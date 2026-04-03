@@ -1,6 +1,5 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
-  Image,
   Platform,
   Pressable,
   ScrollView,
@@ -81,10 +80,34 @@ function PuzzleCard({
   );
 }
 
+function useDailyCountdown() {
+  const getSecondsUntilMidnight = () => {
+    const now = new Date();
+    const midnight = new Date(now);
+    midnight.setHours(24, 0, 0, 0);
+    return Math.floor((midnight.getTime() - now.getTime()) / 1000);
+  };
+
+  const [secondsLeft, setSecondsLeft] = useState(getSecondsUntilMidnight);
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setSecondsLeft(getSecondsUntilMidnight());
+    }, 1000);
+    return () => clearInterval(id);
+  }, []);
+
+  const h = Math.floor(secondsLeft / 3600);
+  const m = Math.floor((secondsLeft % 3600) / 60);
+  const s = secondsLeft % 60;
+  return `${h.toString().padStart(2, "0")}:${m.toString().padStart(2, "0")}:${s.toString().padStart(2, "0")}`;
+}
+
 export default function HomeScreen() {
   const colors = useColors();
   const insets = useSafeAreaInsets();
   const { profile, gameHistory, startDailyPuzzle, startPuzzle } = useGame();
+  const countdown = useDailyCountdown();
 
   const dailyPuzzle = getDailyPuzzle();
   const todayStr = new Date().toISOString().split("T")[0];
@@ -159,12 +182,21 @@ export default function HomeScreen() {
           <Text style={[styles.dailyStory, { color: colors.mutedForeground }]} numberOfLines={3}>
             {dailyPuzzle.story}
           </Text>
-          <View style={[styles.dailyFooter, { borderTopColor: colors.border }]}>
+          <View style={[styles.countdownRow, { borderTopColor: colors.border }]}>
+            <View style={styles.countdownLeft}>
+              <MaterialIcons name="schedule" size={13} color={colors.mutedForeground} />
+              <Text style={[styles.countdownLabel, { color: colors.mutedForeground }]}>
+                Yeni bulmacaya:
+              </Text>
+              <Text style={[styles.countdownValue, { color: colors.primary }]}>{countdown}</Text>
+            </View>
             <View style={[styles.diffBadge, { backgroundColor: `${getDifficultyColor(dailyPuzzle.difficulty as Difficulty)}22`, borderColor: `${getDifficultyColor(dailyPuzzle.difficulty as Difficulty)}66` }]}>
               <Text style={[styles.diffText, { color: getDifficultyColor(dailyPuzzle.difficulty as Difficulty) }]}>
                 {getDifficultyLabel(dailyPuzzle.difficulty as Difficulty)}
               </Text>
             </View>
+          </View>
+          <View style={[styles.dailyFooter, { borderTopColor: colors.border }]}>
             <View style={styles.playNowBtn}>
               <Text style={[styles.playNowText, { color: colors.primary }]}>
                 {playedToday ? "Tekrar Oyna" : "Oyna"}
@@ -252,12 +284,20 @@ const styles = StyleSheet.create({
   doneText: { fontSize: 11, fontWeight: "600" },
   dailyTitle: { fontSize: 18, fontWeight: "700", lineHeight: 24 },
   dailyStory: { fontSize: 13, lineHeight: 20 },
-  dailyFooter: {
+  countdownRow: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     borderTopWidth: 1,
-    paddingTop: 12,
+    paddingTop: 10,
+  },
+  countdownLeft: { flexDirection: "row", alignItems: "center", gap: 5 },
+  countdownLabel: { fontSize: 11, fontWeight: "500" },
+  countdownValue: { fontSize: 13, fontWeight: "700", fontVariant: ["tabular-nums"] },
+  dailyFooter: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingTop: 8,
   },
   playNowBtn: { flexDirection: "row", alignItems: "center", gap: 6 },
   playNowText: { fontSize: 15, fontWeight: "700" },

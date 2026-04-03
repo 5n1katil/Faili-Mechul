@@ -162,7 +162,15 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     const today = new Date().toISOString().split("T")[0];
     const todayEntries = lb.filter((e) => e.date === today);
     const otherEntries = lb.filter((e) => e.date !== today);
-    const topToday = [...todayEntries].sort((a, b) => b.score - a.score).slice(0, 10);
+    const bestPerPlayerToday = Object.values(
+      todayEntries.reduce<Record<string, LeaderboardEntry>>((acc, e) => {
+        if (!acc[e.name] || e.score > acc[e.name].score) {
+          acc[e.name] = e;
+        }
+        return acc;
+      }, {})
+    );
+    const topToday = bestPerPlayerToday.sort((a, b) => b.score - a.score).slice(0, 10);
     const allEntries = [...topToday, ...otherEntries]
       .sort((a, b) => b.score - a.score)
       .slice(0, 50);
