@@ -62,12 +62,12 @@ function GridCell({
   const getCellContent = () => {
     if (mark === "check") {
       return (
-        <MaterialIcons name="check" size={18} color="#4ade80" />
+        <MaterialIcons name="check" size={26} color="#4ade80" />
       );
     }
     if (mark === "cross") {
       return (
-        <MaterialIcons name="close" size={16} color="#f87171" />
+        <MaterialIcons name="close" size={24} color="#f87171" />
       );
     }
     return (
@@ -129,7 +129,7 @@ function HeaderAvatar({
         <View style={[styles.avatarCircle, { backgroundColor: bg, borderColor: color + "60" }]}>
           <MaterialIcons
             name={icon as ComponentProps<typeof MaterialIcons>["name"]}
-            size={14}
+            size={20}
             color={color}
           />
         </View>
@@ -141,8 +141,8 @@ function HeaderAvatar({
   );
 }
 
-const CELL_SIZE = 40;
-const LABEL_WIDTH = 100;
+const CELL_SIZE = 54;
+const LABEL_WIDTH = 130;
 
 export default function DetectiveGrid({
   suspects,
@@ -231,7 +231,7 @@ export default function DetectiveGrid({
           <View style={[styles.rowAvatarCircle, { backgroundColor: bg, borderColor: color + "50" }]}>
             <MaterialIcons
               name={icon as ComponentProps<typeof MaterialIcons>["name"]}
-              size={12}
+              size={16}
               color={color}
             />
           </View>
@@ -283,79 +283,79 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 3,
+    marginBottom: 5,
   },
   cell: {
     width: CELL_SIZE,
     height: CELL_SIZE,
-    borderWidth: 1,
-    borderRadius: 8,
+    borderWidth: 1.5,
+    borderRadius: 10,
     alignItems: "center",
     justifyContent: "center",
-    marginHorizontal: 2,
+    marginHorizontal: 3,
   },
   questionMark: {
-    fontSize: 14,
-    fontWeight: "600",
+    fontSize: 18,
+    fontWeight: "700",
     color: "#4B5563",
-    lineHeight: 18,
+    lineHeight: 24,
   },
   colHeaderInner: {
     alignItems: "center",
     justifyContent: "flex-end",
-    paddingBottom: 6,
-    marginHorizontal: 2,
-    height: 76,
-    gap: 4,
+    paddingBottom: 8,
+    marginHorizontal: 3,
+    height: 96,
+    gap: 6,
   },
   avatarCircle: {
-    width: 28,
-    height: 28,
-    borderRadius: 14,
-    borderWidth: 1,
+    width: 38,
+    height: 38,
+    borderRadius: 19,
+    borderWidth: 1.5,
     alignItems: "center",
     justifyContent: "center",
   },
   colHeaderText: {
-    fontSize: 8,
+    fontSize: 10,
     textAlign: "center",
     fontWeight: "700",
-    letterSpacing: 0.3,
-    lineHeight: 11,
+    letterSpacing: 0.2,
+    lineHeight: 13,
   },
   rowLabel: {
     height: CELL_SIZE,
     flexDirection: "row",
     alignItems: "center",
-    paddingRight: 8,
-    gap: 6,
+    paddingRight: 10,
+    gap: 8,
   },
   rowAvatarCircle: {
-    width: 22,
-    height: 22,
-    borderRadius: 11,
-    borderWidth: 1,
+    width: 28,
+    height: 28,
+    borderRadius: 14,
+    borderWidth: 1.5,
     alignItems: "center",
     justifyContent: "center",
     flexShrink: 0,
   },
   rowLabelText: {
-    fontSize: 10,
+    fontSize: 13,
     fontWeight: "600",
     flex: 1,
-    lineHeight: 13,
+    lineHeight: 17,
   },
   sectionHeader: {
-    paddingVertical: 5,
-    paddingHorizontal: 10,
-    marginVertical: 5,
-    borderRadius: 6,
+    paddingVertical: 7,
+    paddingHorizontal: 12,
+    marginVertical: 7,
+    borderRadius: 8,
     borderWidth: 1,
-    borderLeftWidth: 3,
+    borderLeftWidth: 4,
     marginLeft: LABEL_WIDTH,
   },
   sectionHeaderText: {
-    fontSize: 9,
+    fontSize: 11,
     fontWeight: "800",
     letterSpacing: 1.5,
   },

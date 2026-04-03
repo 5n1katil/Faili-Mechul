@@ -285,7 +285,7 @@ export default function OyunScreen() {
 const styles = StyleSheet.create({
   container: { flex: 1 },
   scroll: { flex: 1 },
-  content: { paddingHorizontal: 16, gap: 16 },
+  content: { paddingHorizontal: 10, gap: 16 },
   emptyContainer: {
     flex: 1,
     alignItems: "center",
@@ -311,10 +311,10 @@ const styles = StyleSheet.create({
   storyLabel: { fontSize: 11, fontWeight: "700", letterSpacing: 1 },
   storyText: { fontSize: 14, lineHeight: 22 },
   sectionTitle: { fontSize: 16, fontWeight: "700", marginBottom: 8 },
-  gridContainer: { borderRadius: 14, borderWidth: 1, padding: 12, overflow: "hidden" },
-  locationsRow: { paddingBottom: 6, marginBottom: 6, borderBottomWidth: 1 },
-  axisLabel: { fontSize: 10, fontWeight: "700", letterSpacing: 2 },
-  gridWrapper: { minHeight: 160 },
+  gridContainer: { borderRadius: 14, borderWidth: 1, padding: 10, overflow: "hidden" },
+  locationsRow: { paddingBottom: 8, marginBottom: 8, borderBottomWidth: 1 },
+  axisLabel: { fontSize: 12, fontWeight: "700", letterSpacing: 2 },
+  gridWrapper: { minHeight: 240 },
   cluesHeader: { flexDirection: "row", justifyContent: "space-between", alignItems: "center" },
   revealAllBtn: {
     flexDirection: "row",
