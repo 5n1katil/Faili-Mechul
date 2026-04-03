@@ -1,0 +1,300 @@
+import React, { useState } from "react";
+import {
+  Platform,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
+import { MaterialIcons } from "@expo/vector-icons";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useColors } from "@/hooks/useColors";
+import { useGame } from "@/context/GameContext";
+import { getDifficultyLabel } from "@/data/puzzles";
+import Animated, { FadeInDown } from "react-native-reanimated";
+
+const BADGE_INFO: Record<string, { label: string; icon: string; desc: string }> = {
+  ilk_cozum: { label: "İlk Çözüm", icon: "emoji-events", desc: "İlk bulmacayı çözdünüz!" },
+  bes_cozum: { label: "5 Bulmaca", icon: "star", desc: "5 bulmaca çözdünüz!" },
+  hafta_serisi: { label: "Haftalık Seri", icon: "local-fire-department", desc: "7 gün üst üste oynadınız!" },
+  hatasiz: { label: "Hatasız", icon: "verified", desc: "Bir bulmacayı hiç hata yapmadan çözdünüz!" },
+};
+
+function BadgeItem({ badgeId, colors }: { badgeId: string; colors: ReturnType<typeof useColors> }) {
+  const info = BADGE_INFO[badgeId];
+  if (!info) return null;
+  return (
+    <View
+      style={[styles.badgeItem, { backgroundColor: colors.card, borderColor: colors.primary }]}
+    >
+      <View style={[styles.badgeIcon, { backgroundColor: `${colors.primary}22` }]}>
+        <MaterialIcons name={info.icon as any} size={24} color={colors.primary} />
+      </View>
+      <Text style={[styles.badgeLabel, { color: colors.foreground }]}>{info.label}</Text>
+      <Text style={[styles.badgeDesc, { color: colors.mutedForeground }]}>{info.desc}</Text>
+    </View>
+  );
+}
+
+export default function ProfilScreen() {
+  const colors = useColors();
+  const insets = useSafeAreaInsets();
+  const { profile, gameHistory, updateProfile } = useGame();
+
+  const [editingName, setEditingName] = useState(false);
+  const [tempName, setTempName] = useState(profile.name);
+
+  const winRate =
+    profile.gamesPlayed > 0
+      ? Math.round((profile.gamesWon / profile.gamesPlayed) * 100)
+      : 0;
+
+  const recentHistory = gameHistory.slice(0, 10);
+
+  const handleNameSave = () => {
+    if (tempName.trim()) {
+      updateProfile(tempName.trim());
+    }
+    setEditingName(false);
+  };
+
+  return (
+    <ScrollView
+      style={[styles.container, { backgroundColor: colors.background }]}
+      contentContainerStyle={[
+        styles.content,
+        {
+          paddingTop: Platform.OS === "web" ? 67 + 16 : insets.top + 16,
+          paddingBottom: Platform.OS === "web" ? 34 + 80 : insets.bottom + 80,
+        },
+      ]}
+      showsVerticalScrollIndicator={false}
+    >
+      <Animated.View entering={FadeInDown.delay(0).springify()}>
+        <View style={[styles.profileCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
+          <View style={[styles.avatar, { backgroundColor: `${colors.primary}22`, borderColor: colors.primary }]}>
+            <MaterialIcons name="person" size={40} color={colors.primary} />
+          </View>
+          {editingName ? (
+            <View style={styles.nameEditRow}>
+              <TextInput
+                value={tempName}
+                onChangeText={setTempName}
+                style={[
+                  styles.nameInput,
+                  { color: colors.foreground, borderColor: colors.primary, backgroundColor: colors.background },
+                ]}
+                autoFocus
+                maxLength={20}
+                returnKeyType="done"
+                onSubmitEditing={handleNameSave}
+              />
+              <Pressable onPress={handleNameSave} style={[styles.saveBtn, { backgroundColor: colors.primary }]}>
+                <MaterialIcons name="check" size={18} color={colors.primaryForeground} />
+              </Pressable>
+            </View>
+          ) : (
+            <Pressable onPress={() => setEditingName(true)} style={styles.nameRow}>
+              <Text style={[styles.profileName, { color: colors.foreground }]}>{profile.name}</Text>
+              <MaterialIcons name="edit" size={16} color={colors.mutedForeground} />
+            </Pressable>
+          )}
+          <View style={styles.streakRow}>
+            <MaterialIcons name="local-fire-department" size={18} color="#FF6B35" />
+            <Text style={[styles.streakLabel, { color: colors.mutedForeground }]}>
+              {profile.currentStreak} günlük seri
+            </Text>
+          </View>
+        </View>
+      </Animated.View>
+
+      <Animated.View entering={FadeInDown.delay(80).springify()}>
+        <View style={styles.statsGrid}>
+          {[
+            { value: profile.gamesPlayed, label: "Oynanan" },
+            { value: profile.gamesWon, label: "Kazanılan" },
+            { value: `%${winRate}`, label: "Başarı" },
+            { value: profile.totalScore, label: "Toplam Puan" },
+            { value: profile.currentStreak, label: "Mevcut Seri" },
+            { value: profile.maxStreak, label: "En Uzun Seri" },
+          ].map((stat, i) => (
+            <View
+              key={i}
+              style={[styles.statCard, { backgroundColor: colors.card, borderColor: colors.border }]}
+            >
+              <Text style={[styles.statValue, { color: colors.primary }]}>{stat.value}</Text>
+              <Text style={[styles.statLabel, { color: colors.mutedForeground }]}>{stat.label}</Text>
+            </View>
+          ))}
+        </View>
+      </Animated.View>
+
+      {profile.badges.length > 0 && (
+        <Animated.View entering={FadeInDown.delay(160).springify()}>
+          <Text style={[styles.sectionTitle, { color: colors.foreground }]}>Rozetler</Text>
+          <View style={styles.badgesGrid}>
+            {profile.badges.map((b) => (
+              <BadgeItem key={b} badgeId={b} colors={colors} />
+            ))}
+          </View>
+        </Animated.View>
+      )}
+
+      {recentHistory.length > 0 && (
+        <Animated.View entering={FadeInDown.delay(240).springify()}>
+          <Text style={[styles.sectionTitle, { color: colors.foreground }]}>Son Oyunlar</Text>
+          {recentHistory.map((rec, i) => (
+            <View
+              key={i}
+              style={[
+                styles.historyItem,
+                {
+                  backgroundColor: colors.card,
+                  borderColor: rec.completed ? `${colors.success}44` : colors.border,
+                },
+              ]}
+            >
+              <View
+                style={[
+                  styles.historyIcon,
+                  { backgroundColor: rec.completed ? `${colors.success}22` : `${colors.accent}22` },
+                ]}
+              >
+                <MaterialIcons
+                  name={rec.completed ? "check-circle" : "cancel"}
+                  size={20}
+                  color={rec.completed ? colors.success : colors.accent}
+                />
+              </View>
+              <View style={styles.historyInfo}>
+                <Text style={[styles.historyDate, { color: colors.mutedForeground }]}>
+                  {rec.date}
+                </Text>
+                <Text style={[styles.historyResult, { color: rec.completed ? colors.success : colors.accent }]}>
+                  {rec.completed ? "Çözüldü" : "Çözülemedi"}
+                </Text>
+              </View>
+              <View style={styles.historyStats}>
+                {rec.completed && (
+                  <Text style={[styles.historyScore, { color: colors.primary }]}>{rec.score}</Text>
+                )}
+                <Text style={[styles.historyMistakes, { color: colors.mutedForeground }]}>
+                  {rec.mistakes} hata
+                </Text>
+              </View>
+            </View>
+          ))}
+        </Animated.View>
+      )}
+    </ScrollView>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: { flex: 1 },
+  content: { paddingHorizontal: 16, gap: 16 },
+  profileCard: {
+    borderRadius: 16,
+    borderWidth: 1,
+    padding: 20,
+    alignItems: "center",
+    gap: 10,
+  },
+  avatar: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    borderWidth: 2,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  nameRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+  },
+  profileName: { fontSize: 22, fontWeight: "700" },
+  nameEditRow: { flexDirection: "row", alignItems: "center", gap: 8 },
+  nameInput: {
+    fontSize: 18,
+    fontWeight: "600",
+    borderWidth: 1.5,
+    borderRadius: 8,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    minWidth: 140,
+  },
+  saveBtn: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  streakRow: { flexDirection: "row", alignItems: "center", gap: 6 },
+  streakLabel: { fontSize: 13, fontWeight: "500" },
+  statsGrid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 10,
+  },
+  statCard: {
+    flex: 1,
+    minWidth: "28%",
+    borderRadius: 12,
+    borderWidth: 1,
+    padding: 14,
+    alignItems: "center",
+    gap: 4,
+  },
+  statValue: { fontSize: 22, fontWeight: "700" },
+  statLabel: { fontSize: 11, fontWeight: "500", textAlign: "center" },
+  sectionTitle: { fontSize: 18, fontWeight: "700" },
+  badgesGrid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 10,
+  },
+  badgeItem: {
+    flex: 1,
+    minWidth: "42%",
+    borderRadius: 12,
+    borderWidth: 1.5,
+    padding: 14,
+    alignItems: "center",
+    gap: 8,
+  },
+  badgeIcon: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  badgeLabel: { fontSize: 13, fontWeight: "700", textAlign: "center" },
+  badgeDesc: { fontSize: 11, textAlign: "center", lineHeight: 16 },
+  historyItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderRadius: 12,
+    borderWidth: 1,
+    padding: 12,
+    gap: 12,
+    marginBottom: 8,
+  },
+  historyIcon: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  historyInfo: { flex: 1 },
+  historyDate: { fontSize: 12 },
+  historyResult: { fontSize: 14, fontWeight: "600", marginTop: 2 },
+  historyStats: { alignItems: "flex-end", gap: 2 },
+  historyScore: { fontSize: 18, fontWeight: "700" },
+  historyMistakes: { fontSize: 11 },
+});
