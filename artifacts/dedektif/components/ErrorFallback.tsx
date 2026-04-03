@@ -70,11 +70,11 @@ export function ErrorFallback({ error, resetError }: ErrorFallbackProps) {
 
       <View style={styles.content}>
         <Text style={[styles.title, { color: colors.foreground }]}>
-          Something went wrong
+          Bir Hata Oluştu
         </Text>
 
         <Text style={[styles.message, { color: colors.mutedForeground }]}>
-          Please reload the app to continue.
+          Devam etmek için uygulamayı yeniden başlatın.
         </Text>
 
         <Pressable
@@ -94,7 +94,7 @@ export function ErrorFallback({ error, resetError }: ErrorFallbackProps) {
               { color: colors.primaryForeground },
             ]}
           >
-            Try Again
+            Tekrar Dene
           </Text>
         </Pressable>
       </View>
@@ -120,7 +120,7 @@ export function ErrorFallback({ error, resetError }: ErrorFallbackProps) {
                 ]}
               >
                 <Text style={[styles.modalTitle, { color: colors.foreground }]}>
-                  Error Details
+                  Hata Detayları
                 </Text>
                 <Pressable
                   onPress={() => setIsModalVisible(false)}

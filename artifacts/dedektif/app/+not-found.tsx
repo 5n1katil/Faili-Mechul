@@ -1,5 +1,6 @@
 import { Link, Stack } from "expo-router";
 import { StyleSheet, Text, View } from "react-native";
+import { MaterialIcons } from "@expo/vector-icons";
 
 import { useColors } from "@/hooks/useColors";
 
@@ -8,15 +9,16 @@ export default function NotFoundScreen() {
 
   return (
     <>
-      <Stack.Screen options={{ title: "Oops!" }} />
+      <Stack.Screen options={{ title: "Sayfa Bulunamadı" }} />
       <View style={[styles.container, { backgroundColor: colors.background }]}>
+        <MaterialIcons name="search-off" size={56} color={colors.mutedForeground} />
         <Text style={[styles.title, { color: colors.foreground }]}>
-          This screen doesn&apos;t exist.
+          Bu sayfa mevcut değil.
         </Text>
 
         <Link href="/" style={styles.link}>
           <Text style={[styles.linkText, { color: colors.primary }]}>
-            Go to home screen!
+            Ana sayfaya git
           </Text>
         </Link>
       </View>
@@ -30,16 +32,19 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     padding: 20,
+    gap: 16,
   },
   title: {
     fontSize: 20,
     fontWeight: "bold",
+    textAlign: "center",
   },
   link: {
-    marginTop: 15,
-    paddingVertical: 15,
+    marginTop: 8,
+    paddingVertical: 12,
   },
   linkText: {
-    fontSize: 14,
+    fontSize: 15,
+    fontWeight: "600",
   },
 });

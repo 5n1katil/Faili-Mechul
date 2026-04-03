@@ -159,9 +159,15 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
   };
 
   const saveLeaderboard = async (lb: LeaderboardEntry[]) => {
-    const sorted = [...lb].sort((a, b) => b.score - a.score).slice(0, 50);
-    await AsyncStorage.setItem(LEADERBOARD_KEY, JSON.stringify(sorted));
-    setLeaderboard(sorted);
+    const today = new Date().toISOString().split("T")[0];
+    const todayEntries = lb.filter((e) => e.date === today);
+    const otherEntries = lb.filter((e) => e.date !== today);
+    const topToday = [...todayEntries].sort((a, b) => b.score - a.score).slice(0, 10);
+    const allEntries = [...topToday, ...otherEntries]
+      .sort((a, b) => b.score - a.score)
+      .slice(0, 50);
+    await AsyncStorage.setItem(LEADERBOARD_KEY, JSON.stringify(allEntries));
+    setLeaderboard(allEntries);
   };
 
   const startPuzzle = useCallback((puzzle: Puzzle) => {
@@ -240,7 +246,9 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         const today = new Date().toISOString().split("T")[0];
         const yesterday = new Date(Date.now() - 86400000).toISOString().split("T")[0];
         const newStreak =
-          profile.lastPlayedDate === yesterday
+          profile.lastPlayedDate === today
+            ? profile.currentStreak
+            : profile.lastPlayedDate === yesterday
             ? profile.currentStreak + 1
             : 1;
         const newHistory = [record, ...gameHistory];
