@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import type { ComponentProps } from "react";
 import {
   Platform,
   Pressable,
@@ -12,10 +13,11 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useColors } from "@/hooks/useColors";
 import { useGame } from "@/context/GameContext";
-import { getDifficultyLabel } from "@/data/puzzles";
 import Animated, { FadeInDown } from "react-native-reanimated";
 
-const BADGE_INFO: Record<string, { label: string; icon: string; desc: string }> = {
+type MaterialIconName = ComponentProps<typeof MaterialIcons>["name"];
+
+const BADGE_INFO: Record<string, { label: string; icon: MaterialIconName; desc: string }> = {
   ilk_cozum: { label: "İlk Çözüm", icon: "emoji-events", desc: "İlk bulmacayı çözdünüz!" },
   bes_cozum: { label: "5 Bulmaca", icon: "star", desc: "5 bulmaca çözdünüz!" },
   hafta_serisi: { label: "Haftalık Seri", icon: "local-fire-department", desc: "7 gün üst üste oynadınız!" },
@@ -30,7 +32,7 @@ function BadgeItem({ badgeId, colors }: { badgeId: string; colors: ReturnType<ty
       style={[styles.badgeItem, { backgroundColor: colors.card, borderColor: colors.primary }]}
     >
       <View style={[styles.badgeIcon, { backgroundColor: `${colors.primary}22` }]}>
-        <MaterialIcons name={info.icon as any} size={24} color={colors.primary} />
+        <MaterialIcons name={info.icon} size={24} color={colors.primary} />
       </View>
       <Text style={[styles.badgeLabel, { color: colors.foreground }]}>{info.label}</Text>
       <Text style={[styles.badgeDesc, { color: colors.mutedForeground }]}>{info.desc}</Text>

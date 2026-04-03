@@ -1,4 +1,5 @@
 import React from "react";
+import type { ComponentProps } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import Animated, {
@@ -8,6 +9,8 @@ import Animated, {
 } from "react-native-reanimated";
 import { useColors } from "@/hooks/useColors";
 import type { Clue } from "@/data/puzzles";
+
+type MaterialIconName = ComponentProps<typeof MaterialIcons>["name"];
 
 interface Props {
   clue: Clue;
@@ -31,7 +34,7 @@ export default function ClueCard({ clue, index, isRevealed, onReveal }: Props) {
     transform: [{ translateY: translateY.value }],
   }));
 
-  const getClueIcon = () => {
+  const getClueIcon = (): MaterialIconName => {
     switch (clue.type) {
       case "direct":
         return "search";
@@ -67,7 +70,7 @@ export default function ClueCard({ clue, index, isRevealed, onReveal }: Props) {
       >
         <View style={styles.header}>
           <View style={[styles.iconBadge, { backgroundColor: `${getClueColor()}22` }]}>
-            <MaterialIcons name={getClueIcon() as any} size={14} color={getClueColor()} />
+            <MaterialIcons name={getClueIcon()} size={14} color={getClueColor()} />
           </View>
           <Text style={[styles.clueNumber, { color: colors.mutedForeground }]}>
             İpucu {index + 1}

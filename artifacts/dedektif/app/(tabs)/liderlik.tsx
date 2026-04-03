@@ -1,4 +1,5 @@
 import React from "react";
+import type { ComponentProps } from "react";
 import {
   FlatList,
   Platform,
@@ -11,6 +12,8 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useColors } from "@/hooks/useColors";
 import { useGame } from "@/context/GameContext";
 import Animated, { FadeInDown } from "react-native-reanimated";
+
+type MaterialIconName = ComponentProps<typeof MaterialIcons>["name"];
 
 function formatTime(s: number): string {
   const m = Math.floor(s / 60);
@@ -28,7 +31,7 @@ interface RankItemProps {
 function RankItem({ entry, rank, isCurrentUser, colors }: RankItemProps) {
   const rankColor =
     rank === 1 ? "#FFD700" : rank === 2 ? "#C0C0C0" : rank === 3 ? "#CD7F32" : colors.mutedForeground;
-  const rankIcon =
+  const rankIcon: MaterialIconName =
     rank === 1 ? "emoji-events" : rank === 2 ? "workspace-premium" : rank === 3 ? "military-tech" : "tag";
 
   return (
@@ -43,7 +46,7 @@ function RankItem({ entry, rank, isCurrentUser, colors }: RankItemProps) {
         ]}
       >
         <View style={[styles.rankBadge, { backgroundColor: `${rankColor}22` }]}>
-          <MaterialIcons name={rankIcon as any} size={18} color={rankColor} />
+          <MaterialIcons name={rankIcon} size={18} color={rankColor} />
           {rank > 3 && (
             <Text style={[styles.rankNum, { color: rankColor }]}>{rank}</Text>
           )}
@@ -81,7 +84,11 @@ export default function LiderlikScreen() {
   const insets = useSafeAreaInsets();
   const { leaderboard, profile } = useGame();
 
-  const sorted = [...leaderboard].sort((a, b) => b.score - a.score);
+  const today = new Date().toISOString().split("T")[0];
+  const sorted = [...leaderboard]
+    .filter((e) => e.date === today)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 10);
 
   return (
     <View
@@ -94,9 +101,9 @@ export default function LiderlikScreen() {
       ]}
     >
       <View style={[styles.header, { borderBottomColor: colors.border }]}>
-        <Text style={[styles.headerTitle, { color: colors.primary }]}>Liderlik Tablosu</Text>
+        <Text style={[styles.headerTitle, { color: colors.primary }]}>Bugünün Liderleri</Text>
         <Text style={[styles.headerSub, { color: colors.mutedForeground }]}>
-          {sorted.length} oyuncu
+          En iyi {sorted.length} oyuncu
         </Text>
       </View>
 
