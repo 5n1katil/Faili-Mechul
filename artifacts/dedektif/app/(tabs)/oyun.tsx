@@ -17,8 +17,10 @@ import ClueCard from "@/components/ClueCard";
 import TimerDisplay from "@/components/TimerDisplay";
 import AnswerModal from "@/components/AnswerModal";
 import ResultScreen from "@/components/ResultScreen";
+import EntityInfoSheet from "@/components/EntityInfoSheet";
 import { getDailyPuzzle } from "@/data/puzzles";
 import type { GridMark } from "@/data/puzzles";
+import type { EntityInfo } from "@/components/EntityInfoSheet";
 import Animated, { FadeInDown } from "react-native-reanimated";
 
 export default function OyunScreen() {
@@ -37,6 +39,7 @@ export default function OyunScreen() {
   const [showAnswerModal, setShowAnswerModal] = useState(false);
   const [showResult, setShowResult] = useState(false);
   const [lastResultSuccess, setLastResultSuccess] = useState(false);
+  const [selectedEntity, setSelectedEntity] = useState<EntityInfo | null>(null);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
@@ -201,6 +204,7 @@ export default function OyunScreen() {
                 gridState={gridState}
                 onCellPress={handleCellPress}
                 disabled={gameState.isComplete || gameState.isGameOver}
+                onHeaderPress={setSelectedEntity}
               />
             </View>
           </View>
@@ -268,6 +272,12 @@ export default function OyunScreen() {
           onClose={() => setShowAnswerModal(false)}
         />
       )}
+
+      <EntityInfoSheet
+        visible={selectedEntity !== null}
+        entity={selectedEntity}
+        onClose={() => setSelectedEntity(null)}
+      />
     </View>
   );
 }

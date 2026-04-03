@@ -10,12 +10,14 @@ export interface Suspect {
 export interface Weapon {
   id: string;
   name: string;
+  description: string;
   icon: string;
 }
 
 export interface Location {
   id: string;
   name: string;
+  description: string;
   icon: string;
 }
 
@@ -57,17 +59,17 @@ export const PUZZLES: Puzzle[] = [
     suspects: [
       { id: "s1", name: "Nazik Hanım", description: "Ev sahibinin eski dostu", icon: "person" },
       { id: "s2", name: "Rıfat Bey", description: "Avukat ve iş ortağı", icon: "briefcase" },
-      { id: "s3", name: "Zeynep Hanim", description: "Genç yeğen", icon: "star" },
+      { id: "s3", name: "Zeynep Hanım", description: "Genç yeğen", icon: "star" },
     ],
     weapons: [
-      { id: "w1", name: "Bıçak", icon: "cut" },
-      { id: "w2", name: "Zehir", icon: "local-pharmacy" },
-      { id: "w3", name: "Tabanca", icon: "gps-not-fixed" },
+      { id: "w1", name: "Bıçak", description: "Konak mutfağından alınan ince, uzun şef bıçağı", icon: "cut" },
+      { id: "w2", name: "Zehir", description: "Renksiz, kokusuz bitkisel toksin karışımı", icon: "local-pharmacy" },
+      { id: "w3", name: "Tabanca", description: "Tek mermi kalan eski model bir revolver", icon: "gps-not-fixed" },
     ],
     locations: [
-      { id: "l1", name: "Kütüphane", icon: "menu-book" },
-      { id: "l2", name: "Mutfak", icon: "restaurant" },
-      { id: "l3", name: "Bahçe", icon: "park" },
+      { id: "l1", name: "Kütüphane", description: "Deri ciltli kitaplarla dolu, meşe raflı tarihi oda", icon: "menu-book" },
+      { id: "l2", name: "Mutfak", description: "Yemek hazırlığından hâlâ sıcak olan geniş konak mutfağı", icon: "restaurant" },
+      { id: "l3", name: "Bahçe", description: "Fıskiyeli havuz ve asırlık çınarların bulunduğu loş bahçe", icon: "park" },
     ],
     clues: [
       {
@@ -111,14 +113,14 @@ export const PUZZLES: Puzzle[] = [
       { id: "s3", name: "Murat Aydın", description: "Sigorta şirketi temsilcisi", icon: "business" },
     ],
     weapons: [
-      { id: "w1", name: "Demir Çubuk", icon: "hardware" },
-      { id: "w2", name: "İp", icon: "trip-origin" },
-      { id: "w3", name: "Gaz Maskesi", icon: "air" },
+      { id: "w1", name: "Demir Çubuk", description: "Güverteden sökülen ağır metal çubuk", icon: "hardware" },
+      { id: "w2", name: "İp", description: "Yelken bağlamak için kullanılan dayanıklı naylon ip", icon: "trip-origin" },
+      { id: "w3", name: "Gaz Maskesi", description: "Soluk alma sistemini kilitleyen endüstriyel ekipman", icon: "air" },
     ],
     locations: [
-      { id: "l1", name: "Güverte", icon: "waves" },
-      { id: "l2", name: "Makine Dairesi", icon: "settings" },
-      { id: "l3", name: "VIP Salon", icon: "star" },
+      { id: "l1", name: "Güverte", description: "Boğaz rüzgarına açık, ıslak tekne güvertesi", icon: "waves" },
+      { id: "l2", name: "Makine Dairesi", description: "Teknenin alt katında gürültülü, karanlık motor odası", icon: "settings" },
+      { id: "l3", name: "VIP Salon", description: "Kristal aydınlatma ve kadife koltuklu özel salon", icon: "star" },
     ],
     clues: [
       {
@@ -162,14 +164,14 @@ export const PUZZLES: Puzzle[] = [
       { id: "s3", name: "Kerem Genç", description: "Stajyer, son ay işe başladı", icon: "school" },
     ],
     weapons: [
-      { id: "w1", name: "Ağır Terazi", icon: "balance" },
-      { id: "w2", name: "Kimyasal Madde", icon: "science" },
-      { id: "w3", name: "Pençe Anahtar", icon: "build" },
+      { id: "w1", name: "Ağır Terazi", description: "Kuyumcu terazisinin tunç kefesi, birkaç kilogram ağırlığında", icon: "balance" },
+      { id: "w2", name: "Kimyasal Madde", description: "Altın eritme sürecinde kullanılan asit bazlı çözelti", icon: "science" },
+      { id: "w3", name: "Pençe Anahtar", description: "Kilitlerde iz bırakan ağır çelik alet", icon: "build" },
     ],
     locations: [
-      { id: "l1", name: "Dükkan İçi", icon: "store" },
-      { id: "l2", name: "Arka Depo", icon: "inventory" },
-      { id: "l3", name: "Çarşı Koridoru", icon: "directions-walk" },
+      { id: "l1", name: "Dükkan İçi", description: "Vitrinlerin altın ışıltısıyla parlayan kuyumcu dükkânı", icon: "store" },
+      { id: "l2", name: "Arka Depo", description: "Elektronik kilitli, penceresiz depolama odası", icon: "inventory" },
+      { id: "l3", name: "Çarşı Koridoru", description: "Yüzlerce yıllık kıvrımlı taş koridorlar", icon: "directions-walk" },
     ],
     clues: [
       {
@@ -213,14 +215,14 @@ export const PUZZLES: Puzzle[] = [
       { id: "s3", name: "Güvenlik Görevlisi", description: "Gece vardiyası çalışanı", icon: "security" },
     ],
     weapons: [
-      { id: "w1", name: "Elektrik Çarpması", icon: "flash-on" },
-      { id: "w2", name: "Kimyasal Gaz", icon: "cloud" },
-      { id: "w3", name: "Keskin Nesne", icon: "cut" },
+      { id: "w1", name: "Elektrik Çarpması", description: "Laboratuvar kablosunun kasıtlı olarak sabote edilmesi", icon: "flash-on" },
+      { id: "w2", name: "Kimyasal Gaz", description: "Kapalı ortamda birikebilen tehlikeli kimyasal bileşik", icon: "cloud" },
+      { id: "w3", name: "Keskin Nesne", description: "Laboratuvar cam bölmesinin kırık parçası", icon: "cut" },
     ],
     locations: [
-      { id: "l1", name: "Laboratuvar", icon: "science" },
-      { id: "l2", name: "Ofis", icon: "business" },
-      { id: "l3", name: "Koridorlar", icon: "directions-walk" },
+      { id: "l1", name: "Laboratuvar", description: "Çeşitli deney düzeneklerinin bulunduğu araştırma laboratuvarı", icon: "science" },
+      { id: "l2", name: "Ofis", description: "Yığın yığın dosya ve ekran ışığıyla dolu akademisyen ofisi", icon: "business" },
+      { id: "l3", name: "Koridorlar", description: "Gece yarısı ıssız, uzun üniversite koridorları", icon: "directions-walk" },
     ],
     clues: [
       {
@@ -259,14 +261,14 @@ export const PUZZLES: Puzzle[] = [
       { id: "s3", name: "Tedarikçi", description: "Malları sabah erkenden teslim etti", icon: "local-shipping" },
     ],
     weapons: [
-      { id: "w1", name: "Zehirli Baklava", icon: "cake" },
-      { id: "w2", name: "Darbe", icon: "pan-tool" },
-      { id: "w3", name: "Boğulma", icon: "water" },
+      { id: "w1", name: "Zehirli Baklava", description: "İçine gizlice zehir karıştırılmış tatlı baklava", icon: "cake" },
+      { id: "w2", name: "Darbe", description: "Elle ya da sert bir cisimle uygulanan güçlü vurma", icon: "pan-tool" },
+      { id: "w3", name: "Boğulma", description: "Boyuna uygulanan iki elle güçlü baskı", icon: "water" },
     ],
     locations: [
-      { id: "l1", name: "Tatlı Tezgahı", icon: "store" },
-      { id: "l2", name: "Ara Sokak", icon: "map" },
-      { id: "l3", name: "Park Alanı", icon: "local-parking" },
+      { id: "l1", name: "Tatlı Tezgahı", description: "Çeşit çeşit baklavanın sergilendiği pazar tezgahı", icon: "store" },
+      { id: "l2", name: "Ara Sokak", description: "Pazar gürültüsünden uzak, dar ve sakin ara sokak", icon: "map" },
+      { id: "l3", name: "Park Alanı", description: "Araçların park ettiği, tenha ve ıssız bir alan", icon: "local-parking" },
     ],
     clues: [
       {
@@ -276,7 +278,7 @@ export const PUZZLES: Puzzle[] = [
       },
       {
         id: "c2",
-        text: "Müşteri Hanım o sabah hiç tatı almadı - diyet yapıyordu.",
+        text: "Müşteri Hanım o sabah hiç tatlı almadı - diyet yapıyordu.",
         type: "elimination",
       },
       {
@@ -305,14 +307,14 @@ export const PUZZLES: Puzzle[] = [
       { id: "s3", name: "Ziyaretçi Rehber", description: "Müzede turlar düzenliyor", icon: "tour" },
     ],
     weapons: [
-      { id: "w1", name: "Uyutucu İğne", icon: "vaccines" },
-      { id: "w2", name: "Sergi Kaidesi", icon: "construction" },
-      { id: "w3", name: "Kimyasal Sprey", icon: "air" },
+      { id: "w1", name: "Uyutucu İğne", description: "Deriye hızla etki eden anestezik enjeksiyon", icon: "vaccines" },
+      { id: "w2", name: "Sergi Kaidesi", description: "Ağır mermer kaide, vitrinlerin altındaki taş destek", icon: "construction" },
+      { id: "w3", name: "Kimyasal Sprey", description: "Geçici felç etkisi yaratan kimyasal karışım", icon: "air" },
     ],
     locations: [
-      { id: "l1", name: "Sergi Salonu", icon: "art-track" },
-      { id: "l2", name: "Depolama Odası", icon: "storage" },
-      { id: "l3", name: "Güvenlik Odası", icon: "security" },
+      { id: "l1", name: "Sergi Salonu", description: "Bizans ve Osmanlı eserlerinin sergilendiği aydınlık salon", icon: "art-track" },
+      { id: "l2", name: "Depolama Odası", description: "Restorasyon bekleyen eserlerin bulunduğu kilitli oda", icon: "storage" },
+      { id: "l3", name: "Güvenlik Odası", description: "Kamera görüntülerinin izlendiği kontrol merkezi", icon: "security" },
     ],
     clues: [
       {
@@ -352,16 +354,16 @@ export const PUZZLES: Puzzle[] = [
       { id: "s4", name: "Aşçı Mehmet", description: "Villa aşçısı", icon: "restaurant" },
     ],
     weapons: [
-      { id: "w1", name: "Av Tüfeği", icon: "sports" },
-      { id: "w2", name: "Zehir", icon: "science" },
-      { id: "w3", name: "Bıçak", icon: "cut" },
-      { id: "w4", name: "Boğma", icon: "pan-tool" },
+      { id: "w1", name: "Av Tüfeği", description: "Emekli albayın dolabında sakladığı çift namlulu tüfek", icon: "sports" },
+      { id: "w2", name: "Zehir", description: "Doğal bitkilerden elde edilen güçlü bitki toksini", icon: "science" },
+      { id: "w3", name: "Bıçak", description: "Balık ayıklamak için kullanılan uzun mutfak bıçağı", icon: "cut" },
+      { id: "w4", name: "Boğma", description: "El gücüyle boyuna uygulanan güçlü basınç", icon: "pan-tool" },
     ],
     locations: [
-      { id: "l1", name: "Villa Bahçesi", icon: "park" },
-      { id: "l2", name: "Sahil Şeridi", icon: "waves" },
-      { id: "l3", name: "Kayalık", icon: "terrain" },
-      { id: "l4", name: "Villa İçi", icon: "home" },
+      { id: "l1", name: "Villa Bahçesi", description: "Akdeniz bitkileri ve yüzme havuzuyla süslü villa bahçesi", icon: "park" },
+      { id: "l2", name: "Sahil Şeridi", description: "Ada kıyısındaki kayalık sahil yolu", icon: "waves" },
+      { id: "l3", name: "Kayalık", description: "Adanın güney ucundaki sarp, yüksek kayalık", icon: "terrain" },
+      { id: "l4", name: "Villa İçi", description: "Ahşap zeminli, antika mobilyalı villa içi", icon: "home" },
     ],
     clues: [
       {
@@ -410,14 +412,14 @@ export const PUZZLES: Puzzle[] = [
       { id: "s3", name: "Emekli Doktor", description: "Kaplıcaya gidiyordu", icon: "medical-services" },
     ],
     weapons: [
-      { id: "w1", name: "Zehirli İçecek", icon: "local-bar" },
-      { id: "w2", name: "Kesici Silah", icon: "cut" },
-      { id: "w3", name: "Boğma Halatı", icon: "trip-origin" },
+      { id: "w1", name: "Zehirli İçecek", description: "Şişeye karıştırılan renksiz ve tatsız zehir", icon: "local-bar" },
+      { id: "w2", name: "Kesici Silah", description: "Hareketli trende saklanmış küçük çakı bıçağı", icon: "cut" },
+      { id: "w3", name: "Boğma Halatı", description: "Bavuldan çıkabilecek ince naylon halat", icon: "trip-origin" },
     ],
     locations: [
-      { id: "l1", name: "Kompartıman", icon: "train" },
-      { id: "l2", name: "Yemekli Vagon", icon: "restaurant" },
-      { id: "l3", name: "Tuvalet", icon: "wc" },
+      { id: "l1", name: "Kompartıman", description: "Dar, dört kişilik ahşap bölmeli tren kompartımanı", icon: "train" },
+      { id: "l2", name: "Yemekli Vagon", description: "Beyaz örtülü masalar ve garsonlarla yemekli vagon", icon: "restaurant" },
+      { id: "l3", name: "Tuvalet", description: "Trenin arka bölümündeki küçük, kilitlenebilir tuvalet", icon: "wc" },
     ],
     clues: [
       {
@@ -456,14 +458,14 @@ export const PUZZLES: Puzzle[] = [
       { id: "s3", name: "Kasiyer", description: "Genç çalışan", icon: "point-of-sale" },
     ],
     weapons: [
-      { id: "w1", name: "Zehirli Sabun", icon: "soap" },
-      { id: "w2", name: "Boğma", icon: "pan-tool" },
-      { id: "w3", name: "Uyku İlacı", icon: "medication" },
+      { id: "w1", name: "Zehirli Sabun", description: "Sabun köpüğüne karıştırılan toksik kimyasal madde", icon: "soap" },
+      { id: "w2", name: "Boğma", description: "Islak havluyla ya da elle gerçekleştirilen boğma", icon: "pan-tool" },
+      { id: "w3", name: "Uyku İlacı", description: "Çaya karıştırılan güçlü sedatif madde", icon: "medication" },
     ],
     locations: [
-      { id: "l1", name: "Masaj Odası", icon: "spa" },
-      { id: "l2", name: "Soğukluk", icon: "ac-unit" },
-      { id: "l3", name: "Kasa", icon: "point-of-sale" },
+      { id: "l1", name: "Masaj Odası", description: "Mermer göbek taşıyla ısınan özel masaj kabini", icon: "spa" },
+      { id: "l2", name: "Soğukluk", description: "Hamamın giriş bölümündeki serinletici soğukluk", icon: "ac-unit" },
+      { id: "l3", name: "Kasa", description: "Hamamın girişindeki ödeme ve bekleme kasası", icon: "point-of-sale" },
     ],
     clues: [
       {
@@ -503,16 +505,16 @@ export const PUZZLES: Puzzle[] = [
       { id: "s4", name: "Nakliyeci", description: "Eserleri taşıdı", icon: "local-shipping" },
     ],
     weapons: [
-      { id: "w1", name: "Elektrik Sopası", icon: "flash-on" },
-      { id: "w2", name: "Kimyasal Sprey", icon: "air" },
-      { id: "w3", name: "Demir Çubuk", icon: "hardware" },
-      { id: "w4", name: "Uyutucu", icon: "vaccines" },
+      { id: "w1", name: "Elektrik Sopası", description: "Yüksek voltajlı elektrik deşarjı yapan sopa", icon: "flash-on" },
+      { id: "w2", name: "Kimyasal Sprey", description: "Bilinç kaybına neden olan biber gazı karışımı", icon: "air" },
+      { id: "w3", name: "Demir Çubuk", description: "Güvenlik kapılarını kırmak için kullanılan ağır çubuk", icon: "hardware" },
+      { id: "w4", name: "Uyutucu", description: "Damar içi enjeksiyonla hızla etkisini gösteren sedatif", icon: "vaccines" },
     ],
     locations: [
-      { id: "l1", name: "Sergi Salonu", icon: "museum" },
-      { id: "l2", name: "Güvenlik Merkezi", icon: "security" },
-      { id: "l3", name: "Depo", icon: "inventory" },
-      { id: "l4", name: "Çıkış Noktası", icon: "exit-to-app" },
+      { id: "l1", name: "Sergi Salonu", description: "Osmanlı mücevherlerinin vitrinlerde sergilendiği ana salon", icon: "museum" },
+      { id: "l2", name: "Güvenlik Merkezi", description: "Kamera panellerinin ve alarm sisteminin bulunduğu oda", icon: "security" },
+      { id: "l3", name: "Depo", description: "Sergilenmeyecek eserlerin muhafaza edildiği arka depo", icon: "inventory" },
+      { id: "l4", name: "Çıkış Noktası", description: "Müzenin arka kapısına açılan güvenlik çıkışı", icon: "exit-to-app" },
     ],
     clues: [
       {
@@ -561,14 +563,14 @@ export const PUZZLES: Puzzle[] = [
       { id: "s3", name: "İnşaat Müteahhit", description: "Belediyeyle anlaşmazlık yaşıyor", icon: "construction" },
     ],
     weapons: [
-      { id: "w1", name: "Ağır Kağıt Ağırlığı", icon: "square" },
-      { id: "w2", name: "Zehirli Kahve", icon: "coffee" },
-      { id: "w3", name: "Elektrik Çarpması", icon: "flash-on" },
+      { id: "w1", name: "Ağır Kağıt Ağırlığı", description: "Masanın üzerindeki süslü ağır cam kağıt ağırlığı", icon: "square" },
+      { id: "w2", name: "Zehirli Kahve", description: "Her sabah hazırlanan kahvenin içine karıştırılan toksin", icon: "coffee" },
+      { id: "w3", name: "Elektrik Çarpması", description: "Ofis ekipmanının kasıtlı olarak sabote edilmesi", icon: "flash-on" },
     ],
     locations: [
-      { id: "l1", name: "Belediye Ofisi", icon: "business" },
-      { id: "l2", name: "Toplantı Odası", icon: "groups" },
-      { id: "l3", name: "Koridor", icon: "directions-walk" },
+      { id: "l1", name: "Belediye Ofisi", description: "Belediye başkanının kullandığı büyük ve gösterişli ofis", icon: "business" },
+      { id: "l2", name: "Toplantı Odası", description: "Uzun oval masalı resmi toplantı odası", icon: "groups" },
+      { id: "l3", name: "Koridor", description: "Ofisin önündeki güvenlik kameralı geniş koridor", icon: "directions-walk" },
     ],
     clues: [
       {
@@ -600,21 +602,21 @@ export const PUZZLES: Puzzle[] = [
     difficulty: "caylik",
     dayIndex: 12,
     story:
-      "Ankara'daki yıllık folklar festivalinde, organizasyonun baş koordinatörü sahnede aniden yere yığıldı.",
+      "Ankara'daki yıllık folklor festivalinde, organizasyonun baş koordinatörü sahnede aniden yere yığıldı.",
     suspects: [
       { id: "s1", name: "Rakip Sanatçı", description: "Aynı gruba üye olmak istiyordu", icon: "music-note" },
       { id: "s2", name: "Ses Teknikeri", description: "Sahne arkasında çalışıyor", icon: "headphones" },
       { id: "s3", name: "Sponsorların Temsilcisi", description: "Bütçe tartışması yaşanmıştı", icon: "monetization-on" },
     ],
     weapons: [
-      { id: "w1", name: "Zehirli Su", icon: "water-drop" },
-      { id: "w2", name: "Elektrik Darbesi", icon: "flash-on" },
-      { id: "w3", name: "Gizli Enjeksiyon", icon: "vaccines" },
+      { id: "w1", name: "Zehirli Su", description: "Su şişesine karıştırılan renksiz kimyasal madde", icon: "water-drop" },
+      { id: "w2", name: "Elektrik Darbesi", description: "Sahne ekipmanı üzerinden iletilen yüksek voltaj", icon: "flash-on" },
+      { id: "w3", name: "Gizli Enjeksiyon", description: "İnce iğneyle kalabalıkta fark edilmeden uygulanan enjeksiyon", icon: "vaccines" },
     ],
     locations: [
-      { id: "l1", name: "Sahne", icon: "theater-comedy" },
-      { id: "l2", name: "Soyunma Odası", icon: "room" },
-      { id: "l3", name: "Kontrol Odası", icon: "settings" },
+      { id: "l1", name: "Sahne", description: "Festival meydanındaki açık hava performans sahnesi", icon: "theater-comedy" },
+      { id: "l2", name: "Soyunma Odası", description: "Sanatçıların kostüm değiştirdiği arka oda", icon: "room" },
+      { id: "l3", name: "Kontrol Odası", description: "Ses ve ışık düzeneklerinin yönetildiği teknik oda", icon: "settings" },
     ],
     clues: [
       {
@@ -653,14 +655,14 @@ export const PUZZLES: Puzzle[] = [
       { id: "s3", name: "Temizlik Görevlisi", description: "Gece 02.00'de çalışıyor", icon: "cleaning-services" },
     ],
     weapons: [
-      { id: "w1", name: "Ağır Kitap", icon: "menu-book" },
-      { id: "w2", name: "Kimyasal Madde", icon: "science" },
-      { id: "w3", name: "Baskı Aleti", icon: "print" },
+      { id: "w1", name: "Ağır Kitap", description: "Ansiklopedik cilt, yaklaşık iki kilogram ağırlığında", icon: "menu-book" },
+      { id: "w2", name: "Kimyasal Madde", description: "Cilt restorasyon sürecinde kullanılan güçlü solüsyon", icon: "science" },
+      { id: "w3", name: "Baskı Aleti", description: "El yazması kopyalamak için kullanılan antika baskı presi", icon: "print" },
     ],
     locations: [
-      { id: "l1", name: "Okuma Salonu", icon: "library-books" },
-      { id: "l2", name: "El Yazmaları Bölümü", icon: "history-edu" },
-      { id: "l3", name: "Katalog Odası", icon: "folder" },
+      { id: "l1", name: "Okuma Salonu", description: "Ahşap uzun masalar ve okuma lambalarıyla dolu sessiz salon", icon: "library-books" },
+      { id: "l2", name: "El Yazmaları Bölümü", description: "Yüzlerce yıllık belgelerin özel korumalı depolandığı bölüm", icon: "history-edu" },
+      { id: "l3", name: "Katalog Odası", description: "Kütüphane kataloğunun ve arşiv dosyalarının tutulduğu oda", icon: "folder" },
     ],
     clues: [
       {
@@ -700,16 +702,16 @@ export const PUZZLES: Puzzle[] = [
       { id: "s4", name: "Aşçı", description: "Kovulma korkusu yaşıyordu", icon: "restaurant" },
     ],
     weapons: [
-      { id: "w1", name: "Balıkçı Bıçağı", icon: "cut" },
-      { id: "w2", name: "Kayalık", icon: "terrain" },
-      { id: "w3", name: "Zehirli İçki", icon: "local-bar" },
-      { id: "w4", name: "İp", icon: "trip-origin" },
+      { id: "w1", name: "Balıkçı Bıçağı", description: "Balık ayıklamak için kullanılan uzun ve dar bıçak", icon: "cut" },
+      { id: "w2", name: "Kayalık", description: "Sahil kayalıklarından kopan parça ya da duvara çarpma", icon: "terrain" },
+      { id: "w3", name: "Zehirli İçki", description: "Yerel rakıya karıştırılan tehlikeli kimyasal madde", icon: "local-bar" },
+      { id: "w4", name: "İp", description: "Teknelerde kullanılan kalın ve dayanıklı bağlama ipi", icon: "trip-origin" },
     ],
     locations: [
-      { id: "l1", name: "Sahil Kenarı", icon: "waves" },
-      { id: "l2", name: "Otel Mutfağı", icon: "restaurant" },
-      { id: "l3", name: "Kayalık Burun", icon: "terrain" },
-      { id: "l4", name: "Otel Lobisi", icon: "hotel" },
+      { id: "l1", name: "Sahil Kenarı", description: "Küçük ahşap teknelerin bağlı olduğu ıssız sahil", icon: "waves" },
+      { id: "l2", name: "Otel Mutfağı", description: "Taze deniz ürünleriyle dolu, daima işlek mutfak", icon: "restaurant" },
+      { id: "l3", name: "Kayalık Burun", description: "Adanın burnunda uzanan, sarp ve tehlikeli kayalık", icon: "terrain" },
+      { id: "l4", name: "Otel Lobisi", description: "Deniz manzaralı pencerelerin bulunduğu ahşap dekorlu lobi", icon: "hotel" },
     ],
     clues: [
       {
@@ -753,14 +755,14 @@ export const PUZZLES: Puzzle[] = [
       { id: "s3", name: "Makine Mühendisi", description: "Fabrikayı tasarlamıştı", icon: "precision-manufacturing" },
     ],
     weapons: [
-      { id: "w1", name: "Çekiç", icon: "hardware" },
-      { id: "w2", name: "Zehirli Kimyasal", icon: "science" },
-      { id: "w3", name: "Makine Parçası", icon: "settings" },
+      { id: "w1", name: "Çekiç", description: "Metal parçaları işlemek için kullanılan ağır demir çekiç", icon: "hardware" },
+      { id: "w2", name: "Zehirli Kimyasal", description: "Makine yağıyla karıştırılan endüstriyel solvent", icon: "science" },
+      { id: "w3", name: "Makine Parçası", description: "Üretim bandından sökülen ağır metal bileşen", icon: "settings" },
     ],
     locations: [
-      { id: "l1", name: "Üretim Alanı", icon: "factory" },
-      { id: "l2", name: "Müdür Odası", icon: "business" },
-      { id: "l3", name: "Kontrol Odası", icon: "dashboard" },
+      { id: "l1", name: "Üretim Alanı", description: "Saat mekanizmalarının üretildiği büyük atölye", icon: "factory" },
+      { id: "l2", name: "Müdür Odası", description: "Fabrika direktörünün kullandığı cam bölmeli ofis", icon: "business" },
+      { id: "l3", name: "Kontrol Odası", description: "Üretim sürecinin izlendiği elektronik panelli oda", icon: "dashboard" },
     ],
     clues: [
       {
@@ -799,14 +801,14 @@ export const PUZZLES: Puzzle[] = [
       { id: "s3", name: "Rakip Şarkıcı", description: "Aynı gecede performans vardı", icon: "music-note" },
     ],
     weapons: [
-      { id: "w1", name: "Su Altında Boğma", icon: "water" },
-      { id: "w2", name: "Uyku Hapı", icon: "medication" },
-      { id: "w3", name: "Bıçak", icon: "cut" },
+      { id: "w1", name: "Su Altında Boğma", description: "Suya bastırarak solunum yolunu kapama", icon: "water" },
+      { id: "w2", name: "Uyku Hapı", description: "İçeceğe karıştırılan güçlü uyku ilacı", icon: "medication" },
+      { id: "w3", name: "Bıçak", description: "Spa malzemeleri arasına saklanmış küçük katlanır bıçak", icon: "cut" },
     ],
     locations: [
-      { id: "l1", name: "Havuz Başı", icon: "pool" },
-      { id: "l2", name: "Spa Odası", icon: "spa" },
-      { id: "l3", name: "Sauna", icon: "whatshot" },
+      { id: "l1", name: "Havuz Başı", description: "Termal suyun aktığı açık yüzme havuzu kenarı", icon: "pool" },
+      { id: "l2", name: "Spa Odası", description: "Aromaterapi ve masaj yapılan özel kabin", icon: "spa" },
+      { id: "l3", name: "Sauna", description: "Yüksek sıcaklıkta tutulan, dışarıdan kilitlenebilen sauna", icon: "whatshot" },
     ],
     clues: [
       {
@@ -845,14 +847,14 @@ export const PUZZLES: Puzzle[] = [
       { id: "s3", name: "Müşteri", description: "Masanın bitişiğinde oturuyordu", icon: "person" },
     ],
     weapons: [
-      { id: "w1", name: "Zehirli Çay", icon: "local-cafe" },
-      { id: "w2", name: "Gizli Enjeksiyon", icon: "vaccines" },
-      { id: "w3", name: "Gürültü Bombası", icon: "crisis-alert" },
+      { id: "w1", name: "Zehirli Çay", description: "Demliğin içine kasıtlı olarak karıştırılan renksiz toksin", icon: "local-cafe" },
+      { id: "w2", name: "Gizli Enjeksiyon", description: "Kalabalıkta fark edilmeden uygulanan ince iğne", icon: "vaccines" },
+      { id: "w3", name: "Gürültü Bombası", description: "Panik yaratmak amacıyla tasarlanmış küçük patlayıcı", icon: "crisis-alert" },
     ],
     locations: [
-      { id: "l1", name: "Kafe İçi", icon: "coffee" },
-      { id: "l2", name: "Tuvalet", icon: "wc" },
-      { id: "l3", name: "Dış Terasa", icon: "outdoor-grill" },
+      { id: "l1", name: "Kafe İçi", description: "Bohem tarzı dekorla süslü, müşterilerle dolu kafe", icon: "coffee" },
+      { id: "l2", name: "Tuvalet", description: "Kafenin arka koridorundaki tek kişilik tuvalet", icon: "wc" },
+      { id: "l3", name: "Dış Terasa", description: "Caddeden görülen açık hava oturma alanı", icon: "outdoor-grill" },
     ],
     clues: [
       {
@@ -892,16 +894,16 @@ export const PUZZLES: Puzzle[] = [
       { id: "s4", name: "Yazılım Mühendisi", description: "Güvenlik sistemini tasarladı", icon: "code" },
     ],
     weapons: [
-      { id: "w1", name: "Zehirli İğne", icon: "vaccines" },
-      { id: "w2", name: "Bilgisayar Şoku", icon: "computer" },
-      { id: "w3", name: "Kimyasal Madde", icon: "science" },
-      { id: "w4", name: "Boğma", icon: "pan-tool" },
+      { id: "w1", name: "Zehirli İğne", description: "Küçük, hızlı etki eden nörotoksin enjeksiyonu", icon: "vaccines" },
+      { id: "w2", name: "Bilgisayar Şoku", description: "Bilgisayar kasasına yerleştirilen elektrik deşarjı", icon: "computer" },
+      { id: "w3", name: "Kimyasal Madde", description: "Araştırma laboratuvarından alınan tehlikeli kimyasal", icon: "science" },
+      { id: "w4", name: "Boğma", description: "Güçlü el baskısıyla boyuna uygulanan basınç", icon: "pan-tool" },
     ],
     locations: [
-      { id: "l1", name: "Toplantı Odası", icon: "groups" },
-      { id: "l2", name: "Sunucu Odası", icon: "storage" },
-      { id: "l3", name: "Araştırma Laboratuvarı", icon: "science" },
-      { id: "l4", name: "Güvenli Alan", icon: "lock" },
+      { id: "l1", name: "Toplantı Odası", description: "Uzun ahşap masa ve projeksiyon ekranlı sunum odası", icon: "groups" },
+      { id: "l2", name: "Sunucu Odası", description: "Soğutma sistemli, kilitli veri merkezi odası", icon: "storage" },
+      { id: "l3", name: "Araştırma Laboratuvarı", description: "Çeşitli bilimsel cihazların bulunduğu steril lab", icon: "science" },
+      { id: "l4", name: "Güvenli Alan", description: "Biyometrik giriş sistemli üst güvenlik bölgesi", icon: "lock" },
     ],
     clues: [
       {
@@ -951,16 +953,16 @@ export const PUZZLES: Puzzle[] = [
       { id: "s4", name: "Saray Kütüphanecisi", description: "Davette geziniyordu", icon: "menu-book" },
     ],
     weapons: [
-      { id: "w1", name: "Zehirli Şarap", icon: "wine-bar" },
-      { id: "w2", name: "Zehirli Yemek", icon: "dinner-dining" },
-      { id: "w3", name: "Kimyasal Madde", icon: "science" },
-      { id: "w4", name: "Zehirli İçecek", icon: "local-bar" },
+      { id: "w1", name: "Zehirli Şarap", description: "Kadehe dökülen nadide şaraba karıştırılan arsen", icon: "wine-bar" },
+      { id: "w2", name: "Zehirli Yemek", description: "Servis sırasında tabağa eklenen kokusuz toksin", icon: "dinner-dining" },
+      { id: "w3", name: "Kimyasal Madde", description: "Yiyeceklere karıştırılan sentetik kimyasal bileşik", icon: "science" },
+      { id: "w4", name: "Zehirli İçecek", description: "Su ya da meyve suyuna karıştırılan tehlikeli madde", icon: "local-bar" },
     ],
     locations: [
-      { id: "l1", name: "Yemek Salonu", icon: "dinner-dining" },
-      { id: "l2", name: "Mutfak", icon: "restaurant" },
-      { id: "l3", name: "Bahçe Terası", icon: "park" },
-      { id: "l4", name: "Kütüphane", icon: "library-books" },
+      { id: "l1", name: "Yemek Salonu", description: "Kristal avizeli, Osmanlı motifleriyle süslü şölen salonu", icon: "dinner-dining" },
+      { id: "l2", name: "Mutfak", description: "Saray aşçılarının tabakları hazırladığı devasa mutfak", icon: "restaurant" },
+      { id: "l3", name: "Bahçe Terası", description: "Boğaz manzaralı saray bahçesine açılan teras", icon: "park" },
+      { id: "l4", name: "Kütüphane", description: "Nadir kitaplarla dolu saraya ait özel kütüphane", icon: "library-books" },
     ],
     clues: [
       {
@@ -1009,14 +1011,14 @@ export const PUZZLES: Puzzle[] = [
       { id: "s3", name: "Düğün Fotoğrafçısı", description: "Dışarıdan gelen yabancı", icon: "camera-alt" },
     ],
     weapons: [
-      { id: "w1", name: "Av Tüfeği", icon: "sports" },
-      { id: "w2", name: "Bıçak", icon: "cut" },
-      { id: "w3", name: "Zehir", icon: "science" },
+      { id: "w1", name: "Av Tüfeği", description: "Köyde yaygın olarak kullanılan uzun namlulu av tüfeği", icon: "sports" },
+      { id: "w2", name: "Bıçak", description: "Köylülerin taşıdığı tipik kemer bıçağı", icon: "cut" },
+      { id: "w3", name: "Zehir", description: "Bitkisel kökenli, yavaş etkili güçlü zehir", icon: "science" },
     ],
     locations: [
-      { id: "l1", name: "Düğün Çadırı", icon: "festival" },
-      { id: "l2", name: "Köy Meydanı", icon: "location-city" },
-      { id: "l3", name: "Ahır Arkası", icon: "agriculture" },
+      { id: "l1", name: "Düğün Çadırı", description: "Rengarenk süslemeli, davul zurnalı büyük düğün çadırı", icon: "festival" },
+      { id: "l2", name: "Köy Meydanı", description: "Halayların çekildiği aydınlatılmış köy meydanı", icon: "location-city" },
+      { id: "l3", name: "Ahır Arkası", description: "Köyün kenarında, ıssız ve karanlık ahır arka bölümü", icon: "agriculture" },
     ],
     clues: [
       {

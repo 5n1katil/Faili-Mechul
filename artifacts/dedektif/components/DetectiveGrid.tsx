@@ -13,10 +13,13 @@ import Animated, {
   useAnimatedStyle,
   useSharedValue,
   withSequence,
+  withSpring,
   withTiming,
 } from "react-native-reanimated";
 import { useColors } from "@/hooks/useColors";
 import type { GridMark, Suspect, Weapon, Location } from "@/data/puzzles";
+import type { EntityInfo } from "@/components/EntityInfoSheet";
+import type { ComponentProps } from "react";
 
 interface Props {
   suspects: Suspect[];
@@ -25,6 +28,7 @@ interface Props {
   gridState: { [key: string]: GridMark };
   onCellPress: (key: string, current: GridMark) => void;
   disabled?: boolean;
+  onHeaderPress?: (entity: EntityInfo) => void;
 }
 
 function GridCell({
@@ -46,8 +50,8 @@ function GridCell({
   const handlePress = () => {
     if (disabled) return;
     scale.value = withSequence(
-      withTiming(0.85, { duration: 80 }),
-      withTiming(1, { duration: 80 })
+      withSpring(0.78, { damping: 10, stiffness: 300 }),
+      withSpring(1, { damping: 12, stiffness: 200 })
     );
     if (Platform.OS !== "web") {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -57,12 +61,18 @@ function GridCell({
 
   const getCellContent = () => {
     if (mark === "check") {
-      return <MaterialIcons name="check" size={16} color={colors.success} />;
+      return (
+        <MaterialIcons name="check" size={18} color="#4ade80" />
+      );
     }
     if (mark === "cross") {
-      return <MaterialIcons name="close" size={14} color={colors.accent} />;
+      return (
+        <MaterialIcons name="close" size={16} color="#f87171" />
+      );
     }
-    return null;
+    return (
+      <Text style={styles.questionMark}>?</Text>
+    );
   };
 
   return (
@@ -70,9 +80,9 @@ function GridCell({
       <Animated.View
         style={[
           styles.cell,
-          { borderColor: colors.border, backgroundColor: colors.card },
-          mark === "check" && { borderColor: colors.success, backgroundColor: "#1a2e1a" },
-          mark === "cross" && { borderColor: colors.accent, backgroundColor: "#2e1a1a" },
+          { borderColor: colors.border, backgroundColor: colors.background },
+          mark === "check" && { borderColor: "#4ade8060", backgroundColor: "#052e16" },
+          mark === "cross" && { borderColor: "#f8717160", backgroundColor: "#2d0e0e" },
           animStyle,
         ]}
       >
@@ -82,9 +92,57 @@ function GridCell({
   );
 }
 
-const CELL_SIZE = 34;
-const LABEL_WIDTH = 80;
-const LABEL_HEIGHT = 28;
+function HeaderAvatar({
+  icon,
+  name,
+  color,
+  bg,
+  onPress,
+}: {
+  icon: string;
+  name: string;
+  color: string;
+  bg: string;
+  onPress?: () => void;
+}) {
+  const scale = useSharedValue(1);
+
+  const animStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: scale.value }],
+  }));
+
+  const handlePress = () => {
+    if (!onPress) return;
+    scale.value = withSequence(
+      withTiming(0.88, { duration: 80 }),
+      withTiming(1, { duration: 80 })
+    );
+    if (Platform.OS !== "web") {
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    }
+    onPress();
+  };
+
+  return (
+    <Pressable onPress={onPress ? handlePress : undefined}>
+      <Animated.View style={[styles.colHeaderInner, { width: CELL_SIZE }, animStyle]}>
+        <View style={[styles.avatarCircle, { backgroundColor: bg, borderColor: color + "60" }]}>
+          <MaterialIcons
+            name={icon as ComponentProps<typeof MaterialIcons>["name"]}
+            size={14}
+            color={color}
+          />
+        </View>
+        <Text style={[styles.colHeaderText, { color: color }]} numberOfLines={2}>
+          {name}
+        </Text>
+      </Animated.View>
+    </Pressable>
+  );
+}
+
+const CELL_SIZE = 40;
+const LABEL_WIDTH = 100;
 
 export default function DetectiveGrid({
   suspects,
@@ -93,6 +151,7 @@ export default function DetectiveGrid({
   gridState,
   onCellPress,
   disabled,
+  onHeaderPress,
 }: Props) {
   const colors = useColors();
 
@@ -104,9 +163,14 @@ export default function DetectiveGrid({
 
   const getKey = (row: string, col: string) => `${row}_${col}`;
 
-  const renderSectionHeader = (label: string) => (
-    <View style={[styles.sectionHeader, { backgroundColor: colors.card, borderColor: colors.border }]}>
-      <Text style={[styles.sectionHeaderText, { color: colors.primary }]}>{label}</Text>
+  const renderSectionHeader = (label: string, accentColor: string) => (
+    <View
+      style={[
+        styles.sectionHeader,
+        { backgroundColor: colors.card, borderColor: accentColor + "60", borderLeftColor: accentColor },
+      ]}
+    >
+      <Text style={[styles.sectionHeaderText, { color: accentColor }]}>{label}</Text>
     </View>
   );
 
@@ -114,39 +178,82 @@ export default function DetectiveGrid({
     <View style={styles.row}>
       <View style={{ width: LABEL_WIDTH }} />
       {locations.map((loc) => (
-        <View
+        <HeaderAvatar
           key={loc.id}
-          style={[styles.colHeader, { width: CELL_SIZE, borderColor: colors.border }]}
-        >
-          <Text style={[styles.colHeaderText, { color: colors.mutedForeground }]} numberOfLines={2}>
-            {loc.name}
-          </Text>
-        </View>
+          icon={loc.icon}
+          name={loc.name}
+          color="#D4A843"
+          bg="#2A1E0840"
+          onPress={
+            onHeaderPress
+              ? () =>
+                  onHeaderPress({
+                    type: "location",
+                    id: loc.id,
+                    name: loc.name,
+                    description: loc.description,
+                    icon: loc.icon,
+                  })
+              : undefined
+          }
+        />
       ))}
     </View>
   );
 
-  const renderRow = (rowId: string, label: string) => (
-    <View key={rowId} style={styles.row}>
-      <View style={[styles.rowLabel, { width: LABEL_WIDTH }]}>
-        <Text style={[styles.rowLabelText, { color: colors.foreground }]} numberOfLines={2}>
-          {label}
-        </Text>
+  const renderRow = (
+    rowId: string,
+    label: string,
+    icon: string,
+    description: string,
+    entityType: "suspect" | "weapon"
+  ) => {
+    const color = entityType === "suspect" ? "#A855F7" : "#C8372D";
+    const bg = entityType === "suspect" ? "#1E1030" : "#2E1010";
+
+    return (
+      <View key={rowId} style={styles.row}>
+        <Pressable
+          style={[styles.rowLabel, { width: LABEL_WIDTH }]}
+          onPress={
+            onHeaderPress
+              ? () =>
+                  onHeaderPress({
+                    type: entityType,
+                    id: rowId,
+                    name: label,
+                    description,
+                    icon,
+                  })
+              : undefined
+          }
+        >
+          <View style={[styles.rowAvatarCircle, { backgroundColor: bg, borderColor: color + "50" }]}>
+            <MaterialIcons
+              name={icon as ComponentProps<typeof MaterialIcons>["name"]}
+              size={12}
+              color={color}
+            />
+          </View>
+          <Text style={[styles.rowLabelText, { color: colors.foreground }]} numberOfLines={2}>
+            {label}
+          </Text>
+        </Pressable>
+        {locations.map((loc) => {
+          const key = getKey(rowId, loc.id);
+          const mark = gridState[key] ?? "none";
+          return (
+            <GridCell
+              key={key}
+              mark={mark}
+              onPress={() => onCellPress(key, cycleNextMark(mark))}
+              disabled={disabled}
+            />
+          );
+        })}
       </View>
-      {locations.map((loc) => {
-        const key = getKey(rowId, loc.id);
-        const mark = gridState[key] ?? "none";
-        return (
-          <GridCell
-            key={key}
-            mark={mark}
-            onPress={() => onCellPress(key, cycleNextMark(mark))}
-            disabled={disabled}
-          />
-        );
-      })}
-    </View>
-  );
+    );
+  };
 
   return (
     <ScrollView
@@ -156,10 +263,14 @@ export default function DetectiveGrid({
     >
       <View>
         {renderColumnHeaders()}
-        {renderSectionHeader("ŞÜPHELILER")}
-        {suspects.map((s) => renderRow(s.id, s.name))}
-        {renderSectionHeader("SİLAHLAR")}
-        {weapons.map((w) => renderRow(w.id, w.name))}
+        {renderSectionHeader("ŞÜPHELILER", "#A855F7")}
+        {suspects.map((s) =>
+          renderRow(s.id, s.name, s.icon, s.description, "suspect")
+        )}
+        {renderSectionHeader("SİLAHLAR", "#C8372D")}
+        {weapons.map((w) =>
+          renderRow(w.id, w.name, w.icon, w.description, "weapon")
+        )}
       </View>
     </ScrollView>
   );
@@ -172,51 +283,80 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 2,
+    marginBottom: 3,
   },
   cell: {
     width: CELL_SIZE,
     height: CELL_SIZE,
     borderWidth: 1,
-    borderRadius: 6,
+    borderRadius: 8,
     alignItems: "center",
     justifyContent: "center",
-    marginHorizontal: 1,
+    marginHorizontal: 2,
   },
-  colHeader: {
-    width: CELL_SIZE,
-    height: LABEL_HEIGHT * 2,
+  questionMark: {
+    fontSize: 14,
+    fontWeight: "600",
+    color: "#4B5563",
+    lineHeight: 18,
+  },
+  colHeaderInner: {
     alignItems: "center",
     justifyContent: "flex-end",
-    paddingBottom: 4,
-    marginHorizontal: 1,
+    paddingBottom: 6,
+    marginHorizontal: 2,
+    height: 76,
+    gap: 4,
+  },
+  avatarCircle: {
+    width: 28,
+    height: 28,
+    borderRadius: 14,
+    borderWidth: 1,
+    alignItems: "center",
+    justifyContent: "center",
   },
   colHeaderText: {
-    fontSize: 9,
+    fontSize: 8,
     textAlign: "center",
-    fontWeight: "600",
+    fontWeight: "700",
+    letterSpacing: 0.3,
+    lineHeight: 11,
   },
   rowLabel: {
     height: CELL_SIZE,
+    flexDirection: "row",
+    alignItems: "center",
+    paddingRight: 8,
+    gap: 6,
+  },
+  rowAvatarCircle: {
+    width: 22,
+    height: 22,
+    borderRadius: 11,
+    borderWidth: 1,
+    alignItems: "center",
     justifyContent: "center",
-    paddingRight: 6,
+    flexShrink: 0,
   },
   rowLabelText: {
-    fontSize: 11,
-    fontWeight: "500",
-    textAlign: "right",
+    fontSize: 10,
+    fontWeight: "600",
+    flex: 1,
+    lineHeight: 13,
   },
   sectionHeader: {
-    paddingVertical: 4,
-    paddingHorizontal: 8,
-    marginVertical: 4,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    marginVertical: 5,
     borderRadius: 6,
     borderWidth: 1,
+    borderLeftWidth: 3,
     marginLeft: LABEL_WIDTH,
   },
   sectionHeaderText: {
-    fontSize: 10,
-    fontWeight: "700",
-    letterSpacing: 1,
+    fontSize: 9,
+    fontWeight: "800",
+    letterSpacing: 1.5,
   },
 });
