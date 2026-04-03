@@ -33,10 +33,25 @@ interface Props {
   onClose: () => void;
 }
 
-const TYPE_CONFIG: Record<EntityType, { label: string; color: string; bg: string }> = {
-  suspect: { label: "ŞÜPHELI", color: "#A855F7", bg: "#1E1030" },
-  weapon: { label: "SİLAH", color: "#C8372D", bg: "#2E1010" },
-  location: { label: "MEKAN", color: "#D4A843", bg: "#2A1E08" },
+const TYPE_CONFIG: Record<EntityType, { label: string; color: string; bg: string; hint: string }> = {
+  suspect: {
+    label: "ŞÜPHELI",
+    color: "#A855F7",
+    bg: "#1E1030",
+    hint: "Bu kişinin fırsatı ve motifi var mıydı? Olayın yaşandığı yerde bulunuyor muydu?",
+  },
+  weapon: {
+    label: "SİLAH",
+    color: "#C8372D",
+    bg: "#2E1010",
+    hint: "Bu alet olay yerinde mevcut muydu? Kim tarafından temin edilebilirdi?",
+  },
+  location: {
+    label: "MEKAN",
+    color: "#D4A843",
+    bg: "#2A1E08",
+    hint: "Bu mekana kim erişebilirdi? Cinayet burada gerçekleşmiş olabilir mi?",
+  },
 };
 
 export default function EntityInfoSheet({ visible, entity, onClose }: Props) {
@@ -102,6 +117,14 @@ export default function EntityInfoSheet({ visible, entity, onClose }: Props) {
 
           <Text style={[styles.entityName, { color: colors.foreground }]}>{entity.name}</Text>
           <Text style={[styles.entityDesc, { color: colors.mutedForeground }]}>{entity.description}</Text>
+
+          <View style={[styles.hintBox, { backgroundColor: config.bg, borderColor: config.color + "30" }]}>
+            <View style={styles.hintHeader}>
+              <MaterialIcons name="tips-and-updates" size={13} color={config.color} />
+              <Text style={[styles.hintLabel, { color: config.color }]}>DEDEKTİF İPUCU</Text>
+            </View>
+            <Text style={[styles.hintText, { color: colors.mutedForeground }]}>{config.hint}</Text>
+          </View>
 
           <View style={[styles.divider, { backgroundColor: colors.border }]} />
 
@@ -174,6 +197,27 @@ const styles = StyleSheet.create({
     lineHeight: 22,
     textAlign: "center",
     paddingHorizontal: 8,
+  },
+  hintBox: {
+    alignSelf: "stretch",
+    borderRadius: 10,
+    borderWidth: 1,
+    padding: 12,
+    gap: 6,
+  },
+  hintHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+  },
+  hintLabel: {
+    fontSize: 9,
+    fontWeight: "800",
+    letterSpacing: 1.5,
+  },
+  hintText: {
+    fontSize: 13,
+    lineHeight: 19,
   },
   divider: {
     height: 1,
