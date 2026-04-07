@@ -72,8 +72,8 @@ type CellMark = "check" | "cross" | "none";
 
 const GRID_EXAMPLE: CellMark[][] = [
   ["cross", "check", "cross"],
-  ["cross", "cross", "cross"],
-  ["check", "cross", "cross"],
+  ["none",  "cross", "none" ],
+  ["none",  "cross", "none" ],
 ];
 
 const SUSPECTS = ["Arif", "Buse", "Can"];
