@@ -84,6 +84,7 @@ export interface GameState {
   puzzle: Puzzle | null;
   gridState: GridState;
   autoCrossGroups: { [checkKey: string]: string[] };
+  autoCrossOwners: { [crossedKey: string]: string[] };
   cluesRevealed: number[];
   timeElapsed: number;
   mistakes: number;
@@ -243,6 +244,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
       puzzle,
       gridState: {},
       autoCrossGroups: {},
+      autoCrossOwners: {},
       cluesRevealed: [0],
       timeElapsed: 0,
       mistakes: 0,
@@ -271,15 +273,25 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         const colId = parts[1];
 
         const newGrid = { ...prev.gridState };
-        const newAutoCross = { ...prev.autoCrossGroups };
+        const newGroups = { ...prev.autoCrossGroups };
+        const newOwners: { [k: string]: string[] } = {};
+        for (const [k, v] of Object.entries(prev.autoCrossOwners)) {
+          newOwners[k] = [...v];
+        }
 
-        if (prev.gridState[key] === "check" && newAutoCross[key]) {
-          for (const k of newAutoCross[key]) {
-            if (newGrid[k] === "cross") {
-              delete newGrid[k];
+        if (prev.gridState[key] === "check" && newGroups[key]) {
+          for (const k of newGroups[key]) {
+            const owners = newOwners[k] ? newOwners[k].filter((o) => o !== key) : [];
+            if (owners.length === 0) {
+              delete newOwners[k];
+              if (newGrid[k] === "cross") {
+                delete newGrid[k];
+              }
+            } else {
+              newOwners[k] = owners;
             }
           }
-          delete newAutoCross[key];
+          delete newGroups[key];
         }
 
         if (mark === "none") {
@@ -294,15 +306,27 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
           const autoCrossed: string[] = [];
           for (const k of [...sameRow, ...sameCol]) {
             const current = newGrid[k];
+            const isAlreadyAutoCrossed = newOwners[k] && newOwners[k].length > 0;
             if (!current || current === "none") {
               newGrid[k] = "cross";
               autoCrossed.push(k);
+              newOwners[k] = [key];
+            } else if (current === "cross" && isAlreadyAutoCrossed) {
+              autoCrossed.push(k);
+              if (!newOwners[k].includes(key)) {
+                newOwners[k] = [...newOwners[k], key];
+              }
             }
           }
-          newAutoCross[key] = autoCrossed;
+          newGroups[key] = autoCrossed;
         }
 
-        return { ...prev, gridState: newGrid, autoCrossGroups: newAutoCross };
+        return {
+          ...prev,
+          gridState: newGrid,
+          autoCrossGroups: newGroups,
+          autoCrossOwners: newOwners,
+        };
       });
     },
     [gameState]
