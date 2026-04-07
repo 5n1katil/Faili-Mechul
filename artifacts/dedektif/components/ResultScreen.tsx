@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   Dimensions,
   Platform,
@@ -111,6 +111,12 @@ function ConfettiParticle({ x, w, h, color, delay, driftX, rotation, duration }:
 
 function Confetti() {
   const { width: SCREEN_W } = Dimensions.get("window");
+  const [visible, setVisible] = useState(true);
+
+  useEffect(() => {
+    const id = setTimeout(() => setVisible(false), 3000);
+    return () => clearTimeout(id);
+  }, []);
 
   const particles = useMemo<ParticleData[]>(() => {
     const out: ParticleData[] = [];
@@ -130,6 +136,8 @@ function Confetti() {
     }
     return out;
   }, []);
+
+  if (!visible) return null;
 
   return (
     <View

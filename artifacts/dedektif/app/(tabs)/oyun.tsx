@@ -50,14 +50,24 @@ export default function OyunScreen() {
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const accusePulse = useSharedValue(1);
+  const accuseOpacity = useSharedValue(1);
   const accusePulseStyle = useAnimatedStyle(() => ({
     transform: [{ scale: accusePulse.value }],
+    opacity: accuseOpacity.value,
   }));
 
   useEffect(() => {
     accusePulse.value = withRepeat(
       withSequence(
         withTiming(1.04, { duration: 850 }),
+        withTiming(1, { duration: 850 }),
+      ),
+      -1,
+      false
+    );
+    accuseOpacity.value = withRepeat(
+      withSequence(
+        withTiming(0.82, { duration: 850 }),
         withTiming(1, { duration: 850 }),
       ),
       -1,
