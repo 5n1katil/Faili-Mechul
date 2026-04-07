@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import type { ComponentProps } from "react";
 import {
-  Dimensions,
   Modal,
   Platform,
   Pressable,
@@ -14,10 +13,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Animated, {
   FadeIn,
   FadeOut,
-  SlideInRight,
-  SlideOutLeft,
 } from "react-native-reanimated";
-import { useColors } from "@/hooks/useColors";
 
 type MaterialIconName = ComponentProps<typeof MaterialIcons>["name"];
 
@@ -189,8 +185,6 @@ export default function OnboardingScreen({ visible, onDone, closeLabel }: Props)
     </Modal>
   );
 }
-
-const { width } = Dimensions.get("window");
 
 const styles = StyleSheet.create({
   container: {
