@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 import {
   Platform,
   Pressable,
@@ -10,6 +10,7 @@ import {
 import { MaterialIcons } from "@expo/vector-icons";
 import * as Haptics from "expo-haptics";
 import Animated, {
+  interpolateColor,
   useAnimatedStyle,
   useSharedValue,
   withSequence,
@@ -31,6 +32,12 @@ interface Props {
   onHeaderPress?: (entity: EntityInfo) => void;
 }
 
+function getMarkColors(mark: GridMark, neutralBg: string, neutralBorder: string) {
+  if (mark === "check") return { bg: "#052e16", border: "#4ade8060" };
+  if (mark === "cross") return { bg: "#2d0e0e", border: "#f8717160" };
+  return { bg: neutralBg, border: neutralBorder };
+}
+
 function GridCell({
   mark,
   onPress,
@@ -42,9 +49,39 @@ function GridCell({
 }) {
   const colors = useColors();
   const scale = useSharedValue(1);
+  const colorProgress = useSharedValue(1);
+  const fromBg = useSharedValue(colors.background);
+  const toBg = useSharedValue(colors.background);
+  const fromBd = useSharedValue(colors.border);
+  const toBd = useSharedValue(colors.border);
+  const prevMarkRef = useRef<GridMark>(mark);
+
+  useEffect(() => {
+    if (mark !== prevMarkRef.current) {
+      const from = getMarkColors(prevMarkRef.current, colors.background, colors.border);
+      const to = getMarkColors(mark, colors.background, colors.border);
+      fromBg.value = from.bg;
+      toBg.value = to.bg;
+      fromBd.value = from.border;
+      toBd.value = to.border;
+      colorProgress.value = 0;
+      colorProgress.value = withTiming(1, { duration: 160 });
+      prevMarkRef.current = mark;
+    }
+  }, [mark]);
 
   const animStyle = useAnimatedStyle(() => ({
     transform: [{ scale: scale.value }],
+    backgroundColor: interpolateColor(
+      colorProgress.value,
+      [0, 1],
+      [fromBg.value, toBg.value]
+    ),
+    borderColor: interpolateColor(
+      colorProgress.value,
+      [0, 1],
+      [fromBd.value, toBd.value]
+    ),
   }));
 
   const handlePress = () => {
@@ -61,31 +98,17 @@ function GridCell({
 
   const getCellContent = () => {
     if (mark === "check") {
-      return (
-        <MaterialIcons name="check" size={26} color="#4ade80" />
-      );
+      return <MaterialIcons name="check" size={26} color="#4ade80" />;
     }
     if (mark === "cross") {
-      return (
-        <MaterialIcons name="close" size={24} color="#f87171" />
-      );
+      return <MaterialIcons name="close" size={24} color="#f87171" />;
     }
-    return (
-      <Text style={styles.questionMark}>?</Text>
-    );
+    return <Text style={styles.questionMark}>?</Text>;
   };
 
   return (
     <Pressable onPress={handlePress} disabled={disabled}>
-      <Animated.View
-        style={[
-          styles.cell,
-          { borderColor: colors.border, backgroundColor: colors.background },
-          mark === "check" && { borderColor: "#4ade8060", backgroundColor: "#052e16" },
-          mark === "cross" && { borderColor: "#f8717160", backgroundColor: "#2d0e0e" },
-          animStyle,
-        ]}
-      >
+      <Animated.View style={[styles.cell, animStyle]}>
         {getCellContent()}
       </Animated.View>
     </Pressable>

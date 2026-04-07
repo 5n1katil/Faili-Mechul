@@ -1,6 +1,13 @@
-import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import React, { useEffect, useRef } from "react";
+import { Platform, StyleSheet, Text, View } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
+import * as Haptics from "expo-haptics";
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withSequence,
+  withTiming,
+} from "react-native-reanimated";
 import { useColors } from "@/hooks/useColors";
 
 interface Props {
@@ -17,9 +24,39 @@ function formatTime(seconds: number): string {
 
 export default function TimerDisplay({ seconds, mistakes, maxMistakes }: Props) {
   const colors = useColors();
+  const translateX = useSharedValue(0);
+  const prevMistakesRef = useRef(mistakes);
+
+  useEffect(() => {
+    if (mistakes > prevMistakesRef.current) {
+      translateX.value = withSequence(
+        withTiming(-12, { duration: 50 }),
+        withTiming(12, { duration: 50 }),
+        withTiming(-9, { duration: 50 }),
+        withTiming(9, { duration: 50 }),
+        withTiming(-5, { duration: 40 }),
+        withTiming(5, { duration: 40 }),
+        withTiming(0, { duration: 30 }),
+      );
+      if (Platform.OS !== "web") {
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+      }
+    }
+    prevMistakesRef.current = mistakes;
+  }, [mistakes]);
+
+  const shakeStyle = useAnimatedStyle(() => ({
+    transform: [{ translateX: translateX.value }],
+  }));
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.card, borderColor: colors.border }]}>
+    <Animated.View
+      style={[
+        styles.container,
+        { backgroundColor: colors.card, borderColor: colors.border },
+        shakeStyle,
+      ]}
+    >
       <View style={styles.item}>
         <MaterialIcons name="timer" size={18} color={colors.primary} />
         <Text style={[styles.value, { color: colors.foreground }]}>
@@ -36,15 +73,15 @@ export default function TimerDisplay({ seconds, mistakes, maxMistakes }: Props) 
               style={[
                 styles.dot,
                 {
-                  backgroundColor:
-                    i < mistakes ? colors.accent : colors.border,
+                  backgroundColor: i < mistakes ? colors.accent : colors.border,
+                  transform: [{ scale: i === mistakes - 1 ? 1.25 : 1 }],
                 },
               ]}
             />
           ))}
         </View>
       </View>
-    </View>
+    </Animated.View>
   );
 }
 

@@ -1,11 +1,20 @@
-import React, { useEffect } from "react";
-import { Platform, Pressable, StyleSheet, Text, View } from "react-native";
+import React, { useEffect, useMemo, useState } from "react";
+import {
+  Dimensions,
+  Platform,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import * as Haptics from "expo-haptics";
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
   withDelay,
+  withRepeat,
+  withSequence,
   withSpring,
   withTiming,
 } from "react-native-reanimated";
@@ -28,6 +37,135 @@ function formatTime(s: number): string {
   return `${m}:${sec.toString().padStart(2, "0")}`;
 }
 
+const CONFETTI_COLORS = [
+  "#D4A843",
+  "#A855F7",
+  "#4ade80",
+  "#f87171",
+  "#60a5fa",
+  "#fb923c",
+];
+
+interface ParticleData {
+  id: number;
+  color: string;
+  x: number;
+  w: number;
+  h: number;
+  delay: number;
+  driftX: number;
+  rotation: number;
+  duration: number;
+}
+
+function ConfettiParticle({ x, w, h, color, delay, driftX, rotation, duration }: ParticleData) {
+  const { height: SCREEN_H } = Dimensions.get("window");
+  const ty = useSharedValue(-20);
+  const tx = useSharedValue(0);
+  const rot = useSharedValue(0);
+  const op = useSharedValue(0);
+
+  useEffect(() => {
+    op.value = withDelay(delay, withTiming(1, { duration: 100 }));
+    ty.value = withDelay(delay, withTiming(SCREEN_H + 60, { duration }));
+    tx.value = withDelay(delay, withTiming(driftX, { duration }));
+    rot.value = withDelay(delay, withTiming(rotation, { duration }));
+    op.value = withDelay(
+      delay + duration * 0.65,
+      withTiming(0, { duration: duration * 0.35 })
+    );
+  }, []);
+
+  const animStyle = useAnimatedStyle(() => ({
+    transform: [
+      { translateY: ty.value },
+      { translateX: tx.value },
+      { rotate: `${rot.value}deg` },
+    ],
+    opacity: op.value,
+  }));
+
+  return (
+    <Animated.View
+      style={[
+        {
+          position: "absolute",
+          left: x,
+          top: 0,
+          width: w,
+          height: h,
+          backgroundColor: color,
+          borderRadius: 2,
+        },
+        animStyle,
+      ]}
+    />
+  );
+}
+
+function Confetti() {
+  const { width: SCREEN_W } = Dimensions.get("window");
+
+  const particles = useMemo<ParticleData[]>(() => {
+    const out: ParticleData[] = [];
+    for (let i = 0; i < 42; i++) {
+      const duration = 1600 + Math.random() * 900;
+      out.push({
+        id: i,
+        color: CONFETTI_COLORS[i % CONFETTI_COLORS.length],
+        x: Math.random() * SCREEN_W,
+        w: 5 + Math.random() * 7,
+        h: 9 + Math.random() * 9,
+        delay: Math.random() * 500,
+        driftX: (Math.random() - 0.5) * 70,
+        rotation: Math.random() * 540 - 270,
+        duration,
+      });
+    }
+    return out;
+  }, []);
+
+  return (
+    <View
+      style={StyleSheet.absoluteFillObject}
+      pointerEvents="none"
+    >
+      {particles.map((p) => (
+        <ConfettiParticle key={p.id} {...p} />
+      ))}
+    </View>
+  );
+}
+
+function AnimatedScore({ score }: { score: number }) {
+  const colors = useColors();
+  const [displayed, setDisplayed] = useState(0);
+
+  useEffect(() => {
+    if (score === 0) {
+      setDisplayed(0);
+      return;
+    }
+    const totalFrames = 72;
+    let frame = 0;
+    const id = setInterval(() => {
+      frame++;
+      const progress = frame / totalFrames;
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setDisplayed(Math.round(score * eased));
+      if (frame >= totalFrames) {
+        setDisplayed(score);
+        clearInterval(id);
+      }
+    }, 1000 / 60);
+    return () => clearInterval(id);
+  }, [score]);
+
+  return (
+    <Text style={[styles.statValue, { color: colors.primary }]}>{displayed}</Text>
+  );
+}
+
 export default function ResultScreen({
   puzzle,
   success,
@@ -40,10 +178,18 @@ export default function ResultScreen({
   const colors = useColors();
   const scale = useSharedValue(0);
   const opacity = useSharedValue(0);
+  const iconScale = useSharedValue(0);
 
   useEffect(() => {
     scale.value = withSpring(1, { damping: 12 });
-    opacity.value = withTiming(1, { duration: 400 });
+    opacity.value = withTiming(1, { duration: 350 });
+    iconScale.value = withDelay(
+      200,
+      withSequence(
+        withSpring(1.25, { damping: 8, stiffness: 200 }),
+        withSpring(1, { damping: 10 })
+      )
+    );
     if (Platform.OS !== "web") {
       if (success) {
         Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
@@ -58,6 +204,10 @@ export default function ResultScreen({
     opacity: opacity.value,
   }));
 
+  const iconStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: iconScale.value }],
+  }));
+
   const solution = puzzle.solution;
   const suspect = puzzle.suspects.find((s) => s.id === solution.suspectId);
   const weapon = puzzle.weapons.find((w) => w.id === solution.weaponId);
@@ -65,19 +215,26 @@ export default function ResultScreen({
 
   return (
     <View style={[styles.overlay, { backgroundColor: "rgba(0,0,0,0.92)" }]}>
+      {success && <Confetti />}
       <Animated.View
         style={[
           styles.container,
-          { backgroundColor: colors.card, borderColor: success ? colors.primary : colors.accent },
+          {
+            backgroundColor: colors.card,
+            borderColor: success ? colors.primary : colors.accent,
+          },
           containerStyle,
         ]}
       >
-        <View
+        <Animated.View
           style={[
             styles.iconCircle,
             {
-              backgroundColor: success ? `${colors.primary}22` : `${colors.accent}22`,
+              backgroundColor: success
+                ? `${colors.primary}22`
+                : `${colors.accent}22`,
             },
+            iconStyle,
           ]}
         >
           <MaterialIcons
@@ -85,9 +242,14 @@ export default function ResultScreen({
             size={48}
             color={success ? colors.primary : colors.accent}
           />
-        </View>
+        </Animated.View>
 
-        <Text style={[styles.resultTitle, { color: success ? colors.primary : colors.accent }]}>
+        <Text
+          style={[
+            styles.resultTitle,
+            { color: success ? colors.primary : colors.accent },
+          ]}
+        >
           {success ? "DAVA ÇÖZÜLDÜ!" : "DAVA KAPANDI"}
         </Text>
         <Text style={[styles.subtitle, { color: colors.mutedForeground }]}>
@@ -96,8 +258,17 @@ export default function ResultScreen({
             : "İpuçları yetmedi, katil kaçtı."}
         </Text>
 
-        <View style={[styles.solutionBox, { backgroundColor: colors.background, borderColor: colors.border }]}>
-          <Text style={[styles.solutionTitle, { color: colors.mutedForeground }]}>ÇÖZÜM</Text>
+        <View
+          style={[
+            styles.solutionBox,
+            { backgroundColor: colors.background, borderColor: colors.border },
+          ]}
+        >
+          <Text
+            style={[styles.solutionTitle, { color: colors.mutedForeground }]}
+          >
+            ÇÖZÜM
+          </Text>
           <View style={styles.solutionRow}>
             <MaterialIcons name="person" size={16} color={colors.primary} />
             <Text style={[styles.solutionText, { color: colors.foreground }]}>
@@ -105,13 +276,21 @@ export default function ResultScreen({
             </Text>
           </View>
           <View style={styles.solutionRow}>
-            <MaterialIcons name="gps-not-fixed" size={16} color={colors.primary} />
+            <MaterialIcons
+              name="gps-not-fixed"
+              size={16}
+              color={colors.primary}
+            />
             <Text style={[styles.solutionText, { color: colors.foreground }]}>
               {weapon?.name ?? "-"}
             </Text>
           </View>
           <View style={styles.solutionRow}>
-            <MaterialIcons name="location-on" size={16} color={colors.primary} />
+            <MaterialIcons
+              name="location-on"
+              size={16}
+              color={colors.primary}
+            />
             <Text style={[styles.solutionText, { color: colors.foreground }]}>
               {location?.name ?? "-"}
             </Text>
@@ -121,20 +300,34 @@ export default function ResultScreen({
         {success && (
           <View style={styles.statsRow}>
             <View style={[styles.statItem, { backgroundColor: colors.background }]}>
-              <Text style={[styles.statValue, { color: colors.primary }]}>{score}</Text>
-              <Text style={[styles.statLabel, { color: colors.mutedForeground }]}>PUAN</Text>
+              <AnimatedScore score={score} />
+              <Text style={[styles.statLabel, { color: colors.mutedForeground }]}>
+                PUAN
+              </Text>
             </View>
             <View style={[styles.statItem, { backgroundColor: colors.background }]}>
               <Text style={[styles.statValue, { color: colors.foreground }]}>
                 {formatTime(timeSeconds)}
               </Text>
-              <Text style={[styles.statLabel, { color: colors.mutedForeground }]}>SÜRE</Text>
+              <Text style={[styles.statLabel, { color: colors.mutedForeground }]}>
+                SÜRE
+              </Text>
             </View>
             <View style={[styles.statItem, { backgroundColor: colors.background }]}>
-              <Text style={[styles.statValue, { color: mistakes > 0 ? colors.accent : colors.success }]}>
+              <Text
+                style={[
+                  styles.statValue,
+                  {
+                    color:
+                      mistakes > 0 ? colors.accent : colors.success,
+                  },
+                ]}
+              >
                 {mistakes}
               </Text>
-              <Text style={[styles.statLabel, { color: colors.mutedForeground }]}>HATA</Text>
+              <Text style={[styles.statLabel, { color: colors.mutedForeground }]}>
+                HATA
+              </Text>
             </View>
           </View>
         )}

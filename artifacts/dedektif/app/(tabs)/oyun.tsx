@@ -21,7 +21,14 @@ import EntityInfoSheet from "@/components/EntityInfoSheet";
 import { getDailyPuzzle } from "@/data/puzzles";
 import type { GridMark } from "@/data/puzzles";
 import type { EntityInfo } from "@/components/EntityInfoSheet";
-import Animated, { FadeInDown } from "react-native-reanimated";
+import Animated, {
+  FadeInDown,
+  useAnimatedStyle,
+  useSharedValue,
+  withRepeat,
+  withSequence,
+  withTiming,
+} from "react-native-reanimated";
 
 export default function OyunScreen() {
   const colors = useColors();
@@ -41,6 +48,22 @@ export default function OyunScreen() {
   const [lastResultSuccess, setLastResultSuccess] = useState(false);
   const [selectedEntity, setSelectedEntity] = useState<EntityInfo | null>(null);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  const accusePulse = useSharedValue(1);
+  const accusePulseStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: accusePulse.value }],
+  }));
+
+  useEffect(() => {
+    accusePulse.value = withRepeat(
+      withSequence(
+        withTiming(1.04, { duration: 850 }),
+        withTiming(1, { duration: 850 }),
+      ),
+      -1,
+      false
+    );
+  }, []);
 
   useEffect(() => {
     if (gameState && !gameState.isComplete && !gameState.isGameOver) {
@@ -252,15 +275,17 @@ export default function OyunScreen() {
             },
           ]}
         >
-          <Pressable
-            onPress={() => setShowAnswerModal(true)}
-            style={[styles.accuseBtn, { backgroundColor: colors.primary }]}
-          >
-            <MaterialIcons name="gavel" size={22} color={colors.primaryForeground} />
-            <Text style={[styles.accuseText, { color: colors.primaryForeground }]}>
-              SUÇLA
-            </Text>
-          </Pressable>
+          <Animated.View style={accusePulseStyle}>
+            <Pressable
+              onPress={() => setShowAnswerModal(true)}
+              style={[styles.accuseBtn, { backgroundColor: colors.primary }]}
+            >
+              <MaterialIcons name="gavel" size={22} color={colors.primaryForeground} />
+              <Text style={[styles.accuseText, { color: colors.primaryForeground }]}>
+                SUÇLA
+              </Text>
+            </Pressable>
+          </Animated.View>
         </View>
       )}
 
