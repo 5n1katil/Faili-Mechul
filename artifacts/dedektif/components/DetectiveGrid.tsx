@@ -262,7 +262,7 @@ export default function DetectiveGrid({
     const available = screenWidth - HORIZONTAL_INSET;
     const numCols = suspects.length + locations.length;
     const lw = Math.min(90, Math.floor(available * 0.26));
-    const ct = Math.max(36, Math.floor((available - lw - GROUP_DIVIDER_WIDTH) / numCols));
+    const ct = Math.floor((available - lw - GROUP_DIVIDER_WIDTH) / numCols);
     const cm = Math.max(2, Math.floor(ct * 0.065));
     const cs = ct - cm * 2;
     return {
