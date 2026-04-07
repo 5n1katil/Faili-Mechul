@@ -14,6 +14,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useColors } from "@/hooks/useColors";
 import { useGame } from "@/context/GameContext";
 import Animated, { FadeInDown } from "react-native-reanimated";
+import OnboardingScreen from "@/components/OnboardingScreen";
 
 type MaterialIconName = ComponentProps<typeof MaterialIcons>["name"];
 
@@ -47,6 +48,7 @@ export default function ProfilScreen() {
 
   const [editingName, setEditingName] = useState(false);
   const [tempName, setTempName] = useState(profile.name);
+  const [showHowToPlay, setShowHowToPlay] = useState(false);
 
   const winRate =
     profile.gamesPlayed > 0
@@ -63,134 +65,159 @@ export default function ProfilScreen() {
   };
 
   return (
-    <ScrollView
-      style={[styles.container, { backgroundColor: colors.background }]}
-      contentContainerStyle={[
-        styles.content,
-        {
-          paddingTop: Platform.OS === "web" ? 67 + 16 : insets.top + 16,
-          paddingBottom: Platform.OS === "web" ? 34 + 80 : insets.bottom + 80,
-        },
-      ]}
-      showsVerticalScrollIndicator={false}
-    >
-      <Animated.View entering={FadeInDown.delay(0).springify()}>
-        <View style={[styles.profileCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
-          <View style={[styles.avatar, { backgroundColor: `${colors.primary}22`, borderColor: colors.primary }]}>
-            <MaterialIcons name="person" size={40} color={colors.primary} />
-          </View>
-          {editingName ? (
-            <View style={styles.nameEditRow}>
-              <TextInput
-                value={tempName}
-                onChangeText={setTempName}
-                style={[
-                  styles.nameInput,
-                  { color: colors.foreground, borderColor: colors.primary, backgroundColor: colors.background },
-                ]}
-                autoFocus
-                maxLength={20}
-                returnKeyType="done"
-                onSubmitEditing={handleNameSave}
-              />
-              <Pressable onPress={handleNameSave} style={[styles.saveBtn, { backgroundColor: colors.primary }]}>
-                <MaterialIcons name="check" size={18} color={colors.primaryForeground} />
+    <>
+      <OnboardingScreen
+        visible={showHowToPlay}
+        onDone={() => setShowHowToPlay(false)}
+        closeLabel="Kapat"
+      />
+      <ScrollView
+        style={[styles.container, { backgroundColor: colors.background }]}
+        contentContainerStyle={[
+          styles.content,
+          {
+            paddingTop: Platform.OS === "web" ? 67 + 16 : insets.top + 16,
+            paddingBottom: Platform.OS === "web" ? 34 + 80 : insets.bottom + 80,
+          },
+        ]}
+        showsVerticalScrollIndicator={false}
+      >
+        <Animated.View entering={FadeInDown.delay(0).springify()}>
+          <View style={[styles.profileCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
+            <View style={[styles.avatar, { backgroundColor: `${colors.primary}22`, borderColor: colors.primary }]}>
+              <MaterialIcons name="person" size={40} color={colors.primary} />
+            </View>
+            {editingName ? (
+              <View style={styles.nameEditRow}>
+                <TextInput
+                  value={tempName}
+                  onChangeText={setTempName}
+                  style={[
+                    styles.nameInput,
+                    { color: colors.foreground, borderColor: colors.primary, backgroundColor: colors.background },
+                  ]}
+                  autoFocus
+                  maxLength={20}
+                  returnKeyType="done"
+                  onSubmitEditing={handleNameSave}
+                />
+                <Pressable onPress={handleNameSave} style={[styles.saveBtn, { backgroundColor: colors.primary }]}>
+                  <MaterialIcons name="check" size={18} color={colors.primaryForeground} />
+                </Pressable>
+              </View>
+            ) : (
+              <Pressable onPress={() => setEditingName(true)} style={styles.nameRow}>
+                <Text style={[styles.profileName, { color: colors.foreground }]}>{profile.name}</Text>
+                <MaterialIcons name="edit" size={16} color={colors.mutedForeground} />
               </Pressable>
+            )}
+            <View style={styles.streakRow}>
+              <MaterialIcons name="local-fire-department" size={18} color="#FF6B35" />
+              <Text style={[styles.streakLabel, { color: colors.mutedForeground }]}>
+                {profile.currentStreak} günlük seri
+              </Text>
             </View>
-          ) : (
-            <Pressable onPress={() => setEditingName(true)} style={styles.nameRow}>
-              <Text style={[styles.profileName, { color: colors.foreground }]}>{profile.name}</Text>
-              <MaterialIcons name="edit" size={16} color={colors.mutedForeground} />
-            </Pressable>
-          )}
-          <View style={styles.streakRow}>
-            <MaterialIcons name="local-fire-department" size={18} color="#FF6B35" />
-            <Text style={[styles.streakLabel, { color: colors.mutedForeground }]}>
-              {profile.currentStreak} günlük seri
-            </Text>
           </View>
-        </View>
-      </Animated.View>
+        </Animated.View>
 
-      <Animated.View entering={FadeInDown.delay(80).springify()}>
-        <View style={styles.statsGrid}>
-          {[
-            { value: profile.gamesPlayed, label: "Oynanan" },
-            { value: profile.gamesWon, label: "Kazanılan" },
-            { value: `%${winRate}`, label: "Başarı" },
-            { value: profile.totalScore, label: "Toplam Puan" },
-            { value: profile.currentStreak, label: "Mevcut Seri" },
-            { value: profile.maxStreak, label: "En Uzun Seri" },
-          ].map((stat, i) => (
-            <View
-              key={i}
-              style={[styles.statCard, { backgroundColor: colors.card, borderColor: colors.border }]}
-            >
-              <Text style={[styles.statValue, { color: colors.primary }]}>{stat.value}</Text>
-              <Text style={[styles.statLabel, { color: colors.mutedForeground }]}>{stat.label}</Text>
-            </View>
-          ))}
-        </View>
-      </Animated.View>
-
-      {profile.badges.length > 0 && (
-        <Animated.View entering={FadeInDown.delay(160).springify()}>
-          <Text style={[styles.sectionTitle, { color: colors.foreground }]}>Rozetler</Text>
-          <View style={styles.badgesGrid}>
-            {profile.badges.map((b) => (
-              <BadgeItem key={b} badgeId={b} colors={colors} />
+        <Animated.View entering={FadeInDown.delay(80).springify()}>
+          <View style={styles.statsGrid}>
+            {[
+              { value: profile.gamesPlayed, label: "Oynanan" },
+              { value: profile.gamesWon, label: "Kazanılan" },
+              { value: `%${winRate}`, label: "Başarı" },
+              { value: profile.totalScore, label: "Toplam Puan" },
+              { value: profile.currentStreak, label: "Mevcut Seri" },
+              { value: profile.maxStreak, label: "En Uzun Seri" },
+            ].map((stat, i) => (
+              <View
+                key={i}
+                style={[styles.statCard, { backgroundColor: colors.card, borderColor: colors.border }]}
+              >
+                <Text style={[styles.statValue, { color: colors.primary }]}>{stat.value}</Text>
+                <Text style={[styles.statLabel, { color: colors.mutedForeground }]}>{stat.label}</Text>
+              </View>
             ))}
           </View>
         </Animated.View>
-      )}
 
-      {recentHistory.length > 0 && (
-        <Animated.View entering={FadeInDown.delay(240).springify()}>
-          <Text style={[styles.sectionTitle, { color: colors.foreground }]}>Son Oyunlar</Text>
-          {recentHistory.map((rec, i) => (
-            <View
-              key={i}
-              style={[
-                styles.historyItem,
-                {
-                  backgroundColor: colors.card,
-                  borderColor: rec.completed ? `${colors.success}44` : colors.border,
-                },
-              ]}
-            >
+        {profile.badges.length > 0 && (
+          <Animated.View entering={FadeInDown.delay(160).springify()}>
+            <Text style={[styles.sectionTitle, { color: colors.foreground }]}>Rozetler</Text>
+            <View style={styles.badgesGrid}>
+              {profile.badges.map((b) => (
+                <BadgeItem key={b} badgeId={b} colors={colors} />
+              ))}
+            </View>
+          </Animated.View>
+        )}
+
+        <Animated.View entering={FadeInDown.delay(220).springify()}>
+          <Pressable
+            onPress={() => setShowHowToPlay(true)}
+            style={[styles.howToPlayBtn, { backgroundColor: colors.card, borderColor: colors.border }]}
+          >
+            <View style={[styles.howToPlayIcon, { backgroundColor: `${colors.primary}18` }]}>
+              <MaterialIcons name="help-outline" size={22} color={colors.primary} />
+            </View>
+            <View style={styles.howToPlayInfo}>
+              <Text style={[styles.howToPlayTitle, { color: colors.foreground }]}>Nasıl Oynanır?</Text>
+              <Text style={[styles.howToPlayDesc, { color: colors.mutedForeground }]}>
+                Dedektif ızgarasını ve ipuçlarını öğren
+              </Text>
+            </View>
+            <MaterialIcons name="chevron-right" size={22} color={colors.mutedForeground} />
+          </Pressable>
+        </Animated.View>
+
+        {recentHistory.length > 0 && (
+          <Animated.View entering={FadeInDown.delay(280).springify()}>
+            <Text style={[styles.sectionTitle, { color: colors.foreground }]}>Son Oyunlar</Text>
+            {recentHistory.map((rec, i) => (
               <View
+                key={i}
                 style={[
-                  styles.historyIcon,
-                  { backgroundColor: rec.completed ? `${colors.success}22` : `${colors.accent}22` },
+                  styles.historyItem,
+                  {
+                    backgroundColor: colors.card,
+                    borderColor: rec.completed ? `${colors.success}44` : colors.border,
+                  },
                 ]}
               >
-                <MaterialIcons
-                  name={rec.completed ? "check-circle" : "cancel"}
-                  size={20}
-                  color={rec.completed ? colors.success : colors.accent}
-                />
+                <View
+                  style={[
+                    styles.historyIcon,
+                    { backgroundColor: rec.completed ? `${colors.success}22` : `${colors.accent}22` },
+                  ]}
+                >
+                  <MaterialIcons
+                    name={rec.completed ? "check-circle" : "cancel"}
+                    size={20}
+                    color={rec.completed ? colors.success : colors.accent}
+                  />
+                </View>
+                <View style={styles.historyInfo}>
+                  <Text style={[styles.historyDate, { color: colors.mutedForeground }]}>
+                    {rec.date}
+                  </Text>
+                  <Text style={[styles.historyResult, { color: rec.completed ? colors.success : colors.accent }]}>
+                    {rec.completed ? "Çözüldü" : "Çözülemedi"}
+                  </Text>
+                </View>
+                <View style={styles.historyStats}>
+                  {rec.completed && (
+                    <Text style={[styles.historyScore, { color: colors.primary }]}>{rec.score}</Text>
+                  )}
+                  <Text style={[styles.historyMistakes, { color: colors.mutedForeground }]}>
+                    {rec.mistakes} hata
+                  </Text>
+                </View>
               </View>
-              <View style={styles.historyInfo}>
-                <Text style={[styles.historyDate, { color: colors.mutedForeground }]}>
-                  {rec.date}
-                </Text>
-                <Text style={[styles.historyResult, { color: rec.completed ? colors.success : colors.accent }]}>
-                  {rec.completed ? "Çözüldü" : "Çözülemedi"}
-                </Text>
-              </View>
-              <View style={styles.historyStats}>
-                {rec.completed && (
-                  <Text style={[styles.historyScore, { color: colors.primary }]}>{rec.score}</Text>
-                )}
-                <Text style={[styles.historyMistakes, { color: colors.mutedForeground }]}>
-                  {rec.mistakes} hata
-                </Text>
-              </View>
-            </View>
-          ))}
-        </Animated.View>
-      )}
-    </ScrollView>
+            ))}
+          </Animated.View>
+        )}
+      </ScrollView>
+    </>
   );
 }
 
@@ -277,6 +304,24 @@ const styles = StyleSheet.create({
   },
   badgeLabel: { fontSize: 13, fontWeight: "700", textAlign: "center" },
   badgeDesc: { fontSize: 11, textAlign: "center", lineHeight: 16 },
+  howToPlayBtn: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderRadius: 14,
+    borderWidth: 1,
+    padding: 14,
+    gap: 14,
+  },
+  howToPlayIcon: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  howToPlayInfo: { flex: 1 },
+  howToPlayTitle: { fontSize: 15, fontWeight: "700" },
+  howToPlayDesc: { fontSize: 12, marginTop: 2, lineHeight: 17 },
   historyItem: {
     flexDirection: "row",
     alignItems: "center",

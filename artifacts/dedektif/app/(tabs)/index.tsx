@@ -10,6 +10,7 @@ import {
 import { MaterialIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useColors } from "@/hooks/useColors";
 import { useGame } from "@/context/GameContext";
 import {
@@ -26,6 +27,9 @@ import Animated, {
   withDelay,
   FadeInDown,
 } from "react-native-reanimated";
+import OnboardingScreen from "@/components/OnboardingScreen";
+
+const ONBOARDING_KEY = "@dedektif_onboarding_done";
 
 function PuzzleCard({
   puzzle,
@@ -108,11 +112,25 @@ export default function HomeScreen() {
   const insets = useSafeAreaInsets();
   const { profile, gameHistory, startDailyPuzzle, startPuzzle } = useGame();
   const countdown = useDailyCountdown();
+  const [showOnboarding, setShowOnboarding] = useState(false);
 
   const dailyPuzzle = getDailyPuzzle();
   const todayStr = new Date().toISOString().split("T")[0];
   const playedToday = gameHistory.some((h) => h.date === todayStr);
   const otherPuzzles = PUZZLES.filter((p) => p.id !== dailyPuzzle.id).slice(0, 6);
+
+  useEffect(() => {
+    AsyncStorage.getItem(ONBOARDING_KEY).then((val) => {
+      if (!val) {
+        setShowOnboarding(true);
+      }
+    });
+  }, []);
+
+  const handleOnboardingDone = async () => {
+    await AsyncStorage.setItem(ONBOARDING_KEY, "1");
+    setShowOnboarding(false);
+  };
 
   const handleDailyPlay = () => {
     startDailyPuzzle();
@@ -125,115 +143,121 @@ export default function HomeScreen() {
   };
 
   return (
-    <ScrollView
-      style={[styles.container, { backgroundColor: colors.background }]}
-      contentContainerStyle={[
-        styles.content,
-        {
-          paddingTop: Platform.OS === "web" ? 67 + 20 : insets.top + 16,
-          paddingBottom: Platform.OS === "web" ? 34 + 80 : insets.bottom + 80,
-        },
-      ]}
-      showsVerticalScrollIndicator={false}
-    >
-      <Animated.View entering={FadeInDown.delay(0).springify()}>
-        <View style={styles.headerRow}>
-          <View>
-            <Text style={[styles.greetingSmall, { color: colors.mutedForeground }]}>
-              Merhaba, {profile.name}
-            </Text>
-            <Text style={[styles.appTitle, { color: colors.primary }]}>
-              Dedektif
-            </Text>
-          </View>
-          <View style={[styles.streakBadge, { backgroundColor: colors.card, borderColor: colors.border }]}>
-            <MaterialIcons name="local-fire-department" size={20} color="#FF6B35" />
-            <Text style={[styles.streakText, { color: colors.foreground }]}>
-              {profile.currentStreak}
-            </Text>
-          </View>
-        </View>
-      </Animated.View>
-
-      <Animated.View entering={FadeInDown.delay(100).springify()}>
-        <Pressable
-          onPress={handleDailyPlay}
-          style={[
-            styles.dailyCard,
-            { backgroundColor: colors.card, borderColor: colors.primary },
-            playedToday && { opacity: 0.7 },
-          ]}
-        >
-          <View style={styles.dailyTop}>
-            <View style={[styles.dailyBadge, { backgroundColor: colors.primary }]}>
-              <MaterialIcons name="today" size={12} color={colors.primaryForeground} />
-              <Text style={[styles.dailyBadgeText, { color: colors.primaryForeground }]}>
-                GÜNÜN BULMACASI
+    <>
+      <OnboardingScreen
+        visible={showOnboarding}
+        onDone={handleOnboardingDone}
+      />
+      <ScrollView
+        style={[styles.container, { backgroundColor: colors.background }]}
+        contentContainerStyle={[
+          styles.content,
+          {
+            paddingTop: Platform.OS === "web" ? 67 + 20 : insets.top + 16,
+            paddingBottom: Platform.OS === "web" ? 34 + 80 : insets.bottom + 80,
+          },
+        ]}
+        showsVerticalScrollIndicator={false}
+      >
+        <Animated.View entering={FadeInDown.delay(0).springify()}>
+          <View style={styles.headerRow}>
+            <View>
+              <Text style={[styles.greetingSmall, { color: colors.mutedForeground }]}>
+                Merhaba, {profile.name}
+              </Text>
+              <Text style={[styles.appTitle, { color: colors.primary }]}>
+                Dedektif
               </Text>
             </View>
-            {playedToday && (
-              <View style={[styles.doneBadge, { backgroundColor: `${colors.success}22` }]}>
-                <MaterialIcons name="check-circle" size={14} color={colors.success} />
-                <Text style={[styles.doneText, { color: colors.success }]}>Tamamlandı</Text>
+            <View style={[styles.streakBadge, { backgroundColor: colors.card, borderColor: colors.border }]}>
+              <MaterialIcons name="local-fire-department" size={20} color="#FF6B35" />
+              <Text style={[styles.streakText, { color: colors.foreground }]}>
+                {profile.currentStreak}
+              </Text>
+            </View>
+          </View>
+        </Animated.View>
+
+        <Animated.View entering={FadeInDown.delay(100).springify()}>
+          <Pressable
+            onPress={handleDailyPlay}
+            style={[
+              styles.dailyCard,
+              { backgroundColor: colors.card, borderColor: colors.primary },
+              playedToday && { opacity: 0.7 },
+            ]}
+          >
+            <View style={styles.dailyTop}>
+              <View style={[styles.dailyBadge, { backgroundColor: colors.primary }]}>
+                <MaterialIcons name="today" size={12} color={colors.primaryForeground} />
+                <Text style={[styles.dailyBadgeText, { color: colors.primaryForeground }]}>
+                  GÜNÜN BULMACASI
+                </Text>
               </View>
-            )}
-          </View>
-          <Text style={[styles.dailyTitle, { color: colors.foreground }]}>{dailyPuzzle.title}</Text>
-          <Text style={[styles.dailyStory, { color: colors.mutedForeground }]} numberOfLines={3}>
-            {dailyPuzzle.story}
-          </Text>
-          <View style={[styles.countdownRow, { borderTopColor: colors.border }]}>
-            <View style={styles.countdownLeft}>
-              <MaterialIcons name="schedule" size={13} color={colors.mutedForeground} />
-              <Text style={[styles.countdownLabel, { color: colors.mutedForeground }]}>
-                Yeni bulmacaya:
-              </Text>
-              <Text style={[styles.countdownValue, { color: colors.primary }]}>{countdown}</Text>
+              {playedToday && (
+                <View style={[styles.doneBadge, { backgroundColor: `${colors.success}22` }]}>
+                  <MaterialIcons name="check-circle" size={14} color={colors.success} />
+                  <Text style={[styles.doneText, { color: colors.success }]}>Tamamlandı</Text>
+                </View>
+              )}
             </View>
-            <View style={[styles.diffBadge, { backgroundColor: `${getDifficultyColor(dailyPuzzle.difficulty as Difficulty)}22`, borderColor: `${getDifficultyColor(dailyPuzzle.difficulty as Difficulty)}66` }]}>
-              <Text style={[styles.diffText, { color: getDifficultyColor(dailyPuzzle.difficulty as Difficulty) }]}>
-                {getDifficultyLabel(dailyPuzzle.difficulty as Difficulty)}
-              </Text>
+            <Text style={[styles.dailyTitle, { color: colors.foreground }]}>{dailyPuzzle.title}</Text>
+            <Text style={[styles.dailyStory, { color: colors.mutedForeground }]} numberOfLines={3}>
+              {dailyPuzzle.story}
+            </Text>
+            <View style={[styles.countdownRow, { borderTopColor: colors.border }]}>
+              <View style={styles.countdownLeft}>
+                <MaterialIcons name="schedule" size={13} color={colors.mutedForeground} />
+                <Text style={[styles.countdownLabel, { color: colors.mutedForeground }]}>
+                  Yeni bulmacaya:
+                </Text>
+                <Text style={[styles.countdownValue, { color: colors.primary }]}>{countdown}</Text>
+              </View>
+              <View style={[styles.diffBadge, { backgroundColor: `${getDifficultyColor(dailyPuzzle.difficulty as Difficulty)}22`, borderColor: `${getDifficultyColor(dailyPuzzle.difficulty as Difficulty)}66` }]}>
+                <Text style={[styles.diffText, { color: getDifficultyColor(dailyPuzzle.difficulty as Difficulty) }]}>
+                  {getDifficultyLabel(dailyPuzzle.difficulty as Difficulty)}
+                </Text>
+              </View>
             </View>
-          </View>
-          <View style={[styles.dailyFooter, { borderTopColor: colors.border }]}>
-            <View style={styles.playNowBtn}>
-              <Text style={[styles.playNowText, { color: colors.primary }]}>
-                {playedToday ? "Tekrar Oyna" : "Oyna"}
-              </Text>
-              <MaterialIcons name="play-circle-filled" size={22} color={colors.primary} />
+            <View style={[styles.dailyFooter, { borderTopColor: colors.border }]}>
+              <View style={styles.playNowBtn}>
+                <Text style={[styles.playNowText, { color: colors.primary }]}>
+                  {playedToday ? "Tekrar Oyna" : "Oyna"}
+                </Text>
+                <MaterialIcons name="play-circle-filled" size={22} color={colors.primary} />
+              </View>
             </View>
-          </View>
-        </Pressable>
-      </Animated.View>
+          </Pressable>
+        </Animated.View>
 
-      <Animated.View entering={FadeInDown.delay(200).springify()}>
-        <View style={[styles.statsRow]}>
-          <View style={[styles.statCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
-            <Text style={[styles.statValue, { color: colors.primary }]}>{profile.gamesWon}</Text>
-            <Text style={[styles.statLabel, { color: colors.mutedForeground }]}>Çözülen</Text>
+        <Animated.View entering={FadeInDown.delay(200).springify()}>
+          <View style={[styles.statsRow]}>
+            <View style={[styles.statCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
+              <Text style={[styles.statValue, { color: colors.primary }]}>{profile.gamesWon}</Text>
+              <Text style={[styles.statLabel, { color: colors.mutedForeground }]}>Çözülen</Text>
+            </View>
+            <View style={[styles.statCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
+              <Text style={[styles.statValue, { color: colors.foreground }]}>{profile.totalScore}</Text>
+              <Text style={[styles.statLabel, { color: colors.mutedForeground }]}>Toplam Puan</Text>
+            </View>
+            <View style={[styles.statCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
+              <Text style={[styles.statValue, { color: "#FF6B35" }]}>{profile.currentStreak}</Text>
+              <Text style={[styles.statLabel, { color: colors.mutedForeground }]}>Seri</Text>
+            </View>
           </View>
-          <View style={[styles.statCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
-            <Text style={[styles.statValue, { color: colors.foreground }]}>{profile.totalScore}</Text>
-            <Text style={[styles.statLabel, { color: colors.mutedForeground }]}>Toplam Puan</Text>
-          </View>
-          <View style={[styles.statCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
-            <Text style={[styles.statValue, { color: "#FF6B35" }]}>{profile.currentStreak}</Text>
-            <Text style={[styles.statLabel, { color: colors.mutedForeground }]}>Seri</Text>
-          </View>
-        </View>
-      </Animated.View>
+        </Animated.View>
 
-      <Text style={[styles.sectionTitle, { color: colors.foreground }]}>Diğer Bulmacalar</Text>
-      {otherPuzzles.map((puzzle, i) => (
-        <PuzzleCard
-          key={puzzle.id}
-          puzzle={puzzle}
-          onPress={() => handlePuzzlePlay(puzzle)}
-          delay={300 + i * 60}
-        />
-      ))}
-    </ScrollView>
+        <Text style={[styles.sectionTitle, { color: colors.foreground }]}>Diğer Bulmacalar</Text>
+        {otherPuzzles.map((puzzle, i) => (
+          <PuzzleCard
+            key={puzzle.id}
+            puzzle={puzzle}
+            onPress={() => handlePuzzlePlay(puzzle)}
+            delay={300 + i * 60}
+          />
+        ))}
+      </ScrollView>
+    </>
   );
 }
 
