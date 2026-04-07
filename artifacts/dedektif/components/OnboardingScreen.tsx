@@ -23,6 +23,7 @@ interface Slide {
   iconBg: string;
   title: string;
   subtitle: string;
+  subtitleNoUppercase?: boolean;
   body: string;
   tip?: string;
   showGrid?: boolean;
@@ -35,6 +36,7 @@ const SLIDES: Slide[] = [
     iconBg: "#2A1E0840",
     title: "Faili Meçhul'e Hoş Geldin!",
     subtitle: "Dedektif Bulmaca Oyunu",
+    subtitleNoUppercase: true,
     body: "Her bulmacada çözmen gereken bir cinayet gizemi seni bekliyor... Şüpheliler, silahlar ve mekanlar arasından doğru kombinasyonu en kısa zamanda bul, diğer dedektifler ile yarışarak liderlik tablosunda adını efsaneler arasına yazdır.",
     tip: "3 yanlış cevap hakkın var — dikkatli ol!",
   },
@@ -277,7 +279,11 @@ export default function OnboardingScreen({ visible, onDone, closeLabel }: Props)
             </View>
           )}
 
-          <Text style={styles.slideSubtitle}>{slide.subtitle.toLocaleUpperCase("tr-TR")}</Text>
+          <Text style={styles.slideSubtitle}>
+            {slide.subtitleNoUppercase
+              ? slide.subtitle
+              : slide.subtitle.toLocaleUpperCase("tr-TR")}
+          </Text>
           <Text style={styles.slideTitle}>{slide.title}</Text>
           <Text style={styles.slideBody}>{slide.body}</Text>
 
