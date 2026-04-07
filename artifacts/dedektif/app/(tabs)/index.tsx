@@ -142,6 +142,7 @@ export default function HomeScreen() {
   const { profile, gameHistory, startDailyPuzzle, startPuzzle, completedPuzzleIds, bestScoreForPuzzle } = useGame();
   const countdown = useDailyCountdown();
   const [showOnboarding, setShowOnboarding] = useState(false);
+  const [helpBtnOpen, setHelpBtnOpen] = useState(false);
 
   const dailyPuzzle = getDailyPuzzle();
   const todayStr = new Date().toISOString().split("T")[0];
@@ -161,6 +162,12 @@ export default function HomeScreen() {
   const handleOnboardingDone = async () => {
     await AsyncStorage.setItem(ONBOARDING_KEY, "1");
     setShowOnboarding(false);
+    setHelpBtnOpen(false);
+  };
+
+  const handleHelpPress = () => {
+    setHelpBtnOpen(true);
+    setShowOnboarding(true);
   };
 
   const handleDailyPlay = () => {
@@ -178,6 +185,7 @@ export default function HomeScreen() {
       <OnboardingScreen
         visible={showOnboarding}
         onDone={handleOnboardingDone}
+        closeLabel={helpBtnOpen ? "Kapat" : undefined}
       />
       <ScrollView
         style={[styles.container, { backgroundColor: colors.background }]}
@@ -197,14 +205,22 @@ export default function HomeScreen() {
                 Merhaba, {profile.name}
               </Text>
               <Text style={[styles.appTitle, { color: colors.primary }]}>
-                Dedektif
+                Faili Meçhul
+              </Text>
+              <Text style={[styles.appSubtitle, { color: colors.mutedForeground }]}>
+                Dedektif Bulmaca Oyunu
               </Text>
             </View>
-            <View style={[styles.streakBadge, { backgroundColor: colors.card, borderColor: colors.border }]}>
-              <MaterialIcons name="local-fire-department" size={20} color="#FF6B35" />
-              <Text style={[styles.streakText, { color: colors.foreground }]}>
-                {profile.currentStreak}
-              </Text>
+            <View style={styles.headerRight}>
+              <Pressable onPress={handleHelpPress} style={styles.helpBtn} hitSlop={8}>
+                <MaterialIcons name="help-outline" size={22} color={colors.mutedForeground} />
+              </Pressable>
+              <View style={[styles.streakBadge, { backgroundColor: colors.card, borderColor: colors.border }]}>
+                <MaterialIcons name="local-fire-department" size={20} color="#FF6B35" />
+                <Text style={[styles.streakText, { color: colors.foreground }]}>
+                  {profile.currentStreak}
+                </Text>
+              </View>
             </View>
           </View>
         </Animated.View>
@@ -306,7 +322,20 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
   },
   greetingSmall: { fontSize: 13, fontWeight: "500" },
-  appTitle: { fontSize: 32, fontWeight: "800", letterSpacing: -0.5 },
+  appTitle: { fontSize: 26, fontWeight: "800", letterSpacing: -0.5 },
+  appSubtitle: { fontSize: 12, fontWeight: "500", marginTop: 1 },
+  headerRight: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+  },
+  helpBtn: {
+    width: 36,
+    height: 36,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 18,
+  },
   streakBadge: {
     flexDirection: "row",
     alignItems: "center",

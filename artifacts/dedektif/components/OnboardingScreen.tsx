@@ -25,6 +25,7 @@ interface Slide {
   subtitle: string;
   body: string;
   tip?: string;
+  showGrid?: boolean;
 }
 
 const SLIDES: Slide[] = [
@@ -32,7 +33,7 @@ const SLIDES: Slide[] = [
     icon: "search",
     iconColor: "#D4A843",
     iconBg: "#2A1E0840",
-    title: "Dedektif'e Hoş Geldin!",
+    title: "Faili Meçhul'e Hoş Geldin!",
     subtitle: "Cinayeti Çöz",
     body: "Her bulmacada bir cinayet var. Şüpheliler, silahlar ve mekanlar arasından doğru kombinasyonu bulman gerekiyor.",
     tip: "3 yanlış cevap hakkın var — dikkatli ol!",
@@ -43,8 +44,9 @@ const SLIDES: Slide[] = [
     iconBg: "#1E103040",
     title: "Dedektif Izgarası",
     subtitle: "Mantık Yürüt",
-    body: "Izgara hücrelerine dokunarak işaretleme yap. Her dokunuş sırasıyla değişir:\n\n✗  →  Bu kombinasyon imkânsız\n✓  →  Bu kombinasyon kesin doğru\n?  →  Henüz bilmiyorum",
+    body: "Izgara hücrelerine dokunarak işaretleme yap:\n\n✗  →  Bu kombinasyon imkânsız\n✓  →  Bu kombinasyon kesin doğru\n?  →  Henüz bilmiyorum",
     tip: "Bir satırda yalnızca bir ✓ olabilir!",
+    showGrid: true,
   },
   {
     icon: "lightbulb",
@@ -65,6 +67,132 @@ const SLIDES: Slide[] = [
     tip: "Emin olmadan suçlama — 3 hata hakkını korumaya çalış!",
   },
 ];
+
+type CellMark = "check" | "cross" | "none";
+
+const GRID_EXAMPLE: CellMark[][] = [
+  ["cross", "check", "cross"],
+  ["cross", "cross", "cross"],
+  ["check", "cross", "cross"],
+];
+
+const SUSPECTS = ["Arif", "Buse", "Can"];
+const WEAPONS = ["Hançer", "Tabanca", "Zehir"];
+
+function MiniCell({ mark }: { mark: CellMark }) {
+  const bg =
+    mark === "check" ? "#052e16" : mark === "cross" ? "#2d0e0e" : "#1A1F2E";
+  const border =
+    mark === "check"
+      ? "#4ade8066"
+      : mark === "cross"
+      ? "#f8717166"
+      : "#FFFFFF18";
+
+  return (
+    <View style={[miniStyles.cell, { backgroundColor: bg, borderColor: border }]}>
+      {mark === "check" && (
+        <MaterialIcons name="check" size={16} color="#4ade80" />
+      )}
+      {mark === "cross" && (
+        <MaterialIcons name="close" size={15} color="#f87171" />
+      )}
+      {mark === "none" && (
+        <Text style={miniStyles.questionMark}>?</Text>
+      )}
+    </View>
+  );
+}
+
+function MiniGrid() {
+  return (
+    <View style={miniStyles.container}>
+      <View style={miniStyles.gridWrapper}>
+        <View style={miniStyles.headerRow}>
+          <View style={miniStyles.cornerSpacer} />
+          {SUSPECTS.map((s) => (
+            <Text key={s} style={miniStyles.suspectLabel} numberOfLines={1}>
+              {s}
+            </Text>
+          ))}
+        </View>
+        {WEAPONS.map((weapon, rowIdx) => (
+          <View key={weapon} style={miniStyles.dataRow}>
+            <Text style={miniStyles.weaponLabel} numberOfLines={1}>
+              {weapon}
+            </Text>
+            {GRID_EXAMPLE[rowIdx].map((mark, colIdx) => (
+              <MiniCell key={colIdx} mark={mark} />
+            ))}
+          </View>
+        ))}
+      </View>
+      <Text style={miniStyles.caption}>Örnek: Buse, Hançerle suç işledi</Text>
+    </View>
+  );
+}
+
+const miniStyles = StyleSheet.create({
+  container: {
+    alignItems: "center",
+    gap: 10,
+    marginBottom: 4,
+  },
+  gridWrapper: {
+    backgroundColor: "#13172280",
+    borderRadius: 14,
+    borderWidth: 1,
+    borderColor: "#FFFFFF14",
+    padding: 12,
+    gap: 6,
+  },
+  headerRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+  },
+  cornerSpacer: {
+    width: 56,
+  },
+  suspectLabel: {
+    width: 44,
+    fontSize: 11,
+    fontWeight: "700",
+    color: "#A855F7",
+    textAlign: "center",
+  },
+  dataRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+  },
+  weaponLabel: {
+    width: 56,
+    fontSize: 11,
+    fontWeight: "700",
+    color: "#C8372D",
+    textAlign: "right",
+    paddingRight: 4,
+  },
+  cell: {
+    width: 44,
+    height: 36,
+    borderRadius: 8,
+    borderWidth: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  questionMark: {
+    fontSize: 14,
+    color: "#6B7280",
+    fontWeight: "700",
+  },
+  caption: {
+    fontSize: 11,
+    color: "#6B7280",
+    fontStyle: "italic",
+  },
+});
 
 interface Props {
   visible: boolean;
@@ -139,11 +267,15 @@ export default function OnboardingScreen({ visible, onDone, closeLabel }: Props)
           exiting={FadeOut.duration(160)}
           style={styles.slideArea}
         >
-          <View style={[styles.iconWrapper, { backgroundColor: slide.iconBg }]}>
-            <View style={[styles.iconCircle, { borderColor: slide.iconColor + "60", backgroundColor: slide.iconBg }]}>
-              <MaterialIcons name={slide.icon} size={54} color={slide.iconColor} />
+          {slide.showGrid ? (
+            <MiniGrid />
+          ) : (
+            <View style={[styles.iconWrapper, { backgroundColor: slide.iconBg }]}>
+              <View style={[styles.iconCircle, { borderColor: slide.iconColor + "60", backgroundColor: slide.iconBg }]}>
+                <MaterialIcons name={slide.icon} size={54} color={slide.iconColor} />
+              </View>
             </View>
-          </View>
+          )}
 
           <Text style={styles.slideSubtitle}>{slide.subtitle.toUpperCase()}</Text>
           <Text style={styles.slideTitle}>{slide.title}</Text>
@@ -223,7 +355,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    gap: 16,
+    gap: 14,
     paddingHorizontal: 8,
   },
   iconWrapper: {
