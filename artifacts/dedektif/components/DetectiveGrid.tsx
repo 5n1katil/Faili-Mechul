@@ -50,10 +50,11 @@ function GridCell({
   const colors = useColors();
   const scale = useSharedValue(1);
   const colorProgress = useSharedValue(1);
-  const fromBg = useSharedValue(colors.background);
-  const toBg = useSharedValue(colors.background);
-  const fromBd = useSharedValue(colors.border);
-  const toBd = useSharedValue(colors.border);
+  const initialColors = getMarkColors(mark, colors.background, colors.border);
+  const fromBg = useSharedValue(initialColors.bg);
+  const toBg = useSharedValue(initialColors.bg);
+  const fromBd = useSharedValue(initialColors.border);
+  const toBd = useSharedValue(initialColors.border);
   const prevMarkRef = useRef<GridMark>(mark);
 
   useEffect(() => {

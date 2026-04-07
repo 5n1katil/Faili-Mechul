@@ -1,25 +1,31 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo } from "react";
 import {
   Dimensions,
   Platform,
   Pressable,
   StyleSheet,
   Text,
+  TextInput,
   View,
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import * as Haptics from "expo-haptics";
 import Animated, {
+  Easing,
+  useAnimatedProps,
   useAnimatedStyle,
+  useDerivedValue,
   useSharedValue,
   withDelay,
-  withRepeat,
   withSequence,
   withSpring,
   withTiming,
 } from "react-native-reanimated";
+
 import { useColors } from "@/hooks/useColors";
 import type { Puzzle } from "@/data/puzzles";
+
+const AnimatedTextInput = Animated.createAnimatedComponent(TextInput);
 
 interface Props {
   puzzle: Puzzle;
@@ -139,30 +145,30 @@ function Confetti() {
 
 function AnimatedScore({ score }: { score: number }) {
   const colors = useColors();
-  const [displayed, setDisplayed] = useState(0);
+  const progress = useSharedValue(0);
 
   useEffect(() => {
-    if (score === 0) {
-      setDisplayed(0);
-      return;
-    }
-    const totalFrames = 72;
-    let frame = 0;
-    const id = setInterval(() => {
-      frame++;
-      const progress = frame / totalFrames;
-      const eased = 1 - Math.pow(1 - progress, 3);
-      setDisplayed(Math.round(score * eased));
-      if (frame >= totalFrames) {
-        setDisplayed(score);
-        clearInterval(id);
-      }
-    }, 1000 / 60);
-    return () => clearInterval(id);
-  }, [score]);
+    progress.value = withTiming(1, {
+      duration: 1200,
+      easing: Easing.out(Easing.cubic),
+    });
+  }, []);
+
+  const derivedScore = useDerivedValue(() =>
+    Math.round(score * progress.value)
+  );
+
+  const animatedProps = useAnimatedProps(() => {
+    const val = `${derivedScore.value}`;
+    return { value: val, defaultValue: val };
+  });
 
   return (
-    <Text style={[styles.statValue, { color: colors.primary }]}>{displayed}</Text>
+    <AnimatedTextInput
+      animatedProps={animatedProps}
+      editable={false}
+      style={[styles.statValue, { color: colors.primary }]}
+    />
   );
 }
 

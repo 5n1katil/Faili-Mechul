@@ -3,9 +3,11 @@ import { Platform, StyleSheet, Text, View } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import * as Haptics from "expo-haptics";
 import Animated, {
+  interpolateColor,
   useAnimatedStyle,
   useSharedValue,
   withSequence,
+  withSpring,
   withTiming,
 } from "react-native-reanimated";
 import { useColors } from "@/hooks/useColors";
@@ -20,6 +22,44 @@ function formatTime(seconds: number): string {
   const m = Math.floor(seconds / 60);
   const s = seconds % 60;
   return `${m.toString().padStart(2, "0")}:${s.toString().padStart(2, "0")}`;
+}
+
+function MistakeDot({
+  isActive,
+  justActivated,
+}: {
+  isActive: boolean;
+  justActivated: boolean;
+}) {
+  const colors = useColors();
+  const prevActiveRef = useRef(isActive);
+  const flashProgress = useSharedValue(0);
+  const scaleV = useSharedValue(1);
+
+  useEffect(() => {
+    if (justActivated && !prevActiveRef.current) {
+      flashProgress.value = 0;
+      flashProgress.value = withSequence(
+        withTiming(1, { duration: 0 }),
+        withTiming(1, { duration: 120 }),
+        withTiming(0, { duration: 450 }),
+      );
+      scaleV.value = withSequence(
+        withSpring(1.6, { damping: 7, stiffness: 300 }),
+        withSpring(1, { damping: 12, stiffness: 200 }),
+      );
+    }
+    prevActiveRef.current = isActive;
+  }, [justActivated, isActive]);
+
+  const dotStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: scaleV.value }],
+    backgroundColor: isActive
+      ? interpolateColor(flashProgress.value, [0, 1], [colors.accent, "#FF3333"])
+      : colors.border,
+  }));
+
+  return <Animated.View style={[styles.dot, dotStyle]} />;
 }
 
 export default function TimerDisplay({ seconds, mistakes, maxMistakes }: Props) {
@@ -68,15 +108,10 @@ export default function TimerDisplay({ seconds, mistakes, maxMistakes }: Props) 
         <MaterialIcons name="error-outline" size={18} color={colors.accent} />
         <View style={styles.mistakesDots}>
           {Array.from({ length: maxMistakes }).map((_, i) => (
-            <View
+            <MistakeDot
               key={i}
-              style={[
-                styles.dot,
-                {
-                  backgroundColor: i < mistakes ? colors.accent : colors.border,
-                  transform: [{ scale: i === mistakes - 1 ? 1.25 : 1 }],
-                },
-              ]}
+              isActive={i < mistakes}
+              justActivated={i === mistakes - 1}
             />
           ))}
         </View>
@@ -112,6 +147,7 @@ const styles = StyleSheet.create({
   mistakesDots: {
     flexDirection: "row",
     gap: 6,
+    alignItems: "center",
   },
   dot: {
     width: 12,
