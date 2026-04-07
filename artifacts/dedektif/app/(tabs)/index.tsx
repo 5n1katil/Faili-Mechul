@@ -145,7 +145,9 @@ export default function HomeScreen() {
 
   const dailyPuzzle = getDailyPuzzle();
   const todayStr = new Date().toISOString().split("T")[0];
-  const wonToday = gameHistory.some((h) => h.date === todayStr && h.completed);
+  const wonToday = gameHistory.some(
+    (h) => h.date === todayStr && h.completed && h.puzzleId === dailyPuzzle.id
+  );
   const otherPuzzles = PUZZLES.filter((p) => p.id !== dailyPuzzle.id).slice(0, 6);
 
   useEffect(() => {
