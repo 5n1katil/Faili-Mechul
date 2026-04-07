@@ -73,19 +73,22 @@ const SLIDES: Slide[] = [
 type CellMark = "check" | "cross" | "none";
 
 const MINI_SUSPECTS = ["Arif", "Buse", "Can"];
-const MINI_LOCATIONS = ["Ev", "Park"];
-const MINI_WEAPONS = ["Hançer", "Zehir"];
+const MINI_LOCATIONS = ["Ev", "Park", "Bar"];
+const MINI_WEAPONS = ["Hançer", "Tabanca", "Zehir"];
 
 const WxS: CellMark[][] = [
   ["cross", "check", "cross"],
   ["none",  "cross", "none" ],
+  ["none",  "cross", "none" ],
 ];
 const WxL: CellMark[][] = [
-  ["check", "cross"],
-  ["none",  "none" ],
+  ["check", "cross", "cross"],
+  ["none",  "none",  "none" ],
+  ["none",  "none",  "none" ],
 ];
 const LxS: CellMark[][] = [
   ["cross", "check", "cross"],
+  ["none",  "cross", "none" ],
   ["none",  "cross", "none" ],
 ];
 
