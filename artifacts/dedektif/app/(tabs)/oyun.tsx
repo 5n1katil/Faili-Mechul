@@ -224,11 +224,6 @@ export default function OyunScreen() {
         <Animated.View entering={FadeInDown.delay(160).springify()}>
           <Text style={[styles.sectionTitle, { color: colors.foreground }]}>Dedektif Izgarası</Text>
           <View style={[styles.gridContainer, { backgroundColor: colors.card, borderColor: colors.border }]}>
-            <View style={[styles.locationsRow, { borderBottomColor: colors.border }]}>
-              <Text style={[styles.axisLabel, { color: colors.mutedForeground }]}>
-                MEKANLAR →
-              </Text>
-            </View>
             <View style={styles.gridWrapper}>
               <DetectiveGrid
                 suspects={puzzle.suspects}
@@ -347,8 +342,6 @@ const styles = StyleSheet.create({
   storyText: { fontSize: 14, lineHeight: 22 },
   sectionTitle: { fontSize: 16, fontWeight: "700", marginBottom: 8 },
   gridContainer: { borderRadius: 14, borderWidth: 1, padding: 10, overflow: "hidden" },
-  locationsRow: { paddingBottom: 8, marginBottom: 8, borderBottomWidth: 1 },
-  axisLabel: { fontSize: 12, fontWeight: "700", letterSpacing: 2 },
   gridWrapper: { minHeight: 240 },
   cluesHeader: { flexDirection: "row", justifyContent: "space-between", alignItems: "center" },
   revealAllBtn: {

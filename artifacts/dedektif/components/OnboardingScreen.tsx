@@ -72,14 +72,25 @@ const SLIDES: Slide[] = [
 
 type CellMark = "check" | "cross" | "none";
 
-const GRID_EXAMPLE: CellMark[][] = [
+const MINI_SUSPECTS = ["Arif", "Buse", "Can"];
+const MINI_LOCATIONS = ["Ev", "Park"];
+const MINI_WEAPONS = ["Hançer", "Zehir"];
+
+const WxS: CellMark[][] = [
   ["cross", "check", "cross"],
   ["none",  "cross", "none" ],
+];
+const WxL: CellMark[][] = [
+  ["check", "cross"],
+  ["none",  "none" ],
+];
+const LxS: CellMark[][] = [
+  ["cross", "check", "cross"],
   ["none",  "cross", "none" ],
 ];
 
-const SUSPECTS = ["Arif", "Buse", "Can"];
-const WEAPONS = ["Hançer", "Tabanca", "Zehir"];
+const MINI_CELL = 28;
+const MINI_LABEL = 48;
 
 function MiniCell({ mark }: { mark: CellMark }) {
   const bg =
@@ -94,10 +105,10 @@ function MiniCell({ mark }: { mark: CellMark }) {
   return (
     <View style={[miniStyles.cell, { backgroundColor: bg, borderColor: border }]}>
       {mark === "check" && (
-        <MaterialIcons name="check" size={16} color="#4ade80" />
+        <MaterialIcons name="check" size={13} color="#4ade80" />
       )}
       {mark === "cross" && (
-        <MaterialIcons name="close" size={15} color="#f87171" />
+        <MaterialIcons name="close" size={12} color="#f87171" />
       )}
       {mark === "none" && (
         <Text style={miniStyles.questionMark}>?</Text>
@@ -110,26 +121,63 @@ function MiniGrid() {
   return (
     <View style={miniStyles.container}>
       <View style={miniStyles.gridWrapper}>
-        <View style={miniStyles.headerRow}>
-          <View style={miniStyles.cornerSpacer} />
-          {SUSPECTS.map((s) => (
-            <Text key={s} style={miniStyles.suspectLabel} numberOfLines={1}>
+        <View style={miniStyles.groupHeaderRow}>
+          <View style={{ width: MINI_LABEL }} />
+          <View style={[miniStyles.groupLabel, { width: MINI_SUSPECTS.length * (MINI_CELL + 5) }]}>
+            <Text style={[miniStyles.groupLabelText, { color: "#A855F7" }]}>ŞÜPHELILER</Text>
+          </View>
+          <View style={miniStyles.miniDivider} />
+          <View style={[miniStyles.groupLabel, { width: MINI_LOCATIONS.length * (MINI_CELL + 5) }]}>
+            <Text style={[miniStyles.groupLabelText, { color: "#D4A843" }]}>MEKANLAR</Text>
+          </View>
+        </View>
+
+        <View style={miniStyles.avatarRow}>
+          <View style={{ width: MINI_LABEL }} />
+          {MINI_SUSPECTS.map((s) => (
+            <Text key={s} style={miniStyles.colHeaderText} numberOfLines={1}>
               {s}
             </Text>
           ))}
-        </View>
-        {WEAPONS.map((weapon, rowIdx) => (
-          <View key={weapon} style={miniStyles.dataRow}>
-            <Text style={miniStyles.weaponLabel} numberOfLines={1}>
-              {weapon}
+          <View style={miniStyles.miniDivider} />
+          {MINI_LOCATIONS.map((l) => (
+            <Text key={l} style={[miniStyles.colHeaderText, { color: "#D4A843" }]} numberOfLines={1}>
+              {l}
             </Text>
-            {GRID_EXAMPLE[rowIdx].map((mark, colIdx) => (
-              <MiniCell key={colIdx} mark={mark} />
+          ))}
+        </View>
+
+        <View style={miniStyles.sectionBanner}>
+          <Text style={miniStyles.sectionBannerText}>SİLAHLAR</Text>
+        </View>
+
+        {MINI_WEAPONS.map((weapon, rowIdx) => (
+          <View key={weapon} style={miniStyles.dataRow}>
+            <Text style={miniStyles.weaponLabel} numberOfLines={1}>{weapon}</Text>
+            {WxS[rowIdx].map((mark, ci) => (
+              <MiniCell key={"ws" + ci} mark={mark} />
+            ))}
+            <View style={miniStyles.miniDivider} />
+            {WxL[rowIdx].map((mark, ci) => (
+              <MiniCell key={"wl" + ci} mark={mark} />
+            ))}
+          </View>
+        ))}
+
+        <View style={[miniStyles.sectionBanner, { borderLeftColor: "#D4A843", borderColor: "#D4A84355" }]}>
+          <Text style={[miniStyles.sectionBannerText, { color: "#D4A843" }]}>MEKANLAR</Text>
+        </View>
+
+        {MINI_LOCATIONS.map((location, rowIdx) => (
+          <View key={location} style={miniStyles.dataRow}>
+            <Text style={[miniStyles.weaponLabel, { color: "#D4A843" }]} numberOfLines={1}>{location}</Text>
+            {LxS[rowIdx].map((mark, ci) => (
+              <MiniCell key={"ls" + ci} mark={mark} />
             ))}
           </View>
         ))}
       </View>
-      <Text style={miniStyles.caption}>Örnek: Buse, Hançerle suç işledi</Text>
+      <Text style={miniStyles.caption}>Örnek: Buse, Hançerle Ev'de suç işledi</Text>
     </View>
   );
 }
@@ -145,47 +193,84 @@ const miniStyles = StyleSheet.create({
     borderRadius: 14,
     borderWidth: 1,
     borderColor: "#FFFFFF14",
-    padding: 12,
-    gap: 6,
+    padding: 10,
+    gap: 4,
   },
-  headerRow: {
+  groupHeaderRow: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 6,
+    marginBottom: 2,
   },
-  cornerSpacer: {
-    width: 56,
+  groupLabel: {
+    alignItems: "center",
+    justifyContent: "center",
   },
-  suspectLabel: {
-    width: 44,
-    fontSize: 11,
+  groupLabelText: {
+    fontSize: 8,
+    fontWeight: "800",
+    letterSpacing: 1.0,
+  },
+  miniDivider: {
+    width: 2,
+    height: MINI_CELL,
+    backgroundColor: "#FFFFFF22",
+    borderRadius: 1,
+    marginHorizontal: 1,
+  },
+  avatarRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 5,
+    marginBottom: 2,
+  },
+  colHeaderText: {
+    width: MINI_CELL,
+    fontSize: 9,
     fontWeight: "700",
     color: "#A855F7",
     textAlign: "center",
   },
+  sectionBanner: {
+    marginLeft: MINI_LABEL,
+    paddingVertical: 3,
+    paddingHorizontal: 7,
+    borderRadius: 5,
+    borderWidth: 1,
+    borderLeftWidth: 3,
+    borderColor: "#C8372D55",
+    borderLeftColor: "#C8372D",
+    backgroundColor: "#1A1F2E",
+    marginBottom: 2,
+  },
+  sectionBannerText: {
+    fontSize: 8,
+    fontWeight: "800",
+    letterSpacing: 1.2,
+    color: "#C8372D",
+  },
   dataRow: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 6,
+    gap: 5,
   },
   weaponLabel: {
-    width: 56,
-    fontSize: 11,
+    width: MINI_LABEL,
+    fontSize: 10,
     fontWeight: "700",
     color: "#C8372D",
     textAlign: "right",
     paddingRight: 4,
   },
   cell: {
-    width: 44,
-    height: 36,
-    borderRadius: 8,
+    width: MINI_CELL,
+    height: MINI_CELL - 2,
+    borderRadius: 6,
     borderWidth: 1,
     alignItems: "center",
     justifyContent: "center",
   },
   questionMark: {
-    fontSize: 14,
+    fontSize: 11,
     color: "#6B7280",
     fontWeight: "700",
   },
