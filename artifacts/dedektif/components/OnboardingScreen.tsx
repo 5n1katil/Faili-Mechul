@@ -73,7 +73,6 @@ interface Props {
 }
 
 export default function OnboardingScreen({ visible, onDone, closeLabel }: Props) {
-  const colors = useColors();
   const insets = useSafeAreaInsets();
   const [slideIndex, setSlideIndex] = useState(0);
   const [key, setKey] = useState(0);

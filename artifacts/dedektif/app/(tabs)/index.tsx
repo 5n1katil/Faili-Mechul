@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Platform,
   Pressable,
@@ -13,6 +13,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useColors } from "@/hooks/useColors";
 import { useGame } from "@/context/GameContext";
+import type { BestResult } from "@/context/GameContext";
 import {
   getDailyPuzzle,
   getDifficultyColor,
@@ -20,25 +21,29 @@ import {
   PUZZLES,
   type Difficulty,
 } from "@/data/puzzles";
-import Animated, {
-  useAnimatedStyle,
-  useSharedValue,
-  withTiming,
-  withDelay,
-  FadeInDown,
-} from "react-native-reanimated";
+import Animated, { FadeInDown } from "react-native-reanimated";
 import OnboardingScreen from "@/components/OnboardingScreen";
 
 const ONBOARDING_KEY = "@dedektif_onboarding_done";
+
+function formatTime(s: number): string {
+  const m = Math.floor(s / 60);
+  const sec = s % 60;
+  return `${m}:${sec.toString().padStart(2, "0")}`;
+}
 
 function PuzzleCard({
   puzzle,
   onPress,
   delay,
+  completed,
+  bestResult,
 }: {
   puzzle: (typeof PUZZLES)[0];
   onPress: () => void;
   delay: number;
+  completed: boolean;
+  bestResult: BestResult | null;
 }) {
   const colors = useColors();
   const diffColor = getDifficultyColor(puzzle.difficulty as Difficulty);
@@ -51,9 +56,10 @@ function PuzzleCard({
           styles.puzzleCard,
           {
             backgroundColor: colors.card,
-            borderColor: colors.border,
+            borderColor: completed ? `${colors.success}55` : colors.border,
             opacity: pressed ? 0.75 : 1,
           },
+          completed && { backgroundColor: `${colors.success}08` },
         ]}
       >
         <View style={styles.puzzleCardTop}>
@@ -62,11 +68,20 @@ function PuzzleCard({
               {getDifficultyLabel(puzzle.difficulty as Difficulty)}
             </Text>
           </View>
-          <View style={styles.puzzleCardMeta}>
-            <MaterialIcons name="person" size={13} color={colors.mutedForeground} />
-            <Text style={[styles.metaText, { color: colors.mutedForeground }]}>
-              {puzzle.suspects.length} şüpheli
-            </Text>
+          <View style={styles.puzzleCardRight}>
+            {completed ? (
+              <View style={[styles.solvedBadge, { backgroundColor: `${colors.success}22`, borderColor: `${colors.success}55` }]}>
+                <MaterialIcons name="check-circle" size={12} color={colors.success} />
+                <Text style={[styles.solvedText, { color: colors.success }]}>Çözüldü</Text>
+              </View>
+            ) : (
+              <View style={styles.puzzleCardMeta}>
+                <MaterialIcons name="person" size={13} color={colors.mutedForeground} />
+                <Text style={[styles.metaText, { color: colors.mutedForeground }]}>
+                  {puzzle.suspects.length} şüpheli
+                </Text>
+              </View>
+            )}
           </View>
         </View>
         <Text style={[styles.puzzleTitle, { color: colors.foreground }]} numberOfLines={2}>
@@ -75,10 +90,24 @@ function PuzzleCard({
         <Text style={[styles.puzzleStory, { color: colors.mutedForeground }]} numberOfLines={2}>
           {puzzle.story}
         </Text>
-        <View style={[styles.playRow, { borderTopColor: colors.border }]}>
-          <Text style={[styles.playText, { color: colors.primary }]}>Oynamak için dokun</Text>
-          <MaterialIcons name="chevron-right" size={20} color={colors.primary} />
-        </View>
+        {completed && bestResult ? (
+          <View style={[styles.bestResultRow, { borderTopColor: colors.border }]}>
+            <View style={styles.bestResultItem}>
+              <MaterialIcons name="emoji-events" size={13} color={colors.primary} />
+              <Text style={[styles.bestResultLabel, { color: colors.mutedForeground }]}>En İyi:</Text>
+              <Text style={[styles.bestResultValue, { color: colors.primary }]}>{bestResult.score} puan</Text>
+            </View>
+            <View style={styles.bestResultItem}>
+              <MaterialIcons name="timer" size={13} color={colors.mutedForeground} />
+              <Text style={[styles.bestResultValue, { color: colors.mutedForeground }]}>{formatTime(bestResult.timeSeconds)}</Text>
+            </View>
+          </View>
+        ) : (
+          <View style={[styles.playRow, { borderTopColor: colors.border }]}>
+            <Text style={[styles.playText, { color: colors.primary }]}>Oynamak için dokun</Text>
+            <MaterialIcons name="chevron-right" size={20} color={colors.primary} />
+          </View>
+        )}
       </Pressable>
     </Animated.View>
   );
@@ -110,13 +139,13 @@ function useDailyCountdown() {
 export default function HomeScreen() {
   const colors = useColors();
   const insets = useSafeAreaInsets();
-  const { profile, gameHistory, startDailyPuzzle, startPuzzle } = useGame();
+  const { profile, gameHistory, startDailyPuzzle, startPuzzle, completedPuzzleIds, bestScoreForPuzzle } = useGame();
   const countdown = useDailyCountdown();
   const [showOnboarding, setShowOnboarding] = useState(false);
 
   const dailyPuzzle = getDailyPuzzle();
   const todayStr = new Date().toISOString().split("T")[0];
-  const playedToday = gameHistory.some((h) => h.date === todayStr);
+  const wonToday = gameHistory.some((h) => h.date === todayStr && h.completed);
   const otherPuzzles = PUZZLES.filter((p) => p.id !== dailyPuzzle.id).slice(0, 6);
 
   useEffect(() => {
@@ -184,7 +213,7 @@ export default function HomeScreen() {
             style={[
               styles.dailyCard,
               { backgroundColor: colors.card, borderColor: colors.primary },
-              playedToday && { opacity: 0.7 },
+              wonToday && { opacity: 0.7 },
             ]}
           >
             <View style={styles.dailyTop}>
@@ -194,7 +223,7 @@ export default function HomeScreen() {
                   GÜNÜN BULMACASI
                 </Text>
               </View>
-              {playedToday && (
+              {wonToday && (
                 <View style={[styles.doneBadge, { backgroundColor: `${colors.success}22` }]}>
                   <MaterialIcons name="check-circle" size={14} color={colors.success} />
                   <Text style={[styles.doneText, { color: colors.success }]}>Tamamlandı</Text>
@@ -222,7 +251,7 @@ export default function HomeScreen() {
             <View style={[styles.dailyFooter, { borderTopColor: colors.border }]}>
               <View style={styles.playNowBtn}>
                 <Text style={[styles.playNowText, { color: colors.primary }]}>
-                  {playedToday ? "Tekrar Oyna" : "Oyna"}
+                  {wonToday ? "Tekrar Oyna" : "Oyna"}
                 </Text>
                 <MaterialIcons name="play-circle-filled" size={22} color={colors.primary} />
               </View>
@@ -248,14 +277,19 @@ export default function HomeScreen() {
         </Animated.View>
 
         <Text style={[styles.sectionTitle, { color: colors.foreground }]}>Diğer Bulmacalar</Text>
-        {otherPuzzles.map((puzzle, i) => (
-          <PuzzleCard
-            key={puzzle.id}
-            puzzle={puzzle}
-            onPress={() => handlePuzzlePlay(puzzle)}
-            delay={300 + i * 60}
-          />
-        ))}
+        {otherPuzzles.map((puzzle, i) => {
+          const isCompleted = completedPuzzleIds.has(puzzle.id);
+          return (
+            <PuzzleCard
+              key={puzzle.id}
+              puzzle={puzzle}
+              onPress={() => handlePuzzlePlay(puzzle)}
+              delay={300 + i * 60}
+              completed={isCompleted}
+              bestResult={isCompleted ? bestScoreForPuzzle(puzzle.id) : null}
+            />
+          );
+        })}
       </ScrollView>
     </>
   );
@@ -348,6 +382,7 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   puzzleCardTop: { flexDirection: "row", justifyContent: "space-between", alignItems: "center" },
+  puzzleCardRight: { flexDirection: "row", alignItems: "center" },
   puzzleCardMeta: { flexDirection: "row", alignItems: "center", gap: 4 },
   metaText: { fontSize: 12 },
   diffBadge: {
@@ -359,6 +394,16 @@ const styles = StyleSheet.create({
   diffText: { fontSize: 11, fontWeight: "700" },
   puzzleTitle: { fontSize: 15, fontWeight: "700", lineHeight: 22 },
   puzzleStory: { fontSize: 12, lineHeight: 18 },
+  solvedBadge: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderRadius: 6,
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+    borderWidth: 1,
+    gap: 4,
+  },
+  solvedText: { fontSize: 11, fontWeight: "700" },
   playRow: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -367,4 +412,18 @@ const styles = StyleSheet.create({
     paddingTop: 10,
   },
   playText: { fontSize: 13, fontWeight: "600" },
+  bestResultRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    borderTopWidth: 1,
+    paddingTop: 10,
+  },
+  bestResultItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
+  },
+  bestResultLabel: { fontSize: 12 },
+  bestResultValue: { fontSize: 12, fontWeight: "600" },
 });

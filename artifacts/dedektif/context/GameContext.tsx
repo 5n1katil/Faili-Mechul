@@ -4,6 +4,7 @@ import React, {
   useCallback,
   useContext,
   useEffect,
+  useMemo,
   useState,
 } from "react";
 import { getDailyPuzzle, PUZZLES, type GridMark, type Puzzle } from "@/data/puzzles";
@@ -57,11 +58,18 @@ export interface GameState {
   selectedLocation: string | null;
 }
 
+export interface BestResult {
+  score: number;
+  timeSeconds: number;
+}
+
 interface GameContextType {
   profile: PlayerProfile;
   gameHistory: GameRecord[];
   leaderboard: LeaderboardEntry[];
   gameState: GameState | null;
+  completedPuzzleIds: Set<string>;
+  bestScoreForPuzzle: (id: string) => BestResult | null;
   startDailyPuzzle: () => void;
   startPuzzle: (puzzle: Puzzle) => void;
   setGridMark: (key: string, mark: GridMark) => void;
@@ -177,6 +185,21 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     await AsyncStorage.setItem(LEADERBOARD_KEY, JSON.stringify(allEntries));
     setLeaderboard(allEntries);
   };
+
+  const completedPuzzleIds = useMemo(
+    () => new Set(gameHistory.filter((h) => h.completed).map((h) => h.puzzleId)),
+    [gameHistory]
+  );
+
+  const bestScoreForPuzzle = useCallback(
+    (id: string): BestResult | null => {
+      const wins = gameHistory.filter((h) => h.puzzleId === id && h.completed);
+      if (wins.length === 0) return null;
+      const best = wins.reduce((a, b) => (b.score > a.score ? b : a));
+      return { score: best.score, timeSeconds: best.timeSeconds };
+    },
+    [gameHistory]
+  );
 
   const startPuzzle = useCallback((puzzle: Puzzle) => {
     setGameState({
@@ -348,6 +371,8 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         gameHistory,
         leaderboard,
         gameState,
+        completedPuzzleIds,
+        bestScoreForPuzzle,
         startDailyPuzzle,
         startPuzzle,
         setGridMark,
