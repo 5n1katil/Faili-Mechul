@@ -113,9 +113,6 @@ function MiniCell({ mark }: { mark: CellMark }) {
       {mark === "cross" && (
         <MaterialIcons name="close" size={12} color="#f87171" />
       )}
-      {mark === "none" && (
-        <Text style={miniStyles.questionMark}>?</Text>
-      )}
     </View>
   );
 }
@@ -271,11 +268,6 @@ const miniStyles = StyleSheet.create({
     borderWidth: 1,
     alignItems: "center",
     justifyContent: "center",
-  },
-  questionMark: {
-    fontSize: 11,
-    color: "#6B7280",
-    fontWeight: "700",
   },
   caption: {
     fontSize: 11,

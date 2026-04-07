@@ -7,7 +7,43 @@ import React, {
   useMemo,
   useState,
 } from "react";
-import { getDailyPuzzle, PUZZLES, type GridMark, type Puzzle } from "@/data/puzzles";
+import {
+  getDailyPuzzle,
+  PUZZLES,
+  type GridMark,
+  type Location,
+  type Puzzle,
+  type Suspect,
+  type Weapon,
+} from "@/data/puzzles";
+
+function getSameRowKeys(
+  rowId: string,
+  excludeColId: string,
+  suspects: Suspect[],
+  weapons: Weapon[],
+  locations: Location[]
+): string[] {
+  const isWeaponRow = weapons.some((w) => w.id === rowId);
+  const colIds = isWeaponRow
+    ? [...suspects.map((s) => s.id), ...locations.map((l) => l.id)]
+    : suspects.map((s) => s.id);
+  return colIds.filter((c) => c !== excludeColId).map((c) => `${rowId}_${c}`);
+}
+
+function getSameColKeys(
+  colId: string,
+  excludeRowId: string,
+  suspects: Suspect[],
+  weapons: Weapon[],
+  locations: Location[]
+): string[] {
+  const isSuspectCol = suspects.some((s) => s.id === colId);
+  const rowIds = isSuspectCol
+    ? [...weapons.map((w) => w.id), ...locations.map((l) => l.id)]
+    : weapons.map((w) => w.id);
+  return rowIds.filter((r) => r !== excludeRowId).map((r) => `${r}_${colId}`);
+}
 
 export interface GameRecord {
   puzzleId: string;
@@ -47,6 +83,7 @@ export type GridState = { [key: string]: GridMark };
 export interface GameState {
   puzzle: Puzzle | null;
   gridState: GridState;
+  autoCrossGroups: { [checkKey: string]: string[] };
   cluesRevealed: number[];
   timeElapsed: number;
   mistakes: number;
@@ -205,6 +242,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     setGameState({
       puzzle,
       gridState: {},
+      autoCrossGroups: {},
       cluesRevealed: [0],
       timeElapsed: 0,
       mistakes: 0,
@@ -226,9 +264,45 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     (key: string, mark: GridMark) => {
       if (!gameState || gameState.isComplete || gameState.isGameOver) return;
       setGameState((prev) => {
-        if (!prev) return prev;
-        const newGrid = { ...prev.gridState, [key]: mark };
-        return { ...prev, gridState: newGrid };
+        if (!prev || !prev.puzzle) return prev;
+        const { suspects, weapons, locations } = prev.puzzle;
+        const parts = key.split("_");
+        const rowId = parts[0];
+        const colId = parts[1];
+
+        const newGrid = { ...prev.gridState };
+        const newAutoCross = { ...prev.autoCrossGroups };
+
+        if (prev.gridState[key] === "check" && newAutoCross[key]) {
+          for (const k of newAutoCross[key]) {
+            if (newGrid[k] === "cross") {
+              delete newGrid[k];
+            }
+          }
+          delete newAutoCross[key];
+        }
+
+        if (mark === "none") {
+          delete newGrid[key];
+        } else {
+          newGrid[key] = mark;
+        }
+
+        if (mark === "check") {
+          const sameRow = getSameRowKeys(rowId, colId, suspects, weapons, locations);
+          const sameCol = getSameColKeys(colId, rowId, suspects, weapons, locations);
+          const autoCrossed: string[] = [];
+          for (const k of [...sameRow, ...sameCol]) {
+            const current = newGrid[k];
+            if (!current || current === "none") {
+              newGrid[k] = "cross";
+              autoCrossed.push(k);
+            }
+          }
+          newAutoCross[key] = autoCrossed;
+        }
+
+        return { ...prev, gridState: newGrid, autoCrossGroups: newAutoCross };
       });
     },
     [gameState]

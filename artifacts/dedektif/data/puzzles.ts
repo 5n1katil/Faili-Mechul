@@ -1,4 +1,4 @@
-export type GridMark = "none" | "check" | "cross";
+export type GridMark = "none" | "cross" | "check" | "question";
 
 export interface Suspect {
   id: string;

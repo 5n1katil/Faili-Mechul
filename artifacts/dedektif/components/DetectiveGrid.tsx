@@ -1,10 +1,10 @@
-import React, { useCallback, useEffect, useRef } from "react";
+import React, { useCallback, useEffect, useMemo, useRef } from "react";
 import {
   Platform,
   Pressable,
-  ScrollView,
   StyleSheet,
   Text,
+  useWindowDimensions,
   View,
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -30,11 +30,8 @@ const SUSPECT_BG = "#1E103080";
 const WEAPON_BG = "#2E101080";
 const LOCATION_BG = "#2A1E0880";
 
-const CELL_SIZE = 46;
-const CELL_MARGIN = 3;
-const CELL_TOTAL = CELL_SIZE + CELL_MARGIN * 2;
-const LABEL_WIDTH = 112;
 const GROUP_DIVIDER_WIDTH = 2;
+const HORIZONTAL_INSET = 40;
 
 interface Props {
   suspects: Suspect[];
@@ -49,6 +46,7 @@ interface Props {
 function getMarkColors(mark: GridMark, neutralBg: string, neutralBorder: string) {
   if (mark === "check") return { bg: "#052e16", border: "#4ade8060" };
   if (mark === "cross") return { bg: "#2d0e0e", border: "#f8717160" };
+  if (mark === "question") return { bg: "#1A1500", border: "#D4A84360" };
   return { bg: neutralBg, border: neutralBorder };
 }
 
@@ -56,10 +54,14 @@ function GridCell({
   mark,
   onPress,
   disabled,
+  cellSize,
+  cellMargin,
 }: {
   mark: GridMark;
   onPress: () => void;
   disabled?: boolean;
+  cellSize: number;
+  cellMargin: number;
 }) {
   const colors = useColors();
   const scale = useSharedValue(1);
@@ -111,17 +113,41 @@ function GridCell({
     onPress();
   };
 
+  const iconSize = Math.max(12, Math.floor(cellSize * 0.5));
+
   return (
     <Pressable onPress={handlePress} disabled={disabled}>
-      <Animated.View style={[styles.cell, animStyle]}>
+      <Animated.View
+        style={[
+          {
+            width: cellSize,
+            height: cellSize,
+            borderWidth: 1.5,
+            borderRadius: Math.max(6, Math.floor(cellSize * 0.2)),
+            alignItems: "center",
+            justifyContent: "center",
+            marginHorizontal: cellMargin,
+          },
+          animStyle,
+        ]}
+      >
         {mark === "check" && (
-          <MaterialIcons name="check" size={22} color="#4ade80" />
+          <MaterialIcons name="check" size={iconSize} color="#4ade80" />
         )}
         {mark === "cross" && (
-          <MaterialIcons name="close" size={20} color="#f87171" />
+          <MaterialIcons name="close" size={iconSize} color="#f87171" />
         )}
-        {mark === "none" && (
-          <Text style={styles.questionMark}>?</Text>
+        {mark === "question" && (
+          <Text
+            style={{
+              fontSize: Math.max(10, Math.floor(cellSize * 0.4)),
+              fontWeight: "700",
+              color: "#D4A843",
+              lineHeight: Math.max(14, Math.floor(cellSize * 0.55)),
+            }}
+          >
+            ?
+          </Text>
         )}
       </Animated.View>
     </Pressable>
@@ -134,12 +160,16 @@ function HeaderAvatar({
   color,
   bg,
   onPress,
+  cellSize,
+  cellMargin,
 }: {
   icon: string;
   name: string;
   color: string;
   bg: string;
   onPress?: () => void;
+  cellSize: number;
+  cellMargin: number;
 }) {
   const scale = useSharedValue(1);
 
@@ -159,17 +189,56 @@ function HeaderAvatar({
     onPress();
   };
 
+  const avatarSize = Math.max(22, Math.floor(cellSize * 0.72));
+  const avatarRadius = Math.floor(avatarSize / 2);
+  const avatarIconSize = Math.max(11, Math.floor(avatarSize * 0.5));
+  const headerHeight = Math.max(60, Math.floor(cellSize * 1.8));
+
   return (
     <Pressable onPress={onPress ? handlePress : undefined}>
-      <Animated.View style={[styles.colHeaderInner, { width: CELL_SIZE }, animStyle]}>
-        <View style={[styles.avatarCircle, { backgroundColor: bg, borderColor: color + "60" }]}>
+      <Animated.View
+        style={[
+          {
+            width: cellSize,
+            alignItems: "center",
+            justifyContent: "flex-end",
+            paddingBottom: 6,
+            marginHorizontal: cellMargin,
+            height: headerHeight,
+            gap: 4,
+          },
+          animStyle,
+        ]}
+      >
+        <View
+          style={{
+            width: avatarSize,
+            height: avatarSize,
+            borderRadius: avatarRadius,
+            borderWidth: 1.5,
+            borderColor: color + "60",
+            backgroundColor: bg,
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
           <MaterialIcons
             name={icon as ComponentProps<typeof MaterialIcons>["name"]}
-            size={17}
+            size={avatarIconSize}
             color={color}
           />
         </View>
-        <Text style={[styles.colHeaderText, { color }]} numberOfLines={2}>
+        <Text
+          style={{
+            fontSize: Math.max(7, Math.floor(cellSize * 0.2)),
+            textAlign: "center",
+            fontWeight: "700",
+            letterSpacing: 0.2,
+            lineHeight: Math.max(10, Math.floor(cellSize * 0.28)),
+            color,
+          }}
+          numberOfLines={2}
+        >
           {name}
         </Text>
       </Animated.View>
@@ -187,22 +256,39 @@ export default function DetectiveGrid({
   onHeaderPress,
 }: Props) {
   const colors = useColors();
+  const { width: screenWidth } = useWindowDimensions();
+
+  const { cellSize, cellMargin, cellTotal, labelWidth } = useMemo(() => {
+    const available = screenWidth - HORIZONTAL_INSET;
+    const numCols = suspects.length + locations.length;
+    const lw = Math.min(90, Math.floor(available * 0.26));
+    const ct = Math.max(36, Math.floor((available - lw - GROUP_DIVIDER_WIDTH) / numCols));
+    const cm = Math.max(2, Math.floor(ct * 0.065));
+    const cs = ct - cm * 2;
+    return {
+      cellSize: cs,
+      cellMargin: cm,
+      cellTotal: ct,
+      labelWidth: lw,
+    };
+  }, [screenWidth, suspects.length, locations.length]);
 
   const cycleNextMark = useCallback((current: GridMark): GridMark => {
     if (current === "none") return "cross";
     if (current === "cross") return "check";
+    if (current === "check") return "question";
     return "none";
   }, []);
 
   const getKey = (rowId: string, colId: string) => `${rowId}_${colId}`;
 
-  const suspectGroupWidth = suspects.length * CELL_TOTAL;
-  const locationGroupWidth = locations.length * CELL_TOTAL;
+  const suspectGroupWidth = suspects.length * cellTotal;
+  const locationGroupWidth = locations.length * cellTotal;
   const fullGroupWidth = suspectGroupWidth + GROUP_DIVIDER_WIDTH + locationGroupWidth;
 
   const renderGroupLabelRow = () => (
     <View style={[styles.row, { marginBottom: 2 }]}>
-      <View style={{ width: LABEL_WIDTH }} />
+      <View style={{ width: labelWidth }} />
       <View style={[styles.groupLabelBox, { width: suspectGroupWidth }]}>
         <Text style={[styles.groupLabelText, { color: SUSPECT_COLOR }]}>
           ŞÜPHELILER
@@ -219,7 +305,7 @@ export default function DetectiveGrid({
 
   const renderAvatarRow = () => (
     <View style={[styles.row, { marginBottom: 4 }]}>
-      <View style={{ width: LABEL_WIDTH }} />
+      <View style={{ width: labelWidth }} />
       {suspects.map((s) => (
         <HeaderAvatar
           key={s.id}
@@ -227,6 +313,8 @@ export default function DetectiveGrid({
           name={s.name}
           color={SUSPECT_COLOR}
           bg={SUSPECT_BG}
+          cellSize={cellSize}
+          cellMargin={cellMargin}
           onPress={
             onHeaderPress
               ? () =>
@@ -241,7 +329,14 @@ export default function DetectiveGrid({
           }
         />
       ))}
-      <View style={styles.groupDivider} />
+      <View
+        style={{
+          width: GROUP_DIVIDER_WIDTH,
+          height: cellSize,
+          backgroundColor: "#FFFFFF22",
+          borderRadius: 1,
+        }}
+      />
       {locations.map((loc) => (
         <HeaderAvatar
           key={loc.id}
@@ -249,6 +344,8 @@ export default function DetectiveGrid({
           name={loc.name}
           color={LOCATION_COLOR}
           bg={LOCATION_BG}
+          cellSize={cellSize}
+          cellMargin={cellMargin}
           onPress={
             onHeaderPress
               ? () =>
@@ -285,9 +382,10 @@ export default function DetectiveGrid({
         : type === "weapon"
         ? WEAPON_BG
         : LOCATION_BG;
+    const avatarSize = Math.max(18, Math.floor(cellSize * 0.55));
     return (
       <Pressable
-        style={[styles.rowLabel, { width: LABEL_WIDTH }]}
+        style={[styles.rowLabel, { width: labelWidth, height: cellSize }]}
         onPress={
           onHeaderPress
             ? () =>
@@ -302,19 +400,29 @@ export default function DetectiveGrid({
         }
       >
         <View
-          style={[
-            styles.rowAvatarCircle,
-            { backgroundColor: bg, borderColor: color + "50" },
-          ]}
+          style={{
+            width: avatarSize,
+            height: avatarSize,
+            borderRadius: Math.floor(avatarSize / 2),
+            borderWidth: 1.5,
+            borderColor: color + "50",
+            backgroundColor: bg,
+            alignItems: "center",
+            justifyContent: "center",
+            flexShrink: 0,
+          }}
         >
           <MaterialIcons
             name={icon as ComponentProps<typeof MaterialIcons>["name"]}
-            size={14}
+            size={Math.max(9, Math.floor(avatarSize * 0.5))}
             color={color}
           />
         </View>
         <Text
-          style={[styles.rowLabelText, { color: colors.foreground }]}
+          style={[
+            styles.rowLabelText,
+            { color: colors.foreground, fontSize: Math.max(9, Math.floor(cellSize * 0.28)) },
+          ]}
           numberOfLines={2}
         >
           {name}
@@ -323,13 +431,9 @@ export default function DetectiveGrid({
     );
   };
 
-  const renderSectionBanner = (
-    label: string,
-    color: string,
-    width: number
-  ) => (
-    <View style={[styles.row, { marginVertical: 5 }]}>
-      <View style={{ width: LABEL_WIDTH }} />
+  const renderSectionBanner = (label: string, color: string, width: number) => (
+    <View style={[styles.row, { marginVertical: 4 }]}>
+      <View style={{ width: labelWidth }} />
       <View
         style={[
           styles.sectionBanner,
@@ -347,14 +451,8 @@ export default function DetectiveGrid({
   );
 
   const renderWeaponRow = (weapon: Weapon) => (
-    <View key={weapon.id} style={styles.row}>
-      {renderRowLabel(
-        weapon.id,
-        weapon.name,
-        weapon.icon,
-        weapon.description,
-        "weapon"
-      )}
+    <View key={weapon.id} style={[styles.row, { marginBottom: 4 }]}>
+      {renderRowLabel(weapon.id, weapon.name, weapon.icon, weapon.description, "weapon")}
       {suspects.map((s) => {
         const key = getKey(weapon.id, s.id);
         const mark = gridState[key] ?? "none";
@@ -364,10 +462,19 @@ export default function DetectiveGrid({
             mark={mark}
             onPress={() => onCellPress(key, cycleNextMark(mark))}
             disabled={disabled}
+            cellSize={cellSize}
+            cellMargin={cellMargin}
           />
         );
       })}
-      <View style={styles.groupDivider} />
+      <View
+        style={{
+          width: GROUP_DIVIDER_WIDTH,
+          height: cellSize,
+          backgroundColor: "#FFFFFF22",
+          borderRadius: 1,
+        }}
+      />
       {locations.map((loc) => {
         const key = getKey(weapon.id, loc.id);
         const mark = gridState[key] ?? "none";
@@ -377,6 +484,8 @@ export default function DetectiveGrid({
             mark={mark}
             onPress={() => onCellPress(key, cycleNextMark(mark))}
             disabled={disabled}
+            cellSize={cellSize}
+            cellMargin={cellMargin}
           />
         );
       })}
@@ -384,7 +493,7 @@ export default function DetectiveGrid({
   );
 
   const renderLocationRow = (location: Location) => (
-    <View key={location.id} style={styles.row}>
+    <View key={location.id} style={[styles.row, { marginBottom: 4 }]}>
       {renderRowLabel(
         location.id,
         location.name,
@@ -401,55 +510,42 @@ export default function DetectiveGrid({
             mark={mark}
             onPress={() => onCellPress(key, cycleNextMark(mark))}
             disabled={disabled}
+            cellSize={cellSize}
+            cellMargin={cellMargin}
           />
         );
       })}
-      <View style={styles.groupDivider} />
-      <View style={[styles.emptyCorner, { width: locationGroupWidth }]} />
+      <View
+        style={{
+          width: GROUP_DIVIDER_WIDTH,
+          height: cellSize,
+          backgroundColor: "#FFFFFF22",
+          borderRadius: 1,
+        }}
+      />
+      <View style={{ width: locationGroupWidth, height: cellSize }} />
     </View>
   );
 
   return (
-    <ScrollView
-      horizontal
-      showsHorizontalScrollIndicator={false}
-      style={styles.container}
-    >
-      <View>
-        {renderGroupLabelRow()}
-        {renderAvatarRow()}
-        {renderSectionBanner("SİLAHLAR", WEAPON_COLOR, fullGroupWidth)}
-        {weapons.map(renderWeaponRow)}
-        {renderSectionBanner("MEKANLAR", LOCATION_COLOR, suspectGroupWidth)}
-        {locations.map(renderLocationRow)}
-      </View>
-    </ScrollView>
+    <View style={styles.container}>
+      {renderGroupLabelRow()}
+      {renderAvatarRow()}
+      {renderSectionBanner("SİLAHLAR", WEAPON_COLOR, fullGroupWidth)}
+      {weapons.map(renderWeaponRow)}
+      {renderSectionBanner("MEKANLAR", LOCATION_COLOR, suspectGroupWidth)}
+      {locations.map(renderLocationRow)}
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    width: "100%",
   },
   row: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 5,
-  },
-  cell: {
-    width: CELL_SIZE,
-    height: CELL_SIZE,
-    borderWidth: 1.5,
-    borderRadius: 9,
-    alignItems: "center",
-    justifyContent: "center",
-    marginHorizontal: CELL_MARGIN,
-  },
-  questionMark: {
-    fontSize: 16,
-    fontWeight: "700",
-    color: "#4B5563",
-    lineHeight: 20,
   },
   groupLabelBox: {
     alignItems: "center",
@@ -461,59 +557,19 @@ const styles = StyleSheet.create({
     fontWeight: "800",
     letterSpacing: 1.4,
   },
-  groupDivider: {
-    width: GROUP_DIVIDER_WIDTH,
-    height: CELL_SIZE,
-    backgroundColor: "#FFFFFF22",
-    borderRadius: 1,
-  },
-  colHeaderInner: {
-    alignItems: "center",
-    justifyContent: "flex-end",
-    paddingBottom: 6,
-    marginHorizontal: CELL_MARGIN,
-    height: 84,
-    gap: 5,
-  },
-  avatarCircle: {
-    width: 34,
-    height: 34,
-    borderRadius: 17,
-    borderWidth: 1.5,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  colHeaderText: {
-    fontSize: 9,
-    textAlign: "center",
-    fontWeight: "700",
-    letterSpacing: 0.2,
-    lineHeight: 12,
-  },
   rowLabel: {
-    height: CELL_SIZE,
     flexDirection: "row",
     alignItems: "center",
-    paddingRight: 8,
-    gap: 6,
-  },
-  rowAvatarCircle: {
-    width: 26,
-    height: 26,
-    borderRadius: 13,
-    borderWidth: 1.5,
-    alignItems: "center",
-    justifyContent: "center",
-    flexShrink: 0,
+    paddingRight: 6,
+    gap: 5,
   },
   rowLabelText: {
-    fontSize: 12,
     fontWeight: "600",
     flex: 1,
-    lineHeight: 16,
+    lineHeight: 14,
   },
   sectionBanner: {
-    paddingVertical: 6,
+    paddingVertical: 5,
     paddingHorizontal: 10,
     borderRadius: 7,
     borderWidth: 1,
@@ -523,8 +579,5 @@ const styles = StyleSheet.create({
     fontSize: 10,
     fontWeight: "800",
     letterSpacing: 1.4,
-  },
-  emptyCorner: {
-    height: CELL_SIZE,
   },
 });
