@@ -404,12 +404,8 @@ export default function DetectiveGrid({
           />
         );
       })}
-      <View
-        style={[
-          styles.emptyCorner,
-          { width: GROUP_DIVIDER_WIDTH + locationGroupWidth },
-        ]}
-      />
+      <View style={styles.groupDivider} />
+      <View style={[styles.emptyCorner, { width: locationGroupWidth }]} />
     </View>
   );
 
