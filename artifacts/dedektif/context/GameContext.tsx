@@ -19,30 +19,38 @@ import {
 
 function getSameRowKeys(
   rowId: string,
-  excludeColId: string,
+  colId: string,
   suspects: Suspect[],
   weapons: Weapon[],
   locations: Location[]
 ): string[] {
   const isWeaponRow = weapons.some((w) => w.id === rowId);
-  const colIds = isWeaponRow
-    ? [...suspects.map((s) => s.id), ...locations.map((l) => l.id)]
-    : suspects.map((s) => s.id);
-  return colIds.filter((c) => c !== excludeColId).map((c) => `${rowId}_${c}`);
+  const colIsLocation = locations.some((l) => l.id === colId);
+  let colIds: string[];
+  if (isWeaponRow) {
+    colIds = colIsLocation ? locations.map((l) => l.id) : suspects.map((s) => s.id);
+  } else {
+    colIds = suspects.map((s) => s.id);
+  }
+  return colIds.filter((c) => c !== colId).map((c) => `${rowId}_${c}`);
 }
 
 function getSameColKeys(
   colId: string,
-  excludeRowId: string,
+  rowId: string,
   suspects: Suspect[],
   weapons: Weapon[],
   locations: Location[]
 ): string[] {
   const isSuspectCol = suspects.some((s) => s.id === colId);
-  const rowIds = isSuspectCol
-    ? [...weapons.map((w) => w.id), ...locations.map((l) => l.id)]
-    : weapons.map((w) => w.id);
-  return rowIds.filter((r) => r !== excludeRowId).map((r) => `${r}_${colId}`);
+  const rowIsLocation = locations.some((l) => l.id === rowId);
+  let rowIds: string[];
+  if (isSuspectCol) {
+    rowIds = rowIsLocation ? locations.map((l) => l.id) : weapons.map((w) => w.id);
+  } else {
+    rowIds = weapons.map((w) => w.id);
+  }
+  return rowIds.filter((r) => r !== rowId).map((r) => `${r}_${colId}`);
 }
 
 export interface GameRecord {
