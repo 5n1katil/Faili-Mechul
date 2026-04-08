@@ -220,7 +220,10 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         const raw: Record<string, unknown>[] = JSON.parse(historyStr);
         setGameHistory(raw.map(migrateRecord));
       }
-      if (leaderboardStr) setLeaderboard(JSON.parse(leaderboardStr));
+      if (leaderboardStr) {
+        const rawLb: Record<string, unknown>[] = JSON.parse(leaderboardStr);
+        setLeaderboard(rawLb.map((e) => ({ avatar: "", ...e } as LeaderboardEntry)));
+      }
     } catch {}
   };
 
