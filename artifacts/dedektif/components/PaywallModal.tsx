@@ -21,8 +21,7 @@ const FEATURES = [
   { icon: "folder-open" as const, text: "Tüm vaka arşivine tam erişim (20+ bulmaca)" },
   { icon: "lock-open" as const, text: "Yeni vakalar çıktıkça otomatik olarak açılır" },
   { icon: "emoji-events" as const, text: "Liderlik tablosunda altın 🔱 Baş Dedektif amblemi" },
-  { icon: "lightbulb" as const, text: "Günlük 1 ek ipucu hakkı" },
-  { icon: "bolt" as const, text: "Skor çarpanı: %10 puan bonusu" },
+  { icon: "favorite" as const, text: "Tek seferlik ödeme — abonelik yok, süre sınırı yok" },
 ];
 
 export default function PaywallModal({ visible, onClose }: Props) {
