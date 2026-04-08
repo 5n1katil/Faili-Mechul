@@ -6,7 +6,13 @@ import {
   StyleSheet,
   Text,
   View,
+  LayoutAnimation,
+  UIManager,
 } from "react-native";
+
+if (Platform.OS === "android" && UIManager.setLayoutAnimationEnabledExperimental) {
+  UIManager.setLayoutAnimationEnabledExperimental(true);
+}
 import { MaterialIcons } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useColors } from "@/hooks/useColors";
@@ -17,7 +23,8 @@ import { usePurchase } from "@/context/PurchaseContext";
 import DetectiveGrid from "@/components/DetectiveGrid";
 import ClueCard from "@/components/ClueCard";
 import TimerDisplay from "@/components/TimerDisplay";
-import AccusationPanel from "@/components/AccusationPanel";
+import AccusationSheet from "@/components/AccusationSheet";
+import StickyAccuseBar from "@/components/StickyAccuseBar";
 import ResultScreen from "@/components/ResultScreen";
 import EntityInfoSheet from "@/components/EntityInfoSheet";
 import PaywallModal from "@/components/PaywallModal";
@@ -55,6 +62,61 @@ function SectionHeader({
         <Text style={listStyles.sectionHeaderText}>{title}</Text>
       </View>
       {right}
+    </View>
+  );
+}
+
+function AccordionSection({
+  title,
+  count,
+  badge,
+  defaultExpanded = true,
+  children,
+}: {
+  title: string;
+  count: number;
+  badge?: React.ReactNode;
+  defaultExpanded?: boolean;
+  children: React.ReactNode;
+}) {
+  const colors = useColors();
+  const [expanded, setExpanded] = useState(defaultExpanded);
+
+  const toggle = () => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    setExpanded((v) => !v);
+  };
+
+  return (
+    <View style={accordionStyles.wrapper}>
+      <Pressable
+        onPress={toggle}
+        style={({ pressed }) => [
+          accordionStyles.header,
+          {
+            backgroundColor: colors.card,
+            borderColor: colors.border,
+            opacity: pressed ? 0.8 : 1,
+          },
+        ]}
+      >
+        <View style={accordionStyles.headerLeft}>
+          <View style={accordionStyles.accentBar} />
+          <Text style={[accordionStyles.title, { color: colors.foreground }]}>{title}</Text>
+          <View style={[accordionStyles.countBadge, { backgroundColor: `${colors.primary}22`, borderColor: `${colors.primary}44` }]}>
+            <Text style={[accordionStyles.countText, { color: colors.primary }]}>{count}</Text>
+          </View>
+        </View>
+        <View style={accordionStyles.headerRight}>
+          {badge}
+          <MaterialIcons
+            name={expanded ? "keyboard-arrow-up" : "keyboard-arrow-down"}
+            size={20}
+            color={colors.mutedForeground}
+          />
+        </View>
+      </Pressable>
+      {expanded && <View style={accordionStyles.body}>{children}</View>}
     </View>
   );
 }
@@ -200,6 +262,7 @@ export default function VakalarScreen() {
   const [accuLocation, setAccuLocation] = useState<string | null>(null);
   const [finalRank, setFinalRank] = useState(1);
   const [totalPlayers, setTotalPlayers] = useState(1);
+  const [showSheet, setShowSheet] = useState(false);
 
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
@@ -229,6 +292,7 @@ export default function VakalarScreen() {
     setAccuseSuspect(null);
     setAccuWeapon(null);
     setAccuLocation(null);
+    setShowSheet(false);
   }, [gameState?.puzzle?.id]);
 
   const handleBackToList = () => {
@@ -305,26 +369,30 @@ export default function VakalarScreen() {
             </View>
           </Animated.View>
 
-          <SectionHeader title="Başlangıç Seviyesi Vakalar" />
+          <AccordionSection
+            title="Başlangıç Seviyesi Vakalar"
+            count={freePuzzles.length}
+          >
+            {freePuzzles.map((puzzle, i) => {
+              const isCompleted = completedPuzzleIds.has(puzzle.id);
+              return (
+                <PuzzleCard
+                  key={puzzle.id}
+                  puzzle={puzzle}
+                  onPress={() => startPuzzle(puzzle)}
+                  delay={100 + i * 50}
+                  completed={isCompleted}
+                  bestResult={isCompleted ? bestScoreForPuzzle(puzzle.id) : null}
+                  locked={false}
+                />
+              );
+            })}
+          </AccordionSection>
 
-          {freePuzzles.map((puzzle, i) => {
-            const isCompleted = completedPuzzleIds.has(puzzle.id);
-            return (
-              <PuzzleCard
-                key={puzzle.id}
-                puzzle={puzzle}
-                onPress={() => startPuzzle(puzzle)}
-                delay={100 + i * 50}
-                completed={isCompleted}
-                bestResult={isCompleted ? bestScoreForPuzzle(puzzle.id) : null}
-                locked={false}
-              />
-            );
-          })}
-
-          <SectionHeader
+          <AccordionSection
             title="Premium Vaka Arşivi"
-            right={
+            count={premiumPuzzles.length}
+            badge={
               !isPremium ? (
                 <Pressable
                   onPress={() => setShowPaywall(true)}
@@ -332,52 +400,51 @@ export default function VakalarScreen() {
                 >
                   <MaterialIcons name="lock" size={12} color="#D4A843" />
                   <Text style={[listStyles.premiumChipText, { color: "#D4A843" }]}>
-                    {premiumLockedCount} kilitli vaka
+                    {premiumLockedCount} kilitli
                   </Text>
                 </Pressable>
-              ) : null
+              ) : undefined
             }
-          />
-
-          {!isPremium && (
-            <Pressable
-              onPress={() => setShowPaywall(true)}
-              style={[listStyles.premiumBanner, { backgroundColor: "#D4A84310", borderColor: "#D4A84340" }]}
-            >
-              <MaterialIcons name="workspace-premium" size={20} color="#D4A843" />
-              <View style={listStyles.premiumBannerText}>
-                <Text style={[listStyles.premiumBannerTitle, { color: "#D4A843" }]}>
-                  Premium Vaka Arşivi'ni Aç
-                </Text>
-                <Text style={[listStyles.premiumBannerSub, { color: "#D4A84399" }]}>
-                  {premiumLockedCount} ek vaka · Tek seferlik satın al
-                </Text>
-              </View>
-              <MaterialIcons name="chevron-right" size={20} color="#D4A843" />
-            </Pressable>
-          )}
-
-          {premiumPuzzles.map((puzzle, i) => {
-            const isCompleted = completedPuzzleIds.has(puzzle.id);
-            const isLocked = !isPremium;
-            return (
-              <PuzzleCard
-                key={puzzle.id}
-                puzzle={puzzle}
-                onPress={() => {
-                  if (isLocked) {
-                    setShowPaywall(true);
-                  } else {
-                    startPuzzle(puzzle);
-                  }
-                }}
-                delay={100 + (freePuzzles.length + i) * 40}
-                completed={isCompleted && !isLocked}
-                bestResult={isCompleted && !isLocked ? bestScoreForPuzzle(puzzle.id) : null}
-                locked={isLocked}
-              />
-            );
-          })}
+          >
+            {!isPremium && (
+              <Pressable
+                onPress={() => setShowPaywall(true)}
+                style={[listStyles.premiumBanner, { backgroundColor: "#D4A84310", borderColor: "#D4A84340" }]}
+              >
+                <MaterialIcons name="workspace-premium" size={20} color="#D4A843" />
+                <View style={listStyles.premiumBannerText}>
+                  <Text style={[listStyles.premiumBannerTitle, { color: "#D4A843" }]}>
+                    Premium Vaka Arşivi'ni Aç
+                  </Text>
+                  <Text style={[listStyles.premiumBannerSub, { color: "#D4A84399" }]}>
+                    {premiumLockedCount} ek vaka · Tek seferlik satın al
+                  </Text>
+                </View>
+                <MaterialIcons name="chevron-right" size={20} color="#D4A843" />
+              </Pressable>
+            )}
+            {premiumPuzzles.map((puzzle, i) => {
+              const isCompleted = completedPuzzleIds.has(puzzle.id);
+              const isLocked = !isPremium;
+              return (
+                <PuzzleCard
+                  key={puzzle.id}
+                  puzzle={puzzle}
+                  onPress={() => {
+                    if (isLocked) {
+                      setShowPaywall(true);
+                    } else {
+                      startPuzzle(puzzle);
+                    }
+                  }}
+                  delay={100 + (freePuzzles.length + i) * 40}
+                  completed={isCompleted && !isLocked}
+                  bestResult={isCompleted && !isLocked ? bestScoreForPuzzle(puzzle.id) : null}
+                  locked={isLocked}
+                />
+              );
+            })}
+          </AccordionSection>
         </ScrollView>
       </>
     );
@@ -395,6 +462,16 @@ export default function VakalarScreen() {
   const bonusCluesRevealedCount = cluesRevealed.filter((idx) => isBonusClue(puzzle, idx)).length;
   const penaltyCount = wrongGuesses + bonusCluesRevealedCount;
   const displayScore = finalScore ?? 0;
+
+  const suspectName = accuseSuspect
+    ? puzzle.suspects.find((s) => s.id === accuseSuspect)?.name ?? null
+    : null;
+  const weaponName = accuWeapon
+    ? puzzle.weapons.find((w) => w.id === accuWeapon)?.name ?? null
+    : null;
+  const locationName = accuLocation
+    ? puzzle.locations.find((l) => l.id === accuLocation)?.name ?? null
+    : null;
 
   return (
     <View style={[gameStyles.container, { backgroundColor: colors.background }]}>
@@ -420,7 +497,7 @@ export default function VakalarScreen() {
           gameStyles.content,
           {
             paddingTop: Platform.OS === "web" ? 67 + 12 : insets.top + 12,
-            paddingBottom: Platform.OS === "web" ? 34 + 80 : insets.bottom + 80,
+            paddingBottom: Platform.OS === "web" ? 34 + 148 : insets.bottom + 148,
           },
         ]}
         showsVerticalScrollIndicator={false}
@@ -497,22 +574,45 @@ export default function VakalarScreen() {
             );
           })}
         </Animated.View>
-
-        {!gameState.isComplete && (
-          <Animated.View entering={FadeInDown.delay(320).springify()}>
-            <AccusationPanel
-              puzzle={puzzle}
-              selectedSuspect={accuseSuspect}
-              selectedWeapon={accuWeapon}
-              selectedLocation={accuLocation}
-              onSelectSuspect={setAccuseSuspect}
-              onSelectWeapon={setAccuWeapon}
-              onSelectLocation={setAccuLocation}
-              onSubmit={handleSubmit}
-            />
-          </Animated.View>
-        )}
       </ScrollView>
+
+      {!gameState.isComplete && (
+        <Animated.View
+          entering={FadeInDown.delay(320).springify()}
+          style={[
+            gameStyles.stickyBarWrapper,
+            {
+              paddingBottom: Platform.OS === "web" ? 34 + 64 : insets.bottom + 64,
+              backgroundColor: colors.background,
+              borderTopColor: colors.border,
+            },
+          ]}
+        >
+          <StickyAccuseBar
+            selectedSuspect={accuseSuspect}
+            selectedWeapon={accuWeapon}
+            selectedLocation={accuLocation}
+            suspectName={suspectName}
+            weaponName={weaponName}
+            locationName={locationName}
+            onOpen={() => setShowSheet(true)}
+          />
+        </Animated.View>
+      )}
+
+      <AccusationSheet
+        visible={showSheet}
+        onClose={() => setShowSheet(false)}
+        puzzle={puzzle}
+        selectedSuspect={accuseSuspect}
+        selectedWeapon={accuWeapon}
+        selectedLocation={accuLocation}
+        onSelectSuspect={setAccuseSuspect}
+        onSelectWeapon={setAccuWeapon}
+        onSelectLocation={setAccuLocation}
+        onSubmit={handleSubmit}
+        disabled={gameState.isComplete}
+      />
 
       <EntityInfoSheet
         visible={selectedEntity !== null}
@@ -655,6 +755,15 @@ const gameStyles = StyleSheet.create({
   container: { flex: 1 },
   scroll: { flex: 1 },
   content: { paddingHorizontal: 10, gap: 16 },
+  stickyBarWrapper: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    bottom: 0,
+    paddingHorizontal: 10,
+    paddingTop: 10,
+    borderTopWidth: StyleSheet.hairlineWidth,
+  },
   puzzleHeader: {
     flexDirection: "row",
     alignItems: "flex-start",
@@ -684,4 +793,56 @@ const gameStyles = StyleSheet.create({
   sectionTitle: { fontSize: 16, fontWeight: "700", marginBottom: 8 },
   gridContainer: { borderRadius: 14, borderWidth: 1, padding: 10, overflow: "hidden" },
   gridWrapper: { minHeight: 240 },
+});
+
+const accordionStyles = StyleSheet.create({
+  wrapper: {
+    gap: 0,
+  },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    borderRadius: 12,
+    borderWidth: 1,
+    paddingHorizontal: 14,
+    paddingVertical: 11,
+    marginBottom: 4,
+  },
+  headerLeft: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+    flex: 1,
+  },
+  headerRight: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+  },
+  accentBar: {
+    width: 3,
+    height: 18,
+    backgroundColor: "#D4A843",
+    borderRadius: 2,
+  },
+  title: {
+    fontSize: 15,
+    fontWeight: "800",
+    letterSpacing: 0.3,
+  },
+  countBadge: {
+    borderRadius: 10,
+    borderWidth: 1,
+    paddingHorizontal: 7,
+    paddingVertical: 1,
+  },
+  countText: {
+    fontSize: 11,
+    fontWeight: "700",
+  },
+  body: {
+    gap: 0,
+    marginBottom: 8,
+  },
 });
