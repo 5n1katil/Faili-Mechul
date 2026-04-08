@@ -453,8 +453,6 @@ export default function DetectiveGrid({
               borderLeftWidth: 1,
               borderRightWidth: 1,
               borderColor: OUTER_BORDER_COLOR,
-              borderTopWidth: wi === 0 ? 0 : 0,
-              borderBottomWidth: wi === weapons.length - 1 ? 0 : 0,
             }}
           >
             {suspects.map((s, si) => {
@@ -562,11 +560,6 @@ export default function DetectiveGrid({
         </View>
       ))}
 
-      {/* ── Bottom outer border ── */}
-      <View style={styles.row}>
-        <View style={{ width: labelWidth }} />
-        <View style={{ flex: 1, height: 1, backgroundColor: OUTER_BORDER_COLOR }} />
-      </View>
     </View>
   );
 }
