@@ -3,12 +3,14 @@ import {
   Dimensions,
   Platform,
   Pressable,
+  Share,
   StyleSheet,
   Text,
   TextInput,
   View,
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
+import * as Clipboard from "expo-clipboard";
 import * as Haptics from "expo-haptics";
 import Animated, {
   Easing,
@@ -23,7 +25,7 @@ import Animated, {
 } from "react-native-reanimated";
 
 import { useColors } from "@/hooks/useColors";
-import type { Puzzle } from "@/data/puzzles";
+import type { Puzzle, GridMark } from "@/data/puzzles";
 
 const AnimatedTextInput = Animated.createAnimatedComponent(TextInput);
 
@@ -33,6 +35,7 @@ interface Props {
   score: number;
   timeSeconds: number;
   mistakes: number;
+  gridState: { [key: string]: GridMark };
   onPlayMore: () => void;
   onClose: () => void;
 }
@@ -41,6 +44,73 @@ function formatTime(s: number): string {
   const m = Math.floor(s / 60);
   const sec = s % 60;
   return `${m}:${sec.toString().padStart(2, "0")}`;
+}
+
+function markToEmoji(mark: GridMark): string {
+  if (mark === "check") return "🟩";
+  if (mark === "cross") return "🟥";
+  if (mark === "question") return "🟨";
+  return "⬛";
+}
+
+function buildShareText(
+  puzzle: Puzzle,
+  success: boolean,
+  score: number,
+  timeSeconds: number,
+  mistakes: number,
+  gridState: { [key: string]: GridMark }
+): string {
+  const lines: string[] = [];
+
+  lines.push(`Faili Meçhul #${puzzle.dayIndex} ${success ? "✅" : "❌"}`);
+
+  if (success) {
+    lines.push(`⏱ ${formatTime(timeSeconds)} | ⭐ ${score} puan | ❌ ${mistakes} hata`);
+  } else {
+    lines.push("Bugün çözemedim...");
+  }
+
+  lines.push("");
+
+  const weaponRows = puzzle.weapons.map((w) => {
+    const suspectCells = puzzle.suspects
+      .map((s) => markToEmoji(gridState[`${w.id}_${s.id}`] ?? "none"))
+      .join("");
+    const locationCells = puzzle.locations
+      .map((l) => markToEmoji(gridState[`${w.id}_${l.id}`] ?? "none"))
+      .join("");
+    return `${suspectCells}  ${locationCells}`;
+  });
+
+  const locationRows = puzzle.locations.map((loc) => {
+    return puzzle.suspects
+      .map((s) => markToEmoji(gridState[`${loc.id}_${s.id}`] ?? "none"))
+      .join("");
+  });
+
+  for (const row of weaponRows) lines.push(row);
+  lines.push("");
+  for (const row of locationRows) lines.push(row);
+
+  lines.push("");
+
+  if (success) {
+    const sol = puzzle.solution;
+    const suspect = puzzle.suspects.find((s) => s.id === sol.suspectId);
+    const weapon = puzzle.weapons.find((w) => w.id === sol.weaponId);
+    const location = puzzle.locations.find((l) => l.id === sol.locationId);
+    lines.push(
+      `👤 ${suspect?.name ?? "?"} | 🔪 ${weapon?.name ?? "?"} | 📍 ${location?.name ?? "?"}`
+    );
+  } else {
+    lines.push("👤 ??? | 🔪 ??? | 📍 ???");
+  }
+
+  lines.push("");
+  lines.push("failimechul.app 🕵️");
+
+  return lines.join("\n");
 }
 
 const CONFETTI_COLORS = [
@@ -186,6 +256,7 @@ export default function ResultScreen({
   score,
   timeSeconds,
   mistakes,
+  gridState,
   onPlayMore,
   onClose,
 }: Props) {
@@ -193,6 +264,7 @@ export default function ResultScreen({
   const scale = useSharedValue(0);
   const opacity = useSharedValue(0);
   const iconScale = useSharedValue(0);
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     scale.value = withSpring(1, { damping: 12 });
@@ -226,6 +298,27 @@ export default function ResultScreen({
   const suspect = puzzle.suspects.find((s) => s.id === solution.suspectId);
   const weapon = puzzle.weapons.find((w) => w.id === solution.weaponId);
   const location = puzzle.locations.find((l) => l.id === solution.locationId);
+
+  const handleShare = async () => {
+    const text = buildShareText(puzzle, success, score, timeSeconds, mistakes, gridState);
+    if (Platform.OS !== "web") {
+      try {
+        await Share.share({ message: text });
+      } catch {
+        // fallback to clipboard if Share fails
+        await Clipboard.setStringAsync(text);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2500);
+      }
+    } else {
+      await Clipboard.setStringAsync(text);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2500);
+    }
+    if (Platform.OS !== "web") {
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    }
+  };
 
   return (
     <View style={[styles.overlay, { backgroundColor: "rgba(0,0,0,0.92)" }]}>
@@ -348,6 +441,26 @@ export default function ResultScreen({
 
         <View style={styles.buttons}>
           <Pressable
+            onPress={handleShare}
+            style={[
+              styles.shareBtn,
+              {
+                backgroundColor: copied ? `${colors.success}22` : `${colors.primary}18`,
+                borderColor: copied ? colors.success : colors.primary,
+              },
+            ]}
+          >
+            <MaterialIcons
+              name={copied ? "check" : "share"}
+              size={18}
+              color={copied ? colors.success : colors.primary}
+            />
+            <Text style={[styles.shareBtnText, { color: copied ? colors.success : colors.primary }]}>
+              {copied ? "Panoya Kopyalandı!" : "Sonucu Paylaş"}
+            </Text>
+          </Pressable>
+
+          <Pressable
             onPress={onPlayMore}
             style={[styles.btn, { backgroundColor: colors.primary }]}
           >
@@ -444,6 +557,20 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     letterSpacing: 1,
     marginTop: 2,
+  },
+  shareBtn: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 12,
+    borderRadius: 12,
+    borderWidth: 1.5,
+    gap: 8,
+    width: "100%",
+  },
+  shareBtnText: {
+    fontSize: 15,
+    fontWeight: "700",
   },
   buttons: {
     width: "100%",

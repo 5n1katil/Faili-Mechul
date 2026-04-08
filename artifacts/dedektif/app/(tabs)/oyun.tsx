@@ -182,6 +182,7 @@ export default function OyunScreen() {
           }
           timeSeconds={timeElapsed}
           mistakes={mistakes}
+          gridState={gridState}
           onPlayMore={handlePlayMore}
           onClose={handleClose}
         />
