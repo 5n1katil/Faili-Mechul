@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import {
   Platform,
   Pressable,
@@ -9,8 +9,10 @@ import {
 import { MaterialIcons } from "@expo/vector-icons";
 import * as Haptics from "expo-haptics";
 import Animated, {
+  interpolateColor,
   useAnimatedStyle,
   useSharedValue,
+  withDelay,
   withSequence,
   withSpring,
   withTiming,
@@ -39,6 +41,7 @@ interface Props {
   onCellPress: (key: string, current: GridMark) => void;
   disabled?: boolean;
   onHeaderPress?: (entity: EntityInfo) => void;
+  isComplete?: boolean;
 }
 
 function getMarkStyle(mark: GridMark) {
@@ -53,17 +56,45 @@ function GridCell({
   onPress,
   disabled,
   cellSize,
+  isComplete,
+  glowDelay,
 }: {
   mark: GridMark;
   onPress: () => void;
   disabled?: boolean;
   cellSize: number;
+  isComplete?: boolean;
+  glowDelay?: number;
 }) {
   const scale = useSharedValue(1);
+  const glowProgress = useSharedValue(0);
 
   const animStyle = useAnimatedStyle(() => ({
     transform: [{ scale: scale.value }],
   }));
+
+  const glowStyle = useAnimatedStyle(() => ({
+    backgroundColor: interpolateColor(
+      glowProgress.value,
+      [0, 1],
+      ["#0a3d1f", "#4ade80"],
+    ),
+  }));
+
+  useEffect(() => {
+    if (isComplete && mark === "check") {
+      glowProgress.value = withDelay(
+        glowDelay ?? 0,
+        withSequence(
+          withTiming(1, { duration: 180 }),
+          withTiming(1, { duration: 220 }),
+          withTiming(0, { duration: 450 }),
+        ),
+      );
+    } else {
+      glowProgress.value = withTiming(0, { duration: 200 });
+    }
+  }, [isComplete]);
 
   const handlePress = () => {
     if (disabled) return;
@@ -79,6 +110,7 @@ function GridCell({
 
   const { bg, border } = getMarkStyle(mark);
   const iconSize = Math.max(10, Math.floor(cellSize * 0.46));
+  const isCheckMark = mark === "check";
 
   return (
     <Pressable onPress={handlePress} disabled={disabled}>
@@ -89,10 +121,11 @@ function GridCell({
             height: cellSize,
             borderWidth: 1,
             borderColor: border,
-            backgroundColor: bg,
+            backgroundColor: isCheckMark ? "#0a3d1f" : bg,
             alignItems: "center",
             justifyContent: "center",
           },
+          isCheckMark ? glowStyle : undefined,
           animStyle,
         ]}
       >
@@ -255,6 +288,7 @@ export default function DetectiveGrid({
   onCellPress,
   disabled,
   onHeaderPress,
+  isComplete,
 }: Props) {
   const [containerWidth, setContainerWidth] = useState(0);
 
@@ -274,6 +308,29 @@ export default function DetectiveGrid({
 
   const mk = (rowId: string, colId: string) => `${rowId}_${colId}`;
 
+  const checkCellGlowMap = useMemo(() => {
+    if (!isComplete) return {} as Record<string, number>;
+    const map: Record<string, number> = {};
+    let idx = 0;
+    for (const weapon of weapons) {
+      for (const s of suspects) {
+        const key = mk(weapon.id, s.id);
+        if (gridState[key] === "check") map[key] = idx++ * 180;
+      }
+      for (const loc of locations) {
+        const key = mk(weapon.id, loc.id);
+        if (gridState[key] === "check") map[key] = idx++ * 180;
+      }
+    }
+    for (const loc of locations) {
+      for (const s of suspects) {
+        const key = mk(loc.id, s.id);
+        if (gridState[key] === "check") map[key] = idx++ * 180;
+      }
+    }
+    return map;
+  }, [isComplete]);
+
   const renderCells = (rowId: string, colEntities: { id: string }[]) =>
     colEntities.map((e, i) => {
       const cellKey = mk(rowId, e.id);
@@ -286,6 +343,8 @@ export default function DetectiveGrid({
             onPress={() => onCellPress(cellKey, cycleNextMark(mark))}
             disabled={disabled}
             cellSize={cellSize}
+            isComplete={isComplete}
+            glowDelay={checkCellGlowMap[cellKey]}
           />
         </React.Fragment>
       );

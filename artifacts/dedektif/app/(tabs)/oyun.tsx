@@ -32,6 +32,12 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 
+function getTimeLimit(difficulty: string): number {
+  if (difficulty === "baskomiser") return 360;
+  if (difficulty === "dedektif") return 480;
+  return 600;
+}
+
 export default function OyunScreen() {
   const colors = useColors();
   const insets = useSafeAreaInsets();
@@ -50,6 +56,8 @@ export default function OyunScreen() {
   const [showResult, setShowResult] = useState(false);
   const [lastResultSuccess, setLastResultSuccess] = useState(false);
   const [selectedEntity, setSelectedEntity] = useState<EntityInfo | null>(null);
+  const [timedOut, setTimedOut] = useState(false);
+  const timedOutRef = useRef(false);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const accusePulse = useSharedValue(1);
@@ -79,7 +87,7 @@ export default function OyunScreen() {
   }, []);
 
   useEffect(() => {
-    if (gameState && !gameState.isComplete && !gameState.isGameOver) {
+    if (gameState && !gameState.isComplete && !gameState.isGameOver && !timedOut) {
       timerRef.current = setInterval(() => {
         tickTimer();
       }, 1000);
@@ -89,7 +97,7 @@ export default function OyunScreen() {
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
     };
-  }, [gameState?.isComplete, gameState?.isGameOver, tickTimer]);
+  }, [gameState?.isComplete, gameState?.isGameOver, timedOut, tickTimer]);
 
   useEffect(() => {
     if (gameState?.isComplete) {
@@ -104,6 +112,31 @@ export default function OyunScreen() {
       setShowResult(true);
     }
   }, [gameState?.isComplete, gameState?.isGameOver, play]);
+
+  useEffect(() => {
+    timedOutRef.current = false;
+    setTimedOut(false);
+    setShowResult(false);
+  }, [gameState?.puzzle?.id]);
+
+  const timeElapsedNow = gameState?.timeElapsed ?? 0;
+  const puzzleDifficulty = gameState?.puzzle?.difficulty ?? "kolay";
+  const timeLimitNow = getTimeLimit(puzzleDifficulty);
+
+  useEffect(() => {
+    if (
+      gameState?.puzzle &&
+      !gameState.isComplete &&
+      !gameState.isGameOver &&
+      !timedOutRef.current &&
+      timeElapsedNow >= timeLimitNow
+    ) {
+      timedOutRef.current = true;
+      setTimedOut(true);
+      setLastResultSuccess(false);
+      setShowResult(true);
+    }
+  }, [timeElapsedNow, gameState?.isComplete, gameState?.isGameOver, gameState?.puzzle?.id]);
 
   if (!gameState || !gameState.puzzle) {
     return (
@@ -142,6 +175,8 @@ export default function OyunScreen() {
   const { puzzle, gridState, cluesRevealed, timeElapsed, mistakes, maxMistakes } =
     gameState;
 
+  const timeLimit = getTimeLimit(puzzle.difficulty);
+  const remainingTime = Math.max(0, timeLimit - timeElapsed);
   const canRevealMore = cluesRevealed[cluesRevealed.length - 1] < puzzle.clues.length - 1;
 
   const handleCellPress = (key: string, nextMark: GridMark) => {
@@ -226,7 +261,7 @@ export default function OyunScreen() {
               {puzzle.title}
             </Text>
             <TimerDisplay
-              seconds={timeElapsed}
+              seconds={remainingTime}
               mistakes={mistakes}
               maxMistakes={maxMistakes}
             />
@@ -253,8 +288,9 @@ export default function OyunScreen() {
                 locations={puzzle.locations}
                 gridState={gridState}
                 onCellPress={handleCellPress}
-                disabled={gameState.isComplete || gameState.isGameOver}
+                disabled={gameState.isComplete || gameState.isGameOver || timedOut}
                 onHeaderPress={setSelectedEntity}
+                isComplete={gameState.isComplete}
               />
             </View>
           </View>
@@ -263,7 +299,7 @@ export default function OyunScreen() {
         <Animated.View entering={FadeInDown.delay(240).springify()}>
           <View style={styles.cluesHeader}>
             <Text style={[styles.sectionTitle, { color: colors.foreground }]}>İpuçları</Text>
-            {canRevealMore && !gameState.isComplete && !gameState.isGameOver && (
+            {canRevealMore && !gameState.isComplete && !gameState.isGameOver && !timedOut && (
               <Pressable
                 onPress={handleRevealClue}
                 style={[styles.revealAllBtn, { borderColor: colors.border }]}
@@ -291,7 +327,7 @@ export default function OyunScreen() {
         </Animated.View>
       </ScrollView>
 
-      {!gameState.isComplete && !gameState.isGameOver && (
+      {!gameState.isComplete && !gameState.isGameOver && !timedOut && (
         <View
           style={[
             styles.footer,

@@ -69,7 +69,7 @@ export default function TimerDisplay({ seconds, mistakes, maxMistakes }: Props) 
   const timerScale = useSharedValue(1);
   const prevMistakesRef = useRef(mistakes);
 
-  const isCritical = mistakes > 0 && mistakes >= maxMistakes - 1;
+  const isCritical = seconds > 0 && seconds <= 30;
 
   useEffect(() => {
     if (mistakes > prevMistakesRef.current) {
