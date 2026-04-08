@@ -83,8 +83,8 @@ const M_OUTER = "#FFFFFF50";
 const M_BLKDIV = "#FFFFFF80";
 const M_CELLSEP = "#FFFFFF2A";
 
-const MINI_CELL = 26;
-const MINI_LABEL = 26;
+const MINI_CELL = 22;
+const MINI_LABEL = 22;
 const MINI_DIV = 2;
 
 const MINI_SUSPECTS = [
@@ -134,9 +134,10 @@ function MiniCell({ mark }: { mark: CellMark }) {
 }
 
 function MiniColIcon({ icon, color, bg }: { icon: string; color: string; bg: string }) {
-  const avSz = Math.max(18, Math.floor(MINI_CELL * 0.78));
+  const avSz = Math.max(16, Math.floor(MINI_CELL * 0.78));
+  const colH = Math.max(24, Math.floor(MINI_CELL * 1.3));
   return (
-    <View style={{ width: MINI_CELL, height: 36, alignItems: "center", justifyContent: "flex-end", paddingBottom: 4 }}>
+    <View style={{ width: MINI_CELL, height: colH, alignItems: "center", justifyContent: "flex-end", paddingBottom: 3 }}>
       <View style={{ width: avSz, height: avSz, borderRadius: avSz / 2, borderWidth: 1.5, borderColor: color + "AA", backgroundColor: bg, alignItems: "center", justifyContent: "center" }}>
         <MaterialIcons name={icon as ComponentProps<typeof MaterialIcons>["name"]} size={Math.floor(avSz * 0.54)} color={color} />
       </View>
@@ -181,12 +182,18 @@ function MiniGrid() {
         {/* Row 2: Column icons */}
         <View style={miniStyles.row}>
           <View style={{ width: MINI_LABEL }} />
-          {MINI_SUSPECTS.map((s) => (
-            <MiniColIcon key={s.id} icon={s.icon} color={M_S_COLOR} bg={M_S_BG} />
+          {MINI_SUSPECTS.map((s, i) => (
+            <React.Fragment key={s.id}>
+              {i > 0 && <View style={{ width: 1, backgroundColor: M_CELLSEP }} />}
+              <MiniColIcon icon={s.icon} color={M_S_COLOR} bg={M_S_BG} />
+            </React.Fragment>
           ))}
           <View style={{ width: MINI_DIV + 2, backgroundColor: M_BLKDIV }} />
-          {MINI_LOCATIONS.map((l) => (
-            <MiniColIcon key={l.id} icon={l.icon} color={M_L_COLOR} bg={M_L_BG} />
+          {MINI_LOCATIONS.map((l, i) => (
+            <React.Fragment key={l.id}>
+              {i > 0 && <View style={{ width: 1, backgroundColor: M_CELLSEP }} />}
+              <MiniColIcon icon={l.icon} color={M_L_COLOR} bg={M_L_BG} />
+            </React.Fragment>
           ))}
         </View>
 
@@ -363,7 +370,7 @@ export default function OnboardingScreen({ visible, onDone, closeLabel }: Props)
           key={key}
           entering={FadeIn.duration(260)}
           exiting={FadeOut.duration(160)}
-          style={styles.slideArea}
+          style={[styles.slideArea, slide.showGrid && { gap: 6 }]}
         >
           {slide.showGrid ? (
             <MiniGrid />
@@ -387,12 +394,12 @@ export default function OnboardingScreen({ visible, onDone, closeLabel }: Props)
               : slide.subtitle.toLocaleUpperCase("tr-TR")}
           </Text>
           <Text style={styles.slideTitle}>{slide.title}</Text>
-          <Text style={styles.slideBody}>{slide.body}</Text>
+          <Text style={[styles.slideBody, slide.showGrid && { fontSize: 13, lineHeight: 21 }]}>{slide.body}</Text>
 
           {slide.tip && (
-            <View style={styles.tipBox}>
-              <MaterialIcons name="info-outline" size={16} color="#D4A843" />
-              <Text style={styles.tipText}>{slide.tip}</Text>
+            <View style={[styles.tipBox, slide.showGrid && { paddingVertical: 8, marginTop: 0 }]}>
+              <MaterialIcons name="info-outline" size={15} color="#D4A843" />
+              <Text style={[styles.tipText, slide.showGrid && { fontSize: 12, lineHeight: 18 }]}>{slide.tip}</Text>
             </View>
           )}
         </Animated.View>
