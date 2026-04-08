@@ -38,8 +38,8 @@ const SLIDES: Slide[] = [
     title: "Faili Meçhul'e Hoş Geldin!",
     subtitle: "Dedektif Bulmaca Oyunu",
     subtitleNoUppercase: true,
-    body: "Her bulmacada çözmen gereken bir cinayet gizemi seni bekliyor... Şüpheliler, silahlar ve mekanlar arasından doğru kombinasyonu en kısa zamanda bul, diğer dedektifler ile yarışarak liderlik tablosunda adını efsaneler arasına yazdır.",
-    tip: "Yanlış tahminler zaman cezasına dönüşür — dikkatli ol!",
+    body: "Faili Meçhul, mantık yürütme ile cinayet gizemini birleştiren dedüksiyon temelli bir dedektif bulmaca oyunudur.\n\nHer vakada Kim? Nerede? Neyle? sorularının tek doğru cevabını, ipuçlarını eleyerek ve dedektif ızgarasını doğru kullanarak bulman gerekir.\n\nŞüpheliler, silahlar ve mekanlar arasından doğru kombinasyonu en kısa zamanda bul, diğer dedektifler ile yarışarak liderlik tablosunda adını efsaneler arasına yazdır.",
+    tip: "Unutma dedektif, suçu kanıtlanana kadar herkes masumdur...",
   },
   {
     icon: "grid-on",
