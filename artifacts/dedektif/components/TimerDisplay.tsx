@@ -24,6 +24,10 @@ function formatTime(seconds: number): string {
   return `${m.toString().padStart(2, "0")}:${s.toString().padStart(2, "0")}`;
 }
 
+function penaltyForGuess(n: number): number {
+  return 30 * Math.pow(2, n - 1);
+}
+
 export default function TimerDisplay({ seconds, wrongGuesses, penaltySeconds }: Props) {
   const colors = useColors();
   const translateX = useSharedValue(0);
@@ -85,6 +89,11 @@ export default function TimerDisplay({ seconds, wrongGuesses, penaltySeconds }: 
   const timerColor = isCritical ? "#FF3333" : colors.primary;
   const timerTextColor = isCritical ? "#FF3333" : colors.foreground;
 
+  const penaltyBadges = Array.from({ length: wrongGuesses }, (_, i) => ({
+    n: i + 1,
+    secs: penaltyForGuess(i + 1),
+  }));
+
   return (
     <Animated.View
       style={[
@@ -102,24 +111,23 @@ export default function TimerDisplay({ seconds, wrongGuesses, penaltySeconds }: 
 
       <View style={[styles.divider, { backgroundColor: colors.border }]} />
 
-      <Animated.View style={[styles.item, penaltyItemStyle]}>
-        <MaterialIcons
-          name="gavel"
-          size={16}
-          color={wrongGuesses > 0 ? "#f97316" : colors.mutedForeground}
-        />
-        <Text
-          style={[
-            styles.wrongValue,
-            { color: wrongGuesses > 0 ? "#f97316" : colors.mutedForeground },
-          ]}
-        >
-          {wrongGuesses}
-        </Text>
-        {penaltySeconds > 0 && (
-          <Text style={[styles.penaltyText, { color: "#f97316" }]}>
-            +{penaltySeconds}s
-          </Text>
+      <Animated.View style={[styles.penaltySection, penaltyItemStyle]}>
+        {penaltyBadges.length === 0 ? (
+          <View style={styles.item}>
+            <MaterialIcons name="gavel" size={16} color={colors.mutedForeground} />
+            <Text style={[styles.wrongValue, { color: colors.mutedForeground }]}>0</Text>
+          </View>
+        ) : (
+          penaltyBadges.map((badge) => (
+            <View
+              key={badge.n}
+              style={[styles.badge, { backgroundColor: "#f9731622" }]}
+            >
+              <Text style={styles.badgeEmoji}>⚡</Text>
+              <Text style={styles.badgeLabel}>×{badge.n}</Text>
+              <Text style={styles.badgeSecs}>+{badge.secs}s</Text>
+            </View>
+          ))
         )}
       </Animated.View>
     </Animated.View>
@@ -134,7 +142,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     paddingHorizontal: 16,
     paddingVertical: 10,
-    gap: 16,
+    gap: 12,
   },
   item: {
     flexDirection: "row",
@@ -151,9 +159,33 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     fontVariant: ["tabular-nums"],
   },
-  penaltyText: {
+  penaltySection: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+    flexWrap: "wrap",
+    flex: 1,
+  },
+  badge: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderRadius: 6,
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    gap: 2,
+  },
+  badgeEmoji: {
     fontSize: 12,
+  },
+  badgeLabel: {
+    fontSize: 11,
     fontWeight: "700",
+    color: "#f97316",
+  },
+  badgeSecs: {
+    fontSize: 10,
+    fontWeight: "600",
+    color: "#f9731699",
   },
   divider: {
     width: 1,
