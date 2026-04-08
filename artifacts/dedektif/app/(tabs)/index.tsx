@@ -23,6 +23,8 @@ import {
 } from "@/data/puzzles";
 import Animated, { FadeInDown } from "react-native-reanimated";
 import OnboardingScreen from "@/components/OnboardingScreen";
+import PaywallModal from "@/components/PaywallModal";
+import { usePurchase } from "@/context/PurchaseContext";
 
 const ONBOARDING_KEY = "@dedektif_onboarding_done";
 
@@ -38,12 +40,14 @@ function PuzzleCard({
   delay,
   completed,
   bestResult,
+  locked,
 }: {
   puzzle: (typeof PUZZLES)[0];
   onPress: () => void;
   delay: number;
   completed: boolean;
   bestResult: BestResult | null;
+  locked?: boolean;
 }) {
   const colors = useColors();
   const diffColor = getDifficultyColor(puzzle.difficulty as Difficulty);
@@ -55,11 +59,11 @@ function PuzzleCard({
         style={({ pressed }) => [
           styles.puzzleCard,
           {
-            backgroundColor: colors.card,
-            borderColor: completed ? `${colors.success}55` : colors.border,
+            backgroundColor: locked ? `${colors.card}CC` : colors.card,
+            borderColor: completed ? `${colors.success}55` : locked ? `#D4A84333` : colors.border,
             opacity: pressed ? 0.75 : 1,
           },
-          completed && { backgroundColor: `${colors.success}08` },
+          completed && !locked && { backgroundColor: `${colors.success}08` },
         ]}
       >
         <View style={styles.puzzleCardTop}>
@@ -69,7 +73,12 @@ function PuzzleCard({
             </Text>
           </View>
           <View style={styles.puzzleCardRight}>
-            {completed ? (
+            {locked ? (
+              <View style={[styles.lockBadge, { backgroundColor: "#D4A84322", borderColor: "#D4A84366" }]}>
+                <MaterialIcons name="lock" size={12} color="#D4A843" />
+                <Text style={[styles.lockText, { color: "#D4A843" }]}>Premium</Text>
+              </View>
+            ) : completed ? (
               <View style={[styles.solvedBadge, { backgroundColor: `${colors.success}22`, borderColor: `${colors.success}55` }]}>
                 <MaterialIcons name="check-circle" size={12} color={colors.success} />
                 <Text style={[styles.solvedText, { color: colors.success }]}>Çözüldü</Text>
@@ -84,13 +93,23 @@ function PuzzleCard({
             )}
           </View>
         </View>
-        <Text style={[styles.puzzleTitle, { color: colors.foreground }]} numberOfLines={2}>
+        <Text
+          style={[styles.puzzleTitle, { color: locked ? colors.mutedForeground : colors.foreground }]}
+          numberOfLines={2}
+        >
           {puzzle.title}
         </Text>
-        <Text style={[styles.puzzleStory, { color: colors.mutedForeground }]} numberOfLines={2}>
-          {puzzle.story}
-        </Text>
-        {completed && bestResult ? (
+        {!locked && (
+          <Text style={[styles.puzzleStory, { color: colors.mutedForeground }]} numberOfLines={2}>
+            {puzzle.story}
+          </Text>
+        )}
+        {locked ? (
+          <View style={[styles.playRow, { borderTopColor: colors.border }]}>
+            <Text style={[styles.playText, { color: "#D4A843" }]}>Kilidi açmak için dokun</Text>
+            <MaterialIcons name="lock-open" size={20} color="#D4A843" />
+          </View>
+        ) : completed && bestResult ? (
           <View style={[styles.bestResultRow, { borderTopColor: colors.border }]}>
             <View style={styles.bestResultItem}>
               <MaterialIcons name="emoji-events" size={13} color={colors.primary} />
@@ -140,9 +159,11 @@ export default function HomeScreen() {
   const colors = useColors();
   const insets = useSafeAreaInsets();
   const { profile, gameHistory, startDailyPuzzle, startPuzzle, completedPuzzleIds, bestScoreForPuzzle } = useGame();
+  const { isPremium } = usePurchase();
   const countdown = useDailyCountdown();
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [helpBtnOpen, setHelpBtnOpen] = useState(false);
+  const [showPaywall, setShowPaywall] = useState(false);
 
   const dailyPuzzle = getDailyPuzzle();
   const todayStr = new Date().toISOString().split("T")[0];
@@ -294,21 +315,41 @@ export default function HomeScreen() {
           </View>
         </Animated.View>
 
-        <Text style={[styles.sectionTitle, { color: colors.foreground }]}>Diğer Bulmacalar</Text>
+        <View style={[styles.sectionTitleRow]}>
+          <Text style={[styles.sectionTitle, { color: colors.foreground }]}>Diğer Bulmacalar</Text>
+          {!isPremium && (
+            <Pressable
+              onPress={() => setShowPaywall(true)}
+              style={[styles.premiumChip, { backgroundColor: "#D4A84318", borderColor: "#D4A84355" }]}
+            >
+              <MaterialIcons name="lock" size={12} color="#D4A843" />
+              <Text style={[styles.premiumChipText, { color: "#D4A843" }]}>Vaka Arşivi</Text>
+            </Pressable>
+          )}
+        </View>
         {otherPuzzles.map((puzzle, i) => {
           const isCompleted = completedPuzzleIds.has(puzzle.id);
+          const isLocked = !isPremium;
           return (
             <PuzzleCard
               key={puzzle.id}
               puzzle={puzzle}
-              onPress={() => handlePuzzlePlay(puzzle)}
+              onPress={() => {
+                if (isLocked) {
+                  setShowPaywall(true);
+                } else {
+                  handlePuzzlePlay(puzzle);
+                }
+              }}
               delay={300 + i * 60}
-              completed={isCompleted}
-              bestResult={isCompleted ? bestScoreForPuzzle(puzzle.id) : null}
+              completed={isCompleted && !isLocked}
+              bestResult={isCompleted && !isLocked ? bestScoreForPuzzle(puzzle.id) : null}
+              locked={isLocked}
             />
           );
         })}
       </ScrollView>
+      <PaywallModal visible={showPaywall} onClose={() => setShowPaywall(false)} />
     </>
   );
 }
@@ -404,7 +445,23 @@ const styles = StyleSheet.create({
   },
   statValue: { fontSize: 22, fontWeight: "700" },
   statLabel: { fontSize: 11, fontWeight: "500" },
-  sectionTitle: { fontSize: 18, fontWeight: "700", marginTop: 4 },
+  sectionTitleRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginTop: 4,
+  },
+  sectionTitle: { fontSize: 18, fontWeight: "700" },
+  premiumChip: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderRadius: 8,
+    borderWidth: 1,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    gap: 4,
+  },
+  premiumChipText: { fontSize: 11, fontWeight: "700" },
   puzzleCard: {
     borderRadius: 14,
     borderWidth: 1,
@@ -435,6 +492,16 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   solvedText: { fontSize: 11, fontWeight: "700" },
+  lockBadge: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderRadius: 6,
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+    borderWidth: 1,
+    gap: 4,
+  },
+  lockText: { fontSize: 11, fontWeight: "700" },
   playRow: {
     flexDirection: "row",
     justifyContent: "space-between",

@@ -45,11 +45,24 @@ Turkish Murdle-style detective deduction puzzle game built with Expo React Nativ
 - To build for production: `cd artifacts/dedektif && eas build --profile production --platform ios`
 - To submit to App Store: `eas submit --profile production --platform ios`
 
+### Revenue Model (IAP)
+
+- **Free**: Daily puzzle always accessible (no account needed)
+- **Vaka Arşivi** (₺79,99 one-time): unlocks all current and future puzzles
+  - Gold 🔱 Baş Dedektif emblem on leaderboard
+  - Daily bonus hint
+  - 10% score multiplier
+- SDK: `react-native-purchases` (RevenueCat) — gracefully stubs on web
+- Entitlement ID: `premium` | Product ID: `com.failimechul.dedektif.vaka_arsivi`
+- Env vars: `EXPO_PUBLIC_REVENUECAT_IOS_KEY`, `EXPO_PUBLIC_REVENUECAT_ANDROID_KEY`
+
 ### Key App Files
 
 - `artifacts/dedektif/app/(tabs)/` — screens: index (home), oyun (game), liderlik (leaderboard), profil (profile)
 - `artifacts/dedektif/components/DetectiveGrid.tsx` — L-shaped Murdle deduction grid
+- `artifacts/dedektif/components/PaywallModal.tsx` — noir-themed paywall bottom sheet
 - `artifacts/dedektif/context/GameContext.tsx` — game state, scoring, streak, badges
+- `artifacts/dedektif/context/PurchaseContext.tsx` — RevenueCat IAP context (web stub + native)
 - `artifacts/dedektif/data/puzzles.ts` — 20 Turkish puzzles, daily puzzle system
 - `artifacts/dedektif/app.json` — Expo config with full App Store metadata
 - `artifacts/dedektif/eas.json` — EAS build configuration

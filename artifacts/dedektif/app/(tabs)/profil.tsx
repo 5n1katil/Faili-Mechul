@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import type { ComponentProps } from "react";
 import {
+  ActivityIndicator,
   Linking,
   Platform,
   Pressable,
@@ -17,7 +18,9 @@ import { useColors } from "@/hooks/useColors";
 import { useGame } from "@/context/GameContext";
 import Animated, { FadeInDown } from "react-native-reanimated";
 import OnboardingScreen from "@/components/OnboardingScreen";
+import PaywallModal from "@/components/PaywallModal";
 import { soundSettings } from "@/utils/soundSettings";
+import { usePurchase } from "@/context/PurchaseContext";
 
 type MaterialIconName = ComponentProps<typeof MaterialIcons>["name"];
 
@@ -48,11 +51,15 @@ export default function ProfilScreen() {
   const colors = useColors();
   const insets = useSafeAreaInsets();
   const { profile, gameHistory, updateProfile } = useGame();
+  const { isPremium, restorePurchases } = usePurchase();
 
   const [editingName, setEditingName] = useState(false);
   const [tempName, setTempName] = useState(profile.name);
   const [showHowToPlay, setShowHowToPlay] = useState(false);
+  const [showPaywall, setShowPaywall] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(() => soundSettings.enabled);
+  const [restoring, setRestoring] = useState(false);
+  const [restoreMsg, setRestoreMsg] = useState<{ text: string; ok: boolean } | null>(null);
 
   useEffect(() => {
     soundSettings.refresh().then((val) => setSoundEnabled(val));
@@ -77,6 +84,14 @@ export default function ProfilScreen() {
     setEditingName(false);
   };
 
+  const handleRestore = async () => {
+    setRestoring(true);
+    setRestoreMsg(null);
+    const result = await restorePurchases();
+    setRestoring(false);
+    setRestoreMsg({ text: result.message, ok: result.success });
+  };
+
   return (
     <>
       <OnboardingScreen
@@ -84,6 +99,7 @@ export default function ProfilScreen() {
         onDone={() => setShowHowToPlay(false)}
         closeLabel="Kapat"
       />
+      <PaywallModal visible={showPaywall} onClose={() => setShowPaywall(false)} />
       <ScrollView
         style={[styles.container, { backgroundColor: colors.background }]}
         contentContainerStyle={[
@@ -202,6 +218,74 @@ export default function ProfilScreen() {
             />
           </View>
         </Animated.View>
+
+        <Animated.View entering={FadeInDown.delay(260).springify()}>
+          {isPremium ? (
+            <View style={[styles.premiumActiveCard, { backgroundColor: "#D4A84310", borderColor: "#D4A84344" }]}>
+              <View style={[styles.howToPlayIcon, { backgroundColor: "#D4A84322" }]}>
+                <MaterialIcons name="local-police" size={22} color="#D4A843" />
+              </View>
+              <View style={styles.howToPlayInfo}>
+                <Text style={[styles.howToPlayTitle, { color: "#D4A843" }]}>🔱 Baş Dedektif</Text>
+                <Text style={[styles.howToPlayDesc, { color: colors.mutedForeground }]}>
+                  Vaka Arşivi aktif · Tüm vakalar açık
+                </Text>
+              </View>
+              <MaterialIcons name="verified" size={22} color="#D4A843" />
+            </View>
+          ) : (
+            <Pressable
+              onPress={() => setShowPaywall(true)}
+              style={({ pressed }) => [
+                styles.howToPlayBtn,
+                { backgroundColor: "#D4A84310", borderColor: "#D4A84344", opacity: pressed ? 0.75 : 1 },
+              ]}
+            >
+              <View style={[styles.howToPlayIcon, { backgroundColor: "#D4A84318" }]}>
+                <MaterialIcons name="lock-open" size={22} color="#D4A843" />
+              </View>
+              <View style={styles.howToPlayInfo}>
+                <Text style={[styles.howToPlayTitle, { color: "#D4A843" }]}>Vaka Arşivini Aç</Text>
+                <Text style={[styles.howToPlayDesc, { color: colors.mutedForeground }]}>
+                  Tüm vakalar · Tek seferlik · ₺79,99
+                </Text>
+              </View>
+              <MaterialIcons name="chevron-right" size={22} color="#D4A843" />
+            </Pressable>
+          )}
+        </Animated.View>
+
+        {!isPremium && (
+          <Animated.View entering={FadeInDown.delay(265).springify()}>
+            <Pressable
+              onPress={handleRestore}
+              disabled={restoring}
+              style={({ pressed }) => [
+                styles.restoreBtn,
+                { backgroundColor: colors.card, borderColor: colors.border, opacity: (pressed || restoring) ? 0.6 : 1 },
+              ]}
+            >
+              {restoring ? (
+                <ActivityIndicator size="small" color={colors.mutedForeground} />
+              ) : (
+                <MaterialIcons name="restore" size={18} color={colors.mutedForeground} />
+              )}
+              <View style={styles.howToPlayInfo}>
+                <Text style={[styles.howToPlayTitle, { color: colors.foreground }]}>Satın Almalarımı Geri Yükle</Text>
+                {restoreMsg && (
+                  <Text style={[styles.howToPlayDesc, { color: restoreMsg.ok ? colors.success : colors.accent }]}>
+                    {restoreMsg.text}
+                  </Text>
+                )}
+                {!restoreMsg && (
+                  <Text style={[styles.howToPlayDesc, { color: colors.mutedForeground }]}>
+                    Önceki satın almayı geri yükle
+                  </Text>
+                )}
+              </View>
+            </Pressable>
+          </Animated.View>
+        )}
 
         <Animated.View entering={FadeInDown.delay(270).springify()}>
           <Pressable
@@ -356,6 +440,22 @@ const styles = StyleSheet.create({
   badgeLabel: { fontSize: 13, fontWeight: "700", textAlign: "center" },
   badgeDesc: { fontSize: 11, textAlign: "center", lineHeight: 16 },
   howToPlayBtn: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderRadius: 14,
+    borderWidth: 1,
+    padding: 14,
+    gap: 14,
+  },
+  premiumActiveCard: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderRadius: 14,
+    borderWidth: 1.5,
+    padding: 14,
+    gap: 14,
+  },
+  restoreBtn: {
     flexDirection: "row",
     alignItems: "center",
     borderRadius: 14,
