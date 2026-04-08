@@ -19,28 +19,17 @@ import type { GridMark, Suspect, Weapon, Location } from "@/data/puzzles";
 import type { EntityInfo } from "@/components/EntityInfoSheet";
 import type { ComponentProps } from "react";
 
-// ─── Entity colors ───────────────────────────────────────────────────────────
 const SUSPECT_COLOR = "#A855F7";
 const WEAPON_COLOR = "#C8372D";
 const LOCATION_COLOR = "#D4A843";
 
-// Richer avatar backgrounds (more saturated / less transparent)
 const SUSPECT_BG = "#2A1050";
 const WEAPON_BG = "#3D1212";
 const LOCATION_BG = "#3A2800";
 
-// ─── Grid chrome colors ──────────────────────────────────────────────────────
-const OUTER_BORDER_COLOR = "#FFFFFF50";   // 31% — clearly visible outer frame
-const BLOCK_DIVIDER_COLOR = "#FFFFFF80";  // 50% — strong section divider
-const CELL_SEP_COLOR = "#FFFFFF2A";       // 17% — subtle but visible cell grid
-
-// ─── Cell state colors ───────────────────────────────────────────────────────
-function getMarkStyle(mark: GridMark) {
-  if (mark === "check")    return { bg: "#0a3d1f", border: "#22c55e99" };
-  if (mark === "cross")    return { bg: "#3b0f0f", border: "#ef444499" };
-  if (mark === "question") return { bg: "#1f1600", border: "#D4A84399" };
-  return { bg: "#FFFFFF08", border: CELL_SEP_COLOR };
-}
+const OUTER_BORDER_COLOR = "#FFFFFF50";
+const BLOCK_DIVIDER_COLOR = "#FFFFFF80";
+const CELL_SEP_COLOR = "#FFFFFF2A";
 
 interface Props {
   suspects: Suspect[];
@@ -52,7 +41,13 @@ interface Props {
   onHeaderPress?: (entity: EntityInfo) => void;
 }
 
-// ─── GridCell ─────────────────────────────────────────────────────────────────
+function getMarkStyle(mark: GridMark) {
+  if (mark === "check")    return { bg: "#0a3d1f", border: "#22c55e99" };
+  if (mark === "cross")    return { bg: "#3b0f0f", border: "#ef444499" };
+  if (mark === "question") return { bg: "#1f1600", border: "#D4A84399" };
+  return { bg: "#FFFFFF08", border: "#FFFFFF22" };
+}
+
 function GridCell({
   mark,
   onPress,
@@ -124,7 +119,6 @@ function GridCell({
   );
 }
 
-// ─── EntityLabel (shared for top-header & left row labels) ───────────────────
 function EntityLabel({
   icon,
   name,
@@ -286,7 +280,6 @@ function EntityLabel({
   );
 }
 
-// ─── Main component ───────────────────────────────────────────────────────────
 export default function DetectiveGrid({
   suspects,
   weapons,
@@ -296,8 +289,6 @@ export default function DetectiveGrid({
   disabled,
   onHeaderPress,
 }: Props) {
-  // Use onLayout to measure the ACTUAL container width (avoids overflow from
-  // parent padding/border that useWindowDimensions cannot account for)
   const [containerWidth, setContainerWidth] = useState(0);
 
   const { cellSize, labelWidth } = useMemo(() => {
@@ -351,7 +342,6 @@ export default function DetectiveGrid({
     >
       {containerWidth === 0 ? null : (
         <>
-          {/* ── Column group labels ── */}
           <View style={styles.row}>
             <View style={{ width: labelWidth }} />
             <View style={{ width: suspectBlockOuter, alignItems: "center" }}>
@@ -363,7 +353,6 @@ export default function DetectiveGrid({
             </View>
           </View>
 
-          {/* ── Top entity avatars ── */}
           <View style={styles.row}>
             <View style={{ width: labelWidth }} />
             {suspects.map((s) => (
@@ -387,7 +376,6 @@ export default function DetectiveGrid({
             ))}
           </View>
 
-          {/* ── SİLAHLAR section label + top border ── */}
           <View style={styles.row}>
             <View style={[styles.sectionLabel, { width: labelWidth, borderLeftColor: WEAPON_COLOR }]}>
               <Text style={[styles.sectionLabelText, { color: WEAPON_COLOR }]}>SİLAHLAR</Text>
@@ -395,7 +383,6 @@ export default function DetectiveGrid({
             <View style={{ width: weaponBlockOuter, height: 1, backgroundColor: OUTER_BORDER_COLOR }} />
           </View>
 
-          {/* ── Weapon rows ── */}
           {weapons.map((weapon) => (
             <View key={weapon.id} style={styles.row}>
               <EntityLabel
@@ -412,20 +399,17 @@ export default function DetectiveGrid({
             </View>
           ))}
 
-          {/* ── Horizontal block divider ── */}
           <View style={styles.row}>
             <View style={{ width: labelWidth }} />
             <View style={{ width: weaponBlockOuter, height: 2, backgroundColor: BLOCK_DIVIDER_COLOR }} />
           </View>
 
-          {/* ── MEKANLAR section label ── */}
           <View style={styles.row}>
             <View style={[styles.sectionLabel, { width: labelWidth, borderLeftColor: LOCATION_COLOR }]}>
               <Text style={[styles.sectionLabelText, { color: LOCATION_COLOR }]}>MEKANLAR</Text>
             </View>
           </View>
 
-          {/* ── Location rows (L-shape: suspect columns only) ── */}
           {locations.map((location, li) => (
             <View key={location.id} style={styles.row}>
               <EntityLabel
