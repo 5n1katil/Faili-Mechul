@@ -31,9 +31,9 @@ interface RankEntry {
 }
 
 const SORT_TABS: { key: SortKey; label: string; icon: MaterialIconName }[] = [
-  { key: "score",  label: "Puan",  icon: "emoji-events"         },
-  { key: "cases",  label: "Vaka",  icon: "folder-special"       },
-  { key: "streak", label: "Seri",  icon: "local-fire-department" },
+  { key: "score",  label: "🏆 Puan", icon: "emoji-events"          },
+  { key: "cases",  label: "📁 Vaka", icon: "folder-special"        },
+  { key: "streak", label: "🔥 Seri", icon: "local-fire-department" },
 ];
 
 function sortEntries(entries: RankEntry[], key: SortKey): RankEntry[] {
