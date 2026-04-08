@@ -36,7 +36,7 @@ export default function TimerDisplay({ seconds, wrongGuesses, penaltySeconds }: 
   const flashOpacity = useSharedValue(0);
   const prevWrongRef = useRef(wrongGuesses);
 
-  const isCritical = seconds > 0 && seconds <= 30;
+  const isCritical = seconds > 0 && seconds <= 60;
 
   useEffect(() => {
     if (wrongGuesses > prevWrongRef.current) {

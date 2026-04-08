@@ -27,6 +27,7 @@ import PaywallModal from "@/components/PaywallModal";
 import { usePurchase } from "@/context/PurchaseContext";
 
 const ONBOARDING_KEY = "@dedektif_onboarding_done";
+const FREE_PUZZLE_COUNT = 10;
 
 function formatTime(s: number): string {
   const m = Math.floor(s / 60);
@@ -59,29 +60,63 @@ function PuzzleCard({
         style={({ pressed }) => [
           styles.puzzleCard,
           {
-            backgroundColor: locked ? `${colors.card}CC` : colors.card,
-            borderColor: completed ? `${colors.success}55` : locked ? `#D4A84333` : colors.border,
-            opacity: pressed ? 0.75 : 1,
+            backgroundColor: colors.card,
+            borderColor: completed
+              ? `${colors.success}55`
+              : locked
+              ? "#D4A84322"
+              : colors.border,
+            opacity: pressed ? 0.78 : 1,
           },
           completed && !locked && { backgroundColor: `${colors.success}08` },
+          locked && { borderStyle: "dashed" as const },
         ]}
       >
+        {locked && (
+          <View style={styles.lockedOverlay} pointerEvents="none">
+            <View style={[styles.lockIconCircle, { backgroundColor: "#D4A84318", borderColor: "#D4A84355" }]}>
+              <MaterialIcons name="lock" size={22} color="#D4A843" />
+            </View>
+          </View>
+        )}
         <View style={styles.puzzleCardTop}>
-          <View style={[styles.diffBadge, { backgroundColor: `${diffColor}22`, borderColor: `${diffColor}66` }]}>
+          <View
+            style={[
+              styles.diffBadge,
+              {
+                backgroundColor: `${diffColor}22`,
+                borderColor: `${diffColor}66`,
+              },
+            ]}
+          >
             <Text style={[styles.diffText, { color: diffColor }]}>
               {getDifficultyLabel(puzzle.difficulty as Difficulty)}
             </Text>
           </View>
           <View style={styles.puzzleCardRight}>
             {locked ? (
-              <View style={[styles.lockBadge, { backgroundColor: "#D4A84322", borderColor: "#D4A84366" }]}>
-                <MaterialIcons name="lock" size={12} color="#D4A843" />
+              <View
+                style={[
+                  styles.lockBadge,
+                  { backgroundColor: "#D4A84322", borderColor: "#D4A84366" },
+                ]}
+              >
                 <Text style={[styles.lockText, { color: "#D4A843" }]}>Premium</Text>
               </View>
             ) : completed ? (
-              <View style={[styles.solvedBadge, { backgroundColor: `${colors.success}22`, borderColor: `${colors.success}55` }]}>
+              <View
+                style={[
+                  styles.solvedBadge,
+                  {
+                    backgroundColor: `${colors.success}22`,
+                    borderColor: `${colors.success}55`,
+                  },
+                ]}
+              >
                 <MaterialIcons name="check-circle" size={12} color={colors.success} />
-                <Text style={[styles.solvedText, { color: colors.success }]}>Çözüldü</Text>
+                <Text style={[styles.solvedText, { color: colors.success }]}>
+                  Çözüldü
+                </Text>
               </View>
             ) : (
               <View style={styles.puzzleCardMeta}>
@@ -93,37 +128,56 @@ function PuzzleCard({
             )}
           </View>
         </View>
+
         <Text
-          style={[styles.puzzleTitle, { color: locked ? colors.mutedForeground : colors.foreground }]}
+          style={[
+            styles.puzzleTitle,
+            { color: locked ? colors.mutedForeground : colors.foreground },
+          ]}
           numberOfLines={2}
         >
           {puzzle.title}
         </Text>
+
         {!locked && (
-          <Text style={[styles.puzzleStory, { color: colors.mutedForeground }]} numberOfLines={2}>
+          <Text
+            style={[styles.puzzleStory, { color: colors.mutedForeground }]}
+            numberOfLines={2}
+          >
             {puzzle.story}
           </Text>
         )}
+
         {locked ? (
           <View style={[styles.playRow, { borderTopColor: colors.border }]}>
-            <Text style={[styles.playText, { color: "#D4A843" }]}>Kilidi açmak için dokun</Text>
-            <MaterialIcons name="lock-open" size={20} color="#D4A843" />
+            <Text style={[styles.playText, { color: "#D4A843" }]}>
+              Kilidi açmak için dokun
+            </Text>
+            <MaterialIcons name="lock-open" size={18} color="#D4A843" />
           </View>
         ) : completed && bestResult ? (
           <View style={[styles.bestResultRow, { borderTopColor: colors.border }]}>
             <View style={styles.bestResultItem}>
               <MaterialIcons name="emoji-events" size={13} color={colors.primary} />
-              <Text style={[styles.bestResultLabel, { color: colors.mutedForeground }]}>En İyi:</Text>
-              <Text style={[styles.bestResultValue, { color: colors.primary }]}>{bestResult.score} puan</Text>
+              <Text style={[styles.bestResultLabel, { color: colors.mutedForeground }]}>
+                En İyi:
+              </Text>
+              <Text style={[styles.bestResultValue, { color: colors.primary }]}>
+                {bestResult.score} puan
+              </Text>
             </View>
             <View style={styles.bestResultItem}>
               <MaterialIcons name="timer" size={13} color={colors.mutedForeground} />
-              <Text style={[styles.bestResultValue, { color: colors.mutedForeground }]}>{formatTime(bestResult.timeSeconds)}</Text>
+              <Text style={[styles.bestResultValue, { color: colors.mutedForeground }]}>
+                {formatTime(bestResult.timeSeconds)}
+              </Text>
             </View>
           </View>
         ) : (
           <View style={[styles.playRow, { borderTopColor: colors.border }]}>
-            <Text style={[styles.playText, { color: colors.primary }]}>Oynamak için dokun</Text>
+            <Text style={[styles.playText, { color: colors.primary }]}>
+              Oynamak için dokun
+            </Text>
             <MaterialIcons name="chevron-right" size={20} color={colors.primary} />
           </View>
         )}
@@ -143,9 +197,7 @@ function useDailyCountdown() {
   const [secondsLeft, setSecondsLeft] = useState(getSecondsUntilMidnight);
 
   useEffect(() => {
-    const id = setInterval(() => {
-      setSecondsLeft(getSecondsUntilMidnight());
-    }, 1000);
+    const id = setInterval(() => setSecondsLeft(getSecondsUntilMidnight()), 1000);
     return () => clearInterval(id);
   }, []);
 
@@ -155,10 +207,35 @@ function useDailyCountdown() {
   return `${h.toString().padStart(2, "0")}:${m.toString().padStart(2, "0")}:${s.toString().padStart(2, "0")}`;
 }
 
+function SectionHeader({
+  title,
+  right,
+}: {
+  title: string;
+  right?: React.ReactNode;
+}) {
+  return (
+    <View style={styles.sectionHeaderRow}>
+      <View style={styles.sectionHeaderLeft}>
+        <View style={styles.sectionAccentBar} />
+        <Text style={styles.sectionHeaderText}>{title}</Text>
+      </View>
+      {right}
+    </View>
+  );
+}
+
 export default function HomeScreen() {
   const colors = useColors();
   const insets = useSafeAreaInsets();
-  const { profile, gameHistory, startDailyPuzzle, startPuzzle, completedPuzzleIds, bestScoreForPuzzle } = useGame();
+  const {
+    gameHistory,
+    startDailyPuzzle,
+    startPuzzle,
+    completedPuzzleIds,
+    bestScoreForPuzzle,
+    profile,
+  } = useGame();
   const { isPremium } = usePurchase();
   const countdown = useDailyCountdown();
   const [showOnboarding, setShowOnboarding] = useState(false);
@@ -170,13 +247,14 @@ export default function HomeScreen() {
   const wonToday = gameHistory.some(
     (h) => h.date === todayStr && h.completed && h.puzzleId === dailyPuzzle.id
   );
-  const otherPuzzles = PUZZLES.filter((p) => p.id !== dailyPuzzle.id).slice(0, 6);
+
+  const archivePuzzles = PUZZLES.filter((p) => p.id !== dailyPuzzle.id);
+  const freePuzzles = archivePuzzles.slice(0, FREE_PUZZLE_COUNT);
+  const premiumPuzzles = archivePuzzles.slice(FREE_PUZZLE_COUNT);
 
   useEffect(() => {
     AsyncStorage.getItem(ONBOARDING_KEY).then((val) => {
-      if (!val) {
-        setShowOnboarding(true);
-      }
+      if (!val) setShowOnboarding(true);
     });
   }, []);
 
@@ -200,6 +278,8 @@ export default function HomeScreen() {
     startPuzzle(puzzle);
     router.push("/oyun");
   };
+
+  const premiumLockedCount = isPremium ? 0 : premiumPuzzles.length;
 
   return (
     <>
@@ -226,8 +306,9 @@ export default function HomeScreen() {
                 Merhaba, {profile.name}
               </Text>
               <Text style={[styles.appTitle, { color: colors.primary }]}>
-                Faili Meçhul
+                FAİLİ MEÇHUL
               </Text>
+              <View style={[styles.titleUnderline, { backgroundColor: colors.primary }]} />
               <Text style={[styles.appSubtitle, { color: colors.mutedForeground }]}>
                 Dedektif Bulmaca Oyunu
               </Text>
@@ -236,7 +317,12 @@ export default function HomeScreen() {
               <Pressable onPress={handleHelpPress} style={styles.helpBtn} hitSlop={8}>
                 <MaterialIcons name="help-outline" size={22} color={colors.mutedForeground} />
               </Pressable>
-              <View style={[styles.streakBadge, { backgroundColor: colors.card, borderColor: colors.border }]}>
+              <View
+                style={[
+                  styles.streakBadge,
+                  { backgroundColor: colors.card, borderColor: colors.border },
+                ]}
+              >
                 <MaterialIcons name="local-fire-department" size={20} color="#FF6B35" />
                 <Text style={[styles.streakText, { color: colors.foreground }]}>
                   {profile.currentStreak}
@@ -251,83 +337,213 @@ export default function HomeScreen() {
             onPress={handleDailyPlay}
             style={[
               styles.dailyCard,
-              { backgroundColor: colors.card, borderColor: colors.primary },
+              {
+                backgroundColor: colors.card,
+                borderColor: wonToday ? `${colors.primary}88` : colors.primary,
+              },
               wonToday && { backgroundColor: `${colors.primary}08` },
             ]}
           >
-            <View style={styles.dailyTop}>
-              <View style={[styles.dailyBadge, { backgroundColor: colors.primary }]}>
-                <MaterialIcons name="today" size={12} color={colors.primaryForeground} />
-                <Text style={[styles.dailyBadgeText, { color: colors.primaryForeground }]}>
-                  GÜNÜN BULMACASI
-                </Text>
-              </View>
-              {wonToday && (
-                <View style={[styles.doneBadge, { backgroundColor: `${colors.primary}22`, borderColor: `${colors.primary}66`, borderWidth: 1 }]}>
-                  <MaterialIcons name="check-circle" size={14} color={colors.primary} />
-                  <Text style={[styles.doneText, { color: colors.primary }]}>Bugün Tamamlandı</Text>
+            <View style={[styles.dailyGoldBar, { backgroundColor: colors.primary }]} />
+            <View style={styles.dailyCardInner}>
+              <View style={styles.dailyTop}>
+                <View
+                  style={[styles.dailyBadge, { backgroundColor: colors.primary }]}
+                >
+                  <MaterialIcons name="today" size={12} color={colors.primaryForeground} />
+                  <Text
+                    style={[styles.dailyBadgeText, { color: colors.primaryForeground }]}
+                  >
+                    GÜNÜN BULMACASI
+                  </Text>
                 </View>
-              )}
-            </View>
-            <Text style={[styles.dailyTitle, { color: colors.foreground }]}>{dailyPuzzle.title}</Text>
-            <Text style={[styles.dailyStory, { color: colors.mutedForeground }]} numberOfLines={3}>
-              {dailyPuzzle.story}
-            </Text>
-            <View style={[styles.countdownRow, { borderTopColor: colors.border }]}>
-              <View style={styles.countdownLeft}>
-                <MaterialIcons name="schedule" size={13} color={colors.mutedForeground} />
-                <Text style={[styles.countdownLabel, { color: colors.mutedForeground }]}>
-                  Yeni bulmacaya:
-                </Text>
-                <Text style={[styles.countdownValue, { color: colors.primary }]}>{countdown}</Text>
+                {wonToday && (
+                  <View
+                    style={[
+                      styles.doneBadge,
+                      {
+                        backgroundColor: `${colors.primary}22`,
+                        borderColor: `${colors.primary}66`,
+                        borderWidth: 1,
+                      },
+                    ]}
+                  >
+                    <MaterialIcons name="check-circle" size={14} color={colors.primary} />
+                    <Text style={[styles.doneText, { color: colors.primary }]}>
+                      Tamamlandı
+                    </Text>
+                  </View>
+                )}
               </View>
-              <View style={[styles.diffBadge, { backgroundColor: `${getDifficultyColor(dailyPuzzle.difficulty as Difficulty)}22`, borderColor: `${getDifficultyColor(dailyPuzzle.difficulty as Difficulty)}66` }]}>
-                <Text style={[styles.diffText, { color: getDifficultyColor(dailyPuzzle.difficulty as Difficulty) }]}>
-                  {getDifficultyLabel(dailyPuzzle.difficulty as Difficulty)}
-                </Text>
+
+              <Text style={[styles.dailyTitle, { color: colors.foreground }]}>
+                {dailyPuzzle.title}
+              </Text>
+              <Text
+                style={[styles.dailyStory, { color: colors.mutedForeground }]}
+                numberOfLines={3}
+              >
+                {dailyPuzzle.story}
+              </Text>
+
+              <View style={[styles.countdownRow, { borderTopColor: colors.border }]}>
+                <View style={styles.countdownLeft}>
+                  <MaterialIcons name="schedule" size={13} color={colors.mutedForeground} />
+                  <Text
+                    style={[styles.countdownLabel, { color: colors.mutedForeground }]}
+                  >
+                    Yeni bulmacaya:
+                  </Text>
+                  <Text
+                    style={[styles.countdownValue, { color: colors.primary }]}
+                  >
+                    {countdown}
+                  </Text>
+                </View>
+                <View
+                  style={[
+                    styles.diffBadge,
+                    {
+                      backgroundColor: `${getDifficultyColor(dailyPuzzle.difficulty as Difficulty)}22`,
+                      borderColor: `${getDifficultyColor(dailyPuzzle.difficulty as Difficulty)}66`,
+                    },
+                  ]}
+                >
+                  <Text
+                    style={[
+                      styles.diffText,
+                      {
+                        color: getDifficultyColor(dailyPuzzle.difficulty as Difficulty),
+                      },
+                    ]}
+                  >
+                    {getDifficultyLabel(dailyPuzzle.difficulty as Difficulty)}
+                  </Text>
+                </View>
               </View>
-            </View>
-            <View style={[styles.dailyFooter, { borderTopColor: colors.border }]}>
-              <View style={styles.playNowBtn}>
-                <Text style={[styles.playNowText, { color: colors.primary }]}>
-                  {wonToday ? "Tekrar Oyna" : "Oyna"}
-                </Text>
-                <MaterialIcons name="play-circle-filled" size={22} color={colors.primary} />
+
+              <View style={[styles.dailyFooter, { borderTopColor: colors.border }]}>
+                <View style={styles.playNowBtn}>
+                  <Text style={[styles.playNowText, { color: colors.primary }]}>
+                    {wonToday ? "Tekrar Oyna" : "Oyna"}
+                  </Text>
+                  <MaterialIcons
+                    name="play-circle-filled"
+                    size={22}
+                    color={colors.primary}
+                  />
+                </View>
               </View>
             </View>
           </Pressable>
         </Animated.View>
 
         <Animated.View entering={FadeInDown.delay(200).springify()}>
-          <View style={[styles.statsRow]}>
-            <View style={[styles.statCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
-              <Text style={[styles.statValue, { color: colors.primary }]}>{profile.gamesWon}</Text>
-              <Text style={[styles.statLabel, { color: colors.mutedForeground }]}>Çözülen</Text>
+          <View style={styles.statsRow}>
+            <View
+              style={[
+                styles.statCard,
+                { backgroundColor: colors.card, borderColor: colors.border },
+              ]}
+            >
+              <View style={[styles.statAccent, { backgroundColor: colors.primary }]} />
+              <Text style={[styles.statValue, { color: colors.primary }]}>
+                {profile.gamesWon}
+              </Text>
+              <Text style={[styles.statLabel, { color: colors.mutedForeground }]}>
+                Çözülen
+              </Text>
             </View>
-            <View style={[styles.statCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
-              <Text style={[styles.statValue, { color: colors.foreground }]}>{profile.totalScore}</Text>
-              <Text style={[styles.statLabel, { color: colors.mutedForeground }]}>Toplam Puan</Text>
+            <View
+              style={[
+                styles.statCard,
+                { backgroundColor: colors.card, borderColor: colors.border },
+              ]}
+            >
+              <View style={[styles.statAccent, { backgroundColor: "#9333ea" }]} />
+              <Text style={[styles.statValue, { color: colors.foreground }]}>
+                {profile.totalScore}
+              </Text>
+              <Text style={[styles.statLabel, { color: colors.mutedForeground }]}>
+                Toplam Puan
+              </Text>
             </View>
-            <View style={[styles.statCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
-              <Text style={[styles.statValue, { color: "#FF6B35" }]}>{profile.currentStreak}</Text>
-              <Text style={[styles.statLabel, { color: colors.mutedForeground }]}>Seri</Text>
+            <View
+              style={[
+                styles.statCard,
+                { backgroundColor: colors.card, borderColor: colors.border },
+              ]}
+            >
+              <View style={[styles.statAccent, { backgroundColor: "#FF6B35" }]} />
+              <Text style={[styles.statValue, { color: "#FF6B35" }]}>
+                {profile.currentStreak}
+              </Text>
+              <Text style={[styles.statLabel, { color: colors.mutedForeground }]}>
+                Seri
+              </Text>
             </View>
           </View>
         </Animated.View>
 
-        <View style={[styles.sectionTitleRow]}>
-          <Text style={[styles.sectionTitle, { color: colors.foreground }]}>Diğer Bulmacalar</Text>
-          {!isPremium && (
-            <Pressable
-              onPress={() => setShowPaywall(true)}
-              style={[styles.premiumChip, { backgroundColor: "#D4A84318", borderColor: "#D4A84355" }]}
-            >
-              <MaterialIcons name="lock" size={12} color="#D4A843" />
-              <Text style={[styles.premiumChipText, { color: "#D4A843" }]}>Vaka Arşivi</Text>
-            </Pressable>
-          )}
-        </View>
-        {otherPuzzles.map((puzzle, i) => {
+        <SectionHeader title="Ücretsiz Vakalar" />
+
+        {freePuzzles.map((puzzle, i) => {
+          const isCompleted = completedPuzzleIds.has(puzzle.id);
+          return (
+            <PuzzleCard
+              key={puzzle.id}
+              puzzle={puzzle}
+              onPress={() => handlePuzzlePlay(puzzle)}
+              delay={300 + i * 50}
+              completed={isCompleted}
+              bestResult={isCompleted ? bestScoreForPuzzle(puzzle.id) : null}
+              locked={false}
+            />
+          );
+        })}
+
+        <SectionHeader
+          title="Vaka Arşivi"
+          right={
+            !isPremium ? (
+              <Pressable
+                onPress={() => setShowPaywall(true)}
+                style={[
+                  styles.premiumChip,
+                  { backgroundColor: "#D4A84318", borderColor: "#D4A84355" },
+                ]}
+              >
+                <MaterialIcons name="lock" size={12} color="#D4A843" />
+                <Text style={[styles.premiumChipText, { color: "#D4A843" }]}>
+                  {premiumLockedCount} kilitli vaka
+                </Text>
+              </Pressable>
+            ) : null
+          }
+        />
+
+        {!isPremium && (
+          <Pressable
+            onPress={() => setShowPaywall(true)}
+            style={[
+              styles.premiumBanner,
+              { backgroundColor: "#D4A84310", borderColor: "#D4A84340" },
+            ]}
+          >
+            <MaterialIcons name="workspace-premium" size={20} color="#D4A843" />
+            <View style={styles.premiumBannerText}>
+              <Text style={[styles.premiumBannerTitle, { color: "#D4A843" }]}>
+                Vaka Arşivi'ni Aç
+              </Text>
+              <Text style={[styles.premiumBannerSub, { color: "#D4A84399" }]}>
+                {premiumLockedCount} ek vaka · Tek seferlik satın al
+              </Text>
+            </View>
+            <MaterialIcons name="chevron-right" size={20} color="#D4A843" />
+          </Pressable>
+        )}
+
+        {premiumPuzzles.map((puzzle, i) => {
           const isCompleted = completedPuzzleIds.has(puzzle.id);
           const isLocked = !isPremium;
           return (
@@ -341,9 +557,11 @@ export default function HomeScreen() {
                   handlePuzzlePlay(puzzle);
                 }
               }}
-              delay={300 + i * 60}
+              delay={300 + (freePuzzles.length + i) * 40}
               completed={isCompleted && !isLocked}
-              bestResult={isCompleted && !isLocked ? bestScoreForPuzzle(puzzle.id) : null}
+              bestResult={
+                isCompleted && !isLocked ? bestScoreForPuzzle(puzzle.id) : null
+              }
               locked={isLocked}
             />
           );
@@ -356,15 +574,27 @@ export default function HomeScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1 },
-  content: { paddingHorizontal: 16, gap: 16 },
+  content: { paddingHorizontal: 16, gap: 14 },
+
   headerRow: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "flex-end",
   },
-  greetingSmall: { fontSize: 13, fontWeight: "500" },
-  appTitle: { fontSize: 26, fontWeight: "800", letterSpacing: -0.5 },
-  appSubtitle: { fontSize: 12, fontWeight: "500", marginTop: 1 },
+  greetingSmall: { fontSize: 13, fontWeight: "500", marginBottom: 2 },
+  appTitle: {
+    fontSize: 28,
+    fontWeight: "900",
+    letterSpacing: 4,
+  },
+  titleUnderline: {
+    height: 2,
+    width: 48,
+    borderRadius: 1,
+    marginTop: 4,
+    marginBottom: 4,
+  },
+  appSubtitle: { fontSize: 12, fontWeight: "500" },
   headerRight: {
     flexDirection: "row",
     alignItems: "center",
@@ -387,9 +617,19 @@ const styles = StyleSheet.create({
     gap: 6,
   },
   streakText: { fontSize: 18, fontWeight: "700" },
+
   dailyCard: {
     borderRadius: 16,
     borderWidth: 2,
+    overflow: "hidden",
+    flexDirection: "row",
+  },
+  dailyGoldBar: {
+    width: 4,
+    borderRadius: 0,
+  },
+  dailyCardInner: {
+    flex: 1,
     padding: 16,
     gap: 10,
   },
@@ -402,7 +642,7 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
     gap: 4,
   },
-  dailyBadgeText: { fontSize: 10, fontWeight: "700", letterSpacing: 0.5 },
+  dailyBadgeText: { fontSize: 10, fontWeight: "700", letterSpacing: 0.8 },
   doneBadge: {
     flexDirection: "row",
     alignItems: "center",
@@ -412,7 +652,7 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   doneText: { fontSize: 11, fontWeight: "600" },
-  dailyTitle: { fontSize: 18, fontWeight: "700", lineHeight: 24 },
+  dailyTitle: { fontSize: 18, fontWeight: "800", lineHeight: 24 },
   dailyStory: { fontSize: 13, lineHeight: 20 },
   countdownRow: {
     flexDirection: "row",
@@ -423,7 +663,11 @@ const styles = StyleSheet.create({
   },
   countdownLeft: { flexDirection: "row", alignItems: "center", gap: 5 },
   countdownLabel: { fontSize: 11, fontWeight: "500" },
-  countdownValue: { fontSize: 13, fontWeight: "700", fontVariant: ["tabular-nums"] },
+  countdownValue: {
+    fontSize: 13,
+    fontWeight: "700",
+    fontVariant: ["tabular-nums"],
+  },
   dailyFooter: {
     flexDirection: "row",
     alignItems: "center",
@@ -431,6 +675,7 @@ const styles = StyleSheet.create({
   },
   playNowBtn: { flexDirection: "row", alignItems: "center", gap: 6 },
   playNowText: { fontSize: 15, fontWeight: "700" },
+
   statsRow: {
     flexDirection: "row",
     gap: 10,
@@ -442,16 +687,42 @@ const styles = StyleSheet.create({
     padding: 14,
     alignItems: "center",
     gap: 4,
+    overflow: "hidden",
   },
-  statValue: { fontSize: 22, fontWeight: "700" },
+  statAccent: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    height: 2,
+    borderRadius: 0,
+  },
+  statValue: { fontSize: 22, fontWeight: "700", marginTop: 4 },
   statLabel: { fontSize: 11, fontWeight: "500" },
-  sectionTitleRow: {
+
+  sectionHeaderRow: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    marginTop: 4,
+    marginTop: 6,
   },
-  sectionTitle: { fontSize: 18, fontWeight: "700" },
+  sectionHeaderLeft: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+  },
+  sectionAccentBar: {
+    width: 3,
+    height: 18,
+    backgroundColor: "#D4A843",
+    borderRadius: 2,
+  },
+  sectionHeaderText: {
+    fontSize: 16,
+    fontWeight: "800",
+    color: "#E8E8E8",
+    letterSpacing: 1,
+  },
   premiumChip: {
     flexDirection: "row",
     alignItems: "center",
@@ -462,14 +733,48 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   premiumChipText: { fontSize: 11, fontWeight: "700" },
+
+  premiumBanner: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderRadius: 12,
+    borderWidth: 1,
+    paddingHorizontal: 14,
+    paddingVertical: 12,
+    gap: 12,
+    marginBottom: 2,
+  },
+  premiumBannerText: { flex: 1 },
+  premiumBannerTitle: { fontSize: 14, fontWeight: "700" },
+  premiumBannerSub: { fontSize: 12, marginTop: 1 },
+
   puzzleCard: {
     borderRadius: 14,
     borderWidth: 1,
     padding: 14,
     gap: 8,
     marginBottom: 4,
+    overflow: "hidden",
   },
-  puzzleCardTop: { flexDirection: "row", justifyContent: "space-between", alignItems: "center" },
+  lockedOverlay: {
+    position: "absolute",
+    top: 10,
+    right: 14,
+    zIndex: 2,
+  },
+  lockIconCircle: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    borderWidth: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  puzzleCardTop: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
   puzzleCardRight: { flexDirection: "row", alignItems: "center" },
   puzzleCardMeta: { flexDirection: "row", alignItems: "center", gap: 4 },
   metaText: { fontSize: 12 },

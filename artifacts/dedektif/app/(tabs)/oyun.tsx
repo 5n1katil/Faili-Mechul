@@ -287,9 +287,14 @@ export default function OyunScreen() {
       >
         <Animated.View entering={FadeInDown.delay(0).springify()}>
           <View style={styles.puzzleHeader}>
-            <Text style={[styles.puzzleTitle, { color: colors.foreground }]}>
-              {puzzle.title}
-            </Text>
+            <View>
+              <Text style={[styles.caseNumber, { color: colors.mutedForeground }]}>
+                VAKA #{puzzle.dayIndex.toString().padStart(3, "0")}
+              </Text>
+              <Text style={[styles.puzzleTitle, { color: colors.foreground }]}>
+                {puzzle.title}
+              </Text>
+            </View>
             <TimerDisplay
               seconds={remainingTime}
               wrongGuesses={wrongGuesses}
@@ -424,6 +429,7 @@ const styles = StyleSheet.create({
   },
   startBtnText: { fontSize: 16, fontWeight: "700" },
   puzzleHeader: { gap: 12 },
+  caseNumber: { fontSize: 10, fontWeight: "700", letterSpacing: 2, marginBottom: 2 },
   puzzleTitle: { fontSize: 20, fontWeight: "700", lineHeight: 28 },
   storyBox: { borderRadius: 12, borderWidth: 1, padding: 14, gap: 8 },
   storyHeader: { flexDirection: "row", alignItems: "center", gap: 8 },

@@ -221,17 +221,35 @@ export default function ProfilScreen() {
 
         <Animated.View entering={FadeInDown.delay(260).springify()}>
           {isPremium ? (
-            <View style={[styles.premiumActiveCard, { backgroundColor: "#D4A84310", borderColor: "#D4A84344" }]}>
-              <View style={[styles.howToPlayIcon, { backgroundColor: "#D4A84322" }]}>
-                <MaterialIcons name="local-police" size={22} color="#D4A843" />
+            <View
+              style={[
+                styles.premiumActiveCard,
+                {
+                  backgroundColor: "#D4A84314",
+                  borderColor: "#D4A843",
+                  shadowColor: "#D4A843",
+                  shadowOffset: { width: 0, height: 0 },
+                  shadowOpacity: 0.35,
+                  shadowRadius: 12,
+                  elevation: 8,
+                },
+              ]}
+            >
+              <View style={[styles.premiumGoldTopBar]} />
+              <View style={styles.premiumActiveInner}>
+                <View style={[styles.howToPlayIcon, { backgroundColor: "#D4A84330" }]}>
+                  <MaterialIcons name="local-police" size={24} color="#D4A843" />
+                </View>
+                <View style={styles.howToPlayInfo}>
+                  <Text style={[styles.howToPlayTitle, { color: "#D4A843", fontSize: 15, fontWeight: "800" }]}>
+                    🔱 Baş Dedektif
+                  </Text>
+                  <Text style={[styles.howToPlayDesc, { color: "#D4A84399" }]}>
+                    Vaka Arşivi aktif · Tüm vakalar açık
+                  </Text>
+                </View>
+                <MaterialIcons name="verified" size={22} color="#D4A843" />
               </View>
-              <View style={styles.howToPlayInfo}>
-                <Text style={[styles.howToPlayTitle, { color: "#D4A843" }]}>🔱 Baş Dedektif</Text>
-                <Text style={[styles.howToPlayDesc, { color: colors.mutedForeground }]}>
-                  Vaka Arşivi aktif · Tüm vakalar açık
-                </Text>
-              </View>
-              <MaterialIcons name="verified" size={22} color="#D4A843" />
             </View>
           ) : (
             <Pressable
@@ -448,10 +466,17 @@ const styles = StyleSheet.create({
     gap: 14,
   },
   premiumActiveCard: {
-    flexDirection: "row",
-    alignItems: "center",
     borderRadius: 14,
     borderWidth: 1.5,
+    overflow: "hidden",
+  },
+  premiumGoldTopBar: {
+    height: 3,
+    backgroundColor: "#D4A843",
+  },
+  premiumActiveInner: {
+    flexDirection: "row",
+    alignItems: "center",
     padding: 14,
     gap: 14,
   },
