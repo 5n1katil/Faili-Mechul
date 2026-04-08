@@ -407,8 +407,6 @@ export default function VakalarScreen() {
           wrongGuesses={wrongGuesses}
           bonusCluesRevealedCount={bonusCluesRevealedCount}
           gridState={gridState}
-          leaderboard={leaderboard}
-          profile={profile}
           finalRank={finalRank}
           totalPlayers={totalPlayers}
           onPlayMore={handleBackToList}

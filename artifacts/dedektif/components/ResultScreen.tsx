@@ -27,7 +27,6 @@ import Animated, {
 
 import { useColors } from "@/hooks/useColors";
 import type { Puzzle, GridMark } from "@/data/puzzles";
-import type { LeaderboardEntry, PlayerProfile } from "@/context/GameContext";
 
 const AnimatedTextInput = Animated.createAnimatedComponent(TextInput);
 
@@ -39,8 +38,6 @@ interface Props {
   wrongGuesses: number;
   bonusCluesRevealedCount: number;
   gridState: { [key: string]: GridMark };
-  leaderboard: LeaderboardEntry[];
-  profile: PlayerProfile;
   finalRank: number;
   totalPlayers: number;
   onPlayMore: () => void;
@@ -310,8 +307,6 @@ export default function ResultScreen({
   wrongGuesses,
   bonusCluesRevealedCount,
   gridState,
-  leaderboard,
-  profile,
   finalRank,
   totalPlayers,
   onPlayMore,
