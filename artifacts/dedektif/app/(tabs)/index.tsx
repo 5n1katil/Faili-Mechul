@@ -784,20 +784,6 @@ const styles = StyleSheet.create({
     marginBottom: 4,
     overflow: "hidden",
   },
-  lockedOverlay: {
-    position: "absolute",
-    top: 10,
-    right: 14,
-    zIndex: 2,
-  },
-  lockIconCircle: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
-    borderWidth: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
   puzzleCardTop: {
     flexDirection: "row",
     justifyContent: "space-between",

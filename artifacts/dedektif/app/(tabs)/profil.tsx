@@ -405,23 +405,6 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   profileName: { fontSize: 22, fontWeight: "700" },
-  nameEditRow: { flexDirection: "row", alignItems: "center", gap: 8 },
-  nameInput: {
-    fontSize: 18,
-    fontWeight: "600",
-    borderWidth: 1.5,
-    borderRadius: 8,
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-    minWidth: 140,
-  },
-  saveBtn: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
-    alignItems: "center",
-    justifyContent: "center",
-  },
   streakRow: { flexDirection: "row", alignItems: "center", gap: 6 },
   streakLabel: { fontSize: 13, fontWeight: "500" },
   statsGrid: {
