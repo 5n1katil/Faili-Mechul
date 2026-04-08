@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useRef } from "react";
+import React, { useCallback, useMemo } from "react";
 import {
   Platform,
   Pressable,
@@ -10,14 +10,12 @@ import {
 import { MaterialIcons } from "@expo/vector-icons";
 import * as Haptics from "expo-haptics";
 import Animated, {
-  interpolateColor,
   useAnimatedStyle,
   useSharedValue,
   withSequence,
   withSpring,
   withTiming,
 } from "react-native-reanimated";
-import { useColors } from "@/hooks/useColors";
 import type { GridMark, Suspect, Weapon, Location } from "@/data/puzzles";
 import type { EntityInfo } from "@/components/EntityInfoSheet";
 import type { ComponentProps } from "react";
@@ -31,8 +29,8 @@ const WEAPON_BG = "#2E101080";
 const LOCATION_BG = "#2A1E0880";
 
 const OUTER_BORDER_COLOR = "#FFFFFF28";
-const BLOCK_DIVIDER_COLOR = "#FFFFFF50";
-const CELL_BORDER_COLOR = "#FFFFFF14";
+const BLOCK_DIVIDER_COLOR = "#FFFFFF55";
+const CELL_SEP_COLOR = "#FFFFFF16";
 
 const HORIZONTAL_INSET = 24;
 
@@ -46,11 +44,11 @@ interface Props {
   onHeaderPress?: (entity: EntityInfo) => void;
 }
 
-function getMarkColors(mark: GridMark, neutralBg: string) {
-  if (mark === "check") return { bg: "#052e16", border: "#4ade8080" };
-  if (mark === "cross") return { bg: "#2d0e0e", border: "#f8717180" };
-  if (mark === "question") return { bg: "#1A1500", border: "#D4A84380" };
-  return { bg: neutralBg, border: "transparent" };
+function getMarkStyle(mark: GridMark) {
+  if (mark === "check") return { bg: "#052e16", border: "#4ade8070" };
+  if (mark === "cross") return { bg: "#2d0e0e", border: "#f8717170" };
+  if (mark === "question") return { bg: "#1A1500", border: "#D4A84370" };
+  return { bg: "transparent", border: CELL_SEP_COLOR };
 }
 
 function GridCell({
@@ -64,49 +62,17 @@ function GridCell({
   disabled?: boolean;
   cellSize: number;
 }) {
-  const colors = useColors();
   const scale = useSharedValue(1);
-  const colorProgress = useSharedValue(1);
-  const initialColors = getMarkColors(mark, colors.background);
-  const fromBg = useSharedValue(initialColors.bg);
-  const toBg = useSharedValue(initialColors.bg);
-  const fromBd = useSharedValue(initialColors.border);
-  const toBd = useSharedValue(initialColors.border);
-  const prevMarkRef = useRef<GridMark>(mark);
-
-  useEffect(() => {
-    if (mark !== prevMarkRef.current) {
-      const from = getMarkColors(prevMarkRef.current, colors.background);
-      const to = getMarkColors(mark, colors.background);
-      fromBg.value = from.bg;
-      toBg.value = to.bg;
-      fromBd.value = from.border;
-      toBd.value = to.border;
-      colorProgress.value = 0;
-      colorProgress.value = withTiming(1, { duration: 160 });
-      prevMarkRef.current = mark;
-    }
-  }, [mark]);
 
   const animStyle = useAnimatedStyle(() => ({
     transform: [{ scale: scale.value }],
-    backgroundColor: interpolateColor(
-      colorProgress.value,
-      [0, 1],
-      [fromBg.value, toBg.value]
-    ),
-    borderColor: interpolateColor(
-      colorProgress.value,
-      [0, 1],
-      [fromBd.value, toBd.value]
-    ),
   }));
 
   const handlePress = () => {
     if (disabled) return;
     scale.value = withSequence(
-      withSpring(0.78, { damping: 10, stiffness: 300 }),
-      withSpring(1, { damping: 12, stiffness: 200 })
+      withSpring(0.72, { damping: 12, stiffness: 350 }),
+      withSpring(1, { damping: 14, stiffness: 220 })
     );
     if (Platform.OS !== "web") {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -114,16 +80,19 @@ function GridCell({
     onPress();
   };
 
+  const { bg, border } = getMarkStyle(mark);
   const iconSize = Math.max(10, Math.floor(cellSize * 0.46));
 
   return (
-    <Pressable onPress={handlePress} disabled={disabled} style={{ flex: 1 }}>
+    <Pressable onPress={handlePress} disabled={disabled}>
       <Animated.View
         style={[
           {
-            flex: 1,
+            width: cellSize,
             height: cellSize,
             borderWidth: 1,
+            borderColor: border,
+            backgroundColor: bg,
             alignItems: "center",
             justifyContent: "center",
           },
@@ -153,20 +122,30 @@ function GridCell({
   );
 }
 
-function HeaderAvatar({
+function EntityLabel({
   icon,
   name,
   color,
   bg,
-  onPress,
+  entityId,
+  description,
+  type,
   cellSize,
+  labelWidth,
+  onHeaderPress,
+  isRowLabel,
 }: {
   icon: string;
   name: string;
   color: string;
   bg: string;
-  onPress?: () => void;
+  entityId: string;
+  description: string;
+  type: "suspect" | "weapon" | "location";
   cellSize: number;
+  labelWidth: number;
+  onHeaderPress?: (entity: EntityInfo) => void;
+  isRowLabel: boolean;
 }) {
   const scale = useSharedValue(1);
 
@@ -175,32 +154,93 @@ function HeaderAvatar({
   }));
 
   const handlePress = () => {
-    if (!onPress) return;
+    if (!onHeaderPress) return;
     scale.value = withSequence(
-      withTiming(0.88, { duration: 80 }),
-      withTiming(1, { duration: 80 })
+      withTiming(0.9, { duration: 70 }),
+      withTiming(1, { duration: 70 })
     );
     if (Platform.OS !== "web") {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     }
-    onPress();
+    onHeaderPress({ type, id: entityId, name, description, icon });
   };
 
-  const avatarSize = Math.max(20, Math.floor(cellSize * 0.68));
+  const avatarSize = Math.max(20, Math.floor(cellSize * 0.62));
   const avatarRadius = Math.floor(avatarSize / 2);
   const avatarIconSize = Math.max(10, Math.floor(avatarSize * 0.5));
-  const headerHeight = Math.max(52, Math.floor(cellSize * 1.75));
+  const nameFontSize = Math.max(7, Math.floor(cellSize * 0.2));
+  const nameLineHeight = Math.max(10, Math.floor(cellSize * 0.28));
 
+  if (isRowLabel) {
+    return (
+      <Pressable
+        onPress={onHeaderPress ? handlePress : undefined}
+        style={{ width: labelWidth, height: cellSize }}
+      >
+        <Animated.View
+          style={[
+            {
+              width: labelWidth,
+              height: cellSize,
+              flexDirection: "row",
+              alignItems: "center",
+              paddingHorizontal: 4,
+              gap: 4,
+            },
+            animStyle,
+          ]}
+        >
+          <View
+            style={{
+              width: avatarSize,
+              height: avatarSize,
+              borderRadius: avatarRadius,
+              borderWidth: 1.5,
+              borderColor: color + "55",
+              backgroundColor: bg,
+              alignItems: "center",
+              justifyContent: "center",
+              flexShrink: 0,
+            }}
+          >
+            <MaterialIcons
+              name={icon as ComponentProps<typeof MaterialIcons>["name"]}
+              size={avatarIconSize}
+              color={color}
+            />
+          </View>
+          <Text
+            style={{
+              color,
+              fontSize: nameFontSize,
+              fontWeight: "700",
+              letterSpacing: 0.1,
+              lineHeight: nameLineHeight,
+              flex: 1,
+            }}
+            numberOfLines={2}
+          >
+            {name}
+          </Text>
+        </Animated.View>
+      </Pressable>
+    );
+  }
+
+  const headerHeight = Math.max(54, Math.floor(cellSize * 1.8));
   return (
-    <Pressable onPress={onPress ? handlePress : undefined} style={{ flex: 1 }}>
+    <Pressable
+      onPress={onHeaderPress ? handlePress : undefined}
+      style={{ width: cellSize, height: headerHeight }}
+    >
       <Animated.View
         style={[
           {
-            flex: 1,
+            width: cellSize,
+            height: headerHeight,
             alignItems: "center",
             justifyContent: "flex-end",
             paddingBottom: 5,
-            height: headerHeight,
             gap: 3,
           },
           animStyle,
@@ -212,7 +252,7 @@ function HeaderAvatar({
             height: avatarSize,
             borderRadius: avatarRadius,
             borderWidth: 1.5,
-            borderColor: color + "60",
+            borderColor: color + "55",
             backgroundColor: bg,
             alignItems: "center",
             justifyContent: "center",
@@ -226,12 +266,13 @@ function HeaderAvatar({
         </View>
         <Text
           style={{
-            fontSize: Math.max(6, Math.floor(cellSize * 0.19)),
+            fontSize: nameFontSize,
             textAlign: "center",
             fontWeight: "700",
-            letterSpacing: 0.2,
-            lineHeight: Math.max(9, Math.floor(cellSize * 0.27)),
+            letterSpacing: 0.1,
+            lineHeight: nameLineHeight,
             color,
+            width: cellSize,
           }}
           numberOfLines={2}
         >
@@ -251,19 +292,14 @@ export default function DetectiveGrid({
   disabled,
   onHeaderPress,
 }: Props) {
-  const colors = useColors();
   const { width: screenWidth } = useWindowDimensions();
 
   const { cellSize, labelWidth } = useMemo(() => {
     const available = screenWidth - HORIZONTAL_INSET;
     const numCols = suspects.length + locations.length;
     const lw = Math.min(80, Math.floor(available * 0.24));
-    const cellsWidth = available - lw;
-    const ct = Math.floor(cellsWidth / numCols);
-    return {
-      cellSize: ct,
-      labelWidth: lw,
-    };
+    const ct = Math.floor((available - lw) / numCols);
+    return { cellSize: ct, labelWidth: lw };
   }, [screenWidth, suspects.length, locations.length]);
 
   const cycleNextMark = useCallback((current: GridMark): GridMark => {
@@ -273,289 +309,133 @@ export default function DetectiveGrid({
     return "none";
   }, []);
 
-  const getKey = (rowId: string, colId: string) => `${rowId}_${colId}`;
+  const mk = (rowId: string, colId: string) => `${rowId}_${colId}`;
 
-  const numSuspects = suspects.length;
-  const numLocations = locations.length;
-
-  const renderRowLabel = (
-    entityId: string,
-    name: string,
-    icon: string,
-    description: string,
-    type: "suspect" | "weapon" | "location"
-  ) => {
-    const color =
-      type === "suspect"
-        ? SUSPECT_COLOR
-        : type === "weapon"
-        ? WEAPON_COLOR
-        : LOCATION_COLOR;
-    const bg =
-      type === "suspect"
-        ? SUSPECT_BG
-        : type === "weapon"
-        ? WEAPON_BG
-        : LOCATION_BG;
-    const avatarSize = Math.max(16, Math.floor(cellSize * 0.5));
-    return (
-      <Pressable
-        style={[styles.rowLabel, { width: labelWidth, height: cellSize }]}
-        onPress={
-          onHeaderPress
-            ? () =>
-                onHeaderPress({
-                  type,
-                  id: entityId,
-                  name,
-                  description,
-                  icon,
-                })
-            : undefined
-        }
-      >
-        <View
-          style={{
-            width: avatarSize,
-            height: avatarSize,
-            borderRadius: Math.floor(avatarSize / 2),
-            borderWidth: 1.5,
-            borderColor: color + "50",
-            backgroundColor: bg,
-            alignItems: "center",
-            justifyContent: "center",
-            flexShrink: 0,
-          }}
-        >
-          <MaterialIcons
-            name={icon as ComponentProps<typeof MaterialIcons>["name"]}
-            size={Math.max(8, Math.floor(avatarSize * 0.5))}
-            color={color}
+  const renderCells = (rowId: string, colEntities: { id: string }[]) =>
+    colEntities.map((e, i) => {
+      const cellKey = mk(rowId, e.id);
+      const mark = gridState[cellKey] ?? "none";
+      return (
+        <React.Fragment key={cellKey}>
+          {i > 0 && <View style={{ width: 1, backgroundColor: CELL_SEP_COLOR }} />}
+          <GridCell
+            mark={mark}
+            onPress={() => onCellPress(cellKey, cycleNextMark(mark))}
+            disabled={disabled}
+            cellSize={cellSize}
           />
-        </View>
-        <Text
-          style={[
-            styles.rowLabelText,
-            { color: colors.foreground, fontSize: Math.max(8, Math.floor(cellSize * 0.25)) },
-          ]}
-          numberOfLines={2}
-        >
-          {name}
-        </Text>
-      </Pressable>
-    );
-  };
+        </React.Fragment>
+      );
+    });
+
+  const nS = suspects.length;
+  const nL = locations.length;
+
+  const sCellsInner = nS * cellSize + Math.max(0, nS - 1);
+  const lCellsInner = nL * cellSize + Math.max(0, nL - 1);
+  const divider = 2;
+
+  const suspectBlockOuter = sCellsInner + 2;
+  const weaponBlockOuter = sCellsInner + divider + lCellsInner + 2;
 
   return (
     <View style={styles.container}>
-      {/* ── Column group labels (ŞÜPHELILER / MEKANLAR) ── */}
+
+      {/* ── Column group labels ── */}
       <View style={styles.row}>
         <View style={{ width: labelWidth }} />
-        <View style={{ flex: numSuspects, alignItems: "center" }}>
-          <Text style={[styles.groupLabel, { color: SUSPECT_COLOR }]}>
-            ŞÜPHELILER
-          </Text>
+        <View style={{ width: suspectBlockOuter, alignItems: "center" }}>
+          <Text style={[styles.groupLabel, { color: SUSPECT_COLOR }]}>ŞÜPHELILER</Text>
         </View>
-        <View style={{ width: 1, backgroundColor: "transparent" }} />
-        <View style={{ flex: numLocations, alignItems: "center" }}>
-          <Text style={[styles.groupLabel, { color: LOCATION_COLOR }]}>
-            MEKANLAR
-          </Text>
+        <View style={{ width: divider }} />
+        <View style={{ width: lCellsInner, alignItems: "center" }}>
+          <Text style={[styles.groupLabel, { color: LOCATION_COLOR }]}>MEKANLAR</Text>
         </View>
       </View>
 
-      {/* ── Avatar header row ── */}
-      <View style={[styles.row, { marginBottom: 0 }]}>
+      {/* ── Top entity avatars (left=suspects, right=locations) ── */}
+      <View style={styles.row}>
         <View style={{ width: labelWidth }} />
-        <View
-          style={{
-            flex: 1,
-            flexDirection: "row",
-            borderWidth: 1,
-            borderColor: OUTER_BORDER_COLOR,
-            borderBottomWidth: 0,
-          }}
-        >
-          {suspects.map((s, i) => (
-            <React.Fragment key={s.id}>
-              {i > 0 && (
-                <View style={{ width: 1, backgroundColor: CELL_BORDER_COLOR }} />
-              )}
-              <HeaderAvatar
-                icon={s.icon}
-                name={s.name}
-                color={SUSPECT_COLOR}
-                bg={SUSPECT_BG}
-                cellSize={cellSize}
-                onPress={
-                  onHeaderPress
-                    ? () =>
-                        onHeaderPress({
-                          type: "suspect",
-                          id: s.id,
-                          name: s.name,
-                          description: s.description,
-                          icon: s.icon,
-                        })
-                    : undefined
-                }
-              />
-            </React.Fragment>
-          ))}
-          <View style={{ width: 2, backgroundColor: BLOCK_DIVIDER_COLOR }} />
-          {locations.map((loc, i) => (
-            <React.Fragment key={loc.id}>
-              {i > 0 && (
-                <View style={{ width: 1, backgroundColor: CELL_BORDER_COLOR }} />
-              )}
-              <HeaderAvatar
-                icon={loc.icon}
-                name={loc.name}
-                color={LOCATION_COLOR}
-                bg={LOCATION_BG}
-                cellSize={cellSize}
-                onPress={
-                  onHeaderPress
-                    ? () =>
-                        onHeaderPress({
-                          type: "location",
-                          id: loc.id,
-                          name: loc.name,
-                          description: loc.description,
-                          icon: loc.icon,
-                        })
-                    : undefined
-                }
-              />
-            </React.Fragment>
-          ))}
-        </View>
+        {suspects.map((s) => (
+          <EntityLabel
+            key={s.id}
+            icon={s.icon} name={s.name} color={SUSPECT_COLOR} bg={SUSPECT_BG}
+            entityId={s.id} description={s.description} type="suspect"
+            cellSize={cellSize} labelWidth={labelWidth}
+            onHeaderPress={onHeaderPress} isRowLabel={false}
+          />
+        ))}
+        <View style={{ width: divider + 2, backgroundColor: BLOCK_DIVIDER_COLOR }} />
+        {locations.map((loc) => (
+          <EntityLabel
+            key={loc.id}
+            icon={loc.icon} name={loc.name} color={LOCATION_COLOR} bg={LOCATION_BG}
+            entityId={loc.id} description={loc.description} type="location"
+            cellSize={cellSize} labelWidth={labelWidth}
+            onHeaderPress={onHeaderPress} isRowLabel={false}
+          />
+        ))}
       </View>
 
-      {/* ── SİLAHLAR group label in left column ── */}
-      <View style={[styles.row, { marginTop: 0 }]}>
-        <View style={[styles.sectionGroupLabel, { width: labelWidth, borderLeftColor: WEAPON_COLOR }]}>
-          <Text style={[styles.sectionGroupText, { color: WEAPON_COLOR }]}>
-            SİLAHLAR
-          </Text>
+      {/* ── SİLAHLAR label ── */}
+      <View style={styles.row}>
+        <View style={[styles.sectionLabel, { width: labelWidth, borderLeftColor: WEAPON_COLOR }]}>
+          <Text style={[styles.sectionLabelText, { color: WEAPON_COLOR }]}>SİLAHLAR</Text>
         </View>
-        <View style={{ flex: 1, height: 1, backgroundColor: OUTER_BORDER_COLOR }} />
+        <View style={{ width: weaponBlockOuter, height: 1, backgroundColor: OUTER_BORDER_COLOR }} />
       </View>
 
       {/* ── Weapon rows ── */}
-      {weapons.map((weapon, wi) => (
+      {weapons.map((weapon) => (
         <View key={weapon.id} style={styles.row}>
-          {renderRowLabel(weapon.id, weapon.name, weapon.icon, weapon.description, "weapon")}
-          <View
-            style={{
-              flex: 1,
-              flexDirection: "row",
-              borderLeftWidth: 1,
-              borderRightWidth: 1,
-              borderColor: OUTER_BORDER_COLOR,
-            }}
-          >
-            {suspects.map((s, si) => {
-              const key = getKey(weapon.id, s.id);
-              const mark = gridState[key] ?? "none";
-              return (
-                <React.Fragment key={key}>
-                  {si > 0 && (
-                    <View style={{ width: 1, backgroundColor: CELL_BORDER_COLOR }} />
-                  )}
-                  <GridCell
-                    mark={mark}
-                    onPress={() => onCellPress(key, cycleNextMark(mark))}
-                    disabled={disabled}
-                    cellSize={cellSize}
-                  />
-                </React.Fragment>
-              );
-            })}
-            <View style={{ width: 2, backgroundColor: BLOCK_DIVIDER_COLOR }} />
-            {locations.map((loc, li) => {
-              const key = getKey(weapon.id, loc.id);
-              const mark = gridState[key] ?? "none";
-              return (
-                <React.Fragment key={key}>
-                  {li > 0 && (
-                    <View style={{ width: 1, backgroundColor: CELL_BORDER_COLOR }} />
-                  )}
-                  <GridCell
-                    mark={mark}
-                    onPress={() => onCellPress(key, cycleNextMark(mark))}
-                    disabled={disabled}
-                    cellSize={cellSize}
-                  />
-                </React.Fragment>
-              );
-            })}
+          <EntityLabel
+            icon={weapon.icon} name={weapon.name} color={WEAPON_COLOR} bg={WEAPON_BG}
+            entityId={weapon.id} description={weapon.description} type="weapon"
+            cellSize={cellSize} labelWidth={labelWidth}
+            onHeaderPress={onHeaderPress} isRowLabel={true}
+          />
+          <View style={[styles.cellsBlock, { width: weaponBlockOuter }]}>
+            {renderCells(weapon.id, suspects)}
+            <View style={{ width: divider, backgroundColor: BLOCK_DIVIDER_COLOR }} />
+            {renderCells(weapon.id, locations)}
           </View>
         </View>
       ))}
 
-      {/* ── Horizontal block divider (between weapons and locations) ── */}
+      {/* ── Horizontal divider ── */}
       <View style={styles.row}>
         <View style={{ width: labelWidth }} />
-        <View style={{ flex: 1, height: 2, backgroundColor: BLOCK_DIVIDER_COLOR }} />
+        <View style={{ width: weaponBlockOuter, height: 2, backgroundColor: BLOCK_DIVIDER_COLOR }} />
       </View>
 
-      {/* ── MEKANLAR group label in left column ── */}
-      <View style={[styles.row]}>
-        <View style={[styles.sectionGroupLabel, { width: labelWidth, borderLeftColor: LOCATION_COLOR }]}>
-          <Text style={[styles.sectionGroupText, { color: LOCATION_COLOR }]}>
-            MEKANLAR
-          </Text>
+      {/* ── MEKANLAR label ── */}
+      <View style={styles.row}>
+        <View style={[styles.sectionLabel, { width: labelWidth, borderLeftColor: LOCATION_COLOR }]}>
+          <Text style={[styles.sectionLabelText, { color: LOCATION_COLOR }]}>MEKANLAR</Text>
         </View>
-        <View style={{ flex: 1, height: 1, backgroundColor: "transparent" }} />
       </View>
 
-      {/* ── Location rows (L-shape: only suspect cols, right block is empty) ── */}
+      {/* ── Location rows (L-shape: suspect columns ONLY, right side is empty) ── */}
       {locations.map((location, li) => (
         <View key={location.id} style={styles.row}>
-          {renderRowLabel(
-            location.id,
-            location.name,
-            location.icon,
-            location.description,
-            "location"
-          )}
+          <EntityLabel
+            icon={location.icon} name={location.name} color={LOCATION_COLOR} bg={LOCATION_BG}
+            entityId={location.id} description={location.description} type="location"
+            cellSize={cellSize} labelWidth={labelWidth}
+            onHeaderPress={onHeaderPress} isRowLabel={true}
+          />
           <View
-            style={{
-              flex: 1,
-              flexDirection: "row",
-              borderLeftWidth: 1,
-              borderRightWidth: 1,
-              borderBottomWidth: li === locations.length - 1 ? 1 : 0,
-              borderColor: OUTER_BORDER_COLOR,
-            }}
+            style={[
+              styles.cellsBlock,
+              {
+                width: suspectBlockOuter,
+                ...(li === locations.length - 1
+                  ? { borderBottomWidth: 1 }
+                  : {}),
+              },
+            ]}
           >
-            {suspects.map((s, si) => {
-              const key = getKey(location.id, s.id);
-              const mark = gridState[key] ?? "none";
-              return (
-                <React.Fragment key={key}>
-                  {si > 0 && (
-                    <View style={{ width: 1, backgroundColor: CELL_BORDER_COLOR }} />
-                  )}
-                  <GridCell
-                    mark={mark}
-                    onPress={() => onCellPress(key, cycleNextMark(mark))}
-                    disabled={disabled}
-                    cellSize={cellSize}
-                  />
-                </React.Fragment>
-              );
-            })}
-            <View style={{ width: 2, backgroundColor: BLOCK_DIVIDER_COLOR }} />
-            {/* Empty right block for L-shape */}
-            <View
-              style={{
-                flex: numLocations,
-                height: cellSize,
-                backgroundColor: "#0F1117",
-              }}
-            />
+            {renderCells(location.id, suspects)}
           </View>
         </View>
       ))}
@@ -578,27 +458,21 @@ const styles = StyleSheet.create({
     letterSpacing: 1.4,
     paddingVertical: 3,
   },
-  sectionGroupLabel: {
+  sectionLabel: {
     paddingLeft: 6,
     paddingVertical: 4,
     borderLeftWidth: 3,
     justifyContent: "center",
   },
-  sectionGroupText: {
+  sectionLabelText: {
     fontSize: 8,
     fontWeight: "800",
     letterSpacing: 1.2,
   },
-  rowLabel: {
+  cellsBlock: {
     flexDirection: "row",
-    alignItems: "center",
-    paddingRight: 5,
-    paddingLeft: 2,
-    gap: 4,
-  },
-  rowLabelText: {
-    fontWeight: "600",
-    flex: 1,
-    lineHeight: 13,
+    borderLeftWidth: 1,
+    borderRightWidth: 1,
+    borderColor: OUTER_BORDER_COLOR,
   },
 });
