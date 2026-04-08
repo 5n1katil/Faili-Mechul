@@ -70,6 +70,7 @@ export interface GameRecord {
 
 export interface PlayerProfile {
   name: string;
+  avatar: string;
   totalScore: number;
   gamesPlayed: number;
   gamesWon: number;
@@ -81,6 +82,7 @@ export interface PlayerProfile {
 
 export interface LeaderboardEntry {
   name: string;
+  avatar: string;
   score: number;
   time: number;
   wrongGuesses: number;
@@ -124,7 +126,7 @@ interface GameContextType {
   revealNextClue: () => void;
   submitAnswer: (suspectId: string, weaponId: string, locationId: string) => boolean;
   recordTimeout: () => void;
-  updateProfile: (name: string) => void;
+  updateProfile: (name: string, avatar?: string) => void;
   resetCurrentGame: () => void;
   tickTimer: () => void;
 }
@@ -137,6 +139,7 @@ const LEADERBOARD_KEY = "@dedektif_leaderboard";
 
 const DEFAULT_PROFILE: PlayerProfile = {
   name: "Dedektif",
+  avatar: "",
   totalScore: 0,
   gamesPlayed: 0,
   gamesWon: 0,
@@ -209,7 +212,10 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         AsyncStorage.getItem(HISTORY_KEY),
         AsyncStorage.getItem(LEADERBOARD_KEY),
       ]);
-      if (profileStr) setProfile(JSON.parse(profileStr));
+      if (profileStr) {
+        const parsed = JSON.parse(profileStr);
+        setProfile({ avatar: "", ...parsed });
+      }
       if (historyStr) {
         const raw: Record<string, unknown>[] = JSON.parse(historyStr);
         setGameHistory(raw.map(migrateRecord));
@@ -416,6 +422,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
 
         const newLeaderEntry: LeaderboardEntry = {
           name: profile.name,
+          avatar: profile.avatar,
           score,
           time: gameState.timeElapsed,
           wrongGuesses: gameState.wrongGuesses,
@@ -473,8 +480,8 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
   }, [gameState, profile, gameHistory]);
 
   const updateProfile = useCallback(
-    (name: string) => {
-      saveProfile({ ...profile, name });
+    (name: string, avatar?: string) => {
+      saveProfile({ ...profile, name, ...(avatar !== undefined ? { avatar } : {}) });
     },
     [profile]
   );

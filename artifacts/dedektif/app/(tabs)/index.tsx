@@ -25,9 +25,11 @@ import {
 import Animated, { FadeInDown } from "react-native-reanimated";
 import OnboardingScreen from "@/components/OnboardingScreen";
 import PaywallModal from "@/components/PaywallModal";
+import ProfileSetupModal from "@/components/ProfileSetupModal";
 import { usePurchase } from "@/context/PurchaseContext";
 
 const ONBOARDING_KEY = "@dedektif_onboarding_done";
+const SETUP_KEY = "@dedektif_setup_done";
 const FREE_PUZZLE_COUNT = 10;
 
 function formatTime(s: number): string {
@@ -236,12 +238,14 @@ export default function HomeScreen() {
     completedPuzzleIds,
     bestScoreForPuzzle,
     profile,
+    updateProfile,
   } = useGame();
   const { isPremium } = usePurchase();
   const countdown = useDailyCountdown();
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [helpBtnOpen, setHelpBtnOpen] = useState(false);
   const [showPaywall, setShowPaywall] = useState(false);
+  const [showSetup, setShowSetup] = useState(false);
 
   const dailyPuzzle = getDailyPuzzle();
   const todayStr = new Date().toISOString().split("T")[0];
@@ -256,6 +260,7 @@ export default function HomeScreen() {
   useEffect(() => {
     AsyncStorage.getItem(ONBOARDING_KEY).then((val) => {
       if (!val) setShowOnboarding(true);
+      else AsyncStorage.getItem(SETUP_KEY).then((s) => { if (!s) setShowSetup(true); });
     });
   }, []);
 
@@ -263,6 +268,14 @@ export default function HomeScreen() {
     await AsyncStorage.setItem(ONBOARDING_KEY, "1");
     setShowOnboarding(false);
     setHelpBtnOpen(false);
+    const s = await AsyncStorage.getItem(SETUP_KEY);
+    if (!s) setShowSetup(true);
+  };
+
+  const handleSetupDone = async (name: string, avatar: string) => {
+    await AsyncStorage.setItem(SETUP_KEY, "1");
+    updateProfile(name, avatar);
+    setShowSetup(false);
   };
 
   const handleHelpPress = () => {
@@ -288,6 +301,10 @@ export default function HomeScreen() {
         visible={showOnboarding}
         onDone={handleOnboardingDone}
         closeLabel={helpBtnOpen ? "Kapat" : undefined}
+      />
+      <ProfileSetupModal
+        visible={showSetup}
+        onDone={handleSetupDone}
       />
       <ScrollView
         style={[styles.container, { backgroundColor: colors.background }]}

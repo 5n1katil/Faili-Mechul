@@ -19,6 +19,8 @@ import { useGame } from "@/context/GameContext";
 import Animated, { FadeInDown } from "react-native-reanimated";
 import OnboardingScreen from "@/components/OnboardingScreen";
 import PaywallModal from "@/components/PaywallModal";
+import AvatarPicker from "@/components/AvatarPicker";
+import { AvatarDisplay } from "@/utils/avatarHelpers";
 import { soundSettings } from "@/utils/soundSettings";
 import { usePurchase } from "@/context/PurchaseContext";
 
@@ -57,6 +59,7 @@ export default function ProfilScreen() {
   const [tempName, setTempName] = useState(profile.name);
   const [showHowToPlay, setShowHowToPlay] = useState(false);
   const [showPaywall, setShowPaywall] = useState(false);
+  const [showAvatarPicker, setShowAvatarPicker] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(() => soundSettings.enabled);
   const [restoring, setRestoring] = useState(false);
   const [restoreMsg, setRestoreMsg] = useState<{ text: string; ok: boolean } | null>(null);
@@ -84,6 +87,10 @@ export default function ProfilScreen() {
     setEditingName(false);
   };
 
+  const handleAvatarChange = (newAvatar: string) => {
+    updateProfile(profile.name, newAvatar);
+  };
+
   const handleRestore = async () => {
     setRestoring(true);
     setRestoreMsg(null);
@@ -94,6 +101,12 @@ export default function ProfilScreen() {
 
   return (
     <>
+      <AvatarPicker
+        visible={showAvatarPicker}
+        value={profile.avatar}
+        onChange={handleAvatarChange}
+        onClose={() => setShowAvatarPicker(false)}
+      />
       <OnboardingScreen
         visible={showHowToPlay}
         onDone={() => setShowHowToPlay(false)}
@@ -113,8 +126,22 @@ export default function ProfilScreen() {
       >
         <Animated.View entering={FadeInDown.delay(0).springify()}>
           <View style={[styles.profileCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
-            <View style={[styles.avatar, { backgroundColor: `${colors.primary}22`, borderColor: colors.primary }]}>
-              <MaterialIcons name="person" size={40} color={colors.primary} />
+            <View style={[styles.avatarContainer, { backgroundColor: `${colors.primary}22`, borderColor: colors.primary }]}>
+              <AvatarDisplay
+                avatar={profile.avatar || "detective"}
+                size={64}
+                color={colors.primary}
+                backgroundColor="transparent"
+              />
+              <View style={[styles.avatarEditBadge, { backgroundColor: colors.primary }]}>
+                <MaterialIcons name="edit" size={11} color={colors.primaryForeground} />
+              </View>
+              <Pressable
+                onPress={() => setShowAvatarPicker(true)}
+                style={StyleSheet.absoluteFillObject}
+                accessibilityRole="button"
+                accessibilityLabel="Avatar değiştir"
+              />
             </View>
             {editingName ? (
               <View style={styles.nameEditRow}>
@@ -384,11 +411,22 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 10,
   },
-  avatar: {
+  avatarContainer: {
     width: 80,
     height: 80,
     borderRadius: 40,
     borderWidth: 2,
+    alignItems: "center",
+    justifyContent: "center",
+    position: "relative",
+  },
+  avatarEditBadge: {
+    position: "absolute",
+    bottom: 2,
+    right: 2,
+    width: 20,
+    height: 20,
+    borderRadius: 10,
     alignItems: "center",
     justifyContent: "center",
   },
