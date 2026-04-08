@@ -83,8 +83,8 @@ const M_OUTER = "#FFFFFF50";
 const M_BLKDIV = "#FFFFFF80";
 const M_CELLSEP = "#FFFFFF2A";
 
-const MINI_CELL = 18;
-const MINI_LABEL = 18;
+const MINI_CELL = 22;
+const MINI_LABEL = 22;
 const MINI_DIV = 2;
 
 const MINI_SUSPECTS = [
@@ -101,7 +101,7 @@ const MINI_WEAPONS = [
 
 const MINI_LOCATIONS = [
   { id: "ev",   icon: "home", name: "Ev"   },
-  { id: "park", icon: "eco",  name: "Park" },
+  { id: "park", icon: "park", name: "Park" },
 ] as const;
 
 const WxS: CellMark[][] = [
@@ -166,7 +166,7 @@ function MiniGrid() {
 
   return (
     <View style={miniStyles.container}>
-      <View>
+      <View style={{ overflow: "visible" }}>
         {/* Row 1: Group headers */}
         <View style={miniStyles.row}>
           <View style={{ width: MINI_LABEL }} />
@@ -267,6 +267,7 @@ const miniStyles = StyleSheet.create({
     alignItems: "center",
     gap: 10,
     marginBottom: 4,
+    overflow: "visible",
   },
   row: {
     flexDirection: "row",
