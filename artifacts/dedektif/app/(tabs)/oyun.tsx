@@ -203,19 +203,17 @@ function PuzzleCard({
               <MaterialIcons name="emoji-events" size={13} color={colors.primary} />
               <Text style={[listStyles.bestResultLabel, { color: colors.mutedForeground }]}>En İyi:</Text>
               <Text style={[listStyles.bestResultValue, { color: colors.primary }]}>{bestResult.score} puan</Text>
-            </View>
-            <View style={listStyles.bestResultItem}>
               <MaterialIcons name="timer" size={13} color={colors.mutedForeground} />
               <Text style={[listStyles.bestResultValue, { color: colors.mutedForeground }]}>
                 {formatTime(bestResult.timeSeconds)}
               </Text>
-              {showReplay && (
-                <>
-                  <Text style={[listStyles.bestResultLabel, { color: colors.mutedForeground }]}>·</Text>
-                  <MaterialIcons name="replay" size={13} color={colors.mutedForeground} />
-                </>
-              )}
             </View>
+            {showReplay && (
+              <View style={listStyles.bestResultItem}>
+                <MaterialIcons name="replay" size={13} color={colors.primary} />
+                <Text style={[listStyles.bestResultValue, { color: colors.primary }]}>Tekrar Oyna</Text>
+              </View>
+            )}
           </View>
         ) : (
           <View style={[listStyles.playRow, { borderTopColor: colors.border }]}>
