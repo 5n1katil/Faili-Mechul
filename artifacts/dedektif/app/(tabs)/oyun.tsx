@@ -200,7 +200,7 @@ export default function OyunScreen() {
     gameState;
 
   const timeLimit = getTimeLimit(puzzle.difficulty);
-  const remainingTime = Math.max(0, timeLimit - timeElapsed);
+  const remainingTime = Math.max(0, timeLimit - timeElapsed - wrongGuessPenaltySeconds);
   const canRevealMore = cluesRevealed[cluesRevealed.length - 1] < puzzle.clues.length - 1;
 
   const handleCellPress = (key: string, nextMark: GridMark) => {

@@ -33,6 +33,7 @@ export default function TimerDisplay({ seconds, wrongGuesses, penaltySeconds }: 
   const translateX = useSharedValue(0);
   const timerScale = useSharedValue(1);
   const penaltyScale = useSharedValue(1);
+  const flashOpacity = useSharedValue(0);
   const prevWrongRef = useRef(wrongGuesses);
 
   const isCritical = seconds > 0 && seconds <= 30;
@@ -51,6 +52,12 @@ export default function TimerDisplay({ seconds, wrongGuesses, penaltySeconds }: 
       penaltyScale.value = withSequence(
         withSpring(1.4, { damping: 7, stiffness: 300 }),
         withSpring(1, { damping: 12, stiffness: 200 }),
+      );
+      flashOpacity.value = withSequence(
+        withTiming(1, { duration: 60 }),
+        withTiming(0, { duration: 60 }),
+        withTiming(0.7, { duration: 60 }),
+        withTiming(0, { duration: 180 }),
       );
       if (Platform.OS !== "web") {
         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
@@ -78,6 +85,10 @@ export default function TimerDisplay({ seconds, wrongGuesses, penaltySeconds }: 
     transform: [{ translateX: translateX.value }],
   }));
 
+  const flashStyle = useAnimatedStyle(() => ({
+    opacity: flashOpacity.value,
+  }));
+
   const timerItemStyle = useAnimatedStyle(() => ({
     transform: [{ scale: timerScale.value }],
   }));
@@ -102,6 +113,10 @@ export default function TimerDisplay({ seconds, wrongGuesses, penaltySeconds }: 
         shakeStyle,
       ]}
     >
+      <Animated.View
+        pointerEvents="none"
+        style={[styles.flashOverlay, flashStyle]}
+      />
       <Animated.View style={[styles.item, timerItemStyle]}>
         <MaterialIcons name="timer" size={18} color={timerColor} />
         <Text style={[styles.value, { color: timerTextColor }]}>
@@ -190,5 +205,11 @@ const styles = StyleSheet.create({
   divider: {
     width: 1,
     height: 24,
+  },
+  flashOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: "#FF0000",
+    borderRadius: 10,
+    zIndex: 1,
   },
 });
