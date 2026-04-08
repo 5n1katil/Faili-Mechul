@@ -48,24 +48,6 @@ function formatTime(s: number): string {
   return `${m}:${sec.toString().padStart(2, "0")}`;
 }
 
-function SectionHeader({
-  title,
-  right,
-}: {
-  title: string;
-  right?: React.ReactNode;
-}) {
-  return (
-    <View style={listStyles.sectionHeaderRow}>
-      <View style={listStyles.sectionHeaderLeft}>
-        <View style={listStyles.sectionAccentBar} />
-        <Text style={listStyles.sectionHeaderText}>{title}</Text>
-      </View>
-      {right}
-    </View>
-  );
-}
-
 function AccordionSection({
   title,
   count,
@@ -337,6 +319,7 @@ export default function VakalarScreen() {
       const rank = allScores.indexOf(estimatedScore) + 1;
       setFinalRank(Math.max(1, rank));
       setTotalPlayers(allScores.length);
+      setShowSheet(false);
     }
     return success;
   };
@@ -635,29 +618,6 @@ const listStyles = StyleSheet.create({
     fontSize: 22,
     fontWeight: "900",
     letterSpacing: 0.5,
-  },
-  sectionHeaderRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    marginTop: 6,
-  },
-  sectionHeaderLeft: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 8,
-  },
-  sectionAccentBar: {
-    width: 3,
-    height: 18,
-    backgroundColor: "#D4A843",
-    borderRadius: 2,
-  },
-  sectionHeaderText: {
-    fontSize: 16,
-    fontWeight: "800",
-    color: "#E8E8E8",
-    letterSpacing: 1,
   },
   premiumChip: {
     flexDirection: "row",

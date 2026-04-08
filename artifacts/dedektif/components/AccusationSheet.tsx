@@ -27,9 +27,9 @@ interface Props {
   selectedSuspect: string | null;
   selectedWeapon: string | null;
   selectedLocation: string | null;
-  onSelectSuspect: (id: string) => void;
-  onSelectWeapon: (id: string) => void;
-  onSelectLocation: (id: string) => void;
+  onSelectSuspect: (id: string | null) => void;
+  onSelectWeapon: (id: string | null) => void;
+  onSelectLocation: (id: string | null) => void;
   onSubmit: (suspectId: string, weaponId: string, locationId: string) => boolean | void;
   disabled?: boolean;
 }
@@ -218,9 +218,9 @@ export default function AccusationSheet({
           <View style={[styles.optionList, { backgroundColor: colors.background, borderColor: colors.border }]}>
             <Pressable
               onPress={() => {
-                if (activeColumn === "suspect") onSelectSuspect("");
-                else if (activeColumn === "location") onSelectLocation("");
-                else if (activeColumn === "weapon") onSelectWeapon("");
+                if (activeColumn === "suspect") onSelectSuspect(null);
+                else if (activeColumn === "location") onSelectLocation(null);
+                else if (activeColumn === "weapon") onSelectWeapon(null);
                 setActiveColumn(null);
               }}
               style={[styles.optionItem, { borderBottomColor: colors.border }]}
