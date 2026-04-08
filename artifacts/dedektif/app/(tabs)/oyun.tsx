@@ -1,5 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
+  BackHandler,
   Platform,
   Pressable,
   ScrollView,
@@ -14,6 +15,7 @@ if (Platform.OS === "android" && UIManager.setLayoutAnimationEnabledExperimental
   UIManager.setLayoutAnimationEnabledExperimental(true);
 }
 import { MaterialIcons } from "@expo/vector-icons";
+import { useFocusEffect } from "@react-navigation/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useColors } from "@/hooks/useColors";
 import { useGame } from "@/context/GameContext";
@@ -29,6 +31,8 @@ import ResultScreen from "@/components/ResultScreen";
 import EntityInfoSheet from "@/components/EntityInfoSheet";
 import PaywallModal from "@/components/PaywallModal";
 import ScoreInfoSheet from "@/components/ScoreInfoSheet";
+import PuzzleStartModal from "@/components/PuzzleStartModal";
+import ExitConfirmSheet from "@/components/ExitConfirmSheet";
 import {
   getDailyPuzzle,
   getDifficultyColor,
@@ -111,6 +115,7 @@ function PuzzleCard({
   completed,
   bestResult,
   locked,
+  showReplay,
 }: {
   puzzle: (typeof PUZZLES)[0];
   onPress: () => void;
@@ -118,6 +123,7 @@ function PuzzleCard({
   completed: boolean;
   bestResult: BestResult | null;
   locked?: boolean;
+  showReplay?: boolean;
 }) {
   const colors = useColors();
   const diffColor = getDifficultyColor(puzzle.difficulty as Difficulty);
@@ -199,10 +205,20 @@ function PuzzleCard({
               <Text style={[listStyles.bestResultValue, { color: colors.primary }]}>{bestResult.score} puan</Text>
             </View>
             <View style={listStyles.bestResultItem}>
-              <MaterialIcons name="timer" size={13} color={colors.mutedForeground} />
-              <Text style={[listStyles.bestResultValue, { color: colors.mutedForeground }]}>
-                {formatTime(bestResult.timeSeconds)}
-              </Text>
+              {showReplay && (
+                <>
+                  <MaterialIcons name="replay" size={13} color={colors.mutedForeground} />
+                  <Text style={[listStyles.bestResultValue, { color: colors.mutedForeground }]}>Tekrar Oyna</Text>
+                </>
+              )}
+              {!showReplay && (
+                <>
+                  <MaterialIcons name="timer" size={13} color={colors.mutedForeground} />
+                  <Text style={[listStyles.bestResultValue, { color: colors.mutedForeground }]}>
+                    {formatTime(bestResult.timeSeconds)}
+                  </Text>
+                </>
+              )}
             </View>
           </View>
         ) : (
@@ -229,6 +245,8 @@ export default function VakalarScreen() {
     tickTimer,
     resetCurrentGame,
     startPuzzle,
+    activateTimer,
+    invalidateGame,
     completedPuzzleIds,
     bestScoreForPuzzle,
   } = useGame();
@@ -247,11 +265,17 @@ export default function VakalarScreen() {
   const [totalPlayers, setTotalPlayers] = useState(1);
   const [showSheet, setShowSheet] = useState(false);
   const [showScoreInfo, setShowScoreInfo] = useState(false);
+  const [showExitConfirm, setShowExitConfirm] = useState(false);
+  const [listTab, setListTab] = useState<"aktif" | "tamamlananlar">("aktif");
 
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const gameStateRef = useRef(gameState);
+  const invalidateGameRef = useRef(invalidateGame);
+  useEffect(() => { gameStateRef.current = gameState; }, [gameState]);
+  useEffect(() => { invalidateGameRef.current = invalidateGame; }, [invalidateGame]);
 
   useEffect(() => {
-    if (gameState && !gameState.isComplete) {
+    if (gameState && gameState.timerActive && !gameState.isComplete) {
       timerRef.current = setInterval(() => {
         tickTimer();
       }, 1000);
@@ -261,7 +285,7 @@ export default function VakalarScreen() {
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
     };
-  }, [gameState?.isComplete, tickTimer]);
+  }, [gameState?.timerActive, gameState?.isComplete, tickTimer]);
 
   useEffect(() => {
     if (gameState?.isComplete) {
@@ -278,11 +302,50 @@ export default function VakalarScreen() {
     setAccuLocation(null);
     setShowSheet(false);
     setShowScoreInfo(false);
+    setShowExitConfirm(false);
   }, [gameState?.puzzle?.id]);
+
+  useFocusEffect(
+    useCallback(() => {
+      return () => {
+        const gs = gameStateRef.current;
+        const inv = invalidateGameRef.current;
+        if (gs && gs.timerActive && !gs.isComplete && gs.isRanked) {
+          inv();
+        }
+      };
+    }, [])
+  );
+
+  useEffect(() => {
+    if (Platform.OS !== "android") return;
+    const sub = BackHandler.addEventListener("hardwareBackPress", () => {
+      if (gameState && !gameState.isComplete && gameState.timerActive) {
+        setShowExitConfirm(true);
+        return true;
+      }
+      return false;
+    });
+    return () => sub.remove();
+  }, [gameState]);
 
   const handleBackToList = () => {
     setShowResult(false);
     resetCurrentGame();
+  };
+
+  const handleBackPress = () => {
+    if (gameState && !gameState.isComplete && gameState.timerActive) {
+      setShowExitConfirm(true);
+    } else {
+      handleBackToList();
+    }
+  };
+
+  const handleExitConfirmed = () => {
+    setShowExitConfirm(false);
+    invalidateGame();
+    handleBackToList();
   };
 
   const handleCellPress = (key: string, nextMark: GridMark) => {
@@ -327,10 +390,15 @@ export default function VakalarScreen() {
     if (!success) {
       play("error");
     } else {
-      const allScores = [...samePuzzleScores, estimatedScore].sort((a, b) => b - a);
-      const rank = allScores.indexOf(estimatedScore) + 1;
-      setFinalRank(Math.max(1, rank));
-      setTotalPlayers(allScores.length);
+      if (gameState.isRanked) {
+        const allScores = [...samePuzzleScores, estimatedScore].sort((a, b) => b - a);
+        const rank = allScores.indexOf(estimatedScore) + 1;
+        setFinalRank(Math.max(1, rank));
+        setTotalPlayers(allScores.length);
+      } else {
+        setFinalRank(0);
+        setTotalPlayers(0);
+      }
       setShowSheet(false);
     }
     return success;
@@ -343,104 +411,226 @@ export default function VakalarScreen() {
     const premiumPuzzles = archivePuzzles.slice(FREE_PUZZLE_COUNT);
     const premiumLockedCount = isPremium ? 0 : premiumPuzzles.length;
 
+    const activePuzzles = [dailyPuzzle, ...archivePuzzles].filter(
+      (p) => !completedPuzzleIds.has(p.id)
+    );
+    const completedPuzzles = [dailyPuzzle, ...archivePuzzles].filter(
+      (p) => completedPuzzleIds.has(p.id)
+    );
+
+    const activeFree = freePuzzles.filter((p) => !completedPuzzleIds.has(p.id));
+    const activePremium = premiumPuzzles.filter((p) => !completedPuzzleIds.has(p.id));
+
     return (
       <>
         <PaywallModal visible={showPaywall} onClose={() => setShowPaywall(false)} />
-        <ScrollView
-          style={[gameStyles.container, { backgroundColor: colors.background }]}
-          contentContainerStyle={[
-            listStyles.listContent,
-            {
-              paddingTop: Platform.OS === "web" ? 67 + 16 : insets.top + 16,
-              paddingBottom: Platform.OS === "web" ? 34 + 80 : insets.bottom + 80,
-            },
-          ]}
-          showsVerticalScrollIndicator={false}
-        >
-          <Animated.View entering={FadeInDown.delay(0).springify()}>
-            <View style={listStyles.listHeader}>
-              <MaterialIcons name="folder-open" size={24} color={colors.primary} />
-              <Text style={[listStyles.listHeaderText, { color: colors.primary }]}>Vaka Listesi</Text>
-            </View>
-          </Animated.View>
-
-          <AccordionSection
-            title="Başlangıç Seviyesi Vakalar"
-            count={freePuzzles.length}
+        <View style={[gameStyles.container, { backgroundColor: colors.background }]}>
+          <View
+            style={[
+              listStyles.tabBar,
+              {
+                paddingTop: Platform.OS === "web" ? 67 + 12 : insets.top + 12,
+                backgroundColor: colors.background,
+                borderBottomColor: colors.border,
+              },
+            ]}
           >
-            {freePuzzles.map((puzzle, i) => {
-              const isCompleted = completedPuzzleIds.has(puzzle.id);
-              return (
-                <PuzzleCard
-                  key={puzzle.id}
-                  puzzle={puzzle}
-                  onPress={() => startPuzzle(puzzle)}
-                  delay={100 + i * 50}
-                  completed={isCompleted}
-                  bestResult={isCompleted ? bestScoreForPuzzle(puzzle.id) : null}
-                  locked={false}
-                />
-              );
-            })}
-          </AccordionSection>
-
-          <AccordionSection
-            title="Premium Vaka Arşivi"
-            count={premiumPuzzles.length}
-            badge={
-              !isPremium ? (
-                <Pressable
-                  onPress={() => setShowPaywall(true)}
-                  style={[listStyles.premiumChip, { backgroundColor: "#D4A84318", borderColor: "#D4A84355" }]}
-                >
-                  <MaterialIcons name="lock" size={12} color="#D4A843" />
-                  <Text style={[listStyles.premiumChipText, { color: "#D4A843" }]}>
-                    {premiumLockedCount} kilitli
-                  </Text>
-                </Pressable>
-              ) : undefined
-            }
-          >
-            {!isPremium && (
+            <View style={listStyles.tabBarInner}>
               <Pressable
-                onPress={() => setShowPaywall(true)}
-                style={[listStyles.premiumBanner, { backgroundColor: "#D4A84310", borderColor: "#D4A84340" }]}
+                onPress={() => setListTab("aktif")}
+                style={[
+                  listStyles.tabBtn,
+                  listTab === "aktif" && { borderBottomColor: colors.primary, borderBottomWidth: 2 },
+                ]}
               >
-                <MaterialIcons name="workspace-premium" size={20} color="#D4A843" />
-                <View style={listStyles.premiumBannerText}>
-                  <Text style={[listStyles.premiumBannerTitle, { color: "#D4A843" }]}>
-                    Premium Vaka Arşivi'ni Aç
-                  </Text>
-                  <Text style={[listStyles.premiumBannerSub, { color: "#D4A84399" }]}>
-                    {premiumLockedCount} ek vaka · Tek seferlik satın al
-                  </Text>
-                </View>
-                <MaterialIcons name="chevron-right" size={20} color="#D4A843" />
+                <Text
+                  style={[
+                    listStyles.tabBtnText,
+                    { color: listTab === "aktif" ? colors.primary : colors.mutedForeground },
+                  ]}
+                >
+                  Aktif
+                </Text>
+                {activePuzzles.length > 0 && (
+                  <View style={[listStyles.tabCount, { backgroundColor: `${colors.primary}22` }]}>
+                    <Text style={[listStyles.tabCountText, { color: colors.primary }]}>
+                      {activePuzzles.length}
+                    </Text>
+                  </View>
+                )}
               </Pressable>
+              <Pressable
+                onPress={() => setListTab("tamamlananlar")}
+                style={[
+                  listStyles.tabBtn,
+                  listTab === "tamamlananlar" && { borderBottomColor: colors.success, borderBottomWidth: 2 },
+                ]}
+              >
+                <Text
+                  style={[
+                    listStyles.tabBtnText,
+                    { color: listTab === "tamamlananlar" ? colors.success : colors.mutedForeground },
+                  ]}
+                >
+                  Tamamlananlar
+                </Text>
+                {completedPuzzles.length > 0 && (
+                  <View style={[listStyles.tabCount, { backgroundColor: `${colors.success}22` }]}>
+                    <Text style={[listStyles.tabCountText, { color: colors.success }]}>
+                      {completedPuzzles.length}
+                    </Text>
+                  </View>
+                )}
+              </Pressable>
+            </View>
+          </View>
+
+          <ScrollView
+            style={{ flex: 1 }}
+            contentContainerStyle={[
+              listStyles.listContent,
+              {
+                paddingTop: 16,
+                paddingBottom: Platform.OS === "web" ? 34 + 80 : insets.bottom + 80,
+              },
+            ]}
+            showsVerticalScrollIndicator={false}
+          >
+            {listTab === "aktif" ? (
+              <>
+                <Animated.View entering={FadeInDown.delay(0).springify()}>
+                  <View style={listStyles.listHeader}>
+                    <MaterialIcons name="folder-open" size={24} color={colors.primary} />
+                    <Text style={[listStyles.listHeaderText, { color: colors.primary }]}>Aktif Vakalar</Text>
+                  </View>
+                </Animated.View>
+
+                {activePuzzles.length === 0 ? (
+                  <View style={[listStyles.emptyBox, { borderColor: colors.border }]}>
+                    <MaterialIcons name="check-circle-outline" size={40} color={colors.success} />
+                    <Text style={[listStyles.emptyTitle, { color: colors.foreground }]}>
+                      Tüm Vakalar Çözüldü!
+                    </Text>
+                    <Text style={[listStyles.emptyText, { color: colors.mutedForeground }]}>
+                      Tamamlananlar sekmesinden tekrar oynayabilirsiniz.
+                    </Text>
+                  </View>
+                ) : (
+                  <>
+                    <AccordionSection
+                      title="Başlangıç Seviyesi Vakalar"
+                      count={activeFree.length}
+                    >
+                      {activeFree.map((puzzle, i) => (
+                        <PuzzleCard
+                          key={puzzle.id}
+                          puzzle={puzzle}
+                          onPress={() => startPuzzle(puzzle)}
+                          delay={100 + i * 50}
+                          completed={false}
+                          bestResult={null}
+                          locked={false}
+                        />
+                      ))}
+                    </AccordionSection>
+
+                    <AccordionSection
+                      title="Premium Vaka Arşivi"
+                      count={activePremium.length}
+                      badge={
+                        !isPremium ? (
+                          <Pressable
+                            onPress={() => setShowPaywall(true)}
+                            style={[listStyles.premiumChip, { backgroundColor: "#D4A84318", borderColor: "#D4A84355" }]}
+                          >
+                            <MaterialIcons name="lock" size={12} color="#D4A843" />
+                            <Text style={[listStyles.premiumChipText, { color: "#D4A843" }]}>
+                              {premiumLockedCount} kilitli
+                            </Text>
+                          </Pressable>
+                        ) : undefined
+                      }
+                    >
+                      {!isPremium && (
+                        <Pressable
+                          onPress={() => setShowPaywall(true)}
+                          style={[listStyles.premiumBanner, { backgroundColor: "#D4A84310", borderColor: "#D4A84340" }]}
+                        >
+                          <MaterialIcons name="workspace-premium" size={20} color="#D4A843" />
+                          <View style={listStyles.premiumBannerText}>
+                            <Text style={[listStyles.premiumBannerTitle, { color: "#D4A843" }]}>
+                              Premium Vaka Arşivi'ni Aç
+                            </Text>
+                            <Text style={[listStyles.premiumBannerSub, { color: "#D4A84399" }]}>
+                              {premiumLockedCount} ek vaka · Tek seferlik satın al
+                            </Text>
+                          </View>
+                          <MaterialIcons name="chevron-right" size={20} color="#D4A843" />
+                        </Pressable>
+                      )}
+                      {activePremium.map((puzzle, i) => {
+                        const isLocked = !isPremium;
+                        return (
+                          <PuzzleCard
+                            key={puzzle.id}
+                            puzzle={puzzle}
+                            onPress={() => {
+                              if (isLocked) {
+                                setShowPaywall(true);
+                              } else {
+                                startPuzzle(puzzle);
+                              }
+                            }}
+                            delay={100 + (activeFree.length + i) * 40}
+                            completed={false}
+                            bestResult={null}
+                            locked={isLocked}
+                          />
+                        );
+                      })}
+                    </AccordionSection>
+                  </>
+                )}
+              </>
+            ) : (
+              <>
+                <Animated.View entering={FadeInDown.delay(0).springify()}>
+                  <View style={listStyles.listHeader}>
+                    <MaterialIcons name="check-circle" size={24} color={colors.success} />
+                    <Text style={[listStyles.listHeaderText, { color: colors.success }]}>Tamamlananlar</Text>
+                  </View>
+                </Animated.View>
+
+                {completedPuzzles.length === 0 ? (
+                  <View style={[listStyles.emptyBox, { borderColor: colors.border }]}>
+                    <MaterialIcons name="folder-open" size={40} color={colors.mutedForeground} />
+                    <Text style={[listStyles.emptyTitle, { color: colors.foreground }]}>
+                      Henüz Çözülmüş Vaka Yok
+                    </Text>
+                    <Text style={[listStyles.emptyText, { color: colors.mutedForeground }]}>
+                      Aktif vakalardan birini çözdükten sonra burada görünecek.
+                    </Text>
+                  </View>
+                ) : (
+                  completedPuzzles.map((puzzle, i) => {
+                    const best = bestScoreForPuzzle(puzzle.id);
+                    return (
+                      <PuzzleCard
+                        key={puzzle.id}
+                        puzzle={puzzle}
+                        onPress={() => startPuzzle(puzzle)}
+                        delay={100 + i * 40}
+                        completed={true}
+                        bestResult={best}
+                        showReplay={true}
+                      />
+                    );
+                  })
+                )}
+              </>
             )}
-            {premiumPuzzles.map((puzzle, i) => {
-              const isCompleted = completedPuzzleIds.has(puzzle.id);
-              const isLocked = !isPremium;
-              return (
-                <PuzzleCard
-                  key={puzzle.id}
-                  puzzle={puzzle}
-                  onPress={() => {
-                    if (isLocked) {
-                      setShowPaywall(true);
-                    } else {
-                      startPuzzle(puzzle);
-                    }
-                  }}
-                  delay={100 + (freePuzzles.length + i) * 40}
-                  completed={isCompleted && !isLocked}
-                  bestResult={isCompleted && !isLocked ? bestScoreForPuzzle(puzzle.id) : null}
-                  locked={isLocked}
-                />
-              );
-            })}
-          </AccordionSection>
-        </ScrollView>
+          </ScrollView>
+        </View>
       </>
     );
   }
@@ -452,6 +642,8 @@ export default function VakalarScreen() {
     timeElapsed,
     wrongGuesses,
     finalScore,
+    timerActive,
+    isRanked,
   } = gameState;
 
   const bonusCluesRevealedCount = cluesRevealed.filter((idx) => isBonusClue(puzzle, idx)).length;
@@ -482,10 +674,27 @@ export default function VakalarScreen() {
           finalRank={finalRank}
           totalPlayers={totalPlayers}
           currentStreak={gameState.appliedStreak ?? profile.currentStreak}
+          isRanked={isRanked}
           onPlayMore={handleBackToList}
           onClose={handleBackToList}
         />
       )}
+
+      <PuzzleStartModal
+        visible={!timerActive && !gameState.isComplete}
+        puzzle={puzzle}
+        isRanked={isRanked}
+        onStart={activateTimer}
+        onCancel={handleBackToList}
+      />
+
+      <ExitConfirmSheet
+        visible={showExitConfirm}
+        isRanked={isRanked}
+        onContinue={() => setShowExitConfirm(false)}
+        onExit={handleExitConfirmed}
+      />
+
       <ScoreInfoSheet visible={showScoreInfo} onClose={() => setShowScoreInfo(false)} />
 
       <ScrollView
@@ -502,7 +711,7 @@ export default function VakalarScreen() {
         <Animated.View entering={FadeInDown.delay(0).springify()}>
           <View style={gameStyles.puzzleHeader}>
             <View style={gameStyles.puzzleHeaderLeft}>
-              <Pressable onPress={handleBackToList} style={gameStyles.backBtn} hitSlop={8}>
+              <Pressable onPress={handleBackPress} style={gameStyles.backBtn} hitSlop={8}>
                 <MaterialIcons name="arrow-back" size={20} color={colors.mutedForeground} />
               </Pressable>
               <View style={{ flex: 1 }}>
@@ -515,6 +724,12 @@ export default function VakalarScreen() {
               </View>
             </View>
             <View style={gameStyles.timerRow}>
+              {!isRanked && (
+                <View style={[gameStyles.practiceBadge, { backgroundColor: "#6B728020", borderColor: "#6B728044" }]}>
+                  <MaterialIcons name="fitness-center" size={11} color={colors.mutedForeground} />
+                  <Text style={[gameStyles.practiceBadgeText, { color: colors.mutedForeground }]}>Antrenman</Text>
+                </View>
+              )}
               <TimerDisplay
                 seconds={timeElapsed}
                 wrongGuesses={wrongGuesses}
@@ -641,6 +856,54 @@ const listStyles = StyleSheet.create({
     fontSize: 22,
     fontWeight: "900",
     letterSpacing: 0.5,
+  },
+  tabBar: {
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    paddingHorizontal: 16,
+  },
+  tabBarInner: {
+    flexDirection: "row",
+    gap: 4,
+  },
+  tabBtn: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingVertical: 10,
+    paddingHorizontal: 4,
+    marginRight: 20,
+    gap: 6,
+  },
+  tabBtnText: {
+    fontSize: 14,
+    fontWeight: "700",
+  },
+  tabCount: {
+    borderRadius: 8,
+    paddingHorizontal: 6,
+    paddingVertical: 1,
+  },
+  tabCountText: {
+    fontSize: 11,
+    fontWeight: "700",
+  },
+  emptyBox: {
+    alignItems: "center",
+    borderRadius: 16,
+    borderWidth: 1,
+    borderStyle: "dashed",
+    padding: 32,
+    gap: 12,
+    marginTop: 16,
+  },
+  emptyTitle: {
+    fontSize: 16,
+    fontWeight: "700",
+    textAlign: "center",
+  },
+  emptyText: {
+    fontSize: 13,
+    textAlign: "center",
+    lineHeight: 20,
   },
   premiumChip: {
     flexDirection: "row",
@@ -780,6 +1043,21 @@ const gameStyles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 6,
+    flexWrap: "wrap",
+    justifyContent: "flex-end",
+  },
+  practiceBadge: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderRadius: 6,
+    borderWidth: 1,
+    paddingHorizontal: 6,
+    paddingVertical: 3,
+    gap: 3,
+  },
+  practiceBadgeText: {
+    fontSize: 10,
+    fontWeight: "700",
   },
   scoreInfoBtn: {
     width: 30,

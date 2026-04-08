@@ -42,6 +42,7 @@ interface Props {
   finalRank: number;
   totalPlayers: number;
   currentStreak: number;
+  isRanked: boolean;
   onPlayMore: () => void;
   onClose: () => void;
 }
@@ -325,6 +326,7 @@ export default function ResultScreen({
   finalRank,
   totalPlayers,
   currentStreak,
+  isRanked,
   onPlayMore,
   onClose,
 }: Props) {
@@ -423,6 +425,14 @@ export default function ResultScreen({
           <Text style={[styles.subtitle, { color: colors.mutedForeground }]}>
             {success ? "Harika dedektiflik çalışması!" : "Bir dahaki sefere daha dikkatli!"}
           </Text>
+          {!isRanked && (
+            <View style={[styles.practiceNote, { backgroundColor: "#6B728018", borderColor: "#6B728044" }]}>
+              <MaterialIcons name="fitness-center" size={14} color={colors.mutedForeground} />
+              <Text style={[styles.practiceNoteText, { color: colors.mutedForeground }]}>
+                Antrenman modu — Bu oynayış liderlik tablosunu etkilemedi
+              </Text>
+            </View>
+          )}
 
           <View style={[styles.solutionBox, { backgroundColor: colors.background, borderColor: colors.border }]}>
             <Text style={[styles.solutionTitle, { color: colors.mutedForeground }]}>ÇÖZÜM</Text>
@@ -471,7 +481,7 @@ export default function ResultScreen({
             />
           )}
 
-          {success && totalPlayers > 0 && (
+          {success && isRanked && totalPlayers > 0 && (
             <RankCard finalRank={finalRank} totalPlayers={totalPlayers} />
           )}
 
@@ -687,5 +697,20 @@ const styles = StyleSheet.create({
   btnOutlineText: {
     fontSize: 14,
     fontWeight: "600",
+  },
+  practiceNote: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderRadius: 8,
+    borderWidth: 1,
+    paddingHorizontal: 10,
+    paddingVertical: 7,
+    gap: 7,
+    alignSelf: "stretch",
+  },
+  practiceNoteText: {
+    flex: 1,
+    fontSize: 12,
+    fontWeight: "500",
   },
 });

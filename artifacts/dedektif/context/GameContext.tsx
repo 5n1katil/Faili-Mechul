@@ -110,6 +110,8 @@ export interface GameState {
   selectedSuspect: string | null;
   selectedWeapon: string | null;
   selectedLocation: string | null;
+  timerActive: boolean;
+  isRanked: boolean;
 }
 
 export interface BestResult {
@@ -126,6 +128,8 @@ interface GameContextType {
   bestScoreForPuzzle: (id: string) => BestResult | null;
   startDailyPuzzle: () => void;
   startPuzzle: (puzzle: Puzzle) => void;
+  activateTimer: () => void;
+  invalidateGame: () => void;
   setGridMark: (key: string, mark: GridMark) => void;
   revealBonusClue: (index: number) => void;
   submitAnswer: (suspectId: string, weaponId: string, locationId: string) => boolean;
@@ -274,6 +278,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
 
   const startPuzzle = useCallback((puzzle: Puzzle) => {
     const standardIndices = getStandardClueIndices(puzzle);
+    const isRanked = !completedPuzzleIds.has(puzzle.id);
     setGameState({
       puzzle,
       gridState: {},
@@ -288,13 +293,29 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
       selectedSuspect: null,
       selectedWeapon: null,
       selectedLocation: null,
+      timerActive: false,
+      isRanked,
     });
-  }, []);
+  }, [completedPuzzleIds]);
 
   const startDailyPuzzle = useCallback(() => {
     const puzzle = getDailyPuzzle();
     startPuzzle(puzzle);
   }, [startPuzzle]);
+
+  const activateTimer = useCallback(() => {
+    setGameState((prev) => {
+      if (!prev) return prev;
+      return { ...prev, timerActive: true };
+    });
+  }, []);
+
+  const invalidateGame = useCallback(() => {
+    setGameState((prev) => {
+      if (!prev) return prev;
+      return { ...prev, isRanked: false, timerActive: false };
+    });
+  }, []);
 
   const setGridMark = useCallback(
     (key: string, mark: GridMark) => {
@@ -410,50 +431,52 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
           newStreak
         );
 
-        const record: GameRecord = {
-          puzzleId: gameState.puzzle.id,
-          date: today,
-          score,
-          timeSeconds: gameState.timeElapsed,
-          wrongGuesses: gameState.wrongGuesses,
-          penaltySeconds: 0,
-          completed: true,
-          solution: { suspectId, weaponId, locationId },
-        };
+        if (gameState.isRanked) {
+          const record: GameRecord = {
+            puzzleId: gameState.puzzle.id,
+            date: today,
+            score,
+            timeSeconds: gameState.timeElapsed,
+            wrongGuesses: gameState.wrongGuesses,
+            penaltySeconds: 0,
+            completed: true,
+            solution: { suspectId, weaponId, locationId },
+          };
 
-        const newHistory = [record, ...gameHistory];
-        const wins = newHistory.filter((h) => h.completed);
-        const avgSolveTimeSeconds =
-          wins.length > 0
-            ? Math.round(wins.reduce((acc, h) => acc + h.timeSeconds, 0) / wins.length)
-            : 0;
+          const newHistory = [record, ...gameHistory];
+          const wins = newHistory.filter((h) => h.completed);
+          const avgSolveTimeSeconds =
+            wins.length > 0
+              ? Math.round(wins.reduce((acc, h) => acc + h.timeSeconds, 0) / wins.length)
+              : 0;
 
-        const newProfile = {
-          ...profile,
-          totalScore: profile.totalScore + score,
-          gamesPlayed: profile.gamesPlayed + 1,
-          gamesWon: profile.gamesWon + 1,
-          currentStreak: newStreak,
-          maxStreak: Math.max(profile.maxStreak, newStreak),
-          lastPlayedDate: today,
-          avgSolveTimeSeconds,
-        };
-        newProfile.badges = getBadges(newProfile, newHistory);
+          const newProfile = {
+            ...profile,
+            totalScore: profile.totalScore + score,
+            gamesPlayed: profile.gamesPlayed + 1,
+            gamesWon: profile.gamesWon + 1,
+            currentStreak: newStreak,
+            maxStreak: Math.max(profile.maxStreak, newStreak),
+            lastPlayedDate: today,
+            avgSolveTimeSeconds,
+          };
+          newProfile.badges = getBadges(newProfile, newHistory);
 
-        const newLeaderEntry: LeaderboardEntry = {
-          name: profile.name,
-          avatar: profile.avatar,
-          score,
-          time: gameState.timeElapsed,
-          wrongGuesses: gameState.wrongGuesses,
-          date: today,
-          puzzleId: gameState.puzzle.id,
-          avgSolveTimeSeconds,
-        };
+          const newLeaderEntry: LeaderboardEntry = {
+            name: profile.name,
+            avatar: profile.avatar,
+            score,
+            time: gameState.timeElapsed,
+            wrongGuesses: gameState.wrongGuesses,
+            date: today,
+            puzzleId: gameState.puzzle.id,
+            avgSolveTimeSeconds,
+          };
 
-        saveHistory(newHistory);
-        saveProfile(newProfile);
-        saveLeaderboard([...leaderboard, newLeaderEntry]);
+          saveHistory(newHistory);
+          saveProfile(newProfile);
+          saveLeaderboard([...leaderboard, newLeaderEntry]);
+        }
 
         setGameState((prev) => {
           if (!prev) return prev;
@@ -488,7 +511,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
 
   const tickTimer = useCallback(() => {
     setGameState((prev) => {
-      if (!prev || prev.isComplete) return prev;
+      if (!prev || prev.isComplete || !prev.timerActive) return prev;
       return { ...prev, timeElapsed: prev.timeElapsed + 1 };
     });
   }, []);
@@ -504,6 +527,8 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         bestScoreForPuzzle,
         startDailyPuzzle,
         startPuzzle,
+        activateTimer,
+        invalidateGame,
         setGridMark,
         revealBonusClue,
         submitAnswer,
