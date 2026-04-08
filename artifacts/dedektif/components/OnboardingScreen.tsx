@@ -38,7 +38,7 @@ const SLIDES: Slide[] = [
     subtitle: "Dedektif Bulmaca Oyunu",
     subtitleNoUppercase: true,
     body: "Her bulmacada çözmen gereken bir cinayet gizemi seni bekliyor... Şüpheliler, silahlar ve mekanlar arasından doğru kombinasyonu en kısa zamanda bul, diğer dedektifler ile yarışarak liderlik tablosunda adını efsaneler arasına yazdır.",
-    tip: "3 yanlış cevap hakkın var — dikkatli ol!",
+    tip: "Yanlış tahminler zaman cezasına dönüşür — dikkatli ol!",
   },
   {
     icon: "grid-on",
@@ -65,8 +65,8 @@ const SLIDES: Slide[] = [
     iconBg: "#2E101040",
     title: "Suçlama",
     subtitle: "Kararını Bildir",
-    body: "Şüpheliyi, silahı ve mekanı belirledikten sonra alt taraftaki \"SUÇLA\" butonuna bas. Yanlışsa bir hata hakkın gider.",
-    tip: "Emin olmadan suçlama — 3 hata hakkını korumaya çalış!",
+    body: "Şüpheliyi, silahı ve mekanı belirledikten sonra alt taraftaki \"SUÇLA\" butonuna bas. Yanlış tahmin yaparsan süreye ceza eklenir ama oyun bitmez!",
+    tip: "Emin olmadan suçlama — her hata zaman cezası olarak puanına yansır!",
   },
 ];
 

@@ -3,7 +3,6 @@ import { Platform, StyleSheet, Text, View } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import * as Haptics from "expo-haptics";
 import Animated, {
-  interpolateColor,
   useAnimatedStyle,
   useSharedValue,
   withRepeat,
@@ -15,8 +14,8 @@ import { useColors } from "@/hooks/useColors";
 
 interface Props {
   seconds: number;
-  mistakes: number;
-  maxMistakes: number;
+  wrongGuesses: number;
+  penaltySeconds: number;
 }
 
 function formatTime(seconds: number): string {
@@ -25,54 +24,17 @@ function formatTime(seconds: number): string {
   return `${m.toString().padStart(2, "0")}:${s.toString().padStart(2, "0")}`;
 }
 
-function MistakeDot({
-  isActive,
-  justActivated,
-}: {
-  isActive: boolean;
-  justActivated: boolean;
-}) {
-  const colors = useColors();
-  const prevActiveRef = useRef(isActive);
-  const flashProgress = useSharedValue(0);
-  const scaleV = useSharedValue(1);
-
-  useEffect(() => {
-    if (justActivated && !prevActiveRef.current) {
-      flashProgress.value = 0;
-      flashProgress.value = withSequence(
-        withTiming(1, { duration: 0 }),
-        withTiming(1, { duration: 120 }),
-        withTiming(0, { duration: 450 }),
-      );
-      scaleV.value = withSequence(
-        withSpring(1.6, { damping: 7, stiffness: 300 }),
-        withSpring(1, { damping: 12, stiffness: 200 }),
-      );
-    }
-    prevActiveRef.current = isActive;
-  }, [justActivated, isActive]);
-
-  const dotStyle = useAnimatedStyle(() => ({
-    transform: [{ scale: scaleV.value }],
-    backgroundColor: isActive
-      ? interpolateColor(flashProgress.value, [0, 1], [colors.accent, "#FF3333"])
-      : colors.border,
-  }));
-
-  return <Animated.View style={[styles.dot, dotStyle]} />;
-}
-
-export default function TimerDisplay({ seconds, mistakes, maxMistakes }: Props) {
+export default function TimerDisplay({ seconds, wrongGuesses, penaltySeconds }: Props) {
   const colors = useColors();
   const translateX = useSharedValue(0);
   const timerScale = useSharedValue(1);
-  const prevMistakesRef = useRef(mistakes);
+  const penaltyScale = useSharedValue(1);
+  const prevWrongRef = useRef(wrongGuesses);
 
   const isCritical = seconds > 0 && seconds <= 30;
 
   useEffect(() => {
-    if (mistakes > prevMistakesRef.current) {
+    if (wrongGuesses > prevWrongRef.current) {
       translateX.value = withSequence(
         withTiming(-12, { duration: 50 }),
         withTiming(12, { duration: 50 }),
@@ -82,12 +44,16 @@ export default function TimerDisplay({ seconds, mistakes, maxMistakes }: Props) 
         withTiming(5, { duration: 40 }),
         withTiming(0, { duration: 30 }),
       );
+      penaltyScale.value = withSequence(
+        withSpring(1.4, { damping: 7, stiffness: 300 }),
+        withSpring(1, { damping: 12, stiffness: 200 }),
+      );
       if (Platform.OS !== "web") {
         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
       }
     }
-    prevMistakesRef.current = mistakes;
-  }, [mistakes]);
+    prevWrongRef.current = wrongGuesses;
+  }, [wrongGuesses]);
 
   useEffect(() => {
     if (isCritical) {
@@ -112,6 +78,10 @@ export default function TimerDisplay({ seconds, mistakes, maxMistakes }: Props) 
     transform: [{ scale: timerScale.value }],
   }));
 
+  const penaltyItemStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: penaltyScale.value }],
+  }));
+
   const timerColor = isCritical ? "#FF3333" : colors.primary;
   const timerTextColor = isCritical ? "#FF3333" : colors.foreground;
 
@@ -129,19 +99,29 @@ export default function TimerDisplay({ seconds, mistakes, maxMistakes }: Props) 
           {formatTime(seconds)}
         </Text>
       </Animated.View>
+
       <View style={[styles.divider, { backgroundColor: colors.border }]} />
-      <View style={styles.item}>
-        <MaterialIcons name="error-outline" size={18} color={colors.accent} />
-        <View style={styles.mistakesDots}>
-          {Array.from({ length: maxMistakes }).map((_, i) => (
-            <MistakeDot
-              key={i}
-              isActive={i < mistakes}
-              justActivated={i === mistakes - 1}
-            />
-          ))}
-        </View>
-      </View>
+
+      <Animated.View style={[styles.item, penaltyItemStyle]}>
+        <MaterialIcons
+          name="gavel"
+          size={16}
+          color={wrongGuesses > 0 ? "#f97316" : colors.mutedForeground}
+        />
+        <Text
+          style={[
+            styles.wrongValue,
+            { color: wrongGuesses > 0 ? "#f97316" : colors.mutedForeground },
+          ]}
+        >
+          {wrongGuesses}
+        </Text>
+        {penaltySeconds > 0 && (
+          <Text style={[styles.penaltyText, { color: "#f97316" }]}>
+            +{penaltySeconds}s
+          </Text>
+        )}
+      </Animated.View>
     </Animated.View>
   );
 }
@@ -166,18 +146,17 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     fontVariant: ["tabular-nums"],
   },
+  wrongValue: {
+    fontSize: 16,
+    fontWeight: "700",
+    fontVariant: ["tabular-nums"],
+  },
+  penaltyText: {
+    fontSize: 12,
+    fontWeight: "700",
+  },
   divider: {
     width: 1,
     height: 24,
-  },
-  mistakesDots: {
-    flexDirection: "row",
-    gap: 6,
-    alignItems: "center",
-  },
-  dot: {
-    width: 12,
-    height: 12,
-    borderRadius: 6,
   },
 });

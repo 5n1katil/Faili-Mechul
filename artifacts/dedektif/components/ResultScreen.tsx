@@ -34,7 +34,8 @@ interface Props {
   success: boolean;
   score: number;
   timeSeconds: number;
-  mistakes: number;
+  wrongGuesses: number;
+  penaltySeconds: number;
   gridState: { [key: string]: GridMark };
   onPlayMore: () => void;
   onClose: () => void;
@@ -58,7 +59,8 @@ function buildShareText(
   success: boolean,
   score: number,
   timeSeconds: number,
-  mistakes: number,
+  wrongGuesses: number,
+  penaltySeconds: number,
   gridState: { [key: string]: GridMark }
 ): string {
   const lines: string[] = [];
@@ -66,7 +68,8 @@ function buildShareText(
   lines.push(`Faili Meçhul #${puzzle.dayIndex} ${success ? "✅" : "❌"}`);
 
   if (success) {
-    lines.push(`⏱ ${formatTime(timeSeconds)} | ⭐ ${score} puan | ❌ ${mistakes} hata`);
+    const penaltyStr = penaltySeconds > 0 ? ` | ⚡ +${penaltySeconds}s ceza` : "";
+    lines.push(`⏱ ${formatTime(timeSeconds)} | ⭐ ${score} puan | ❌ ${wrongGuesses} hata${penaltyStr}`);
   } else {
     lines.push("Bugün çözemedim...");
   }
@@ -257,7 +260,8 @@ export default function ResultScreen({
   success,
   score,
   timeSeconds,
-  mistakes,
+  wrongGuesses,
+  penaltySeconds,
   gridState,
   onPlayMore,
   onClose,
@@ -302,12 +306,11 @@ export default function ResultScreen({
   const location = puzzle.locations.find((l) => l.id === solution.locationId);
 
   const handleShare = async () => {
-    const text = buildShareText(puzzle, success, score, timeSeconds, mistakes, gridState);
+    const text = buildShareText(puzzle, success, score, timeSeconds, wrongGuesses, penaltySeconds, gridState);
     if (Platform.OS !== "web") {
       try {
         await Share.share({ message: text });
       } catch {
-        // fallback to clipboard if Share fails
         await Clipboard.setStringAsync(text);
         setCopied(true);
         setTimeout(() => setCopied(false), 2500);
@@ -359,12 +362,12 @@ export default function ResultScreen({
             { color: success ? colors.primary : colors.accent },
           ]}
         >
-          {success ? "DAVA ÇÖZÜLDÜ!" : "DAVA KAPANDI"}
+          {success ? "DAVA ÇÖZÜLDÜ!" : "SÜRE DOLDU"}
         </Text>
         <Text style={[styles.subtitle, { color: colors.mutedForeground }]}>
           {success
             ? "Harika dedektiflik çalışması!"
-            : "İpuçları yetmedi, katil kaçtı."}
+            : "Süre bitti, katil kaçtı."}
         </Text>
 
         <View
@@ -427,17 +430,25 @@ export default function ResultScreen({
                 style={[
                   styles.statValue,
                   {
-                    color:
-                      mistakes > 0 ? colors.accent : colors.success,
+                    color: wrongGuesses > 0 ? colors.accent : colors.success,
                   },
                 ]}
               >
-                {mistakes}
+                {wrongGuesses}
               </Text>
               <Text style={[styles.statLabel, { color: colors.mutedForeground }]}>
-                HATA
+                YANLIŞ
               </Text>
             </View>
+          </View>
+        )}
+
+        {success && penaltySeconds > 0 && (
+          <View style={[styles.penaltyBadge, { backgroundColor: `#f9731618` }]}>
+            <MaterialIcons name="timer-off" size={14} color="#f97316" />
+            <Text style={[styles.penaltyBadgeText, { color: "#f97316" }]}>
+              {penaltySeconds}s zaman cezası uygulandı
+            </Text>
           </View>
         )}
 
@@ -498,31 +509,32 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     borderWidth: 2,
     padding: 24,
-    alignItems: "center",
     gap: 16,
+    maxHeight: "92%",
   },
   iconCircle: {
-    width: 88,
-    height: 88,
-    borderRadius: 44,
+    width: 80,
+    height: 80,
+    borderRadius: 40,
     alignItems: "center",
     justifyContent: "center",
+    alignSelf: "center",
   },
   resultTitle: {
     fontSize: 24,
-    fontWeight: "700",
-    letterSpacing: 2,
+    fontWeight: "800",
+    textAlign: "center",
+    letterSpacing: 1,
   },
   subtitle: {
     fontSize: 14,
     textAlign: "center",
   },
   solutionBox: {
-    width: "100%",
     borderRadius: 12,
     borderWidth: 1,
-    padding: 16,
-    gap: 10,
+    padding: 14,
+    gap: 8,
   },
   solutionTitle: {
     fontSize: 11,
@@ -536,47 +548,57 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   solutionText: {
-    fontSize: 15,
+    fontSize: 14,
     fontWeight: "600",
   },
   statsRow: {
     flexDirection: "row",
-    gap: 12,
-    width: "100%",
+    gap: 8,
   },
   statItem: {
     flex: 1,
     borderRadius: 10,
     padding: 12,
     alignItems: "center",
+    gap: 4,
   },
   statValue: {
-    fontSize: 22,
+    fontSize: 20,
     fontWeight: "700",
   },
   statLabel: {
     fontSize: 10,
-    fontWeight: "600",
+    fontWeight: "700",
     letterSpacing: 1,
-    marginTop: 2,
+  },
+  penaltyBadge: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 8,
+    alignSelf: "center",
+  },
+  penaltyBadgeText: {
+    fontSize: 12,
+    fontWeight: "600",
+  },
+  buttons: {
+    gap: 10,
   },
   shareBtn: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    padding: 12,
+    padding: 14,
     borderRadius: 12,
     borderWidth: 1.5,
-    gap: 8,
-    width: "100%",
+    gap: 10,
   },
   shareBtnText: {
-    fontSize: 15,
+    fontSize: 14,
     fontWeight: "700",
-  },
-  buttons: {
-    width: "100%",
-    gap: 10,
   },
   btn: {
     flexDirection: "row",
@@ -587,7 +609,7 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   btnText: {
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: "700",
   },
   btnOutline: {

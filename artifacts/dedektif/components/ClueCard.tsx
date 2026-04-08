@@ -19,6 +19,18 @@ interface Props {
   onReveal?: () => void;
 }
 
+const CLUE_META: Record<
+  Clue["type"],
+  { icon: MaterialIconName; color: string; label: string }
+> = {
+  direct: { icon: "search", color: "#D4A843", label: "Doğrudan" },
+  indirect: { icon: "lightbulb-outline", color: "#f59e0b", label: "Dolaylı" },
+  elimination: { icon: "block", color: "#C8372D", label: "Eleme" },
+  evidence: { icon: "fingerprint", color: "#9333ea", label: "Kanıt" },
+  witness: { icon: "record-voice-over", color: "#3b82f6", label: "Tanık" },
+  forensic: { icon: "biotech", color: "#14b8a6", label: "Adli" },
+};
+
 export default function ClueCard({ clue, index, isRevealed, onReveal }: Props) {
   const colors = useColors();
   const opacity = useSharedValue(isRevealed ? 1 : 0.4);
@@ -34,27 +46,7 @@ export default function ClueCard({ clue, index, isRevealed, onReveal }: Props) {
     transform: [{ translateY: translateY.value }],
   }));
 
-  const getClueIcon = (): MaterialIconName => {
-    switch (clue.type) {
-      case "direct":
-        return "search";
-      case "indirect":
-        return "lightbulb-outline";
-      case "elimination":
-        return "block";
-    }
-  };
-
-  const getClueColor = () => {
-    switch (clue.type) {
-      case "direct":
-        return colors.primary;
-      case "indirect":
-        return colors.warning;
-      case "elimination":
-        return colors.accent;
-    }
-  };
+  const meta = CLUE_META[clue.type] ?? CLUE_META.direct;
 
   return (
     <Animated.View style={[styles.container, animStyle]}>
@@ -63,15 +55,18 @@ export default function ClueCard({ clue, index, isRevealed, onReveal }: Props) {
           styles.card,
           {
             backgroundColor: colors.card,
-            borderColor: isRevealed ? getClueColor() : colors.border,
+            borderColor: isRevealed ? meta.color : colors.border,
             borderWidth: isRevealed ? 1.5 : 1,
           },
         ]}
       >
         <View style={styles.header}>
-          <View style={[styles.iconBadge, { backgroundColor: `${getClueColor()}22` }]}>
-            <MaterialIcons name={getClueIcon()} size={14} color={getClueColor()} />
+          <View style={[styles.iconBadge, { backgroundColor: `${meta.color}22` }]}>
+            <MaterialIcons name={meta.icon} size={14} color={meta.color} />
           </View>
+          <Text style={[styles.clueLabel, { color: meta.color }]}>
+            {meta.label}
+          </Text>
           <Text style={[styles.clueNumber, { color: colors.mutedForeground }]}>
             İpucu {index + 1}
           </Text>
@@ -110,7 +105,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 8,
-    gap: 8,
+    gap: 6,
   },
   iconBadge: {
     width: 24,
@@ -119,9 +114,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  clueLabel: {
+    fontSize: 11,
+    fontWeight: "700",
+    letterSpacing: 0.5,
+  },
   clueNumber: {
     fontSize: 12,
-    fontWeight: "600",
+    fontWeight: "500",
     flex: 1,
   },
   revealBtn: {

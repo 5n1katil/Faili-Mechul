@@ -22,7 +22,7 @@ function formatTime(s: number): string {
 }
 
 interface RankItemProps {
-  entry: { name: string; score: number; time: number; mistakes: number; date: string };
+  entry: { name: string; score: number; time: number; wrongGuesses?: number; mistakes?: number; date: string };
   rank: number;
   isCurrentUser: boolean;
   colors: ReturnType<typeof useColors>;
@@ -66,7 +66,7 @@ function RankItem({ entry, rank, isCurrentUser, colors }: RankItemProps) {
             <Text style={[styles.dotSep, { color: colors.border }]}>•</Text>
             <MaterialIcons name="error-outline" size={12} color={colors.mutedForeground} />
             <Text style={[styles.metaText, { color: colors.mutedForeground }]}>
-              {entry.mistakes} hata
+              {entry.wrongGuesses ?? entry.mistakes ?? 0} hata
             </Text>
           </View>
         </View>

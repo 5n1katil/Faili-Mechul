@@ -58,7 +58,8 @@ export interface GameRecord {
   date: string;
   score: number;
   timeSeconds: number;
-  mistakes: number;
+  wrongGuesses: number;
+  penaltySeconds: number;
   completed: boolean;
   solution: {
     suspectId: string;
@@ -82,7 +83,7 @@ export interface LeaderboardEntry {
   name: string;
   score: number;
   time: number;
-  mistakes: number;
+  wrongGuesses: number;
   date: string;
 }
 
@@ -95,10 +96,10 @@ export interface GameState {
   autoCrossOwners: { [crossedKey: string]: string[] };
   cluesRevealed: number[];
   timeElapsed: number;
-  mistakes: number;
-  maxMistakes: number;
+  wrongGuesses: number;
+  wrongGuessPenaltySeconds: number;
   isComplete: boolean;
-  isGameOver: boolean;
+  finalScore: number | null;
   selectedSuspect: string | null;
   selectedWeapon: string | null;
   selectedLocation: string | null;
@@ -145,22 +146,19 @@ const DEFAULT_PROFILE: PlayerProfile = {
 };
 
 function computeScore(
-  timeSeconds: number,
-  mistakes: number,
-  cluesRevealed: number,
+  timeElapsed: number,
+  wrongGuessPenaltySeconds: number,
+  cluesRevealedCount: number,
   difficulty: string
 ): number {
-  let baseScore = 1000;
-  const timePenalty = Math.floor(timeSeconds / 10) * 5;
-  const mistakePenalty = mistakes * 100;
-  const cluePenalty = cluesRevealed * 20;
+  const extraClues = Math.max(0, cluesRevealedCount - 2);
+  const cluePenaltySeconds = extraClues * 30;
+  const effectiveTime = timeElapsed + wrongGuessPenaltySeconds + cluePenaltySeconds;
+  const rawScore = 10000 - effectiveTime * 5;
   let difficultyBonus = 0;
-  if (difficulty === "dedektif") difficultyBonus = 200;
-  if (difficulty === "baskomiser") difficultyBonus = 500;
-  return Math.max(
-    100,
-    baseScore - timePenalty - mistakePenalty - cluePenalty + difficultyBonus
-  );
+  if (difficulty === "dedektif") difficultyBonus = 2000;
+  if (difficulty === "baskomiser") difficultyBonus = 5000;
+  return Math.max(100, rawScore) + difficultyBonus;
 }
 
 function getBadges(profile: PlayerProfile, history: GameRecord[]): string[] {
@@ -174,7 +172,7 @@ function getBadges(profile: PlayerProfile, history: GameRecord[]): string[] {
   if (profile.currentStreak >= 7 && !badges.includes("hafta_serisi")) {
     badges.push("hafta_serisi");
   }
-  if (history.some((h) => h.mistakes === 0 && h.completed) && !badges.includes("hatasiz")) {
+  if (history.some((h) => h.wrongGuesses === 0 && h.completed) && !badges.includes("hatasiz")) {
     badges.push("hatasiz");
   }
   return badges;
@@ -256,10 +254,10 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
       autoCrossOwners: {},
       cluesRevealed: [0],
       timeElapsed: 0,
-      mistakes: 0,
-      maxMistakes: 3,
+      wrongGuesses: 0,
+      wrongGuessPenaltySeconds: 0,
       isComplete: false,
-      isGameOver: false,
+      finalScore: null,
       selectedSuspect: null,
       selectedWeapon: null,
       selectedLocation: null,
@@ -273,7 +271,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
 
   const setGridMark = useCallback(
     (key: string, mark: GridMark) => {
-      if (!gameState || gameState.isComplete || gameState.isGameOver) return;
+      if (!gameState || gameState.isComplete) return;
       setGameState((prev) => {
         if (!prev || !prev.puzzle) return prev;
         const { suspects, weapons, locations } = prev.puzzle;
@@ -366,7 +364,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
       if (isCorrect) {
         const score = computeScore(
           gameState.timeElapsed,
-          gameState.mistakes,
+          gameState.wrongGuessPenaltySeconds,
           gameState.cluesRevealed.length - 1,
           gameState.puzzle.difficulty
         );
@@ -376,7 +374,8 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
           date: new Date().toISOString().split("T")[0],
           score,
           timeSeconds: gameState.timeElapsed,
-          mistakes: gameState.mistakes,
+          wrongGuesses: gameState.wrongGuesses,
+          penaltySeconds: gameState.wrongGuessPenaltySeconds,
           completed: true,
           solution: { suspectId, weaponId, locationId },
         };
@@ -405,7 +404,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
           name: profile.name,
           score,
           time: gameState.timeElapsed,
-          mistakes: gameState.mistakes,
+          wrongGuesses: gameState.wrongGuesses,
           date: today,
         };
 
@@ -415,37 +414,20 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
 
         setGameState((prev) => {
           if (!prev) return prev;
-          return { ...prev, isComplete: true };
+          return { ...prev, isComplete: true, finalScore: score };
         });
         return true;
       } else {
-        const newMistakes = gameState.mistakes + 1;
-        const isGameOver = newMistakes >= gameState.maxMistakes;
-
-        if (isGameOver) {
-          const record: GameRecord = {
-            puzzleId: gameState.puzzle.id,
-            date: new Date().toISOString().split("T")[0],
-            score: 0,
-            timeSeconds: gameState.timeElapsed,
-            mistakes: newMistakes,
-            completed: false,
-            solution: null,
-          };
-          const newHistory = [record, ...gameHistory];
-          const newProfile = {
-            ...profile,
-            gamesPlayed: profile.gamesPlayed + 1,
-            currentStreak: 0,
-            lastPlayedDate: new Date().toISOString().split("T")[0],
-          };
-          saveHistory(newHistory);
-          saveProfile(newProfile);
-        }
+        const newWrongGuesses = gameState.wrongGuesses + 1;
+        const penaltySeconds = 30 * Math.pow(2, newWrongGuesses - 1);
 
         setGameState((prev) => {
           if (!prev) return prev;
-          return { ...prev, mistakes: newMistakes, isGameOver };
+          return {
+            ...prev,
+            wrongGuesses: newWrongGuesses,
+            wrongGuessPenaltySeconds: prev.wrongGuessPenaltySeconds + penaltySeconds,
+          };
         });
         return false;
       }
@@ -460,7 +442,8 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
       date: new Date().toISOString().split("T")[0],
       score: 0,
       timeSeconds: gameState.timeElapsed,
-      mistakes: gameState.mistakes,
+      wrongGuesses: gameState.wrongGuesses,
+      penaltySeconds: gameState.wrongGuessPenaltySeconds,
       completed: false,
       solution: null,
     };
@@ -488,7 +471,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
 
   const tickTimer = useCallback(() => {
     setGameState((prev) => {
-      if (!prev || prev.isComplete || prev.isGameOver) return prev;
+      if (!prev || prev.isComplete) return prev;
       return { ...prev, timeElapsed: prev.timeElapsed + 1 };
     });
   }, []);

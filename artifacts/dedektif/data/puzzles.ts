@@ -24,7 +24,7 @@ export interface Location {
 export interface Clue {
   id: string;
   text: string;
-  type: "direct" | "indirect" | "elimination";
+  type: "direct" | "indirect" | "elimination" | "evidence" | "witness" | "forensic";
 }
 
 export interface Solution {
@@ -74,28 +74,33 @@ export const PUZZLES: Puzzle[] = [
     clues: [
       {
         id: "c1",
-        text: "Suikast kütüphanede gerçekleşmedi. Kurban, orada sadece bulundu.",
-        type: "elimination",
+        text: "Suikast konak içindeydi; kurban dışarıya çıkmamış, bahçede herhangi bir iz bulunamadı.",
+        type: "evidence",
       },
       {
         id: "c2",
-        text: "Nazik Hanım, gece boyunca yemek odasında misafirlerle birlikte olduğunu kanıtlayabildi.",
-        type: "elimination",
+        text: "Nazik Hanım, gece boyunca yemek odasında misafirlerle birlikte kaldı. Düzinelerce kişi bunu doğrulayabilir.",
+        type: "witness",
       },
       {
         id: "c3",
-        text: "Rıfat Bey, çok güçlü bir koku olan zehire erişimi olmadığını söyledi ve bu doğrulandı.",
-        type: "elimination",
+        text: "Otopsi raporu: vücutta kimyasal toksin izine rastlanmadı. Zehir kullanılmamış.",
+        type: "forensic",
       },
       {
         id: "c4",
-        text: "Katil, bahçede birileri tarafından görüldü. Zeynep Hanım gece yarısı dışarı çıkmamıştı.",
-        type: "elimination",
+        text: "Zeynep Hanım gece boyunca odacının gözetiminde konakta kaldı; kapı kayıtları bunu doğruluyor.",
+        type: "witness",
       },
       {
         id: "c5",
-        text: "Tabanca sesi kimse tarafından duyulmadı. Silah sessiz bir aletti.",
-        type: "elimination",
+        text: "Gece boyunca hiç kimse silah sesi duymadı. Kullanılan alet sessizdi.",
+        type: "witness",
+      },
+      {
+        id: "c6",
+        text: "Mutfak tezgahının altında kan izleri ve bıçak kını bulundu. Cinayet bu mekanda işlendi.",
+        type: "evidence",
       },
     ],
     solution: { suspectId: "s2", weaponId: "w1", locationId: "l2" },
@@ -125,27 +130,27 @@ export const PUZZLES: Puzzle[] = [
     clues: [
       {
         id: "c1",
-        text: "Güvenlik görevlisi VIP salonda değil, kapalı bir alanda son nefesini vermişti.",
+        text: "Olay VIP salonda değil, kapalı ve ıssız bir bölgede gerçekleşti.",
         type: "elimination",
       },
       {
         id: "c2",
-        text: "Levent Kaptan, olay anında köprüde olduğunu üç tanık doğruladı.",
-        type: "elimination",
+        text: "Levent Kaptan, olay anında köprüde olduğunu üç ayrı tanık doğruladı.",
+        type: "witness",
       },
       {
         id: "c3",
-        text: "Murat Aydın'ın elleri temizdi, fiziksel güç gerektiren bir silah kullanmamıştı.",
-        type: "elimination",
+        text: "Güvertedeki ıslak yüzey incelendi; tüm ayak izleri kaybolan güvenlik görevlisine ait — başka iz yok.",
+        type: "evidence",
       },
       {
         id: "c4",
-        text: "Güverte o gece ıslaktı ve tekne boyunca ayak izleri vardı - ama kayıp kişiye aitti.",
-        type: "elimination",
+        text: "Adli rapor: maktul boğulmuş. Demir çubuk veya gaz maskesi kullanılmış olsaydı fiziksel iz kalırdı.",
+        type: "forensic",
       },
       {
         id: "c5",
-        text: "Dilek Hanım, mücevher kasasının yerini biliyordu ve makine dairesine girişi vardı.",
+        text: "Dilek Hanım, mücevher kasasının yerini ve makine dairesine inişin kodunu biliyordu.",
         type: "direct",
       },
     ],
@@ -176,28 +181,28 @@ export const PUZZLES: Puzzle[] = [
     clues: [
       {
         id: "c1",
-        text: "Olay çarşı koridorunda değil, kapalı bir mekanda gerçekleşti.",
+        text: "Olay kapalı bir mekanda gerçekleşti; çarşı koridorunda herhangi bir iz ya da tanık yok.",
         type: "elimination",
       },
       {
         id: "c2",
-        text: "Selma Teyze, o saatlerde kasayı kapatırken güvenlik kamerasına yakalandı.",
-        type: "elimination",
+        text: "Güvenlik kamerası Selma Teyze'yi olay saatinde kasayı kapatırken dükkan dışında gösteriyor.",
+        type: "evidence",
       },
       {
         id: "c3",
-        text: "Kimyasal madde kullanılmış olsaydı, dumandan alarm devreye girerdi.",
-        type: "elimination",
+        text: "Kimyasal madde kullanılmış olsaydı, asit dumanı yangın alarmını tetiklerdi. Alarm çalmadı.",
+        type: "forensic",
       },
       {
         id: "c4",
-        text: "Kerem Genç, deponun kilit sistemini çok iyi biliyordu - onu bizzat kurmuştu.",
+        text: "Kerem Genç, deponun elektronik kilit sistemini bizzat kurmuş ve kodu yalnızca o biliyordu.",
         type: "direct",
       },
       {
         id: "c5",
-        text: "Kırık kilidi incelendiğinde, pençe anahtar izi bulundu.",
-        type: "direct",
+        text: "Kilit incelemesinde tipik pençe anahtar çizikleri tespit edildi; bu aletle açılmış.",
+        type: "evidence",
       },
     ],
     solution: { suspectId: "s3", weaponId: "w3", locationId: "l2" },
@@ -227,23 +232,28 @@ export const PUZZLES: Puzzle[] = [
     clues: [
       {
         id: "c1",
-        text: "Vücut ofiste bulundu, ancak orada hayatını kaybetmedi.",
-        type: "elimination",
+        text: "Vücut ofiste bulundu; ancak adli izler laboratuvara işaret ediyor. Cinayet orada gerçekleşti.",
+        type: "forensic",
       },
       {
         id: "c2",
-        text: "Güvenlik görevlisi gece boyunca güvenlik odasında oturmuş, kameralar bunu gösteriyordu.",
-        type: "elimination",
+        text: "Güvenlik görevlisi gece boyunca güvenlik odasında oturmuş; kameralar bunu kayıt altına almış.",
+        type: "evidence",
       },
       {
         id: "c3",
-        text: "Kimyasal gaz sızıntısı tespit edilebilir olurdu - sensörler tetiklenmedi.",
-        type: "elimination",
+        text: "Kimyasal gaz sensörleri gece boyunca hiç tepki vermedi. Gaz sızıntısı yok.",
+        type: "forensic",
       },
       {
         id: "c4",
-        text: "Elif laboratuvar anahtarına sahipti ve gece geç saate kadar çalışıyordu.",
+        text: "Elif, laboratuvar anahtarına sahip tek doktora öğrencisiydi ve gece geç saate kadar çalışıyordu.",
         type: "direct",
+      },
+      {
+        id: "c5",
+        text: "Laboratuvarda sabote edilmiş bir elektrik kablosu bulundu; bu tür müdahale uzmanlık gerektirir.",
+        type: "evidence",
       },
     ],
     solution: { suspectId: "s2", weaponId: "w1", locationId: "l1" },
@@ -273,23 +283,23 @@ export const PUZZLES: Puzzle[] = [
     clues: [
       {
         id: "c1",
-        text: "Olay tezgahın hemen başında gerçekleşti, uzak bir yerde değil.",
-        type: "direct",
+        text: "Kurban tezgahının tam başında yere yığıldı; ara sokak veya park alanına geçmemişti.",
+        type: "witness",
       },
       {
         id: "c2",
-        text: "Müşteri Hanım o sabah hiç tatlı almadı - diyet yapıyordu.",
-        type: "elimination",
+        text: "Müşteri Hanım o sabah hiç tatlı almadı, diyet yapıyordu. Bunu tezgah arkadaşı doğruluyor.",
+        type: "witness",
       },
       {
         id: "c3",
-        text: "Tedarikçi malları bırakıp hemen ayrıldı, bölgede değildi.",
-        type: "elimination",
+        text: "Tedarikçi malları bırakıp hemen ayrıldı; pazar kamerasına çıkış saati kaydedilmiş.",
+        type: "evidence",
       },
       {
         id: "c4",
-        text: "Adli tıp raporu: kurban yediği yiyecekten zehirlendi.",
-        type: "direct",
+        text: "Adli tıp raporu: vücutta baklava kökenli bitkisel toksin tespit edildi. Zehirleme kesin.",
+        type: "forensic",
       },
     ],
     solution: { suspectId: "s1", weaponId: "w1", locationId: "l1" },
@@ -319,23 +329,28 @@ export const PUZZLES: Puzzle[] = [
     clues: [
       {
         id: "c1",
-        text: "Bekçi güvenlik odasında değil, depolama odasında bulundu.",
-        type: "elimination",
+        text: "Bekçi, depolama odasında bulundu. Orada dövüşe ilişkin izler vardı.",
+        type: "evidence",
       },
       {
         id: "c2",
-        text: "Rehber, turla birlikte sergi salonundaydı - 20 tanık var.",
-        type: "elimination",
+        text: "Rehber, tur grubuyla birlikte sergi salonundaydı; 20 ziyaretçi bunu teyit ediyor.",
+        type: "witness",
       },
       {
         id: "c3",
-        text: "Kimyasal sprey kullanılmış olsaydı, güvenlik kameraları hareketi tespit ederdi.",
-        type: "elimination",
+        text: "Güvenlik kamerası kimyasal sprey kullanımını tespit ederdi; kayıtlarda böyle bir görüntü yok.",
+        type: "evidence",
       },
       {
         id: "c4",
-        text: "Restoratör Hanım depolama odasına erişim kodunu biliyordu.",
+        text: "Restoratör Hanım, depolama odasına erişim kodu bilen tek kişiydi ve gece mesaisi vardı.",
         type: "direct",
+      },
+      {
+        id: "c5",
+        text: "Adli analiz: bekçinin kolunda ince iğne izi tespit edildi. Uyutucu madde enjekte edilmiş.",
+        type: "forensic",
       },
     ],
     solution: { suspectId: "s2", weaponId: "w1", locationId: "l2" },
@@ -368,33 +383,33 @@ export const PUZZLES: Puzzle[] = [
     clues: [
       {
         id: "c1",
-        text: "Kurban villa içinde değil, açık havada bulundu.",
+        text: "Kurban villa içinde değil, açık havada ve villa çevresinde bulundu.",
         type: "elimination",
       },
       {
         id: "c2",
-        text: "Emekli Albay, olay saatinde sabah sporu yapıyordu - komşular gördü.",
-        type: "elimination",
+        text: "Emekli Albay sabah komşular tarafından düzenli sporu yaparken görüldü; o saatte bahçeden uzaktaydı.",
+        type: "witness",
       },
       {
         id: "c3",
-        text: "Ressam Leyla, kayalıkların üzerinde hiç çalışmamıştı.",
-        type: "elimination",
+        text: "Ressam Leyla'nın kayalıkları hiç ziyaret etmediği, tuvali ve gözlemevi başka yerdeydi.",
+        type: "witness",
       },
       {
         id: "c4",
-        text: "Aşçı Mehmet, mutfaktan çıkmadı - yemek hazırlıyordu.",
-        type: "elimination",
+        text: "Aşçı Mehmet sabahtan beri mutfaktan çıkmadı; yemek hazırlık kayıtları bunu teyit ediyor.",
+        type: "evidence",
       },
       {
         id: "c5",
-        text: "Kurbanın boynunda parmak izi izleri vardı.",
-        type: "direct",
+        text: "Adli rapor: kurbanın boynunda parmak izi şeklinde morluklar var. Boğulma kesinleşti.",
+        type: "forensic",
       },
       {
         id: "c6",
-        text: "Genç Yatçı, sahil şeridinde yürüyüş yapıyordu - tanıklar var.",
-        type: "elimination",
+        text: "Genç Yatçı sahil şeridinde görülmüş olsa da villa bahçesinin kamera açısı dışında dolaştığı biliniyor.",
+        type: "witness",
       },
     ],
     solution: { suspectId: "s3", weaponId: "w4", locationId: "l1" },
@@ -424,23 +439,28 @@ export const PUZZLES: Puzzle[] = [
     clues: [
       {
         id: "c1",
-        text: "Kurban tuvalette değil, oturma alanında bulundu.",
+        text: "Kurban tuvalet değil, oturma alanında bulundu. Hiç oraya geçmemişti.",
         type: "elimination",
       },
       {
         id: "c2",
-        text: "Öğrenci bütün yolculuk boyunca koridorda müzik dinledi - diğer yolcular gördü.",
-        type: "elimination",
+        text: "Öğrenci bütün yolculuk boyunca koridorda müzik dinledi; birden fazla yolcu bunu gördü.",
+        type: "witness",
       },
       {
         id: "c3",
-        text: "Boğma halatı o kadar kısa trende saklanamaz - bir tanık görürdü.",
+        text: "Hareket halindeki trende halat saklamak ve kulanmak imkansız; tanıklar tüm hareketi görmüş olurdu.",
         type: "elimination",
       },
       {
         id: "c4",
-        text: "Emekli Doktor kurbanla yemekli vagonda içki içmişti.",
+        text: "Emekli Doktor kurbanla yemekli vagonda içki içmişti; kursun kokteylin içine karışmıştı.",
         type: "direct",
+      },
+      {
+        id: "c5",
+        text: "Adli tıp: kanda standart zehir bileşiği tespit edildi. İçecek yoluyla alınmış.",
+        type: "forensic",
       },
     ],
     solution: { suspectId: "s3", weaponId: "w1", locationId: "l2" },
@@ -470,22 +490,22 @@ export const PUZZLES: Puzzle[] = [
     clues: [
       {
         id: "c1",
-        text: "Kurban masaj odasında bulundu ve orada hayatını kaybetti.",
-        type: "direct",
+        text: "Kurban masaj odasında bulundu ve adli izler de orada hayatını kaybettiğini doğruluyor.",
+        type: "forensic",
       },
       {
         id: "c2",
-        text: "Kasiyer, o sırada dışarıda bekleme listesiyle meşguldü.",
-        type: "elimination",
+        text: "Kasiyer o sırada dışarıda bekleme listesiyle meşguldü; güvenlik kamerası bunu kayıt altına almış.",
+        type: "evidence",
       },
       {
         id: "c3",
-        text: "Zehirli sabun hipotezi reddedildi - kimyasal iz bulunamadı.",
-        type: "elimination",
+        text: "Kimyasal analiz: sabun köpüğünde toksin izi bulunamadı. Zehirli sabun hipotezi reddedildi.",
+        type: "forensic",
       },
       {
         id: "c4",
-        text: "Kese ustası her an kurbanla temas halindeydi.",
+        text: "Kese ustası masaj boyunca kurbanla temas halindeydi. Masaj odasına başka kimse girmedi.",
         type: "direct",
       },
     ],
@@ -519,33 +539,33 @@ export const PUZZLES: Puzzle[] = [
     clues: [
       {
         id: "c1",
-        text: "Saldırı sergi salonunda değil, arka bölümlerde gerçekleşti.",
-        type: "elimination",
+        text: "Saldırı sergi salonunda değil; arka bölümlerde gerçekleşti. Salon kameraları normal gösteriyor.",
+        type: "evidence",
       },
       {
         id: "c2",
-        text: "Nakliyeci, gala başlamadan malları teslim edip ayrılmıştı.",
-        type: "elimination",
+        text: "Nakliyeci, gala başlamadan malları teslim edip ayrılmıştı. Çıkış saati loglanmış.",
+        type: "evidence",
       },
       {
         id: "c3",
-        text: "Kimyasal sprey kullanılmış olsaydı, gala misafirleri de etkilenirdi.",
+        text: "Kimyasal sprey kullanılmış olsaydı gala misafirleri de etkilenirdi; hiç şikayet yok.",
         type: "elimination",
       },
       {
         id: "c4",
-        text: "Güvenlik Şefi güvenlik merkezinde tek başınaydı - birisinin içeriden yardım etmesi gerekiyor.",
-        type: "direct",
+        text: "Galeri Direktörü her misafirle fotoğraf çektirdi; salon boyunca tanıkları var, tek başına kalmadı.",
+        type: "witness",
       },
       {
         id: "c5",
-        text: "Galeri Direktörü, her misafirle fotoğraf çektiriyordu - alibi var.",
-        type: "elimination",
+        text: "Ünlü Sanatçı, güvenlik merkezine özel geçiş izni almış ve sistemin kapandığı anda orada görülmüş.",
+        type: "direct",
       },
       {
         id: "c6",
-        text: "Ünlü Sanatçı güvenlik merkezine geçiş izni istemişti.",
-        type: "direct",
+        text: "Adli rapor: koordinatörde elektrik deşarjından kaynaklanan yanık izleri bulundu.",
+        type: "forensic",
       },
     ],
     solution: { suspectId: "s2", weaponId: "w1", locationId: "l2" },
@@ -575,22 +595,27 @@ export const PUZZLES: Puzzle[] = [
     clues: [
       {
         id: "c1",
-        text: "Cinayet koridorda değil, kapalı bir odada gerçekleşti.",
-        type: "elimination",
+        text: "Güvenlik kamerası koridorda herhangi bir olay olmadığını gösteriyor; cinayet kapalı bir odada.",
+        type: "evidence",
       },
       {
         id: "c2",
-        text: "Muhalefet adayı, seçim kampanyası toplantısındaydı - 50 kişi bunu doğrular.",
-        type: "elimination",
+        text: "Muhalefet adayı, seçim kampanyası toplantısındaydı; 50 kişi bunu doğruluyor.",
+        type: "witness",
       },
       {
         id: "c3",
-        text: "Elektrik altyapısı o gün arızalıydı - elektrik kullanılamazdı.",
-        type: "elimination",
+        text: "Elektrik altyapısı o gün arızalıydı; teknik servis kayıtları bunu belgeler.",
+        type: "evidence",
       },
       {
         id: "c4",
-        text: "Sekreter Bayan her sabah belediye başkanına kahve getirirdi.",
+        text: "Adli tıp: kahvede kimyasal toksin tespit edildi. Zehirleme yöntemi kesinleşti.",
+        type: "forensic",
+      },
+      {
+        id: "c5",
+        text: "Sekreter Bayan her sabah belediye başkanına kahve hazırlardı; o gün da bu rutin yaşandı.",
         type: "direct",
       },
     ],
@@ -621,22 +646,22 @@ export const PUZZLES: Puzzle[] = [
     clues: [
       {
         id: "c1",
-        text: "Kurban soyunma odasına girerken son görüldü - sonraki an sahneye çıktı.",
+        text: "Kurban soyunma odasından sonra direkt sahneye çıktı. Kontrol odasına uğramadı.",
         type: "elimination",
       },
       {
         id: "c2",
-        text: "Rakip sanatçı, soyunma odasına girişi yoktu.",
-        type: "elimination",
+        text: "Rakip sanatçının soyunma odasına girişi yoktu; kapı kayıtları bunu doğruluyor.",
+        type: "evidence",
       },
       {
         id: "c3",
-        text: "Zehirli su ya da enjeksiyon iz bırakır - adli tıp doğruladı.",
-        type: "elimination",
+        text: "Adli tıp: zehir veya iğne izi bulunamadı. Elektrik kökenli travma tespit edildi.",
+        type: "forensic",
       },
       {
         id: "c4",
-        text: "Ses teknikeri sahne elektriğini kontrol ediyordu - mikrofon kasıtlı olarak modifiye edilmişti.",
+        text: "Ses teknikeri sahne elektriğini kontrol ediyordu; daha sonra mikrofon kasıtlı olarak modifiye edilmişti.",
         type: "direct",
       },
     ],
@@ -667,23 +692,28 @@ export const PUZZLES: Puzzle[] = [
     clues: [
       {
         id: "c1",
-        text: "Suç el yazmaları bölümünde işlendi - orada iz bırakıldı.",
-        type: "direct",
+        text: "El yazmaları bölümünde bozulmuş kilit ve dağınık raf görüntülendi. Suç burada işlendi.",
+        type: "evidence",
       },
       {
         id: "c2",
-        text: "Temizlik görevlisi 02.00-04.00 arasında katlarda dolaşıyordu - kameralar kayıt aldı.",
-        type: "elimination",
+        text: "Temizlik görevlisi 02.00-04.00 arasında tüm katlarda dolaştı; kameralar her adımı kaydetti.",
+        type: "evidence",
       },
       {
         id: "c3",
-        text: "Kütüphaneci, el yazmalarını yıllardır çalışmak istiyordu ama erişim izni yoktu.",
+        text: "Kütüphaneci 30 yıldır el yazmalarına ulaşmak istiyordu ama erişim izni hiçbir zaman verilmemişti.",
         type: "elimination",
       },
       {
         id: "c4",
-        text: "Doktora öğrencisi el yazmaları bölümünde tek izinli kişiydi.",
+        text: "Doktora öğrencisi, el yazmaları bölümünde tek izinli araştırmacıydı ve kodu biliyordu.",
         type: "direct",
+      },
+      {
+        id: "c5",
+        text: "Adli inceleme: kurbanın kafasında ağır, düz kenarlı cisimle vurulmuş iz. Ağır kitap profiliyle örtüşüyor.",
+        type: "forensic",
       },
     ],
     solution: { suspectId: "s2", weaponId: "w1", locationId: "l2" },
@@ -721,23 +751,28 @@ export const PUZZLES: Puzzle[] = [
       },
       {
         id: "c2",
-        text: "Aşçı otel sahibiyle mesai yapmıştı - lobi kamerasına yansıdı.",
-        type: "elimination",
+        text: "Aşçı gece boyunca otel sahibiyle çalıştı; lobi kamerası ve lobideki misafirler bunu doğruluyor.",
+        type: "witness",
       },
       {
         id: "c3",
-        text: "Tur Rehberi geceyi kasabada değil, şehirde geçirmişti.",
-        type: "elimination",
+        text: "Tur Rehberi geceyi kasabada değil, şehirde geçirmişti; otobüs bileti bunu kanıtlıyor.",
+        type: "evidence",
       },
       {
         id: "c4",
-        text: "Zehirli içki izleri bulunamadı - kurban çarpma sonucu yaralanmış.",
-        type: "elimination",
+        text: "Balıkçı sahil kenarında gece boyunca ağlarını onarıyordu; komşu bunu teyit ediyor.",
+        type: "witness",
       },
       {
         id: "c5",
-        text: "Kayalık burnda kan izleri bulundu ve mülk sahibinin ayak izleri eşleşti.",
-        type: "direct",
+        text: "Adli tıp: toksin ya da kesik izi yok. Travma; kayadan düşmeyle ya da çarpmayla oluşmuş.",
+        type: "forensic",
+      },
+      {
+        id: "c6",
+        text: "Kayalık burunda kan izleri ve mülk sahibinin ayak izi tespit edildi. Kıyafetinde toprak izi var.",
+        type: "evidence",
       },
     ],
     solution: { suspectId: "s3", weaponId: "w2", locationId: "l3" },
@@ -767,23 +802,28 @@ export const PUZZLES: Puzzle[] = [
     clues: [
       {
         id: "c1",
-        text: "Müdür kontrol odasında değil, üretim alanında bulundu.",
-        type: "elimination",
+        text: "Müdür kontrol odasında değil, üretim alanında bulundu. Adli izler de bölgeyle örtüşüyor.",
+        type: "forensic",
       },
       {
         id: "c2",
-        text: "Muhasebe müdürü akşam bütçe toplantısında şehir dışındaydı.",
-        type: "elimination",
+        text: "Muhasebe müdürü akşam bütçe toplantısı için şehir dışındaydı; geri dönüş biletinin saati bunu kanıtlıyor.",
+        type: "evidence",
       },
       {
         id: "c3",
-        text: "Zehirli kimyasal fabrikada hiç kullanılmıyordu.",
-        type: "elimination",
+        text: "Fabrikada zehirli kimyasal hiç stoklanmamış; tedarik kayıtları temiz.",
+        type: "evidence",
       },
       {
         id: "c4",
-        text: "İşçi Başı, gece vardiyasında fabrikadaydı - erişim kaydı var.",
-        type: "direct",
+        text: "İşçi Başı, gece vardiyasında fabrikada bulunuyordu; erişim kartı kaydı gece boyunca üretim alanındaydı.",
+        type: "evidence",
+      },
+      {
+        id: "c5",
+        text: "Adli inceleme: kafada düz yüzeyli ağır cisimle darbe. Çekiç profiliyle tam örtüşüyor.",
+        type: "forensic",
       },
     ],
     solution: { suspectId: "s1", weaponId: "w1", locationId: "l1" },
@@ -813,22 +853,22 @@ export const PUZZLES: Puzzle[] = [
     clues: [
       {
         id: "c1",
-        text: "Kurban havuz başında değil, kapalı bir odada bulundu.",
+        text: "Kurban havuz başında değil, kapalı bir kabinde bulundu.",
         type: "elimination",
       },
       {
         id: "c2",
-        text: "Rakip şarkıcı sahne performansı için şehirdeydi - binlerce tanık var.",
-        type: "elimination",
+        text: "Rakip şarkıcı o gece sahne performansı için şehirdeydi; binlerce izleyici ve video kayıtları kanıt.",
+        type: "witness",
       },
       {
         id: "c3",
-        text: "Bıçak izi yoktu - kurban boğularak hayatını kaybetti.",
-        type: "elimination",
+        text: "Adli tıp: bıçak izi ya da ilaç izi yok. Boğulma; akciğerlere su dolmuş.",
+        type: "forensic",
       },
       {
         id: "c4",
-        text: "Eski hayranı sauna kapısını dışarıdan kilitleyebilirdi.",
+        text: "Eski hayranı, sauna kapısını dışarıdan kilitleyebilecek konumdaydı ve saunanın yerini biliyordu.",
         type: "direct",
       },
     ],
@@ -859,22 +899,27 @@ export const PUZZLES: Puzzle[] = [
     clues: [
       {
         id: "c1",
-        text: "Gazeteci içeride oturuyordu, terasa çıkmadı.",
-        type: "elimination",
+        text: "Gazeteci içeride oturuyordu; terasa ya da tuvalete hiç çıkmadı. Tanıklar bunu doğruluyor.",
+        type: "witness",
       },
       {
         id: "c2",
-        text: "Müşteri o gün yeni geldi, garsonun kim olduğunu bilmiyordu.",
+        text: "Müşteri o gün yeni geldi; garsonla ya da kafe sahibiyle daha önce hiç iletişimi yoktu.",
         type: "elimination",
       },
       {
         id: "c3",
-        text: "Gürültü bombası kamuya açık yerde kaosa yol açardı - kimse bir şey duymadı.",
+        text: "Kafede hiç patlama ya da ses olmadı. Gürültü bombası hipotezi dışlandı.",
         type: "elimination",
       },
       {
         id: "c4",
-        text: "Garson çayı bizzat hazırladı ve masaya taşıdı - tek temas noktası buydu.",
+        text: "Adli tıp: kanda hızlı etkili toksin tespit edildi. Çayla birlikte alınmış.",
+        type: "forensic",
+      },
+      {
+        id: "c5",
+        text: "Garson çayı bizzat hazırladı ve masaya taşıdı; tek temas noktasıydı.",
         type: "direct",
       },
     ],
@@ -908,33 +953,33 @@ export const PUZZLES: Puzzle[] = [
     clues: [
       {
         id: "c1",
-        text: "Kurban toplantı odasında bulundu ve orada hayatını kaybetti.",
-        type: "direct",
+        text: "Kurban toplantı odasında bulundu; adli izler de orada hayatını kaybettiğini doğruluyor.",
+        type: "forensic",
       },
       {
         id: "c2",
-        text: "Yazılım Mühendisi, sistemi güncelliyordu - sunucu odasından çıkmadı.",
-        type: "elimination",
+        text: "Yazılım Mühendisi sistemi güncellemek için sunucu odasındaydı; erişim logu bunu doğruluyor.",
+        type: "evidence",
       },
       {
         id: "c3",
-        text: "Kimyasal iz bulunamadı - fiziksel temas yöntemi kullanıldı.",
-        type: "elimination",
+        text: "Kimyasal madde analizi: toplantı odasının hava örneğinde kimyasal iz bulunmadı.",
+        type: "forensic",
       },
       {
         id: "c4",
-        text: "Bilgisayar şoku için özel ekipman gerekir - toplantı odasında yoktu.",
+        text: "Bilgisayar şoku için özel adaptör gerekir; toplantı odasında böyle bir ekipman yoktu.",
         type: "elimination",
       },
       {
         id: "c5",
-        text: "Etik Komite Üyesi toplantıya geç geldi - 30 dakika boşluk var.",
-        type: "direct",
+        text: "Adli tıp: boyunda parmak izi şeklinde morluklar. Boğulma kesinleşti.",
+        type: "forensic",
       },
       {
         id: "c6",
-        text: "Baş araştırmacı, kurbanla toplantı öncesi tartıştı - tanıklar duydu.",
-        type: "direct",
+        text: "Baş Araştırmacı, kurbanla toplantı öncesinde tartıştı; iki çalışan bunu duydu.",
+        type: "witness",
       },
     ],
     solution: { suspectId: "s1", weaponId: "w4", locationId: "l1" },
@@ -967,32 +1012,32 @@ export const PUZZLES: Puzzle[] = [
     clues: [
       {
         id: "c1",
-        text: "Elçi yemek salonunda zehirlendi - bahçeye hiç çıkmadı.",
-        type: "elimination",
+        text: "Elçi yemek salonunda zehirlendi; bahçeye ya da kütüphaneye hiç çıkmadı.",
+        type: "witness",
       },
       {
         id: "c2",
-        text: "Kütüphaneci kütüphanede oturuyordu - davete katılmadı.",
-        type: "elimination",
+        text: "Kütüphaneci kütüphanede oturuyordu; davete katılmadığı güvenlik loglarında kayıtlı.",
+        type: "evidence",
       },
       {
         id: "c3",
-        text: "Yabancı Diplomat yemek yemedi - perhizdeydi.",
-        type: "elimination",
+        text: "Yabancı Diplomat perhiz yapıyordu ve yemek yemedi; protokol şefi bunu teyit ediyor.",
+        type: "witness",
       },
       {
         id: "c4",
-        text: "Kimyasal madde, saray gibi kontrollü bir alanda tespit edilirdi.",
-        type: "elimination",
+        text: "Saray laboratuvarı: sentetik kimyasal ya da alkol bazlı toksin izi bulunamadı. Organik kaynaklı.",
+        type: "forensic",
       },
       {
         id: "c5",
-        text: "Protokol Şefi yemek siparişini bizzat verdi ama teslim etmedi.",
-        type: "elimination",
+        text: "Protokol Şefi yemek siparişini verdi ama tabakları hiç taşımadı; personel bunu doğruluyor.",
+        type: "witness",
       },
       {
         id: "c6",
-        text: "Özel Aşçı tek kişi olarak mutfakta tabakları hazırladı.",
+        text: "Özel Aşçı mutfakta tek kişi olarak tabakları hazırladı ve servis etti.",
         type: "direct",
       },
     ],
@@ -1023,22 +1068,27 @@ export const PUZZLES: Puzzle[] = [
     clues: [
       {
         id: "c1",
-        text: "Silah sesi duyuldu - tüfek kullanıldı.",
-        type: "direct",
+        text: "Silah sesi çadır uzağında duyuldu; düğün çadırı ve meydan dışında bir yerde.",
+        type: "witness",
       },
       {
         id: "c2",
-        text: "Fotoğrafçı, çadırın önünde fotoğraf çekiyordu - gözler üzerindeydi.",
-        type: "elimination",
+        text: "Adli tıp: kurban ateşli silahla öldürülmüş. Bıçak ya da zehir izi yok.",
+        type: "forensic",
       },
       {
         id: "c3",
-        text: "Damat düğün çadırındaydı, köy meydanında değildi.",
-        type: "elimination",
+        text: "Fotoğrafçı çadırın önünde fotoğraf çekiyordu; birden fazla kişi bunu gördü.",
+        type: "witness",
       },
       {
         id: "c4",
-        text: "Muhtar, arazi davasını kazanmak için elinden geleni yapardı.",
+        text: "Damat düğün çadırındaydı; kadınlar ve erkekler bölümünden ayrılmadı.",
+        type: "witness",
+      },
+      {
+        id: "c5",
+        text: "Muhtar, arazi davasını kazanmak için her yolu denemiş; ahır arkasına gittiğini gören bir tanık var.",
         type: "direct",
       },
     ],

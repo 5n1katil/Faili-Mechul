@@ -20,7 +20,6 @@ import TimerDisplay from "@/components/TimerDisplay";
 import AnswerModal from "@/components/AnswerModal";
 import ResultScreen from "@/components/ResultScreen";
 import EntityInfoSheet from "@/components/EntityInfoSheet";
-import { getDailyPuzzle } from "@/data/puzzles";
 import type { GridMark } from "@/data/puzzles";
 import type { EntityInfo } from "@/components/EntityInfoSheet";
 import Animated, {
@@ -36,6 +35,11 @@ function getTimeLimit(difficulty: string): number {
   if (difficulty === "baskomiser") return 360;
   if (difficulty === "dedektif") return 480;
   return 600;
+}
+
+interface PenaltyToast {
+  visible: boolean;
+  message: string;
 }
 
 export default function OyunScreen() {
@@ -58,14 +62,22 @@ export default function OyunScreen() {
   const [lastResultSuccess, setLastResultSuccess] = useState(false);
   const [selectedEntity, setSelectedEntity] = useState<EntityInfo | null>(null);
   const [timedOut, setTimedOut] = useState(false);
+  const [penaltyToast, setPenaltyToast] = useState<PenaltyToast>({ visible: false, message: "" });
   const timedOutRef = useRef(false);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const toastTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const accusePulse = useSharedValue(1);
   const accuseOpacity = useSharedValue(1);
+  const toastOpacity = useSharedValue(0);
+
   const accusePulseStyle = useAnimatedStyle(() => ({
-    transform: [{ scale: accusePulse.value }],
+    transform: Platform.OS === "web" ? [] : [{ scale: accusePulse.value }],
     opacity: accuseOpacity.value,
+  }));
+
+  const toastStyle = useAnimatedStyle(() => ({
+    opacity: toastOpacity.value,
   }));
 
   useEffect(() => {
@@ -88,7 +100,7 @@ export default function OyunScreen() {
   }, []);
 
   useEffect(() => {
-    if (gameState && !gameState.isComplete && !gameState.isGameOver && !timedOut) {
+    if (gameState && !gameState.isComplete && !timedOut) {
       timerRef.current = setInterval(() => {
         tickTimer();
       }, 1000);
@@ -98,7 +110,7 @@ export default function OyunScreen() {
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
     };
-  }, [gameState?.isComplete, gameState?.isGameOver, timedOut, tickTimer]);
+  }, [gameState?.isComplete, timedOut, tickTimer]);
 
   useEffect(() => {
     if (gameState?.isComplete) {
@@ -108,11 +120,8 @@ export default function OyunScreen() {
       }
       setLastResultSuccess(true);
       setShowResult(true);
-    } else if (gameState?.isGameOver) {
-      setLastResultSuccess(false);
-      setShowResult(true);
     }
-  }, [gameState?.isComplete, gameState?.isGameOver, play]);
+  }, [gameState?.isComplete, play]);
 
   useEffect(() => {
     timedOutRef.current = false;
@@ -121,14 +130,13 @@ export default function OyunScreen() {
   }, [gameState?.puzzle?.id]);
 
   const timeElapsedNow = gameState?.timeElapsed ?? 0;
-  const puzzleDifficulty = gameState?.puzzle?.difficulty ?? "kolay";
+  const puzzleDifficulty = gameState?.puzzle?.difficulty ?? "caylik";
   const timeLimitNow = getTimeLimit(puzzleDifficulty);
 
   useEffect(() => {
     if (
       gameState?.puzzle &&
       !gameState.isComplete &&
-      !gameState.isGameOver &&
       !timedOutRef.current &&
       timeElapsedNow >= timeLimitNow
     ) {
@@ -138,7 +146,21 @@ export default function OyunScreen() {
       setLastResultSuccess(false);
       setShowResult(true);
     }
-  }, [timeElapsedNow, gameState?.isComplete, gameState?.isGameOver, gameState?.puzzle?.id]);
+  }, [timeElapsedNow, gameState?.isComplete, gameState?.puzzle?.id]);
+
+  const showPenaltyToast = (penaltySeconds: number) => {
+    if (toastTimerRef.current) clearTimeout(toastTimerRef.current);
+    const nextWrong = (gameState?.wrongGuesses ?? 0) + 1;
+    setPenaltyToast({
+      visible: true,
+      message: `Yanlış tahmin! +${penaltySeconds}s ceza (${nextWrong}. hata)`,
+    });
+    toastOpacity.value = withTiming(1, { duration: 200 });
+    toastTimerRef.current = setTimeout(() => {
+      toastOpacity.value = withTiming(0, { duration: 400 });
+      setTimeout(() => setPenaltyToast({ visible: false, message: "" }), 420);
+    }, 2200);
+  };
 
   if (!gameState || !gameState.puzzle) {
     return (
@@ -174,7 +196,7 @@ export default function OyunScreen() {
     );
   }
 
-  const { puzzle, gridState, cluesRevealed, timeElapsed, mistakes, maxMistakes } =
+  const { puzzle, gridState, cluesRevealed, timeElapsed, wrongGuesses, wrongGuessPenaltySeconds, finalScore } =
     gameState;
 
   const timeLimit = getTimeLimit(puzzle.difficulty);
@@ -195,12 +217,16 @@ export default function OyunScreen() {
 
   const handleSubmit = (suspectId: string, weaponId: string, locationId: string) => {
     setShowAnswerModal(false);
+    const currentWrongGuesses = gameState.wrongGuesses;
     const success = submitAnswer(suspectId, weaponId, locationId);
     if (!success) {
       play("error");
       if (Platform.OS !== "web") {
         Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
       }
+      const nextWrong = currentWrongGuesses + 1;
+      const penaltySeconds = 30 * Math.pow(2, nextWrong - 1);
+      showPenaltyToast(penaltySeconds);
     }
   };
 
@@ -216,34 +242,36 @@ export default function OyunScreen() {
     router.push("/");
   };
 
+  const displayScore = finalScore ?? 0;
+
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
       {showResult && (
         <ResultScreen
           puzzle={puzzle}
           success={lastResultSuccess}
-          score={
-            lastResultSuccess
-              ? Math.max(
-                  100,
-                  1000 -
-                    Math.floor(timeElapsed / 10) * 5 -
-                    mistakes * 100 -
-                    (cluesRevealed.length - 1) * 20 +
-                    (puzzle.difficulty === "dedektif"
-                      ? 200
-                      : puzzle.difficulty === "baskomiser"
-                      ? 500
-                      : 0)
-                )
-              : 0
-          }
+          score={displayScore}
           timeSeconds={timeElapsed}
-          mistakes={mistakes}
+          wrongGuesses={wrongGuesses}
+          penaltySeconds={wrongGuessPenaltySeconds}
           gridState={gridState}
           onPlayMore={handlePlayMore}
           onClose={handleClose}
         />
+      )}
+
+      {penaltyToast.visible && (
+        <Animated.View
+          style={[
+            styles.penaltyToast,
+            { backgroundColor: "#C8372D", },
+            toastStyle,
+          ]}
+          pointerEvents="none"
+        >
+          <MaterialIcons name="gavel" size={16} color="#fff" />
+          <Text style={styles.penaltyToastText}>{penaltyToast.message}</Text>
+        </Animated.View>
       )}
 
       <ScrollView
@@ -264,8 +292,8 @@ export default function OyunScreen() {
             </Text>
             <TimerDisplay
               seconds={remainingTime}
-              mistakes={mistakes}
-              maxMistakes={maxMistakes}
+              wrongGuesses={wrongGuesses}
+              penaltySeconds={wrongGuessPenaltySeconds}
             />
           </View>
         </Animated.View>
@@ -290,7 +318,7 @@ export default function OyunScreen() {
                 locations={puzzle.locations}
                 gridState={gridState}
                 onCellPress={handleCellPress}
-                disabled={gameState.isComplete || gameState.isGameOver || timedOut}
+                disabled={gameState.isComplete || timedOut}
                 onHeaderPress={setSelectedEntity}
                 isComplete={gameState.isComplete}
               />
@@ -301,7 +329,7 @@ export default function OyunScreen() {
         <Animated.View entering={FadeInDown.delay(240).springify()}>
           <View style={styles.cluesHeader}>
             <Text style={[styles.sectionTitle, { color: colors.foreground }]}>İpuçları</Text>
-            {canRevealMore && !gameState.isComplete && !gameState.isGameOver && !timedOut && (
+            {canRevealMore && !gameState.isComplete && !timedOut && (
               <Pressable
                 onPress={handleRevealClue}
                 style={[styles.revealAllBtn, { borderColor: colors.border }]}
@@ -329,7 +357,7 @@ export default function OyunScreen() {
         </Animated.View>
       </ScrollView>
 
-      {!gameState.isComplete && !gameState.isGameOver && !timedOut && (
+      {!gameState.isComplete && !timedOut && (
         <View
           style={[
             styles.footer,
@@ -342,6 +370,7 @@ export default function OyunScreen() {
         >
           <Animated.View style={accusePulseStyle}>
             <Pressable
+              testID="accuse-button"
               onPress={() => setShowAnswerModal(true)}
               style={[styles.accuseBtn, { backgroundColor: colors.primary }]}
             >
@@ -428,4 +457,23 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   accuseText: { fontSize: 18, fontWeight: "700", letterSpacing: 2 },
+  penaltyToast: {
+    position: "absolute",
+    top: 120,
+    left: 20,
+    right: 20,
+    zIndex: 200,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+    paddingVertical: 12,
+    paddingHorizontal: 18,
+    borderRadius: 12,
+  },
+  penaltyToastText: {
+    color: "#fff",
+    fontSize: 14,
+    fontWeight: "700",
+    flex: 1,
+  },
 });
