@@ -452,9 +452,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
   },
   logoImage: {
-    width: 120,
-    height: 120,
-    borderRadius: 60,
+    width: 80,
+    height: 80,
+    borderRadius: 40,
     marginBottom: 8,
   },
   iconWrapper: {
