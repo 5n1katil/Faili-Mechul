@@ -139,7 +139,7 @@ function MiniColIcon({ icon, color, bg }: { icon: string; color: string; bg: str
   return (
     <View style={{ width: MINI_CELL, height: colH, alignItems: "center", justifyContent: "flex-end", paddingBottom: 3 }}>
       <View style={{ width: avSz, height: avSz, borderRadius: avSz / 2, borderWidth: 1.5, borderColor: color + "AA", backgroundColor: bg, alignItems: "center", justifyContent: "center" }}>
-        <MaterialIcons name={icon as ComponentProps<typeof MaterialIcons>["name"]} size={Math.floor(avSz * 0.54)} color={color} />
+        <MaterialIcons name={icon as ComponentProps<typeof MaterialIcons>["name"]} size={Math.floor(avSz * 0.68)} color={color} />
       </View>
     </View>
   );
@@ -150,7 +150,7 @@ function MiniRowIcon({ icon, color, bg }: { icon: string; color: string; bg: str
   return (
     <View style={{ width: MINI_LABEL, height: MINI_CELL, alignItems: "center", justifyContent: "center" }}>
       <View style={{ width: avSz, height: avSz, borderRadius: avSz / 2, borderWidth: 1.5, borderColor: color + "AA", backgroundColor: bg, alignItems: "center", justifyContent: "center" }}>
-        <MaterialIcons name={icon as ComponentProps<typeof MaterialIcons>["name"]} size={Math.floor(avSz * 0.54)} color={color} />
+        <MaterialIcons name={icon as ComponentProps<typeof MaterialIcons>["name"]} size={Math.floor(avSz * 0.68)} color={color} />
       </View>
     </View>
   );
