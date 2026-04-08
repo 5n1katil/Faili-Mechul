@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import type { ComponentProps } from "react";
 import {
   Linking,
@@ -13,13 +13,11 @@ import {
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useColors } from "@/hooks/useColors";
 import { useGame } from "@/context/GameContext";
 import Animated, { FadeInDown } from "react-native-reanimated";
 import OnboardingScreen from "@/components/OnboardingScreen";
-
-const SOUND_KEY = "@dedektif_sound_enabled";
+import { soundSettings } from "@/utils/soundSettings";
 
 type MaterialIconName = ComponentProps<typeof MaterialIcons>["name"];
 
@@ -54,17 +52,11 @@ export default function ProfilScreen() {
   const [editingName, setEditingName] = useState(false);
   const [tempName, setTempName] = useState(profile.name);
   const [showHowToPlay, setShowHowToPlay] = useState(false);
-  const [soundEnabled, setSoundEnabled] = useState(true);
+  const [soundEnabled, setSoundEnabled] = useState(() => soundSettings.enabled);
 
-  useEffect(() => {
-    AsyncStorage.getItem(SOUND_KEY).then((val) => {
-      setSoundEnabled(val !== "false");
-    });
-  }, []);
-
-  const handleSoundToggle = async (val: boolean) => {
+  const handleSoundToggle = (val: boolean) => {
+    soundSettings.enabled = val;
     setSoundEnabled(val);
-    await AsyncStorage.setItem(SOUND_KEY, val ? "true" : "false");
   };
 
   const winRate =
