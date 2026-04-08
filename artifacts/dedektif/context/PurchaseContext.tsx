@@ -7,10 +7,16 @@ import React, {
   useState,
 } from "react";
 import { Platform } from "react-native";
+import type {
+  PurchasesError,
+  PURCHASES_ERROR_CODE,
+  PurchasesPackage,
+} from "react-native-purchases";
 
 const PREMIUM_CACHE_KEY = "@dedektif_is_premium";
 const PRODUCT_ID = "com.failimechul.dedektif.vaka_arsivi";
 const ENTITLEMENT_ID = "premium";
+const DEFAULT_PRICE_STRING = "₺79,99";
 
 const REVENUECAT_IOS_KEY = process.env.EXPO_PUBLIC_REVENUECAT_IOS_KEY || "";
 const REVENUECAT_ANDROID_KEY = process.env.EXPO_PUBLIC_REVENUECAT_ANDROID_KEY || "";
@@ -18,6 +24,7 @@ const REVENUECAT_ANDROID_KEY = process.env.EXPO_PUBLIC_REVENUECAT_ANDROID_KEY ||
 type PurchaseContextType = {
   isPremium: boolean;
   isLoading: boolean;
+  priceString: string;
   purchaseVacaArsivi: () => Promise<{ success: boolean; message: string }>;
   restorePurchases: () => Promise<{ success: boolean; message: string }>;
 };
@@ -30,39 +37,64 @@ export function usePurchase(): PurchaseContextType {
   return ctx;
 }
 
+function getNativeKey(): string {
+  return Platform.OS === "ios" ? REVENUECAT_IOS_KEY : REVENUECAT_ANDROID_KEY;
+}
+
+function isRevenueCatConfigured(): boolean {
+  return Platform.OS !== "web" && !!getNativeKey();
+}
+
 async function checkEntitlement(): Promise<boolean> {
   if (Platform.OS === "web") {
     const cached = await AsyncStorage.getItem(PREMIUM_CACHE_KEY);
     return cached === "1";
+  }
+  if (!isRevenueCatConfigured()) {
+    return false;
   }
   try {
     const Purchases = require("react-native-purchases").default;
     const info = await Purchases.getCustomerInfo();
     return !!info.entitlements.active[ENTITLEMENT_ID];
   } catch {
-    const cached = await AsyncStorage.getItem(PREMIUM_CACHE_KEY);
-    return cached === "1";
+    return false;
   }
 }
 
-function initRevenueCat() {
-  if (Platform.OS === "web") return;
-  const key = Platform.OS === "ios" ? REVENUECAT_IOS_KEY : REVENUECAT_ANDROID_KEY;
-  if (!key) return;
+async function fetchPriceString(): Promise<string> {
+  if (!isRevenueCatConfigured()) return DEFAULT_PRICE_STRING;
   try {
     const Purchases = require("react-native-purchases").default;
-    Purchases.configure({ apiKey: key });
+    const offerings = await Purchases.getOfferings();
+    const pkg: PurchasesPackage | undefined =
+      offerings.current?.availablePackages?.find(
+        (p: PurchasesPackage) => p.product?.identifier === PRODUCT_ID
+      ) ?? offerings.current?.availablePackages?.[0];
+    return pkg?.product?.priceString ?? DEFAULT_PRICE_STRING;
+  } catch {
+    return DEFAULT_PRICE_STRING;
+  }
+}
+
+function initRevenueCat(): void {
+  if (!isRevenueCatConfigured()) return;
+  try {
+    const Purchases = require("react-native-purchases").default;
+    Purchases.configure({ apiKey: getNativeKey() });
   } catch {}
 }
 
 export function PurchaseProvider({ children }: { children: React.ReactNode }) {
   const [isPremium, setIsPremium] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [priceString, setPriceString] = useState(DEFAULT_PRICE_STRING);
 
   useEffect(() => {
     initRevenueCat();
-    checkEntitlement().then((p) => {
-      setIsPremium(p);
+    Promise.all([checkEntitlement(), fetchPriceString()]).then(([premium, price]) => {
+      setIsPremium(premium);
+      setPriceString(price);
       setIsLoading(false);
     });
   }, []);
@@ -74,19 +106,20 @@ export function PurchaseProvider({ children }: { children: React.ReactNode }) {
       return { success: true, message: "Satın alma simüle edildi (web önizleme)." };
     }
 
-    const key = Platform.OS === "ios" ? REVENUECAT_IOS_KEY : REVENUECAT_ANDROID_KEY;
-    if (!key) {
-      await AsyncStorage.setItem(PREMIUM_CACHE_KEY, "1");
-      setIsPremium(true);
-      return { success: true, message: "Satın alma simüle edildi (API anahtarı yapılandırılmadı)." };
+    if (!isRevenueCatConfigured()) {
+      return {
+        success: false,
+        message: "Uygulama mağaza satın almaları yapılandırılmamış. Lütfen App Store'dan deneyin.",
+      };
     }
 
     try {
       const Purchases = require("react-native-purchases").default;
       const offerings = await Purchases.getOfferings();
-      const pkg = offerings.current?.availablePackages?.find(
-        (p: any) => p.product?.identifier === PRODUCT_ID
-      ) ?? offerings.current?.availablePackages?.[0];
+      const pkg: PurchasesPackage | undefined =
+        offerings.current?.availablePackages?.find(
+          (p: PurchasesPackage) => p.product?.identifier === PRODUCT_ID
+        ) ?? offerings.current?.availablePackages?.[0];
 
       if (!pkg) {
         return { success: false, message: "Satın alma paketi bulunamadı. Lütfen daha sonra tekrar deneyin." };
@@ -100,8 +133,10 @@ export function PurchaseProvider({ children }: { children: React.ReactNode }) {
         return { success: true, message: "Vaka Arşivi'ne hoş geldiniz! Tüm vakalar açıldı." };
       }
       return { success: false, message: "Satın alma tamamlanamadı. Lütfen tekrar deneyin." };
-    } catch (err: any) {
-      if (err?.code === "1" || err?.userCancelled) {
+    } catch (err: unknown) {
+      const rcErr = err as PurchasesError & { userCancelled?: boolean };
+      const CANCELLED = "1" as PURCHASES_ERROR_CODE;
+      if (rcErr?.userCancelled === true || rcErr?.code === CANCELLED) {
         return { success: false, message: "Satın alma iptal edildi." };
       }
       return { success: false, message: "Bir hata oluştu. Lütfen internet bağlantınızı kontrol edin." };
@@ -118,9 +153,8 @@ export function PurchaseProvider({ children }: { children: React.ReactNode }) {
       return { success: false, message: "Geri yüklenecek satın alma bulunamadı." };
     }
 
-    const key = Platform.OS === "ios" ? REVENUECAT_IOS_KEY : REVENUECAT_ANDROID_KEY;
-    if (!key) {
-      return { success: false, message: "RevenueCat yapılandırılmamış. Gerçek cihazda deneyin." };
+    if (!isRevenueCatConfigured()) {
+      return { success: false, message: "App Store hesabınızla giriş yaparak gerçek cihazda deneyin." };
     }
 
     try {
@@ -139,7 +173,7 @@ export function PurchaseProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   return (
-    <PurchaseContext.Provider value={{ isPremium, isLoading, purchaseVacaArsivi, restorePurchases }}>
+    <PurchaseContext.Provider value={{ isPremium, isLoading, priceString, purchaseVacaArsivi, restorePurchases }}>
       {children}
     </PurchaseContext.Provider>
   );

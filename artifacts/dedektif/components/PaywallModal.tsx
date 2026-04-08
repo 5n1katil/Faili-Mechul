@@ -27,7 +27,7 @@ const FEATURES = [
 
 export default function PaywallModal({ visible, onClose }: Props) {
   const colors = useColors();
-  const { purchaseVacaArsivi, restorePurchases, isLoading } = usePurchase();
+  const { purchaseVacaArsivi, restorePurchases, isLoading, priceString } = usePurchase();
   const [buying, setBuying] = useState(false);
   const [restoring, setRestoring] = useState(false);
   const [message, setMessage] = useState<{ text: string; ok: boolean } | null>(null);
@@ -80,7 +80,7 @@ export default function PaywallModal({ visible, onClose }: Props) {
             </Text>
 
             <View style={[styles.priceBox, { borderColor: `${colors.primary}55`, backgroundColor: `${colors.primary}0A` }]}>
-              <Text style={[styles.price, { color: colors.primary }]}>₺79,99</Text>
+              <Text style={[styles.price, { color: colors.primary }]}>{priceString}</Text>
               <Text style={[styles.priceNote, { color: colors.mutedForeground }]}>
                 Tek seferlik · Ömür boyu erişim
               </Text>
@@ -127,7 +127,7 @@ export default function PaywallModal({ visible, onClose }: Props) {
                 <>
                   <MaterialIcons name="lock-open" size={20} color={colors.primaryForeground} />
                   <Text style={[styles.buyBtnText, { color: colors.primaryForeground }]}>
-                    Vaka Arşivini Aç — ₺79,99
+                    Vaka Arşivini Aç — {priceString}
                   </Text>
                 </>
               )}

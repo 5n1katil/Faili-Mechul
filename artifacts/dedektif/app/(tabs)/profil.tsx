@@ -51,7 +51,7 @@ export default function ProfilScreen() {
   const colors = useColors();
   const insets = useSafeAreaInsets();
   const { profile, gameHistory, updateProfile } = useGame();
-  const { isPremium, restorePurchases } = usePurchase();
+  const { isPremium, restorePurchases, priceString } = usePurchase();
 
   const [editingName, setEditingName] = useState(false);
   const [tempName, setTempName] = useState(profile.name);
@@ -247,7 +247,7 @@ export default function ProfilScreen() {
               <View style={styles.howToPlayInfo}>
                 <Text style={[styles.howToPlayTitle, { color: "#D4A843" }]}>Vaka Arşivini Aç</Text>
                 <Text style={[styles.howToPlayDesc, { color: colors.mutedForeground }]}>
-                  Tüm vakalar · Tek seferlik · ₺79,99
+                  Tüm vakalar · Tek seferlik · {priceString}
                 </Text>
               </View>
               <MaterialIcons name="chevron-right" size={22} color="#D4A843" />
