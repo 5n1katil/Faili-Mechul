@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {
   Image,
+  Modal,
   Platform,
   Pressable,
   ScrollView,
@@ -70,6 +71,7 @@ export default function HomeScreen() {
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [helpBtnOpen, setHelpBtnOpen] = useState(false);
   const [showSetup, setShowSetup] = useState(false);
+  const [showStreakInfo, setShowStreakInfo] = useState(false);
 
   const dailyPuzzle = getDailyPuzzle();
   const todayStr = new Date().toISOString().split("T")[0];
@@ -122,6 +124,7 @@ export default function HomeScreen() {
 
   const myRank = allEntries.findIndex((e) => e.isCurrentUser) + 1;
   const personAbove = myRank > 1 ? allEntries[myRank - 2] : null;
+  const scoreDiff = personAbove ? personAbove.totalScore - profile.totalScore : 0;
 
   return (
     <>
@@ -134,6 +137,42 @@ export default function HomeScreen() {
         visible={showSetup}
         onDone={handleSetupDone}
       />
+
+      <Modal visible={showStreakInfo} transparent animationType="fade">
+        <Pressable
+          style={styles.streakModalOverlay}
+          onPress={() => setShowStreakInfo(false)}
+        >
+          <Pressable
+            style={[styles.streakModalCard, { backgroundColor: colors.card, borderColor: "#FF6B3560" }]}
+            onPress={(e) => e.stopPropagation()}
+          >
+            <MaterialIcons name="local-fire-department" size={52} color="#FF6B35" />
+            <Text style={[styles.streakModalTitle, { color: colors.foreground }]}>
+              Günlük Seri
+            </Text>
+            <Text style={[styles.streakModalCount, { color: "#FF6B35" }]}>
+              {profile.currentStreak}
+            </Text>
+            <Text style={[styles.streakModalLabel, { color: colors.mutedForeground }]}>
+              gün üst üste
+            </Text>
+            <View style={[styles.streakModalDivider, { backgroundColor: colors.border }]} />
+            <Text style={[styles.streakModalDesc, { color: colors.mutedForeground }]}>
+              Üst üste bulmaca çözdüğün gün sayısı. Her gün en az bir bulmacayı başarıyla çözersen serin artar. Bir gün atlasan sıfırlanır.
+            </Text>
+            <Pressable
+              onPress={() => setShowStreakInfo(false)}
+              style={[styles.streakModalBtn, { backgroundColor: colors.primary }]}
+            >
+              <Text style={[styles.streakModalBtnText, { color: colors.primaryForeground }]}>
+                Anladım
+              </Text>
+            </Pressable>
+          </Pressable>
+        </Pressable>
+      </Modal>
+
       <ScrollView
         style={[styles.container, { backgroundColor: colors.background }]}
         contentContainerStyle={[
@@ -170,7 +209,8 @@ export default function HomeScreen() {
               <Pressable onPress={handleHelpPress} style={styles.helpBtn} hitSlop={8}>
                 <MaterialIcons name="help-outline" size={22} color={colors.mutedForeground} />
               </Pressable>
-              <View
+              <Pressable
+                onPress={() => setShowStreakInfo(true)}
                 style={[
                   styles.streakBadge,
                   { backgroundColor: colors.card, borderColor: colors.border },
@@ -180,7 +220,7 @@ export default function HomeScreen() {
                 <Text style={[styles.streakText, { color: colors.foreground }]}>
                   {profile.currentStreak}
                 </Text>
-              </View>
+              </Pressable>
             </View>
           </View>
         </Animated.View>
@@ -348,53 +388,77 @@ export default function HomeScreen() {
           >
             <View style={[styles.rankCardAccent, { backgroundColor: "#D4A843" }]} />
             <View style={styles.rankCardInner}>
-              <View style={styles.rankCardLeft}>
+
+              <View style={styles.rankTopRow}>
                 <View style={[styles.rankBadge, { backgroundColor: "#D4A84320", borderColor: "#D4A84355" }]}>
-                  <MaterialIcons name="emoji-events" size={16} color="#D4A843" />
+                  <MaterialIcons name="emoji-events" size={14} color="#D4A843" />
                   <Text style={[styles.rankBadgeText, { color: "#D4A843" }]}>
-                    Sıralama
+                    Liderlik Sıralaması
                   </Text>
                 </View>
-                <Text style={[styles.rankPosition, { color: colors.foreground }]}>
+                <Text style={[styles.rankPosition, { color: "#D4A843" }]}>
                   #{myRank}
                 </Text>
-                <Text style={[styles.rankSub, { color: colors.mutedForeground }]}>
-                  {allEntries.length} dedektif arasında
-                </Text>
               </View>
-              {personAbove ? (
-                <View style={styles.rankCardRight}>
-                  <Text style={[styles.rankAheadLabel, { color: colors.mutedForeground }]}>
-                    Önündeki
+
+              <View style={styles.rankUserRow}>
+                <View style={[styles.rankUserAvatar, { borderColor: "#D4A84366", backgroundColor: "#D4A84315" }]}>
+                  <AvatarDisplay
+                    avatar={profile.avatar || "detective"}
+                    size={30}
+                    color={colors.primary}
+                    backgroundColor="transparent"
+                  />
+                </View>
+                <View style={styles.rankUserInfo}>
+                  <Text style={[styles.rankUserName, { color: colors.foreground }]} numberOfLines={1}>
+                    {profile.name}
                   </Text>
-                  <View style={[styles.rankAheadAvatar, { borderColor: `${colors.primary}40`, backgroundColor: `${colors.primary}12` }]}>
+                  <Text style={[styles.rankUserMeta, { color: colors.mutedForeground }]}>
+                    {profile.totalScore.toLocaleString("tr-TR")} puan · {profile.gamesWon} vaka
+                  </Text>
+                </View>
+                <View style={[styles.rankTotalBadge, { backgroundColor: "#D4A84314", borderColor: "#D4A84330" }]}>
+                  <Text style={[styles.rankTotalText, { color: colors.mutedForeground }]}>
+                    {allEntries.length} dedektif
+                  </Text>
+                </View>
+              </View>
+
+              <View style={[styles.rankDivider, { borderTopColor: colors.border }]} />
+
+              {personAbove ? (
+                <View style={styles.rankAheadRow}>
+                  <Text style={[styles.rankAheadLabel, { color: colors.mutedForeground }]}>
+                    Önündeki:
+                  </Text>
+                  <View style={[styles.rankAheadAvatar, { borderColor: `${colors.primary}30`, backgroundColor: `${colors.primary}10` }]}>
                     <AvatarDisplay
                       avatar={personAbove.avatar || "detective"}
-                      size={28}
+                      size={22}
                       color={colors.mutedForeground}
                       backgroundColor="transparent"
                     />
                   </View>
-                  <Text
-                    style={[styles.rankAheadName, { color: colors.foreground }]}
-                    numberOfLines={1}
-                  >
+                  <Text style={[styles.rankAheadName, { color: colors.foreground }]} numberOfLines={1}>
                     {personAbove.name}
                   </Text>
+                  <View style={{ flex: 1 }} />
                   <Text style={[styles.rankAheadScore, { color: "#D4A843" }]}>
-                    {(personAbove.totalScore - profile.totalScore).toLocaleString("tr-TR")} puan fark
+                    +{scoreDiff.toLocaleString("tr-TR")} puan
                   </Text>
                 </View>
               ) : (
-                <View style={styles.rankCardRight}>
-                  <MaterialIcons name="emoji-events" size={32} color="#D4A843" />
+                <View style={styles.rankLeaderRow}>
+                  <MaterialIcons name="emoji-events" size={16} color="#D4A843" />
                   <Text style={[styles.rankLeaderText, { color: "#D4A843" }]}>
-                    Sen lidersin!
+                    Sen zirvedesin!
                   </Text>
                 </View>
               )}
             </View>
-            <View style={styles.rankCardFooter}>
+
+            <View style={[styles.rankCardFooter, { borderTopColor: colors.border }]}>
               <Text style={[styles.rankCardFooterText, { color: colors.mutedForeground }]}>
                 Tam sıralamayı gör
               </Text>
@@ -431,6 +495,60 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: { flex: 1 },
   content: { paddingHorizontal: 16, gap: 14 },
+
+  streakModalOverlay: {
+    flex: 1,
+    backgroundColor: "rgba(0,0,0,0.75)",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 32,
+  },
+  streakModalCard: {
+    width: "100%",
+    maxWidth: 320,
+    borderRadius: 20,
+    borderWidth: 1.5,
+    padding: 28,
+    alignItems: "center",
+    gap: 8,
+  },
+  streakModalTitle: {
+    fontSize: 20,
+    fontWeight: "800",
+    letterSpacing: 0.3,
+    marginTop: 4,
+  },
+  streakModalCount: {
+    fontSize: 64,
+    fontWeight: "900",
+    lineHeight: 72,
+  },
+  streakModalLabel: {
+    fontSize: 13,
+    fontWeight: "500",
+    marginTop: -4,
+  },
+  streakModalDivider: {
+    height: 1,
+    width: "100%",
+    marginVertical: 8,
+  },
+  streakModalDesc: {
+    fontSize: 13,
+    lineHeight: 20,
+    textAlign: "center",
+  },
+  streakModalBtn: {
+    marginTop: 8,
+    width: "100%",
+    paddingVertical: 13,
+    borderRadius: 12,
+    alignItems: "center",
+  },
+  streakModalBtnText: {
+    fontSize: 15,
+    fontWeight: "700",
+  },
 
   headerRow: {
     flexDirection: "row",
@@ -581,16 +699,16 @@ const styles = StyleSheet.create({
   },
   rankCardAccent: {
     height: 2,
-    borderRadius: 0,
   },
   rankCardInner: {
-    flexDirection: "row",
+    flexDirection: "column",
     padding: 14,
-    gap: 12,
+    gap: 10,
   },
-  rankCardLeft: {
-    flex: 1,
-    gap: 4,
+  rankTopRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
   },
   rankBadge: {
     flexDirection: "row",
@@ -600,35 +718,69 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
     borderRadius: 8,
     borderWidth: 1,
-    alignSelf: "flex-start",
   },
   rankBadgeText: { fontSize: 11, fontWeight: "700" },
-  rankPosition: { fontSize: 34, fontWeight: "900", lineHeight: 40 },
-  rankSub: { fontSize: 11, fontWeight: "500" },
-  rankCardRight: {
+  rankPosition: { fontSize: 30, fontWeight: "900", letterSpacing: -0.5 },
+  rankUserRow: {
+    flexDirection: "row",
     alignItems: "center",
-    justifyContent: "center",
-    gap: 4,
-    minWidth: 90,
+    gap: 10,
   },
-  rankAheadLabel: { fontSize: 10, fontWeight: "600" },
-  rankAheadAvatar: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+  rankUserAvatar: {
+    width: 38,
+    height: 38,
+    borderRadius: 19,
     borderWidth: 1.5,
     alignItems: "center",
     justifyContent: "center",
   },
-  rankAheadName: { fontSize: 12, fontWeight: "700", textAlign: "center" },
-  rankAheadScore: { fontSize: 11, fontWeight: "600", textAlign: "center" },
-  rankLeaderText: { fontSize: 13, fontWeight: "700", textAlign: "center" },
+  rankUserInfo: {
+    flex: 1,
+    gap: 2,
+  },
+  rankUserName: { fontSize: 14, fontWeight: "700" },
+  rankUserMeta: { fontSize: 11, fontWeight: "500" },
+  rankTotalBadge: {
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 8,
+    borderWidth: 1,
+  },
+  rankTotalText: { fontSize: 10, fontWeight: "600" },
+  rankDivider: {
+    borderTopWidth: 1,
+  },
+  rankAheadRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 7,
+  },
+  rankAheadLabel: { fontSize: 11, fontWeight: "600" },
+  rankAheadAvatar: {
+    width: 28,
+    height: 28,
+    borderRadius: 14,
+    borderWidth: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  rankAheadName: { fontSize: 12, fontWeight: "700", flexShrink: 1 },
+  rankAheadScore: { fontSize: 12, fontWeight: "700" },
+  rankLeaderRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 6,
+  },
+  rankLeaderText: { fontSize: 14, fontWeight: "700" },
   rankCardFooter: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "flex-end",
     paddingHorizontal: 14,
     paddingBottom: 10,
+    paddingTop: 8,
+    borderTopWidth: 1,
     gap: 4,
   },
   rankCardFooterText: { fontSize: 12, fontWeight: "500" },
