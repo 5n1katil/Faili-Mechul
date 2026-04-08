@@ -9,7 +9,6 @@ import {
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import * as Haptics from "expo-haptics";
 import { useColors } from "@/hooks/useColors";
 import { useGame } from "@/context/GameContext";
 import type { BestResult } from "@/context/GameContext";
@@ -18,7 +17,7 @@ import { usePurchase } from "@/context/PurchaseContext";
 import DetectiveGrid from "@/components/DetectiveGrid";
 import ClueCard from "@/components/ClueCard";
 import TimerDisplay from "@/components/TimerDisplay";
-import AnswerModal from "@/components/AnswerModal";
+import AccusationPanel from "@/components/AccusationPanel";
 import ResultScreen from "@/components/ResultScreen";
 import EntityInfoSheet from "@/components/EntityInfoSheet";
 import PaywallModal from "@/components/PaywallModal";
@@ -26,19 +25,13 @@ import {
   getDailyPuzzle,
   getDifficultyColor,
   getDifficultyLabel,
+  isBonusClue,
   PUZZLES,
   type Difficulty,
   type GridMark,
 } from "@/data/puzzles";
 import type { EntityInfo } from "@/components/EntityInfoSheet";
-import Animated, {
-  FadeInDown,
-  useAnimatedStyle,
-  useSharedValue,
-  withRepeat,
-  withSequence,
-  withTiming,
-} from "react-native-reanimated";
+import Animated, { FadeInDown } from "react-native-reanimated";
 
 const FREE_PUZZLE_COUNT = 10;
 
@@ -107,10 +100,7 @@ function PuzzleCard({
           <View
             style={[
               listStyles.diffBadge,
-              {
-                backgroundColor: `${diffColor}22`,
-                borderColor: `${diffColor}66`,
-              },
+              { backgroundColor: `${diffColor}22`, borderColor: `${diffColor}66` },
             ]}
           >
             <Text style={[listStyles.diffText, { color: diffColor }]}>
@@ -119,28 +109,13 @@ function PuzzleCard({
           </View>
           <View style={listStyles.puzzleCardRight}>
             {locked ? (
-              <View
-                style={[
-                  listStyles.lockBadge,
-                  { backgroundColor: "#D4A84322", borderColor: "#D4A84366" },
-                ]}
-              >
+              <View style={[listStyles.lockBadge, { backgroundColor: "#D4A84322", borderColor: "#D4A84366" }]}>
                 <Text style={[listStyles.lockText, { color: "#D4A843" }]}>Premium</Text>
               </View>
             ) : completed ? (
-              <View
-                style={[
-                  listStyles.solvedBadge,
-                  {
-                    backgroundColor: `${colors.success}22`,
-                    borderColor: `${colors.success}55`,
-                  },
-                ]}
-              >
+              <View style={[listStyles.solvedBadge, { backgroundColor: `${colors.success}22`, borderColor: `${colors.success}55` }]}>
                 <MaterialIcons name="check-circle" size={12} color={colors.success} />
-                <Text style={[listStyles.solvedText, { color: colors.success }]}>
-                  Çözüldü
-                </Text>
+                <Text style={[listStyles.solvedText, { color: colors.success }]}>Çözüldü</Text>
               </View>
             ) : (
               <View style={listStyles.puzzleCardMeta}>
@@ -154,41 +129,29 @@ function PuzzleCard({
         </View>
 
         <Text
-          style={[
-            listStyles.puzzleTitle,
-            { color: locked ? colors.mutedForeground : colors.foreground },
-          ]}
+          style={[listStyles.puzzleTitle, { color: locked ? colors.mutedForeground : colors.foreground }]}
           numberOfLines={2}
         >
           {puzzle.title}
         </Text>
 
         {!locked && (
-          <Text
-            style={[listStyles.puzzleStory, { color: colors.mutedForeground }]}
-            numberOfLines={2}
-          >
+          <Text style={[listStyles.puzzleStory, { color: colors.mutedForeground }]} numberOfLines={2}>
             {puzzle.story}
           </Text>
         )}
 
         {locked ? (
           <View style={[listStyles.playRow, { borderTopColor: colors.border }]}>
-            <Text style={[listStyles.playText, { color: "#D4A843" }]}>
-              Kilidi açmak için dokun
-            </Text>
+            <Text style={[listStyles.playText, { color: "#D4A843" }]}>Kilidi açmak için dokun</Text>
             <MaterialIcons name="lock-open" size={18} color="#D4A843" />
           </View>
         ) : completed && bestResult ? (
           <View style={[listStyles.bestResultRow, { borderTopColor: colors.border }]}>
             <View style={listStyles.bestResultItem}>
               <MaterialIcons name="emoji-events" size={13} color={colors.primary} />
-              <Text style={[listStyles.bestResultLabel, { color: colors.mutedForeground }]}>
-                En İyi:
-              </Text>
-              <Text style={[listStyles.bestResultValue, { color: colors.primary }]}>
-                {bestResult.score} puan
-              </Text>
+              <Text style={[listStyles.bestResultLabel, { color: colors.mutedForeground }]}>En İyi:</Text>
+              <Text style={[listStyles.bestResultValue, { color: colors.primary }]}>{bestResult.score} puan</Text>
             </View>
             <View style={listStyles.bestResultItem}>
               <MaterialIcons name="timer" size={13} color={colors.mutedForeground} />
@@ -199,9 +162,7 @@ function PuzzleCard({
           </View>
         ) : (
           <View style={[listStyles.playRow, { borderTopColor: colors.border }]}>
-            <Text style={[listStyles.playText, { color: colors.primary }]}>
-              Oynamak için dokun
-            </Text>
+            <Text style={[listStyles.playText, { color: colors.primary }]}>Oynamak için dokun</Text>
             <MaterialIcons name="chevron-right" size={20} color={colors.primary} />
           </View>
         )}
@@ -210,26 +171,16 @@ function PuzzleCard({
   );
 }
 
-function getTimeLimit(difficulty: string): number {
-  if (difficulty === "baskomiser") return 360;
-  if (difficulty === "dedektif") return 480;
-  return 600;
-}
-
-interface PenaltyToast {
-  visible: boolean;
-  message: string;
-}
-
 export default function VakalarScreen() {
   const colors = useColors();
   const insets = useSafeAreaInsets();
   const {
     gameState,
+    leaderboard,
+    profile,
     setGridMark,
-    revealNextClue,
+    revealBonusClue,
     submitAnswer,
-    recordTimeout,
     tickTimer,
     resetCurrentGame,
     startPuzzle,
@@ -239,55 +190,21 @@ export default function VakalarScreen() {
   const { isPremium } = usePurchase();
   const { play } = useSounds();
 
-  const [showAnswerModal, setShowAnswerModal] = useState(false);
   const [showResult, setShowResult] = useState(false);
   const [lastResultSuccess, setLastResultSuccess] = useState(false);
   const [selectedEntity, setSelectedEntity] = useState<EntityInfo | null>(null);
-  const [timedOut, setTimedOut] = useState(false);
-  const [penaltyToast, setPenaltyToast] = useState<PenaltyToast>({
-    visible: false,
-    message: "",
-  });
   const [showPaywall, setShowPaywall] = useState(false);
 
-  const timedOutRef = useRef(false);
+  const [accuseSuspect, setAccuseSuspect] = useState<string | null>(null);
+  const [accuWeapon, setAccuWeapon] = useState<string | null>(null);
+  const [accuLocation, setAccuLocation] = useState<string | null>(null);
+  const [finalRank, setFinalRank] = useState(1);
+  const [totalPlayers, setTotalPlayers] = useState(1);
+
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const toastTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  const accusePulse = useSharedValue(1);
-  const accuseOpacity = useSharedValue(1);
-  const toastOpacity = useSharedValue(0);
-
-  const accusePulseStyle = useAnimatedStyle(() => ({
-    transform: Platform.OS === "web" ? [] : [{ scale: accusePulse.value }],
-    opacity: accuseOpacity.value,
-  }));
-
-  const toastStyle = useAnimatedStyle(() => ({
-    opacity: toastOpacity.value,
-  }));
 
   useEffect(() => {
-    accusePulse.value = withRepeat(
-      withSequence(
-        withTiming(1.04, { duration: 850 }),
-        withTiming(1, { duration: 850 })
-      ),
-      -1,
-      false
-    );
-    accuseOpacity.value = withRepeat(
-      withSequence(
-        withTiming(0.82, { duration: 850 }),
-        withTiming(1, { duration: 850 })
-      ),
-      -1,
-      false
-    );
-  }, []);
-
-  useEffect(() => {
-    if (gameState && !gameState.isComplete && !timedOut) {
+    if (gameState && !gameState.isComplete) {
       timerRef.current = setInterval(() => {
         tickTimer();
       }, 1000);
@@ -297,57 +214,22 @@ export default function VakalarScreen() {
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
     };
-  }, [gameState?.isComplete, timedOut, tickTimer]);
+  }, [gameState?.isComplete, tickTimer]);
 
   useEffect(() => {
     if (gameState?.isComplete) {
       play("success");
-      if (Platform.OS !== "web") {
-        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-      }
       setLastResultSuccess(true);
       setShowResult(true);
     }
   }, [gameState?.isComplete, play]);
 
   useEffect(() => {
-    timedOutRef.current = false;
-    setTimedOut(false);
     setShowResult(false);
+    setAccuseSuspect(null);
+    setAccuWeapon(null);
+    setAccuLocation(null);
   }, [gameState?.puzzle?.id]);
-
-  const timeElapsedNow = gameState?.timeElapsed ?? 0;
-  const puzzleDifficulty = gameState?.puzzle?.difficulty ?? "caylik";
-  const timeLimitNow = getTimeLimit(puzzleDifficulty);
-
-  useEffect(() => {
-    if (
-      gameState?.puzzle &&
-      !gameState.isComplete &&
-      !timedOutRef.current &&
-      timeElapsedNow >= timeLimitNow
-    ) {
-      timedOutRef.current = true;
-      recordTimeout();
-      setTimedOut(true);
-      setLastResultSuccess(false);
-      setShowResult(true);
-    }
-  }, [timeElapsedNow, gameState?.isComplete, gameState?.puzzle?.id]);
-
-  const showPenaltyToast = (penaltySeconds: number) => {
-    if (toastTimerRef.current) clearTimeout(toastTimerRef.current);
-    const nextWrong = (gameState?.wrongGuesses ?? 0) + 1;
-    setPenaltyToast({
-      visible: true,
-      message: `Yanlış tahmin! +${penaltySeconds}s ceza (${nextWrong}. hata)`,
-    });
-    toastOpacity.value = withTiming(1, { duration: 200 });
-    toastTimerRef.current = setTimeout(() => {
-      toastOpacity.value = withTiming(0, { duration: 400 });
-      setTimeout(() => setPenaltyToast({ visible: false, message: "" }), 420);
-    }, 2200);
-  };
 
   const handleBackToList = () => {
     setShowResult(false);
@@ -361,23 +243,36 @@ export default function VakalarScreen() {
     else play("tap");
   };
 
-  const handleRevealClue = () => {
+  const handleRevealBonusClue = (index: number) => {
     play("clue");
-    revealNextClue();
+    revealBonusClue(index);
   };
 
   const handleSubmit = (suspectId: string, weaponId: string, locationId: string) => {
-    setShowAnswerModal(false);
-    const currentWrongGuesses = gameState!.wrongGuesses;
+    if (!gameState?.puzzle) return;
+    const puzzleId = gameState.puzzle.id;
+    const diff = gameState.puzzle.difficulty;
+    const currentTime = gameState.timeElapsed;
+    const currentWrong = gameState.wrongGuesses;
+    const currentBonus = gameState.cluesRevealed.filter((idx) => isBonusClue(gameState.puzzle!, idx)).length;
+
+    const rawScore = 10000 - currentTime * 5 - currentWrong * 150 - currentBonus * 150;
+    const diffBonus = diff === "baskomiser" ? 5000 : diff === "dedektif" ? 2000 : 0;
+    const estimatedScore = Math.max(100, rawScore) + diffBonus;
+
+    const samePuzzleScores = leaderboard
+      .filter((e) => e.puzzleId === puzzleId)
+      .map((e) => e.score);
+
     const success = submitAnswer(suspectId, weaponId, locationId);
+
     if (!success) {
       play("error");
-      if (Platform.OS !== "web") {
-        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
-      }
-      const nextWrong = currentWrongGuesses + 1;
-      const penaltySeconds = 30 * Math.pow(2, nextWrong - 1);
-      showPenaltyToast(penaltySeconds);
+    } else {
+      const allScores = [...samePuzzleScores, estimatedScore].sort((a, b) => b - a);
+      const rank = allScores.indexOf(estimatedScore) + 1;
+      setFinalRank(Math.max(1, rank));
+      setTotalPlayers(allScores.length);
     }
   };
 
@@ -405,9 +300,7 @@ export default function VakalarScreen() {
           <Animated.View entering={FadeInDown.delay(0).springify()}>
             <View style={listStyles.listHeader}>
               <MaterialIcons name="folder-open" size={24} color={colors.primary} />
-              <Text style={[listStyles.listHeaderText, { color: colors.primary }]}>
-                Vaka Listesi
-              </Text>
+              <Text style={[listStyles.listHeaderText, { color: colors.primary }]}>Vaka Listesi</Text>
             </View>
           </Animated.View>
 
@@ -434,10 +327,7 @@ export default function VakalarScreen() {
               !isPremium ? (
                 <Pressable
                   onPress={() => setShowPaywall(true)}
-                  style={[
-                    listStyles.premiumChip,
-                    { backgroundColor: "#D4A84318", borderColor: "#D4A84355" },
-                  ]}
+                  style={[listStyles.premiumChip, { backgroundColor: "#D4A84318", borderColor: "#D4A84355" }]}
                 >
                   <MaterialIcons name="lock" size={12} color="#D4A843" />
                   <Text style={[listStyles.premiumChipText, { color: "#D4A843" }]}>
@@ -451,10 +341,7 @@ export default function VakalarScreen() {
           {!isPremium && (
             <Pressable
               onPress={() => setShowPaywall(true)}
-              style={[
-                listStyles.premiumBanner,
-                { backgroundColor: "#D4A84310", borderColor: "#D4A84340" },
-              ]}
+              style={[listStyles.premiumBanner, { backgroundColor: "#D4A84310", borderColor: "#D4A84340" }]}
             >
               <MaterialIcons name="workspace-premium" size={20} color="#D4A843" />
               <View style={listStyles.premiumBannerText}>
@@ -485,9 +372,7 @@ export default function VakalarScreen() {
                 }}
                 delay={100 + (freePuzzles.length + i) * 40}
                 completed={isCompleted && !isLocked}
-                bestResult={
-                  isCompleted && !isLocked ? bestScoreForPuzzle(puzzle.id) : null
-                }
+                bestResult={isCompleted && !isLocked ? bestScoreForPuzzle(puzzle.id) : null}
                 locked={isLocked}
               />
             );
@@ -503,14 +388,11 @@ export default function VakalarScreen() {
     cluesRevealed,
     timeElapsed,
     wrongGuesses,
-    wrongGuessPenaltySeconds,
     finalScore,
   } = gameState;
 
-  const timeLimit = getTimeLimit(puzzle.difficulty);
-  const remainingTime = Math.max(0, timeLimit - timeElapsed - wrongGuessPenaltySeconds);
-  const canRevealMore =
-    cluesRevealed[cluesRevealed.length - 1] < puzzle.clues.length - 1;
+  const bonusCluesRevealedCount = cluesRevealed.filter((idx) => isBonusClue(puzzle, idx)).length;
+  const penaltyCount = wrongGuesses + bonusCluesRevealedCount;
   const displayScore = finalScore ?? 0;
 
   return (
@@ -522,25 +404,15 @@ export default function VakalarScreen() {
           score={displayScore}
           timeSeconds={timeElapsed}
           wrongGuesses={wrongGuesses}
-          penaltySeconds={wrongGuessPenaltySeconds}
+          bonusCluesRevealedCount={bonusCluesRevealedCount}
           gridState={gridState}
+          leaderboard={leaderboard}
+          profile={profile}
+          finalRank={finalRank}
+          totalPlayers={totalPlayers}
           onPlayMore={handleBackToList}
           onClose={handleBackToList}
         />
-      )}
-
-      {penaltyToast.visible && (
-        <Animated.View
-          style={[
-            gameStyles.penaltyToast,
-            { backgroundColor: "#C8372D" },
-            toastStyle,
-          ]}
-          pointerEvents="none"
-        >
-          <MaterialIcons name="gavel" size={16} color="#fff" />
-          <Text style={gameStyles.penaltyToastText}>{penaltyToast.message}</Text>
-        </Animated.View>
       )}
 
       <ScrollView
@@ -557,11 +429,7 @@ export default function VakalarScreen() {
         <Animated.View entering={FadeInDown.delay(0).springify()}>
           <View style={gameStyles.puzzleHeader}>
             <View style={gameStyles.puzzleHeaderLeft}>
-              <Pressable
-                onPress={handleBackToList}
-                style={gameStyles.backBtn}
-                hitSlop={8}
-              >
+              <Pressable onPress={handleBackToList} style={gameStyles.backBtn} hitSlop={8}>
                 <MaterialIcons name="arrow-back" size={20} color={colors.mutedForeground} />
               </Pressable>
               <View style={{ flex: 1 }}>
@@ -574,40 +442,26 @@ export default function VakalarScreen() {
               </View>
             </View>
             <TimerDisplay
-              seconds={remainingTime}
+              seconds={timeElapsed}
               wrongGuesses={wrongGuesses}
-              penaltySeconds={wrongGuessPenaltySeconds}
+              penaltyCount={penaltyCount}
             />
           </View>
         </Animated.View>
 
         <Animated.View entering={FadeInDown.delay(80).springify()}>
-          <View
-            style={[
-              gameStyles.storyBox,
-              { backgroundColor: colors.card, borderColor: colors.border },
-            ]}
-          >
+          <View style={[gameStyles.storyBox, { backgroundColor: colors.card, borderColor: colors.border }]}>
             <View style={gameStyles.storyHeader}>
               <MaterialIcons name="auto-stories" size={16} color={colors.primary} />
               <Text style={[gameStyles.storyLabel, { color: colors.primary }]}>OLAY</Text>
             </View>
-            <Text style={[gameStyles.storyText, { color: colors.foreground }]}>
-              {puzzle.story}
-            </Text>
+            <Text style={[gameStyles.storyText, { color: colors.foreground }]}>{puzzle.story}</Text>
           </View>
         </Animated.View>
 
         <Animated.View entering={FadeInDown.delay(160).springify()}>
-          <Text style={[gameStyles.sectionTitle, { color: colors.foreground }]}>
-            Dedektif Izgarası
-          </Text>
-          <View
-            style={[
-              gameStyles.gridContainer,
-              { backgroundColor: colors.card, borderColor: colors.border },
-            ]}
-          >
+          <Text style={[gameStyles.sectionTitle, { color: colors.foreground }]}>Dedektif Izgarası</Text>
+          <View style={[gameStyles.gridContainer, { backgroundColor: colors.card, borderColor: colors.border }]}>
             <View style={gameStyles.gridWrapper}>
               <DetectiveGrid
                 suspects={puzzle.suspects}
@@ -615,7 +469,7 @@ export default function VakalarScreen() {
                 locations={puzzle.locations}
                 gridState={gridState}
                 onCellPress={handleCellPress}
-                disabled={gameState.isComplete || timedOut}
+                disabled={gameState.isComplete}
                 onHeaderPress={setSelectedEntity}
                 isComplete={gameState.isComplete}
               />
@@ -624,72 +478,42 @@ export default function VakalarScreen() {
         </Animated.View>
 
         <Animated.View entering={FadeInDown.delay(240).springify()}>
-          <View style={gameStyles.cluesHeader}>
-            <Text style={[gameStyles.sectionTitle, { color: colors.foreground }]}>
-              İpuçları
-            </Text>
-            {canRevealMore && !gameState.isComplete && !timedOut && (
-              <Pressable
-                onPress={handleRevealClue}
-                style={[gameStyles.revealAllBtn, { borderColor: colors.border }]}
-              >
-                <MaterialIcons name="add" size={14} color={colors.mutedForeground} />
-                <Text style={[gameStyles.revealAllText, { color: colors.mutedForeground }]}>
-                  Sonraki
-                </Text>
-              </Pressable>
-            )}
-          </View>
-          {puzzle.clues.map((clue, i) => (
-            <ClueCard
-              key={clue.id}
-              clue={clue}
-              index={i}
-              isRevealed={cluesRevealed.includes(i)}
-              onReveal={
-                i === (cluesRevealed[cluesRevealed.length - 1] ?? 0) + 1
-                  ? handleRevealClue
-                  : undefined
-              }
-            />
-          ))}
+          <Text style={[gameStyles.sectionTitle, { color: colors.foreground }]}>İpuçları</Text>
+          {puzzle.clues.map((clue, i) => {
+            const isBonus = isBonusClue(puzzle, i);
+            const isRevealed = cluesRevealed.includes(i);
+            return (
+              <ClueCard
+                key={clue.id}
+                clue={clue}
+                index={i}
+                isRevealed={isRevealed}
+                isBonus={isBonus}
+                onRevealBonus={
+                  isBonus && !isRevealed && !gameState.isComplete
+                    ? () => handleRevealBonusClue(i)
+                    : undefined
+                }
+              />
+            );
+          })}
         </Animated.View>
-      </ScrollView>
 
-      {!gameState.isComplete && !timedOut && (
-        <View
-          style={[
-            gameStyles.footer,
-            {
-              backgroundColor: colors.background,
-              borderTopColor: colors.border,
-              paddingBottom: Platform.OS === "web" ? 34 : insets.bottom,
-            },
-          ]}
-        >
-          <Animated.View style={accusePulseStyle}>
-            <Pressable
-              testID="accuse-button"
-              onPress={() => setShowAnswerModal(true)}
-              style={[gameStyles.accuseBtn, { backgroundColor: colors.primary }]}
-            >
-              <MaterialIcons name="gavel" size={22} color={colors.primaryForeground} />
-              <Text style={[gameStyles.accuseText, { color: colors.primaryForeground }]}>
-                SUÇLA
-              </Text>
-            </Pressable>
+        {!gameState.isComplete && (
+          <Animated.View entering={FadeInDown.delay(320).springify()}>
+            <AccusationPanel
+              puzzle={puzzle}
+              selectedSuspect={accuseSuspect}
+              selectedWeapon={accuWeapon}
+              selectedLocation={accuLocation}
+              onSelectSuspect={setAccuseSuspect}
+              onSelectWeapon={setAccuWeapon}
+              onSelectLocation={setAccuLocation}
+              onSubmit={handleSubmit}
+            />
           </Animated.View>
-        </View>
-      )}
-
-      {showAnswerModal && (
-        <AnswerModal
-          visible={showAnswerModal}
-          puzzle={puzzle}
-          onSubmit={handleSubmit}
-          onClose={() => setShowAnswerModal(false)}
-        />
-      )}
+        )}
+      </ScrollView>
 
       <EntityInfoSheet
         visible={selectedEntity !== null}
@@ -861,52 +685,4 @@ const gameStyles = StyleSheet.create({
   sectionTitle: { fontSize: 16, fontWeight: "700", marginBottom: 8 },
   gridContainer: { borderRadius: 14, borderWidth: 1, padding: 10, overflow: "hidden" },
   gridWrapper: { minHeight: 240 },
-  cluesHeader: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  revealAllBtn: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 4,
-    paddingHorizontal: 10,
-    paddingVertical: 6,
-    borderRadius: 8,
-    borderWidth: 1,
-  },
-  revealAllText: { fontSize: 12, fontWeight: "600" },
-  footer: {
-    paddingHorizontal: 16,
-    paddingTop: 12,
-    borderTopWidth: 1,
-  },
-  accuseBtn: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    padding: 16,
-    borderRadius: 14,
-    gap: 12,
-  },
-  accuseText: { fontSize: 18, fontWeight: "700", letterSpacing: 2 },
-  penaltyToast: {
-    position: "absolute",
-    top: 120,
-    left: 20,
-    right: 20,
-    zIndex: 200,
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 10,
-    paddingVertical: 12,
-    paddingHorizontal: 18,
-    borderRadius: 12,
-  },
-  penaltyToastText: {
-    color: "#fff",
-    fontSize: 14,
-    fontWeight: "700",
-    flex: 1,
-  },
 });

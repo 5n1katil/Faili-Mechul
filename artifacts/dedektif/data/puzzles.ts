@@ -25,6 +25,7 @@ export interface Clue {
   id: string;
   text: string;
   type: "direct" | "indirect" | "elimination" | "evidence" | "witness" | "forensic";
+  isBonus?: boolean;
 }
 
 export interface Solution {
@@ -1543,4 +1544,15 @@ export function getDifficultyColor(difficulty: Difficulty): string {
     case "baskomiser":
       return "#C8372D";
   }
+}
+
+export function getStandardClueIndices(puzzle: Puzzle): number[] {
+  const bonusCount = puzzle.clues.length >= 7 ? 3 : 2;
+  const standardCount = puzzle.clues.length - bonusCount;
+  return Array.from({ length: standardCount }, (_, i) => i);
+}
+
+export function isBonusClue(puzzle: Puzzle, clueIndex: number): boolean {
+  const bonusCount = puzzle.clues.length >= 7 ? 3 : 2;
+  return clueIndex >= puzzle.clues.length - bonusCount;
 }

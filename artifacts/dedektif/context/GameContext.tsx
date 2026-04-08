@@ -9,6 +9,8 @@ import React, {
 } from "react";
 import {
   getDailyPuzzle,
+  getStandardClueIndices,
+  isBonusClue,
   PUZZLES,
   type GridMark,
   type Location,
@@ -100,7 +102,6 @@ export interface GameState {
   cluesRevealed: number[];
   timeElapsed: number;
   wrongGuesses: number;
-  wrongGuessPenaltySeconds: number;
   isComplete: boolean;
   finalScore: number | null;
   selectedSuspect: string | null;
@@ -123,9 +124,8 @@ interface GameContextType {
   startDailyPuzzle: () => void;
   startPuzzle: (puzzle: Puzzle) => void;
   setGridMark: (key: string, mark: GridMark) => void;
-  revealNextClue: () => void;
+  revealBonusClue: (index: number) => void;
   submitAnswer: (suspectId: string, weaponId: string, locationId: string) => boolean;
-  recordTimeout: () => void;
   updateProfile: (name: string, avatar?: string) => void;
   resetCurrentGame: () => void;
   tickTimer: () => void;
@@ -151,14 +151,11 @@ const DEFAULT_PROFILE: PlayerProfile = {
 
 function computeScore(
   timeElapsed: number,
-  wrongGuessPenaltySeconds: number,
-  cluesRevealedCount: number,
+  wrongGuesses: number,
+  bonusCluesRevealedCount: number,
   difficulty: string
 ): number {
-  const extraClues = Math.max(0, cluesRevealedCount - 2);
-  const cluePenaltySeconds = extraClues * 30;
-  const effectiveTime = timeElapsed + wrongGuessPenaltySeconds + cluePenaltySeconds;
-  const rawScore = 10000 - effectiveTime * 5;
+  const rawScore = 10000 - timeElapsed * 5 - wrongGuesses * 150 - bonusCluesRevealedCount * 150;
   let difficultyBonus = 0;
   if (difficulty === "dedektif") difficultyBonus = 2000;
   if (difficulty === "baskomiser") difficultyBonus = 5000;
@@ -270,15 +267,15 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
   );
 
   const startPuzzle = useCallback((puzzle: Puzzle) => {
+    const standardIndices = getStandardClueIndices(puzzle);
     setGameState({
       puzzle,
       gridState: {},
       autoCrossGroups: {},
       autoCrossOwners: {},
-      cluesRevealed: [0],
+      cluesRevealed: standardIndices,
       timeElapsed: 0,
       wrongGuesses: 0,
-      wrongGuessPenaltySeconds: 0,
       isComplete: false,
       finalScore: null,
       selectedSuspect: null,
@@ -362,15 +359,15 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     [gameState]
   );
 
-  const revealNextClue = useCallback(() => {
+  const revealBonusClue = useCallback((index: number) => {
     setGameState((prev) => {
       if (!prev || !prev.puzzle) return prev;
-      const maxClues = prev.puzzle.clues.length - 1;
-      const lastRevealed = prev.cluesRevealed[prev.cluesRevealed.length - 1];
-      if (lastRevealed >= maxClues) return prev;
+      if (prev.cluesRevealed.includes(index)) return prev;
+      if (!isBonusClue(prev.puzzle, index)) return prev;
       return {
         ...prev,
-        cluesRevealed: [...prev.cluesRevealed, lastRevealed + 1],
+        cluesRevealed: [...prev.cluesRevealed, index],
+        timeElapsed: prev.timeElapsed + 30,
       };
     });
   }, []);
@@ -385,10 +382,14 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         locationId === solution.locationId;
 
       if (isCorrect) {
+        const bonusCluesRevealedCount = gameState.cluesRevealed.filter((idx) =>
+          isBonusClue(gameState.puzzle!, idx)
+        ).length;
+
         const score = computeScore(
           gameState.timeElapsed,
-          gameState.wrongGuessPenaltySeconds,
-          gameState.cluesRevealed.length,
+          gameState.wrongGuesses,
+          bonusCluesRevealedCount,
           gameState.puzzle.difficulty
         );
 
@@ -398,7 +399,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
           score,
           timeSeconds: gameState.timeElapsed,
           wrongGuesses: gameState.wrongGuesses,
-          penaltySeconds: gameState.wrongGuessPenaltySeconds,
+          penaltySeconds: 0,
           completed: true,
           solution: { suspectId, weaponId, locationId },
         };
@@ -445,12 +446,10 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
       } else {
         setGameState((prev) => {
           if (!prev) return prev;
-          const newWrongGuesses = prev.wrongGuesses + 1;
-          const penaltySeconds = 30 * Math.pow(2, newWrongGuesses - 1);
           return {
             ...prev,
-            wrongGuesses: newWrongGuesses,
-            wrongGuessPenaltySeconds: prev.wrongGuessPenaltySeconds + penaltySeconds,
+            wrongGuesses: prev.wrongGuesses + 1,
+            timeElapsed: prev.timeElapsed + 30,
           };
         });
         return false;
@@ -458,29 +457,6 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     },
     [gameState, profile, gameHistory, leaderboard]
   );
-
-  const recordTimeout = useCallback(() => {
-    if (!gameState?.puzzle) return;
-    const record: GameRecord = {
-      puzzleId: gameState.puzzle.id,
-      date: new Date().toISOString().split("T")[0],
-      score: 0,
-      timeSeconds: gameState.timeElapsed,
-      wrongGuesses: gameState.wrongGuesses,
-      penaltySeconds: gameState.wrongGuessPenaltySeconds,
-      completed: false,
-      solution: null,
-    };
-    const newHistory = [record, ...gameHistory];
-    const newProfile = {
-      ...profile,
-      gamesPlayed: profile.gamesPlayed + 1,
-      currentStreak: 0,
-      lastPlayedDate: new Date().toISOString().split("T")[0],
-    };
-    saveHistory(newHistory);
-    saveProfile(newProfile);
-  }, [gameState, profile, gameHistory]);
 
   const updateProfile = useCallback(
     (name: string, avatar?: string) => {
@@ -512,9 +488,8 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         startDailyPuzzle,
         startPuzzle,
         setGridMark,
-        revealNextClue,
+        revealBonusClue,
         submitAnswer,
-        recordTimeout,
         updateProfile,
         resetCurrentGame,
         tickTimer,

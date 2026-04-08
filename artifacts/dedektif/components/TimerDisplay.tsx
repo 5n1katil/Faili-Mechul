@@ -5,7 +5,6 @@ import * as Haptics from "expo-haptics";
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
-  withRepeat,
   withSequence,
   withSpring,
   withTiming,
@@ -15,7 +14,7 @@ import { useColors } from "@/hooks/useColors";
 interface Props {
   seconds: number;
   wrongGuesses: number;
-  penaltySeconds: number;
+  penaltyCount: number;
 }
 
 function formatTime(seconds: number): string {
@@ -24,22 +23,17 @@ function formatTime(seconds: number): string {
   return `${m.toString().padStart(2, "0")}:${s.toString().padStart(2, "0")}`;
 }
 
-function penaltyForGuess(n: number): number {
-  return 30 * Math.pow(2, n - 1);
-}
-
-export default function TimerDisplay({ seconds, wrongGuesses, penaltySeconds }: Props) {
+export default function TimerDisplay({ seconds, wrongGuesses, penaltyCount }: Props) {
   const colors = useColors();
   const translateX = useSharedValue(0);
   const timerScale = useSharedValue(1);
-  const penaltyScale = useSharedValue(1);
   const flashOpacity = useSharedValue(0);
-  const prevWrongRef = useRef(wrongGuesses);
-
-  const isCritical = seconds > 0 && seconds <= 60;
+  const penaltyTextOpacity = useSharedValue(0);
+  const penaltyTextScale = useSharedValue(0.6);
+  const prevPenaltyRef = useRef(penaltyCount);
 
   useEffect(() => {
-    if (wrongGuesses > prevWrongRef.current) {
+    if (penaltyCount > prevPenaltyRef.current) {
       translateX.value = withSequence(
         withTiming(-12, { duration: 50 }),
         withTiming(12, { duration: 50 }),
@@ -49,37 +43,32 @@ export default function TimerDisplay({ seconds, wrongGuesses, penaltySeconds }: 
         withTiming(5, { duration: 40 }),
         withTiming(0, { duration: 30 }),
       );
-      penaltyScale.value = withSequence(
-        withSpring(1.4, { damping: 7, stiffness: 300 }),
+      timerScale.value = withSequence(
+        withSpring(1.15, { damping: 7, stiffness: 300 }),
         withSpring(1, { damping: 12, stiffness: 200 }),
       );
       flashOpacity.value = withSequence(
-        withTiming(1, { duration: 60 }),
+        withTiming(0.35, { duration: 60 }),
         withTiming(0, { duration: 60 }),
-        withTiming(0.7, { duration: 60 }),
-        withTiming(0, { duration: 180 }),
+        withTiming(0.25, { duration: 60 }),
+        withTiming(0, { duration: 200 }),
+      );
+      penaltyTextOpacity.value = withSequence(
+        withTiming(1, { duration: 150 }),
+        withTiming(1, { duration: 900 }),
+        withTiming(0, { duration: 400 }),
+      );
+      penaltyTextScale.value = withSequence(
+        withSpring(1.1, { damping: 8, stiffness: 300 }),
+        withSpring(1, { damping: 12 }),
+        withTiming(0.6, { duration: 400 }),
       );
       if (Platform.OS !== "web") {
         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
       }
     }
-    prevWrongRef.current = wrongGuesses;
-  }, [wrongGuesses]);
-
-  useEffect(() => {
-    if (isCritical) {
-      timerScale.value = withRepeat(
-        withSequence(
-          withTiming(1.08, { duration: 480 }),
-          withTiming(1, { duration: 480 }),
-        ),
-        -1,
-        false,
-      );
-    } else {
-      timerScale.value = withTiming(1, { duration: 200 });
-    }
-  }, [isCritical]);
+    prevPenaltyRef.current = penaltyCount;
+  }, [penaltyCount]);
 
   const shakeStyle = useAnimatedStyle(() => ({
     transform: [{ translateX: translateX.value }],
@@ -93,23 +82,16 @@ export default function TimerDisplay({ seconds, wrongGuesses, penaltySeconds }: 
     transform: [{ scale: timerScale.value }],
   }));
 
-  const penaltyItemStyle = useAnimatedStyle(() => ({
-    transform: [{ scale: penaltyScale.value }],
-  }));
-
-  const timerColor = isCritical ? "#FF3333" : colors.primary;
-  const timerTextColor = isCritical ? "#FF3333" : colors.foreground;
-
-  const penaltyBadges = Array.from({ length: wrongGuesses }, (_, i) => ({
-    n: i + 1,
-    secs: penaltyForGuess(i + 1),
+  const penaltyTextStyle = useAnimatedStyle(() => ({
+    opacity: penaltyTextOpacity.value,
+    transform: [{ scale: penaltyTextScale.value }],
   }));
 
   return (
     <Animated.View
       style={[
         styles.container,
-        { backgroundColor: colors.card, borderColor: isCritical ? "#FF333355" : colors.border },
+        { backgroundColor: colors.card, borderColor: colors.border },
         shakeStyle,
       ]}
     >
@@ -117,34 +99,35 @@ export default function TimerDisplay({ seconds, wrongGuesses, penaltySeconds }: 
         pointerEvents="none"
         style={[styles.flashOverlay, flashStyle]}
       />
+
       <Animated.View style={[styles.item, timerItemStyle]}>
-        <MaterialIcons name="timer" size={18} color={timerColor} />
-        <Text style={[styles.value, { color: timerTextColor }]}>
+        <MaterialIcons name="timer" size={16} color={colors.primary} />
+        <Text style={[styles.timerValue, { color: colors.foreground }]}>
           {formatTime(seconds)}
         </Text>
       </Animated.View>
 
       <View style={[styles.divider, { backgroundColor: colors.border }]} />
 
-      <Animated.View style={[styles.penaltySection, penaltyItemStyle]}>
-        {penaltyBadges.length === 0 ? (
-          <View style={styles.item}>
-            <MaterialIcons name="gavel" size={16} color={colors.mutedForeground} />
-            <Text style={[styles.wrongValue, { color: colors.mutedForeground }]}>0</Text>
-          </View>
-        ) : (
-          penaltyBadges.map((badge) => (
-            <View
-              key={badge.n}
-              style={[styles.badge, { backgroundColor: "#f9731622" }]}
-            >
-              <Text style={styles.badgeEmoji}>⚡</Text>
-              <Text style={styles.badgeLabel}>×{badge.n}</Text>
-              <Text style={styles.badgeSecs}>+{badge.secs}s</Text>
-            </View>
-          ))
-        )}
-      </Animated.View>
+      <View style={styles.rightSection}>
+        <MaterialIcons
+          name="gavel"
+          size={14}
+          color={wrongGuesses > 0 ? "#C8372D" : colors.mutedForeground}
+        />
+        <Text
+          style={[
+            styles.wrongValue,
+            { color: wrongGuesses > 0 ? "#C8372D" : colors.mutedForeground },
+          ]}
+        >
+          {wrongGuesses}
+        </Text>
+        <Animated.View style={[styles.penaltyToast, penaltyTextStyle]}>
+          <MaterialIcons name="add" size={10} color="#C8372D" />
+          <Text style={styles.penaltyToastText}>30 sn</Text>
+        </Animated.View>
+      </View>
     </Animated.View>
   );
 }
@@ -155,56 +138,49 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 10,
     borderWidth: 1,
-    paddingHorizontal: 16,
-    paddingVertical: 10,
-    gap: 12,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    gap: 10,
+    overflow: "hidden",
   },
   item: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 8,
+    gap: 6,
   },
-  value: {
-    fontSize: 18,
-    fontWeight: "700",
-    fontVariant: ["tabular-nums"],
-  },
-  wrongValue: {
+  timerValue: {
     fontSize: 16,
     fontWeight: "700",
     fontVariant: ["tabular-nums"],
-  },
-  penaltySection: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 6,
-    flexWrap: "wrap",
-    flex: 1,
-  },
-  badge: {
-    flexDirection: "row",
-    alignItems: "center",
-    borderRadius: 6,
-    paddingHorizontal: 6,
-    paddingVertical: 2,
-    gap: 2,
-  },
-  badgeEmoji: {
-    fontSize: 12,
-  },
-  badgeLabel: {
-    fontSize: 11,
-    fontWeight: "700",
-    color: "#f97316",
-  },
-  badgeSecs: {
-    fontSize: 10,
-    fontWeight: "600",
-    color: "#f9731699",
+    minWidth: 44,
   },
   divider: {
     width: 1,
-    height: 24,
+    height: 20,
+  },
+  rightSection: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
+  },
+  wrongValue: {
+    fontSize: 14,
+    fontWeight: "700",
+  },
+  penaltyToast: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#C8372D22",
+    borderRadius: 6,
+    paddingHorizontal: 5,
+    paddingVertical: 2,
+    gap: 1,
+    marginLeft: 2,
+  },
+  penaltyToastText: {
+    fontSize: 10,
+    fontWeight: "800",
+    color: "#C8372D",
   },
   flashOverlay: {
     ...StyleSheet.absoluteFillObject,

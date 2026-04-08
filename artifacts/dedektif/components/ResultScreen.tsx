@@ -3,6 +3,7 @@ import {
   Dimensions,
   Platform,
   Pressable,
+  ScrollView,
   Share,
   StyleSheet,
   Text,
@@ -26,6 +27,7 @@ import Animated, {
 
 import { useColors } from "@/hooks/useColors";
 import type { Puzzle, GridMark } from "@/data/puzzles";
+import type { LeaderboardEntry, PlayerProfile } from "@/context/GameContext";
 
 const AnimatedTextInput = Animated.createAnimatedComponent(TextInput);
 
@@ -35,8 +37,12 @@ interface Props {
   score: number;
   timeSeconds: number;
   wrongGuesses: number;
-  penaltySeconds: number;
+  bonusCluesRevealedCount: number;
   gridState: { [key: string]: GridMark };
+  leaderboard: LeaderboardEntry[];
+  profile: PlayerProfile;
+  finalRank: number;
+  totalPlayers: number;
   onPlayMore: () => void;
   onClose: () => void;
 }
@@ -60,22 +66,18 @@ function buildShareText(
   score: number,
   timeSeconds: number,
   wrongGuesses: number,
-  penaltySeconds: number,
+  bonusCluesRevealedCount: number,
   gridState: { [key: string]: GridMark }
 ): string {
   const lines: string[] = [];
-
   lines.push(`Faili Meçhul #${puzzle.dayIndex} ${success ? "✅" : "❌"}`);
-
   if (success) {
-    const penaltyStr = penaltySeconds > 0 ? ` | ⚡ +${penaltySeconds}s ceza` : "";
-    lines.push(`⏱ ${formatTime(timeSeconds)} | ⭐ ${score} puan | ❌ ${wrongGuesses} hata${penaltyStr}`);
+    const bonusStr = bonusCluesRevealedCount > 0 ? ` | 🔓 ${bonusCluesRevealedCount} ek ipucu` : "";
+    lines.push(`⏱ ${formatTime(timeSeconds)} | ⭐ ${score} puan | ❌ ${wrongGuesses} hata${bonusStr}`);
   } else {
     lines.push("Bugün çözemedim...");
   }
-
   lines.push("");
-
   if (success) {
     const weaponRows = puzzle.weapons.map((w) => {
       const suspectCells = puzzle.suspects
@@ -86,46 +88,31 @@ function buildShareText(
         .join("");
       return `${suspectCells}  ${locationCells}`;
     });
-
-    const locationRows = puzzle.locations.map((loc) => {
-      return puzzle.suspects
+    const locationRows = puzzle.locations.map((loc) =>
+      puzzle.suspects
         .map((s) => markToEmoji(gridState[`${loc.id}_${s.id}`] ?? "none"))
-        .join("");
-    });
-
+        .join("")
+    );
     for (const row of weaponRows) lines.push(row);
     lines.push("");
     for (const row of locationRows) lines.push(row);
-
     lines.push("");
   }
-
   if (success) {
     const sol = puzzle.solution;
     const suspect = puzzle.suspects.find((s) => s.id === sol.suspectId);
     const weapon = puzzle.weapons.find((w) => w.id === sol.weaponId);
     const location = puzzle.locations.find((l) => l.id === sol.locationId);
-    lines.push(
-      `👤 ${suspect?.name ?? "?"} | 🔪 ${weapon?.name ?? "?"} | 📍 ${location?.name ?? "?"}`
-    );
+    lines.push(`👤 ${suspect?.name ?? "?"} | 🔪 ${weapon?.name ?? "?"} | 📍 ${location?.name ?? "?"}`);
   } else {
     lines.push("👤 ??? | 🔪 ??? | 📍 ???");
   }
-
   lines.push("");
   lines.push("failimechul.app 🕵️");
-
   return lines.join("\n");
 }
 
-const CONFETTI_COLORS = [
-  "#D4A843",
-  "#A855F7",
-  "#4ade80",
-  "#f87171",
-  "#60a5fa",
-  "#fb923c",
-];
+const CONFETTI_COLORS = ["#D4A843", "#A855F7", "#4ade80", "#f87171", "#60a5fa", "#fb923c"];
 
 interface ParticleData {
   id: number;
@@ -151,10 +138,7 @@ function ConfettiParticle({ x, w, h, color, delay, driftX, rotation, duration }:
     ty.value = withDelay(delay, withTiming(SCREEN_H + 60, { duration }));
     tx.value = withDelay(delay, withTiming(driftX, { duration }));
     rot.value = withDelay(delay, withTiming(rotation, { duration }));
-    op.value = withDelay(
-      delay + duration * 0.65,
-      withTiming(0, { duration: duration * 0.35 })
-    );
+    op.value = withDelay(delay + duration * 0.65, withTiming(0, { duration: duration * 0.35 }));
   }, []);
 
   const animStyle = useAnimatedStyle(() => ({
@@ -168,18 +152,7 @@ function ConfettiParticle({ x, w, h, color, delay, driftX, rotation, duration }:
 
   return (
     <Animated.View
-      style={[
-        {
-          position: "absolute",
-          left: x,
-          top: 0,
-          width: w,
-          height: h,
-          backgroundColor: color,
-          borderRadius: 2,
-        },
-        animStyle,
-      ]}
+      style={[{ position: "absolute", left: x, top: 0, width: w, height: h, backgroundColor: color, borderRadius: 2 }, animStyle]}
     />
   );
 }
@@ -215,10 +188,7 @@ function Confetti() {
   if (!visible) return null;
 
   return (
-    <View
-      style={StyleSheet.absoluteFillObject}
-      pointerEvents="none"
-    >
+    <View style={StyleSheet.absoluteFillObject} pointerEvents="none">
       {particles.map((p) => (
         <ConfettiParticle key={p.id} {...p} />
       ))}
@@ -231,15 +201,10 @@ function AnimatedScore({ score }: { score: number }) {
   const progress = useSharedValue(0);
 
   useEffect(() => {
-    progress.value = withTiming(1, {
-      duration: 1200,
-      easing: Easing.out(Easing.cubic),
-    });
+    progress.value = withTiming(1, { duration: 1200, easing: Easing.out(Easing.cubic) });
   }, []);
 
-  const derivedScore = useDerivedValue(() =>
-    Math.round(score * progress.value)
-  );
+  const derivedScore = useDerivedValue(() => Math.round(score * progress.value));
 
   const animatedProps = useAnimatedProps(() => {
     const val = `${derivedScore.value}`;
@@ -255,14 +220,100 @@ function AnimatedScore({ score }: { score: number }) {
   );
 }
 
+function ScoreBreakdownCard({
+  timeSeconds,
+  wrongGuesses,
+  bonusCluesRevealedCount,
+  difficulty,
+  finalScore,
+}: {
+  timeSeconds: number;
+  wrongGuesses: number;
+  bonusCluesRevealedCount: number;
+  difficulty: string;
+  finalScore: number;
+}) {
+  const colors = useColors();
+  const timePenalty = timeSeconds * 5;
+  const wrongPenalty = wrongGuesses * 150;
+  const bonusPenalty = bonusCluesRevealedCount * 150;
+  let difficultyBonus = 0;
+  if (difficulty === "dedektif") difficultyBonus = 2000;
+  if (difficulty === "baskomiser") difficultyBonus = 5000;
+
+  const rows = [
+    { label: "Baz Puan", value: "+10,000", color: colors.primary, icon: "stars" as const },
+    { label: `Süre (${formatTime(timeSeconds)} × 5)`, value: `-${timePenalty.toLocaleString()}`, color: "#C8372D", icon: "timer" as const },
+    ...(wrongGuesses > 0
+      ? [{ label: `Yanlış (${wrongGuesses} × 150)`, value: `-${wrongPenalty.toLocaleString()}`, color: "#C8372D", icon: "gavel" as const }]
+      : []),
+    ...(bonusCluesRevealedCount > 0
+      ? [{ label: `Ek İpucu (${bonusCluesRevealedCount} × 150)`, value: `-${bonusPenalty.toLocaleString()}`, color: "#f97316", icon: "lock-open" as const }]
+      : []),
+    ...(difficultyBonus > 0
+      ? [{ label: "Zorluk Bonusu", value: `+${difficultyBonus.toLocaleString()}`, color: "#4ade80", icon: "upgrade" as const }]
+      : []),
+  ];
+
+  return (
+    <View style={[styles.breakdownCard, { backgroundColor: colors.background, borderColor: colors.border }]}>
+      <Text style={[styles.breakdownTitle, { color: colors.mutedForeground }]}>PUAN DETAYI</Text>
+      {rows.map((row, i) => (
+        <View key={i} style={styles.breakdownRow}>
+          <MaterialIcons name={row.icon} size={13} color={row.color} />
+          <Text style={[styles.breakdownLabel, { color: colors.foreground }]}>{row.label}</Text>
+          <Text style={[styles.breakdownValue, { color: row.color }]}>{row.value}</Text>
+        </View>
+      ))}
+      <View style={[styles.breakdownDivider, { backgroundColor: colors.border }]} />
+      <View style={styles.breakdownRow}>
+        <MaterialIcons name="emoji-events" size={14} color={colors.primary} />
+        <Text style={[styles.breakdownLabel, { color: colors.primary, fontWeight: "700" }]}>Toplam</Text>
+        <Text style={[styles.breakdownValue, { color: colors.primary, fontWeight: "800" }]}>{finalScore.toLocaleString()}</Text>
+      </View>
+    </View>
+  );
+}
+
+function RankCard({
+  finalRank,
+  totalPlayers,
+}: {
+  finalRank: number;
+  totalPlayers: number;
+}) {
+  const colors = useColors();
+  const rankLabel =
+    finalRank === 1 ? "🥇 Birinci!" : finalRank === 2 ? "🥈 İkinci" : finalRank === 3 ? "🥉 Üçüncü" : `#${finalRank}`;
+  const isTop3 = finalRank <= 3;
+
+  return (
+    <View style={[styles.rankCard, { backgroundColor: colors.background, borderColor: isTop3 ? colors.primary : colors.border }]}>
+      <MaterialIcons name="leaderboard" size={14} color={isTop3 ? colors.primary : colors.mutedForeground} />
+      <View style={{ flex: 1 }}>
+        <Text style={[styles.rankLabel, { color: isTop3 ? colors.primary : colors.foreground }]}>
+          {rankLabel}
+        </Text>
+        <Text style={[styles.rankSub, { color: colors.mutedForeground }]}>
+          {totalPlayers} oyuncu arasında
+        </Text>
+      </View>
+    </View>
+  );
+}
+
 export default function ResultScreen({
   puzzle,
   success,
   score,
   timeSeconds,
   wrongGuesses,
-  penaltySeconds,
+  bonusCluesRevealedCount,
   gridState,
+  leaderboard,
+  profile,
+  finalRank,
+  totalPlayers,
   onPlayMore,
   onClose,
 }: Props) {
@@ -306,7 +357,7 @@ export default function ResultScreen({
   const location = puzzle.locations.find((l) => l.id === solution.locationId);
 
   const handleShare = async () => {
-    const text = buildShareText(puzzle, success, score, timeSeconds, wrongGuesses, penaltySeconds, gridState);
+    const text = buildShareText(puzzle, success, score, timeSeconds, wrongGuesses, bonusCluesRevealedCount, gridState);
     if (Platform.OS !== "web") {
       try {
         await Share.share({ message: text });
@@ -331,166 +382,120 @@ export default function ResultScreen({
       <Animated.View
         style={[
           styles.container,
-          {
-            backgroundColor: colors.card,
-            borderColor: success ? colors.primary : colors.accent,
-          },
+          { backgroundColor: colors.card, borderColor: success ? colors.primary : colors.accent },
           containerStyle,
         ]}
       >
-        <Animated.View
-          style={[
-            styles.iconCircle,
-            {
-              backgroundColor: success
-                ? `${colors.primary}22`
-                : `${colors.accent}22`,
-            },
-            iconStyle,
-          ]}
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={styles.scrollContent}
         >
-          <MaterialIcons
-            name={success ? "emoji-events" : "psychology-alt"}
-            size={48}
-            color={success ? colors.primary : colors.accent}
-          />
-        </Animated.View>
-
-        <Text
-          style={[
-            styles.resultTitle,
-            { color: success ? colors.primary : colors.accent },
-          ]}
-        >
-          {success ? "DAVA ÇÖZÜLDÜ!" : "SÜRE DOLDU"}
-        </Text>
-        <Text style={[styles.subtitle, { color: colors.mutedForeground }]}>
-          {success
-            ? "Harika dedektiflik çalışması!"
-            : "Süre bitti, katil kaçtı."}
-        </Text>
-
-        <View
-          style={[
-            styles.solutionBox,
-            { backgroundColor: colors.background, borderColor: colors.border },
-          ]}
-        >
-          <Text
-            style={[styles.solutionTitle, { color: colors.mutedForeground }]}
-          >
-            ÇÖZÜM
-          </Text>
-          <View style={styles.solutionRow}>
-            <MaterialIcons name="person" size={16} color={colors.primary} />
-            <Text style={[styles.solutionText, { color: colors.foreground }]}>
-              {suspect?.name ?? "-"}
-            </Text>
-          </View>
-          <View style={styles.solutionRow}>
-            <MaterialIcons
-              name="gps-not-fixed"
-              size={16}
-              color={colors.primary}
-            />
-            <Text style={[styles.solutionText, { color: colors.foreground }]}>
-              {weapon?.name ?? "-"}
-            </Text>
-          </View>
-          <View style={styles.solutionRow}>
-            <MaterialIcons
-              name="location-on"
-              size={16}
-              color={colors.primary}
-            />
-            <Text style={[styles.solutionText, { color: colors.foreground }]}>
-              {location?.name ?? "-"}
-            </Text>
-          </View>
-        </View>
-
-        {success && (
-          <View style={styles.statsRow}>
-            <View style={[styles.statItem, { backgroundColor: colors.background }]}>
-              <AnimatedScore score={score} />
-              <Text style={[styles.statLabel, { color: colors.mutedForeground }]}>
-                PUAN
-              </Text>
-            </View>
-            <View style={[styles.statItem, { backgroundColor: colors.background }]}>
-              <Text style={[styles.statValue, { color: colors.foreground }]}>
-                {formatTime(timeSeconds)}
-              </Text>
-              <Text style={[styles.statLabel, { color: colors.mutedForeground }]}>
-                SÜRE
-              </Text>
-            </View>
-            <View style={[styles.statItem, { backgroundColor: colors.background }]}>
-              <Text
-                style={[
-                  styles.statValue,
-                  {
-                    color: wrongGuesses > 0 ? colors.accent : colors.success,
-                  },
-                ]}
-              >
-                {wrongGuesses}
-              </Text>
-              <Text style={[styles.statLabel, { color: colors.mutedForeground }]}>
-                YANLIŞ
-              </Text>
-            </View>
-          </View>
-        )}
-
-        {success && penaltySeconds > 0 && (
-          <View style={[styles.penaltyBadge, { backgroundColor: `#f9731618` }]}>
-            <MaterialIcons name="timer-off" size={14} color="#f97316" />
-            <Text style={[styles.penaltyBadgeText, { color: "#f97316" }]}>
-              {penaltySeconds}s zaman cezası uygulandı
-            </Text>
-          </View>
-        )}
-
-        <View style={styles.buttons}>
-          <Pressable
-            onPress={handleShare}
+          <Animated.View
             style={[
-              styles.shareBtn,
-              {
-                backgroundColor: copied ? `${colors.success}22` : `${colors.primary}18`,
-                borderColor: copied ? colors.success : colors.primary,
-              },
+              styles.iconCircle,
+              { backgroundColor: success ? `${colors.primary}22` : `${colors.accent}22` },
+              iconStyle,
             ]}
           >
             <MaterialIcons
-              name={copied ? "check" : "share"}
-              size={18}
-              color={copied ? colors.success : colors.primary}
+              name={success ? "emoji-events" : "psychology-alt"}
+              size={48}
+              color={success ? colors.primary : colors.accent}
             />
-            <Text style={[styles.shareBtnText, { color: copied ? colors.success : colors.primary }]}>
-              {copied ? "Panoya Kopyalandı!" : "Sonucu Paylaş"}
-            </Text>
-          </Pressable>
+          </Animated.View>
 
-          <Pressable
-            onPress={onPlayMore}
-            style={[styles.btn, { backgroundColor: colors.primary }]}
-          >
-            <MaterialIcons name="play-arrow" size={20} color={colors.primaryForeground} />
-            <Text style={[styles.btnText, { color: colors.primaryForeground }]}>
-              Başka Bulmaca
-            </Text>
-          </Pressable>
-          <Pressable
-            onPress={onClose}
-            style={[styles.btnOutline, { borderColor: colors.border }]}
-          >
-            <Text style={[styles.btnOutlineText, { color: colors.mutedForeground }]}>
-              Ana Sayfa
-            </Text>
-          </Pressable>
-        </View>
+          <Text style={[styles.resultTitle, { color: success ? colors.primary : colors.accent }]}>
+            {success ? "DAVA ÇÖZÜLDÜ!" : "DAVA KAPATILDI"}
+          </Text>
+          <Text style={[styles.subtitle, { color: colors.mutedForeground }]}>
+            {success ? "Harika dedektiflik çalışması!" : "Bir dahaki sefere daha dikkatli!"}
+          </Text>
+
+          <View style={[styles.solutionBox, { backgroundColor: colors.background, borderColor: colors.border }]}>
+            <Text style={[styles.solutionTitle, { color: colors.mutedForeground }]}>ÇÖZÜM</Text>
+            <View style={styles.solutionRow}>
+              <MaterialIcons name="person" size={16} color={colors.primary} />
+              <Text style={[styles.solutionText, { color: colors.foreground }]}>{suspect?.name ?? "-"}</Text>
+            </View>
+            <View style={styles.solutionRow}>
+              <MaterialIcons name="gps-not-fixed" size={16} color={colors.primary} />
+              <Text style={[styles.solutionText, { color: colors.foreground }]}>{weapon?.name ?? "-"}</Text>
+            </View>
+            <View style={styles.solutionRow}>
+              <MaterialIcons name="location-on" size={16} color={colors.primary} />
+              <Text style={[styles.solutionText, { color: colors.foreground }]}>{location?.name ?? "-"}</Text>
+            </View>
+          </View>
+
+          {success && (
+            <View style={styles.statsRow}>
+              <View style={[styles.statItem, { backgroundColor: colors.background }]}>
+                <AnimatedScore score={score} />
+                <Text style={[styles.statLabel, { color: colors.mutedForeground }]}>PUAN</Text>
+              </View>
+              <View style={[styles.statItem, { backgroundColor: colors.background }]}>
+                <Text style={[styles.statValue, { color: colors.foreground }]}>{formatTime(timeSeconds)}</Text>
+                <Text style={[styles.statLabel, { color: colors.mutedForeground }]}>SÜRE</Text>
+              </View>
+              <View style={[styles.statItem, { backgroundColor: colors.background }]}>
+                <Text style={[styles.statValue, { color: wrongGuesses > 0 ? colors.accent : colors.success }]}>
+                  {wrongGuesses}
+                </Text>
+                <Text style={[styles.statLabel, { color: colors.mutedForeground }]}>YANLIŞ</Text>
+              </View>
+            </View>
+          )}
+
+          {success && (
+            <ScoreBreakdownCard
+              timeSeconds={timeSeconds}
+              wrongGuesses={wrongGuesses}
+              bonusCluesRevealedCount={bonusCluesRevealedCount}
+              difficulty={puzzle.difficulty}
+              finalScore={score}
+            />
+          )}
+
+          {success && totalPlayers > 0 && (
+            <RankCard finalRank={finalRank} totalPlayers={totalPlayers} />
+          )}
+
+          <View style={styles.buttons}>
+            <Pressable
+              onPress={handleShare}
+              style={[
+                styles.shareBtn,
+                {
+                  backgroundColor: copied ? `${colors.success}22` : `${colors.primary}18`,
+                  borderColor: copied ? colors.success : colors.primary,
+                },
+              ]}
+            >
+              <MaterialIcons
+                name={copied ? "check" : "share"}
+                size={18}
+                color={copied ? colors.success : colors.primary}
+              />
+              <Text style={[styles.shareBtnText, { color: copied ? colors.success : colors.primary }]}>
+                {copied ? "Panoya Kopyalandı!" : "Sonucu Paylaş"}
+              </Text>
+            </Pressable>
+
+            <Pressable
+              onPress={onPlayMore}
+              style={[styles.btn, { backgroundColor: colors.primary }]}
+            >
+              <MaterialIcons name="play-arrow" size={20} color={colors.primaryForeground} />
+              <Text style={[styles.btnText, { color: colors.primaryForeground }]}>Başka Bulmaca</Text>
+            </Pressable>
+            <Pressable
+              onPress={onClose}
+              style={[styles.btnOutline, { borderColor: colors.border }]}
+            >
+              <Text style={[styles.btnOutlineText, { color: colors.mutedForeground }]}>Ana Sayfa</Text>
+            </Pressable>
+          </View>
+        </ScrollView>
       </Animated.View>
     </View>
   );
@@ -508,9 +513,11 @@ const styles = StyleSheet.create({
     width: "100%",
     borderRadius: 20,
     borderWidth: 2,
+    maxHeight: "94%",
+  },
+  scrollContent: {
     padding: 24,
     gap: 16,
-    maxHeight: "92%",
   },
   iconCircle: {
     width: 80,
@@ -571,18 +578,52 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     letterSpacing: 1,
   },
-  penaltyBadge: {
+  breakdownCard: {
+    borderRadius: 12,
+    borderWidth: 1,
+    padding: 12,
+    gap: 8,
+  },
+  breakdownTitle: {
+    fontSize: 10,
+    fontWeight: "700",
+    letterSpacing: 2,
+    marginBottom: 2,
+  },
+  breakdownRow: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 6,
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 8,
-    alignSelf: "center",
+    gap: 8,
   },
-  penaltyBadgeText: {
+  breakdownLabel: {
     fontSize: 12,
-    fontWeight: "600",
+    fontWeight: "500",
+    flex: 1,
+  },
+  breakdownValue: {
+    fontSize: 13,
+    fontWeight: "700",
+    fontVariant: ["tabular-nums"],
+  },
+  breakdownDivider: {
+    height: 1,
+    marginVertical: 2,
+  },
+  rankCard: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderRadius: 12,
+    borderWidth: 1,
+    padding: 12,
+    gap: 10,
+  },
+  rankLabel: {
+    fontSize: 15,
+    fontWeight: "700",
+  },
+  rankSub: {
+    fontSize: 11,
+    fontWeight: "500",
   },
   buttons: {
     gap: 10,
