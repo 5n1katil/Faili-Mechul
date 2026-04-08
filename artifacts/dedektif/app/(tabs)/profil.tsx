@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import type { ComponentProps } from "react";
 import {
+  Linking,
   Platform,
   Pressable,
   ScrollView,
@@ -167,6 +168,24 @@ export default function ProfilScreen() {
               </Text>
             </View>
             <MaterialIcons name="chevron-right" size={22} color={colors.mutedForeground} />
+          </Pressable>
+        </Animated.View>
+
+        <Animated.View entering={FadeInDown.delay(260).springify()}>
+          <Pressable
+            onPress={() => Linking.openURL("https://failimechul.app/gizlilik")}
+            style={[styles.howToPlayBtn, { backgroundColor: colors.card, borderColor: colors.border }]}
+          >
+            <View style={[styles.howToPlayIcon, { backgroundColor: `${colors.mutedForeground}18` }]}>
+              <MaterialIcons name="privacy-tip" size={22} color={colors.mutedForeground} />
+            </View>
+            <View style={styles.howToPlayInfo}>
+              <Text style={[styles.howToPlayTitle, { color: colors.foreground }]}>Gizlilik Politikası</Text>
+              <Text style={[styles.howToPlayDesc, { color: colors.mutedForeground }]}>
+                Verileriniz ve kullanım koşulları
+              </Text>
+            </View>
+            <MaterialIcons name="open-in-new" size={18} color={colors.mutedForeground} />
           </Pressable>
         </Animated.View>
 
