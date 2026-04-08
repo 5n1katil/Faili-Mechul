@@ -362,7 +362,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
           for (const k of [...sameRow, ...sameCol]) {
             const current = newGrid[k];
             const isAlreadyAutoCrossed = newOwners[k] && newOwners[k].length > 0;
-            if (!current || current === "none") {
+            if (!current || current === "none" || current === "question") {
               newGrid[k] = "cross";
               autoCrossed.push(k);
               newOwners[k] = [key];
