@@ -76,7 +76,7 @@ function GridCell({
     backgroundColor: interpolateColor(
       glowProgress.value,
       [0, 1],
-      ["#0a3d1f", "#4ade80"],
+      ["transparent", "#4ade80"],
     ),
   }));
 
@@ -109,7 +109,6 @@ function GridCell({
 
   const { bg, border } = getMarkStyle(mark);
   const iconSize = Math.max(10, Math.floor(cellSize * 0.46));
-  const isCheckMark = mark === "check";
 
   return (
     <Pressable onPress={handlePress} disabled={disabled}>
@@ -120,11 +119,11 @@ function GridCell({
             height: cellSize,
             borderWidth: 1,
             borderColor: border,
-            backgroundColor: isCheckMark ? "#0a3d1f" : bg,
+            backgroundColor: bg,
             alignItems: "center",
             justifyContent: "center",
           },
-          isCheckMark ? glowStyle : undefined,
+          glowStyle,
           animStyle,
         ]}
       >

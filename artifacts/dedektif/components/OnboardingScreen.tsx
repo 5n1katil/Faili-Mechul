@@ -374,7 +374,11 @@ export default function OnboardingScreen({ visible, onDone, closeLabel }: Props)
           style={[styles.slideArea, slide.showGrid && { gap: 6 }]}
         >
           {slide.showGrid ? (
-            <MiniGrid />
+            <Image
+              source={require("@/assets/images/grid-example.png")}
+              style={{ width: "100%", maxHeight: 260, borderRadius: 8 }}
+              resizeMode="contain"
+            />
           ) : slideIndex === 0 ? (
             <Image
               source={require("@/assets/images/logo.png")}
