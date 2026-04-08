@@ -1,0 +1,201 @@
+=======================================================================
+FAİLİ MEÇHUL — REPLİT KURULUM TALİMATI
+=======================================================================
+
+Bu dosyayı Replit'e yapıştır ve "Bu talimatları uygula" de.
+Aşağıdaki her adımı sırasıyla gerçekleştirecek.
+
+-----------------------------------------------------------------------
+PROJE NEDİR?
+-----------------------------------------------------------------------
+
+"Faili Meçhul" adlı bir Türkçe mobil dedektif bulmaca oyunu
+geliştiriyorum. Oyuncu; şüpheli, silah ve mekan seçerek cinayeti
+çözmek zorunda. Murdle oyunundan ilham alındı, mobil öncelikli.
+
+Elimde 25 premium bulmacadan oluşan bir JSON veritabanı var
+(puzzles_database.json). Bu veriyi kullanarak çalışan bir React Native
+/ Expo oyun prototipi oluşturmanı istiyorum.
+
+-----------------------------------------------------------------------
+DOSYALARIM
+-----------------------------------------------------------------------
+
+Sana iki dosya vereceğim:
+
+1. puzzles_database.json
+   → 5 paket, her pakette 5 bulmaca = toplam 25 bulmaca
+   → Her bulmacada: şüpheliler, silahlar, mekanlar, ipuçları, çözüm
+
+2. REPLIT_ENTEGRASYON.md
+   → GameEngine, FingerprintGame, CipherSolver, WitnessDialog
+     sınıflarını içeren hazır JavaScript kodları
+   → Bunları doğrudan projeye kopyalayacaksın
+
+-----------------------------------------------------------------------
+YAPMAN GEREKENLER (SIRASIYLA)
+-----------------------------------------------------------------------
+
+ADIM 1 — PROJE KURULUMU
+   Expo + React Native projesi oluştur.
+   Gerekli paketleri kur: expo, react-native, @react-navigation/native,
+   @react-navigation/stack, expo-av (ses için), expo-haptics.
+
+ADIM 2 — DOSYA YAPISI
+   Aşağıdaki klasör yapısını oluştur:
+
+   faili_mechul/
+   ├── assets/
+   ├── src/
+   │   ├── data/
+   │   │   └── puzzles_database.json   ← BENİM JSON DOSYAM
+   │   ├── engine/
+   │   │   ├── puzzleLoader.js
+   │   │   ├── gameEngine.js
+   │   │   └── mechanics/
+   │   │       ├── fingerprintGame.js
+   │   │       ├── cipherSolver.js
+   │   │       └── witnessDialog.js
+   │   ├── screens/
+   │   │   ├── HomeScreen.js
+   │   │   ├── PackListScreen.js
+   │   │   ├── PuzzleScreen.js
+   │   │   └── SolutionScreen.js
+   │   └── components/
+   │       ├── SuspectGrid.js
+   │       ├── ClueCard.js
+   │       ├── FingerprintMini.js
+   │       └── CipherMini.js
+   └── App.js
+
+ADIM 3 — ENGINE KODLARINI YAZ
+   REPLIT_ENTEGRASYON.md dosyasındaki şu sınıfları ilgili dosyalara
+   kopyala ve gerekirse düzenle:
+   - puzzleLoader.js → getAllPacks, getPuzzleById fonksiyonları
+   - gameEngine.js   → GameEngine sınıfı
+   - fingerprintGame.js → FingerprintGame sınıfı
+   - cipherSolver.js → CipherSolver sınıfı
+   - witnessDialog.js → WitnessDialog sınıfı
+
+ADIM 4 — ANA EKRANLAR
+   Şu dört ekranı React Native bileşenleri olarak oluştur:
+
+   A) HomeScreen — Ana sayfa
+      - "Faili Meçhul" başlığı
+      - Paket listesine git butonu
+      - Oyuncu istatistikleri (çözülen vaka sayısı, toplam puan)
+
+   B) PackListScreen — Paket seçimi
+      - puzzles_database.json'dan paketleri listele
+      - Her paketin ikonu, adı, fiyatı ve zorluk dağılımı görünsün
+      - Pakete tıklayınca içindeki 5 bulmacayı göster
+
+   C) PuzzleScreen — Oyun ekranı (EN ÖNEMLİSİ)
+      - Üstte: vaka adı, süre sayacı, mevcut puan
+      - Ortada: 3 bölüm — Şüpheliler / Silahlar / Mekanlar
+        (her birinden birer seçim yapılacak)
+      - Altta: İpuçları listesi (sırayla açılır, her birinin puanı var)
+      - "Suçla" butonu → seçilen 3 elemanla GameEngine.makeAccusation()
+      - Özel mekanikler: ipucu türüne göre ilgili mini oyunu aç
+
+   D) SolutionScreen — Çözüm ekranı
+      - Doğru/yanlış sonuç
+      - Kazanılan puan
+      - Çözüm hikayesi (solutionNarrative)
+      - "Sonraki Bulmaca" butonu
+
+ADIM 5 — ÖZEL MEKANİKLER
+   Şu 3 mini bileşeni oluştur:
+
+   FingerprintMini.js
+   → İpucu türü "parmak_izi" olduğunda açılır
+   → Ekranda 3-4 parmak izi kartı göster (farklı şekillerde SVG/emoji)
+   → Kullanıcı doğru şüpheliyi seçtiğinde FingerprintGame.match() çağır
+   → Doğruysa yeşil, yanlışsa kırmızı animasyon
+
+   CipherMini.js
+   → İpucu türü "sifreli_mesaj" olduğunda açılır
+   → Şifrelenmiş metni göster
+   → Kullanıcı çözüm girer → CipherSolver.attempt() çağır
+   → 2. yanlışta ipucu göster, doğruysa çözülmüş metni göster
+
+   WitnessDialog.js
+   → İpucu türü "tanik_yuzlesme" olduğunda açılır
+   → Soru/cevap sırasıyla göster
+   → "Yalan söylüyor mu?" butonu → WitnessDialog.answerQuestion() çağır
+
+ADIM 6 — TASARIM
+   Renk paleti (puzzles_database.json'dan her paket için ayrı):
+   - Osmanlı: #8B4513 zemin, #F5C842 vurgu
+   - Hollywood: #1a1a2e zemin, #FFD700 vurgu
+   - Sci-Fi: #0a0a2e zemin, #00FFFF vurgu
+   - Gerçek Vaka: #1a1a1a zemin, #CC0000 vurgu
+   - Korku: #0d0d0d zemin, #8B0000 vurgu
+
+   Genel font: koyu arka plan, açık yazı, dedektif/noir hissi.
+   İpucu kartları: türe göre farklı renk (kanıt=mavi, tanık=sarı,
+   adli=yeşil, eleme=kırmızı, doğrudan=mor).
+
+ADIM 7 — TEST
+   Şu test senaryosunu çalıştır:
+   1. puzzleId: "ott_001" bulmacasını yükle
+   2. c1 ipucunu aç (ücretsiz)
+   3. c2 ipucunu aç (50 puan maliyeti)
+   4. Yanlış suçlama yap → puan düşmeli
+   5. Doğru suçlama: suspectId=s1, weaponId=w1, locationId=l1
+   6. SolutionScreen açılmalı
+
+-----------------------------------------------------------------------
+JSON VERİSİ HAKKINDA BİLMEN GEREKENLER
+-----------------------------------------------------------------------
+
+Her bulmacada şu alanlar var:
+- puzzleId       : Benzersiz ID (örn: "ott_001")
+- difficulty     : 1-5 arası zorluk
+- gridSize       : "3x3" veya "4x4"
+- suspects[]     : id, name, icon, description
+- weapons[]      : id, name, icon, description
+- locations[]    : id, name, icon, description
+- clues[]        : id, type, revealOrder, pointCost, mechanicType + verisi
+- solution       : { suspectId, weaponId, locationId }
+- solutionNarrative : Çözüm hikayesi metni
+
+İpucu mekanik türleri:
+- "text"          → Sadece metin göster
+- "parmak_izi"    → FingerprintMini bileşenini aç, parmakIziVerisi kullan
+- "sifreli_mesaj" → CipherMini bileşenini aç, sifre objesi kullan
+- "ses_kaydi"     → sesMetni alanını kutuda göster
+- "gorsel_ipucu"  → gorselAciklama alanını italik kutu içinde göster
+- "tanik_yuzlesme"→ WitnessDialog bileşenini aç, yuzlesmeDialogu kullan
+
+-----------------------------------------------------------------------
+ÖNCELİK SIRASI
+-----------------------------------------------------------------------
+
+Önce şunları bitir (MVP):
+✅ JSON yükleme ve paket/bulmaca listeleme
+✅ Temel PuzzleScreen (şüpheli/silah/mekan seçimi)
+✅ GameEngine ile suçlama ve puan sistemi
+✅ En az bir bulmaca baştan sona oynanabilir olsun
+
+Sonra bunları ekle:
+⬜ Parmak izi mini oyunu
+⬜ Şifre çözme mini oyunu
+⬜ Tanık yüzleşme diyalogu
+⬜ Ses kaydı simülasyonu
+⬜ Paket satın alma ekranı (isPremium kontrolü)
+⬜ Liderlik tablosu
+
+-----------------------------------------------------------------------
+SORU SORMADAN ÖNCE
+-----------------------------------------------------------------------
+
+- Projeyi React Native + Expo ile yap
+- TypeScript değil, JavaScript kullan
+- State management için useState/useContext yeterli (Redux gerekmez)
+- Backend yok, tüm veri yerel JSON'dan
+- Eğer bir şey belirsizse puzzles_database.json'a bak, tüm veri orada
+
+=======================================================================
+HAZIRSAN BAŞLA — İLK OLARAK ADIM 1'İ UYGULA VE BANA SÖYLE.
+=======================================================================
