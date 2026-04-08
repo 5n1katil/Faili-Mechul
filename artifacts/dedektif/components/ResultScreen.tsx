@@ -73,27 +73,29 @@ function buildShareText(
 
   lines.push("");
 
-  const weaponRows = puzzle.weapons.map((w) => {
-    const suspectCells = puzzle.suspects
-      .map((s) => markToEmoji(gridState[`${w.id}_${s.id}`] ?? "none"))
-      .join("");
-    const locationCells = puzzle.locations
-      .map((l) => markToEmoji(gridState[`${w.id}_${l.id}`] ?? "none"))
-      .join("");
-    return `${suspectCells}  ${locationCells}`;
-  });
+  if (success) {
+    const weaponRows = puzzle.weapons.map((w) => {
+      const suspectCells = puzzle.suspects
+        .map((s) => markToEmoji(gridState[`${w.id}_${s.id}`] ?? "none"))
+        .join("");
+      const locationCells = puzzle.locations
+        .map((l) => markToEmoji(gridState[`${w.id}_${l.id}`] ?? "none"))
+        .join("");
+      return `${suspectCells}  ${locationCells}`;
+    });
 
-  const locationRows = puzzle.locations.map((loc) => {
-    return puzzle.suspects
-      .map((s) => markToEmoji(gridState[`${loc.id}_${s.id}`] ?? "none"))
-      .join("");
-  });
+    const locationRows = puzzle.locations.map((loc) => {
+      return puzzle.suspects
+        .map((s) => markToEmoji(gridState[`${loc.id}_${s.id}`] ?? "none"))
+        .join("");
+    });
 
-  for (const row of weaponRows) lines.push(row);
-  lines.push("");
-  for (const row of locationRows) lines.push(row);
+    for (const row of weaponRows) lines.push(row);
+    lines.push("");
+    for (const row of locationRows) lines.push(row);
 
-  lines.push("");
+    lines.push("");
+  }
 
   if (success) {
     const sol = puzzle.solution;
