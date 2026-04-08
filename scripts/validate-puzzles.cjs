@@ -13,7 +13,7 @@
  *      (one suspect, one weapon, one location), and eliminated IDs are valid.
  *   8. Free clues alone eliminate at least 2 options (not trivially easy).
  *
- * Run: node scripts/validate-puzzles.cjs   (from workspace root)
+ * Run: node scripts/validate-puzzles.cjs  (from workspace root)
  */
 
 const fs = require("fs");
