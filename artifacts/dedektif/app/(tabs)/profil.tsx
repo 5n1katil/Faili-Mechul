@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import type { ComponentProps } from "react";
 import {
   Linking,
@@ -53,6 +53,10 @@ export default function ProfilScreen() {
   const [tempName, setTempName] = useState(profile.name);
   const [showHowToPlay, setShowHowToPlay] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(() => soundSettings.enabled);
+
+  useEffect(() => {
+    soundSettings.refresh().then((val) => setSoundEnabled(val));
+  }, []);
 
   const handleSoundToggle = (val: boolean) => {
     soundSettings.enabled = val;

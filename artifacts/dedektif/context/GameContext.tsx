@@ -121,6 +121,7 @@ interface GameContextType {
   setGridMark: (key: string, mark: GridMark) => void;
   revealNextClue: () => void;
   submitAnswer: (suspectId: string, weaponId: string, locationId: string) => boolean;
+  recordTimeout: () => void;
   updateProfile: (name: string) => void;
   resetCurrentGame: () => void;
   tickTimer: () => void;
@@ -452,6 +453,28 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     [gameState, profile, gameHistory, leaderboard]
   );
 
+  const recordTimeout = useCallback(() => {
+    if (!gameState?.puzzle) return;
+    const record: GameRecord = {
+      puzzleId: gameState.puzzle.id,
+      date: new Date().toISOString().split("T")[0],
+      score: 0,
+      timeSeconds: gameState.timeElapsed,
+      mistakes: gameState.mistakes,
+      completed: false,
+      solution: null,
+    };
+    const newHistory = [record, ...gameHistory];
+    const newProfile = {
+      ...profile,
+      gamesPlayed: profile.gamesPlayed + 1,
+      currentStreak: 0,
+      lastPlayedDate: new Date().toISOString().split("T")[0],
+    };
+    saveHistory(newHistory);
+    saveProfile(newProfile);
+  }, [gameState, profile, gameHistory]);
+
   const updateProfile = useCallback(
     (name: string) => {
       saveProfile({ ...profile, name });
@@ -484,6 +507,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         setGridMark,
         revealNextClue,
         submitAnswer,
+        recordTimeout,
         updateProfile,
         resetCurrentGame,
         tickTimer,

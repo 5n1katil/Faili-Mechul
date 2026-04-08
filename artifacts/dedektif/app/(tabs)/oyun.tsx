@@ -47,6 +47,7 @@ export default function OyunScreen() {
     setGridMark,
     revealNextClue,
     submitAnswer,
+    recordTimeout,
     tickTimer,
     resetCurrentGame,
   } = useGame();
@@ -132,6 +133,7 @@ export default function OyunScreen() {
       timeElapsedNow >= timeLimitNow
     ) {
       timedOutRef.current = true;
+      recordTimeout();
       setTimedOut(true);
       setLastResultSuccess(false);
       setShowResult(true);
