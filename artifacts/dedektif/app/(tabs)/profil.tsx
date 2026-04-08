@@ -9,7 +9,6 @@ import {
   StyleSheet,
   Switch,
   Text,
-  TextInput,
   View,
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -55,8 +54,6 @@ export default function ProfilScreen() {
   const { profile, gameHistory, updateProfile } = useGame();
   const { isPremium, restorePurchases, priceString } = usePurchase();
 
-  const [editingName, setEditingName] = useState(false);
-  const [tempName, setTempName] = useState(profile.name);
   const [showHowToPlay, setShowHowToPlay] = useState(false);
   const [showPaywall, setShowPaywall] = useState(false);
   const [showAvatarPicker, setShowAvatarPicker] = useState(false);
@@ -79,13 +76,6 @@ export default function ProfilScreen() {
       : 0;
 
   const recentHistory = gameHistory.slice(0, 10);
-
-  const handleNameSave = () => {
-    if (tempName.trim()) {
-      updateProfile(tempName.trim());
-    }
-    setEditingName(false);
-  };
 
   const handleAvatarChange = (newAvatar: string) => {
     updateProfile(profile.name, newAvatar);
@@ -143,30 +133,9 @@ export default function ProfilScreen() {
                 accessibilityLabel="Avatar değiştir"
               />
             </View>
-            {editingName ? (
-              <View style={styles.nameEditRow}>
-                <TextInput
-                  value={tempName}
-                  onChangeText={setTempName}
-                  style={[
-                    styles.nameInput,
-                    { color: colors.foreground, borderColor: colors.primary, backgroundColor: colors.background },
-                  ]}
-                  autoFocus
-                  maxLength={20}
-                  returnKeyType="done"
-                  onSubmitEditing={handleNameSave}
-                />
-                <Pressable onPress={handleNameSave} style={[styles.saveBtn, { backgroundColor: colors.primary }]}>
-                  <MaterialIcons name="check" size={18} color={colors.primaryForeground} />
-                </Pressable>
-              </View>
-            ) : (
-              <Pressable onPress={() => setEditingName(true)} style={styles.nameRow}>
-                <Text style={[styles.profileName, { color: colors.foreground }]}>{profile.name}</Text>
-                <MaterialIcons name="edit" size={16} color={colors.mutedForeground} />
-              </Pressable>
-            )}
+            <View style={styles.nameRow}>
+              <Text style={[styles.profileName, { color: colors.foreground }]}>{profile.name}</Text>
+            </View>
             <View style={styles.streakRow}>
               <MaterialIcons name="local-fire-department" size={18} color="#FF6B35" />
               <Text style={[styles.streakLabel, { color: colors.mutedForeground }]}>

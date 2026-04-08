@@ -75,13 +75,6 @@ function PuzzleCard({
           locked && { borderStyle: "dashed" as const },
         ]}
       >
-        {locked && (
-          <View style={styles.lockedOverlay} pointerEvents="none">
-            <View style={[styles.lockIconCircle, { backgroundColor: "#D4A84318", borderColor: "#D4A84355" }]}>
-              <MaterialIcons name="lock" size={22} color="#D4A843" />
-            </View>
-          </View>
-        )}
         <View style={styles.puzzleCardTop}>
           <View
             style={[
@@ -510,7 +503,7 @@ export default function HomeScreen() {
           </View>
         </Animated.View>
 
-        <SectionHeader title="Ücretsiz Vakalar" />
+        <SectionHeader title="Başlangıç Seviyesi Vakalar" />
 
         {freePuzzles.map((puzzle, i) => {
           const isCompleted = completedPuzzleIds.has(puzzle.id);
@@ -528,7 +521,7 @@ export default function HomeScreen() {
         })}
 
         <SectionHeader
-          title="Vaka Arşivi"
+          title="Premium Vaka Arşivi"
           right={
             !isPremium ? (
               <Pressable
@@ -558,7 +551,7 @@ export default function HomeScreen() {
             <MaterialIcons name="workspace-premium" size={20} color="#D4A843" />
             <View style={styles.premiumBannerText}>
               <Text style={[styles.premiumBannerTitle, { color: "#D4A843" }]}>
-                Vaka Arşivi'ni Aç
+                Premium Vaka Arşivi'ni Aç
               </Text>
               <Text style={[styles.premiumBannerSub, { color: "#D4A84399" }]}>
                 {premiumLockedCount} ek vaka · Tek seferlik satın al
