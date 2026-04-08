@@ -14,7 +14,6 @@ import Animated, {
   useSharedValue,
   withDelay,
   withSequence,
-  withSpring,
   withTiming,
 } from "react-native-reanimated";
 import type { GridMark, Suspect, Weapon, Location } from "@/data/puzzles";
@@ -94,13 +93,13 @@ function GridCell({
     } else {
       glowProgress.value = withTiming(0, { duration: 200 });
     }
-  }, [isComplete]);
+  }, [isComplete, mark]);
 
   const handlePress = () => {
     if (disabled) return;
     scale.value = withSequence(
-      withSpring(0.72, { damping: 12, stiffness: 350 }),
-      withSpring(1, { damping: 14, stiffness: 220 })
+      withTiming(0.92, { duration: 80 }),
+      withTiming(1, { duration: 120 })
     );
     if (Platform.OS !== "web") {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
