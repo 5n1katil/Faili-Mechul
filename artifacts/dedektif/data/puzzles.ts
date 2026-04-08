@@ -312,7 +312,7 @@ export const PUZZLES: Puzzle[] = [
     ],
     weapons: [
       { id: "w1", name: "Zehirli Baklava", description: "İçine gizlice zehir karıştırılmış tatlı baklava", icon: "cake" },
-      { id: "w2", name: "Darbe", description: "Elle ya da sert bir cisimle uygulanan güçlü vurma", icon: "back-hand" },
+      { id: "w2", name: "Darbe", description: "Elle ya da sert bir cisimle uygulanan güçlü vurma", icon: "pan-tool" },
       { id: "w3", name: "Boğulma", description: "Boyuna uygulanan iki elle güçlü baskı", icon: "back-hand" },
     ],
     locations: [
@@ -329,7 +329,7 @@ export const PUZZLES: Puzzle[] = [
       },
       {
         id: "c2",
-        text: "Müşteri Hanım o sabah hiç tatlı almadı, diyet yapıyordu. Bunu tezgah arkadaşı doğruluyor.",
+        text: "Müşteri Hanım o sabah hiç tatlı almadı ve tezgaha hiç yaklaşmadı; hem tezgah kamerası hem de komşu satıcılar bunu doğruluyor.",
         type: "witness",
         isBonus: false,
       },
@@ -530,7 +530,7 @@ export const PUZZLES: Puzzle[] = [
       },
       {
         id: "c4",
-        text: "Emekli Doktor kurbanla yemekli vagonda içki içmişti; kursun kokteylin içine karışmıştı.",
+        text: "Emekli Doktor kurbanla yemekli vagonda içki içmişti; zehir kokteylin içine karışmıştı.",
         type: "direct",
         isBonus: false,
       },
@@ -669,7 +669,7 @@ export const PUZZLES: Puzzle[] = [
       },
       {
         id: "c6",
-        text: "Adli rapor: koordinatörde elektrik deşarjından kaynaklanan yanık izleri bulundu.",
+        text: "Adli rapor: koordinatörde elektrik deşarjından kaynaklanan yanık izleri bulundu. Güvenlik Şefi o gece resmi izin kullandığından görevde değildi; insan kaynakları kaydı bunu teyit ediyor.",
         type: "forensic",
         isBonus: true,
       },
@@ -908,7 +908,7 @@ export const PUZZLES: Puzzle[] = [
       },
       {
         id: "c4",
-        text: "Balıkçı sahil kenarında gece boyunca ağlarını onarıyordu; komşu bunu teyit ediyor.",
+        text: "Balıkçı tüm gece sahil kenarında ağlarını onarıyordu; hem komşusu hem de sahil güvenlik kamerası bunu teyit ediyor. Kayalık buruna gittiğine dair herhangi bir kayıt ya da tanık yok.",
         type: "witness",
         isBonus: false,
       },
