@@ -10,8 +10,10 @@ import {
 import { MaterialIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import * as Haptics from "expo-haptics";
 import { useColors } from "@/hooks/useColors";
 import { useGame } from "@/context/GameContext";
+import { useSounds } from "@/hooks/useSounds";
 import DetectiveGrid from "@/components/DetectiveGrid";
 import ClueCard from "@/components/ClueCard";
 import TimerDisplay from "@/components/TimerDisplay";
@@ -42,6 +44,7 @@ export default function OyunScreen() {
     tickTimer,
     resetCurrentGame,
   } = useGame();
+  const { play } = useSounds();
 
   const [showAnswerModal, setShowAnswerModal] = useState(false);
   const [showResult, setShowResult] = useState(false);
@@ -89,11 +92,18 @@ export default function OyunScreen() {
   }, [gameState?.isComplete, gameState?.isGameOver, tickTimer]);
 
   useEffect(() => {
-    if (gameState?.isComplete || gameState?.isGameOver) {
-      setLastResultSuccess(gameState.isComplete);
+    if (gameState?.isComplete) {
+      play("success");
+      if (Platform.OS !== "web") {
+        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+      }
+      setLastResultSuccess(true);
+      setShowResult(true);
+    } else if (gameState?.isGameOver) {
+      setLastResultSuccess(false);
       setShowResult(true);
     }
-  }, [gameState?.isComplete, gameState?.isGameOver]);
+  }, [gameState?.isComplete, gameState?.isGameOver, play]);
 
   if (!gameState || !gameState.puzzle) {
     return (
@@ -136,13 +146,24 @@ export default function OyunScreen() {
 
   const handleCellPress = (key: string, nextMark: GridMark) => {
     setGridMark(key, nextMark);
+    if (nextMark === "check") play("check");
+    else if (nextMark === "cross") play("cross");
+    else play("tap");
+  };
+
+  const handleRevealClue = () => {
+    play("clue");
+    revealNextClue();
   };
 
   const handleSubmit = (suspectId: string, weaponId: string, locationId: string) => {
     setShowAnswerModal(false);
     const success = submitAnswer(suspectId, weaponId, locationId);
-    if (!success && !gameState.isGameOver) {
-      // shake effect handled by state change
+    if (!success) {
+      play("error");
+      if (Platform.OS !== "web") {
+        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+      }
     }
   };
 
@@ -244,7 +265,7 @@ export default function OyunScreen() {
             <Text style={[styles.sectionTitle, { color: colors.foreground }]}>İpuçları</Text>
             {canRevealMore && !gameState.isComplete && !gameState.isGameOver && (
               <Pressable
-                onPress={revealNextClue}
+                onPress={handleRevealClue}
                 style={[styles.revealAllBtn, { borderColor: colors.border }]}
               >
                 <MaterialIcons name="add" size={14} color={colors.mutedForeground} />
@@ -262,7 +283,7 @@ export default function OyunScreen() {
               isRevealed={cluesRevealed.includes(i)}
               onReveal={
                 i === (cluesRevealed[cluesRevealed.length - 1] ?? 0) + 1
-                  ? revealNextClue
+                  ? handleRevealClue
                   : undefined
               }
             />

@@ -231,7 +231,7 @@ export default function HomeScreen() {
             style={[
               styles.dailyCard,
               { backgroundColor: colors.card, borderColor: colors.primary },
-              wonToday && { opacity: 0.7 },
+              wonToday && { backgroundColor: `${colors.primary}08` },
             ]}
           >
             <View style={styles.dailyTop}>
@@ -242,9 +242,9 @@ export default function HomeScreen() {
                 </Text>
               </View>
               {wonToday && (
-                <View style={[styles.doneBadge, { backgroundColor: `${colors.success}22` }]}>
-                  <MaterialIcons name="check-circle" size={14} color={colors.success} />
-                  <Text style={[styles.doneText, { color: colors.success }]}>Tamamlandı</Text>
+                <View style={[styles.doneBadge, { backgroundColor: `${colors.primary}22`, borderColor: `${colors.primary}66`, borderWidth: 1 }]}>
+                  <MaterialIcons name="check-circle" size={14} color={colors.primary} />
+                  <Text style={[styles.doneText, { color: colors.primary }]}>Bugün Tamamlandı</Text>
                 </View>
               )}
             </View>

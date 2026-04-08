@@ -6,6 +6,7 @@ import Animated, {
   interpolateColor,
   useAnimatedStyle,
   useSharedValue,
+  withRepeat,
   withSequence,
   withSpring,
   withTiming,
@@ -65,7 +66,10 @@ function MistakeDot({
 export default function TimerDisplay({ seconds, mistakes, maxMistakes }: Props) {
   const colors = useColors();
   const translateX = useSharedValue(0);
+  const timerScale = useSharedValue(1);
   const prevMistakesRef = useRef(mistakes);
+
+  const isCritical = mistakes > 0 && mistakes >= maxMistakes - 1;
 
   useEffect(() => {
     if (mistakes > prevMistakesRef.current) {
@@ -85,24 +89,46 @@ export default function TimerDisplay({ seconds, mistakes, maxMistakes }: Props) 
     prevMistakesRef.current = mistakes;
   }, [mistakes]);
 
+  useEffect(() => {
+    if (isCritical) {
+      timerScale.value = withRepeat(
+        withSequence(
+          withTiming(1.08, { duration: 480 }),
+          withTiming(1, { duration: 480 }),
+        ),
+        -1,
+        false,
+      );
+    } else {
+      timerScale.value = withTiming(1, { duration: 200 });
+    }
+  }, [isCritical]);
+
   const shakeStyle = useAnimatedStyle(() => ({
     transform: [{ translateX: translateX.value }],
   }));
+
+  const timerItemStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: timerScale.value }],
+  }));
+
+  const timerColor = isCritical ? "#FF3333" : colors.primary;
+  const timerTextColor = isCritical ? "#FF3333" : colors.foreground;
 
   return (
     <Animated.View
       style={[
         styles.container,
-        { backgroundColor: colors.card, borderColor: colors.border },
+        { backgroundColor: colors.card, borderColor: isCritical ? "#FF333355" : colors.border },
         shakeStyle,
       ]}
     >
-      <View style={styles.item}>
-        <MaterialIcons name="timer" size={18} color={colors.primary} />
-        <Text style={[styles.value, { color: colors.foreground }]}>
+      <Animated.View style={[styles.item, timerItemStyle]}>
+        <MaterialIcons name="timer" size={18} color={timerColor} />
+        <Text style={[styles.value, { color: timerTextColor }]}>
           {formatTime(seconds)}
         </Text>
-      </View>
+      </Animated.View>
       <View style={[styles.divider, { backgroundColor: colors.border }]} />
       <View style={styles.item}>
         <MaterialIcons name="error-outline" size={18} color={colors.accent} />

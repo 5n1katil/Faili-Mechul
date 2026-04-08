@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import type { ComponentProps } from "react";
 import {
   Linking,
@@ -6,16 +6,20 @@ import {
   Pressable,
   ScrollView,
   StyleSheet,
+  Switch,
   Text,
   TextInput,
   View,
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useColors } from "@/hooks/useColors";
 import { useGame } from "@/context/GameContext";
 import Animated, { FadeInDown } from "react-native-reanimated";
 import OnboardingScreen from "@/components/OnboardingScreen";
+
+const SOUND_KEY = "@dedektif_sound_enabled";
 
 type MaterialIconName = ComponentProps<typeof MaterialIcons>["name"];
 
@@ -50,6 +54,18 @@ export default function ProfilScreen() {
   const [editingName, setEditingName] = useState(false);
   const [tempName, setTempName] = useState(profile.name);
   const [showHowToPlay, setShowHowToPlay] = useState(false);
+  const [soundEnabled, setSoundEnabled] = useState(true);
+
+  useEffect(() => {
+    AsyncStorage.getItem(SOUND_KEY).then((val) => {
+      setSoundEnabled(val !== "false");
+    });
+  }, []);
+
+  const handleSoundToggle = async (val: boolean) => {
+    setSoundEnabled(val);
+    await AsyncStorage.setItem(SOUND_KEY, val ? "true" : "false");
+  };
 
   const winRate =
     profile.gamesPlayed > 0
@@ -171,7 +187,27 @@ export default function ProfilScreen() {
           </Pressable>
         </Animated.View>
 
-        <Animated.View entering={FadeInDown.delay(260).springify()}>
+        <Animated.View entering={FadeInDown.delay(250).springify()}>
+          <View style={[styles.settingsRow, { backgroundColor: colors.card, borderColor: colors.border }]}>
+            <View style={[styles.howToPlayIcon, { backgroundColor: `${colors.primary}18` }]}>
+              <MaterialIcons name="volume-up" size={22} color={colors.primary} />
+            </View>
+            <View style={styles.howToPlayInfo}>
+              <Text style={[styles.howToPlayTitle, { color: colors.foreground }]}>Ses Efektleri</Text>
+              <Text style={[styles.howToPlayDesc, { color: colors.mutedForeground }]}>
+                Oyun seslerini aç veya kapat
+              </Text>
+            </View>
+            <Switch
+              value={soundEnabled}
+              onValueChange={handleSoundToggle}
+              trackColor={{ false: colors.border, true: `${colors.primary}88` }}
+              thumbColor={soundEnabled ? colors.primary : colors.mutedForeground}
+            />
+          </View>
+        </Animated.View>
+
+        <Animated.View entering={FadeInDown.delay(270).springify()}>
           <Pressable
             onPress={() => Linking.openURL("https://failimechul.app/gizlilik")}
             style={[styles.howToPlayBtn, { backgroundColor: colors.card, borderColor: colors.border }]}
@@ -324,6 +360,14 @@ const styles = StyleSheet.create({
   badgeLabel: { fontSize: 13, fontWeight: "700", textAlign: "center" },
   badgeDesc: { fontSize: 11, textAlign: "center", lineHeight: 16 },
   howToPlayBtn: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderRadius: 14,
+    borderWidth: 1,
+    padding: 14,
+    gap: 14,
+  },
+  settingsRow: {
     flexDirection: "row",
     alignItems: "center",
     borderRadius: 14,
