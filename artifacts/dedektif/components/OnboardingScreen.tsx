@@ -47,7 +47,7 @@ const SLIDES: Slide[] = [
     iconBg: "#1E103040",
     title: "Dedektif Izgarası",
     subtitle: "Mantık Yürüt",
-    body: "Izgara hücrelerine dokunarak işaretleme yap:\n\n✗  →  Bu kombinasyon imkânsız\n✓  →  Bu kombinasyon kesin doğru\n?  →  Henüz bilmiyorum",
+    body: "Izgara hücrelerine dokunarak işaretleme yap:\n✗  →  Bu kombinasyon imkânsız\n✓  →  Bu kombinasyon kesin doğru\n?  →  Henüz bilmiyorum",
     tip: "Bir satırda yalnızca bir ✓ olabilir!",
     showGrid: true,
   },
@@ -83,8 +83,8 @@ const M_OUTER = "#FFFFFF50";
 const M_BLKDIV = "#FFFFFF80";
 const M_CELLSEP = "#FFFFFF2A";
 
-const MINI_CELL = 22;
-const MINI_LABEL = 22;
+const MINI_CELL = 18;
+const MINI_LABEL = 18;
 const MINI_DIV = 2;
 
 const MINI_SUSPECTS = [
