@@ -452,10 +452,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
   },
   logoImage: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
-    marginBottom: 8,
+    width: 150,
+    height: 150,
+    borderRadius: 75,
+    marginBottom: 12,
   },
   iconWrapper: {
     width: 120,
