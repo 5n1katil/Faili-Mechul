@@ -9,7 +9,6 @@ import {
 import { MaterialIcons } from "@expo/vector-icons";
 import * as Haptics from "expo-haptics";
 import Animated, {
-  interpolateColor,
   useAnimatedStyle,
   useSharedValue,
   withDelay,
@@ -72,12 +71,8 @@ function GridCell({
     transform: [{ scale: scale.value }],
   }));
 
-  const glowStyle = useAnimatedStyle(() => ({
-    backgroundColor: interpolateColor(
-      glowProgress.value,
-      [0, 1],
-      ["transparent", "#4ade80"],
-    ),
+  const glowOverlayStyle = useAnimatedStyle(() => ({
+    opacity: glowProgress.value,
   }));
 
   useEffect(() => {
@@ -123,10 +118,13 @@ function GridCell({
             alignItems: "center",
             justifyContent: "center",
           },
-          glowStyle,
           animStyle,
         ]}
       >
+        <Animated.View
+          style={[StyleSheet.absoluteFill, { backgroundColor: "#4ade80" }, glowOverlayStyle]}
+          pointerEvents="none"
+        />
         {mark === "check" && (
           <MaterialIcons name="check" size={iconSize} color="#4ade80" />
         )}
