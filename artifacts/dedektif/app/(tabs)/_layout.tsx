@@ -16,8 +16,8 @@ function NativeTabLayout() {
         <Label>Ana Sayfa</Label>
       </NativeTabs.Trigger>
       <NativeTabs.Trigger name="oyun">
-        <Icon sf={{ default: "magnifyingglass", selected: "magnifyingglass.circle.fill" }} />
-        <Label>Oyun</Label>
+        <Icon sf={{ default: "folder", selected: "folder.fill" }} />
+        <Label>Vakalar</Label>
       </NativeTabs.Trigger>
       <NativeTabs.Trigger name="liderlik">
         <Icon sf={{ default: "trophy", selected: "trophy.fill" }} />
@@ -84,12 +84,12 @@ function ClassicTabLayout() {
       <Tabs.Screen
         name="oyun"
         options={{
-          title: "Oyun",
+          title: "Vakalar",
           tabBarIcon: ({ color }) =>
             isIOS ? (
-              <SymbolView name="magnifyingglass" tintColor={color} size={24} />
+              <SymbolView name="folder" tintColor={color} size={24} />
             ) : (
-              <MaterialIcons name="search" size={24} color={color} />
+              <MaterialIcons name="folder-open" size={24} color={color} />
             ),
         }}
       />

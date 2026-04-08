@@ -14,173 +14,27 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useColors } from "@/hooks/useColors";
 import { useGame } from "@/context/GameContext";
-import type { BestResult } from "@/context/GameContext";
 import {
   getDailyPuzzle,
   getDifficultyColor,
   getDifficultyLabel,
-  PUZZLES,
   type Difficulty,
 } from "@/data/puzzles";
 import Animated, { FadeInDown } from "react-native-reanimated";
 import OnboardingScreen from "@/components/OnboardingScreen";
-import PaywallModal from "@/components/PaywallModal";
 import ProfileSetupModal from "@/components/ProfileSetupModal";
-import { usePurchase } from "@/context/PurchaseContext";
+import { AvatarDisplay } from "@/utils/avatarHelpers";
+import { AI_DETECTIVES } from "@/data/aiDetectives";
 
 const ONBOARDING_KEY = "@dedektif_onboarding_done";
 const SETUP_KEY = "@dedektif_setup_done";
-const FREE_PUZZLE_COUNT = 10;
 
-function formatTime(s: number): string {
-  const m = Math.floor(s / 60);
-  const sec = s % 60;
-  return `${m}:${sec.toString().padStart(2, "0")}`;
-}
-
-function PuzzleCard({
-  puzzle,
-  onPress,
-  delay,
-  completed,
-  bestResult,
-  locked,
-}: {
-  puzzle: (typeof PUZZLES)[0];
-  onPress: () => void;
-  delay: number;
-  completed: boolean;
-  bestResult: BestResult | null;
-  locked?: boolean;
-}) {
-  const colors = useColors();
-  const diffColor = getDifficultyColor(puzzle.difficulty as Difficulty);
-
-  return (
-    <Animated.View entering={FadeInDown.delay(delay).springify()}>
-      <Pressable
-        onPress={onPress}
-        style={({ pressed }) => [
-          styles.puzzleCard,
-          {
-            backgroundColor: colors.card,
-            borderColor: completed
-              ? `${colors.success}55`
-              : locked
-              ? "#D4A84322"
-              : colors.border,
-            opacity: pressed ? 0.78 : 1,
-          },
-          completed && !locked && { backgroundColor: `${colors.success}08` },
-          locked && { borderStyle: "dashed" as const },
-        ]}
-      >
-        <View style={styles.puzzleCardTop}>
-          <View
-            style={[
-              styles.diffBadge,
-              {
-                backgroundColor: `${diffColor}22`,
-                borderColor: `${diffColor}66`,
-              },
-            ]}
-          >
-            <Text style={[styles.diffText, { color: diffColor }]}>
-              {getDifficultyLabel(puzzle.difficulty as Difficulty)}
-            </Text>
-          </View>
-          <View style={styles.puzzleCardRight}>
-            {locked ? (
-              <View
-                style={[
-                  styles.lockBadge,
-                  { backgroundColor: "#D4A84322", borderColor: "#D4A84366" },
-                ]}
-              >
-                <Text style={[styles.lockText, { color: "#D4A843" }]}>Premium</Text>
-              </View>
-            ) : completed ? (
-              <View
-                style={[
-                  styles.solvedBadge,
-                  {
-                    backgroundColor: `${colors.success}22`,
-                    borderColor: `${colors.success}55`,
-                  },
-                ]}
-              >
-                <MaterialIcons name="check-circle" size={12} color={colors.success} />
-                <Text style={[styles.solvedText, { color: colors.success }]}>
-                  Çözüldü
-                </Text>
-              </View>
-            ) : (
-              <View style={styles.puzzleCardMeta}>
-                <MaterialIcons name="person" size={13} color={colors.mutedForeground} />
-                <Text style={[styles.metaText, { color: colors.mutedForeground }]}>
-                  {puzzle.suspects.length} şüpheli
-                </Text>
-              </View>
-            )}
-          </View>
-        </View>
-
-        <Text
-          style={[
-            styles.puzzleTitle,
-            { color: locked ? colors.mutedForeground : colors.foreground },
-          ]}
-          numberOfLines={2}
-        >
-          {puzzle.title}
-        </Text>
-
-        {!locked && (
-          <Text
-            style={[styles.puzzleStory, { color: colors.mutedForeground }]}
-            numberOfLines={2}
-          >
-            {puzzle.story}
-          </Text>
-        )}
-
-        {locked ? (
-          <View style={[styles.playRow, { borderTopColor: colors.border }]}>
-            <Text style={[styles.playText, { color: "#D4A843" }]}>
-              Kilidi açmak için dokun
-            </Text>
-            <MaterialIcons name="lock-open" size={18} color="#D4A843" />
-          </View>
-        ) : completed && bestResult ? (
-          <View style={[styles.bestResultRow, { borderTopColor: colors.border }]}>
-            <View style={styles.bestResultItem}>
-              <MaterialIcons name="emoji-events" size={13} color={colors.primary} />
-              <Text style={[styles.bestResultLabel, { color: colors.mutedForeground }]}>
-                En İyi:
-              </Text>
-              <Text style={[styles.bestResultValue, { color: colors.primary }]}>
-                {bestResult.score} puan
-              </Text>
-            </View>
-            <View style={styles.bestResultItem}>
-              <MaterialIcons name="timer" size={13} color={colors.mutedForeground} />
-              <Text style={[styles.bestResultValue, { color: colors.mutedForeground }]}>
-                {formatTime(bestResult.timeSeconds)}
-              </Text>
-            </View>
-          </View>
-        ) : (
-          <View style={[styles.playRow, { borderTopColor: colors.border }]}>
-            <Text style={[styles.playText, { color: colors.primary }]}>
-              Oynamak için dokun
-            </Text>
-            <MaterialIcons name="chevron-right" size={20} color={colors.primary} />
-          </View>
-        )}
-      </Pressable>
-    </Animated.View>
-  );
-}
+const TIPS = [
+  { icon: "grid-on" as const, text: "Izgara satırlarını ve sütunlarını sistematik ele al — her işaret önemlidir." },
+  { icon: "auto-stories" as const, text: "İpuçlarını dikkatle oku; her kelime çözümü işaret eder." },
+  { icon: "psychology" as const, text: "Çelişkileri tespit etmek seni hızlıca çözüme götürür." },
+  { icon: "gavel" as const, text: "Yanlış suçlamalar ceza süresini ikiye katlar — emin ol, sonra suçla!" },
+];
 
 function useDailyCountdown() {
   const getSecondsUntilMidnight = () => {
@@ -203,41 +57,18 @@ function useDailyCountdown() {
   return `${h.toString().padStart(2, "0")}:${m.toString().padStart(2, "0")}:${s.toString().padStart(2, "0")}`;
 }
 
-function SectionHeader({
-  title,
-  right,
-}: {
-  title: string;
-  right?: React.ReactNode;
-}) {
-  return (
-    <View style={styles.sectionHeaderRow}>
-      <View style={styles.sectionHeaderLeft}>
-        <View style={styles.sectionAccentBar} />
-        <Text style={styles.sectionHeaderText}>{title}</Text>
-      </View>
-      {right}
-    </View>
-  );
-}
-
 export default function HomeScreen() {
   const colors = useColors();
   const insets = useSafeAreaInsets();
   const {
     gameHistory,
     startDailyPuzzle,
-    startPuzzle,
-    completedPuzzleIds,
-    bestScoreForPuzzle,
     profile,
     updateProfile,
   } = useGame();
-  const { isPremium } = usePurchase();
   const countdown = useDailyCountdown();
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [helpBtnOpen, setHelpBtnOpen] = useState(false);
-  const [showPaywall, setShowPaywall] = useState(false);
   const [showSetup, setShowSetup] = useState(false);
 
   const dailyPuzzle = getDailyPuzzle();
@@ -245,10 +76,6 @@ export default function HomeScreen() {
   const wonToday = gameHistory.some(
     (h) => h.date === todayStr && h.completed && h.puzzleId === dailyPuzzle.id
   );
-
-  const archivePuzzles = PUZZLES.filter((p) => p.id !== dailyPuzzle.id);
-  const freePuzzles = archivePuzzles.slice(0, FREE_PUZZLE_COUNT);
-  const premiumPuzzles = archivePuzzles.slice(FREE_PUZZLE_COUNT);
 
   useEffect(() => {
     AsyncStorage.getItem(ONBOARDING_KEY).then((val) => {
@@ -281,12 +108,20 @@ export default function HomeScreen() {
     router.push("/oyun");
   };
 
-  const handlePuzzlePlay = (puzzle: (typeof PUZZLES)[0]) => {
-    startPuzzle(puzzle);
-    router.push("/oyun");
-  };
+  const allEntries = [
+    ...AI_DETECTIVES.map((d) => ({ ...d, isCurrentUser: false })),
+    {
+      name: profile.name,
+      avatar: profile.avatar || "detective",
+      totalScore: profile.totalScore,
+      gamesWon: profile.gamesWon,
+      maxStreak: profile.maxStreak,
+      isCurrentUser: true,
+    },
+  ].sort((a, b) => b.totalScore - a.totalScore);
 
-  const premiumLockedCount = isPremium ? 0 : premiumPuzzles.length;
+  const myRank = allEntries.findIndex((e) => e.isCurrentUser) + 1;
+  const personAbove = myRank > 1 ? allEntries[myRank - 2] : null;
 
   return (
     <>
@@ -503,89 +338,92 @@ export default function HomeScreen() {
           </View>
         </Animated.View>
 
-        <SectionHeader title="Başlangıç Seviyesi Vakalar" />
-
-        {freePuzzles.map((puzzle, i) => {
-          const isCompleted = completedPuzzleIds.has(puzzle.id);
-          return (
-            <PuzzleCard
-              key={puzzle.id}
-              puzzle={puzzle}
-              onPress={() => handlePuzzlePlay(puzzle)}
-              delay={300 + i * 50}
-              completed={isCompleted}
-              bestResult={isCompleted ? bestScoreForPuzzle(puzzle.id) : null}
-              locked={false}
-            />
-          );
-        })}
-
-        <SectionHeader
-          title="Premium Vaka Arşivi"
-          right={
-            !isPremium ? (
-              <Pressable
-                onPress={() => setShowPaywall(true)}
-                style={[
-                  styles.premiumChip,
-                  { backgroundColor: "#D4A84318", borderColor: "#D4A84355" },
-                ]}
-              >
-                <MaterialIcons name="lock" size={12} color="#D4A843" />
-                <Text style={[styles.premiumChipText, { color: "#D4A843" }]}>
-                  {premiumLockedCount} kilitli vaka
-                </Text>
-              </Pressable>
-            ) : null
-          }
-        />
-
-        {!isPremium && (
+        <Animated.View entering={FadeInDown.delay(280).springify()}>
           <Pressable
-            onPress={() => setShowPaywall(true)}
+            onPress={() => router.push("/liderlik")}
             style={[
-              styles.premiumBanner,
-              { backgroundColor: "#D4A84310", borderColor: "#D4A84340" },
+              styles.rankCard,
+              { backgroundColor: colors.card, borderColor: colors.border },
             ]}
           >
-            <MaterialIcons name="workspace-premium" size={20} color="#D4A843" />
-            <View style={styles.premiumBannerText}>
-              <Text style={[styles.premiumBannerTitle, { color: "#D4A843" }]}>
-                Premium Vaka Arşivi'ni Aç
+            <View style={[styles.rankCardAccent, { backgroundColor: "#D4A843" }]} />
+            <View style={styles.rankCardInner}>
+              <View style={styles.rankCardLeft}>
+                <View style={[styles.rankBadge, { backgroundColor: "#D4A84320", borderColor: "#D4A84355" }]}>
+                  <MaterialIcons name="emoji-events" size={16} color="#D4A843" />
+                  <Text style={[styles.rankBadgeText, { color: "#D4A843" }]}>
+                    Sıralama
+                  </Text>
+                </View>
+                <Text style={[styles.rankPosition, { color: colors.foreground }]}>
+                  #{myRank}
+                </Text>
+                <Text style={[styles.rankSub, { color: colors.mutedForeground }]}>
+                  {allEntries.length} dedektif arasında
+                </Text>
+              </View>
+              {personAbove ? (
+                <View style={styles.rankCardRight}>
+                  <Text style={[styles.rankAheadLabel, { color: colors.mutedForeground }]}>
+                    Önündeki
+                  </Text>
+                  <View style={[styles.rankAheadAvatar, { borderColor: `${colors.primary}40`, backgroundColor: `${colors.primary}12` }]}>
+                    <AvatarDisplay
+                      avatar={personAbove.avatar || "detective"}
+                      size={28}
+                      color={colors.mutedForeground}
+                      backgroundColor="transparent"
+                    />
+                  </View>
+                  <Text
+                    style={[styles.rankAheadName, { color: colors.foreground }]}
+                    numberOfLines={1}
+                  >
+                    {personAbove.name}
+                  </Text>
+                  <Text style={[styles.rankAheadScore, { color: "#D4A843" }]}>
+                    {(personAbove.totalScore - profile.totalScore).toLocaleString("tr-TR")} puan fark
+                  </Text>
+                </View>
+              ) : (
+                <View style={styles.rankCardRight}>
+                  <MaterialIcons name="emoji-events" size={32} color="#D4A843" />
+                  <Text style={[styles.rankLeaderText, { color: "#D4A843" }]}>
+                    Sen lidersin!
+                  </Text>
+                </View>
+              )}
+            </View>
+            <View style={styles.rankCardFooter}>
+              <Text style={[styles.rankCardFooterText, { color: colors.mutedForeground }]}>
+                Tam sıralamayı gör
               </Text>
-              <Text style={[styles.premiumBannerSub, { color: "#D4A84399" }]}>
-                {premiumLockedCount} ek vaka · Tek seferlik satın al
+              <MaterialIcons name="chevron-right" size={16} color={colors.mutedForeground} />
+            </View>
+          </Pressable>
+        </Animated.View>
+
+        <Animated.View entering={FadeInDown.delay(340).springify()}>
+          <View style={[styles.tipsCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
+            <View style={styles.tipsHeader}>
+              <MaterialIcons name="lightbulb-outline" size={16} color={colors.primary} />
+              <Text style={[styles.tipsTitle, { color: colors.primary }]}>
+                Dedektif İpuçları
               </Text>
             </View>
-            <MaterialIcons name="chevron-right" size={20} color="#D4A843" />
-          </Pressable>
-        )}
-
-        {premiumPuzzles.map((puzzle, i) => {
-          const isCompleted = completedPuzzleIds.has(puzzle.id);
-          const isLocked = !isPremium;
-          return (
-            <PuzzleCard
-              key={puzzle.id}
-              puzzle={puzzle}
-              onPress={() => {
-                if (isLocked) {
-                  setShowPaywall(true);
-                } else {
-                  handlePuzzlePlay(puzzle);
-                }
-              }}
-              delay={300 + (freePuzzles.length + i) * 40}
-              completed={isCompleted && !isLocked}
-              bestResult={
-                isCompleted && !isLocked ? bestScoreForPuzzle(puzzle.id) : null
-              }
-              locked={isLocked}
-            />
-          );
-        })}
+            {TIPS.map((tip, i) => (
+              <View key={i} style={[styles.tipRow, i > 0 && { borderTopWidth: 1, borderTopColor: colors.border }]}>
+                <View style={[styles.tipIconBox, { backgroundColor: `${colors.primary}15` }]}>
+                  <MaterialIcons name={tip.icon} size={14} color={colors.primary} />
+                </View>
+                <Text style={[styles.tipText, { color: colors.mutedForeground }]}>
+                  {tip.text}
+                </Text>
+              </View>
+            ))}
+          </View>
+        </Animated.View>
       </ScrollView>
-      <PaywallModal visible={showPaywall} onClose={() => setShowPaywall(false)} />
     </>
   );
 }
@@ -704,6 +542,14 @@ const styles = StyleSheet.create({
   playNowBtn: { flexDirection: "row", alignItems: "center", gap: 6 },
   playNowText: { fontSize: 15, fontWeight: "700" },
 
+  diffBadge: {
+    borderRadius: 6,
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+    borderWidth: 1,
+  },
+  diffText: { fontSize: 11, fontWeight: "700" },
+
   statsRow: {
     flexDirection: "row",
     gap: 10,
@@ -728,119 +574,93 @@ const styles = StyleSheet.create({
   statValue: { fontSize: 22, fontWeight: "700", marginTop: 4 },
   statLabel: { fontSize: 11, fontWeight: "500" },
 
-  sectionHeaderRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    marginTop: 6,
-  },
-  sectionHeaderLeft: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 8,
-  },
-  sectionAccentBar: {
-    width: 3,
-    height: 18,
-    backgroundColor: "#D4A843",
-    borderRadius: 2,
-  },
-  sectionHeaderText: {
-    fontSize: 16,
-    fontWeight: "800",
-    color: "#E8E8E8",
-    letterSpacing: 1,
-  },
-  premiumChip: {
-    flexDirection: "row",
-    alignItems: "center",
-    borderRadius: 8,
-    borderWidth: 1,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    gap: 4,
-  },
-  premiumChipText: { fontSize: 11, fontWeight: "700" },
-
-  premiumBanner: {
-    flexDirection: "row",
-    alignItems: "center",
-    borderRadius: 12,
-    borderWidth: 1,
-    paddingHorizontal: 14,
-    paddingVertical: 12,
-    gap: 12,
-    marginBottom: 2,
-  },
-  premiumBannerText: { flex: 1 },
-  premiumBannerTitle: { fontSize: 14, fontWeight: "700" },
-  premiumBannerSub: { fontSize: 12, marginTop: 1 },
-
-  puzzleCard: {
+  rankCard: {
     borderRadius: 14,
     borderWidth: 1,
-    padding: 14,
-    gap: 8,
-    marginBottom: 4,
     overflow: "hidden",
   },
-  puzzleCardTop: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
+  rankCardAccent: {
+    height: 2,
+    borderRadius: 0,
   },
-  puzzleCardRight: { flexDirection: "row", alignItems: "center" },
-  puzzleCardMeta: { flexDirection: "row", alignItems: "center", gap: 4 },
-  metaText: { fontSize: 12 },
-  diffBadge: {
-    borderRadius: 6,
-    paddingHorizontal: 8,
-    paddingVertical: 3,
-    borderWidth: 1,
-  },
-  diffText: { fontSize: 11, fontWeight: "700" },
-  puzzleTitle: { fontSize: 15, fontWeight: "700", lineHeight: 22 },
-  puzzleStory: { fontSize: 12, lineHeight: 18 },
-  solvedBadge: {
+  rankCardInner: {
     flexDirection: "row",
-    alignItems: "center",
-    borderRadius: 6,
-    paddingHorizontal: 8,
-    paddingVertical: 3,
-    borderWidth: 1,
+    padding: 14,
+    gap: 12,
+  },
+  rankCardLeft: {
+    flex: 1,
     gap: 4,
   },
-  solvedText: { fontSize: 11, fontWeight: "700" },
-  lockBadge: {
+  rankBadge: {
     flexDirection: "row",
     alignItems: "center",
-    borderRadius: 6,
+    gap: 5,
     paddingHorizontal: 8,
-    paddingVertical: 3,
+    paddingVertical: 4,
+    borderRadius: 8,
     borderWidth: 1,
+    alignSelf: "flex-start",
+  },
+  rankBadgeText: { fontSize: 11, fontWeight: "700" },
+  rankPosition: { fontSize: 34, fontWeight: "900", lineHeight: 40 },
+  rankSub: { fontSize: 11, fontWeight: "500" },
+  rankCardRight: {
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 4,
+    minWidth: 90,
+  },
+  rankAheadLabel: { fontSize: 10, fontWeight: "600" },
+  rankAheadAvatar: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    borderWidth: 1.5,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  rankAheadName: { fontSize: 12, fontWeight: "700", textAlign: "center" },
+  rankAheadScore: { fontSize: 11, fontWeight: "600", textAlign: "center" },
+  rankLeaderText: { fontSize: 13, fontWeight: "700", textAlign: "center" },
+  rankCardFooter: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-end",
+    paddingHorizontal: 14,
+    paddingBottom: 10,
     gap: 4,
   },
-  lockText: { fontSize: 11, fontWeight: "700" },
-  playRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    borderTopWidth: 1,
-    paddingTop: 10,
+  rankCardFooterText: { fontSize: 12, fontWeight: "500" },
+
+  tipsCard: {
+    borderRadius: 14,
+    borderWidth: 1,
+    overflow: "hidden",
   },
-  playText: { fontSize: 13, fontWeight: "600" },
-  bestResultRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    borderTopWidth: 1,
-    paddingTop: 10,
-  },
-  bestResultItem: {
+  tipsHeader: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 4,
+    gap: 8,
+    paddingHorizontal: 14,
+    paddingTop: 14,
+    paddingBottom: 10,
   },
-  bestResultLabel: { fontSize: 12 },
-  bestResultValue: { fontSize: 12, fontWeight: "600" },
+  tipsTitle: { fontSize: 13, fontWeight: "700", letterSpacing: 0.5 },
+  tipRow: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+    gap: 10,
+    paddingHorizontal: 14,
+    paddingVertical: 10,
+  },
+  tipIconBox: {
+    width: 26,
+    height: 26,
+    borderRadius: 8,
+    alignItems: "center",
+    justifyContent: "center",
+    flexShrink: 0,
+  },
+  tipText: { flex: 1, fontSize: 12, lineHeight: 18 },
 });
