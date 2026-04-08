@@ -138,7 +138,7 @@ export default function HomeScreen() {
         onDone={handleSetupDone}
       />
 
-      <Modal visible={showStreakInfo} transparent animationType="fade">
+      <Modal visible={showStreakInfo} transparent animationType="fade" onRequestClose={() => setShowStreakInfo(false)}>
         <Pressable
           style={styles.streakModalOverlay}
           onPress={() => setShowStreakInfo(false)}
@@ -445,7 +445,7 @@ export default function HomeScreen() {
                   </Text>
                   <View style={{ flex: 1 }} />
                   <Text style={[styles.rankAheadScore, { color: "#D4A843" }]}>
-                    +{scoreDiff.toLocaleString("tr-TR")} puan
+                    {scoreDiff.toLocaleString("tr-TR")} puan geride
                   </Text>
                 </View>
               ) : (
