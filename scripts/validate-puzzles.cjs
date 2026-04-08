@@ -1,15 +1,19 @@
 #!/usr/bin/env node
 /**
- * Structural validation script for puzzles.ts
+ * Logical solvability validation script for puzzles.ts
  *
  * Checks every puzzle in artifacts/dedektif/data/puzzles.ts for:
- *   1. Solution IDs (suspectId, weaponId, locationId) reference valid entities.
+ *   1. Solution IDs reference valid declared entities.
  *   2. Every clue has isBonus explicitly set.
  *   3. Every puzzle has at least 4 free clues and at least 2 bonus clues.
  *   4. Difficulty is one of: caylik, dedektif, baskomiser.
  *   5. dayIndex is present.
+ *   6. solvabilityMeta is present with freeEliminations and bonusEliminations.
+ *   7. LOGICAL CHECK — free + bonus eliminations leave exactly the solution
+ *      (one suspect, one weapon, one location), and eliminated IDs are valid.
+ *   8. Free clues alone eliminate at least 2 options (not trivially easy).
  *
- * Run: node scripts/validate-puzzles.js   (from workspace root)
+ * Run: node scripts/validate-puzzles.cjs   (from workspace root)
  */
 
 const fs = require("fs");
@@ -23,7 +27,6 @@ const PUZZLES_FILE = path.resolve(
 
 const raw = fs.readFileSync(PUZZLES_FILE, "utf8");
 
-// Extract all values for a given unquoted key like   id: "s1"
 function extractAll(src, key) {
   const re = new RegExp(`\\b${key}:\\s*"([^"]+)"`, "g");
   const results = [];
@@ -42,7 +45,40 @@ function countOccurrences(src, pattern) {
   return (src.match(new RegExp(pattern, "g")) || []).length;
 }
 
-// Split file into per-puzzle blocks by looking for the `id: "pNNN"` line
+function extractJsonArray(src, key) {
+  const re = new RegExp(`\\b${key}:\\s*(\\[[^\\]]*\\])`);
+  const m = src.match(re);
+  if (!m) return null;
+  try {
+    return JSON.parse(m[1].replace(/'/g, '"'));
+  } catch {
+    return null;
+  }
+}
+
+function extractSolvabilityMeta(src) {
+  const metaRe = /solvabilityMeta:\s*\{([^}]+)\}/s;
+  const m = src.match(metaRe);
+  if (!m) return null;
+  const block = m[1];
+
+  const freeRe = /freeEliminations:\s*(\[[^\]]*\])/;
+  const bonusRe = /bonusEliminations:\s*(\[[^\]]*\])/;
+
+  const freeMatch = block.match(freeRe);
+  const bonusMatch = block.match(bonusRe);
+
+  if (!freeMatch || !bonusMatch) return null;
+
+  try {
+    const freeEliminations = JSON.parse(freeMatch[1].replace(/'/g, '"'));
+    const bonusEliminations = JSON.parse(bonusMatch[1].replace(/'/g, '"'));
+    return { freeEliminations, bonusEliminations };
+  } catch {
+    return null;
+  }
+}
+
 const startPositions = [];
 const blockRe = /\n\s*id:\s*"(p\d+)"/g;
 let match;
@@ -64,31 +100,29 @@ let failed = 0;
 for (const { id, src } of puzzleBlocks) {
   const puzzleErrors = [];
 
-  // 1. Collect declared entity IDs (filter out clue IDs like c1, c2...)
   const allIds = extractAll(src, "id");
   const suspectIds = allIds.filter((v) => /^s\d+$/.test(v));
   const weaponIds = allIds.filter((v) => /^w\d+$/.test(v));
   const locationIds = allIds.filter((v) => /^l\d+$/.test(v));
+  const allEntityIds = [...suspectIds, ...weaponIds, ...locationIds];
 
-  // 2. Check solution references
   const solutionMatch = src.match(
     /solution:\s*\{\s*suspectId:\s*"([^"]+)",\s*weaponId:\s*"([^"]+)",\s*locationId:\s*"([^"]+)"/
   );
+  let solutionSuspect = null, solutionWeapon = null, solutionLocation = null;
+
   if (!solutionMatch) {
     puzzleErrors.push("missing or malformed `solution` field");
   } else {
-    const [, sId, wId, lId] = solutionMatch;
-    if (!suspectIds.includes(sId))
-      puzzleErrors.push(`solution.suspectId "${sId}" not declared in suspects`);
-    if (!weaponIds.includes(wId))
-      puzzleErrors.push(`solution.weaponId "${wId}" not declared in weapons`);
-    if (!locationIds.includes(lId))
-      puzzleErrors.push(
-        `solution.locationId "${lId}" not declared in locations`
-      );
+    [, solutionSuspect, solutionWeapon, solutionLocation] = solutionMatch;
+    if (!suspectIds.includes(solutionSuspect))
+      puzzleErrors.push(`solution.suspectId "${solutionSuspect}" not declared in suspects`);
+    if (!weaponIds.includes(solutionWeapon))
+      puzzleErrors.push(`solution.weaponId "${solutionWeapon}" not declared in weapons`);
+    if (!locationIds.includes(solutionLocation))
+      puzzleErrors.push(`solution.locationId "${solutionLocation}" not declared in locations`);
   }
 
-  // 3. Count free and bonus clues
   const freeClues = countOccurrences(src, "isBonus: false");
   const bonusClues = countOccurrences(src, "isBonus: true");
 
@@ -97,26 +131,96 @@ for (const { id, src } of puzzleBlocks) {
   if (bonusClues < 2)
     puzzleErrors.push(`only ${bonusClues} bonus clue(s); need ≥ 2`);
 
-  // 4. Ensure every clue object has isBonus set (count { id: "c... blocks)
   const clueBlockCount = countOccurrences(src, '\\bid:\\s*"c\\d+"');
   if (freeClues + bonusClues !== clueBlockCount) {
     puzzleErrors.push(
-      `${clueBlockCount} clue(s) total but only ${
-        freeClues + bonusClues
-      } have isBonus set`
+      `${clueBlockCount} clue(s) total but only ${freeClues + bonusClues} have isBonus set`
     );
   }
 
-  // 5. Difficulty validation
   const diff = extractFirst(src, "difficulty");
   if (!["caylik", "dedektif", "baskomiser"].includes(diff)) {
     puzzleErrors.push(`unknown difficulty "${diff}"`);
   }
 
-  // 6. dayIndex present
   if (!src.match(/\bdayIndex:\s*\d+/)) puzzleErrors.push("missing dayIndex");
 
-  const label = `${id} (${diff}, ${suspectIds.length}s×${weaponIds.length}w×${locationIds.length}l, ${freeClues}f+${bonusClues}b)`;
+  const meta = extractSolvabilityMeta(src);
+  if (!meta) {
+    puzzleErrors.push("missing or malformed solvabilityMeta block");
+  } else {
+    const { freeEliminations, bonusEliminations } = meta;
+    const allEliminations = [...freeEliminations, ...bonusEliminations];
+
+    for (const elim of allEliminations) {
+      if (!allEntityIds.includes(elim)) {
+        puzzleErrors.push(`solvabilityMeta eliminates unknown ID "${elim}"`);
+      }
+    }
+
+    const hasDuplicates = allEliminations.length !== new Set(allEliminations).size;
+    if (hasDuplicates) {
+      puzzleErrors.push("solvabilityMeta has duplicate elimination IDs");
+    }
+
+    if (freeEliminations.length < 2) {
+      puzzleErrors.push(
+        `freeEliminations has only ${freeEliminations.length} item(s); free clues must narrow down ≥ 2 options`
+      );
+    }
+
+    if (solutionSuspect && solutionWeapon && solutionLocation) {
+      const elimSet = new Set(allEliminations);
+
+      const remainingSuspects = suspectIds.filter((s) => !elimSet.has(s));
+      const remainingWeapons = weaponIds.filter((w) => !elimSet.has(w));
+      const remainingLocations = locationIds.filter((l) => !elimSet.has(l));
+
+      const solutionInEliminations =
+        elimSet.has(solutionSuspect) ||
+        elimSet.has(solutionWeapon) ||
+        elimSet.has(solutionLocation);
+
+      if (solutionInEliminations) {
+        puzzleErrors.push(
+          "solvabilityMeta eliminates the solution itself — contradiction!"
+        );
+      } else {
+        if (remainingSuspects.length !== 1) {
+          puzzleErrors.push(
+            `after all eliminations: ${remainingSuspects.length} suspect(s) remain [${remainingSuspects.join(",")}]; need exactly 1`
+          );
+        } else if (remainingSuspects[0] !== solutionSuspect) {
+          puzzleErrors.push(
+            `after all eliminations: remaining suspect is "${remainingSuspects[0]}" but solution is "${solutionSuspect}"`
+          );
+        }
+
+        if (remainingWeapons.length !== 1) {
+          puzzleErrors.push(
+            `after all eliminations: ${remainingWeapons.length} weapon(s) remain [${remainingWeapons.join(",")}]; need exactly 1`
+          );
+        } else if (remainingWeapons[0] !== solutionWeapon) {
+          puzzleErrors.push(
+            `after all eliminations: remaining weapon is "${remainingWeapons[0]}" but solution is "${solutionWeapon}"`
+          );
+        }
+
+        if (remainingLocations.length !== 1) {
+          puzzleErrors.push(
+            `after all eliminations: ${remainingLocations.length} location(s) remain [${remainingLocations.join(",")}]; need exactly 1`
+          );
+        } else if (remainingLocations[0] !== solutionLocation) {
+          puzzleErrors.push(
+            `after all eliminations: remaining location is "${remainingLocations[0]}" but solution is "${solutionLocation}"`
+          );
+        }
+      }
+    }
+  }
+
+  const diff2 = extractFirst(src, "difficulty");
+  const label = `${id} (${diff2}, ${suspectIds.length}s×${weaponIds.length}w×${locationIds.length}l, ${freeClues}f+${bonusClues}b)`;
 
   if (puzzleErrors.length === 0) {
     console.log(`  ✓ ${label}`);
@@ -138,5 +242,5 @@ if (failed > 0) {
   console.error("\nValidation FAILED — fix the errors listed above.");
   process.exit(1);
 } else {
-  console.log("\nAll puzzles pass structural validation ✅");
+  console.log("\nAll puzzles pass logical solvability validation ✅");
 }

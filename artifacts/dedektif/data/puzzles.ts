@@ -39,6 +39,11 @@ export interface Clue {
   isBonus: boolean;
 }
 
+export interface SolvabilityMeta {
+  freeEliminations: string[];
+  bonusEliminations: string[];
+}
+
 export interface Solution {
   suspectId: string;
   weaponId: string;
@@ -58,6 +63,7 @@ export interface Puzzle {
   solution: Solution;
   difficulty: Difficulty;
   dayIndex: number;
+  solvabilityMeta: SolvabilityMeta;
 }
 
 export const PUZZLES: Puzzle[] = [
@@ -121,6 +127,10 @@ export const PUZZLES: Puzzle[] = [
         isBonus: true,
       },
     ],
+    solvabilityMeta: {
+      freeEliminations: ["l3", "s1", "w2", "s3"],
+      bonusEliminations: ["w3", "l1"],
+    },
     solution: { suspectId: "s2", weaponId: "w1", locationId: "l2" },
   },
   {
@@ -183,6 +193,10 @@ export const PUZZLES: Puzzle[] = [
         isBonus: true,
       },
     ],
+    solvabilityMeta: {
+      freeEliminations: ["l3", "s1", "l1", "w1", "w3"],
+      bonusEliminations: ["s3"],
+    },
     solution: { suspectId: "s2", weaponId: "w2", locationId: "l2" },
   },
   {
@@ -245,6 +259,10 @@ export const PUZZLES: Puzzle[] = [
         isBonus: true,
       },
     ],
+    solvabilityMeta: {
+      freeEliminations: ["l1", "l3", "s2", "w2", "s1"],
+      bonusEliminations: ["w1"],
+    },
     solution: { suspectId: "s3", weaponId: "w3", locationId: "l2" },
   },
   {
@@ -307,6 +325,10 @@ export const PUZZLES: Puzzle[] = [
         isBonus: true,
       },
     ],
+    solvabilityMeta: {
+      freeEliminations: ["l2", "l3", "s3", "w2"],
+      bonusEliminations: ["w3", "s1"],
+    },
     solution: { suspectId: "s2", weaponId: "w1", locationId: "l1" },
   },
   {
@@ -369,6 +391,10 @@ export const PUZZLES: Puzzle[] = [
         isBonus: true,
       },
     ],
+    solvabilityMeta: {
+      freeEliminations: ["l2", "l3", "s2", "s3", "w2", "w3"],
+      bonusEliminations: [],
+    },
     solution: { suspectId: "s1", weaponId: "w1", locationId: "l1" },
   },
   {
@@ -431,6 +457,10 @@ export const PUZZLES: Puzzle[] = [
         isBonus: true,
       },
     ],
+    solvabilityMeta: {
+      freeEliminations: ["l1", "l3", "s3", "w3"],
+      bonusEliminations: ["w2", "s1"],
+    },
     solution: { suspectId: "s2", weaponId: "w1", locationId: "l2" },
   },
   {
@@ -496,6 +526,10 @@ export const PUZZLES: Puzzle[] = [
         isBonus: true,
       },
     ],
+    solvabilityMeta: {
+      freeEliminations: ["l4", "s1", "s2", "s4"],
+      bonusEliminations: ["w1", "w2", "w3", "l2", "l3"],
+    },
     solution: { suspectId: "s3", weaponId: "w4", locationId: "l1" },
   },
   {
@@ -558,6 +592,10 @@ export const PUZZLES: Puzzle[] = [
         isBonus: true,
       },
     ],
+    solvabilityMeta: {
+      freeEliminations: ["l3", "s2", "w3", "l1", "w2"],
+      bonusEliminations: ["s1"],
+    },
     solution: { suspectId: "s3", weaponId: "w1", locationId: "l2" },
   },
   {
@@ -620,6 +658,10 @@ export const PUZZLES: Puzzle[] = [
         isBonus: true,
       },
     ],
+    solvabilityMeta: {
+      freeEliminations: ["l2", "l3", "s3", "w1"],
+      bonusEliminations: ["s2", "w3"],
+    },
     solution: { suspectId: "s1", weaponId: "w2", locationId: "l1" },
   },
   {
@@ -685,6 +727,10 @@ export const PUZZLES: Puzzle[] = [
         isBonus: true,
       },
     ],
+    solvabilityMeta: {
+      freeEliminations: ["l1", "s4", "w2", "s1"],
+      bonusEliminations: ["l3", "l4", "w3", "w4", "s3"],
+    },
     solution: { suspectId: "s2", weaponId: "w1", locationId: "l2" },
   },
   {
@@ -747,6 +793,10 @@ export const PUZZLES: Puzzle[] = [
         isBonus: true,
       },
     ],
+    solvabilityMeta: {
+      freeEliminations: ["l2", "l3", "s1", "w3", "w1"],
+      bonusEliminations: ["s3"],
+    },
     solution: { suspectId: "s2", weaponId: "w2", locationId: "l1" },
   },
   {
@@ -809,6 +859,10 @@ export const PUZZLES: Puzzle[] = [
         isBonus: true,
       },
     ],
+    solvabilityMeta: {
+      freeEliminations: ["l3", "l2", "s1", "w1", "w3"],
+      bonusEliminations: ["s3"],
+    },
     solution: { suspectId: "s2", weaponId: "w2", locationId: "l1" },
   },
   {
@@ -871,6 +925,10 @@ export const PUZZLES: Puzzle[] = [
         isBonus: true,
       },
     ],
+    solvabilityMeta: {
+      freeEliminations: ["l1", "l3", "s3", "s1"],
+      bonusEliminations: ["w2", "w3"],
+    },
     solution: { suspectId: "s2", weaponId: "w1", locationId: "l2" },
   },
   {
@@ -936,6 +994,10 @@ export const PUZZLES: Puzzle[] = [
         isBonus: true,
       },
     ],
+    solvabilityMeta: {
+      freeEliminations: ["l2", "l4", "s4", "s2", "s1"],
+      bonusEliminations: ["w1", "w3", "w4", "l1"],
+    },
     solution: { suspectId: "s3", weaponId: "w2", locationId: "l3" },
   },
   {
@@ -998,6 +1060,10 @@ export const PUZZLES: Puzzle[] = [
         isBonus: true,
       },
     ],
+    solvabilityMeta: {
+      freeEliminations: ["l3", "l2", "s2", "w2"],
+      bonusEliminations: ["w3", "s3"],
+    },
     solution: { suspectId: "s1", weaponId: "w1", locationId: "l1" },
   },
   {
@@ -1060,6 +1126,10 @@ export const PUZZLES: Puzzle[] = [
         isBonus: true,
       },
     ],
+    solvabilityMeta: {
+      freeEliminations: ["l1", "s3", "w2", "w3"],
+      bonusEliminations: ["l2", "s1"],
+    },
     solution: { suspectId: "s2", weaponId: "w1", locationId: "l3" },
   },
   {
@@ -1122,6 +1192,10 @@ export const PUZZLES: Puzzle[] = [
         isBonus: true,
       },
     ],
+    solvabilityMeta: {
+      freeEliminations: ["l2", "l3", "s3", "w3", "w2"],
+      bonusEliminations: ["s1"],
+    },
     solution: { suspectId: "s2", weaponId: "w1", locationId: "l1" },
   },
   {
@@ -1187,6 +1261,10 @@ export const PUZZLES: Puzzle[] = [
         isBonus: true,
       },
     ],
+    solvabilityMeta: {
+      freeEliminations: ["l2", "l3", "l4", "s4", "s3", "s2"],
+      bonusEliminations: ["w1", "w2", "w3"],
+    },
     solution: { suspectId: "s1", weaponId: "w4", locationId: "l1" },
   },
   {
@@ -1252,6 +1330,10 @@ export const PUZZLES: Puzzle[] = [
         isBonus: true,
       },
     ],
+    solvabilityMeta: {
+      freeEliminations: ["l3", "l4", "s4", "s3", "w1", "w3", "w4", "l2"],
+      bonusEliminations: ["s1"],
+    },
     solution: { suspectId: "s2", weaponId: "w2", locationId: "l1" },
   },
   {
@@ -1314,6 +1396,10 @@ export const PUZZLES: Puzzle[] = [
         isBonus: true,
       },
     ],
+    solvabilityMeta: {
+      freeEliminations: ["l1", "l2", "w2", "w3", "s3", "s1"],
+      bonusEliminations: [],
+    },
     solution: { suspectId: "s2", weaponId: "w1", locationId: "l3" },
   },
   {
@@ -1346,6 +1432,10 @@ export const PUZZLES: Puzzle[] = [
       { id: "c5", text: "Kule tepesine erişim yalnızca güvenlik yetkilisinin master anahtarıyla mümkündü; master anahtar Bekir'de kayıtlı.", type: "direct", isBonus: true },
       { id: "c6", text: "Kule tepesindeki parmaklık çevresinden alınan DNA örneği Bekir Yıldız ile eşleşti.", type: "forensic", isBonus: true },
     ],
+    solvabilityMeta: {
+      freeEliminations: ["w2", "w3", "l2", "l3", "s2", "s1"],
+      bonusEliminations: [],
+    },
     solution: { suspectId: "s3", weaponId: "w1", locationId: "l1" },
   },
   {
@@ -1379,6 +1469,10 @@ export const PUZZLES: Puzzle[] = [
       { id: "c6", text: "Kurbanın çay fincanı üzerinde yalnızca Nazife Hanım'ın parmak izleri belirlendi; zehir, çay içindeydi.", type: "forensic", isBonus: true },
       { id: "c7", text: "Selamlık salonunun özel demlik rafında Nazife'ye ait ilaç tozu kalıntıları bulundu.", type: "evidence", isBonus: true },
     ],
+    solvabilityMeta: {
+      freeEliminations: ["w2", "w3", "l1", "l3", "s2", "s3"],
+      bonusEliminations: [],
+    },
     solution: { suspectId: "s1", weaponId: "w1", locationId: "l2" },
   },
   {
@@ -1411,6 +1505,10 @@ export const PUZZLES: Puzzle[] = [
       { id: "c5", text: "Motor dairesine erişmek için kapı kodu gerekiyor; kod yalnızca personelde kayıtlı, Muzaffer'in kodu bildiği göreve başlarken imzalattırıldı.", type: "direct", isBonus: true },
       { id: "c6", text: "Motor dairesinin kapı çerçevesinde Muzaffer'e ait parmak izleri ve halat lifi bulundu.", type: "evidence", isBonus: true },
     ],
+    solvabilityMeta: {
+      freeEliminations: ["w1", "w3", "l1", "l3", "s1", "s3"],
+      bonusEliminations: [],
+    },
     solution: { suspectId: "s2", weaponId: "w2", locationId: "l2" },
   },
   {
@@ -1443,6 +1541,10 @@ export const PUZZLES: Puzzle[] = [
       { id: "c5", text: "Orhan Aras'ın deposundaki envanter defterinde kayıtlı mermer büstün eksik olduğu belirlendi; benzer boyut ve ağırlıkta iz olay yerinde.", type: "direct", isBonus: true },
       { id: "c6", text: "Depodaki kan izleri üzerinde yapılan analiz Orhan Aras'ın DNA'sıyla örtüştü.", type: "forensic", isBonus: true },
     ],
+    solvabilityMeta: {
+      freeEliminations: ["w1", "w2", "l1", "l3", "s2", "s3"],
+      bonusEliminations: [],
+    },
     solution: { suspectId: "s1", weaponId: "w3", locationId: "l2" },
   },
   {
@@ -1476,6 +1578,10 @@ export const PUZZLES: Puzzle[] = [
       { id: "c6", text: "Geçitte bulunan çizme izi boyutu ve şekli Teğmen Ferhat'ın askeri botlarıyla örtüşüyor; kılıf parçası da ona ait.", type: "evidence", isBonus: true },
       { id: "c7", text: "Ferhat'ın kıyafetinde bıçakla uyumlu kesik ve olay yerine ait kan grubu tespit edildi.", type: "forensic", isBonus: true },
     ],
+    solvabilityMeta: {
+      freeEliminations: ["w1", "w3", "l1", "l3", "s1", "s2"],
+      bonusEliminations: [],
+    },
     solution: { suspectId: "s3", weaponId: "w2", locationId: "l2" },
   },
   {
@@ -1508,6 +1614,10 @@ export const PUZZLES: Puzzle[] = [
       { id: "c5", text: "Ayşen Demir, kurbanla o gün tur kapsamında Yerebatan Sarnıcı'nı ziyaret etti; son yarım saati ikibaşına geçirdiler.", type: "direct", isBonus: true },
       { id: "c6", text: "Sarnıçtaki şişenin üzerinde Ayşen Demir'e ait parmak izleri tespit edildi.", type: "forensic", isBonus: true },
     ],
+    solvabilityMeta: {
+      freeEliminations: ["w1", "w2", "l1", "l3", "s1", "s3"],
+      bonusEliminations: [],
+    },
     solution: { suspectId: "s2", weaponId: "w3", locationId: "l2" },
   },
   {
@@ -1540,6 +1650,10 @@ export const PUZZLES: Puzzle[] = [
       { id: "c5", text: "Fayton bakım defterleri ve araç envanter kayıtları, fren sistemine son el atan kişinin Hayriye olduğunu gösteriyor.", type: "direct", isBonus: true },
       { id: "c6", text: "Hayriye'nin banka hesabına Fikret Bey adına açılmış anonim bir hesaptan nakit aktarım yapıldığı tespit edildi.", type: "evidence", isBonus: true },
     ],
+    solvabilityMeta: {
+      freeEliminations: ["w1", "w2", "l1", "l2", "s2", "s3"],
+      bonusEliminations: [],
+    },
     solution: { suspectId: "s1", weaponId: "w3", locationId: "l3" },
   },
   {
@@ -1572,6 +1686,10 @@ export const PUZZLES: Puzzle[] = [
       { id: "c5", text: "Garson ifadesine göre Esma Hanım, kurbana kendi özel koleksiyonundan ayrı bir şişeyle servis yaptı.", type: "direct", isBonus: true },
       { id: "c6", text: "Zehirlenen şişe Esma Hanım'ın kişisel dolabından çıktı; parmak izleri de yalnızca ona ait.", type: "evidence", isBonus: true },
     ],
+    solvabilityMeta: {
+      freeEliminations: ["w1", "w2", "l1", "l3", "s1", "s3"],
+      bonusEliminations: [],
+    },
     solution: { suspectId: "s2", weaponId: "w3", locationId: "l2" },
   },
   {
@@ -1605,6 +1723,10 @@ export const PUZZLES: Puzzle[] = [
       { id: "c6", text: "Hançer Cemil'in kişisel çantasında ele geçirildi; enjektörün üzerinde Cemil'in parmak izleri ve DNA'sı tespit edildi.", type: "evidence", isBonus: true },
       { id: "c7", text: "Cemil'in eski bir özel koleksiyoncuyla yazışmaları bulundu; hançerin yüksek fiyata satışı planlanıyordu.", type: "direct", isBonus: true },
     ],
+    solvabilityMeta: {
+      freeEliminations: ["w1", "w3", "l1", "l3", "s1", "s2"],
+      bonusEliminations: [],
+    },
     solution: { suspectId: "s3", weaponId: "w2", locationId: "l2" },
   },
   {
@@ -1637,6 +1759,10 @@ export const PUZZLES: Puzzle[] = [
       { id: "c5", text: "Hakan, kurbanla servis çıkışında tartıştığını gösteren kamera görüntüsü mevcut; ses seviyesi yüzünden dövüşe döndü.", type: "direct", isBonus: true },
       { id: "c6", text: "Servis geçidinde bulunan nesne üzerinde Hakan'a ait parmak izleri belirlendi.", type: "evidence", isBonus: true },
     ],
+    solvabilityMeta: {
+      freeEliminations: ["w1", "w2", "l1", "l2", "s1", "s2"],
+      bonusEliminations: [],
+    },
     solution: { suspectId: "s3", weaponId: "w3", locationId: "l3" },
   },
 ];
