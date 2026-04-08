@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
+  Image,
   Platform,
   Pressable,
   ScrollView,
@@ -301,17 +302,24 @@ export default function HomeScreen() {
       >
         <Animated.View entering={FadeInDown.delay(0).springify()}>
           <View style={styles.headerRow}>
-            <View>
-              <Text style={[styles.greetingSmall, { color: colors.mutedForeground }]}>
-                Merhaba, {profile.name}
-              </Text>
-              <Text style={[styles.appTitle, { color: colors.primary }]}>
-                FAİLİ MEÇHUL
-              </Text>
-              <View style={[styles.titleUnderline, { backgroundColor: colors.primary }]} />
-              <Text style={[styles.appSubtitle, { color: colors.mutedForeground }]}>
-                Dedektif Bulmaca Oyunu
-              </Text>
+            <View style={styles.headerBrand}>
+              <Image
+                source={require("@/assets/images/logo.png")}
+                style={styles.headerLogo}
+                resizeMode="contain"
+              />
+              <View>
+                <Text style={[styles.greetingSmall, { color: colors.mutedForeground }]}>
+                  Merhaba, {profile.name}
+                </Text>
+                <Text style={[styles.appTitle, { color: colors.primary }]}>
+                  FAİLİ MEÇHUL
+                </Text>
+                <View style={[styles.titleUnderline, { backgroundColor: colors.primary }]} />
+                <Text style={[styles.appSubtitle, { color: colors.mutedForeground }]}>
+                  Dedektif Bulmaca Oyunu
+                </Text>
+              </View>
             </View>
             <View style={styles.headerRight}>
               <Pressable onPress={handleHelpPress} style={styles.helpBtn} hitSlop={8}>
@@ -581,18 +589,28 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "flex-end",
   },
+  headerBrand: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+  },
+  headerLogo: {
+    width: 52,
+    height: 52,
+    borderRadius: 26,
+  },
   greetingSmall: { fontSize: 13, fontWeight: "500", marginBottom: 2 },
   appTitle: {
-    fontSize: 28,
+    fontSize: 22,
     fontWeight: "900",
-    letterSpacing: 4,
+    letterSpacing: 3,
   },
   titleUnderline: {
     height: 2,
-    width: 48,
+    width: 40,
     borderRadius: 1,
-    marginTop: 4,
-    marginBottom: 4,
+    marginTop: 3,
+    marginBottom: 3,
   },
   appSubtitle: { fontSize: 12, fontWeight: "500" },
   headerRight: {

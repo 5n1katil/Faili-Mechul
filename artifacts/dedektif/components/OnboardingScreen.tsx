@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import type { ComponentProps } from "react";
 import {
+  Image,
   Modal,
   Platform,
   Pressable,
@@ -351,6 +352,12 @@ export default function OnboardingScreen({ visible, onDone, closeLabel }: Props)
         >
           {slide.showGrid ? (
             <MiniGrid />
+          ) : slideIndex === 0 ? (
+            <Image
+              source={require("@/assets/images/logo.png")}
+              style={styles.logoImage}
+              resizeMode="contain"
+            />
           ) : (
             <View style={[styles.iconWrapper, { backgroundColor: slide.iconBg }]}>
               <View style={[styles.iconCircle, { borderColor: slide.iconColor + "60", backgroundColor: slide.iconBg }]}>
@@ -443,6 +450,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     gap: 14,
     paddingHorizontal: 8,
+  },
+  logoImage: {
+    width: 120,
+    height: 120,
+    borderRadius: 60,
+    marginBottom: 8,
   },
   iconWrapper: {
     width: 120,
