@@ -45,10 +45,14 @@ function isRevenueCatConfigured(): boolean {
   return Platform.OS !== "web" && !!getNativeKey();
 }
 
+async function getCachedPremium(): Promise<boolean> {
+  const cached = await AsyncStorage.getItem(PREMIUM_CACHE_KEY);
+  return cached === "1";
+}
+
 async function checkEntitlement(): Promise<boolean> {
   if (Platform.OS === "web") {
-    const cached = await AsyncStorage.getItem(PREMIUM_CACHE_KEY);
-    return cached === "1";
+    return getCachedPremium();
   }
   if (!isRevenueCatConfigured()) {
     return false;
@@ -56,9 +60,11 @@ async function checkEntitlement(): Promise<boolean> {
   try {
     const Purchases = require("react-native-purchases").default;
     const info = await Purchases.getCustomerInfo();
-    return !!info.entitlements.active[ENTITLEMENT_ID];
+    const active = !!info.entitlements.active[ENTITLEMENT_ID];
+    await AsyncStorage.setItem(PREMIUM_CACHE_KEY, active ? "1" : "0");
+    return active;
   } catch {
-    return false;
+    return getCachedPremium();
   }
 }
 
