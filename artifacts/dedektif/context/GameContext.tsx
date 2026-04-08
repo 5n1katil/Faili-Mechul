@@ -431,19 +431,21 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
           newStreak
         );
 
-        if (gameState.isRanked) {
-          const record: GameRecord = {
-            puzzleId: gameState.puzzle.id,
-            date: today,
-            score,
-            timeSeconds: gameState.timeElapsed,
-            wrongGuesses: gameState.wrongGuesses,
-            penaltySeconds: 0,
-            completed: true,
-            solution: { suspectId, weaponId, locationId },
-          };
+        const record: GameRecord = {
+          puzzleId: gameState.puzzle.id,
+          date: today,
+          score,
+          timeSeconds: gameState.timeElapsed,
+          wrongGuesses: gameState.wrongGuesses,
+          penaltySeconds: 0,
+          completed: true,
+          solution: { suspectId, weaponId, locationId },
+        };
 
-          const newHistory = [record, ...gameHistory];
+        const newHistory = [record, ...gameHistory];
+        saveHistory(newHistory);
+
+        if (gameState.isRanked) {
           const wins = newHistory.filter((h) => h.completed);
           const avgSolveTimeSeconds =
             wins.length > 0
@@ -473,7 +475,6 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
             avgSolveTimeSeconds,
           };
 
-          saveHistory(newHistory);
           saveProfile(newProfile);
           saveLeaderboard([...leaderboard, newLeaderEntry]);
         }
