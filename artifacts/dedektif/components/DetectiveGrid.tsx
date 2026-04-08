@@ -105,8 +105,8 @@ function GridCell({
         {mark === "question" && (
           <Text
             style={{
-              fontSize: Math.max(9, Math.floor(cellSize * 0.4)),
-              fontWeight: "700",
+              fontSize: Math.max(12, Math.floor(cellSize * 0.42)),
+              fontWeight: "900",
               color: "#D4A843",
               lineHeight: Math.max(12, Math.floor(cellSize * 0.54)),
             }}
@@ -162,27 +162,23 @@ function EntityLabel({
     onHeaderPress({ type, id: entityId, name, description, icon });
   };
 
-  const avatarSize = Math.max(22, Math.floor(cellSize * 0.62));
+  const avatarSize = Math.max(24, Math.floor(cellSize * 0.78));
   const avatarRadius = Math.floor(avatarSize / 2);
-  const avatarIconSize = Math.max(11, Math.floor(avatarSize * 0.52));
-  const nameFontSize = Math.max(7, Math.floor(cellSize * 0.2));
-  const nameLineHeight = Math.max(10, Math.floor(cellSize * 0.28));
+  const avatarIconSize = Math.max(12, Math.floor(avatarSize * 0.54));
 
   if (isRowLabel) {
     return (
       <Pressable
         onPress={onHeaderPress ? handlePress : undefined}
-        style={{ width: labelWidth, height: cellSize }}
+        style={{ width: labelWidth, height: cellSize, alignItems: "center", justifyContent: "center" }}
       >
         <Animated.View
           style={[
             {
               width: labelWidth,
               height: cellSize,
-              flexDirection: "row",
               alignItems: "center",
-              paddingHorizontal: 4,
-              gap: 4,
+              justifyContent: "center",
             },
             animStyle,
           ]}
@@ -197,7 +193,6 @@ function EntityLabel({
               backgroundColor: bg,
               alignItems: "center",
               justifyContent: "center",
-              flexShrink: 0,
             }}
           >
             <MaterialIcons
@@ -206,25 +201,12 @@ function EntityLabel({
               color={color}
             />
           </View>
-          <Text
-            style={{
-              color,
-              fontSize: nameFontSize,
-              fontWeight: "700",
-              letterSpacing: 0.1,
-              lineHeight: nameLineHeight,
-              flex: 1,
-            }}
-            numberOfLines={2}
-          >
-            {name}
-          </Text>
         </Animated.View>
       </Pressable>
     );
   }
 
-  const headerHeight = Math.max(54, Math.floor(cellSize * 1.85));
+  const headerHeight = Math.max(44, Math.floor(cellSize * 1.4));
   return (
     <Pressable
       onPress={onHeaderPress ? handlePress : undefined}
@@ -238,7 +220,6 @@ function EntityLabel({
             alignItems: "center",
             justifyContent: "flex-end",
             paddingBottom: 6,
-            gap: 4,
           },
           animStyle,
         ]}
@@ -261,20 +242,6 @@ function EntityLabel({
             color={color}
           />
         </View>
-        <Text
-          style={{
-            fontSize: nameFontSize,
-            textAlign: "center",
-            fontWeight: "700",
-            letterSpacing: 0.1,
-            lineHeight: nameLineHeight,
-            color,
-            width: cellSize,
-          }}
-          numberOfLines={2}
-        >
-          {name}
-        </Text>
       </Animated.View>
     </Pressable>
   );
@@ -294,9 +261,8 @@ export default function DetectiveGrid({
   const { cellSize, labelWidth } = useMemo(() => {
     if (containerWidth === 0) return { cellSize: 0, labelWidth: 0 };
     const numCols = suspects.length + locations.length;
-    const lw = Math.min(72, Math.floor(containerWidth * 0.22));
-    const ct = Math.floor((containerWidth - lw) / numCols);
-    return { cellSize: ct, labelWidth: lw };
+    const cs = Math.floor(containerWidth / (numCols + 1));
+    return { cellSize: cs, labelWidth: cs };
   }, [containerWidth, suspects.length, locations.length]);
 
   const cycleNextMark = useCallback((current: GridMark): GridMark => {
@@ -376,11 +342,11 @@ export default function DetectiveGrid({
             ))}
           </View>
 
-          <View style={styles.row}>
-            <View style={[styles.sectionLabel, { width: labelWidth, borderLeftColor: WEAPON_COLOR }]}>
-              <Text style={[styles.sectionLabelText, { color: WEAPON_COLOR }]}>SİLAHLAR</Text>
-            </View>
-            <View style={{ width: weaponBlockOuter, height: 1, backgroundColor: OUTER_BORDER_COLOR }} />
+          <View style={[styles.row, { paddingVertical: 4 }]}>
+            <View style={{ width: 3, backgroundColor: WEAPON_COLOR, alignSelf: "stretch" }} />
+            <View style={{ width: 6 }} />
+            <Text style={[styles.sectionLabelText, { color: WEAPON_COLOR }]}>SİLAHLAR</Text>
+            <View style={{ flex: 1, height: 1, backgroundColor: OUTER_BORDER_COLOR, alignSelf: "center", marginLeft: 8 }} />
           </View>
 
           {weapons.map((weapon) => (
@@ -404,10 +370,11 @@ export default function DetectiveGrid({
             <View style={{ width: weaponBlockOuter, height: 2, backgroundColor: BLOCK_DIVIDER_COLOR }} />
           </View>
 
-          <View style={styles.row}>
-            <View style={[styles.sectionLabel, { width: labelWidth, borderLeftColor: LOCATION_COLOR }]}>
-              <Text style={[styles.sectionLabelText, { color: LOCATION_COLOR }]}>MEKANLAR</Text>
-            </View>
+          <View style={[styles.row, { paddingVertical: 4 }]}>
+            <View style={{ width: 3, backgroundColor: LOCATION_COLOR, alignSelf: "stretch" }} />
+            <View style={{ width: 6 }} />
+            <Text style={[styles.sectionLabelText, { color: LOCATION_COLOR }]}>MEKANLAR</Text>
+            <View style={{ flex: 1, height: 1, backgroundColor: OUTER_BORDER_COLOR, alignSelf: "center", marginLeft: 8 }} />
           </View>
 
           {locations.map((location, li) => (
@@ -452,12 +419,6 @@ const styles = StyleSheet.create({
     fontWeight: "800",
     letterSpacing: 1.6,
     paddingVertical: 3,
-  },
-  sectionLabel: {
-    paddingLeft: 6,
-    paddingVertical: 5,
-    borderLeftWidth: 3,
-    justifyContent: "center",
   },
   sectionLabelText: {
     fontSize: 10,
