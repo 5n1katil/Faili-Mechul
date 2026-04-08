@@ -85,6 +85,7 @@ export interface LeaderboardEntry {
   time: number;
   wrongGuesses: number;
   date: string;
+  puzzleId: string;
 }
 
 export type GridState = { [key: string]: GridMark };
@@ -161,6 +162,19 @@ function computeScore(
   return Math.max(100, rawScore) + difficultyBonus;
 }
 
+function migrateRecord(raw: Record<string, unknown>): GameRecord {
+  return {
+    puzzleId: String(raw.puzzleId ?? ""),
+    date: String(raw.date ?? ""),
+    score: Number(raw.score ?? 0),
+    timeSeconds: Number(raw.timeSeconds ?? 0),
+    wrongGuesses: typeof raw.wrongGuesses === "number" ? raw.wrongGuesses : Number(raw.mistakes ?? 0),
+    penaltySeconds: Number(raw.penaltySeconds ?? 0),
+    completed: Boolean(raw.completed),
+    solution: raw.solution as GameRecord["solution"] ?? null,
+  };
+}
+
 function getBadges(profile: PlayerProfile, history: GameRecord[]): string[] {
   const badges: string[] = [...profile.badges];
   if (history.filter((h) => h.completed).length >= 1 && !badges.includes("ilk_cozum")) {
@@ -196,7 +210,10 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         AsyncStorage.getItem(LEADERBOARD_KEY),
       ]);
       if (profileStr) setProfile(JSON.parse(profileStr));
-      if (historyStr) setGameHistory(JSON.parse(historyStr));
+      if (historyStr) {
+        const raw: Record<string, unknown>[] = JSON.parse(historyStr);
+        setGameHistory(raw.map(migrateRecord));
+      }
       if (leaderboardStr) setLeaderboard(JSON.parse(leaderboardStr));
     } catch {}
   };
@@ -212,19 +229,16 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
   };
 
   const saveLeaderboard = async (lb: LeaderboardEntry[]) => {
-    const today = new Date().toISOString().split("T")[0];
-    const todayEntries = lb.filter((e) => e.date === today);
-    const otherEntries = lb.filter((e) => e.date !== today);
-    const bestPerPlayerToday = Object.values(
-      todayEntries.reduce<Record<string, LeaderboardEntry>>((acc, e) => {
-        if (!acc[e.name] || e.score > acc[e.name].score) {
-          acc[e.name] = e;
+    const bestPerPlayerPuzzle = Object.values(
+      lb.reduce<Record<string, LeaderboardEntry>>((acc, e) => {
+        const key = `${e.name}__${e.puzzleId}`;
+        if (!acc[key] || e.score > acc[key].score) {
+          acc[key] = e;
         }
         return acc;
       }, {})
     );
-    const topToday = bestPerPlayerToday.sort((a, b) => b.score - a.score).slice(0, 10);
-    const allEntries = [...topToday, ...otherEntries]
+    const allEntries = bestPerPlayerPuzzle
       .sort((a, b) => b.score - a.score)
       .slice(0, 50);
     await AsyncStorage.setItem(LEADERBOARD_KEY, JSON.stringify(allEntries));
@@ -365,7 +379,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         const score = computeScore(
           gameState.timeElapsed,
           gameState.wrongGuessPenaltySeconds,
-          gameState.cluesRevealed.length - 1,
+          gameState.cluesRevealed.length,
           gameState.puzzle.difficulty
         );
 
@@ -406,6 +420,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
           time: gameState.timeElapsed,
           wrongGuesses: gameState.wrongGuesses,
           date: today,
+          puzzleId: gameState.puzzle.id,
         };
 
         saveHistory(newHistory);
@@ -418,11 +433,10 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         });
         return true;
       } else {
-        const newWrongGuesses = gameState.wrongGuesses + 1;
-        const penaltySeconds = 30 * Math.pow(2, newWrongGuesses - 1);
-
         setGameState((prev) => {
           if (!prev) return prev;
+          const newWrongGuesses = prev.wrongGuesses + 1;
+          const penaltySeconds = 30 * Math.pow(2, newWrongGuesses - 1);
           return {
             ...prev,
             wrongGuesses: newWrongGuesses,

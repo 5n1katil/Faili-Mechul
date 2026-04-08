@@ -260,7 +260,7 @@ export default function ProfilScreen() {
                     <Text style={[styles.historyScore, { color: colors.primary }]}>{rec.score}</Text>
                   )}
                   <Text style={[styles.historyMistakes, { color: colors.mutedForeground }]}>
-                    {(rec as any).wrongGuesses ?? (rec as any).mistakes ?? 0} hata
+                    {rec.wrongGuesses} hata
                   </Text>
                 </View>
               </View>

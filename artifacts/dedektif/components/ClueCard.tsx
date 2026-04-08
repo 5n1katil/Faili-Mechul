@@ -21,14 +21,56 @@ interface Props {
 
 const CLUE_META: Record<
   Clue["type"],
-  { icon: MaterialIconName; color: string; label: string }
+  {
+    icon: MaterialIconName;
+    color: string;
+    label: string;
+    cardTint: string;
+    borderStyle: "solid" | "dashed" | "dotted";
+  }
 > = {
-  direct: { icon: "search", color: "#D4A843", label: "Doğrudan" },
-  indirect: { icon: "lightbulb-outline", color: "#f59e0b", label: "Dolaylı" },
-  elimination: { icon: "block", color: "#C8372D", label: "Eleme" },
-  evidence: { icon: "fingerprint", color: "#9333ea", label: "Kanıt" },
-  witness: { icon: "record-voice-over", color: "#3b82f6", label: "Tanık" },
-  forensic: { icon: "biotech", color: "#14b8a6", label: "Adli" },
+  direct: {
+    icon: "search",
+    color: "#D4A843",
+    label: "Doğrudan",
+    cardTint: "#D4A84308",
+    borderStyle: "solid",
+  },
+  indirect: {
+    icon: "lightbulb-outline",
+    color: "#f59e0b",
+    label: "Dolaylı",
+    cardTint: "#f59e0b08",
+    borderStyle: "solid",
+  },
+  elimination: {
+    icon: "block",
+    color: "#C8372D",
+    label: "Eleme",
+    cardTint: "#C8372D0D",
+    borderStyle: "solid",
+  },
+  evidence: {
+    icon: "fingerprint",
+    color: "#9333ea",
+    label: "Kanıt",
+    cardTint: "#9333ea14",
+    borderStyle: "dashed",
+  },
+  witness: {
+    icon: "record-voice-over",
+    color: "#3b82f6",
+    label: "Tanık",
+    cardTint: "#3b82f610",
+    borderStyle: "solid",
+  },
+  forensic: {
+    icon: "biotech",
+    color: "#14b8a6",
+    label: "Adli",
+    cardTint: "#14b8a610",
+    borderStyle: "dotted",
+  },
 };
 
 export default function ClueCard({ clue, index, isRevealed, onReveal }: Props) {
@@ -54,9 +96,10 @@ export default function ClueCard({ clue, index, isRevealed, onReveal }: Props) {
         style={[
           styles.card,
           {
-            backgroundColor: colors.card,
+            backgroundColor: isRevealed ? meta.cardTint : colors.card,
             borderColor: isRevealed ? meta.color : colors.border,
             borderWidth: isRevealed ? 1.5 : 1,
+            borderStyle: isRevealed ? meta.borderStyle : "solid",
           },
         ]}
       >
