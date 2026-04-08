@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import {
   Platform,
   Pressable,
@@ -13,6 +13,7 @@ import Animated, {
   useAnimatedStyle,
   useSharedValue,
   withSequence,
+  withSpring,
   withTiming,
 } from "react-native-reanimated";
 import { useColors } from "@/hooks/useColors";
@@ -26,7 +27,8 @@ interface Props {
   onSelectSuspect: (id: string) => void;
   onSelectWeapon: (id: string) => void;
   onSelectLocation: (id: string) => void;
-  onSubmit: (suspectId: string, weaponId: string, locationId: string) => void;
+  onSubmit: (suspectId: string, weaponId: string, locationId: string) => boolean | void;
+  onWrongAnswer?: () => void;
   disabled?: boolean;
 }
 
@@ -77,23 +79,63 @@ export default function AccusationPanel({
   onSelectWeapon,
   onSelectLocation,
   onSubmit,
+  onWrongAnswer,
   disabled,
 }: Props) {
   const colors = useColors();
   const canSubmit = Boolean(selectedSuspect && selectedWeapon && selectedLocation);
   const btnScale = useSharedValue(1);
-  const btnColor = useSharedValue(0);
+  const flashOpacity = useSharedValue(0);
+  const [wrongToastVisible, setWrongToastVisible] = useState(false);
+  const wrongToastOpacity = useSharedValue(0);
+  const wrongToastRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const showWrongFlash = () => {
+    if (Platform.OS !== "web") {
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+    }
+    flashOpacity.value = withSequence(
+      withTiming(0.4, { duration: 60 }),
+      withTiming(0.2, { duration: 80 }),
+      withTiming(0.35, { duration: 60 }),
+      withTiming(0, { duration: 250 }),
+    );
+    btnScale.value = withSequence(
+      withSpring(0.95, { damping: 8 }),
+      withSpring(1, { damping: 12 }),
+    );
+    setWrongToastVisible(true);
+    wrongToastOpacity.value = withSequence(
+      withTiming(1, { duration: 150 }),
+      withTiming(1, { duration: 1800 }),
+      withTiming(0, { duration: 400 }),
+    );
+    if (wrongToastRef.current) clearTimeout(wrongToastRef.current);
+    wrongToastRef.current = setTimeout(() => setWrongToastVisible(false), 2450);
+    onWrongAnswer?.();
+  };
 
   const handleSubmit = () => {
     if (!canSubmit || disabled) return;
     if (Platform.OS !== "web") {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     }
-    onSubmit(selectedSuspect!, selectedWeapon!, selectedLocation!);
+    const submitResult = onSubmit(selectedSuspect!, selectedWeapon!, selectedLocation!);
+    if (submitResult === false) {
+      showWrongFlash();
+    }
   };
 
   const btnStyle = useAnimatedStyle(() => ({
     transform: [{ scale: btnScale.value }],
+  }));
+
+  const flashStyle = useAnimatedStyle(() => ({
+    opacity: flashOpacity.value,
+  }));
+
+  const wrongToastStyle = useAnimatedStyle(() => ({
+    opacity: wrongToastOpacity.value,
   }));
 
   const sections = [
@@ -121,12 +163,17 @@ export default function AccusationPanel({
   ];
 
   return (
-    <View
+    <Animated.View
       style={[
         styles.container,
         { backgroundColor: colors.card, borderColor: colors.border },
       ]}
     >
+      <Animated.View
+        pointerEvents="none"
+        style={[styles.flashOverlay, flashStyle]}
+      />
+
       <View style={styles.headerRow}>
         <View style={[styles.headerIcon, { backgroundColor: `${colors.primary}22` }]}>
           <MaterialIcons name="gps-fixed" size={16} color={colors.primary} />
@@ -136,6 +183,13 @@ export default function AccusationPanel({
           {[selectedSuspect, selectedWeapon, selectedLocation].filter(Boolean).length}/3 seçildi
         </Text>
       </View>
+
+      {wrongToastVisible && (
+        <Animated.View style={[styles.wrongToast, wrongToastStyle]}>
+          <MaterialIcons name="gavel" size={14} color="#fff" />
+          <Text style={styles.wrongToastText}>Yanlış suçlama — +30 saniye eklendi!</Text>
+        </Animated.View>
+      )}
 
       {sections.map((section) => (
         <View key={section.label} style={styles.section}>
@@ -194,7 +248,7 @@ export default function AccusationPanel({
           </Text>
         </Pressable>
       </Animated.View>
-    </View>
+    </Animated.View>
   );
 }
 
@@ -204,6 +258,30 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 14,
     gap: 12,
+    overflow: "hidden",
+  },
+  flashOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: "#C8372D",
+    borderRadius: 14,
+    zIndex: 1,
+    pointerEvents: "none",
+  },
+  wrongToast: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#C8372D",
+    borderRadius: 8,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    gap: 8,
+    zIndex: 2,
+  },
+  wrongToastText: {
+    color: "#fff",
+    fontSize: 12,
+    fontWeight: "700",
+    flex: 1,
   },
   headerRow: {
     flexDirection: "row",

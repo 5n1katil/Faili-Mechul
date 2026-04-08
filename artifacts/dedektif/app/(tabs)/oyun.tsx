@@ -248,8 +248,8 @@ export default function VakalarScreen() {
     revealBonusClue(index);
   };
 
-  const handleSubmit = (suspectId: string, weaponId: string, locationId: string) => {
-    if (!gameState?.puzzle) return;
+  const handleSubmit = (suspectId: string, weaponId: string, locationId: string): boolean => {
+    if (!gameState?.puzzle) return false;
     const puzzleId = gameState.puzzle.id;
     const diff = gameState.puzzle.difficulty;
     const currentTime = gameState.timeElapsed;
@@ -274,6 +274,7 @@ export default function VakalarScreen() {
       setFinalRank(Math.max(1, rank));
       setTotalPlayers(allScores.length);
     }
+    return success;
   };
 
   if (!gameState || !gameState.puzzle) {
