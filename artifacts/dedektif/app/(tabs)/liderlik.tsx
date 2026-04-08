@@ -28,6 +28,7 @@ interface RankEntry {
   maxStreak: number;
   isCurrentUser: boolean;
   isPremiumUser: boolean;
+  avgSolveTimeSeconds?: number;
 }
 
 const SORT_TABS: { key: SortKey; label: string; icon: MaterialIconName }[] = [
@@ -139,6 +140,14 @@ function RankItem({ entry, rank, sortKey, colors, delay }: RankItemProps) {
                 : `${entry.totalScore.toLocaleString("tr-TR")} puan · ${entry.gamesWon} vaka`}
             </Text>
           </View>
+          {entry.isCurrentUser && entry.avgSolveTimeSeconds != null && entry.avgSolveTimeSeconds > 0 && (
+            <View style={styles.avgTimeRow}>
+              <MaterialIcons name="schedule" size={10} color={colors.mutedForeground} />
+              <Text style={[styles.avgTimeText, { color: colors.mutedForeground }]}>
+                {`ort. ${Math.floor(entry.avgSolveTimeSeconds / 60)}:${(entry.avgSolveTimeSeconds % 60).toString().padStart(2, "0")}`}
+              </Text>
+            </View>
+          )}
         </View>
 
         <View style={styles.rankScore}>
@@ -167,6 +176,7 @@ export default function LiderlikScreen() {
     maxStreak: profile.maxStreak,
     isCurrentUser: true,
     isPremiumUser: isPremium,
+    avgSolveTimeSeconds: profile.avgSolveTimeSeconds,
   };
 
   const aiEntries: RankEntry[] = AI_DETECTIVES.map((d) => ({
@@ -335,6 +345,8 @@ const styles = StyleSheet.create({
   youText: { fontSize: 10, fontWeight: "700" },
   metaRow: { flexDirection: "row", alignItems: "center", gap: 4 },
   metaText: { fontSize: 11 },
+  avgTimeRow: { flexDirection: "row", alignItems: "center", gap: 3, marginTop: 2 },
+  avgTimeText: { fontSize: 10 },
   rankScore: { alignItems: "flex-end", minWidth: 52 },
   scoreValue: { fontSize: 18, fontWeight: "800" },
   scoreLabel: { fontSize: 10, fontWeight: "500" },

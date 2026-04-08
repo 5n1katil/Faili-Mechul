@@ -154,6 +154,13 @@ export default function ProfilScreen() {
               { value: profile.totalScore, label: "Toplam Puan" },
               { value: profile.currentStreak, label: "Mevcut Seri" },
               { value: profile.maxStreak, label: "En Uzun Seri" },
+              {
+                value:
+                  profile.avgSolveTimeSeconds > 0
+                    ? `${Math.floor(profile.avgSolveTimeSeconds / 60)}:${(profile.avgSolveTimeSeconds % 60).toString().padStart(2, "0")}`
+                    : "—",
+                label: "Ort. Süre",
+              },
             ].map((stat, i) => (
               <View
                 key={i}

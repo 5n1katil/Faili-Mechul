@@ -27,6 +27,7 @@ import Animated, {
 
 import { useColors } from "@/hooks/useColors";
 import type { Puzzle, GridMark } from "@/data/puzzles";
+import ScoreInfoSheet from "@/components/ScoreInfoSheet";
 
 const AnimatedTextInput = Animated.createAnimatedComponent(TextInput);
 
@@ -40,6 +41,7 @@ interface Props {
   gridState: { [key: string]: GridMark };
   finalRank: number;
   totalPlayers: number;
+  currentStreak: number;
   onPlayMore: () => void;
   onClose: () => void;
 }
@@ -222,13 +224,17 @@ function ScoreBreakdownCard({
   wrongGuesses,
   bonusCluesRevealedCount,
   difficulty,
+  currentStreak,
   finalScore,
+  onShowInfo,
 }: {
   timeSeconds: number;
   wrongGuesses: number;
   bonusCluesRevealedCount: number;
   difficulty: string;
+  currentStreak: number;
   finalScore: number;
+  onShowInfo: () => void;
 }) {
   const colors = useColors();
   const timePenalty = timeSeconds * 5;
@@ -237,24 +243,33 @@ function ScoreBreakdownCard({
   let difficultyBonus = 0;
   if (difficulty === "dedektif") difficultyBonus = 2000;
   if (difficulty === "baskomiser") difficultyBonus = 5000;
+  const streakBonus = Math.min(currentStreak * 50, 500);
 
   const rows = [
-    { label: "Baz Puan", value: "+10,000", color: colors.primary, icon: "stars" as const },
-    { label: `Süre (${formatTime(timeSeconds)} × 5)`, value: `-${timePenalty.toLocaleString()}`, color: "#C8372D", icon: "timer" as const },
+    { label: "Baz Puan", value: "+10.000", color: colors.primary, icon: "stars" as const },
+    { label: `Süre (${formatTime(timeSeconds)} × 5)`, value: `-${timePenalty.toLocaleString("tr-TR")}`, color: "#C8372D", icon: "timer" as const },
     ...(wrongGuesses > 0
-      ? [{ label: `Yanlış (${wrongGuesses} × 150)`, value: `-${wrongPenalty.toLocaleString()}`, color: "#C8372D", icon: "gavel" as const }]
+      ? [{ label: `Yanlış (${wrongGuesses} × 150)`, value: `-${wrongPenalty.toLocaleString("tr-TR")}`, color: "#C8372D", icon: "gavel" as const }]
       : []),
     ...(bonusCluesRevealedCount > 0
-      ? [{ label: `Ek İpucu (${bonusCluesRevealedCount} × 150)`, value: `-${bonusPenalty.toLocaleString()}`, color: "#f97316", icon: "lock-open" as const }]
+      ? [{ label: `Ek İpucu (${bonusCluesRevealedCount} × 150)`, value: `-${bonusPenalty.toLocaleString("tr-TR")}`, color: "#f97316", icon: "lock-open" as const }]
       : []),
     ...(difficultyBonus > 0
-      ? [{ label: "Zorluk Bonusu", value: `+${difficultyBonus.toLocaleString()}`, color: "#4ade80", icon: "upgrade" as const }]
+      ? [{ label: "Zorluk Bonusu", value: `+${difficultyBonus.toLocaleString("tr-TR")}`, color: "#4ade80", icon: "upgrade" as const }]
+      : []),
+    ...(streakBonus > 0
+      ? [{ label: `Seri Bonusu (${currentStreak} gün × 50)`, value: `+${streakBonus.toLocaleString("tr-TR")}`, color: "#FF6B35", icon: "local-fire-department" as const }]
       : []),
   ];
 
   return (
     <View style={[styles.breakdownCard, { backgroundColor: colors.background, borderColor: colors.border }]}>
-      <Text style={[styles.breakdownTitle, { color: colors.mutedForeground }]}>PUAN DETAYI</Text>
+      <View style={styles.breakdownHeader}>
+        <Text style={[styles.breakdownTitle, { color: colors.mutedForeground }]}>PUAN DETAYI</Text>
+        <Pressable onPress={onShowInfo} hitSlop={10} style={[styles.infoBtn, { borderColor: `${colors.mutedForeground}44` }]}>
+          <MaterialIcons name="help-outline" size={14} color={colors.mutedForeground} />
+        </Pressable>
+      </View>
       {rows.map((row, i) => (
         <View key={i} style={styles.breakdownRow}>
           <MaterialIcons name={row.icon} size={13} color={row.color} />
@@ -266,7 +281,7 @@ function ScoreBreakdownCard({
       <View style={styles.breakdownRow}>
         <MaterialIcons name="emoji-events" size={14} color={colors.primary} />
         <Text style={[styles.breakdownLabel, { color: colors.primary, fontWeight: "700" }]}>Toplam</Text>
-        <Text style={[styles.breakdownValue, { color: colors.primary, fontWeight: "800" }]}>{finalScore.toLocaleString()}</Text>
+        <Text style={[styles.breakdownValue, { color: colors.primary, fontWeight: "800" }]}>{finalScore.toLocaleString("tr-TR")}</Text>
       </View>
     </View>
   );
@@ -309,6 +324,7 @@ export default function ResultScreen({
   gridState,
   finalRank,
   totalPlayers,
+  currentStreak,
   onPlayMore,
   onClose,
 }: Props) {
@@ -317,6 +333,7 @@ export default function ResultScreen({
   const opacity = useSharedValue(0);
   const iconScale = useSharedValue(0);
   const [copied, setCopied] = useState(false);
+  const [showScoreInfo, setShowScoreInfo] = useState(false);
 
   useEffect(() => {
     scale.value = withSpring(1, { damping: 12 });
@@ -374,6 +391,7 @@ export default function ResultScreen({
   return (
     <View style={[styles.overlay, { backgroundColor: "rgba(0,0,0,0.92)" }]}>
       {success && <Confetti />}
+      <ScoreInfoSheet visible={showScoreInfo} onClose={() => setShowScoreInfo(false)} />
       <Animated.View
         style={[
           styles.container,
@@ -447,7 +465,9 @@ export default function ResultScreen({
               wrongGuesses={wrongGuesses}
               bonusCluesRevealedCount={bonusCluesRevealedCount}
               difficulty={puzzle.difficulty}
+              currentStreak={currentStreak}
               finalScore={score}
+              onShowInfo={() => setShowScoreInfo(true)}
             />
           )}
 
@@ -579,11 +599,21 @@ const styles = StyleSheet.create({
     padding: 12,
     gap: 8,
   },
+  breakdownHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: 2,
+  },
   breakdownTitle: {
     fontSize: 10,
     fontWeight: "700",
     letterSpacing: 2,
-    marginBottom: 2,
+  },
+  infoBtn: {
+    borderRadius: 8,
+    borderWidth: 1,
+    padding: 3,
   },
   breakdownRow: {
     flexDirection: "row",

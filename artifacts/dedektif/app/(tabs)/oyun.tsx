@@ -28,6 +28,7 @@ import StickyAccuseBar from "@/components/StickyAccuseBar";
 import ResultScreen from "@/components/ResultScreen";
 import EntityInfoSheet from "@/components/EntityInfoSheet";
 import PaywallModal from "@/components/PaywallModal";
+import ScoreInfoSheet from "@/components/ScoreInfoSheet";
 import {
   getDailyPuzzle,
   getDifficultyColor,
@@ -245,6 +246,7 @@ export default function VakalarScreen() {
   const [finalRank, setFinalRank] = useState(1);
   const [totalPlayers, setTotalPlayers] = useState(1);
   const [showSheet, setShowSheet] = useState(false);
+  const [showScoreInfo, setShowScoreInfo] = useState(false);
 
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
@@ -275,6 +277,7 @@ export default function VakalarScreen() {
     setAccuWeapon(null);
     setAccuLocation(null);
     setShowSheet(false);
+    setShowScoreInfo(false);
   }, [gameState?.puzzle?.id]);
 
   const handleBackToList = () => {
@@ -302,9 +305,18 @@ export default function VakalarScreen() {
     const currentWrong = gameState.wrongGuesses;
     const currentBonus = gameState.cluesRevealed.filter((idx) => isBonusClue(gameState.puzzle!, idx)).length;
 
+    const today = new Date().toISOString().split("T")[0];
+    const yesterday = new Date(Date.now() - 86400000).toISOString().split("T")[0];
+    const estimatedStreak =
+      profile.lastPlayedDate === today
+        ? profile.currentStreak
+        : profile.lastPlayedDate === yesterday
+        ? profile.currentStreak + 1
+        : 1;
     const rawScore = 10000 - currentTime * 5 - currentWrong * 150 - currentBonus * 150;
     const diffBonus = diff === "baskomiser" ? 5000 : diff === "dedektif" ? 2000 : 0;
-    const estimatedScore = Math.max(100, rawScore) + diffBonus;
+    const streakBonus = Math.min(estimatedStreak * 50, 500);
+    const estimatedScore = Math.max(100, rawScore) + diffBonus + streakBonus;
 
     const samePuzzleScores = leaderboard
       .filter((e) => e.puzzleId === puzzleId)
@@ -469,10 +481,12 @@ export default function VakalarScreen() {
           gridState={gridState}
           finalRank={finalRank}
           totalPlayers={totalPlayers}
+          currentStreak={profile.currentStreak}
           onPlayMore={handleBackToList}
           onClose={handleBackToList}
         />
       )}
+      <ScoreInfoSheet visible={showScoreInfo} onClose={() => setShowScoreInfo(false)} />
 
       <ScrollView
         style={gameStyles.scroll}
@@ -500,11 +514,20 @@ export default function VakalarScreen() {
                 </Text>
               </View>
             </View>
-            <TimerDisplay
-              seconds={timeElapsed}
-              wrongGuesses={wrongGuesses}
-              penaltyCount={penaltyCount}
-            />
+            <View style={gameStyles.timerRow}>
+              <TimerDisplay
+                seconds={timeElapsed}
+                wrongGuesses={wrongGuesses}
+                penaltyCount={penaltyCount}
+              />
+              <Pressable
+                onPress={() => setShowScoreInfo(true)}
+                hitSlop={10}
+                style={[gameStyles.scoreInfoBtn, { backgroundColor: `${colors.primary}15`, borderColor: `${colors.primary}40` }]}
+              >
+                <MaterialIcons name="help-outline" size={16} color={colors.primary} />
+              </Pressable>
+            </View>
           </View>
         </Animated.View>
 
@@ -753,6 +776,19 @@ const gameStyles = StyleSheet.create({
   sectionTitle: { fontSize: 16, fontWeight: "700", marginBottom: 8 },
   gridContainer: { borderRadius: 14, borderWidth: 1, padding: 10, overflow: "hidden" },
   gridWrapper: { minHeight: 240 },
+  timerRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+  },
+  scoreInfoBtn: {
+    width: 30,
+    height: 30,
+    borderRadius: 15,
+    borderWidth: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
 });
 
 const accordionStyles = StyleSheet.create({

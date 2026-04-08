@@ -80,6 +80,7 @@ export interface PlayerProfile {
   maxStreak: number;
   lastPlayedDate: string | null;
   badges: string[];
+  avgSolveTimeSeconds: number;
 }
 
 export interface LeaderboardEntry {
@@ -90,6 +91,7 @@ export interface LeaderboardEntry {
   wrongGuesses: number;
   date: string;
   puzzleId: string;
+  avgSolveTimeSeconds?: number;
 }
 
 export type GridState = { [key: string]: GridMark };
@@ -147,19 +149,22 @@ const DEFAULT_PROFILE: PlayerProfile = {
   maxStreak: 0,
   lastPlayedDate: null,
   badges: [],
+  avgSolveTimeSeconds: 0,
 };
 
 function computeScore(
   timeElapsed: number,
   wrongGuesses: number,
   bonusCluesRevealedCount: number,
-  difficulty: string
+  difficulty: string,
+  currentStreak: number = 0
 ): number {
   const rawScore = 10000 - timeElapsed * 5 - wrongGuesses * 150 - bonusCluesRevealedCount * 150;
   let difficultyBonus = 0;
   if (difficulty === "dedektif") difficultyBonus = 2000;
   if (difficulty === "baskomiser") difficultyBonus = 5000;
-  return Math.max(100, rawScore) + difficultyBonus;
+  const streakBonus = Math.min(currentStreak * 50, 500);
+  return Math.max(100, rawScore) + difficultyBonus + streakBonus;
 }
 
 function migrateRecord(raw: Record<string, unknown>): GameRecord {
@@ -386,24 +391,6 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
           isBonusClue(gameState.puzzle!, idx)
         ).length;
 
-        const score = computeScore(
-          gameState.timeElapsed,
-          gameState.wrongGuesses,
-          bonusCluesRevealedCount,
-          gameState.puzzle.difficulty
-        );
-
-        const record: GameRecord = {
-          puzzleId: gameState.puzzle.id,
-          date: new Date().toISOString().split("T")[0],
-          score,
-          timeSeconds: gameState.timeElapsed,
-          wrongGuesses: gameState.wrongGuesses,
-          penaltySeconds: 0,
-          completed: true,
-          solution: { suspectId, weaponId, locationId },
-        };
-
         const today = new Date().toISOString().split("T")[0];
         const yesterday = new Date(Date.now() - 86400000).toISOString().split("T")[0];
         const newStreak =
@@ -412,7 +399,33 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
             : profile.lastPlayedDate === yesterday
             ? profile.currentStreak + 1
             : 1;
+
+        const score = computeScore(
+          gameState.timeElapsed,
+          gameState.wrongGuesses,
+          bonusCluesRevealedCount,
+          gameState.puzzle.difficulty,
+          newStreak
+        );
+
+        const record: GameRecord = {
+          puzzleId: gameState.puzzle.id,
+          date: today,
+          score,
+          timeSeconds: gameState.timeElapsed,
+          wrongGuesses: gameState.wrongGuesses,
+          penaltySeconds: 0,
+          completed: true,
+          solution: { suspectId, weaponId, locationId },
+        };
+
         const newHistory = [record, ...gameHistory];
+        const wins = newHistory.filter((h) => h.completed);
+        const avgSolveTimeSeconds =
+          wins.length > 0
+            ? Math.round(wins.reduce((acc, h) => acc + h.timeSeconds, 0) / wins.length)
+            : 0;
+
         const newProfile = {
           ...profile,
           totalScore: profile.totalScore + score,
@@ -421,6 +434,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
           currentStreak: newStreak,
           maxStreak: Math.max(profile.maxStreak, newStreak),
           lastPlayedDate: today,
+          avgSolveTimeSeconds,
         };
         newProfile.badges = getBadges(newProfile, newHistory);
 
@@ -432,6 +446,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
           wrongGuesses: gameState.wrongGuesses,
           date: today,
           puzzleId: gameState.puzzle.id,
+          avgSolveTimeSeconds,
         };
 
         saveHistory(newHistory);
