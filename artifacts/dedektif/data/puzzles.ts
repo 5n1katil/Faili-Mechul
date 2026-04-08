@@ -1,3 +1,204 @@
+/**
+ * BULMACA MANTIK DOĞRULAMA TABLOSU — Tüm 30 Bulmaca (p001–p030)
+ * ================================================================
+ * Her bulmaca için: ücretsiz ipuçlarıyla hangi seçeneklerin elendiği
+ * ve bonus ipuçları eklendikten sonra çözümün benzersiz olup olmadığı.
+ *
+ * Kural: Ücretsiz ipuçları ≥2 seçenek elemiş olmalı (toplamda).
+ *        Bonus ipuçları eklendikten sonra suspect+weapon+location TEKİL olmalı.
+ *
+ * ──────────────────────────────────────────────────────────────────
+ * p001 (Çaylak) Çözüm: s2/w1/l2
+ *   Ücretsiz: c1→l3✗  c2→s1✗  c3→w2✗  c4→s3✗
+ *   Kalan: s2✓  |  l1 veya l2  |  w1 veya w3
+ *   Bonus: c5→w3✗ → w1✓  |  c6→l2✓
+ *   Sonuç: Rıfat Bey / Bıçak / Mutfak  ✅ TEKİL
+ *
+ * p002 (Dedektif) Çözüm: s2/w2/l2
+ *   Ücretsiz: c1→l3✗  c2→s1✗  c3→l1✗ (kaptanın izleri güvertede, katil izi yok)
+ *   c4→w1✗ w3✗ → w2✓
+ *   Kalan: s2 veya s3  |  l2✓  |  w2✓
+ *   Bonus: c5→s2✓ (erişim + fırsat)  |  c6→s3✗ (anakaradaydı)
+ *   Sonuç: Dilek Hanım / İp / Makine Dairesi  ✅ TEKİL
+ *
+ * p003 (Dedektif) Çözüm: s3/w2/l2
+ *   Ücretsiz: c1→l1✗ l3✗ → l2✓  c2→w3✗  c3→s2✗  c4→s1✗
+ *   Kalan: s3✓  |  l2✓  |  w1 veya w2
+ *   Bonus: c5→w1✗ → w2✓  |  c6→s3✓ doğrulandı
+ *   Sonuç: Komşu Esnaf / Halka Taşı / Arka Depo  ✅ TEKİL
+ *
+ * p004 (Çaylak) Çözüm: s2/w1/l1
+ *   Ücretsiz: c1→l1✓ (adli izler)  c2→s3✗  c3→w2✗  c4→s2✓ (anahtar+gece çalışma)
+ *   Kalan: s2✓  |  l1✓  |  w1 veya w3
+ *   Bonus: c5→w1✓ (sabote kablo)  |  c6→s1✗ (uçuş)
+ *   Sonuç: Asistan Elif / Elektrik Çarpması / Laboratuvar  ✅ TEKİL
+ *
+ * p005 (Çaylak) Çözüm: s1/w1/l1
+ *   Ücretsiz: c1→l1✓ l2✗ l3✗  c2→s2✗ (tezgaha hiç yaklaşmadı; kamera+tanık)
+ *   c3→s3✗ (erken ayrılmış)  c4→w1✓ (bitkisel toksin)
+ *   Kalan: s1✓  |  l1✓  |  w1✓ — ÜCRETSİZ IPUÇLARIYLA TAM ÇÖZÜM
+ *   Bonus: c5→doğrulama  |  c6→doğrulama
+ *   Sonuç: Komşu Satıcı / Zehirli Baklava / Tatlı Tezgahı  ✅ TEKİL
+ *
+ * p006 (Dedektif) Çözüm: s2/w1/l2
+ *   Ücretsiz: c1→l2✓ (bekçi deposu)  c2→s3✗  c3→w3✗  c4→s2✓ (erişim kodu)
+ *   Kalan: s2✓  |  l2✓  |  w1 veya w2
+ *   Bonus: c5→w1✓ (iğne izi)  |  c6→s1✗ (grup+sergi)
+ *   Sonuç: Restoratör Hanım / Uyuşturucu Enjeksiyon / Depolama Odası  ✅ TEKİL
+ *
+ * p007 (Baş Komiser 4×4) Çözüm: s3/w3/l1
+ *   Ücretsiz: c1→w1✗  c2→s1✗ (feribot kaydı+2 tanık)  c3→s2✗ (galeri açılışı)
+ *   c4→w2✗
+ *   Kalan: s3✓  |  l1 veya l2 veya l3 veya l4  |  w3 veya w4
+ *   Bonus: c5→l2✗ l3✗ l4✗ → l1✓  |  c6→l1✓ (havuz çevresi fiziksel iz)+w3✓
+ *   Sonuç: Genç Yatçı / Boğma Halatı / Villa Bahçesi  ✅ TEKİL
+ *
+ * p008 (Çaylak) Çözüm: s3/w1/l2
+ *   Ücretsiz: c1→l3✗  c2→s2✗ (koridor+birden fazla tanık)  c3→w3✗
+ *   c4→s3✓+l2✓+w1✓ (yemekli vagonda, zehir kokteylin içinde) — TAM ÇÖZÜM
+ *   Bonus: c5→w1✓ doğrulandı  |  c6→s1✗ (kondüktör gördü)
+ *   Sonuç: Emekli Doktor / Zehirli İçecek / Yemekli Vagon  ✅ TEKİL
+ *
+ * p009 (Çaylak) Çözüm: s1/w2/l1
+ *   Ücretsiz: c1→l1✓ (masaj odası)  c2→s3✗ (kamera)  c3→w1✗ (toksin yok)
+ *   c4→s1✓ (temas+başka kimse girmiyor)
+ *   Kalan: s1✓  |  l1✓  |  w2 veya w3
+ *   Bonus: c5→s2✗ (ofis kamerası)  |  c6→w2✓ (el baskısı izi)
+ *   Sonuç: Kese Ustası / Boğma / Masaj Odası  ✅ TEKİL
+ *
+ * p010 (Baş Komiser 4×4) Çözüm: s2/w1/l2
+ *   Ücretsiz: c1→l1✗  c2→s4✗  c3→w2✗  c4→s1✗
+ *   Kalan: s2 veya s3  |  l2/l3/l4  |  w1/w3/w4
+ *   Bonus: c5→s2✓+l2✓  |  c6→w1✓+s3✗ (izin kaydı)
+ *   Sonuç: Ünlü Sanatçı / Elektrik Sopası / Güvenlik Merkezi  ✅ TEKİL
+ *
+ * p011 (Dedektif) Çözüm: s2/w2/l1
+ *   Ücretsiz: c1→l1✓ l2✗ l3✗  c2→s1✗ (50 tanık)  c3→w3✗ (altyapı arızalı)
+ *   c4→w2✓ (toksin kahvede)
+ *   Kalan: s2 veya s3  |  l1✓  |  w2✓
+ *   Bonus: c5→s2✓ (kahve rutin)  |  c6→s3✗ (şantiye)
+ *   Sonuç: Sekreter Bayan / Zehirli Kahve / Belediye Ofisi  ✅ TEKİL
+ *
+ * p012 (Çaylak) Çözüm: s2/w2/l1
+ *   Ücretsiz: c1→l2✗ l3✗ → l1✓  c2→s1✗ (başka şehir; afiş+kayıt+sosyal medya)
+ *   c3→w1✗ w3✗ → w2✓  c4→s2✓ (sahne elektriği+modifikasyon)
+ *   Kalan: s2✓  |  l1✓  |  w2✓ — ÜCRETSİZ IPUÇLARIYLA TAM ÇÖZÜM
+ *   Bonus: c5→doğrulama  |  c6→s3✗ (erken ayrılmış)
+ *   Sonuç: Ses Teknikeri / Elektrik Darbesi / Sahne  ✅ TEKİL
+ *
+ * p013 (Dedektif) Çözüm: s2/w1/l2
+ *   Ücretsiz: c1→l2✓ (kırık kilit)  c2→s3✗ (kamera her adımı kaydetti)
+ *   c3→s1✗ (erişim izni yoktu)  c4→s2✓ (tek izinli+kod biliyor)
+ *   Kalan: s2✓  |  l2✓  |  w1/w2/w3
+ *   Bonus: c5→w1✓ (ağır kitap profili)  |  c6→s2✓ doğrulandı
+ *   Sonuç: Doktora Öğrencisi / Ağır Kitap / El Yazmaları Bölümü  ✅ TEKİL
+ *
+ * p014 (Baş Komiser 4×4) Çözüm: s3/w2/l3
+ *   Ücretsiz: c1→l2✗ l4✗  c2→s4✗  c3→s2✗ (otobüs bileti)
+ *   c4→s1✗ (kamera+komşu+kayalığa gitmiyor)
+ *   Kalan: s3✓  |  l1 veya l3  |  w1/w2/w3/w4
+ *   Bonus: c5→w1✗ w3✗ → w2✓  |  c6→l3✓+s3✓ (kan izi+ayak izi+toprak)
+ *   Sonuç: Mülk Sahibi / Kayalık / Kayalık Burun  ✅ TEKİL
+ *
+ * p015 (Dedektif) Çözüm: s1/w1/l1
+ *   Ücretsiz: c1→l1✓ l3✗  c2→s2✗ (şehir dışı bilet)  c3→w2✗ (stok yok)
+ *   c4→s1✓ (erişim kartı gece boyunca l1)
+ *   Kalan: s1✓  |  l1✓  |  w1 veya w3
+ *   Bonus: c5→w1✓ (çekiç profili)  |  c6→s3✗ (uçuş kaydı)+s1 tartışma tanığı
+ *   Sonuç: İşçi Başı / Çekiç / Üretim Alanı  ✅ TEKİL
+ *
+ * p016 (Çaylak) Çözüm: s2/w1/l1
+ *   Ücretsiz: c1→l1✓ (sauna)  c2→s3✗ (resepsiyonda kamera)  c3→w2✗ (boyunda el baskısı, su değil)
+ *   c4→s2✓ (sauna üyesi+zaman çakışıyor)
+ *   Kalan: s2✓  |  l1✓  |  w1 veya w3
+ *   Bonus: c5→w3✗ → w1✓  |  c6→s1✗ (havuz)
+ *   Sonuç: Spa Müdürü / Boğma / Sauna  ✅ TEKİL
+ *
+ * p017 (Dedektif) Çözüm: s1/w1/l2
+ *   Ücretsiz: c1→l1✗ l3✗ → l2✓  c2→s3✗ (masa kamerası; çay alanına yaklaşmadı)
+ *   c3→w2✗ w3✗ → w1✓  c4→s1✓ (barista+sabah erken erişim)
+ *   Kalan: s1✓  |  l2✓  |  w1✓ — ÜCRETSİZ IPUÇLARIYLA TAM ÇÖZÜM
+ *   Bonus: c5→doğrulama  |  c6→s2✗ (başka şehir)
+ *   Sonuç: Barista / Zehirli Çay / Hazırlık Tezgahı  ✅ TEKİL
+ *
+ * p018 (Baş Komiser 4×4) Çözüm: s1/w4/l2
+ *   Ücretsiz: c1→l1✗ l4✗  c2→w1✗ w2✗ w3✗ → w4✓  c3→s3✗ (turnikle+kamera)
+ *   c4→s2✗ (VPN uzak erişim logu)
+ *   Kalan: s1✓  |  l2 veya l3  |  w4✓
+ *   Bonus: c5→l2✓+w4✓ doğrulandı  |  c6→s1✓ (DNA+parmak izi)
+ *   Sonuç: Sistem Yöneticisi / Boğma / Sunucu Odası  ✅ TEKİL
+ *
+ * p019 (Baş Komiser 4×4) Çözüm: s2/w2/l2
+ *   Ücretsiz: c1→l1✗  c2→s4✗  c3→s3✗ (balistik)  c4→w1✗ w3✗ w4✗ → w2✓
+ *   Kalan: s1 veya s2  |  l2/l3/l4  |  w2✓
+ *   Bonus: c5→l2✓+s2✓  |  c6→s1✗ (uçuş)+l3✗ l4✗
+ *   Sonuç: Şef Aşçı / Zehirli Yemek / Mutfak  ✅ TEKİL
+ *
+ * p020 (Çaylak) Çözüm: s2/w2/l2
+ *   Ücretsiz: c1→l3✗  c2→s3✗  c3→w1✗  c4→s2✓+l2✓+w2✓ (doğrudan+yer)
+ *   Kalan: s2✓  |  l2✓  |  w2✓ — ÜCRETSİZ IPUÇLARIYLA TAM ÇÖZÜM
+ *   Bonus: c5→doğrulama  |  c6→s1✗ (not)
+ *   Sonuç: Rakip Müzisyen / Zehirli İçecek / Soyunma Odası  ✅ TEKİL
+ *
+ * p021–p030: isBonus alanı eksikti; tüm 40 ücretsiz ipucuna isBonus:false eklendi.
+ *
+ * p021 (Çaylak) Çözüm: s1/w1/l1
+ *   Ücretsiz: c1→l1✓  c2→s2✗  c3→s3✗  c4→w2✗ w3✗ → w1✓ s1 ima
+ *   Bonus: c5→w1✓  c6→s1✓
+ *   Sonuç: ✅ TEKİL
+ *
+ * p022 (Dedektif) Çözüm: s2/w2/l2
+ *   Ücretsiz: c1→l3✗  c2→s1✗  c3→w1✗  c4→s2✓+l2 ima
+ *   Bonus: c5→l2✓  c6→w2✓
+ *   Sonuç: ✅ TEKİL
+ *
+ * p023 (Baş Komiser 4×4) Çözüm: s3/w3/l3
+ *   Ücretsiz: c1→l1✗  c2→s1✗  c3→w1✗ w2✗  c4→s4✗
+ *   Bonus: c5→l3✓+s3✓  c6→w3✓
+ *   Sonuç: ✅ TEKİL
+ *
+ * p024 (Çaylak) Çözüm: s1/w1/l2
+ *   Ücretsiz: c1→l3✗  c2→s2✗  c3→w3✗  c4→s1✓+l2 ima
+ *   Bonus: c5→l2✓  c6→w1✓
+ *   Sonuç: ✅ TEKİL
+ *
+ * p025 (Dedektif) Çözüm: s2/w2/l1
+ *   Ücretsiz: c1→l2✗ l3✗ → l1✓  c2→s3✗  c3→w1✗  c4→s2✓
+ *   Bonus: c5→w2✓  c6→s1✗
+ *   Sonuç: ✅ TEKİL
+ *
+ * p026 (Baş Komiser 4×4) Çözüm: s4/w4/l4
+ *   Ücretsiz: c1→l1✗  c2→s1✗  c3→w1✗ w2✗  c4→s2✗
+ *   Bonus: c5→l4✓+s4✓  c6→w4✓+s3✗
+ *   Sonuç: ✅ TEKİL
+ *
+ * p027 (Çaylak) Çözüm: s3/w3/l3
+ *   Ücretsiz: c1→l1✗  c2→s1✗  c3→w1✗ w2✗ → w3✓  c4→s2✗
+ *   Kalan: s3✓  |  l2/l3  |  w3✓
+ *   Bonus: c5→l3✓  c6→s3✓
+ *   Sonuç: ✅ TEKİL
+ *
+ * p028 (Dedektif) Çözüm: s1/w2/l2
+ *   Ücretsiz: c1→l3✗  c2→s3✗  c3→w1✗ w3✗ → w2✓  c4→s1✓+l2 ima
+ *   Bonus: c5→l2✓  c6→s2✗
+ *   Sonuç: ✅ TEKİL
+ *
+ * p029 (Baş Komiser 4×4) Çözüm: s2/w1/l2
+ *   Ücretsiz: c1→l1✗  c2→s4✗  c3→w3✗ w4✗  c4→s3✗
+ *   Kalan: s1 veya s2  |  l2/l3/l4  |  w1/w2
+ *   Bonus: c5→s2✓+l2✓  c6→w1✓+s1✗
+ *   Sonuç: ✅ TEKİL
+ *
+ * p030 (Baş Komiser 4×4) Çözüm: s3/w2/l3
+ *   Ücretsiz: c1→l1✗  c2→s1✗  c3→w1✗ w4✗  c4→s4✗
+ *   Kalan: s2 veya s3  |  l2/l3/l4  |  w2/w3
+ *   Bonus: c5→s3✓+l3✓  c6→w2✓+s2✗
+ *   Sonuç: ✅ TEKİL
+ *
+ * ================================================================
+ * ÖZET: Tüm 30 bulmaca benzersiz suspect+weapon+location çözümüne sahip.
+ * Ücretsiz ipuçları ≥2 seçenek elimine ediyor. Bonus ipuçları çözümü tekil yapıyor.
+ */
 export type GridMark = "none" | "cross" | "check" | "question";
 
 export interface Suspect {
