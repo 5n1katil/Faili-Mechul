@@ -481,7 +481,7 @@ export default function VakalarScreen() {
           gridState={gridState}
           finalRank={finalRank}
           totalPlayers={totalPlayers}
-          currentStreak={profile.currentStreak}
+          currentStreak={gameState.appliedStreak ?? profile.currentStreak}
           onPlayMore={handleBackToList}
           onClose={handleBackToList}
         />

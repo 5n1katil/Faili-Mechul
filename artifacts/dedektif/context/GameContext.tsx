@@ -106,6 +106,7 @@ export interface GameState {
   wrongGuesses: number;
   isComplete: boolean;
   finalScore: number | null;
+  appliedStreak: number | null;
   selectedSuspect: string | null;
   selectedWeapon: string | null;
   selectedLocation: string | null;
@@ -216,7 +217,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
       ]);
       if (profileStr) {
         const parsed = JSON.parse(profileStr);
-        setProfile({ avatar: "", ...parsed });
+        setProfile({ avatar: "", avgSolveTimeSeconds: 0, ...parsed });
       }
       if (historyStr) {
         const raw: Record<string, unknown>[] = JSON.parse(historyStr);
@@ -283,6 +284,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
       wrongGuesses: 0,
       isComplete: false,
       finalScore: null,
+      appliedStreak: null,
       selectedSuspect: null,
       selectedWeapon: null,
       selectedLocation: null,
@@ -455,7 +457,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
 
         setGameState((prev) => {
           if (!prev) return prev;
-          return { ...prev, isComplete: true, finalScore: score };
+          return { ...prev, isComplete: true, finalScore: score, appliedStreak: newStreak };
         });
         return true;
       } else {
