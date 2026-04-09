@@ -74,47 +74,6 @@ async function loadCachedPacks(): Promise<Record<string, boolean>> {
   return result;
 }
 
-async function checkEntitlement(): Promise<boolean> {
-  if (Platform.OS === "web") {
-    return getCachedPremium();
-  }
-  if (!isRevenueCatConfigured()) {
-    return false;
-  }
-  try {
-    const Purchases = require("react-native-purchases").default;
-    const info = await Purchases.getCustomerInfo();
-    const active = !!info.entitlements.active[ENTITLEMENT_ID];
-    await AsyncStorage.setItem(PREMIUM_CACHE_KEY, active ? "1" : "0");
-    return active;
-  } catch {
-    return getCachedPremium();
-  }
-}
-
-async function checkPackEntitlements(): Promise<Record<string, boolean>> {
-  if (Platform.OS === "web") {
-    return loadCachedPacks();
-  }
-  if (!isRevenueCatConfigured()) {
-    return loadCachedPacks();
-  }
-  try {
-    const Purchases = require("react-native-purchases").default;
-    const info = await Purchases.getCustomerInfo();
-    const result: Record<string, boolean> = {};
-    for (const packId of Object.keys(PACK_PRODUCT_IDS)) {
-      const productId = PACK_PRODUCT_IDS[packId];
-      const purchased = (info.allPurchasedProductIdentifiers as string[]).includes(productId);
-      result[packId] = purchased;
-      await AsyncStorage.setItem(packCacheKey(packId), purchased ? "1" : "0");
-    }
-    return result;
-  } catch {
-    return loadCachedPacks();
-  }
-}
-
 async function fetchPriceString(): Promise<string> {
   if (!isRevenueCatConfigured()) return DEFAULT_PRICE_STRING;
   try {
@@ -138,6 +97,56 @@ function initRevenueCat(): void {
   } catch {}
 }
 
+type SyncResult = {
+  premium: boolean;
+  packs: Record<string, boolean>;
+};
+
+async function syncFromRevenueCat(): Promise<SyncResult> {
+  if (Platform.OS === "web") {
+    const [premium, packs] = await Promise.all([
+      getCachedPremium(),
+      loadCachedPacks(),
+    ]);
+    return { premium, packs };
+  }
+
+  if (!isRevenueCatConfigured()) {
+    const [premium, packs] = await Promise.all([
+      getCachedPremium(),
+      loadCachedPacks(),
+    ]);
+    return { premium, packs };
+  }
+
+  try {
+    const Purchases = require("react-native-purchases").default;
+    const info = await Purchases.getCustomerInfo();
+
+    const premium = !!info.entitlements.active[ENTITLEMENT_ID];
+    await AsyncStorage.setItem(PREMIUM_CACHE_KEY, premium ? "1" : "0");
+
+    const purchasedIds = info.allPurchasedProductIdentifiers as string[];
+    const packs: Record<string, boolean> = {};
+    await Promise.all(
+      Object.keys(PACK_PRODUCT_IDS).map(async (packId) => {
+        const productId = PACK_PRODUCT_IDS[packId];
+        const purchased = purchasedIds.includes(productId);
+        packs[packId] = purchased;
+        await AsyncStorage.setItem(packCacheKey(packId), purchased ? "1" : "0");
+      })
+    );
+
+    return { premium, packs };
+  } catch {
+    const [premium, packs] = await Promise.all([
+      getCachedPremium(),
+      loadCachedPacks(),
+    ]);
+    return { premium, packs };
+  }
+}
+
 export function PurchaseProvider({ children }: { children: React.ReactNode }) {
   const [isPremium, setIsPremium] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -146,16 +155,14 @@ export function PurchaseProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     initRevenueCat();
-    Promise.all([
-      checkEntitlement(),
-      fetchPriceString(),
-      checkPackEntitlements(),
-    ]).then(([premium, price, packs]) => {
-      setIsPremium(premium);
-      setPriceString(price);
-      setPurchasedPacks(packs);
-      setIsLoading(false);
-    });
+    Promise.all([syncFromRevenueCat(), fetchPriceString()]).then(
+      ([{ premium, packs }, price]) => {
+        setIsPremium(premium);
+        setPurchasedPacks(packs);
+        setPriceString(price);
+        setIsLoading(false);
+      }
+    );
   }, []);
 
   const isPackPurchased = useCallback(
@@ -224,7 +231,7 @@ export function PurchaseProvider({ children }: { children: React.ReactNode }) {
         };
       }
     },
-    []
+    [setPurchasedPacks]
   );
 
   const purchaseVacaArsivi = useCallback(async (): Promise<{
@@ -287,7 +294,7 @@ export function PurchaseProvider({ children }: { children: React.ReactNode }) {
         message: "Bir hata oluştu. Lütfen internet bağlantınızı kontrol edin.",
       };
     }
-  }, []);
+  }, [setIsPremium]);
 
   const restorePurchases = useCallback(async (): Promise<{
     success: boolean;
@@ -324,9 +331,10 @@ export function PurchaseProvider({ children }: { children: React.ReactNode }) {
         setIsPremium(true);
       }
       const restoredPacks: Record<string, boolean> = {};
+      const purchasedIds = info.allPurchasedProductIdentifiers as string[];
       for (const packId of Object.keys(PACK_PRODUCT_IDS)) {
         const productId = PACK_PRODUCT_IDS[packId];
-        const purchased = (info.allPurchasedProductIdentifiers as string[]).includes(productId);
+        const purchased = purchasedIds.includes(productId);
         restoredPacks[packId] = purchased;
         await AsyncStorage.setItem(packCacheKey(packId), purchased ? "1" : "0");
       }
@@ -346,7 +354,7 @@ export function PurchaseProvider({ children }: { children: React.ReactNode }) {
         message: "Geri yükleme başarısız oldu. Lütfen tekrar deneyin.",
       };
     }
-  }, []);
+  }, [setIsPremium, setPurchasedPacks]);
 
   return (
     <PurchaseContext.Provider
