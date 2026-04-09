@@ -30,7 +30,7 @@ const BADGE_INFO: Record<string, { label: string; icon: MaterialIconName; desc: 
   bes_cozum:      { label: "5 Vaka",          icon: "star",                   desc: "5 bulmaca çözdünüz!" },
   on_cozum:       { label: "10 Vaka",         icon: "star-half",              desc: "10 bulmaca çözdünüz!" },
   yirmi_cozum:    { label: "20 Vaka",         icon: "grade",                  desc: "20 bulmaca çözdünüz!" },
-  uzman_dedektif: { label: "Uzman Dedektif",  icon: "military-tech",          desc: "Tüm ücretsiz bulmacaları çözdünüz!" },
+  uzman_dedektif: { label: "Uzman Dedektif",  icon: "military-tech",          desc: "Tüm ücretsiz bulmacaları çözdünüz!", color: "#D4A843" },
   soguk_iz:       { label: "İlk Seri",        icon: "local-fire-department",  desc: "3 gün üst üste oynadınız!", color: "#F97316" },
   hafta_serisi:   { label: "Haftalık Seri",   icon: "local-fire-department",  desc: "7 gün üst üste oynadınız!" },
   on_seri:        { label: "Sönmez Ateş",     icon: "whatshot",               desc: "10 gün üst üste oynadınız!", color: "#F97316" },
