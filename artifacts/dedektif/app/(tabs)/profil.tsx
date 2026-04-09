@@ -185,8 +185,8 @@ export default function ProfilScreen() {
                 label: "En İyi Süre",
               },
               {
-                value: flawlessCount > 0 ? flawlessCount : "—",
-                label: "Hatasız",
+                value: flawlessCount,
+                label: "Hatasız Çözüm",
               },
             ].map((stat, i) => (
               <View

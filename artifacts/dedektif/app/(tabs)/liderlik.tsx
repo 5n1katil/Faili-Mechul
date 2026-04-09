@@ -138,7 +138,12 @@ function RankItem({ entry, rank, sortKey, colors, delay }: RankItemProps) {
           </View>
           <View style={styles.metaRow}>
             <MaterialIcons
-              name={sortKey === "streak" ? "local-fire-department" : sortKey === "cases" ? "folder" : "star"}
+              name={
+                sortKey === "streak" ? "local-fire-department" :
+                sortKey === "cases"  ? "folder" :
+                sortKey === "hiz"    ? "bolt" :
+                "star"
+              }
               size={11}
               color={colors.mutedForeground}
             />
