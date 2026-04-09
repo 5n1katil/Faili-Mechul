@@ -1,38 +1,10 @@
 import type { ExpoConfig, ConfigContext } from "expo/config";
-import {
-  withAndroidManifest,
-  type AndroidConfig,
-} from "expo/config-plugins";
-
-function withRevenueCat(config: ExpoConfig): ExpoConfig {
-  return withAndroidManifest(config, (androidConfig) => {
-    const manifest: AndroidConfig.Manifest.AndroidManifest =
-      androidConfig.modResults;
-
-    const mainApplication = manifest.manifest;
-    if (!mainApplication["uses-permission"]) {
-      mainApplication["uses-permission"] = [];
-    }
-
-    const hasBilling = mainApplication["uses-permission"].some(
-      (p) => p.$?.["android:name"] === "com.android.vending.BILLING"
-    );
-
-    if (!hasBilling) {
-      mainApplication["uses-permission"].push({
-        $: { "android:name": "com.android.vending.BILLING" },
-      });
-    }
-
-    return androidConfig;
-  });
-}
 
 export default ({ config }: ConfigContext): ExpoConfig => {
   const iosKey = process.env.EXPO_PUBLIC_REVENUECAT_IOS_KEY ?? "";
   const androidKey = process.env.EXPO_PUBLIC_REVENUECAT_ANDROID_KEY ?? "";
 
-  const baseConfig: ExpoConfig = {
+  return {
     ...config,
     name: "Faili Meçhul",
     slug: "dedektif",
@@ -76,6 +48,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
       ],
       "expo-font",
       "expo-web-browser",
+      "./plugins/withRevenueCat",
     ],
     extra: {
       revenueCatIosKey: iosKey,
@@ -86,6 +59,4 @@ export default ({ config }: ConfigContext): ExpoConfig => {
       reactCompiler: true,
     },
   };
-
-  return withRevenueCat(baseConfig);
 };
