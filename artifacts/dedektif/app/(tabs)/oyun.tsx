@@ -15,6 +15,8 @@ if (Platform.OS === "android" && UIManager.setLayoutAnimationEnabledExperimental
   UIManager.setLayoutAnimationEnabledExperimental(true);
 }
 import { MaterialIcons } from "@expo/vector-icons";
+import type { ComponentProps } from "react";
+type MaterialIconName = ComponentProps<typeof MaterialIcons>["name"];
 import { useFocusEffect } from "@react-navigation/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useColors } from "@/hooks/useColors";
@@ -59,6 +61,7 @@ function AccordionSection({
   badge,
   defaultExpanded = true,
   accentColor,
+  icon,
   compact = false,
   children,
 }: {
@@ -67,6 +70,7 @@ function AccordionSection({
   badge?: React.ReactNode;
   defaultExpanded?: boolean;
   accentColor?: string;
+  icon?: MaterialIconName;
   compact?: boolean;
   children: React.ReactNode;
 }) {
@@ -94,7 +98,11 @@ function AccordionSection({
         ]}
       >
         <View style={accordionStyles.headerLeft}>
-          <View style={[accordionStyles.accentBar, { backgroundColor: color }]} />
+          {icon ? (
+            <MaterialIcons name={icon} size={compact ? 15 : 17} color={color} />
+          ) : (
+            <View style={[accordionStyles.accentBar, { backgroundColor: color }]} />
+          )}
           <Text style={[accordionStyles.title, compact && accordionStyles.titleCompact, { color: colors.foreground }]}>{title}</Text>
           <View style={[accordionStyles.countBadge, { backgroundColor: `${color}22`, borderColor: `${color}44` }]}>
             <Text style={[accordionStyles.countText, { color }]}>{count}</Text>
@@ -129,12 +137,17 @@ function DifficultySubGroups({
         const group = puzzles.filter((p) => p.difficulty === diff);
         if (group.length === 0) return null;
         const color = getDifficultyColor(diff as Difficulty);
+        const diffIcon: MaterialIconName =
+          diff === "caylik" ? "sentiment-satisfied" :
+          diff === "dedektif" ? "search" :
+          "local-police";
         return (
           <AccordionSection
             key={diff}
             title={getDifficultyLabel(diff as Difficulty)}
             count={group.length}
             accentColor={color}
+            icon={diffIcon}
             compact
             defaultExpanded={diff === "caylik"}
           >
