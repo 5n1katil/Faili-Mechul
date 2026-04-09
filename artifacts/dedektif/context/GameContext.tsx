@@ -304,10 +304,12 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
       wrongGuesses: gs.wrongGuesses,
     };
     await AsyncStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
+    setPendingDraft(draft);
   };
 
   const clearDraft = async () => {
     await AsyncStorage.removeItem(DRAFT_KEY);
+    setPendingDraft(null);
   };
 
   const completedPuzzleIds = useMemo(
