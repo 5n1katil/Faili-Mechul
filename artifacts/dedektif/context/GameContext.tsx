@@ -329,11 +329,14 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     const standardIndices = getStandardClueIndices(puzzle);
     const isRanked = !completedPuzzleIds.has(puzzle.id);
 
-    const draft = pendingDraft?.puzzleId === puzzle.id ? pendingDraft : null;
+    const matchingDraft = pendingDraft?.puzzleId === puzzle.id ? pendingDraft : null;
+    const draft = isRanked ? matchingDraft : null;
 
-    if (draft && completedPuzzleIds.has(puzzle.id)) {
+    if (matchingDraft && !isRanked) {
       clearDraft();
     }
+
+    tickCount.current = 0;
 
     setGameState({
       puzzle,
@@ -353,7 +356,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
       isRanked,
     });
 
-    if (draft) setPendingDraft(null);
+    if (matchingDraft) setPendingDraft(null);
   }, [completedPuzzleIds, pendingDraft]);
 
   const startDailyPuzzle = useCallback(() => {
@@ -550,11 +553,13 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
       } else {
         setGameState((prev) => {
           if (!prev) return prev;
-          return {
+          const nextState = {
             ...prev,
             wrongGuesses: prev.wrongGuesses + 1,
             timeElapsed: prev.timeElapsed + 30,
           };
+          saveDraft(nextState);
+          return nextState;
         });
         return false;
       }
@@ -571,6 +576,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
 
   const resetCurrentGame = useCallback(() => {
     clearDraft();
+    tickCount.current = 0;
     setGameState(null);
   }, []);
 
