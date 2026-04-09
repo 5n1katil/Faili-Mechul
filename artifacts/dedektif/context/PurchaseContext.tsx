@@ -105,7 +105,7 @@ async function checkPackEntitlements(): Promise<Record<string, boolean>> {
     const result: Record<string, boolean> = {};
     for (const packId of Object.keys(PACK_PRODUCT_IDS)) {
       const productId = PACK_PRODUCT_IDS[packId];
-      const purchased = Object.values(info.allPurchasedProductIdentifiers as string[]).includes(productId);
+      const purchased = (info.allPurchasedProductIdentifiers as string[]).includes(productId);
       result[packId] = purchased;
       await AsyncStorage.setItem(packCacheKey(packId), purchased ? "1" : "0");
     }
@@ -202,9 +202,7 @@ export function PurchaseProvider({ children }: { children: React.ReactNode }) {
         }
 
         const { customerInfo } = await Purchases.purchasePackage(pkg);
-        const purchased = Object.values(
-          customerInfo.allPurchasedProductIdentifiers as string[]
-        ).includes(productId);
+        const purchased = (customerInfo.allPurchasedProductIdentifiers as string[]).includes(productId);
 
         if (purchased) {
           await AsyncStorage.setItem(packCacheKey(packId), "1");
@@ -328,9 +326,7 @@ export function PurchaseProvider({ children }: { children: React.ReactNode }) {
       const restoredPacks: Record<string, boolean> = {};
       for (const packId of Object.keys(PACK_PRODUCT_IDS)) {
         const productId = PACK_PRODUCT_IDS[packId];
-        const purchased = Object.values(
-          info.allPurchasedProductIdentifiers as string[]
-        ).includes(productId);
+        const purchased = (info.allPurchasedProductIdentifiers as string[]).includes(productId);
         restoredPacks[packId] = purchased;
         await AsyncStorage.setItem(packCacheKey(packId), purchased ? "1" : "0");
       }

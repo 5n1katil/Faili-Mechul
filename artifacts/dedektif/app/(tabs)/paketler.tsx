@@ -33,10 +33,11 @@ export default function PaketlerScreen() {
   const insets = useSafeAreaInsets();
   const router = useRouter();
   const { startPuzzle } = useGame();
-  const { isPackPurchased, purchasePack, isLoading } = usePurchase();
+  const { isPackPurchased, purchasePack, restorePurchases, isLoading } = usePurchase();
 
   const [expandedPack, setExpandedPack] = useState<string | null>(null);
   const [purchasing, setPurchasing] = useState<string | null>(null);
+  const [restoring, setRestoring] = useState(false);
 
   const togglePack = useCallback((packId: string) => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
@@ -55,6 +56,16 @@ export default function PaketlerScreen() {
     },
     [purchasePack]
   );
+
+  const handleRestore = useCallback(async () => {
+    setRestoring(true);
+    const result = await restorePurchases();
+    setRestoring(false);
+    Alert.alert(
+      result.success ? "Geri Yükleme Başarılı" : "Geri Yükleme",
+      result.message
+    );
+  }, [restorePurchases]);
 
   const handleStartPuzzle = useCallback(
     (packId: string, puzzleIndex: number) => {
@@ -227,6 +238,21 @@ export default function PaketlerScreen() {
         );
       })}
 
+      <Pressable
+        onPress={handleRestore}
+        disabled={restoring || isLoading}
+        style={[styles.restoreBtn, { opacity: restoring || isLoading ? 0.5 : 1 }]}
+      >
+        {restoring ? (
+          <ActivityIndicator size="small" color="#888888" />
+        ) : (
+          <MaterialIcons name="restore" size={16} color="#888888" />
+        )}
+        <Text style={styles.restoreBtnText}>
+          {restoring ? "Geri Yükleniyor…" : "Satın Almaları Geri Yükle"}
+        </Text>
+      </Pressable>
+
       <View style={styles.footer}>
         <MaterialIcons name="info-outline" size={14} color="#555555" />
         <Text style={[styles.footerText, { color: "#555555" }]}>
@@ -362,6 +388,19 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: "700",
     color: "#000000",
+  },
+  restoreBtn: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 6,
+    paddingVertical: 12,
+    marginTop: 4,
+  },
+  restoreBtnText: {
+    fontSize: 13,
+    color: "#888888",
+    textDecorationLine: "underline",
   },
   footer: {
     flexDirection: "row",

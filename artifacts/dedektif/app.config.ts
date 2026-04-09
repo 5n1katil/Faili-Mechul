@@ -15,9 +15,7 @@ function withRevenueCat(config: ExpoConfig): ExpoConfig {
     }
 
     const hasBilling = mainApplication["uses-permission"].some(
-      (p) =>
-        p.$?.["android:name"] ===
-        "com.android.vending.BILLING"
+      (p) => p.$?.["android:name"] === "com.android.vending.BILLING"
     );
 
     if (!hasBilling) {
