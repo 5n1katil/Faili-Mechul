@@ -54,6 +54,13 @@ export default function PuzzleStartModal({ visible, puzzle, isRanked, onStart, o
             </Text>
           </View>
 
+          <View style={styles.tipBox}>
+            <MaterialIcons name="lightbulb-outline" size={16} color="#60A5FA" />
+            <Text style={styles.tipText}>
+              Unutma! Şüphelilerin her biri tek bir mekana tek bir silah getirmişti, ancak sadece biri katildi...
+            </Text>
+          </View>
+
           <View
             style={[
               styles.infoBox,
@@ -163,6 +170,24 @@ const styles = StyleSheet.create({
   },
   diffText: { fontSize: 11, fontWeight: "700" },
   puzzleName: { fontSize: 14, fontWeight: "600", lineHeight: 20 },
+  tipBox: {
+    width: "100%",
+    flexDirection: "row",
+    alignItems: "flex-start",
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "#60A5FA44",
+    backgroundColor: "#1E3A5F",
+    padding: 12,
+    gap: 8,
+  },
+  tipText: {
+    flex: 1,
+    fontSize: 13,
+    fontWeight: "600",
+    lineHeight: 19,
+    color: "#93C5FD",
+  },
   infoBox: {
     width: "100%",
     flexDirection: "row",
