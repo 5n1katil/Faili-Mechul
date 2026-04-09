@@ -178,7 +178,7 @@ export default function HomeScreen() {
         contentContainerStyle={[
           styles.content,
           {
-            paddingTop: Platform.OS === "web" ? 67 + 20 : insets.top + 16,
+            paddingTop: Platform.OS === "web" ? 67 : insets.top,
             paddingBottom: Platform.OS === "web" ? 34 + 80 : insets.bottom + 80,
           },
         ]}
