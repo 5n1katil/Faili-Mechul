@@ -19,6 +19,10 @@ function NativeTabLayout() {
         <Icon sf={{ default: "folder", selected: "folder.fill" }} />
         <Label>Vakalar</Label>
       </NativeTabs.Trigger>
+      <NativeTabs.Trigger name="paketler">
+        <Icon sf={{ default: "shippingbox", selected: "shippingbox.fill" }} />
+        <Label>Paketler</Label>
+      </NativeTabs.Trigger>
       <NativeTabs.Trigger name="liderlik">
         <Icon sf={{ default: "trophy", selected: "trophy.fill" }} />
         <Label>Liderlik</Label>
@@ -90,6 +94,18 @@ function ClassicTabLayout() {
               <SymbolView name="folder" tintColor={color} size={24} />
             ) : (
               <MaterialIcons name="folder-open" size={24} color={color} />
+            ),
+        }}
+      />
+      <Tabs.Screen
+        name="paketler"
+        options={{
+          title: "Paketler",
+          tabBarIcon: ({ color }) =>
+            isIOS ? (
+              <SymbolView name="shippingbox" tintColor={color} size={24} />
+            ) : (
+              <MaterialIcons name="storefront" size={24} color={color} />
             ),
         }}
       />
