@@ -58,15 +58,20 @@ function AccordionSection({
   count,
   badge,
   defaultExpanded = true,
+  accentColor,
+  compact = false,
   children,
 }: {
   title: string;
   count: number;
   badge?: React.ReactNode;
   defaultExpanded?: boolean;
+  accentColor?: string;
+  compact?: boolean;
   children: React.ReactNode;
 }) {
   const colors = useColors();
+  const color = accentColor ?? colors.primary;
   const [expanded, setExpanded] = useState(defaultExpanded);
 
   const toggle = () => {
@@ -80,31 +85,64 @@ function AccordionSection({
         onPress={toggle}
         style={({ pressed }) => [
           accordionStyles.header,
+          compact && accordionStyles.headerCompact,
           {
-            backgroundColor: colors.card,
-            borderColor: colors.border,
+            backgroundColor: compact ? `${color}0D` : colors.card,
+            borderColor: compact ? `${color}33` : colors.border,
             opacity: pressed ? 0.8 : 1,
           },
         ]}
       >
         <View style={accordionStyles.headerLeft}>
-          <View style={accordionStyles.accentBar} />
-          <Text style={[accordionStyles.title, { color: colors.foreground }]}>{title}</Text>
-          <View style={[accordionStyles.countBadge, { backgroundColor: `${colors.primary}22`, borderColor: `${colors.primary}44` }]}>
-            <Text style={[accordionStyles.countText, { color: colors.primary }]}>{count}</Text>
+          <View style={[accordionStyles.accentBar, { backgroundColor: color }]} />
+          <Text style={[accordionStyles.title, compact && accordionStyles.titleCompact, { color: colors.foreground }]}>{title}</Text>
+          <View style={[accordionStyles.countBadge, { backgroundColor: `${color}22`, borderColor: `${color}44` }]}>
+            <Text style={[accordionStyles.countText, { color }]}>{count}</Text>
           </View>
         </View>
         <View style={accordionStyles.headerRight}>
           {badge}
           <MaterialIcons
             name={expanded ? "keyboard-arrow-up" : "keyboard-arrow-down"}
-            size={20}
+            size={compact ? 18 : 20}
             color={colors.mutedForeground}
           />
         </View>
       </Pressable>
       {expanded && <View style={accordionStyles.body}>{children}</View>}
     </View>
+  );
+}
+
+const DIFFICULTY_ORDER: Difficulty[] = ["caylik", "dedektif", "baskomiser"];
+
+function DifficultySubGroups({
+  puzzles,
+  renderCard,
+}: {
+  puzzles: (typeof PUZZLES)[number][];
+  renderCard: (puzzle: (typeof PUZZLES)[number], groupIndex: number) => React.ReactNode;
+}) {
+  return (
+    <>
+      {DIFFICULTY_ORDER.map((diff) => {
+        const group = puzzles.filter((p) => p.difficulty === diff);
+        if (group.length === 0) return null;
+        const color = getDifficultyColor(diff as Difficulty);
+        return (
+          <AccordionSection
+            key={diff}
+            title={getDifficultyLabel(diff as Difficulty)}
+            count={group.length}
+            accentColor={color}
+            compact
+            defaultExpanded={diff === "caylik"}
+          >
+            {group.map((puzzle, i) => renderCard(puzzle, i))}
+          </AccordionSection>
+        );
+      })}
+    </>
   );
 }
 
@@ -515,17 +553,20 @@ export default function VakalarScreen() {
                       title="Başlangıç Seviyesi Vakalar"
                       count={activeFree.length}
                     >
-                      {activeFree.map((puzzle, i) => (
-                        <PuzzleCard
-                          key={puzzle.id}
-                          puzzle={puzzle}
-                          onPress={() => startPuzzle(puzzle)}
-                          delay={100 + i * 50}
-                          completed={false}
-                          bestResult={null}
-                          locked={false}
-                        />
-                      ))}
+                      <DifficultySubGroups
+                        puzzles={activeFree}
+                        renderCard={(puzzle, i) => (
+                          <PuzzleCard
+                            key={puzzle.id}
+                            puzzle={puzzle}
+                            onPress={() => startPuzzle(puzzle)}
+                            delay={100 + i * 50}
+                            completed={false}
+                            bestResult={null}
+                            locked={false}
+                          />
+                        )}
+                      />
                     </AccordionSection>
 
                     <AccordionSection
@@ -562,26 +603,29 @@ export default function VakalarScreen() {
                           <MaterialIcons name="chevron-right" size={20} color="#D4A843" />
                         </Pressable>
                       )}
-                      {activePremium.map((puzzle, i) => {
-                        const isLocked = !isPremium;
-                        return (
-                          <PuzzleCard
-                            key={puzzle.id}
-                            puzzle={puzzle}
-                            onPress={() => {
-                              if (isLocked) {
-                                setShowPaywall(true);
-                              } else {
-                                startPuzzle(puzzle);
-                              }
-                            }}
-                            delay={100 + (activeFree.length + i) * 40}
-                            completed={false}
-                            bestResult={null}
-                            locked={isLocked}
-                          />
-                        );
-                      })}
+                      <DifficultySubGroups
+                        puzzles={activePremium}
+                        renderCard={(puzzle, i) => {
+                          const isLocked = !isPremium;
+                          return (
+                            <PuzzleCard
+                              key={puzzle.id}
+                              puzzle={puzzle}
+                              onPress={() => {
+                                if (isLocked) {
+                                  setShowPaywall(true);
+                                } else {
+                                  startPuzzle(puzzle);
+                                }
+                              }}
+                              delay={100 + (activeFree.length + i) * 40}
+                              completed={false}
+                              bestResult={null}
+                              locked={isLocked}
+                            />
+                          );
+                        }}
+                      />
                     </AccordionSection>
                   </>
                 )}
@@ -606,20 +650,23 @@ export default function VakalarScreen() {
                     </Text>
                   </View>
                 ) : (
-                  completedPuzzles.map((puzzle, i) => {
-                    const best = bestScoreForPuzzle(puzzle.id);
-                    return (
-                      <PuzzleCard
-                        key={puzzle.id}
-                        puzzle={puzzle}
-                        onPress={() => startPuzzle(puzzle)}
-                        delay={100 + i * 40}
-                        completed={true}
-                        bestResult={best}
-                        showReplay={true}
-                      />
-                    );
-                  })
+                  <DifficultySubGroups
+                    puzzles={completedPuzzles}
+                    renderCard={(puzzle, i) => {
+                      const best = bestScoreForPuzzle(puzzle.id);
+                      return (
+                        <PuzzleCard
+                          key={puzzle.id}
+                          puzzle={puzzle}
+                          onPress={() => startPuzzle(puzzle)}
+                          delay={100 + i * 40}
+                          completed={true}
+                          bestResult={best}
+                          showReplay={true}
+                        />
+                      );
+                    }}
+                  />
                 )}
               </>
             )}
@@ -1091,13 +1138,23 @@ const accordionStyles = StyleSheet.create({
   accentBar: {
     width: 3,
     height: 18,
-    backgroundColor: "#D4A843",
     borderRadius: 2,
   },
   title: {
     fontSize: 15,
     fontWeight: "800",
     letterSpacing: 0.3,
+  },
+  headerCompact: {
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 10,
+    marginBottom: 3,
+  },
+  titleCompact: {
+    fontSize: 13,
+    fontWeight: "700",
+    letterSpacing: 0.2,
   },
   countBadge: {
     borderRadius: 10,
