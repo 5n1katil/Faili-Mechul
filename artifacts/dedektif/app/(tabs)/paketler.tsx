@@ -21,7 +21,6 @@ import {
   getPuzzlesForPack,
   getRawPuzzlesForPack,
   getDifficultyStars,
-  getDifficultyLabel,
 } from "@/data/packs";
 import { useColors } from "@/hooks/useColors";
 
