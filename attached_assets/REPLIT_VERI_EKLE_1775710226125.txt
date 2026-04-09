@@ -1,0 +1,60 @@
+=======================================================================
+FAİLİ MEÇHUL — 25 YENİ BULMACA EKLEMESİ
+=======================================================================
+
+Mevcut oyun altyapım hazır ve çalışıyor. Senden sadece aşağıdaki
+veriyi mevcut sisteme entegre etmeni istiyorum. Kod değiştirme,
+altyapıya dokunma — sadece bu bulmacaları ekle.
+
+-----------------------------------------------------------------------
+NE EKLEYECEKSİN?
+-----------------------------------------------------------------------
+
+"puzzles_database.json" dosyasını sana veriyorum.
+Bu dosya 5 paket, her pakette 5 bulmaca olmak üzere
+toplam 25 premium bulmaca içeriyor.
+
+Mevcut sistemde bulmacalar nasıl yükleniyorsa, bu 25 bulmacayı
+da aynı şekilde yükle. Veri yapısı şöyle:
+
+  puzzles_database.json
+  └── packs[]
+       ├── packId        → paketin benzersiz kimliği
+       ├── packTitle     → paket adı
+       ├── packColor     → tema rengi (hex)
+       ├── price         → fiyat (TRY)
+       └── puzzles[]
+            ├── puzzleId       → bulmaca kimliği
+            ├── difficulty     → 1-5 arası zorluk
+            ├── gridSize       → "3x3" veya "4x4"
+            ├── suspects[]     → şüpheliler (id, name, icon)
+            ├── weapons[]      → silahlar (id, name, icon)
+            ├── locations[]    → mekanlar (id, name, icon)
+            ├── clues[]        → ipuçları (sıralı, açılabilir)
+            └── solution       → { suspectId, weaponId, locationId }
+
+-----------------------------------------------------------------------
+5 PAKETİN ÖZETI
+-----------------------------------------------------------------------
+
+pack_001 → Osmanlı Gizemleri       (5 bulmaca, tarihi tema)
+pack_002 → Hollywood Cinayetleri   (5 bulmaca, sinema teması)
+pack_003 → Galaksinin Katili       (5 bulmaca, bilim kurgu)
+pack_004 → Gerçek Dosyalar         (5 bulmaca, gerçek vaka ilhamlı)
+pack_005 → Karanlık Geceler        (5 bulmaca, gerilim/korku)
+
+Her pakette zorluk 1'den 5'e çıkıyor (★☆☆☆☆ → ★★★★★).
+
+-----------------------------------------------------------------------
+YAPMAN GEREKENLER
+-----------------------------------------------------------------------
+
+1. puzzles_database.json dosyasını projeye ekle
+2. Mevcut bulmaca yükleme sistemi bu JSON'u okusun
+3. Paket listesi ekranında 5 paket görünsün
+4. Her pakete tıklayınca içindeki 5 bulmaca listelensin
+5. Bulmacaya girilince mevcut oyun motoru çalışsın
+
+Başka hiçbir şeye dokunma. Sadece veriyi sisteme bağla.
+
+=======================================================================

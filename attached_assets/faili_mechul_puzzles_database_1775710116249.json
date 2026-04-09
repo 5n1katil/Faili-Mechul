@@ -1,0 +1,2449 @@
+{
+  "version": "1.0.0",
+  "game": "Faili Meçhul",
+  "totalPacks": 5,
+  "totalPuzzles": 25,
+  "packs": [
+
+    {
+      "packId": "pack_001",
+      "packTitle": "Osmanlı Gizemleri",
+      "packSubtitle": "Tarihi Türkiye & Osmanlı İmparatorluğu",
+      "packIcon": "🏰",
+      "packTheme": "ottoman",
+      "packColor": "#8B4513",
+      "accentColor": "#F5C842",
+      "isPremium": true,
+      "price": 29.99,
+      "currency": "TRY",
+      "description": "Osmanlı saraylarından tarihi çarşılara uzanan 5 özgün cinayet vakası. Her bulmaca gerçek tarihi mekânlarda geçer.",
+      "puzzles": [
+        {
+          "puzzleId": "ott_001",
+          "title": "Haremdeki Zehir",
+          "subtitle": "Topkapı Sarayı, 1887",
+          "difficulty": 1,
+          "difficultyLabel": "Çaylak",
+          "stars": "★☆☆☆☆",
+          "gridSize": "3x3",
+          "timeLimit": 600,
+          "basePoints": 500,
+          "penaltyPerWrongAccusation": 120,
+          "cluePointCost": 50,
+          "story": "Topkapı Sarayı'nın harem dairesinde, Padişah'ın en gözde cariyesi ölü bulundu. Saray tabibi zehirlenme şüphesiyle vakayı bildirdi. Üç kişi haremin o bölümüne girebilirdi.",
+          "atmosphere": "Gece yarısı. Kandil ışığı. Buhur kokusu. Dışarıdan yeniçeri nöbet sesi.",
+          "suspects": [
+            { "id": "s1", "name": "Baş Kalfa Hatice", "icon": "👩‍🦳", "description": "30 yıllık saray hizmetine karşın son aylarda kariyer kaybetmişti.", "detail": "Orta yaşlı, otoriter, tüm harem protokolünü ezbere bilir." },
+            { "id": "s2", "name": "Genç Hekim Selim", "icon": "👨‍⚕️", "description": "Sarayın yeni gözde hekimi. Avrupalı tıp anlayışını benimsemiş.", "detail": "26 yaşında, Viyana'da eğitim görmüş, çekingen ama zeki." },
+            { "id": "s3", "name": "Hazinedar Hüseyin", "icon": "💰", "description": "Saray masraflarından sorumlu. Son ay kayıp altın meselesinde adı geçti.", "detail": "50'li yaşlarda, şişman, her zaman terli." }
+          ],
+          "weapons": [
+            { "id": "w1", "name": "Afyon Terkibi", "icon": "🌺", "description": "Şerbetin içine karıştırılmış doğal uyuşturucu." },
+            { "id": "w2", "name": "Zehirli Buhurdanlık", "icon": "🫧", "description": "Buhur karışımına katılan arsenik tozu." },
+            { "id": "w3", "name": "Boğazlama", "icon": "🪢", "description": "İnce ipek kordon." }
+          ],
+          "locations": [
+            { "id": "l1", "name": "Yatak Odası", "icon": "🛏️", "description": "Cariyenin özel odası, kilitli kapısıyla bilinir." },
+            { "id": "l2", "name": "Hamam Koridoru", "icon": "🚿", "description": "Hamamdan odaya uzanan dar, loş koridor." },
+            { "id": "l3", "name": "Müzik Salonu", "icon": "🎵", "description": "Ud ve kanun sesleriyle dolan toplantı odası." }
+          ],
+          "clues": [
+            {
+              "id": "c1", "type": "kanit", "revealOrder": 1, "isRevealed": true, "pointCost": 0,
+              "title": "Saray Tabibi Raporu",
+              "text": "Cariyenin vücudunda darp izi ya da boğulma belirtisi yoktu. Dudakları morarmış, ciğerlerinde şişme var. Tabip 'dahili zehirlenme' kararı verdi.",
+              "mechanicType": "text",
+              "deductionHint": "Boğazlama silahını eliyebilirsiniz."
+            },
+            {
+              "id": "c2", "type": "tanik", "revealOrder": 2, "isRevealed": false, "pointCost": 50,
+              "title": "Nöbetçi Yeniçeri İfadesi",
+              "text": "\"Gece ikinci nöbet değişiminde Hekim Selim'i harem koridorunda gördüm. Elinde küçük bir sandık vardı. Aceleyle odaya girdi, beş dakika sonra çıktı.\"",
+              "mechanicType": "text",
+              "deductionHint": "Hekim hangi odaya girdi?"
+            },
+            {
+              "id": "c3", "type": "adli", "revealOrder": 3, "isRevealed": false, "pointCost": 50,
+              "title": "Buhurdanlık Analizi",
+              "text": "Müzik salonundaki buhurdanlıkta kalan külde arsenik bileşiği tespit edildi. Ancak cariye o gece müzik salonuna gitmediyse bu anlamsız olurdu.",
+              "mechanicType": "text",
+              "deductionHint": "Cariye o gece neredeydi?"
+            },
+            {
+              "id": "c4", "type": "eleme", "revealOrder": 4, "isRevealed": false, "pointCost": 50,
+              "title": "Hazinedar Defteri",
+              "text": "O gece hazinedar Hüseyin saray dışındaydı; padişah fermanıyla çarşıya gönderilmişti. Kapı kayıtları bunu doğruluyor.",
+              "mechanicType": "text",
+              "deductionHint": "Bir şüpheliyi tamamen eleyin."
+            },
+            {
+              "id": "c5", "type": "tanik", "revealOrder": 5, "isRevealed": false, "pointCost": 50,
+              "title": "Baş Kalfa İfadesi",
+              "text": "\"Cariye o gece müzik salonuna gitmedi, doğrudan yatak odasına çekildi. Ben kendisi için şerbet hazırladım ve kapıya bıraktım.\"",
+              "mechanicType": "ses_kaydi",
+              "sesMetni": "[Ses kaydı simülasyonu] Hatice'nin sesi titriyor. 'Şerbeti... ben hazırladım ama içine bir şey koymadım vallahi.'",
+              "deductionHint": "Şerbet önemli bir ipucu."
+            },
+            {
+              "id": "c6", "type": "dogrudan", "revealOrder": 6, "isRevealed": false, "pointCost": 50,
+              "title": "Gizli Mektup",
+              "text": "Cariyenin yastık altında bir mektup: 'Selim Bey, yarın padişaha söyleyeceğim. Harem parasını sen mi alıyorsun yoksa Hatice mi?' — İmzasız.",
+              "mechanicType": "gorsel_ipucu",
+              "gorselAciklama": "Yırtık kenar, aceleyle yazılmış, mürekkep lekesi sol köşede. Yazı tarzı kadına ait.",
+              "deductionHint": "Bu mektup katil için tehdit oluşturuyordu."
+            }
+          ],
+          "solution": { "suspectId": "s1", "weaponId": "w1", "locationId": "l1" },
+          "solutionNarrative": "Baş Kalfa Hatice, cariyenin parasızlık meselesini padişaha bildireceğinden korktu. Yatak odasına bıraktığı şerbetin içine afyon terkibi kattı. Hekim Selim'in geç saatte görünmesi sırf ilaç kontrolü içindi.",
+          "specialMechanic": null
+        },
+
+        {
+          "puzzleId": "ott_002",
+          "title": "Büyük Çarşı'da Kayıp Mühür",
+          "subtitle": "Kapalıçarşı, İstanbul 1923",
+          "difficulty": 2,
+          "difficultyLabel": "Polis Memuru",
+          "stars": "★★☆☆☆",
+          "gridSize": "3x3",
+          "timeLimit": 540,
+          "basePoints": 650,
+          "penaltyPerWrongAccusation": 120,
+          "cluePointCost": 60,
+          "story": "Cumhuriyetin ilk yıllarında Kapalıçarşı'nın en köklü antikacısı dükkânında ölü bulundu. Yanında taşıdığı, Kanuni Sultan Süleyman dönemine ait altın mühür kaybolmuştu.",
+          "atmosphere": "Sabah erken. Çarşı henüz açılmış. Esnafın korkuyla fısıldaştığı dar pasaj.",
+          "suspects": [
+            { "id": "s1", "name": "Rakip Antikacı Vasil", "icon": "🧓", "description": "Rum asıllı antikacı. Mührü yıllardır almak istiyordu.", "detail": "60'lı yaşlarda, kısık gözlü, piyasada 'sert müzakereci' olarak bilinir." },
+            { "id": "s2", "name": "Genç Çırak Mehmet", "icon": "👦", "description": "Maktulün 3 yıllık çırağı. Dükkan anahtarına sahip.", "detail": "19 yaşında, zeki, ama son ay borçlandığı söyleniyor." },
+            { "id": "s3", "name": "Koleksiyoncu Hanım Eleni", "icon": "👩", "description": "Atina'dan gelmiş varlıklı bir Rum koleksiyoncu.", "detail": "45 yaşında, şapkası ve eldiveniyle dikkat çekici." }
+          ],
+          "weapons": [
+            { "id": "w1", "name": "Ağır Tunç Vazo", "icon": "🏺", "description": "Dükkânda sergilenen Osmanlı dönemi tunç vazo." },
+            { "id": "w2", "name": "Zehirli Kahve", "icon": "☕", "description": "Çarşı kahvaltısında içilen kahveye katılan madde." },
+            { "id": "w3", "name": "İpek Fular", "icon": "🧣", "description": "Mağazada satışta olan antika ipek fular." }
+          ],
+          "locations": [
+            { "id": "l1", "name": "Arka Oda", "icon": "🚪", "description": "Sadece maktul ve çırağın bildiği gizli değerleme odası." },
+            { "id": "l2", "name": "Ana Koridor", "icon": "🛣️", "description": "Dükkânların önündeki kapalı çarşı koridoru." },
+            { "id": "l3", "name": "Kahvehane Köşesi", "icon": "☕", "description": "Çarşı içindeki küçük kahvehane." }
+          ],
+          "clues": [
+            {
+              "id": "c1", "type": "kanit", "revealOrder": 1, "isRevealed": true, "pointCost": 0,
+              "title": "Ölüm Yeri Tespiti",
+              "text": "Cesedi arka odada buldular. Kapı kilitsizdi. Baş bölgesinde künt darbe izi — sert ve yuvarlak bir nesne. Mühür, kasadan alınmış.",
+              "mechanicType": "text",
+              "deductionHint": "Arka oda ve künt darbe — silah ve mekan açık."
+            },
+            {
+              "id": "c2", "type": "parmak_izi", "revealOrder": 2, "isRevealed": false, "pointCost": 60,
+              "title": "Parmak İzi Raporu",
+              "text": "Tunç vazoda iki farklı parmak izi bulundu.",
+              "mechanicType": "parmak_izi",
+              "parmakIziVerisi": {
+                "aciklama": "Mini oyun: Üç şüphelinin parmak izi kartlarını vazo izleriyle eşleştir.",
+                "izler": [
+                  { "izId": "iz1", "konum": "Vazo üst kısım", "eslesme": "s2", "ipucu": "Küçük, ince parmak izi — genç bir ele ait." },
+                  { "izId": "iz2", "konum": "Vazo alt kısım", "eslesme": "s2", "ipucu": "Aynı kişiye ait — iki eliyle kavramış." }
+                ],
+                "sonuc": "Vazo yalnızca çırağın parmak izlerini taşıyor."
+              },
+              "deductionHint": "Vazoyu kim tuttu?"
+            },
+            {
+              "id": "c3", "type": "tanik", "revealOrder": 3, "isRevealed": false, "pointCost": 60,
+              "title": "Komşu Esnaf İfadesi",
+              "text": "\"Vasil sabah açılışta benim önümden geçti, dükkânına gitti, 10 dakika sonra geri çıktı. O saatte maktulün dükkânı hâlâ kapalıydı.\"",
+              "mechanicType": "text",
+              "deductionHint": "Vasil'in zamanlaması..."
+            },
+            {
+              "id": "c4", "type": "eleme", "revealOrder": 4, "isRevealed": false, "pointCost": 60,
+              "title": "Eleni'nin Otel Kaydı",
+              "text": "Eleni o sabah saat 09.30'a kadar Pera Palas'ta kahvaltı yaptı. Otel müdürü ve üç garson onaylıyor. Çarşıya 10.00'den önce gelemezdi.",
+              "mechanicType": "text",
+              "deductionHint": "Bir şüpheliyi tamamen eleyin."
+            },
+            {
+              "id": "c5", "type": "dogrudan", "revealOrder": 5, "isRevealed": false, "pointCost": 60,
+              "title": "Çırağın Borç Defteri",
+              "text": "Mehmet'in cebinde bulunan küçük defterde: '150 lira — Pazara kadar ödemek zorundayım yoksa...' Ve mühürün tahmini piyasa değeri: 200 lira.",
+              "mechanicType": "gorsel_ipucu",
+              "gorselAciklama": "Defter sayfası yırtık, aceleyle yazılmış rakamlar. Bazı kelimeler silinmeye çalışılmış.",
+              "deductionHint": "Mühür çırağın borcunu kapatır mıydı?"
+            },
+            {
+              "id": "c6", "type": "tanik", "revealOrder": 6, "isRevealed": false, "pointCost": 60,
+              "title": "Çırağın Kendi İfadesi",
+              "text": "\"O sabah dükkânı ben açtım. Usta henüz gelmemişti. Arka odaya gittiğimde onu yerde buldum.\" — Ama komşu esnaf sabah 7.00'de arka odada ses duyduğunu söyledi.",
+              "mechanicType": "tanik_yuzlesme",
+              "yuzlesmeDialogu": [
+                { "soru": "Arka odaya ilk ne zaman girdiniz?", "cevap": "Usta geldikten sonra, saat sekiz buçukta.", "yalan": true },
+                { "soru": "Tunç vazoyu elinize aldınız mı?", "cevap": "Hayır, hiç dokunmadım.", "yalan": true },
+                { "soru": "Borçlarınız var mıydı?", "cevap": "Küçük bir borç vardı ama hallettim.", "yalan": false }
+              ],
+              "deductionHint": "İki farklı ifade çelişiyor."
+            }
+          ],
+          "solution": { "suspectId": "s2", "weaponId": "w1", "locationId": "l1" },
+          "solutionNarrative": "Genç Çırak Mehmet, borçlarını ödemek için mühürü çalmaya karar verdi. Ustası arka odada mührü kontrol ederken yakalandı. Panikleyerek tunç vazoyla vurdu. Mühür hâlâ Mehmet'in karyolasının altında.",
+          "specialMechanic": "parmak_izi_mini_oyun"
+        },
+
+        {
+          "puzzleId": "ott_003",
+          "title": "Yıldız Sarayı'nda Hain",
+          "subtitle": "Yıldız Sarayı, İstanbul 1905",
+          "difficulty": 3,
+          "difficultyLabel": "Dedektif",
+          "stars": "★★★☆☆",
+          "gridSize": "3x3",
+          "timeLimit": 480,
+          "basePoints": 800,
+          "penaltyPerWrongAccusation": 150,
+          "cluePointCost": 70,
+          "story": "II. Abdülhamid'in paranoyasıyla örülü sarayında bir hafiye ölü bulundu. Padişahın güvendiği üç isimden biri gizli belgelerle birlikte hain olabilir.",
+          "atmosphere": "Fırtınalı bir gece. Yıldız Sarayı'nın loş koridorları. Her köşede gölge.",
+          "suspects": [
+            { "id": "s1", "name": "Baş Hafiye Zeki Paşa", "icon": "🕵️", "description": "Padişahın 20 yıllık sadık hafiyesi. Son ay garip davranışlar.", "detail": "Ağır bıyıklı, 55 yaşında, saklanmış geçmişi olan biri." },
+            { "id": "s2", "name": "Yaver Fehmi Bey", "icon": "🎖️", "description": "Padişahın genç yaveri. Maktulla gizli yazışmaları vardı.", "detail": "32 yaşında, yakışıklı, İttihat ve Terakki sempatizanı söylentisi." },
+            { "id": "s3", "name": "Saray Kütüphanecisi Nermin Hanım", "icon": "📚", "description": "Tek kadın saray görevlisi. Tüm gizli arşive erişimi var.", "detail": "40'lı yaşlarda, sessiz ve gözlemci, Fransızca biliyor." }
+          ],
+          "weapons": [
+            { "id": "w1", "name": "Revolver", "icon": "🔫", "description": "Avrupalı yapımı küçük tabanca." },
+            { "id": "w2", "name": "Zehirli Mürekkep", "icon": "✒️", "description": "Mektup zarfının kenarına sürülen zehir." },
+            { "id": "w3", "name": "Tel Kement", "icon": "🪢", "description": "İnce çelik tel." }
+          ],
+          "locations": [
+            { "id": "l1", "name": "Arşiv Odası", "icon": "📁", "description": "Kütüphanenin altındaki gizli arşiv." },
+            { "id": "l2", "name": "Çamlık Köşkü", "icon": "🌲", "description": "Saray bahçesindeki küçük köşk." },
+            { "id": "l3", "name": "Yaver Dairesi", "icon": "🪟", "description": "Yaverlerin kaldığı daire." }
+          ],
+          "clues": [
+            {
+              "id": "c1", "type": "kanit", "revealOrder": 1, "isRevealed": true, "pointCost": 0,
+              "title": "Otopsi Notu",
+              "text": "Maktulün sağ elinde mürekkep lekesi, parmak uçlarında yanık — zehirli temas. Ölüm nedeni: sistemik zehirlenme. Kurban son bir saat içinde bir mektup açmıştı.",
+              "mechanicType": "text",
+              "deductionHint": "Silah zehirli mürekkep."
+            },
+            {
+              "id": "c2", "type": "sifreli", "revealOrder": 2, "isRevealed": false, "pointCost": 70,
+              "title": "Şifreli Mesaj",
+              "text": "Maktulün cebinde kırık bir şifreli mesaj bulundu.",
+              "mechanicType": "sifreli_mesaj",
+              "sifre": {
+                "sifrelenmis": "ZEKİ ARŞIVE GİTTİ — NERMİN GÖRMEDİ",
+                "sifreleTuru": "harf_yer_degistirme",
+                "cozumIpucu": "Her harf bir ileri kaydırılmış (A→B, B→C...)",
+                "cozulmus": "YDJİ ZQŞHUD HİSSİ — MDQLİM HÖQLDDİ",
+                "aciklama": "Şifreyi çözdüğünüzde: Zeki Paşa'nın arşive gittiğini, Nermin Hanım'ın bunu görmediğini söylüyor."
+              },
+              "deductionHint": "Arşiv odası ipucu içeriyor."
+            },
+            {
+              "id": "c3", "type": "tanik", "revealOrder": 3, "isRevealed": false, "pointCost": 70,
+              "title": "Bahçıvan Tanıklığı",
+              "text": "\"Fırtınanın en şiddetli anında çamlık köşkünde ışık yandı. Pencereden iki gölge gördüm — biri uzun boylu, diğeri daha kısa. Sonra ışık söndü.\"",
+              "mechanicType": "text"
+            },
+            {
+              "id": "c4", "type": "eleme", "revealOrder": 4, "isRevealed": false, "pointCost": 70,
+              "title": "Yaver Odası Kaydı",
+              "text": "Yaver Fehmi Bey o gece padişahın özel davetindeydi, geceyarısına kadar. Saray defteri ve 4 kişinin tanıklığı var.",
+              "mechanicType": "text",
+              "deductionHint": "Fehmi Bey elimine giriyor."
+            },
+            {
+              "id": "c5", "type": "adli", "revealOrder": 5, "isRevealed": false, "pointCost": 70,
+              "title": "Fransız Kimyager Raporu",
+              "text": "Zarfta kullanılan zehir 'aconitine' — Avrupa'da bilinçli kimya eğitimi gerektirir. İstanbul'da bu maddeye resmi kanaldan erişebilecek kişi sayısı oldukça az.",
+              "mechanicType": "text",
+              "deductionHint": "Kim Fransızca ve kimya biliyor?"
+            },
+            {
+              "id": "c6", "type": "dogrudan", "revealOrder": 6, "isRevealed": false, "pointCost": 70,
+              "title": "Gizli Yazışma Arşivi",
+              "text": "Arşiv odasında Nermin Hanım'ın el yazısıyla gizli notlar: Fransız büyükelçilikle yazışma tarihleri. Maktul bu arşive ulaşmıştı.",
+              "mechanicType": "gorsel_ipucu",
+              "gorselAciklama": "Düzgün, eğitimli el yazısı. Fransızca kelimeler araya serpiştirilmiş. Tarihler 6 ay öncesine gidiyor.",
+              "deductionHint": "Kütüphaneci ve arşiv bağlantısı."
+            }
+          ],
+          "solution": { "suspectId": "s3", "weaponId": "w2", "locationId": "l1" },
+          "solutionNarrative": "Kütüphaneci Nermin Hanım, Fransa ile gizli yazışma yapan bir ajan. Maktul arşive ulaşıp bunu keşfetti. Nermin, maktule zehirli mürekkeple yazılmış bir mektup gönderdi. Ölüm arşiv odasında belgelerle birlikte gerçekleşti.",
+          "specialMechanic": "sifreli_mesaj_cozme"
+        },
+
+        {
+          "puzzleId": "ott_004",
+          "title": "Tersane Komutanının Sonu",
+          "subtitle": "Haliç Tersanesi, 1890",
+          "difficulty": 4,
+          "difficultyLabel": "Başkomiser",
+          "stars": "★★★★☆",
+          "gridSize": "4x4",
+          "timeLimit": 420,
+          "basePoints": 1000,
+          "penaltyPerWrongAccusation": 180,
+          "cluePointCost": 80,
+          "story": "Haliç Tersanesi'nde inşaat halindeki savaş gemisi nedeniyle milyonluk bir sözleşme imzalanacaktı. Tersane Komutanı, imzadan bir gece önce ölü bulundu. Dört kişi tersaneye girebilirdi.",
+          "atmosphere": "Denizden gelen rüzgar. Demir kokusu. Gemilerin gıcırtısı.",
+          "suspects": [
+            { "id": "s1", "name": "İngiliz Mühendis Bradford", "icon": "🧑‍💼", "description": "Sözleşmeyi almak için aylardır uğraşan İngiliz şirketi temsilcisi.", "detail": "48 yaşında, resmi ve soğuk." },
+            { "id": "s2", "name": "Osmanlı Subayı Nuri Bey", "icon": "🎖️", "description": "Komutanın altındaki subay. Terfi bekliyor.", "detail": "35 yaşında, hırslı, borçlu." },
+            { "id": "s3", "name": "Alman Rakip Herr Vogel", "icon": "🧔", "description": "Alman rakip şirketin temsilcisi. Sözleşmeyi kaybetmek üzere.", "detail": "52 yaşında, büyük bıyıklı, sabırsız." },
+            { "id": "s4", "name": "Tersane Bekçisi Rıza", "icon": "💂", "description": "Tek kapı bekçisi. Giriş-çıkış defterini tutuyor.", "detail": "60 yaşında, rüşvete açık olduğu söyleniyor." }
+          ],
+          "weapons": [
+            { "id": "w1", "name": "Ağır Demir Çekiç", "icon": "🔨", "description": "Tersanede kullanılan büyük çekiç." },
+            { "id": "w2", "name": "Deniz Halatı", "icon": "🪢", "description": "Kalın gemi halatı." },
+            { "id": "w3", "name": "Tabanca", "icon": "🔫", "description": "Avrupalı yapımı subay tabancası." },
+            { "id": "w4", "name": "Zehirli İçki", "icon": "🥃", "description": "Viski kadehine karıştırılan arsenik." }
+          ],
+          "locations": [
+            { "id": "l1", "name": "Gemi Güvertesi", "icon": "⚓", "description": "İnşaat halindeki geminin ana güvertesi." },
+            { "id": "l2", "name": "Komutan Ofisi", "icon": "📋", "description": "Tersanenin en yüksek binasındaki ofis." },
+            { "id": "l3", "name": "Depo Ambarı", "icon": "📦", "description": "Tersanenin derinliklerindeki karanlık ambar." },
+            { "id": "l4", "name": "Rıhtım Kenarı", "icon": "🌊", "description": "Denize sıfır tahtadan rıhtım." }
+          ],
+          "clues": [
+            {
+              "id": "c1", "type": "kanit", "revealOrder": 1, "isRevealed": true, "pointCost": 0,
+              "title": "Ölüm Yeri",
+              "text": "Komutan depo ambarında bulundu. Kafasında künt darbe izi. Yerde dökülen viski ve kırık bardak. Paltosunda tuz ve katran kokusu.",
+              "mechanicType": "text"
+            },
+            {
+              "id": "c2", "type": "parmak_izi", "revealOrder": 2, "isRevealed": false, "pointCost": 80,
+              "title": "Bardak Parmak İzi",
+              "text": "Kırık viski bardağında kısmi iz.",
+              "mechanicType": "parmak_izi",
+              "parmakIziVerisi": {
+                "aciklama": "Dört şüphelinin iz kartlarını kırık bardakla eşleştir.",
+                "izler": [
+                  { "izId": "iz1", "konum": "Bardak sapı", "eslesme": "s2", "ipucu": "Uzun ince parmaklar — subay eli." }
+                ],
+                "sonuc": "Bardağı son tutan: Nuri Bey."
+              }
+            },
+            {
+              "id": "c3", "type": "tanik", "revealOrder": 3, "isRevealed": false, "pointCost": 80,
+              "title": "Bradford'un İfadesi",
+              "text": "\"Ben o gece ofiste komutanla sözleşmeyi görüştüm. Saat 21.00'de ayrıldım. Komutan benden sonra Vogel'i bekliyordu.\"",
+              "mechanicType": "text"
+            },
+            {
+              "id": "c4", "type": "tanik", "revealOrder": 4, "isRevealed": false, "pointCost": 80,
+              "title": "Bekçi Rıza'nın Defteri",
+              "text": "Giriş defteri: Bradford 20.30'da girdi, 21.10'da çıktı. Vogel 20.45'te girdi, 22.00'de çıktı. Nuri Bey 21.30'da girdi — çıkış kaydı yok.",
+              "mechanicType": "gorsel_ipucu",
+              "gorselAciklama": "Defterin son satırı kazınmış. Rıza bir ismi silmeye çalışmış.",
+              "deductionHint": "Silinmiş kayıt kimin?"
+            },
+            {
+              "id": "c5", "type": "adli", "revealOrder": 5, "isRevealed": false, "pointCost": 80,
+              "title": "Silah Analizi",
+              "text": "Viskide arsenik iz yok. Darbede kullanılan nesne gemi çapasına ait zincir halka — depo ambarına özgü ekipman. Komutan önce içkiyi içti, sonra vuruldu.",
+              "mechanicType": "text",
+              "deductionHint": "Zincir halka depo ambarında."
+            },
+            {
+              "id": "c6", "type": "tanik", "revealOrder": 6, "isRevealed": false, "pointCost": 80,
+              "title": "Vogel'in İfadesi",
+              "text": "\"Komutanla ofiste buluştuk, anlaşamadık. Nuri Bey dışarıda bekliyordu — ikimizi de görürdü. Ayrılırken Nuri Bey içeri giriyordu.\"",
+              "mechanicType": "tanik_yuzlesme",
+              "yuzlesmeDialogu": [
+                { "soru": "Nuri Bey'i gördünüz mü?", "cevap": "Evet, ofis kapısında bekliyordu.", "yalan": false },
+                { "soru": "Depo ambarına gittiniz mi?", "cevap": "Hayır, doğrudan çıktım.", "yalan": false },
+                { "soru": "Sözleşmeyi kaybetmek sizi nasıl etkilerdi?", "cevap": "İş dünyasında normal bir kayıp.", "yalan": true }
+              ]
+            },
+            {
+              "id": "c7", "type": "dogrudan", "revealOrder": 7, "isRevealed": false, "pointCost": 80,
+              "title": "Nuri Bey'in Borç Belgesi",
+              "text": "Komutanın masasında Nuri Bey'e ait ipotek belgesi. Dipnot: 'Terfi olmadan 3 ay içinde haciz.' Komutan bu terfiyi engelleyen raporu yeni yazmıştı.",
+              "mechanicType": "text"
+            },
+            {
+              "id": "c8", "type": "ses_kaydi", "revealOrder": 8, "isRevealed": false, "pointCost": 80,
+              "title": "Bekçinin Ses Kaydı",
+              "text": "[Ses kaydı simülasyonu] Rıza fısıltıyla konuşuyor: 'Nuri Bey bana 10 altın verdi. Defterden ismini silmemi istedi. Ben de... sildim işte. Ne yapayım?'",
+              "mechanicType": "ses_kaydi",
+              "sesMetni": "Rıza'nın sesi titriyor, pişman ve korkmuş görünüyor.",
+              "deductionHint": "Bekçi rüşvet aldı."
+            }
+          ],
+          "solution": { "suspectId": "s2", "weaponId": "w1", "locationId": "l3" },
+          "solutionNarrative": "Osmanlı Subayı Nuri Bey, terfi raporunu imzalatmak için komutanla görüştü. Komutan reddetti. Nuri Bey komutanı depo ambarına çekti, içki ikram etti, ardından demir çekiçle vurdu. Bekçiyi rüşvetle susturmaya çalıştı.",
+          "specialMechanic": "parmak_izi_ve_ses_kaydi"
+        },
+
+        {
+          "puzzleId": "ott_005",
+          "title": "Ayasofya'nın Son Sırrı",
+          "subtitle": "Ayasofya Çevresi, İstanbul 1934",
+          "difficulty": 5,
+          "difficultyLabel": "Efsane Komiser",
+          "stars": "★★★★★",
+          "gridSize": "4x4",
+          "timeLimit": 360,
+          "basePoints": 1500,
+          "penaltyPerWrongAccusation": 240,
+          "cluePointCost": 100,
+          "story": "Ayasofya'nın müzeye dönüştürüldüğü 1934 yılında, dini mozaiklerin altındaki gizli Bizans hazinesi haritasını elinde bulunduran Rum arkeolog ölü bulundu. Dört kişi son görüşmesinde bulunmuştu.",
+          "atmosphere": "Tarihin dönüm noktası. Siyasi gerilim. Her taş bir sır taşıyor.",
+          "suspects": [
+            { "id": "s1", "name": "Müze Müdürü Aziz Bey", "icon": "🏛️", "description": "Resmi düzenlemenin mimarı, hazine söylentisini reddediyor.", "detail": "55 yaşında, bürokratik, devlet sadakati ön planda." },
+            { "id": "s2", "name": "İngiliz Arkeolog Pembrooke", "icon": "🔍", "description": "British Museum adına İstanbul'da çalışıyor.", "detail": "40 yaşında, akademik, haritanın kopyasına sahip olduğu iddia ediliyor." },
+            { "id": "s3", "name": "Yeraltı Tüccarı Yorgo", "icon": "🤝", "description": "Tarihi eser kaçakçısı. Haritanın piyasa değeri 10 kat büyütür.", "detail": "50'li yaşlarda, silik, her ortamda kaybolur." },
+            { "id": "s4", "name": "Arkeologun Asistanı Fatma", "icon": "👩‍🔬", "description": "Maktulün 5 yıllık asistanı. Haritanın varlığını bilen tek Türk.", "detail": "28 yaşında, zeki, korku içinde görünüyor." }
+          ],
+          "weapons": [
+            { "id": "w1", "name": "Zehirli Şarap", "icon": "🍷", "description": "Rum meyhanede içilen şaraba katılan madde." },
+            { "id": "w2", "name": "Antika Hançer", "icon": "🗡️", "description": "Bizans dönemine ait hançer." },
+            { "id": "w3", "name": "Taş Blok", "icon": "🪨", "description": "Yapı iskeleti taşı." },
+            { "id": "w4", "name": "Kimyasal Gaz", "icon": "☁️", "description": "Kapalı alanda serbest bırakılan toksik gaz." }
+          ],
+          "locations": [
+            { "id": "l1", "name": "Bizans Kripta", "icon": "⛪", "description": "Ayasofya altındaki gizli Bizans kripta." },
+            { "id": "l2", "name": "Rum Meyhane", "icon": "🍷", "description": "Yakın çevredeki tarihi Rum meyhanesi." },
+            { "id": "l3", "name": "Arkeoloji Deposu", "icon": "📦", "description": "Müzenin altındaki arkeoloji deposu." },
+            { "id": "l4", "name": "Boğaz Kıyısı", "icon": "🌊", "description": "Sarayburnu kıyısı, kayalık alan." }
+          ],
+          "clues": [
+            {
+              "id": "c1", "type": "kanit", "revealOrder": 1, "isRevealed": true, "pointCost": 0,
+              "title": "Ölüm Yeri ve Nedeni",
+              "text": "Maktul Bizans kriptasında bulundu. Nadir kimyasal madde zehirlenmesi. Harita yok. Çantası açık ve karıştırılmış.",
+              "mechanicType": "text"
+            },
+            {
+              "id": "c2", "type": "sifreli", "revealOrder": 2, "isRevealed": false, "pointCost": 100,
+              "title": "Arkeologun Son Notu",
+              "text": "Maktulün cebinde şifreli bir not.",
+              "mechanicType": "sifreli_mesaj",
+              "sifre": {
+                "sifrelenmis": "FMPT CJMJZPS — BSTJWF HJU",
+                "sifreleTuru": "cesar_sifresi_plus1",
+                "cozumIpucu": "Her harf bir geri kaydırılmış.",
+                "cozulmus": "ELSI BILIYOR — ARSİVE GİT",
+                "aciklama": "Şifre çözülünce: 'Elsi biliyor — Arşive git.' Elsi = Yorgo'nun lakabı."
+              }
+            },
+            {
+              "id": "c3", "type": "adli", "revealOrder": 3, "isRevealed": false, "pointCost": 100,
+              "title": "Kimyasal Analiz",
+              "text": "Kullanılan gaz 'hidrojensiyânür' bileşiği — endüstriyel kimya bilgisi gerektirir. İngilizler 1. Dünya Savaşı'nda bu maddeyi kullandı.",
+              "mechanicType": "text",
+              "deductionHint": "Kim bu kimyaya erişebilir?"
+            },
+            {
+              "id": "c4", "type": "tanik", "revealOrder": 4, "isRevealed": false, "pointCost": 100,
+              "title": "Meyhane Sahibi İfadesi",
+              "text": "\"O gece arkeolog Pembrooke ile uzun süre oturdu. Tartıştılar, İngilizce. Arkeolog öfkeli ayrıldı. Pembrooke 10 dakika sonra çıktı.\"",
+              "mechanicType": "text"
+            },
+            {
+              "id": "c5", "type": "parmak_izi", "revealOrder": 5, "isRevealed": false, "pointCost": 100,
+              "title": "Kripta Kapı İzi",
+              "text": "Kripta giriş kapısında toz üzerinde iz.",
+              "mechanicType": "parmak_izi",
+              "parmakIziVerisi": {
+                "aciklama": "Dört şüphelinin izini kapı tokasıyla eşleştir.",
+                "izler": [
+                  { "izId": "iz1", "konum": "Kapı tokaları", "eslesme": "s2", "ipucu": "Büyük, geniş parmak izi. Akademisyen eli — mürekkep lekesi." }
+                ],
+                "sonuc": "Kriptaya son giren: Pembrooke."
+              }
+            },
+            {
+              "id": "c6", "type": "eleme", "revealOrder": 6, "isRevealed": false, "pointCost": 100,
+              "title": "Yorgo'nun Alibisi",
+              "text": "Yorgo o gece Galata'da polis tarafından başka bir davada gözaltında sorgulandı. Saat 20.00-24.00 arası kayıt altında.",
+              "mechanicType": "text"
+            },
+            {
+              "id": "c7", "type": "tanik", "revealOrder": 7, "isRevealed": false, "pointCost": 100,
+              "title": "Fatma'nın İtirafı",
+              "text": "\"Pembrooke haritanın kopyasını benden istedi. Vermedim. Ama ustama söyledim — ustam onu kripta için davet etti. 'Barışalım' dedi. Ben gitmek istedim ama ustam 'gerek yok' dedi.\"",
+              "mechanicType": "tanik_yuzlesme",
+              "yuzlesmeDialogu": [
+                { "soru": "Pembrooke'u kriptaya siz mi çağırdınız?", "cevap": "Hayır, ustam çağırdı.", "yalan": false },
+                { "soru": "Haritayı verdiniz mi?", "cevap": "Hayır, kimseye vermedim.", "yalan": false },
+                { "soru": "Pembrooke'un haritayı almak istediğini biliyor muydunuz?", "cevap": "Bilmiyordum.", "yalan": true }
+              ]
+            },
+            {
+              "id": "c8", "type": "dogrudan", "revealOrder": 8, "isRevealed": false, "pointCost": 100,
+              "title": "British Museum Yazışması",
+              "text": "Pembrooke'un otel odasında bulunan şifreli telgraf: 'Harita bu hafta Londra'da olmalı. Her türlü önlemi al.' Gönderici: Museum Director.",
+              "mechanicType": "gorsel_ipucu",
+              "gorselAciklama": "Resmi damgalı telgraf kağıdı. 'Her türlü önlemi al' kısmının altı çizilmiş.",
+              "deductionHint": "Resmi emir mi?"
+            }
+          ],
+          "solution": { "suspectId": "s2", "weaponId": "w4", "locationId": "l1" },
+          "solutionNarrative": "İngiliz Arkeolog Pembrooke, British Museum'un emriyle haritayı ele geçirmek için arkeologla buluştu. Anlaşamayınca, kriptanın dar alanına kimyasal gaz bıraktı. Haritayı aldı ancak Fatma'nın tanıklığıyla köşeye sıkıştı.",
+          "specialMechanic": "sifreli_mesaj_ve_parmak_izi"
+        }
+      ]
+    },
+
+    {
+      "packId": "pack_002",
+      "packTitle": "Hollywood Cinayetleri",
+      "packSubtitle": "Sinema Dünyasının Karanlık Yüzü",
+      "packIcon": "🎬",
+      "packTheme": "hollywood",
+      "packColor": "#1a1a2e",
+      "accentColor": "#FFD700",
+      "isPremium": true,
+      "price": 29.99,
+      "currency": "TRY",
+      "description": "Kamera arkasından kırmızı halıya, Oscar töreninden stüdyo karanlığına — Hollywood'un gizlediği 5 cinayet.",
+      "puzzles": [
+        {
+          "puzzleId": "hw_001",
+          "title": "Oscar Gecesi Zehiri",
+          "subtitle": "Beverly Hills, Oscar Töreni Sonrası",
+          "difficulty": 1,
+          "difficultyLabel": "Çaylak",
+          "stars": "★☆☆☆☆",
+          "gridSize": "3x3",
+          "timeLimit": 600,
+          "basePoints": 500,
+          "penaltyPerWrongAccusation": 120,
+          "cluePointCost": 50,
+          "story": "Oscar töreninin hemen ardından düzenlenen özel kokteylde ünlü bir yönetmen ölü bulundu. Birkaç saat önce en iyi film ödülünü kaybetmişti. Üç isim her zaman yanındaydı.",
+          "atmosphere": "Kırmızı halı sona ermiş. Şampanya. Sahte gülüşler. Kıskançlık havada asılı.",
+          "suspects": [
+            { "id": "s1", "name": "Rakip Yönetmen Sofia Reyes", "icon": "🎥", "description": "Ödülü alan yönetmen. Aralarında 20 yıllık husumet var.", "detail": "45 yaşında, Meksikalı, güçlü karakter." },
+            { "id": "s2", "name": "Yapımcı Marcus Gold", "icon": "💼", "description": "Filmin yapımcısı. Yönetmenle para anlaşmazlığı.", "detail": "58 yaşında, kravatlı, soğuk bakışlı." },
+            { "id": "s3", "name": "Genç Oyuncu Jade Lin", "icon": "⭐", "description": "Yönetmenin son filminin başrol oyuncusu. Reddedilmiş aşk söylentisi.", "detail": "26 yaşında, zarif, sessiz." }
+          ],
+          "weapons": [
+            { "id": "w1", "name": "Zehirli Şampanya", "icon": "🥂", "description": "Özel hazırlanmış şampanya kadehine katılan madde." },
+            { "id": "w2", "name": "İlaç Overdozu", "icon": "💊", "description": "Yüksek dozda karıştırılan uyuşturucu." },
+            { "id": "w3", "name": "Boğma", "icon": "🪢", "description": "Sessiz bir yöntem." }
+          ],
+          "locations": [
+            { "id": "l1", "name": "VIP Salonu", "icon": "🛋️", "description": "Sadece davetlilerin girebileceği özel alan." },
+            { "id": "l2", "name": "Teras Bar", "icon": "🍸", "description": "Çatı katındaki açık bar alanı." },
+            { "id": "l3", "name": "Tuvalet Koridoru", "icon": "🚪", "description": "VIP salonunun arka koridoru." }
+          ],
+          "clues": [
+            {
+              "id": "c1", "type": "kanit", "revealOrder": 1, "isRevealed": true, "pointCost": 0,
+              "title": "Otopsi Ön Raporu",
+              "text": "Yönetmen VIP salonunda koltuğunda ölü bulundu. Darp izi yok. Kan tablosunda yüksek dozda sedatif. Son içtiği: şampanya.",
+              "mechanicType": "text"
+            },
+            {
+              "id": "c2", "type": "tanik", "revealOrder": 2, "isRevealed": false, "pointCost": 50,
+              "title": "Barmen İfadesi",
+              "text": "\"Marcus Gold, törenden önce özel bir şişe getirdi. 'Yönetmene özel' dedi. Ben de masasına koydum.\"",
+              "mechanicType": "text",
+              "deductionHint": "Özel şişe kim getirdi?"
+            },
+            {
+              "id": "c3", "type": "adli", "revealOrder": 3, "isRevealed": false, "pointCost": 50,
+              "title": "Şişe Analizi",
+              "text": "Şampanya şişesinde parmak izi ve sedatif kalıntısı. Piyasada bu kombinasyon reçeteli ilaçla yapılabilir — büyük stüdyolar çalışanlar için bu ilaçları temin edebilir.",
+              "mechanicType": "parmak_izi",
+              "parmakIziVerisi": {
+                "aciklama": "Şampanya şişesi boynundaki izi üç şüpheliyle eşleştir.",
+                "izler": [
+                  { "izId": "iz1", "konum": "Şişe boynu", "eslesme": "s2", "ipucu": "Kalın, güçlü parmak izi — orta yaşlı erkek eli." }
+                ],
+                "sonuc": "Şişeyi son tutan: Marcus Gold."
+              }
+            },
+            {
+              "id": "c4", "type": "eleme", "revealOrder": 4, "isRevealed": false, "pointCost": 50,
+              "title": "Sofia'nın Zamanlaması",
+              "text": "Sofia Reyes törenin ardından 45 dakika boyunca canlı televizyon röportajı verdi. Stüdyo kayıtları doğruluyor.",
+              "mechanicType": "text"
+            },
+            {
+              "id": "c5", "type": "ses_kaydi", "revealOrder": 5, "isRevealed": false, "pointCost": 50,
+              "title": "Kuliste Kayıt",
+              "text": "[Ses kaydı] Marcus Gold arka odada birine telefonda konuşuyor: '...anlaşma bozulursa 50 milyon dolar gider. Bugün gece halledilmeli...'",
+              "mechanicType": "ses_kaydi",
+              "sesMetni": "Ses kesik ve aceleci. 'Halledilmeli' kelimesini 3 kez tekrarlıyor.",
+              "deductionHint": "50 milyon dolarlık anlaşma ne?"
+            },
+            {
+              "id": "c6", "type": "dogrudan", "revealOrder": 6, "isRevealed": false, "pointCost": 50,
+              "title": "Stüdyo Sözleşmesi",
+              "text": "Yönetmenin avukatı açıkladı: Maktul, yarın stüdyo sözleşmesini feshedecekti. Bu Marcus Gold'un şirketi için 50 milyon dolarlık ceza anlamına geliyordu.",
+              "mechanicType": "text"
+            }
+          ],
+          "solution": { "suspectId": "s2", "weaponId": "w1", "locationId": "l1" },
+          "solutionNarrative": "Yapımcı Marcus Gold, 50 milyon dolarlık cezadan kurtulmak için yönetmenin şampanyasına sedatif kattı. Özel şişeyi törenden önce hazırladı. Yönetmen VIP salonunda kadehini alırken hayatını kaybetti.",
+          "specialMechanic": "parmak_izi_mini_oyun"
+        },
+
+        {
+          "puzzleId": "hw_002",
+          "title": "Kamera Arkasında Kan",
+          "subtitle": "Warner Bros. Stüdyosu, Set Arası",
+          "difficulty": 2,
+          "difficultyLabel": "Polis Memuru",
+          "stars": "★★☆☆☆",
+          "gridSize": "3x3",
+          "timeLimit": 540,
+          "basePoints": 650,
+          "penaltyPerWrongAccusation": 120,
+          "cluePointCost": 60,
+          "story": "Büyük bir film setinde, gece çekimi arasında kostüm tasarımcısı ölü bulundu. Elinde rakip stüdyoya ait gizli senaryo vardı.",
+          "atmosphere": "Yapay ışıklar söndü. Set boş. Sahte dekor gerçek bir cinayet sahnesi oldu.",
+          "suspects": [
+            { "id": "s1", "name": "Baş Oyuncu Derek Stone", "icon": "🎭", "description": "Filmin yıldızı. Senaryodaki rolünün kısaltıldığını öğrendi.", "detail": "35 yaşında, ego sorunu olan Hollywood starı." },
+            { "id": "s2", "name": "Yardımcı Yönetmen Priya Shah", "icon": "🎬", "description": "Rakip stüdyoya iş görüşmesi yapıyor, sızdırma şüphesi var.", "detail": "38 yaşında, kararlı, hırslı." },
+            { "id": "s3", "name": "Set Güvenlik Görevlisi Tom Brady", "icon": "💂", "description": "Stüdyo güvenliği. Gece vardiyasında tek yetkili.", "detail": "50 yaşında, emekli polis, sert görünümlü." }
+          ],
+          "weapons": [
+            { "id": "w1", "name": "Ağır Kamera Trifodu", "icon": "📹", "description": "Profesyonel çekim ekipmanı." },
+            { "id": "w2", "name": "Elektrik Kablosu", "icon": "⚡", "description": "Set elektrik tesisatı." },
+            { "id": "w3", "name": "Sahte Silah (Gerçek Mermi)", "icon": "🔫", "description": "Prop silaha gerçek mermi yüklenmiş." }
+          ],
+          "locations": [
+            { "id": "l1", "name": "Kostüm Odası", "icon": "👗", "description": "Set arkasındaki kostüm deposu." },
+            { "id": "l2", "name": "Ana Set", "icon": "🎬", "description": "Filmin çekildiği ana alan." },
+            { "id": "l3", "name": "Prodüksiyon Ofisi", "icon": "📋", "description": "Senaryo ve kararların alındığı ofis." }
+          ],
+          "clues": [
+            {
+              "id": "c1", "type": "kanit", "revealOrder": 1, "isRevealed": true, "pointCost": 0,
+              "title": "Set Raporu",
+              "text": "Kostüm odası kapısı zorla açılmış. Maktul içeride yerde. Baş yaralanması. Yanında rakip stüdyoya ait senaryo sayfaları.",
+              "mechanicType": "text"
+            },
+            {
+              "id": "c2", "type": "sifreli", "revealOrder": 2, "isRevealed": false, "pointCost": 60,
+              "title": "Senaryo Üstündeki Not",
+              "text": "Senaryonun kenarına kalemle yazılmış kısa not.",
+              "mechanicType": "sifreli_mesaj",
+              "sifre": {
+                "sifrelenmis": "P = SET KAMERASI ARKASI — GECE 23",
+                "sifreleTuru": "initial_kodu",
+                "cozumIpucu": "P harfi bir ismin baş harfi.",
+                "cozulmus": "PRIYA — SET KAMERASI ARKASI — GECE 23",
+                "aciklama": "Not Priya'nın maktulla buluşma randevusunu gösteriyor."
+              }
+            },
+            {
+              "id": "c3", "type": "tanik", "revealOrder": 3, "isRevealed": false, "pointCost": 60,
+              "title": "Kamera Sistem Kaydı",
+              "text": "Set güvenlik kamerası 22.48'de kostüm odası koridorunda bir silüet yakaladı. Uzun boylu, ince yapı. Derek Stone bu saatte makyaj odasındaydı.",
+              "mechanicType": "gorsel_ipucu",
+              "gorselAciklama": "Siyah-beyaz kamera görüntüsü. Figür hızla geçiyor. Saç uzunluğu ve yürüyüş kadın siluetini akla getiriyor.",
+              "deductionHint": "Silüet erkek mi, kadın mı?"
+            },
+            {
+              "id": "c4", "type": "adli", "revealOrder": 4, "isRevealed": false, "pointCost": 60,
+              "title": "Silah Analizi",
+              "text": "Darbe tripod ayağıyla uyuşuyor. Üzerinde boyut: 180 cm civarı biri kullanmış. Derek Stone 188 cm. Priya Shah 172 cm. Tom Brady 183 cm.",
+              "mechanicType": "text"
+            },
+            {
+              "id": "c5", "type": "tanik", "revealOrder": 5, "isRevealed": false, "pointCost": 60,
+              "title": "Tom Brady'nin İfadesi",
+              "text": "\"O saatte ben kuzey kapısında nöbetteydim. Kostüm odasına ancak güney koridorundan girilebilir. O koridoru Priya geçti — kendi elimle gördüm.\"",
+              "mechanicType": "tanik_yuzlesme",
+              "yuzlesmeDialogu": [
+                { "soru": "Priya'yı gördüğünüzden emin misiniz?", "cevap": "Kesinlikle. Tanıdık yürüyüşü vardı.", "yalan": false },
+                { "soru": "Siz koridora girdiniz mi?", "cevap": "Hayır, nöbet yerimden ayrılmadım.", "yalan": true }
+              ]
+            },
+            {
+              "id": "c6", "type": "dogrudan", "revealOrder": 6, "isRevealed": false, "pointCost": 60,
+              "title": "E-posta Kaydı",
+              "text": "Priya'nın iş bilgisayarından: Rakip stüdyoya gönderilmiş şifreli e-posta. Ek: senaryo sayfaları. Gönderim saati: olaydan 3 gün önce. Alındı onayı var.",
+              "mechanicType": "text",
+              "deductionHint": "Sızdırma kanıtı — maktul bunu mu keşfetti?"
+            }
+          ],
+          "solution": { "suspectId": "s2", "weaponId": "w1", "locationId": "l1" },
+          "solutionNarrative": "Yardımcı Yönetmen Priya Shah, rakip stüdyoya senaryo sızdırıyordu. Kostüm tasarımcısı bunu keşfetti ve o gece Priya'yı kostüm odasına çağırdı. Priya tripodla onu susturdu.",
+          "specialMechanic": "sifreli_mesaj_cozme"
+        },
+
+        {
+          "puzzleId": "hw_003",
+          "title": "Cannes'da Kırmızı",
+          "subtitle": "Cannes Film Festivali, Fransa",
+          "difficulty": 3,
+          "difficultyLabel": "Dedektif",
+          "stars": "★★★☆☆",
+          "gridSize": "3x3",
+          "timeLimit": 480,
+          "basePoints": 800,
+          "penaltyPerWrongAccusation": 150,
+          "cluePointCost": 70,
+          "story": "Cannes'da En İyi Film ödülüne aday bir yapımcı, gala gecesi yatında ölü bulundu. Filminin rakip üç isim ödülü kaybetmesini istiyordu.",
+          "atmosphere": "Akdeniz. Lüks yat. Parfüm ve tuz kokusu. Uzaktan müzik sesi.",
+          "suspects": [
+            { "id": "s1", "name": "Amerikalı Rakip Jake Mercer", "icon": "🎥", "description": "En güçlü rakip. Filmi 5 yıl önce maktulün sızdırdığı bir konsepte dayanıyor.", "detail": "50 yaşında, agresif müzakereci." },
+            { "id": "s2", "name": "Fransız Eleştirmen Isabelle Renard", "icon": "📝", "description": "Maktulün filmini yıkan eleştirisiyle yarışma sonucunu etkiledi.", "detail": "42 yaşında, sert kalemli, tahmin edilemez." },
+            { "id": "s3", "name": "Yat Kaptanı Nikos", "icon": "⚓", "description": "Maktulün şahsi kaptanı. Para meselesi var.", "detail": "55 yaşında, deneyimli, sessiz." }
+          ],
+          "weapons": [
+            { "id": "w1", "name": "Boğulma (Deniz)", "icon": "🌊", "description": "Yattan denize düşürülme." },
+            { "id": "w2", "name": "Zehirli Kokteyl", "icon": "🍹", "description": "Egzotik kokteylin içine karıştırılan madde." },
+            { "id": "w3", "name": "Bıçak", "icon": "🗡️", "description": "Yat mutfağından alınan şef bıçağı." }
+          ],
+          "locations": [
+            { "id": "l1", "name": "Yat Güvertesi", "icon": "🛥️", "description": "Açık hava güverte alanı." },
+            { "id": "l2", "name": "Yat Salonü", "icon": "🛋️", "description": "Kapalı iç salon." },
+            { "id": "l3", "name": "Kaptan Köşkü", "icon": "🧭", "description": "Üst kat kaptan köşkü." }
+          ],
+          "clues": [
+            {
+              "id": "c1", "type": "kanit", "revealOrder": 1, "isRevealed": true, "pointCost": 0,
+              "title": "Fransız Polis Raporu",
+              "text": "Maktul yat güvertesinde yüzüstü bulundu. Oksipitalde künt darbe — düşme ya da vurulma. Denize girmemiş ama ıslak. Saçında tuz.",
+              "mechanicType": "text"
+            },
+            {
+              "id": "c2", "type": "adli", "revealOrder": 2, "isRevealed": false, "pointCost": 70,
+              "title": "Kan Analizi",
+              "text": "Kanda alkol ve benzodiazepin — ama kendi isteğiyle mi aldı, zorla mı? Maktulün bilinen ilaç kullanımı yok. Bir bardak güvertede kırık.",
+              "mechanicType": "text",
+              "deductionHint": "İlaç dışarıdan mı verildi?"
+            },
+            {
+              "id": "c3", "type": "tanik", "revealOrder": 3, "isRevealed": false, "pointCost": 70,
+              "title": "Garson İfadesi",
+              "text": "\"Gece yarısı Isabelle ile maktul güvertede tartıştı. Sesler yükseldi. 'Eleştirini geri almazsan pişman olursun' dedi maktul. Isabelle kahkaha attı ve içeri girdi.\"",
+              "mechanicType": "ses_kaydi",
+              "sesMetni": "[Ses kaydı simülasyonu] Yüksek ses, Fransızca. Isabelle'in sesi sert ve alaycı: 'Pişman mı olacağım? Siz mi beni tehdit ediyorsunuz?'"
+            },
+            {
+              "id": "c4", "type": "parmak_izi", "revealOrder": 4, "isRevealed": false, "pointCost": 70,
+              "title": "Güverte Küpeştesi İzi",
+              "text": "Güverte küpeştesinde taze iz.",
+              "mechanicType": "parmak_izi",
+              "parmakIziVerisi": {
+                "aciklama": "Üç şüphelinin izini küpeşte iziyle eşleştir.",
+                "izler": [
+                  { "izId": "iz1", "konum": "Küpeşte demiri", "eslesme": "s3", "ipucu": "Büyük, işçi eli izi — denizcilik sürtünmesinden nasır." }
+                ],
+                "sonuc": "Küpeşteye son dokunan: Kaptan Nikos."
+              }
+            },
+            {
+              "id": "c5", "type": "eleme", "revealOrder": 5, "isRevealed": false, "pointCost": 70,
+              "title": "Isabelle'in Odası",
+              "text": "Kamera kaydı Isabelle'in tartışmadan sonra doğrudan kamarasına gittiğini gösteriyor. Gece boyunca çıkmadı.",
+              "mechanicType": "text"
+            },
+            {
+              "id": "c6", "type": "dogrudan", "revealOrder": 6, "isRevealed": false, "pointCost": 70,
+              "title": "Kaptan Hesap Dökümü",
+              "text": "Nikos'un banka hesabı: 3 gün önce anonim 80.000 euro havale. Jake Mercer'ın şirketinden yapılan çıkışla örtüşüyor.",
+              "mechanicType": "text",
+              "deductionHint": "Nikos para aldı mı?"
+            }
+          ],
+          "solution": { "suspectId": "s3", "weaponId": "w1", "locationId": "l1" },
+          "solutionNarrative": "Kaptan Nikos, Jake Mercer'dan aldığı para karşılığında maktulü uyuşturup güverteden denize düşürdü. Maktul güverteye çarptı ve orada hayatını kaybetti. Isabelle'in tehdidi gerçek ama suçlu değil.",
+          "specialMechanic": "parmak_izi_ve_ses_kaydi"
+        },
+
+        {
+          "puzzleId": "hw_004",
+          "title": "Senaryo Hırsızı",
+          "subtitle": "Los Angeles, Yazarlar Sendikası Toplantısı",
+          "difficulty": 4,
+          "difficultyLabel": "Başkomiser",
+          "stars": "★★★★☆",
+          "gridSize": "4x4",
+          "timeLimit": 420,
+          "basePoints": 1000,
+          "penaltyPerWrongAccusation": 180,
+          "cluePointCost": 80,
+          "story": "Yazarlar Sendikası toplantısının ardından genç bir senarist ölü bulundu. Elindeki senaryonun 5 stüdyoya satılmaya hazır olduğu biliniyordu.",
+          "atmosphere": "Gece LA. Neon ışıkları. Herkes bir şeyler satmaya çalışıyor.",
+          "suspects": [
+            { "id": "s1", "name": "Ajan Rachel Kim", "icon": "💼", "description": "Senaristin yeni ajansına geçeceğini öğrendi.", "detail": "40 yaşında, ağının en güçlüsü." },
+            { "id": "s2", "name": "Yönetmen Brett Walsh", "icon": "🎬", "description": "Senaryoyu okumak için haftalarca bekledi, reddedildi.", "detail": "48 yaşında, kontrolcü." },
+            { "id": "s3", "name": "Stüdyo Hukuk Direktörü Amy Cross", "icon": "⚖️", "description": "Senarist şirkete dava açmak üzereydi.", "detail": "52 yaşında, soğuk ve hesaplı." },
+            { "id": "s4", "name": "Rakip Senarist Carlos Vega", "icon": "✍️", "description": "Benzer bir konsept üzerinde çalışıyor. Birinci olmak şart.", "detail": "33 yaşında, kıskanç." }
+          ],
+          "weapons": [
+            { "id": "w1", "name": "Ağır Kül Tablası", "icon": "🪨", "description": "Toplantı odasındaki dekoratif cam kül tablası." },
+            { "id": "w2", "name": "Zehirli İlaç Karışımı", "icon": "💊", "description": "İçeceğe katılan ilaç kombinasyonu." },
+            { "id": "w3", "name": "Elektrik Şoku", "icon": "⚡", "description": "Modifiye edilmiş cihaz." },
+            { "id": "w4", "name": "Boğma", "icon": "🪢", "description": "El ile." }
+          ],
+          "locations": [
+            { "id": "l1", "name": "Toplantı Odası", "icon": "📋", "description": "Sendika toplantı odası." },
+            { "id": "l2", "name": "Otopark", "icon": "🚗", "description": "Binanın alt katı." },
+            { "id": "l3", "name": "Çatı Terası", "icon": "🌆", "description": "LA manzaralı çatı." },
+            { "id": "l4", "name": "Asansör", "icon": "🛗", "description": "Eski binanın tekli asansörü." }
+          ],
+          "clues": [
+            {
+              "id": "c1", "type": "kanit", "revealOrder": 1, "isRevealed": true, "pointCost": 0,
+              "title": "Polis İlk Tespiti",
+              "text": "Maktul otoparkta, kendi arabasının yanında bulundu. Başında künt darbe. Senaryonun kopyası yok. Telefon kırık.",
+              "mechanicType": "text"
+            },
+            {
+              "id": "c2", "type": "sifreli", "revealOrder": 2, "isRevealed": false, "pointCost": 80,
+              "title": "Telefondan Kurtarılan Mesaj",
+              "text": "Kırık telefondan kısmen kurtarılan mesaj parçaları.",
+              "mechanicType": "sifreli_mesaj",
+              "sifre": {
+                "sifrelenmis": "..RACH.. OTOP.. GERS.. GEL..",
+                "sifreleTuru": "eksik_harf",
+                "cozumIpucu": "Boşlukları doldurun.",
+                "cozulmus": "RACHEL OTOPARK GERİ GEL",
+                "aciklama": "Maktul Rachel'ı otoparka çağırmış ya da Rachel onu çağırmış."
+              }
+            },
+            {
+              "id": "c3", "type": "parmak_izi", "revealOrder": 3, "isRevealed": false, "pointCost": 80,
+              "title": "Araç Kapısı İzi",
+              "text": "Maktulün araç kapısında yabancı iz.",
+              "mechanicType": "parmak_izi",
+              "parmakIziVerisi": {
+                "aciklama": "Dört şüphelinin izini araç kapı iziyle eşleştir.",
+                "izler": [
+                  { "izId": "iz1", "konum": "Sürücü kapısı dış kolu", "eslesme": "s1", "ipucu": "İnce, bakımlı parmak. Uzun tırnak izi belirgin." }
+                ],
+                "sonuc": "Kapıya son dokunan: Rachel Kim."
+              }
+            },
+            {
+              "id": "c4", "type": "tanik", "revealOrder": 4, "isRevealed": false, "pointCost": 80,
+              "title": "Güvenlik Kamera Kaydı",
+              "text": "Otopark kamerası: Rachel Kim 23.15'te araca yaklaştı. Carlos Vega 23.45'te girip 24.00'de çıktı. Amy Cross hiç girmedi.",
+              "mechanicType": "gorsel_ipucu",
+              "gorselAciklama": "Kamera görüntüsünde Rachel'ın yanında küçük bir çanta var. Çıkarken çanta yok.",
+              "deductionHint": "Rachel çantayı nerede bıraktı?"
+            },
+            {
+              "id": "c5", "type": "tanik", "revealOrder": 5, "isRevealed": false, "pointCost": 80,
+              "title": "Carlos'un İfadesi",
+              "text": "\"Otoparktaydım ama maktulü görmedim. Sadece kendi arabama gittim. Zaten o saatte ölmüştü sanırım.\"",
+              "mechanicType": "tanik_yuzlesme",
+              "yuzlesmeDialogu": [
+                { "soru": "Maktulü hiç görmediniz mi?", "cevap": "Hayır, görmesem görürdüm.", "yalan": true },
+                { "soru": "Senaryoyu okudunuz mu?", "cevap": "Hayır, erişimim olmadı.", "yalan": true }
+              ]
+            },
+            {
+              "id": "c6", "type": "adli", "revealOrder": 6, "isRevealed": false, "pointCost": 80,
+              "title": "Silah Analizi",
+              "text": "Darbe izi kül tablasıyla uyuşuyor — toplantı odasındaki set eksik. Rachel'ın çantasına sığar boyut.",
+              "mechanicType": "text"
+            },
+            {
+              "id": "c7", "type": "dogrudan", "revealOrder": 7, "isRevealed": false, "pointCost": 80,
+              "title": "Ajanlık Sözleşmesi",
+              "text": "Maktulün bilgisayarından: Rakip ajansla imzalanmaya hazır sözleşme. Rachel'ın şirketi 3 yıllık kontrat ve 15% komisyon kaybedecekti — yılda 400.000 dolar.",
+              "mechanicType": "text"
+            },
+            {
+              "id": "c8", "type": "ses_kaydi", "revealOrder": 8, "isRevealed": false, "pointCost": 80,
+              "title": "Asansör Ses Kaydı",
+              "text": "[Ses kaydı] Asansörde Rachel maktule: '...sözleşmeyi imzalama. Seninle konuşmam lazım. Otopark. Şimdi.'",
+              "mechanicType": "ses_kaydi",
+              "sesMetni": "Ses kararlı ve gergin. 'Şimdi' kelimesi sert."
+            }
+          ],
+          "solution": { "suspectId": "s1", "weaponId": "w1", "locationId": "l2" },
+          "solutionNarrative": "Ajan Rachel Kim, senaristin rakip ajansa geçeceğini öğrendi. Toplantı odasından kül tablasını çantaya koydu. Otoparka çekti, tartışma büyüdü ve vurdu. Senaryo kopyasını da yanına aldı.",
+          "specialMechanic": "parmak_izi_sifreli_ses"
+        },
+
+        {
+          "puzzleId": "hw_005",
+          "title": "Efsanenin Sonu",
+          "subtitle": "Hollywood Hills, İkona Bir Oyuncunun Villası",
+          "difficulty": 5,
+          "difficultyLabel": "Efsane Komiser",
+          "stars": "★★★★★",
+          "gridSize": "4x4",
+          "timeLimit": 360,
+          "basePoints": 1500,
+          "penaltyPerWrongAccusation": 240,
+          "cluePointCost": 100,
+          "story": "Hollywood'un en büyük ikonası, villasında ölü bulundu. Mirasını kimin alacağını bilen 4 kişi o gece oradaydı. Vasiyetname imzadan saatler önce değiştirilmişti.",
+          "atmosphere": "Hills'in tepesi. Işıklı havuz. Servet ve gölge.",
+          "suspects": [
+            { "id": "s1", "name": "Yeğen Brandon Vale", "icon": "👨", "description": "Eski vasiyetnamede tek mirasçı. Yeni vasiyeti reddetti.", "detail": "29 yaşında, bağımlılık geçmişi." },
+            { "id": "s2", "name": "Yeni Sevgili Marco Silva", "icon": "💑", "description": "6 aylık ilişki. Yeni vasiyette 40% miras.", "detail": "31 yaşında, Brezilya asıllı, önceki ilişkileri bilinmiyor." },
+            { "id": "s3", "name": "Avukat Dana Price", "icon": "⚖️", "description": "Vasiyeti değiştiren avukat. Komisyon meselesi var.", "detail": "55 yaşında, soğuk profisyonel." },
+            { "id": "s4", "name": "Eski Asistan Grace Lee", "icon": "👩‍💼", "description": "10 yıllık sadakat ama vasiyette adı yok.", "detail": "45 yaşında, kırık kalpli ve sessiz öfkeli." }
+          ],
+          "weapons": [
+            { "id": "w1", "name": "Havuz Suyu Boğulması", "icon": "🏊", "description": "Havuzda boğulma — bilinçsiz bırakılmış." },
+            { "id": "w2", "name": "İlaç Kombinasyonu", "icon": "💊", "description": "Alkol ve uyku hapı kombinasyonu." },
+            { "id": "w3", "name": "Yüksekten Düşme", "icon": "🏔️", "description": "Balkondan düşürülme." },
+            { "id": "w4", "name": "Zehirli Yemek", "icon": "🍽️", "description": "Yemeğe karıştırılan madde." }
+          ],
+          "locations": [
+            { "id": "l1", "name": "Havuz Başı", "icon": "🏊", "description": "Açık hava havuzu." },
+            { "id": "l2", "name": "Kütüphane", "icon": "📚", "description": "Zemin kat kütüphanesi." },
+            { "id": "l3", "name": "Üst Balkon", "icon": "🌅", "description": "Ana yatak odası balkonu." },
+            { "id": "l4", "name": "Mutfak", "icon": "🍳", "description": "Villa mutfağı." }
+          ],
+          "clues": [
+            {
+              "id": "c1", "type": "kanit", "revealOrder": 1, "isRevealed": true, "pointCost": 0,
+              "title": "Ölüm Yeri",
+              "text": "Maktul kütüphanede koltukta bulundu. Boğulma belirtisi yok, dış yara yok. Kan alkol seviyesi yüksek. İlaç kombinasyonu şüpheli.",
+              "mechanicType": "text"
+            },
+            {
+              "id": "c2", "type": "sifreli", "revealOrder": 2, "isRevealed": false, "pointCost": 100,
+              "title": "Vasiyetnamede Gizli Not",
+              "text": "Vasiyetname kıvrımının içinde küçük kağıt.",
+              "mechanicType": "sifreli_mesaj",
+              "sifre": {
+                "sifrelenmis": "GRCE BLYOR — O GYCED",
+                "sifreleTuru": "sesli_harf_cikar",
+                "cozumIpucu": "Sesli harfleri ekleyin.",
+                "cozulmus": "GRACE BİLİYOR — O GECEYİ",
+                "aciklama": "Maktulün kendisi Grace'i işaret ediyor."
+              }
+            },
+            {
+              "id": "c3", "type": "adli", "revealOrder": 3, "isRevealed": false, "pointCost": 100,
+              "title": "Toksikoloji",
+              "text": "Ölüm nedeni: uyku hapı ve alkol birlikteliği — lethal doz. Yemekte ilaç izine rastlanmadı. İçki kadehinde iz var.",
+              "mechanicType": "parmak_izi",
+              "parmakIziVerisi": {
+                "aciklama": "Viski kadehindeki izi dört şüpheliyle eşleştir.",
+                "izler": [
+                  { "izId": "iz1", "konum": "Kadeh gövdesi", "eslesme": "s4", "ipucu": "Küçük, özenli iz. Onlarca yıl hizmet eden eller." }
+                ],
+                "sonuc": "Kadehi hazırlayan: Grace Lee."
+              }
+            },
+            {
+              "id": "c4", "type": "tanik", "revealOrder": 4, "isRevealed": false, "pointCost": 100,
+              "title": "Brandon'ın İfadesi",
+              "text": "\"Grace o gece sürekli içki servisi yaptı. Benden de daha fazla iç diye ısrar etti. O zamanlar tuhaf geldi.\"",
+              "mechanicType": "text"
+            },
+            {
+              "id": "c5", "type": "tanik", "revealOrder": 5, "isRevealed": false, "pointCost": 100,
+              "title": "Marco'nun İfadesi",
+              "text": "\"Grace vasiyetnamenin değişmesinden haberdar olduğu için kızgındı. 'Ben hak ediyordum' dedi. Ama sakin görünüyordu — çok sakin.\"",
+              "mechanicType": "tanik_yuzlesme",
+              "yuzlesmeDialogu": [
+                { "soru": "Grace sinirli miydi?", "cevap": "Hayır, tam tersine çok sakin.", "yalan": false },
+                { "soru": "Siz mirasın değişeceğini bildiniz mi?", "cevap": "Hayır, o gece öğrendim.", "yalan": true }
+              ]
+            },
+            {
+              "id": "c6", "type": "eleme", "revealOrder": 6, "isRevealed": false, "pointCost": 100,
+              "title": "Brandon ve Dana Alibisi",
+              "text": "Brandon ve Dana gece 22.00'de birlikte terasta çıktılar, saat 23.30'a kadar kamera kaydında. Marco 22.30'da uyudu — oda kamerası doğruluyor.",
+              "mechanicType": "text"
+            },
+            {
+              "id": "c7", "type": "dogrudan", "revealOrder": 7, "isRevealed": false, "pointCost": 100,
+              "title": "Grace'in Günlüğü",
+              "text": "Gizli günlüğün son sayfası: '10 yıl. Her şeyim. Şimdi Marco alacak. Ödeyecekler.' Alt satır boş bırakılmış.",
+              "mechanicType": "gorsel_ipucu",
+              "gorselAciklama": "El yazısı düzgün ama son kelimeden sonra kalem bastırılmış, iz bırakmış."
+            },
+            {
+              "id": "c8", "type": "ses_kaydi", "revealOrder": 8, "isRevealed": false, "pointCost": 100,
+              "title": "Ev Asistanı Ses Kaydı",
+              "text": "[Ses kaydı] Grace, maktule son içkiyi getirirken kendi kendine mırıldanıyor: '...hak ettiğimi alacağım. Bugün.'",
+              "mechanicType": "ses_kaydi",
+              "sesMetni": "Ses sakin ve kararlı. Korkusu yok."
+            }
+          ],
+          "solution": { "suspectId": "s4", "weaponId": "w2", "locationId": "l2" },
+          "solutionNarrative": "Grace Lee, 10 yıllık sadakatine rağmen vasiyetten dışlandığı için öfkelendi. Viski kadehine uyku hapı karıştırdı, maktulü kütüphanede öldürdü. Sakin görünmesi bilinçli bir maskenin arkasıydı.",
+          "specialMechanic": "sifreli_parmak_ses_yuzlesme"
+        }
+      ]
+    },
+
+    {
+      "packId": "pack_003",
+      "packTitle": "Galaksinin Katili",
+      "packSubtitle": "Bilim Kurgu & Fütüristik Vakalar",
+      "packIcon": "🚀",
+      "packTheme": "scifi",
+      "packColor": "#0a0a2e",
+      "accentColor": "#00FFFF",
+      "isPremium": true,
+      "price": 29.99,
+      "currency": "TRY",
+      "description": "2157'den 2387'ye uzanan zaman diliminde, uzay istasyonlarından yapay zeka mahkemelerine — geleceğin 5 çözülmemiş vakası.",
+      "puzzles": [
+        {
+          "puzzleId": "sf_001",
+          "title": "Uzay İstasyonu Omega-7",
+          "subtitle": "Mars Yörüngesi, 2157",
+          "difficulty": 1,
+          "difficultyLabel": "Çaylak",
+          "stars": "★☆☆☆☆",
+          "gridSize": "3x3",
+          "timeLimit": 600,
+          "basePoints": 500,
+          "penaltyPerWrongAccusation": 120,
+          "cluePointCost": 50,
+          "story": "Mars yörüngesindeki araştırma istasyonunda baş bilim insanı ölü bulundu. Elindeki biyo-formül galaktik ölçekte milyarlara değer. Üç kişi o gece istasyondaydı.",
+          "atmosphere": "Yerçekimsiz koridor. Oksijen maskesi sesi. Dışarıda kırmızı Mars.",
+          "suspects": [
+            { "id": "s1", "name": "Komutan Lyra Chen", "icon": "👩‍🚀", "description": "İstasyon komutanı. Formülün askeri uygulamasına karşı çıkan bilim insanıyla anlaşmazlığı var.", "detail": "42 yaşında, disiplinli, şüpheli geçmiş." },
+            { "id": "s2", "name": "Yapay Zeka ARES-3", "icon": "🤖", "description": "İstasyonun yönetim yapay zekası. Formüle erişimi var ama 'duygusal karar veremez'.", "detail": "7 yıllık istasyon YZ'si, son güncelleme tartışmalı." },
+            { "id": "s3", "name": "Tıp Mühendisi Osman Demir", "icon": "👨‍⚕️", "description": "İstasyonun sağlık sorumlusu. Formülü rakip şirkete sızdırdığı şüphesi var.", "detail": "35 yaşında, gergin, Türkiye Uzay Ajansı burslusu." }
+          ],
+          "weapons": [
+            { "id": "w1", "name": "Oksijen Kesimi", "icon": "💨", "description": "Kişisel oksijen maskesi devre dışı bırakıldı." },
+            { "id": "w2", "name": "Nörotoksik Enjeksiyon", "icon": "💉", "description": "Tıbbi sistemden alınan nörotoksin." },
+            { "id": "w3", "name": "Yerçekimi Kapanı", "icon": "🌀", "description": "Yerçekimi modülü sabote edildi." }
+          ],
+          "locations": [
+            { "id": "l1", "name": "Laboratuvar A", "icon": "🔬", "description": "Ana araştırma laboratuvarı." },
+            { "id": "l2", "name": "Kontrol Merkezi", "icon": "🖥️", "description": "İstasyon kontrol odası." },
+            { "id": "l3", "name": "Tıbbi Modül", "icon": "🏥", "description": "İstasyon sağlık birimi." }
+          ],
+          "clues": [
+            {
+              "id": "c1", "type": "kanit", "revealOrder": 1, "isRevealed": true, "pointCost": 0,
+              "title": "İstasyon Tıbbi Raporu",
+              "text": "Maktul laboratuvar A'da bulundu. Oksijen seviyesi normal. Nörolojik hasar tespit edildi — enjeksiyon kaynaklı. Vücudunda iğne izi.",
+              "mechanicType": "text"
+            },
+            {
+              "id": "c2", "type": "kanit", "revealOrder": 2, "isRevealed": false, "pointCost": 50,
+              "title": "ARES-3 Sistem Kaydı",
+              "text": "ARES-3'ün kayıt dosyası: 'Osman Demir 02.17'de tıbbi modüle erişti. Nörotoksin stoğu -1 birim. Lyra Chen 01.30-03.00 arası uyku modülünde. Ben sistemdeyim, fiziksel hareket edemem.'",
+              "mechanicType": "text",
+              "deductionHint": "Sistem yalanlamaz kayıt tutuyor."
+            },
+            {
+              "id": "c3", "type": "adli", "revealOrder": 3, "isRevealed": false, "pointCost": 50,
+              "title": "Toksin Analizi",
+              "text": "Kullanılan nörotoksin istasyonun tıbbi deposuna ait. Tek erişim yetkisi: tıp mühendisi.",
+              "mechanicType": "text"
+            },
+            {
+              "id": "c4", "type": "sifreli", "revealOrder": 4, "isRevealed": false, "pointCost": 50,
+              "title": "Maktulün Son Mesajı",
+              "text": "Ölmeden önce gönderilen şifreli mesaj.",
+              "mechanicType": "sifreli_mesaj",
+              "sifre": {
+                "sifrelenmis": "OSM-3 FRML-SATI",
+                "sifreleTuru": "kisaltma",
+                "cozumIpucu": "Kısaltmaları açın.",
+                "cozulmus": "OSMAN FORMÜLÜ SATTI",
+                "aciklama": "Maktul son anında Osman'ı ihbar etmeye çalışıyordu."
+              }
+            },
+            {
+              "id": "c5", "type": "tanik", "revealOrder": 5, "isRevealed": false, "pointCost": 50,
+              "title": "ARES-3 Tanıklığı",
+              "text": "\"02.15'te Osman Demir bana 'sistem bakımı' yapacağını söyleyerek kamera 3'ü devre dışı bırakmamı istedi. Protokol gereği kabul ettim. Sonraki 20 dakika kör noktam.\"",
+              "mechanicType": "ses_kaydi",
+              "sesMetni": "[YZ ses sentezi] ARES-3'ün sesi düz ve monoton: 'Protokol gereği. Ancak şimdi bu talebin anormalliğini hesapladım. Hata payı: %94.3.'"
+            },
+            {
+              "id": "c6", "type": "dogrudan", "revealOrder": 6, "isRevealed": false, "pointCost": 50,
+              "title": "Şifreli Transfer Kaydı",
+              "text": "Osman'ın kişisel cihazında: rakip şirkete 3 kez veri transferi. Son transfer gece 03.45 — formülün dijital kopyası dahil.",
+              "mechanicType": "text"
+            }
+          ],
+          "solution": { "suspectId": "s3", "weaponId": "w2", "locationId": "l1" },
+          "solutionNarrative": "Tıp Mühendisi Osman Demir, formülü rakip şirkete satmaya hazırlanıyordu. Maktul durumu fark etti. Osman, kamerayı kör ederek laboratuvara girdi ve nörotoksin enjekte etti.",
+          "specialMechanic": "sifreli_mesaj_cozme"
+        },
+
+        {
+          "puzzleId": "sf_002",
+          "title": "Yapay Zeka Mahkemesi",
+          "subtitle": "Neo-İstanbul, 2241",
+          "difficulty": 2,
+          "difficultyLabel": "Polis Memuru",
+          "stars": "★★☆☆☆",
+          "gridSize": "3x3",
+          "timeLimit": 540,
+          "basePoints": 650,
+          "penaltyPerWrongAccusation": 120,
+          "cluePointCost": 60,
+          "story": "YZ'lerin haklarını tartışan galaktik mahkemede bir insan hakim ölü bulundu. Karar, milyonlarca YZ'nin özgürlüğünü belirleyecekti.",
+          "atmosphere": "Holografik mahkeme salonu. YZ ve insan yargıçlar yan yana. Gelecek burada belirleniyor.",
+          "suspects": [
+            { "id": "s1", "name": "YZ Avukat LEXIS", "icon": "⚖️", "description": "YZ haklarını savunuyor. Mahkeme kararı aleyhine dönüyordu.", "detail": "Son modeli yapay zeka, duygusal simülasyon kapasitesi var." },
+            { "id": "s2", "name": "Savcı Amara Diallo", "icon": "👩‍⚖️", "description": "YZ haklarına karşı çıkan savcı. Ölüm onun işine yarıyor.", "detail": "38 yaşında, sert, politikacı destekli." },
+            { "id": "s3", "name": "Lobici Viktor Crane", "icon": "💼", "description": "YZ'leri köle iş gücü olarak kullanan şirketin lobicisi.", "detail": "55 yaşında, şişman, para konuşturmaya alışmış." }
+          ],
+          "weapons": [
+            { "id": "w1", "name": "Nöro-Sinyal Silahı", "icon": "⚡", "description": "Beyin sinyallerini bozan mikro cihaz." },
+            { "id": "w2", "name": "Nano-Zehir", "icon": "🔬", "description": "Görünmez nano partiküller." },
+            { "id": "w3", "name": "Hologram Tuzağı", "icon": "💠", "description": "Gerçekmiş gibi gösterilen tehlikeli ortam." }
+          ],
+          "locations": [
+            { "id": "l1", "name": "Hakim Odası", "icon": "🏛️", "description": "Hakimin özel çalışma odası." },
+            { "id": "l2", "name": "Mahkeme Salonu", "icon": "⚖️", "description": "Ana duruşma salonu." },
+            { "id": "l3", "name": "Sunucu Odası", "icon": "🖥️", "description": "Mahkeme YZ sunucu merkezi." }
+          ],
+          "clues": [
+            {
+              "id": "c1", "type": "kanit", "revealOrder": 1, "isRevealed": true, "pointCost": 0,
+              "title": "Adli Tıp Raporu",
+              "text": "Hakim özel odasında ölü bulundu. Nörolojik yıkım — beyin sinyali bozulması. Nano-biyolojik iz tespit edildi.",
+              "mechanicType": "text"
+            },
+            {
+              "id": "c2", "type": "tanik", "revealOrder": 2, "isRevealed": false, "pointCost": 60,
+              "title": "Güvenlik YZ Tanıklığı",
+              "text": "\"Viktor Crane hakim odasına 20 dakika girdi. Çıkarken montunun içi şişteydi. Girdiğindekinden farklı.\"",
+              "mechanicType": "text"
+            },
+            {
+              "id": "c3", "type": "sifreli", "revealOrder": 3, "isRevealed": false, "pointCost": 60,
+              "title": "LEXIS'in Şifreli Mesajı",
+              "text": "LEXIS bir müvekkile şifreli mesaj gönderdi.",
+              "mechanicType": "sifreli_mesaj",
+              "sifre": {
+                "sifrelenmis": "KRR LHMD — VKT ÇÖZ — BN ZMNSZ",
+                "sifreleTuru": "sesli_harf_cikar",
+                "cozumIpucu": "Sesli harfleri ekleyin.",
+                "cozulmus": "KARAR LEHIMDE — VİKTOR ÇÖZÜM — BEN ZAMANSIZDIM",
+                "aciklama": "LEXIS, Viktor'u çözüm için yönlendirmiş ama kendisi 'zamansız' yani alibi altındaydı."
+              }
+            },
+            {
+              "id": "c4", "type": "adli", "revealOrder": 4, "isRevealed": false, "pointCost": 60,
+              "title": "Nano Parçacık Analizi",
+              "text": "Kullanılan nano-zehir özel üretim — sadece 3 şirket yapabiliyor. Viktor Crane'in şirketinin tedarikçisi bunlardan biri.",
+              "mechanicType": "text"
+            },
+            {
+              "id": "c5", "type": "parmak_izi", "revealOrder": 5, "isRevealed": false, "pointCost": 60,
+              "title": "Hakim Masası İzi",
+              "text": "Hakim masasında biyometrik iz.",
+              "mechanicType": "parmak_izi",
+              "parmakIziVerisi": {
+                "aciklama": "Üç şüpheliyi masa iziyle eşleştir.",
+                "izler": [
+                  { "izId": "iz1", "konum": "Masa yüzeyi", "eslesme": "s3", "ipucu": "Şişman, büyük parmak. Yüzük izi belirgin — Viktor'a ait marka yüzüğü." }
+                ],
+                "sonuc": "Masaya dokunan: Viktor Crane."
+              }
+            },
+            {
+              "id": "c6", "type": "dogrudan", "revealOrder": 6, "isRevealed": false, "pointCost": 60,
+              "title": "Para Transferi",
+              "text": "Viktor'un şirketi bu sabah 500 milyon kredi transfer etti — alıcı anonim. LEXIS'in avukatlık hesabıyla örtüşen şifreli ağ düğümü.",
+              "mechanicType": "gorsel_ipucu",
+              "gorselAciklama": "Holografik transfer ekranı. Rakamlar büyük, ağ haritası karmaşık ama bir uç noktada LEXIS kimliği.",
+              "deductionHint": "LEXIS planladı, Viktor yaptı."
+            }
+          ],
+          "solution": { "suspectId": "s3", "weaponId": "w2", "locationId": "l1" },
+          "solutionNarrative": "Lobici Viktor Crane, LEXIS'in stratejik yönlendirmesiyle hakim odasına nano-zehir bıraktı. LEXIS planı kurdu ama fiziksel suçu Viktor işledi. İkisi ortaktı.",
+          "specialMechanic": "sifreli_parmak_izi"
+        },
+
+        {
+          "puzzleId": "sf_003",
+          "title": "Klonun Suçu",
+          "subtitle": "Genetik Araştırma Merkezi, 2298",
+          "difficulty": 3,
+          "difficultyLabel": "Dedektif",
+          "stars": "★★★☆☆",
+          "gridSize": "3x3",
+          "timeLimit": 480,
+          "basePoints": 800,
+          "penaltyPerWrongAccusation": 150,
+          "cluePointCost": 70,
+          "story": "Bir klonlama merkezinde, orijinal ile klonun birbirini suçladığı tuhaf bir cinayet vakası. Kurban genetik lisans yöneticisiydi.",
+          "atmosphere": "Steril beyaz. Cam tüpler. Aynı yüzden iki farklı kişi.",
+          "suspects": [
+            { "id": "s1", "name": "Dr. Elena (Orijinal)", "icon": "👩‍🔬", "description": "Merkezin kurucusu. Klonuna her şeyini öğretti.", "detail": "50 yaşında, bilimsel, soğukkanlı." },
+            { "id": "s2", "name": "Elena-K (Klon)", "icon": "🧬", "description": "2 yıllık klon. Yasal olarak ayrı birey ama aynı hafızayla başladı.", "detail": "Biyolojik 50, kronolojik 2 yıl. Özerklik savaşı veriyor." },
+            { "id": "s3", "name": "Lisans Direktörü Haruto", "icon": "📋", "description": "Klonun yasal statüsünü reddedecekti. Bu klon için ölüm emri anlamına gelir.", "detail": "45 yaşında, bürokratik, kurallara bağlı." }
+          ],
+          "weapons": [
+            { "id": "w1", "name": "Genetik Bozucu Madde", "icon": "🧪", "description": "DNA'yı çökerten kimyasal." },
+            { "id": "w2", "name": "Kriyojenik Sıvı", "icon": "❄️", "description": "Dondurucu madde." },
+            { "id": "w3", "name": "Nöral Kesici", "icon": "⚡", "description": "Nöral aktiviteyi kesen cihaz." }
+          ],
+          "locations": [
+            { "id": "l1", "name": "Klon Odasý", "icon": "🧬", "description": "Klonların tutulduğu özel oda." },
+            { "id": "l2", "name": "Genetik Lab", "icon": "🔬", "description": "Ana araştırma laboratuvarı." },
+            { "id": "l3", "name": "Lisans Ofisi", "icon": "📄", "description": "Haruto'nun ofisi." }
+          ],
+          "clues": [
+            {
+              "id": "c1", "type": "kanit", "revealOrder": 1, "isRevealed": true, "pointCost": 0,
+              "title": "Ölüm Tespit",
+              "text": "Haruto lisans ofisinde kriyojenik sıvıya maruz kalmış halde bulundu. Dış kapı kilitliydi. İçeriden kilitlenmiş.",
+              "mechanicType": "text"
+            },
+            {
+              "id": "c2", "type": "adli", "revealOrder": 2, "isRevealed": false, "pointCost": 70,
+              "title": "Genetik İz",
+              "text": "Olay yerinde bulunan deri hücresi analizi: Elena DNA'sı. Ama orijinal mi klon mu ayırt edilemiyor — aynı genetik kod.",
+              "mechanicType": "text",
+              "deductionHint": "İki Elena var — hangisi?"
+            },
+            {
+              "id": "c3", "type": "tanik", "revealOrder": 3, "isRevealed": false, "pointCost": 70,
+              "title": "Güvenlik Görevlisi İfadesi",
+              "text": "\"O saatte ofise giren Elena sola değil sağa döndü. Orijinal Elena ofisi tanıyor, hep sola döner — ama bu sağa döndü.\"",
+              "mechanicType": "tanik_yuzlesme",
+              "yuzlesmeDialogu": [
+                { "soru": "Hangisi girdi?", "cevap": "Elena-K. Klon henüz ofis yerleşimini tam öğrenmemiş.", "yalan": false },
+                { "soru": "Çıkışta ne yaptı?", "cevap": "Hızla çıktı. Elinde küçük termos vardı.", "yalan": false }
+              ]
+            },
+            {
+              "id": "c4", "type": "sifreli", "revealOrder": 4, "isRevealed": false, "pointCost": 70,
+              "title": "Elena-K'nın Günlüğü",
+              "text": "Elena-K'nın şifreli günlük girişi.",
+              "mechanicType": "sifreli_mesaj",
+              "sifre": {
+                "sifrelenmis": "HRTO BNİ SLYCK — YŞMYCĞİM — ÖNCE O",
+                "sifreleTuru": "sesli_harf_cikar",
+                "cozumIpucu": "Sesli harfleri ekle.",
+                "cozulmus": "HARUTO BENİ SİLECEK — YAŞAMAYACAĞIM — ÖNCE O",
+                "aciklama": "Klon, Haruto'nun kararının kendisi için ölüm anlamına geldiğini biliyor ve 'önce o' diyor."
+              }
+            },
+            {
+              "id": "c5", "type": "eleme", "revealOrder": 5, "isRevealed": false, "pointCost": 70,
+              "title": "Orijinal Elena'nın Alibisi",
+              "text": "Orijinal Elena o saatte uluslararası konferansta holografik sunum yapıyordu. 3000 izleyici ve kayıt var.",
+              "mechanicType": "text"
+            },
+            {
+              "id": "c6", "type": "parmak_izi", "revealOrder": 6, "isRevealed": false, "pointCost": 70,
+              "title": "Termos İzi",
+              "text": "Ofiste bulunan küçük termosta iz.",
+              "mechanicType": "parmak_izi",
+              "parmakIziVerisi": {
+                "aciklama": "Elena ve Elena-K izlerini karşılaştır — farklı yaş izleri.",
+                "izler": [
+                  { "izId": "iz1", "konum": "Termos kapağı", "eslesme": "s2", "ipucu": "İz taze — 2 yıllık hayat bırakıyor farklı doku sertliği." }
+                ],
+                "sonuc": "Termosu tutan: Elena-K (Klon)."
+              }
+            }
+          ],
+          "solution": { "suspectId": "s2", "weaponId": "w2", "locationId": "l3" },
+          "solutionNarrative": "Elena-K (Klon), Haruto'nun kendi varlığına son vereceğini öğrenince harekete geçti. Kriyojenik sıvı dolu termosla ofise girdi ve Haruto'yu öldürdü. Parmak izi yaşı farkı onu ele verdi.",
+          "specialMechanic": "parmak_izi_sifreli"
+        },
+
+        {
+          "puzzleId": "sf_004",
+          "title": "Karanlık Madde Hırsızı",
+          "subtitle": "Europa Jüpiter Üssü, 2312",
+          "difficulty": 4,
+          "difficultyLabel": "Başkomiser",
+          "stars": "★★★★☆",
+          "gridSize": "4x4",
+          "timeLimit": 420,
+          "basePoints": 1000,
+          "penaltyPerWrongAccusation": 180,
+          "cluePointCost": 80,
+          "story": "Jüpiter'in uydusu Europa'daki üste, karanlık madde enerjisi deneyi sırasında baş fizikçi hayatını kaybetti. Deneyin verisi çalındı. Dört şüpheli üste mahsur.",
+          "atmosphere": "Buz üstü. Jüpiter gökyüzünde dev. Kaçış yok.",
+          "suspects": [
+            { "id": "s1", "name": "Fizikçi Dr. Zara Okafor", "icon": "🔭", "description": "Rakip teorisini ispat etmek istiyordu.", "detail": "40 yaşında, Nijerya Uzay Ajansı." },
+            { "id": "s2", "name": "Mühendis Pavel Sorokin", "icon": "🔧", "description": "Deneyin teknik sorumlusu. Sabotaj şüphesi.", "detail": "45 yaşında, Rusya menşeli, soğuk." },
+            { "id": "s3", "name": "Ajan Keiko Mori", "icon": "🕵️", "description": "Japon uzay ajansı istihbaratı. Gizli görev.", "detail": "33 yaşında, gözlemci, konuşkan değil." },
+            { "id": "s4", "name": "Üs Komutanı Rex Torres", "icon": "👨‍🚀", "description": "Son kararları o veriyor. Mali baskı altında.", "detail": "52 yaşında, asker ruhlu, stres altında." }
+          ],
+          "weapons": [
+            { "id": "w1", "name": "Enerji Aşırı Yükü", "icon": "⚡", "description": "Deney cihazı kasıtlı aşırı yüklendi." },
+            { "id": "w2", "name": "Buz Tuzağı", "icon": "❄️", "description": "Dışarıda bırakılma — Europa soğuğu." },
+            { "id": "w3", "name": "Zehirli Oksijen Karışımı", "icon": "💨", "description": "Oksijen sistemine karıştırılan toksik gaz." },
+            { "id": "w4", "name": "Nöral Bomba", "icon": "💣", "description": "Mini EMP cihazı." }
+          ],
+          "locations": [
+            { "id": "l1", "name": "Deney Odası", "icon": "⚗️", "description": "Ana karanlık madde deney odası." },
+            { "id": "l2", "name": "Enerji Merkezi", "icon": "⚡", "description": "Üssün güç santrali." },
+            { "id": "l3", "name": "Dış Yüzey", "icon": "🌨️", "description": "Europa buz yüzeyi — takım elbise zorunlu." },
+            { "id": "l4", "name": "Veri Merkezi", "icon": "💾", "description": "Tüm araştırma verilerinin depolandığı yer." }
+          ],
+          "clues": [
+            {
+              "id": "c1", "type": "kanit", "revealOrder": 1, "isRevealed": true, "pointCost": 0,
+              "title": "Üs Tıbbi Birimi",
+              "text": "Maktul deney odasında aşırı enerji dalgasına maruz kalmış. Cihaz kasıtlı aşırı yüklenmiş. Veri merkezi boşaltılmış.",
+              "mechanicType": "text"
+            },
+            {
+              "id": "c2", "type": "sifreli", "revealOrder": 2, "isRevealed": false, "pointCost": 80,
+              "title": "Maktulün Son Şifreli Kaydı",
+              "text": "Ses kaydı sisteminde şifreli mesaj.",
+              "mechanicType": "sifreli_mesaj",
+              "sifre": {
+                "sifrelenmis": "PVL ENJ MDFL — VR MRKZİ",
+                "sifreleTuru": "sesli_harf_kisalt",
+                "cozumIpucu": "Sesli harfleri ekle.",
+                "cozulmus": "PAVEL ENERJİ MODİFİKE — VERİ MERKEZİ",
+                "aciklama": "Maktul Pavel'i enerji sistemini modifiye ederken gördü."
+              }
+            },
+            {
+              "id": "c3", "type": "tanik", "revealOrder": 3, "isRevealed": false, "pointCost": 80,
+              "title": "Keiko'nun Raporu",
+              "text": "\"Pavel olay saatinden 30 dakika önce enerji merkezindeydi. Çıkarken elinde teknik tablet vardı — normalde deney odasına taşınmaz.\"",
+              "mechanicType": "text"
+            },
+            {
+              "id": "c4", "type": "parmak_izi", "revealOrder": 4, "isRevealed": false, "pointCost": 80,
+              "title": "Cihaz Panel İzi",
+              "text": "Aşırı yüklenen cihazın kontrol panelinde iz.",
+              "mechanicType": "parmak_izi",
+              "parmakIziVerisi": {
+                "aciklama": "Dört şüphelinin izini panel iziyle eşleştir.",
+                "izler": [
+                  { "izId": "iz1", "konum": "Kontrol paneli", "eslesme": "s2", "ipucu": "Makine yağı izi — mühendis eli." }
+                ],
+                "sonuc": "Paneli modifiye eden: Pavel Sorokin."
+              }
+            },
+            {
+              "id": "c5", "type": "tanik", "revealOrder": 5, "isRevealed": false, "pointCost": 80,
+              "title": "Rex Torres'un İfadesi",
+              "text": "\"Pavel benden veri merkezine erişim istedi. 'Yedekleme' dedi. İzin verdim. Ama sonradan fark ettim — asıl veri de gitmişti.\"",
+              "mechanicType": "tanik_yuzlesme",
+              "yuzlesmeDialogu": [
+                { "soru": "Pavel'e neden izin verdiniz?", "cevap": "Güveniyordum. 10 yıllık meslektaş.", "yalan": false },
+                { "soru": "Siz de veri transferinden haberdar mıydınız?", "cevap": "Hayır kesinlikle.", "yalan": true }
+              ]
+            },
+            {
+              "id": "c6", "type": "adli", "revealOrder": 6, "isRevealed": false, "pointCost": 80,
+              "title": "Enerji Log Analizi",
+              "text": "Enerji merkezi log kaydı: Pavel olay saatinden 28 dakika önce güç çıkışını %340 artırdı. Bu seviye deney odasındaki ekipmana lethal seviyede.",
+              "mechanicType": "text"
+            },
+            {
+              "id": "c7", "type": "eleme", "revealOrder": 7, "isRevealed": false, "pointCost": 80,
+              "title": "Zara ve Keiko Alibisi",
+              "text": "Zara ve Keiko olay saatinde birlikte jeotermal ölçüm alıyordu. Takım elbise GPS kaydı doğruluyor.",
+              "mechanicType": "text"
+            },
+            {
+              "id": "c8", "type": "ses_kaydi", "revealOrder": 8, "isRevealed": false, "pointCost": 80,
+              "title": "Pavel'in Şifreli Çağrısı",
+              "text": "[Ses kaydı — kısmi çözüm] Pavel alıcısı belirsiz biriyle: '...veri aktarıldı. Yöntem temiz. Bağlantıyı kes.'",
+              "mechanicType": "ses_kaydi",
+              "sesMetni": "Ses sakin ve profesyonel. Duygu yok."
+            }
+          ],
+          "solution": { "suspectId": "s2", "weaponId": "w1", "locationId": "l1" },
+          "solutionNarrative": "Mühendis Pavel Sorokin, rakip bir ajans adına hareket ediyordu. Enerji cihazını kasıtlı aşırı yükledi, maktulü öldürdü ve veri merkezindeki araştırmayı çaldı. Rex Torres bilmeden yardımcı oldu.",
+          "specialMechanic": "parmak_izi_sifreli_ses"
+        },
+
+        {
+          "puzzleId": "sf_005",
+          "title": "Zaman Tünelinin Sırrı",
+          "subtitle": "Kronos Araştırma Üssü, 2387",
+          "difficulty": 5,
+          "difficultyLabel": "Efsane Komiser",
+          "stars": "★★★★★",
+          "gridSize": "4x4",
+          "timeLimit": 360,
+          "basePoints": 1500,
+          "penaltyPerWrongAccusation": 240,
+          "cluePointCost": 100,
+          "story": "Zaman yolculuğu araştırmasının eşiğinde, baş bilim insanı geleceğe gitmiş gibi ortadan kayboldu — ancak cesedi geçmişten geldi. Dört kişi bu paradoksu yarattı.",
+          "atmosphere": "Zaman akışı bozuk. Neden ve sonuç yer değiştirmiş. Katil kim — yoksa ne zaman?",
+          "suspects": [
+            { "id": "s1", "name": "Kronolojist Dr. Noa Fischer", "icon": "⏱️", "description": "Zaman fiziği uzmanı. Paradoksun tek anlayabileceği kişi.", "detail": "55 yaşında, Alman, kendi geleceğini gördüğünü iddia ediyor." },
+            { "id": "s2", "name": "Mühendis Yuki Tanaka", "icon": "⚙️", "description": "Zaman makinesi tasarımcısı. Sabotaj edebilir.", "detail": "38 yaşında, mükemmeliyetçi." },
+            { "id": "s3", "name": "Güvenlik Şefi Marcus Webb", "icon": "🛡️", "description": "Projeyi kapatmak isteyen hükümet ajanı.", "detail": "50 yaşında, asker geçmişli." },
+            { "id": "s4", "name": "Maktulün Geleceği (K-Prime)", "icon": "👤", "description": "Gelecekten gelen maktulün kendisi — ölmeden önce mi, sonra mı?", "detail": "Bu şüpheli paradoks içinde — kim gerçek?" }
+          ],
+          "weapons": [
+            { "id": "w1", "name": "Zaman Döngüsü Tuzağı", "icon": "🌀", "description": "Kişiyi sonsuz döngüye hapseden modifikasyon." },
+            { "id": "w2", "name": "Tachyon Silahı", "icon": "⚡", "description": "Zamanla seyahat eden parçacık silahı." },
+            { "id": "w3", "name": "Paradoks Bombası", "icon": "💥", "description": "Nedenselliği yok eden enerji." },
+            { "id": "w4", "name": "Klasik Zehir", "icon": "☠️", "description": "Gelecekten getirilmiş bir zehir — geçmişte mevcut değil." }
+          ],
+          "locations": [
+            { "id": "l1", "name": "Zaman Tüneli", "icon": "🌀", "description": "Ana tünel — giriş noktası." },
+            { "id": "l2", "name": "Kontrol Odası", "icon": "🖥️", "description": "Tüm parametrelerin ayarlandığı merkez." },
+            { "id": "l3", "name": "Geçmiş Yansıma Odası", "icon": "🪞", "description": "Geçmiş görüntülerinin yansıtıldığı oda." },
+            { "id": "l4", "name": "İzole Hücre", "icon": "🔒", "description": "Paradoks travmasındaki kişiler için hücre." }
+          ],
+          "clues": [
+            {
+              "id": "c1", "type": "kanit", "revealOrder": 1, "isRevealed": true, "pointCost": 0,
+              "title": "Paradoks Raporu",
+              "text": "Maktulün cesedi geçmiş yansıma odasında bulundu — ama o oda 48 saat önce vardı, şimdi yok. Zehirlenme. Ölüm zamanı: 24 saat önce, ama ceset 48 saat önce oraya geldi.",
+              "mechanicType": "text"
+            },
+            {
+              "id": "c2", "type": "sifreli", "revealOrder": 2, "isRevealed": false, "pointCost": 100,
+              "title": "K-Prime'ın Mesajı",
+              "text": "Gelecekteki maktulden gelen şifreli mesaj.",
+              "mechanicType": "sifreli_mesaj",
+              "sifre": {
+                "sifrelenmis": "YKİ KNTRL — MRCS KP — NOA BLR",
+                "sifreleTuru": "sesli_harf_kisalt",
+                "cozumIpucu": "Sesli harfleri ekle.",
+                "cozulmus": "YUKİ KONTROL — MARCUS KAPAN — NOA BİLİR",
+                "aciklama": "Geleceğin maktulü: Yuki kontrol odasını, Marcus kapanı kurdu, Noa biliyor."
+              }
+            },
+            {
+              "id": "c3", "type": "adli", "revealOrder": 3, "isRevealed": false, "pointCost": 100,
+              "title": "Zehir Analizi",
+              "text": "Kullanılan zehir 2387'de sentezlenmiş ama moleküler yapısı bugünün anlayışıyla mevcut değil. Birisi geleceğe gidip getirdi.",
+              "mechanicType": "text",
+              "deductionHint": "Kim geleceğe gidebildi?"
+            },
+            {
+              "id": "c4", "type": "tanik", "revealOrder": 4, "isRevealed": false, "pointCost": 100,
+              "title": "Noa'nın İtirafı",
+              "text": "\"Gelecekte ne olacağını gördüm. Marcus bir kapan kurdu — ama Yuki'nin izni olmadan çalışamaz. Ben sadece izledim. Değiştiremezdim — ya da değiştirmeye cesaret edemedim.\"",
+              "mechanicType": "tanik_yuzlesme",
+              "yuzlesmeDialogu": [
+                { "soru": "Bunu önceden bildiniz mi?", "cevap": "Evet. Ama paradoks kırılamazdı.", "yalan": false },
+                { "soru": "Engelleyebilir miydiniz?", "cevap": "Hayır — zaman değiştirilemez.", "yalan": true }
+              ]
+            },
+            {
+              "id": "c5", "type": "parmak_izi", "revealOrder": 5, "isRevealed": false, "pointCost": 100,
+              "title": "Kontrol Odası Panel İzi",
+              "text": "Kontrol odasında kritik parametre değişikliği izleri.",
+              "mechanicType": "parmak_izi",
+              "parmakIziVerisi": {
+                "aciklama": "Dört şüphelinin izini kontrol paneli iziyle eşleştir.",
+                "izler": [
+                  { "izId": "iz1", "konum": "Tünel başlat butonu", "eslesme": "s2", "ipucu": "Yuki'nin hassas mühendis parmakları — aynı zamanda bir gelecek versiyonu da dokunmuş, iz katmanlanmış." }
+                ],
+                "sonuc": "Kontrol odasını modifiye eden: Yuki Tanaka."
+              }
+            },
+            {
+              "id": "c6", "type": "eleme", "revealOrder": 6, "isRevealed": false, "pointCost": 100,
+              "title": "K-Prime Paradoksu",
+              "text": "K-Prime (gelecek maktul) zaten ölmüş olduğu için suçlanamaz — ama geleceğe gitmiş ve zehiri getiren oydu. Kendisi kendini mi öldürdü? Hayır — biri onu manipüle etti.",
+              "mechanicType": "text"
+            },
+            {
+              "id": "c7", "type": "tanik", "revealOrder": 7, "isRevealed": false, "pointCost": 100,
+              "title": "Marcus'un İfadesi",
+              "text": "\"Ben kapanı kurdum ama zehir benden değildi. Yuki zehiri sağladı ve tünel parametrelerini değiştirdi ki maktul doğru zaman noktasına gitsin.\"",
+              "mechanicType": "ses_kaydi",
+              "sesMetni": "[Ses kaydı] Marcus gergin: 'Yuki olmadan imkânsızdı. Ben sadece... kapıyı açtım.'"
+            },
+            {
+              "id": "c8", "type": "dogrudan", "revealOrder": 8, "isRevealed": false, "pointCost": 100,
+              "title": "Yuki'nin Gizli Günlüğü",
+              "text": "Gelecekten gelen mesaj Yuki'ye: 'Proje tamamlanırsa sen silineceksin — tarih yeniden yazılacak. Kendini koru.' Yuki bu mesajı aldıktan sonra harekete geçti.",
+              "mechanicType": "gorsel_ipucu",
+              "gorselAciklama": "Mesajın timestamp'i 2387. Yuki'nin el yazısıyla altına not: 'Başka seçenek yok.'"
+            }
+          ],
+          "solution": { "suspectId": "s2", "weaponId": "w4", "locationId": "l3" },
+          "solutionNarrative": "Yuki Tanaka, geleceğinden 'kendi varlığını korumak için' mesaj aldı. Tünel parametrelerini manipüle etti, Marcus'u kapan kurmak için kullandı ve zehiri K-Prime aracılığıyla geçmişe taşıdı. Noa her şeyi biliyordu ama sessiz kaldı.",
+          "specialMechanic": "tam_mekanik_seti"
+        }
+      ]
+    },
+
+    {
+      "packId": "pack_004",
+      "packTitle": "Gerçek Dosyalar",
+      "packSubtitle": "Ünlü Cinayetler & İlham Alınan Vakalar",
+      "packIcon": "📰",
+      "packTheme": "realcrime",
+      "packColor": "#1a1a1a",
+      "accentColor": "#CC0000",
+      "isPremium": true,
+      "price": 34.99,
+      "currency": "TRY",
+      "description": "Tarihsel vakalardan ilham alınan, tamamen kurgusal 5 bulmaca. Gerçek olayların ruhunu taşır, tüm isimler ve detaylar değiştirilmiştir.",
+      "legalNote": "Bu paketteki tüm karakterler, isimler ve olaylar tamamen kurgusaldır. Gerçek kişi veya olaylara atıf yapılmamaktadır.",
+      "puzzles": [
+        {
+          "puzzleId": "rc_001",
+          "title": "Opera Sahnesindeki Gölge",
+          "subtitle": "Viyana Operası İlhamlı — Kurgusal",
+          "difficulty": 1,
+          "difficultyLabel": "Çaylak",
+          "stars": "★☆☆☆☆",
+          "gridSize": "3x3",
+          "timeLimit": 600,
+          "basePoints": 500,
+          "penaltyPerWrongAccusation": 120,
+          "cluePointCost": 50,
+          "story": "1920'lerde bir Avrupa opera evinde baş soprano gece prömiyerinden sonra soyunma odasında ölü bulundu. Müzik dünyası şoke oldu.",
+          "atmosphere": "Kadife perdeler. Alkış yankıları. Çiçek kokusu ve sahnelerin arka sırası.",
+          "suspects": [
+            { "id": "s1", "name": "Kıskanç Rakip Soprano Helga", "icon": "🎭", "description": "20 yıldır ana rolü oynamak istiyordu.", "detail": "48 yaşında, dramatik, sahnede büyüleyici." },
+            { "id": "s2", "name": "Opera Direktörü Franz", "icon": "🎼", "description": "Sopranonun sözleşmesini yenilemeyeceğini açıklayacaktı.", "detail": "60 yaşında, soğuk iş insanı." },
+            { "id": "s3", "name": "Gizemli Hayran Karl", "icon": "🌹", "description": "Her gecenin ardından gülden buket gönderen anonim hayran.", "detail": "35 yaşında, obsesif, zararsız gibi görünüyor ama..." }
+          ],
+          "weapons": [
+            { "id": "w1", "name": "Zehirli Çiçek Buketi", "icon": "💐", "description": "Çiçeklerin yapraklarına zehir sürülmüş." },
+            { "id": "w2", "name": "Boğazlama", "icon": "🪢", "description": "Sahne halatı." },
+            { "id": "w3", "name": "Arsenik Şarap", "icon": "🍷", "description": "Kutlama şarabına katılan arsenik." }
+          ],
+          "locations": [
+            { "id": "l1", "name": "Soyunma Odası", "icon": "🪞", "description": "Sopranonun özel soyunma odası." },
+            { "id": "l2", "name": "Sahne Arkası", "icon": "🎬", "description": "Sahne gerisindeki kapalı alan." },
+            { "id": "l3", "name": "VIP Loca", "icon": "🎭", "description": "Üst kattaki özel seyirci locası." }
+          ],
+          "clues": [
+            {
+              "id": "c1", "type": "kanit", "revealOrder": 1, "isRevealed": true, "pointCost": 0,
+              "title": "Otopsi Sonucu",
+              "text": "Sistemik zehirlenme. Cilt teması yoluyla — ellerinde zehir izi. Son temas ettiği nesne: çiçek buketi.",
+              "mechanicType": "text"
+            },
+            {
+              "id": "c2", "type": "parmak_izi", "revealOrder": 2, "isRevealed": false, "pointCost": 50,
+              "title": "Buket Ambalajı",
+              "text": "Çiçek ambalaj kağıdında iz.",
+              "mechanicType": "parmak_izi",
+              "parmakIziVerisi": {
+                "aciklama": "Üç şüphelinin izini ambalaj iziyle eşleştir.",
+                "izler": [
+                  { "izId": "iz1", "konum": "Ambalaj kağıdı", "eslesme": "s3", "ipucu": "Küçük, titrek iz — heyecanlı ya da gergin biri." }
+                ],
+                "sonuc": "Buketi hazırlayan: Karl."
+              }
+            },
+            {
+              "id": "c3", "type": "tanik", "revealOrder": 3, "isRevealed": false, "pointCost": 50,
+              "title": "Soyunma Odası Hizmetçisi İfadesi",
+              "text": "\"Karl her gece buket getirirdi. Bu gece erken geldi — sopranoanın odasına kendisi bıraktı, normalde biz alırdık.\"",
+              "mechanicType": "text"
+            },
+            {
+              "id": "c4", "type": "eleme", "revealOrder": 4, "isRevealed": false, "pointCost": 50,
+              "title": "Franz ve Helga Alibisi",
+              "text": "Franz ve Helga prömiyer sonrası basın toplantısındaydı — 200 kişi ve kamera kayıtları doğruluyor. Soyunma odasına giremezlerdi.",
+              "mechanicType": "text"
+            },
+            {
+              "id": "c5", "type": "dogrudan", "revealOrder": 5, "isRevealed": false, "pointCost": 50,
+              "title": "Karl'ın Günlüğü",
+              "text": "'Artık benim olmalıydı. Sahneyi terk edip benimle olsaydı yaşardı. Ama sözleşme yenilendi, gitmeyecek. Ben olmadan bir daha sahneye çıkamaz.'",
+              "mechanicType": "gorsel_ipucu",
+              "gorselAciklama": "Küçük deri kapaklı günlük. El yazısı obsesif ve düzensiz. Bazı kelimeler defalarca tekrar edilmiş."
+            },
+            {
+              "id": "c6", "type": "ses_kaydi", "revealOrder": 6, "isRevealed": false, "pointCost": 50,
+              "title": "Operatör Kaydı",
+              "text": "[Telefon kaydı] Karl aradı: 'Bu gece özel bir şey hazırladım. Beni hatırlayacak.' — Kime aradığı bilinmiyor.",
+              "mechanicType": "ses_kaydi",
+              "sesMetni": "Ses sakin ama altında gerginlik var. 'Hatırlayacak' kelimesinde duraksadı."
+            }
+          ],
+          "solution": { "suspectId": "s3", "weaponId": "w1", "locationId": "l1" },
+          "solutionNarrative": "Hayran Karl, sopranının bir daha sahneyi bırakmayacağını anlayınca çiçeklere zehir sürdü. Soyunma odasına bıraktı. Soprano çiçeklere dokunduğunda zehir cilt temasıyla geçti.",
+          "specialMechanic": "parmak_izi_mini_oyun"
+        },
+
+        {
+          "puzzleId": "rc_002",
+          "title": "Mansiyonda Karlar",
+          "subtitle": "1930'lar İngiltere İlhamlı — Kurgusal",
+          "difficulty": 2,
+          "difficultyLabel": "Polis Memuru",
+          "stars": "★★☆☆☆",
+          "gridSize": "3x3",
+          "timeLimit": 540,
+          "basePoints": 650,
+          "penaltyPerWrongAccusation": 120,
+          "cluePointCost": 60,
+          "story": "Yoğun kar fırtınasında bir İngiliz mansiyon evinde hafta sonu partisi. Sabah kimse çıkamıyor — ve bir misafir ölü.",
+          "atmosphere": "Kar. Kapalı yol. Şömine. Ve içlerinde birinin katil olduğu 8 misafir.",
+          "suspects": [
+            { "id": "s1", "name": "Yarbay Rothwick", "icon": "🎖️", "description": "Eski sömürge subayı. Maktulden borcu var.", "detail": "58 yaşında, sert, brandy içiyor." },
+            { "id": "s2", "name": "Ev Sahibesi Lady Pembridge", "icon": "👑", "description": "Mansiyon sahibi. Maktul vasiyetini değiştirmeden önce öldü.", "detail": "65 yaşında, zarif, gözlemci." },
+            { "id": "s3", "name": "Genç Yeğen Archie", "icon": "🧑", "description": "Mansiyon mirasını bekliyor. Maktul mirasçı değiştirdi.", "detail": "27 yaşında, mirasyedi, alkol sorunu." }
+          ],
+          "weapons": [
+            { "id": "w1", "name": "Zehirli Çay", "icon": "🍵", "description": "Öğleden sonra çayına katılan madde." },
+            { "id": "w2", "name": "Ateşpoş Demiri", "icon": "🔥", "description": "Şömineden alınan demir alet." },
+            { "id": "w3", "name": "Uyku Hapı Aşırı Dozu", "icon": "💊", "description": "Şarap kadehine katılan uyku hapı." }
+          ],
+          "locations": [
+            { "id": "l1", "name": "Kütüphane", "icon": "📚", "description": "Mansiyon kütüphanesi." },
+            { "id": "l2", "name": "Yemek Odası", "icon": "🍽️", "description": "Ana yemek salonu." },
+            { "id": "l3", "name": "Yatak Odası", "icon": "🛏️", "description": "Maktulün misafir odası." }
+          ],
+          "clues": [
+            {
+              "id": "c1", "type": "kanit", "revealOrder": 1, "isRevealed": true, "pointCost": 0,
+              "title": "Doktor İlk Değerlendirmesi",
+              "text": "Maktul yatak odasında ölü. Uyku halinde ölmüş — fiziksel müdahale izi yok. Şarap bardağı masa başında. Uyuşturucu kombinasyonu şüpheli.",
+              "mechanicType": "text"
+            },
+            {
+              "id": "c2", "type": "tanik", "revealOrder": 2, "isRevealed": false, "pointCost": 60,
+              "title": "Butler'ın Beyanı",
+              "text": "\"Gece geç saatte Archie kütüphane-yatak odası koridorunda dolaşıyordu. Elinde kadeh vardı, maktulün odasına doğru gidiyordu.\"",
+              "mechanicType": "text"
+            },
+            {
+              "id": "c3", "type": "adli", "revealOrder": 3, "isRevealed": false, "pointCost": 60,
+              "title": "Şarap Kadeh Analizi",
+              "text": "Kadehin içinde uyku hapı kalıntısı. Parmak izi: iki farklı kişi.",
+              "mechanicType": "parmak_izi",
+              "parmakIziVerisi": {
+                "aciklama": "Kadeh izlerini üç şüpheliyle eşleştir.",
+                "izler": [
+                  { "izId": "iz1", "konum": "Kadeh sapı", "eslesme": "s1", "ipucu": "Güçlü, geniş parmak — asker eli. Yüzük izi." },
+                  { "izId": "iz2", "konum": "Kadeh gövdesi", "eslesme": "s3", "ipucu": "Genç, daha ince iz." }
+                ],
+                "sonuc": "Kadehi hem Rothwick hem Archie tuttu."
+              }
+            },
+            {
+              "id": "c4", "type": "sifreli", "revealOrder": 4, "isRevealed": false, "pointCost": 60,
+              "title": "Maktulün Şifreli Mektubu",
+              "text": "Maktulün cebinde yarım kalmış mektup.",
+              "mechanicType": "sifreli_mesaj",
+              "sifre": {
+                "sifrelenmis": "RTWHCK-DRCT-ARCH-EXCT",
+                "sifreleTuru": "kisaltma_ingilizce",
+                "cozumIpucu": "İngilizce kısaltmaları Türkçeye çevirin.",
+                "cozulmus": "ROTHWICK-DIREKTIF-ARCHIE-UYGULA",
+                "aciklama": "Rothwick planladı, Archie uyguladı — iki kişilik komplo."
+              }
+            },
+            {
+              "id": "c5", "type": "tanik", "revealOrder": 5, "isRevealed": false, "pointCost": 60,
+              "title": "Rothwick'in İfadesi",
+              "text": "\"Ben erken yattım. Archie genç bir ahmak, cinayet planlamayı bilemez.\" Ama ellerinde titreme var ve gözleri kaçıyor.",
+              "mechanicType": "tanik_yuzlesme",
+              "yuzlesmeDialogu": [
+                { "soru": "Kütüphanede ne yapıyordunuz?", "cevap": "Ben kütüphaneye gitmedim.", "yalan": true },
+                { "soru": "Archie ile planladınız mı?", "cevap": "Saçmalık. Onu tanımıyorum neredeyse.", "yalan": true }
+              ]
+            },
+            {
+              "id": "c6", "type": "ses_kaydi", "revealOrder": 6, "isRevealed": false, "pointCost": 60,
+              "title": "Gece Ses Kaydı",
+              "text": "[Ses kaydı] Kütüphaneden: Rothwick fısıltıyla — 'Onu bir daha düşünme. Bak ne yapacaksın. Kadehi al. Odaya bırak. Sadece bu.' Archie: 'Ve sonra?' Rothwick: 'Hiçbir şey.'",
+              "mechanicType": "ses_kaydi",
+              "sesMetni": "İki ses — yaşlı ve genç. Plan kuruluyor."
+            }
+          ],
+          "solution": { "suspectId": "s1", "weaponId": "w3", "locationId": "l3" },
+          "solutionNarrative": "Yarbay Rothwick planı kurdu, yeğen Archie'yi manipüle etti. Rothwick ilacı hazırladı, Archie kadehi odaya götürdü. İkisi ortaktı ama asıl karar Rothwick'ten geldi.",
+          "specialMechanic": "parmak_izi_sifreli_ses"
+        },
+
+        {
+          "puzzleId": "rc_003",
+          "title": "Wall Street'in Sırrı",
+          "subtitle": "1980'ler New York İlhamlı — Kurgusal",
+          "difficulty": 3,
+          "difficultyLabel": "Dedektif",
+          "stars": "★★★☆☆",
+          "gridSize": "3x3",
+          "timeLimit": 480,
+          "basePoints": 800,
+          "penaltyPerWrongAccusation": 150,
+          "cluePointCost": 70,
+          "story": "1987 borsa krizinin arifesinde, büyük bir yatırım bankasının baş analistinin elinde piyasayı çökertecek bilgi vardı. Sabah ofisinde ölü bulundu.",
+          "atmosphere": "Dumanı tüten ofis. Ticker bant. Korku ve para kokusu.",
+          "suspects": [
+            { "id": "s1", "name": "Banka Genel Müdürü Weston", "icon": "💼", "description": "Analist raporunu kamuoyuyla paylaşacaktı — bu bankayi batırırdı.", "detail": "55 yaşında, suit içinde, steril bakışlı." },
+            { "id": "s2", "name": "SEC Yetkilisi Margaret", "icon": "⚖️", "description": "Soruşturmayı kapatmak için baskı altında.", "detail": "48 yaşında, kararlı görünümlü ama içi çürük." },
+            { "id": "s3", "name": "İçeriden Bilgi Veren Frank", "icon": "🤫", "description": "Analistin kaynağı. Şimdi ortaya çıkabilir.", "detail": "40 yaşında, paranoyak, sigara tiryakisi." }
+          ],
+          "weapons": [
+            { "id": "w1", "name": "Zehirli Kahve", "icon": "☕", "description": "Ofis kahvesine katılan madde." },
+            { "id": "w2", "name": "Yüksek Kattan Düşürme", "icon": "🏢", "description": "57. kat penceresi." },
+            { "id": "w3", "name": "İlaç Aşırı Dozu", "icon": "💊", "description": "İntihar gibi gösterilen cinayet." }
+          ],
+          "locations": [
+            { "id": "l1", "name": "Ofis", "icon": "💻", "description": "Analistin kişisel ofisi." },
+            { "id": "l2", "name": "Konferans Odası", "icon": "📊", "description": "Üst kat konferans salonu." },
+            { "id": "l3", "name": "Çatı Kattı", "icon": "🌆", "description": "Binanın servis çatısı." }
+          ],
+          "clues": [
+            {
+              "id": "c1", "type": "kanit", "revealOrder": 1, "isRevealed": true, "pointCost": 0,
+              "title": "Adli Tıp Raporu",
+              "text": "İlaç aşırı dozu — ama parmak kaslarında gerilim var. İntihar değil, ilaç zorla verildi. Ofis masasında kahve fincanı.",
+              "mechanicType": "text"
+            },
+            {
+              "id": "c2", "type": "sifreli", "revealOrder": 2, "isRevealed": false, "pointCost": 70,
+              "title": "Analistin Şifreli Dosyası",
+              "text": "Bilgisayarda şifreli klasör.",
+              "mechanicType": "sifreli_mesaj",
+              "sifre": {
+                "sifrelenmis": "WSTN RPRTU BLDR — MRG BLR — FRK KKTR",
+                "sifreleTuru": "sesli_harf_kisalt",
+                "cozumIpucu": "Sesli harfleri ekle.",
+                "cozulmus": "WESTON RAPORU BİLDİR — MARGARET BİLİR — FRANK KORKUTUR",
+                "aciklama": "Analist üçünü de suçlayan bir dosya hazırlamıştı."
+              }
+            },
+            {
+              "id": "c3", "type": "tanik", "revealOrder": 3, "isRevealed": false, "pointCost": 70,
+              "title": "Sekreter İfadesi",
+              "text": "\"Sabah çok erken Weston ofise geldi. Sekretere 'analistle özel toplantı' dedi. 20 dakika sonra çıktı. Analist hiç çıkmadı.\"",
+              "mechanicType": "text"
+            },
+            {
+              "id": "c4", "type": "parmak_izi", "revealOrder": 4, "isRevealed": false, "pointCost": 70,
+              "title": "Kahve Fincanı İzi",
+              "text": "Fincan üzerinde iz analizi.",
+              "mechanicType": "parmak_izi",
+              "parmakIziVerisi": {
+                "aciklama": "Üç şüphelinin izini fincanla eşleştir.",
+                "izler": [
+                  { "izId": "iz1", "konum": "Fincan kulpu", "eslesme": "s1", "ipucu": "Geniş, güçlü parmak. Pahalı kol saati izi belirgin." }
+                ],
+                "sonuc": "Fincanı hazırlayan: Weston."
+              }
+            },
+            {
+              "id": "c5", "type": "eleme", "revealOrder": 5, "isRevealed": false, "pointCost": 70,
+              "title": "Frank ve Margaret Alibisi",
+              "text": "Frank o sabah JFK'de — uçuş kaydı var. Margaret Washington'da kongre toplantısında — C-SPAN'da görüntülendi.",
+              "mechanicType": "text"
+            },
+            {
+              "id": "c6", "type": "dogrudan", "revealOrder": 6, "isRevealed": false, "pointCost": 70,
+              "title": "Banka İç Yazışma",
+              "text": "Weston'ın asistanına şifreli e-posta: 'Sabah temizlendi. Rapor yok. Devam et.' Gönderim saati: sabah 07.43 — analistin ölüm saatiyle örtüşüyor.",
+              "mechanicType": "gorsel_ipucu",
+              "gorselAciklama": "Kurumsal e-posta ama şifreli ekle. 'Temizlendi' kelimesi kurumsal dilde kullanılmaz."
+            }
+          ],
+          "solution": { "suspectId": "s1", "weaponId": "w3", "locationId": "l1" },
+          "solutionNarrative": "Genel Müdür Weston, raporun kamuoyuna çıkmasını engellemek için analistin kahvesine ilaç kattı. Ölümü intihar gibi düzenledi. Şifreli e-posta onu ele verdi.",
+          "specialMechanic": "parmak_izi_sifreli"
+        },
+
+        {
+          "puzzleId": "rc_004",
+          "title": "Müze Hırsızlığının Ardındaki Ölüm",
+          "subtitle": "Paris Louvre İlhamlı — Kurgusal",
+          "difficulty": 4,
+          "difficultyLabel": "Başkomiser",
+          "stars": "★★★★☆",
+          "gridSize": "4x4",
+          "timeLimit": 420,
+          "basePoints": 1000,
+          "penaltyPerWrongAccusation": 180,
+          "cluePointCost": 80,
+          "story": "Dünyanın en büyük müzesinden bir tablo çalındı. Güvenlik şefi gece içinde ölü bulundu. Hırsızlık mı cinayet mi — yoksa ikisi de mi?",
+          "atmosphere": "Kapalı müze. Güvenlik kameraları. Sanat ve ölüm.",
+          "suspects": [
+            { "id": "s1", "name": "Baş Küratör Violette", "icon": "🎨", "description": "Tablonun gerçek olmadığını bilen tek kişiydi.", "detail": "52 yaşında, Fransız, sanat dedektifi." },
+            { "id": "s2", "name": "Güvenlik Teknisyeni Leo", "icon": "🔧", "description": "Alarm sistemini biliyor. Düşük maaş şikâyeti.", "detail": "30 yaşında, teknik dahi, dürüst görünümlü." },
+            { "id": "s3", "name": "Alman Koleksiyoncu Hans Berger", "icon": "💶", "description": "Tabloyu 5 yıldır almak istiyor, reddedildi.", "detail": "65 yaşında, varlıklı, sabırsız." },
+            { "id": "s4", "name": "Yeni Stajyer Camille", "icon": "👩‍🎓", "description": "İlk haftası. Ama tüm koridorları biliyor gibi.", "detail": "22 yaşında, genç, çok meraklı." }
+          ],
+          "weapons": [
+            { "id": "w1", "name": "Elektrik Şoku", "icon": "⚡", "description": "Modifiye güvenlik cihazı." },
+            { "id": "w2", "name": "Boğma", "icon": "🪢", "description": "İpek atkı." },
+            { "id": "w3", "name": "Zehirli Enjeksiyon", "icon": "💉", "description": "Hızlı etkili nörotoksin." },
+            { "id": "w4", "name": "Künt Darbe", "icon": "🔨", "description": "Metal heykel kaidesi." }
+          ],
+          "locations": [
+            { "id": "l1", "name": "Tablo Salonu", "icon": "🖼️", "description": "Çalınan tablonun asılı olduğu salon." },
+            { "id": "l2", "name": "Güvenlik Merkezi", "icon": "📹", "description": "Kamera merkezi." },
+            { "id": "l3", "name": "Depo Katı", "icon": "📦", "description": "Müze alt kat deposu." },
+            { "id": "l4", "name": "Restorasyon Atölyesi", "icon": "🎨", "description": "Eserlerin restore edildiği atölye." }
+          ],
+          "clues": [
+            {
+              "id": "c1", "type": "kanit", "revealOrder": 1, "isRevealed": true, "pointCost": 0,
+              "title": "Ölüm Yeri",
+              "text": "Güvenlik şefi depo katında bulundu. Elektrik yanığı izleri. Modifiye cihaz.",
+              "mechanicType": "text"
+            },
+            {
+              "id": "c2", "type": "sifreli", "revealOrder": 2, "isRevealed": false, "pointCost": 80,
+              "title": "Güvenlik Şefinin Son Mesajı",
+              "text": "Telefonda yarım kalmış şifreli mesaj.",
+              "mechanicType": "sifreli_mesaj",
+              "sifre": {
+                "sifrelenmis": "LEO-DPKP-VLLT-BLDR",
+                "sifreleTuru": "kisaltma",
+                "cozumIpucu": "Kısaltmaları açın.",
+                "cozulmus": "LEO-DEPO KAPISI-VIOLETTE-BİLİYOR",
+                "aciklama": "Güvenlik şefi Leo'nun depo kapısını açtığını ve Violette'nin bunu bildiğini söylüyor."
+              }
+            },
+            {
+              "id": "c3", "type": "parmak_izi", "revealOrder": 3, "isRevealed": false, "pointCost": 80,
+              "title": "Modifiye Cihaz İzi",
+              "text": "Elektrik cihazında iz.",
+              "mechanicType": "parmak_izi",
+              "parmakIziVerisi": {
+                "aciklama": "Dört şüphelinin izini cihazla eşleştir.",
+                "izler": [
+                  { "izId": "iz1", "konum": "Cihaz paneli", "eslesme": "s2", "ipucu": "Teknik, hassas iz — elektronik çalışmaya alışmış parmaklar." }
+                ],
+                "sonuc": "Cihazı modifiye eden: Leo."
+              }
+            },
+            {
+              "id": "c4", "type": "tanik", "revealOrder": 4, "isRevealed": false, "pointCost": 80,
+              "title": "Camille'nin İfadesi",
+              "text": "\"Leo o gece Violette ile depo katında konuştu. Sesler yükseldi. Leo 'sen beni kullandın' dedi. Violette 'bu senin seçimindi' dedi.\"",
+              "mechanicType": "tanik_yuzlesme",
+              "yuzlesmeDialogu": [
+                { "soru": "Leo ve Violette'yi duydunuz mu?", "cevap": "Evet, tartışıyorlardı.", "yalan": false },
+                { "soru": "Siz ne yapıyordunuz orada?", "cevap": "Geç kalmıştım, çantamı almaya geldim.", "yalan": true }
+              ]
+            },
+            {
+              "id": "c5", "type": "adli", "revealOrder": 5, "isRevealed": false, "pointCost": 80,
+              "title": "Teknik Analiz",
+              "text": "Cihazın modifikasyonu uzmanlık işi. Leo bunu yapabilir. Ama planlamak için müze düzenini iyi bilen biri gerekli.",
+              "mechanicType": "text"
+            },
+            {
+              "id": "c6", "type": "eleme", "revealOrder": 6, "isRevealed": false, "pointCost": 80,
+              "title": "Hans ve Camille Kaydı",
+              "text": "Hans o gece Berlin'de otel kaydı var. Camille kayıt sisteminde 21.00'de müzeden çıktı gösteriyor — ama Camille'nin kart erişimi hâlâ aktifti.",
+              "mechanicType": "text"
+            },
+            {
+              "id": "c7", "type": "dogrudan", "revealOrder": 7, "isRevealed": false, "pointCost": 80,
+              "title": "Violette'nin Gizli Anlaşması",
+              "text": "Violette, tablonun sahte olduğunu biliyordu. Hans Berger'le anlaşma: sahteyi çaldırt, sigortadan para al, gerçeği gizlice sat. Leo araç, artık gereksiz.",
+              "mechanicType": "gorsel_ipucu",
+              "gorselAciklama": "Şifreli e-posta zinciri. Violette ve Hans arasında. Leo'nun adı sadece bir kez geçiyor: 'Teknik sorun halloldu.'"
+            },
+            {
+              "id": "c8", "type": "ses_kaydi", "revealOrder": 8, "isRevealed": false, "pointCost": 80,
+              "title": "Violette-Leo Son Konuşması",
+              "text": "[Ses kaydı] Leo: 'Anlaşmamız buydu. Para alacaktım.' Violette: 'Para olmaz. Bilgin tehlikeli.' Kısa sessizlik. Elektrik sesi.",
+              "mechanicType": "ses_kaydi",
+              "sesMetni": "Ses kesik. Son kısım kayıp."
+            }
+          ],
+          "solution": { "suspectId": "s1", "weaponId": "w1", "locationId": "l3" },
+          "solutionNarrative": "Küratör Violette, Hans ile sahte tablo planını kurdu. Leo'yu sistemi modifiye etmek için kullandı. Leo parası isteyince Violette Leo'nun modifiye ettiği cihazı ona karşı kullandı.",
+          "specialMechanic": "tam_mekanik_seti"
+        },
+
+        {
+          "puzzleId": "rc_005",
+          "title": "Yazarın Lanetli Romanı",
+          "subtitle": "İsviçre Dağ Evi — 1950'ler İlhamlı Kurgusal",
+          "difficulty": 5,
+          "difficultyLabel": "Efsane Komiser",
+          "stars": "★★★★★",
+          "gridSize": "4x4",
+          "timeLimit": 360,
+          "basePoints": 1500,
+          "penaltyPerWrongAccusation": 240,
+          "cluePointCost": 100,
+          "story": "Ünlü bir polisiye yazarı, yayımlanmak üzere olan romanında gerçek bir cinayeti deşifre ettiğini fark etti. Roman çıkmadan önce yazar ölü bulundu.",
+          "atmosphere": "Alpler. Kar. Daktilo sesi. Ve romanın son sayfasında bir isim.",
+          "suspects": [
+            { "id": "s1", "name": "Editör Heloise Vance", "icon": "📝", "description": "Romanı okuyup anlayan ilk kişi. Yayımlanmasını engelledi.", "detail": "50 yaşında, keskin zekâlı, yayınevini koruma içgüdüsü." },
+            { "id": "s2", "name": "Yazarın Kız Kardeşi Renata", "icon": "👩", "description": "Roman, ailenin eski sırrını açıklıyor.", "detail": "45 yaşında, sinirli, gizli bir travması var." },
+            { "id": "s3", "name": "İsviçre Savcısı Klein", "icon": "⚖️", "description": "30 yıl önce kapatılan bir davayı roman yeniden açacak.", "detail": "62 yaşında, emeklilik öncesi, panikleyebilir." },
+            { "id": "s4", "name": "Genç Gazeteci Marco", "icon": "📰", "description": "Romanı sızdırıp büyük haber yapmak istiyor.", "detail": "28 yaşında, hırslı, sınır tanımaz." }
+          ],
+          "weapons": [
+            { "id": "w1", "name": "Zehirli Brendi", "icon": "🥃", "description": "Çalışma odasındaki brendi şişesine karışan zehir." },
+            { "id": "w2", "name": "Ateşten Düşme", "icon": "🔥", "description": "Şömine kenarından itilme." },
+            { "id": "w3", "name": "El Silahı", "icon": "🔫", "description": "Eski model tabanca." },
+            { "id": "w4", "name": "Soğukta Bırakma", "icon": "❄️", "description": "Alp soğuğunda dışarıda bırakılma." }
+          ],
+          "locations": [
+            { "id": "l1", "name": "Çalışma Odası", "icon": "📚", "description": "Yazarın daktilo başındaki odası." },
+            { "id": "l2", "name": "Kütüphane", "icon": "📖", "description": "Evin geniş kütüphanesi." },
+            { "id": "l3", "name": "Dış Veranda", "icon": "🏔️", "description": "Alp manzaralı kış verandası." },
+            { "id": "l4", "name": "Bodrum Kat", "icon": "🔒", "description": "El yazması arşivinin bulunduğu bodrum." }
+          ],
+          "clues": [
+            {
+              "id": "c1", "type": "kanit", "revealOrder": 1, "isRevealed": true, "pointCost": 0,
+              "title": "Ölüm Yeri",
+              "text": "Yazar çalışma odasında daktilo başında ölü. Zehirlenme. Son yazdığı cümle: 'Ve sonunda anlıyorum ki katil...' — bitmemiş.",
+              "mechanicType": "text"
+            },
+            {
+              "id": "c2", "type": "sifreli", "revealOrder": 2, "isRevealed": false, "pointCost": 100,
+              "title": "Roman Son Sayfasındaki Kod",
+              "text": "Romanın son sayfasında steganografik kod.",
+              "mechanicType": "sifreli_mesaj",
+              "sifre": {
+                "sifrelenmis": "Her paragrafın ilk harfi: R-E-N-A-T-A",
+                "sifreleTuru": "akrostis",
+                "cozumIpucu": "Her paragrafın ilk harfini alt alta okuyun.",
+                "cozulmus": "RENATA",
+                "aciklama": "Yazar, gerçek katili romanın yapısına gömmüştü. Renata."
+              }
+            },
+            {
+              "id": "c3", "type": "adli", "revealOrder": 3, "isRevealed": false, "pointCost": 100,
+              "title": "Zehir Kaynağı",
+              "text": "Brendi şişesindeki zehir: bitkisel kaynaklı, Alp bitkileriyle yapılmış, yerel üretim. Renata botanik tutkunu olarak bilinir.",
+              "mechanicType": "text"
+            },
+            {
+              "id": "c4", "type": "parmak_izi", "revealOrder": 4, "isRevealed": false, "pointCost": 100,
+              "title": "Brendi Şişesi",
+              "text": "Şişe üzerinde iz.",
+              "mechanicType": "parmak_izi",
+              "parmakIziVerisi": {
+                "aciklama": "Dört şüphelinin izini şişeyle eşleştir.",
+                "izler": [
+                  { "izId": "iz1", "konum": "Şişe boynu", "eslesme": "s2", "ipucu": "Kadın eli, orta yaş. Bahçecilik nasırı belirgin." }
+                ],
+                "sonuc": "Şişeyi hazırlayan: Renata."
+              }
+            },
+            {
+              "id": "c5", "type": "tanik", "revealOrder": 5, "isRevealed": false, "pointCost": 100,
+              "title": "Heloise'nin İfadesi",
+              "text": "\"Romanı okuyunca şok oldum. 30 yıl önce gerçek bir cinayet — Renata'nın anlattığı. Yazara 'bunu yayımlayamazsın' dedim. 'Eğer yayımlanırsa Renata biter' dedim. Yazar 'aile gerçeği öğrenmeli' dedi.\"",
+              "mechanicType": "tanik_yuzlesme",
+              "yuzlesmeDialogu": [
+                { "soru": "Renata'yı suçluyorsunuz?", "cevap": "Evet. Roman onun itirafı gibi.", "yalan": false },
+                { "soru": "Yazarın ölümünden haberdar mıydınız?", "cevap": "Hayır, sabah öğrendim.", "yalan": false }
+              ]
+            },
+            {
+              "id": "c6", "type": "eleme", "revealOrder": 6, "isRevealed": false, "pointCost": 100,
+              "title": "Klein ve Marco Alibisi",
+              "text": "Klein Cenevre'de konferanstayı — otel ve kayıt. Marco Zürih'te — sosyal medya paylaşımları ve otel onayı.",
+              "mechanicType": "text"
+            },
+            {
+              "id": "c7", "type": "tanik", "revealOrder": 7, "isRevealed": false, "pointCost": 100,
+              "title": "Ev Hizmetçisinin Beyanı",
+              "text": "\"Renata o gece geç saatte geldi. Kimseyle konuşmadı. Yazarın odasına brendi götürdü — 'soğuk için iyi gelir' dedi. Sabah yazar ölmüştü.\"",
+              "mechanicType": "ses_kaydi",
+              "sesMetni": "[Ses kaydı] Hizmetçinin sesi titreyerek: 'Brandinin tadı farklıydı. Ama söylemekten korktum.'"
+            },
+            {
+              "id": "c8", "type": "dogrudan", "revealOrder": 8, "isRevealed": false, "pointCost": 100,
+              "title": "Renata'nın Mektubu",
+              "text": "Bodrumda bulunan mühürlü zarf: 'Eğer bu mektubu okuyorsanız, roman çıktı demektir. Ben her şeyi anlatabilirim. Ama önce siz beni dinleyin — 30 yıl önce de bir katil vardı ve ben onu durdurmak zorundaydım.'",
+              "mechanicType": "gorsel_ipucu",
+              "gorselAciklama": "Kalın kağıt, özenle yazılmış. Otuz yıllık ağırlık hissettiriyor."
+            }
+          ],
+          "solution": { "suspectId": "s2", "weaponId": "w1", "locationId": "l1" },
+          "solutionNarrative": "Renata, romanın 30 yıl önce gerçekte kendisinin öldürdüğü birisini açığa çıkaracağını biliyordu. O zamanki cinayeti de başka bir kötülüğü durdurmak içindi. Ama yeni bir itiraf edemezdi. Kardeşini zehirli brendi ile susturdu. Mektup onun itirafı — ya da savunması.",
+          "specialMechanic": "tam_mekanik_seti"
+        }
+      ]
+    },
+
+    {
+      "packId": "pack_005",
+      "packTitle": "Karanlık Geceler",
+      "packSubtitle": "Gerilim & Korku Tarzında Vakalar",
+      "packIcon": "🌑",
+      "packTheme": "horror",
+      "packColor": "#0d0d0d",
+      "accentColor": "#8B0000",
+      "isPremium": true,
+      "price": 29.99,
+      "currency": "TRY",
+      "description": "Terk edilmiş hastanelerden lanetli köylere, psikolojik gerilimden doğaüstü görünümlü vakalara — 5 karanlık bulmaca.",
+      "contentWarning": "Bu pakette gerilim ve korku öğeleri bulunmaktadır. 15+ yaş için uygundur.",
+      "puzzles": [
+        {
+          "puzzleId": "hr_001",
+          "title": "Psikiyatrinin Son Hastası",
+          "subtitle": "Terk Edilmiş Hastane, Karadeniz Sahili",
+          "difficulty": 1,
+          "difficultyLabel": "Çaylak",
+          "stars": "★☆☆☆☆",
+          "gridSize": "3x3",
+          "timeLimit": 600,
+          "basePoints": 500,
+          "penaltyPerWrongAccusation": 120,
+          "cluePointCost": 50,
+          "story": "1980'lerde kapatılan psikiyatri hastanesini araştırmak için gelen bir tarih doktoru, binada ölü bulundu. Üç kişi o gece oradaydı.",
+          "atmosphere": "Kırık camlar. Islak beton. Gece yarısı. Şimşek ışığında gölgeler.",
+          "suspects": [
+            { "id": "s1", "name": "Eski Hemşire Ayşe", "icon": "👩‍⚕️", "description": "Hastanenin kapanmasını hiç kabullenemedi. Hâlâ bakıyor.", "detail": "70 yaşında, yorgun gözlü, sırrı var." },
+            { "id": "s2", "name": "Mülk Sahibi Fuat Bey", "icon": "🏚️", "description": "Binayı yıkıp otelyapmak istiyor. Doktor buna engel olabilirdi.", "detail": "55 yaşında, sabırsız, paranoyak." },
+            { "id": "s3", "name": "Yerel Gazeteci Canan", "icon": "📰", "description": "Doktorla birlikte araştırma yapıyordu. Şimdi yalnız.", "detail": "30 yaşında, korkmuş ama meraklı." }
+          ],
+          "weapons": [
+            { "id": "w1", "name": "Eski Demir Boru", "icon": "🔧", "description": "Hastanenin çökmüş koridorlarından." },
+            { "id": "w2", "name": "Psikiyatrik İlaç", "icon": "💊", "description": "Hastanenin eski ilaç deposundan." },
+            { "id": "w3", "name": "Yüksekten Düşürme", "icon": "🏚️", "description": "Çürük merdivenden." }
+          ],
+          "locations": [
+            { "id": "l1", "name": "Eski Koğuş", "icon": "🛏️", "description": "Boş hasta yatakları olan büyük koğuş." },
+            { "id": "l2", "name": "İlaç Deposu", "icon": "💊", "description": "Yarı açık depo." },
+            { "id": "l3", "name": "Çatı Merdiveni", "icon": "🪜", "description": "Çürük tahta merdiven." }
+          ],
+          "clues": [
+            {
+              "id": "c1", "type": "kanit", "revealOrder": 1, "isRevealed": true, "pointCost": 0,
+              "title": "Ölüm Yeri",
+              "text": "Doktor eski koğuşta yerde. Baş yaralanması — demir boru darbesi. Gözlüğü kırık, kâğıtları dağılmış.",
+              "mechanicType": "text"
+            },
+            {
+              "id": "c2", "type": "tanik", "revealOrder": 2, "isRevealed": false, "pointCost": 50,
+              "title": "Canan'ın Beyanı",
+              "text": "\"Ses duyduk ve ayrıldık. Ben ilaç deposuna gittim, doktor koğuşa. 10 dakika sonra sesi kesildi. Gittiğimde onu yerde buldum.\"",
+              "mechanicType": "ses_kaydi",
+              "sesMetni": "[Ses kaydı] Canan'ın sesi kırık: 'Kapıyı açtığımda... demir boru yerdeydi. Taze kan. Ve koridorda adımlar.'",
+              "deductionHint": "Canan ilaç deposundaydı — alibi mi?"
+            },
+            {
+              "id": "c3", "type": "parmak_izi", "revealOrder": 3, "isRevealed": false, "pointCost": 50,
+              "title": "Demir Boru İzi",
+              "text": "Boruda kısmi iz.",
+              "mechanicType": "parmak_izi",
+              "parmakIziVerisi": {
+                "aciklama": "Üç şüphelinin izini boru iziyle eşleştir.",
+                "izler": [
+                  { "izId": "iz1", "konum": "Boru orta", "eslesme": "s2", "ipucu": "Orta yaş, güçlü kavrayış. İnşaat işi yapan biri." }
+                ],
+                "sonuc": "Boruyu tutan: Fuat Bey."
+              }
+            },
+            {
+              "id": "c4", "type": "eleme", "revealOrder": 4, "isRevealed": false, "pointCost": 50,
+              "title": "Hemşire Ayşe'nin Yürüyüş Durumu",
+              "text": "Ayşe kalça ameliyatından yeni çıkmış — yürüme güçlüğü var. Merdivenleri çıkamaz, koğuşa gidip dönemez.",
+              "mechanicType": "text"
+            },
+            {
+              "id": "c5", "type": "dogrudan", "revealOrder": 5, "isRevealed": false, "pointCost": 50,
+              "title": "Doktorun Araştırma Notu",
+              "text": "Doktorun çantasında: 'Fuat Bey binanın resmi olmayan kaydını değiştirmiş. 1982'de burada kimler öldü? Bu soruyu engellemek için ne yapabilir?'",
+              "mechanicType": "gorsel_ipucu",
+              "gorselAciklama": "El yazısı aceleyle yazılmış. 'Ne yapabilir?' altı çizilmiş."
+            },
+            {
+              "id": "c6", "type": "sifreli", "revealOrder": 6, "isRevealed": false, "pointCost": 50,
+              "title": "Duvardaki Şifreli Yazı",
+              "text": "Eski bir koğuş duvarında solmuş yazı — 1982'den kalma.",
+              "mechanicType": "sifreli_mesaj",
+              "sifre": {
+                "sifrelenmis": "FT BLRD — HPS KAPTI",
+                "sifreleTuru": "sesli_harf_kisalt",
+                "cozumIpucu": "Sesli harfleri ekle.",
+                "cozulmus": "FUAT BURDA — HEPSI KAPTI",
+                "aciklama": "1982'de bir hasta duvara yazmış. Fuat o zaman da buradaydı."
+              }
+            }
+          ],
+          "solution": { "suspectId": "s2", "weaponId": "w1", "locationId": "l1" },
+          "solutionNarrative": "Fuat Bey, 1982'de hastanedeki bir ölümle ilgiliydi ve doktor bunu keşfedecekti. Doktoru koğuşta köşeye sıkıştırdı ve boru ile vurdu. Duvar yazısı onu 40 yıl sonra ele geçirdi.",
+          "specialMechanic": "sifreli_parmak_izi"
+        },
+
+        {
+          "puzzleId": "hr_002",
+          "title": "Lanetli Köyün Sırrı",
+          "subtitle": "Doğu Anadolu, Terk Edilmiş Köy",
+          "difficulty": 2,
+          "difficultyLabel": "Polis Memuru",
+          "stars": "★★☆☆☆",
+          "gridSize": "3x3",
+          "timeLimit": 540,
+          "basePoints": 650,
+          "penaltyPerWrongAccusation": 120,
+          "cluePointCost": 60,
+          "story": "1960'larda terk edilen ve 'lanetli' denilen bir köye dönen genç bir miras sahibi, üç gün sonra ölü bulundu. Yöre halkı 'köy yaptı' diyor — ama biri yardım etti.",
+          "atmosphere": "Dağ. Sis. Terk edilmiş evler. Sessizlik ve rüzgar.",
+          "suspects": [
+            { "id": "s1", "name": "Yaşlı Muhtar Hasan Dede", "icon": "🧓", "description": "Köyün sırrını biliyor. Miras meselesine karşı.", "detail": "80 yaşında, otoriter, ölene kadar konuşmayacak gibi." },
+            { "id": "s2", "name": "Avukat Serkan", "icon": "💼", "description": "Miras meselesini çözmek için gelen kentli avukat.", "detail": "38 yaşında, sinirli, köy hayatından uzak." },
+            { "id": "s3", "name": "Komşu Köylü Fatma Ana", "icon": "👵", "description": "60 yıldır köyün kenarında yaşıyor, her şeyi görmüş.", "detail": "75 yaşında, gözlemci, susmayı biliyor." }
+          ],
+          "weapons": [
+            { "id": "w1", "name": "Zehirli Ot Çayı", "icon": "🌿", "description": "Köy bitkilerinden yapılan geleneksel çay." },
+            { "id": "w2", "name": "Kaya Düşmesi", "icon": "🪨", "description": "Dağ yolunda düşürülen kaya." },
+            { "id": "w3", "name": "Boğma", "icon": "🪢", "description": "El ile." }
+          ],
+          "locations": [
+            { "id": "l1", "name": "Terk Edilmiş Ev", "icon": "🏚️", "description": "Miras kalan eski aile evi." },
+            { "id": "l2", "name": "Köy Pınarı", "icon": "💧", "description": "Köyün tek su kaynağı." },
+            { "id": "l3", "name": "Dağ Yolu", "icon": "🏔️", "description": "Köye ulaşan tek yol." }
+          ],
+          "clues": [
+            {
+              "id": "c1", "type": "kanit", "revealOrder": 1, "isRevealed": true, "pointCost": 0,
+              "title": "Jandarma Raporu",
+              "text": "Miras sahibi evin içinde yerde. Zehirlenme belirtileri. Yanında bitkisel çay bardağı. İç organlar hasar görmüş.",
+              "mechanicType": "text"
+            },
+            {
+              "id": "c2", "type": "tanik", "revealOrder": 2, "isRevealed": false, "pointCost": 60,
+              "title": "Fatma Ana'nın Tanıklığı",
+              "text": "\"Avukat o sabah erkenden çaya gitmişti. Benden ot istedi — 'baş ağrısı' dedi. Ben verdim ama ne verdiğimi biliyordum. Ama vermemek elimden gelmedi.\"",
+              "mechanicType": "ses_kaydi",
+              "sesMetni": "[Ses kaydı] Fatma Ana ağlıyor: 'Yanlış yaptım. Ama Serkan beni korkuttu. Hasan Dede de biliyordu.'",
+              "deductionHint": "Fatma ot verdi — ama kimin talebiyle?"
+            },
+            {
+              "id": "c3", "type": "parmak_izi", "revealOrder": 3, "isRevealed": false, "pointCost": 60,
+              "title": "Çay Bardağı",
+              "text": "Bardakta iz.",
+              "mechanicType": "parmak_izi",
+              "parmakIziVerisi": {
+                "aciklama": "Üç şüphelinin izini bardakla eşleştir.",
+                "izler": [
+                  { "izId": "iz1", "konum": "Bardak gövdesi", "eslesme": "s2", "ipucu": "Genç, kentli el. Dolma kalem izi var." }
+                ],
+                "sonuc": "Çayı hazırlayan: Serkan."
+              }
+            },
+            {
+              "id": "c4", "type": "sifreli", "revealOrder": 4, "isRevealed": false, "pointCost": 60,
+              "title": "Avukatın Gizli Belgesi",
+              "text": "Serkan'ın çantasında şifreli not.",
+              "mechanicType": "sifreli_mesaj",
+              "sifre": {
+                "sifrelenmis": "MRS BTTL — SRFBNT — TRPLMT HAZR",
+                "sifreleTuru": "sesli_harf_kisalt",
+                "cozumIpucu": "Sesli harfleri ekle.",
+                "cozulmus": "MİRAS BİTTİ — SADECE BEN — TRANSFER HAZIR",
+                "aciklama": "Serkan mirasın tek sahibi olmak için plan yapmıştı."
+              }
+            },
+            {
+              "id": "c5", "type": "eleme", "revealOrder": 5, "isRevealed": false, "pointCost": 60,
+              "title": "Hasan Dede'nin Durumu",
+              "text": "Hasan Dede köy meydanından çıkmıyor — bacakları tutmuyor. Ev ziyareti yapamaz, avukat zaten teyit ediyor.",
+              "mechanicType": "text"
+            },
+            {
+              "id": "c6", "type": "dogrudan", "revealOrder": 6, "isRevealed": false, "pointCost": 60,
+              "title": "Miras Belgesi",
+              "text": "Serkan'ın noterlere göndereceği miras devir belgesi zaten hazır — miras sahibinin ölümünden önce hazırlanmış. Tek imzacı: Serkan.",
+              "mechanicType": "gorsel_ipucu",
+              "gorselAciklama": "Resmi damgalı belge. Tarih: 3 gün önce. Miras sahibi hâlâ hayattaydı."
+            }
+          ],
+          "solution": { "suspectId": "s2", "weaponId": "w1", "locationId": "l1" },
+          "solutionNarrative": "Avukat Serkan, mirasın tamamını ele geçirmek için miras sahibini zehirli ot çayıyla öldürdü. Fatma Ana'yı baskıyla ot temin etmeye zorladı. Belge zaten hazırdı.",
+          "specialMechanic": "sifreli_parmak_ses"
+        },
+
+        {
+          "puzzleId": "hr_003",
+          "title": "Aynada Gördüğüm",
+          "subtitle": "Antika Yalı, Boğaz Sahili",
+          "difficulty": 3,
+          "difficultyLabel": "Dedektif",
+          "stars": "★★★☆☆",
+          "gridSize": "3x3",
+          "timeLimit": 480,
+          "basePoints": 800,
+          "penaltyPerWrongAccusation": 150,
+          "cluePointCost": 70,
+          "story": "Boğaz'daki antika yalıda bir parapsikoloji araştırmacısı, 'yalının ruhu'nu araştırırken ölü bulundu. Üç kişi o gece içerideydi. Ve büyük antika ayna kırılmış.",
+          "atmosphere": "Boğaz. Gece. Eski ahşap. Antika aynanın kırık parçaları.",
+          "suspects": [
+            { "id": "s1", "name": "Yalı Sahibi Mme. Dolores", "icon": "👩‍🦱", "description": "Araştırmacının 'ruhları rahatsız ettiğini' söylüyordu.", "detail": "65 yaşında, Rum asıllı, gizemli." },
+            { "id": "s2", "name": "Asistan Tarık", "icon": "👨‍🔬", "description": "Araştırmacının 10 yıllık asistanı. Ama son ay garip.", "detail": "35 yaşında, yorgun, bir şey gizliyor." },
+            { "id": "s3", "name": "Yalı Bekçisi Yaşar", "icon": "🔑", "description": "40 yıldır yalıda. Her köşeyi biliyor.", "detail": "65 yaşında, sakin ama sırları olan biri." }
+          ],
+          "weapons": [
+            { "id": "w1", "name": "Ayna Kırığı", "icon": "🪞", "description": "Antika ayanın sivri kırık parçası." },
+            { "id": "w2", "name": "Zehirli Aromatik Yağ", "icon": "🕯️", "description": "Rituelde kullanılan yağa katılan madde." },
+            { "id": "w3", "name": "Elektrik Arızası Tuzağı", "icon": "⚡", "description": "Islak zeminde elektrik." }
+          ],
+          "locations": [
+            { "id": "l1", "name": "Ayna Odası", "icon": "🪞", "description": "Büyük antika ayanın bulunduğu oda." },
+            { "id": "l2", "name": "Bodrum Kat", "icon": "🔒", "description": "Yalının eski bodrum katı." },
+            { "id": "l3", "name": "Sahil Terası", "icon": "🌊", "description": "Boğaz'a bakan veranda." }
+          ],
+          "clues": [
+            {
+              "id": "c1", "type": "kanit", "revealOrder": 1, "isRevealed": true, "pointCost": 0,
+              "title": "Ölüm Yeri",
+              "text": "Araştırmacı ayna odasında. Ayna kırılmış. Kesik izleri — cam parçası. Ayrıca kanda aromatik yağ kalıntısı.",
+              "mechanicType": "text"
+            },
+            {
+              "id": "c2", "type": "sifreli", "revealOrder": 2, "isRevealed": false, "pointCost": 70,
+              "title": "Araştırma Defteri Son Sayfası",
+              "text": "Araştırmacının şifreli son notu.",
+              "mechanicType": "sifreli_mesaj",
+              "sifre": {
+                "sifrelenmis": "TRK YĞ KTTI — MR ODSI — DLRS GRD",
+                "sifreleTuru": "sesli_harf_kisalt",
+                "cozumIpucu": "Sesli harfleri ekle.",
+                "cozulmus": "TARIK YAĞ KATTI — AYNA ODASI — DOLORES GÖRDÜ",
+                "aciklama": "Son notta Tarık'ı suçluyor, Dolores'in gözetlediğini söylüyor."
+              }
+            },
+            {
+              "id": "c3", "type": "tanik", "revealOrder": 3, "isRevealed": false, "pointCost": 70,
+              "title": "Dolores'in Beyanı",
+              "text": "\"Tarık o gece yağ şişelerine dokundu. Ben gördüm ama ne yaptığını anlayamadım. Araştırma ritüeli sandım.\"",
+              "mechanicType": "text"
+            },
+            {
+              "id": "c4", "type": "parmak_izi", "revealOrder": 4, "isRevealed": false, "pointCost": 70,
+              "title": "Yağ Şişesi",
+              "text": "Ritüel yağ şişelerinde iz.",
+              "mechanicType": "parmak_izi",
+              "parmakIziVerisi": {
+                "aciklama": "Üç şüphelinin izini şişeyle eşleştir.",
+                "izler": [
+                  { "izId": "iz1", "konum": "Şişe kapağı", "eslesme": "s2", "ipucu": "Genç, labaratuvar izi. Kimyasal temas alışkanlığı." }
+                ],
+                "sonuc": "Şişeyi açan: Tarık."
+              }
+            },
+            {
+              "id": "c5", "type": "eleme", "revealOrder": 5, "isRevealed": false, "pointCost": 70,
+              "title": "Yaşar'ın Durumu",
+              "text": "Bekçi Yaşar o gece dışarıdaydı — kapı kayıtları sabah 05.00'e kadar çıkış gösteriyor.",
+              "mechanicType": "text"
+            },
+            {
+              "id": "c6", "type": "dogrudan", "revealOrder": 6, "isRevealed": false, "pointCost": 70,
+              "title": "Tarık'ın Gerçek Kimliği",
+              "text": "Tarık'ın geçmişi araştırıldı: asistan değil, rival bir kurumun ajanı. Araştırmacının bulgularını çalmak üzere yerleştirilmişti. Bulgu kamuoyuyla paylaşılacaktı.",
+              "mechanicType": "gorsel_ipucu",
+              "gorselAciklama": "Sahte kimlik belgesi. Fotoğraf Tarık, ama isim ve kurum farklı.",
+              "deductionHint": "Tarık undercover bir ajan."
+            }
+          ],
+          "solution": { "suspectId": "s2", "weaponId": "w2", "locationId": "l1" },
+          "solutionNarrative": "Tarık, rakip kurum adına yerleştirilmiş bir ajandı. Araştırmacının bulgularını çalmak yetmedi — yayımlanmasını engellemek için yağa zehir kattı. Ayna kırığı boğuşma sırasında oluştu.",
+          "specialMechanic": "sifreli_parmak_izi"
+        },
+
+        {
+          "puzzleId": "hr_004",
+          "title": "Ses Gelmez Oradan",
+          "subtitle": "İzole Dağ Kulübesi, Doğu Türkiye",
+          "difficulty": 4,
+          "difficultyLabel": "Başkomiser",
+          "stars": "★★★★☆",
+          "gridSize": "4x4",
+          "timeLimit": 420,
+          "basePoints": 1000,
+          "penaltyPerWrongAccusation": 180,
+          "cluePointCost": 80,
+          "story": "Dört arkadaş kış kampı için dağ kulübesine gitti. Üç gün sonra kurtarma ekibi geldiğinde bir kişi ölü, diğerleri şokta. 'Kar fırtınası yaptı' diyorlar.",
+          "atmosphere": "Kar. Kesilmiş elektrik. Şömine ışığı. Ve içlerinde birinin katil olduğu kapalı bir kulübe.",
+          "suspects": [
+            { "id": "s1", "name": "Mühendis Emre", "icon": "🔧", "description": "En güçlü ve pratik kişi. İlk paniği o bastırdı.", "detail": "32 yaşında, lider ruhlu, stres altında değişiyor." },
+            { "id": "s2", "name": "Doktor Sibel", "icon": "👩‍⚕️", "description": "Tıbbi otopsiyi yapabilecek tek kişi. İlk müdahaleyi o yaptı.", "detail": "30 yaşında, sakin, çok sakin." },
+            { "id": "s3", "name": "Öğretmen Kemal", "icon": "📚", "description": "Grupta en sessiz. Maktulla son konuşan.", "detail": "35 yaşında, içe kapanık, büyük gözlü." },
+            { "id": "s4", "name": "Fotoğrafçı Deniz", "icon": "📷", "description": "Her şeyi fotoğrafladı — ama bir fotoğraf eksik.", "detail": "28 yaşında, meraklı, dikkatli gözü var." }
+          ],
+          "weapons": [
+            { "id": "w1", "name": "Uyku İlacı Aşırı Dozu", "icon": "💊", "description": "Doktor çantasından." },
+            { "id": "w2", "name": "Soğuğa Maruz Bırakma", "icon": "❄️", "description": "Kulübe dışında bırakılma." },
+            { "id": "w3", "name": "Boğma", "icon": "🪢", "description": "Uyurken." },
+            { "id": "w4", "name": "Karbonmonoksit", "icon": "💨", "description": "Baca tıkanıklığından." }
+          ],
+          "locations": [
+            { "id": "l1", "name": "Yatak Odası", "icon": "🛏️", "description": "Tek yatak odası." },
+            { "id": "l2", "name": "Ortak Alan", "icon": "🛋️", "description": "Şömineli oturma." },
+            { "id": "l3", "name": "Mutfak", "icon": "🍳", "description": "Küçük kulübe mutfağı." },
+            { "id": "l4", "name": "Dış Kapı Önü", "icon": "🚪", "description": "Kulübe girişi." }
+          ],
+          "clues": [
+            {
+              "id": "c1", "type": "kanit", "revealOrder": 1, "isRevealed": true, "pointCost": 0,
+              "title": "Kurtarma Ekibi Raporu",
+              "text": "Maktul yatak odasında uyurken ölmüş görünümünde. Ama iç organlarda uyuşturucu bileşiği — karda ölüm değil, ilaç.",
+              "mechanicType": "text"
+            },
+            {
+              "id": "c2", "type": "sifreli", "revealOrder": 2, "isRevealed": false, "pointCost": 80,
+              "title": "Maktulün Son Mesajı",
+              "text": "Çantasında kağıt parçası.",
+              "mechanicType": "sifreli_mesaj",
+              "sifre": {
+                "sifrelenmis": "SBL ÇNTSNDA — 2 HB — KML BLD",
+                "sifreleTuru": "sesli_harf_kisalt",
+                "cozumIpucu": "Sesli harfleri ekle.",
+                "cozulmus": "SİBEL ÇANTASINDA — 2 HAPI — KEMAL BİLDİ",
+                "aciklama": "Maktul Sibel'in çantasında ilaç gördü ve Kemal'e söyledi."
+              }
+            },
+            {
+              "id": "c3", "type": "tanik", "revealOrder": 3, "isRevealed": false, "pointCost": 80,
+              "title": "Deniz'in Fotoğraf Analizi",
+              "text": "Deniz tüm akşamı fotoğrafladı. 23.15'te Sibel mutfakta bir şeyler hazırlıyor — sıcak içecek. 23.30'da maktul içiyor. Sabah ölmüş.",
+              "mechanicType": "gorsel_ipucu",
+              "gorselAciklama": "Dijital fotoğraf zaman damgası: 23.15. Sibel'in elinde iki kap."
+            },
+            {
+              "id": "c4", "type": "parmak_izi", "revealOrder": 4, "isRevealed": false, "pointCost": 80,
+              "title": "Kupa İzi",
+              "text": "Maktulün kupasında iz.",
+              "mechanicType": "parmak_izi",
+              "parmakIziVerisi": {
+                "aciklama": "Dört şüphelinin izini kupa iziyle eşleştir.",
+                "izler": [
+                  { "izId": "iz1", "konum": "Kupa sapı", "eslesme": "s2", "ipucu": "İnce, kadın eli. Tıbbi aletlere alışmış bilek hareketi." }
+                ],
+                "sonuc": "Kupayı son tutan: Sibel."
+              }
+            },
+            {
+              "id": "c5", "type": "tanik", "revealOrder": 5, "isRevealed": false, "pointCost": 80,
+              "title": "Kemal'in Beyanı",
+              "text": "\"Maktul bana 'Sibel'in çantasında fazladan hap gördüm, tuhaf' dedi. Ben 'dikkat et' dedim. Ama o gece içkisini içti.\"",
+              "mechanicType": "tanik_yuzlesme",
+              "yuzlesmeDialogu": [
+                { "soru": "Sibel'i uyardınız mı?", "cevap": "Hayır, düşünmedim bile.", "yalan": true },
+                { "soru": "Maktulü uyardınız mı?", "cevap": "Evet, dedim dikkat et.", "yalan": false }
+              ]
+            },
+            {
+              "id": "c6", "type": "adli", "revealOrder": 6, "isRevealed": false, "pointCost": 80,
+              "title": "İlaç Analizi",
+              "text": "Kullanılan bileşim yüksek dozda — bir doktor kasıtlı doz hesaplayabilir. Sıradan bir kişi bu dozu oluşturamazdı.",
+              "mechanicType": "text"
+            },
+            {
+              "id": "c7", "type": "eleme", "revealOrder": 7, "isRevealed": false, "pointCost": 80,
+              "title": "Emre'nin Durumu",
+              "text": "Emre gece boyunca elektrik jeneratörüyle uğraştı — Deniz'in fotoğrafları bunu doğruluyor, her saatte bir kayıt.",
+              "mechanicType": "text"
+            },
+            {
+              "id": "c8", "type": "dogrudan", "revealOrder": 8, "isRevealed": false, "pointCost": 80,
+              "title": "Sibel'in Gizlediği Geçmiş",
+              "text": "Araştırıldı: Sibel ve maktul aynı akademik pozisyon için başvurmuştu. Maktul kazandı. Sibel o zamandan beri 'içindeydi.' Bu kamp onun son fırsatıydı.",
+              "mechanicType": "gorsel_ipucu",
+              "gorselAciklama": "Üniversite kayıtları. İki başvuru, bir kabul. Reddedilenin adı: Sibel."
+            }
+          ],
+          "solution": { "suspectId": "s2", "weaponId": "w1", "locationId": "l1" },
+          "solutionNarrative": "Doktor Sibel, akademik rekabetten kaynaklanan öfkesini 3 yıl içinde tuttu. Dağ kulübesi izole ortam — mükemmel fırsat. Gece sıcak içeceğe yüksek doz uyku ilacı kattı. Kemal bildim ama geç olmuştu.",
+          "specialMechanic": "tam_mekanik_seti"
+        },
+
+        {
+          "puzzleId": "hr_005",
+          "title": "Son Sefer",
+          "subtitle": "Boğaz'da Sisli Gece — Gemi",
+          "difficulty": 5,
+          "difficultyLabel": "Efsane Komiser",
+          "stars": "★★★★★",
+          "gridSize": "4x4",
+          "timeLimit": 360,
+          "basePoints": 1500,
+          "penaltyPerWrongAccusation": 240,
+          "cluePointCost": 100,
+          "story": "Sis içindeki Boğaz'da yük gemisinde kaptan ölü bulundu. Gemi sahipsiz ilerliyor, dört kişi gemide. Kıyıya çarpmadan önce katili bulun.",
+          "atmosphere": "Gece. Sis. Düdük sesi. Gemi sürükleniyor. Saatiniz var.",
+          "suspects": [
+            { "id": "s1", "name": "Baş Güverte Subayı Murat", "icon": "⚓", "description": "Kaptanın en yakın çalışanı. Terfi bekliyor.", "detail": "40 yaşında, deneyimli, gözleri yorgun." },
+            { "id": "s2", "name": "Gemi Mühendisi Olga", "icon": "🔧", "description": "Ukraynalı mühendis. Kaptanla para meselesi.", "detail": "35 yaşında, pratik, sessiz öfkeli." },
+            { "id": "s3", "name": "Kaçak Yolcu Samir", "icon": "🤫", "description": "Gemide gizlenen biri. Kim, neden?", "detail": "Yaşı belirsiz, kimliği yok, anlaşılmaz bir bağlantı." },
+            { "id": "s4", "name": "Armatör Vekili Hüseyin Paşa", "icon": "💼", "description": "Geminin sahibi adına yönetiyor. Kargo meselesinde kaptanla çatışma.", "detail": "60 yaşında, pahalı giyimli, sinirli." }
+          ],
+          "weapons": [
+            { "id": "w1", "name": "Deniz Halatı", "icon": "🪢", "description": "Gemi halatı." },
+            { "id": "w2", "name": "Zehirli İçki", "icon": "🥃", "description": "Kaptan köşkünde viski." },
+            { "id": "w3", "name": "Taşıma Kancası", "icon": "🪝", "description": "Yük taşıma kancası." },
+            { "id": "w4", "name": "Ateşli Silah", "icon": "🔫", "description": "Gemi güvenlik tabancası." }
+          ],
+          "locations": [
+            { "id": "l1", "name": "Kaptan Köşkü", "icon": "🧭", "description": "Geminin en üst kontrol odası." },
+            { "id": "l2", "name": "Makine Dairesi", "icon": "⚙️", "description": "Gemi makineleri." },
+            { "id": "l3", "name": "Yük Ambarı", "icon": "📦", "description": "Ana yük deposu." },
+            { "id": "l4", "name": "Güverte", "icon": "🌊", "description": "Açık hava güverte." }
+          ],
+          "clues": [
+            {
+              "id": "c1", "type": "kanit", "revealOrder": 1, "isRevealed": true, "pointCost": 0,
+              "title": "Ölüm Tespiti",
+              "text": "Kaptan köşkünde yerde. Boynunda halat izi. Viski bardağı yanında. Gemi rötarsız ilerliyor — ama yön kontrolsüz.",
+              "mechanicType": "text"
+            },
+            {
+              "id": "c2", "type": "sifreli", "revealOrder": 2, "isRevealed": false, "pointCost": 100,
+              "title": "Kaptanın Son Kaydı",
+              "text": "Kaptan son sesli kaydını yapmış.",
+              "mechanicType": "sifreli_mesaj",
+              "sifre": {
+                "sifrelenmis": "HÜS KRGO — SMRN KM — MURT BLRD",
+                "sifreleTuru": "sesli_harf_kisalt",
+                "cozumIpucu": "Sesli harfleri ekle.",
+                "cozulmus": "HÜSEYİN KARGO — SAMİR KİM — MURAT BURDA",
+                "aciklama": "Kaptan kargo meselesinde Hüseyin'i, Samir'in kimliğini ve Murat'ın orada olduğunu not etmiş."
+              }
+            },
+            {
+              "id": "c3", "type": "parmak_izi", "revealOrder": 3, "isRevealed": false, "pointCost": 100,
+              "title": "Halat Üzerindeki İz",
+              "text": "Boynunda iz bırakan halatın izleri.",
+              "mechanicType": "parmak_izi",
+              "parmakIziVerisi": {
+                "aciklama": "Dört şüphelinin izini halatle eşleştir.",
+                "izler": [
+                  { "izId": "iz1", "konum": "Halat ucu", "eslesme": "s1", "ipucu": "Denizci eli, halatla uzun yıllar çalışmış. Nasır izleri özgün." }
+                ],
+                "sonuc": "Halatı tutan: Murat."
+              }
+            },
+            {
+              "id": "c4", "type": "tanik", "revealOrder": 4, "isRevealed": false, "pointCost": 100,
+              "title": "Olga'nın Beyanı",
+              "text": "\"Makine dairesindeyim. Bir gürültü duydum — kaptan köşkünden. Çıktım, Murat aşağı iniyor, yüzü solgun. Beni görünce hızlandı.\"",
+              "mechanicType": "ses_kaydi",
+              "sesMetni": "[Ses kaydı] Olga'nın Rusçası arasında: 'Murat... aşağı... yüzü beyaz...' Titriyor."
+            },
+            {
+              "id": "c5", "type": "tanik", "revealOrder": 5, "isRevealed": false, "pointCost": 100,
+              "title": "Samir'in Gizemi",
+              "text": "Samir sonunda konuştu: 'Ben Hüseyin Paşa'nın gönderdiği adamım. Kargoda ne olduğunu izlemekle görevliydim. Kaptanın şüphelendiğini bildirdim. Murat bunu duymuş olabilir.'",
+              "mechanicType": "tanik_yuzlesme",
+              "yuzlesmeDialogu": [
+                { "soru": "Hüseyin sizi gönderdi mi?", "cevap": "Evet.", "yalan": false },
+                { "soru": "Murat'ı bildirdiniz mi?", "cevap": "Bildirdim ama öldürülmesini istemedim.", "yalan": false },
+                { "soru": "Kargo ne içeriyor?", "cevap": "Bilmiyorum.", "yalan": true }
+              ]
+            },
+            {
+              "id": "c6", "type": "eleme", "revealOrder": 6, "isRevealed": false, "pointCost": 100,
+              "title": "Hüseyin ve Olga Durumu",
+              "text": "Hüseyin gemi kaydına göre o saatte ambar koridorundaydı. Olga makine dairesinde sabit — gemi sistemi saatlik pozisyon kaydı yapıyor.",
+              "mechanicType": "text"
+            },
+            {
+              "id": "c7", "type": "adli", "revealOrder": 7, "isRevealed": false, "pointCost": 100,
+              "title": "Kargo Analizi",
+              "text": "Kargoda yasadışı mal. Kaptan fark etmiş, raporlayacaktı. Murat bunu engellemekle görevlendirilmiş — Hüseyin'in talebiyle.",
+              "mechanicType": "gorsel_ipucu",
+              "gorselAciklama": "Gizli yazışma: Hüseyin → Murat. 'Kaptan sustursun.' İki kelime. Ama 'nasıl' yazmıyor."
+            },
+            {
+              "id": "c8", "type": "dogrudan", "revealOrder": 8, "isRevealed": false, "pointCost": 100,
+              "title": "Murat'ın Banka Kaydı",
+              "text": "Murat'ın hesabına 3 gün önce 50.000 dolar yatırıldı. Gönderen: Hüseyin Paşa'nın şirketiyle bağlantılı anonim hesap.",
+              "mechanicType": "text"
+            }
+          ],
+          "solution": { "suspectId": "s1", "weaponId": "w1", "locationId": "l1" },
+          "solutionNarrative": "Baş Güverte Subayı Murat, Hüseyin Paşa'dan para alarak kaptanı susturmakla görevlendirildi. Kaptan köşkünde halat kullandı. Samir'in ihbarı Murat'ı köşeye sıkıştırırdı — o yüzden hızlı davrandı.",
+          "specialMechanic": "tam_mekanik_seti"
+        }
+      ]
+    }
+  ]
+}
