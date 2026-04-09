@@ -8,7 +8,10 @@ import {
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
+import * as TrackingTransparency from "expo-tracking-transparency";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { useEffect } from "react";
+import { Platform } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { KeyboardProvider } from "react-native-keyboard-controller";
 import { SafeAreaProvider } from "react-native-safe-area-context";
@@ -20,6 +23,20 @@ import { PurchaseProvider } from "@/context/PurchaseContext";
 SplashScreen.preventAutoHideAsync();
 
 const queryClient = new QueryClient();
+
+const ATT_KEY = "att_requested_v1";
+
+async function requestAttIfNeeded() {
+  if (Platform.OS !== "ios") return;
+  try {
+    const already = await AsyncStorage.getItem(ATT_KEY);
+    if (already) return;
+    await AsyncStorage.setItem(ATT_KEY, "1");
+    const { status } = await TrackingTransparency.requestTrackingPermissionsAsync();
+    return status;
+  } catch {
+  }
+}
 
 function RootLayoutNav() {
   return (
@@ -40,6 +57,7 @@ export default function RootLayout() {
   useEffect(() => {
     if (fontsLoaded || fontError) {
       SplashScreen.hideAsync();
+      requestAttIfNeeded();
     }
   }, [fontsLoaded, fontError]);
 

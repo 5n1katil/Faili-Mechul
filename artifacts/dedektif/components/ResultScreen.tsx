@@ -13,6 +13,8 @@ import {
 import { MaterialIcons } from "@expo/vector-icons";
 import * as Clipboard from "expo-clipboard";
 import * as Haptics from "expo-haptics";
+import * as StoreReview from "expo-store-review";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import Animated, {
   Easing,
   useAnimatedProps,
@@ -353,6 +355,32 @@ export default function ResultScreen({
       } else {
         Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
       }
+    }
+
+    if (success && isRanked && Platform.OS !== "web") {
+      void (async () => {
+        try {
+          const [alreadyRequested, rawCount] = await Promise.all([
+            AsyncStorage.getItem("review_requested_v1"),
+            AsyncStorage.getItem("ranked_completions_v1"),
+          ]);
+          if (alreadyRequested) return;
+
+          const count = (parseInt(rawCount ?? "0", 10) || 0) + 1;
+          await AsyncStorage.setItem("ranked_completions_v1", String(count));
+
+          const shouldAsk =
+            count === 3 || (wrongGuesses === 0 && count >= 2);
+          if (!shouldAsk) return;
+
+          const available = await StoreReview.isAvailableAsync();
+          if (!available) return;
+
+          await AsyncStorage.setItem("review_requested_v1", "1");
+          await StoreReview.requestReview();
+        } catch {
+        }
+      })();
     }
   }, []);
 

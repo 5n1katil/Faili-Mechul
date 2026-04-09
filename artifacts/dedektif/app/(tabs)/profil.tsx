@@ -326,6 +326,24 @@ export default function ProfilScreen() {
           </Pressable>
         </Animated.View>
 
+        <Animated.View entering={FadeInDown.delay(275).springify()}>
+          <Pressable
+            onPress={() => Linking.openURL("https://failimechul.app/kullanim-sartlari")}
+            style={[styles.howToPlayBtn, { backgroundColor: colors.card, borderColor: colors.border }]}
+          >
+            <View style={[styles.howToPlayIcon, { backgroundColor: `${colors.mutedForeground}18` }]}>
+              <MaterialIcons name="description" size={22} color={colors.mutedForeground} />
+            </View>
+            <View style={styles.howToPlayInfo}>
+              <Text style={[styles.howToPlayTitle, { color: colors.foreground }]}>Kullanım Şartları</Text>
+              <Text style={[styles.howToPlayDesc, { color: colors.mutedForeground }]}>
+                Hizmet koşulları ve lisans
+              </Text>
+            </View>
+            <MaterialIcons name="open-in-new" size={18} color={colors.mutedForeground} />
+          </Pressable>
+        </Animated.View>
+
         {recentHistory.length > 0 && (
           <Animated.View entering={FadeInDown.delay(280).springify()}>
             <Text style={[styles.sectionTitle, { color: colors.foreground }]}>Son Oyunlar</Text>
