@@ -25,22 +25,29 @@ import { usePurchase } from "@/context/PurchaseContext";
 
 type MaterialIconName = ComponentProps<typeof MaterialIcons>["name"];
 
-const BADGE_INFO: Record<string, { label: string; icon: MaterialIconName; desc: string }> = {
-  ilk_cozum: { label: "İlk Çözüm", icon: "emoji-events", desc: "İlk bulmacayı çözdünüz!" },
-  bes_cozum: { label: "5 Bulmaca", icon: "star", desc: "5 bulmaca çözdünüz!" },
-  hafta_serisi: { label: "Haftalık Seri", icon: "local-fire-department", desc: "7 gün üst üste oynadınız!" },
-  hatasiz: { label: "Hatasız", icon: "verified", desc: "Bir bulmacayı hiç hata yapmadan çözdünüz!" },
+const BADGE_INFO: Record<string, { label: string; icon: MaterialIconName; desc: string; color?: string }> = {
+  ilk_cozum:      { label: "İlk Çözüm",      icon: "emoji-events",           desc: "İlk bulmacayı çözdünüz!" },
+  bes_cozum:      { label: "5 Vaka",          icon: "star",                   desc: "5 bulmaca çözdünüz!" },
+  on_cozum:       { label: "10 Vaka",         icon: "star-half",              desc: "10 bulmaca çözdünüz!" },
+  yirmi_cozum:    { label: "20 Vaka",         icon: "grade",                  desc: "20 bulmaca çözdünüz!" },
+  uzman_dedektif: { label: "Uzman Dedektif",  icon: "military-tech",          desc: "Tüm ücretsiz bulmacaları çözdünüz!" },
+  soguk_iz:       { label: "İlk Seri",        icon: "local-fire-department",  desc: "3 gün üst üste oynadınız!", color: "#F97316" },
+  hafta_serisi:   { label: "Haftalık Seri",   icon: "local-fire-department",  desc: "7 gün üst üste oynadınız!" },
+  on_seri:        { label: "Sönmez Ateş",     icon: "whatshot",               desc: "10 gün üst üste oynadınız!", color: "#F97316" },
+  hatasiz:        { label: "Hatasız",         icon: "verified",               desc: "Bir bulmacayı hiç hata yapmadan çözdünüz!" },
+  hizli_dedektif: { label: "Hızlı Dedektif",  icon: "bolt",                   desc: "Bir bulmacayı 3 dakikadan kısa sürede çözdünüz!", color: "#60A5FA" },
 };
 
 function BadgeItem({ badgeId, colors }: { badgeId: string; colors: ReturnType<typeof useColors> }) {
   const info = BADGE_INFO[badgeId];
   if (!info) return null;
+  const accentColor = info.color ?? colors.primary;
   return (
     <View
-      style={[styles.badgeItem, { backgroundColor: colors.card, borderColor: colors.primary }]}
+      style={[styles.badgeItem, { backgroundColor: colors.card, borderColor: `${accentColor}66` }]}
     >
-      <View style={[styles.badgeIcon, { backgroundColor: `${colors.primary}22` }]}>
-        <MaterialIcons name={info.icon} size={24} color={colors.primary} />
+      <View style={[styles.badgeIcon, { backgroundColor: `${accentColor}22` }]}>
+        <MaterialIcons name={info.icon} size={24} color={accentColor} />
       </View>
       <Text style={[styles.badgeLabel, { color: colors.foreground }]}>{info.label}</Text>
       <Text style={[styles.badgeDesc, { color: colors.mutedForeground }]}>{info.desc}</Text>

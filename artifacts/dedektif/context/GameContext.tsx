@@ -187,18 +187,30 @@ function migrateRecord(raw: Record<string, unknown>): GameRecord {
 
 function getBadges(profile: PlayerProfile, history: GameRecord[]): string[] {
   const badges: string[] = [...profile.badges];
-  if (history.filter((h) => h.completed).length >= 1 && !badges.includes("ilk_cozum")) {
+  const completed = history.filter((h) => h.completed);
+  const completedCount = completed.length;
+
+  if (completedCount >= 1 && !badges.includes("ilk_cozum"))
     badges.push("ilk_cozum");
-  }
-  if (history.filter((h) => h.completed).length >= 5 && !badges.includes("bes_cozum")) {
+  if (completedCount >= 5 && !badges.includes("bes_cozum"))
     badges.push("bes_cozum");
-  }
-  if (profile.currentStreak >= 7 && !badges.includes("hafta_serisi")) {
+  if (completedCount >= 10 && !badges.includes("on_cozum"))
+    badges.push("on_cozum");
+  if (completedCount >= 20 && !badges.includes("yirmi_cozum"))
+    badges.push("yirmi_cozum");
+  if (completedCount >= 30 && !badges.includes("uzman_dedektif"))
+    badges.push("uzman_dedektif");
+  if (profile.currentStreak >= 3 && !badges.includes("soguk_iz"))
+    badges.push("soguk_iz");
+  if (profile.currentStreak >= 7 && !badges.includes("hafta_serisi"))
     badges.push("hafta_serisi");
-  }
-  if (history.some((h) => h.wrongGuesses === 0 && h.completed) && !badges.includes("hatasiz")) {
+  if (profile.currentStreak >= 10 && !badges.includes("on_seri"))
+    badges.push("on_seri");
+  if (completed.some((h) => h.wrongGuesses === 0) && !badges.includes("hatasiz"))
     badges.push("hatasiz");
-  }
+  if (completed.some((h) => h.timeSeconds < 180) && !badges.includes("hizli_dedektif"))
+    badges.push("hizli_dedektif");
+
   return badges;
 }
 
