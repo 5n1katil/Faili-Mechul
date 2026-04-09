@@ -5,6 +5,7 @@ import React, {
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from "react";
 import {
@@ -143,6 +144,17 @@ const GameContext = createContext<GameContextType | null>(null);
 const PROFILE_KEY = "@dedektif_profile";
 const HISTORY_KEY = "@dedektif_history";
 const LEADERBOARD_KEY = "@dedektif_leaderboard";
+const DRAFT_KEY = "@dedektif_draft";
+
+interface SavedDraft {
+  puzzleId: string;
+  gridState: GridState;
+  autoCrossGroups: { [checkKey: string]: string[] };
+  autoCrossOwners: { [crossedKey: string]: string[] };
+  cluesRevealed: number[];
+  timeElapsed: number;
+  wrongGuesses: number;
+}
 
 const DEFAULT_PROFILE: PlayerProfile = {
   name: "Dedektif",
@@ -219,6 +231,8 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
   const [gameHistory, setGameHistory] = useState<GameRecord[]>([]);
   const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
   const [gameState, setGameState] = useState<GameState | null>(null);
+  const [pendingDraft, setPendingDraft] = useState<SavedDraft | null>(null);
+  const tickCount = useRef(0);
 
   useEffect(() => {
     loadData();
@@ -226,10 +240,11 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
 
   const loadData = async () => {
     try {
-      const [profileStr, historyStr, leaderboardStr] = await Promise.all([
+      const [profileStr, historyStr, leaderboardStr, draftStr] = await Promise.all([
         AsyncStorage.getItem(PROFILE_KEY),
         AsyncStorage.getItem(HISTORY_KEY),
         AsyncStorage.getItem(LEADERBOARD_KEY),
+        AsyncStorage.getItem(DRAFT_KEY),
       ]);
       if (profileStr) {
         const parsed = JSON.parse(profileStr);
@@ -242,6 +257,10 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
       if (leaderboardStr) {
         const rawLb: Record<string, unknown>[] = JSON.parse(leaderboardStr);
         setLeaderboard(rawLb.map((e) => ({ avatar: "", ...e } as LeaderboardEntry)));
+      }
+      if (draftStr) {
+        const draft = JSON.parse(draftStr) as SavedDraft;
+        setPendingDraft(draft);
       }
     } catch {}
   };
@@ -273,6 +292,24 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     setLeaderboard(allEntries);
   };
 
+  const saveDraft = async (gs: GameState) => {
+    if (!gs.puzzle || gs.isComplete) return;
+    const draft: SavedDraft = {
+      puzzleId: gs.puzzle.id,
+      gridState: gs.gridState,
+      autoCrossGroups: gs.autoCrossGroups,
+      autoCrossOwners: gs.autoCrossOwners,
+      cluesRevealed: gs.cluesRevealed,
+      timeElapsed: gs.timeElapsed,
+      wrongGuesses: gs.wrongGuesses,
+    };
+    await AsyncStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
+  };
+
+  const clearDraft = async () => {
+    await AsyncStorage.removeItem(DRAFT_KEY);
+  };
+
   const completedPuzzleIds = useMemo(
     () => new Set(gameHistory.filter((h) => h.completed).map((h) => h.puzzleId)),
     [gameHistory]
@@ -291,14 +328,21 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
   const startPuzzle = useCallback((puzzle: Puzzle) => {
     const standardIndices = getStandardClueIndices(puzzle);
     const isRanked = !completedPuzzleIds.has(puzzle.id);
+
+    const draft = pendingDraft?.puzzleId === puzzle.id ? pendingDraft : null;
+
+    if (draft && completedPuzzleIds.has(puzzle.id)) {
+      clearDraft();
+    }
+
     setGameState({
       puzzle,
-      gridState: {},
-      autoCrossGroups: {},
-      autoCrossOwners: {},
-      cluesRevealed: standardIndices,
-      timeElapsed: 0,
-      wrongGuesses: 0,
+      gridState: draft?.gridState ?? {},
+      autoCrossGroups: draft?.autoCrossGroups ?? {},
+      autoCrossOwners: draft?.autoCrossOwners ?? {},
+      cluesRevealed: draft?.cluesRevealed ?? standardIndices,
+      timeElapsed: draft?.timeElapsed ?? 0,
+      wrongGuesses: draft?.wrongGuesses ?? 0,
       isComplete: false,
       finalScore: null,
       appliedStreak: null,
@@ -308,7 +352,9 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
       timerActive: false,
       isRanked,
     });
-  }, [completedPuzzleIds]);
+
+    if (draft) setPendingDraft(null);
+  }, [completedPuzzleIds, pendingDraft]);
 
   const startDailyPuzzle = useCallback(() => {
     const puzzle = getDailyPuzzle();
@@ -388,12 +434,14 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
           newGroups[key] = autoCrossed;
         }
 
-        return {
+        const nextState = {
           ...prev,
           gridState: newGrid,
           autoCrossGroups: newGroups,
           autoCrossOwners: newOwners,
         };
+        saveDraft(nextState);
+        return nextState;
       });
     },
     [gameState]
@@ -404,11 +452,13 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
       if (!prev || !prev.puzzle) return prev;
       if (prev.cluesRevealed.includes(index)) return prev;
       if (!isBonusClue(prev.puzzle, index)) return prev;
-      return {
+      const nextState = {
         ...prev,
         cluesRevealed: [...prev.cluesRevealed, index],
         timeElapsed: prev.timeElapsed + 30,
       };
+      saveDraft(nextState);
+      return nextState;
     });
   }, []);
 
@@ -491,6 +541,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
           saveLeaderboard([...leaderboard, newLeaderEntry]);
         }
 
+        clearDraft();
         setGameState((prev) => {
           if (!prev) return prev;
           return { ...prev, isComplete: true, finalScore: score, appliedStreak: newStreak };
@@ -519,13 +570,17 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
   );
 
   const resetCurrentGame = useCallback(() => {
+    clearDraft();
     setGameState(null);
   }, []);
 
   const tickTimer = useCallback(() => {
     setGameState((prev) => {
       if (!prev || prev.isComplete || !prev.timerActive) return prev;
-      return { ...prev, timeElapsed: prev.timeElapsed + 1 };
+      const next = { ...prev, timeElapsed: prev.timeElapsed + 1 };
+      tickCount.current += 1;
+      if (tickCount.current % 30 === 0) saveDraft(next);
+      return next;
     });
   }, []);
 
