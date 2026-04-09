@@ -82,6 +82,15 @@ export default function ProfilScreen() {
       ? Math.round((profile.gamesWon / profile.gamesPlayed) * 100)
       : 0;
 
+  const completedRecords = gameHistory.filter((h) => h.completed);
+
+  const bestTimeSeconds =
+    completedRecords.length > 0
+      ? Math.min(...completedRecords.map((h) => h.timeSeconds))
+      : 0;
+
+  const flawlessCount = completedRecords.filter((h) => h.wrongGuesses === 0).length;
+
   const recentHistory = gameHistory.slice(0, 10);
 
   const handleAvatarChange = (newAvatar: string) => {
@@ -167,6 +176,17 @@ export default function ProfilScreen() {
                     ? `${Math.floor(profile.avgSolveTimeSeconds / 60)}:${(profile.avgSolveTimeSeconds % 60).toString().padStart(2, "0")}`
                     : "—",
                 label: "Ort. Süre",
+              },
+              {
+                value:
+                  bestTimeSeconds > 0
+                    ? `${Math.floor(bestTimeSeconds / 60)}:${(bestTimeSeconds % 60).toString().padStart(2, "0")}`
+                    : "—",
+                label: "En İyi Süre",
+              },
+              {
+                value: flawlessCount > 0 ? flawlessCount : "—",
+                label: "Hatasız",
               },
             ].map((stat, i) => (
               <View

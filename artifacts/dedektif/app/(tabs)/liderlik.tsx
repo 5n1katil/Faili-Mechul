@@ -18,7 +18,7 @@ import { AvatarDisplay } from "@/utils/avatarHelpers";
 import { AI_DETECTIVES } from "@/data/aiDetectives";
 
 type MaterialIconName = ComponentProps<typeof MaterialIcons>["name"];
-type SortKey = "score" | "cases" | "streak";
+type SortKey = "score" | "cases" | "streak" | "hiz";
 
 interface RankEntry {
   name: string;
@@ -35,13 +35,21 @@ const SORT_TABS: { key: SortKey; label: string; icon: MaterialIconName }[] = [
   { key: "score",  label: "🏆 Puan", icon: "emoji-events"          },
   { key: "cases",  label: "📁 Vaka", icon: "folder-special"        },
   { key: "streak", label: "🔥 Seri", icon: "local-fire-department" },
+  { key: "hiz",    label: "⚡ Hız",  icon: "bolt"                  },
 ];
+
+function fmtTime(s: number): string {
+  return `${Math.floor(s / 60)}:${(s % 60).toString().padStart(2, "0")}`;
+}
 
 function sortEntries(entries: RankEntry[], key: SortKey): RankEntry[] {
   return [...entries].sort((a, b) => {
     if (key === "score")  return b.totalScore - a.totalScore;
     if (key === "cases")  return b.gamesWon   - a.gamesWon;
-    return b.maxStreak - a.maxStreak;
+    if (key === "streak") return b.maxStreak   - a.maxStreak;
+    const aT = a.avgSolveTimeSeconds || Infinity;
+    const bT = b.avgSolveTimeSeconds || Infinity;
+    return aT - bT;
   });
 }
 
@@ -59,15 +67,17 @@ function RankItem({ entry, rank, sortKey, colors, delay }: RankItemProps) {
   const rankIcon: MaterialIconName =
     rank === 1 ? "emoji-events" : rank === 2 ? "workspace-premium" : rank === 3 ? "military-tech" : "tag";
 
-  const metaValue =
+  const metaValue: string | number =
     sortKey === "score"  ? entry.totalScore :
     sortKey === "cases"  ? entry.gamesWon :
-    entry.maxStreak;
+    sortKey === "streak" ? entry.maxStreak :
+    entry.avgSolveTimeSeconds ? fmtTime(entry.avgSolveTimeSeconds) : "—";
 
   const metaLabel =
     sortKey === "score"  ? "puan" :
     sortKey === "cases"  ? "vaka" :
-    "seri";
+    sortKey === "streak" ? "seri" :
+    "süre";
 
   const isTop3 = rank <= 3;
 
@@ -137,10 +147,12 @@ function RankItem({ entry, rank, sortKey, colors, delay }: RankItemProps) {
                 ? `${entry.gamesWon} vaka · ${entry.maxStreak} seri`
                 : sortKey === "cases"
                 ? `${entry.totalScore.toLocaleString("tr-TR")} puan · ${entry.maxStreak} seri`
-                : `${entry.totalScore.toLocaleString("tr-TR")} puan · ${entry.gamesWon} vaka`}
+                : sortKey === "streak"
+                ? `${entry.totalScore.toLocaleString("tr-TR")} puan · ${entry.gamesWon} vaka`
+                : `${entry.gamesWon} vaka · ${entry.maxStreak} seri`}
             </Text>
           </View>
-          {entry.avgSolveTimeSeconds != null && entry.avgSolveTimeSeconds > 0 && (
+          {sortKey !== "hiz" && entry.avgSolveTimeSeconds != null && entry.avgSolveTimeSeconds > 0 && (
             <View style={styles.avgTimeRow}>
               <MaterialIcons name="schedule" size={10} color={colors.mutedForeground} />
               <Text style={[styles.avgTimeText, { color: colors.mutedForeground }]}>
@@ -152,7 +164,7 @@ function RankItem({ entry, rank, sortKey, colors, delay }: RankItemProps) {
 
         <View style={styles.rankScore}>
           <Text style={[styles.scoreValue, { color: entry.isCurrentUser ? colors.primary : colors.foreground }]}>
-            {metaValue.toLocaleString("tr-TR")}
+            {typeof metaValue === "number" ? metaValue.toLocaleString("tr-TR") : metaValue}
           </Text>
           <Text style={[styles.scoreLabel, { color: colors.mutedForeground }]}>{metaLabel}</Text>
         </View>
