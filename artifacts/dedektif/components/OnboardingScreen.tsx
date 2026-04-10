@@ -93,6 +93,117 @@ function DemoGridWrapper() {
   );
 }
 
+function ClueExampleBox() {
+  const GOLD = "#D4A843";
+  const RED = "#C8372D";
+  return (
+    <View style={{ width: "100%", maxWidth: 340, alignSelf: "center", gap: 8 }}>
+      {/* Standart ipucu */}
+      <View style={{
+        backgroundColor: "#1A1F2E",
+        borderRadius: 10,
+        borderLeftWidth: 3,
+        borderLeftColor: GOLD,
+        flexDirection: "row",
+        alignItems: "center",
+        paddingVertical: 10,
+        paddingHorizontal: 12,
+        gap: 10,
+      }}>
+        <MaterialIcons name="fingerprint" size={18} color={GOLD} />
+        <Text style={{ flex: 1, fontSize: 12, color: "#D1D5DB", lineHeight: 18 }}>
+          "Otopsi raporu: vücutta kimyasal toksin izine rastlanmadı. Zehir kullanılmamış."
+        </Text>
+        <View style={{ backgroundColor: GOLD + "22", borderRadius: 6, paddingHorizontal: 6, paddingVertical: 3, borderWidth: 1, borderColor: GOLD + "55" }}>
+          <Text style={{ fontSize: 9, fontWeight: "700", color: GOLD, letterSpacing: 0.5 }}>ÜCRETSİZ</Text>
+        </View>
+      </View>
+
+      {/* Bonus ipucu */}
+      <View style={{
+        backgroundColor: "#1A1F2E",
+        borderRadius: 10,
+        borderLeftWidth: 3,
+        borderLeftColor: RED,
+        flexDirection: "row",
+        alignItems: "center",
+        paddingVertical: 10,
+        paddingHorizontal: 12,
+        gap: 10,
+      }}>
+        <MaterialIcons name="lock" size={18} color={RED} />
+        <Text style={{ flex: 1, fontSize: 12, color: "#D1D5DB", lineHeight: 18 }}>
+          "Gece boyunca hiç kimse silah sesi duymadı. Kullanılan alet sessizdi."
+        </Text>
+        <View style={{ backgroundColor: RED + "22", borderRadius: 6, paddingHorizontal: 6, paddingVertical: 3, borderWidth: 1, borderColor: RED + "55" }}>
+          <Text style={{ fontSize: 9, fontWeight: "700", color: RED, letterSpacing: 0.5 }}>+30 sn ⏱</Text>
+        </View>
+      </View>
+    </View>
+  );
+}
+
+function MockAccusationCard() {
+  const GOLD = "#D4A843";
+  const RED = "#C8372D";
+  const SEP = "#2A3050";
+  const rows = [
+    { label: "KİM", value: "Rıfat Bey" },
+    { label: "NEREDE", value: "Mutfak" },
+    { label: "NEYLE", value: "Bıçak" },
+  ];
+  return (
+    <View style={{
+      width: "100%",
+      maxWidth: 320,
+      alignSelf: "center",
+      backgroundColor: "#1A1F2E",
+      borderRadius: 14,
+      borderWidth: 1,
+      borderColor: SEP,
+      overflow: "hidden",
+    }}>
+      {/* Başlık */}
+      <View style={{ flexDirection: "row", alignItems: "center", gap: 8, paddingHorizontal: 16, paddingTop: 13, paddingBottom: 10, borderBottomWidth: 1, borderBottomColor: SEP }}>
+        <MaterialIcons name="gavel" size={15} color={RED} />
+        <Text style={{ fontSize: 11, fontWeight: "800", color: "#9CA3AF", letterSpacing: 1.5 }}>SON ÇIKARIM</Text>
+      </View>
+
+      {/* Seçim satırları */}
+      {rows.map((row, i) => (
+        <View key={row.label} style={{
+          flexDirection: "row",
+          alignItems: "center",
+          paddingHorizontal: 16,
+          paddingVertical: 12,
+          borderBottomWidth: i < rows.length - 1 ? 1 : 0,
+          borderBottomColor: SEP,
+        }}>
+          <Text style={{ width: 68, fontSize: 11, fontWeight: "700", color: "#6B7280", letterSpacing: 0.5 }}>{row.label}</Text>
+          <View style={{ flex: 1, flexDirection: "row", alignItems: "center", justifyContent: "space-between", backgroundColor: "#0F1117", borderRadius: 8, paddingHorizontal: 12, paddingVertical: 8 }}>
+            <Text style={{ fontSize: 13, fontWeight: "600", color: "#F9FAFB" }}>{row.value}</Text>
+            <MaterialIcons name="expand-more" size={18} color="#6B7280" />
+          </View>
+        </View>
+      ))}
+
+      {/* Raporu Gönder butonu */}
+      <View style={{ paddingHorizontal: 16, paddingTop: 12, paddingBottom: 10 }}>
+        <View style={{ backgroundColor: GOLD, borderRadius: 10, paddingVertical: 11, alignItems: "center", justifyContent: "center", flexDirection: "row", gap: 8 }}>
+          <MaterialIcons name="send" size={16} color="#0F1117" />
+          <Text style={{ fontSize: 14, fontWeight: "800", color: "#0F1117" }}>Raporu Gönder</Text>
+        </View>
+      </View>
+
+      {/* Hata notu */}
+      <View style={{ flexDirection: "row", alignItems: "center", gap: 6, paddingHorizontal: 16, paddingBottom: 12 }}>
+        <MaterialIcons name="warning-amber" size={12} color={RED} />
+        <Text style={{ fontSize: 11, color: RED + "CC", fontWeight: "500" }}>Yanlış tahmin → +30 sn ceza eklenir, oyun devam eder</Text>
+      </View>
+    </View>
+  );
+}
+
 interface Slide {
   icon: MaterialIconName;
   iconColor: string;
@@ -103,6 +214,8 @@ interface Slide {
   body: string;
   tip?: string;
   showGrid?: boolean;
+  showClueExample?: boolean;
+  showAccusation?: boolean;
   clue?: string;
 }
 
@@ -134,8 +247,9 @@ const SLIDES: Slide[] = [
     iconBg: "#2A1E0840",
     title: "İpuçları",
     subtitle: "Delilleri Değerlendir",
-    body: "Ekranın alt kısmında ipuçları seni yönlendirir. Başlangıçta bir ipucu görünür; \"Sonraki\" butonuyla daha fazla ipucu açabilirsin.",
-    tip: "Her açtığın ipucu puanından kesiyor — mümkün olduğunca az kullan!",
+    showClueExample: true,
+    body: "Her bulmacada belirli sayıda ipucu baştan açık gelir. Bu standart ipuçları seni çözüme yönlendiren temel delillerdir.\n\nDaha fazla ipucuna ihtiyaç duyarsan \"Sonraki İpucu\" ile bir tane daha açabilirsin — ama dikkatli ol!",
+    tip: "Her bonus ipucu +30 saniye ceza ekler. İpuçsuz çözdükçe puanın artar!",
   },
   {
     icon: "gavel",
@@ -143,8 +257,9 @@ const SLIDES: Slide[] = [
     iconBg: "#2E101040",
     title: "Suçlama",
     subtitle: "Kararını Bildir",
-    body: "Şüpheliyi, silahı ve mekanı belirledikten sonra alt taraftaki \"SUÇLA\" butonuna bas. Yanlış tahmin yaparsan süreye ceza eklenir ama oyun bitmez!",
-    tip: "Emin olmadan suçlama — her hata zaman cezası olarak puanına yansır!",
+    showAccusation: true,
+    body: "Tüm delilleri değerlendirince alt çubukta \"SUÇLA\" butonuna bas. Açılan panelde 3 kutuyu doldur:\n\nKİM (şüpheli)  ·  NEREDE (mekan)  ·  NEYLE (silah)\n\n\"Raporu Gönder\" aktif olunca kararını bildir.",
+    tip: "Yanlış suçlama: kırmızı titreme + +30 saniye ceza — ama oyun devam eder! Emin olmadan suçlama yapma.",
   },
 ];
 
@@ -232,6 +347,10 @@ export default function OnboardingScreen({ visible, onDone, closeLabel }: Props)
 
           {slide.showGrid ? (
             <DemoGridWrapper />
+          ) : slide.showClueExample ? (
+            <ClueExampleBox />
+          ) : slide.showAccusation ? (
+            <MockAccusationCard />
           ) : slideIndex === 0 ? (
             <Image
               source={require("@/assets/images/logo.png")}
