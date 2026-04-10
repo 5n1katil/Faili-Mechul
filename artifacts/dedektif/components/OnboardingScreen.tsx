@@ -223,6 +223,13 @@ export default function OnboardingScreen({ visible, onDone, closeLabel }: Props)
           exiting={FadeOut.duration(160)}
           style={[styles.slideArea, slide.showGrid && { gap: 4 }]}
         >
+          {slide.clue && (
+            <View style={styles.clueBox}>
+              <MaterialIcons name="fingerprint" size={14} color="#D4A843" />
+              <Text style={styles.clueText}>{slide.clue}</Text>
+            </View>
+          )}
+
           {slide.showGrid ? (
             <DemoGridWrapper />
           ) : slideIndex === 0 ? (
@@ -236,13 +243,6 @@ export default function OnboardingScreen({ visible, onDone, closeLabel }: Props)
               <View style={[styles.iconCircle, { borderColor: slide.iconColor + "60", backgroundColor: slide.iconBg }]}>
                 <MaterialIcons name={slide.icon} size={54} color={slide.iconColor} />
               </View>
-            </View>
-          )}
-
-          {slide.clue && (
-            <View style={styles.clueBox}>
-              <MaterialIcons name="fingerprint" size={14} color="#D4A843" />
-              <Text style={styles.clueText}>{slide.clue}</Text>
             </View>
           )}
 
