@@ -296,7 +296,7 @@ export default function DetectiveGrid({
     // Row pixel budget: (numCols+1)*cs + (nS-1 separators) + (nL-1 separators) + 2 divider + 2 border
     // = (numCols+1)*cs + nS + nL + 2  →  solve for cs:
     const overhead = nS + nL + 2;
-    const cs = Math.floor((containerWidth - overhead) / (numCols + 1));
+    const cs = Math.max(0, Math.floor((containerWidth - overhead) / (numCols + 1)));
     return { cellSize: cs, labelWidth: cs };
   }, [containerWidth, suspects.length, locations.length]);
 
