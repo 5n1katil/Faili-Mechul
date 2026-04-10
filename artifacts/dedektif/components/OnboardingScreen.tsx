@@ -115,7 +115,7 @@ function ClueExampleBox() {
           "Otopsi raporu: vücutta kimyasal toksin izine rastlanmadı. Zehir kullanılmamış."
         </Text>
         <View style={{ backgroundColor: GOLD, borderRadius: 6, paddingHorizontal: 6, paddingVertical: 3 }}>
-          <Text style={{ fontSize: 9, fontWeight: "700", color: "#0F1117", letterSpacing: 0.5 }}>ÜCRETSİZ</Text>
+          <Text style={{ fontSize: 9, fontWeight: "700", color: "#0F1117", letterSpacing: 0.5 }}>AÇIK</Text>
         </View>
       </View>
 
@@ -157,6 +157,7 @@ function MockAccusationCard() {
       width: "100%",
       maxWidth: 320,
       alignSelf: "center",
+      flexShrink: 1,
       backgroundColor: "#1A1F2E",
       borderRadius: 14,
       borderWidth: 1,
@@ -164,7 +165,7 @@ function MockAccusationCard() {
       overflow: "hidden",
     }}>
       {/* Başlık */}
-      <View style={{ flexDirection: "row", alignItems: "center", gap: 8, paddingHorizontal: 16, paddingTop: 13, paddingBottom: 10, borderBottomWidth: 1, borderBottomColor: SEP }}>
+      <View style={{ flexDirection: "row", alignItems: "center", gap: 8, paddingHorizontal: 16, paddingTop: 9, paddingBottom: 8, borderBottomWidth: 1, borderBottomColor: SEP }}>
         <MaterialIcons name="gavel" size={15} color={RED} />
         <Text style={{ fontSize: 11, fontWeight: "800", color: GOLD, letterSpacing: 1.5 }}>SON ÇIKARIM</Text>
       </View>
@@ -175,12 +176,12 @@ function MockAccusationCard() {
           flexDirection: "row",
           alignItems: "center",
           paddingHorizontal: 16,
-          paddingVertical: 12,
+          paddingVertical: 8,
           borderBottomWidth: i < rows.length - 1 ? 1 : 0,
           borderBottomColor: SEP,
         }}>
           <Text style={{ width: 68, fontSize: 11, fontWeight: "700", color: "#6B7280", letterSpacing: 0.5 }}>{row.label}</Text>
-          <View style={{ flex: 1, flexDirection: "row", alignItems: "center", justifyContent: "space-between", backgroundColor: "#0F1117", borderRadius: 8, paddingHorizontal: 12, paddingVertical: 8 }}>
+          <View style={{ flex: 1, flexDirection: "row", alignItems: "center", justifyContent: "space-between", backgroundColor: "#0F1117", borderRadius: 8, paddingHorizontal: 12, paddingVertical: 6 }}>
             <Text style={{ fontSize: 13, fontWeight: "600", color: "#F9FAFB" }}>{row.value}</Text>
             <MaterialIcons name="expand-more" size={18} color="#6B7280" />
           </View>
@@ -188,15 +189,15 @@ function MockAccusationCard() {
       ))}
 
       {/* Raporu Gönder butonu */}
-      <View style={{ paddingHorizontal: 16, paddingTop: 12, paddingBottom: 10 }}>
-        <View style={{ backgroundColor: GOLD, borderRadius: 10, paddingVertical: 11, alignItems: "center", justifyContent: "center", flexDirection: "row", gap: 8 }}>
+      <View style={{ paddingHorizontal: 16, paddingTop: 8, paddingBottom: 6 }}>
+        <View style={{ backgroundColor: GOLD, borderRadius: 10, paddingVertical: 9, alignItems: "center", justifyContent: "center", flexDirection: "row", gap: 8 }}>
           <MaterialIcons name="send" size={16} color="#0F1117" />
           <Text style={{ fontSize: 14, fontWeight: "800", color: "#0F1117" }}>Raporu Gönder</Text>
         </View>
       </View>
 
       {/* Hata notu */}
-      <View style={{ flexDirection: "row", alignItems: "center", gap: 6, paddingHorizontal: 16, paddingBottom: 12 }}>
+      <View style={{ flexDirection: "row", alignItems: "center", gap: 6, paddingHorizontal: 16, paddingBottom: 8 }}>
         <MaterialIcons name="warning-amber" size={12} color={RED} />
         <Text style={{ fontSize: 11, color: RED + "CC", fontWeight: "500" }}>Yanlış tahmin → +30 sn ceza eklenir, oyun devam eder</Text>
       </View>
@@ -449,6 +450,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     gap: 14,
     paddingHorizontal: 8,
+    overflow: "hidden",
   },
   logoImage: {
     width: 150,
