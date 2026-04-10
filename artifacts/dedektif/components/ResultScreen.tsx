@@ -7,7 +7,6 @@ import {
   Share,
   StyleSheet,
   Text,
-  TextInput,
   View,
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -16,22 +15,19 @@ import * as Haptics from "expo-haptics";
 import * as StoreReview from "expo-store-review";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Animated, {
-  Easing,
-  useAnimatedProps,
   useAnimatedStyle,
-  useDerivedValue,
   useSharedValue,
   withDelay,
   withSequence,
   withSpring,
   withTiming,
 } from "react-native-reanimated";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { useColors } from "@/hooks/useColors";
 import type { Puzzle, GridMark } from "@/data/puzzles";
 import ScoreInfoSheet from "@/components/ScoreInfoSheet";
 
-const AnimatedTextInput = Animated.createAnimatedComponent(TextInput);
 
 interface Props {
   puzzle: Puzzle;
@@ -200,25 +196,27 @@ function Confetti() {
 
 function AnimatedScore({ score }: { score: number }) {
   const colors = useColors();
-  const progress = useSharedValue(0);
+  const [displayed, setDisplayed] = useState(0);
 
   useEffect(() => {
-    progress.value = withTiming(1, { duration: 1200, easing: Easing.out(Easing.cubic) });
-  }, []);
-
-  const derivedScore = useDerivedValue(() => Math.round(score * progress.value));
-
-  const animatedProps = useAnimatedProps(() => {
-    const val = `${derivedScore.value}`;
-    return { value: val, defaultValue: val };
-  });
+    const start = Date.now();
+    const duration = 1200;
+    let raf: number;
+    const tick = () => {
+      const elapsed = Date.now() - start;
+      const t = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - t, 3);
+      setDisplayed(Math.round(score * eased));
+      if (t < 1) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [score]);
 
   return (
-    <AnimatedTextInput
-      animatedProps={animatedProps}
-      editable={false}
-      style={[styles.statValue, { color: colors.primary }]}
-    />
+    <Text style={[styles.statValue, { color: colors.primary }]}>
+      {displayed.toLocaleString("tr-TR")}
+    </Text>
   );
 }
 
@@ -333,6 +331,7 @@ export default function ResultScreen({
   onClose,
 }: Props) {
   const colors = useColors();
+  const insets = useSafeAreaInsets();
   const scale = useSharedValue(0);
   const opacity = useSharedValue(0);
   const iconScale = useSharedValue(0);
@@ -431,7 +430,7 @@ export default function ResultScreen({
       >
         <ScrollView
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={styles.scrollContent}
+          contentContainerStyle={[styles.scrollContent, { paddingBottom: 24 + 49 + insets.bottom }]}
         >
           <Animated.View
             style={[
@@ -448,7 +447,7 @@ export default function ResultScreen({
           </Animated.View>
 
           <Text style={[styles.resultTitle, { color: success ? colors.primary : colors.accent }]}>
-            {success ? "DAVA ÇÖZÜLDÜ!" : "DAVA KAPATILDI"}
+            {success ? "VAKA ÇÖZÜLDÜ!" : "VAKA KAPATILDI"}
           </Text>
           <Text style={[styles.subtitle, { color: colors.mutedForeground }]}>
             {success ? "Harika dedektiflik çalışması!" : "Bir dahaki sefere daha dikkatli!"}
