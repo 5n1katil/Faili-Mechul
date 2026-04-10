@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import type { ComponentProps } from "react";
 import {
   Image,
@@ -280,10 +280,16 @@ export default function OnboardingScreen({ visible, onDone, closeLabel }: Props)
   const slide = SLIDES[slideIndex];
   const isLast = slideIndex === SLIDES.length - 1;
 
+  useEffect(() => {
+    if (visible) {
+      setSlideIndex(0);
+      setKey((k) => k + 1);
+    }
+  }, [visible]);
+
   const goNext = () => {
     if (isLast) {
       onDone();
-      setSlideIndex(0);
     } else {
       setSlideIndex((i) => i + 1);
       setKey((k) => k + 1);
@@ -292,7 +298,6 @@ export default function OnboardingScreen({ visible, onDone, closeLabel }: Props)
 
   const handleSkip = () => {
     onDone();
-    setSlideIndex(0);
   };
 
   return (
