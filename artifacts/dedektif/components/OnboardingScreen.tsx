@@ -23,11 +23,11 @@ type MaterialIconName = ComponentProps<typeof MaterialIcons>["name"];
 
 const DEMO_SUSPECTS: Suspect[] = [
   { id: "ds1", name: "Ahmet",  description: "", icon: "face" },
-  { id: "ds2", name: "Zeynep", description: "", icon: "badge" },
+  { id: "ds2", name: "Zeynep", description: "", icon: "woman" },
   { id: "ds3", name: "Murat",  description: "", icon: "elderly" },
 ];
 const DEMO_WEAPONS: Weapon[] = [
-  { id: "dw1", name: "Bıçak",   description: "", icon: "cut" },
+  { id: "dw1", name: "Bıçak",   description: "", icon: "dining" },
   { id: "dw2", name: "Zehir",   description: "", icon: "local-pharmacy" },
   { id: "dw3", name: "Tabanca", description: "", icon: "my-location" },
 ];
