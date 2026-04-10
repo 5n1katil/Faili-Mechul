@@ -27,7 +27,7 @@ const DEMO_SUSPECTS: Suspect[] = [
   { id: "ds3", name: "Murat",  description: "", icon: "elderly" },
 ];
 const DEMO_WEAPONS: Weapon[] = [
-  { id: "dw1", name: "Bıçak",   description: "", icon: "dining" },
+  { id: "dw1", name: "Bıçak",   description: "", icon: "🔪" },
   { id: "dw2", name: "Zehir",   description: "", icon: "local-pharmacy" },
   { id: "dw3", name: "Tabanca", description: "", icon: "my-location" },
 ];

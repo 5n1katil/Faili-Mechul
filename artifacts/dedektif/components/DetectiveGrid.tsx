@@ -195,6 +195,8 @@ function EntityLabel({
   const avatarRadius = Math.floor(avatarSize / 2);
   const avatarIconSize = Math.max(12, Math.floor(avatarSize * 0.54));
 
+  const isEmojiIcon = (str: string): boolean => (str.codePointAt(0) ?? 0) > 127;
+
   if (isRowLabel) {
     return (
       <Pressable
@@ -224,11 +226,17 @@ function EntityLabel({
               justifyContent: "center",
             }}
           >
-            <MaterialIcons
-              name={icon as ComponentProps<typeof MaterialIcons>["name"]}
-              size={avatarIconSize}
-              color={color}
-            />
+            {isEmojiIcon(icon) ? (
+              <Text style={{ fontSize: avatarIconSize, lineHeight: avatarIconSize * 1.2, includeFontPadding: false }}>
+                {icon}
+              </Text>
+            ) : (
+              <MaterialIcons
+                name={icon as ComponentProps<typeof MaterialIcons>["name"]}
+                size={avatarIconSize}
+                color={color}
+              />
+            )}
           </View>
         </Animated.View>
       </Pressable>
@@ -265,11 +273,17 @@ function EntityLabel({
             justifyContent: "center",
           }}
         >
-          <MaterialIcons
-            name={icon as ComponentProps<typeof MaterialIcons>["name"]}
-            size={avatarIconSize}
-            color={color}
-          />
+          {isEmojiIcon(icon) ? (
+            <Text style={{ fontSize: avatarIconSize, lineHeight: avatarIconSize * 1.2, includeFontPadding: false }}>
+              {icon}
+            </Text>
+          ) : (
+            <MaterialIcons
+              name={icon as ComponentProps<typeof MaterialIcons>["name"]}
+              size={avatarIconSize}
+              color={color}
+            />
+          )}
         </View>
       </Animated.View>
     </Pressable>
