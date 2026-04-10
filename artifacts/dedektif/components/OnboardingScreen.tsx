@@ -8,6 +8,7 @@ import {
   StyleSheet,
   Text,
   View,
+  useWindowDimensions,
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -21,31 +22,57 @@ import type { Suspect, Weapon, Location } from "@/data/puzzles";
 type MaterialIconName = ComponentProps<typeof MaterialIcons>["name"];
 
 const DEMO_SUSPECTS: Suspect[] = [
-  { id: "ds1", name: "Ahmet", description: "Şüpheli", icon: "face" },
-  { id: "ds2", name: "Zeynep", description: "Şüpheli", icon: "badge" },
-  { id: "ds3", name: "Murat", description: "Şüpheli", icon: "elderly" },
+  { id: "ds1", name: "Ahmet",  description: "", icon: "face" },
+  { id: "ds2", name: "Zeynep", description: "", icon: "badge" },
+  { id: "ds3", name: "Murat",  description: "", icon: "elderly" },
 ];
 const DEMO_WEAPONS: Weapon[] = [
-  { id: "dw1", name: "Bıçak", description: "Silah", icon: "cut" },
-  { id: "dw2", name: "Zehir", description: "Silah", icon: "local-pharmacy" },
+  { id: "dw1", name: "Bıçak",   description: "", icon: "cut" },
+  { id: "dw2", name: "Zehir",   description: "", icon: "local-pharmacy" },
+  { id: "dw3", name: "Tabanca", description: "", icon: "my-location" },
 ];
 const DEMO_LOCATIONS: Location[] = [
-  { id: "dl1", name: "Mutfak", description: "Mekan", icon: "restaurant" },
-  { id: "dl2", name: "Bahçe", description: "Mekan", icon: "park" },
+  { id: "dl1", name: "Mutfak",    description: "", icon: "restaurant" },
+  { id: "dl2", name: "Bahçe",     description: "", icon: "park" },
+  { id: "dl3", name: "Kütüphane", description: "", icon: "menu-book" },
 ];
 const DEMO_GRID_STATE: Record<string, "cross" | "check" | "question"> = {
-  "dw1_ds1": "cross",    "dw1_ds2": "check",    "dw1_ds3": "cross",
-  "dw1_dl1": "cross",    "dw1_dl2": "check",
-  "dw2_ds1": "cross",    "dw2_ds2": "cross",    "dw2_ds3": "question",
+  "dw1_ds1": "cross",   "dw1_ds2": "check",    "dw1_ds3": "cross",
+  "dw1_dl1": "cross",   "dw1_dl2": "check",    "dw1_dl3": "cross",
+  "dw2_ds1": "cross",   "dw2_ds2": "cross",    "dw2_ds3": "question",
   "dw2_dl1": "question",
-  "dl1_ds1": "cross",    "dl1_ds2": "check",    "dl1_ds3": "cross",
-  "dl2_ds1": "question", "dl2_ds2": "cross",
+  "dw3_ds1": "cross",   "dw3_ds2": "cross",    "dw3_ds3": "cross",
+  "dw3_dl1": "cross",   "dw3_dl2": "cross",
+  "dl1_ds1": "cross",   "dl1_ds2": "check",    "dl1_ds3": "cross",
+  "dl2_ds1": "question","dl2_ds2": "cross",
+  "dl3_ds1": "cross",   "dl3_ds2": "cross",    "dl3_ds3": "cross",
 };
 
+const DEMO_SCALE = 0.68;
+
 function DemoGridWrapper() {
+  const { width: screenWidth } = useWindowDimensions();
+  const gridWidth = screenWidth - 48;
+  const [gridHeight, setGridHeight] = useState(0);
+
   return (
-    <View style={{ width: "100%", alignItems: "center", overflow: "hidden", borderRadius: 10 }}>
-      <View style={{ width: 240 }}>
+    <View
+      style={{
+        width: gridWidth * DEMO_SCALE,
+        height: gridHeight > 0 ? gridHeight * DEMO_SCALE : undefined,
+        alignSelf: "center",
+        overflow: "hidden",
+        borderRadius: 10,
+      }}
+    >
+      <View
+        style={{
+          width: gridWidth,
+          transform: [{ scale: DEMO_SCALE }],
+          transformOrigin: "top left",
+        }}
+        onLayout={(e) => setGridHeight(e.nativeEvent.layout.height)}
+      >
         <DetectiveGrid
           suspects={DEMO_SUSPECTS}
           weapons={DEMO_WEAPONS}

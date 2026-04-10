@@ -290,8 +290,13 @@ export default function DetectiveGrid({
 
   const { cellSize, labelWidth } = useMemo(() => {
     if (containerWidth === 0) return { cellSize: 0, labelWidth: 0 };
-    const numCols = suspects.length + locations.length;
-    const cs = Math.floor(containerWidth / (numCols + 1));
+    const nS = suspects.length;
+    const nL = locations.length;
+    const numCols = nS + nL;
+    // Row pixel budget: (numCols+1)*cs + (nS-1 separators) + (nL-1 separators) + 2 divider + 2 border
+    // = (numCols+1)*cs + nS + nL + 2  →  solve for cs:
+    const overhead = nS + nL + 2;
+    const cs = Math.floor((containerWidth - overhead) / (numCols + 1));
     return { cellSize: cs, labelWidth: cs };
   }, [containerWidth, suspects.length, locations.length]);
 
