@@ -36,16 +36,23 @@ const DEMO_LOCATIONS: Location[] = [
   { id: "dl2", name: "Bahçe",     description: "", icon: "park" },
   { id: "dl3", name: "Kütüphane", description: "", icon: "menu-book" },
 ];
+// Cevap: Zeynep + Bıçak + Bahçe
+// Gösterilen durum: Bıçak satırı ve Bahçe mekan satırı çözülmüş,
+// otomatik çarpılamalar uygulanmış; geri kalan hücreler henüz incelenmemiş.
 const DEMO_GRID_STATE: Record<string, "cross" | "check" | "question"> = {
-  "dw1_ds1": "cross",   "dw1_ds2": "check",    "dw1_ds3": "cross",
-  "dw1_dl1": "cross",   "dw1_dl2": "check",    "dw1_dl3": "cross",
-  "dw2_ds1": "cross",   "dw2_ds2": "cross",    "dw2_ds3": "question",
-  "dw2_dl1": "question",
-  "dw3_ds1": "cross",   "dw3_ds2": "cross",    "dw3_ds3": "cross",
-  "dw3_dl1": "cross",   "dw3_dl2": "cross",
-  "dl1_ds1": "cross",   "dl1_ds2": "check",    "dl1_ds3": "cross",
-  "dl2_ds1": "question","dl2_ds2": "cross",
-  "dl3_ds1": "cross",   "dl3_ds2": "cross",    "dl3_ds3": "cross",
+  // dw1 (Bıçak) — ÇÖZÜLDÜ: Zeynep kullandı, Bahçe'de
+  "dw1_ds1": "cross",  "dw1_ds2": "check",  "dw1_ds3": "cross",
+  "dw1_dl1": "cross",  "dw1_dl2": "check",  "dw1_dl3": "cross",
+  // dw2 (Zehir) — Zeynep=Bıçak → Zeynep≠Zehir; Bahçe=Bıçak → Bahçe≠Zehir
+  "dw2_ds2": "cross",  "dw2_dl2": "cross",
+  // dw3 (Tabanca) — aynı mantıkla Zeynep≠Tabanca, Bahçe≠Tabanca
+  "dw3_ds2": "cross",  "dw3_dl2": "cross",
+  // dl1 (Mutfak) — Zeynep=Bahçe → Zeynep≠Mutfak
+  "dl1_ds2": "cross",
+  // dl2 (Bahçe) — ÇÖZÜLDÜ: Zeynep'in mekanı
+  "dl2_ds1": "cross",  "dl2_ds2": "check",  "dl2_ds3": "cross",
+  // dl3 (Kütüphane) — Zeynep=Bahçe → Zeynep≠Kütüphane
+  "dl3_ds2": "cross",
 };
 
 const DEMO_SCALE = 0.68;
@@ -96,6 +103,7 @@ interface Slide {
   body: string;
   tip?: string;
   showGrid?: boolean;
+  clue?: string;
 }
 
 const SLIDES: Slide[] = [
@@ -115,8 +123,9 @@ const SLIDES: Slide[] = [
     iconBg: "#1E103040",
     title: "Dedektif Izgarası",
     subtitle: "Mantık Yürüt",
-    body: "Izgara hücrelerine dokunarak işaretleme yap:\n✗  →  Bu kombinasyon imkânsız\n✓  →  Bu kombinasyon kesin doğru\n?  →  Henüz bilmiyorum",
-    tip: "Bir satırda yalnızca bir ✓ olabilir!",
+    clue: "İpucu: Zeynep'in parmak izi Bıçak'ta, ayak izi Bahçe'de bulundu.",
+    body: "✗  →  Bu kombinasyon imkânsız\n✓  →  Kesin doğru kombinasyon\n?  →  Henüz emin değilim\n\n✓ koyduğunda aynı satır ve sütundaki diğer hücreler otomatik ✗ olur!",
+    tip: "Izgara: Zeynep • Bıçak • Bahçe çözüldü. Peki Ahmet ve Murat nerede?",
     showGrid: true,
   },
   {
@@ -227,6 +236,13 @@ export default function OnboardingScreen({ visible, onDone, closeLabel }: Props)
               <View style={[styles.iconCircle, { borderColor: slide.iconColor + "60", backgroundColor: slide.iconBg }]}>
                 <MaterialIcons name={slide.icon} size={54} color={slide.iconColor} />
               </View>
+            </View>
+          )}
+
+          {slide.clue && (
+            <View style={styles.clueBox}>
+              <MaterialIcons name="fingerprint" size={14} color="#D4A843" />
+              <Text style={styles.clueText}>{slide.clue}</Text>
             </View>
           )}
 
@@ -403,5 +419,25 @@ const styles = StyleSheet.create({
     fontWeight: "800",
     color: "#0F1117",
     letterSpacing: 0.5,
+  },
+  clueBox: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+    gap: 7,
+    backgroundColor: "#2A1E0860",
+    borderLeftWidth: 2,
+    borderLeftColor: "#D4A843",
+    borderRadius: 8,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    maxWidth: 340,
+    alignSelf: "center",
+  },
+  clueText: {
+    flex: 1,
+    fontSize: 12,
+    color: "#D4A843CC",
+    lineHeight: 18,
+    fontStyle: "italic",
   },
 });
