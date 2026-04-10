@@ -303,7 +303,7 @@ export default function OnboardingScreen({ visible, onDone, closeLabel }: Props)
   return (
     <Modal
       visible={visible}
-      animationType="fade"
+      animationType="none"
       statusBarTranslucent
       transparent={false}
       onRequestClose={handleSkip}

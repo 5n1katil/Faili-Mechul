@@ -87,11 +87,15 @@ export default function HomeScreen() {
   }, []);
 
   const handleOnboardingDone = async () => {
-    await AsyncStorage.setItem(ONBOARDING_KEY, "1");
+    const [, s] = await Promise.all([
+      AsyncStorage.setItem(ONBOARDING_KEY, "1"),
+      AsyncStorage.getItem(SETUP_KEY),
+    ]);
     setShowOnboarding(false);
     setHelpBtnOpen(false);
-    const s = await AsyncStorage.getItem(SETUP_KEY);
-    if (!s) setShowSetup(true);
+    if (!s) {
+      setTimeout(() => setShowSetup(true), 400);
+    }
   };
 
   const handleSetupDone = async (name: string, avatar: string) => {
