@@ -15,8 +15,49 @@ import Animated, {
   FadeIn,
   FadeOut,
 } from "react-native-reanimated";
+import DetectiveGrid from "@/components/DetectiveGrid";
+import type { Suspect, Weapon, Location } from "@/data/puzzles";
 
 type MaterialIconName = ComponentProps<typeof MaterialIcons>["name"];
+
+const DEMO_SUSPECTS: Suspect[] = [
+  { id: "ds1", name: "Ahmet", description: "Şüpheli", icon: "face" },
+  { id: "ds2", name: "Zeynep", description: "Şüpheli", icon: "badge" },
+  { id: "ds3", name: "Murat", description: "Şüpheli", icon: "elderly" },
+];
+const DEMO_WEAPONS: Weapon[] = [
+  { id: "dw1", name: "Bıçak", description: "Silah", icon: "cut" },
+  { id: "dw2", name: "Zehir", description: "Silah", icon: "local-pharmacy" },
+];
+const DEMO_LOCATIONS: Location[] = [
+  { id: "dl1", name: "Mutfak", description: "Mekan", icon: "restaurant" },
+  { id: "dl2", name: "Bahçe", description: "Mekan", icon: "park" },
+];
+const DEMO_GRID_STATE: Record<string, "cross" | "check" | "question"> = {
+  "dw1_ds1": "cross",    "dw1_ds2": "check",    "dw1_ds3": "cross",
+  "dw1_dl1": "cross",    "dw1_dl2": "check",
+  "dw2_ds1": "cross",    "dw2_ds2": "cross",    "dw2_ds3": "question",
+  "dw2_dl1": "question",
+  "dl1_ds1": "cross",    "dl1_ds2": "check",    "dl1_ds3": "cross",
+  "dl2_ds1": "question", "dl2_ds2": "cross",
+};
+
+function DemoGridWrapper() {
+  return (
+    <View style={{ width: "100%", alignItems: "center", overflow: "hidden", borderRadius: 10 }}>
+      <View style={{ width: 240 }}>
+        <DetectiveGrid
+          suspects={DEMO_SUSPECTS}
+          weapons={DEMO_WEAPONS}
+          locations={DEMO_LOCATIONS}
+          gridState={DEMO_GRID_STATE}
+          onCellPress={() => {}}
+          disabled
+        />
+      </View>
+    </View>
+  );
+}
 
 interface Slide {
   icon: MaterialIconName;
@@ -144,14 +185,10 @@ export default function OnboardingScreen({ visible, onDone, closeLabel }: Props)
           key={key}
           entering={FadeIn.duration(260)}
           exiting={FadeOut.duration(160)}
-          style={[styles.slideArea, slide.showGrid && { gap: 6 }]}
+          style={[styles.slideArea, slide.showGrid && { gap: 4 }]}
         >
           {slide.showGrid ? (
-            <Image
-              source={require("@/assets/images/grid-example.png")}
-              style={{ width: "100%", maxHeight: 260, borderRadius: 8 }}
-              resizeMode="contain"
-            />
+            <DemoGridWrapper />
           ) : slideIndex === 0 ? (
             <Image
               source={require("@/assets/images/logo.png")}
