@@ -102,7 +102,7 @@ function ClueExampleBox() {
       <View style={{
         backgroundColor: "#1A1F2E",
         borderRadius: 10,
-        borderLeftWidth: 3,
+        borderLeftWidth: 2,
         borderLeftColor: GOLD,
         flexDirection: "row",
         alignItems: "center",
@@ -114,8 +114,8 @@ function ClueExampleBox() {
         <Text style={{ flex: 1, fontSize: 12, color: "#D1D5DB", lineHeight: 18 }}>
           "Otopsi raporu: vücutta kimyasal toksin izine rastlanmadı. Zehir kullanılmamış."
         </Text>
-        <View style={{ backgroundColor: GOLD + "22", borderRadius: 6, paddingHorizontal: 6, paddingVertical: 3, borderWidth: 1, borderColor: GOLD + "55" }}>
-          <Text style={{ fontSize: 9, fontWeight: "700", color: GOLD, letterSpacing: 0.5 }}>ÜCRETSİZ</Text>
+        <View style={{ backgroundColor: GOLD, borderRadius: 6, paddingHorizontal: 6, paddingVertical: 3 }}>
+          <Text style={{ fontSize: 9, fontWeight: "700", color: "#0F1117", letterSpacing: 0.5 }}>ÜCRETSİZ</Text>
         </View>
       </View>
 
@@ -123,7 +123,7 @@ function ClueExampleBox() {
       <View style={{
         backgroundColor: "#1A1F2E",
         borderRadius: 10,
-        borderLeftWidth: 3,
+        borderLeftWidth: 2,
         borderLeftColor: RED,
         flexDirection: "row",
         alignItems: "center",
@@ -135,8 +135,8 @@ function ClueExampleBox() {
         <Text style={{ flex: 1, fontSize: 12, color: "#D1D5DB", lineHeight: 18 }}>
           "Gece boyunca hiç kimse silah sesi duymadı. Kullanılan alet sessizdi."
         </Text>
-        <View style={{ backgroundColor: RED + "22", borderRadius: 6, paddingHorizontal: 6, paddingVertical: 3, borderWidth: 1, borderColor: RED + "55" }}>
-          <Text style={{ fontSize: 9, fontWeight: "700", color: RED, letterSpacing: 0.5 }}>+30 sn ⏱</Text>
+        <View style={{ backgroundColor: RED, borderRadius: 6, paddingHorizontal: 6, paddingVertical: 3 }}>
+          <Text style={{ fontSize: 9, fontWeight: "700", color: "#FFFFFF", letterSpacing: 0.5 }}>+30 sn ⏱</Text>
         </View>
       </View>
     </View>
@@ -166,7 +166,7 @@ function MockAccusationCard() {
       {/* Başlık */}
       <View style={{ flexDirection: "row", alignItems: "center", gap: 8, paddingHorizontal: 16, paddingTop: 13, paddingBottom: 10, borderBottomWidth: 1, borderBottomColor: SEP }}>
         <MaterialIcons name="gavel" size={15} color={RED} />
-        <Text style={{ fontSize: 11, fontWeight: "800", color: "#9CA3AF", letterSpacing: 1.5 }}>SON ÇIKARIM</Text>
+        <Text style={{ fontSize: 11, fontWeight: "800", color: GOLD, letterSpacing: 1.5 }}>SON ÇIKARIM</Text>
       </View>
 
       {/* Seçim satırları */}
@@ -248,7 +248,7 @@ const SLIDES: Slide[] = [
     title: "İpuçları",
     subtitle: "Delilleri Değerlendir",
     showClueExample: true,
-    body: "Her bulmacada belirli sayıda ipucu baştan açık gelir. Bu standart ipuçları seni çözüme yönlendiren temel delillerdir.\n\nDaha fazla ipucuna ihtiyaç duyarsan \"Sonraki İpucu\" ile bir tane daha açabilirsin — ama dikkatli ol!",
+    body: "Her bulmacada baştan 4 standart ipucu açık gelir. Bu ipuçları seni çözüme yönlendiren temel delillerdir.\n\nDaha fazla ipucuna ihtiyaç duyarsan \"Sonraki İpucu\" ile bir tane daha açabilirsin — ama dikkatli ol!",
     tip: "Her bonus ipucu +30 saniye ceza ekler. İpuçsuz çözdükçe puanın artar!",
   },
   {
