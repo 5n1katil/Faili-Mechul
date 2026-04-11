@@ -553,7 +553,7 @@ export default function VakalarScreen() {
 
     return (
       <>
-        <PaywallModal visible={showPaywall} onClose={() => setShowPaywall(false)} />
+        <PaywallModal visible={showPaywall} onClose={() => setShowPaywall(false)} premiumPuzzleCount={premiumPuzzles.length} />
         <PremiumInfoModal
           visible={showPremiumInfo}
           premiumPuzzleCount={premiumPuzzles.length}
@@ -703,66 +703,46 @@ export default function VakalarScreen() {
                         />
                       </AccordionSection>
 
-                      <AccordionSection
-                        title="Premium Vaka Arşivi"
-                        count={isPremium ? activePremium.length : premiumPuzzles.length}
-                        premiumInfoIcon
-                        onPremiumInfoPress={() => setShowPremiumInfo(true)}
-                        badge={
-                          !isPremium ? (
-                            <Pressable
-                              onPress={() => setShowPaywall(true)}
-                              style={[listStyles.premiumChip, { backgroundColor: "#D4A84318", borderColor: "#D4A84355" }]}
-                            >
-                              <MaterialIcons name="lock" size={12} color="#D4A843" />
-                              <Text style={[listStyles.premiumChipText, { color: "#D4A843" }]}>
-                                {premiumLockedCount} kilitli
-                              </Text>
-                            </Pressable>
-                          ) : undefined
-                        }
-                      >
-                        {!isPremium && (
-                          <Pressable
-                            onPress={() => setShowPaywall(true)}
-                            style={[listStyles.premiumBanner, { backgroundColor: "#D4A84310", borderColor: "#D4A84340" }]}
-                          >
-                            <MaterialIcons name="workspace-premium" size={20} color="#D4A843" />
-                            <View style={listStyles.premiumBannerText}>
-                              <Text style={[listStyles.premiumBannerTitle, { color: "#D4A843" }]}>
-                                Premium Vaka Arşivi'ni Aç
-                              </Text>
-                              <Text style={[listStyles.premiumBannerSub, { color: "#D4A84399" }]}>
-                                {premiumLockedCount} ek vaka · Tek seferlik satın al
-                              </Text>
-                            </View>
-                            <MaterialIcons name="chevron-right" size={20} color="#D4A843" />
-                          </Pressable>
-                        )}
-                        <DifficultySubGroups
-                          puzzles={activePremium}
-                          renderCard={(puzzle, i) => {
-                            const isLocked = !isPremium;
-                            return (
+                      {isPremium ? (
+                        <AccordionSection
+                          title="Premium Vaka Arşivi"
+                          count={activePremium.length}
+                          premiumInfoIcon
+                          onPremiumInfoPress={() => setShowPremiumInfo(true)}
+                        >
+                          <DifficultySubGroups
+                            puzzles={activePremium}
+                            renderCard={(puzzle, i) => (
                               <PuzzleCard
                                 key={puzzle.id}
                                 puzzle={puzzle}
-                                onPress={() => {
-                                  if (isLocked) {
-                                    setShowPaywall(true);
-                                  } else {
-                                    startPuzzle(puzzle);
-                                  }
-                                }}
+                                onPress={() => startPuzzle(puzzle)}
                                 delay={100 + (activeFree.length + i) * 40}
                                 completed={false}
                                 bestResult={null}
-                                locked={isLocked}
+                                locked={false}
                               />
-                            );
-                          }}
-                        />
-                      </AccordionSection>
+                            )}
+                          />
+                        </AccordionSection>
+                      ) : (
+                        <Pressable
+                          onPress={() => setShowPaywall(true)}
+                          style={({ pressed }) => [
+                            listStyles.premiumCtaRow,
+                            { opacity: pressed ? 0.75 : 1 },
+                          ]}
+                          accessibilityRole="button"
+                          accessibilityLabel="Premium Vakalar — satın almak için dokun"
+                        >
+                          <MaterialIcons name="workspace-premium" size={24} color="#D4A843" />
+                          <Text style={listStyles.premiumCtaText}>Premium Vakalar</Text>
+                          <View style={listStyles.premiumCtaCount}>
+                            <Text style={listStyles.premiumCtaCountText}>{premiumPuzzles.length}</Text>
+                          </View>
+                          <MaterialIcons name="chevron-right" size={22} color="#D4A843" style={{ marginLeft: "auto" }} />
+                        </Pressable>
+                      )}
                     </>
                   )}
                 </>
@@ -1037,6 +1017,35 @@ const listStyles = StyleSheet.create({
     fontSize: 22,
     fontWeight: "900",
     letterSpacing: 0.5,
+  },
+  premiumCtaRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+    paddingVertical: 14,
+    paddingHorizontal: 16,
+    marginTop: 8,
+    borderRadius: 14,
+    backgroundColor: "#D4A84312",
+    borderWidth: 1.5,
+    borderColor: "#D4A84355",
+  },
+  premiumCtaText: {
+    fontSize: 22,
+    fontWeight: "900",
+    letterSpacing: 0.5,
+    color: "#D4A843",
+  },
+  premiumCtaCount: {
+    backgroundColor: "#D4A84333",
+    borderRadius: 10,
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+  },
+  premiumCtaCountText: {
+    fontSize: 13,
+    fontWeight: "700",
+    color: "#D4A843",
   },
   tabBar: {
     borderBottomWidth: StyleSheet.hairlineWidth,

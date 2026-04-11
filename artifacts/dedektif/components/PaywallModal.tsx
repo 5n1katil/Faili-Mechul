@@ -19,21 +19,57 @@ const TERMS_URL = "https://failimechul.app/kullanim-sartlari";
 interface Props {
   visible: boolean;
   onClose: () => void;
+  premiumPuzzleCount?: number;
 }
 
-const FEATURES = [
-  { icon: "folder-open" as const, text: "Tüm vaka arşivine tam erişim (20+ bulmaca)" },
-  { icon: "lock-open" as const, text: "Yeni vakalar çıktıkça otomatik olarak açılır" },
-  { icon: "emoji-events" as const, text: "Liderlik tablosunda altın 🔱 Baş Dedektif amblemi" },
-  { icon: "favorite" as const, text: "Tek seferlik ödeme — abonelik yok, süre sınırı yok" },
-];
+function makeFeatures(count: number) {
+  return [
+    {
+      icon: "folder-open" as const,
+      label: `${count} Premium Vaka`,
+      text: "Çaylak'tan Baş Komiser'e kadar tüm zorluk seviyelerinde özgün bulmacalar",
+    },
+    {
+      icon: "refresh" as const,
+      label: "Otomatik Erişim",
+      text: "Yeni vakalar çıktıkça otomatik olarak kilidini açar — ek ödeme yok",
+    },
+    {
+      icon: "emoji-events" as const,
+      label: "Baş Dedektif Rozeti",
+      text: "Liderlik tablosunda 🔱 altın Baş Dedektif ünvanı ve özel rozet",
+    },
+    {
+      icon: "trending-up" as const,
+      label: "İlerleme Takibi",
+      text: "Kişisel istatistikler ve zorluk bazlı performans geçmişi",
+    },
+    {
+      icon: "all-inclusive" as const,
+      label: "Tek Seferlik Ödeme",
+      text: "Abonelik yok, süre sınırı yok — bir kez öde, sonsuza kadar oyna",
+    },
+    {
+      icon: "devices" as const,
+      label: "Tüm Cihazlar",
+      text: "Aynı Apple ID / Google hesabıyla iPhone, iPad ve Android'de geçerli",
+    },
+    {
+      icon: "support-agent" as const,
+      label: "Öncelikli Destek",
+      text: "Doğrudan geliştirici desteği ve yeni vakalara erken erişim",
+    },
+  ];
+}
 
-export default function PaywallModal({ visible, onClose }: Props) {
+export default function PaywallModal({ visible, onClose, premiumPuzzleCount = 19 }: Props) {
   const colors = useColors();
   const { purchaseVacaArsivi, restorePurchases, isLoading, priceString } = usePurchase();
   const [buying, setBuying] = useState(false);
   const [restoring, setRestoring] = useState(false);
   const [message, setMessage] = useState<{ text: string; ok: boolean } | null>(null);
+
+  const FEATURES = makeFeatures(premiumPuzzleCount);
 
   const handlePurchase = async () => {
     setBuying(true);
@@ -83,9 +119,9 @@ export default function PaywallModal({ visible, onClose }: Props) {
               <MaterialIcons name="local-police" size={44} color={colors.primary} />
             </View>
 
-            <Text style={[styles.title, { color: colors.foreground }]}>Vaka Arşivi</Text>
+            <Text style={[styles.title, { color: colors.foreground }]}>Premium Vaka Arşivi</Text>
             <Text style={[styles.subtitle, { color: colors.mutedForeground }]}>
-              Baş Dedektif koltuğuna otur — tüm vakalar seni bekliyor
+              Baş Dedektif koltuğuna otur — {premiumPuzzleCount} premium vaka seni bekliyor
             </Text>
 
             <View style={[styles.priceBox, { borderColor: `${colors.primary}55`, backgroundColor: `${colors.primary}0A` }]}>
@@ -95,26 +131,45 @@ export default function PaywallModal({ visible, onClose }: Props) {
                 <Text style={[styles.price, { color: colors.primary }]}>{priceString}</Text>
               )}
               <Text style={[styles.priceNote, { color: colors.mutedForeground }]}>
-                Tek seferlik · Ömür boyu erişim
+                Tek seferlik · Ömür boyu erişim · Abonelik yok
               </Text>
+            </View>
+
+            <View style={styles.sectionHeader}>
+              <MaterialIcons name="star" size={15} color={colors.primary} />
+              <Text style={[styles.sectionTitle, { color: colors.primary }]}>Ne Kazanıyorsunuz?</Text>
             </View>
 
             <View style={[styles.featureList, { borderColor: colors.border }]}>
               {FEATURES.map((f, i) => (
-                <View key={i} style={[styles.featureRow, i > 0 && { borderTopColor: colors.border, borderTopWidth: StyleSheet.hairlineWidth }]}>
+                <View
+                  key={i}
+                  style={[
+                    styles.featureRow,
+                    i > 0 && { borderTopColor: colors.border, borderTopWidth: StyleSheet.hairlineWidth },
+                  ]}
+                >
                   <View style={[styles.featureIcon, { backgroundColor: `${colors.primary}18` }]}>
                     <MaterialIcons name={f.icon} size={18} color={colors.primary} />
                   </View>
-                  <Text style={[styles.featureText, { color: colors.foreground }]}>{f.text}</Text>
+                  <View style={styles.featureTextWrap}>
+                    <Text style={[styles.featureLabel, { color: colors.foreground }]}>{f.label}</Text>
+                    <Text style={[styles.featureText, { color: colors.mutedForeground }]}>{f.text}</Text>
+                  </View>
                 </View>
               ))}
             </View>
 
             {message && (
-              <View style={[
-                styles.messageBox,
-                { backgroundColor: message.ok ? `${colors.success}18` : `#C8372D18`, borderColor: message.ok ? `${colors.success}55` : `#C8372D55` }
-              ]}>
+              <View
+                style={[
+                  styles.messageBox,
+                  {
+                    backgroundColor: message.ok ? `${colors.success}18` : `#C8372D18`,
+                    borderColor: message.ok ? `${colors.success}55` : `#C8372D55`,
+                  },
+                ]}
+              >
                 <MaterialIcons
                   name={message.ok ? "check-circle" : "error"}
                   size={16}
@@ -192,7 +247,8 @@ export default function PaywallModal({ visible, onClose }: Props) {
             </Pressable>
 
             <Text style={[styles.legalNote, { color: colors.mutedForeground }]}>
-              Tek seferlik ödeme · Abonelik yok · Aynı Apple ID / Google hesabıyla tüm cihazlarda geri yüklenebilir
+              Ödeme, satın alma onaylanınca Apple ID hesabınıza borç alınır. Abonelik bulunmamaktadır.
+              Aynı Apple ID ile tüm cihazlarınızda kullanabilirsiniz.
             </Text>
           </ScrollView>
         </View>
@@ -232,7 +288,7 @@ const styles = StyleSheet.create({
   },
   content: {
     padding: 24,
-    gap: 16,
+    gap: 14,
     alignItems: "center",
   },
   iconWrap: {
@@ -261,9 +317,10 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     paddingHorizontal: 32,
     alignItems: "center",
+    width: "100%",
   },
   price: {
-    fontSize: 32,
+    fontSize: 34,
     fontWeight: "800",
     letterSpacing: -1,
   },
@@ -271,6 +328,19 @@ const styles = StyleSheet.create({
     fontSize: 12,
     marginTop: 4,
     fontWeight: "500",
+    textAlign: "center",
+  },
+  sectionHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+    alignSelf: "flex-start",
+  },
+  sectionTitle: {
+    fontSize: 13,
+    fontWeight: "700",
+    letterSpacing: 0.5,
+    textTransform: "uppercase",
   },
   featureList: {
     width: "100%",
@@ -280,7 +350,7 @@ const styles = StyleSheet.create({
   },
   featureRow: {
     flexDirection: "row",
-    alignItems: "center",
+    alignItems: "flex-start",
     padding: 14,
     gap: 12,
   },
@@ -290,12 +360,20 @@ const styles = StyleSheet.create({
     borderRadius: 18,
     alignItems: "center",
     justifyContent: "center",
+    flexShrink: 0,
+    marginTop: 1,
+  },
+  featureTextWrap: {
+    flex: 1,
+    gap: 2,
+  },
+  featureLabel: {
+    fontSize: 13,
+    fontWeight: "700",
   },
   featureText: {
-    flex: 1,
-    fontSize: 13,
-    lineHeight: 19,
-    fontWeight: "500",
+    fontSize: 12,
+    lineHeight: 17,
   },
   messageBox: {
     width: "100%",
@@ -352,5 +430,6 @@ const styles = StyleSheet.create({
     fontSize: 11,
     textAlign: "center",
     lineHeight: 17,
+    paddingHorizontal: 4,
   },
 });
