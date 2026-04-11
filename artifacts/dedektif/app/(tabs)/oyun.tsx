@@ -128,7 +128,7 @@ function AccordionSection({
           )}
           {badge}
           <MaterialIcons
-            name={expanded ? "keyboard-arrow-up" : "keyboard-arrow-down"}
+            name={expanded ? "keyboard-arrow-down" : "keyboard-arrow-up"}
             size={compact ? 18 : 20}
             color={colors.mutedForeground}
           />
