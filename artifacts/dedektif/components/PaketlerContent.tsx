@@ -39,6 +39,8 @@ export default function PaketlerContent({ embedded = false }: { embedded?: boole
   const { startPuzzle } = useGame();
   const { isPackPurchased, purchasePack, restorePurchases, isLoading, packPrices } = usePurchase();
 
+  const totalPuzzles = PACKS.reduce((sum, pack) => sum + getRawPuzzlesForPack(pack.packId).length, 0);
+
   const [expandedPack, setExpandedPack] = useState<string | null>(null);
   const [purchasing, setPurchasing] = useState<string | null>(null);
   const [restoring, setRestoring] = useState(false);
@@ -99,7 +101,7 @@ export default function PaketlerContent({ embedded = false }: { embedded?: boole
         Premium Paketler
       </Text>
       <Text style={[styles.screenSubtitle, { color: colors.mutedForeground }]}>
-        5 farklı tema, 25 özgün vaka
+        {PACKS.length} farklı tema, {totalPuzzles} özgün vaka
       </Text>
 
       <Pressable
