@@ -671,7 +671,7 @@ export default function VakalarScreen() {
                     </View>
                   </Animated.View>
 
-                  {standartCount === 0 && activeFree.length === 0 ? (
+                  {activeFree.length === 0 && isPremium && activePremium.length === 0 ? (
                     <View style={[listStyles.emptyBox, { borderColor: colors.border }]}>
                       <MaterialIcons name="check-circle-outline" size={40} color={colors.success} />
                       <Text style={[listStyles.emptyTitle, { color: colors.foreground }]}>
