@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   BackHandler,
+  Modal,
   Platform,
   Pressable,
   ScrollView,
@@ -63,6 +64,8 @@ function AccordionSection({
   accentColor,
   icon,
   compact = false,
+  premiumInfoIcon = false,
+  onPremiumInfoPress,
   children,
 }: {
   title: string;
@@ -72,6 +75,8 @@ function AccordionSection({
   accentColor?: string;
   icon?: MaterialIconName;
   compact?: boolean;
+  premiumInfoIcon?: boolean;
+  onPremiumInfoPress?: () => void;
   children: React.ReactNode;
 }) {
   const colors = useColors();
@@ -109,6 +114,18 @@ function AccordionSection({
           </View>
         </View>
         <View style={accordionStyles.headerRight}>
+          {premiumInfoIcon && (
+            <Pressable
+              onPress={(e) => {
+                e.stopPropagation?.();
+                onPremiumInfoPress?.();
+              }}
+              hitSlop={8}
+              style={accordionStyles.premiumIconBtn}
+            >
+              <MaterialIcons name="workspace-premium" size={20} color="#D4A843" />
+            </Pressable>
+          )}
           {badge}
           <MaterialIcons
             name={expanded ? "keyboard-arrow-up" : "keyboard-arrow-down"}
@@ -119,6 +136,67 @@ function AccordionSection({
       </Pressable>
       {expanded && <View style={accordionStyles.body}>{children}</View>}
     </View>
+  );
+}
+
+function PremiumInfoModal({
+  visible,
+  premiumPuzzleCount,
+  onBuy,
+  onClose,
+}: {
+  visible: boolean;
+  premiumPuzzleCount: number;
+  onBuy: () => void;
+  onClose: () => void;
+}) {
+  return (
+    <Modal visible={visible} transparent animationType="fade" onRequestClose={onClose}>
+      <Pressable style={premiumInfoStyles.overlay} onPress={onClose}>
+        <Pressable style={premiumInfoStyles.card} onPress={() => {}}>
+          <View style={premiumInfoStyles.iconRow}>
+            <View style={premiumInfoStyles.iconCircle}>
+              <MaterialIcons name="workspace-premium" size={36} color="#D4A843" />
+            </View>
+          </View>
+          <Text style={premiumInfoStyles.title}>Premium Vaka Arşivi</Text>
+          <Text style={premiumInfoStyles.subtitle}>
+            Zorluğa göre gruplandırılmış {premiumPuzzleCount} özel vaka
+          </Text>
+          <View style={premiumInfoStyles.featureList}>
+            <View style={premiumInfoStyles.featureRow}>
+              <MaterialIcons name="search" size={16} color="#6B7280" />
+              <Text style={premiumInfoStyles.featureText}>Çaylak — Giriş seviyesi vakalar</Text>
+            </View>
+            <View style={premiumInfoStyles.featureRow}>
+              <MaterialIcons name="psychology" size={16} color="#6B7280" />
+              <Text style={premiumInfoStyles.featureText}>Dedektif — Orta zorluk vakalar</Text>
+            </View>
+            <View style={premiumInfoStyles.featureRow}>
+              <MaterialIcons name="local-police" size={16} color="#6B7280" />
+              <Text style={premiumInfoStyles.featureText}>Baş Komiser — Uzman seviye vakalar</Text>
+            </View>
+            <View style={premiumInfoStyles.featureRow}>
+              <MaterialIcons name="bolt" size={16} color="#D4A843" />
+              <Text style={premiumInfoStyles.featureText}>İnteraktif ipuçları ve mini oyunlar</Text>
+            </View>
+            <View style={premiumInfoStyles.featureRow}>
+              <MaterialIcons name="all-inclusive" size={16} color="#D4A843" />
+              <Text style={premiumInfoStyles.featureText}>Tek seferlik satın al, sonsuza dey oyna</Text>
+            </View>
+          </View>
+          <View style={premiumInfoStyles.btnRow}>
+            <Pressable style={premiumInfoStyles.buyBtn} onPress={onBuy}>
+              <MaterialIcons name="lock-open" size={16} color="#0F1117" />
+              <Text style={premiumInfoStyles.buyBtnText}>Satın Al</Text>
+            </Pressable>
+            <Pressable style={premiumInfoStyles.closeBtn} onPress={onClose}>
+              <Text style={premiumInfoStyles.closeBtnText}>Kapat</Text>
+            </Pressable>
+          </View>
+        </Pressable>
+      </Pressable>
+    </Modal>
   );
 }
 
@@ -303,6 +381,7 @@ export default function VakalarScreen() {
   const [lastResultSuccess, setLastResultSuccess] = useState(false);
   const [selectedEntity, setSelectedEntity] = useState<EntityInfo | null>(null);
   const [showPaywall, setShowPaywall] = useState(false);
+  const [showPremiumInfo, setShowPremiumInfo] = useState(false);
 
   const [accuseSuspect, setAccuseSuspect] = useState<string | null>(null);
   const [accuWeapon, setAccuWeapon] = useState<string | null>(null);
@@ -470,6 +549,12 @@ export default function VakalarScreen() {
     return (
       <>
         <PaywallModal visible={showPaywall} onClose={() => setShowPaywall(false)} />
+        <PremiumInfoModal
+          visible={showPremiumInfo}
+          premiumPuzzleCount={premiumPuzzles.length}
+          onBuy={() => { setShowPremiumInfo(false); setShowPaywall(true); }}
+          onClose={() => setShowPremiumInfo(false)}
+        />
         <View style={[gameStyles.container, { backgroundColor: colors.background }]}>
           <View
             style={[
@@ -486,7 +571,9 @@ export default function VakalarScreen() {
                 onPress={() => setListTab("aktif")}
                 style={[
                   listStyles.tabBtn,
-                  listTab === "aktif" && { borderBottomColor: colors.primary, borderBottomWidth: 2 },
+                  listTab === "aktif"
+                    ? { backgroundColor: `${colors.primary}20`, borderColor: colors.primary }
+                    : { backgroundColor: colors.card, borderColor: colors.border },
                 ]}
               >
                 <Text
@@ -498,7 +585,7 @@ export default function VakalarScreen() {
                   Aktif
                 </Text>
                 {activePuzzles.length > 0 && (
-                  <View style={[listStyles.tabCount, { backgroundColor: `${colors.primary}22` }]}>
+                  <View style={[listStyles.tabCount, { backgroundColor: `${colors.primary}33` }]}>
                     <Text style={[listStyles.tabCountText, { color: colors.primary }]}>
                       {activePuzzles.length}
                     </Text>
@@ -509,7 +596,9 @@ export default function VakalarScreen() {
                 onPress={() => setListTab("tamamlananlar")}
                 style={[
                   listStyles.tabBtn,
-                  listTab === "tamamlananlar" && { borderBottomColor: colors.success, borderBottomWidth: 2 },
+                  listTab === "tamamlananlar"
+                    ? { backgroundColor: `${colors.success}20`, borderColor: colors.success }
+                    : { backgroundColor: colors.card, borderColor: colors.border },
                 ]}
               >
                 <Text
@@ -521,7 +610,7 @@ export default function VakalarScreen() {
                   Tamamlananlar
                 </Text>
                 {completedPuzzles.length > 0 && (
-                  <View style={[listStyles.tabCount, { backgroundColor: `${colors.success}22` }]}>
+                  <View style={[listStyles.tabCount, { backgroundColor: `${colors.success}33` }]}>
                     <Text style={[listStyles.tabCountText, { color: colors.success }]}>
                       {completedPuzzles.length}
                     </Text>
@@ -586,6 +675,8 @@ export default function VakalarScreen() {
                     <AccordionSection
                       title="Premium Vaka Arşivi"
                       count={activePremium.length}
+                      premiumInfoIcon
+                      onPremiumInfoPress={() => setShowPremiumInfo(true)}
                       badge={
                         !isPremium ? (
                           <Pressable
@@ -918,30 +1009,34 @@ const listStyles = StyleSheet.create({
   tabBar: {
     borderBottomWidth: StyleSheet.hairlineWidth,
     paddingHorizontal: 16,
+    paddingBottom: 10,
   },
   tabBarInner: {
     flexDirection: "row",
-    gap: 4,
+    gap: 8,
   },
   tabBtn: {
+    flex: 1,
     flexDirection: "row",
     alignItems: "center",
-    paddingVertical: 10,
-    paddingHorizontal: 4,
-    marginRight: 20,
-    gap: 6,
+    justifyContent: "center",
+    paddingVertical: 12,
+    paddingHorizontal: 12,
+    borderRadius: 10,
+    borderWidth: 1,
+    gap: 7,
   },
   tabBtnText: {
-    fontSize: 14,
+    fontSize: 15,
     fontWeight: "700",
   },
   tabCount: {
-    borderRadius: 8,
-    paddingHorizontal: 6,
-    paddingVertical: 1,
+    borderRadius: 9,
+    paddingHorizontal: 7,
+    paddingVertical: 2,
   },
   tabCountText: {
-    fontSize: 11,
+    fontSize: 12,
     fontWeight: "700",
   },
   emptyBox: {
@@ -1135,10 +1230,10 @@ const accordionStyles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    borderRadius: 12,
+    borderRadius: 14,
     borderWidth: 1,
     paddingHorizontal: 14,
-    paddingVertical: 11,
+    paddingVertical: 14,
     marginBottom: 4,
   },
   headerLeft: {
@@ -1154,22 +1249,22 @@ const accordionStyles = StyleSheet.create({
   },
   accentBar: {
     width: 3,
-    height: 18,
+    height: 20,
     borderRadius: 2,
   },
   title: {
-    fontSize: 15,
+    fontSize: 16,
     fontWeight: "800",
     letterSpacing: 0.3,
   },
   headerCompact: {
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-    borderRadius: 10,
+    paddingHorizontal: 14,
+    paddingVertical: 11,
+    borderRadius: 12,
     marginBottom: 3,
   },
   titleCompact: {
-    fontSize: 13,
+    fontSize: 14,
     fontWeight: "700",
     letterSpacing: 0.2,
   },
@@ -1177,14 +1272,113 @@ const accordionStyles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 1,
     paddingHorizontal: 7,
-    paddingVertical: 1,
+    paddingVertical: 2,
   },
   countText: {
-    fontSize: 11,
+    fontSize: 12,
     fontWeight: "700",
   },
   body: {
     gap: 0,
     marginBottom: 8,
+  },
+  premiumIconBtn: {
+    padding: 2,
+  },
+});
+
+const premiumInfoStyles = StyleSheet.create({
+  overlay: {
+    flex: 1,
+    backgroundColor: "#0F111799",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 24,
+  },
+  card: {
+    backgroundColor: "#1A1F2E",
+    borderRadius: 20,
+    padding: 24,
+    width: "100%",
+    maxWidth: 380,
+    borderWidth: 1,
+    borderColor: "#D4A84333",
+    gap: 12,
+  },
+  iconRow: {
+    alignItems: "center",
+    marginBottom: 4,
+  },
+  iconCircle: {
+    width: 72,
+    height: 72,
+    borderRadius: 36,
+    backgroundColor: "#D4A84318",
+    borderWidth: 1,
+    borderColor: "#D4A84344",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: "900",
+    color: "#D4A843",
+    textAlign: "center",
+    letterSpacing: 0.5,
+  },
+  subtitle: {
+    fontSize: 13,
+    color: "#D4A84399",
+    textAlign: "center",
+    lineHeight: 19,
+  },
+  featureList: {
+    gap: 8,
+    marginTop: 4,
+    marginBottom: 4,
+  },
+  featureRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+  },
+  featureText: {
+    fontSize: 13,
+    color: "#aaa",
+    lineHeight: 19,
+    flex: 1,
+  },
+  btnRow: {
+    flexDirection: "column",
+    gap: 8,
+    marginTop: 4,
+  },
+  buyBtn: {
+    backgroundColor: "#D4A843",
+    borderRadius: 12,
+    paddingVertical: 14,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 8,
+  },
+  buyBtnText: {
+    fontSize: 15,
+    fontWeight: "800",
+    color: "#0F1117",
+    letterSpacing: 0.3,
+  },
+  closeBtn: {
+    borderRadius: 12,
+    paddingVertical: 12,
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: 1,
+    borderColor: "#333",
+  },
+  closeBtnText: {
+    fontSize: 14,
+    fontWeight: "600",
+    color: "#666",
   },
 });
