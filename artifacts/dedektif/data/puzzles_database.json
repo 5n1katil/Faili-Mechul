@@ -119,7 +119,7 @@
           ],
           "weapons": [
             { "id": "w1", "name": "Ağır Tunç Vazo", "icon": "🏺", "description": "Dükkânda sergilenen Osmanlı dönemi tunç vazo." },
-            { "id": "w2", "name": "Zehirli Kahve", "icon": "☕", "description": "Çarşı kahvaltısında içilen kahveye katılan madde." },
+            { "id": "w2", "name": "Zehirli Kahve", "icon": "🧪", "description": "Çarşı kahvaltısında içilen kahveye katılan madde." },
             { "id": "w3", "name": "İpek Fular", "icon": "🧣", "description": "Mağazada satışta olan antika ipek fular." }
           ],
           "locations": [
@@ -400,7 +400,7 @@
             { "id": "s4", "name": "Arkeologun Asistanı Fatma", "icon": "👩‍🔬", "description": "Maktulün 5 yıllık asistanı. Haritanın varlığını bilen tek Türk.", "detail": "28 yaşında, zeki, korku içinde görünüyor." }
           ],
           "weapons": [
-            { "id": "w1", "name": "Zehirli Şarap", "icon": "🍷", "description": "Rum meyhanede içilen şaraba katılan madde." },
+            { "id": "w1", "name": "Zehirli Şarap", "icon": "🧪", "description": "Rum meyhanede içilen şaraba katılan madde." },
             { "id": "w2", "name": "Antika Hançer", "icon": "🗡️", "description": "Bizans dönemine ait hançer." },
             { "id": "w3", "name": "Taş Blok", "icon": "🪨", "description": "Yapı iskeleti taşı." },
             { "id": "w4", "name": "Kimyasal Gaz", "icon": "☁️", "description": "Kapalı alanda serbest bırakılan toksik gaz." }
@@ -601,7 +601,7 @@
           "atmosphere": "Yapay ışıklar söndü. Set boş. Sahte dekor gerçek bir cinayet sahnesi oldu.",
           "suspects": [
             { "id": "s1", "name": "Baş Oyuncu Derek Stone", "icon": "🎭", "description": "Filmin yıldızı. Senaryodaki rolünün kısaltıldığını öğrendi.", "detail": "35 yaşında, ego sorunu olan Hollywood starı." },
-            { "id": "s2", "name": "Yardımcı Yönetmen Priya Shah", "icon": "🎬", "description": "Rakip stüdyoya iş görüşmesi yapıyor, sızdırma şüphesi var.", "detail": "38 yaşında, kararlı, hırslı." },
+            { "id": "s2", "name": "Yardımcı Yönetmen Priya Shah", "icon": "🎥", "description": "Rakip stüdyoya iş görüşmesi yapıyor, sızdırma şüphesi var.", "detail": "38 yaşında, kararlı, hırslı." },
             { "id": "s3", "name": "Set Güvenlik Görevlisi Tom Brady", "icon": "💂", "description": "Stüdyo güvenliği. Gece vardiyasında tek yetkili.", "detail": "50 yaşında, emekli polis, sert görünümlü." }
           ],
           "weapons": [
@@ -877,12 +877,12 @@
           "atmosphere": "Hills'in tepesi. Işıklı havuz. Servet ve gölge.",
           "suspects": [
             { "id": "s1", "name": "Yeğen Brandon Vale", "icon": "👨", "description": "Eski vasiyetnamede tek mirasçı. Yeni vasiyeti reddetti.", "detail": "29 yaşında, bağımlılık geçmişi." },
-            { "id": "s2", "name": "Yeni Sevgili Marco Silva", "icon": "💑", "description": "6 aylık ilişki. Yeni vasiyette 40% miras.", "detail": "31 yaşında, Brezilya asıllı, önceki ilişkileri bilinmiyor." },
+            { "id": "s2", "name": "Yeni Sevgili Marco Silva", "icon": "🧑", "description": "6 aylık ilişki. Yeni vasiyette 40% miras.", "detail": "31 yaşında, Brezilya asıllı, önceki ilişkileri bilinmiyor." },
             { "id": "s3", "name": "Avukat Dana Price", "icon": "⚖️", "description": "Vasiyeti değiştiren avukat. Komisyon meselesi var.", "detail": "55 yaşında, soğuk profisyonel." },
             { "id": "s4", "name": "Eski Asistan Grace Lee", "icon": "👩‍💼", "description": "10 yıllık sadakat ama vasiyette adı yok.", "detail": "45 yaşında, kırık kalpli ve sessiz öfkeli." }
           ],
           "weapons": [
-            { "id": "w1", "name": "Havuz Suyu Boğulması", "icon": "🏊", "description": "Havuzda boğulma — bilinçsiz bırakılmış." },
+            { "id": "w1", "name": "Havuz Suyu Boğulması", "icon": "🌊", "description": "Havuzda boğulma — bilinçsiz bırakılmış." },
             { "id": "w2", "name": "İlaç Kombinasyonu", "icon": "💊", "description": "Alkol ve uyku hapı kombinasyonu." },
             { "id": "w3", "name": "Yüksekten Düşme", "icon": "🏔️", "description": "Balkondan düşürülme." },
             { "id": "w4", "name": "Zehirli Yemek", "icon": "🍽️", "description": "Yemeğe karıştırılan madde." }
@@ -1090,7 +1090,7 @@
           ],
           "locations": [
             { "id": "l1", "name": "Hakim Odası", "icon": "🏛️", "description": "Hakimin özel çalışma odası." },
-            { "id": "l2", "name": "Mahkeme Salonu", "icon": "⚖️", "description": "Ana duruşma salonu." },
+            { "id": "l2", "name": "Mahkeme Salonu", "icon": "🏢", "description": "Ana duruşma salonu." },
             { "id": "l3", "name": "Sunucu Odası", "icon": "🖥️", "description": "Mahkeme YZ sunucu merkezi." }
           ],
           "clues": [
@@ -1168,7 +1168,7 @@
           "atmosphere": "Steril beyaz. Cam tüpler. Aynı yüzden iki farklı kişi.",
           "suspects": [
             { "id": "s1", "name": "Dr. Elena (Orijinal)", "icon": "👩‍🔬", "description": "Merkezin kurucusu. Klonuna her şeyini öğretti.", "detail": "50 yaşında, bilimsel, soğukkanlı." },
-            { "id": "s2", "name": "Elena-K (Klon)", "icon": "🧬", "description": "2 yıllık klon. Yasal olarak ayrı birey ama aynı hafızayla başladı.", "detail": "Biyolojik 50, kronolojik 2 yıl. Özerklik savaşı veriyor." },
+            { "id": "s2", "name": "Elena-K (Klon)", "icon": "🤖", "description": "2 yıllık klon. Yasal olarak ayrı birey ama aynı hafızayla başladı.", "detail": "Biyolojik 50, kronolojik 2 yıl. Özerklik savaşı veriyor." },
             { "id": "s3", "name": "Lisans Direktörü Haruto", "icon": "📋", "description": "Klonun yasal statüsünü reddedecekti. Bu klon için ölüm emri anlamına gelir.", "detail": "45 yaşında, bürokratik, kurallara bağlı." }
           ],
           "weapons": [
@@ -1264,7 +1264,7 @@
             { "id": "s4", "name": "Üs Komutanı Rex Torres", "icon": "👨‍🚀", "description": "Son kararları o veriyor. Mali baskı altında.", "detail": "52 yaşında, asker ruhlu, stres altında." }
           ],
           "weapons": [
-            { "id": "w1", "name": "Enerji Aşırı Yükü", "icon": "⚡", "description": "Deney cihazı kasıtlı aşırı yüklendi." },
+            { "id": "w1", "name": "Enerji Aşırı Yükü", "icon": "☢️", "description": "Deney cihazı kasıtlı aşırı yüklendi." },
             { "id": "w2", "name": "Buz Tuzağı", "icon": "❄️", "description": "Dışarıda bırakılma — Europa soğuğu." },
             { "id": "w3", "name": "Zehirli Oksijen Karışımı", "icon": "💨", "description": "Oksijen sistemine karıştırılan toksik gaz." },
             { "id": "w4", "name": "Nöral Bomba", "icon": "💣", "description": "Mini EMP cihazı." }
@@ -1364,13 +1364,13 @@
           "story": "Zaman yolculuğu araştırmasının eşiğinde, baş bilim insanı geleceğe gitmiş gibi ortadan kayboldu — ancak cesedi geçmişten geldi. Dört kişi bu paradoksu yarattı.",
           "atmosphere": "Zaman akışı bozuk. Neden ve sonuç yer değiştirmiş. Katil kim — yoksa ne zaman?",
           "suspects": [
-            { "id": "s1", "name": "Kronolojist Dr. Noa Fischer", "icon": "⏱️", "description": "Zaman fiziği uzmanı. Paradoksun tek anlayabileceği kişi.", "detail": "55 yaşında, Alman, kendi geleceğini gördüğünü iddia ediyor." },
+            { "id": "s1", "name": "Kronolojist Dr. Noa Fischer", "icon": "🔭", "description": "Zaman fiziği uzmanı. Paradoksun tek anlayabileceği kişi.", "detail": "55 yaşında, Alman, kendi geleceğini gördüğünü iddia ediyor." },
             { "id": "s2", "name": "Mühendis Yuki Tanaka", "icon": "⚙️", "description": "Zaman makinesi tasarımcısı. Sabotaj edebilir.", "detail": "38 yaşında, mükemmeliyetçi." },
             { "id": "s3", "name": "Güvenlik Şefi Marcus Webb", "icon": "🛡️", "description": "Projeyi kapatmak isteyen hükümet ajanı.", "detail": "50 yaşında, asker geçmişli." },
             { "id": "s4", "name": "Maktulün Geleceği (K-Prime)", "icon": "👤", "description": "Gelecekten gelen maktulün kendisi — ölmeden önce mi, sonra mı?", "detail": "Bu şüpheli paradoks içinde — kim gerçek?" }
           ],
           "weapons": [
-            { "id": "w1", "name": "Zaman Döngüsü Tuzağı", "icon": "🌀", "description": "Kişiyi sonsuz döngüye hapseden modifikasyon." },
+            { "id": "w1", "name": "Zaman Döngüsü Tuzağı", "icon": "⏱️", "description": "Kişiyi sonsuz döngüye hapseden modifikasyon." },
             { "id": "w2", "name": "Tachyon Silahı", "icon": "⚡", "description": "Zamanla seyahat eden parçacık silahı." },
             { "id": "w3", "name": "Paradoks Bombası", "icon": "💥", "description": "Nedenselliği yok eden enerji." },
             { "id": "w4", "name": "Klasik Zehir", "icon": "☠️", "description": "Gelecekten getirilmiş bir zehir — geçmişte mevcut değil." }
@@ -1488,7 +1488,7 @@
           "story": "1920'lerde bir Avrupa opera evinde baş soprano gece prömiyerinden sonra soyunma odasında ölü bulundu. Müzik dünyası şoke oldu.",
           "atmosphere": "Kadife perdeler. Alkış yankıları. Çiçek kokusu ve sahnelerin arka sırası.",
           "suspects": [
-            { "id": "s1", "name": "Kıskanç Rakip Soprano Helga", "icon": "🎭", "description": "20 yıldır ana rolü oynamak istiyordu.", "detail": "48 yaşında, dramatik, sahnede büyüleyici." },
+            { "id": "s1", "name": "Kıskanç Rakip Soprano Helga", "icon": "🎵", "description": "20 yıldır ana rolü oynamak istiyordu.", "detail": "48 yaşında, dramatik, sahnede büyüleyici." },
             { "id": "s2", "name": "Opera Direktörü Franz", "icon": "🎼", "description": "Sopranonun sözleşmesini yenilemeyeceğini açıklayacaktı.", "detail": "60 yaşında, soğuk iş insanı." },
             { "id": "s3", "name": "Gizemli Hayran Karl", "icon": "🌹", "description": "Her gecenin ardından gülden buket gönderen anonim hayran.", "detail": "35 yaşında, obsesif, zararsız gibi görünüyor ama..." }
           ],
@@ -1763,7 +1763,7 @@
             { "id": "l1", "name": "Tablo Salonu", "icon": "🖼️", "description": "Çalınan tablonun asılı olduğu salon." },
             { "id": "l2", "name": "Güvenlik Merkezi", "icon": "📹", "description": "Kamera merkezi." },
             { "id": "l3", "name": "Depo Katı", "icon": "📦", "description": "Müze alt kat deposu." },
-            { "id": "l4", "name": "Restorasyon Atölyesi", "icon": "🎨", "description": "Eserlerin restore edildiği atölye." }
+            { "id": "l4", "name": "Restorasyon Atölyesi", "icon": "🔍", "description": "Eserlerin restore edildiği atölye." }
           ],
           "clues": [
             {
@@ -1867,7 +1867,7 @@
             { "id": "w4", "name": "Soğukta Bırakma", "icon": "❄️", "description": "Alp soğuğunda dışarıda bırakılma." }
           ],
           "locations": [
-            { "id": "l1", "name": "Çalışma Odası", "icon": "📚", "description": "Yazarın daktilo başındaki odası." },
+            { "id": "l1", "name": "Çalışma Odası", "icon": "💻", "description": "Yazarın daktilo başındaki odası." },
             { "id": "l2", "name": "Kütüphane", "icon": "📖", "description": "Evin geniş kütüphanesi." },
             { "id": "l3", "name": "Dış Veranda", "icon": "🏔️", "description": "Alp manzaralı kış verandası." },
             { "id": "l4", "name": "Bodrum Kat", "icon": "🔒", "description": "El yazması arşivinin bulunduğu bodrum." }
@@ -1984,8 +1984,8 @@
           ],
           "weapons": [
             { "id": "w1", "name": "Eski Demir Boru", "icon": "🔧", "description": "Hastanenin çökmüş koridorlarından." },
-            { "id": "w2", "name": "Psikiyatrik İlaç", "icon": "💊", "description": "Hastanenin eski ilaç deposundan." },
-            { "id": "w3", "name": "Yüksekten Düşürme", "icon": "🏚️", "description": "Çürük merdivenden." }
+            { "id": "w2", "name": "Psikiyatrik İlaç", "icon": "💉", "description": "Hastanenin eski ilaç deposundan." },
+            { "id": "w3", "name": "Yüksekten Düşürme", "icon": "🌆", "description": "Çürük merdivenden." }
           ],
           "locations": [
             { "id": "l1", "name": "Eski Koğuş", "icon": "🛏️", "description": "Boş hasta yatakları olan büyük koğuş." },
@@ -2161,7 +2161,7 @@
             { "id": "s3", "name": "Yalı Bekçisi Yaşar", "icon": "🔑", "description": "40 yıldır yalıda. Her köşeyi biliyor.", "detail": "65 yaşında, sakin ama sırları olan biri." }
           ],
           "weapons": [
-            { "id": "w1", "name": "Ayna Kırığı", "icon": "🪞", "description": "Antika ayanın sivri kırık parçası." },
+            { "id": "w1", "name": "Ayna Kırığı", "icon": "🗡️", "description": "Antika ayanın sivri kırık parçası." },
             { "id": "w2", "name": "Zehirli Aromatik Yağ", "icon": "🕯️", "description": "Rituelde kullanılan yağa katılan madde." },
             { "id": "w3", "name": "Elektrik Arızası Tuzağı", "icon": "⚡", "description": "Islak zeminde elektrik." }
           ],
