@@ -26,8 +26,6 @@ export default ({ config }: ConfigContext): ExpoConfig => {
       infoPlist: {
         NSUserNotificationUsageDescription:
           "Günlük bulmaca hatırlatmaları için",
-        NSUserTrackingUsageDescription:
-          "Kişiselleştirilmiş içerik ve uygulama analitiği için kullanılır.",
       },
     },
     android: {
