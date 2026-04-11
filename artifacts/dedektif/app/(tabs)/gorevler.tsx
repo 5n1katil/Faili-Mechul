@@ -53,10 +53,6 @@ function getMissionTargetPuzzle(
     const targetDiff = DIFF_MAP[mission.requirement.difficulty] ?? "caylik";
     const filtered = PUZZLES.filter((p) => p.difficulty === targetDiff);
     if (filtered.length > 0) candidates = filtered;
-  } else if (mission.tier !== "caylak") {
-    const tierDiff = DIFF_MAP[mission.tier] ?? "caylik";
-    const filtered = PUZZLES.filter((p) => p.difficulty === tierDiff);
-    if (filtered.length > 0) candidates = filtered;
   }
 
   const uncompleted = candidates.filter((p) => !completedPuzzleIds.has(p.id));
@@ -398,7 +394,7 @@ export default function GorevlerScreen() {
   const handleMissionPlay = (mission: Mission) => {
     const puzzle = getMissionTargetPuzzle(mission, completedPuzzleIds);
     startPuzzle(puzzle);
-    router.push("/(tabs)/oyun" as never);
+    router.push("/oyun");
   };
 
   const dailyByTier = {
