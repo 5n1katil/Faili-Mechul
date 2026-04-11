@@ -286,6 +286,7 @@ export default function VakalarScreen() {
     profile,
     setGridMark,
     revealBonusClue,
+    solveMechanic,
     submitAnswer,
     tickTimer,
     resetCurrentGame,
@@ -698,6 +699,7 @@ export default function VakalarScreen() {
     finalScore,
     timerActive,
     isRanked,
+    solvedMechanics,
   } = gameState;
 
   const bonusCluesRevealedCount = cluesRevealed.filter((idx) => isBonusClue(puzzle, idx)).length;
@@ -840,11 +842,13 @@ export default function VakalarScreen() {
                 index={i}
                 isRevealed={isRevealed}
                 isBonus={isBonus}
+                isSolved={solvedMechanics.includes(clue.id)}
                 onRevealBonus={
                   isBonus && !isRevealed && !gameState.isComplete
                     ? () => handleRevealBonusClue(i)
                     : undefined
                 }
+                onSolveMechanic={() => solveMechanic(clue.id)}
               />
             );
           })}

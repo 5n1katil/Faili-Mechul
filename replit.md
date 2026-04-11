@@ -63,7 +63,10 @@ Turkish Murdle-style detective deduction puzzle game built with Expo React Nativ
 - `artifacts/dedektif/components/PaywallModal.tsx` — noir-themed paywall bottom sheet
 - `artifacts/dedektif/context/GameContext.tsx` — game state, scoring, streak, badges
 - `artifacts/dedektif/context/PurchaseContext.tsx` — RevenueCat IAP context (web stub + native)
-- `artifacts/dedektif/data/puzzles.ts` — 20 Turkish puzzles, daily puzzle system
+- `artifacts/dedektif/data/puzzles.ts` — 30 Turkish puzzles, daily puzzle system
+- `artifacts/dedektif/data/puzzles_database.json` — v2.0.0: 9 premium packs, 37 puzzles total (pack_001–pack_005 + pack_fenomen, pack_mitoloji, pack_dijital, pack_edebi)
+- `artifacts/dedektif/data/packs.ts` — Pack adapter with EMOJI_TO_MATERIAL map (200+ entries), adaptPackPuzzle with rich mechanic fields
+- `artifacts/dedektif/components/ClueCard.tsx` — Rich mechanic UI: gorsel_ipucu, ses_kaydi, tanik_yuzlesme, sifreli_mesaj, phone_chain (passive); anagram, dna_match, timeline_sort (interactive mini-games)
 - `artifacts/dedektif/app.json` — Expo config with full App Store metadata
 - `artifacts/dedektif/eas.json` — EAS build configuration
 

@@ -32,11 +32,113 @@ export interface Location {
   icon: string;
 }
 
+export type ClueMechanicType =
+  | "text"
+  | "gorsel_ipucu"
+  | "ses_kaydi"
+  | "tanik_yuzlesme"
+  | "sifreli_mesaj"
+  | "phone_chain"
+  | "anagram"
+  | "dna_match"
+  | "timeline_sort"
+  | "parmak_izi"
+  | "face_match";
+
+export interface ClueYuzlesmeDialog {
+  soru: string;
+  cevap: string;
+  yalan: boolean;
+}
+
+export interface ClueSifre {
+  sifrelenmis: string;
+  sifreleTuru: string;
+  cozumIpucu: string;
+  cozulmus: string;
+  aciklama: string;
+}
+
+export interface CluePhoneMessage {
+  id: string;
+  gonderen: string;
+  alici: string;
+  icerik: string;
+  saat: string;
+}
+
+export interface CluePhoneVerisi {
+  aciklama: string;
+  mesajlar: CluePhoneMessage[];
+  sonuc: string;
+}
+
+export interface ClueAnagramData {
+  karisik: string;
+  dogru: string;
+  aciklama: string;
+  ipucu: string;
+}
+
+export interface ClueDNAProfile {
+  lokus1: string;
+  lokus2: string;
+  lokus3: string;
+}
+
+export interface ClueDNASuspect extends ClueDNAProfile {
+  suspectId: string;
+  eslesme: boolean;
+}
+
+export interface ClueDnaVerisi {
+  aciklama: string;
+  ornekProfil: ClueDNAProfile;
+  supheliProfiller: ClueDNASuspect[];
+  sonuc: string;
+}
+
+export interface ClueTimelineEvent {
+  id: string;
+  metin: string;
+  dogruSira: number;
+}
+
+export interface ClueTimelineVerisi {
+  aciklama: string;
+  olaylar: ClueTimelineEvent[];
+  sonuc: string;
+}
+
+export interface ClueParmakIziIz {
+  izId: string;
+  konum: string;
+  eslesme: string;
+  ipucu: string;
+}
+
+export interface ClueParmakIziVerisi {
+  aciklama: string;
+  izler: ClueParmakIziIz[];
+  sonuc: string;
+}
+
 export interface Clue {
   id: string;
   text: string;
   type: "direct" | "indirect" | "elimination" | "evidence" | "witness" | "forensic";
   isBonus: boolean;
+  mechanicType?: ClueMechanicType;
+  deductionHint?: string;
+  gorselAciklama?: string;
+  sesMetni?: string;
+  yuzlesmeDialogu?: ClueYuzlesmeDialog[];
+  sifre?: ClueSifre;
+  phoneVerisi?: CluePhoneVerisi;
+  anagramVerisi?: ClueAnagramData;
+  dnaVerisi?: ClueDnaVerisi;
+  timelineVerisi?: ClueTimelineVerisi;
+  parmakIziVerisi?: ClueParmakIziVerisi;
 }
 
 export interface SolvabilityMeta {

@@ -113,6 +113,7 @@ export interface GameState {
   selectedLocation: string | null;
   timerActive: boolean;
   isRanked: boolean;
+  solvedMechanics: string[];
 }
 
 export interface BestResult {
@@ -133,6 +134,7 @@ interface GameContextType {
   invalidateGame: () => void;
   setGridMark: (key: string, mark: GridMark) => void;
   revealBonusClue: (index: number) => void;
+  solveMechanic: (clueId: string) => void;
   submitAnswer: (suspectId: string, weaponId: string, locationId: string) => boolean;
   updateProfile: (name: string, avatar?: string) => void;
   resetCurrentGame: () => void;
@@ -154,6 +156,7 @@ interface SavedDraft {
   cluesRevealed: number[];
   timeElapsed: number;
   wrongGuesses: number;
+  solvedMechanics?: string[];
 }
 
 const DEFAULT_PROFILE: PlayerProfile = {
@@ -302,6 +305,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
       cluesRevealed: gs.cluesRevealed,
       timeElapsed: gs.timeElapsed,
       wrongGuesses: gs.wrongGuesses,
+      solvedMechanics: gs.solvedMechanics,
     };
     await AsyncStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
     setPendingDraft(draft);
@@ -356,6 +360,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
       selectedLocation: null,
       timerActive: false,
       isRanked,
+      solvedMechanics: draft?.solvedMechanics ?? [],
     });
 
     if (matchingDraft) setPendingDraft(null);
@@ -461,6 +466,19 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         ...prev,
         cluesRevealed: [...prev.cluesRevealed, index],
         timeElapsed: prev.timeElapsed + 30,
+      };
+      saveDraft(nextState);
+      return nextState;
+    });
+  }, []);
+
+  const solveMechanic = useCallback((clueId: string) => {
+    setGameState((prev) => {
+      if (!prev) return prev;
+      if (prev.solvedMechanics.includes(clueId)) return prev;
+      const nextState = {
+        ...prev,
+        solvedMechanics: [...prev.solvedMechanics, clueId],
       };
       saveDraft(nextState);
       return nextState;
@@ -607,6 +625,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         invalidateGame,
         setGridMark,
         revealBonusClue,
+        solveMechanic,
         submitAnswer,
         updateProfile,
         resetCurrentGame,

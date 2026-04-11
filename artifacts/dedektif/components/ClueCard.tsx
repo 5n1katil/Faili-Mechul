@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import type { ComponentProps } from "react";
-import { Alert, Pressable, StyleSheet, Text, View } from "react-native";
+import { Alert, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import Animated, {
   useAnimatedStyle,
@@ -9,7 +9,15 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import { useColors } from "@/hooks/useColors";
-import type { Clue } from "@/data/puzzles";
+import type {
+  Clue,
+  ClueAnagramData,
+  ClueDnaVerisi,
+  CluePhoneVerisi,
+  ClueSifre,
+  ClueTimelineVerisi,
+  ClueYuzlesmeDialog,
+} from "@/data/puzzles";
 
 type MaterialIconName = ComponentProps<typeof MaterialIcons>["name"];
 
@@ -18,7 +26,9 @@ interface Props {
   index: number;
   isRevealed: boolean;
   isBonus?: boolean;
+  isSolved?: boolean;
   onRevealBonus?: () => void;
+  onSolveMechanic?: () => void;
 }
 
 const CLUE_META: Record<
@@ -75,7 +85,408 @@ const CLUE_META: Record<
   },
 };
 
-export default function ClueCard({ clue, index, isRevealed, isBonus, onRevealBonus }: Props) {
+function DeductionHint({ hint }: { hint: string }) {
+  return (
+    <View style={styles.deductionHint}>
+      <MaterialIcons name="lightbulb" size={12} color="#D4A843" />
+      <Text style={styles.deductionHintText}>{hint}</Text>
+    </View>
+  );
+}
+
+function GorselIpucuBlock({ aciklama }: { aciklama: string }) {
+  return (
+    <View style={styles.gorselBlock}>
+      <View style={styles.gorselHeader}>
+        <MaterialIcons name="image-search" size={14} color="#D4A843" />
+        <Text style={styles.gorselLabel}>KANIT DELİLİ</Text>
+      </View>
+      <Text style={styles.gorselText}>{aciklama}</Text>
+    </View>
+  );
+}
+
+function SesKaydiBlock({ sesMetni }: { sesMetni: string }) {
+  return (
+    <View style={styles.sesBlock}>
+      <View style={styles.sesHeader}>
+        <MaterialIcons name="mic" size={14} color="#3b82f6" />
+        <Text style={styles.sesLabel}>SES KAYDI TRANSKRİPTİ</Text>
+        <View style={styles.sesBadge}>
+          <View style={styles.sesDot} />
+          <Text style={styles.sesRec}>REC</Text>
+        </View>
+      </View>
+      <Text style={styles.sesText}>{sesMetni}</Text>
+    </View>
+  );
+}
+
+function TanikYuzlesmeBlock({ dialoglar }: { dialoglar: ClueYuzlesmeDialog[] }) {
+  return (
+    <View style={styles.yuzlesmeBlock}>
+      <View style={styles.gorselHeader}>
+        <MaterialIcons name="question-answer" size={14} color="#f59e0b" />
+        <Text style={[styles.gorselLabel, { color: "#f59e0b" }]}>TANIK YÜZLEŞMESİ</Text>
+      </View>
+      {dialoglar.map((d, i) => (
+        <View key={i} style={styles.yuzlesmeRow}>
+          <View style={styles.soruBubble}>
+            <Text style={styles.soruLabel}>S:</Text>
+            <Text style={styles.soruText}>{d.soru}</Text>
+          </View>
+          <View style={[styles.cevapBubble, d.yalan && styles.cevapBubbleYalan]}>
+            <Text style={styles.cevapLabel}>C:</Text>
+            <Text style={[styles.cevapText, d.yalan && styles.cevapTextYalan]}>{d.cevap}</Text>
+            {d.yalan && (
+              <View style={styles.yalanBadge}>
+                <MaterialIcons name="warning" size={10} color="#C8372D" />
+                <Text style={styles.yalanText}>ÇELIŞKI</Text>
+              </View>
+            )}
+          </View>
+        </View>
+      ))}
+    </View>
+  );
+}
+
+function SifreliMesajBlock({ sifre }: { sifre: ClueSifre }) {
+  return (
+    <View style={styles.sifreBlock}>
+      <View style={styles.gorselHeader}>
+        <MaterialIcons name="lock" size={14} color="#9333ea" />
+        <Text style={[styles.gorselLabel, { color: "#9333ea" }]}>ŞİFRELİ MESAJ</Text>
+      </View>
+      <Text style={styles.sifreText}>{sifre.sifrelenmis}</Text>
+      <View style={styles.sifreDivider} />
+      <View style={styles.sifreIpucu}>
+        <MaterialIcons name="vpn-key" size={12} color="#9333ea88" />
+        <Text style={styles.sifreIpucuText}>{sifre.cozumIpucu}</Text>
+      </View>
+      <Text style={styles.sifreAciklama}>{sifre.aciklama}</Text>
+    </View>
+  );
+}
+
+function PhoneChainBlock({ phoneVerisi }: { phoneVerisi: CluePhoneVerisi }) {
+  return (
+    <View style={styles.phoneBlock}>
+      <View style={styles.gorselHeader}>
+        <MaterialIcons name="phone-in-talk" size={14} color="#14b8a6" />
+        <Text style={[styles.gorselLabel, { color: "#14b8a6" }]}>TELEFON ZİNCİRİ</Text>
+      </View>
+      <Text style={styles.phoneAciklama}>{phoneVerisi.aciklama}</Text>
+      {phoneVerisi.mesajlar.map((m, i) => (
+        <View key={m.id} style={styles.phoneCard}>
+          <View style={styles.phoneCardTop}>
+            <View style={styles.phoneFrom}>
+              <MaterialIcons name="send" size={10} color="#14b8a6" />
+              <Text style={styles.phoneFromText}>{m.gonderen}</Text>
+            </View>
+            <MaterialIcons name="arrow-forward" size={12} color="#555" />
+            <View style={styles.phoneTo}>
+              <Text style={styles.phoneToText}>{m.alici}</Text>
+            </View>
+            <Text style={styles.phoneSaat}>{m.saat}</Text>
+          </View>
+          <Text style={styles.phoneIcerik}>"{m.icerik}"</Text>
+          {i < phoneVerisi.mesajlar.length - 1 && (
+            <View style={styles.phoneConnector}>
+              <View style={styles.phoneConnectorLine} />
+            </View>
+          )}
+        </View>
+      ))}
+      <View style={styles.phoneSonuc}>
+        <MaterialIcons name="info-outline" size={12} color="#14b8a688" />
+        <Text style={styles.phoneSonucText}>{phoneVerisi.sonuc}</Text>
+      </View>
+    </View>
+  );
+}
+
+function AnagramBlock({
+  anagramVerisi,
+  isSolved,
+  onSolve,
+}: {
+  anagramVerisi: ClueAnagramData;
+  isSolved: boolean;
+  onSolve: () => void;
+}) {
+  const [input, setInput] = useState("");
+  const [tried, setTried] = useState(false);
+
+  const checkAnswer = () => {
+    const normalized = input.trim().toUpperCase().replace(/İ/g, "I");
+    const correct = anagramVerisi.dogru.toUpperCase().replace(/İ/g, "I");
+    if (normalized === correct) {
+      onSolve();
+      setTried(false);
+    } else {
+      setTried(true);
+    }
+  };
+
+  if (isSolved) {
+    return (
+      <View style={styles.miniGameSolvedBlock}>
+        <MaterialIcons name="check-circle" size={20} color="#22c55e" />
+        <Text style={styles.miniGameSolvedText}>Anagram Çözüldü!</Text>
+        <View style={styles.miniGameAnswer}>
+          <Text style={styles.miniGameAnswerText}>{anagramVerisi.dogru}</Text>
+        </View>
+        <Text style={styles.miniGameAciklama}>{anagramVerisi.aciklama}</Text>
+      </View>
+    );
+  }
+
+  return (
+    <View style={styles.anagramBlock}>
+      <View style={styles.gorselHeader}>
+        <MaterialIcons name="text-rotation-none" size={14} color="#f59e0b" />
+        <Text style={[styles.gorselLabel, { color: "#f59e0b" }]}>ANAGRAM</Text>
+      </View>
+      <Text style={styles.anagramKarisik}>{anagramVerisi.karisik}</Text>
+      <Text style={styles.anagramIpucu}>{anagramVerisi.ipucu}</Text>
+      <View style={styles.anagramInputRow}>
+        <TextInput
+          style={[styles.anagramInput, tried && styles.anagramInputError]}
+          value={input}
+          onChangeText={(t) => { setInput(t); setTried(false); }}
+          placeholder="Çözümü yaz..."
+          placeholderTextColor="#555"
+          autoCapitalize="characters"
+          autoCorrect={false}
+          onSubmitEditing={checkAnswer}
+        />
+        <Pressable style={styles.anagramBtn} onPress={checkAnswer}>
+          <MaterialIcons name="check" size={18} color="#0F1117" />
+        </Pressable>
+      </View>
+      {tried && <Text style={styles.anagramWrong}>Yanlış — tekrar dene</Text>}
+    </View>
+  );
+}
+
+function DnaMatchBlock({
+  dnaVerisi,
+  isSolved,
+  onSolve,
+}: {
+  dnaVerisi: ClueDnaVerisi;
+  isSolved: boolean;
+  onSolve: () => void;
+}) {
+  const [selected, setSelected] = useState<string | null>(null);
+  const [confirmed, setConfirmed] = useState(false);
+
+  const handleSelect = (suspectId: string) => {
+    if (isSolved || confirmed) return;
+    setSelected(suspectId);
+  };
+
+  const handleConfirm = () => {
+    if (!selected) return;
+    const match = dnaVerisi.supheliProfiller.find((p) => p.suspectId === selected);
+    if (match?.eslesme) {
+      onSolve();
+    }
+    setConfirmed(true);
+  };
+
+  if (isSolved) {
+    const match = dnaVerisi.supheliProfiller.find((p) => p.eslesme);
+    return (
+      <View style={styles.miniGameSolvedBlock}>
+        <MaterialIcons name="check-circle" size={20} color="#22c55e" />
+        <Text style={styles.miniGameSolvedText}>DNA Eşleşmesi Bulundu!</Text>
+        <Text style={styles.miniGameAciklama}>{dnaVerisi.sonuc}</Text>
+      </View>
+    );
+  }
+
+  return (
+    <View style={styles.dnaBlock}>
+      <View style={styles.gorselHeader}>
+        <MaterialIcons name="biotech" size={14} color="#14b8a6" />
+        <Text style={[styles.gorselLabel, { color: "#14b8a6" }]}>DNA KARŞILAŞTIRMA</Text>
+      </View>
+      <Text style={styles.dnaAciklama}>{dnaVerisi.aciklama}</Text>
+      <View style={styles.dnaOrnekCard}>
+        <Text style={styles.dnaOrnekLabel}>ÖRNEK PROFİL</Text>
+        <View style={styles.dnaLokusRow}>
+          <View style={styles.dnaLokus}>
+            <Text style={styles.dnaLokusKey}>L1</Text>
+            <Text style={styles.dnaLokusVal}>{dnaVerisi.ornekProfil.lokus1}</Text>
+          </View>
+          <View style={styles.dnaLokus}>
+            <Text style={styles.dnaLokusKey}>L2</Text>
+            <Text style={styles.dnaLokusVal}>{dnaVerisi.ornekProfil.lokus2}</Text>
+          </View>
+          <View style={styles.dnaLokus}>
+            <Text style={styles.dnaLokusKey}>L3</Text>
+            <Text style={styles.dnaLokusVal}>{dnaVerisi.ornekProfil.lokus3}</Text>
+          </View>
+        </View>
+      </View>
+      <Text style={styles.dnaSelectLabel}>Eşleşen kişiyi seç:</Text>
+      {dnaVerisi.supheliProfiller.map((p) => {
+        const isSelected = selected === p.suspectId;
+        const isWrong = confirmed && isSelected && !p.eslesme;
+        const isCorrectRevealed = confirmed && p.eslesme;
+        return (
+          <Pressable
+            key={p.suspectId}
+            onPress={() => handleSelect(p.suspectId)}
+            style={[
+              styles.dnaCard,
+              isSelected && styles.dnaCardSelected,
+              isWrong && styles.dnaCardWrong,
+              isCorrectRevealed && styles.dnaCardCorrect,
+            ]}
+          >
+            <Text style={styles.dnaSuspectId}>{p.suspectId.toUpperCase()}</Text>
+            <View style={styles.dnaLokusRow}>
+              <View style={styles.dnaLokus}>
+                <Text style={styles.dnaLokusKey}>L1</Text>
+                <Text style={[styles.dnaLokusVal, p.lokus1 === dnaVerisi.ornekProfil.lokus1 && styles.dnaLokusMatch]}>
+                  {p.lokus1}
+                </Text>
+              </View>
+              <View style={styles.dnaLokus}>
+                <Text style={styles.dnaLokusKey}>L2</Text>
+                <Text style={[styles.dnaLokusVal, p.lokus2 === dnaVerisi.ornekProfil.lokus2 && styles.dnaLokusMatch]}>
+                  {p.lokus2}
+                </Text>
+              </View>
+              <View style={styles.dnaLokus}>
+                <Text style={styles.dnaLokusKey}>L3</Text>
+                <Text style={[styles.dnaLokusVal, p.lokus3 === dnaVerisi.ornekProfil.lokus3 && styles.dnaLokusMatch]}>
+                  {p.lokus3}
+                </Text>
+              </View>
+            </View>
+          </Pressable>
+        );
+      })}
+      {!confirmed && (
+        <Pressable
+          style={[styles.dnaConfirmBtn, !selected && styles.dnaConfirmBtnDisabled]}
+          onPress={handleConfirm}
+          disabled={!selected}
+        >
+          <Text style={styles.dnaConfirmText}>Onayla</Text>
+        </Pressable>
+      )}
+      {confirmed && !isSolved && (
+        <Text style={styles.dnaWrong}>Yanlış seçim — tekrar dene</Text>
+      )}
+    </View>
+  );
+}
+
+function TimelineSortBlock({
+  timelineVerisi,
+  isSolved,
+  onSolve,
+}: {
+  timelineVerisi: ClueTimelineVerisi;
+  isSolved: boolean;
+  onSolve: () => void;
+}) {
+  const [order, setOrder] = useState(() =>
+    [...timelineVerisi.olaylar].sort(() => Math.random() - 0.5)
+  );
+  const [checked, setChecked] = useState(false);
+  const [wrong, setWrong] = useState(false);
+
+  const moveUp = (i: number) => {
+    if (i === 0) return;
+    const newOrder = [...order];
+    [newOrder[i - 1], newOrder[i]] = [newOrder[i], newOrder[i - 1]];
+    setOrder(newOrder);
+    setWrong(false);
+  };
+
+  const moveDown = (i: number) => {
+    if (i === order.length - 1) return;
+    const newOrder = [...order];
+    [newOrder[i], newOrder[i + 1]] = [newOrder[i + 1], newOrder[i]];
+    setOrder(newOrder);
+    setWrong(false);
+  };
+
+  const verify = () => {
+    const correct = order.every((ev, i) => ev.dogruSira === i + 1);
+    if (correct) {
+      onSolve();
+    } else {
+      setWrong(true);
+    }
+    setChecked(true);
+  };
+
+  if (isSolved) {
+    return (
+      <View style={styles.miniGameSolvedBlock}>
+        <MaterialIcons name="check-circle" size={20} color="#22c55e" />
+        <Text style={styles.miniGameSolvedText}>Zaman Çizelgesi Tamamlandı!</Text>
+        <Text style={styles.miniGameAciklama}>{timelineVerisi.sonuc}</Text>
+      </View>
+    );
+  }
+
+  return (
+    <View style={styles.timelineBlock}>
+      <View style={styles.gorselHeader}>
+        <MaterialIcons name="timeline" size={14} color="#C8372D" />
+        <Text style={[styles.gorselLabel, { color: "#C8372D" }]}>ZAMAN ÇİZELGESİ SIRALA</Text>
+      </View>
+      <Text style={styles.timelineAciklama}>{timelineVerisi.aciklama}</Text>
+      {order.map((ev, i) => (
+        <View key={ev.id} style={styles.timelineCard}>
+          <View style={styles.timelineIndex}>
+            <Text style={styles.timelineIndexText}>{i + 1}</Text>
+          </View>
+          <Text style={styles.timelineMetin} numberOfLines={3}>{ev.metin}</Text>
+          <View style={styles.timelineBtns}>
+            <Pressable
+              style={[styles.timelineBtn, i === 0 && styles.timelineBtnDisabled]}
+              onPress={() => moveUp(i)}
+              disabled={i === 0}
+            >
+              <MaterialIcons name="keyboard-arrow-up" size={20} color={i === 0 ? "#333" : "#D4A843"} />
+            </Pressable>
+            <Pressable
+              style={[styles.timelineBtn, i === order.length - 1 && styles.timelineBtnDisabled]}
+              onPress={() => moveDown(i)}
+              disabled={i === order.length - 1}
+            >
+              <MaterialIcons name="keyboard-arrow-down" size={20} color={i === order.length - 1 ? "#333" : "#D4A843"} />
+            </Pressable>
+          </View>
+        </View>
+      ))}
+      <Pressable style={styles.timelineVerifyBtn} onPress={verify}>
+        <MaterialIcons name="check" size={16} color="#0F1117" />
+        <Text style={styles.timelineVerifyText}>Sırayı Doğrula</Text>
+      </Pressable>
+      {wrong && <Text style={styles.timelineWrong}>Yanlış sıra — tekrar dene</Text>}
+    </View>
+  );
+}
+
+export default function ClueCard({
+  clue,
+  index,
+  isRevealed,
+  isBonus,
+  isSolved = false,
+  onRevealBonus,
+  onSolveMechanic,
+}: Props) {
   const colors = useColors();
   const opacity = useSharedValue(isRevealed ? 1 : isBonus ? 0.9 : 0.4);
   const translateY = useSharedValue(isRevealed ? 0 : 4);
@@ -91,6 +502,7 @@ export default function ClueCard({ clue, index, isRevealed, isBonus, onRevealBon
   }));
 
   const meta = CLUE_META[clue.type] ?? CLUE_META.direct;
+  const mechanic = clue.mechanicType ?? "text";
 
   const handleBonusReveal = () => {
     Alert.alert(
@@ -159,6 +571,69 @@ export default function ClueCard({ clue, index, isRevealed, isBonus, onRevealBon
     );
   }
 
+  const renderMechanicContent = () => {
+    switch (mechanic) {
+      case "gorsel_ipucu":
+        return clue.gorselAciklama ? (
+          <GorselIpucuBlock aciklama={clue.gorselAciklama} />
+        ) : null;
+
+      case "ses_kaydi":
+        return clue.sesMetni ? (
+          <SesKaydiBlock sesMetni={clue.sesMetni} />
+        ) : null;
+
+      case "tanik_yuzlesme":
+        return clue.yuzlesmeDialogu ? (
+          <TanikYuzlesmeBlock dialoglar={clue.yuzlesmeDialogu} />
+        ) : null;
+
+      case "sifreli_mesaj":
+        return clue.sifre ? (
+          <SifreliMesajBlock sifre={clue.sifre} />
+        ) : null;
+
+      case "phone_chain":
+        return clue.phoneVerisi ? (
+          <PhoneChainBlock phoneVerisi={clue.phoneVerisi} />
+        ) : null;
+
+      case "anagram":
+        return clue.anagramVerisi ? (
+          <AnagramBlock
+            anagramVerisi={clue.anagramVerisi}
+            isSolved={isSolved}
+            onSolve={() => onSolveMechanic?.()}
+          />
+        ) : null;
+
+      case "dna_match":
+        return clue.dnaVerisi ? (
+          <DnaMatchBlock
+            dnaVerisi={clue.dnaVerisi}
+            isSolved={isSolved}
+            onSolve={() => onSolveMechanic?.()}
+          />
+        ) : null;
+
+      case "timeline_sort":
+        return clue.timelineVerisi ? (
+          <TimelineSortBlock
+            timelineVerisi={clue.timelineVerisi}
+            isSolved={isSolved}
+            onSolve={() => onSolveMechanic?.()}
+          />
+        ) : null;
+
+      default:
+        return null;
+    }
+  };
+
+  const mechanicContent = isRevealed ? renderMechanicContent() : null;
+  const showDeductionHint = clue.deductionHint && isRevealed &&
+    (mechanic === "text" || mechanic === "gorsel_ipucu" || mechanic === "ses_kaydi" || mechanic === "tanik_yuzlesme" || mechanic === "sifreli_mesaj" || mechanic === "phone_chain" || isSolved);
+
   return (
     <Animated.View style={[styles.container, animStyle]}>
       <View
@@ -189,7 +664,14 @@ export default function ClueCard({ clue, index, isRevealed, isBonus, onRevealBon
             İpucu {index + 1}
           </Text>
         </View>
+
         <Text style={[styles.clueText, { color: colors.foreground }]}>{clue.text}</Text>
+
+        {mechanicContent}
+
+        {showDeductionHint && clue.deductionHint ? (
+          <DeductionHint hint={clue.deductionHint} />
+        ) : null}
       </View>
     </Animated.View>
   );
@@ -246,6 +728,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 21,
     fontWeight: "400",
+    marginBottom: 8,
   },
   lockedBody: {
     gap: 10,
@@ -284,5 +767,541 @@ const styles = StyleSheet.create({
   penaltyTagText: {
     fontSize: 10,
     fontWeight: "700",
+  },
+  deductionHint: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+    gap: 5,
+    marginTop: 8,
+    backgroundColor: "#D4A84310",
+    borderRadius: 6,
+    padding: 7,
+    borderLeftWidth: 2,
+    borderLeftColor: "#D4A84366",
+  },
+  deductionHintText: {
+    fontSize: 12,
+    color: "#D4A843aa",
+    flex: 1,
+    lineHeight: 17,
+    fontStyle: "italic",
+  },
+  gorselBlock: {
+    backgroundColor: "#1a1400",
+    borderRadius: 8,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: "#D4A84344",
+    marginTop: 6,
+  },
+  gorselHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 5,
+    marginBottom: 7,
+  },
+  gorselLabel: {
+    fontSize: 10,
+    fontWeight: "700",
+    color: "#D4A843",
+    letterSpacing: 0.8,
+  },
+  gorselText: {
+    fontSize: 13,
+    color: "#D4A843cc",
+    lineHeight: 19,
+    fontStyle: "italic",
+  },
+  sesBlock: {
+    backgroundColor: "#0a0f1e",
+    borderRadius: 8,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: "#3b82f644",
+    marginTop: 6,
+  },
+  sesHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 5,
+    marginBottom: 7,
+  },
+  sesLabel: {
+    fontSize: 10,
+    fontWeight: "700",
+    color: "#3b82f6",
+    letterSpacing: 0.8,
+    flex: 1,
+  },
+  sesBadge: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
+  },
+  sesDot: {
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+    backgroundColor: "#C8372D",
+  },
+  sesRec: {
+    fontSize: 9,
+    fontWeight: "700",
+    color: "#C8372D",
+    letterSpacing: 0.5,
+  },
+  sesText: {
+    fontSize: 13,
+    color: "#8cb4ff",
+    lineHeight: 19,
+    fontStyle: "italic",
+  },
+  yuzlesmeBlock: {
+    marginTop: 6,
+    gap: 8,
+  },
+  yuzlesmeRow: {
+    gap: 4,
+  },
+  soruBubble: {
+    flexDirection: "row",
+    gap: 6,
+    backgroundColor: "#1A1F2E",
+    borderRadius: 7,
+    padding: 8,
+    alignSelf: "flex-start",
+    maxWidth: "90%",
+  },
+  soruLabel: {
+    fontSize: 11,
+    fontWeight: "700",
+    color: "#666",
+  },
+  soruText: {
+    fontSize: 13,
+    color: "#aaa",
+    lineHeight: 18,
+    flex: 1,
+  },
+  cevapBubble: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 6,
+    backgroundColor: "#1e2a1e",
+    borderRadius: 7,
+    padding: 8,
+    alignSelf: "flex-end",
+    maxWidth: "90%",
+    borderWidth: 1,
+    borderColor: "#22c55e33",
+  },
+  cevapBubbleYalan: {
+    backgroundColor: "#2a1010",
+    borderColor: "#C8372D44",
+  },
+  cevapLabel: {
+    fontSize: 11,
+    fontWeight: "700",
+    color: "#22c55e",
+  },
+  cevapText: {
+    fontSize: 13,
+    color: "#aaa",
+    lineHeight: 18,
+    flex: 1,
+  },
+  cevapTextYalan: {
+    color: "#ff8080",
+    textDecorationLine: "line-through",
+  },
+  yalanBadge: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 3,
+    backgroundColor: "#C8372D22",
+    borderRadius: 4,
+    paddingHorizontal: 5,
+    paddingVertical: 2,
+    marginTop: 2,
+  },
+  yalanText: {
+    fontSize: 9,
+    fontWeight: "700",
+    color: "#C8372D",
+    letterSpacing: 0.5,
+  },
+  sifreBlock: {
+    backgroundColor: "#0f0a1a",
+    borderRadius: 8,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: "#9333ea44",
+    marginTop: 6,
+    gap: 6,
+  },
+  sifreText: {
+    fontFamily: "monospace",
+    fontSize: 14,
+    color: "#9333ea",
+    letterSpacing: 1.5,
+    lineHeight: 22,
+  },
+  sifreDivider: {
+    height: 1,
+    backgroundColor: "#9333ea22",
+    marginVertical: 2,
+  },
+  sifreIpucu: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 5,
+  },
+  sifreIpucuText: {
+    fontSize: 11,
+    color: "#9333ea88",
+    fontStyle: "italic",
+  },
+  sifreAciklama: {
+    fontSize: 12,
+    color: "#c084fc",
+    lineHeight: 18,
+  },
+  phoneBlock: {
+    marginTop: 6,
+    gap: 8,
+  },
+  phoneAciklama: {
+    fontSize: 12,
+    color: "#6ee7e7",
+    lineHeight: 17,
+    fontStyle: "italic",
+    marginBottom: 4,
+  },
+  phoneCard: {
+    backgroundColor: "#0a1a1a",
+    borderRadius: 8,
+    padding: 9,
+    borderWidth: 1,
+    borderColor: "#14b8a633",
+  },
+  phoneCardTop: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
+    marginBottom: 5,
+    flexWrap: "wrap",
+  },
+  phoneFrom: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 3,
+  },
+  phoneFromText: {
+    fontSize: 11,
+    fontWeight: "600",
+    color: "#14b8a6",
+  },
+  phoneTo: {},
+  phoneToText: {
+    fontSize: 11,
+    color: "#6ee7e7",
+    fontWeight: "500",
+  },
+  phoneSaat: {
+    fontSize: 10,
+    color: "#444",
+    marginLeft: "auto",
+  },
+  phoneIcerik: {
+    fontSize: 12,
+    color: "#8ee8e8",
+    lineHeight: 17,
+    fontStyle: "italic",
+  },
+  phoneConnector: {
+    alignItems: "center",
+    paddingTop: 4,
+  },
+  phoneConnectorLine: {
+    width: 1,
+    height: 10,
+    backgroundColor: "#14b8a633",
+  },
+  phoneSonuc: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+    gap: 5,
+    backgroundColor: "#14b8a610",
+    borderRadius: 6,
+    padding: 7,
+  },
+  phoneSonucText: {
+    fontSize: 12,
+    color: "#6ee7e7aa",
+    flex: 1,
+    lineHeight: 17,
+    fontStyle: "italic",
+  },
+  anagramBlock: {
+    backgroundColor: "#1a1400",
+    borderRadius: 8,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: "#f59e0b44",
+    marginTop: 6,
+    gap: 8,
+  },
+  anagramKarisik: {
+    fontSize: 20,
+    fontWeight: "800",
+    color: "#f59e0b",
+    letterSpacing: 4,
+    textAlign: "center",
+  },
+  anagramIpucu: {
+    fontSize: 11,
+    color: "#f59e0b88",
+    fontStyle: "italic",
+    textAlign: "center",
+  },
+  anagramInputRow: {
+    flexDirection: "row",
+    gap: 8,
+  },
+  anagramInput: {
+    flex: 1,
+    backgroundColor: "#0F1117",
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: "#f59e0b44",
+    color: "#f59e0b",
+    fontSize: 15,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    letterSpacing: 2,
+  },
+  anagramInputError: {
+    borderColor: "#C8372D",
+  },
+  anagramBtn: {
+    backgroundColor: "#f59e0b",
+    borderRadius: 8,
+    width: 42,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  anagramWrong: {
+    fontSize: 11,
+    color: "#C8372D",
+    textAlign: "center",
+  },
+  dnaBlock: {
+    backgroundColor: "#0a1a15",
+    borderRadius: 8,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: "#14b8a644",
+    marginTop: 6,
+    gap: 8,
+  },
+  dnaAciklama: {
+    fontSize: 12,
+    color: "#6ee7e7aa",
+    fontStyle: "italic",
+    lineHeight: 17,
+  },
+  dnaOrnekCard: {
+    backgroundColor: "#0F1117",
+    borderRadius: 6,
+    padding: 8,
+    borderWidth: 1,
+    borderColor: "#14b8a6",
+  },
+  dnaOrnekLabel: {
+    fontSize: 9,
+    fontWeight: "700",
+    color: "#14b8a6",
+    letterSpacing: 0.8,
+    marginBottom: 6,
+  },
+  dnaLokusRow: {
+    flexDirection: "row",
+    gap: 8,
+  },
+  dnaLokus: {
+    alignItems: "center",
+    flex: 1,
+  },
+  dnaLokusKey: {
+    fontSize: 9,
+    color: "#555",
+    fontWeight: "600",
+    marginBottom: 2,
+  },
+  dnaLokusVal: {
+    fontSize: 13,
+    color: "#aaa",
+    fontWeight: "700",
+    fontFamily: "monospace",
+  },
+  dnaLokusMatch: {
+    color: "#22c55e",
+  },
+  dnaSelectLabel: {
+    fontSize: 11,
+    color: "#6ee7e7",
+    fontStyle: "italic",
+  },
+  dnaCard: {
+    backgroundColor: "#0F1117",
+    borderRadius: 6,
+    padding: 8,
+    borderWidth: 1,
+    borderColor: "#333",
+  },
+  dnaCardSelected: {
+    borderColor: "#14b8a6",
+    backgroundColor: "#0a1a15",
+  },
+  dnaCardWrong: {
+    borderColor: "#C8372D",
+    backgroundColor: "#1a0a0a",
+  },
+  dnaCardCorrect: {
+    borderColor: "#22c55e",
+    backgroundColor: "#0a1a0a",
+  },
+  dnaSuspectId: {
+    fontSize: 10,
+    fontWeight: "700",
+    color: "#555",
+    letterSpacing: 0.5,
+    marginBottom: 5,
+  },
+  dnaConfirmBtn: {
+    backgroundColor: "#14b8a6",
+    borderRadius: 8,
+    paddingVertical: 9,
+    alignItems: "center",
+  },
+  dnaConfirmBtnDisabled: {
+    backgroundColor: "#1a2a2a",
+  },
+  dnaConfirmText: {
+    fontSize: 13,
+    fontWeight: "700",
+    color: "#0F1117",
+  },
+  dnaWrong: {
+    fontSize: 11,
+    color: "#C8372D",
+    textAlign: "center",
+  },
+  timelineBlock: {
+    backgroundColor: "#1a0a0a",
+    borderRadius: 8,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: "#C8372D44",
+    marginTop: 6,
+    gap: 8,
+  },
+  timelineAciklama: {
+    fontSize: 12,
+    color: "#ff8080aa",
+    fontStyle: "italic",
+    lineHeight: 17,
+  },
+  timelineCard: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+    backgroundColor: "#0F1117",
+    borderRadius: 6,
+    padding: 8,
+    borderWidth: 1,
+    borderColor: "#C8372D33",
+  },
+  timelineIndex: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    backgroundColor: "#C8372D22",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  timelineIndexText: {
+    fontSize: 11,
+    fontWeight: "700",
+    color: "#C8372D",
+  },
+  timelineMetin: {
+    flex: 1,
+    fontSize: 12,
+    color: "#ccc",
+    lineHeight: 17,
+  },
+  timelineBtns: {
+    flexDirection: "column",
+  },
+  timelineBtn: {
+    padding: 2,
+  },
+  timelineBtnDisabled: {
+    opacity: 0.2,
+  },
+  timelineVerifyBtn: {
+    backgroundColor: "#C8372D",
+    borderRadius: 8,
+    paddingVertical: 9,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 6,
+  },
+  timelineVerifyText: {
+    fontSize: 13,
+    fontWeight: "700",
+    color: "#fff",
+  },
+  timelineWrong: {
+    fontSize: 11,
+    color: "#C8372D",
+    textAlign: "center",
+  },
+  miniGameSolvedBlock: {
+    backgroundColor: "#0a1a0a",
+    borderRadius: 8,
+    padding: 12,
+    borderWidth: 1,
+    borderColor: "#22c55e44",
+    marginTop: 6,
+    alignItems: "center",
+    gap: 6,
+  },
+  miniGameSolvedText: {
+    fontSize: 14,
+    fontWeight: "700",
+    color: "#22c55e",
+  },
+  miniGameAnswer: {
+    backgroundColor: "#0F1117",
+    borderRadius: 6,
+    paddingHorizontal: 12,
+    paddingVertical: 5,
+    borderWidth: 1,
+    borderColor: "#22c55e44",
+  },
+  miniGameAnswerText: {
+    fontSize: 16,
+    fontWeight: "800",
+    color: "#22c55e",
+    letterSpacing: 2,
+  },
+  miniGameAciklama: {
+    fontSize: 12,
+    color: "#22c55eaa",
+    lineHeight: 17,
+    textAlign: "center",
   },
 });
