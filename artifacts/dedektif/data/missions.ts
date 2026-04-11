@@ -15,7 +15,7 @@ export type RequirementType =
 export interface MissionRequirement {
   type: RequirementType;
   value: number;
-  difficulty?: "caylik" | "dedektif" | "baskomiser";
+  difficulty?: "caylak" | "dedektif" | "baskomiser";
   timeLimit?: number;
 }
 
