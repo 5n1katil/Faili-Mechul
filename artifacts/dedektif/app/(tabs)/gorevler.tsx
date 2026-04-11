@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, type ComponentProps } from "react";
 import {
   Platform,
   ScrollView,
@@ -8,7 +8,6 @@ import {
   type DimensionValue,
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
-import type { ComponentProps } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Animated, { FadeInDown } from "react-native-reanimated";
 

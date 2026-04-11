@@ -39,6 +39,7 @@ interface MissionContextType {
   isAwarded: (missionId: string) => boolean;
   isSeen: (missionId: string) => boolean;
   unseenCompletedCount: number;
+  pendingDailyWeeklyCount: number;
   markAllSeen: () => void;
   dailyTimeLeft: string;
   weeklyTimeLeft: string;
@@ -407,6 +408,15 @@ export function MissionProvider({ children }: { children: React.ReactNode }) {
     return awardedIds.filter((id) => !seenIds.includes(id)).length;
   }, [awardedIds, seenIds]);
 
+  const pendingDailyWeeklyCount = useMemo(() => {
+    const periodicMissions = [...DAILY_MISSIONS, ...WEEKLY_MISSIONS];
+    return periodicMissions.filter((m) => {
+      if (awardedIds.includes(m.id)) return false;
+      const prog = progressMap.get(m.id);
+      return prog ? prog.completed : false;
+    }).length;
+  }, [awardedIds, progressMap]);
+
   const markAllSeen = useCallback(() => {
     const newSeenIds = [...new Set([...seenIds, ...awardedIds])];
     setSeenIds(newSeenIds);
@@ -427,6 +437,7 @@ export function MissionProvider({ children }: { children: React.ReactNode }) {
         isAwarded,
         isSeen,
         unseenCompletedCount,
+        pendingDailyWeeklyCount,
         markAllSeen,
         dailyTimeLeft,
         weeklyTimeLeft,
