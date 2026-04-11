@@ -42,6 +42,8 @@ interface MissionContextType {
   markAllSeen: () => void;
   dailyTimeLeft: string;
   weeklyTimeLeft: string;
+  pendingCelebration: Mission[];
+  clearCelebration: () => void;
 }
 
 const MissionContext = createContext<MissionContextType | null>(null);
@@ -70,25 +72,39 @@ function isThisWeek(dateStr: string): boolean {
   return d >= monday && d <= sunday;
 }
 
+function rankedOnly(history: GameRecord[]): GameRecord[] {
+  return history.filter((h) => h.ranked !== false);
+}
+
+function uniqueByPuzzle(records: GameRecord[]): GameRecord[] {
+  const seen = new Set<string>();
+  return records.filter((h) => {
+    if (seen.has(h.puzzleId)) return false;
+    seen.add(h.puzzleId);
+    return true;
+  });
+}
+
 function computeProgress(
   mission: Mission,
   gameHistory: GameRecord[],
   profile: PlayerProfile
 ): number {
-  const completed = gameHistory.filter((h) => h.completed);
+  const ranked = rankedOnly(gameHistory);
+  const completed = ranked.filter((h) => h.completed);
   const today = getToday();
 
   switch (mission.type) {
     case "daily": {
-      const todayRecords = completed.filter((h) => h.date === today);
+      const todayRecords = uniqueByPuzzle(completed.filter((h) => h.date === today));
       return _computeForPeriod(mission, todayRecords, profile);
     }
     case "weekly": {
-      const weekRecords = completed.filter((h) => isThisWeek(h.date));
+      const weekRecords = uniqueByPuzzle(completed.filter((h) => isThisWeek(h.date)));
       return _computeForPeriod(mission, weekRecords, profile);
     }
     case "achievement": {
-      return _computeAchievement(mission, completed, profile);
+      return _computeAchievement(mission, uniqueByPuzzle(completed), profile);
     }
   }
 }
@@ -191,11 +207,22 @@ export function MissionProvider({ children }: { children: React.ReactNode }) {
   const [lastDailyDate, setLastDailyDate] = useState<string>("");
   const [lastWeeklyMonday, setLastWeeklyMonday] = useState<string>("");
   const [loaded, setLoaded] = useState(false);
+  const [pendingCelebration, setPendingCelebration] = useState<Mission[]>([]);
 
   const [dailySeconds, setDailySeconds] = useState(getSecondsUntilMidnight);
   const [weeklySeconds, setWeeklySeconds] = useState(getSecondsUntilNextMonday);
 
   const prevHistoryLength = useRef(0);
+
+  const awardedIdsRef = useRef<string[]>([]);
+  const seenIdsRef = useRef<string[]>([]);
+  const lastDailyDateRef = useRef<string>("");
+  const lastWeeklyMondayRef = useRef<string>("");
+
+  useEffect(() => { awardedIdsRef.current = awardedIds; }, [awardedIds]);
+  useEffect(() => { seenIdsRef.current = seenIds; }, [seenIds]);
+  useEffect(() => { lastDailyDateRef.current = lastDailyDate; }, [lastDailyDate]);
+  useEffect(() => { lastWeeklyMondayRef.current = lastWeeklyMonday; }, [lastWeeklyMonday]);
 
   useEffect(() => {
     const id = setInterval(() => {
@@ -260,16 +287,64 @@ export function MissionProvider({ children }: { children: React.ReactNode }) {
     []
   );
 
+  const applyResets = useCallback(() => {
+    const today = getToday();
+    const monday = getCurrentWeekMonday();
+    const ldd = lastDailyDateRef.current;
+    const lwm = lastWeeklyMondayRef.current;
+
+    if (ldd === today && lwm === monday) return;
+
+    let aids = [...awardedIdsRef.current];
+    let sids = [...seenIdsRef.current];
+    let newLdd = ldd;
+    let newLwm = lwm;
+
+    if (ldd && ldd !== today) {
+      const dailyIds = new Set(DAILY_MISSIONS.map((m) => m.id));
+      aids = aids.filter((id) => !dailyIds.has(id));
+      sids = sids.filter((id) => !dailyIds.has(id));
+      newLdd = today;
+    }
+
+    if (lwm && lwm !== monday) {
+      const weeklyIds = new Set(WEEKLY_MISSIONS.map((m) => m.id));
+      aids = aids.filter((id) => !weeklyIds.has(id));
+      sids = sids.filter((id) => !weeklyIds.has(id));
+      newLwm = monday;
+    }
+
+    setAwardedIds(aids);
+    setSeenIds(sids);
+    setLastDailyDate(newLdd);
+    setLastWeeklyMonday(newLwm);
+    saveState(aids, sids, newLdd, newLwm);
+  }, [saveState]);
+
+  useEffect(() => {
+    if (!loaded) return;
+    applyResets();
+  }, [loaded]);
+
+  useEffect(() => {
+    if (!loaded) return;
+    const id = setInterval(applyResets, 60_000);
+    return () => clearInterval(id);
+  }, [loaded, applyResets]);
+
   useEffect(() => {
     if (!loaded) return;
     if (gameHistory.length === prevHistoryLength.current) return;
     prevHistoryLength.current = gameHistory.length;
 
+    const currentAwardedIds = awardedIdsRef.current;
+    const currentSeenIds = seenIdsRef.current;
+
     const newlyCompleted: string[] = [];
     let totalBonus = 0;
 
     for (const mission of ALL_MISSIONS) {
-      if (awardedIds.includes(mission.id)) continue;
+      if (currentAwardedIds.includes(mission.id)) continue;
       const progress = computeProgress(mission, gameHistory, profile);
       if (progress >= mission.requirement.value) {
         newlyCompleted.push(mission.id);
@@ -278,50 +353,16 @@ export function MissionProvider({ children }: { children: React.ReactNode }) {
     }
 
     if (newlyCompleted.length > 0) {
-      const newAwardedIds = [...awardedIds, ...newlyCompleted];
+      const newAwardedIds = [...currentAwardedIds, ...newlyCompleted];
       setAwardedIds(newAwardedIds);
-      saveState(newAwardedIds, seenIds, lastDailyDate, lastWeeklyMonday);
+      saveState(newAwardedIds, currentSeenIds, lastDailyDateRef.current, lastWeeklyMondayRef.current);
       if (totalBonus > 0) {
         addBonusPoints(totalBonus);
       }
+      const celebrationMissions = ALL_MISSIONS.filter((m) => newlyCompleted.includes(m.id));
+      setPendingCelebration(celebrationMissions);
     }
   }, [gameHistory, loaded]);
-
-  useEffect(() => {
-    if (!loaded) return;
-    const today = getToday();
-    const monday = getCurrentWeekMonday();
-
-    let changed = false;
-    let newAids = [...awardedIds];
-    let newSids = [...seenIds];
-    let newLdd = lastDailyDate;
-    let newLwm = lastWeeklyMonday;
-
-    if (lastDailyDate && lastDailyDate !== today) {
-      const dailyIds = new Set(DAILY_MISSIONS.map((m) => m.id));
-      newAids = newAids.filter((id) => !dailyIds.has(id));
-      newSids = newSids.filter((id) => !dailyIds.has(id));
-      newLdd = today;
-      changed = true;
-    }
-
-    if (lastWeeklyMonday && lastWeeklyMonday !== monday) {
-      const weeklyIds = new Set(WEEKLY_MISSIONS.map((m) => m.id));
-      newAids = newAids.filter((id) => !weeklyIds.has(id));
-      newSids = newSids.filter((id) => !weeklyIds.has(id));
-      newLwm = monday;
-      changed = true;
-    }
-
-    if (changed) {
-      setAwardedIds(newAids);
-      setSeenIds(newSids);
-      setLastDailyDate(newLdd);
-      setLastWeeklyMonday(newLwm);
-      saveState(newAids, newSids, newLdd, newLwm);
-    }
-  }, [loaded]);
 
   const progressMap = useMemo(() => {
     const map = new Map<string, MissionProgress>();
@@ -372,6 +413,10 @@ export function MissionProvider({ children }: { children: React.ReactNode }) {
     saveState(awardedIds, newSeenIds, lastDailyDate, lastWeeklyMonday);
   }, [awardedIds, seenIds, lastDailyDate, lastWeeklyMonday, saveState]);
 
+  const clearCelebration = useCallback(() => {
+    setPendingCelebration([]);
+  }, []);
+
   const dailyTimeLeft = formatCountdown(dailySeconds);
   const weeklyTimeLeft = formatCountdown(weeklySeconds);
 
@@ -385,6 +430,8 @@ export function MissionProvider({ children }: { children: React.ReactNode }) {
         markAllSeen,
         dailyTimeLeft,
         weeklyTimeLeft,
+        pendingCelebration,
+        clearCelebration,
       }}
     >
       {children}

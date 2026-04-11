@@ -5,10 +5,14 @@ import {
   StyleSheet,
   Text,
   View,
+  type DimensionValue,
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
+import type { ComponentProps } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Animated, { FadeInDown } from "react-native-reanimated";
+
+type MatIconName = ComponentProps<typeof MaterialIcons>["name"];
 
 import { useColors } from "@/hooks/useColors";
 import { useMission } from "@/context/MissionContext";
@@ -32,12 +36,13 @@ function ProgressBar({
   color: string;
 }) {
   const ratio = Math.min(current / target, 1);
+  const fillWidth: DimensionValue = `${Math.round(ratio * 100)}%`;
   return (
     <View style={styles.progressTrack}>
       <View
         style={[
           styles.progressFill,
-          { width: `${ratio * 100}%` as any, backgroundColor: color },
+          { width: fillWidth, backgroundColor: color },
         ]}
       />
     </View>
@@ -78,7 +83,7 @@ function MissionCard({ mission }: { mission: Mission }) {
               <MaterialIcons name="check-circle" size={20} color={colors.success} />
             ) : (
               <MaterialIcons
-                name={mission.icon as any}
+                name={mission.icon as MatIconName}
                 size={20}
                 color={tierColor}
               />
@@ -165,13 +170,13 @@ function SectionHeader({
   subtitle,
 }: {
   title: string;
-  icon: string;
+  icon: MatIconName;
   subtitle?: string;
 }) {
   const colors = useColors();
   return (
     <View style={styles.sectionHeaderRow}>
-      <MaterialIcons name={icon as any} size={20} color={colors.primary} />
+      <MaterialIcons name={icon} size={20} color={colors.primary} />
       <View style={styles.sectionHeaderText}>
         <Text style={[styles.sectionTitle, { color: colors.foreground }]}>
           {title}

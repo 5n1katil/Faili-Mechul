@@ -64,6 +64,7 @@ export interface GameRecord {
   wrongGuesses: number;
   penaltySeconds: number;
   completed: boolean;
+  ranked?: boolean;
   solution: {
     suspectId: string;
     weaponId: string;
@@ -525,6 +526,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
           wrongGuesses: gameState.wrongGuesses,
           penaltySeconds: 0,
           completed: true,
+          ranked: gameState.isRanked,
           solution: { suspectId, weaponId, locationId },
         };
 
