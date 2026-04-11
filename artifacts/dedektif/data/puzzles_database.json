@@ -400,7 +400,7 @@
             { "id": "s4", "name": "Arkeologun Asistanı Fatma", "icon": "👩‍🔬", "description": "Maktulün 5 yıllık asistanı. Haritanın varlığını bilen tek Türk.", "detail": "28 yaşında, zeki, korku içinde görünüyor." }
           ],
           "weapons": [
-            { "id": "w1", "name": "Zehirli Şarap", "icon": "🧪", "description": "Rum meyhanede içilen şaraba katılan madde." },
+            { "id": "w1", "name": "Zehirli Şarap", "icon": "☠️", "description": "Rum meyhanede içilen şaraba katılan madde." },
             { "id": "w2", "name": "Antika Hançer", "icon": "🗡️", "description": "Bizans dönemine ait hançer." },
             { "id": "w3", "name": "Taş Blok", "icon": "🪨", "description": "Yapı iskeleti taşı." },
             { "id": "w4", "name": "Kimyasal Gaz", "icon": "☁️", "description": "Kapalı alanda serbest bırakılan toksik gaz." }
@@ -601,7 +601,7 @@
           "atmosphere": "Yapay ışıklar söndü. Set boş. Sahte dekor gerçek bir cinayet sahnesi oldu.",
           "suspects": [
             { "id": "s1", "name": "Baş Oyuncu Derek Stone", "icon": "🎭", "description": "Filmin yıldızı. Senaryodaki rolünün kısaltıldığını öğrendi.", "detail": "35 yaşında, ego sorunu olan Hollywood starı." },
-            { "id": "s2", "name": "Yardımcı Yönetmen Priya Shah", "icon": "🎥", "description": "Rakip stüdyoya iş görüşmesi yapıyor, sızdırma şüphesi var.", "detail": "38 yaşında, kararlı, hırslı." },
+            { "id": "s2", "name": "Yardımcı Yönetmen Priya Shah", "icon": "💼", "description": "Rakip stüdyoya iş görüşmesi yapıyor, sızdırma şüphesi var.", "detail": "38 yaşında, kararlı, hırslı." },
             { "id": "s3", "name": "Set Güvenlik Görevlisi Tom Brady", "icon": "💂", "description": "Stüdyo güvenliği. Gece vardiyasında tek yetkili.", "detail": "50 yaşında, emekli polis, sert görünümlü." }
           ],
           "weapons": [
@@ -877,7 +877,7 @@
           "atmosphere": "Hills'in tepesi. Işıklı havuz. Servet ve gölge.",
           "suspects": [
             { "id": "s1", "name": "Yeğen Brandon Vale", "icon": "👨", "description": "Eski vasiyetnamede tek mirasçı. Yeni vasiyeti reddetti.", "detail": "29 yaşında, bağımlılık geçmişi." },
-            { "id": "s2", "name": "Yeni Sevgili Marco Silva", "icon": "🧑", "description": "6 aylık ilişki. Yeni vasiyette 40% miras.", "detail": "31 yaşında, Brezilya asıllı, önceki ilişkileri bilinmiyor." },
+            { "id": "s2", "name": "Yeni Sevgili Marco Silva", "icon": "🎵", "description": "6 aylık ilişki. Yeni vasiyette 40% miras.", "detail": "31 yaşında, Brezilya asıllı, önceki ilişkileri bilinmiyor." },
             { "id": "s3", "name": "Avukat Dana Price", "icon": "⚖️", "description": "Vasiyeti değiştiren avukat. Komisyon meselesi var.", "detail": "55 yaşında, soğuk profisyonel." },
             { "id": "s4", "name": "Eski Asistan Grace Lee", "icon": "👩‍💼", "description": "10 yıllık sadakat ama vasiyette adı yok.", "detail": "45 yaşında, kırık kalpli ve sessiz öfkeli." }
           ],
@@ -1000,7 +1000,7 @@
           "suspects": [
             { "id": "s1", "name": "Komutan Lyra Chen", "icon": "👩‍🚀", "description": "İstasyon komutanı. Formülün askeri uygulamasına karşı çıkan bilim insanıyla anlaşmazlığı var.", "detail": "42 yaşında, disiplinli, şüpheli geçmiş." },
             { "id": "s2", "name": "Yapay Zeka ARES-3", "icon": "🤖", "description": "İstasyonun yönetim yapay zekası. Formüle erişimi var ama 'duygusal karar veremez'.", "detail": "7 yıllık istasyon YZ'si, son güncelleme tartışmalı." },
-            { "id": "s3", "name": "Tıp Mühendisi Osman Demir", "icon": "👨‍⚕️", "description": "İstasyonun sağlık sorumlusu. Formülü rakip şirkete sızdırdığı şüphesi var.", "detail": "35 yaşında, gergin, Türkiye Uzay Ajansı burslusu." }
+            { "id": "s3", "name": "Tıp Mühendisi Osman Demir", "icon": "🔧", "description": "İstasyonun sağlık sorumlusu. Formülü rakip şirkete sızdırdığı şüphesi var.", "detail": "35 yaşında, gergin, Türkiye Uzay Ajansı burslusu." }
           ],
           "weapons": [
             { "id": "w1", "name": "Oksijen Kesimi", "icon": "💨", "description": "Kişisel oksijen maskesi devre dışı bırakıldı." },
@@ -1172,13 +1172,13 @@
             { "id": "s3", "name": "Lisans Direktörü Haruto", "icon": "📋", "description": "Klonun yasal statüsünü reddedecekti. Bu klon için ölüm emri anlamına gelir.", "detail": "45 yaşında, bürokratik, kurallara bağlı." }
           ],
           "weapons": [
-            { "id": "w1", "name": "Genetik Bozucu Madde", "icon": "🧪", "description": "DNA'yı çökerten kimyasal." },
+            { "id": "w1", "name": "Genetik Bozucu Madde", "icon": "☢️", "description": "DNA'yı çökerten kimyasal." },
             { "id": "w2", "name": "Kriyojenik Sıvı", "icon": "❄️", "description": "Dondurucu madde." },
             { "id": "w3", "name": "Nöral Kesici", "icon": "⚡", "description": "Nöral aktiviteyi kesen cihaz." }
           ],
           "locations": [
             { "id": "l1", "name": "Klon Odasý", "icon": "🧬", "description": "Klonların tutulduğu özel oda." },
-            { "id": "l2", "name": "Genetik Lab", "icon": "🔬", "description": "Ana araştırma laboratuvarı." },
+            { "id": "l2", "name": "Genetik Lab", "icon": "🖥️", "description": "Ana araştırma laboratuvarı." },
             { "id": "l3", "name": "Lisans Ofisi", "icon": "📄", "description": "Haruto'nun ofisi." }
           ],
           "clues": [
@@ -1272,7 +1272,7 @@
           "locations": [
             { "id": "l1", "name": "Deney Odası", "icon": "⚗️", "description": "Ana karanlık madde deney odası." },
             { "id": "l2", "name": "Enerji Merkezi", "icon": "⚡", "description": "Üssün güç santrali." },
-            { "id": "l3", "name": "Dış Yüzey", "icon": "🌨️", "description": "Europa buz yüzeyi — takım elbise zorunlu." },
+            { "id": "l3", "name": "Dış Yüzey", "icon": "🌑", "description": "Europa buz yüzeyi — takım elbise zorunlu." },
             { "id": "l4", "name": "Veri Merkezi", "icon": "💾", "description": "Tüm araştırma verilerinin depolandığı yer." }
           ],
           "clues": [
@@ -1493,7 +1493,7 @@
             { "id": "s3", "name": "Gizemli Hayran Karl", "icon": "🌹", "description": "Her gecenin ardından gülden buket gönderen anonim hayran.", "detail": "35 yaşında, obsesif, zararsız gibi görünüyor ama..." }
           ],
           "weapons": [
-            { "id": "w1", "name": "Zehirli Çiçek Buketi", "icon": "💐", "description": "Çiçeklerin yapraklarına zehir sürülmüş." },
+            { "id": "w1", "name": "Zehirli Çiçek Buketi", "icon": "☠️", "description": "Çiçeklerin yapraklarına zehir sürülmüş." },
             { "id": "w2", "name": "Boğazlama", "icon": "🪢", "description": "Sahne halatı." },
             { "id": "w3", "name": "Arsenik Şarap", "icon": "🍷", "description": "Kutlama şarabına katılan arsenik." }
           ],
@@ -1985,12 +1985,12 @@
           "weapons": [
             { "id": "w1", "name": "Eski Demir Boru", "icon": "🔧", "description": "Hastanenin çökmüş koridorlarından." },
             { "id": "w2", "name": "Psikiyatrik İlaç", "icon": "💉", "description": "Hastanenin eski ilaç deposundan." },
-            { "id": "w3", "name": "Yüksekten Düşürme", "icon": "🌆", "description": "Çürük merdivenden." }
+            { "id": "w3", "name": "Yüksekten Düşürme", "icon": "🪜", "description": "Çürük merdivenden." }
           ],
           "locations": [
             { "id": "l1", "name": "Eski Koğuş", "icon": "🛏️", "description": "Boş hasta yatakları olan büyük koğuş." },
             { "id": "l2", "name": "İlaç Deposu", "icon": "💊", "description": "Yarı açık depo." },
-            { "id": "l3", "name": "Çatı Merdiveni", "icon": "🪜", "description": "Çürük tahta merdiven." }
+            { "id": "l3", "name": "Çatı Merdiveni", "icon": "🌆", "description": "Çürük tahta merdiven." }
           ],
           "clues": [
             {
@@ -2359,7 +2359,7 @@
           "weapons": [
             { "id": "w1", "name": "Deniz Halatı", "icon": "🪢", "description": "Gemi halatı." },
             { "id": "w2", "name": "Zehirli İçki", "icon": "🥃", "description": "Kaptan köşkünde viski." },
-            { "id": "w3", "name": "Taşıma Kancası", "icon": "🪝", "description": "Yük taşıma kancası." },
+            { "id": "w3", "name": "Taşıma Kancası", "icon": "🔨", "description": "Yük taşıma kancası." },
             { "id": "w4", "name": "Ateşli Silah", "icon": "🔫", "description": "Gemi güvenlik tabancası." }
           ],
           "locations": [
