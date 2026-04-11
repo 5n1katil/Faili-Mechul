@@ -148,25 +148,6 @@ export default function PaywallModal({ visible, onClose }: Props) {
               )}
             </Pressable>
 
-            <Pressable
-              onPress={handleRestore}
-              disabled={buying || restoring || isLoading}
-              style={({ pressed }) => [
-                styles.restoreBtn,
-                { borderColor: colors.border, opacity: (buying || restoring || pressed) ? 0.6 : 1 },
-              ]}
-              accessibilityRole="button"
-              accessibilityLabel="Önceki satın almalarımı geri yükle"
-            >
-              {restoring ? (
-                <ActivityIndicator color={colors.mutedForeground} size="small" />
-              ) : (
-                <Text style={[styles.restoreBtnText, { color: colors.mutedForeground }]}>
-                  Satın almalarımı geri yükle
-                </Text>
-              )}
-            </Pressable>
-
             <View style={styles.legalRow}>
               <Pressable
                 onPress={() => Linking.openURL(PRIVACY_URL)}
@@ -190,6 +171,25 @@ export default function PaywallModal({ visible, onClose }: Props) {
                 </Text>
               </Pressable>
             </View>
+
+            <Pressable
+              onPress={handleRestore}
+              disabled={buying || restoring || isLoading}
+              style={({ pressed }) => [
+                styles.restoreBtn,
+                { borderColor: colors.border, opacity: (buying || restoring || pressed) ? 0.6 : 1 },
+              ]}
+              accessibilityRole="button"
+              accessibilityLabel="Önceki satın almalarımı geri yükle"
+            >
+              {restoring ? (
+                <ActivityIndicator color={colors.mutedForeground} size="small" />
+              ) : (
+                <Text style={[styles.restoreBtnText, { color: colors.mutedForeground }]}>
+                  Satın almalarımı geri yükle
+                </Text>
+              )}
+            </Pressable>
 
             <Text style={[styles.legalNote, { color: colors.mutedForeground }]}>
               Tek seferlik ödeme · Abonelik yok · Aynı Apple ID / Google hesabıyla tüm cihazlarda geri yüklenebilir
