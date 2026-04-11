@@ -79,28 +79,6 @@ export interface PublicProfile {
   badges?: string[];
 }
 
-export type PlayerProfile = {
-  name: string;
-  avatar?: string;
-  bio?: string;
-  totalScore?: number;
-  gamesWon?: number;
-  maxStreak?: number;
-  avgSolveTimeSeconds?: number;
-};
-
-function mapPublicProfile(p: PublicProfile): PlayerProfile {
-  return {
-    name: p.displayName,
-    avatar: p.avatar,
-    bio: p.bio,
-    totalScore: p.stats?.totalScore,
-    gamesWon: p.stats?.gamesWon,
-    maxStreak: p.stats?.maxStreak,
-    avgSolveTimeSeconds: p.stats?.avgSolveTimeSeconds,
-  };
-}
-
 export async function fetchPublicProfile(playerId: string): Promise<PublicProfile | null> {
   try {
     const base = getApiBase();
@@ -113,9 +91,7 @@ export async function fetchPublicProfile(playerId: string): Promise<PublicProfil
 }
 
 export const apiClient = {
-  async getProfile(playerId: string): Promise<PlayerProfile | null> {
-    const raw = await fetchPublicProfile(playerId);
-    if (!raw) return null;
-    return mapPublicProfile(raw);
+  async getProfile(playerId: string): Promise<PublicProfile | null> {
+    return fetchPublicProfile(playerId);
   },
 };

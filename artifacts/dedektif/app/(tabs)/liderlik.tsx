@@ -288,7 +288,13 @@ export default function LiderlikScreen() {
             sortKey={sortKey}
             colors={colors}
             delay={index * 30}
-            onPress={() => router.push(`/public-profile/${item.profileId}` as any)}
+            onPress={() => {
+              if (item.isCurrentUser) {
+                router.push("/(tabs)/profil");
+              } else {
+                router.push({ pathname: "/public-profile/[playerId]", params: { playerId: item.profileId } });
+              }
+            }}
           />
         )}
         ItemSeparatorComponent={() => <View style={{ height: 8 }} />}
