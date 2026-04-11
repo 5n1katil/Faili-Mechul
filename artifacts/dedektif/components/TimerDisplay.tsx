@@ -87,6 +87,8 @@ export default function TimerDisplay({ seconds, wrongGuesses, penaltyCount }: Pr
     transform: [{ scale: penaltyTextScale.value }],
   }));
 
+  const penaltyColor = wrongGuesses > 0 ? "#C8372D" : colors.mutedForeground;
+
   return (
     <Animated.View
       style={[
@@ -100,29 +102,26 @@ export default function TimerDisplay({ seconds, wrongGuesses, penaltyCount }: Pr
         style={[styles.flashOverlay, flashStyle]}
       />
 
-      <Animated.View style={[styles.item, timerItemStyle]}>
-        <MaterialIcons name="timer" size={16} color={colors.primary} />
-        <Text style={[styles.timerValue, { color: colors.foreground }]}>
-          {formatTime(seconds)}
-        </Text>
-      </Animated.View>
+      <View style={styles.timerSection}>
+        <Animated.View style={[styles.item, timerItemStyle]}>
+          <MaterialIcons name="timer" size={16} color={colors.primary} />
+          <Text style={[styles.timerValue, { color: colors.foreground }]}>
+            {formatTime(seconds)}
+          </Text>
+        </Animated.View>
+        <Text style={[styles.timerLabel, { color: colors.mutedForeground }]}>SÜRE</Text>
+      </View>
 
       <View style={[styles.divider, { backgroundColor: colors.border }]} />
 
       <View style={styles.rightSection}>
-        <MaterialIcons
-          name="gavel"
-          size={14}
-          color={wrongGuesses > 0 ? "#C8372D" : colors.mutedForeground}
-        />
-        <Text
-          style={[
-            styles.wrongValue,
-            { color: wrongGuesses > 0 ? "#C8372D" : colors.mutedForeground },
-          ]}
-        >
-          {wrongGuesses}
-        </Text>
+        <View style={styles.penaltyInner}>
+          <MaterialIcons name="gavel" size={16} color={penaltyColor} />
+          <Text style={[styles.wrongValue, { color: penaltyColor }]}>
+            {wrongGuesses}
+          </Text>
+        </View>
+        <Text style={[styles.penaltyLabel, { color: penaltyColor }]}>HATA</Text>
         <Animated.View style={[styles.penaltyToast, penaltyTextStyle]}>
           <MaterialIcons name="add" size={10} color="#C8372D" />
           <Text style={styles.penaltyToastText}>30 sn</Text>
@@ -136,12 +135,16 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     alignItems: "center",
-    borderRadius: 10,
+    borderRadius: 12,
     borderWidth: 1,
     paddingHorizontal: 12,
-    paddingVertical: 8,
+    paddingVertical: 10,
     gap: 10,
     overflow: "hidden",
+  },
+  timerSection: {
+    alignItems: "center",
+    gap: 1,
   },
   item: {
     flexDirection: "row",
@@ -149,23 +152,37 @@ const styles = StyleSheet.create({
     gap: 6,
   },
   timerValue: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: "700",
     fontVariant: ["tabular-nums"],
     minWidth: 44,
   },
+  timerLabel: {
+    fontSize: 9,
+    fontWeight: "700",
+    letterSpacing: 1,
+  },
   divider: {
     width: 1,
-    height: 20,
+    height: 28,
   },
   rightSection: {
+    alignItems: "center",
+    gap: 1,
+  },
+  penaltyInner: {
     flexDirection: "row",
     alignItems: "center",
     gap: 4,
   },
   wrongValue: {
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: "700",
+  },
+  penaltyLabel: {
+    fontSize: 9,
+    fontWeight: "700",
+    letterSpacing: 1,
   },
   penaltyToast: {
     flexDirection: "row",
@@ -175,7 +192,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5,
     paddingVertical: 2,
     gap: 1,
-    marginLeft: 2,
+    position: "absolute",
+    top: -18,
+    right: 0,
   },
   penaltyToastText: {
     fontSize: 10,
@@ -185,7 +204,7 @@ const styles = StyleSheet.create({
   flashOverlay: {
     ...StyleSheet.absoluteFillObject,
     backgroundColor: "#FF0000",
-    borderRadius: 10,
+    borderRadius: 12,
     zIndex: 1,
   },
 });

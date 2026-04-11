@@ -876,7 +876,11 @@ export default function VakalarScreen() {
                 <Text style={[gameStyles.caseNumber, { color: colors.mutedForeground }]}>
                   VAKA #{puzzle.dayIndex.toString().padStart(3, "0")}
                 </Text>
-                <Text style={[gameStyles.puzzleTitle, { color: colors.foreground }]}>
+                <Text
+                  style={[gameStyles.puzzleTitle, { color: colors.foreground }]}
+                  numberOfLines={2}
+                  ellipsizeMode="tail"
+                >
                   {puzzle.title}
                 </Text>
               </View>
@@ -1215,9 +1219,9 @@ const gameStyles = StyleSheet.create({
     fontWeight: "700",
   },
   scoreInfoBtn: {
-    width: 30,
-    height: 30,
-    borderRadius: 15,
+    width: 34,
+    height: 34,
+    borderRadius: 17,
     borderWidth: 1,
     alignItems: "center",
     justifyContent: "center",
