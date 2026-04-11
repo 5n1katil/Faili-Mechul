@@ -2,49 +2,71 @@ import { Router, type IRouter } from "express";
 import { db } from "@workspace/db";
 import { playerProfiles } from "@workspace/db/schema";
 import { eq } from "drizzle-orm";
+import { z } from "zod";
 
 const router: IRouter = Router();
 
-router.put("/profiles/:playerId", async (req, res) => {
-  const { playerId } = req.params;
+const UUID_SCHEMA = z.string().uuid();
 
-  if (!playerId || !/^[0-9a-f-]{36}$/i.test(playerId)) {
+const upsertBodySchema = z.object({
+  displayName: z.string().max(50).optional(),
+  avatar: z.string().max(100).optional(),
+  bio: z.string().max(160).optional(),
+  totalScore: z.number().int().min(0).optional(),
+  gamesPlayed: z.number().int().min(0).optional(),
+  gamesWon: z.number().int().min(0).optional(),
+  maxStreak: z.number().int().min(0).optional(),
+  avgSolveTimeSeconds: z.number().min(0).optional(),
+  badges: z.array(z.string()).optional(),
+  isPremium: z.boolean().optional(),
+  privacyShowStats: z.boolean().optional(),
+  privacyShowBadges: z.boolean().optional(),
+  privacyShowBio: z.boolean().optional(),
+  privacyShowAvatar: z.boolean().optional(),
+});
+
+router.put("/profiles/:playerId", async (req, res) => {
+  const uuidResult = UUID_SCHEMA.safeParse(req.params.playerId);
+  if (!uuidResult.success) {
     res.status(400).json({ error: "Geçersiz oyuncu kimliği" });
     return;
   }
+  const playerId = uuidResult.data;
 
-  const body = req.body as Record<string, unknown>;
+  const bodyResult = upsertBodySchema.safeParse(req.body);
+  if (!bodyResult.success) {
+    res.status(400).json({ error: "Geçersiz istek gövdesi", details: bodyResult.error.flatten() });
+    return;
+  }
 
-  const upsertData = {
+  const body = bodyResult.data;
+
+  const upsertData: Partial<typeof playerProfiles.$inferInsert> & { playerId: string; updatedAt: Date } = {
     playerId,
-    displayName: typeof body.displayName === "string" ? body.displayName.slice(0, 50) : undefined,
-    avatar: typeof body.avatar === "string" ? body.avatar.slice(0, 100) : undefined,
-    bio: typeof body.bio === "string" ? body.bio.slice(0, 160) : undefined,
-    totalScore: typeof body.totalScore === "number" ? body.totalScore : undefined,
-    gamesPlayed: typeof body.gamesPlayed === "number" ? body.gamesPlayed : undefined,
-    gamesWon: typeof body.gamesWon === "number" ? body.gamesWon : undefined,
-    maxStreak: typeof body.maxStreak === "number" ? body.maxStreak : undefined,
-    avgSolveTimeSeconds: typeof body.avgSolveTimeSeconds === "number" ? body.avgSolveTimeSeconds : undefined,
-    badges: Array.isArray(body.badges) ? JSON.stringify(body.badges) : undefined,
-    isPremium: typeof body.isPremium === "boolean" ? body.isPremium : undefined,
-    privacyShowStats: typeof body.privacyShowStats === "boolean" ? body.privacyShowStats : undefined,
-    privacyShowBadges: typeof body.privacyShowBadges === "boolean" ? body.privacyShowBadges : undefined,
-    privacyShowBio: typeof body.privacyShowBio === "boolean" ? body.privacyShowBio : undefined,
-    privacyShowAvatar: typeof body.privacyShowAvatar === "boolean" ? body.privacyShowAvatar : undefined,
     updatedAt: new Date(),
+    ...(body.displayName !== undefined && { displayName: body.displayName }),
+    ...(body.avatar !== undefined && { avatar: body.avatar }),
+    ...(body.bio !== undefined && { bio: body.bio }),
+    ...(body.totalScore !== undefined && { totalScore: body.totalScore }),
+    ...(body.gamesPlayed !== undefined && { gamesPlayed: body.gamesPlayed }),
+    ...(body.gamesWon !== undefined && { gamesWon: body.gamesWon }),
+    ...(body.maxStreak !== undefined && { maxStreak: body.maxStreak }),
+    ...(body.avgSolveTimeSeconds !== undefined && { avgSolveTimeSeconds: body.avgSolveTimeSeconds }),
+    ...(body.badges !== undefined && { badges: JSON.stringify(body.badges) }),
+    ...(body.isPremium !== undefined && { isPremium: body.isPremium }),
+    ...(body.privacyShowStats !== undefined && { privacyShowStats: body.privacyShowStats }),
+    ...(body.privacyShowBadges !== undefined && { privacyShowBadges: body.privacyShowBadges }),
+    ...(body.privacyShowBio !== undefined && { privacyShowBio: body.privacyShowBio }),
+    ...(body.privacyShowAvatar !== undefined && { privacyShowAvatar: body.privacyShowAvatar }),
   };
-
-  const cleanData = Object.fromEntries(
-    Object.entries(upsertData).filter(([, v]) => v !== undefined)
-  ) as typeof upsertData;
 
   try {
     await db
       .insert(playerProfiles)
-      .values({ ...cleanData, playerId })
+      .values(upsertData)
       .onConflictDoUpdate({
         target: playerProfiles.playerId,
-        set: cleanData,
+        set: upsertData,
       });
 
     res.json({ success: true });
@@ -55,12 +77,12 @@ router.put("/profiles/:playerId", async (req, res) => {
 });
 
 router.get("/profiles/:playerId", async (req, res) => {
-  const { playerId } = req.params;
-
-  if (!playerId || !/^[0-9a-f-]{36}$/i.test(playerId)) {
+  const uuidResult = UUID_SCHEMA.safeParse(req.params.playerId);
+  if (!uuidResult.success) {
     res.status(400).json({ error: "Geçersiz oyuncu kimliği" });
     return;
   }
+  const playerId = uuidResult.data;
 
   try {
     const rows = await db
