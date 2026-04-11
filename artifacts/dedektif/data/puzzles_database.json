@@ -1000,7 +1000,7 @@
           "suspects": [
             { "id": "s1", "name": "Komutan Lyra Chen", "icon": "👩‍🚀", "description": "İstasyon komutanı. Formülün askeri uygulamasına karşı çıkan bilim insanıyla anlaşmazlığı var.", "detail": "42 yaşında, disiplinli, şüpheli geçmiş." },
             { "id": "s2", "name": "Yapay Zeka ARES-3", "icon": "🤖", "description": "İstasyonun yönetim yapay zekası. Formüle erişimi var ama 'duygusal karar veremez'.", "detail": "7 yıllık istasyon YZ'si, son güncelleme tartışmalı." },
-            { "id": "s3", "name": "Tıp Mühendisi Osman Demir", "icon": "🔧", "description": "İstasyonun sağlık sorumlusu. Formülü rakip şirkete sızdırdığı şüphesi var.", "detail": "35 yaşında, gergin, Türkiye Uzay Ajansı burslusu." }
+            { "id": "s3", "name": "Tıp Mühendisi Osman Demir", "icon": "👨‍⚕️", "description": "İstasyonun sağlık sorumlusu. Formülü rakip şirkete sızdırdığı şüphesi var.", "detail": "35 yaşında, gergin, Türkiye Uzay Ajansı burslusu." }
           ],
           "weapons": [
             { "id": "w1", "name": "Oksijen Kesimi", "icon": "💨", "description": "Kişisel oksijen maskesi devre dışı bırakıldı." },
@@ -1090,7 +1090,7 @@
           ],
           "locations": [
             { "id": "l1", "name": "Hakim Odası", "icon": "🏛️", "description": "Hakimin özel çalışma odası." },
-            { "id": "l2", "name": "Mahkeme Salonu", "icon": "🏢", "description": "Ana duruşma salonu." },
+            { "id": "l2", "name": "Mahkeme Salonu", "icon": "⚖️", "description": "Ana duruşma salonu." },
             { "id": "l3", "name": "Sunucu Odası", "icon": "🖥️", "description": "Mahkeme YZ sunucu merkezi." }
           ],
           "clues": [
@@ -1172,13 +1172,13 @@
             { "id": "s3", "name": "Lisans Direktörü Haruto", "icon": "📋", "description": "Klonun yasal statüsünü reddedecekti. Bu klon için ölüm emri anlamına gelir.", "detail": "45 yaşında, bürokratik, kurallara bağlı." }
           ],
           "weapons": [
-            { "id": "w1", "name": "Genetik Bozucu Madde", "icon": "☢️", "description": "DNA'yı çökerten kimyasal." },
+            { "id": "w1", "name": "Genetik Bozucu Madde", "icon": "🧪", "description": "DNA'yı çökerten kimyasal." },
             { "id": "w2", "name": "Kriyojenik Sıvı", "icon": "❄️", "description": "Dondurucu madde." },
             { "id": "w3", "name": "Nöral Kesici", "icon": "⚡", "description": "Nöral aktiviteyi kesen cihaz." }
           ],
           "locations": [
             { "id": "l1", "name": "Klon Odasý", "icon": "🧬", "description": "Klonların tutulduğu özel oda." },
-            { "id": "l2", "name": "Genetik Lab", "icon": "🖥️", "description": "Ana araştırma laboratuvarı." },
+            { "id": "l2", "name": "Genetik Lab", "icon": "🔬", "description": "Ana araştırma laboratuvarı." },
             { "id": "l3", "name": "Lisans Ofisi", "icon": "📄", "description": "Haruto'nun ofisi." }
           ],
           "clues": [
@@ -1272,7 +1272,7 @@
           "locations": [
             { "id": "l1", "name": "Deney Odası", "icon": "⚗️", "description": "Ana karanlık madde deney odası." },
             { "id": "l2", "name": "Enerji Merkezi", "icon": "⚡", "description": "Üssün güç santrali." },
-            { "id": "l3", "name": "Dış Yüzey", "icon": "🌑", "description": "Europa buz yüzeyi — takım elbise zorunlu." },
+            { "id": "l3", "name": "Dış Yüzey", "icon": "🌨️", "description": "Europa buz yüzeyi — takım elbise zorunlu." },
             { "id": "l4", "name": "Veri Merkezi", "icon": "💾", "description": "Tüm araştırma verilerinin depolandığı yer." }
           ],
           "clues": [
@@ -1493,7 +1493,7 @@
             { "id": "s3", "name": "Gizemli Hayran Karl", "icon": "🌹", "description": "Her gecenin ardından gülden buket gönderen anonim hayran.", "detail": "35 yaşında, obsesif, zararsız gibi görünüyor ama..." }
           ],
           "weapons": [
-            { "id": "w1", "name": "Zehirli Çiçek Buketi", "icon": "☠️", "description": "Çiçeklerin yapraklarına zehir sürülmüş." },
+            { "id": "w1", "name": "Zehirli Çiçek Buketi", "icon": "💐", "description": "Çiçeklerin yapraklarına zehir sürülmüş." },
             { "id": "w2", "name": "Boğazlama", "icon": "🪢", "description": "Sahne halatı." },
             { "id": "w3", "name": "Arsenik Şarap", "icon": "🍷", "description": "Kutlama şarabına katılan arsenik." }
           ],
@@ -2359,7 +2359,7 @@
           "weapons": [
             { "id": "w1", "name": "Deniz Halatı", "icon": "🪢", "description": "Gemi halatı." },
             { "id": "w2", "name": "Zehirli İçki", "icon": "🥃", "description": "Kaptan köşkünde viski." },
-            { "id": "w3", "name": "Taşıma Kancası", "icon": "🔨", "description": "Yük taşıma kancası." },
+            { "id": "w3", "name": "Taşıma Kancası", "icon": "🪝", "description": "Yük taşıma kancası." },
             { "id": "w4", "name": "Ateşli Silah", "icon": "🔫", "description": "Gemi güvenlik tabancası." }
           ],
           "locations": [
