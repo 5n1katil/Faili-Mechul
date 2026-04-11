@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import {
   ActivityIndicator,
+  Linking,
   Modal,
   Pressable,
   ScrollView,
@@ -11,6 +12,9 @@ import {
 import { MaterialIcons } from "@expo/vector-icons";
 import { usePurchase } from "@/context/PurchaseContext";
 import { useColors } from "@/hooks/useColors";
+
+const PRIVACY_URL = "https://failimechul.app/gizlilik";
+const TERMS_URL = "https://failimechul.app/kullanim-sartlari";
 
 interface Props {
   visible: boolean;
@@ -64,7 +68,13 @@ export default function PaywallModal({ visible, onClose }: Props) {
         <View style={[styles.sheet, { backgroundColor: colors.card }]}>
           <View style={[styles.handle, { backgroundColor: colors.border }]} />
 
-          <Pressable onPress={onClose} style={styles.closeBtn} hitSlop={8}>
+          <Pressable
+            onPress={onClose}
+            style={styles.closeBtn}
+            hitSlop={12}
+            accessibilityRole="button"
+            accessibilityLabel="Kapat"
+          >
             <MaterialIcons name="close" size={22} color={colors.mutedForeground} />
           </Pressable>
 
@@ -79,7 +89,11 @@ export default function PaywallModal({ visible, onClose }: Props) {
             </Text>
 
             <View style={[styles.priceBox, { borderColor: `${colors.primary}55`, backgroundColor: `${colors.primary}0A` }]}>
-              <Text style={[styles.price, { color: colors.primary }]}>{priceString}</Text>
+              {isLoading ? (
+                <ActivityIndicator color={colors.primary} style={{ height: 42 }} />
+              ) : (
+                <Text style={[styles.price, { color: colors.primary }]}>{priceString}</Text>
+              )}
               <Text style={[styles.priceNote, { color: colors.mutedForeground }]}>
                 Tek seferlik · Ömür boyu erişim
               </Text>
@@ -119,6 +133,8 @@ export default function PaywallModal({ visible, onClose }: Props) {
                 styles.buyBtn,
                 { backgroundColor: colors.primary, opacity: (buying || restoring || isLoading || pressed) ? 0.75 : 1 },
               ]}
+              accessibilityRole="button"
+              accessibilityLabel={`Vaka Arşivini satın al — ${priceString}`}
             >
               {buying ? (
                 <ActivityIndicator color={colors.primaryForeground} />
@@ -139,6 +155,8 @@ export default function PaywallModal({ visible, onClose }: Props) {
                 styles.restoreBtn,
                 { borderColor: colors.border, opacity: (buying || restoring || pressed) ? 0.6 : 1 },
               ]}
+              accessibilityRole="button"
+              accessibilityLabel="Önceki satın almalarımı geri yükle"
             >
               {restoring ? (
                 <ActivityIndicator color={colors.mutedForeground} size="small" />
@@ -149,8 +167,32 @@ export default function PaywallModal({ visible, onClose }: Props) {
               )}
             </Pressable>
 
+            <View style={styles.legalRow}>
+              <Pressable
+                onPress={() => Linking.openURL(PRIVACY_URL)}
+                accessibilityRole="link"
+                accessibilityLabel="Gizlilik Politikası"
+                hitSlop={8}
+              >
+                <Text style={[styles.legalLink, { color: colors.mutedForeground }]}>
+                  Gizlilik Politikası
+                </Text>
+              </Pressable>
+              <Text style={[styles.legalSep, { color: colors.mutedForeground }]}>·</Text>
+              <Pressable
+                onPress={() => Linking.openURL(TERMS_URL)}
+                accessibilityRole="link"
+                accessibilityLabel="Kullanım Şartları"
+                hitSlop={8}
+              >
+                <Text style={[styles.legalLink, { color: colors.mutedForeground }]}>
+                  Kullanım Şartları
+                </Text>
+              </Pressable>
+            </View>
+
             <Text style={[styles.legalNote, { color: colors.mutedForeground }]}>
-              Tek seferlik ödeme · Abonelik yok · iOS/Android cihaza bağlı
+              Tek seferlik ödeme · Abonelik yok · Aynı Apple ID / Google hesabıyla tüm cihazlarda geri yüklenebilir
             </Text>
           </ScrollView>
         </View>
@@ -183,6 +225,10 @@ const styles = StyleSheet.create({
     top: 16,
     right: 16,
     zIndex: 10,
+    width: 36,
+    height: 36,
+    alignItems: "center",
+    justifyContent: "center",
   },
   content: {
     padding: 24,
@@ -289,6 +335,18 @@ const styles = StyleSheet.create({
   restoreBtnText: {
     fontSize: 13,
     fontWeight: "600",
+  },
+  legalRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+  },
+  legalLink: {
+    fontSize: 12,
+    textDecorationLine: "underline",
+  },
+  legalSep: {
+    fontSize: 12,
   },
   legalNote: {
     fontSize: 11,

@@ -3,6 +3,7 @@ import {
   ActivityIndicator,
   Alert,
   LayoutAnimation,
+  Linking,
   Platform,
   Pressable,
   ScrollView,
@@ -24,6 +25,9 @@ import {
 } from "@/data/packs";
 import { useColors } from "@/hooks/useColors";
 
+const PRIVACY_URL = "https://failimechul.app/gizlilik";
+const TERMS_URL = "https://failimechul.app/kullanim-sartlari";
+
 if (Platform.OS === "android" && UIManager.setLayoutAnimationEnabledExperimental) {
   UIManager.setLayoutAnimationEnabledExperimental(true);
 }
@@ -33,7 +37,7 @@ export default function PaketlerScreen() {
   const insets = useSafeAreaInsets();
   const router = useRouter();
   const { startPuzzle } = useGame();
-  const { isPackPurchased, purchasePack, restorePurchases, isLoading } = usePurchase();
+  const { isPackPurchased, purchasePack, restorePurchases, isLoading, packPrices } = usePurchase();
 
   const [expandedPack, setExpandedPack] = useState<string | null>(null);
   const [purchasing, setPurchasing] = useState<string | null>(null);
@@ -45,16 +49,15 @@ export default function PaketlerScreen() {
   }, []);
 
   const handlePurchase = useCallback(
-    async (packId: string, packTitle: string, price: number) => {
+    async (packId: string) => {
       setPurchasing(packId);
-      const priceLabel = `₺${price.toFixed(2)}`;
-      const result = await purchasePack(packId, priceLabel);
+      const result = await purchasePack(packId, packPrices[packId] ?? "");
       setPurchasing(null);
       if (!result.success && result.message !== "Satın alma iptal edildi.") {
         Alert.alert("Satın Alma", result.message);
       }
     },
-    [purchasePack]
+    [purchasePack, packPrices]
   );
 
   const handleRestore = useCallback(async () => {
@@ -96,11 +99,32 @@ export default function PaketlerScreen() {
         5 farklı tema, 25 özgün vaka
       </Text>
 
+      <Pressable
+        onPress={handleRestore}
+        disabled={restoring || isLoading}
+        style={({ pressed }) => [
+          styles.restoreBtn,
+          { borderColor: colors.border, backgroundColor: colors.card, opacity: (restoring || isLoading || pressed) ? 0.5 : 1 },
+        ]}
+        accessibilityRole="button"
+        accessibilityLabel="Önceki satın almalarımı geri yükle"
+      >
+        {restoring ? (
+          <ActivityIndicator size="small" color={colors.mutedForeground} />
+        ) : (
+          <MaterialIcons name="restore" size={15} color={colors.mutedForeground} />
+        )}
+        <Text style={[styles.restoreBtnText, { color: colors.mutedForeground }]}>
+          {restoring ? "Geri Yükleniyor…" : "Satın Almalarımı Geri Yükle"}
+        </Text>
+      </Pressable>
+
       {PACKS.map((pack) => {
         const purchased = isPackPurchased(pack.packId);
         const isExpanded = expandedPack === pack.packId;
         const isPurchasing = purchasing === pack.packId;
         const rawPuzzles = getRawPuzzlesForPack(pack.packId);
+        const displayPrice = isLoading ? "…" : (packPrices[pack.packId] ?? `₺${pack.price.toFixed(2)}`);
 
         return (
           <View
@@ -117,6 +141,8 @@ export default function PaketlerScreen() {
               onPress={() => togglePack(pack.packId)}
               style={styles.packHeader}
               android_ripple={{ color: pack.accentColor + "22" }}
+              accessibilityRole="button"
+              accessibilityLabel={`${pack.packTitle} paketini ${isExpanded ? "kapat" : "aç"}`}
             >
               <Text style={styles.packIconEmoji}>{pack.packIcon}</Text>
               <View style={styles.packHeaderText}>
@@ -136,9 +162,13 @@ export default function PaketlerScreen() {
                       <Text style={[styles.ownedText, { color: "#4CAF50" }]}>Sahip</Text>
                     </View>
                   ) : (
-                    <Text style={[styles.priceLabel, { color: pack.accentColor }]}>
-                      ₺{pack.price.toFixed(2)}
-                    </Text>
+                    isLoading ? (
+                      <ActivityIndicator size="small" color={pack.accentColor} style={{ width: 40 }} />
+                    ) : (
+                      <Text style={[styles.priceLabel, { color: pack.accentColor }]}>
+                        {displayPrice}
+                      </Text>
+                    )
                   )}
                 </View>
               </View>
@@ -160,7 +190,7 @@ export default function PaketlerScreen() {
                     key={rawPuzzle.puzzleId}
                     onPress={() => {
                       if (!purchased) {
-                        handlePurchase(pack.packId, pack.packTitle, pack.price);
+                        handlePurchase(pack.packId);
                         return;
                       }
                       handleStartPuzzle(pack.packId, idx);
@@ -176,6 +206,8 @@ export default function PaketlerScreen() {
                           : "#1A1A1A",
                       },
                     ]}
+                    accessibilityRole="button"
+                    accessibilityLabel={purchased ? `${rawPuzzle.title} vakasını oyna` : `${rawPuzzle.title} — satın al`}
                   >
                     <View style={styles.puzzleRowLeft}>
                       <Text style={[styles.puzzleDifficulty, { color: pack.accentColor }]}>
@@ -206,19 +238,19 @@ export default function PaketlerScreen() {
 
                 {!purchased && (
                   <Pressable
-                    onPress={() =>
-                      !isPurchasing && handlePurchase(pack.packId, pack.packTitle, pack.price)
-                    }
-                    style={[
+                    onPress={() => !isPurchasing && handlePurchase(pack.packId)}
+                    style={({ pressed }) => [
                       styles.purchaseBtn,
                       {
                         backgroundColor: isPurchasing
                           ? pack.packColor + "66"
                           : pack.accentColor,
-                        opacity: isLoading || isPurchasing ? 0.7 : 1,
+                        opacity: isLoading || isPurchasing || pressed ? 0.7 : 1,
                       },
                     ]}
                     disabled={isLoading || isPurchasing}
+                    accessibilityRole="button"
+                    accessibilityLabel={`${pack.packTitle} paketini satın al — ${displayPrice}`}
                   >
                     {isPurchasing ? (
                       <ActivityIndicator size="small" color="#000000" />
@@ -226,7 +258,7 @@ export default function PaketlerScreen() {
                       <>
                         <MaterialIcons name="shopping-cart" size={16} color="#000000" />
                         <Text style={styles.purchaseBtnText}>
-                          Paketi Satın Al — ₺{pack.price.toFixed(2)}
+                          Paketi Satın Al — {displayPrice}
                         </Text>
                       </>
                     )}
@@ -238,27 +270,29 @@ export default function PaketlerScreen() {
         );
       })}
 
-      <Pressable
-        onPress={handleRestore}
-        disabled={restoring || isLoading}
-        style={[styles.restoreBtn, { opacity: restoring || isLoading ? 0.5 : 1 }]}
-      >
-        {restoring ? (
-          <ActivityIndicator size="small" color="#888888" />
-        ) : (
-          <MaterialIcons name="restore" size={16} color="#888888" />
-        )}
-        <Text style={styles.restoreBtnText}>
-          {restoring ? "Geri Yükleniyor…" : "Satın Almaları Geri Yükle"}
-        </Text>
-      </Pressable>
-
-      <View style={styles.footer}>
-        <MaterialIcons name="info-outline" size={14} color="#555555" />
-        <Text style={[styles.footerText, { color: "#555555" }]}>
-          RevenueCat üzerinden güvenli ödeme. Satın aldıktan sonra başka cihazlarda geri yükleyebilirsiniz.
-        </Text>
+      <View style={styles.legalRow}>
+        <Pressable
+          onPress={() => Linking.openURL(PRIVACY_URL)}
+          accessibilityRole="link"
+          accessibilityLabel="Gizlilik Politikası"
+          hitSlop={8}
+        >
+          <Text style={styles.legalLink}>Gizlilik Politikası</Text>
+        </Pressable>
+        <Text style={styles.legalSep}>·</Text>
+        <Pressable
+          onPress={() => Linking.openURL(TERMS_URL)}
+          accessibilityRole="link"
+          accessibilityLabel="Kullanım Şartları"
+          hitSlop={8}
+        >
+          <Text style={styles.legalLink}>Kullanım Şartları</Text>
+        </Pressable>
       </View>
+
+      <Text style={styles.legalNote}>
+        Tek seferlik ödeme · Abonelik yok · Aynı Apple ID / Google hesabıyla tüm cihazlarda geri yüklenebilir
+      </Text>
     </ScrollView>
   );
 }
@@ -279,7 +313,22 @@ const styles = StyleSheet.create({
   },
   screenSubtitle: {
     fontSize: 13,
-    marginBottom: 8,
+    marginBottom: 2,
+  },
+  restoreBtn: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 6,
+    paddingVertical: 10,
+    paddingHorizontal: 14,
+    borderRadius: 10,
+    borderWidth: 1,
+    marginBottom: 2,
+  },
+  restoreBtnText: {
+    fontSize: 13,
+    fontWeight: "500",
   },
   packCard: {
     borderRadius: 14,
@@ -389,29 +438,29 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     color: "#000000",
   },
-  restoreBtn: {
+  legalRow: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    gap: 6,
-    paddingVertical: 12,
+    gap: 8,
+    paddingVertical: 4,
     marginTop: 4,
   },
-  restoreBtnText: {
-    fontSize: 13,
+  legalLink: {
+    fontSize: 12,
     color: "#888888",
     textDecorationLine: "underline",
   },
-  footer: {
-    flexDirection: "row",
-    alignItems: "flex-start",
-    gap: 6,
-    paddingHorizontal: 4,
-    paddingVertical: 8,
+  legalSep: {
+    fontSize: 12,
+    color: "#555555",
   },
-  footerText: {
-    flex: 1,
+  legalNote: {
     fontSize: 11,
+    color: "#555555",
+    textAlign: "center",
     lineHeight: 16,
+    paddingHorizontal: 4,
+    paddingBottom: 4,
   },
 });

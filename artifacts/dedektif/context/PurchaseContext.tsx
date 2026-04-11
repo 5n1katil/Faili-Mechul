@@ -13,13 +13,19 @@ import type {
   PurchasesPackage,
 } from "react-native-purchases";
 import { PURCHASES_ERROR_CODE } from "react-native-purchases";
-import { PACK_PRODUCT_IDS } from "@/data/packs";
+import { PACK_PRODUCT_IDS, PACKS } from "@/data/packs";
 
 const PREMIUM_CACHE_KEY = "@dedektif_is_premium";
 const PACK_CACHE_PREFIX = "@dedektif_pack_";
 const PRODUCT_ID = "com.failimechul.dedektif.vaka_arsivi";
 const ENTITLEMENT_ID = "premium";
 const DEFAULT_PRICE_STRING = "₺79,99";
+
+function buildFallbackPackPrices(): Record<string, string> {
+  return Object.fromEntries(
+    PACKS.map((p) => [p.packId, `₺${p.price.toFixed(2)}`])
+  );
+}
 
 function getRevenueCatKey(): string {
   const extra = Constants.expoConfig?.extra as
@@ -42,6 +48,7 @@ type PurchaseContextType = {
   isPremium: boolean;
   isLoading: boolean;
   priceString: string;
+  packPrices: Record<string, string>;
   purchaseVacaArsivi: () => Promise<{ success: boolean; message: string }>;
   restorePurchases: () => Promise<{ success: boolean; message: string }>;
   purchasedPacks: Record<string, boolean>;
@@ -86,6 +93,33 @@ async function fetchPriceString(): Promise<string> {
     return pkg?.product?.priceString ?? DEFAULT_PRICE_STRING;
   } catch {
     return DEFAULT_PRICE_STRING;
+  }
+}
+
+async function fetchPackPrices(): Promise<Record<string, string>> {
+  const fallback = buildFallbackPackPrices();
+  if (!isRevenueCatConfigured()) return fallback;
+
+  try {
+    const Purchases = require("react-native-purchases").default;
+    const offerings = await Purchases.getOfferings();
+    const allPackages: PurchasesPackage[] = [];
+    for (const offering of Object.values(
+      offerings.all as Record<string, { availablePackages: PurchasesPackage[] }>
+    )) {
+      allPackages.push(...offering.availablePackages);
+    }
+
+    const prices: Record<string, string> = { ...fallback };
+    for (const [packId, productId] of Object.entries(PACK_PRODUCT_IDS)) {
+      const pkg = allPackages.find((p) => p.product?.identifier === productId);
+      if (pkg?.product?.priceString) {
+        prices[packId] = pkg.product.priceString;
+      }
+    }
+    return prices;
+  } catch {
+    return fallback;
   }
 }
 
@@ -151,15 +185,17 @@ export function PurchaseProvider({ children }: { children: React.ReactNode }) {
   const [isPremium, setIsPremium] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [priceString, setPriceString] = useState(DEFAULT_PRICE_STRING);
+  const [packPrices, setPackPrices] = useState<Record<string, string>>(buildFallbackPackPrices);
   const [purchasedPacks, setPurchasedPacks] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
     initRevenueCat();
-    Promise.all([syncFromRevenueCat(), fetchPriceString()]).then(
-      ([{ premium, packs }, price]) => {
+    Promise.all([syncFromRevenueCat(), fetchPriceString(), fetchPackPrices()]).then(
+      ([{ premium, packs }, price, packPricesMap]) => {
         setIsPremium(premium);
         setPurchasedPacks(packs);
         setPriceString(price);
+        setPackPrices(packPricesMap);
         setIsLoading(false);
       }
     );
@@ -362,6 +398,7 @@ export function PurchaseProvider({ children }: { children: React.ReactNode }) {
         isPremium,
         isLoading,
         priceString,
+        packPrices,
         purchaseVacaArsivi,
         restorePurchases,
         purchasedPacks,
