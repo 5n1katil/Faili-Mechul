@@ -1,41 +1,29 @@
 import { BlurView } from "expo-blur";
-import { isLiquidGlassAvailable } from "expo-glass-effect";
 import { Tabs } from "expo-router";
 import { Icon, Label, NativeTabs } from "expo-router/unstable-native-tabs";
 import { SymbolView } from "expo-symbols";
 import { MaterialIcons } from "@expo/vector-icons";
 import React from "react";
-import { Platform, StyleSheet, Text, View, useColorScheme } from "react-native";
+import { Platform, StyleSheet, View, useColorScheme } from "react-native";
 import { useColors } from "@/hooks/useColors";
 import { useMission } from "@/context/MissionContext";
 
-function NativeTabBadge({ count }: { count: number }) {
-  if (count === 0) return null;
-  return (
-    <View
-      style={{
-        position: "absolute",
-        top: -4,
-        right: -6,
-        backgroundColor: "#4CAF50",
-        borderRadius: 8,
-        minWidth: 16,
-        height: 16,
-        paddingHorizontal: 3,
-        alignItems: "center",
-        justifyContent: "center",
-        zIndex: 10,
-      }}
-    >
-      <Text style={{ color: "#fff", fontSize: 9, fontWeight: "800", lineHeight: 10 }}>
-        {count > 9 ? "9+" : count}
-      </Text>
-    </View>
-  );
+function tryIsLiquidGlassAvailable(): boolean {
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const mod = require("expo-glass-effect") as {
+      isLiquidGlassAvailable?: () => boolean;
+    };
+    return (
+      typeof mod.isLiquidGlassAvailable === "function" &&
+      mod.isLiquidGlassAvailable()
+    );
+  } catch {
+    return false;
+  }
 }
 
 function NativeTabLayout() {
-  const { claimableCount } = useMission();
   return (
     <NativeTabs>
       <NativeTabs.Trigger name="index">
@@ -47,10 +35,7 @@ function NativeTabLayout() {
         <Label>Vakalar</Label>
       </NativeTabs.Trigger>
       <NativeTabs.Trigger name="gorevler">
-        <View style={{ position: "relative" }}>
-          <Icon sf={{ default: "checklist", selected: "checklist" }} />
-          <NativeTabBadge count={claimableCount} />
-        </View>
+        <Icon sf={{ default: "checklist", selected: "checklist" }} />
         <Label>Görevler</Label>
       </NativeTabs.Trigger>
       <NativeTabs.Trigger name="liderlik">
@@ -177,7 +162,7 @@ function ClassicTabLayout() {
 }
 
 export default function TabLayout() {
-  if (isLiquidGlassAvailable()) {
+  if (tryIsLiquidGlassAvailable()) {
     return <NativeTabLayout />;
   }
   return <ClassicTabLayout />;
