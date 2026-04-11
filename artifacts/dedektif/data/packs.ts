@@ -308,6 +308,7 @@ export function adaptPackPuzzle(raw: RawPuzzle, packId: string): Puzzle {
       dnaVerisi: r.dnaVerisi as import("./puzzles").ClueDnaVerisi | undefined,
       timelineVerisi: r.timelineVerisi as import("./puzzles").ClueTimelineVerisi | undefined,
       parmakIziVerisi: r.parmakIziVerisi as import("./puzzles").ClueParmakIziVerisi | undefined,
+      fotoVerisi: r.fotoVerisi as import("./puzzles").ClueFotoVerisi | undefined,
     };
   });
 

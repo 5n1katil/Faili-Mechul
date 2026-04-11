@@ -123,6 +123,19 @@ export interface ClueParmakIziVerisi {
   sonuc: string;
 }
 
+export interface ClueFotoSupheli {
+  suspectId: string;
+  eslesme: boolean;
+  [key: string]: string | boolean;
+}
+
+export interface ClueFotoVerisi {
+  aciklama: string;
+  olayYeriIzi: Record<string, string>;
+  supheliAyakkabilari: ClueFotoSupheli[];
+  sonuc: string;
+}
+
 export interface Clue {
   id: string;
   text: string;
@@ -139,6 +152,7 @@ export interface Clue {
   dnaVerisi?: ClueDnaVerisi;
   timelineVerisi?: ClueTimelineVerisi;
   parmakIziVerisi?: ClueParmakIziVerisi;
+  fotoVerisi?: ClueFotoVerisi;
 }
 
 export interface SolvabilityMeta {

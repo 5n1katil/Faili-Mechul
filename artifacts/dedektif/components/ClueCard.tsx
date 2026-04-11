@@ -12,6 +12,7 @@ import type {
   Clue,
   ClueAnagramData,
   ClueDnaVerisi,
+  ClueFotoVerisi,
   CluePhoneVerisi,
   ClueSifre,
   ClueTimelineVerisi,
@@ -380,6 +381,108 @@ function DnaMatchBlock({
   );
 }
 
+function FaceMatchBlock({
+  fotoVerisi,
+  isSolved,
+  onSolve,
+}: {
+  fotoVerisi: ClueFotoVerisi;
+  isSolved: boolean;
+  onSolve: () => void;
+}) {
+  const [selected, setSelected] = useState<string | null>(null);
+  const [wrongAttempt, setWrongAttempt] = useState(false);
+
+  const measurementKeys = Object.keys(fotoVerisi.olayYeriIzi);
+
+  const handleSelect = (suspectId: string) => {
+    if (isSolved) return;
+    setSelected(suspectId);
+    setWrongAttempt(false);
+  };
+
+  const handleConfirm = () => {
+    if (!selected) return;
+    const match = fotoVerisi.supheliAyakkabilari.find((p) => p.suspectId === selected);
+    if (match?.eslesme) {
+      onSolve();
+    } else {
+      setWrongAttempt(true);
+      setSelected(null);
+    }
+  };
+
+  if (isSolved) {
+    return (
+      <View style={styles.miniGameSolvedBlock}>
+        <MaterialIcons name="check-circle" size={20} color="#22c55e" />
+        <Text style={styles.miniGameSolvedText}>Eşleşme Bulundu!</Text>
+        <Text style={styles.miniGameAciklama}>{fotoVerisi.sonuc}</Text>
+      </View>
+    );
+  }
+
+  return (
+    <View style={styles.faceMatchBlock}>
+      <View style={styles.gorselHeader}>
+        <MaterialIcons name="face-retouching-natural" size={14} color="#9333ea" />
+        <Text style={[styles.gorselLabel, { color: "#9333ea" }]}>GÖRSEL KARŞILAŞTIRMA</Text>
+      </View>
+      <Text style={styles.faceMatchAciklama}>{fotoVerisi.aciklama}</Text>
+
+      <View style={styles.faceMatchReferans}>
+        <Text style={styles.faceMatchRefLabel}>REFERANS İZ</Text>
+        <View style={styles.faceMatchMeasurements}>
+          {measurementKeys.map((key) => (
+            <View key={key} style={styles.faceMatchMeasRow}>
+              <Text style={styles.faceMatchMeasKey}>{key}</Text>
+              <Text style={styles.faceMatchMeasVal}>{fotoVerisi.olayYeriIzi[key]}</Text>
+            </View>
+          ))}
+        </View>
+      </View>
+
+      <Text style={styles.faceMatchSelectLabel}>Eşleşen kişiyi seç:</Text>
+      {fotoVerisi.supheliAyakkabilari.map((p) => {
+        const isSelected = selected === p.suspectId;
+        return (
+          <Pressable
+            key={p.suspectId}
+            onPress={() => handleSelect(p.suspectId)}
+            style={[styles.faceMatchCard, isSelected && styles.faceMatchCardSelected]}
+          >
+            <Text style={styles.faceMatchSuspectId}>{p.suspectId.toUpperCase()}</Text>
+            <View style={styles.faceMatchMeasurements}>
+              {measurementKeys.map((key) => {
+                const val = p[key] as string | undefined;
+                const refVal = fotoVerisi.olayYeriIzi[key];
+                const match = val === refVal;
+                return (
+                  <View key={key} style={styles.faceMatchMeasRow}>
+                    <Text style={styles.faceMatchMeasKey}>{key}</Text>
+                    <Text style={[styles.faceMatchMeasVal, match && styles.faceMatchMeasMatch]}>
+                      {val ?? "—"}
+                    </Text>
+                  </View>
+                );
+              })}
+            </View>
+          </Pressable>
+        );
+      })}
+
+      <Pressable
+        style={[styles.dnaConfirmBtn, !selected && styles.dnaConfirmBtnDisabled]}
+        onPress={handleConfirm}
+        disabled={!selected}
+      >
+        <Text style={styles.dnaConfirmText}>Onayla</Text>
+      </Pressable>
+      {wrongAttempt && <Text style={styles.dnaWrong}>Yanlış eşleşme — tekrar incele</Text>}
+    </View>
+  );
+}
+
 function TimelineSortBlock({
   timelineVerisi,
   isSolved,
@@ -613,6 +716,15 @@ export default function ClueCard({
         return clue.timelineVerisi ? (
           <TimelineSortBlock
             timelineVerisi={clue.timelineVerisi}
+            isSolved={isSolved}
+            onSolve={() => onSolveMechanic?.()}
+          />
+        ) : null;
+
+      case "face_match":
+        return clue.fotoVerisi ? (
+          <FaceMatchBlock
+            fotoVerisi={clue.fotoVerisi}
             isSolved={isSolved}
             onSolve={() => onSolveMechanic?.()}
           />
@@ -1296,5 +1408,81 @@ const styles = StyleSheet.create({
     color: "#22c55eaa",
     lineHeight: 17,
     textAlign: "center",
+  },
+  faceMatchBlock: {
+    backgroundColor: "#110a1a",
+    borderRadius: 8,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: "#9333ea44",
+    marginTop: 6,
+    gap: 8,
+  },
+  faceMatchAciklama: {
+    fontSize: 12,
+    color: "#c4b5fdaa",
+    fontStyle: "italic",
+    lineHeight: 17,
+  },
+  faceMatchReferans: {
+    backgroundColor: "#0F1117",
+    borderRadius: 6,
+    padding: 8,
+    borderWidth: 1,
+    borderColor: "#9333ea",
+  },
+  faceMatchRefLabel: {
+    fontSize: 9,
+    fontWeight: "700",
+    color: "#9333ea",
+    letterSpacing: 0.8,
+    marginBottom: 6,
+  },
+  faceMatchMeasurements: {
+    gap: 4,
+  },
+  faceMatchMeasRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  faceMatchMeasKey: {
+    fontSize: 10,
+    color: "#777",
+    fontWeight: "600",
+    flex: 1,
+  },
+  faceMatchMeasVal: {
+    fontSize: 12,
+    color: "#aaa",
+    fontWeight: "700",
+    fontFamily: "monospace",
+    textAlign: "right",
+  },
+  faceMatchMeasMatch: {
+    color: "#22c55e",
+  },
+  faceMatchSelectLabel: {
+    fontSize: 11,
+    color: "#c4b5fd",
+    fontStyle: "italic",
+  },
+  faceMatchCard: {
+    backgroundColor: "#0F1117",
+    borderRadius: 6,
+    padding: 8,
+    borderWidth: 1,
+    borderColor: "#333",
+  },
+  faceMatchCardSelected: {
+    borderColor: "#9333ea",
+    backgroundColor: "#110a1a",
+  },
+  faceMatchSuspectId: {
+    fontSize: 10,
+    fontWeight: "700",
+    color: "#555",
+    letterSpacing: 0.5,
+    marginBottom: 5,
   },
 });
