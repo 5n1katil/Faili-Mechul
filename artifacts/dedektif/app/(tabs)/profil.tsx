@@ -26,7 +26,8 @@ import { usePurchase } from "@/context/PurchaseContext";
 type MaterialIconName = ComponentProps<typeof MaterialIcons>["name"];
 
 const BADGE_INFO: Record<string, { label: string; icon: MaterialIconName; desc: string; color?: string }> = {
-  ilk_cozum:      { label: "İlk Çözüm",      icon: "emoji-events",           desc: "İlk bulmacayı çözdünüz!" },
+  bas_dedektif:   { label: "Baş Dedektif",    icon: "workspace-premium",      desc: "Premium Vaka Arşivini açtınız!", color: "#D4A843" },
+  ilk_cozum:      { label: "İlk Çözüm",       icon: "emoji-events",           desc: "İlk bulmacayı çözdünüz!" },
   bes_cozum:      { label: "5 Vaka",          icon: "star",                   desc: "5 bulmaca çözdünüz!" },
   on_cozum:       { label: "10 Vaka",         icon: "star-half",              desc: "10 bulmaca çözdünüz!" },
   yirmi_cozum:    { label: "20 Vaka",         icon: "grade",                  desc: "20 bulmaca çözdünüz!" },
@@ -92,6 +93,10 @@ export default function ProfilScreen() {
   const flawlessCount = completedRecords.filter((h) => h.wrongGuesses === 0).length;
 
   const recentHistory = gameHistory.slice(0, 10);
+
+  const visibleBadges = isPremium && !profile.badges.includes("bas_dedektif")
+    ? ["bas_dedektif", ...profile.badges]
+    : profile.badges;
 
   const handleAvatarChange = (newAvatar: string) => {
     updateProfile(profile.name, newAvatar);
@@ -200,11 +205,11 @@ export default function ProfilScreen() {
           </View>
         </Animated.View>
 
-        {profile.badges.length > 0 && (
+        {visibleBadges.length > 0 && (
           <Animated.View entering={FadeInDown.delay(160).springify()}>
             <Text style={[styles.sectionTitle, { color: colors.foreground }]}>Rozetler</Text>
             <View style={styles.badgesGrid}>
-              {profile.badges.map((b) => (
+              {visibleBadges.map((b) => (
                 <BadgeItem key={b} badgeId={b} colors={colors} />
               ))}
             </View>
@@ -279,6 +284,24 @@ export default function ProfilScreen() {
                   </Text>
                 </View>
                 <MaterialIcons name="verified" size={22} color="#D4A843" />
+              </View>
+              <View style={[styles.premiumStatRow, { borderTopColor: "#D4A84330" }]}>
+                <View style={styles.premiumStat}>
+                  <Text style={[styles.premiumStatValue, { color: "#D4A843" }]}>{profile.gamesWon}</Text>
+                  <Text style={[styles.premiumStatLabel, { color: "#D4A84399" }]}>çözülen vaka</Text>
+                </View>
+                <View style={[styles.premiumStatDivider, { backgroundColor: "#D4A84330" }]} />
+                <View style={styles.premiumStat}>
+                  <Text style={[styles.premiumStatValue, { color: "#D4A843" }]}>{flawlessCount}</Text>
+                  <Text style={[styles.premiumStatLabel, { color: "#D4A84399" }]}>hatasız çözüm</Text>
+                </View>
+                <View style={[styles.premiumStatDivider, { backgroundColor: "#D4A84330" }]} />
+                <View style={styles.premiumStat}>
+                  <Text style={[styles.premiumStatValue, { color: "#D4A843" }]}>
+                    {bestTimeSeconds > 0 ? `${Math.floor(bestTimeSeconds / 60)}:${(bestTimeSeconds % 60).toString().padStart(2, "0")}` : "—"}
+                  </Text>
+                  <Text style={[styles.premiumStatLabel, { color: "#D4A84399" }]}>en iyi süre</Text>
+                </View>
               </View>
             </View>
           ) : (
@@ -521,6 +544,32 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 14,
     gap: 14,
+  },
+  premiumStatRow: {
+    flexDirection: "row",
+    borderTopWidth: 1,
+    marginTop: 0,
+    paddingTop: 10,
+    paddingHorizontal: 16,
+    paddingBottom: 12,
+  },
+  premiumStat: {
+    flex: 1,
+    alignItems: "center",
+    gap: 2,
+  },
+  premiumStatDivider: {
+    width: 1,
+    marginVertical: 2,
+  },
+  premiumStatValue: {
+    fontSize: 18,
+    fontWeight: "800",
+  },
+  premiumStatLabel: {
+    fontSize: 10,
+    fontWeight: "600",
+    textAlign: "center",
   },
   restoreBtn: {
     flexDirection: "row",

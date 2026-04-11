@@ -133,7 +133,10 @@ function RankItem({ entry, rank, sortKey, colors, delay }: RankItemProps) {
               </View>
             )}
             {entry.isPremiumUser && (
-              <MaterialIcons name="workspace-premium" size={14} color="#D4A843" />
+              <View style={[styles.premiumChip, { backgroundColor: "#D4A84320", borderColor: "#D4A84355" }]}>
+                <MaterialIcons name="workspace-premium" size={10} color="#D4A843" />
+                <Text style={[styles.premiumChipText, { color: "#D4A843" }]}>Baş Dedektif</Text>
+              </View>
             )}
           </View>
           <View style={styles.metaRow}>
@@ -360,6 +363,20 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   youText: { fontSize: 10, fontWeight: "700" },
+  premiumChip: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 3,
+    borderWidth: 1,
+    borderRadius: 8,
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+  },
+  premiumChipText: {
+    fontSize: 10,
+    fontWeight: "700",
+    letterSpacing: 0.2,
+  },
   metaRow: { flexDirection: "row", alignItems: "center", gap: 4 },
   metaText: { fontSize: 11 },
   avgTimeRow: { flexDirection: "row", alignItems: "center", gap: 3, marginTop: 2 },
