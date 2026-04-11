@@ -26,6 +26,8 @@ import OnboardingScreen from "@/components/OnboardingScreen";
 import ProfileSetupModal from "@/components/ProfileSetupModal";
 import { AvatarDisplay } from "@/utils/avatarHelpers";
 import { AI_DETECTIVES } from "@/data/aiDetectives";
+import { useMission } from "@/context/MissionContext";
+import { DAILY_MISSIONS } from "@/data/missions";
 
 const ONBOARDING_KEY = "@dedektif_onboarding_done";
 const SETUP_KEY = "@dedektif_setup_done";
@@ -68,6 +70,7 @@ export default function HomeScreen() {
     updateProfile,
   } = useGame();
   const countdown = useDailyCountdown();
+  const { getMissionProgress, isAwarded } = useMission();
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [helpBtnOpen, setHelpBtnOpen] = useState(false);
   const [showSetup, setShowSetup] = useState(false);
@@ -335,6 +338,80 @@ export default function HomeScreen() {
           </Pressable>
         </Animated.View>
 
+        <Animated.View entering={FadeInDown.delay(160).springify()}>
+          {(() => {
+            const incompleteDailyCount = DAILY_MISSIONS.filter(
+              (m) => !isAwarded(m.id)
+            ).length;
+            const completedToday = DAILY_MISSIONS.filter(
+              (m) => {
+                const prog = getMissionProgress(m.id);
+                return prog.completed;
+              }
+            ).length;
+            const totalPoints = DAILY_MISSIONS
+              .filter((m) => !isAwarded(m.id))
+              .reduce((sum, m) => sum + m.reward.points, 0);
+
+            return (
+              <Pressable
+                onPress={() => router.push("/(tabs)/gorevler")}
+                style={[
+                  styles.missionsCard,
+                  { backgroundColor: colors.card, borderColor: colors.border },
+                ]}
+              >
+                <View style={[styles.missionsAccent, { backgroundColor: "#60A5FA" }]} />
+                <View style={styles.missionsInner}>
+                  <View style={styles.missionsLeft}>
+                    <View style={[styles.missionsIconWrap, { backgroundColor: "#60A5FA22" }]}>
+                      <MaterialIcons name="assignment" size={20} color="#60A5FA" />
+                    </View>
+                    <View>
+                      <Text style={[styles.missionsTitle, { color: colors.foreground }]}>
+                        Günlük Görevler
+                      </Text>
+                      <Text style={[styles.missionsSubtitle, { color: colors.mutedForeground }]}>
+                        {incompleteDailyCount > 0
+                          ? `${incompleteDailyCount} görev bekliyor · +${totalPoints} puan`
+                          : "Tüm görevler tamamlandı!"}
+                      </Text>
+                    </View>
+                  </View>
+                  <View style={styles.missionsRight}>
+                    <View style={[
+                      styles.missionsDots,
+                      { borderColor: colors.border },
+                    ]}>
+                      {DAILY_MISSIONS.map((m, i) => {
+                        const prog = getMissionProgress(m.id);
+                        const done = isAwarded(m.id) || prog.completed;
+                        return (
+                          <View
+                            key={m.id}
+                            style={[
+                              styles.missionDot,
+                              {
+                                backgroundColor: done
+                                  ? "#4CAF50"
+                                  : colors.border,
+                              },
+                            ]}
+                          />
+                        );
+                      })}
+                    </View>
+                    <Text style={[styles.missionsDotLabel, { color: colors.mutedForeground }]}>
+                      {completedToday}/{DAILY_MISSIONS.length}
+                    </Text>
+                    <MaterialIcons name="chevron-right" size={18} color={colors.mutedForeground} />
+                  </View>
+                </View>
+              </Pressable>
+            );
+          })()}
+        </Animated.View>
+
         <Animated.View entering={FadeInDown.delay(200).springify()}>
           <View style={styles.statsRow}>
             <View
@@ -499,6 +576,67 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: { flex: 1 },
   content: { paddingHorizontal: 16, gap: 14 },
+
+  missionsCard: {
+    borderRadius: 12,
+    borderWidth: 1,
+    overflow: "hidden",
+    flexDirection: "row",
+  },
+  missionsAccent: {
+    width: 3,
+    alignSelf: "stretch",
+  },
+  missionsInner: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    padding: 12,
+    gap: 10,
+  },
+  missionsLeft: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+    flex: 1,
+  },
+  missionsIconWrap: {
+    width: 38,
+    height: 38,
+    borderRadius: 9,
+    alignItems: "center",
+    justifyContent: "center",
+    flexShrink: 0,
+  },
+  missionsTitle: {
+    fontSize: 13,
+    fontWeight: "700",
+  },
+  missionsSubtitle: {
+    fontSize: 11,
+    marginTop: 2,
+  },
+  missionsRight: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+    flexShrink: 0,
+  },
+  missionsDots: {
+    flexDirection: "row",
+    gap: 4,
+    alignItems: "center",
+  },
+  missionDot: {
+    width: 7,
+    height: 7,
+    borderRadius: 4,
+  },
+  missionsDotLabel: {
+    fontSize: 11,
+    fontVariant: ["tabular-nums"],
+  },
 
   streakModalOverlay: {
     flex: 1,

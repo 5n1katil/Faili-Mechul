@@ -137,6 +137,7 @@ interface GameContextType {
   solveMechanic: (clueId: string) => void;
   submitAnswer: (suspectId: string, weaponId: string, locationId: string) => boolean;
   updateProfile: (name: string, avatar?: string) => void;
+  addBonusPoints: (points: number) => void;
   resetCurrentGame: () => void;
   tickTimer: () => void;
 }
@@ -594,6 +595,17 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     [profile]
   );
 
+  const addBonusPoints = useCallback(
+    (points: number) => {
+      setProfile((prev) => {
+        const updated = { ...prev, totalScore: prev.totalScore + points };
+        AsyncStorage.setItem(PROFILE_KEY, JSON.stringify(updated)).catch(() => {});
+        return updated;
+      });
+    },
+    []
+  );
+
   const resetCurrentGame = useCallback(() => {
     clearDraft();
     tickCount.current = 0;
@@ -628,6 +640,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         solveMechanic,
         submitAnswer,
         updateProfile,
+        addBonusPoints,
         resetCurrentGame,
         tickTimer,
       }}

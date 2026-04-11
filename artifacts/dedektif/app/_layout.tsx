@@ -15,6 +15,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { GameProvider } from "@/context/GameContext";
+import { MissionProvider } from "@/context/MissionContext";
 import { PurchaseProvider } from "@/context/PurchaseContext";
 
 SplashScreen.preventAutoHideAsync();
@@ -53,7 +54,9 @@ export default function RootLayout() {
             <KeyboardProvider>
               <PurchaseProvider>
                 <GameProvider>
-                  <RootLayoutNav />
+                  <MissionProvider>
+                    <RootLayoutNav />
+                  </MissionProvider>
                 </GameProvider>
               </PurchaseProvider>
             </KeyboardProvider>

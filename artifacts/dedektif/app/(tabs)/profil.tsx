@@ -22,21 +22,42 @@ import AvatarPicker from "@/components/AvatarPicker";
 import { AvatarDisplay } from "@/utils/avatarHelpers";
 import { soundSettings } from "@/utils/soundSettings";
 import { usePurchase } from "@/context/PurchaseContext";
+import { useMission } from "@/context/MissionContext";
+import { ALL_MISSIONS } from "@/data/missions";
 
 type MaterialIconName = ComponentProps<typeof MaterialIcons>["name"];
 
 const BADGE_INFO: Record<string, { label: string; icon: MaterialIconName; desc: string; color?: string }> = {
-  bas_dedektif:   { label: "Baş Dedektif",    icon: "workspace-premium",      desc: "Premium Vaka Arşivini açtınız!", color: "#D4A843" },
-  ilk_cozum:      { label: "İlk Çözüm",       icon: "emoji-events",           desc: "İlk bulmacayı çözdünüz!" },
-  bes_cozum:      { label: "5 Vaka",          icon: "star",                   desc: "5 bulmaca çözdünüz!" },
-  on_cozum:       { label: "10 Vaka",         icon: "star-half",              desc: "10 bulmaca çözdünüz!" },
-  yirmi_cozum:    { label: "20 Vaka",         icon: "grade",                  desc: "20 bulmaca çözdünüz!" },
-  uzman_dedektif: { label: "Uzman Dedektif",  icon: "military-tech",          desc: "Tüm ücretsiz bulmacaları çözdünüz!", color: "#D4A843" },
-  soguk_iz:       { label: "İlk Seri",        icon: "local-fire-department",  desc: "3 gün üst üste oynadınız!", color: "#F97316" },
-  hafta_serisi:   { label: "Haftalık Seri",   icon: "local-fire-department",  desc: "7 gün üst üste oynadınız!" },
-  on_seri:        { label: "Sönmez Ateş",     icon: "whatshot",               desc: "10 gün üst üste oynadınız!", color: "#F97316" },
-  hatasiz:        { label: "Hatasız",         icon: "verified",               desc: "Bir bulmacayı hiç hata yapmadan çözdünüz!" },
-  hizli_dedektif: { label: "Hızlı Dedektif",  icon: "bolt",                   desc: "Bir bulmacayı 3 dakikadan kısa sürede çözdünüz!", color: "#60A5FA" },
+  bas_dedektif:      { label: "Baş Dedektif",          icon: "workspace-premium",      desc: "Premium Vaka Arşivini açtınız!", color: "#D4A843" },
+  ilk_cozum:         { label: "İlk Çözüm",             icon: "emoji-events",           desc: "İlk bulmacayı çözdünüz!" },
+  bes_cozum:         { label: "5 Vaka",                icon: "star",                   desc: "5 bulmaca çözdünüz!" },
+  on_cozum:          { label: "10 Vaka",               icon: "star-half",              desc: "10 bulmaca çözdünüz!" },
+  yirmi_cozum:       { label: "20 Vaka",               icon: "grade",                  desc: "20 bulmaca çözdünüz!" },
+  uzman_dedektif:    { label: "Uzman Dedektif",        icon: "military-tech",          desc: "Tüm ücretsiz bulmacaları çözdünüz!", color: "#D4A843" },
+  soguk_iz:          { label: "İlk Seri",              icon: "local-fire-department",  desc: "3 gün üst üste oynadınız!", color: "#F97316" },
+  hafta_serisi:      { label: "Haftalık Seri",         icon: "local-fire-department",  desc: "7 gün üst üste oynadınız!" },
+  on_seri:           { label: "Sönmez Ateş",           icon: "whatshot",               desc: "10 gün üst üste oynadınız!", color: "#F97316" },
+  hatasiz:           { label: "Hatasız",               icon: "verified",               desc: "Bir bulmacayı hiç hata yapmadan çözdünüz!" },
+  hizli_dedektif:    { label: "Hızlı Dedektif",        icon: "bolt",                   desc: "Bir bulmacayı 3 dakikadan kısa sürede çözdünüz!", color: "#60A5FA" },
+  otuz_vaka:         { label: "30 Vaka",               icon: "military-tech",          desc: "30 bulmaca çözdünüz!", color: "#D4A843" },
+  elli_vaka:         { label: "50 Vaka",               icon: "military-tech",          desc: "50 bulmaca çözdünüz!", color: "#D4A843" },
+  sifir_hata_usta:   { label: "Hatasız Usta",          icon: "verified",               desc: "10 bulmacayı hatasız çözdünüz!" },
+  iki_hafta_serisi:  { label: "İki Hafta Serisi",      icon: "whatshot",               desc: "14 günlük seri oluşturdunuz!", color: "#F97316" },
+  hiz_makinesi:      { label: "Hız Makinesi",          icon: "speed",                  desc: "5 bulmacayı 3 dakikadan kısa sürede çözdünüz!", color: "#60A5FA" },
+  dedektif_usta:     { label: "Dedektif Ustası",       icon: "manage-search",          desc: "10 Dedektif seviyesi bulmaca çözdünüz!" },
+  komiser_cirak:     { label: "Komiser Çıraklığı",     icon: "local-police",           desc: "5 Baş Komiser seviyesi bulmaca çözdünüz!", color: "#D4A843" },
+  puan_usta:         { label: "Puan Ustası",           icon: "trending-up",            desc: "Tek bir bulmacada 12.000+ puan kazandınız!" },
+  uc_hafta_serisi:   { label: "Üç Hafta",              icon: "whatshot",               desc: "21 günlük seri oluşturdunuz!", color: "#F97316" },
+  yuz_vaka:          { label: "100 Vaka",              icon: "auto-graph",             desc: "100 bulmaca çözdünüz!", color: "#D4A843" },
+  mukemmeliyetci:    { label: "Mükemmeliyetçi",        icon: "verified",               desc: "20 bulmacayı hatasız çözdünüz!", color: "#D4A843" },
+  altin_sicil:       { label: "Altın Sicil",           icon: "workspace-premium",      desc: "30 bulmacayı hatasız çözdünüz!", color: "#D4A843" },
+  ay_serisi:         { label: "Ay Serisi",             icon: "local-fire-department",  desc: "30 günlük seri oluşturdunuz!", color: "#F97316" },
+  efsane_seri:       { label: "Efsane Seri",           icon: "whatshot",               desc: "50 günlük seri oluşturdunuz!", color: "#C8372D" },
+  simsek:            { label: "Şimşek",                icon: "flash-on",               desc: "Bir bulmacayı 90 saniyeden kısa sürede çözdünüz!", color: "#60A5FA" },
+  komiser_usta:      { label: "Komiser Ustası",        icon: "gavel",                  desc: "10 Baş Komiser seviyesi bulmaca çözdünüz!", color: "#D4A843" },
+  puan_efsane:       { label: "Puan Efsanesi",         icon: "diamond",                desc: "Toplam 100.000 puan kazandınız!", color: "#D4A843" },
+  yuksek_gerilim:    { label: "Yüksek Gerilim",        icon: "trending-up",            desc: "Tek bir bulmacada 15.000+ puan kazandınız!", color: "#D4A843" },
+  efsane_hazine:     { label: "Efsane Hazinesi",       icon: "emoji-events",           desc: "Toplam 200.000 puan kazandınız!", color: "#D4A843" },
 };
 
 function BadgeItem({ badgeId, colors }: { badgeId: string; colors: ReturnType<typeof useColors> }) {
@@ -61,6 +82,7 @@ export default function ProfilScreen() {
   const insets = useSafeAreaInsets();
   const { profile, gameHistory, updateProfile } = useGame();
   const { isPremium, restorePurchases, priceString } = usePurchase();
+  const { isAwarded } = useMission();
 
   const [showHowToPlay, setShowHowToPlay] = useState(false);
   const [showPaywall, setShowPaywall] = useState(false);
@@ -94,9 +116,15 @@ export default function ProfilScreen() {
 
   const recentHistory = gameHistory.slice(0, 10);
 
-  const visibleBadges = isPremium && !profile.badges.includes("bas_dedektif")
+  const missionBadges = ALL_MISSIONS
+    .filter((m) => m.reward.badge && isAwarded(m.id))
+    .map((m) => m.reward.badge as string);
+
+  const rawBadges = isPremium && !profile.badges.includes("bas_dedektif")
     ? ["bas_dedektif", ...profile.badges]
     : profile.badges;
+
+  const visibleBadges = [...new Set([...rawBadges, ...missionBadges])];
 
   const handleAvatarChange = (newAvatar: string) => {
     updateProfile(profile.name, newAvatar);

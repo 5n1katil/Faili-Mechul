@@ -7,6 +7,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import React from "react";
 import { Platform, StyleSheet, View, useColorScheme } from "react-native";
 import { useColors } from "@/hooks/useColors";
+import { useMission } from "@/context/MissionContext";
 
 function NativeTabLayout() {
   return (
@@ -18,6 +19,10 @@ function NativeTabLayout() {
       <NativeTabs.Trigger name="oyun">
         <Icon sf={{ default: "folder", selected: "folder.fill" }} />
         <Label>Vakalar</Label>
+      </NativeTabs.Trigger>
+      <NativeTabs.Trigger name="gorevler">
+        <Icon sf={{ default: "checklist", selected: "checklist" }} />
+        <Label>Görevler</Label>
       </NativeTabs.Trigger>
       <NativeTabs.Trigger name="liderlik">
         <Icon sf={{ default: "trophy", selected: "trophy.fill" }} />
@@ -37,6 +42,7 @@ function ClassicTabLayout() {
   const isDark = colorScheme === "dark";
   const isIOS = Platform.OS === "ios";
   const isWeb = Platform.OS === "web";
+  const { unseenCompletedCount } = useMission();
 
   return (
     <Tabs
@@ -97,6 +103,20 @@ function ClassicTabLayout() {
         name="paketler"
         options={{
           href: null,
+        }}
+      />
+      <Tabs.Screen
+        name="gorevler"
+        options={{
+          title: "Görevler",
+          tabBarBadge: unseenCompletedCount > 0 ? unseenCompletedCount : undefined,
+          tabBarBadgeStyle: { backgroundColor: colors.success, fontSize: 10 },
+          tabBarIcon: ({ color }) =>
+            isIOS ? (
+              <SymbolView name="checklist" tintColor={color} size={24} />
+            ) : (
+              <MaterialIcons name="assignment" size={24} color={color} />
+            ),
         }}
       />
       <Tabs.Screen
