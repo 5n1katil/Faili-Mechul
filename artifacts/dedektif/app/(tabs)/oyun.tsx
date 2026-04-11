@@ -151,7 +151,7 @@ function PremiumInfoModal({
   onClose: () => void;
 }) {
   return (
-    <Modal visible={visible} transparent animationType="fade" onRequestClose={onClose}>
+    <Modal visible={visible} transparent animationType="slide" onRequestClose={onClose}>
       <Pressable style={premiumInfoStyles.overlay} onPress={onClose}>
         <Pressable style={premiumInfoStyles.card} onPress={() => {}}>
           <View style={premiumInfoStyles.iconRow}>
@@ -182,7 +182,7 @@ function PremiumInfoModal({
             </View>
             <View style={premiumInfoStyles.featureRow}>
               <MaterialIcons name="all-inclusive" size={16} color="#D4A843" />
-              <Text style={premiumInfoStyles.featureText}>Tek seferlik satın al, sonsuza dey oyna</Text>
+              <Text style={premiumInfoStyles.featureText}>Tek seferlik satın al, sonsuza dek oyna</Text>
             </View>
           </View>
           <View style={premiumInfoStyles.btnRow}>
@@ -625,7 +625,7 @@ export default function VakalarScreen() {
             contentContainerStyle={[
               listStyles.listContent,
               {
-                paddingTop: 16,
+                paddingTop: 8,
                 paddingBottom: Platform.OS === "web" ? 34 + 80 : insets.bottom + 80,
               },
             ]}
