@@ -350,7 +350,11 @@ export default function ResultScreen({
     );
     if (Platform.OS !== "web") {
       if (success) {
-        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+        setTimeout(() => Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium), 200);
+        setTimeout(() => Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success), 500);
+        setTimeout(() => Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy), 850);
+        setTimeout(() => Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light), 1100);
       } else {
         Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
       }

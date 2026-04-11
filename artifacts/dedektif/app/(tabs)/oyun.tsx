@@ -296,7 +296,7 @@ export default function VakalarScreen() {
     bestScoreForPuzzle,
   } = useGame();
   const { isPremium } = usePurchase();
-  const { play } = useSounds();
+  const { play, playVictorySequence } = useSounds();
 
   const [showResult, setShowResult] = useState(false);
   const [lastResultSuccess, setLastResultSuccess] = useState(false);
@@ -334,11 +334,11 @@ export default function VakalarScreen() {
 
   useEffect(() => {
     if (gameState?.isComplete) {
-      play("success");
+      playVictorySequence();
       setLastResultSuccess(true);
       setShowResult(true);
     }
-  }, [gameState?.isComplete, play]);
+  }, [gameState?.isComplete, playVictorySequence]);
 
   useEffect(() => {
     setShowResult(false);
