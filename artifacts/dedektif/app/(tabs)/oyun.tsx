@@ -60,7 +60,7 @@ function AccordionSection({
   title,
   count,
   badge,
-  defaultExpanded = true,
+  defaultExpanded = false,
   accentColor,
   icon,
   compact = false,
@@ -227,7 +227,7 @@ function DifficultySubGroups({
             accentColor={color}
             icon={diffIcon}
             compact
-            defaultExpanded={diff === "caylik"}
+            defaultExpanded={false}
           >
             {group.map((puzzle, i) => renderCard(puzzle, i))}
           </AccordionSection>
