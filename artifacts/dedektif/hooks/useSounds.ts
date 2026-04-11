@@ -10,6 +10,10 @@ const ZERO_TIMESTAMPS: Record<SoundName, number> = {
   tap: 0, check: 0, cross: 0, error: 0, success: 0, clue: 0, victory: 0,
 };
 
+const FALSE_FLAGS: Record<SoundName, boolean> = {
+  tap: false, check: false, cross: false, error: false, success: false, clue: false, victory: false,
+};
+
 export function useSounds() {
   const tap = useAudioPlayer(require("../assets/sounds/tap.wav"));
   const check = useAudioPlayer(require("../assets/sounds/check.wav"));
@@ -23,14 +27,22 @@ export function useSounds() {
   playersRef.current = { tap, check, cross, error, success, clue, victory };
 
   const lastPlayRef = useRef<Record<SoundName, number>>({ ...ZERO_TIMESTAMPS });
+  const inFlightRef = useRef<Record<SoundName, boolean>>({ ...FALSE_FLAGS });
 
   const play = useCallback((name: SoundName) => {
     if (!soundSettings.enabled) return;
+    if (inFlightRef.current[name]) return;
     const now = Date.now();
     if (now - lastPlayRef.current[name] < DEBOUNCE_MS) return;
     lastPlayRef.current[name] = now;
+    inFlightRef.current[name] = true;
     const player = playersRef.current[name];
-    player.seekTo(0).then(() => player.play()).catch(() => {});
+    player.seekTo(0).then(() => {
+      inFlightRef.current[name] = false;
+      player.play();
+    }).catch(() => {
+      inFlightRef.current[name] = false;
+    });
   }, []);
 
   const playVictorySequence = useCallback(() => {

@@ -2,50 +2,37 @@ const { withDangerousMod, withXcodeProject } = require("expo/config-plugins");
 const path = require("path");
 const fs = require("fs");
 
-const PRIVACY_MANIFEST = `<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-\t<key>NSPrivacyAccessedAPITypes</key>
-\t<array>
-\t\t<dict>
-\t\t\t<key>NSPrivacyAccessedAPIType</key>
-\t\t\t<string>NSPrivacyAccessedAPICategoryUserDefaults</string>
-\t\t\t<key>NSPrivacyAccessedAPITypeReasons</key>
-\t\t\t<array>
-\t\t\t\t<string>CA92.1</string>
-\t\t\t</array>
-\t\t</dict>
-\t</array>
-\t<key>NSPrivacyCollectedDataTypes</key>
-\t<array/>
-\t<key>NSPrivacyTracking</key>
-\t<false/>
-\t<key>NSPrivacyTrackingDomains</key>
-\t<array/>
-</dict>
-</plist>
-`;
-
 /**
- * Expo config plugin that creates PrivacyInfo.xcprivacy for iOS 17+.
+ * Expo config plugin that copies PrivacyInfo.xcprivacy into the iOS project
+ * during EAS prebuild and registers it in the Xcode project file.
  *
- * Apple requires apps to declare which "required reason" APIs they access.
- * AsyncStorage uses NSUserDefaults (reason CA92.1 — same-app access).
- * Without this manifest the App Store may reject the build.
+ * Apple requires apps to declare which "required reason" APIs they access
+ * (https://developer.apple.com/documentation/bundleresources/privacy_manifest_files).
+ * This app uses AsyncStorage → NSUserDefaults (reason CA92.1).
  *
- * References:
- *   https://developer.apple.com/documentation/bundleresources/privacy_manifest_files
- *   https://developer.apple.com/documentation/bundleresources/privacy_manifest_files/describing_use_of_required_reason_api
+ * The source file lives at artifacts/dedektif/PrivacyInfo.xcprivacy.
+ * EAS runs this plugin via `expo prebuild` before each iOS build.
  */
 function withPrivacyManifest(config) {
   config = withDangerousMod(config, [
     "ios",
     (modConfig) => {
       const { projectName, platformProjectRoot } = modConfig.modRequest;
+      const projectRoot = modConfig.modRequest.projectRoot;
+
+      const srcPath = path.join(projectRoot, "PrivacyInfo.xcprivacy");
       const destPath = path.join(platformProjectRoot, projectName, "PrivacyInfo.xcprivacy");
+
+      if (!fs.existsSync(srcPath)) {
+        throw new Error(
+          `[withPrivacyManifest] Source file not found: ${srcPath}\n` +
+          "Create PrivacyInfo.xcprivacy in the app root before building."
+        );
+      }
+
       fs.mkdirSync(path.dirname(destPath), { recursive: true });
-      fs.writeFileSync(destPath, PRIVACY_MANIFEST, "utf8");
+      fs.copyFileSync(srcPath, destPath);
+
       return modConfig;
     },
   ]);
