@@ -23,6 +23,18 @@ export default ({ config }: ConfigContext): ExpoConfig => {
       supportsTablet: false,
       bundleIdentifier: "com.failimechul.dedektif",
       buildNumber: "1",
+      minimumOsVersion: "13.4",
+      privacyManifests: {
+        NSPrivacyAccessedAPITypes: [
+          {
+            NSPrivacyAccessedAPIType: "NSPrivacyAccessedAPICategoryUserDefaults",
+            NSPrivacyAccessedAPITypeReasons: ["CA92.1"],
+          },
+        ],
+        NSPrivacyCollectedDataTypes: [],
+        NSPrivacyTracking: false,
+        NSPrivacyTrackingDomains: [],
+      },
       infoPlist: {
         NSUserNotificationUsageDescription:
           "Günlük bulmaca hatırlatmaları için",
@@ -49,6 +61,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
       "expo-font",
       "expo-web-browser",
       "./plugins/withRevenueCat",
+      "./plugins/withPrivacyManifest",
     ],
     extra: {
       revenueCatIosKey: iosKey,

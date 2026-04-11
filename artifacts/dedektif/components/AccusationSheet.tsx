@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Modal,
   Platform,
@@ -63,6 +63,15 @@ export default function AccusationSheet({
   const btnScale = useSharedValue(1);
   const wrongToastOpacity = useSharedValue(0);
   const wrongToastRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (wrongToastRef.current) {
+        clearTimeout(wrongToastRef.current);
+        wrongToastRef.current = null;
+      }
+    };
+  }, []);
 
   const canSubmit = Boolean(selectedSuspect && selectedWeapon && selectedLocation);
 
