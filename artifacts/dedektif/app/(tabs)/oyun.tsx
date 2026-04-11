@@ -60,7 +60,7 @@ function AccordionSection({
   title,
   count,
   badge,
-  defaultExpanded = false,
+  defaultExpanded = true,
   accentColor,
   icon,
   compact = false,
