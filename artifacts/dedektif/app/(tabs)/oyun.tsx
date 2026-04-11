@@ -536,8 +536,6 @@ export default function VakalarScreen() {
     const archivePuzzles = PUZZLES.filter((p) => p.id !== dailyPuzzle.id);
     const freePuzzles = archivePuzzles.slice(0, FREE_PUZZLE_COUNT);
     const premiumPuzzles = archivePuzzles.slice(FREE_PUZZLE_COUNT);
-    const premiumLockedCount = isPremium ? 0 : premiumPuzzles.length;
-
     const completedStandardPuzzles = [dailyPuzzle, ...archivePuzzles].filter(
       (p) => completedPuzzleIds.has(p.id)
     );
@@ -1099,29 +1097,6 @@ const listStyles = StyleSheet.create({
     textAlign: "center",
     lineHeight: 20,
   },
-  premiumChip: {
-    flexDirection: "row",
-    alignItems: "center",
-    borderRadius: 8,
-    borderWidth: 1,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    gap: 4,
-  },
-  premiumChipText: { fontSize: 11, fontWeight: "700" },
-  premiumBanner: {
-    flexDirection: "row",
-    alignItems: "center",
-    borderRadius: 12,
-    borderWidth: 1,
-    paddingHorizontal: 14,
-    paddingVertical: 12,
-    gap: 12,
-    marginBottom: 2,
-  },
-  premiumBannerText: { flex: 1 },
-  premiumBannerTitle: { fontSize: 14, fontWeight: "700" },
-  premiumBannerSub: { fontSize: 12, marginTop: 1 },
   puzzleCard: {
     borderRadius: 14,
     borderWidth: 1,
