@@ -387,11 +387,14 @@ export function MissionProvider({ children }: { children: React.ReactNode }) {
       const mission = ALL_MISSIONS.find((m) => m.id === missionId);
       if (!mission) return;
 
-      const currentAwardedIds = awardedIdsRef.current;
       const prog = progressMap.get(missionId);
-      if (!prog?.completed || currentAwardedIds.includes(missionId)) return;
+      if (!prog?.completed) return;
+
+      const currentAwardedIds = awardedIdsRef.current;
+      if (currentAwardedIds.includes(missionId)) return;
 
       const newAwardedIds = [...currentAwardedIds, missionId];
+      awardedIdsRef.current = newAwardedIds;
       setAwardedIds(newAwardedIds);
       saveState(newAwardedIds, lastDailyDateRef.current, lastWeeklyMondayRef.current);
       addBonusPoints(mission.reward.points);
@@ -412,6 +415,7 @@ export function MissionProvider({ children }: { children: React.ReactNode }) {
     const newAwardedIds = [...currentAwardedIds, ...claimableMissions.map((m) => m.id)];
     const totalPoints = claimableMissions.reduce((sum, m) => sum + m.reward.points, 0);
 
+    awardedIdsRef.current = newAwardedIds;
     setAwardedIds(newAwardedIds);
     saveState(newAwardedIds, lastDailyDateRef.current, lastWeeklyMondayRef.current);
     addBonusPoints(totalPoints);
