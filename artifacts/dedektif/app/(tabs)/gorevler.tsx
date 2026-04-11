@@ -1,6 +1,7 @@
-import React, { useEffect, type ComponentProps } from "react";
+import React, { type ComponentProps } from "react";
 import {
   Platform,
+  Pressable,
   ScrollView,
   StyleSheet,
   Text,
@@ -9,7 +10,12 @@ import {
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import Animated, { FadeInDown } from "react-native-reanimated";
+import Animated, {
+  FadeInDown,
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+} from "react-native-reanimated";
 
 type MatIconName = ComponentProps<typeof MaterialIcons>["name"];
 
@@ -24,6 +30,15 @@ import {
   type Mission,
   type MissionTier,
 } from "@/data/missions";
+
+function formatPoints(pts: number): string {
+  if (pts >= 1000) {
+    return pts % 1000 === 0
+      ? `${pts / 1000}K`
+      : `${(pts / 1000).toFixed(1)}K`;
+  }
+  return String(pts);
+}
 
 function ProgressBar({
   current,
@@ -48,13 +63,41 @@ function ProgressBar({
   );
 }
 
+const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
+
+function ClaimButton({
+  onPress,
+  points,
+}: {
+  onPress: () => void;
+  points: number;
+}) {
+  const scale = useSharedValue(1);
+  const animStyle = useAnimatedStyle(() => ({ transform: [{ scale: scale.value }] }));
+
+  return (
+    <AnimatedPressable
+      style={[styles.claimBtn, animStyle]}
+      onPressIn={() => { scale.value = withSpring(0.93, { damping: 12 }); }}
+      onPressOut={() => { scale.value = withSpring(1, { damping: 12 }); }}
+      onPress={onPress}
+    >
+      <MaterialIcons name="bolt" size={13} color="#000" />
+      <Text style={styles.claimBtnText}>TOPLA</Text>
+      <View style={styles.claimBtnPoints}>
+        <Text style={styles.claimBtnPointsText}>+{formatPoints(points)}</Text>
+      </View>
+    </AnimatedPressable>
+  );
+}
+
 function MissionCard({ mission }: { mission: Mission }) {
   const colors = useColors();
-  const { getMissionProgress, isAwarded } = useMission();
+  const { getMissionProgress, isAwarded, isClaimable, claimMission } = useMission();
   const progress = getMissionProgress(mission.id);
   const awarded = isAwarded(mission.id);
+  const claimable = isClaimable(mission.id);
   const tierColor = getTierColor(mission.tier);
-  const dimmed = awarded;
 
   return (
     <View
@@ -64,22 +107,35 @@ function MissionCard({ mission }: { mission: Mission }) {
           backgroundColor: colors.card,
           borderColor: awarded
             ? `${colors.success}44`
-            : `${colors.border}`,
-          opacity: dimmed ? 0.65 : 1,
+            : claimable
+            ? colors.primary
+            : colors.border,
+          opacity: awarded ? 0.65 : 1,
         },
       ]}
     >
-      <View style={[styles.missionAccent, { backgroundColor: tierColor }]} />
+      <View
+        style={[
+          styles.missionAccent,
+          { backgroundColor: claimable ? colors.primary : tierColor },
+        ]}
+      />
       <View style={styles.missionInner}>
         <View style={styles.missionHeader}>
           <View
             style={[
               styles.missionIconWrap,
-              { backgroundColor: `${tierColor}22` },
+              {
+                backgroundColor: claimable
+                  ? `${colors.primary}22`
+                  : `${tierColor}22`,
+              },
             ]}
           >
             {awarded ? (
               <MaterialIcons name="check-circle" size={20} color={colors.success} />
+            ) : claimable ? (
+              <MaterialIcons name="bolt" size={20} color={colors.primary} />
             ) : (
               <MaterialIcons
                 name={mission.icon as MatIconName}
@@ -92,7 +148,13 @@ function MissionCard({ mission }: { mission: Mission }) {
             <Text
               style={[
                 styles.missionTitle,
-                { color: awarded ? colors.success : colors.foreground },
+                {
+                  color: awarded
+                    ? colors.success
+                    : claimable
+                    ? colors.primary
+                    : colors.foreground,
+                },
               ]}
             >
               {mission.title}
@@ -107,33 +169,47 @@ function MissionCard({ mission }: { mission: Mission }) {
               {mission.description}
             </Text>
           </View>
-          <View
-            style={[
-              styles.rewardBadge,
-              { backgroundColor: `${colors.primary}18`, borderColor: `${colors.primary}44` },
-            ]}
-          >
-            <MaterialIcons name="bolt" size={11} color={colors.primary} />
-            <Text style={[styles.rewardText, { color: colors.primary }]}>
-              +{mission.reward.points >= 1000
-                ? `${(mission.reward.points / 1000).toFixed(mission.reward.points % 1000 === 0 ? 0 : 1)}K`
-                : mission.reward.points}
-            </Text>
-            {mission.reward.badge && (
-              <MaterialIcons name="workspace-premium" size={11} color={colors.primary} style={{ marginLeft: 2 }} />
-            )}
-          </View>
+          {!claimable && (
+            <View
+              style={[
+                styles.rewardBadge,
+                {
+                  backgroundColor: `${colors.primary}18`,
+                  borderColor: `${colors.primary}44`,
+                },
+              ]}
+            >
+              <MaterialIcons name="bolt" size={11} color={colors.primary} />
+              <Text style={[styles.rewardText, { color: colors.primary }]}>
+                +{formatPoints(mission.reward.points)}
+              </Text>
+              {mission.reward.badge && (
+                <MaterialIcons
+                  name="workspace-premium"
+                  size={11}
+                  color={colors.primary}
+                  style={{ marginLeft: 2 }}
+                />
+              )}
+            </View>
+          )}
         </View>
         <View style={styles.progressRow}>
           <ProgressBar
             current={progress.current}
             target={progress.target}
-            color={awarded ? colors.success : tierColor}
+            color={awarded ? colors.success : claimable ? colors.primary : tierColor}
           />
           <Text style={[styles.progressLabel, { color: colors.mutedForeground }]}>
             {progress.current}/{progress.target}
           </Text>
         </View>
+        {claimable && (
+          <ClaimButton
+            onPress={() => claimMission(mission.id)}
+            points={mission.reward.points}
+          />
+        )}
       </View>
     </View>
   );
@@ -190,16 +266,58 @@ function SectionHeader({
   );
 }
 
+function CollectAllButton() {
+  const colors = useColors();
+  const { claimableCount, claimablePoints, claimAll } = useMission();
+  const scale = useSharedValue(1);
+  const animStyle = useAnimatedStyle(() => ({ transform: [{ scale: scale.value }] }));
+  const hasClaimable = claimableCount > 0;
+
+  return (
+    <AnimatedPressable
+      onPressIn={() => {
+        if (!hasClaimable) return;
+        scale.value = withSpring(0.96, { damping: 12 });
+      }}
+      onPressOut={() => { scale.value = withSpring(1, { damping: 12 }); }}
+      onPress={hasClaimable ? claimAll : undefined}
+      style={[styles.collectAllBtn, animStyle, { opacity: hasClaimable ? 1 : 0.45 }]}
+    >
+      <View
+        style={[
+          styles.collectAllInner,
+          { backgroundColor: hasClaimable ? colors.primary : colors.card },
+        ]}
+      >
+        <MaterialIcons
+          name="bolt"
+          size={18}
+          color={hasClaimable ? "#000" : colors.mutedForeground}
+        />
+        <Text
+          style={[
+            styles.collectAllText,
+            { color: hasClaimable ? "#000" : colors.mutedForeground },
+          ]}
+        >
+          {hasClaimable
+            ? `Tümünü Topla  ·  +${formatPoints(claimablePoints)} puan`
+            : "Toplanacak görev yok"}
+        </Text>
+        {hasClaimable && (
+          <View style={styles.collectAllBadge}>
+            <Text style={styles.collectAllBadgeText}>{claimableCount}</Text>
+          </View>
+        )}
+      </View>
+    </AnimatedPressable>
+  );
+}
+
 export default function GorevlerScreen() {
   const colors = useColors();
   const insets = useSafeAreaInsets();
-  const { unseenCompletedCount, markAllSeen, loaded, dailyTimeLeft, weeklyTimeLeft } =
-    useMission();
-
-  useEffect(() => {
-    if (!loaded) return;
-    markAllSeen();
-  }, [loaded]);
+  const { claimableCount, dailyTimeLeft, weeklyTimeLeft } = useMission();
 
   const dailyByTier = {
     caylak: DAILY_MISSIONS.filter((m) => m.tier === "caylak"),
@@ -241,12 +359,16 @@ export default function GorevlerScreen() {
               Görevleri tamamla, bonus puan kazan
             </Text>
           </View>
-          {unseenCompletedCount > 0 && (
-            <View style={[styles.newBadge, { backgroundColor: colors.success }]}>
-              <Text style={styles.newBadgeText}>{unseenCompletedCount} yeni!</Text>
+          {claimableCount > 0 && (
+            <View style={[styles.newBadge, { backgroundColor: colors.primary }]}>
+              <Text style={styles.newBadgeText}>{claimableCount} bekliyor</Text>
             </View>
           )}
         </View>
+      </Animated.View>
+
+      <Animated.View entering={FadeInDown.delay(30).springify()}>
+        <CollectAllButton />
       </Animated.View>
 
       <Animated.View entering={FadeInDown.delay(60).springify()}>
@@ -360,9 +482,41 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   newBadgeText: {
-    color: "#fff",
+    color: "#000",
     fontSize: 12,
     fontWeight: "700",
+  },
+  collectAllBtn: {
+    borderRadius: 12,
+    overflow: "hidden",
+  },
+  collectAllInner: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+    paddingHorizontal: 14,
+    paddingVertical: 13,
+    borderRadius: 12,
+  },
+  collectAllText: {
+    flex: 1,
+    fontSize: 14,
+    fontWeight: "800",
+    letterSpacing: 0.2,
+  },
+  collectAllBadge: {
+    backgroundColor: "rgba(0,0,0,0.18)",
+    borderRadius: 10,
+    minWidth: 22,
+    height: 22,
+    paddingHorizontal: 5,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  collectAllBadgeText: {
+    color: "#000",
+    fontSize: 11,
+    fontWeight: "800",
   },
   section: {
     borderWidth: 1,
@@ -505,6 +659,33 @@ const styles = StyleSheet.create({
     minWidth: 32,
     textAlign: "right",
     fontVariant: ["tabular-nums"],
+  },
+  claimBtn: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 4,
+    backgroundColor: "#D4A843",
+    borderRadius: 7,
+    paddingVertical: 7,
+    paddingHorizontal: 10,
+  },
+  claimBtnText: {
+    color: "#000",
+    fontSize: 12,
+    fontWeight: "800",
+    letterSpacing: 0.5,
+  },
+  claimBtnPoints: {
+    backgroundColor: "rgba(0,0,0,0.15)",
+    borderRadius: 6,
+    paddingHorizontal: 5,
+    paddingVertical: 1,
+  },
+  claimBtnPointsText: {
+    color: "#000",
+    fontSize: 11,
+    fontWeight: "700",
   },
   emptyState: {
     fontSize: 13,

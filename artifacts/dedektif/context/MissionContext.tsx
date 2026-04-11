@@ -22,7 +22,6 @@ const MISSION_STATE_KEY = "@dedektif_mission_state";
 
 interface StoredMissionState {
   awardedIds: string[];
-  seenIds: string[];
   lastDailyDate: string;
   lastWeeklyMonday: string;
 }
@@ -37,10 +36,11 @@ interface MissionProgress {
 interface MissionContextType {
   getMissionProgress: (missionId: string) => MissionProgress;
   isAwarded: (missionId: string) => boolean;
-  isSeen: (missionId: string) => boolean;
-  unseenCompletedCount: number;
-  pendingDailyWeeklyCount: number;
-  markAllSeen: () => void;
+  isClaimable: (missionId: string) => boolean;
+  claimableCount: number;
+  claimablePoints: number;
+  claimMission: (missionId: string) => void;
+  claimAll: () => void;
   loaded: boolean;
   dailyTimeLeft: string;
   weeklyTimeLeft: string;
@@ -205,7 +205,6 @@ export function MissionProvider({ children }: { children: React.ReactNode }) {
   const { gameHistory, profile, addBonusPoints } = useGame();
 
   const [awardedIds, setAwardedIds] = useState<string[]>([]);
-  const [seenIds, setSeenIds] = useState<string[]>([]);
   const [lastDailyDate, setLastDailyDate] = useState<string>("");
   const [lastWeeklyMonday, setLastWeeklyMonday] = useState<string>("");
   const [loaded, setLoaded] = useState(false);
@@ -215,12 +214,10 @@ export function MissionProvider({ children }: { children: React.ReactNode }) {
   const [weeklySeconds, setWeeklySeconds] = useState(getSecondsUntilNextMonday);
 
   const awardedIdsRef = useRef<string[]>([]);
-  const seenIdsRef = useRef<string[]>([]);
   const lastDailyDateRef = useRef<string>("");
   const lastWeeklyMondayRef = useRef<string>("");
 
   useEffect(() => { awardedIdsRef.current = awardedIds; }, [awardedIds]);
-  useEffect(() => { seenIdsRef.current = seenIds; }, [seenIds]);
   useEffect(() => { lastDailyDateRef.current = lastDailyDate; }, [lastDailyDate]);
   useEffect(() => { lastWeeklyMondayRef.current = lastWeeklyMonday; }, [lastWeeklyMonday]);
 
@@ -243,25 +240,24 @@ export function MissionProvider({ children }: { children: React.ReactNode }) {
       const monday = getCurrentWeekMonday();
 
       if (raw) {
-        const parsed: StoredMissionState = JSON.parse(raw);
-        let { awardedIds: aids, seenIds: sids, lastDailyDate: ldd, lastWeeklyMonday: lwm } = parsed;
+        const parsed = JSON.parse(raw) as Partial<StoredMissionState> & { seenIds?: string[] };
+        let aids: string[] = parsed.awardedIds ?? [];
+        let ldd: string = parsed.lastDailyDate ?? today;
+        let lwm: string = parsed.lastWeeklyMonday ?? monday;
 
         if (ldd !== today) {
           const dailyIds = new Set(DAILY_MISSIONS.map((m) => m.id));
           aids = aids.filter((id) => !dailyIds.has(id));
-          sids = sids.filter((id) => !dailyIds.has(id));
           ldd = today;
         }
 
         if (lwm !== monday) {
           const weeklyIds = new Set(WEEKLY_MISSIONS.map((m) => m.id));
           aids = aids.filter((id) => !weeklyIds.has(id));
-          sids = sids.filter((id) => !weeklyIds.has(id));
           lwm = monday;
         }
 
         setAwardedIds(aids);
-        setSeenIds(sids);
         setLastDailyDate(ldd);
         setLastWeeklyMonday(lwm);
       } else {
@@ -273,11 +269,10 @@ export function MissionProvider({ children }: { children: React.ReactNode }) {
   };
 
   const saveState = useCallback(
-    async (aids: string[], sids: string[], ldd: string, lwm: string) => {
+    async (aids: string[], ldd: string, lwm: string) => {
       try {
         const state: StoredMissionState = {
           awardedIds: aids,
-          seenIds: sids,
           lastDailyDate: ldd,
           lastWeeklyMonday: lwm,
         };
@@ -296,29 +291,25 @@ export function MissionProvider({ children }: { children: React.ReactNode }) {
     if (ldd === today && lwm === monday) return;
 
     let aids = [...awardedIdsRef.current];
-    let sids = [...seenIdsRef.current];
     let newLdd = ldd;
     let newLwm = lwm;
 
     if (ldd && ldd !== today) {
       const dailyIds = new Set(DAILY_MISSIONS.map((m) => m.id));
       aids = aids.filter((id) => !dailyIds.has(id));
-      sids = sids.filter((id) => !dailyIds.has(id));
       newLdd = today;
     }
 
     if (lwm && lwm !== monday) {
       const weeklyIds = new Set(WEEKLY_MISSIONS.map((m) => m.id));
       aids = aids.filter((id) => !weeklyIds.has(id));
-      sids = sids.filter((id) => !weeklyIds.has(id));
       newLwm = monday;
     }
 
     setAwardedIds(aids);
-    setSeenIds(sids);
     setLastDailyDate(newLdd);
     setLastWeeklyMonday(newLwm);
-    saveState(aids, sids, newLdd, newLwm);
+    saveState(aids, newLdd, newLwm);
   }, [saveState]);
 
   useEffect(() => {
@@ -331,36 +322,6 @@ export function MissionProvider({ children }: { children: React.ReactNode }) {
     const id = setInterval(applyResets, 60_000);
     return () => clearInterval(id);
   }, [loaded, applyResets]);
-
-  useEffect(() => {
-    if (!loaded) return;
-
-    const currentAwardedIds = awardedIdsRef.current;
-    const currentSeenIds = seenIdsRef.current;
-
-    const newlyCompleted: string[] = [];
-    let totalBonus = 0;
-
-    for (const mission of ALL_MISSIONS) {
-      if (currentAwardedIds.includes(mission.id)) continue;
-      const progress = computeProgress(mission, gameHistory, profile);
-      if (progress >= mission.requirement.value) {
-        newlyCompleted.push(mission.id);
-        totalBonus += mission.reward.points;
-      }
-    }
-
-    if (newlyCompleted.length > 0) {
-      const newAwardedIds = [...currentAwardedIds, ...newlyCompleted];
-      setAwardedIds(newAwardedIds);
-      saveState(newAwardedIds, currentSeenIds, lastDailyDateRef.current, lastWeeklyMondayRef.current);
-      if (totalBonus > 0) {
-        addBonusPoints(totalBonus);
-      }
-      const celebrationMissions = ALL_MISSIONS.filter((m) => newlyCompleted.includes(m.id));
-      setPendingCelebration(celebrationMissions);
-    }
-  }, [gameHistory, profile, loaded]);
 
   const progressMap = useMemo(() => {
     const map = new Map<string, MissionProgress>();
@@ -396,28 +357,66 @@ export function MissionProvider({ children }: { children: React.ReactNode }) {
     [awardedIds]
   );
 
-  const isSeen = useCallback(
-    (missionId: string) => seenIds.includes(missionId),
-    [seenIds]
+  const isClaimable = useCallback(
+    (missionId: string) => {
+      const prog = progressMap.get(missionId);
+      return (prog?.completed ?? false) && !awardedIds.includes(missionId);
+    },
+    [progressMap, awardedIds]
   );
 
-  const unseenCompletedCount = useMemo(() => {
-    return awardedIds.filter((id) => !seenIds.includes(id)).length;
-  }, [awardedIds, seenIds]);
-
-  const pendingDailyWeeklyCount = useMemo(() => {
-    const periodicMissions = [...DAILY_MISSIONS, ...WEEKLY_MISSIONS];
-    return periodicMissions.filter((m) => {
+  const claimableCount = useMemo(() => {
+    return ALL_MISSIONS.filter((m) => {
       const prog = progressMap.get(m.id);
-      return prog ? prog.completed : false;
+      return (prog?.completed ?? false) && !awardedIds.includes(m.id);
     }).length;
-  }, [progressMap]);
+  }, [progressMap, awardedIds]);
 
-  const markAllSeen = useCallback(() => {
-    const newSeenIds = [...new Set([...seenIds, ...awardedIds])];
-    setSeenIds(newSeenIds);
-    saveState(awardedIds, newSeenIds, lastDailyDate, lastWeeklyMonday);
-  }, [awardedIds, seenIds, lastDailyDate, lastWeeklyMonday, saveState]);
+  const claimablePoints = useMemo(() => {
+    return ALL_MISSIONS.reduce((sum, m) => {
+      const prog = progressMap.get(m.id);
+      if ((prog?.completed ?? false) && !awardedIds.includes(m.id)) {
+        return sum + m.reward.points;
+      }
+      return sum;
+    }, 0);
+  }, [progressMap, awardedIds]);
+
+  const claimMission = useCallback(
+    (missionId: string) => {
+      const mission = ALL_MISSIONS.find((m) => m.id === missionId);
+      if (!mission) return;
+
+      const currentAwardedIds = awardedIdsRef.current;
+      const prog = progressMap.get(missionId);
+      if (!prog?.completed || currentAwardedIds.includes(missionId)) return;
+
+      const newAwardedIds = [...currentAwardedIds, missionId];
+      setAwardedIds(newAwardedIds);
+      saveState(newAwardedIds, lastDailyDateRef.current, lastWeeklyMondayRef.current);
+      addBonusPoints(mission.reward.points);
+      setPendingCelebration([mission]);
+    },
+    [progressMap, addBonusPoints, saveState]
+  );
+
+  const claimAll = useCallback(() => {
+    const currentAwardedIds = awardedIdsRef.current;
+    const claimableMissions = ALL_MISSIONS.filter((m) => {
+      const prog = progressMap.get(m.id);
+      return (prog?.completed ?? false) && !currentAwardedIds.includes(m.id);
+    });
+
+    if (claimableMissions.length === 0) return;
+
+    const newAwardedIds = [...currentAwardedIds, ...claimableMissions.map((m) => m.id)];
+    const totalPoints = claimableMissions.reduce((sum, m) => sum + m.reward.points, 0);
+
+    setAwardedIds(newAwardedIds);
+    saveState(newAwardedIds, lastDailyDateRef.current, lastWeeklyMondayRef.current);
+    addBonusPoints(totalPoints);
+    setPendingCelebration(claimableMissions);
+  }, [progressMap, addBonusPoints, saveState]);
 
   const clearCelebration = useCallback(() => {
     setPendingCelebration([]);
@@ -431,10 +430,11 @@ export function MissionProvider({ children }: { children: React.ReactNode }) {
       value={{
         getMissionProgress,
         isAwarded,
-        isSeen,
-        unseenCompletedCount,
-        pendingDailyWeeklyCount,
-        markAllSeen,
+        isClaimable,
+        claimableCount,
+        claimablePoints,
+        claimMission,
+        claimAll,
         loaded,
         dailyTimeLeft,
         weeklyTimeLeft,

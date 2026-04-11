@@ -35,7 +35,7 @@ function NativeTabBadge({ count }: { count: number }) {
 }
 
 function NativeTabLayout() {
-  const { pendingDailyWeeklyCount } = useMission();
+  const { claimableCount } = useMission();
   return (
     <NativeTabs>
       <NativeTabs.Trigger name="index">
@@ -49,7 +49,7 @@ function NativeTabLayout() {
       <NativeTabs.Trigger name="gorevler">
         <View style={{ position: "relative" }}>
           <Icon sf={{ default: "checklist", selected: "checklist" }} />
-          <NativeTabBadge count={pendingDailyWeeklyCount} />
+          <NativeTabBadge count={claimableCount} />
         </View>
         <Label>Görevler</Label>
       </NativeTabs.Trigger>
@@ -71,7 +71,7 @@ function ClassicTabLayout() {
   const isDark = colorScheme === "dark";
   const isIOS = Platform.OS === "ios";
   const isWeb = Platform.OS === "web";
-  const { pendingDailyWeeklyCount } = useMission();
+  const { claimableCount } = useMission();
 
   return (
     <Tabs
@@ -138,7 +138,7 @@ function ClassicTabLayout() {
         name="gorevler"
         options={{
           title: "Görevler",
-          tabBarBadge: pendingDailyWeeklyCount > 0 ? pendingDailyWeeklyCount : undefined,
+          tabBarBadge: claimableCount > 0 ? claimableCount : undefined,
           tabBarBadgeStyle: { backgroundColor: colors.success, fontSize: 10 },
           tabBarIcon: ({ color }) =>
             isIOS ? (
