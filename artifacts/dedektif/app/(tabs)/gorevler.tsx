@@ -16,10 +16,12 @@ import Animated, {
   useSharedValue,
   withSpring,
 } from "react-native-reanimated";
+import { useRouter } from "expo-router";
 
 type MatIconName = ComponentProps<typeof MaterialIcons>["name"];
 
 import { useColors } from "@/hooks/useColors";
+import { useGame } from "@/context/GameContext";
 import { useMission } from "@/context/MissionContext";
 import {
   DAILY_MISSIONS,
@@ -30,6 +32,36 @@ import {
   type Mission,
   type MissionTier,
 } from "@/data/missions";
+import { PUZZLES, type Puzzle, type Difficulty } from "@/data/puzzles";
+
+const DIFF_MAP: Record<string, Difficulty> = {
+  caylak: "caylik",
+  dedektif: "dedektif",
+  baskomiser: "baskomiser",
+};
+
+function getMissionTargetPuzzle(
+  mission: Mission,
+  completedPuzzleIds: Set<string>
+): Puzzle {
+  let candidates = [...PUZZLES];
+
+  if (
+    mission.requirement.type === "solve_difficulty" &&
+    mission.requirement.difficulty
+  ) {
+    const targetDiff = DIFF_MAP[mission.requirement.difficulty] ?? "caylik";
+    const filtered = PUZZLES.filter((p) => p.difficulty === targetDiff);
+    if (filtered.length > 0) candidates = filtered;
+  } else if (mission.tier !== "caylak") {
+    const tierDiff = DIFF_MAP[mission.tier] ?? "caylik";
+    const filtered = PUZZLES.filter((p) => p.difficulty === tierDiff);
+    if (filtered.length > 0) candidates = filtered;
+  }
+
+  const uncompleted = candidates.filter((p) => !completedPuzzleIds.has(p.id));
+  return uncompleted[0] ?? candidates[0];
+}
 
 function formatPoints(pts: number): string {
   if (pts >= 1000) {
@@ -89,135 +121,180 @@ function ClaimButton({
   );
 }
 
-function MissionCard({ mission }: { mission: Mission }) {
+function MissionCard({
+  mission,
+  onPlay,
+}: {
+  mission: Mission;
+  onPlay?: () => void;
+}) {
   const colors = useColors();
   const { getMissionProgress, isAwarded, isClaimable, claimMission } = useMission();
   const progress = getMissionProgress(mission.id);
   const awarded = isAwarded(mission.id);
   const claimable = isClaimable(mission.id);
+  const inProgress = !awarded && !claimable;
   const tierColor = getTierColor(mission.tier);
 
+  const handlePress = () => {
+    if (awarded) return;
+    if (claimable) {
+      claimMission(mission.id);
+    } else {
+      onPlay?.();
+    }
+  };
+
   return (
-    <View
-      style={[
-        styles.missionCard,
-        {
-          backgroundColor: colors.card,
-          borderColor: awarded
-            ? `${colors.success}44`
-            : claimable
-            ? colors.primary
-            : colors.border,
-          opacity: awarded ? 0.65 : 1,
-        },
-      ]}
+    <Pressable
+      onPress={handlePress}
+      style={({ pressed }) => [{ opacity: pressed && !awarded ? 0.75 : 1 }]}
     >
       <View
         style={[
-          styles.missionAccent,
-          { backgroundColor: claimable ? colors.primary : tierColor },
+          styles.missionCard,
+          {
+            backgroundColor: colors.card,
+            borderColor: awarded
+              ? `${colors.success}44`
+              : claimable
+              ? colors.primary
+              : colors.border,
+            opacity: awarded ? 0.65 : 1,
+          },
         ]}
-      />
-      <View style={styles.missionInner}>
-        <View style={styles.missionHeader}>
-          <View
-            style={[
-              styles.missionIconWrap,
-              {
-                backgroundColor: claimable
-                  ? `${colors.primary}22`
-                  : `${tierColor}22`,
-              },
-            ]}
-          >
-            {awarded ? (
-              <MaterialIcons name="check-circle" size={20} color={colors.success} />
-            ) : claimable ? (
-              <MaterialIcons name="bolt" size={20} color={colors.primary} />
-            ) : (
-              <MaterialIcons
-                name={mission.icon as MatIconName}
-                size={20}
-                color={tierColor}
-              />
-            )}
-          </View>
-          <View style={styles.missionTextBlock}>
-            <Text
-              style={[
-                styles.missionTitle,
-                {
-                  color: awarded
-                    ? colors.success
-                    : claimable
-                    ? colors.primary
-                    : colors.foreground,
-                },
-              ]}
-            >
-              {mission.title}
-              {awarded && (
-                <Text style={[styles.completedTag, { color: colors.success }]}> ✓</Text>
-              )}
-            </Text>
-            <Text
-              style={[styles.missionDesc, { color: colors.mutedForeground }]}
-              numberOfLines={2}
-            >
-              {mission.description}
-            </Text>
-          </View>
-          {claimable ? (
-            <ClaimButton
-              onPress={() => claimMission(mission.id)}
-              points={mission.reward.points}
-            />
-          ) : (
+      >
+        <View
+          style={[
+            styles.missionAccent,
+            { backgroundColor: claimable ? colors.primary : tierColor },
+          ]}
+        />
+        <View style={styles.missionInner}>
+          <View style={styles.missionHeader}>
             <View
               style={[
-                styles.rewardBadge,
+                styles.missionIconWrap,
                 {
-                  backgroundColor: `${colors.primary}18`,
-                  borderColor: `${colors.primary}44`,
+                  backgroundColor: claimable
+                    ? `${colors.primary}22`
+                    : `${tierColor}22`,
                 },
               ]}
             >
-              <MaterialIcons name="bolt" size={11} color={colors.primary} />
-              <Text style={[styles.rewardText, { color: colors.primary }]}>
-                +{formatPoints(mission.reward.points)}
-              </Text>
-              {mission.reward.badge && (
+              {awarded ? (
+                <MaterialIcons name="check-circle" size={20} color={colors.success} />
+              ) : claimable ? (
+                <MaterialIcons name="bolt" size={20} color={colors.primary} />
+              ) : (
                 <MaterialIcons
-                  name="workspace-premium"
-                  size={11}
-                  color={colors.primary}
-                  style={{ marginLeft: 2 }}
+                  name={mission.icon as MatIconName}
+                  size={20}
+                  color={tierColor}
                 />
               )}
             </View>
+            <View style={styles.missionTextBlock}>
+              <Text
+                style={[
+                  styles.missionTitle,
+                  {
+                    color: awarded
+                      ? colors.success
+                      : claimable
+                      ? colors.primary
+                      : colors.foreground,
+                  },
+                ]}
+              >
+                {mission.title}
+                {awarded && (
+                  <Text style={[styles.completedTag, { color: colors.success }]}> ✓</Text>
+                )}
+              </Text>
+              <Text
+                style={[styles.missionDesc, { color: colors.mutedForeground }]}
+                numberOfLines={2}
+              >
+                {mission.description}
+              </Text>
+            </View>
+            {claimable ? (
+              <ClaimButton
+                onPress={() => claimMission(mission.id)}
+                points={mission.reward.points}
+              />
+            ) : (
+              <View
+                style={[
+                  styles.rewardBadge,
+                  {
+                    backgroundColor: `${colors.primary}18`,
+                    borderColor: `${colors.primary}44`,
+                  },
+                ]}
+              >
+                <MaterialIcons name="bolt" size={11} color={colors.primary} />
+                <Text style={[styles.rewardText, { color: colors.primary }]}>
+                  +{formatPoints(mission.reward.points)}
+                </Text>
+                {mission.reward.badge && (
+                  <MaterialIcons
+                    name="workspace-premium"
+                    size={11}
+                    color={colors.primary}
+                    style={{ marginLeft: 2 }}
+                  />
+                )}
+              </View>
+            )}
+          </View>
+          <View style={styles.progressRow}>
+            <ProgressBar
+              current={progress.current}
+              target={progress.target}
+              color={awarded ? colors.success : claimable ? colors.primary : tierColor}
+            />
+            <Text style={[styles.progressLabel, { color: colors.mutedForeground }]}>
+              {progress.current}/{progress.target}
+            </Text>
+          </View>
+          {inProgress && (
+            <View style={styles.playChipRow}>
+              <View
+                style={[
+                  styles.playChip,
+                  {
+                    borderColor: `${colors.mutedForeground}40`,
+                    backgroundColor: `${colors.mutedForeground}0A`,
+                  },
+                ]}
+              >
+                <MaterialIcons
+                  name="play-arrow"
+                  size={12}
+                  color={colors.mutedForeground}
+                />
+                <Text style={[styles.playChipText, { color: colors.mutedForeground }]}>
+                  Oyna
+                </Text>
+              </View>
+            </View>
           )}
         </View>
-        <View style={styles.progressRow}>
-          <ProgressBar
-            current={progress.current}
-            target={progress.target}
-            color={awarded ? colors.success : claimable ? colors.primary : tierColor}
-          />
-          <Text style={[styles.progressLabel, { color: colors.mutedForeground }]}>
-            {progress.current}/{progress.target}
-          </Text>
-        </View>
       </View>
-    </View>
+    </Pressable>
   );
 }
 
 function TierSection({
   tier,
   missions,
+  onPlayMission,
 }: {
   tier: MissionTier;
   missions: Mission[];
+  onPlayMission: (mission: Mission) => void;
 }) {
   const colors = useColors();
   const tierColor = getTierColor(tier);
@@ -230,7 +307,7 @@ function TierSection({
         </Text>
       </View>
       {missions.map((m) => (
-        <MissionCard key={m.id} mission={m} />
+        <MissionCard key={m.id} mission={m} onPlay={() => onPlayMission(m)} />
       ))}
     </View>
   );
@@ -315,6 +392,14 @@ export default function GorevlerScreen() {
   const colors = useColors();
   const insets = useSafeAreaInsets();
   const { claimableCount, dailyTimeLeft, weeklyTimeLeft } = useMission();
+  const { startPuzzle, completedPuzzleIds } = useGame();
+  const router = useRouter();
+
+  const handleMissionPlay = (mission: Mission) => {
+    const puzzle = getMissionTargetPuzzle(mission, completedPuzzleIds);
+    startPuzzle(puzzle);
+    router.push("/(tabs)/oyun" as never);
+  };
 
   const dailyByTier = {
     caylak: DAILY_MISSIONS.filter((m) => m.tier === "caylak"),
@@ -386,7 +471,12 @@ export default function GorevlerScreen() {
           {(["caylak", "dedektif", "baskomiser"] as MissionTier[]).map(
             (tier) =>
               dailyByTier[tier].length > 0 && (
-                <TierSection key={tier} tier={tier} missions={dailyByTier[tier]} />
+                <TierSection
+                  key={tier}
+                  tier={tier}
+                  missions={dailyByTier[tier]}
+                  onPlayMission={handleMissionPlay}
+                />
               )
           )}
           {DAILY_MISSIONS.length === 0 && (
@@ -415,7 +505,12 @@ export default function GorevlerScreen() {
           {(["caylak", "dedektif", "baskomiser"] as MissionTier[]).map(
             (tier) =>
               weeklyByTier[tier].length > 0 && (
-                <TierSection key={tier} tier={tier} missions={weeklyByTier[tier]} />
+                <TierSection
+                  key={tier}
+                  tier={tier}
+                  missions={weeklyByTier[tier]}
+                  onPlayMission={handleMissionPlay}
+                />
               )
           )}
           {WEEKLY_MISSIONS.length === 0 && (
@@ -436,7 +531,12 @@ export default function GorevlerScreen() {
           {(["caylak", "dedektif", "baskomiser"] as MissionTier[]).map(
             (tier) =>
               achByTier[tier].length > 0 && (
-                <TierSection key={tier} tier={tier} missions={achByTier[tier]} />
+                <TierSection
+                  key={tier}
+                  tier={tier}
+                  missions={achByTier[tier]}
+                  onPlayMission={handleMissionPlay}
+                />
               )
           )}
           {ACHIEVEMENT_MISSIONS.length === 0 && (
@@ -683,5 +783,22 @@ const styles = StyleSheet.create({
     textAlign: "center",
     paddingVertical: 12,
     fontStyle: "italic",
+  },
+  playChipRow: {
+    alignItems: "flex-end",
+  },
+  playChip: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 2,
+    paddingHorizontal: 7,
+    paddingVertical: 3,
+    borderRadius: 20,
+    borderWidth: 1,
+  },
+  playChipText: {
+    fontSize: 11,
+    fontWeight: "600",
+    letterSpacing: 0.2,
   },
 });
