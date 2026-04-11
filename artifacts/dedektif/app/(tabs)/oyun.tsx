@@ -727,18 +727,19 @@ export default function VakalarScreen() {
                         <Pressable
                           onPress={() => setShowPaywall(true)}
                           style={({ pressed }) => [
-                            listStyles.premiumCtaRow,
-                            { opacity: pressed ? 0.75 : 1 },
+                            listStyles.listHeader,
+                            listStyles.premiumHeader,
+                            { opacity: pressed ? 0.7 : 1 },
                           ]}
                           accessibilityRole="button"
-                          accessibilityLabel="Premium Vakalar — satın almak için dokun"
+                          accessibilityLabel="Premium Vakalar — detaylar için dokun"
                         >
                           <MaterialIcons name="workspace-premium" size={24} color="#D4A843" />
-                          <Text style={listStyles.premiumCtaText}>Premium Vakalar</Text>
-                          <View style={listStyles.premiumCtaCount}>
+                          <Text style={[listStyles.listHeaderText, { color: "#D4A843" }]}>Premium Vakalar</Text>
+                          <View style={[listStyles.premiumCtaCount, { marginLeft: 2 }]}>
                             <Text style={listStyles.premiumCtaCountText}>{premiumPuzzles.length}</Text>
                           </View>
-                          <MaterialIcons name="chevron-right" size={22} color="#D4A843" style={{ marginLeft: "auto" }} />
+                          <MaterialIcons name="chevron-right" size={20} color="#D4A84388" style={{ marginLeft: "auto" }} />
                         </Pressable>
                       )}
                     </>
@@ -1016,23 +1017,8 @@ const listStyles = StyleSheet.create({
     fontWeight: "900",
     letterSpacing: 0.5,
   },
-  premiumCtaRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 10,
-    paddingVertical: 14,
-    paddingHorizontal: 16,
-    marginTop: 8,
-    borderRadius: 14,
-    backgroundColor: "#D4A84312",
-    borderWidth: 1.5,
-    borderColor: "#D4A84355",
-  },
-  premiumCtaText: {
-    fontSize: 22,
-    fontWeight: "900",
-    letterSpacing: 0.5,
-    color: "#D4A843",
+  premiumHeader: {
+    marginTop: 16,
   },
   premiumCtaCount: {
     backgroundColor: "#D4A84333",
