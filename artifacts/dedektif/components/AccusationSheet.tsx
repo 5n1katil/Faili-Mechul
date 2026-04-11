@@ -73,6 +73,14 @@ export default function AccusationSheet({
     };
   }, []);
 
+  useEffect(() => {
+    if (!visible && wrongToastRef.current) {
+      clearTimeout(wrongToastRef.current);
+      wrongToastRef.current = null;
+      setWrongToastVisible(false);
+    }
+  }, [visible]);
+
   const canSubmit = Boolean(selectedSuspect && selectedWeapon && selectedLocation);
 
   const columns: { key: Column; label: string; items: { id: string; name: string }[]; selected: string | null; onSelect: (id: string) => void }[] = [
