@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import {
+  Keyboard,
   KeyboardAvoidingView,
   Modal,
   Platform,
@@ -27,8 +28,11 @@ export default function ProfileSetupModal({ visible, onDone }: ProfileSetupModal
   const [showPicker, setShowPicker] = useState(false);
 
   const handleStart = () => {
+    Keyboard.dismiss();
     const finalName = name.trim() || "Dedektif";
-    onDone(finalName, avatar);
+    setTimeout(() => {
+      onDone(finalName, avatar);
+    }, 120);
   };
 
   return (

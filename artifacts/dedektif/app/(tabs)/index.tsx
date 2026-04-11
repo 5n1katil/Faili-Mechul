@@ -182,7 +182,7 @@ export default function HomeScreen() {
         contentContainerStyle={[
           styles.content,
           {
-            paddingTop: Platform.OS === "web" ? 67 : insets.top,
+            paddingTop: Platform.OS === "web" ? 67 : Math.max(insets.top - 6, 0),
             paddingBottom: Platform.OS === "web" ? 34 + 80 : insets.bottom + 80,
           },
         ]}
@@ -482,7 +482,7 @@ export default function HomeScreen() {
             {TIPS.map((tip, i) => (
               <View key={i} style={[styles.tipRow, i > 0 && { borderTopWidth: 1, borderTopColor: colors.border }]}>
                 <View style={[styles.tipIconBox, { backgroundColor: `${colors.primary}15` }]}>
-                  <MaterialIcons name={tip.icon} size={14} color={colors.primary} />
+                  <MaterialIcons name={tip.icon} size={16} color={colors.primary} />
                 </View>
                 <Text style={[styles.tipText, { color: colors.mutedForeground }]}>
                   {tip.text}
@@ -802,21 +802,21 @@ const styles = StyleSheet.create({
     paddingTop: 14,
     paddingBottom: 10,
   },
-  tipsTitle: { fontSize: 13, fontWeight: "700", letterSpacing: 0.5 },
+  tipsTitle: { fontSize: 14, fontWeight: "700", letterSpacing: 0.5 },
   tipRow: {
     flexDirection: "row",
     alignItems: "flex-start",
-    gap: 10,
+    gap: 12,
     paddingHorizontal: 14,
-    paddingVertical: 10,
+    paddingVertical: 12,
   },
   tipIconBox: {
-    width: 26,
-    height: 26,
+    width: 30,
+    height: 30,
     borderRadius: 8,
     alignItems: "center",
     justifyContent: "center",
     flexShrink: 0,
   },
-  tipText: { flex: 1, fontSize: 12, lineHeight: 18 },
+  tipText: { flex: 1, fontSize: 14, lineHeight: 20 },
 });
