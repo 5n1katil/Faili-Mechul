@@ -3,7 +3,7 @@ import { isLiquidGlassAvailable } from "expo-glass-effect";
 import { Tabs } from "expo-router";
 import { Icon, Label, NativeTabs } from "expo-router/unstable-native-tabs";
 import { SymbolView } from "expo-symbols";
-import { Feather, MaterialIcons } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
 import React from "react";
 import { Platform, StyleSheet, View, useColorScheme } from "react-native";
 import { useColors } from "@/hooks/useColors";
@@ -18,10 +18,6 @@ function NativeTabLayout() {
       <NativeTabs.Trigger name="oyun">
         <Icon sf={{ default: "folder", selected: "folder.fill" }} />
         <Label>Vakalar</Label>
-      </NativeTabs.Trigger>
-      <NativeTabs.Trigger name="paketler">
-        <Icon sf={{ default: "shippingbox", selected: "shippingbox.fill" }} />
-        <Label>Paketler</Label>
       </NativeTabs.Trigger>
       <NativeTabs.Trigger name="liderlik">
         <Icon sf={{ default: "trophy", selected: "trophy.fill" }} />
@@ -100,13 +96,7 @@ function ClassicTabLayout() {
       <Tabs.Screen
         name="paketler"
         options={{
-          title: "Paketler",
-          tabBarIcon: ({ color }) =>
-            isIOS ? (
-              <SymbolView name="shippingbox" tintColor={color} size={24} />
-            ) : (
-              <MaterialIcons name="storefront" size={24} color={color} />
-            ),
+          href: null,
         }}
       />
       <Tabs.Screen
