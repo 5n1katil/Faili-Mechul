@@ -78,15 +78,13 @@ function ClaimButton({
   return (
     <AnimatedPressable
       style={[styles.claimBtn, animStyle]}
-      onPressIn={() => { scale.value = withSpring(0.93, { damping: 12 }); }}
-      onPressOut={() => { scale.value = withSpring(1, { damping: 12 }); }}
+      onPressIn={() => { scale.value = withSpring(0.88, { damping: 10 }); }}
+      onPressOut={() => { scale.value = withSpring(1, { damping: 10 }); }}
       onPress={onPress}
     >
-      <MaterialIcons name="bolt" size={13} color="#000" />
+      <MaterialIcons name="bolt" size={11} color="#000" />
       <Text style={styles.claimBtnText}>TOPLA</Text>
-      <View style={styles.claimBtnPoints}>
-        <Text style={styles.claimBtnPointsText}>+{formatPoints(points)}</Text>
-      </View>
+      <Text style={styles.claimBtnPoints}>+{formatPoints(points)}</Text>
     </AnimatedPressable>
   );
 }
@@ -169,7 +167,12 @@ function MissionCard({ mission }: { mission: Mission }) {
               {mission.description}
             </Text>
           </View>
-          {!claimable && (
+          {claimable ? (
+            <ClaimButton
+              onPress={() => claimMission(mission.id)}
+              points={mission.reward.points}
+            />
+          ) : (
             <View
               style={[
                 styles.rewardBadge,
@@ -204,12 +207,6 @@ function MissionCard({ mission }: { mission: Mission }) {
             {progress.current}/{progress.target}
           </Text>
         </View>
-        {claimable && (
-          <ClaimButton
-            onPress={() => claimMission(mission.id)}
-            points={mission.reward.points}
-          />
-        )}
       </View>
     </View>
   );
@@ -663,26 +660,21 @@ const styles = StyleSheet.create({
   claimBtn: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "center",
-    gap: 4,
+    gap: 2,
     backgroundColor: "#D4A843",
-    borderRadius: 7,
-    paddingVertical: 7,
-    paddingHorizontal: 10,
+    borderRadius: 6,
+    paddingVertical: 3,
+    paddingHorizontal: 6,
+    flexShrink: 0,
+    alignSelf: "flex-start",
   },
   claimBtnText: {
     color: "#000",
-    fontSize: 12,
+    fontSize: 11,
     fontWeight: "800",
     letterSpacing: 0.5,
   },
   claimBtnPoints: {
-    backgroundColor: "rgba(0,0,0,0.15)",
-    borderRadius: 6,
-    paddingHorizontal: 5,
-    paddingVertical: 1,
-  },
-  claimBtnPointsText: {
     color: "#000",
     fontSize: 11,
     fontWeight: "700",
