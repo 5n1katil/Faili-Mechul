@@ -6,4 +6,10 @@
  * OpenAPI spec version: 0.1.0
  */
 
+export * from "./errorResponse";
 export * from "./healthStatus";
+export * from "./privacySettings";
+export * from "./publicPlayerProfile";
+export * from "./publicProfileStats";
+export * from "./successResponse";
+export * from "./upsertProfileRequest";

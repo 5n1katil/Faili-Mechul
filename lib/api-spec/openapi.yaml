@@ -10,6 +10,8 @@ servers:
 tags:
   - name: health
     description: Health operations
+  - name: profiles
+    description: Public player profile operations
 paths:
   /healthz:
     get:
@@ -24,6 +26,75 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+  /profiles/{playerId}:
+    get:
+      operationId: getPublicProfile
+      tags: [profiles]
+      summary: Get public player profile
+      description: Returns a player's public profile filtered by their privacy settings
+      parameters:
+        - name: playerId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Public player profile
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PublicPlayerProfile"
+        "404":
+          description: Player not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid player ID
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    put:
+      operationId: upsertProfile
+      tags: [profiles]
+      summary: Create or update own player profile
+      description: Upserts a player profile identified by UUID. Client generates the UUID on first launch.
+      parameters:
+        - name: playerId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpsertProfileRequest"
+      responses:
+        "200":
+          description: Profile saved successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessResponse"
+        "400":
+          description: Invalid player ID or request body
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
 components:
   schemas:
     HealthStatus:
@@ -33,4 +104,119 @@ components:
           type: string
       required:
         - status
-
+    PrivacySettings:
+      type: object
+      properties:
+        showStats:
+          type: boolean
+        showBadges:
+          type: boolean
+        showBio:
+          type: boolean
+        showAvatar:
+          type: boolean
+      required:
+        - showStats
+        - showBadges
+        - showBio
+        - showAvatar
+    PublicProfileStats:
+      type: object
+      properties:
+        totalScore:
+          type: integer
+        gamesPlayed:
+          type: integer
+        gamesWon:
+          type: integer
+        maxStreak:
+          type: integer
+        avgSolveTimeSeconds:
+          type: number
+      required:
+        - totalScore
+        - gamesPlayed
+        - gamesWon
+        - maxStreak
+        - avgSolveTimeSeconds
+    PublicPlayerProfile:
+      type: object
+      properties:
+        playerId:
+          type: string
+          format: uuid
+        displayName:
+          type: string
+        isPremium:
+          type: boolean
+        updatedAt:
+          type: string
+          format: date-time
+        privacy:
+          $ref: "#/components/schemas/PrivacySettings"
+        avatar:
+          type: string
+        bio:
+          type: string
+        stats:
+          $ref: "#/components/schemas/PublicProfileStats"
+        badges:
+          type: array
+          items:
+            type: string
+      required:
+        - playerId
+        - displayName
+        - isPremium
+        - updatedAt
+        - privacy
+    UpsertProfileRequest:
+      type: object
+      properties:
+        displayName:
+          type: string
+          maxLength: 50
+        avatar:
+          type: string
+          maxLength: 100
+        bio:
+          type: string
+          maxLength: 160
+        totalScore:
+          type: integer
+        gamesPlayed:
+          type: integer
+        gamesWon:
+          type: integer
+        maxStreak:
+          type: integer
+        avgSolveTimeSeconds:
+          type: number
+        badges:
+          type: array
+          items:
+            type: string
+        isPremium:
+          type: boolean
+        privacyShowStats:
+          type: boolean
+        privacyShowBadges:
+          type: boolean
+        privacyShowBio:
+          type: boolean
+        privacyShowAvatar:
+          type: boolean
+    SuccessResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+      required:
+        - success
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+      required:
+        - error

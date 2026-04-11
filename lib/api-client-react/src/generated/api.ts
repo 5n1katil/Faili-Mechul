@@ -5,18 +5,27 @@
  * API specification
  * OpenAPI spec version: 0.1.0
  */
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import type {
+  MutationFunction,
   QueryFunction,
   QueryKey,
+  UseMutationOptions,
+  UseMutationResult,
   UseQueryOptions,
   UseQueryResult,
 } from "@tanstack/react-query";
 
-import type { HealthStatus } from "./api.schemas";
+import type {
+  ErrorResponse,
+  HealthStatus,
+  PublicPlayerProfile,
+  SuccessResponse,
+  UpsertProfileRequest,
+} from "./api.schemas";
 
 import { customFetch } from "../custom-fetch";
-import type { ErrorType } from "../custom-fetch";
+import type { ErrorType, BodyType } from "../custom-fetch";
 
 type AwaitedInput<T> = PromiseLike<T> | T;
 
@@ -99,3 +108,180 @@ export function useHealthCheck<
 
   return { ...query, queryKey: queryOptions.queryKey };
 }
+
+/**
+ * Returns a player's public profile filtered by their privacy settings
+ * @summary Get public player profile
+ */
+export const getGetPublicProfileUrl = (playerId: string) => {
+  return `/api/profiles/${playerId}`;
+};
+
+export const getPublicProfile = async (
+  playerId: string,
+  options?: RequestInit,
+): Promise<PublicPlayerProfile> => {
+  return customFetch<PublicPlayerProfile>(getGetPublicProfileUrl(playerId), {
+    ...options,
+    method: "GET",
+  });
+};
+
+export const getGetPublicProfileQueryKey = (playerId: string) => {
+  return [`/api/profiles/${playerId}`] as const;
+};
+
+export const getGetPublicProfileQueryOptions = <
+  TData = Awaited<ReturnType<typeof getPublicProfile>>,
+  TError = ErrorType<ErrorResponse>,
+>(
+  playerId: string,
+  options?: {
+    query?: UseQueryOptions<
+      Awaited<ReturnType<typeof getPublicProfile>>,
+      TError,
+      TData
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
+
+  const queryKey =
+    queryOptions?.queryKey ?? getGetPublicProfileQueryKey(playerId);
+
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof getPublicProfile>>
+  > = ({ signal }) => getPublicProfile(playerId, { signal, ...requestOptions });
+
+  return {
+    queryKey,
+    queryFn,
+    enabled: !!playerId,
+    ...queryOptions,
+  } as UseQueryOptions<
+    Awaited<ReturnType<typeof getPublicProfile>>,
+    TError,
+    TData
+  > & { queryKey: QueryKey };
+};
+
+export type GetPublicProfileQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getPublicProfile>>
+>;
+export type GetPublicProfileQueryError = ErrorType<ErrorResponse>;
+
+/**
+ * @summary Get public player profile
+ */
+
+export function useGetPublicProfile<
+  TData = Awaited<ReturnType<typeof getPublicProfile>>,
+  TError = ErrorType<ErrorResponse>,
+>(
+  playerId: string,
+  options?: {
+    query?: UseQueryOptions<
+      Awaited<ReturnType<typeof getPublicProfile>>,
+      TError,
+      TData
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+  const queryOptions = getGetPublicProfileQueryOptions(playerId, options);
+
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+/**
+ * Upserts a player profile identified by UUID. Client generates the UUID on first launch.
+ * @summary Create or update own player profile
+ */
+export const getUpsertProfileUrl = (playerId: string) => {
+  return `/api/profiles/${playerId}`;
+};
+
+export const upsertProfile = async (
+  playerId: string,
+  upsertProfileRequest: UpsertProfileRequest,
+  options?: RequestInit,
+): Promise<SuccessResponse> => {
+  return customFetch<SuccessResponse>(getUpsertProfileUrl(playerId), {
+    ...options,
+    method: "PUT",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(upsertProfileRequest),
+  });
+};
+
+export const getUpsertProfileMutationOptions = <
+  TError = ErrorType<ErrorResponse>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof upsertProfile>>,
+    TError,
+    { playerId: string; data: BodyType<UpsertProfileRequest> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof upsertProfile>>,
+  TError,
+  { playerId: string; data: BodyType<UpsertProfileRequest> },
+  TContext
+> => {
+  const mutationKey = ["upsertProfile"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof upsertProfile>>,
+    { playerId: string; data: BodyType<UpsertProfileRequest> }
+  > = (props) => {
+    const { playerId, data } = props ?? {};
+
+    return upsertProfile(playerId, data, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type UpsertProfileMutationResult = NonNullable<
+  Awaited<ReturnType<typeof upsertProfile>>
+>;
+export type UpsertProfileMutationBody = BodyType<UpsertProfileRequest>;
+export type UpsertProfileMutationError = ErrorType<ErrorResponse>;
+
+/**
+ * @summary Create or update own player profile
+ */
+export const useUpsertProfile = <
+  TError = ErrorType<ErrorResponse>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof upsertProfile>>,
+    TError,
+    { playerId: string; data: BodyType<UpsertProfileRequest> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof upsertProfile>>,
+  TError,
+  { playerId: string; data: BodyType<UpsertProfileRequest> },
+  TContext
+> => {
+  return useMutation(getUpsertProfileMutationOptions(options));
+};

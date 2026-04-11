@@ -8,3 +8,58 @@
 export interface HealthStatus {
   status: string;
 }
+
+export interface PrivacySettings {
+  showStats: boolean;
+  showBadges: boolean;
+  showBio: boolean;
+  showAvatar: boolean;
+}
+
+export interface PublicProfileStats {
+  totalScore: number;
+  gamesPlayed: number;
+  gamesWon: number;
+  maxStreak: number;
+  avgSolveTimeSeconds: number;
+}
+
+export interface PublicPlayerProfile {
+  playerId: string;
+  displayName: string;
+  isPremium: boolean;
+  updatedAt: string;
+  privacy: PrivacySettings;
+  avatar?: string;
+  bio?: string;
+  stats?: PublicProfileStats;
+  badges?: string[];
+}
+
+export interface UpsertProfileRequest {
+  /** @maxLength 50 */
+  displayName?: string;
+  /** @maxLength 100 */
+  avatar?: string;
+  /** @maxLength 160 */
+  bio?: string;
+  totalScore?: number;
+  gamesPlayed?: number;
+  gamesWon?: number;
+  maxStreak?: number;
+  avgSolveTimeSeconds?: number;
+  badges?: string[];
+  isPremium?: boolean;
+  privacyShowStats?: boolean;
+  privacyShowBadges?: boolean;
+  privacyShowBio?: boolean;
+  privacyShowAvatar?: boolean;
+}
+
+export interface SuccessResponse {
+  success: boolean;
+}
+
+export interface ErrorResponse {
+  error: string;
+}

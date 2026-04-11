@@ -14,3 +14,71 @@ import * as zod from "zod";
 export const HealthCheckResponse = zod.object({
   status: zod.string(),
 });
+
+/**
+ * Returns a player's public profile filtered by their privacy settings
+ * @summary Get public player profile
+ */
+export const GetPublicProfileParams = zod.object({
+  playerId: zod.coerce.string().uuid(),
+});
+
+export const GetPublicProfileResponse = zod.object({
+  playerId: zod.string().uuid(),
+  displayName: zod.string(),
+  isPremium: zod.boolean(),
+  updatedAt: zod.coerce.date(),
+  privacy: zod.object({
+    showStats: zod.boolean(),
+    showBadges: zod.boolean(),
+    showBio: zod.boolean(),
+    showAvatar: zod.boolean(),
+  }),
+  avatar: zod.string().optional(),
+  bio: zod.string().optional(),
+  stats: zod
+    .object({
+      totalScore: zod.number(),
+      gamesPlayed: zod.number(),
+      gamesWon: zod.number(),
+      maxStreak: zod.number(),
+      avgSolveTimeSeconds: zod.number(),
+    })
+    .optional(),
+  badges: zod.array(zod.string()).optional(),
+});
+
+/**
+ * Upserts a player profile identified by UUID. Client generates the UUID on first launch.
+ * @summary Create or update own player profile
+ */
+export const UpsertProfileParams = zod.object({
+  playerId: zod.coerce.string().uuid(),
+});
+
+export const upsertProfileBodyDisplayNameMax = 50;
+
+export const upsertProfileBodyAvatarMax = 100;
+
+export const upsertProfileBodyBioMax = 160;
+
+export const UpsertProfileBody = zod.object({
+  displayName: zod.string().max(upsertProfileBodyDisplayNameMax).optional(),
+  avatar: zod.string().max(upsertProfileBodyAvatarMax).optional(),
+  bio: zod.string().max(upsertProfileBodyBioMax).optional(),
+  totalScore: zod.number().optional(),
+  gamesPlayed: zod.number().optional(),
+  gamesWon: zod.number().optional(),
+  maxStreak: zod.number().optional(),
+  avgSolveTimeSeconds: zod.number().optional(),
+  badges: zod.array(zod.string()).optional(),
+  isPremium: zod.boolean().optional(),
+  privacyShowStats: zod.boolean().optional(),
+  privacyShowBadges: zod.boolean().optional(),
+  privacyShowBio: zod.boolean().optional(),
+  privacyShowAvatar: zod.boolean().optional(),
+});
+
+export const UpsertProfileResponse = zod.object({
+  success: zod.boolean(),
+});
