@@ -411,11 +411,10 @@ export function MissionProvider({ children }: { children: React.ReactNode }) {
   const pendingDailyWeeklyCount = useMemo(() => {
     const periodicMissions = [...DAILY_MISSIONS, ...WEEKLY_MISSIONS];
     return periodicMissions.filter((m) => {
-      if (awardedIds.includes(m.id)) return false;
       const prog = progressMap.get(m.id);
       return prog ? prog.completed : false;
     }).length;
-  }, [awardedIds, progressMap]);
+  }, [progressMap]);
 
   const markAllSeen = useCallback(() => {
     const newSeenIds = [...new Set([...seenIds, ...awardedIds])];
