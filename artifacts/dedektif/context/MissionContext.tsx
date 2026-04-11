@@ -41,6 +41,7 @@ interface MissionContextType {
   unseenCompletedCount: number;
   pendingDailyWeeklyCount: number;
   markAllSeen: () => void;
+  loaded: boolean;
   dailyTimeLeft: string;
   weeklyTimeLeft: string;
   pendingCelebration: Mission[];
@@ -213,8 +214,6 @@ export function MissionProvider({ children }: { children: React.ReactNode }) {
   const [dailySeconds, setDailySeconds] = useState(getSecondsUntilMidnight);
   const [weeklySeconds, setWeeklySeconds] = useState(getSecondsUntilNextMonday);
 
-  const prevHistoryLength = useRef(0);
-
   const awardedIdsRef = useRef<string[]>([]);
   const seenIdsRef = useRef<string[]>([]);
   const lastDailyDateRef = useRef<string>("");
@@ -335,8 +334,6 @@ export function MissionProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (!loaded) return;
-    if (gameHistory.length === prevHistoryLength.current) return;
-    prevHistoryLength.current = gameHistory.length;
 
     const currentAwardedIds = awardedIdsRef.current;
     const currentSeenIds = seenIdsRef.current;
@@ -363,7 +360,7 @@ export function MissionProvider({ children }: { children: React.ReactNode }) {
       const celebrationMissions = ALL_MISSIONS.filter((m) => newlyCompleted.includes(m.id));
       setPendingCelebration(celebrationMissions);
     }
-  }, [gameHistory, loaded]);
+  }, [gameHistory, profile, loaded]);
 
   const progressMap = useMemo(() => {
     const map = new Map<string, MissionProgress>();
@@ -438,6 +435,7 @@ export function MissionProvider({ children }: { children: React.ReactNode }) {
         unseenCompletedCount,
         pendingDailyWeeklyCount,
         markAllSeen,
+        loaded,
         dailyTimeLeft,
         weeklyTimeLeft,
         pendingCelebration,

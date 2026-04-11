@@ -193,12 +193,13 @@ function SectionHeader({
 export default function GorevlerScreen() {
   const colors = useColors();
   const insets = useSafeAreaInsets();
-  const { unseenCompletedCount, markAllSeen, dailyTimeLeft, weeklyTimeLeft } =
+  const { unseenCompletedCount, markAllSeen, loaded, dailyTimeLeft, weeklyTimeLeft } =
     useMission();
 
   useEffect(() => {
+    if (!loaded) return;
     markAllSeen();
-  }, []);
+  }, [loaded]);
 
   const dailyByTier = {
     caylak: DAILY_MISSIONS.filter((m) => m.tier === "caylak"),
@@ -269,6 +270,11 @@ export default function GorevlerScreen() {
                 <TierSection key={tier} tier={tier} missions={dailyByTier[tier]} />
               )
           )}
+          {DAILY_MISSIONS.length === 0 && (
+            <Text style={[styles.emptyState, { color: colors.mutedForeground }]}>
+              Bugün için görev bulunmuyor.
+            </Text>
+          )}
         </View>
       </Animated.View>
 
@@ -293,6 +299,11 @@ export default function GorevlerScreen() {
                 <TierSection key={tier} tier={tier} missions={weeklyByTier[tier]} />
               )
           )}
+          {WEEKLY_MISSIONS.length === 0 && (
+            <Text style={[styles.emptyState, { color: colors.mutedForeground }]}>
+              Bu hafta için görev bulunmuyor.
+            </Text>
+          )}
         </View>
       </Animated.View>
 
@@ -308,6 +319,11 @@ export default function GorevlerScreen() {
               achByTier[tier].length > 0 && (
                 <TierSection key={tier} tier={tier} missions={achByTier[tier]} />
               )
+          )}
+          {ACHIEVEMENT_MISSIONS.length === 0 && (
+            <Text style={[styles.emptyState, { color: colors.mutedForeground }]}>
+              Henüz başarım bulunmuyor.
+            </Text>
           )}
         </View>
       </Animated.View>
@@ -489,5 +505,11 @@ const styles = StyleSheet.create({
     minWidth: 32,
     textAlign: "right",
     fontVariant: ["tabular-nums"],
+  },
+  emptyState: {
+    fontSize: 13,
+    textAlign: "center",
+    paddingVertical: 12,
+    fontStyle: "italic",
   },
 });
