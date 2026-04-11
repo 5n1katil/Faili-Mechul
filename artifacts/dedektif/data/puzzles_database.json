@@ -397,10 +397,10 @@
             { "id": "s1", "name": "Müze Müdürü Aziz Bey", "icon": "🏛️", "description": "Resmi düzenlemenin mimarı, hazine söylentisini reddediyor.", "detail": "55 yaşında, bürokratik, devlet sadakati ön planda." },
             { "id": "s2", "name": "İngiliz Arkeolog Pembrooke", "icon": "🔍", "description": "British Museum adına İstanbul'da çalışıyor.", "detail": "40 yaşında, akademik, haritanın kopyasına sahip olduğu iddia ediliyor." },
             { "id": "s3", "name": "Yeraltı Tüccarı Yorgo", "icon": "🤝", "description": "Tarihi eser kaçakçısı. Haritanın piyasa değeri 10 kat büyütür.", "detail": "50'li yaşlarda, silik, her ortamda kaybolur." },
-            { "id": "s4", "name": "Arkeologun Asistanı Fatma", "icon": "👩‍🔬", "description": "Maktulün 5 yıllık asistanı. Haritanın varlığını bilen tek Türk.", "detail": "28 yaşında, zeki, korku içinde görünüyor." }
+            { "id": "s4", "name": "Arkeologun Asistanı Fatma", "icon": "🏺", "description": "Maktulün 5 yıllık asistanı. Haritanın varlığını bilen tek Türk.", "detail": "28 yaşında, zeki, korku içinde görünüyor." }
           ],
           "weapons": [
-            { "id": "w1", "name": "Zehirli Şarap", "icon": "☠️", "description": "Rum meyhanede içilen şaraba katılan madde." },
+            { "id": "w1", "name": "Zehirli Şarap", "icon": "🧪", "description": "Rum meyhanede içilen şaraba katılan madde." },
             { "id": "w2", "name": "Antika Hançer", "icon": "🗡️", "description": "Bizans dönemine ait hançer." },
             { "id": "w3", "name": "Taş Blok", "icon": "🪨", "description": "Yapı iskeleti taşı." },
             { "id": "w4", "name": "Kimyasal Gaz", "icon": "☁️", "description": "Kapalı alanda serbest bırakılan toksik gaz." }
@@ -601,11 +601,11 @@
           "atmosphere": "Yapay ışıklar söndü. Set boş. Sahte dekor gerçek bir cinayet sahnesi oldu.",
           "suspects": [
             { "id": "s1", "name": "Baş Oyuncu Derek Stone", "icon": "🎭", "description": "Filmin yıldızı. Senaryodaki rolünün kısaltıldığını öğrendi.", "detail": "35 yaşında, ego sorunu olan Hollywood starı." },
-            { "id": "s2", "name": "Yardımcı Yönetmen Priya Shah", "icon": "💼", "description": "Rakip stüdyoya iş görüşmesi yapıyor, sızdırma şüphesi var.", "detail": "38 yaşında, kararlı, hırslı." },
+            { "id": "s2", "name": "Yardımcı Yönetmen Priya Shah", "icon": "🎥", "description": "Rakip stüdyoya iş görüşmesi yapıyor, sızdırma şüphesi var.", "detail": "38 yaşında, kararlı, hırslı." },
             { "id": "s3", "name": "Set Güvenlik Görevlisi Tom Brady", "icon": "💂", "description": "Stüdyo güvenliği. Gece vardiyasında tek yetkili.", "detail": "50 yaşında, emekli polis, sert görünümlü." }
           ],
           "weapons": [
-            { "id": "w1", "name": "Ağır Kamera Trifodu", "icon": "📹", "description": "Profesyonel çekim ekipmanı." },
+            { "id": "w1", "name": "Ağır Kamera Trifodu", "icon": "📷", "description": "Profesyonel çekim ekipmanı." },
             { "id": "w2", "name": "Elektrik Kablosu", "icon": "⚡", "description": "Set elektrik tesisatı." },
             { "id": "w3", "name": "Sahte Silah (Gerçek Mermi)", "icon": "🔫", "description": "Prop silaha gerçek mermi yüklenmiş." }
           ],
@@ -876,8 +876,8 @@
           "story": "Hollywood'un en büyük ikonası, villasında ölü bulundu. Mirasını kimin alacağını bilen 4 kişi o gece oradaydı. Vasiyetname imzadan saatler önce değiştirilmişti.",
           "atmosphere": "Hills'in tepesi. Işıklı havuz. Servet ve gölge.",
           "suspects": [
-            { "id": "s1", "name": "Yeğen Brandon Vale", "icon": "👨", "description": "Eski vasiyetnamede tek mirasçı. Yeni vasiyeti reddetti.", "detail": "29 yaşında, bağımlılık geçmişi." },
-            { "id": "s2", "name": "Yeni Sevgili Marco Silva", "icon": "🎵", "description": "6 aylık ilişki. Yeni vasiyette 40% miras.", "detail": "31 yaşında, Brezilya asıllı, önceki ilişkileri bilinmiyor." },
+            { "id": "s1", "name": "Yeğen Brandon Vale", "icon": "💰", "description": "Eski vasiyetnamede tek mirasçı. Yeni vasiyeti reddetti.", "detail": "29 yaşında, bağımlılık geçmişi." },
+            { "id": "s2", "name": "Yeni Sevgili Marco Silva", "icon": "🧑", "description": "6 aylık ilişki. Yeni vasiyette 40% miras.", "detail": "31 yaşında, Brezilya asıllı, önceki ilişkileri bilinmiyor." },
             { "id": "s3", "name": "Avukat Dana Price", "icon": "⚖️", "description": "Vasiyeti değiştiren avukat. Komisyon meselesi var.", "detail": "55 yaşında, soğuk profisyonel." },
             { "id": "s4", "name": "Eski Asistan Grace Lee", "icon": "👩‍💼", "description": "10 yıllık sadakat ama vasiyette adı yok.", "detail": "45 yaşında, kırık kalpli ve sessiz öfkeli." }
           ],

@@ -178,6 +178,8 @@ const EMOJI_TO_MATERIAL: Record<string, string> = {
   "🪨": "terrain",
   "🫧": "air",
   "👩‍🦳": "person",
+  "👩‍🦱": "person",
+  "👨‍🔬": "science",
   "👨‍⚕️": "local_hospital",
   "🧑‍💼": "work",
   "👩‍🔬": "science",
