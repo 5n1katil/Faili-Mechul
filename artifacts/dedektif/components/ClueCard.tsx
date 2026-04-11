@@ -280,11 +280,12 @@ function DnaMatchBlock({
   onSolve: () => void;
 }) {
   const [selected, setSelected] = useState<string | null>(null);
-  const [confirmed, setConfirmed] = useState(false);
+  const [wrongAttempt, setWrongAttempt] = useState(false);
 
   const handleSelect = (suspectId: string) => {
-    if (isSolved || confirmed) return;
+    if (isSolved) return;
     setSelected(suspectId);
+    setWrongAttempt(false);
   };
 
   const handleConfirm = () => {
@@ -292,12 +293,13 @@ function DnaMatchBlock({
     const match = dnaVerisi.supheliProfiller.find((p) => p.suspectId === selected);
     if (match?.eslesme) {
       onSolve();
+    } else {
+      setWrongAttempt(true);
+      setSelected(null);
     }
-    setConfirmed(true);
   };
 
   if (isSolved) {
-    const match = dnaVerisi.supheliProfiller.find((p) => p.eslesme);
     return (
       <View style={styles.miniGameSolvedBlock}>
         <MaterialIcons name="check-circle" size={20} color="#22c55e" />
@@ -334,8 +336,6 @@ function DnaMatchBlock({
       <Text style={styles.dnaSelectLabel}>Eşleşen kişiyi seç:</Text>
       {dnaVerisi.supheliProfiller.map((p) => {
         const isSelected = selected === p.suspectId;
-        const isWrong = confirmed && isSelected && !p.eslesme;
-        const isCorrectRevealed = confirmed && p.eslesme;
         return (
           <Pressable
             key={p.suspectId}
@@ -343,8 +343,6 @@ function DnaMatchBlock({
             style={[
               styles.dnaCard,
               isSelected && styles.dnaCardSelected,
-              isWrong && styles.dnaCardWrong,
-              isCorrectRevealed && styles.dnaCardCorrect,
             ]}
           >
             <Text style={styles.dnaSuspectId}>{p.suspectId.toUpperCase()}</Text>
@@ -371,18 +369,14 @@ function DnaMatchBlock({
           </Pressable>
         );
       })}
-      {!confirmed && (
-        <Pressable
-          style={[styles.dnaConfirmBtn, !selected && styles.dnaConfirmBtnDisabled]}
-          onPress={handleConfirm}
-          disabled={!selected}
-        >
-          <Text style={styles.dnaConfirmText}>Onayla</Text>
-        </Pressable>
-      )}
-      {confirmed && !isSolved && (
-        <Text style={styles.dnaWrong}>Yanlış seçim — tekrar dene</Text>
-      )}
+      <Pressable
+        style={[styles.dnaConfirmBtn, !selected && styles.dnaConfirmBtnDisabled]}
+        onPress={handleConfirm}
+        disabled={!selected}
+      >
+        <Text style={styles.dnaConfirmText}>Onayla</Text>
+      </Pressable>
+      {wrongAttempt && <Text style={styles.dnaWrong}>Yanlış seçim — profilleri tekrar incele</Text>}
     </View>
   );
 }
