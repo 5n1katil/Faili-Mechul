@@ -452,9 +452,9 @@ export const ALL_MISSIONS: Mission[] = [
 
 export function getTierLabel(tier: MissionTier): string {
   switch (tier) {
-    case "caylak": return "Çaylak";
-    case "dedektif": return "Dedektif";
-    case "baskomiser": return "Baş Komiser";
+    case "caylak": return "ÇAYLAK";
+    case "dedektif": return "DEDEKTİF";
+    case "baskomiser": return "BAŞ KOMİSER";
   }
 }
 

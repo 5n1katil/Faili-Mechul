@@ -573,7 +573,6 @@ const styles = StyleSheet.create({
   tierLabel: {
     fontSize: 11,
     fontWeight: "700",
-    textTransform: "uppercase",
     letterSpacing: 0.8,
   },
   missionCard: {
