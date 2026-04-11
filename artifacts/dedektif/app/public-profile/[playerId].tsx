@@ -189,7 +189,7 @@ function MeProfile({
       </Animated.View>
 
       <Animated.View entering={FadeInDown.delay(60).springify()}>
-        <Text style={[styles.sectionLabel, { color: colors.mutedForeground }]}>ISTATISTIKLER</Text>
+        <Text style={[styles.sectionLabel, { color: colors.mutedForeground }]}>İSTATİSTİKLER</Text>
         <View style={styles.statsGrid}>
           <StatCard icon="emoji-events" value={myProfile.totalScore.toLocaleString("tr-TR")} label="Toplam Puan" colors={colors} />
           <StatCard icon="folder-special" value={String(myProfile.gamesWon)} label="Çözülen Vaka" colors={colors} />
@@ -232,7 +232,7 @@ function AIProfile({ data, colors, botPad }: { data: AIProfileData; colors: Retu
       </Animated.View>
 
       <Animated.View entering={FadeInDown.delay(60).springify()}>
-        <Text style={[styles.sectionLabel, { color: colors.mutedForeground }]}>ISTATISTIKLER</Text>
+        <Text style={[styles.sectionLabel, { color: colors.mutedForeground }]}>İSTATİSTİKLER</Text>
         <View style={styles.statsGrid}>
           <StatCard icon="emoji-events" value={data.totalScore.toLocaleString("tr-TR")} label="Toplam Puan" colors={colors} />
           <StatCard icon="folder-special" value={String(data.gamesWon)} label="Çözülen Vaka" colors={colors} />
@@ -277,7 +277,7 @@ function BackendProfile({ raw, colors, botPad }: { raw: PublicProfile; colors: R
       </Animated.View>
 
       <Animated.View entering={FadeInDown.delay(60).springify()}>
-        <Text style={[styles.sectionLabel, { color: colors.mutedForeground }]}>ISTATISTIKLER</Text>
+        <Text style={[styles.sectionLabel, { color: colors.mutedForeground }]}>İSTATİSTİKLER</Text>
         {privacy.showStats && raw.stats ? (
           <View style={styles.statsGrid}>
             <StatCard icon="emoji-events" value={raw.stats.totalScore.toLocaleString("tr-TR")} label="Toplam Puan" colors={colors} />

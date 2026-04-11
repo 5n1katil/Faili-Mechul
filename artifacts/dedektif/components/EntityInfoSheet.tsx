@@ -35,7 +35,7 @@ interface Props {
 
 const TYPE_CONFIG: Record<EntityType, { label: string; color: string; bg: string; hint: string }> = {
   suspect: {
-    label: "ŞÜPHELI",
+    label: "ŞÜPHELİ",
     color: "#A855F7",
     bg: "#1E1030",
     hint: "Bu kişinin fırsatı ve motifi var mıydı? Olayın yaşandığı yerde bulunuyor muydu?",

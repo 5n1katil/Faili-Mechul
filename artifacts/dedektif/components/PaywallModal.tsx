@@ -137,7 +137,7 @@ export default function PaywallModal({ visible, onClose, premiumPuzzleCount = 19
 
             <View style={styles.sectionHeader}>
               <MaterialIcons name="star" size={15} color={colors.primary} />
-              <Text style={[styles.sectionTitle, { color: colors.primary }]}>Ne Kazanıyorsunuz?</Text>
+              <Text style={[styles.sectionTitle, { color: colors.primary }]}>NE KAZANİYORSUNUZ?</Text>
             </View>
 
             <View style={[styles.featureList, { borderColor: colors.border }]}>
@@ -340,7 +340,6 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: "700",
     letterSpacing: 0.5,
-    textTransform: "uppercase",
   },
   featureList: {
     width: "100%",

@@ -209,7 +209,7 @@ function MissionCelebrationToast() {
           <MaterialIcons name="emoji-events" size={22} color="#D4A843" />
         </View>
         <View style={toastStyles.textBlock}>
-          <Text style={toastStyles.label}>Görev Tamamlandı!</Text>
+          <Text style={toastStyles.label}>GÖREV TAMAMLANDI!</Text>
           <Text style={toastStyles.missionName} numberOfLines={1}>
             {m.title}
           </Text>
@@ -264,7 +264,6 @@ const toastStyles = StyleSheet.create({
     color: "#D4A843",
     fontSize: 11,
     fontWeight: "700",
-    textTransform: "uppercase",
     letterSpacing: 0.8,
   },
   missionName: {

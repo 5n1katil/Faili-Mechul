@@ -219,8 +219,8 @@ function AnagramBlock({
   const [tried, setTried] = useState(false);
 
   const checkAnswer = () => {
-    const normalized = input.trim().toUpperCase().replace(/İ/g, "I");
-    const correct = anagramVerisi.dogru.toUpperCase().replace(/İ/g, "I");
+    const normalized = input.trim().toLocaleUpperCase("tr-TR").replace(/İ/g, "I");
+    const correct = anagramVerisi.dogru.toLocaleUpperCase("tr-TR").replace(/İ/g, "I");
     if (normalized === correct) {
       onSolve();
       setTried(false);
