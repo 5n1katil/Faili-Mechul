@@ -103,7 +103,7 @@ export default function HomeScreen() {
 
   const handleSetupDone = async (name: string, avatar: string) => {
     await AsyncStorage.setItem(SETUP_KEY, "1");
-    updateProfile(name, avatar);
+    updateProfile({ name, avatar });
     setShowSetup(false);
   };
 

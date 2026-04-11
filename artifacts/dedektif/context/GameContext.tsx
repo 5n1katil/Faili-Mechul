@@ -8,6 +8,7 @@ import React, {
   useRef,
   useState,
 } from "react";
+import { generateUUID, syncProfileToBackend, type PrivacySettings } from "@/utils/apiClient";
 import {
   getDailyPuzzle,
   getStandardClueIndices,
@@ -72,9 +73,12 @@ export interface GameRecord {
   } | null;
 }
 
+export { type PrivacySettings } from "@/utils/apiClient";
+
 export interface PlayerProfile {
   name: string;
   avatar: string;
+  bio: string;
   totalScore: number;
   gamesPlayed: number;
   gamesWon: number;
@@ -83,6 +87,7 @@ export interface PlayerProfile {
   lastPlayedDate: string | null;
   badges: string[];
   avgSolveTimeSeconds: number;
+  privacySettings: PrivacySettings;
 }
 
 export interface LeaderboardEntry {
@@ -124,6 +129,7 @@ export interface BestResult {
 
 interface GameContextType {
   profile: PlayerProfile;
+  playerId: string;
   gameHistory: GameRecord[];
   leaderboard: LeaderboardEntry[];
   gameState: GameState | null;
@@ -137,7 +143,7 @@ interface GameContextType {
   revealBonusClue: (index: number) => void;
   solveMechanic: (clueId: string) => void;
   submitAnswer: (suspectId: string, weaponId: string, locationId: string) => boolean;
-  updateProfile: (name: string, avatar?: string) => void;
+  updateProfile: (updates: { name?: string; avatar?: string; bio?: string; privacySettings?: PrivacySettings }) => void;
   addBonusPoints: (points: number) => void;
   resetCurrentGame: () => void;
   tickTimer: () => void;
@@ -149,6 +155,14 @@ const PROFILE_KEY = "@dedektif_profile";
 const HISTORY_KEY = "@dedektif_history";
 const LEADERBOARD_KEY = "@dedektif_leaderboard";
 const DRAFT_KEY = "@dedektif_draft";
+const PLAYER_ID_KEY = "@dedektif_player_id";
+
+const DEFAULT_PRIVACY: PrivacySettings = {
+  showStats: true,
+  showBadges: true,
+  showBio: true,
+  showAvatar: true,
+};
 
 interface SavedDraft {
   puzzleId: string;
@@ -164,6 +178,7 @@ interface SavedDraft {
 const DEFAULT_PROFILE: PlayerProfile = {
   name: "Dedektif",
   avatar: "",
+  bio: "",
   totalScore: 0,
   gamesPlayed: 0,
   gamesWon: 0,
@@ -172,6 +187,7 @@ const DEFAULT_PROFILE: PlayerProfile = {
   lastPlayedDate: null,
   badges: [],
   avgSolveTimeSeconds: 0,
+  privacySettings: DEFAULT_PRIVACY,
 };
 
 function computeScore(
@@ -233,6 +249,7 @@ function getBadges(profile: PlayerProfile, history: GameRecord[]): string[] {
 
 export function GameProvider({ children }: { children: React.ReactNode }) {
   const [profile, setProfile] = useState<PlayerProfile>(DEFAULT_PROFILE);
+  const [playerId, setPlayerId] = useState<string>("");
   const [gameHistory, setGameHistory] = useState<GameRecord[]>([]);
   const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
   const [gameState, setGameState] = useState<GameState | null>(null);
@@ -245,15 +262,30 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
 
   const loadData = async () => {
     try {
-      const [profileStr, historyStr, leaderboardStr, draftStr] = await Promise.all([
+      const [profileStr, historyStr, leaderboardStr, draftStr, storedPlayerId] = await Promise.all([
         AsyncStorage.getItem(PROFILE_KEY),
         AsyncStorage.getItem(HISTORY_KEY),
         AsyncStorage.getItem(LEADERBOARD_KEY),
         AsyncStorage.getItem(DRAFT_KEY),
+        AsyncStorage.getItem(PLAYER_ID_KEY),
       ]);
+
+      let pid = storedPlayerId;
+      if (!pid) {
+        pid = generateUUID();
+        await AsyncStorage.setItem(PLAYER_ID_KEY, pid);
+      }
+      setPlayerId(pid);
+
       if (profileStr) {
         const parsed = JSON.parse(profileStr);
-        setProfile({ avatar: "", avgSolveTimeSeconds: 0, ...parsed });
+        setProfile({
+          avatar: "",
+          bio: "",
+          avgSolveTimeSeconds: 0,
+          privacySettings: DEFAULT_PRIVACY,
+          ...parsed,
+        });
       }
       if (historyStr) {
         const raw: Record<string, unknown>[] = JSON.parse(historyStr);
@@ -591,10 +623,29 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
   );
 
   const updateProfile = useCallback(
-    (name: string, avatar?: string) => {
-      saveProfile({ ...profile, name, ...(avatar !== undefined ? { avatar } : {}) });
+    (updates: { name?: string; avatar?: string; bio?: string; privacySettings?: PrivacySettings }) => {
+      const updated = { ...profile, ...updates };
+      saveProfile(updated);
+      if (playerId) {
+        syncProfileToBackend(playerId, {
+          displayName: updated.name,
+          avatar: updated.avatar,
+          bio: updated.bio,
+          totalScore: updated.totalScore,
+          gamesPlayed: updated.gamesPlayed,
+          gamesWon: updated.gamesWon,
+          maxStreak: updated.maxStreak,
+          avgSolveTimeSeconds: updated.avgSolveTimeSeconds,
+          badges: updated.badges,
+          isPremium: false,
+          privacyShowStats: updated.privacySettings.showStats,
+          privacyShowBadges: updated.privacySettings.showBadges,
+          privacyShowBio: updated.privacySettings.showBio,
+          privacyShowAvatar: updated.privacySettings.showAvatar,
+        }).catch(() => {});
+      }
     },
-    [profile]
+    [profile, playerId]
   );
 
   const addBonusPoints = useCallback(
@@ -628,6 +679,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     <GameContext.Provider
       value={{
         profile,
+        playerId,
         gameHistory,
         leaderboard,
         gameState,

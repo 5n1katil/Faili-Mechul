@@ -16,6 +16,7 @@ import { usePurchase } from "@/context/PurchaseContext";
 import Animated, { FadeInDown } from "react-native-reanimated";
 import { AvatarDisplay } from "@/utils/avatarHelpers";
 import { AI_DETECTIVES } from "@/data/aiDetectives";
+import { useRouter } from "expo-router";
 
 type MaterialIconName = ComponentProps<typeof MaterialIcons>["name"];
 type SortKey = "score" | "cases" | "streak" | "hiz";
@@ -29,6 +30,7 @@ interface RankEntry {
   isCurrentUser: boolean;
   isPremiumUser: boolean;
   avgSolveTimeSeconds?: number;
+  profileId: string;
 }
 
 const SORT_TABS: { key: SortKey; label: string; icon: MaterialIconName }[] = [
@@ -59,9 +61,10 @@ interface RankItemProps {
   sortKey: SortKey;
   colors: ReturnType<typeof useColors>;
   delay: number;
+  onPress: () => void;
 }
 
-function RankItem({ entry, rank, sortKey, colors, delay }: RankItemProps) {
+function RankItem({ entry, rank, sortKey, colors, delay, onPress }: RankItemProps) {
   const rankColor =
     rank === 1 ? "#FFD700" : rank === 2 ? "#C0C0C0" : rank === 3 ? "#CD7F32" : colors.mutedForeground;
   const rankIcon: MaterialIconName =
@@ -83,8 +86,9 @@ function RankItem({ entry, rank, sortKey, colors, delay }: RankItemProps) {
 
   return (
     <Animated.View entering={FadeInDown.delay(delay).springify()}>
-      <View
-        style={[
+      <Pressable
+        onPress={onPress}
+        style={({ pressed }) => [
           styles.rankItem,
           {
             backgroundColor: entry.isCurrentUser
@@ -97,6 +101,7 @@ function RankItem({ entry, rank, sortKey, colors, delay }: RankItemProps) {
               : isTop3
               ? `${rankColor}44`
               : colors.border,
+            opacity: pressed ? 0.75 : 1,
           },
         ]}
       >
@@ -176,7 +181,7 @@ function RankItem({ entry, rank, sortKey, colors, delay }: RankItemProps) {
           </Text>
           <Text style={[styles.scoreLabel, { color: colors.mutedForeground }]}>{metaLabel}</Text>
         </View>
-      </View>
+      </Pressable>
     </Animated.View>
   );
 }
@@ -184,9 +189,10 @@ function RankItem({ entry, rank, sortKey, colors, delay }: RankItemProps) {
 export default function LiderlikScreen() {
   const colors = useColors();
   const insets = useSafeAreaInsets();
-  const { profile } = useGame();
+  const { profile, playerId } = useGame();
   const { isPremium } = usePurchase();
   const [sortKey, setSortKey] = useState<SortKey>("score");
+  const router = useRouter();
 
   const myEntry: RankEntry = {
     name: profile.name,
@@ -197,12 +203,14 @@ export default function LiderlikScreen() {
     isCurrentUser: true,
     isPremiumUser: isPremium,
     avgSolveTimeSeconds: profile.avgSolveTimeSeconds,
+    profileId: playerId ?? "me",
   };
 
   const aiEntries: RankEntry[] = AI_DETECTIVES.map((d) => ({
     ...d,
     isCurrentUser: false,
     isPremiumUser: false,
+    profileId: `ai-${d.name.toLowerCase().replace(/\s+/g, "-")}`,
   }));
 
   const sorted = sortEntries([...aiEntries, myEntry], sortKey);
@@ -280,6 +288,7 @@ export default function LiderlikScreen() {
             sortKey={sortKey}
             colors={colors}
             delay={index * 30}
+            onPress={() => router.push(`/public-profile/${item.profileId}` as any)}
           />
         )}
         ItemSeparatorComponent={() => <View style={{ height: 8 }} />}

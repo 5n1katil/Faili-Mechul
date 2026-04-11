@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import type { ComponentProps } from "react";
 import {
   ActivityIndicator,
@@ -8,6 +8,7 @@ import {
   StyleSheet,
   Switch,
   Text,
+  TextInput,
   View,
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -89,6 +90,9 @@ export default function ProfilScreen() {
   const [soundEnabled, setSoundEnabled] = useState(() => soundSettings.enabled);
   const [restoring, setRestoring] = useState(false);
   const [restoreMsg, setRestoreMsg] = useState<{ text: string; ok: boolean } | null>(null);
+  const [editingBio, setEditingBio] = useState(false);
+  const [bioText, setBioText] = useState(profile.bio ?? "");
+  const bioInputRef = useRef<TextInput>(null);
 
   useEffect(() => {
     soundSettings.refresh().then((val) => setSoundEnabled(val));
@@ -126,7 +130,16 @@ export default function ProfilScreen() {
   const visibleBadges = [...new Set([...rawBadges, ...missionBadges])];
 
   const handleAvatarChange = (newAvatar: string) => {
-    updateProfile(profile.name, newAvatar);
+    updateProfile({ avatar: newAvatar });
+  };
+
+  const handleBioSave = () => {
+    setEditingBio(false);
+    updateProfile({ bio: bioText.trim() });
+  };
+
+  const handlePrivacyToggle = (key: keyof typeof profile.privacySettings, val: boolean) => {
+    updateProfile({ privacySettings: { ...profile.privacySettings, [key]: val } });
   };
 
   const handleRestore = async () => {
@@ -184,6 +197,42 @@ export default function ProfilScreen() {
             <View style={styles.nameRow}>
               <Text style={[styles.profileName, { color: colors.foreground }]}>{profile.name}</Text>
             </View>
+
+            {editingBio ? (
+              <View style={styles.bioEditRow}>
+                <TextInput
+                  ref={bioInputRef}
+                  style={[styles.bioInput, { color: colors.foreground, borderColor: colors.primary, backgroundColor: `${colors.primary}10` }]}
+                  value={bioText}
+                  onChangeText={setBioText}
+                  maxLength={160}
+                  placeholder="Kendinizi tanıtın..."
+                  placeholderTextColor={colors.mutedForeground}
+                  multiline
+                  autoFocus
+                  returnKeyType="done"
+                  blurOnSubmit
+                  onBlur={handleBioSave}
+                />
+                <Text style={[styles.bioCounter, { color: colors.mutedForeground }]}>
+                  {bioText.length}/160
+                </Text>
+              </View>
+            ) : (
+              <Pressable style={styles.bioRow} onPress={() => { setBioText(profile.bio ?? ""); setEditingBio(true); }}>
+                <Text
+                  style={[
+                    styles.bioText,
+                    { color: profile.bio ? colors.mutedForeground : `${colors.mutedForeground}66` },
+                  ]}
+                  numberOfLines={2}
+                >
+                  {profile.bio || "Bio ekle..."}
+                </Text>
+                <MaterialIcons name="edit" size={14} color={`${colors.mutedForeground}88`} />
+              </Pressable>
+            )}
+
             <View style={styles.streakRow}>
               <MaterialIcons name="local-fire-department" size={18} color="#FF6B35" />
               <Text style={[styles.streakLabel, { color: colors.mutedForeground }]}>
@@ -278,6 +327,35 @@ export default function ProfilScreen() {
               trackColor={{ false: colors.border, true: `${colors.primary}88` }}
               thumbColor={soundEnabled ? colors.primary : colors.mutedForeground}
             />
+          </View>
+        </Animated.View>
+
+        <Animated.View entering={FadeInDown.delay(255).springify()}>
+          <Text style={[styles.sectionTitle, { color: colors.foreground }]}>Genel Profil Görünürlüğü</Text>
+          <View style={[styles.privacyCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
+            {([
+              { key: "showStats" as const, label: "İstatistiklerimi göster", icon: "bar-chart" as const },
+              { key: "showBadges" as const, label: "Rozetlerimi göster", icon: "military-tech" as const },
+              { key: "showBio" as const, label: "Bio'mu göster", icon: "person" as const },
+              { key: "showAvatar" as const, label: "Avatarımı göster", icon: "face" as const },
+            ]).map((item, idx, arr) => (
+              <View
+                key={item.key}
+                style={[
+                  styles.privacyRow,
+                  idx < arr.length - 1 && { borderBottomWidth: 1, borderBottomColor: colors.border },
+                ]}
+              >
+                <MaterialIcons name={item.icon} size={18} color={colors.mutedForeground} />
+                <Text style={[styles.privacyLabel, { color: colors.foreground }]}>{item.label}</Text>
+                <Switch
+                  value={profile.privacySettings?.[item.key] ?? true}
+                  onValueChange={(val) => handlePrivacyToggle(item.key, val)}
+                  trackColor={{ false: colors.border, true: `${colors.primary}88` }}
+                  thumbColor={(profile.privacySettings?.[item.key] ?? true) ? colors.primary : colors.mutedForeground}
+                />
+              </View>
+            ))}
           </View>
         </Animated.View>
 
@@ -471,8 +549,52 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   profileName: { fontSize: 22, fontWeight: "700" },
+  bioRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+    paddingHorizontal: 4,
+  },
+  bioText: {
+    flex: 1,
+    fontSize: 13,
+    lineHeight: 18,
+    textAlign: "center",
+  },
+  bioEditRow: {
+    width: "100%",
+    gap: 4,
+  },
+  bioInput: {
+    fontSize: 13,
+    lineHeight: 18,
+    borderWidth: 1,
+    borderRadius: 10,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    textAlignVertical: "top",
+    minHeight: 60,
+  },
+  bioCounter: {
+    fontSize: 11,
+    textAlign: "right",
+    marginRight: 4,
+  },
   streakRow: { flexDirection: "row", alignItems: "center", gap: 6 },
   streakLabel: { fontSize: 13, fontWeight: "500" },
+  privacyCard: {
+    borderRadius: 14,
+    borderWidth: 1,
+    overflow: "hidden",
+  },
+  privacyRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 14,
+    paddingVertical: 12,
+    gap: 12,
+  },
+  privacyLabel: { flex: 1, fontSize: 14, fontWeight: "500" },
   statsGrid: {
     flexDirection: "row",
     flexWrap: "wrap",
