@@ -724,23 +724,29 @@ export default function VakalarScreen() {
                           />
                         </AccordionSection>
                       ) : (
-                        <Pressable
-                          onPress={() => setShowPaywall(true)}
-                          style={({ pressed }) => [
-                            listStyles.listHeader,
-                            listStyles.premiumHeader,
-                            { opacity: pressed ? 0.7 : 1 },
-                          ]}
-                          accessibilityRole="button"
-                          accessibilityLabel="Premium Vakalar — detaylar için dokun"
+                        <AccordionSection
+                          title="Premium Vakalar"
+                          count={premiumPuzzles.length}
+                          accentColor="#D4A843"
+                          premiumInfoIcon
+                          onPremiumInfoPress={() => setShowPaywall(true)}
+                          defaultExpanded={false}
                         >
-                          <MaterialIcons name="workspace-premium" size={24} color="#D4A843" />
-                          <Text style={[listStyles.listHeaderText, { color: "#D4A843" }]}>Premium Vakalar</Text>
-                          <View style={[listStyles.premiumCtaCount, { marginLeft: 2 }]}>
-                            <Text style={listStyles.premiumCtaCountText}>{premiumPuzzles.length}</Text>
-                          </View>
-                          <MaterialIcons name="chevron-right" size={20} color="#D4A84388" style={{ marginLeft: "auto" }} />
-                        </Pressable>
+                          <DifficultySubGroups
+                            puzzles={premiumPuzzles}
+                            renderCard={(puzzle, i) => (
+                              <PuzzleCard
+                                key={puzzle.id}
+                                puzzle={puzzle}
+                                onPress={() => setShowPaywall(true)}
+                                delay={100 + (activeFree.length + i) * 30}
+                                completed={false}
+                                bestResult={null}
+                                locked={true}
+                              />
+                            )}
+                          />
+                        </AccordionSection>
                       )}
                     </>
                   )}

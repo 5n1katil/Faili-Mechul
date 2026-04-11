@@ -181,11 +181,12 @@ export default function HomeScreen() {
       </Modal>
 
       <ScrollView
+        contentInsetAdjustmentBehavior="never"
         style={[styles.container, { backgroundColor: colors.background }]}
         contentContainerStyle={[
           styles.content,
           {
-            paddingTop: Platform.OS === "web" ? 67 : Math.max(insets.top - 6, 0),
+            paddingTop: Platform.OS === "web" ? 67 : insets.top + 8,
             paddingBottom: Platform.OS === "web" ? 34 + 80 : insets.bottom + 80,
           },
         ]}

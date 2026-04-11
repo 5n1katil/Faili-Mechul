@@ -653,10 +653,28 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
       setProfile((prev) => {
         const updated = { ...prev, totalScore: prev.totalScore + points };
         AsyncStorage.setItem(PROFILE_KEY, JSON.stringify(updated)).catch(() => {});
+        if (playerId) {
+          syncProfileToBackend(playerId, {
+            displayName: updated.name,
+            avatar: updated.avatar,
+            bio: updated.bio,
+            totalScore: updated.totalScore,
+            gamesPlayed: updated.gamesPlayed,
+            gamesWon: updated.gamesWon,
+            maxStreak: updated.maxStreak,
+            avgSolveTimeSeconds: updated.avgSolveTimeSeconds,
+            badges: updated.badges,
+            isPremium: false,
+            privacyShowStats: updated.privacySettings.showStats,
+            privacyShowBadges: updated.privacySettings.showBadges,
+            privacyShowBio: updated.privacySettings.showBio,
+            privacyShowAvatar: updated.privacySettings.showAvatar,
+          }).catch(() => {});
+        }
         return updated;
       });
     },
-    []
+    [playerId]
   );
 
   const resetCurrentGame = useCallback(() => {
