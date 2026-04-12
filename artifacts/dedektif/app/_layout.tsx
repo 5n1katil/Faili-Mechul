@@ -8,8 +8,9 @@ import {
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
-import React, { useEffect, useRef } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import * as TrackingTransparency from "expo-tracking-transparency";
+import React, { useEffect, useRef, useState } from "react";
+import { Platform, StyleSheet, Text, View } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { KeyboardProvider } from "react-native-keyboard-controller";
@@ -305,13 +306,22 @@ export default function RootLayout() {
     Inter_700Bold,
   });
 
+  const [attReady, setAttReady] = useState(Platform.OS !== "ios");
+
   useEffect(() => {
-    if (fontsLoaded || fontError) {
+    if (Platform.OS !== "ios") return;
+    TrackingTransparency.requestTrackingPermissionsAsync()
+      .catch(() => {})
+      .finally(() => setAttReady(true));
+  }, []);
+
+  useEffect(() => {
+    if ((fontsLoaded || fontError) && attReady) {
       SplashScreen.hideAsync();
     }
-  }, [fontsLoaded, fontError]);
+  }, [fontsLoaded, fontError, attReady]);
 
-  if (!fontsLoaded && !fontError) return null;
+  if ((!fontsLoaded && !fontError) || !attReady) return null;
 
   return (
     <SafeAreaProvider>

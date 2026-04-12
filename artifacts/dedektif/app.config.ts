@@ -37,7 +37,11 @@ export default ({ config }: ConfigContext): ExpoConfig => {
       },
       infoPlist: {
         NSUserNotificationUsageDescription:
-          "Günlük bulmaca hatırlatmaları için",
+          "Günlük bulmaca hatırlatmaları için bildirim göndermek istiyoruz.",
+        NSPhotoLibraryUsageDescription:
+          "Profil fotoğrafınızı seçmek için fotoğraf kütüphanesine erişim gerekiyor.",
+        NSUserTrackingUsageDescription:
+          "Uygulama deneyimini iyileştirmek ve içeriği kişiselleştirmek için kullanılır.",
       },
     },
     android: {
@@ -55,11 +59,12 @@ export default ({ config }: ConfigContext): ExpoConfig => {
       [
         "expo-router",
         {
-          origin: "https://replit.com/",
+          origin: "https://failimechul.app/",
         },
       ],
       "expo-font",
       "expo-web-browser",
+      "expo-tracking-transparency",
       "./plugins/withRevenueCat",
       "./plugins/withPrivacyManifest",
     ],

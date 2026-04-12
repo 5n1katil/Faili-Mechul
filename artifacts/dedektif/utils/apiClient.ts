@@ -4,7 +4,14 @@ export function getApiBase(): string {
   const explicit = process.env.EXPO_PUBLIC_API_URL;
   if (explicit) return explicit;
   if (Platform.OS === "web") return "/api";
-  return "/api";
+  if (__DEV__) {
+    return "/api";
+  }
+  console.warn(
+    "[apiClient] EXPO_PUBLIC_API_URL is not set. " +
+      "Set this EAS build secret to point to your production API server."
+  );
+  return "";
 }
 
 export function generateUUID(): string {
@@ -45,6 +52,7 @@ export async function syncProfileToBackend(
 ): Promise<void> {
   try {
     const base = getApiBase();
+    if (!base) return;
     await fetch(`${base}/profiles/${playerId}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
@@ -82,6 +90,7 @@ export interface PublicProfile {
 export async function fetchPublicProfile(playerId: string): Promise<PublicProfile | null> {
   try {
     const base = getApiBase();
+    if (!base) return null;
     const res = await fetch(`${base}/profiles/${playerId}`);
     if (!res.ok) return null;
     return (await res.json()) as PublicProfile;

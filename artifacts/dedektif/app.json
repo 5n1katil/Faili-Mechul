@@ -17,8 +17,11 @@
       "supportsTablet": false,
       "bundleIdentifier": "com.failimechul.dedektif",
       "buildNumber": "1",
+      "minimumOsVersion": "13.4",
       "infoPlist": {
-        "NSUserNotificationUsageDescription": "Günlük bulmaca hatırlatmaları için"
+        "NSUserNotificationUsageDescription": "Günlük bulmaca hatırlatmaları için bildirim göndermek istiyoruz.",
+        "NSPhotoLibraryUsageDescription": "Profil fotoğrafınızı seçmek için fotoğraf kütüphanesine erişim gerekiyor.",
+        "NSUserTrackingUsageDescription": "Uygulama deneyimini iyileştirmek ve içeriği kişiselleştirmek için kullanılır."
       }
     },
     "android": {
@@ -36,11 +39,14 @@
       [
         "expo-router",
         {
-          "origin": "https://replit.com/"
+          "origin": "https://failimechul.app/"
         }
       ],
       "expo-font",
-      "expo-web-browser"
+      "expo-web-browser",
+      "expo-tracking-transparency",
+      "./plugins/withRevenueCat",
+      "./plugins/withPrivacyManifest"
     ],
     "experiments": {
       "typedRoutes": true,
