@@ -24,9 +24,6 @@ export const PACK_PRODUCT_IDS: Record<string, string> = {
   pack_mitoloji: "com.failimechul.dedektif.pack_mitoloji",
   pack_dijital: "com.failimechul.dedektif.pack_dijital",
   pack_edebi: "com.failimechul.dedektif.pack_edebi",
-  pack_caylik: "com.failimechul.dedektif.pack_caylik",
-  pack_dedektif: "com.failimechul.dedektif.pack_dedektif",
-  pack_komiser: "com.failimechul.dedektif.pack_komiser",
 };
 
 const EMOJI_TO_MATERIAL: Record<string, string> = {
@@ -419,6 +416,10 @@ export const PACKS: PackDefinition[] = DB.packs.map((pack) => ({
   description: pack.description,
   puzzleIds: pack.puzzles.map((p) => `${pack.packId}_${p.puzzleId}`),
 }));
+
+export const PURCHASABLE_PACKS: PackDefinition[] = PACKS.filter(
+  (p) => p.packId in PACK_PRODUCT_IDS
+);
 
 const RAW_PUZZLE_MAP = new Map<string, RawPuzzle>();
 const PACK_PUZZLE_MAP = new Map<string, RawPuzzle[]>();

@@ -18,7 +18,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useGame } from "@/context/GameContext";
 import { usePurchase } from "@/context/PurchaseContext";
 import {
-  PACKS,
+  PURCHASABLE_PACKS,
   getPuzzlesForPack,
   getRawPuzzlesForPack,
   getDifficultyStars,
@@ -39,7 +39,7 @@ export default function PaketlerContent({ embedded = false }: { embedded?: boole
   const { startPuzzle } = useGame();
   const { isPackPurchased, purchasePack, restorePurchases, isLoading, packPrices } = usePurchase();
 
-  const totalPuzzles = PACKS.reduce((sum, pack) => sum + getRawPuzzlesForPack(pack.packId).length, 0);
+  const totalPuzzles = PURCHASABLE_PACKS.reduce((sum, pack) => sum + getRawPuzzlesForPack(pack.packId).length, 0);
 
   const [expandedPack, setExpandedPack] = useState<string | null>(null);
   const [purchasing, setPurchasing] = useState<string | null>(null);
@@ -101,7 +101,7 @@ export default function PaketlerContent({ embedded = false }: { embedded?: boole
         Premium Paketler
       </Text>
       <Text style={[styles.screenSubtitle, { color: colors.mutedForeground }]}>
-        {PACKS.length} farklı tema, {totalPuzzles} özgün vaka
+        {PURCHASABLE_PACKS.length} farklı tema, {totalPuzzles} özgün vaka
       </Text>
 
       <Pressable
@@ -124,7 +124,7 @@ export default function PaketlerContent({ embedded = false }: { embedded?: boole
         </Text>
       </Pressable>
 
-      {PACKS.map((pack) => {
+      {PURCHASABLE_PACKS.map((pack) => {
         const purchased = isPackPurchased(pack.packId);
         const isExpanded = expandedPack === pack.packId;
         const isPurchasing = purchasing === pack.packId;

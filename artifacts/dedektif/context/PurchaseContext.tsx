@@ -13,7 +13,7 @@ import type {
   PurchasesPackage,
 } from "react-native-purchases";
 import { PURCHASES_ERROR_CODE } from "react-native-purchases";
-import { PACK_PRODUCT_IDS, PACKS } from "@/data/packs";
+import { PACK_PRODUCT_IDS, PURCHASABLE_PACKS } from "@/data/packs";
 
 const PREMIUM_CACHE_KEY = "@dedektif_is_premium";
 const PACK_CACHE_PREFIX = "@dedektif_pack_";
@@ -23,7 +23,7 @@ const DEFAULT_PRICE_STRING = "₺79,99";
 
 function buildFallbackPackPrices(): Record<string, string> {
   return Object.fromEntries(
-    PACKS.map((p) => [p.packId, `₺${p.price.toFixed(2)}`])
+    PURCHASABLE_PACKS.map((p) => [p.packId, `₺${p.price.toFixed(2)}`])
   );
 }
 
