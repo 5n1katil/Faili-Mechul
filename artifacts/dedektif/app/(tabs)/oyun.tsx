@@ -45,7 +45,7 @@ import {
   type Difficulty,
   type GridMark,
 } from "@/data/puzzles";
-import { PACKS, getPuzzlesForPack } from "@/data/packs";
+import { PACKS, getPuzzlesForPack, PACK_PRODUCT_IDS } from "@/data/packs";
 import PaketlerContent from "@/components/PaketlerContent";
 import type { EntityInfo } from "@/components/EntityInfoSheet";
 import Animated, { FadeInDown } from "react-native-reanimated";
@@ -535,7 +535,13 @@ export default function VakalarScreen() {
     const dailyPuzzle = getDailyPuzzle();
     const archivePuzzles = PUZZLES.filter((p) => p.id !== dailyPuzzle.id);
     const freePuzzles = archivePuzzles.slice(0, FREE_PUZZLE_COUNT);
-    const premiumPuzzles = archivePuzzles.slice(FREE_PUZZLE_COUNT);
+    const archiveOnlyPackPuzzles = PACKS
+      .filter((p) => !(p.packId in PACK_PRODUCT_IDS))
+      .flatMap((p) => getPuzzlesForPack(p.packId));
+    const premiumPuzzles = [
+      ...archivePuzzles.slice(FREE_PUZZLE_COUNT),
+      ...archiveOnlyPackPuzzles,
+    ];
     const completedStandardPuzzles = [dailyPuzzle, ...archivePuzzles].filter(
       (p) => completedPuzzleIds.has(p.id)
     );
