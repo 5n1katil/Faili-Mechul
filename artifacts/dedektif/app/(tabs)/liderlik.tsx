@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import type { ComponentProps } from "react";
 import {
+  ActivityIndicator,
   FlatList,
   Platform,
   Pressable,
@@ -10,6 +11,7 @@ import {
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useFocusEffect } from "expo-router";
 import { useColors } from "@/hooks/useColors";
 import { useGame } from "@/context/GameContext";
 import { usePurchase } from "@/context/PurchaseContext";
@@ -17,6 +19,11 @@ import Animated, { FadeInDown } from "react-native-reanimated";
 import { AvatarDisplay } from "@/utils/avatarHelpers";
 import { AI_DETECTIVES } from "@/data/aiDetectives";
 import { useRouter } from "expo-router";
+import {
+  fetchLeaderboard,
+  type LeaderboardEntry,
+  type LeaderboardSortBy,
+} from "@/utils/apiClient";
 
 type MaterialIconName = ComponentProps<typeof MaterialIcons>["name"];
 type SortKey = "score" | "cases" | "streak" | "hiz";
@@ -40,6 +47,13 @@ const SORT_TABS: { key: SortKey; label: string; icon: MaterialIconName }[] = [
   { key: "hiz",    label: "⚡ Hız",  icon: "bolt"                  },
 ];
 
+const SORT_KEY_TO_API: Record<SortKey, LeaderboardSortBy> = {
+  score:  "totalScore",
+  cases:  "gamesWon",
+  streak: "maxStreak",
+  hiz:    "avgSolveTimeSeconds",
+};
+
 function fmtTime(s: number): string {
   return `${Math.floor(s / 60)}:${(s % 60).toString().padStart(2, "0")}`;
 }
@@ -53,6 +67,20 @@ function sortEntries(entries: RankEntry[], key: SortKey): RankEntry[] {
     const bT = b.avgSolveTimeSeconds || Infinity;
     return aT - bT;
   });
+}
+
+function apiEntryToRank(e: LeaderboardEntry): RankEntry {
+  return {
+    name: e.displayName,
+    avatar: e.avatar || "detective",
+    totalScore: e.totalScore,
+    gamesWon: e.gamesWon,
+    maxStreak: e.maxStreak,
+    isCurrentUser: false,
+    isPremiumUser: e.isPremium,
+    avgSolveTimeSeconds: e.avgSolveTimeSeconds,
+    profileId: e.playerId,
+  };
 }
 
 interface RankItemProps {
@@ -192,7 +220,30 @@ export default function LiderlikScreen() {
   const { profile, playerId } = useGame();
   const { isPremium } = usePurchase();
   const [sortKey, setSortKey] = useState<SortKey>("score");
+  const [apiEntries, setApiEntries] = useState<LeaderboardEntry[] | null>(null);
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
+
+  const loadLeaderboard = useCallback(
+    async (key: SortKey) => {
+      setLoading(true);
+      const data = await fetchLeaderboard(SORT_KEY_TO_API[key], 50);
+      setApiEntries(data);
+      setLoading(false);
+    },
+    []
+  );
+
+  useFocusEffect(
+    useCallback(() => {
+      loadLeaderboard(sortKey);
+    }, [loadLeaderboard, sortKey])
+  );
+
+  const handleSortChange = (key: SortKey) => {
+    setSortKey(key);
+    loadLeaderboard(key);
+  };
 
   const myEntry: RankEntry = {
     name: profile.name,
@@ -206,14 +257,20 @@ export default function LiderlikScreen() {
     profileId: playerId ?? "me",
   };
 
-  const aiEntries: RankEntry[] = AI_DETECTIVES.map((d) => ({
-    ...d,
-    isCurrentUser: false,
-    isPremiumUser: false,
-    profileId: `ai-${d.name.toLowerCase().replace(/\s+/g, "-")}`,
-  }));
+  const useApiData = apiEntries !== null && apiEntries.length > 0;
 
-  const sorted = sortEntries([...aiEntries, myEntry], sortKey);
+  const baseEntries: RankEntry[] = useApiData
+    ? apiEntries
+        .filter((e) => e.playerId !== playerId)
+        .map(apiEntryToRank)
+    : AI_DETECTIVES.map((d) => ({
+        ...d,
+        isCurrentUser: false,
+        isPremiumUser: false,
+        profileId: `ai-${d.name.toLowerCase().replace(/\s+/g, "-")}`,
+      }));
+
+  const sorted = sortEntries([...baseEntries, myEntry], sortKey);
   const myRank = sorted.findIndex((e) => e.isCurrentUser) + 1;
 
   return (
@@ -229,7 +286,9 @@ export default function LiderlikScreen() {
       <View style={[styles.header, { borderBottomColor: colors.border }]}>
         <View>
           <Text style={[styles.headerTitle, { color: colors.primary }]}>Dedektif Sıralaması</Text>
-          <Text style={[styles.headerSub, { color: colors.mutedForeground }]}>Tüm Zamanlar</Text>
+          <Text style={[styles.headerSub, { color: colors.mutedForeground }]}>
+            {useApiData ? "Gerçek Oyuncular" : "Tüm Zamanlar"}
+          </Text>
         </View>
         {myRank > 0 && (
           <View style={[styles.myRankBadge, { backgroundColor: `${colors.primary}20`, borderColor: `${colors.primary}50` }]}>
@@ -245,7 +304,7 @@ export default function LiderlikScreen() {
           return (
             <Pressable
               key={tab.key}
-              onPress={() => setSortKey(tab.key)}
+              onPress={() => handleSortChange(tab.key)}
               style={[
                 styles.filterTab,
                 {
@@ -272,33 +331,39 @@ export default function LiderlikScreen() {
         })}
       </View>
 
-      <FlatList
-        data={sorted}
-        keyExtractor={(item, i) => `${item.name}-${i}`}
-        contentContainerStyle={[
-          styles.list,
-          {
-            paddingBottom: Platform.OS === "web" ? 34 + 80 : insets.bottom + 80,
-          },
-        ]}
-        renderItem={({ item, index }) => (
-          <RankItem
-            entry={item}
-            rank={index + 1}
-            sortKey={sortKey}
-            colors={colors}
-            delay={index * 30}
-            onPress={() => {
-              if (item.isCurrentUser) {
-                router.push("/(tabs)/profil");
-              } else {
-                router.push({ pathname: "/public-profile/[playerId]", params: { playerId: item.profileId } });
-              }
-            }}
-          />
-        )}
-        ItemSeparatorComponent={() => <View style={{ height: 8 }} />}
-      />
+      {loading ? (
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color={colors.primary} />
+        </View>
+      ) : (
+        <FlatList
+          data={sorted}
+          keyExtractor={(item, i) => `${item.name}-${i}`}
+          contentContainerStyle={[
+            styles.list,
+            {
+              paddingBottom: Platform.OS === "web" ? 34 + 80 : insets.bottom + 80,
+            },
+          ]}
+          renderItem={({ item, index }) => (
+            <RankItem
+              entry={item}
+              rank={index + 1}
+              sortKey={sortKey}
+              colors={colors}
+              delay={index * 30}
+              onPress={() => {
+                if (item.isCurrentUser) {
+                  router.push("/(tabs)/profil");
+                } else {
+                  router.push({ pathname: "/public-profile/[playerId]", params: { playerId: item.profileId } });
+                }
+              }}
+            />
+          )}
+          ItemSeparatorComponent={() => <View style={{ height: 8 }} />}
+        />
+      )}
     </View>
   );
 }
@@ -344,6 +409,11 @@ const styles = StyleSheet.create({
   },
   filterTabText: { fontSize: 12, fontWeight: "700" },
   list: { padding: 12, gap: 0 },
+  loadingContainer: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
   rankItem: {
     flexDirection: "row",
     alignItems: "center",

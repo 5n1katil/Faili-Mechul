@@ -99,8 +99,47 @@ export async function fetchPublicProfile(playerId: string): Promise<PublicProfil
   }
 }
 
+export interface LeaderboardEntry {
+  playerId: string;
+  displayName: string;
+  avatar: string;
+  isPremium: boolean;
+  totalScore: number;
+  gamesWon: number;
+  maxStreak: number;
+  avgSolveTimeSeconds: number;
+}
+
+export type LeaderboardSortBy =
+  | "totalScore"
+  | "gamesWon"
+  | "maxStreak"
+  | "avgSolveTimeSeconds";
+
+export async function fetchLeaderboard(
+  sortBy: LeaderboardSortBy = "totalScore",
+  limit = 50
+): Promise<LeaderboardEntry[]> {
+  try {
+    const base = getApiBase();
+    if (!base) return [];
+    const params = new URLSearchParams({ sortBy, limit: String(limit) });
+    const res = await fetch(`${base}/leaderboard?${params.toString()}`);
+    if (!res.ok) return [];
+    return (await res.json()) as LeaderboardEntry[];
+  } catch {
+    return [];
+  }
+}
+
 export const apiClient = {
   async getProfile(playerId: string): Promise<PublicProfile | null> {
     return fetchPublicProfile(playerId);
+  },
+  async getLeaderboard(
+    sortBy: LeaderboardSortBy = "totalScore",
+    limit = 50
+  ): Promise<LeaderboardEntry[]> {
+    return fetchLeaderboard(sortBy, limit);
   },
 };
