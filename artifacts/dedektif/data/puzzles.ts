@@ -898,7 +898,7 @@ export const PUZZLES: Puzzle[] = [
       },
       {
         id: "c5",
-        text: "sekreter bayan her sabah başkana kahve hazırlardı; o gün da bu rutin yaşandı ve belediye ofisindeydü.",
+        text: "sekreter bayan her sabah başkana kahve hazırlardı; o gün de bu rutin yaşandı ve belediye ofisindeydi.",
         type: "direct",
         isBonus: true,
       },
@@ -1933,7 +1933,7 @@ export const PUZZLES: Puzzle[] = [
       },
       {
         id: "c4",
-        text: "haluk çiçek eski bedesten'deki fotoğraf çekimini exıf verisiyle kanıtladı; tüm fotoğraflar aynı saate damgalı, oradan ayrılmadı.",
+        text: "haluk çiçek eski bedesten'deki fotoğraf çekimini exif verisiyle kanıtladı; tüm fotoğraflar aynı saate damgalı, oradan ayrılmadı.",
         type: "witness",
         isBonus: false,
       },
