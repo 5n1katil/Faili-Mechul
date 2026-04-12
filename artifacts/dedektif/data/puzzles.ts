@@ -1117,8 +1117,8 @@ export const PUZZLES: Puzzle[] = [
       },
     ],
     solvabilityMeta: {
-      freeEliminations: ["l1", "l2", "l4", "s1", "s2", "s4", "w1", "w3"],
-      bonusEliminations: [],
+      freeEliminations: ["l1", "l2", "l4", "s1", "s2", "s4", "w1"],
+      bonusEliminations: ["w3", "w4"],
     },
     solution: { suspectId: "s3", weaponId: "w2", locationId: "l3" },
   },
@@ -1385,6 +1385,12 @@ export const PUZZLES: Puzzle[] = [
       {
         id: "c7",
         text: "Toplantı odasında Baş Araştırmacı'ya ait DNA örneği kurbanın yakınında tespit edildi; iki çalışan toplantı öncesi tartışmayı duyduğunu beyan etti.",
+        type: "forensic",
+        isBonus: true,
+      },
+      {
+        id: "c8",
+        text: "Baş Araştırmacı'nın montunda kurbanın saç teli ve boyun bölgesine ait doku örneği bulundu; el baskısıyla oluşan terleme kalıntısı mevcut.",
         type: "forensic",
         isBonus: true,
       },
