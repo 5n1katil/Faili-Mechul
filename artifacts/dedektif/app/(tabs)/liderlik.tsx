@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useRef } from "react";
 import type { ComponentProps } from "react";
 import {
   ActivityIndicator,
@@ -220,27 +220,26 @@ export default function LiderlikScreen() {
   const { profile, playerId } = useGame();
   const { isPremium } = usePurchase();
   const [sortKey, setSortKey] = useState<SortKey>("score");
+  const sortKeyRef = useRef<SortKey>("score");
   const [apiEntries, setApiEntries] = useState<LeaderboardEntry[] | null>(null);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  const loadLeaderboard = useCallback(
-    async (key: SortKey) => {
-      setLoading(true);
-      const data = await fetchLeaderboard(SORT_KEY_TO_API[key], 50);
-      setApiEntries(data);
-      setLoading(false);
-    },
-    []
-  );
+  const loadLeaderboard = useCallback(async (key: SortKey) => {
+    setLoading(true);
+    const data = await fetchLeaderboard(SORT_KEY_TO_API[key], 50);
+    setApiEntries(data);
+    setLoading(false);
+  }, []);
 
   useFocusEffect(
     useCallback(() => {
-      loadLeaderboard(sortKey);
-    }, [loadLeaderboard, sortKey])
+      loadLeaderboard(sortKeyRef.current);
+    }, [loadLeaderboard])
   );
 
   const handleSortChange = (key: SortKey) => {
+    sortKeyRef.current = key;
     setSortKey(key);
     loadLeaderboard(key);
   };
