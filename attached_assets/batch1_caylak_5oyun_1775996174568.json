@@ -1,0 +1,1155 @@
+{
+  "meta": {
+    "batch": 1,
+    "zorluk": "Çaylak",
+    "gridSize": "3x3",
+    "aciklama": "Her bulmacada 3 şüpheli × 3 silah × 3 mekan. Her şüpheli tam olarak 1 silah ve 1 mekânla eşleşir. İpuçları mantık zinciriyle tek çözüme ulaştırır.",
+    "murdle_kurali": "Her satır ve sütunda tam bir ✓, geri kalanlar ✗. Çapraz çıkarım: S→W(✓) + W→L(✓) = S→L(✓)"
+  },
+  "puzzles": [
+    {
+      "puzzleId": "yeni_c01",
+      "title": "Bebek Adası'nda Kan",
+      "subtitle": "Büyükada, Ahşap Köşk",
+      "difficulty": 2,
+      "difficultyLabel": "Çaylak",
+      "stars": "★★☆☆☆",
+      "gridSize": "3x3",
+      "timeLimit": 540,
+      "basePoints": 650,
+      "penaltyPerWrongAccusation": 120,
+      "cluePointCost": 50,
+      "story": "Büyükada'nın en eski köşkünde emekli bir hakim sabah ölü bulundu. Adada araç yok — fayton ya da bisikletle gidilir. Üç misafir gece ada lokantasından ayrılmamıştı.",
+      "atmosphere": "Deniz kokusu. Tahta veranda. Faytonun uzak sesi. Ve köşkün içinden çıkmayan üç kişi.",
+      "suspects": [
+        {
+          "id": "s1",
+          "name": "Damadı Tarık",
+          "icon": "🪢",
+          "description": "Hakimin kızıyla evli. Miras anlaşmazlığında mahkemede kaybetmişti.",
+          "detail": "42 yaşında, hukuk mezunu, soğukkanlı."
+        },
+        {
+          "id": "s2",
+          "name": "Eski Sekreteri Nilgün",
+          "icon": "📎",
+          "description": "20 yıl çalıştı, emekliliğinde hiçbir şey verilmedi.",
+          "detail": "58 yaşında, kırık kalpli, ama bunu belli etmez."
+        },
+        {
+          "id": "s3",
+          "name": "Komşu Avukat Sabri",
+          "icon": "⚖️",
+          "description": "Hakimle eski dava husumetleri. O gece köşkte misafirdi.",
+          "detail": "65 yaşında, inatçı, haklı olduğuna inanır."
+        }
+      ],
+      "weapons": [
+        {
+          "id": "w1",
+          "name": "Zehirli Çay",
+          "icon": "🫖",
+          "description": "Gece içilen bitkisel çaya karıştırılan alkaloiit."
+        },
+        {
+          "id": "w2",
+          "name": "Antika Vazo",
+          "icon": "🏺",
+          "description": "Hakimin koleksiyonundan ağır Osmanlı vazosu."
+        },
+        {
+          "id": "w3",
+          "name": "Yastık Boğması",
+          "icon": "😴",
+          "description": "Uyku sırasında yüz üstü bastırma."
+        }
+      ],
+      "locations": [
+        {
+          "id": "l1",
+          "name": "Kütüphane",
+          "icon": "📚",
+          "description": "Zemin kat kütüphanesi, kitap dolu raflar."
+        },
+        {
+          "id": "l2",
+          "name": "Yatak Odası",
+          "icon": "🌙",
+          "description": "Üst kat, denize bakan yatak odası."
+        },
+        {
+          "id": "l3",
+          "name": "Mutfak",
+          "icon": "🍳",
+          "description": "Zemin kat mutfağı, çay demleme alanı."
+        }
+      ],
+      "solution_table": {
+        "açıklama": "Kesin çözüm — ızgara bu tabloyu doldurmalı",
+        "s1_tarik": {
+          "weapon": "w2_vazo",
+          "location": "l1_kutuphane"
+        },
+        "s2_nilgun": {
+          "weapon": "w1_cay",
+          "location": "l3_mutfak"
+        },
+        "s3_sabri": {
+          "weapon": "w3_yastik",
+          "location": "l2_yatak"
+        },
+        "katil": "s2_nilgun"
+      },
+      "clues": [
+        {
+          "id": "c1",
+          "type": "kanit",
+          "revealOrder": 1,
+          "isRevealed": true,
+          "pointCost": 0,
+          "title": "Adli Tıp Ön Raporu",
+          "text": "Hakim yatak odasında uyku pozisyonunda bulundu. Yüzünde ve boynunda mekanik baskı izleri. Ağzında köpük yok — zehir değil. Yastık yüzünde iz var.",
+          "grid_effect": "w1_cay eleniyor (silah zehir değil). w3_yastik + l2_yatak olası.",
+          "mechanicType": "text",
+          "deductionHint": "Silah yastık boğması. Mekan yatak odası. → s3_sabri çözüm adayı."
+        },
+        {
+          "id": "c2",
+          "type": "tanik",
+          "revealOrder": 2,
+          "isRevealed": false,
+          "pointCost": 50,
+          "title": "Faytoncu Rıza'nın İfadesi",
+          "text": "\"Sabah 6'da köşk önünden geçtim. Nilgün Hanım mutfaktan çay tepsisiyle çıkıyordu — ama hiçbir yere götürmüyordu. Elini yıkıyordu veranda çeşmesinde.\"",
+          "grid_effect": "Nilgün mutfaktaydı → s2_nilgun + l3_mutfak = ✓",
+          "mechanicType": "text",
+          "deductionHint": "Nilgün mutfaktaydı. Hangi silah mutfakla ilişkili? → w1_cay"
+        },
+        {
+          "id": "c3",
+          "type": "eleme",
+          "revealOrder": 3,
+          "isRevealed": false,
+          "pointCost": 50,
+          "title": "Tarık'ın Gece Kayıtları",
+          "text": "Tarık gece boyunca veranda kamerasında görünüyor — 22:00-04:00 arası sürekli dışarıda oturmuş, sigarasını içmiş. Yatak odasına hiç çıkmadı.",
+          "grid_effect": "s1_tarik + l2_yatak = ✗. Tarık yatak odasına girmedi.",
+          "mechanicType": "text",
+          "deductionHint": "Tarık yatak odasında değildi. Sabri ise..."
+        },
+        {
+          "id": "c4",
+          "type": "parmak_izi",
+          "revealOrder": 4,
+          "isRevealed": false,
+          "pointCost": 50,
+          "title": "Vazo İzi",
+          "text": "Kütüphanede devrilmiş antika vazonun üzerinde taze parmak izi.",
+          "mechanicType": "parmak_izi",
+          "parmakIziVerisi": {
+            "aciklama": "Üç şüphelinin parmak izi kartını vazo iziyle eşleştir.",
+            "izler": [
+              {
+                "izId": "iz1",
+                "konum": "Vazo gövdesi",
+                "eslesme": "s1",
+                "ipucu": "Hukuk eğitimli, masa başı eli. Uzun ince parmak."
+              }
+            ],
+            "sonuc": "Vazoyu tutan: Tarık."
+          },
+          "grid_effect": "s1_tarik + w2_vazo = ✓. s2 ve s3 için w2 = ✗.",
+          "deductionHint": "Tarık vazoyu tuttu → w2_vazo + l1_kutuphane = Tarık'ın çifti."
+        },
+        {
+          "id": "c5",
+          "type": "adli",
+          "revealOrder": 5,
+          "isRevealed": false,
+          "pointCost": 50,
+          "title": "Çay Fincanı Analizi",
+          "text": "Mutfaktaki çay fincanında alkaloit kalıntısı tespit edildi. Bu alkaloid doğal bitkisel kaynaklı — eczacı ya da botanik bilgisi gerektiriyor. Nilgün Hanım'ın CV'sinde: 'eczane stajı 1985-1987.'",
+          "grid_effect": "w1_cay → s2_nilgun bağlantısı güçlendi. s2 + w1 = ✓ olası.",
+          "mechanicType": "text",
+          "deductionHint": "Nilgün'ün botanik bilgisi + mutfak konumu → w1_cay + l3_mutfak = Nilgün."
+        },
+        {
+          "id": "c6",
+          "type": "dogrudan",
+          "revealOrder": 6,
+          "isRevealed": false,
+          "pointCost": 50,
+          "title": "Çözüm Zinciri",
+          "text": "Bilinen gerçekler: Tarık kütüphanedeydi (vazo izi) ve vazoyla ilgiliydi. Nilgün mutfaktaydı ve çay hazırladı. Sabri'nin konumu: yatak odası.",
+          "grid_effect": "s3_sabri + l2_yatak = ✓ → s1 ve s2 için l2 = ✗. s3 + w3_yastik = ✓ (tek kalan).",
+          "mechanicType": "text",
+          "deductionHint": "Tarık→vazo→kütüphane. Nilgün→çay→mutfak. Sabri→yastık→yatak odası. Katil kim?"
+        },
+        {
+          "id": "c7",
+          "type": "ses_kaydi",
+          "revealOrder": 7,
+          "isRevealed": false,
+          "pointCost": 50,
+          "title": "Nilgün'ün Ses Mesajı",
+          "text": "[Hakimin telefonunda okunmamış ses mesajı] Nilgün: '20 yıl verdim. Emeklilik hediyesi için bile aramadınız. Bu çay son ikramınız olsun.'",
+          "mechanicType": "ses_kaydi",
+          "sesMetni": "Ses sakin ve sert. 'Son ikramınız olsun' — bilinçli söylenmiş.",
+          "grid_effect": "Motif teyit: Nilgün çay yoluyla harekete geçti.",
+          "deductionHint": "'Son ikramınız' → zehirli çay → Nilgün katil."
+        },
+        {
+          "id": "c8",
+          "type": "gorsel_ipucu",
+          "revealOrder": 8,
+          "isRevealed": false,
+          "pointCost": 50,
+          "title": "Mutfak Tezgahı",
+          "text": "Mutfak tezgahında alkaloide özgü küçük şişe. Nilgün'ün el çantasıyla aynı marka — özel eczane ürünü.",
+          "mechanicType": "gorsel_ipucu",
+          "gorselAciklama": "Küçük cam şişe, el yazısı etiket: 'Uyku Otu Ekstresi.' Nilgün'ün çantasındaki eczane makbuzu — aynı ürün.",
+          "grid_effect": "Nilgün + w1_cay + l3_mutfak = ✓✓✓ Kesin.",
+          "deductionHint": "Şişe Nilgün'ün. Mutfakta. Çay. Çözüm tamam."
+        }
+      ],
+      "solution": {
+        "suspectId": "s2",
+        "weaponId": "w1",
+        "locationId": "l3"
+      },
+      "solutionNarrative": "Sekreter Nilgün, 20 yıllık emeğine karşılık hiçbir şey verilmemesinin öfkesiyle gece hakimin çayına 'uyku otu ekstresi' kattı. Hakim uyuyakaldı — ama bir daha uyanmadı. Parmak izi Tarık'ı kütüphaneye, faytoncu Nilgün'ü mutfağa, kamera Sabri'yi yatak odasına yerleştirdi. Çözüm zinciri tek kişiyi gösterdi: Nilgün."
+    },
+    {
+      "puzzleId": "yeni_c02",
+      "title": "Çarşı Hamamında Sessiz Ölüm",
+      "subtitle": "Bursa, Tarihi Kapalı Çarşı Hamamı",
+      "difficulty": 2,
+      "difficultyLabel": "Çaylak",
+      "stars": "★★☆☆☆",
+      "gridSize": "3x3",
+      "timeLimit": 540,
+      "basePoints": 650,
+      "penaltyPerWrongAccusation": 120,
+      "cluePointCost": 50,
+      "story": "Bursa'nın tarihi kapalı çarşısındaki 600 yıllık hamamda antika tekstil tüccarı taş üstünde ölü bulundu. Hamam o sabah yalnızca üç kişiye açıktı.",
+      "atmosphere": "Buhar. Mermer soğukluğu. Kümbettin yankısı. Ve taşın üzerindeki bir ceset.",
+      "suspects": [
+        {
+          "id": "s1",
+          "name": "Kumaş Tüccarı Fikri Bey",
+          "icon": "🧵",
+          "description": "Maktulün en büyük rakibi. İpek tekelini paylaşmak zorundaydılar.",
+          "detail": "55 yaşında, geniş göbekli, şeker hastalığı var."
+        },
+        {
+          "id": "s2",
+          "name": "Hamamcı Nuri Usta",
+          "icon": "🪣",
+          "description": "50 yıldır hamam işletiyor. Maktul kira artışına itiraz etmişti.",
+          "detail": "72 yaşında, güçlü eller, gözleri zayıf."
+        },
+        {
+          "id": "s3",
+          "name": "Muhasebeci Dilara",
+          "icon": "🧮",
+          "description": "Maktulün hesaplarında 800.000 TL zimmet tespit etmiş — ama henüz söylememişti.",
+          "detail": "38 yaşında, düzgün, sessiz ama sırrı var."
+        }
+      ],
+      "weapons": [
+        {
+          "id": "w1",
+          "name": "Kaynar Su Kovası",
+          "icon": "♨️",
+          "description": "Hamamda kullanılan doldurulabilir büyük bakır kova."
+        },
+        {
+          "id": "w2",
+          "name": "Sabunluk Taşı",
+          "icon": "🪨",
+          "description": "Mermer sabunluk köşesinin kırık parçası."
+        },
+        {
+          "id": "w3",
+          "name": "Kese Bezi Boğması",
+          "icon": "🧤",
+          "description": "Hamamcı kesesiyle boğma — çok güçlü ele gerektirir."
+        }
+      ],
+      "locations": [
+        {
+          "id": "l1",
+          "name": "Göbek Taşı",
+          "icon": "🔥",
+          "description": "Hamamın ortasındaki merkezi ısıtmalı mermer platform."
+        },
+        {
+          "id": "l2",
+          "name": "Soyunma Odası",
+          "icon": "🚪",
+          "description": "Girişte tahta bölmeli soyunma kabinleri."
+        },
+        {
+          "id": "l3",
+          "name": "Su Deposu Bölümü",
+          "icon": "💧",
+          "description": "Hamamın arka tarafı, sıcak su depoları."
+        }
+      ],
+      "solution_table": {
+        "s1_fikri": {
+          "weapon": "w2_sabunluk",
+          "location": "l2_soyunma"
+        },
+        "s2_nuri": {
+          "weapon": "w3_kese",
+          "location": "l3_depo"
+        },
+        "s3_dilara": {
+          "weapon": "w1_kova",
+          "location": "l1_gobek"
+        },
+        "katil": "s3_dilara"
+      },
+      "clues": [
+        {
+          "id": "c1",
+          "type": "kanit",
+          "revealOrder": 1,
+          "isRevealed": true,
+          "pointCost": 0,
+          "title": "Hamam Doktoru Raporu",
+          "text": "Maktul göbek taşı üzerinde yüzüstü bulundu. Kafa arkasında künt darbe — düz ve sert yüzey değil, silindirik nesne. Kaynar su dökülmüş ama ölüm nedeni darbe.",
+          "grid_effect": "l1_gobek taşı ölüm yeri. Silindirik darbe → w1_kova olası. w2_sabunluk (düz) eleniyor bu mekân için.",
+          "mechanicType": "text",
+          "deductionHint": "Göbek taşı + silindirik darbe → kova izi."
+        },
+        {
+          "id": "c2",
+          "type": "tanik",
+          "revealOrder": 2,
+          "isRevealed": false,
+          "pointCost": 50,
+          "title": "Berber Komşu İfadesi",
+          "text": "\"Fikri Bey soyunma odasında 45 dakika oturdu — hiç içeri girmedi. Midesinden şikayet ediyordu.\"",
+          "grid_effect": "s1_fikri + l2_soyunma = ✓. s1 için l1 ve l3 = ✗.",
+          "mechanicType": "text",
+          "deductionHint": "Fikri soyunma odasındaydı — göbek taşına giremedi."
+        },
+        {
+          "id": "c3",
+          "type": "adli",
+          "revealOrder": 3,
+          "isRevealed": false,
+          "pointCost": 50,
+          "title": "Kova İzi Analizi",
+          "text": "Bakır kovada darbe izinin şekli: küçük el, ince parmak. Nuri Usta'nın elleri büyük ve nasırlı — bu iz ona ait olamaz. Fikri Bey'in elleri şişman ve kısa.",
+          "grid_effect": "s1_fikri + w1_kova = ✗. s2_nuri + w1_kova = ✗. → s3_dilara + w1_kova = ✓.",
+          "mechanicType": "gorsel_ipucu",
+          "gorselAciklama": "Kova sapındaki iz ölçümü: parmak kalınlığı 12mm, uzunluk 68mm. Dilara'nın ölçümleriyle eşleşiyor.",
+          "deductionHint": "Küçük el → Dilara. Dilara + kova + göbek taşı."
+        },
+        {
+          "id": "c4",
+          "type": "eleme",
+          "revealOrder": 4,
+          "isRevealed": false,
+          "pointCost": 50,
+          "title": "Nuri Usta'nın Yeri",
+          "text": "Nuri Usta'nın su deposu bölümünde tamir yaptığı, depoda kazınmış tarih ve imzasıyla belgelenmiş. O bölgede kalın.",
+          "grid_effect": "s2_nuri + l3_depo = ✓. s2 için l1 ve l2 = ✗.",
+          "mechanicType": "text",
+          "deductionHint": "Nuri depodaydı. Dilara için l1_gobek kaldı."
+        },
+        {
+          "id": "c5",
+          "type": "dogrudan",
+          "revealOrder": 5,
+          "isRevealed": false,
+          "pointCost": 50,
+          "title": "Muhasebe Defteri",
+          "text": "Dilara'nın çantasında tamamlanmış zimmet raporu: '800.000 TL — maktulün imzasıyla sahte transfer.' Rapor bir savcıya e-postalanmak üzereydi — fakat gönderilmemişti.",
+          "grid_effect": "Motif: Dilara zimmeti açıklayacaktı — maktul öğrendi ve susturmak istedi mi, yoksa Dilara mı önce harekete geçti?",
+          "mechanicType": "gorsel_ipucu",
+          "gorselAciklama": "Taslak e-posta: 'Savcı X'e gönder'. Tarih: bugün. Gönderilmemiş.",
+          "deductionHint": "Dilara raporu göndermeden önce maktul onu tehdit mi etti?"
+        },
+        {
+          "id": "c6",
+          "type": "ses_kaydi",
+          "revealOrder": 6,
+          "isRevealed": false,
+          "pointCost": 50,
+          "title": "Hamam İçinden Ses",
+          "text": "[Akustik ses yansıması — hamam kubbesinin ses iletimi] Maktul: 'O defteri bana ver, yoksa seni bitiririm.' Dilara: 'Sizi bitirmeden önce sizi bitiremedim.'",
+          "mechanicType": "ses_kaydi",
+          "sesMetni": "Dilara'nın sesi titremiyor. 'Sizi bitirmeden önce' — garip kelime sırası.",
+          "grid_effect": "Dilara, maktulün tehdidine yanıt verdi — anlık karar.",
+          "deductionHint": "Maktul Dilara'yı tehdit etti. Dilara harekete geçti."
+        },
+        {
+          "id": "c7",
+          "type": "parmak_izi",
+          "revealOrder": 7,
+          "isRevealed": false,
+          "pointCost": 50,
+          "title": "Sabunluk Köşesi İzi",
+          "text": "Soyunma odası sabunluğunun kırık parçasında iz — bu parça kütüphanede değil, soyunma odasında.",
+          "mechanicType": "parmak_izi",
+          "parmakIziVerisi": {
+            "aciklama": "Sabunluk parçasındaki izi üç şüpheliyle eşleştir.",
+            "izler": [
+              {
+                "izId": "iz1",
+                "konum": "Sabunluk kırık kenarı",
+                "eslesme": "s1",
+                "ipucu": "Şişman parmak, bastırma izi belirgin."
+              }
+            ],
+            "sonuc": "Sabunluk parçasını tutan: Fikri Bey."
+          },
+          "grid_effect": "s1_fikri + w2_sabunluk = ✓. s2 ve s3 için w2 = ✗.",
+          "deductionHint": "Fikri sabunluğu tuttu → soyunma odası uyuşuyor."
+        },
+        {
+          "id": "c8",
+          "type": "adli",
+          "revealOrder": 8,
+          "isRevealed": false,
+          "pointCost": 50,
+          "title": "Kese Bezi",
+          "text": "Depo bölümünde bulunan kese bezi üzerinde lif analizi: pamuk ve ipek karışımı — özel üretim. Nuri Usta'nın depo envanterinde bu kese bezi kayıtlı.",
+          "grid_effect": "s2_nuri + w3_kese = ✓. Tüm silahlar şüphelilere dağıldı: Fikri→sabunluk, Dilara→kova, Nuri→kese.",
+          "mechanicType": "text",
+          "deductionHint": "Nuri kese beziyle + depo. Ama o mekânda maktul yoktu. Katil: göbek taşındaki Dilara."
+        }
+      ],
+      "solution": {
+        "suspectId": "s3",
+        "weaponId": "w1",
+        "locationId": "l1"
+      },
+      "solutionNarrative": "Muhasebeci Dilara, zimmeti ifşa etmek üzere olan maktulün onu susturma tehdidine maruz kalınca göbek taşında onu bakır kovayla vurdu. Her şüpheli farklı bir silahla farklı bir mekânda belirlendi — Dilara göbek taşında, kova eliyle."
+    },
+    {
+      "puzzleId": "yeni_c03",
+      "title": "Kuyumcunun Altın Sırrı",
+      "subtitle": "İzmir, Kemeraltı Çarşısı",
+      "difficulty": 2,
+      "difficultyLabel": "Çaylak",
+      "stars": "★★☆☆☆",
+      "gridSize": "3x3",
+      "timeLimit": 540,
+      "basePoints": 650,
+      "penaltyPerWrongAccusation": 120,
+      "cluePointCost": 50,
+      "story": "Kemeraltı'nın en köklü kuyumcusu sabah dükkânında ölü bulundu. Kasası kırılmamış, içi dolu — hırsızlık değil, kişisel hesaplaşma. Üç kişi dün gece anahtara sahipti.",
+      "atmosphere": "Altın kokusu. Cam vitrinler. Çarşının sabah gürültüsü. Ve kilitli bir dükkânın içinde bir ceset.",
+      "suspects": [
+        {
+          "id": "s1",
+          "name": "Çırak Ferdi",
+          "icon": "🔑",
+          "description": "10 yıldır çalışıyor, maaşı ödenmiyor. Ortaklık vaat edilmişti — hayata geçirilmedi.",
+          "detail": "28 yaşında, sabırlı görünümlü ama sınıra gelmiş."
+        },
+        {
+          "id": "s2",
+          "name": "Rakip Kuyumcu Zeynep",
+          "icon": "💍",
+          "description": "Maktulün müşterilerini çalıyordu. Açık çatışma haline gelmişti.",
+          "detail": "45 yaşında, iş dünyasında güçlü, soğukkanlı."
+        },
+        {
+          "id": "s3",
+          "name": "Vergi Müfettişi Canan",
+          "icon": "📋",
+          "description": "Dün vergi denetimi yaptı, kritik belgeler buldu. Bu sabah raporu yazacaktı.",
+          "detail": "40 yaşında, kurallara bağlı, tehdit edilmiş hissediyordu."
+        }
+      ],
+      "weapons": [
+        {
+          "id": "w1",
+          "name": "Kuyumcu Terazisi",
+          "icon": "⚖️",
+          "description": "Hassas altın tartı terazisinin ağır metal kefesi."
+        },
+        {
+          "id": "w2",
+          "name": "Asit Solüsyonu",
+          "icon": "⚗️",
+          "description": "Altın testinde kullanılan hidroklorik asit karışımı."
+        },
+        {
+          "id": "w3",
+          "name": "Mücevher Teli",
+          "icon": "🪡",
+          "description": "Kuyumculukta kullanılan kalın gümüş tel."
+        }
+      ],
+      "locations": [
+        {
+          "id": "l1",
+          "name": "Kasa Odası",
+          "icon": "🔒",
+          "description": "Dükkânın arka kasa odası."
+        },
+        {
+          "id": "l2",
+          "name": "Vitrin Önü",
+          "icon": "🪟",
+          "description": "Dükkânın cam vitrin önündeki alan."
+        },
+        {
+          "id": "l3",
+          "name": "İmalat Atölyesi",
+          "icon": "🔨",
+          "description": "Dükkânın gerisindeki mücevher yapım atölyesi."
+        }
+      ],
+      "solution_table": {
+        "s1_ferdi": {
+          "weapon": "w1_terazi",
+          "location": "l2_vitrin"
+        },
+        "s2_zeynep": {
+          "weapon": "w3_tel",
+          "location": "l1_kasa"
+        },
+        "s3_canan": {
+          "weapon": "w2_asit",
+          "location": "l3_atolye"
+        },
+        "katil": "s1_ferdi"
+      },
+      "clues": [
+        {
+          "id": "c1",
+          "type": "kanit",
+          "revealOrder": 1,
+          "isRevealed": true,
+          "pointCost": 0,
+          "title": "Kriminal Raporu",
+          "text": "Maktul vitrin önünde devre dışı güvenlik kamerası altında. Kafa tarafında düz metal darbe — kare şekilli. Asit veya tel izi yok.",
+          "grid_effect": "l2_vitrin ölüm yeri. Kare metal darbe → w1_terazi (kefe kare). w2 ve w3 eleniyor bu mekân için.",
+          "mechanicType": "text",
+          "deductionHint": "Vitrin + kare darbe → terazi. s1_ferdi + w1_terazi + l2_vitrin uyumlu."
+        },
+        {
+          "id": "c2",
+          "type": "timeline",
+          "revealOrder": 2,
+          "isRevealed": false,
+          "pointCost": 50,
+          "title": "Gece Giriş Çizelgesi",
+          "text": "Dün gece dükkân anahtarı hareketleri.",
+          "mechanicType": "timeline_sort",
+          "timelineVerisi": {
+            "aciklama": "Gece boyunca olayları doğru sıraya diz.",
+            "olaylar": [
+              {
+                "id": "t1",
+                "metin": "22:00 — Canan denetim için son kez atölyeye girdi",
+                "dogruSira": 1
+              },
+              {
+                "id": "t2",
+                "metin": "22:30 — Canan çıktı, atölye anahtarını Ferdi'ye verdi",
+                "dogruSira": 2
+              },
+              {
+                "id": "t3",
+                "metin": "23:00 — Zeynep kasa odasında maktulla tartıştı",
+                "dogruSira": 3
+              },
+              {
+                "id": "t4",
+                "metin": "23:30 — Ferdi vitrinde çalışıyordu",
+                "dogruSira": 4
+              },
+              {
+                "id": "t5",
+                "metin": "00:15 — Maktul vitrinde hareketsiz bulundu",
+                "dogruSira": 5
+              }
+            ],
+            "sonuc": "Ferdi 23:30'da vitrindeydi. Maktul 00:15'te orada bulundu."
+          },
+          "grid_effect": "s1_ferdi + l2_vitrin = ✓ (zamansal örtüşme). s3_canan + l3_atolye = ✓.",
+          "deductionHint": "Ferdi vitrindeydi, Canan atölyedeydi. Zeynep kasa odasında."
+        },
+        {
+          "id": "c3",
+          "type": "parmak_izi",
+          "revealOrder": 3,
+          "isRevealed": false,
+          "pointCost": 50,
+          "title": "Terazi Kefesi",
+          "text": "Kefede taze iz — altın tozu da var.",
+          "mechanicType": "parmak_izi",
+          "parmakIziVerisi": {
+            "aciklama": "Terazi kefesindeki izi eşleştir.",
+            "izler": [
+              {
+                "izId": "iz1",
+                "konum": "Kefe alt yüzey",
+                "eslesme": "s1",
+                "ipucu": "Çırak eli — defalarca bu aleti tutan, aşina parmak."
+              }
+            ],
+            "sonuc": "Terazi kefesini tutan: Ferdi."
+          },
+          "grid_effect": "s1_ferdi + w1_terazi = ✓. s2 ve s3 için w1 = ✗.",
+          "deductionHint": "Ferdi + terazi + vitrin = tam çözüm."
+        },
+        {
+          "id": "c4",
+          "type": "eleme",
+          "revealOrder": 4,
+          "isRevealed": false,
+          "pointCost": 50,
+          "title": "Zeynep'in Kasa Odasındaki Sesi",
+          "text": "Komşu dükkân kamerası Zeynep'i kasa odası önünde gece boyunca gösteriyor. Oradan çıkmadı.",
+          "grid_effect": "s2_zeynep + l1_kasa = ✓. s2 için l2 ve l3 = ✗.",
+          "mechanicType": "text",
+          "deductionHint": "Zeynep kasa odasında. Zeynep + w3_tel (kalan silah) = ✓."
+        },
+        {
+          "id": "c5",
+          "type": "adli",
+          "revealOrder": 5,
+          "isRevealed": false,
+          "pointCost": 50,
+          "title": "Asit İzi",
+          "text": "Atölyede asit şişesi açık bırakılmış. Canan'ın eldivenlerinde asit sıçrama izi. Canan denetim sırasında dokunmuş.",
+          "grid_effect": "s3_canan + w2_asit = ✓. s1 ve s2 için w2 = ✗.",
+          "mechanicType": "text",
+          "deductionHint": "Canan + asit + atölye. Katil değil ama silahı o tuttu."
+        },
+        {
+          "id": "c6",
+          "type": "dogrudan",
+          "revealOrder": 6,
+          "isRevealed": false,
+          "pointCost": 50,
+          "title": "Ferdi'nin Ortaklık Belgesi",
+          "text": "Maktulün masasında Ferdi'ye gönderilmek üzere mektup: 'Ortaklık teklifini geri çekiyorum. İş arayabilirsin.' Dün hazırlanmış, henüz verilmemiş.",
+          "mechanicType": "gorsel_ipucu",
+          "gorselAciklama": "El yazısı mektup. 'Ortaklığı geri çekiyorum' satırının altı maktul tarafından çizilmiş.",
+          "grid_effect": "Ferdi için son damla: 10 yıl + reddedilen ortaklık.",
+          "deductionHint": "10 yıl + reddedilen ortaklık + vitrin + terazi = Ferdi katil."
+        },
+        {
+          "id": "c7",
+          "type": "ses_kaydi",
+          "revealOrder": 7,
+          "isRevealed": false,
+          "pointCost": 50,
+          "title": "Ferdi'nin Ses Mesajı",
+          "text": "[Ferdi'nin kendi telefonunda kayıtlı sesli not] 'Bugün söyleyeceğim. 10 yıl yetti. Ya ortaklık ya da başka bir yol bulacağım.'",
+          "mechanicType": "ses_kaydi",
+          "sesMetni": "Ses kararlı. 'Başka bir yol' — ne anlama geliyordu?",
+          "grid_effect": "Ferdi'nin niyetini kendi sözleriyle ortaya koyuyor.",
+          "deductionHint": "'Başka bir yol' — vitrin + terazi = o yol."
+        },
+        {
+          "id": "c8",
+          "type": "tanik",
+          "revealOrder": 8,
+          "isRevealed": false,
+          "pointCost": 50,
+          "title": "Çarşı Bekçisi",
+          "text": "\"Gece 23:45'te vitrin camında gölge gördüm — içeride iki kişi. Biri yüksek sesle konuştu, 10 yıl kelimesini duydum. Sonra sessizlik. Sonra yalnız bir gölge.\"",
+          "mechanicType": "tanik_yuzlesme",
+          "yuzlesmeDialogu": [
+            {
+              "soru": "İki kişi miydi kesinlikle?",
+              "cevap": "Evet, ikisini de gördüm.",
+              "yalan": false
+            },
+            {
+              "soru": "Yüksek sesle konuşan kimdi?",
+              "cevap": "Genç olanı — içerden tanımıyorum.",
+              "yalan": false
+            }
+          ],
+          "grid_effect": "Vitrin içinde Ferdi ve maktul — tartışma ve darbe.",
+          "deductionHint": "Vitrinde iki kişi, genç = Ferdi. Sonra yalnız kaldı."
+        }
+      ],
+      "solution": {
+        "suspectId": "s1",
+        "weaponId": "w1",
+        "locationId": "l2"
+      },
+      "solutionNarrative": "Çırak Ferdi, ortaklığının iptal edildiğini o gece öğrendi. Vitrinde maktulla karşılaştı, tartıştı ve terazi kefesiyle vurdu. Her şüpheli kendi silahı ve mekânıyla sahnede yerini aldı — çözüm tek yola gidiyordu."
+    },
+    {
+      "puzzleId": "yeni_c04",
+      "title": "Moda Tasarımcısının Son Koleksiyonu",
+      "subtitle": "İstanbul, Nişantaşı Atölyesi",
+      "difficulty": 2,
+      "difficultyLabel": "Çaylak",
+      "stars": "★★☆☆☆",
+      "gridSize": "3x3",
+      "timeLimit": 540,
+      "basePoints": 650,
+      "penaltyPerWrongAccusation": 120,
+      "cluePointCost": 50,
+      "story": "Ünlü moda tasarımcısı Paris defilesi öncesi gecesi atölyesinde ölü bulundu. Koleksiyonun tasarım haklarına üç kişi talip çıkmıştı.",
+      "atmosphere": "Kumaş kokusu. Mankenler. Yarım kalmış dikiş. Ve koleksiyonun telif hakları.",
+      "suspects": [
+        {
+          "id": "s1",
+          "name": "Yardımcı Tasarımcı Hande",
+          "icon": "🪢",
+          "description": "Koleksiyonun yarısını o tasarladı — ama ismi yok afişte.",
+          "detail": "32 yaşında, yetenekli, sinirli."
+        },
+        {
+          "id": "s2",
+          "name": "Tekstil Yatırımcısı Bülent",
+          "icon": "💶",
+          "description": "Koleksiyona 2 milyon yatırdı, haklar anlaşmazlığı var.",
+          "detail": "52 yaşında, iş adamı, sabırsız."
+        },
+        {
+          "id": "s3",
+          "name": "Eski Ortak Sevgi",
+          "icon": "🪡",
+          "description": "5 yıl önce ortaklıktan çıkarıldı. Tasarımlarının çalındığını iddia ediyor.",
+          "detail": "44 yaşında, ressam ruhlu, adaletten konuşur."
+        }
+      ],
+      "weapons": [
+        {
+          "id": "w1",
+          "name": "Dikiş Makası",
+          "icon": "✂️",
+          "description": "Profesyonel 30 cm'lik keskin dikiş makası."
+        },
+        {
+          "id": "w2",
+          "name": "Manken Ayağı",
+          "icon": "🦵",
+          "description": "Demonte metal manken bacağı, ağır ve uzun."
+        },
+        {
+          "id": "w3",
+          "name": "Zehirli Boya",
+          "icon": "🎨",
+          "description": "Kumaş boya karışımında toksik solvent — kapalı alanda."
+        }
+      ],
+      "locations": [
+        {
+          "id": "l1",
+          "name": "Dikiş Atölyesi",
+          "icon": "🧵",
+          "description": "Ana dikiş ve üretim alanı."
+        },
+        {
+          "id": "l2",
+          "name": "Ofis",
+          "icon": "🖊️",
+          "description": "Tasarım ve sözleşme ofisi."
+        },
+        {
+          "id": "l3",
+          "name": "Boya Odası",
+          "icon": "🌈",
+          "description": "Kumaş boyama ve baskı odası."
+        }
+      ],
+      "solution_table": {
+        "s1_hande": {
+          "weapon": "w1_makas",
+          "location": "l1_atolye"
+        },
+        "s2_bulent": {
+          "weapon": "w2_manken",
+          "location": "l2_ofis"
+        },
+        "s3_sevgi": {
+          "weapon": "w3_boya",
+          "location": "l3_boya"
+        },
+        "katil": "s1_hande"
+      },
+      "clues": [
+        {
+          "id": "c1",
+          "type": "kanit",
+          "revealOrder": 1,
+          "isRevealed": true,
+          "pointCost": 0,
+          "title": "Adli Rapor",
+          "text": "Maktul dikiş atölyesinde bulundu. Göğüs bölgesinde kesik — uzun keskin alet. Zehirleme veya künt darbe izi yok.",
+          "grid_effect": "l1_atolye ölüm yeri. Keskin uzun alet → w1_makas. w2 ve w3 eleniyor bu mekân için.",
+          "mechanicType": "text",
+          "deductionHint": "Atölye + keskin alet = makas. Makas + atölye → s1_hande."
+        },
+        {
+          "id": "c2",
+          "type": "tanik",
+          "revealOrder": 2,
+          "isRevealed": false,
+          "pointCost": 50,
+          "title": "Kapı Komşusu Güvenlik",
+          "text": "\"Bülent Bey gece sözleşmeyi müzakere etmek için ofise çıktı. 2 saat kapanık kaldı içeride.\"",
+          "grid_effect": "s2_bulent + l2_ofis = ✓. s2 için l1 ve l3 = ✗.",
+          "mechanicType": "text",
+          "deductionHint": "Bülent ofisteydi. Ofis + Bülent → hangi silah? Kalan: w2_manken."
+        },
+        {
+          "id": "c3",
+          "type": "adli",
+          "revealOrder": 3,
+          "isRevealed": false,
+          "pointCost": 50,
+          "title": "Boya Odası Solvent İzi",
+          "text": "Boya odasında solvent şişesi açılmış, havalandırma kapalı. Sevgi'nin nefesinde solvent kokusu tespit edildi — o odadan yeni çıkmıştı.",
+          "grid_effect": "s3_sevgi + l3_boya = ✓. s3 için l1 ve l2 = ✗. s3 + w3_boya = ✓.",
+          "mechanicType": "text",
+          "deductionHint": "Sevgi boya odasındaydı + solvent = w3_boya."
+        },
+        {
+          "id": "c4",
+          "type": "parmak_izi",
+          "revealOrder": 4,
+          "isRevealed": false,
+          "pointCost": 50,
+          "title": "Manken Ayağı İzi",
+          "text": "Ofiste devrilmiş manken ayağında iz.",
+          "mechanicType": "parmak_izi",
+          "parmakIziVerisi": {
+            "aciklama": "Manken ayağındaki izi eşleştir.",
+            "izler": [
+              {
+                "izId": "iz1",
+                "konum": "Metal boru üst kısım",
+                "eslesme": "s2",
+                "ipucu": "İş adamı eli — güçlü kavrayış, yüzük izi var."
+              }
+            ],
+            "sonuc": "Manken ayağını tutan: Bülent."
+          },
+          "grid_effect": "s2_bulent + w2_manken = ✓. s1 ve s3 için w2 = ✗.",
+          "deductionHint": "Bülent + manken + ofis. Hande için kalan: w1_makas + l1_atolye."
+        },
+        {
+          "id": "c5",
+          "type": "eleme",
+          "revealOrder": 5,
+          "isRevealed": false,
+          "pointCost": 50,
+          "title": "Hande'nin Konumu",
+          "text": "Hande dikiş atölyesinde gece boyunca çalışmış — dikiş makinesi log kaydı ve tamamlanmamış dikiş üzerinde dNA izi. Atölyeden çıkmamış.",
+          "grid_effect": "s1_hande + l1_atolye = ✓. s1 için l2 ve l3 = ✗.",
+          "mechanicType": "text",
+          "deductionHint": "Hande atölyedeydi. Hande + makas + atölye = tam eşleşme."
+        },
+        {
+          "id": "c6",
+          "type": "dogrudan",
+          "revealOrder": 6,
+          "isRevealed": false,
+          "pointCost": 50,
+          "title": "Paris Defilesi Programı",
+          "text": "Defilede tüm tasarımlar maktulün adına. Hande'nin adı hiçbir yerde geçmiyor. Hande bu programı o gece gördü — maktulün masasında açık duruyordu.",
+          "mechanicType": "gorsel_ipucu",
+          "gorselAciklama": "Paris defilesi katalogu. Her tasarımın altında: 'Maktulün ismi.' Hande'nin ismi sıfır.",
+          "grid_effect": "Hande'nin motifi netleşti: isim yokluğu + atölye + makas.",
+          "deductionHint": "İsim yokluğu + son gece + makas = harekete geçme nedeni."
+        },
+        {
+          "id": "c7",
+          "type": "ses_kaydi",
+          "revealOrder": 7,
+          "isRevealed": false,
+          "pointCost": 50,
+          "title": "Hande'nin Kendi Kaydı",
+          "text": "[Hande'nin telefon ses kaydı — kendi kendine düşünürken] 'Paris'te adım olmayacak. 3 yıl bu tasarımlar için. Makas elimde, karar da.'",
+          "mechanicType": "ses_kaydi",
+          "sesMetni": "Hande'nin sesi düz ve soğuk. 'Makas elimde' — somut.",
+          "grid_effect": "Hande kendi ağzından söylüyor: makas + karar.",
+          "deductionHint": "'Makas elimde, karar da' — itiraf niteliğinde."
+        },
+        {
+          "id": "c8",
+          "type": "tanik",
+          "revealOrder": 8,
+          "isRevealed": false,
+          "pointCost": 50,
+          "title": "Temizlikçi İfadesi",
+          "text": "\"Sabah atölyeye girdim. Hande Hanım camın önünde oturuyordu — hareketsiz. Elinde makas vardı. 'Bitti' dedi. Başka bir şey söylemedi.\"",
+          "mechanicType": "tanik_yuzlesme",
+          "yuzlesmeDialogu": [
+            {
+              "soru": "Hande elinde ne tutuyordu?",
+              "cevap": "Dikiş makası.",
+              "yalan": false
+            },
+            {
+              "soru": "'Bitti' ne demekti?",
+              "cevap": "Bilmiyorum. Ama gözleri boştu.",
+              "yalan": false
+            }
+          ],
+          "grid_effect": "Hande suç aletini elinde tutarak bulundu.",
+          "deductionHint": "Makas elinde, 'bitti' dedi — itiraf."
+        }
+      ],
+      "solution": {
+        "suspectId": "s1",
+        "weaponId": "w1",
+        "locationId": "l1"
+      },
+      "solutionNarrative": "Hande, Paris defil programında adının olmadığını görünce 3 yıllık öfkesi patladı. Dikiş makasını kullandı. Her şüpheli kendi mekânına yerleşti, kendi silahını tuttu — çözüm tek yere işaret ediyordu."
+    },
+    {
+      "puzzleId": "yeni_c05",
+      "title": "Dağ Evinde Kar Altında",
+      "subtitle": "Uludağ, İzole Dağ Evi",
+      "difficulty": 2,
+      "difficultyLabel": "Çaylak",
+      "stars": "★★☆☆☆",
+      "gridSize": "3x3",
+      "timeLimit": 540,
+      "basePoints": 650,
+      "penaltyPerWrongAccusation": 120,
+      "cluePointCost": 50,
+      "story": "Uludağ'da fırtına nedeniyle mahsur kalan dört kişiden biri sabah ölü bulundu. Yolu kapalı — kimse giremez, kimse çıkamaz. Katil içerideki üçten biri.",
+      "atmosphere": "Kar. Rüzgar. Şömine ateşi. Ve dışarı çıkmanın imkânsız olduğu bir ev.",
+      "suspects": [
+        {
+          "id": "s1",
+          "name": "Mimar Selim",
+          "icon": "📐",
+          "description": "Maktulün eski iş ortağı. Mimari proje hırsızlığı davası sürüyor.",
+          "detail": "46 yaşında, metodolojik, planlayıcı."
+        },
+        {
+          "id": "s2",
+          "name": "Doktor Leyla",
+          "icon": "💊",
+          "description": "Kazara bu evde mahsur kaldı. Tıbbi bilgisi var — zehir dozunu bilir.",
+          "detail": "39 yaşında, sakin, gözlemci."
+        },
+        {
+          "id": "s3",
+          "name": "Dağ Evi Sahibi Rasim",
+          "icon": "🏔️",
+          "description": "Maktul bu evi satın almak istiyordu, fiyat anlaşmazlığı.",
+          "detail": "60 yaşında, sert, toprağına bağlı."
+        }
+      ],
+      "weapons": [
+        {
+          "id": "w1",
+          "name": "Şömine Demiri",
+          "icon": "🔥",
+          "description": "Kor karıştırmak için kullanılan uzun demir."
+        },
+        {
+          "id": "w2",
+          "name": "Uyku İlacı Aşırı Dozu",
+          "icon": "💤",
+          "description": "Doktor çantasından alınan sedatif — içeceğe karıştırıldı."
+        },
+        {
+          "id": "w3",
+          "name": "Kar Küreği Sapı",
+          "icon": "❄️",
+          "description": "Ağır ahşap saplı kar küreği."
+        }
+      ],
+      "locations": [
+        {
+          "id": "l1",
+          "name": "Oturma Odası",
+          "icon": "🛋️",
+          "description": "Şömineli ana oturma odası."
+        },
+        {
+          "id": "l2",
+          "name": "Yatak Odası",
+          "icon": "🌙",
+          "description": "Üst kattaki misafir yatak odası."
+        },
+        {
+          "id": "l3",
+          "name": "Garaj",
+          "icon": "🚗",
+          "description": "Araçların bağlı olduğu soğuk garaj."
+        }
+      ],
+      "solution_table": {
+        "s1_selim": {
+          "weapon": "w1_sominedm",
+          "location": "l1_oturma"
+        },
+        "s2_leyla": {
+          "weapon": "w2_ilac",
+          "location": "l2_yatak"
+        },
+        "s3_rasim": {
+          "weapon": "w3_kurek",
+          "location": "l3_garaj"
+        },
+        "katil": "s2_leyla"
+      },
+      "clues": [
+        {
+          "id": "c1",
+          "type": "kanit",
+          "revealOrder": 1,
+          "isRevealed": true,
+          "pointCost": 0,
+          "title": "İlk Tespit",
+          "text": "Maktul yatak odasında uyku pozisyonunda. Dış yaralanma yok. Kanda yüksek sedatif. Yanında boş gece içeceği bardağı.",
+          "grid_effect": "l2_yatak ölüm yeri. Dış yara yok → w1 ve w3 eleniyor. w2_ilac kesin.",
+          "mechanicType": "text",
+          "deductionHint": "Yatak + sedatif = uyku ilacı. Kim ilaca erişebilir? → Doktor Leyla."
+        },
+        {
+          "id": "c2",
+          "type": "tanik",
+          "revealOrder": 2,
+          "isRevealed": false,
+          "pointCost": 50,
+          "title": "Rasim'in Beyanı",
+          "text": "\"Gece garajda araçları kontrol ettim. Kar çok yağıyordu, kürekle biraz temizledim.\"",
+          "grid_effect": "s3_rasim + l3_garaj = ✓. s3 için l1 ve l2 = ✗. s3 + w3_kurek = ✓.",
+          "mechanicType": "text",
+          "deductionHint": "Rasim garajda + kürek. Artık o 3. eşleşmede."
+        },
+        {
+          "id": "c3",
+          "type": "adli",
+          "revealOrder": 3,
+          "isRevealed": false,
+          "pointCost": 50,
+          "title": "İlaç Çantası Eksiği",
+          "text": "Leyla'nın acil tıbbi çantasında envanter eksikliği: 1 adet sedatif ampul kayıp. Leyla 'düştü' dedi — ama çanta kilitliydi.",
+          "grid_effect": "s2_leyla + w2_ilac = ✓. s1 ve s3 için w2 = ✗.",
+          "mechanicType": "gorsel_ipucu",
+          "gorselAciklama": "Tıbbi çanta envanteri. 'Midazolam — 1 ampul: EKSİK'. Kilitli çanta — düşemez.",
+          "deductionHint": "Leyla + ilac. Şimdi nerede? → l2_yatak kalan mekân."
+        },
+        {
+          "id": "c4",
+          "type": "parmak_izi",
+          "revealOrder": 4,
+          "isRevealed": false,
+          "pointCost": 50,
+          "title": "Şömine Demiri",
+          "text": "Oturma odasındaki şömine demirinde iz.",
+          "mechanicType": "parmak_izi",
+          "parmakIziVerisi": {
+            "aciklama": "Şömine demirindeki izi eşleştir.",
+            "izler": [
+              {
+                "izId": "iz1",
+                "konum": "Demir üst kavrama",
+                "eslesme": "s1",
+                "ipucu": "Kâğıt çalışan parmak — ince ve uzun. Aletten alışılmamış kavrayış."
+              }
+            ],
+            "sonuc": "Şömine demirini tutan: Selim."
+          },
+          "grid_effect": "s1_selim + w1_somine = ✓. s2 ve s3 için w1 = ✗.",
+          "deductionHint": "Selim + şömine demiri + oturma odası = Selim'in çifti."
+        },
+        {
+          "id": "c5",
+          "type": "eleme",
+          "revealOrder": 5,
+          "isRevealed": false,
+          "pointCost": 50,
+          "title": "Selim'in Oturma Odası Gece Kaydı",
+          "text": "Evin güvenlik kamerası Selim'i tüm gece oturma odasında gösteriyor — şömine karşısında kitap okudu.",
+          "grid_effect": "s1_selim + l1_oturma = ✓. s1 için l2 ve l3 = ✗.",
+          "mechanicType": "text",
+          "deductionHint": "Selim oturma odasında. Leyla için kalan mekân: l2_yatak."
+        },
+        {
+          "id": "c6",
+          "type": "dogrudan",
+          "revealOrder": 6,
+          "isRevealed": false,
+          "pointCost": 50,
+          "title": "Leyla'nın Geçmişi",
+          "text": "Araştırma: Maktul 2 yıl önce Leyla'nın tıbbi ihmal davasında tanıklık etmişti — aleyhine. Leyla lisansını neredeyse kaybetmişti.",
+          "mechanicType": "gorsel_ipucu",
+          "gorselAciklama": "Mahkeme kaydı: 'Tanık: Maktul. Leyla aleyhine ifade.' Leyla'nın lisans soruşturması dosyası.",
+          "grid_effect": "Leyla'nın motifi: lisans kaybı riski + intikam.",
+          "deductionHint": "Motif + ilac + yatak odası = Leyla katil."
+        },
+        {
+          "id": "c7",
+          "type": "timeline",
+          "revealOrder": 7,
+          "isRevealed": false,
+          "pointCost": 50,
+          "title": "Gece Zaman Çizelgesi",
+          "text": "O geceyi doğru kronolojiye diz.",
+          "mechanicType": "timeline_sort",
+          "timelineVerisi": {
+            "aciklama": "Gece boyunca olayları doğru sıraya diz.",
+            "olaylar": [
+              {
+                "id": "t1",
+                "metin": "22:00 — Herkes oturma odasında birlikte.",
+                "dogruSira": 1
+              },
+              {
+                "id": "t2",
+                "metin": "23:00 — Maktul 'baş ağrım var' deyip yatak odasına çekildi.",
+                "dogruSira": 2
+              },
+              {
+                "id": "t3",
+                "metin": "23:10 — Leyla 'iyi geceler içeceği getireyim' dedi, mutfağa gitti.",
+                "dogruSira": 3
+              },
+              {
+                "id": "t4",
+                "metin": "23:20 — Leyla maktula içecek götürdü.",
+                "dogruSira": 4
+              },
+              {
+                "id": "t5",
+                "metin": "07:00 — Maktul yanıt vermedi, ölü bulundu.",
+                "dogruSira": 5
+              }
+            ],
+            "sonuc": "Leyla içeceği hazırladı ve bizzat götürdü."
+          },
+          "grid_effect": "Leyla maktulla l2_yatak'ta baş başa kaldı.",
+          "deductionHint": "Leyla + içecek + yatak odası = fırsat ve araç."
+        },
+        {
+          "id": "c8",
+          "type": "ses_kaydi",
+          "revealOrder": 8,
+          "isRevealed": false,
+          "pointCost": 50,
+          "title": "Leyla'nın Telefon Görüşmesi",
+          "text": "[Fırtına öncesi son sinyal — ses kaydı] Leyla arkadaşına: 'O kişiyle aynı evde mahsur kaldım. Belki de bu bir işaret.'",
+          "mechanicType": "ses_kaydi",
+          "sesMetni": "'Belki de bu bir işaret' — fırsatı kullanmaya karar verdi mi?",
+          "grid_effect": "Leyla 'işaret' gördü — planlı hareket.",
+          "deductionHint": "Mahsur kalma fırsatı + tıbbi bilgi + motif = Leyla."
+        }
+      ],
+      "solution": {
+        "suspectId": "s2",
+        "weaponId": "w2",
+        "locationId": "l2"
+      },
+      "solutionNarrative": "Doktor Leyla, 2 yıl önce aleyhine tanıklık eden maktulü fırtınanın sunduğu fırsatla susturdu. Çantasından sedatif aldı, gece içeceğine kattı. Selim oturma odasında, Rasim garajda sabitlendi — Leyla tek başına yatak odasındaydı."
+    }
+  ]
+}
