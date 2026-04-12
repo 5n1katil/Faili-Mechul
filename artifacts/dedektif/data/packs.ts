@@ -288,7 +288,7 @@ const EMOJI_TO_MATERIAL: Record<string, string> = {
   "🗿": "account_balance",
   "🏪": "store",
   "🛤️": "linear_scale",
-  "🩻": "medical_information",
+  "🩻": "radiology",
   "🚶": "directions_walk",
   "😷": "masks",
   "🎛️": "tune",
