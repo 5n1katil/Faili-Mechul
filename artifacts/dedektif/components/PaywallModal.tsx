@@ -13,8 +13,8 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { usePurchase } from "@/context/PurchaseContext";
 import { useColors } from "@/hooks/useColors";
 
-const PRIVACY_URL = "https://failimechul.app/gizlilik";
-const TERMS_URL = "https://failimechul.app/kullanim-sartlari";
+const PRIVACY_URL = "https://doc-hosting.flycricket.io/faili-mechul-privacy-policy/e9ef8c9c-2e2e-486c-b5ae-70d067237627/privacy";
+const TERMS_URL = "https://doc-hosting.flycricket.io/faili-mechul-terms-of-use/4f269815-97dc-472b-b9a5-d57f8e1c8673/terms";
 
 interface Props {
   visible: boolean;
