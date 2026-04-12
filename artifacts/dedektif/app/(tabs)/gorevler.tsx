@@ -110,7 +110,7 @@ function ClaimButton({
       onPressOut={() => { scale.value = withSpring(1, { damping: 10 }); }}
       onPress={onPress}
     >
-      <MaterialIcons name="bolt" size={11} color="#000" />
+      <MaterialIcons name="bolt" size={14} color="#000" />
       <Text style={styles.claimBtnText}>TOPLA</Text>
       <Text style={styles.claimBtnPoints}>+{formatPoints(points)}</Text>
     </AnimatedPressable>
@@ -179,13 +179,13 @@ function MissionCard({
               ]}
             >
               {awarded ? (
-                <MaterialIcons name="check-circle" size={20} color={colors.success} />
+                <MaterialIcons name="check-circle" size={22} color={colors.success} />
               ) : claimable ? (
-                <MaterialIcons name="bolt" size={20} color={colors.primary} />
+                <MaterialIcons name="bolt" size={22} color={colors.primary} />
               ) : (
                 <MaterialIcons
                   name={mission.icon as MatIconName}
-                  size={20}
+                  size={22}
                   color={tierColor}
                 />
               )}
@@ -230,14 +230,14 @@ function MissionCard({
                   },
                 ]}
               >
-                <MaterialIcons name="bolt" size={11} color={colors.primary} />
+                <MaterialIcons name="bolt" size={14} color={colors.primary} />
                 <Text style={[styles.rewardText, { color: colors.primary }]}>
                   +{formatPoints(mission.reward.points)}
                 </Text>
                 {mission.reward.badge && (
                   <MaterialIcons
                     name="workspace-premium"
-                    size={11}
+                    size={13}
                     color={colors.primary}
                     style={{ marginLeft: 2 }}
                   />
@@ -268,7 +268,7 @@ function MissionCard({
               >
                 <MaterialIcons
                   name="play-arrow"
-                  size={12}
+                  size={14}
                   color={colors.mutedForeground}
                 />
                 <Text style={[styles.playChipText, { color: colors.mutedForeground }]}>
@@ -321,7 +321,7 @@ function SectionHeader({
   const colors = useColors();
   return (
     <View style={styles.sectionHeaderRow}>
-      <MaterialIcons name={icon} size={20} color={colors.primary} />
+      <MaterialIcons name={icon} size={22} color={colors.primary} />
       <View style={styles.sectionHeaderText}>
         <Text style={[styles.sectionTitle, { color: colors.foreground }]}>
           {title}
@@ -458,7 +458,7 @@ export default function GorevlerScreen() {
               subtitle="Her gün sıfırlanır"
             />
             <View style={styles.countdownChip}>
-              <MaterialIcons name="schedule" size={11} color={colors.mutedForeground} />
+              <MaterialIcons name="schedule" size={13} color={colors.mutedForeground} />
               <Text style={[styles.countdownText, { color: colors.mutedForeground }]}>
                 {dailyTimeLeft}
               </Text>
@@ -492,7 +492,7 @@ export default function GorevlerScreen() {
               subtitle="Her Pazartesi sıfırlanır"
             />
             <View style={styles.countdownChip}>
-              <MaterialIcons name="schedule" size={11} color={colors.mutedForeground} />
+              <MaterialIcons name="schedule" size={13} color={colors.mutedForeground} />
               <Text style={[styles.countdownText, { color: colors.mutedForeground }]}>
                 {weeklyTimeLeft}
               </Text>
@@ -552,7 +552,7 @@ const styles = StyleSheet.create({
   },
   content: {
     paddingHorizontal: 16,
-    gap: 16,
+    gap: 18,
   },
   pageHeader: {
     flexDirection: "row",
@@ -566,7 +566,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.3,
   },
   pageSubtitle: {
-    fontSize: 12,
+    fontSize: 13,
     marginTop: 2,
   },
   newBadge: {
@@ -576,7 +576,7 @@ const styles = StyleSheet.create({
   },
   newBadgeText: {
     color: "#000",
-    fontSize: 12,
+    fontSize: 13,
     fontWeight: "700",
   },
   collectAllBtn: {
@@ -587,13 +587,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 6,
-    paddingHorizontal: 14,
-    paddingVertical: 13,
+    paddingHorizontal: 16,
+    paddingVertical: 15,
     borderRadius: 12,
   },
   collectAllText: {
     flex: 1,
-    fontSize: 14,
+    fontSize: 15,
     fontWeight: "800",
     letterSpacing: 0.2,
   },
@@ -608,14 +608,14 @@ const styles = StyleSheet.create({
   },
   collectAllBadgeText: {
     color: "#000",
-    fontSize: 11,
+    fontSize: 12,
     fontWeight: "800",
   },
   section: {
     borderWidth: 1,
     borderRadius: 12,
-    padding: 14,
-    gap: 10,
+    padding: 16,
+    gap: 12,
   },
   sectionTopRow: {
     flexDirection: "row",
@@ -633,12 +633,12 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   sectionTitle: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: "800",
     letterSpacing: 0.2,
   },
   sectionSubtitle: {
-    fontSize: 11,
+    fontSize: 13,
     marginTop: 1,
   },
   countdownChip: {
@@ -649,52 +649,52 @@ const styles = StyleSheet.create({
     flexShrink: 0,
   },
   countdownText: {
-    fontSize: 11,
+    fontSize: 12,
     fontVariant: ["tabular-nums"],
   },
   tierSection: {
-    gap: 8,
+    gap: 10,
   },
   tierHeader: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 6,
-    marginTop: 4,
+    gap: 8,
+    marginTop: 6,
   },
   tierDot: {
-    width: 6,
-    height: 6,
-    borderRadius: 3,
+    width: 9,
+    height: 9,
+    borderRadius: 4,
   },
   tierLabel: {
-    fontSize: 11,
+    fontSize: 13,
     fontWeight: "700",
-    letterSpacing: 0.8,
+    letterSpacing: 0.5,
   },
   missionCard: {
-    borderRadius: 10,
+    borderRadius: 12,
     borderWidth: 1,
     overflow: "hidden",
     flexDirection: "row",
   },
   missionAccent: {
-    width: 3,
+    width: 4,
     alignSelf: "stretch",
   },
   missionInner: {
     flex: 1,
-    padding: 11,
-    gap: 8,
+    padding: 14,
+    gap: 10,
   },
   missionHeader: {
     flexDirection: "row",
     alignItems: "flex-start",
-    gap: 10,
+    gap: 12,
   },
   missionIconWrap: {
-    width: 36,
-    height: 36,
-    borderRadius: 8,
+    width: 42,
+    height: 42,
+    borderRadius: 10,
     alignItems: "center",
     justifyContent: "center",
     flexShrink: 0,
@@ -704,30 +704,30 @@ const styles = StyleSheet.create({
     gap: 3,
   },
   missionTitle: {
-    fontSize: 13,
+    fontSize: 15,
     fontWeight: "700",
   },
   completedTag: {
-    fontSize: 13,
+    fontSize: 15,
     fontWeight: "700",
   },
   missionDesc: {
-    fontSize: 12,
-    lineHeight: 16,
+    fontSize: 13,
+    lineHeight: 20,
   },
   rewardBadge: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 2,
-    paddingHorizontal: 6,
-    paddingVertical: 3,
+    gap: 4,
+    paddingHorizontal: 9,
+    paddingVertical: 5,
     borderRadius: 6,
     borderWidth: 1,
     flexShrink: 0,
     alignSelf: "flex-start",
   },
   rewardText: {
-    fontSize: 11,
+    fontSize: 13,
     fontWeight: "700",
   },
   progressRow: {
@@ -737,45 +737,45 @@ const styles = StyleSheet.create({
   },
   progressTrack: {
     flex: 1,
-    height: 4,
+    height: 6,
     backgroundColor: "#2A2F4244",
-    borderRadius: 2,
+    borderRadius: 3,
     overflow: "hidden",
   },
   progressFill: {
     height: "100%",
-    borderRadius: 2,
+    borderRadius: 3,
   },
   progressLabel: {
-    fontSize: 11,
-    minWidth: 32,
+    fontSize: 12,
+    minWidth: 36,
     textAlign: "right",
     fontVariant: ["tabular-nums"],
   },
   claimBtn: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 2,
+    gap: 4,
     backgroundColor: "#D4A843",
-    borderRadius: 6,
-    paddingVertical: 3,
-    paddingHorizontal: 6,
+    borderRadius: 8,
+    paddingVertical: 7,
+    paddingHorizontal: 11,
     flexShrink: 0,
     alignSelf: "flex-start",
   },
   claimBtnText: {
     color: "#000",
-    fontSize: 11,
+    fontSize: 13,
     fontWeight: "800",
     letterSpacing: 0.5,
   },
   claimBtnPoints: {
     color: "#000",
-    fontSize: 11,
+    fontSize: 12,
     fontWeight: "700",
   },
   emptyState: {
-    fontSize: 13,
+    fontSize: 14,
     textAlign: "center",
     paddingVertical: 12,
     fontStyle: "italic",
@@ -786,14 +786,14 @@ const styles = StyleSheet.create({
   playChip: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 2,
-    paddingHorizontal: 7,
-    paddingVertical: 3,
+    gap: 4,
+    paddingHorizontal: 11,
+    paddingVertical: 6,
     borderRadius: 20,
     borderWidth: 1,
   },
   playChipText: {
-    fontSize: 11,
+    fontSize: 13,
     fontWeight: "600",
     letterSpacing: 0.2,
   },
