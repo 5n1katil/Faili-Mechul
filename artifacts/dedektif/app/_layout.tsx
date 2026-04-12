@@ -8,7 +8,6 @@ import {
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
-import * as TrackingTransparency from "expo-tracking-transparency";
 import React, { useEffect, useRef, useState } from "react";
 import { Platform, StyleSheet, Text, View } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -310,9 +309,14 @@ export default function RootLayout() {
 
   useEffect(() => {
     if (Platform.OS !== "ios") return;
-    TrackingTransparency.requestTrackingPermissionsAsync()
-      .catch(() => {})
-      .finally(() => setAttReady(true));
+    try {
+      const { requestTrackingPermissionsAsync } = require("expo-tracking-transparency");
+      requestTrackingPermissionsAsync()
+        .catch(() => {})
+        .finally(() => setAttReady(true));
+    } catch {
+      setAttReady(true);
+    }
   }, []);
 
   useEffect(() => {
