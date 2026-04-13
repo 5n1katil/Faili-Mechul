@@ -564,12 +564,12 @@ export default function VakalarScreen() {
           onBuy={() => { setShowPremiumInfo(false); setShowPaywall(true); }}
           onClose={() => setShowPremiumInfo(false)}
         />
-        <View style={[gameStyles.container, { backgroundColor: colors.background }]}>
+        <View style={[gameStyles.container, { backgroundColor: colors.background, paddingTop: Platform.OS === "web" ? 67 : insets.top }]}>
           <View
             style={[
               listStyles.tabBar,
               {
-                paddingTop: Platform.OS === "web" ? 67 + 12 : insets.top + 12,
+                paddingTop: 12,
                 backgroundColor: colors.background,
                 borderBottomColor: colors.border,
               },

@@ -180,59 +180,56 @@ export default function HomeScreen() {
         </Pressable>
       </Modal>
 
-      <ScrollView
-        contentInsetAdjustmentBehavior="never"
-        style={[styles.container, { backgroundColor: colors.background }]}
-        contentContainerStyle={[
-          styles.content,
-          {
-            paddingTop: Platform.OS === "web" ? 67 : insets.top + 8,
-            paddingBottom: Platform.OS === "web" ? 34 + 80 : insets.bottom + 80,
-          },
-        ]}
-        showsVerticalScrollIndicator={false}
-      >
-        <Animated.View entering={FadeInDown.delay(0).springify()}>
-          <View style={styles.headerRow}>
-            <View style={styles.headerBrand}>
-              <Image
-                source={require("@/assets/images/logo.png")}
-                style={styles.headerLogo}
-                resizeMode="contain"
-              />
-              <View>
-                <Text style={[styles.greetingSmall, { color: colors.mutedForeground }]}>
-                  Merhaba, {profile.name}
-                </Text>
-                <Text style={[styles.appTitle, { color: colors.primary }]}>
-                  FAİLİ MEÇHUL
-                </Text>
-                <View style={[styles.titleUnderline, { backgroundColor: colors.primary }]} />
-                <Text style={[styles.appSubtitle, { color: colors.mutedForeground }]}>
-                  Dedektif Bulmaca Oyunu
-                </Text>
-              </View>
-            </View>
-            <View style={styles.headerRight}>
-              <Pressable onPress={handleHelpPress} style={styles.helpBtn} hitSlop={8}>
-                <MaterialIcons name="help-outline" size={22} color={colors.mutedForeground} />
-              </Pressable>
-              <Pressable
-                onPress={() => setShowStreakInfo(true)}
-                style={[
-                  styles.streakBadge,
-                  { backgroundColor: colors.card, borderColor: colors.border },
-                ]}
-              >
-                <MaterialIcons name="local-fire-department" size={20} color="#FF6B35" />
-                <Text style={[styles.streakText, { color: colors.foreground }]}>
-                  {profile.currentStreak}
-                </Text>
-              </Pressable>
+      <View style={[styles.container, { backgroundColor: colors.background, paddingTop: Platform.OS === "web" ? 67 : insets.top }]}>
+        <View style={[styles.headerRow, { paddingHorizontal: 16, paddingBottom: 8 }]}>
+          <View style={styles.headerBrand}>
+            <Image
+              source={require("@/assets/images/logo.png")}
+              style={styles.headerLogo}
+              resizeMode="contain"
+            />
+            <View>
+              <Text style={[styles.greetingSmall, { color: colors.mutedForeground }]}>
+                Merhaba, {profile.name}
+              </Text>
+              <Text style={[styles.appTitle, { color: colors.primary }]}>
+                FAİLİ MEÇHUL
+              </Text>
+              <View style={[styles.titleUnderline, { backgroundColor: colors.primary }]} />
+              <Text style={[styles.appSubtitle, { color: colors.mutedForeground }]}>
+                Dedektif Bulmaca Oyunu
+              </Text>
             </View>
           </View>
-        </Animated.View>
-
+          <View style={styles.headerRight}>
+            <Pressable onPress={handleHelpPress} style={styles.helpBtn} hitSlop={8}>
+              <MaterialIcons name="help-outline" size={22} color={colors.mutedForeground} />
+            </Pressable>
+            <Pressable
+              onPress={() => setShowStreakInfo(true)}
+              style={[
+                styles.streakBadge,
+                { backgroundColor: colors.card, borderColor: colors.border },
+              ]}
+            >
+              <MaterialIcons name="local-fire-department" size={20} color="#FF6B35" />
+              <Text style={[styles.streakText, { color: colors.foreground }]}>
+                {profile.currentStreak}
+              </Text>
+            </Pressable>
+          </View>
+        </View>
+        <ScrollView
+          style={{ flex: 1 }}
+          contentContainerStyle={[
+            styles.content,
+            {
+              paddingTop: 8,
+              paddingBottom: Platform.OS === "web" ? 34 + 80 : insets.bottom + 80,
+            },
+          ]}
+          showsVerticalScrollIndicator={false}
+        >
         <Animated.View entering={FadeInDown.delay(100).springify()}>
           <Pressable
             onPress={handleDailyPlay}
@@ -570,6 +567,7 @@ export default function HomeScreen() {
           </View>
         </Animated.View>
       </ScrollView>
+      </View>
     </>
   );
 }

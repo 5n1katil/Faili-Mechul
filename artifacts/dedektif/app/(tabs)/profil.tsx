@@ -164,12 +164,13 @@ export default function ProfilScreen() {
         closeLabel="Kapat"
       />
       <PaywallModal visible={showPaywall} onClose={() => setShowPaywall(false)} />
+      <View style={[styles.container, { backgroundColor: colors.background, paddingTop: Platform.OS === "web" ? 67 : insets.top }]}>
       <ScrollView
-        style={[styles.container, { backgroundColor: colors.background }]}
+        style={{ flex: 1 }}
         contentContainerStyle={[
           styles.content,
           {
-            paddingTop: Platform.OS === "web" ? 67 + 16 : insets.top + 16,
+            paddingTop: 16,
             paddingBottom: Platform.OS === "web" ? 34 + 80 : insets.bottom + 80,
           },
         ]}
@@ -510,6 +511,7 @@ export default function ProfilScreen() {
           </Animated.View>
         )}
       </ScrollView>
+      </View>
     </>
   );
 }

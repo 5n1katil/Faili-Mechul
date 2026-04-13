@@ -416,35 +416,32 @@ export default function GorevlerScreen() {
   };
 
   return (
-    <ScrollView
-      style={[styles.container, { backgroundColor: colors.background }]}
-      contentContainerStyle={[
-        styles.content,
-        {
-          paddingTop: Platform.OS === "web" ? 67 + 16 : insets.top + 16,
-          paddingBottom: Platform.OS === "web" ? 34 + 80 : insets.bottom + 80,
-        },
-      ]}
-      showsVerticalScrollIndicator={false}
-    >
-      <Animated.View entering={FadeInDown.delay(0).springify()}>
-        <View style={styles.pageHeader}>
-          <View>
-            <Text style={[styles.pageTitle, { color: colors.foreground }]}>
-              Görevler
-            </Text>
-            <Text style={[styles.pageSubtitle, { color: colors.mutedForeground }]}>
-              Görevleri tamamla, bonus puan kazan
-            </Text>
-          </View>
-          {claimableCount > 0 && (
-            <View style={[styles.newBadge, { backgroundColor: colors.primary }]}>
-              <Text style={styles.newBadgeText}>{claimableCount} bekliyor</Text>
-            </View>
-          )}
+    <View style={[styles.container, { backgroundColor: colors.background, paddingTop: Platform.OS === "web" ? 67 : insets.top }]}>
+      <View style={[styles.pageHeader, { paddingHorizontal: 16, paddingVertical: 12 }]}>
+        <View>
+          <Text style={[styles.pageTitle, { color: colors.foreground }]}>
+            Görevler
+          </Text>
+          <Text style={[styles.pageSubtitle, { color: colors.mutedForeground }]}>
+            Görevleri tamamla, bonus puan kazan
+          </Text>
         </View>
-      </Animated.View>
-
+        {claimableCount > 0 && (
+          <View style={[styles.newBadge, { backgroundColor: colors.primary }]}>
+            <Text style={styles.newBadgeText}>{claimableCount} bekliyor</Text>
+          </View>
+        )}
+      </View>
+      <ScrollView
+        style={{ flex: 1 }}
+        contentContainerStyle={[
+          styles.content,
+          {
+            paddingBottom: Platform.OS === "web" ? 34 + 80 : insets.bottom + 80,
+          },
+        ]}
+        showsVerticalScrollIndicator={false}
+      >
       <Animated.View entering={FadeInDown.delay(30).springify()}>
         <CollectAllButton />
       </Animated.View>
@@ -542,7 +539,8 @@ export default function GorevlerScreen() {
           )}
         </View>
       </Animated.View>
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 }
 
