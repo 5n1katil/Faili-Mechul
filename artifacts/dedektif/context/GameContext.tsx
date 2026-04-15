@@ -436,6 +436,24 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
           newOwners[k] = [...v];
         }
 
+        const isRestoringAutoCross =
+          prev.gridState[key] === "question" &&
+          mark === "none" &&
+          newOwners[key] != null &&
+          newOwners[key].length > 0;
+
+        if (isRestoringAutoCross) {
+          newGrid[key] = "cross";
+          const nextState = {
+            ...prev,
+            gridState: newGrid,
+            autoCrossGroups: newGroups,
+            autoCrossOwners: newOwners,
+          };
+          saveDraft(nextState);
+          return nextState;
+        }
+
         if (newOwners[key] && newOwners[key].length > 0) {
           for (const ownerKey of newOwners[key]) {
             if (newGroups[ownerKey]) {
