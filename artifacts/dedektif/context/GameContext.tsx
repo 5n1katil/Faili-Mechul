@@ -436,6 +436,15 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
           newOwners[k] = [...v];
         }
 
+        if (newOwners[key] && newOwners[key].length > 0) {
+          for (const ownerKey of newOwners[key]) {
+            if (newGroups[ownerKey]) {
+              newGroups[ownerKey] = newGroups[ownerKey].filter((k) => k !== key);
+            }
+          }
+          delete newOwners[key];
+        }
+
         if (prev.gridState[key] === "check" && newGroups[key]) {
           for (const k of newGroups[key]) {
             const owners = newOwners[k] ? newOwners[k].filter((o) => o !== key) : [];
@@ -464,7 +473,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
           for (const k of [...sameRow, ...sameCol]) {
             const current = newGrid[k];
             const isAlreadyAutoCrossed = newOwners[k] && newOwners[k].length > 0;
-            if (!current || current === "none" || current === "question") {
+            if (!current || current === "none") {
               newGrid[k] = "cross";
               autoCrossed.push(k);
               newOwners[k] = [key];
