@@ -106,7 +106,7 @@ function GridCell({
   const iconSize = Math.max(10, Math.floor(cellSize * 0.46));
 
   return (
-    <Pressable onPress={handlePress} disabled={disabled}>
+    <Pressable testID="grid-cell" onPress={handlePress} disabled={disabled}>
       <Animated.View
         style={[
           {

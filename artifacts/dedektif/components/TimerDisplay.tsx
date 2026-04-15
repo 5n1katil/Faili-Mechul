@@ -105,7 +105,7 @@ export default function TimerDisplay({ seconds, wrongGuesses, penaltyCount }: Pr
       <View style={styles.timerSection}>
         <Animated.View style={[styles.item, timerItemStyle]}>
           <MaterialIcons name="timer" size={16} color={colors.primary} />
-          <Text style={[styles.timerValue, { color: colors.foreground }]}>
+          <Text testID="timer-value" style={[styles.timerValue, { color: colors.foreground }]}>
             {formatTime(seconds)}
           </Text>
         </Animated.View>
@@ -117,7 +117,7 @@ export default function TimerDisplay({ seconds, wrongGuesses, penaltyCount }: Pr
       <View style={styles.rightSection}>
         <View style={styles.penaltyInner}>
           <MaterialIcons name="gavel" size={16} color={penaltyColor} />
-          <Text style={[styles.wrongValue, { color: penaltyColor }]}>
+          <Text testID="hata-count" style={[styles.wrongValue, { color: penaltyColor }]}>
             {wrongGuesses}
           </Text>
         </View>
