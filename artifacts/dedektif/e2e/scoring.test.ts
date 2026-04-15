@@ -47,7 +47,7 @@ test.describe("Scoring system", () => {
       bonusCluesRevealedCount: number,
       difficulty: "caylik" | "dedektif" | "baskomiser"
     ) => {
-      const rawScore = 10000 - timeElapsed * 5 - wrongGuesses * 150 - bonusCluesRevealedCount * 150;
+      const rawScore = 10000 - timeElapsed * 10 - wrongGuesses * 500 - bonusCluesRevealedCount * 300;
       const bonus = difficulty === "dedektif" ? 2000 : difficulty === "baskomiser" ? 5000 : 0;
       return Math.max(100, rawScore) + bonus;
     };
@@ -58,14 +58,14 @@ test.describe("Scoring system", () => {
     expect(computeScore(10, 0, 0, "baskomiser")).toBeGreaterThan(13000);
   });
 
-  test("scoring: wrong guess and bonus clue each cost 150 pts + 30s time", async ({ page: _page }) => {
+  test("scoring: wrong guess costs 500 pts + 30s, bonus clue costs 300 pts + 30s", async ({ page: _page }) => {
     const computeScore = (
       timeElapsed: number,
       wrongGuesses: number,
       bonusCluesRevealedCount: number,
       difficulty: "caylik" | "dedektif" | "baskomiser"
     ) => {
-      const rawScore = 10000 - timeElapsed * 5 - wrongGuesses * 150 - bonusCluesRevealedCount * 150;
+      const rawScore = 10000 - timeElapsed * 10 - wrongGuesses * 500 - bonusCluesRevealedCount * 300;
       const bonus = difficulty === "dedektif" ? 2000 : difficulty === "baskomiser" ? 5000 : 0;
       return Math.max(100, rawScore) + bonus;
     };
@@ -74,7 +74,7 @@ test.describe("Scoring system", () => {
     const withWrongGuess = computeScore(60 + 30, 1, 0, "caylik");
     const withBonusClue = computeScore(60 + 30, 0, 1, "caylik");
 
-    expect(baseScore - withWrongGuess).toBe(150 + 30 * 5);
-    expect(baseScore - withBonusClue).toBe(150 + 30 * 5);
+    expect(baseScore - withWrongGuess).toBe(500 + 30 * 10);
+    expect(baseScore - withBonusClue).toBe(300 + 30 * 10);
   });
 });
