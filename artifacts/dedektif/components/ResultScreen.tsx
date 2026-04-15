@@ -238,9 +238,9 @@ function ScoreBreakdownCard({
   onShowInfo: () => void;
 }) {
   const colors = useColors();
-  const timePenalty = timeSeconds * 5;
-  const wrongPenalty = wrongGuesses * 150;
-  const bonusPenalty = bonusCluesRevealedCount * 150;
+  const timePenalty = timeSeconds * 10;
+  const wrongPenalty = wrongGuesses * 500;
+  const bonusPenalty = bonusCluesRevealedCount * 300;
   let difficultyBonus = 0;
   if (difficulty === "dedektif") difficultyBonus = 2000;
   if (difficulty === "baskomiser") difficultyBonus = 5000;
@@ -248,12 +248,12 @@ function ScoreBreakdownCard({
 
   const rows = [
     { label: "Baz Puan", value: "+10.000", color: colors.primary, icon: "stars" as const },
-    { label: `Süre (${formatTime(timeSeconds)} × 5)`, value: `-${timePenalty.toLocaleString("tr-TR")}`, color: "#C8372D", icon: "timer" as const },
+    { label: `Süre (${formatTime(timeSeconds)} × 10)`, value: `-${timePenalty.toLocaleString("tr-TR")}`, color: "#C8372D", icon: "timer" as const },
     ...(wrongGuesses > 0
-      ? [{ label: `Yanlış (${wrongGuesses} × 150)`, value: `-${wrongPenalty.toLocaleString("tr-TR")}`, color: "#C8372D", icon: "gavel" as const }]
+      ? [{ label: `Yanlış (${wrongGuesses} × 500)`, value: `-${wrongPenalty.toLocaleString("tr-TR")}`, color: "#C8372D", icon: "gavel" as const }]
       : []),
     ...(bonusCluesRevealedCount > 0
-      ? [{ label: `Ek İpucu (${bonusCluesRevealedCount} × 150)`, value: `-${bonusPenalty.toLocaleString("tr-TR")}`, color: "#f97316", icon: "lock-open" as const }]
+      ? [{ label: `Ek İpucu (${bonusCluesRevealedCount} × 300)`, value: `-${bonusPenalty.toLocaleString("tr-TR")}`, color: "#f97316", icon: "lock-open" as const }]
       : []),
     ...(difficultyBonus > 0
       ? [{ label: "Zorluk Bonusu", value: `+${difficultyBonus.toLocaleString("tr-TR")}`, color: "#4ade80", icon: "upgrade" as const }]

@@ -197,7 +197,7 @@ function computeScore(
   difficulty: string,
   currentStreak: number = 0
 ): number {
-  const rawScore = 10000 - timeElapsed * 5 - wrongGuesses * 150 - bonusCluesRevealedCount * 150;
+  const rawScore = 10000 - timeElapsed * 10 - wrongGuesses * 500 - bonusCluesRevealedCount * 300;
   let difficultyBonus = 0;
   if (difficulty === "dedektif") difficultyBonus = 2000;
   if (difficulty === "baskomiser") difficultyBonus = 5000;

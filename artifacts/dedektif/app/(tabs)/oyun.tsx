@@ -511,7 +511,7 @@ export default function VakalarScreen() {
         : profile.lastPlayedDate === yesterday
         ? profile.currentStreak + 1
         : 1;
-    const rawScore = 10000 - currentTime * 5 - currentWrong * 150 - currentBonus * 150;
+    const rawScore = 10000 - currentTime * 10 - currentWrong * 500 - currentBonus * 300;
     const diffBonus = diff === "baskomiser" ? 5000 : diff === "dedektif" ? 2000 : 0;
     const streakBonus = Math.min(estimatedStreak * 50, 500);
     const estimatedScore = Math.max(100, rawScore) + diffBonus + streakBonus;
