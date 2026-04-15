@@ -831,7 +831,7 @@ export default function VakalarScreen() {
     : null;
 
   return (
-    <View style={[gameStyles.container, { backgroundColor: colors.background }]}>
+    <View style={[gameStyles.container, { backgroundColor: colors.background, paddingTop: Platform.OS === "web" ? 67 : insets.top }]}>
       {showResult && (
         <ResultScreen
           puzzle={puzzle}
@@ -872,7 +872,7 @@ export default function VakalarScreen() {
         contentContainerStyle={[
           gameStyles.content,
           {
-            paddingTop: Platform.OS === "web" ? 67 + 12 : insets.top + 12,
+            paddingTop: 12,
             paddingBottom: Platform.OS === "web" ? 34 + 148 : insets.bottom + 148,
           },
         ]}
