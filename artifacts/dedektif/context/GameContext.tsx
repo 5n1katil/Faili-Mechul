@@ -436,22 +436,29 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
           newOwners[k] = [...v];
         }
 
-        const isRestoringAutoCross =
-          prev.gridState[key] === "question" &&
-          mark === "none" &&
-          newOwners[key] != null &&
-          newOwners[key].length > 0;
-
-        if (isRestoringAutoCross) {
-          newGrid[key] = "cross";
-          const nextState = {
-            ...prev,
-            gridState: newGrid,
-            autoCrossGroups: newGroups,
-            autoCrossOwners: newOwners,
-          };
-          saveDraft(nextState);
-          return nextState;
+        if (prev.gridState[key] === "question" && mark === "none") {
+          const sameRow = getSameRowKeys(rowId, colId, suspects, weapons, locations);
+          const sameCol = getSameColKeys(colId, rowId, suspects, weapons, locations);
+          const checkOwners: string[] = [];
+          for (const k of [...sameRow, ...sameCol]) {
+            if (newGrid[k] === "check") checkOwners.push(k);
+          }
+          if (checkOwners.length > 0) {
+            newGrid[key] = "cross";
+            newOwners[key] = checkOwners;
+            for (const ck of checkOwners) {
+              if (!newGroups[ck]) newGroups[ck] = [];
+              if (!newGroups[ck].includes(key)) newGroups[ck] = [...newGroups[ck], key];
+            }
+            const nextState = {
+              ...prev,
+              gridState: newGrid,
+              autoCrossGroups: newGroups,
+              autoCrossOwners: newOwners,
+            };
+            saveDraft(nextState);
+            return nextState;
+          }
         }
 
         if (newOwners[key] && newOwners[key].length > 0) {
