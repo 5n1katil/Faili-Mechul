@@ -462,6 +462,12 @@ export default function VakalarScreen() {
     resetCurrentGame();
   };
 
+  const handleGoHome = () => {
+    setShowResult(false);
+    resetCurrentGame();
+    router.replace("/(tabs)/index");
+  };
+
   const handleBackPress = () => {
     if (gameState && !gameState.isComplete && gameState.timerActive) {
       setShowExitConfirm(true);
@@ -847,7 +853,7 @@ export default function VakalarScreen() {
           currentStreak={gameState.appliedStreak ?? profile.currentStreak}
           isRanked={isRanked}
           onPlayMore={handleBackToList}
-          onClose={handleBackToList}
+          onClose={handleGoHome}
         />
       )}
 
