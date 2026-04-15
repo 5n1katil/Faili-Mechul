@@ -1,6 +1,20 @@
+/**
+ * gameplay-flow.test.ts
+ * End-to-end gameplay flow tests for Dedektif (Playwright / React Native Web).
+ *
+ * Key patterns:
+ * - Navigate directly to /oyun (tab clicks are unreliable in RNW)
+ * - Expand Çaylak difficulty accordion before selecting a puzzle
+ * - Use page.evaluate DOM click for React Native Pressable elements
+ * - "SON ÇIKARIM" text triggers AccusationSheet
+ * - p001 solution: Rıfat Bey / Bıçak / Mutfak
+ */
+
 import { test, expect, Page } from "@playwright/test";
 
 const BASE = process.env.BASE_URL || "http://localhost:22971";
+
+/* ── Helpers ──────────────────────────────────────────────────────────────── */
 
 async function loadApp(page: Page) {
   await page.goto(BASE, { waitUntil: "domcontentloaded", timeout: 20000 });
@@ -13,273 +27,356 @@ async function loadApp(page: Page) {
 }
 
 async function goToVakalar(page: Page) {
-  await page.goto(`${BASE}/oyun`, { waitUntil: "domcontentloaded", timeout: 15000 });
+  await page.goto(`${BASE}/oyun`, {
+    waitUntil: "domcontentloaded",
+    timeout: 15000,
+  });
   await page.waitForTimeout(1500);
 }
 
-async function expandFirstDifficulty(page: Page): Promise<boolean> {
-  for (const diff of ["Çaylak", "Dedektif", "Baş Komiser"]) {
+/**
+ * Expands the first visible difficulty accordion and verifies puzzle cards appear.
+ * Throws if no accordion can be expanded — hard failure, not a skip.
+ */
+async function expandFirstDifficulty(page: Page): Promise<void> {
+  const diffHeaders = ["Çaylak", "Dedektif", "Baş Komiser"];
+  for (const diff of diffHeaders) {
     const header = page.getByText(diff, { exact: false }).first();
-    if (await header.isVisible({ timeout: 2000 }).catch(() => false)) {
-      await header.click({ force: true });
-      await page.waitForTimeout(800);
-      const content = await page.content();
-      if (content.includes("Cinayeti") || content.includes("Kayıp") || content.includes("Gizemli")) {
-        return true;
-      }
+    if (!(await header.isVisible({ timeout: 2000 }).catch(() => false)))
+      continue;
+    await header.click({ force: true });
+    await page.waitForTimeout(800);
+    const content = await page.content();
+    if (
+      content.includes("Cinayeti") ||
+      content.includes("Kayıp") ||
+      content.includes("Gizemli")
+    ) {
+      return;
     }
   }
-  return false;
+  throw new Error(
+    "Could not expand any difficulty accordion to reveal puzzle cards"
+  );
 }
 
-async function startP001(page: Page): Promise<boolean> {
-  const p001 = page.getByText("Konakta Gece Yarısı Cinayeti").first();
-  if (!(await p001.isVisible({ timeout: 3000 }).catch(() => false))) return false;
-  await p001.click({ force: true });
+/**
+ * Opens the first visible puzzle card and starts the game.
+ * Throws if the puzzle card or start button cannot be found.
+ */
+async function startFirstPuzzle(page: Page): Promise<void> {
+  const card = page
+    .getByText(/cinayeti|kayıp|gizemli/i)
+    .first();
+  await expect(card).toBeVisible({ timeout: 5000 });
+  await card.click({ force: true });
   await page.waitForTimeout(800);
+
   const basla = page.getByText(/başla|oyna/i).first();
-  if (!(await basla.isVisible({ timeout: 5000 }).catch(() => false))) return false;
+  await expect(basla).toBeVisible({
+    timeout: 6000,
+  });
   await basla.click({ force: true });
   await page.waitForTimeout(1500);
-  return true;
 }
 
+/**
+ * Opens "Konakta Gece Yarısı Cinayeti" (p001) under Çaylak and starts it.
+ * Throws if the card or start button is not found.
+ */
+async function startP001(page: Page): Promise<void> {
+  const p001 = page.getByText("Konakta Gece Yarısı Cinayeti").first();
+  await expect(p001).toBeVisible({ timeout: 5000 });
+  await p001.click({ force: true });
+  await page.waitForTimeout(800);
+
+  const basla = page.getByText(/başla|oyna/i).first();
+  await expect(basla).toBeVisible({ timeout: 6000 });
+  await basla.click({ force: true });
+  await page.waitForTimeout(1500);
+}
+
+/**
+ * Clicks a React Native Pressable identified by its exact text content.
+ * Works around RNW Pressable not responding to Playwright click.
+ */
 async function rnClick(page: Page, exactText: string) {
   await page.evaluate((text) => {
     for (const el of Array.from(document.querySelectorAll("*"))) {
       if (el.textContent === text) {
-        let p = el.parentElement;
+        let p: Element | null = el.parentElement;
         while (p && !p.hasAttribute("tabindex")) p = p.parentElement;
-        if (p) { (p as HTMLElement).click(); return; }
+        if (p) {
+          (p as HTMLElement).click();
+          return;
+        }
       }
     }
   }, exactText);
   await page.waitForTimeout(400);
 }
 
+/**
+ * Cycles the first small (grid-sized) empty-text pressable 3 times so it
+ * reaches the "?" mark state (cycle: empty→cross→check→question).
+ * Returns true if a candidate cell was found and clicked.
+ */
 async function cycleFirstGridCellToQuestion(page: Page): Promise<boolean> {
-  const result = await page.evaluate(() => {
-    const allTabEls = Array.from(document.querySelectorAll('[tabindex="0"]')) as HTMLElement[];
-    let candidate: HTMLElement | null = null;
+  const found = await page.evaluate(() => {
+    const allTabEls = Array.from(
+      document.querySelectorAll('[tabindex="0"]')
+    ) as HTMLElement[];
+    let cell: HTMLElement | null = null;
     for (const el of allTabEls) {
-      const text = el.innerText.trim();
-      if (!text) {
-        const rect = el.getBoundingClientRect();
-        if (rect.width > 10 && rect.width < 60 && rect.height > 10 && rect.height < 60) {
-          candidate = el;
-          break;
-        }
+      if (el.innerText.trim()) continue;
+      const { width, height } = el.getBoundingClientRect();
+      if (width > 10 && width < 60 && height > 10 && height < 60) {
+        cell = el;
+        break;
       }
     }
-    if (!candidate) return false;
-    candidate.click();
-    setTimeout(() => { if (candidate) { candidate.click(); } }, 200);
-    setTimeout(() => { if (candidate) { candidate.click(); } }, 400);
+    if (!cell) return false;
+    cell.click();
+    setTimeout(() => cell!.click(), 200);
+    setTimeout(() => cell!.click(), 400);
     return true;
   });
   await page.waitForTimeout(700);
-  return result;
+  return found;
 }
 
 /**
- * Test 1 (unit): Score formula — wrong guess costs 150pts + 30s, min >= 100
+ * Reads the current displayed timer value (MM:SS before "SÜRE" label) and
+ * returns it as total seconds.  Returns -1 if the timer cannot be found.
  */
-test("Score formula: wrong guess 150pts + 30s, min score >= 100, streak capped at 500", async ({ page: _page }) => {
-  const computeScore = (
-    timeElapsed: number,
-    wrongGuesses: number,
-    bonusClues: number,
-    difficulty: "caylik" | "dedektif" | "baskomiser",
-    streak: number
-  ) => {
-    const rawScore = 10000 - timeElapsed * 5 - wrongGuesses * 150 - bonusClues * 150;
-    const diffBonus = difficulty === "dedektif" ? 2000 : difficulty === "baskomiser" ? 5000 : 0;
-    const streakBonus = Math.min(streak * 50, 500);
-    return Math.max(100, rawScore) + diffBonus + streakBonus;
-  };
-
-  const baseScore = computeScore(60, 0, 0, "caylik", 1);
-  const withWrong = computeScore(60 + 30, 1, 0, "caylik", 1);
-  expect(baseScore - withWrong).toBe(150 + 30 * 5);
-
-  expect(computeScore(600, 5, 2, "caylik", 1)).toBeGreaterThanOrEqual(100);
-  expect(computeScore(10, 0, 0, "dedektif", 1)).toBeGreaterThan(10000);
-  expect(computeScore(10, 0, 0, "baskomiser", 1)).toBeGreaterThan(13000);
-
-  const cappedStreak = computeScore(60, 0, 0, "caylik", 20);
-  const maxStreakBonus = computeScore(60, 0, 0, "caylik", 10);
-  expect(cappedStreak).toBe(maxStreakBonus);
-});
-
-/**
- * Test 2: Vakalar screen loads with difficulty headers visible
- */
-test("Vakalar screen loads and shows difficulty category headers", async ({ page }) => {
-  await loadApp(page);
-  await goToVakalar(page);
-
-  await expect(page.getByText(/standart|aktif vakalar/i).first()).toBeVisible({ timeout: 8000 });
-  await expect(page.getByText(/çaylak|dedektif/i).first()).toBeVisible({ timeout: 5000 });
-});
-
-/**
- * Test 3: Expand accordion → puzzle cards visible → game starts → timer/grid shown
- */
-test("Expanding difficulty accordion reveals puzzles; game starts with timer and grid", async ({ page }) => {
-  await loadApp(page);
-  await goToVakalar(page);
-
-  await expect(page.getByText(/çaylak|dedektif/i).first()).toBeVisible({ timeout: 8000 });
-  if (!(await expandFirstDifficulty(page))) { test.skip(); return; }
-
-  const puzzleCard = page.getByText(/cinayeti|kayıp|gizemli/i).first();
-  await expect(puzzleCard).toBeVisible({ timeout: 5000 });
-  await puzzleCard.click({ force: true });
-  await page.waitForTimeout(800);
-
-  const basla = page.getByText(/başla|oyna/i).first();
-  await expect(basla).toBeVisible({ timeout: 6000 });
-  await basla.click({ force: true });
-  await page.waitForTimeout(1500);
-
+async function getDisplayedTimerSeconds(page: Page): Promise<number> {
   const content = await page.content();
-  const hasTimer = content.includes("00:") || content.includes("SÜRE");
-  const hasGrid = content.includes("ŞÜPHELILER") || content.includes("SİLAHLAR");
-  expect(hasTimer).toBe(true);
-  expect(hasGrid).toBe(true);
-});
+  const sureIdx = content.indexOf(">SÜRE<");
+  if (sureIdx < 0) return -1;
+  const before = content.slice(Math.max(0, sureIdx - 300), sureIdx);
+  const match = before.match(/>(\d{2}):(\d{2})</);
+  if (!match) return -1;
+  return parseInt(match[1]) * 60 + parseInt(match[2]);
+}
+
+/* ── Tests ────────────────────────────────────────────────────────────────── */
 
 /**
- * Test 4: Grid cell can be marked (cycling empty → ?)
- * Verifies the deduction grid is interactive and cell state changes on press.
+ * Test 1: Vakalar screen loads with difficulty category headers
  */
-test("Grid cell marking: tapping an empty cell produces a mark indicator", async ({ page }) => {
+test("Vakalar screen loads and shows difficulty category headers", async ({
+  page,
+}) => {
   await loadApp(page);
   await goToVakalar(page);
 
-  await expect(page.getByText(/çaylak|dedektif/i).first()).toBeVisible({ timeout: 8000 });
-  if (!(await expandFirstDifficulty(page))) { test.skip(); return; }
-
-  const puzzleCard = page.getByText(/cinayeti|kayıp|gizemli/i).first();
-  await puzzleCard.click({ force: true });
-  await page.waitForTimeout(800);
-
-  const basla = page.getByText(/başla|oyna/i).first();
-  await expect(basla).toBeVisible({ timeout: 6000 });
-  await basla.click({ force: true });
-  await page.waitForTimeout(1500);
-
-  await expect(page.getByText("ŞÜPHELILER").first()).toBeVisible({ timeout: 5000 });
-
-  const contentBefore = await page.content();
-  const qMarkBefore = (contentBefore.match(/\?/g) || []).length;
-
-  const cycled = await cycleFirstGridCellToQuestion(page);
-  expect(cycled).toBe(true);
-
-  const contentAfter = await page.content();
-  const qMarkAfter = (contentAfter.match(/\?/g) || []).length;
-
-  expect(qMarkAfter).toBeGreaterThan(qMarkBefore);
+  await expect(
+    page.getByText(/standart|aktif vakalar/i).first()
+  ).toBeVisible({ timeout: 8000 });
+  await expect(page.getByText(/çaylak|dedektif/i).first()).toBeVisible({
+    timeout: 5000,
+  });
 });
 
 /**
- * Test 5: AccusationSheet opens with all three dropdowns visible
+ * Test 2: Expand accordion → puzzle cards appear → game starts with timer/grid
  */
-test("SON ÇIKARIM bar opens AccusationSheet with KİM/NEREDE/NEYLE dropdowns", async ({ page }) => {
-  await loadApp(page);
-  await goToVakalar(page);
+test(
+  "Expanding difficulty accordion reveals puzzles; game starts with visible timer and deduction grid",
+  async ({ page }) => {
+    await loadApp(page);
+    await goToVakalar(page);
 
-  await expect(page.getByText(/çaylak|dedektif/i).first()).toBeVisible({ timeout: 8000 });
-  if (!(await expandFirstDifficulty(page))) { test.skip(); return; }
+    await expect(page.getByText(/çaylak|dedektif/i).first()).toBeVisible({
+      timeout: 8000,
+    });
 
-  const puzzleCard = page.getByText(/cinayeti|kayıp|gizemli/i).first();
-  await puzzleCard.click({ force: true });
-  await page.waitForTimeout(800);
-  await (async () => {
-    const basla = page.getByText(/başla|oyna/i).first();
-    await expect(basla).toBeVisible({ timeout: 6000 });
-    await basla.click({ force: true });
-    await page.waitForTimeout(1500);
-  })();
+    await expandFirstDifficulty(page);
+    await startFirstPuzzle(page);
 
-  await expect(page.getByText("SON ÇIKARIM").first()).toBeVisible({ timeout: 8000 });
-  await rnClick(page, "SON ÇIKARIM");
-
-  await expect(page.getByText("Son Çıkarım").first()).toBeVisible({ timeout: 5000 });
-  await expect(page.getByText("KİM").first()).toBeVisible({ timeout: 3000 });
-  await expect(page.getByText("NEREDE").first()).toBeVisible({ timeout: 3000 });
-  await expect(page.getByText("NEYLE").first()).toBeVisible({ timeout: 3000 });
-  await expect(page.getByText("Raporu Gönder").first()).toBeVisible({ timeout: 3000 });
-});
+    const content = await page.content();
+    const hasTimer = content.includes("00:") || content.includes("SÜRE");
+    const hasGrid =
+      content.includes("ŞÜPHELILER") || content.includes("SİLAHLAR");
+    expect(hasTimer).toBe(true);
+    expect(hasGrid).toBe(true);
+  }
+);
 
 /**
- * Test 6: Full p001 accusation flow
- *   - Wrong accusation: HATA counter increments 0→1, error toast visible
- *   - Correct accusation: ResultScreen "VAKA ÇÖZÜLDÜ" with score (puan)
- *   - Post-result: "Başka Bulmaca" button navigates back to puzzle list
+ * Test 3: Grid cell interaction — cycling an empty cell 3× produces the "?" mark
+ */
+test(
+  "Grid cell marking: cycling an empty cell three times produces a '?' indicator",
+  async ({ page }) => {
+    await loadApp(page);
+    await goToVakalar(page);
+
+    await expect(page.getByText(/çaylak|dedektif/i).first()).toBeVisible({
+      timeout: 8000,
+    });
+
+    await expandFirstDifficulty(page);
+    await startFirstPuzzle(page);
+
+    await expect(page.getByText("ŞÜPHELILER").first()).toBeVisible({
+      timeout: 5000,
+    });
+
+    const contentBefore = await page.content();
+    const qBefore = (contentBefore.match(/\?/g) || []).length;
+
+    const cycled = await cycleFirstGridCellToQuestion(page);
+    expect(cycled).toBe(true);
+
+    const contentAfter = await page.content();
+    const qAfter = (contentAfter.match(/\?/g) || []).length;
+
+    expect(qAfter).toBeGreaterThan(qBefore);
+  }
+);
+
+/**
+ * Test 4: AccusationSheet opens from StickyAccuseBar and shows all three dropdowns
+ */
+test(
+  "SON ÇIKARIM bar opens AccusationSheet with KİM / NEREDE / NEYLE dropdowns",
+  async ({ page }) => {
+    await loadApp(page);
+    await goToVakalar(page);
+
+    await expect(page.getByText(/çaylak|dedektif/i).first()).toBeVisible({
+      timeout: 8000,
+    });
+
+    await expandFirstDifficulty(page);
+    await startFirstPuzzle(page);
+
+    await expect(page.getByText("SON ÇIKARIM").first()).toBeVisible({
+      timeout: 8000,
+    });
+    await rnClick(page, "SON ÇIKARIM");
+
+    await expect(page.getByText("Son Çıkarım").first()).toBeVisible({
+      timeout: 5000,
+    });
+    await expect(page.getByText("KİM").first()).toBeVisible({ timeout: 3000 });
+    await expect(page.getByText("NEREDE").first()).toBeVisible({
+      timeout: 3000,
+    });
+    await expect(page.getByText("NEYLE").first()).toBeVisible({ timeout: 3000 });
+    await expect(page.getByText("Raporu Gönder").first()).toBeVisible({
+      timeout: 3000,
+    });
+  }
+);
+
+/**
+ * Test 5 (full p001 flow):
+ *   a. Wrong accusation: timer jumps +30s, HATA counter increments 0→1
+ *   b. Correct accusation: ResultScreen shows "VAKA ÇÖZÜLDÜ" with score
+ *   c. Post-result: "Başka Bulmaca" navigates back to puzzle list
  *
  * p001 solution: Rıfat Bey / Bıçak / Mutfak
  */
-test("p001: wrong accusation increments HATA + shows toast; correct accusation shows result + return to list", async ({ page }) => {
-  await loadApp(page);
-  await goToVakalar(page);
+test(
+  "p001: wrong accusation adds 30s to timer and increments HATA; correct accusation shows result; Başka Bulmaca returns to list",
+  async ({ page }) => {
+    await loadApp(page);
+    await goToVakalar(page);
 
-  await expect(page.getByText(/çaylak|dedektif/i).first()).toBeVisible({ timeout: 8000 });
-  if (!(await expandFirstDifficulty(page))) { test.skip(); return; }
-  if (!(await startP001(page))) { test.skip(); return; }
+    await expect(page.getByText(/çaylak|dedektif/i).first()).toBeVisible({
+      timeout: 8000,
+    });
 
-  await expect(page.getByText("SON ÇIKARIM").first()).toBeVisible({ timeout: 8000 });
+    await expandFirstDifficulty(page);
+    await startP001(page);
 
-  const contentStart = await page.content();
-  const hataIdx = contentStart.indexOf(">HATA<");
-  expect(hataIdx).toBeGreaterThan(0);
-  const beforeHata = contentStart.slice(Math.max(0, hataIdx - 400), hataIdx);
-  expect(beforeHata).toContain(">0<");
+    await expect(page.getByText("SON ÇIKARIM").first()).toBeVisible({
+      timeout: 8000,
+    });
 
-  await rnClick(page, "SON ÇIKARIM");
-  await expect(page.getByText("Son Çıkarım").first()).toBeVisible({ timeout: 5000 });
+    // --- Verify initial HATA counter is 0 ---
+    const contentStart = await page.content();
+    const hataIdx = contentStart.indexOf(">HATA<");
+    expect(hataIdx).toBeGreaterThan(
+      0,
+      "HATA counter label must be visible on game screen"
+    );
+    const nearHata0 = contentStart.slice(Math.max(0, hataIdx - 400), hataIdx);
+    expect(nearHata0).toContain(">0<");
 
-  await rnClick(page, "KİM");
-  await rnClick(page, "Nazik Hanım");
-  await rnClick(page, "NEREDE");
-  await rnClick(page, "Kütüphane");
-  await rnClick(page, "NEYLE");
-  await rnClick(page, "Zehir");
+    // --- Capture timer before wrong accusation ---
+    const timerBefore = await getDisplayedTimerSeconds(page);
+    expect(timerBefore).toBeGreaterThanOrEqual(0);
 
-  await rnClick(page, "Raporu Gönder");
-  await page.waitForTimeout(600);
+    // --- Submit wrong accusation ---
+    await rnClick(page, "SON ÇIKARIM");
+    await expect(page.getByText("Son Çıkarım").first()).toBeVisible({
+      timeout: 5000,
+    });
 
-  const toast = page.getByText(/yanlış suçlama|30 saniye/i).first();
-  await expect(toast).toBeVisible({ timeout: 4000 });
+    await rnClick(page, "KİM");
+    await rnClick(page, "Nazik Hanım");
+    await rnClick(page, "NEREDE");
+    await rnClick(page, "Kütüphane");
+    await rnClick(page, "NEYLE");
+    await rnClick(page, "Zehir");
 
-  const contentAfterWrong = await page.content();
-  const hataIdx2 = contentAfterWrong.indexOf(">HATA<");
-  const beforeHata2 = contentAfterWrong.slice(Math.max(0, hataIdx2 - 400), hataIdx2);
-  expect(beforeHata2).toContain(">1<");
+    await rnClick(page, "Raporu Gönder");
+    await page.waitForTimeout(600);
 
-  await rnClick(page, "KİM");
-  await rnClick(page, "Rıfat Bey");
-  await rnClick(page, "NEREDE");
-  await rnClick(page, "Mutfak");
-  await rnClick(page, "NEYLE");
-  await rnClick(page, "Bıçak");
+    // Error toast is visible
+    const toast = page.getByText(/yanlış suçlama|30 saniye/i).first();
+    await expect(toast).toBeVisible({ timeout: 4000 });
 
-  await rnClick(page, "Raporu Gönder");
-  await page.waitForTimeout(1500);
+    // --- HATA counter must now show 1 ---
+    const contentWrong = await page.content();
+    const hataIdx2 = contentWrong.indexOf(">HATA<");
+    const nearHata1 = contentWrong.slice(Math.max(0, hataIdx2 - 400), hataIdx2);
+    expect(nearHata1).toContain(">1<");
 
-  await expect(page.getByText(/vaka çözüldü/i).first()).toBeVisible({ timeout: 8000 });
+    // --- Timer must have jumped by at least 30s ---
+    const timerAfter = await getDisplayedTimerSeconds(page);
+    expect(timerAfter).toBeGreaterThanOrEqual(0);
+    expect(timerAfter - timerBefore).toBeGreaterThanOrEqual(
+      28,
+      `Timer should jump ≥30s on wrong accusation (before: ${timerBefore}s, after: ${timerAfter}s)`
+    );
 
-  const content = await page.content();
-  const hasPuan = content.includes("PUAN") || content.includes("puan") || content.includes("Puan");
-  const hasScore = /\d{4,5}/.test(content);
-  expect(hasPuan || hasScore).toBe(true);
+    // --- Submit correct accusation ---
+    await rnClick(page, "KİM");
+    await rnClick(page, "Rıfat Bey");
+    await rnClick(page, "NEREDE");
+    await rnClick(page, "Mutfak");
+    await rnClick(page, "NEYLE");
+    await rnClick(page, "Bıçak");
 
-  const bashkaBulmaca = page.getByText("Başka Bulmaca").first();
-  await expect(bashkaBulmaca).toBeVisible({ timeout: 5000 });
-  await rnClick(page, "Başka Bulmaca");
-  await page.waitForTimeout(1000);
+    await rnClick(page, "Raporu Gönder");
+    await page.waitForTimeout(1500);
 
-  const backOnVakalar = page.getByText(/standart|aktif vakalar|çaylak|dedektif/i).first();
-  await expect(backOnVakalar).toBeVisible({ timeout: 8000 });
-});
+    // ResultScreen is visible with "VAKA ÇÖZÜLDÜ"
+    await expect(page.getByText(/vaka çözüldü/i).first()).toBeVisible({
+      timeout: 8000,
+    });
+
+    // Score (4+ digit number) is displayed
+    const resultContent = await page.content();
+    const hasPuan =
+      resultContent.includes("PUAN") ||
+      resultContent.includes("puan") ||
+      resultContent.includes("Puan");
+    const hasNumericScore = /\d{4,5}/.test(resultContent);
+    expect(hasPuan || hasNumericScore).toBe(true);
+
+    // --- "Başka Bulmaca" navigates back to puzzle list ---
+    const bashkaBulmaca = page.getByText("Başka Bulmaca").first();
+    await expect(bashkaBulmaca).toBeVisible({ timeout: 5000 });
+    await rnClick(page, "Başka Bulmaca");
+    await page.waitForTimeout(1000);
+
+    await expect(
+      page.getByText(/standart|aktif vakalar|çaylak|dedektif/i).first()
+    ).toBeVisible({ timeout: 8000 });
+  }
+);
