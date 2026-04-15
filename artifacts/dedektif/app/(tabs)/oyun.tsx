@@ -18,6 +18,7 @@ if (Platform.OS === "android" && UIManager.setLayoutAnimationEnabledExperimental
 import { MaterialIcons } from "@expo/vector-icons";
 import type { ComponentProps } from "react";
 type MaterialIconName = ComponentProps<typeof MaterialIcons>["name"];
+import { router } from "expo-router";
 import { useFocusEffect } from "@react-navigation/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useColors } from "@/hooks/useColors";
