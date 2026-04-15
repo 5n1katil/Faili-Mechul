@@ -940,6 +940,7 @@ export default function VakalarScreen() {
                 weapons={puzzle.weapons}
                 locations={puzzle.locations}
                 gridState={gridState}
+                autoCrossOwners={gameState.autoCrossOwners}
                 onCellPress={handleCellPress}
                 disabled={gameState.isComplete}
                 onHeaderPress={setSelectedEntity}

@@ -36,6 +36,7 @@ interface Props {
   weapons: Weapon[];
   locations: Location[];
   gridState: { [key: string]: GridMark };
+  autoCrossOwners?: { [key: string]: string[] };
   onCellPress: (key: string, current: GridMark) => void;
   disabled?: boolean;
   onHeaderPress?: (entity: EntityInfo) => void;
@@ -295,6 +296,7 @@ export default function DetectiveGrid({
   weapons,
   locations,
   gridState,
+  autoCrossOwners = {},
   onCellPress,
   disabled,
   onHeaderPress,
@@ -350,13 +352,14 @@ export default function DetectiveGrid({
     colEntities.map((e, i) => {
       const cellKey = mk(rowId, e.id);
       const mark = gridState[cellKey] ?? "none";
+      const isAutoCrossed = (autoCrossOwners[cellKey]?.length ?? 0) > 0;
       return (
         <React.Fragment key={cellKey}>
           {i > 0 && <View style={{ width: 1, backgroundColor: CELL_SEP_COLOR }} />}
           <GridCell
             mark={mark}
             onPress={() => onCellPress(cellKey, cycleNextMark(mark))}
-            disabled={disabled}
+            disabled={disabled || isAutoCrossed}
             cellSize={cellSize}
             isComplete={isComplete}
             glowDelay={checkCellGlowMap[cellKey]}
