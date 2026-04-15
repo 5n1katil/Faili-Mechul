@@ -90,6 +90,7 @@ export default function PuzzleStartModal({ visible, puzzle, isRanked, onStart, o
 
           <View style={styles.buttons}>
             <Pressable
+              testID="start-game-btn"
               onPress={onStart}
               style={({ pressed }) => [
                 styles.startBtn,

@@ -262,6 +262,7 @@ function PuzzleCard({
   return (
     <Animated.View entering={FadeInDown.delay(delay).springify()}>
       <Pressable
+        testID="puzzle-card"
         onPress={onPress}
         style={({ pressed }) => [
           listStyles.puzzleCard,

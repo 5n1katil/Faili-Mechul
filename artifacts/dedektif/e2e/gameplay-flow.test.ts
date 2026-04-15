@@ -22,7 +22,7 @@ async function expandCaylik(page: Page) {
   await expect(header).toBeVisible({ timeout: 8000 });
   await header.click({ force: true });
   await page.waitForTimeout(800);
-  await expect(page.getByText(/cinayeti|kayıp|gizemli/i).first()).toBeVisible({ timeout: 5000 });
+  await expect(page.getByTestId("puzzle-card").first()).toBeVisible({ timeout: 5000 });
 }
 
 async function rnClick(page: Page, text: string) {
@@ -41,7 +41,7 @@ async function rnClick(page: Page, text: string) {
 async function startPuzzle(page: Page, titleText: string) {
   await page.getByText(titleText).first().click({ force: true });
   await page.waitForTimeout(800);
-  const btn = page.getByText(/başla|oyna/i).first();
+  const btn = page.getByTestId("start-game-btn");
   await expect(btn).toBeVisible({ timeout: 6000 });
   await btn.click({ force: true });
   await page.waitForTimeout(1500);
@@ -63,9 +63,9 @@ test("Expanding Çaylak accordion starts a game with timer and grid visible", as
   await boot(page);
   await goToVakalar(page);
   await expandCaylik(page);
-  await page.getByText(/cinayeti|kayıp|gizemli/i).first().click({ force: true });
+  await page.getByTestId("puzzle-card").first().click({ force: true });
   await page.waitForTimeout(800);
-  await page.getByText(/başla|oyna/i).first().click({ force: true });
+  await page.getByTestId("start-game-btn").click({ force: true });
   await page.waitForTimeout(1500);
 
   await expect(page.getByTestId("timer-value")).toBeVisible({ timeout: 5000 });
@@ -76,9 +76,9 @@ test("Grid cell marks cycle: three presses produce the '?' indicator", async ({ 
   await boot(page);
   await goToVakalar(page);
   await expandCaylik(page);
-  await page.getByText(/cinayeti|kayıp|gizemli/i).first().click({ force: true });
+  await page.getByTestId("puzzle-card").first().click({ force: true });
   await page.waitForTimeout(800);
-  await page.getByText(/başla|oyna/i).first().click({ force: true });
+  await page.getByTestId("start-game-btn").click({ force: true });
   await page.waitForTimeout(1500);
 
   await expect(page.getByText("ŞÜPHELILER").first()).toBeVisible({ timeout: 5000 });
@@ -104,9 +104,9 @@ test("AccusationSheet shows KİM / NEREDE / NEYLE after tapping SON ÇIKARIM", a
   await boot(page);
   await goToVakalar(page);
   await expandCaylik(page);
-  await page.getByText(/cinayeti|kayıp|gizemli/i).first().click({ force: true });
+  await page.getByTestId("puzzle-card").first().click({ force: true });
   await page.waitForTimeout(800);
-  await page.getByText(/başla|oyna/i).first().click({ force: true });
+  await page.getByTestId("start-game-btn").click({ force: true });
   await page.waitForTimeout(1500);
 
   await expect(page.getByText("SON ÇIKARIM").first()).toBeVisible({ timeout: 8000 });
