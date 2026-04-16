@@ -250,7 +250,7 @@ const SLIDES: Slide[] = [
     subtitle: "Delilleri Değerlendir",
     showClueExample: true,
     body: "Her bulmacada baştan 4 standart ipucu açık gelir. Bu ipuçları seni çözüme yönlendiren temel delillerdir.\n\nDaha fazla ipucuna ihtiyaç duyarsan \"Sonraki İpucu\" ile bir tane daha açabilirsin — ama dikkatli ol!",
-    tip: "Her bonus ipucu +30 saniye ceza ekler. İpuçsuz çözdükçe puanın artar!",
+    tip: "Her bonus ipucu −300 puan maliyeti taşır. İpuçsuz çözdükçe puanın artar!",
   },
   {
     icon: "gavel",

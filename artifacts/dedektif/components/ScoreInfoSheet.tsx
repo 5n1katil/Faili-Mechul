@@ -52,8 +52,8 @@ export default function ScoreInfoSheet({ visible, onClose }: Props) {
       icon: "lock-open",
       iconColor: "#f97316",
       label: "Ek İpucu",
-      formula: "−300 puan + 30 sn",
-      note: "Kilitli ipuçları açmak ekstra ceza getirir",
+      formula: "−300 puan",
+      note: "İpuçsuz çözdükçe puanın artar",
     },
     {
       icon: "upgrade",
