@@ -21,6 +21,10 @@ const PRODUCT_ID = "com.failimechul.dedektif.vaka_arsivi";
 const ENTITLEMENT_ID = "premium";
 const DEFAULT_PRICE_STRING = "₺79,99";
 
+// TEST MODU: true iken tüm paketler ve premium ücretsiz açılır.
+// App Store'a göndermeden önce mutlaka false yapın!
+const DEV_UNLOCK_ALL = true;
+
 function buildFallbackPackPrices(): Record<string, string> {
   return Object.fromEntries(
     PURCHASABLE_PACKS.map((p) => [p.packId, `₺${p.price.toFixed(2)}`])
@@ -182,13 +186,18 @@ async function syncFromRevenueCat(): Promise<SyncResult> {
 }
 
 export function PurchaseProvider({ children }: { children: React.ReactNode }) {
-  const [isPremium, setIsPremium] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isPremium, setIsPremium] = useState(DEV_UNLOCK_ALL);
+  const [isLoading, setIsLoading] = useState(!DEV_UNLOCK_ALL);
   const [priceString, setPriceString] = useState(DEFAULT_PRICE_STRING);
   const [packPrices, setPackPrices] = useState<Record<string, string>>(buildFallbackPackPrices);
-  const [purchasedPacks, setPurchasedPacks] = useState<Record<string, boolean>>({});
+  const [purchasedPacks, setPurchasedPacks] = useState<Record<string, boolean>>(() =>
+    DEV_UNLOCK_ALL
+      ? Object.fromEntries(Object.keys(PACK_PRODUCT_IDS).map((id) => [id, true]))
+      : {}
+  );
 
   useEffect(() => {
+    if (DEV_UNLOCK_ALL) return;
     initRevenueCat();
     Promise.all([syncFromRevenueCat(), fetchPriceString(), fetchPackPrices()]).then(
       ([{ premium, packs }, price, packPricesMap]) => {
@@ -202,7 +211,7 @@ export function PurchaseProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const isPackPurchased = useCallback(
-    (packId: string): boolean => !!purchasedPacks[packId],
+    (packId: string): boolean => DEV_UNLOCK_ALL || !!purchasedPacks[packId],
     [purchasedPacks]
   );
 
