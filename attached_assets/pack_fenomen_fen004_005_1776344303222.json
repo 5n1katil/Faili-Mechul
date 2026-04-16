@@ -1,0 +1,237 @@
+[
+  {
+    "puzzleId": "fen_004",
+    "title": "Viyana Valsi",
+    "subtitle": "Viyana, 1913 — Kurgusal",
+    "difficulty": 4,
+    "difficultyLabel": "Başkomiser",
+    "stars": "★★★★☆",
+    "gridSize": "3x3",
+    "timeLimit": 600,
+    "basePoints": 900,
+    "penaltyPerWrongAccusation": 150,
+    "cluePointCost": 55,
+    "story": "Viyana'nın en prestijli balo salonunda, Karnaval gecesinin son valsinin bitiminden hemen sonra ünlü psikanalist Dr. Heinrich Krell ölü bulundu — salon ortasında, maskesi hâlâ yüzünde. Kurbanın cebi boşaltılmış, yalnızca kırık bir muska kalmış. Üç kişi o gece kurbanın yanından hiç ayrılmadı.",
+    "atmosphere": "Kristal avcılar titriyor, pudra ve parfüm kokusu havada asılı; balo müziği durmuş ama yankısı hâlâ kulaklarda.",
+    "suspects": [
+      {
+        "id": "s1",
+        "name": "Gräfin Elsa von Traben",
+        "icon": "🎭",
+        "description": "Aristo miras sahibi, balo organizatörü",
+        "detail": "45 yaşında, soluk tenli, kalın eldiven takar — kurbanın eski hastasıymış ve tedavi notlarının ifşasından korkuyormuş."
+      },
+      {
+        "id": "s2",
+        "name": "Viktor Salko",
+        "icon": "🎻",
+        "description": "Saray orkestrasının baş kemancısı",
+        "detail": "32 yaşında, sinirli bir adam; kurban onun sahte diploma belgesini ele geçirmişti."
+      },
+      {
+        "id": "s3",
+        "name": "Dr. Marta Engel",
+        "icon": "🔬",
+        "description": "Rakip psikanalist, kurbanın eski asistanı",
+        "detail": "38 yaşında, gözlüklü, sessiz; kurbanın araştırmalarını izinsiz yayımladığı iddiasıyla dava açılmak üzereydi."
+      }
+    ],
+    "weapons": [
+      { "id": "w1", "name": "Zehirli şampanya", "icon": "🥂", "description": "İçine arsenik katılmış köpüklü şarap bardağı." },
+      { "id": "w2", "name": "Fildişi baston", "icon": "🦯", "description": "Gräfin'in süslü baston — ucu sivri metal çivili." },
+      { "id": "w3", "name": "İpek şal", "icon": "🧣", "description": "Boğmak için kullanılmış uzun ipek şal." }
+    ],
+    "locations": [
+      { "id": "l1", "name": "Balo salonu merkezi", "icon": "💃", "description": "Avize ışığı altında dans pisti." },
+      { "id": "l2", "name": "Kış bahçesi", "icon": "🌿", "description": "Salonun arkasındaki palmiyeli lobi." },
+      { "id": "l3", "name": "Şarap mahzeni", "icon": "🍾", "description": "Alt kattaki soğuk taş mahzen." }
+    ],
+    "clues": [
+      {
+        "id": "c1",
+        "type": "adli",
+        "revealOrder": 1,
+        "isRevealed": true,
+        "pointCost": 0,
+        "title": "Otopsi Ön Bulgusu",
+        "text": "Kurbanın dudaklarında ve dişlerinde beyaz tortu — erken arsenik zehirlenmesiyle uyumlu. Gırtlakta baskı ya da darp izi bulunmuyor. Ölüm, içilen bir sıvıdan kaynaklanıyor.",
+        "mechanicType": "text",
+        "deductionHint": "Silah içilebilir bir şey olmalı — baston veya şal değil."
+      },
+      {
+        "id": "c2",
+        "type": "tanik",
+        "revealOrder": 2,
+        "isRevealed": false,
+        "pointCost": 55,
+        "title": "Garson İfadesi",
+        "text": "Servis garsonu Conrad: 'Kurban tek bardak şampanya içti — onu şarap mahzeninden bizzat getiren kişi Viktor Bey'di. Diğerleri kendi bardaklarını buffetten aldı.'",
+        "mechanicType": "text",
+        "deductionHint": "Mahzenden getirilen bardak — Viktor'u mahzenle ve zehirli şampanyayla ilişkilendiriyor."
+      },
+      {
+        "id": "c3",
+        "type": "kanit",
+        "revealOrder": 3,
+        "isRevealed": false,
+        "pointCost": 55,
+        "title": "Mahzendeki Şişe",
+        "text": "Şarap mahzeninde tek açık şampanya şişesi bulundu; içinde arsenik çökeltisi. Şişenin boynunda Viktor Salko'nun sağ el parmak izleri tam olarak oturmuş.",
+        "mechanicType": "text",
+        "deductionHint": "Şişedeki iz Viktor'u mahzene ve silaha bağlıyor."
+      },
+      {
+        "id": "c4",
+        "type": "dogrudan",
+        "revealOrder": 4,
+        "isRevealed": false,
+        "pointCost": 55,
+        "title": "Diploma Dosyası",
+        "text": "Kurbanın iç cebinde —soyulmuş olan ceplerden farklı olarak— gizli bir bölmede Viktor Salko adına düzenlenmiş sahte Viyana Konservatuvarı diplomasının fotokopisi bulundu.",
+        "mechanicType": "text",
+        "deductionHint": "Kurban Viktor'u belgeyle köşeye sıkıştırmıştı — bu güçlü bir motif."
+      },
+      {
+        "id": "c5",
+        "type": "eleme",
+        "revealOrder": 5,
+        "isRevealed": false,
+        "pointCost": 55,
+        "title": "Elsa'nın Alibisi",
+        "text": "Balo boyunca Elsa von Traben, konuk listesini denetlediği kapı görevlisiyle birlikte salonda kaldı; güvenlik defterine her yarım saatte imza attı. Mahzene inme süresi bu aralıklara sığmaz.",
+        "mechanicType": "text",
+        "deductionHint": "Elsa'nın mahzene gidip gelmesi zaman olarak imkânsız — listeden çıkar."
+      },
+      {
+        "id": "c6",
+        "type": "sifreli",
+        "revealOrder": 6,
+        "isRevealed": false,
+        "pointCost": 55,
+        "title": "Kırık Muskanın Notu",
+        "text": "Muskada küçük bir kâğıt parçası: 'V.S. — mahzen — 23:15' yazıyor. Kurban, Viktor'un mahzene inişini önceden not almış — bir tuzak ya da randevu planlamış olabilir.",
+        "mechanicType": "anagram",
+        "deductionHint": "'V.S.' Viktor Salko'nun baş harfleri; mahzen ve saat: olay öncesi kurban bunu biliyordu."
+      }
+    ],
+    "solution": { "suspectId": "s2", "weaponId": "w1", "locationId": "l3" }
+  },
+
+  {
+    "puzzleId": "fen_005",
+    "title": "Tokyo Oyunu",
+    "subtitle": "Tokyo, 1985 — Kurgusal",
+    "difficulty": 5,
+    "difficultyLabel": "Efsane Komiser",
+    "stars": "★★★★★",
+    "gridSize": "3x3",
+    "timeLimit": 600,
+    "basePoints": 1100,
+    "penaltyPerWrongAccusation": 200,
+    "cluePointCost": 55,
+    "story": "Tokyo'nun neon ışıklı Shinjuku semtinde, bir elektronik şirketi yöneticisi olan Kenji Murakami otelin 14. katındaki kilitli odada ölü bulundu. Oda anahtarı içeride, telefon ahizesi yerde, televizyon açık. Üç kişi o gece aynı katta konaklamaktaydı ve çıkış kayıtları yoktu.",
+    "atmosphere": "Neon ışıkları ıslak camdan içeri vuruyor; koridorda hafif bir elektronik uğultu var — dünyada en yoğun yazılı sözleşme imzalanan gece olacaktı bu.",
+    "suspects": [
+      {
+        "id": "s1",
+        "name": "Haruki Sendo",
+        "icon": "💼",
+        "description": "Rakip şirket müzakerecisi",
+        "detail": "51 yaşında, soğukkanlı; kurbanın yarın imzalanacak olan dev patenti bloke etmeye çalışıyordu."
+      },
+      {
+        "id": "s2",
+        "name": "Yuki Tanamoto",
+        "icon": "📷",
+        "description": "Gazeteci, araştırmacı muhabir",
+        "detail": "29 yaşında, zayıf; kurbanın şirketinin çevre skandalını belgeliyordu — kurban haberin yayımlanmasını durdurmaya çalışıyordu."
+      },
+      {
+        "id": "s3",
+        "name": "İvan Petrov",
+        "icon": "🕵️",
+        "description": "Sovyet sanayi casusluğu şüphelisi",
+        "detail": "44 yaşında, şişman; pasaportunda sahte kimlik, kurbanın elindeki mikro film onu ifşa edecekti."
+      }
+    ],
+    "weapons": [
+      { "id": "w1", "name": "Elektrik kablosu", "icon": "⚡", "description": "Televizyon kablosundan çekilmiş ince tel." },
+      { "id": "w2", "name": "Karbon monoksit tüpü", "icon": "💨", "description": "Oda ısıtıcısına sabotaj yapılmış gaz sızıntısı." },
+      { "id": "w3", "name": "Japon suşi bıçağı", "icon": "🔪", "description": "Oda servisiyle gelen keskin yanagiba bıçak." }
+    ],
+    "locations": [
+      { "id": "l1", "name": "Otel odası 1402", "icon": "🛏️", "description": "Kurbanın kilitli odası, 14. kat." },
+      { "id": "l2", "name": "Çatı teknik odası", "icon": "⚙️", "description": "Binanın ısıtma sistemi ve kablo dağıtımı." },
+      { "id": "l3", "name": "Asansör ara sahanlığı", "icon": "🔲", "description": "13-14 arası gizli bakım sahanlığı." }
+    ],
+    "clues": [
+      {
+        "id": "c1",
+        "type": "adli",
+        "revealOrder": 1,
+        "isRevealed": true,
+        "pointCost": 0,
+        "title": "Otopsi Raporu",
+        "text": "Ölüm nedeni: karbon monoksit zehirlenmesi. Kanda COHb doygunluğu %68. Dış yara ya da boğulma izi yok. Oda ısıtıcısının havalandırma borusu mekanik olarak tıkanmış.",
+        "mechanicType": "text",
+        "deductionHint": "Silah bıçak ya da kablo değil — gaz sızıntısı. w2 öne çıkıyor."
+      },
+      {
+        "id": "c2",
+        "type": "tanik",
+        "revealOrder": 2,
+        "isRevealed": false,
+        "pointCost": 55,
+        "title": "Asansör Görevlisi",
+        "text": "Gece asansör operatörü: 'Gece yarısından önce çatıya tek kişi çıktı — büyük postalı, şişmandı. 20 dakika sonra indi, elinde alet çantası vardı.'",
+        "mechanicType": "text",
+        "deductionHint": "Çatı teknik odasına yalnızca biri çıktı — tarif İvan'la örtüşüyor."
+      },
+      {
+        "id": "c3",
+        "type": "kanit",
+        "revealOrder": 3,
+        "isRevealed": false,
+        "pointCost": 55,
+        "title": "Teknik Odadaki İz",
+        "text": "Çatı teknik odasının ısıtıcı boru kapağında İvan Petrov'un sol baş parmak izi bulundu; kapak tıkama malzemesiyle (pamuk + macun) dolu bırakılmıştı.",
+        "mechanicType": "dna_match",
+        "deductionHint": "Parmak izi ve sabotaj malzemesi İvan'ı teknik odaya kesin olarak yerleştiriyor."
+      },
+      {
+        "id": "c4",
+        "type": "dogrudan",
+        "revealOrder": 4,
+        "isRevealed": false,
+        "pointCost": 55,
+        "title": "Mikro Film",
+        "text": "Kurbanın kasa çantasında İvan Petrov'u Sovyet istihbaratıyla ilişkilendiren mikro film kopyası bulundu. Üzerinde 'YARINKAD.' notu — yarın kamuoyuyla paylaşılacaktı.",
+        "mechanicType": "text",
+        "deductionHint": "Kurban İvan'ı ifşa edecekti — bu cinayet için yeterli motif."
+      },
+      {
+        "id": "c5",
+        "type": "eleme",
+        "revealOrder": 5,
+        "isRevealed": false,
+        "pointCost": 55,
+        "title": "Haruki'nin Konferans Kaydı",
+        "text": "Otel konferans salonunun katılım kartı: Haruki Sendo gece yarısı hukuk ekibiyle patent değerlendirme toplantısı yaptı; 5 avukat imzası mevcut, toplantı sabah 2'ye kadar sürdü.",
+        "mechanicType": "text",
+        "deductionHint": "Haruki'nin çatıya ya da odaya gitme vakti yoktu — alibi sağlam."
+      },
+      {
+        "id": "c6",
+        "type": "sifreli",
+        "revealOrder": 6,
+        "isRevealed": false,
+        "pointCost": 55,
+        "title": "Şifreli Telgraf",
+        "text": "İvan'ın otel odasında Rusça şifreli telgraf bulundu; çevirisi: 'Film ele geçirilmeden önce kaynağı temizle.' Tarih: cinayetten 6 saat önce.",
+        "mechanicType": "gorsel_ipucu",
+        "deductionHint": "'Kaynağı temizle' = kurban. Emir İvan'a verilmiş."
+      }
+    ],
+    "solution": { "suspectId": "s3", "weaponId": "w2", "locationId": "l2" }
+  }
+]

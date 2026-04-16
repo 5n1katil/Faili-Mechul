@@ -1,0 +1,237 @@
+[
+  {
+    "puzzleId": "dij_004",
+    "title": "Beğeni Tuzağı",
+    "subtitle": "İstanbul, Influencer Ajansı — Günümüz",
+    "difficulty": 4,
+    "difficultyLabel": "Başkomiser",
+    "stars": "★★★★☆",
+    "gridSize": "3x3",
+    "timeLimit": 600,
+    "basePoints": 900,
+    "penaltyPerWrongAccusation": 150,
+    "cluePointCost": 55,
+    "story": "Türkiye'nin en büyük influencer ajansı TrendHub'ın CEO'su Kerem Aydoğan, ofis binasının sunucu odasında ölü bulundu. Ekranlar hâlâ açık, içeride binlerce kullanıcının kişisel verisini gösteren gösterge paneli parlıyor. Üç kişi o gece binada kalıyordu.",
+    "atmosphere": "Sunucu raflarının soğutucu fanları uğulduyor; mavi LED'ler steril bir ışık veriyor — kan orada çok yanlış görünüyor.",
+    "suspects": [
+      {
+        "id": "s1",
+        "name": "Seda Mirkan",
+        "icon": "📸",
+        "description": "Ajansın en büyük influencer müşterisi, 3M takipçili",
+        "detail": "27 yaşında, karizmatik; kurban Seda'nın takipçi verilerinin sahte bot'larla şişirildiğini reklam verenlerden gizlediğini öğrenmişti — açıklanırsa kariyeri biterdi."
+      },
+      {
+        "id": "s2",
+        "name": "Tarık Demirbaş",
+        "icon": "💾",
+        "description": "Ajans veri mühendisi, back-end sorumlusu",
+        "detail": "34 yaşında, içe dönük; kurban Tarık'ın veri tabanından kullanıcı bilgilerini rakip firmaya sattığını keşfetmişti — yarın kovulacak ve savcıya bildirilecekti."
+      },
+      {
+        "id": "s3",
+        "name": "Dilek Aras",
+        "icon": "📊",
+        "description": "Marka ortaklık direktörü",
+        "detail": "41 yaşında, hırslı; kurban Dilek'in imzaladığı gizli komisyon sözleşmelerini denetim kuruluna açıklamak üzereydi."
+      }
+    ],
+    "weapons": [
+      { "id": "w1", "name": "Sunucu raf rayı", "icon": "🖥️", "description": "Metal sunucu kasası rayı — sökülmüş, keskin kenarlı." },
+      { "id": "w2", "name": "Fiber optik kablo demeti", "icon": "🔌", "description": "Boğmak için kullanılmış yoğun kablo buketi." },
+      { "id": "w3", "name": "UPS akü bloğu", "icon": "🔋", "description": "Kesintisiz güç kaynağı akü — 12 kg, küt darbe." }
+    ],
+    "locations": [
+      { "id": "l1", "name": "Sunucu odası", "icon": "🖧", "description": "Veri merkezinin soğuk ve gürültülü kalbi." },
+      { "id": "l2", "name": "Açık ofis katı", "icon": "🏢", "description": "İçerik üretim masaları ve stüdyo." },
+      { "id": "l3", "name": "CEO ofisi", "icon": "🪟", "description": "Cam duvarlar, panoramik Boğaz manzarası." }
+    ],
+    "clues": [
+      {
+        "id": "c1",
+        "type": "adli",
+        "revealOrder": 1,
+        "isRevealed": true,
+        "pointCost": 0,
+        "title": "Adli BT Raporu",
+        "text": "Sunucu odasının giriş-çıkış logu: gece 02:14'te yalnızca bir çalışan kimliğiyle giriş yapılmış — Tarık Demirbaş'ın kartı. Kurban bu odaya bu kişiyle beraber girmiş olabilir ya da peşinden gelmiş.",
+        "mechanicType": "text",
+        "deductionHint": "Sunucu odasına giriş kartı Tarık'a ait — onu o mekânla doğrudan bağlıyor."
+      },
+      {
+        "id": "c2",
+        "type": "tanik",
+        "revealOrder": 2,
+        "isRevealed": false,
+        "pointCost": 55,
+        "title": "Güvenlik Görevlisi",
+        "text": "Bina güvenlik görevlisi Murat: 'Gece 02:00'de Tarık Bey sunucu odasına indi, elinde alet çantası vardı. 02:40'ta çıktı, terli ve soluklu görünüyordu. Başka kimse o kata inmedi.'",
+        "mechanicType": "text",
+        "deductionHint": "Tarık sunucu katına indi, başkası inmedi — katil Tarık."
+      },
+      {
+        "id": "c3",
+        "type": "kanit",
+        "revealOrder": 3,
+        "isRevealed": false,
+        "pointCost": 55,
+        "title": "Akü Bloğu İzi",
+        "text": "UPS akü bloğunun üstünde taze kan ve saç teli. Tarık'ın çantasında aynı model akü bloğu anahtarı — sadece veri mühendisleri bu anahtarı taşır. Akünün yerinden oynatıldığı belli.",
+        "mechanicType": "dna_match",
+        "deductionHint": "Akü bloğu kanlı + yalnızca Tarık'ın anahtarı var — silah w3."
+      },
+      {
+        "id": "c4",
+        "type": "dogrudan",
+        "revealOrder": 4,
+        "isRevealed": false,
+        "pointCost": 55,
+        "title": "Veri Satışı Kanıtı",
+        "text": "Kurbanın masaüstündeki son açık belge: Tarık Demirbaş imzalı rakip firmadan gelen 85.000 Euro'luk kripto ödeme makbuzu, ajansın kullanıcı veri tabanı dışa aktarım loguyla eşleştirilmiş. Sabah savcıya gönderilecekti.",
+        "mechanicType": "text",
+        "deductionHint": "Sabah savcı bildirimi — Tarık'ın bu geceyi bekleme nedeni açık."
+      },
+      {
+        "id": "c5",
+        "type": "eleme",
+        "revealOrder": 5,
+        "isRevealed": false,
+        "pointCost": 55,
+        "title": "Seda'nın Canlı Yayını",
+        "text": "Seda Mirkan, gece 01:30-03:00 arası ajansın stüdyosundan Instagram canlı yayını yaptı — 47.000 anlık izleyici, yayın kaydı sunucuda. Bu sürede sunucu katına inmesi imkânsız.",
+        "mechanicType": "text",
+        "deductionHint": "Seda 1.5 saat boyunca canlı yayında — sunucu odasında olamaz."
+      },
+      {
+        "id": "c6",
+        "type": "sifreli",
+        "revealOrder": 6,
+        "isRevealed": false,
+        "pointCost": 55,
+        "title": "Şifreli Slack Mesajı",
+        "text": "Tarık'ın kişisel Slack kanalında şifreli mesaj: 'Dosya 02:30'da temizlenir. K.A. artık sorun olmaz.' Gönderme saati 01:55 — cinayetten 19 dakika önce. 'K.A.' = Kerem Aydoğan.",
+        "mechanicType": "anagram",
+        "deductionHint": "'K.A. artık sorun olmaz' — Tarık cinayeti önceden planlamış."
+      }
+    ],
+    "solution": { "suspectId": "s2", "weaponId": "w3", "locationId": "l1" }
+  },
+
+  {
+    "puzzleId": "dij_005",
+    "title": "Son Token",
+    "subtitle": "Metaverse — VoxelCity NFT Platformu",
+    "difficulty": 4,
+    "difficultyLabel": "Başkomiser",
+    "stars": "★★★★☆",
+    "gridSize": "3x3",
+    "timeLimit": 600,
+    "basePoints": 900,
+    "penaltyPerWrongAccusation": 150,
+    "cluePointCost": 55,
+    "story": "VoxelCity'nin kurucusu ve baş geliştiricisi kullanıcı adı Zeta_Zero, gerçek kimliğiyle İzmir'deki evinde ölü bulundu — tam o anda platformun ana sunucusu çöktü ve 12 milyon dolarlık NFT koleksiyonu transferi başladı. Üç kişi o gece platformun yönetici kanalında aktifti.",
+    "atmosphere": "Üç monitör açık, kodlar akmaya devam ediyor; gerçek dünyada ölü, dijital dünyada ise varlıkları milisaniyelerle el değiştiriyor.",
+    "suspects": [
+      {
+        "id": "s1",
+        "name": "CipherX",
+        "icon": "🎮",
+        "description": "En büyük NFT koleksiyoncusu, gerçek adı Barış Eren",
+        "detail": "28 yaşında; kurban CipherX'in sahte 'NFT mint' belgesiyle 3 milyon dolar değerinde token bastığını keşfetmişti — açıklanırsa platform çökerdi."
+      },
+      {
+        "id": "s2",
+        "name": "NullPtr",
+        "icon": "👾",
+        "description": "Platform güvenlik yöneticisi, gerçek adı Cansen Yılmaz",
+        "detail": "35 yaşında; akıllı sözleşme kodlarına arka kapı yerleştirmiş, kurban bunu fark etmişti."
+      },
+      {
+        "id": "s3",
+        "name": "MetaQueen",
+        "icon": "👑",
+        "description": "VoxelCity'nin sanal galeri direktörü, gerçek adı Pınar Koru",
+        "detail": "31 yaşında; kurban MetaQueen'in kullanıcılara sahte 'eşsiz eser' satarken kopyaları farklı hesaplara da sattığını belgelemiş, tüm çift satışlar kayıt altında."
+      }
+    ],
+    "weapons": [
+      { "id": "w1", "name": "Programlı elektrik kesintisi", "icon": "⚡", "description": "Akıllı ev sistemine enjekte edilen kod — kalp ritim cihazını devre dışı bıraktı." },
+      { "id": "w2", "name": "Zehirli soğutma sıvısı", "icon": "🧪", "description": "Bilgisayar soğutma sistemine karıştırılan toksik sıvı — buharlaşarak içildi." },
+      { "id": "w3", "name": "Fiziksel baskın", "icon": "👊", "description": "Kurbanın evine girilip darp edildi." }
+    ],
+    "locations": [
+      { "id": "l1", "name": "Kurbanın ev ofisi", "icon": "🏠", "description": "İzmir'deki çalışma odası, sunucu dolabı burada." },
+      { "id": "l2", "name": "VoxelCity sunucu çiftliği", "icon": "🌐", "description": "İstanbul'daki fiziksel sunucu binası." },
+      { "id": "l3", "name": "Akıllı ev kontrol merkezi", "icon": "📡", "description": "Evin IoT sistemlerini yöneten hub cihazı." }
+    ],
+    "clues": [
+      {
+        "id": "c1",
+        "type": "adli",
+        "revealOrder": 1,
+        "isRevealed": true,
+        "pointCost": 0,
+        "title": "Dijital Otopsi",
+        "text": "Kurbanın göğsünde kalp ritim cihazı var. Adli mühendis raporu: cihaz tam gece 02:47'de dışarıdan gönderilen bir Bluetooth komutuyla devre dışı bırakılmış. Elektrik fiziksel değil, yazılım kaynaklı.",
+        "mechanicType": "text",
+        "deductionHint": "Ölüm yazılım komutuyla — w1 (programlı elektrik kesintisi) tek uyumlu silah."
+      },
+      {
+        "id": "c2",
+        "type": "tanik",
+        "revealOrder": 2,
+        "isRevealed": false,
+        "pointCost": 55,
+        "title": "Blockchain Logu",
+        "text": "Kurbanın ölüm anıyla aynı saniyede (02:47:03) NullPtr'ın cüzdanına 8.4 milyon dolar değerinde NFT transferi başlatılmış — bu transferin tetikleyici kodu kurbanın cihazındaki arka kapıyı kullandı.",
+        "mechanicType": "text",
+        "deductionHint": "Arka kapıyı kullanan transfer NullPtr'a gitti — arka kapıyı kim yerleştirmişti?"
+      },
+      {
+        "id": "c3",
+        "type": "kanit",
+        "revealOrder": 3,
+        "isRevealed": false,
+        "pointCost": 55,
+        "title": "Akıllı Ev Logu",
+        "text": "Ev IoT merkezi logu: gece 02:30'da kurbanın cihaz ağına uzaktan bağlantı. IP adresi NullPtr'ın daha önce kullandığı VPN düğümüyle eşleşiyor — bu düğüm yalnızca platform güvenlik yöneticilerine açık.",
+        "mechanicType": "dna_match",
+        "deductionHint": "VPN düğümü yalnızca NullPtr'ın erişebildiği bir kanal — onu IoT saldırısına bağlıyor."
+      },
+      {
+        "id": "c4",
+        "type": "dogrudan",
+        "revealOrder": 4,
+        "isRevealed": false,
+        "pointCost": 55,
+        "title": "Arka Kapı Kodu",
+        "text": "Platform kaynak kodunda gizlenmiş fonksiyon bulundu: 'killswitch_v2'. Kod yorumunda 'NP_dev' kısaltması — NullPtr'ın geliştirici takma adı. Kurban bu kodu bulmuş ve silmek üzereydi.",
+        "mechanicType": "text",
+        "deductionHint": "'NP_dev' NullPtr'ın imzası — arka kapıyı o yerleştirmiş ve katil o."
+      },
+      {
+        "id": "c5",
+        "type": "eleme",
+        "revealOrder": 5,
+        "isRevealed": false,
+        "pointCost": 55,
+        "title": "CipherX'in Token Panik Logu",
+        "text": "CipherX, tam olay anında kendi NFT'lerini aceleyle başka cüzdanlara dağıtıyordu — panik transferleri. Bu işlem Bluetooth komut göndermeyle eşzamanlı yapılamaz; tek kişi tek ekrana bakıyor.",
+        "mechanicType": "text",
+        "deductionHint": "CipherX kendi panikindeydi — aynı anda IoT saldırısı yapamaz."
+      },
+      {
+        "id": "c6",
+        "type": "sifreli",
+        "revealOrder": 6,
+        "isRevealed": false,
+        "pointCost": 55,
+        "title": "Şifreli Discord Mesajı",
+        "text": "NullPtr'ın özel Discord kanalında tek mesaj, olay gecesi 01:10'da: 'Zeta_Zero yarın kodu siliyor. Benim için killswitch çalışacak mı çalışmayacak mı belli olacak.' Cümle hem arka kapıyı hem de cinayeti işaret ediyor.",
+        "mechanicType": "anagram",
+        "deductionHint": "'Killswitch çalışacak mı' sorusu cevabını o gece verdi — NullPtr kurbanı öldürdü."
+      }
+    ],
+    "solution": { "suspectId": "s2", "weaponId": "w1", "locationId": "l3" }
+  }
+]

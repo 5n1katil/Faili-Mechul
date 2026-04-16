@@ -1,0 +1,237 @@
+[
+  {
+    "puzzleId": "ede_004",
+    "title": "St. Mary Mead'in Gizli Defteri",
+    "subtitle": "İngiltere, St. Mary Mead — Miss Marple Evreni",
+    "difficulty": 3,
+    "difficultyLabel": "Dedektif",
+    "stars": "★★★☆☆",
+    "gridSize": "3x3",
+    "timeLimit": 600,
+    "basePoints": 750,
+    "penaltyPerWrongAccusation": 100,
+    "cluePointCost": 55,
+    "story": "St. Mary Mead köyünde saygın papaz Mr. Aubrey Helm, kilise müziği çalışması için geciktikten sonra vikare evinin çalışma odasında ölü bulundu — elinde kırık bir kalem, masasında yarım bırakılmış vaaz defteri. Miss Marple, sorgulamayı penceresinden gözlemlemekle yetinmedi.",
+    "atmosphere": "Güneş battıktan sonra İngiliz köyü sisi çöküyor; hanımelleri ve ıslak çim kokusu, kilise çanının son titreşimiyle karışıyor.",
+    "suspects": [
+      {
+        "id": "s1",
+        "name": "Bayan Dorothy Pryce",
+        "icon": "🎹",
+        "description": "Kilise org eğitmeni, kurbanın eski öğrencisi",
+        "detail": "52 yaşında, otoriter; papaz Pryce'ın öğrenciliği döneminde yazdığı senfoniyi intihal ettiğini düşünüyor ve mahkeme sürecini başlatmıştı."
+      },
+      {
+        "id": "s2",
+        "name": "Dr. Felix Garnett",
+        "icon": "🩺",
+        "description": "Köy hekimi, papazın yakın dostu",
+        "detail": "61 yaşında, sevecen görünümlü; papaz Garnett'in geçmişte bir hastasını yanlış teşhisle kaybettiğini biliyordu ve bunu vaftiz defterine kaydetmişti."
+      },
+      {
+        "id": "s3",
+        "name": "Gerald Whitmore",
+        "icon": "📋",
+        "description": "Köy noteri, vasi sorumlusu",
+        "detail": "45 yaşında, gergin; kurban, Whitmore'un vefat eden bir kilise üyesinin vasiyetini tahrif ettiğini gösteren belgeye ulaşmıştı."
+      }
+    ],
+    "weapons": [
+      { "id": "w1", "name": "Kemanın teli", "icon": "🎻", "description": "Keman telinden koparılmış ince tel — boğmak için." },
+      { "id": "w2", "name": "Dijital olmayan zehir: baldıran özü", "icon": "🌿", "description": "Köyde biten baldırandan elde edilmiş bitki özü — çaya karıştırılmış." },
+      { "id": "w3", "name": "Demir mektup açacağı", "icon": "✉️", "description": "Masa üstü ağır kesici araç." }
+    ],
+    "locations": [
+      { "id": "l1", "name": "Çalışma odası", "icon": "📖", "description": "Vafti defterlerinin, vaaz notlarının saklandığı oda." },
+      { "id": "l2", "name": "Kilise bahçesi", "icon": "⛪", "description": "Sarmaşıklı taş duvarlar, ıssız mezarlık yolu." },
+      { "id": "l3", "name": "Vikarinin mutfağı", "icon": "🍵", "description": "Çay hazırlanan, yüksek tavanl küçük mutfak." }
+    ],
+    "clues": [
+      {
+        "id": "c1",
+        "type": "adli",
+        "revealOrder": 1,
+        "isRevealed": true,
+        "pointCost": 0,
+        "title": "Dr. Garnett'in İlk Muayenesi",
+        "text": "Kurban masasına yığılmış, dudakları mavimsi. Gırtlapta baskı ya da yara izi yok. Üstelik fincanında soğumuş çay ve ağzında acı ot aroması — Dr. Garnett bitkisel zehiri hemen tanıdı.",
+        "mechanicType": "text",
+        "deductionHint": "Mavimsi dudaklar ve acı ot — baldıran zehri, w2 uyumlu. Dr. Garnett'in onu çok hızlı tanıması ayrıca dikkat çekici."
+      },
+      {
+        "id": "c2",
+        "type": "tanik",
+        "revealOrder": 2,
+        "isRevealed": false,
+        "pointCost": 55,
+        "title": "Miss Marple'ın Gözlemi",
+        "text": "Miss Marple, öğleden sonra pencereden şunu gördü: Dr. Garnett, kilise bahçesinde uzun süre eğilmiş bir bitkinin yapraklarını topladı ve cebine koydu. Köy hekimlerinin bunu neden yaptığını çok iyi bilirim dedi: ilaç için değil, zaman zaman başka amaçlar için.",
+        "mechanicType": "text",
+        "deductionHint": "Garnett bahçede baldıran yaprakları topladı — zehiri o hazırlayabilir."
+      },
+      {
+        "id": "c3",
+        "type": "kanit",
+        "revealOrder": 3,
+        "isRevealed": false,
+        "pointCost": 55,
+        "title": "Mutfaktaki Fincan",
+        "text": "Mutfakta yıkanmış ama silinmemiş bir fincan bulundu — içinde baldıran kalıntısı. Garnett'in parmak izi fincanın kulpunda. Garnett kurbanın çayını kendisi hazırladığını daha önce belirtmişti.",
+        "mechanicType": "text",
+        "deductionHint": "Garnett çayı kendisi hazırlamış — fincan ve iz bunu doğruluyor."
+      },
+      {
+        "id": "c4",
+        "type": "dogrudan",
+        "revealOrder": 4,
+        "isRevealed": false,
+        "pointCost": 55,
+        "title": "Vaftiz Defterindeki Kayıt",
+        "text": "Kurbanın vaaz defterinin gizli bölmesinde not: 'Garnett — 1971 — E.H. vakası. Belgeyi belediye arşivine vereceğim.' E.H. yanlış teşhisle kaybedilen hasta. Garnett bunu biliyordu.",
+        "mechanicType": "text",
+        "deductionHint": "Kurban Garnett'i ifşa etmek üzereydi — en güçlü motif."
+      },
+      {
+        "id": "c5",
+        "type": "eleme",
+        "revealOrder": 5,
+        "isRevealed": false,
+        "pointCost": 55,
+        "title": "Dorothy Pryce'ın Konseri",
+        "text": "Bayan Pryce, olay saatinde kasabada bir müzik topluluğunun provası için yerli yabancı 12 kişinin önünde org çalıyordu. Konseri organize eden kulübün başkanı bunu onaylıyor.",
+        "mechanicType": "text",
+        "deductionHint": "Pryce 12 tanıkla sahada — vika nede olamaz."
+      },
+      {
+        "id": "c6",
+        "type": "tanik_yuzlesme",
+        "revealOrder": 6,
+        "isRevealed": false,
+        "pointCost": 55,
+        "title": "Dr. Garnett ile Yüzleşme",
+        "text": "Fincan, yaprak toplama gözlemi ve vaftiz defteri notu Garnett'e sunuldu. Uzun sessizliğin ardından: 'O vakayı 50 yıldır taşıyorum. Papaz açıklamadan önce ben hâlâ iyi bir adam olarak ölmek istedim.'",
+        "mechanicType": "tanik_yuzlesme",
+        "deductionHint": "İtiraf: Garnett zehirli çayı hazırladı, mutfakta kullandı, ardından çalışma odasına geçti."
+      }
+    ],
+    "solution": { "suspectId": "s2", "weaponId": "w2", "locationId": "l3" }
+  },
+
+  {
+    "puzzleId": "ede_005",
+    "title": "Boğaz'ın Şahidi",
+    "subtitle": "İstanbul, 1960'lar — Ahmet Ümit Evreni",
+    "difficulty": 4,
+    "difficultyLabel": "Başkomiser",
+    "stars": "★★★★☆",
+    "gridSize": "3x3",
+    "timeLimit": 600,
+    "basePoints": 900,
+    "penaltyPerWrongAccusation": 150,
+    "cluePointCost": 55,
+    "story": "İstanbul'un siyasi açıdan çalkantılı 1960'larında, Beyoğlu'nun arka sokaklarından birinde muhalif gazeteci Nafi Karaçay ölü bulundu — masasında yarım bırakılmış röportaj kasedi, üzerinde kırık bir çakmak. Komiser Nevzat henüz emekli olmamıştı ve bu davayı hiçbir zaman kapatmadı.",
+    "atmosphere": "Beyoğlu'nda tramvay sesleri, ıslak taş kaldırım ve nargile dumanı; her köşede bir sır saklayan şehir, 1960'ların güneşi henüz doğmadan önce.",
+    "suspects": [
+      {
+        "id": "s1",
+        "name": "Süreyya Celal",
+        "icon": "🎙️",
+        "description": "Devlet radyosu spikeri, eski muhalefet gazetecisi",
+        "detail": "48 yaşında; kurban Süreyya'nın 1960 öncesinde istihbarat birimlerine isim verdiğine dair belgeye ulaşmıştı."
+      },
+      {
+        "id": "s2",
+        "name": "Belkıs Hanım",
+        "icon": "🌹",
+        "description": "Beyoğlu'nun tanınan meyhane sahibesi",
+        "detail": "55 yaşında, güçlü kişilikli; kurban meyhanede gerçekleşen bir ölümü araştırıyor, parmağın Belkıs'a uzanacağını hissediyordu."
+      },
+      {
+        "id": "s3",
+        "name": "Rıfat Boran",
+        "icon": "💰",
+        "description": "Karaborsacı, arka sokak tüccarı",
+        "detail": "39 yaşında, sinirli; kurban Boran'ın kaçakçılık ağıyla ilgili röportaj materyali topluyordu — deşifre olursa hapishanelik."
+      }
+    ],
+    "weapons": [
+      { "id": "w1", "name": "Demir yumruk", "icon": "🥊", "description": "Parmak delikleri olan döküm demir yumruk." },
+      { "id": "w2", "name": "Sustalı çakı", "icon": "🔪", "description": "Beyoğlu'nun karanlık sokaklarında sık kullanılan bıçak." },
+      { "id": "w3", "name": "İplik bobin teli", "icon": "🧵", "description": "Meyhane perdesinden sökülen ince ama sağlam tel." }
+    ],
+    "locations": [
+      { "id": "l1", "name": "Gazeteci ofisi", "icon": "🗞️", "description": "Arka sokaktaki küçük matbaa odası, daktilo sesleri." },
+      { "id": "l2", "name": "Meyhane arka odası", "icon": "🍷", "description": "Belkıs'ın muhbir toplantılarını yaptığı loş arka oda." },
+      { "id": "l3", "name": "Arka sokak boşluğu", "icon": "🌑", "description": "İki bina arasındaki karanlık pasaj — iz bırakmaz." }
+    ],
+    "clues": [
+      {
+        "id": "c1",
+        "type": "adli",
+        "revealOrder": 1,
+        "isRevealed": true,
+        "pointCost": 0,
+        "title": "Adli Müdür Raporu",
+        "text": "Kurbanın boynunda ince tel baskı izi — sustalı ya da yumrukla uyumlu değil. Tel izi düzensiz ve ince; tekstil kökenli bir nesne. Yara derin değil ama sürekli basınçla oluşmuş.",
+        "mechanicType": "text",
+        "deductionHint": "İnce tel baskı izi — w3 (iplik bobin teli) tek uyumlu silah."
+      },
+      {
+        "id": "c2",
+        "type": "tanik",
+        "revealOrder": 2,
+        "isRevealed": false,
+        "pointCost": 55,
+        "title": "Bakkal Amca",
+        "text": "Karşı dükkânın sahibi Hasip Bey: 'O gece arka sokaktan önce Belkıs Hanım geçti — elinde şal ya da ipe benzer bir şey tutuyordu. Peşinden de kurban. İkisi aynı yöne gittiler.'",
+        "mechanicType": "text",
+        "deductionHint": "Belkıs arka sokağa kurbanla beraber girdi — onu takip etti ya da çekti."
+      },
+      {
+        "id": "c3",
+        "type": "kanit",
+        "revealOrder": 3,
+        "isRevealed": false,
+        "pointCost": 55,
+        "title": "Meyhane Perdesi",
+        "text": "Meyhanenin arka oda perdesi incelendi: perdenin ip askısı kesilmiş, kesik yüzeyi taze. Bobin teli analizi: perde ipiyle özdeş bileşim. Belkıs'ın parmağı perdenin kopuk ucunda.",
+        "mechanicType": "dna_match",
+        "deductionHint": "Tel meyhane perdesinden — Belkıs hem teli aldı hem de arka sokakta kullandı."
+      },
+      {
+        "id": "c4",
+        "type": "dogrudan",
+        "revealOrder": 4,
+        "isRevealed": false,
+        "pointCost": 55,
+        "title": "Röportaj Kasedi",
+        "text": "Kurbanın masasındaki kasette son röportaj başlamış ama kesilmiş: 'Belkıs Hanım, 1958'deki ölüm olayında isminiz geçiyor…' Kaset bu cümlede duruyor — Belkıs o röportajı duymuş olabilir.",
+        "mechanicType": "gorsel_ipucu",
+        "deductionHint": "Kasette Belkıs'ın adı geçiyor — kurban onu köşeye sıkıştırmış, Belkıs bunu biliyordu."
+      },
+      {
+        "id": "c5",
+        "type": "eleme",
+        "revealOrder": 5,
+        "isRevealed": false,
+        "pointCost": 55,
+        "title": "Rıfat Boran'ın Loş Gecesi",
+        "text": "Rıfat Boran, olay saatinde Kapalıçarşı yakınlarındaki polisle rutin ifade veriyordu — kaçakçılıkla ilgisi olmayan başka bir olay için tutanak altına alınmıştı. İfade saati damgalı.",
+        "mechanicType": "text",
+        "deductionHint": "Rıfat poliste resmi ifadede — arka sokakta olamaz."
+      },
+      {
+        "id": "c6",
+        "type": "sifreli",
+        "revealOrder": 6,
+        "isRevealed": false,
+        "pointCost": 55,
+        "title": "Kırık Çakmaktaki Monogram",
+        "text": "Kurbanın üzerindeki kırık çakmakta oyulmuş harf: 'B.H.' — Belkıs Hanım'ın baş harfleri. Çakmak kurbanın değil; mücadele sırasında yere düşmüş, katil fark etmeden bırakmış.",
+        "mechanicType": "anagram",
+        "deductionHint": "'B.H.' monogramı Belkıs'ın — çakmağını olay yerinde bıraktı."
+      }
+    ],
+    "solution": { "suspectId": "s2", "weaponId": "w3", "locationId": "l3" }
+  }
+]

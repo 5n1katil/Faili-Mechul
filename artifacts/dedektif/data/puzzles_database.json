@@ -5640,6 +5640,371 @@
           },
           "solutionNarrative": "Profesör Aldric, sistemin kendisini her reddetmesinin ardından intikam paketi hazırladı. Kulübesinde kimyasal aerosol üretti, Danny'yi para ile kullandı, Lans'ı bilmeden malzeme kaynağı yaptı. 15 yıllık manifesto imzası DNA ile örtüştü.",
           "specialMechanic": "phone_chain_dna_timeline_anagram"
+        },
+        {
+          "puzzleId": "fen_004",
+          "title": "Viyana Valsi",
+          "subtitle": "Viyana, 1913 — Kurgusal",
+          "difficulty": 4,
+          "difficultyLabel": "Başkomiser",
+          "stars": "★★★★☆",
+          "gridSize": "3x3",
+          "timeLimit": 600,
+          "basePoints": 900,
+          "penaltyPerWrongAccusation": 150,
+          "cluePointCost": 55,
+          "story": "Viyana'nın en prestijli balo salonunda, Karnaval gecesinin son valsinin bitiminden hemen sonra ünlü psikanalist Dr. Heinrich Krell ölü bulundu — salon ortasında, maskesi hâlâ yüzünde. Kurbanın cebi boşaltılmış, yalnızca kırık bir muska kalmış. Üç kişi o gece kurbanın yanından hiç ayrılmadı.",
+          "atmosphere": "Kristal avcılar titriyor, pudra ve parfüm kokusu havada asılı; balo müziği durmuş ama yankısı hâlâ kulaklarda.",
+          "suspects": [
+            {
+              "id": "s1",
+              "name": "Gräfin Elsa von Traben",
+              "icon": "🎭",
+              "description": "Aristo miras sahibi, balo organizatörü",
+              "detail": "45 yaşında, soluk tenli, kalın eldiven takar — kurbanın eski hastasıymış ve tedavi notlarının ifşasından korkuyormuş."
+            },
+            {
+              "id": "s2",
+              "name": "Viktor Salko",
+              "icon": "🎻",
+              "description": "Saray orkestrasının baş kemancısı",
+              "detail": "32 yaşında, sinirli bir adam; kurban onun sahte diploma belgesini ele geçirmişti."
+            },
+            {
+              "id": "s3",
+              "name": "Dr. Marta Engel",
+              "icon": "🔬",
+              "description": "Rakip psikanalist, kurbanın eski asistanı",
+              "detail": "38 yaşında, gözlüklü, sessiz; kurbanın araştırmalarını izinsiz yayımladığı iddiasıyla dava açılmak üzereydi."
+            }
+          ],
+          "weapons": [
+            {
+              "id": "w1",
+              "name": "Zehirli şampanya",
+              "icon": "🥂",
+              "description": "İçine arsenik katılmış köpüklü şarap bardağı."
+            },
+            {
+              "id": "w2",
+              "name": "Fildişi baston",
+              "icon": "🦯",
+              "description": "Gräfin'in süslü bastonu — ucu sivri metal çivili."
+            },
+            {
+              "id": "w3",
+              "name": "İpek şal",
+              "icon": "🧣",
+              "description": "Boğmak için kullanılmış uzun ipek şal."
+            }
+          ],
+          "locations": [
+            {
+              "id": "l1",
+              "name": "Balo salonu merkezi",
+              "icon": "💃",
+              "description": "Avize ışığı altında dans pisti."
+            },
+            {
+              "id": "l2",
+              "name": "Kış bahçesi",
+              "icon": "🌿",
+              "description": "Salonun arkasındaki palmiyeli lobi."
+            },
+            {
+              "id": "l3",
+              "name": "Şarap mahzeni",
+              "icon": "🍾",
+              "description": "Alt kattaki soğuk taş mahzen."
+            }
+          ],
+          "clues": [
+            {
+              "id": "c1",
+              "type": "adli",
+              "revealOrder": 1,
+              "isRevealed": true,
+              "pointCost": 0,
+              "title": "Otopsi Ön Bulgusu",
+              "text": "Kurbanın dudaklarında ve dişlerinde beyaz tortu — erken arsenik zehirlenmesiyle uyumlu. Gırtlakta baskı ya da darp izi bulunmuyor. Ölüm, içilen bir sıvıdan kaynaklanıyor.",
+              "mechanicType": "text",
+              "deductionHint": "Silah içilebilir bir şey olmalı — baston veya şal değil."
+            },
+            {
+              "id": "c2",
+              "type": "tanik",
+              "revealOrder": 2,
+              "isRevealed": false,
+              "pointCost": 55,
+              "title": "Garson İfadesi",
+              "text": "Servis garsonu Conrad: 'Kurban tek bardak şampanya içti — onu şarap mahzeninden bizzat getiren kişi Viktor Bey'di. Diğerleri kendi bardaklarını buffetten aldı.'",
+              "mechanicType": "text",
+              "deductionHint": "Mahzenden getirilen bardak — Viktor'u mahzenle ve zehirli şampanyayla ilişkilendiriyor."
+            },
+            {
+              "id": "c3",
+              "type": "kanit",
+              "revealOrder": 3,
+              "isRevealed": false,
+              "pointCost": 55,
+              "title": "Mahzendeki Şişe",
+              "text": "Şarap mahzeninde tek açık şampanya şişesi bulundu; içinde arsenik çökeltisi. Şişenin boynunda Viktor Salko'nun sağ el parmak izleri tam olarak oturmuş.",
+              "mechanicType": "parmak_izi",
+              "parmakIziVerisi": {
+                "aciklama": "Mahzendeki şampanya şişesinin boynundan alınan parmak izi örnekleri. Üç şüphelinin kayıt dosyasıyla karşılaştır.",
+                "izler": [
+                  {
+                    "izId": "iz1",
+                    "konum": "Şişe boynu — sağ taraf",
+                    "eslesme": "s2",
+                    "ipucu": "Sağ baş parmak, halka deseni — Viktor Salko Viyana Sarayı kayıt defterine kayıtlı biyometriyle eşleşiyor"
+                  },
+                  {
+                    "izId": "iz2",
+                    "konum": "Şişe boynu — sol taraf",
+                    "eslesme": "s2",
+                    "ipucu": "Sağ işaret parmağı — aynı kişiye ait, şişeyi dökerken bırakılmış"
+                  }
+                ],
+                "sonuc": "Her iki iz kesinlikle Viktor Salko'ya (s2) ait. Şişeyi o ellemiş."
+              },
+              "deductionHint": "Şişedeki parmak izi Viktor'u mahzene ve silaha bağlıyor."
+            },
+            {
+              "id": "c4",
+              "type": "dogrudan",
+              "revealOrder": 4,
+              "isRevealed": false,
+              "pointCost": 55,
+              "title": "Diploma Dosyası",
+              "text": "Kurbanın iç cebinde —soyulmuş olan ceplerden farklı olarak— gizli bir bölmede Viktor Salko adına düzenlenmiş sahte Viyana Konservatuvarı diplomasının fotokopisi bulundu.",
+              "mechanicType": "gorsel_ipucu",
+              "gorselAciklama": "Viyana Konservatuvarı antetli diploma fotokopisi. Mürekkep analizi: baskı 1913 değil, 1908 tarihli kâğıda 1912'de basılmış. İmza: 'Direktör H. Brahms' — ancak Brahms 1897'de vefat etmiş. Üst köşede not: 'Bu belge sahte. V.S.'ye Pazartesi teslim.' Kurban onu köşeye sıkıştırmıştı.",
+              "deductionHint": "Kurban Viktor'u sahte diplomatla köşeye sıkıştırmıştı — güçlü motif."
+            },
+            {
+              "id": "c5",
+              "type": "eleme",
+              "revealOrder": 5,
+              "isRevealed": false,
+              "pointCost": 55,
+              "title": "Elsa'nın Alibisi",
+              "text": "Balo boyunca Elsa von Traben, konuk listesini denetlediği kapı görevlisiyle birlikte salonda kaldı; güvenlik defterine her yarım saatte imza attı. Mahzene inme süresi bu aralıklara sığmaz.",
+              "mechanicType": "text",
+              "deductionHint": "Elsa'nın mahzene gidip gelmesi zaman olarak imkânsız — listeden çıkar."
+            },
+            {
+              "id": "c6",
+              "type": "sifreli",
+              "revealOrder": 6,
+              "isRevealed": false,
+              "pointCost": 55,
+              "title": "Kırık Muskanın Şifreli Notu",
+              "text": "Muskadan çıkan kâğıtta Sezar şifresiyle yazılmış not: 'W.T. — NBICFO — 23:15'. Kurban randevuyu önceden not almış, ifşa olmasın diye şifrelemiş.",
+              "mechanicType": "sifreli_mesaj",
+              "sifre": {
+                "sifrelenmis": "W.T. — NBICFO — 23:15",
+                "sifreleTuru": "Sezar Şifresi (her harf bir geri)",
+                "cozumIpucu": "Her harfi alfabede bir geri al: W→V, T→S, N→M, B→A, I→H, C→B, F→E, O→N",
+                "cozulmus": "V.S. — MAHZEN — 23:15",
+                "aciklama": "Çözüm: Viktor Salko, Mahzen, 23:15. Kurban Viktor'un mahzene iniş saatini şifreli not etmiş — bir randevu ya da tuzak."
+              },
+              "deductionHint": "'V.S.' Viktor Salko, 'MAHZEN' lokasyon, '23:15' cinayetin tam saati."
+            }
+          ],
+          "solution": {
+            "suspectId": "s2",
+            "weaponId": "w1",
+            "locationId": "l3"
+          }
+        },
+        {
+          "puzzleId": "fen_005",
+          "title": "Tokyo Oyunu",
+          "subtitle": "Tokyo, 1985 — Kurgusal",
+          "difficulty": 5,
+          "difficultyLabel": "Efsane Komiser",
+          "stars": "★★★★★",
+          "gridSize": "3x3",
+          "timeLimit": 600,
+          "basePoints": 1100,
+          "penaltyPerWrongAccusation": 200,
+          "cluePointCost": 55,
+          "story": "Tokyo'nun neon ışıklı Shinjuku semtinde, bir elektronik şirketi yöneticisi olan Kenji Murakami otelin 14. katındaki kilitli odada ölü bulundu. Oda anahtarı içeride, telefon ahizesi yerde, televizyon açık. Üç kişi o gece aynı katta konaklamaktaydı ve çıkış kayıtları yoktu.",
+          "atmosphere": "Neon ışıkları ıslak camdan içeri vuruyor; koridorda hafif bir elektronik uğultu var — dünyada en yoğun yazılı sözleşme imzalanan gece olacaktı bu.",
+          "suspects": [
+            {
+              "id": "s1",
+              "name": "Haruki Sendo",
+              "icon": "💼",
+              "description": "Rakip şirket müzakerecisi",
+              "detail": "51 yaşında, soğukkanlı; kurbanın yarın imzalanacak olan dev patenti bloke etmeye çalışıyordu."
+            },
+            {
+              "id": "s2",
+              "name": "Yuki Tanamoto",
+              "icon": "📷",
+              "description": "Gazeteci, araştırmacı muhabir",
+              "detail": "29 yaşında, zayıf; kurbanın şirketinin çevre skandalını belgeliyordu — kurban haberin yayımlanmasını durdurmaya çalışıyordu."
+            },
+            {
+              "id": "s3",
+              "name": "İvan Petrov",
+              "icon": "🕵️",
+              "description": "Sovyet sanayi casusluğu şüphelisi",
+              "detail": "44 yaşında, şişman; pasaportunda sahte kimlik, kurbanın elindeki mikro film onu ifşa edecekti."
+            }
+          ],
+          "weapons": [
+            {
+              "id": "w1",
+              "name": "Elektrik kablosu",
+              "icon": "⚡",
+              "description": "Televizyon kablosundan çekilmiş ince tel."
+            },
+            {
+              "id": "w2",
+              "name": "Karbon monoksit tüpü",
+              "icon": "💨",
+              "description": "Oda ısıtıcısına sabotaj yapılmış gaz sızıntısı."
+            },
+            {
+              "id": "w3",
+              "name": "Japon suşi bıçağı",
+              "icon": "🔪",
+              "description": "Oda servisiyle gelen keskin yanagiba bıçak."
+            }
+          ],
+          "locations": [
+            {
+              "id": "l1",
+              "name": "Otel odası 1402",
+              "icon": "🛏️",
+              "description": "Kurbanın kilitli odası, 14. kat."
+            },
+            {
+              "id": "l2",
+              "name": "Çatı teknik odası",
+              "icon": "⚙️",
+              "description": "Binanın ısıtma sistemi ve kablo dağıtımı."
+            },
+            {
+              "id": "l3",
+              "name": "Asansör ara sahanlığı",
+              "icon": "🔲",
+              "description": "13-14 arası gizli bakım sahanlığı."
+            }
+          ],
+          "clues": [
+            {
+              "id": "c1",
+              "type": "adli",
+              "revealOrder": 1,
+              "isRevealed": true,
+              "pointCost": 0,
+              "title": "Otopsi Raporu",
+              "text": "Ölüm nedeni: karbon monoksit zehirlenmesi. Kanda COHb doygunluğu %68. Dış yara ya da boğulma izi yok. Oda ısıtıcısının havalandırma borusu mekanik olarak tıkanmış.",
+              "mechanicType": "text",
+              "deductionHint": "Silah bıçak ya da kablo değil — gaz sızıntısı. w2 öne çıkıyor."
+            },
+            {
+              "id": "c2",
+              "type": "tanik",
+              "revealOrder": 2,
+              "isRevealed": false,
+              "pointCost": 55,
+              "title": "Asansör Görevlisi",
+              "text": "Gece asansör operatörü: 'Gece yarısından önce çatıya tek kişi çıktı — büyük postalı, şişmandı. 20 dakika sonra indi, elinde alet çantası vardı.'",
+              "mechanicType": "tanik_yuzlesme",
+              "yuzlesmeDialogu": [
+                {
+                  "soru": "Çatıya çıkan kişiyi tanıdınız mı?",
+                  "cevap": "Hayır ama büyük postallı, kilolu birisiydi. Elinde deri çanta.",
+                  "yalan": false
+                },
+                {
+                  "soru": "Haruki Sendo mu olabilir?",
+                  "cevap": "Hayır, o ince yapılıydı. Bu adam çok daha şişmandı.",
+                  "yalan": false
+                },
+                {
+                  "soru": "Yuki Tanamoto'yu gördünüz mü?",
+                  "cevap": "O küçük Japon gazeteci miydi? Hayır, o aşağıdaydı.",
+                  "yalan": false
+                }
+              ],
+              "deductionHint": "Şişman, büyük postalı — tarif İvan'la birebir örtüşüyor."
+            },
+            {
+              "id": "c3",
+              "type": "kanit",
+              "revealOrder": 3,
+              "isRevealed": false,
+              "pointCost": 55,
+              "title": "Teknik Odadaki Parmak İzleri",
+              "text": "Çatı teknik odasının ısıtıcı boru kapağında parmak izi bulundu; kapak tıkama malzemesiyle (pamuk + macun) dolu bırakılmıştı.",
+              "mechanicType": "parmak_izi",
+              "parmakIziVerisi": {
+                "aciklama": "Çatı teknik odasındaki ısıtıcı boru kapağından alınan parmak izi örnekleri. Japonya Ulusal Polis Teşkilatı kayıtlarıyla karşılaştır.",
+                "izler": [
+                  {
+                    "izId": "iz1",
+                    "konum": "Boru kapağı üst köşe",
+                    "eslesme": "s3",
+                    "ipucu": "Sol baş parmak — büyük spiral desen, İvan Petrov'un Interpol dosyasındaki kayıtla eşleşiyor"
+                  },
+                  {
+                    "izId": "iz2",
+                    "konum": "Kapak vidası çevresi",
+                    "eslesme": "s3",
+                    "ipucu": "Sağ işaret parmağı — aynı şüpheliye ait, kapağa baskı uygularken bırakılmış"
+                  }
+                ],
+                "sonuc": "Her iki iz kesinlikle İvan Petrov'a (s3) ait. Kapağı eliyle açmış ve sabotaj malzemesi yerleştirmiş."
+              },
+              "deductionHint": "Parmak izleri İvan'ı teknik odaya ve sabotaja kesin olarak bağlıyor."
+            },
+            {
+              "id": "c4",
+              "type": "dogrudan",
+              "revealOrder": 4,
+              "isRevealed": false,
+              "pointCost": 55,
+              "title": "Mikro Film",
+              "text": "Kurbanın kasa çantasında İvan Petrov'u Sovyet istihbaratıyla ilişkilendiren mikro film kopyası bulundu. Üzerinde 'YARINKAD.' notu — yarın kamuoyuyla paylaşılacaktı.",
+              "mechanicType": "gorsel_ipucu",
+              "gorselAciklama": "Mikro film büyütüldüğünde: KGB tanımlama formu, fotoğraflı. Kod adı: 'VOLKOV'. Gerçek kimlik: İvan Petrov. Görev: Japonya elektronik sektörü istihbarat toplama. Aktif ajan: 1979—devam ediyor. Kurbanın el yazısıyla not: 'Yarın basına — YARINKAD.' Filmin teslimi İvan'ı kesinlikle mahvedecekti.",
+              "deductionHint": "Kurban İvan'ı ifşa edecekti — bu cinayeti için yeterli ve acil motif."
+            },
+            {
+              "id": "c5",
+              "type": "eleme",
+              "revealOrder": 5,
+              "isRevealed": false,
+              "pointCost": 55,
+              "title": "Haruki'nin Konferans Kaydı",
+              "text": "Otel konferans salonunun katılım kartı: Haruki Sendo gece yarısı hukuk ekibiyle patent değerlendirme toplantısı yaptı; 5 avukat imzası mevcut, toplantı sabah 2'ye kadar sürdü.",
+              "mechanicType": "text",
+              "deductionHint": "Haruki'nin çatıya ya da odaya gitme vakti yoktu — alibi sağlam."
+            },
+            {
+              "id": "c6",
+              "type": "sifreli",
+              "revealOrder": 6,
+              "isRevealed": false,
+              "pointCost": 55,
+              "title": "Şifreli Telgraf",
+              "text": "İvan'ın otel odasında Kiril alfabesiyle yazılmış şifreli telgraf bulundu. KGB Moskova 7. Birim'den gelen emir.",
+              "mechanicType": "gorsel_ipucu",
+              "gorselAciklama": "Kısmen yanık telgraf kâğıdı. Sol üst köşede damga: КГБ МОСКВА — 7. BÖLÜM. Mesaj: ПЛЁНКУ УНИЧТОЖИТЬ ДО ПЕРЕДАЧИ — ИСТОЧНИК ЛИКВИДИРОВАТЬ. Türkçe: 'Film teslim edilmeden imha et — kaynağı tasfiye et.' Alıcı kodu: И.П. (İvan Petrov). Tarih: cinayetten 6 saat önce.",
+              "deductionHint": "'Kaynağı tasfiye et' = kurban. KGB emri İvan'a verilmiş."
+            }
+          ],
+          "solution": {
+            "suspectId": "s3",
+            "weaponId": "w2",
+            "locationId": "l2"
+          }
         }
       ]
     },
@@ -6475,6 +6840,333 @@
           },
           "solutionNarrative": "Sinon, Juno'nun planını ve Dido'nun parasını kullanarak kendi hesabını kapattı. Hançerini Latium ormanında kullandı. Truva Atı'nı tasarlayan adam, bu sefer de bir ihanetle tarihe geçti.",
           "specialMechanic": "phone_chain_dna_anagram_timeline"
+        },
+        {
+          "puzzleId": "mit_004",
+          "title": "Ra'nın Gözü",
+          "subtitle": "Mısır Mitolojisi — Heliopolis Tapınağı",
+          "difficulty": 4,
+          "difficultyLabel": "Başkomiser",
+          "stars": "★★★★☆",
+          "gridSize": "3x3",
+          "timeLimit": 600,
+          "basePoints": 900,
+          "penaltyPerWrongAccusation": 150,
+          "cluePointCost": 55,
+          "story": "Güneş Tanrısı Ra'nın baş rahibi Neferhor, Heliopolis'in kutsal iç tapınağında ölü bulundu — vücudu sfenks pozisyonunda, yüzü güneşe dönük bırakılmış. Kutsal anka kuşunun tüyü cesedinin üstünde. Üç tanrısal figür o gece tapınakta bulunuyordu.",
+          "atmosphere": "Sütunlar arasında yağ lambası ışığı titriyor; Nil'in kokusu taş duvarlara işlemiş, kutsal ibis sesi uzaktan duyuluyor.",
+          "suspects": [
+            {
+              "id": "s1",
+              "name": "Thoth",
+              "icon": "📜",
+              "description": "Bilgelik ve yazı tanrısı, ibis başlı",
+              "detail": "Hesaplar tanrısı; Neferhor'un kendisine ait kehanetleri çarpıttığını öğrenmişti."
+            },
+            {
+              "id": "s2",
+              "name": "Set",
+              "icon": "🌪️",
+              "description": "Kaos ve çöl tanrısı, hayvan başlı",
+              "detail": "Karanlık güçlerin temsilcisi; kurbanın Ra'ya sunduğu rapor Set'i tapınaktan kovacaktı."
+            },
+            {
+              "id": "s3",
+              "name": "Sekhmet",
+              "icon": "🦁",
+              "description": "Savaş ve şifa tanrıçası, aslan başlı",
+              "detail": "Kurban, Sekhmet'in şifa ritüellerini sahte ilan etmişti — itibarı yerle bir olmuştu."
+            }
+          ],
+          "weapons": [
+            {
+              "id": "w1",
+              "name": "Zehirli papirüs mürekkebi",
+              "icon": "🖋️",
+              "description": "Thoth'un kullandığı, kobra zehriyle hazırlanmış kutsal mürekkep."
+            },
+            {
+              "id": "w2",
+              "name": "Çöl kumu fırtınası tuzağı",
+              "icon": "🌪️",
+              "description": "Set'in çağırdığı kum dalgası; akciğerleri doldurmuş."
+            },
+            {
+              "id": "w3",
+              "name": "Sekhmet'in pençe kancası",
+              "icon": "🗡️",
+              "description": "Ritüel demir kanca — savaş aracı."
+            }
+          ],
+          "locations": [
+            {
+              "id": "l1",
+              "name": "Kutsal iç oda",
+              "icon": "☀️",
+              "description": "Ra'nın altın heykelinin durduğu en kutsal alan."
+            },
+            {
+              "id": "l2",
+              "name": "Papirüs arşivi",
+              "icon": "📚",
+              "description": "Thoth'un yazdığı tüm kehanetlerin saklandığı oda."
+            },
+            {
+              "id": "l3",
+              "name": "Çöl kapısı avlusu",
+              "icon": "🏜️",
+              "description": "Tapınağın çöle açılan dış avlusu."
+            }
+          ],
+          "clues": [
+            {
+              "id": "c1",
+              "type": "adli",
+              "revealOrder": 1,
+              "isRevealed": true,
+              "pointCost": 0,
+              "title": "Tanrısal Otopsi",
+              "text": "Kurbanın ciğerleri kum ve ince taş tozu dolmuş; boğaza veya vücuda dışarıdan müdahale yok. Ölüm, iç organların kumla tıkanmasından. Pençe ya da mürekkep izi bulunmuyor.",
+              "mechanicType": "text",
+              "deductionHint": "Kum dolu ciğerler — w2 (kum fırtınası) tek uyumlu silah."
+            },
+            {
+              "id": "c2",
+              "type": "tanik",
+              "revealOrder": 2,
+              "isRevealed": false,
+              "pointCost": 55,
+              "title": "İbis Kuşunun Tanıklığı",
+              "text": "Tapınağın kutsal ibis kuşu, olay gecesi çöl kapısı avlusundan gelen güçlü rüzgâr sesine ürküp kafesten çıkmış ve kutsal iç odaya uçmuş. İbis yalnızca doğaüstü kum gücüne tepki verir.",
+              "mechanicType": "text",
+              "deductionHint": "Kum gücü çöl kapısı avlusundan geldi — Set oradadır."
+            },
+            {
+              "id": "c3",
+              "type": "kanit",
+              "revealOrder": 3,
+              "isRevealed": false,
+              "pointCost": 55,
+              "title": "Set'in Kum İzi",
+              "text": "Çöl kapısı avlusundaki kum desenleri incelendi: girdap şeklinde bir iz — Set'in kum fırtınası çağırma ritüelinin özgün izi bu şekli bırakır, diğer tanrıların gücüyle oluşamaz.",
+              "mechanicType": "gorsel_ipucu",
+              "gorselAciklama": "Kum deseninin papirüse çizilmiş kopyası: merkezden dışa doğru genişleyen çift sarmal girdap. Tapınak yazıtlarına göre bu desen yalnızca Set'in 'Sahara Fırtınası' büyüsüyle oluşabilir. Sekhmet'in pençesi düz paralel çizgiler bırakır; Thoth'un büyüsü ise lotus noktaları şeklinde görünür. Girdap yalnızca Set'e özgü.",
+              "deductionHint": "Girdap izi yalnızca Set'e ait güç — onu avluya ve olaya bağlıyor."
+            },
+            {
+              "id": "c4",
+              "type": "dogrudan",
+              "revealOrder": 4,
+              "isRevealed": false,
+              "pointCost": 55,
+              "title": "Ra'ya Sunulan Rapor",
+              "text": "Kurbanın elinde kısmen yanmış bir papirüs: 'Set'in varlığı tapınağın dengesini bozuyor; Ra'ya iletilmeli…' yazıyor. Set'i kovacak bu raporun teslimi o gece planlanmıştı.",
+              "mechanicType": "text",
+              "deductionHint": "Rapor Set'i hedef alıyor — güçlü motif."
+            },
+            {
+              "id": "c5",
+              "type": "eleme",
+              "revealOrder": 5,
+              "isRevealed": false,
+              "pointCost": 55,
+              "title": "Thoth'un Gece Yazısı",
+              "text": "Papirüs arşivinde Thoth'un gece boyunca yazdığı kehanet metni bulundu: 47 papirüs sayfası, mürekkep taze ama kurumaya başlamış — bu kadar yazı en az 5 saat alır ve olay saatiyle örtüşüyor.",
+              "mechanicType": "text",
+              "deductionHint": "Thoth arşivden çıkmamış — kurbanın yanında olamaz."
+            },
+            {
+              "id": "c6",
+              "type": "sifreli",
+              "revealOrder": 6,
+              "isRevealed": false,
+              "pointCost": 55,
+              "title": "Hiyeroglif Mesajı",
+              "text": "Kurbanun ayağının yanındaki taşa kazılı hiyeroglif: Mısır uzmanlarınca latin harflerine çevirilen harf dizisi, doğru sıralanınca bir mesaj ortaya çıkıyor.",
+              "mechanicType": "anagram",
+              "anagramVerisi": {
+                "karisik": "TUKASOYUT",
+                "dogru": "KAOS YUTTU",
+                "aciklama": "Taşa kazılı hiyerogliflerin çözümü 9 harfli bir ifade veriyor. Mısır dilinde 'kaos' sözcüğü Set'in logosuyla özdeştir — bu mesaj katilinin imzasıdır.",
+                "ipucu": "9 harf, 2 kelime. İlk kelime 4 harf (S ile biter), ikinci kelime 5 harf."
+              },
+              "deductionHint": "'KAOS YUTTU' = Set'in kum fırtınası kurbanı yuttu. Katil imzasını bırakmış."
+            }
+          ],
+          "solution": {
+            "suspectId": "s2",
+            "weaponId": "w2",
+            "locationId": "l3"
+          }
+        },
+        {
+          "puzzleId": "mit_005",
+          "title": "Odin'in Bedeli",
+          "subtitle": "İskandinav Mitolojisi — Asgard, Valhalla Kapısı",
+          "difficulty": 4,
+          "difficultyLabel": "Başkomiser",
+          "stars": "★★★★☆",
+          "gridSize": "3x3",
+          "timeLimit": 600,
+          "basePoints": 900,
+          "penaltyPerWrongAccusation": 150,
+          "cluePointCost": 55,
+          "story": "Valhalla'nın büyük kapısını koruyan yıldırım kahramanı Bjorn Ironfist, kapı önünde zırhıyla birlikte çökmüş halde bulundu — ama üzerinde bir yara bile yok. Odin'in kutsal kuzgunları yankı vermeden sessizleşti. Üç tanrısal figür o gece Valhalla'ya girdi.",
+          "atmosphere": "Kuzey ışıkları gökyüzünde titrerken, demir ve kan kokusu yüklü rüzgâr Bifröst'ten esiyor.",
+          "suspects": [
+            {
+              "id": "s1",
+              "name": "Loki",
+              "icon": "🐍",
+              "description": "Hile ve dönüşüm tanrısı",
+              "detail": "Sonsuz kurnazlığıyla tanınır; kurban Loki'nin Odin'e karşı kurduğu son komplosunu fark etmişti."
+            },
+            {
+              "id": "s2",
+              "name": "Freya",
+              "icon": "🌸",
+              "description": "Aşk ve savaş tanrıçası",
+              "detail": "Valkyrie'lerin lideri; kurban Freya'nın seçtiği savaşçıların listesini değiştirmişti — bu ona ihanet sayılırdı."
+            },
+            {
+              "id": "s3",
+              "name": "Tyr",
+              "icon": "⚔️",
+              "description": "Adalet ve savaş tanrısı, tek elli",
+              "detail": "Kurban, Tyr'ın onuruna yaraşır bir ölümle ölmediğini Valhalla kayıtlarına geçirmişti."
+            }
+          ],
+          "weapons": [
+            {
+              "id": "w1",
+              "name": "Loki'nin zehirli rünleri",
+              "icon": "🔮",
+              "description": "Taşa kazılı lanet rünleri — içten çürütür."
+            },
+            {
+              "id": "w2",
+              "name": "Freya'nın uyku büyüsü tozları",
+              "icon": "✨",
+              "description": "Sonsuz uyku veren altın tozlar — dışarıdan iz bırakmaz."
+            },
+            {
+              "id": "w3",
+              "name": "Tyr'ın yargı kılıcı",
+              "icon": "🗡️",
+              "description": "Adalet kılıcı — yalnızca haksızı keser."
+            }
+          ],
+          "locations": [
+            {
+              "id": "l1",
+              "name": "Valhalla kapısı",
+              "icon": "🚪",
+              "description": "Devasa meşe kapı — kurbanın nöbet yeri."
+            },
+            {
+              "id": "l2",
+              "name": "Rün odası",
+              "icon": "🪨",
+              "description": "Loki'nin lanet rünlerini sakladığı gizli oda."
+            },
+            {
+              "id": "l3",
+              "name": "Valkyrie bahçesi",
+              "icon": "🌺",
+              "description": "Freya'nın savaşçı listelerini tuttuğu kutsal bahçe."
+            }
+          ],
+          "clues": [
+            {
+              "id": "c1",
+              "type": "adli",
+              "revealOrder": 1,
+              "isRevealed": true,
+              "pointCost": 0,
+              "title": "Tanrısal Muayene",
+              "text": "Kurbanın bedeninde hiçbir kesik ya da leke yok. Gözleri kapalı, yüzü huzurlu — savaş yarasına değil, derin bir uykuya çekilmişe benziyor. Ağzında altın rengi iz: peri tozuna özgü kalıntı.",
+              "mechanicType": "text",
+              "deductionHint": "Altın iz ve yarasız ölüm — w2 (uyku büyüsü tozları) tek uyumlu silah."
+            },
+            {
+              "id": "c2",
+              "type": "tanik",
+              "revealOrder": 2,
+              "isRevealed": false,
+              "pointCost": 55,
+              "title": "Kuzgunların Sesi",
+              "text": "Odin'in iki kuzgunu Huginn ve Muninn, sabah raporlarında Valkyrie bahçesinde gece geç saatte altın ışık gördüklerini Odin'e iletti — bu ışık yalnızca Freya'nın büyüsüyle açığa çıkar.",
+              "mechanicType": "text",
+              "deductionHint": "Kuzgunlar altın ışığı bahçede gördü — Freya orada büyü kullanmış."
+            },
+            {
+              "id": "c3",
+              "type": "kanit",
+              "revealOrder": 3,
+              "isRevealed": false,
+              "pointCost": 55,
+              "title": "Bahçedeki Toz İzi",
+              "text": "Valkyrie bahçesinin taş zeminine altın toz serpilmiş — analiz: Freya'nın kendi büyü kitabında tarif edilen 'Sonsuz Uyku Tozu' bileşimiyle birebir eşleşiyor. Başka tanrı bu tozu üretemez.",
+              "mechanicType": "gorsel_ipucu",
+              "gorselAciklama": "Altın toz numunesi büyütme taşıyla inceleniyor. Freya'nın büyü kitabındaki 'Sonsuz Uyku Tozu' tarifi: Asgard gece çiçeği (3 yaprak), Freya'nın saçından alınan ipek tel (kırpılmış), Valhalla pınarından gece suyu. Bu bileşim Freya'nın dışındaki hiçbir tanrı tarafından üretilemez — bileşim analizi birebir eşleşiyor. Bahçede yalnızca Freya'nın geçtiği anlaşılıyor.",
+              "deductionHint": "Toz yalnızca Freya'ya ait — onu bahçeye ve silaha kesin olarak bağlıyor."
+            },
+            {
+              "id": "c4",
+              "type": "dogrudan",
+              "revealOrder": 4,
+              "isRevealed": false,
+              "pointCost": 55,
+              "title": "Değiştirilen Liste",
+              "text": "Freya'nın savaşçı seçim listesinde kurban Bjorn'un ismi el yazısıyla üstü çizilmiş ve yerine başkası yazılmış. Bjorn bu değişikliği Odin'e bildirmek üzereydi.",
+              "mechanicType": "text",
+              "deductionHint": "Bjorn Freya'yı ifşa edecekti — en güçlü motif."
+            },
+            {
+              "id": "c5",
+              "type": "eleme",
+              "revealOrder": 5,
+              "isRevealed": false,
+              "pointCost": 55,
+              "title": "Loki'nin Rün Odası Kaydı",
+              "text": "Rün odasının kapısına kazılı koruyucu büyü her girişi kaydeder: o gece yalnızca Loki girmiş ve çıkmış. Rün odası, Valhalla kapısından çok uzak — aynı anda iki yerde olamaz.",
+              "mechanicType": "text",
+              "deductionHint": "Loki rün odasında kayıtlı — Valhalla kapısına gidemezdi."
+            },
+            {
+              "id": "c6",
+              "type": "tanik_yuzlesme",
+              "revealOrder": 6,
+              "isRevealed": false,
+              "pointCost": 55,
+              "title": "Freya ile Yüzleşme",
+              "text": "Toz analizi ve kuzgunların tanıklığı Freya'ya gösterildi. Uzun sessizliğin ardından itiraf geldi.",
+              "mechanicType": "tanik_yuzlesme",
+              "yuzlesmeDialogu": [
+                {
+                  "soru": "O gece Valkyrie bahçesindeydınız mı?",
+                  "cevap": "Bahçem benim korumamdadır. Her gece orada olmak hakkım.",
+                  "yalan": false
+                },
+                {
+                  "soru": "Bjorn'un listeden silinmesini siz mi yaptınız?",
+                  "cevap": "Liste benim. Değiştirme hakkım var.",
+                  "yalan": false
+                },
+                {
+                  "soru": "Uyku tozunu Bjorn'a siz mi verdiniz?",
+                  "cevap": "Bjorn ertesi gün Odin'e gidecekti. Bir Valkyrie'nin sırrı ölümden değerlidir.",
+                  "yalan": false
+                }
+              ],
+              "deductionHint": "Freya'nın kendi itirafı — cinayet ve motif doğrulandı."
+            }
+          ],
+          "solution": {
+            "suspectId": "s2",
+            "weaponId": "w2",
+            "locationId": "l3"
+          }
         }
       ]
     },
@@ -7440,6 +8132,381 @@
           },
           "solutionNarrative": "Nexus (Marcus Elarne), 4 yıllık emeği ve %40 payının sıfırlanması için intikam aldı. FBI tuzağını fırsat bilerek maktulü sunucu çiftliğinde köşeye sıkıştırdı. Maktulün son sözü 'Nexus' oldu.",
           "specialMechanic": "phone_dna_anagram_timeline_face"
+        },
+        {
+          "puzzleId": "dij_004",
+          "title": "Beğeni Tuzağı",
+          "subtitle": "İstanbul, Influencer Ajansı — Günümüz",
+          "difficulty": 4,
+          "difficultyLabel": "Başkomiser",
+          "stars": "★★★★☆",
+          "gridSize": "3x3",
+          "timeLimit": 600,
+          "basePoints": 900,
+          "penaltyPerWrongAccusation": 150,
+          "cluePointCost": 55,
+          "story": "Türkiye'nin en büyük influencer ajansı TrendHub'ın CEO'su Kerem Aydoğan, ofis binasının sunucu odasında ölü bulundu. Ekranlar hâlâ açık, içeride binlerce kullanıcının kişisel verisini gösteren gösterge paneli parlıyor. Üç kişi o gece binada kalıyordu.",
+          "atmosphere": "Sunucu raflarının soğutucu fanları uğulduyor; mavi LED'ler steril bir ışık veriyor — kan orada çok yanlış görünüyor.",
+          "suspects": [
+            {
+              "id": "s1",
+              "name": "Seda Mirkan",
+              "icon": "📸",
+              "description": "Ajansın en büyük influencer müşterisi, 3M takipçili",
+              "detail": "27 yaşında, karizmatik; kurban Seda'nın takipçi verilerinin sahte bot'larla şişirildiğini reklam verenlerden gizlediğini öğrenmişti."
+            },
+            {
+              "id": "s2",
+              "name": "Tarık Demirbaş",
+              "icon": "💾",
+              "description": "Ajans veri mühendisi, back-end sorumlusu",
+              "detail": "34 yaşında, içe dönük; kurban Tarık'ın veri tabanından kullanıcı bilgilerini rakip firmaya sattığını keşfetmişti — yarın kovulacak ve savcıya bildirilecekti."
+            },
+            {
+              "id": "s3",
+              "name": "Dilek Aras",
+              "icon": "📊",
+              "description": "Marka ortaklık direktörü",
+              "detail": "41 yaşında, hırslı; kurban Dilek'in imzaladığı gizli komisyon sözleşmelerini denetim kuruluna açıklamak üzereydi."
+            }
+          ],
+          "weapons": [
+            {
+              "id": "w1",
+              "name": "Sunucu raf rayı",
+              "icon": "🖥️",
+              "description": "Metal sunucu kasası rayı — sökülmüş, keskin kenarlı."
+            },
+            {
+              "id": "w2",
+              "name": "Fiber optik kablo demeti",
+              "icon": "🔌",
+              "description": "Boğmak için kullanılmış yoğun kablo buketi."
+            },
+            {
+              "id": "w3",
+              "name": "UPS akü bloğu",
+              "icon": "🔋",
+              "description": "Kesintisiz güç kaynağı akü — 12 kg, küt darbe."
+            }
+          ],
+          "locations": [
+            {
+              "id": "l1",
+              "name": "Sunucu odası",
+              "icon": "💻",
+              "description": "Veri merkezinin soğuk ve gürültülü kalbi."
+            },
+            {
+              "id": "l2",
+              "name": "Açık ofis katı",
+              "icon": "🏢",
+              "description": "İçerik üretim masaları ve stüdyo."
+            },
+            {
+              "id": "l3",
+              "name": "CEO ofisi",
+              "icon": "🪟",
+              "description": "Cam duvarlar, panoramik Boğaz manzarası."
+            }
+          ],
+          "clues": [
+            {
+              "id": "c1",
+              "type": "adli",
+              "revealOrder": 1,
+              "isRevealed": true,
+              "pointCost": 0,
+              "title": "Adli BT Raporu",
+              "text": "Sunucu odasının giriş-çıkış logu: gece 02:14'te yalnızca bir çalışan kimliğiyle giriş yapılmış — Tarık Demirbaş'ın kartı. Kurban bu odaya bu kişiyle beraber girmiş olabilir ya da peşinden gelmiş.",
+              "mechanicType": "text",
+              "deductionHint": "Sunucu odasına giriş kartı Tarık'a ait — onu o mekânla doğrudan bağlıyor."
+            },
+            {
+              "id": "c2",
+              "type": "tanik",
+              "revealOrder": 2,
+              "isRevealed": false,
+              "pointCost": 55,
+              "title": "Güvenlik Görevlisi",
+              "text": "Bina güvenlik görevlisi Murat: 'Gece 02:00'de Tarık Bey sunucu odasına indi, elinde alet çantası vardı. 02:40'ta çıktı, terli ve soluklu görünüyordu. Başka kimse o kata inmedi.'",
+              "mechanicType": "tanik_yuzlesme",
+              "yuzlesmeDialogu": [
+                {
+                  "soru": "O gece sunucu katına kim indi?",
+                  "cevap": "Tarık Bey indi. Gece 02:00 civarında, elinde siyah deri çanta.",
+                  "yalan": false
+                },
+                {
+                  "soru": "Dilek Hanım sunucu katına indi mi?",
+                  "cevap": "Hayır, Dilek Hanım akşam 23:30'da binadan çıktı.",
+                  "yalan": false
+                },
+                {
+                  "soru": "Tarık kaç dakika kattaydı?",
+                  "cevap": "40 dakika kadar. Çıkınca terli ve soluk soluğaydı.",
+                  "yalan": false
+                }
+              ],
+              "deductionHint": "Tarık sunucu katında 40 dakika — zaman olay için yeterli."
+            },
+            {
+              "id": "c3",
+              "type": "kanit",
+              "revealOrder": 3,
+              "isRevealed": false,
+              "pointCost": 55,
+              "title": "Akü Bloğu Adli Analizi",
+              "text": "UPS akü bloğunun üstünde taze kan ve saç teli. Tarık'ın çantasında aynı model akü bloğu anahtarı — sadece veri mühendisleri bu anahtarı taşır.",
+              "mechanicType": "gorsel_ipucu",
+              "gorselAciklama": "Adli ışık altında UPS akü bloğu yüzeyi raporu:\n• Taze kan izi: DNA analizi kurbanla (%99.7) eşleşiyor\n• Saç teli (kök hücreli): Tarık Demirbaş'ın TrendHub İK dosyasındaki biyometriyle eşleşiyor\n• T-7 model anahtar izi: Bu anahtar yalnızca veri mühendisi kadrosuna tahsis edilir — Tarık Demirbaş aktif kullanıcı\n• Akünün raftan yerinden oynatıldığı toz dağılımından anlaşılıyor",
+              "deductionHint": "Kan + saç teli + anahtar izi: üç delil Tarık'ı akü bloğuna ve silaha bağlıyor."
+            },
+            {
+              "id": "c4",
+              "type": "dogrudan",
+              "revealOrder": 4,
+              "isRevealed": false,
+              "pointCost": 55,
+              "title": "Veri Satışı Kanıtı",
+              "text": "Kurbanın masaüstündeki son açık belge: Tarık Demirbaş imzalı rakip firmadan gelen 85.000 Euro'luk kripto ödeme makbuzu, ajansın kullanıcı veri tabanı dışa aktarım loguyla eşleştirilmiş. Sabah savcıya gönderilecekti.",
+              "mechanicType": "text",
+              "deductionHint": "Sabah savcı bildirimi — Tarık'ın bu geceyi bekleme nedeni açık."
+            },
+            {
+              "id": "c5",
+              "type": "eleme",
+              "revealOrder": 5,
+              "isRevealed": false,
+              "pointCost": 55,
+              "title": "Seda'nın Canlı Yayını",
+              "text": "Seda Mirkan, gece 01:30-03:00 arası ajansın stüdyosundan Instagram canlı yayını yaptı — 47.000 anlık izleyici, yayın kaydı sunucuda. Bu sürede sunucu katına inmesi imkânsız.",
+              "mechanicType": "text",
+              "deductionHint": "Seda 1.5 saat boyunca canlı yayında — sunucu odasında olamaz."
+            },
+            {
+              "id": "c6",
+              "type": "sifreli",
+              "revealOrder": 6,
+              "isRevealed": false,
+              "pointCost": 55,
+              "title": "Şifreli Slack Mesajı",
+              "text": "Tarık'ın kişisel Slack kanalında cinayetten 19 dakika önce gönderilen mesajlar.",
+              "mechanicType": "phone_chain",
+              "phoneVerisi": {
+                "aciklama": "Tarık Demirbaş'ın şifreli 'burner' Slack kanalı — adli ekip tarafından kurtarıldı. Gönderim saati: 01:55.",
+                "mesajlar": [
+                  {
+                    "id": "m1",
+                    "gonderen": "TarikD_7749",
+                    "alici": "anon_drop",
+                    "icerik": "Dosya 02:30'da temizlenir.",
+                    "saat": "01:55"
+                  },
+                  {
+                    "id": "m2",
+                    "gonderen": "TarikD_7749",
+                    "alici": "anon_drop",
+                    "icerik": "K.A. artık sorun olmaz.",
+                    "saat": "01:55"
+                  },
+                  {
+                    "id": "m3",
+                    "gonderen": "anon_drop",
+                    "alici": "TarikD_7749",
+                    "icerik": "Onaylandı. Ödeme yarın.",
+                    "saat": "01:57"
+                  }
+                ],
+                "sonuc": "TarikD_7749 = Tarık Demirbaş (IP eşleşmesiyle doğrulandı). 'K.A.' = Kerem Aydoğan. Cinayet 19 dakika önceden planlanmış ve onaylanmış."
+              },
+              "deductionHint": "'K.A. artık sorun olmaz' — Tarık cinayeti önceden organize etmiş."
+            }
+          ],
+          "solution": {
+            "suspectId": "s2",
+            "weaponId": "w3",
+            "locationId": "l1"
+          }
+        },
+        {
+          "puzzleId": "dij_005",
+          "title": "Son Token",
+          "subtitle": "Metaverse — VoxelCity NFT Platformu",
+          "difficulty": 4,
+          "difficultyLabel": "Başkomiser",
+          "stars": "★★★★☆",
+          "gridSize": "3x3",
+          "timeLimit": 600,
+          "basePoints": 900,
+          "penaltyPerWrongAccusation": 150,
+          "cluePointCost": 55,
+          "story": "VoxelCity'nin kurucusu ve baş geliştiricisi kullanıcı adı Zeta_Zero, gerçek kimliğiyle İzmir'deki evinde ölü bulundu — tam o anda platformun ana sunucusu çöktü ve 12 milyon dolarlık NFT koleksiyonu transferi başladı. Üç kişi o gece platformun yönetici kanalında aktifti.",
+          "atmosphere": "Üç monitör açık, kodlar akmaya devam ediyor; gerçek dünyada ölü, dijital dünyada ise varlıkları milisaniyelerle el değiştiriyor.",
+          "suspects": [
+            {
+              "id": "s1",
+              "name": "CipherX",
+              "icon": "🎮",
+              "description": "En büyük NFT koleksiyoncusu, gerçek adı Barış Eren",
+              "detail": "28 yaşında; kurban CipherX'in sahte 'NFT mint' belgesiyle 3 milyon dolar değerinde token bastığını keşfetmişti."
+            },
+            {
+              "id": "s2",
+              "name": "NullPtr",
+              "icon": "👾",
+              "description": "Platform güvenlik yöneticisi, gerçek adı Cansen Yılmaz",
+              "detail": "35 yaşında; akıllı sözleşme kodlarına arka kapı yerleştirmiş, kurban bunu fark etmişti."
+            },
+            {
+              "id": "s3",
+              "name": "MetaQueen",
+              "icon": "👑",
+              "description": "VoxelCity sanal galeri direktörü, gerçek adı Pınar Koru",
+              "detail": "31 yaşında; kurban MetaQueen'in kullanıcılara sahte 'eşsiz eser' satarken kopyaları farklı hesaplara da sattığını belgelemiş."
+            }
+          ],
+          "weapons": [
+            {
+              "id": "w1",
+              "name": "Programlı elektrik kesintisi",
+              "icon": "⚡",
+              "description": "Akıllı ev sistemine enjekte edilen kod — kalp ritim cihazını devre dışı bıraktı."
+            },
+            {
+              "id": "w2",
+              "name": "Zehirli soğutma sıvısı",
+              "icon": "🧪",
+              "description": "Bilgisayar soğutma sistemine karıştırılan toksik sıvı — buharlaşarak içildi."
+            },
+            {
+              "id": "w3",
+              "name": "Fiziksel baskın",
+              "icon": "👊",
+              "description": "Kurbanın evine girilip darp edildi."
+            }
+          ],
+          "locations": [
+            {
+              "id": "l1",
+              "name": "Kurbanın ev ofisi",
+              "icon": "🏠",
+              "description": "İzmir'deki çalışma odası, sunucu dolabı burada."
+            },
+            {
+              "id": "l2",
+              "name": "VoxelCity sunucu çiftliği",
+              "icon": "🌐",
+              "description": "İstanbul'daki fiziksel sunucu binası."
+            },
+            {
+              "id": "l3",
+              "name": "Akıllı ev kontrol merkezi",
+              "icon": "📡",
+              "description": "Evin IoT sistemlerini yöneten hub cihazı."
+            }
+          ],
+          "clues": [
+            {
+              "id": "c1",
+              "type": "adli",
+              "revealOrder": 1,
+              "isRevealed": true,
+              "pointCost": 0,
+              "title": "Dijital Otopsi",
+              "text": "Kurbanın göğsünde kalp ritim cihazı var. Adli mühendis raporu: cihaz tam gece 02:47'de dışarıdan gönderilen bir Bluetooth komutuyla devre dışı bırakılmış. Elektrik fiziksel değil, yazılım kaynaklı.",
+              "mechanicType": "text",
+              "deductionHint": "Ölüm yazılım komutuyla — w1 (programlı elektrik kesintisi) tek uyumlu silah."
+            },
+            {
+              "id": "c2",
+              "type": "tanik",
+              "revealOrder": 2,
+              "isRevealed": false,
+              "pointCost": 55,
+              "title": "Blockchain Logu",
+              "text": "Kurbanın ölüm anıyla aynı saniyede (02:47:03) NullPtr'ın cüzdanına 8.4 milyon dolar değerinde NFT transferi başlatılmış — bu transferin tetikleyici kodu kurbanın cihazındaki arka kapıyı kullandı.",
+              "mechanicType": "text",
+              "deductionHint": "Arka kapıyı kullanan transfer NullPtr'a gitti — arka kapıyı kim yerleştirmişti?"
+            },
+            {
+              "id": "c3",
+              "type": "kanit",
+              "revealOrder": 3,
+              "isRevealed": false,
+              "pointCost": 55,
+              "title": "Akıllı Ev Bağlantı Logu",
+              "text": "Ev IoT merkezi logu: gece 02:30'da kurbanın cihaz ağına uzaktan bağlantı. IP adresi NullPtr'ın daha önce kullandığı VPN düğümüyle eşleşiyor — bu düğüm yalnızca platform güvenlik yöneticilerine açık.",
+              "mechanicType": "gorsel_ipucu",
+              "gorselAciklama": "IoT merkezi ekran çıktısı — 3 kritik log satırı:\n[02:30:14] UZAK BAĞLANTI: IP 185.220.xxx.xxx — Tor çıkış düğümü\n[02:30:17] KİMLİK DOĞRULAMA: VPN_NODE_SEC_07 — yalnızca platform güvenlik yöneticilerine tahsisli\n[02:47:01] KOMUT GÖNDERİLDİ: /device/pacemaker BT_DISABLE_SIGNAL\nNot: VPN_NODE_SEC_07 → aktif kullanıcı: NullPtr (Cansen Yılmaz). Başka hiçbir çalışanın bu düğüme erişimi yok.",
+              "deductionHint": "VPN_NODE_SEC_07 yalnızca NullPtr'a ait — onu IoT saldırısına kesin olarak bağlıyor."
+            },
+            {
+              "id": "c4",
+              "type": "dogrudan",
+              "revealOrder": 4,
+              "isRevealed": false,
+              "pointCost": 55,
+              "title": "Arka Kapı Kodu",
+              "text": "Platform kaynak kodunda gizlenmiş fonksiyon bulundu: 'killswitch_v2'. Kod yorumunda 'NP_dev' kısaltması — NullPtr'ın geliştirici takma adı. Kurban bu kodu bulmuş ve silmek üzereydi.",
+              "mechanicType": "text",
+              "deductionHint": "'NP_dev' NullPtr'ın imzası — arka kapıyı o yerleştirmiş."
+            },
+            {
+              "id": "c5",
+              "type": "eleme",
+              "revealOrder": 5,
+              "isRevealed": false,
+              "pointCost": 55,
+              "title": "CipherX'in Token Panik Logu",
+              "text": "CipherX, tam olay anında kendi NFT'lerini aceleyle başka cüzdanlara dağıtıyordu — panik transferleri. Bu işlem Bluetooth komut göndermeyle eşzamanlı yapılamaz.",
+              "mechanicType": "text",
+              "deductionHint": "CipherX kendi panikindeydi — aynı anda IoT saldırısı yapamaz."
+            },
+            {
+              "id": "c6",
+              "type": "sifreli",
+              "revealOrder": 6,
+              "isRevealed": false,
+              "pointCost": 55,
+              "title": "NullPtr'ın Gizli Discord Mesajı",
+              "text": "NullPtr'ın özel Discord sunucusunda olay gecesi 01:10'da gönderilen mesajlar adli ekipçe kurtarıldı.",
+              "mechanicType": "phone_chain",
+              "phoneVerisi": {
+                "aciklama": "NullPtr'ın şifreli Discord sunucusu '#özel-ops' kanalı. Mesajlar cinayetten 97 dakika önce.",
+                "mesajlar": [
+                  {
+                    "id": "m1",
+                    "gonderen": "NullPtr",
+                    "alici": "#özel-ops",
+                    "icerik": "Zeta_Zero yarın kodu siliyor.",
+                    "saat": "01:10"
+                  },
+                  {
+                    "id": "m2",
+                    "gonderen": "NullPtr",
+                    "alici": "#özel-ops",
+                    "icerik": "Benim için killswitch çalışacak mı çalışmayacak mı belli olacak.",
+                    "saat": "01:10"
+                  },
+                  {
+                    "id": "m3",
+                    "gonderen": "NullPtr",
+                    "alici": "#özel-ops",
+                    "icerik": "Transfer hazır. 02:47 aktivasyon.",
+                    "saat": "01:12"
+                  }
+                ],
+                "sonuc": "NullPtr 'killswitch'i hem arka kapı kodu hem de cinayet planı olarak kullanmış. 02:47 aktivasyon saati ölüm saatiyle birebir örtüşüyor."
+              },
+              "deductionHint": "'02:47 aktivasyon' — NullPtr cinayetin saatini dakika dakika planlamış."
+            }
+          ],
+          "solution": {
+            "suspectId": "s2",
+            "weaponId": "w1",
+            "locationId": "l3"
+          }
         }
       ]
     },
@@ -8433,6 +9500,363 @@
           },
           "solutionNarrative": "Magda Stern, 20 yıldır kütüphanede gizli operasyonlar yürütüyordu. Maktul tehlikeli arşiv belgelerine ulaşmak üzereydi. Magda havalandırma sistemini zehirli gazla doldurdu — kapalı oda sırrı böyle çözüldü. Ödemeyi yapan kişi hâlâ bilinmiyor.",
           "specialMechanic": "anagram_dna_timeline_face_phone"
+        },
+        {
+          "puzzleId": "ede_004",
+          "title": "St. Mary Mead'in Gizli Defteri",
+          "subtitle": "İngiltere, St. Mary Mead — Miss Marple Evreni",
+          "difficulty": 3,
+          "difficultyLabel": "Dedektif",
+          "stars": "★★★☆☆",
+          "gridSize": "3x3",
+          "timeLimit": 600,
+          "basePoints": 750,
+          "penaltyPerWrongAccusation": 100,
+          "cluePointCost": 55,
+          "story": "St. Mary Mead köyünde saygın papaz Mr. Aubrey Helm, kilise müziği çalışması için geciktikten sonra vikare evinin çalışma odasında ölü bulundu — elinde kırık bir kalem, masasında yarım bırakılmış vaaz defteri. Miss Marple, sorgulamayı penceresinden gözlemlemekle yetinmedi.",
+          "atmosphere": "Güneş battıktan sonra İngiliz köyü sisi çöküyor; hanımelleri ve ıslak çim kokusu, kilise çanının son titreşimiyle karışıyor.",
+          "suspects": [
+            {
+              "id": "s1",
+              "name": "Bayan Dorothy Pryce",
+              "icon": "🎹",
+              "description": "Kilise org eğitmeni, kurbanın eski öğrencisi",
+              "detail": "52 yaşında, otoriter; papazın öğrenciliği döneminde yazdığı senfoniyi intihal ettiğini düşünüyor ve mahkeme sürecini başlatmıştı."
+            },
+            {
+              "id": "s2",
+              "name": "Dr. Felix Garnett",
+              "icon": "🩺",
+              "description": "Köy hekimi, papazın yakın dostu",
+              "detail": "61 yaşında, sevecen görünümlü; papaz Garnett'in geçmişte bir hastasını yanlış teşhisle kaybettiğini biliyordu ve bunu vaftiz defterine kaydetmişti."
+            },
+            {
+              "id": "s3",
+              "name": "Gerald Whitmore",
+              "icon": "📋",
+              "description": "Köy noteri, vasi sorumlusu",
+              "detail": "45 yaşında, gergin; kurban, Whitmore'un vefat eden bir kilise üyesinin vasiyetini tahrif ettiğini gösteren belgeye ulaşmıştı."
+            }
+          ],
+          "weapons": [
+            {
+              "id": "w1",
+              "name": "Kemanın teli",
+              "icon": "🎻",
+              "description": "Keman telinden koparılmış ince tel — boğmak için."
+            },
+            {
+              "id": "w2",
+              "name": "Baldıran özü",
+              "icon": "🌿",
+              "description": "Köyde biten baldırandan elde edilmiş bitki özü — çaya karıştırılmış."
+            },
+            {
+              "id": "w3",
+              "name": "Demir mektup açacağı",
+              "icon": "✉️",
+              "description": "Masa üstü ağır kesici araç."
+            }
+          ],
+          "locations": [
+            {
+              "id": "l1",
+              "name": "Çalışma odası",
+              "icon": "📖",
+              "description": "Vaftiz defterlerinin, vaaz notlarının saklandığı oda."
+            },
+            {
+              "id": "l2",
+              "name": "Kilise bahçesi",
+              "icon": "⛪",
+              "description": "Sarmaşıklı taş duvarlar, ıssız mezarlık yolu."
+            },
+            {
+              "id": "l3",
+              "name": "Vikarinin mutfağı",
+              "icon": "🍵",
+              "description": "Çay hazırlanan, yüksek tavanlı küçük mutfak."
+            }
+          ],
+          "clues": [
+            {
+              "id": "c1",
+              "type": "adli",
+              "revealOrder": 1,
+              "isRevealed": true,
+              "pointCost": 0,
+              "title": "Dr. Garnett'in İlk Muayenesi",
+              "text": "Kurban masasına yığılmış, dudakları mavimsi. Gırtlapta baskı ya da yara izi yok. Üstelik fincanında soğumuş çay ve ağzında acı ot aroması — Dr. Garnett bitkisel zehiri hemen tanıdı.",
+              "mechanicType": "text",
+              "deductionHint": "Mavimsi dudaklar ve acı ot — baldıran zehri, w2 uyumlu. Garnett'in çok hızlı tanıması ayrıca dikkat çekici."
+            },
+            {
+              "id": "c2",
+              "type": "tanik",
+              "revealOrder": 2,
+              "isRevealed": false,
+              "pointCost": 55,
+              "title": "Miss Marple'ın Gözlemi",
+              "text": "Miss Marple, öğleden sonra pencereden şunu gördü: Dr. Garnett, kilise bahçesinde uzun süre eğilmiş bir bitkinin yapraklarını topladı ve cebine koydu. 'Köy hekimlerinin bunu neden yaptığını çok iyi bilirim' dedi: ilaç için değil, zaman zaman başka amaçlar için.",
+              "mechanicType": "text",
+              "deductionHint": "Garnett bahçede baldıran yaprakları topladı — zehiri o hazırlayabilir."
+            },
+            {
+              "id": "c3",
+              "type": "kanit",
+              "revealOrder": 3,
+              "isRevealed": false,
+              "pointCost": 55,
+              "title": "Mutfaktaki Fincan",
+              "text": "Mutfakta yıkanmış ama silinmemiş bir fincan bulundu — içinde baldıran kalıntısı. Garnett'in parmak izi fincanın kulpunda. Garnett kurbanın çayını kendisi hazırladığını daha önce belirtmişti.",
+              "mechanicType": "parmak_izi",
+              "parmakIziVerisi": {
+                "aciklama": "Mutfaktaki porselen fincanın kulpundan alınan parmak izi örnekleri.",
+                "izler": [
+                  {
+                    "izId": "iz1",
+                    "konum": "Fincan kulpu — üst",
+                    "eslesme": "s2",
+                    "ipucu": "Sağ baş parmak, merkezi çember desen — Dr. Garnett'in yerel polis kaydıyla eşleşiyor"
+                  },
+                  {
+                    "izId": "iz2",
+                    "konum": "Fincan kulpu — alt",
+                    "eslesme": "s2",
+                    "ipucu": "Orta parmak izi — aynı kişiye ait, fincanı çay hazırlarken tutmuş"
+                  }
+                ],
+                "sonuc": "Her iki iz Dr. Felix Garnett'e (s2) ait. Fincanı o taşımış ve çayı o hazırlamış."
+              },
+              "deductionHint": "Garnett'in parmak izi zehirli fincan — onu mutfakta ve silaha bağlıyor."
+            },
+            {
+              "id": "c4",
+              "type": "dogrudan",
+              "revealOrder": 4,
+              "isRevealed": false,
+              "pointCost": 55,
+              "title": "Vaftiz Defterindeki Kayıt",
+              "text": "Kurbanın vaaz defterinin gizli bölmesinde not: 'Garnett — 1971 — E.H. vakası. Belgeyi belediye arşivine vereceğim.' E.H. yanlış teşhisle kaybedilen hasta. Garnett bunu biliyordu.",
+              "mechanicType": "text",
+              "deductionHint": "Kurban Garnett'i ifşa etmek üzereydi — en güçlü motif."
+            },
+            {
+              "id": "c5",
+              "type": "eleme",
+              "revealOrder": 5,
+              "isRevealed": false,
+              "pointCost": 55,
+              "title": "Dorothy Pryce'ın Konseri",
+              "text": "Bayan Pryce, olay saatinde kasabada bir müzik topluluğunun provası için yerli yabancı 12 kişinin önünde org çalıyordu. Konseri organize eden kulübün başkanı bunu onaylıyor.",
+              "mechanicType": "text",
+              "deductionHint": "Pryce 12 tanıkla sahnede — olay yerinde olamaz."
+            },
+            {
+              "id": "c6",
+              "type": "tanik_yuzlesme",
+              "revealOrder": 6,
+              "isRevealed": false,
+              "pointCost": 55,
+              "title": "Dr. Garnett ile Yüzleşme",
+              "text": "Fincan, yaprak toplama gözlemi ve vaftiz defteri notu Garnett'e sunuldu. Uzun sessizliğin ardından itiraf geldi.",
+              "mechanicType": "tanik_yuzlesme",
+              "yuzlesmeDialogu": [
+                {
+                  "soru": "Kilise bahçesinde baldıran mı topladınız?",
+                  "cevap": "Bazen bitkiler toplarım. Hekim olarak doğal bir alışkanlık.",
+                  "yalan": true
+                },
+                {
+                  "soru": "Papazın çayını siz mi hazırladınız?",
+                  "cevap": "Evet, çoğu zaman ben hazırlardım. Yakın dosttuyduk.",
+                  "yalan": false
+                },
+                {
+                  "soru": "E.H. vakasını biliyordunuz, değil mi?",
+                  "cevap": "O vakayı 50 yıldır taşıyorum. Papaz açıklamadan önce hâlâ iyi bir adam olarak ölmek istedim.",
+                  "yalan": false
+                }
+              ],
+              "deductionHint": "Garnett itiraf etti: zehirli çayı hazırladı, mutfakta uyguladı."
+            }
+          ],
+          "solution": {
+            "suspectId": "s2",
+            "weaponId": "w2",
+            "locationId": "l3"
+          }
+        },
+        {
+          "puzzleId": "ede_005",
+          "title": "Boğaz'ın Şahidi",
+          "subtitle": "İstanbul, 1960'lar — Ahmet Ümit Evreni",
+          "difficulty": 4,
+          "difficultyLabel": "Başkomiser",
+          "stars": "★★★★☆",
+          "gridSize": "3x3",
+          "timeLimit": 600,
+          "basePoints": 900,
+          "penaltyPerWrongAccusation": 150,
+          "cluePointCost": 55,
+          "story": "İstanbul'un siyasi açıdan çalkantılı 1960'larında, Beyoğlu'nun arka sokaklarından birinde muhalif gazeteci Nafi Karaçay ölü bulundu — masasında yarım bırakılmış röportaj kasedi, üzerinde kırık bir çakmak. Komiser Nevzat henüz emekli olmamıştı ve bu davayı hiçbir zaman kapatmadı.",
+          "atmosphere": "Beyoğlu'nda tramvay sesleri, ıslak taş kaldırım ve nargile dumanı; her köşede bir sır saklayan şehir, 1960'ların güneşi henüz doğmadan önce.",
+          "suspects": [
+            {
+              "id": "s1",
+              "name": "Süreyya Celal",
+              "icon": "🎙️",
+              "description": "Devlet radyosu spikeri, eski muhalefet gazetecisi",
+              "detail": "48 yaşında; kurban Süreyya'nın 1960 öncesinde istihbarat birimlerine isim verdiğine dair belgeye ulaşmıştı."
+            },
+            {
+              "id": "s2",
+              "name": "Belkıs Hanım",
+              "icon": "🌹",
+              "description": "Beyoğlu'nun tanınan meyhane sahibesi",
+              "detail": "55 yaşında, güçlü kişilikli; kurban meyhanede gerçekleşen bir ölümü araştırıyor, parmağın Belkıs'a uzanacağını hissediyordu."
+            },
+            {
+              "id": "s3",
+              "name": "Rıfat Boran",
+              "icon": "💰",
+              "description": "Karaborsacı, arka sokak tüccarı",
+              "detail": "39 yaşında, sinirli; kurban Boran'ın kaçakçılık ağıyla ilgili röportaj materyali topluyordu."
+            }
+          ],
+          "weapons": [
+            {
+              "id": "w1",
+              "name": "Demir yumruk",
+              "icon": "🥊",
+              "description": "Parmak delikleri olan döküm demir yumruk."
+            },
+            {
+              "id": "w2",
+              "name": "Sustalı çakı",
+              "icon": "🔪",
+              "description": "Beyoğlu'nun karanlık sokaklarında sık kullanılan bıçak."
+            },
+            {
+              "id": "w3",
+              "name": "İplik bobin teli",
+              "icon": "🧵",
+              "description": "Meyhane perdesinden sökülen ince ama sağlam tel."
+            }
+          ],
+          "locations": [
+            {
+              "id": "l1",
+              "name": "Gazeteci ofisi",
+              "icon": "🗞️",
+              "description": "Arka sokaktaki küçük matbaa odası, daktilo sesleri."
+            },
+            {
+              "id": "l2",
+              "name": "Meyhane arka odası",
+              "icon": "🍷",
+              "description": "Belkıs'ın muhbir toplantılarını yaptığı loş arka oda."
+            },
+            {
+              "id": "l3",
+              "name": "Arka sokak boşluğu",
+              "icon": "🌑",
+              "description": "İki bina arasındaki karanlık pasaj — iz bırakmaz."
+            }
+          ],
+          "clues": [
+            {
+              "id": "c1",
+              "type": "adli",
+              "revealOrder": 1,
+              "isRevealed": true,
+              "pointCost": 0,
+              "title": "Adli Müdür Raporu",
+              "text": "Kurbanın boynunda ince tel baskı izi — sustalı ya da yumrukla uyumlu değil. Tel izi düzensiz ve ince; tekstil kökenli bir nesne. Yara derin değil ama sürekli basınçla oluşmuş.",
+              "mechanicType": "text",
+              "deductionHint": "İnce tel baskı izi — w3 (iplik bobin teli) tek uyumlu silah."
+            },
+            {
+              "id": "c2",
+              "type": "tanik",
+              "revealOrder": 2,
+              "isRevealed": false,
+              "pointCost": 55,
+              "title": "Bakkal Amca",
+              "text": "Karşı dükkânın sahibi Hasip Bey: 'O gece arka sokaktan önce Belkıs Hanım geçti — elinde şal ya da ipe benzer bir şey tutuyordu. Peşinden de kurban. İkisi aynı yöne gittiler.'",
+              "mechanicType": "text",
+              "deductionHint": "Belkıs arka sokağa kurbanla beraber girdi — onu takip etti ya da çekti."
+            },
+            {
+              "id": "c3",
+              "type": "kanit",
+              "revealOrder": 3,
+              "isRevealed": false,
+              "pointCost": 55,
+              "title": "Meyhane Perdesi",
+              "text": "Meyhanenin arka oda perdesi incelendi: perdenin ip askısı kesilmiş, kesik yüzeyi taze. Bobin teli analizi: perde ipiyle özdeş bileşim. Belkıs'ın parmağı perdenin kopuk ucunda.",
+              "mechanicType": "parmak_izi",
+              "parmakIziVerisi": {
+                "aciklama": "Meyhanenin arka oda perdesinin koparılan ip ucundan alınan parmak izi örnekleri.",
+                "izler": [
+                  {
+                    "izId": "iz1",
+                    "konum": "İp ucu — kesilmiş taraf",
+                    "eslesme": "s2",
+                    "ipucu": "Başparmak izi, geniş oval desen — Belkıs Hanım'ın 1952 tarihli kimlik kartı kaydıyla eşleşiyor"
+                  },
+                  {
+                    "izId": "iz2",
+                    "konum": "İp beden kısmı",
+                    "eslesme": "s2",
+                    "ipucu": "İşaret parmağı — aynı kişiye ait, ipi çekerek koparırken bırakılmış"
+                  }
+                ],
+                "sonuc": "Her iki iz Belkıs Hanım'a (s2) ait. Perde ipini bizzat koparttığı ve silah olarak kullandığı kesin."
+              },
+              "deductionHint": "Tel meyhane perdesinden, iz Belkıs'tan — hem silahı hem katili işaret ediyor."
+            },
+            {
+              "id": "c4",
+              "type": "dogrudan",
+              "revealOrder": 4,
+              "isRevealed": false,
+              "pointCost": 55,
+              "title": "Röportaj Kasedi",
+              "text": "Kurbanın masasındaki kasette son röportaj yarıda kesilmiş: 'Belkıs Hanım, 1958'deki ölüm olayında isminiz geçiyor…' Bu cümlede daktilo sesi ve ardından statik gürültü. Görüşme kesilmiş.",
+              "mechanicType": "gorsel_ipucu",
+              "gorselAciklama": "Kaset etiketi: KARAÇAY — RÖPORTAJ 7B — 14 MAYIS 1968. Süre: 3 dakika 22 saniye. Son duyulan: 'Belkıs Hanım, 1958'deki ölüm olayında isminiz geçiyor…' Ardından ani ses: sandalye sürtünmesi, kapı çarpması. Statik. Kaset burada bitiyor. Görüşme Belkıs'ı köşeye sıkıştıran anda kesilmiş.",
+              "deductionHint": "Kasette tam Belkıs'ı itham eden anda ses kesiliyor — Belkıs röportajı duymuş ve harekete geçmiş."
+            },
+            {
+              "id": "c5",
+              "type": "eleme",
+              "revealOrder": 5,
+              "isRevealed": false,
+              "pointCost": 55,
+              "title": "Rıfat Boran'ın Loş Gecesi",
+              "text": "Rıfat Boran, olay saatinde Kapalıçarşı yakınlarındaki polisle rutin ifade veriyordu — kaçakçılıkla ilgisi olmayan başka bir olay için tutanak altına alınmıştı. İfade saati damgalı.",
+              "mechanicType": "text",
+              "deductionHint": "Rıfat poliste resmi ifadede — arka sokakta olamaz."
+            },
+            {
+              "id": "c6",
+              "type": "sifreli",
+              "revealOrder": 6,
+              "isRevealed": false,
+              "pointCost": 55,
+              "title": "Kırık Çakmaktaki Monogram",
+              "text": "Kurbanun üzerindeki kırık çakmakta oyulmuş harf: 'B.H.' — Belkıs Hanım'ın baş harfleri. Çakmak kurbanın değil; mücadele sırasında yere düşmüş, katil fark etmeden bırakmış.",
+              "mechanicType": "gorsel_ipucu",
+              "gorselAciklama": "Pirinç gövdeli çakmak — üst kapak içine el oyması: B.H. (süslü hat yazısı). Çakmak markası: Zippo, 1958 üretim. Kurbanın eşyaları arasında böyle bir çakmak kayıtlı değil. Parmak izi: çakmak gövdesinde Belkıs Hanım'a ait iki iz. Çakmak onu fiziksel olarak olay yerine bağlıyor.",
+              "deductionHint": "'B.H.' = Belkıs Hanım. Çakmağını olay yerinde bıraktı — kesin fiziksel delil."
+            }
+          ],
+          "solution": {
+            "suspectId": "s2",
+            "weaponId": "w3",
+            "locationId": "l3"
+          }
         }
       ]
     },

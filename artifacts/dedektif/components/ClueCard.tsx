@@ -14,6 +14,7 @@ import type {
   ClueDnaVerisi,
   ClueFotoVerisi,
   CluePhoneVerisi,
+  ClueParmakIziVerisi,
   ClueSifre,
   ClueTimelineVerisi,
   ClueYuzlesmeDialog,
@@ -266,6 +267,86 @@ function AnagramBlock({
         </Pressable>
       </View>
       {tried && <Text style={styles.anagramWrong}>Yanlış — tekrar dene</Text>}
+    </View>
+  );
+}
+
+function ParmakIziBlock({
+  parmakIziVerisi,
+  isSolved,
+  onSolve,
+}: {
+  parmakIziVerisi: ClueParmakIziVerisi;
+  isSolved: boolean;
+  onSolve: () => void;
+}) {
+  const [selected, setSelected] = useState<string | null>(null);
+  const [wrongAttempt, setWrongAttempt] = useState(false);
+
+  const handleSelect = (izId: string) => {
+    if (isSolved) return;
+    setSelected(izId);
+    setWrongAttempt(false);
+  };
+
+  const handleConfirm = () => {
+    if (!selected) return;
+    const iz = parmakIziVerisi.izler.find((i) => i.izId === selected);
+    if (iz && parmakIziVerisi.sonuc.includes(iz.eslesme)) {
+      onSolve();
+    } else {
+      setWrongAttempt(true);
+      setSelected(null);
+    }
+  };
+
+  if (isSolved) {
+    return (
+      <View style={styles.miniGameSolvedBlock}>
+        <MaterialIcons name="check-circle" size={20} color="#22c55e" />
+        <Text style={styles.miniGameSolvedText}>Parmak İzi Eşleşti!</Text>
+        <Text style={styles.miniGameAciklama}>{parmakIziVerisi.sonuc}</Text>
+      </View>
+    );
+  }
+
+  return (
+    <View style={styles.parmakIziBlock}>
+      <View style={styles.gorselHeader}>
+        <MaterialIcons name="fingerprint" size={14} color="#f97316" />
+        <Text style={[styles.gorselLabel, { color: "#f97316" }]}>PARMAK İZİ ANALİZİ</Text>
+      </View>
+      <Text style={styles.parmakIziAciklama}>{parmakIziVerisi.aciklama}</Text>
+      <Text style={styles.parmakIziSelectLabel}>Kanıt izini seç:</Text>
+      {parmakIziVerisi.izler.map((iz) => {
+        const isSelected = selected === iz.izId;
+        return (
+          <Pressable
+            key={iz.izId}
+            onPress={() => handleSelect(iz.izId)}
+            style={[
+              styles.parmakIziCard,
+              isSelected && styles.parmakIziCardSelected,
+            ]}
+          >
+            <View style={styles.parmakIziCardHeader}>
+              <MaterialIcons name="fingerprint" size={16} color={isSelected ? "#f97316" : "#64748b"} />
+              <Text style={[styles.parmakIziKonum, isSelected && { color: "#f97316" }]}>{iz.konum}</Text>
+            </View>
+            <Text style={styles.parmakIziIpucu}>{iz.ipucu}</Text>
+          </Pressable>
+        );
+      })}
+      {wrongAttempt && (
+        <Text style={styles.parmakIziWrong}>Yanlış iz — tekrar dene</Text>
+      )}
+      <Pressable
+        onPress={handleConfirm}
+        disabled={!selected}
+        style={[styles.parmakIziConfirmBtn, !selected && styles.parmakIziConfirmBtnDisabled]}
+      >
+        <Text style={styles.parmakIziConfirmText}>Eşleşmeyi Onayla</Text>
+      </Pressable>
     </View>
   );
 }
@@ -703,6 +784,15 @@ export default function ClueCard({
           />
         ) : null;
 
+      case "parmak_izi":
+        return clue.parmakIziVerisi ? (
+          <ParmakIziBlock
+            parmakIziVerisi={clue.parmakIziVerisi}
+            isSolved={isSolved}
+            onSolve={() => onSolveMechanic?.()}
+          />
+        ) : null;
+
       case "dna_match":
         return clue.dnaVerisi ? (
           <DnaMatchBlock
@@ -737,7 +827,7 @@ export default function ClueCard({
 
   const mechanicContent = isRevealed ? renderMechanicContent() : null;
   const showDeductionHint = clue.deductionHint && isRevealed &&
-    (mechanic === "text" || mechanic === "gorsel_ipucu" || mechanic === "ses_kaydi" || mechanic === "tanik_yuzlesme" || mechanic === "sifreli_mesaj" || mechanic === "phone_chain" || isSolved);
+    (mechanic === "text" || mechanic === "gorsel_ipucu" || mechanic === "ses_kaydi" || mechanic === "tanik_yuzlesme" || mechanic === "sifreli_mesaj" || mechanic === "phone_chain" || mechanic === "parmak_izi" || isSolved);
 
   return (
     <Animated.View style={[styles.container, animStyle]}>
@@ -1301,6 +1391,79 @@ const styles = StyleSheet.create({
     fontSize: 11,
     color: "#C8372D",
     textAlign: "center",
+  },
+  parmakIziBlock: {
+    backgroundColor: "#1a1000",
+    borderRadius: 8,
+    padding: 10,
+    marginTop: 10,
+    borderWidth: 1,
+    borderColor: "#f9731630",
+  },
+  parmakIziAciklama: {
+    fontSize: 11,
+    color: "#94a3b8",
+    lineHeight: 16,
+    marginBottom: 8,
+  },
+  parmakIziSelectLabel: {
+    fontSize: 11,
+    fontWeight: "700",
+    color: "#f97316",
+    marginBottom: 6,
+    letterSpacing: 0.5,
+  },
+  parmakIziCard: {
+    backgroundColor: "#0F1117",
+    borderRadius: 6,
+    padding: 8,
+    marginBottom: 6,
+    borderWidth: 1,
+    borderColor: "#f9731620",
+  },
+  parmakIziCardSelected: {
+    borderColor: "#f97316",
+    backgroundColor: "#f9731615",
+  },
+  parmakIziCardHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+    marginBottom: 4,
+  },
+  parmakIziKonum: {
+    fontSize: 12,
+    fontWeight: "700",
+    color: "#94a3b8",
+    flex: 1,
+  },
+  parmakIziIpucu: {
+    fontSize: 11,
+    color: "#64748b",
+    lineHeight: 15,
+    paddingLeft: 22,
+  },
+  parmakIziWrong: {
+    fontSize: 11,
+    color: "#C8372D",
+    textAlign: "center",
+    marginTop: 4,
+    marginBottom: 4,
+  },
+  parmakIziConfirmBtn: {
+    backgroundColor: "#f97316",
+    borderRadius: 8,
+    paddingVertical: 9,
+    alignItems: "center",
+    marginTop: 6,
+  },
+  parmakIziConfirmBtnDisabled: {
+    backgroundColor: "#1a1000",
+  },
+  parmakIziConfirmText: {
+    fontSize: 13,
+    fontWeight: "700",
+    color: "#0F1117",
   },
   timelineBlock: {
     backgroundColor: "#1a0a0a",

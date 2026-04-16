@@ -1,0 +1,237 @@
+[
+  {
+    "puzzleId": "mit_004",
+    "title": "Ra'nın Gözü",
+    "subtitle": "Mısır Mitolojisi — Heliopolis Tapınağı",
+    "difficulty": 4,
+    "difficultyLabel": "Başkomiser",
+    "stars": "★★★★☆",
+    "gridSize": "3x3",
+    "timeLimit": 600,
+    "basePoints": 900,
+    "penaltyPerWrongAccusation": 150,
+    "cluePointCost": 55,
+    "story": "Güneş Tanrısı Ra'nın baş rahibi Neferhor, Heliopolis'in kutsal iç tapınağında ölü bulundu — vücudu sfenks pozisyonunda, yüzü güneşe dönük bırakılmış. Kutsal anka kuşunun tüyü cesedinin üstünde. Üç tanrısal figür o gece tapınakta bulunuyordu.",
+    "atmosphere": "Sütunlar arasında yağ lambası ışığı titriyor; Nil'in kokusu taş duvarlara işlemiş, kutsal ibis sesi uzaktan duyuluyor.",
+    "suspects": [
+      {
+        "id": "s1",
+        "name": "Thoth",
+        "icon": "📜",
+        "description": "Bilgelik ve yazı tanrısı, ibis başlı",
+        "detail": "Hesaplar tanrısı; Neferhor'un kendisine ait kehanetleri çarpıttığını öğrenmişti."
+      },
+      {
+        "id": "s2",
+        "name": "Set",
+        "icon": "🌪️",
+        "description": "Kaos ve çöl tanrısı, hayvan başlı",
+        "detail": "Karanlık güçlerin temsilcisi; kurbanın Ra'ya sunduğu rapor Set'i tapınaktan kovacaktı."
+      },
+      {
+        "id": "s3",
+        "name": "Sekhmet",
+        "icon": "🦁",
+        "description": "Savaş ve şifa tanrıçası, aslan başlı",
+        "detail": "Kurban, Sekhmet'in şifa ritüellerini sahte ilan etmişti — itibarı yerle bir olmuştu."
+      }
+    ],
+    "weapons": [
+      { "id": "w1", "name": "Zehirli papirüs mürekkebi", "icon": "🖋️", "description": "Thoth'un kullandığı, kobra zehriyle hazırlanmış kutsal mürekkep." },
+      { "id": "w2", "name": "Çöl kumu fırtınası tuzağı", "icon": "🌊", "description": "Set'in çağırdığı kum dalgası; akciğerleri doldurmuş." },
+      { "id": "w3", "name": "Sekhmet'in pençe kancası", "icon": "🗡️", "description": "Ritüel demir kanca — savaş aracı." }
+    ],
+    "locations": [
+      { "id": "l1", "name": "Kutsal iç oda", "icon": "☀️", "description": "Ra'nın altın heykelinin durduğu en kutsal alan." },
+      { "id": "l2", "name": "Papirüs arşivi", "icon": "📚", "description": "Thoth'un yazdığı tüm kehanetlerin saklandığı oda." },
+      { "id": "l3", "name": "Çöl kapısı avlusu", "icon": "🏜️", "description": "Tapınağın çöle açılan dış avlusu." }
+    ],
+    "clues": [
+      {
+        "id": "c1",
+        "type": "adli",
+        "revealOrder": 1,
+        "isRevealed": true,
+        "pointCost": 0,
+        "title": "Tanrısal Otopsi",
+        "text": "Kurbanın ciğerleri kum ve ince taş tozu dolmuş; boğaza veya vücuda dışarıdan müdahale yok. Ölüm, iç organların kumla tıkanmasından. Pençe ya da mürekkep izi bulunmuyor.",
+        "mechanicType": "text",
+        "deductionHint": "Kum dolu ciğerler — w2 (kum fırtınası) tek uyumlu silah."
+      },
+      {
+        "id": "c2",
+        "type": "tanik",
+        "revealOrder": 2,
+        "isRevealed": false,
+        "pointCost": 55,
+        "title": "İbis Kuşunun Tanıklığı",
+        "text": "Tapınağın kutsal ibis kuşu, olay gecesi çöl kapısı avlusundan gelen güçlü rüzgâr sesine ürküp kafesten çıkmış ve kutsal iç odaya uçmuş. İbis yalnızca doğaüstü kum gücüne tepki verir.",
+        "mechanicType": "text",
+        "deductionHint": "Kum gücü çöl kapısı avlusundan geldi — Set oradadır."
+      },
+      {
+        "id": "c3",
+        "type": "kanit",
+        "revealOrder": 3,
+        "isRevealed": false,
+        "pointCost": 55,
+        "title": "Set'in Kum İzi",
+        "text": "Çöl kapısı avlusundaki kum desenleri incelendi: girdap şeklinde bir iz — Set'in kum fırtınası çağırma ritüelinin özgün izi bu şekli bırakır, diğer tanrıların gücüyle oluşamaz.",
+        "mechanicType": "gorsel_ipucu",
+        "deductionHint": "Girdap izi yalnızca Set'e ait güç — onu avluya ve olaya bağlıyor."
+      },
+      {
+        "id": "c4",
+        "type": "dogrudan",
+        "revealOrder": 4,
+        "isRevealed": false,
+        "pointCost": 55,
+        "title": "Ra'ya Sunulan Rapor",
+        "text": "Kurbanın elinde kısmen yanmış bir papirüs: 'Set'in varlığı tapınağın dengesini bozuyor; Ra'ya iletilmeli…' yazıyor. Set'i kovacak bu raporun teslimi o gece planlanmıştı.",
+        "mechanicType": "text",
+        "deductionHint": "Rapor Set'i hedef alıyor — güçlü motif."
+      },
+      {
+        "id": "c5",
+        "type": "eleme",
+        "revealOrder": 5,
+        "isRevealed": false,
+        "pointCost": 55,
+        "title": "Thoth'un Gece Yazısı",
+        "text": "Papirüs arşivinde Thoth'un gece boyunca yazdığı kehanet metni bulundu: 47 papirüs sayfası, mürekkep taze ama kurumaya başlamış — bu kadar yazı en az 5 saat alır ve olay saatiyle örtüşüyor.",
+        "mechanicType": "text",
+        "deductionHint": "Thoth arşivden çıkmamış — kurbanın yanında olamaz."
+      },
+      {
+        "id": "c6",
+        "type": "sifreli",
+        "revealOrder": 6,
+        "isRevealed": false,
+        "pointCost": 55,
+        "title": "Hiyeroglif Mesajı",
+        "text": "Kurbanın ayağının yanındaki taşa kazılı hiyeroglif: Mısır uzmanlarınca çevirisi 'KAOS YUTTU'. Mısır dilinde 'kaos' sözcüğünün simgesi Set'in logosu ile özdeştir.",
+        "mechanicType": "anagram",
+        "deductionHint": "'Kaos yuttu' = Set'in kum fırtınası kurbanı yuttu. Çözüm tamamlandı."
+      }
+    ],
+    "solution": { "suspectId": "s2", "weaponId": "w2", "locationId": "l3" }
+  },
+
+  {
+    "puzzleId": "mit_005",
+    "title": "Odin'in Bedeli",
+    "subtitle": "İskandinav Mitolojisi — Asgard, Valhalla Kapısı",
+    "difficulty": 4,
+    "difficultyLabel": "Başkomiser",
+    "stars": "★★★★☆",
+    "gridSize": "3x3",
+    "timeLimit": 600,
+    "basePoints": 900,
+    "penaltyPerWrongAccusation": 150,
+    "cluePointCost": 55,
+    "story": "Valhalla'nın büyük kapısını koruyan yıldırım kahramanı Bjorn Ironfist, kapı önünde zırhıyla birlikte çökmüş halde bulundu — ama üzerinde bir yara bile yok. Odin'in kutsal kuzgunları yankı vermeden sessizleşti. Üç tanrısal figür o gece Valhalla'ya girdi.",
+    "atmosphere": "Kuzey ışıkları gökyüzünde titrerken, demir ve kan kokusu yüklü rüzgâr Bifröst'ten esiyor.",
+    "suspects": [
+      {
+        "id": "s1",
+        "name": "Loki",
+        "icon": "🐍",
+        "description": "Hile ve dönüşüm tanrısı",
+        "detail": "Sonsuz kurnazlığıyla tanınır; kurban Loki'nin Odin'e karşı kurduğu son komplosunu fark etmişti."
+      },
+      {
+        "id": "s2",
+        "name": "Freya",
+        "icon": "🌸",
+        "description": "Aşk ve savaş tanrıçası",
+        "detail": "Valkyrie'lerin lideri; kurban Freya'nın seçtiği savaşçıların listesini değiştirmişti — bu ona ihanet sayılırdı."
+      },
+      {
+        "id": "s3",
+        "name": "Tyr",
+        "icon": "⚔️",
+        "description": "Adalet ve savaş tanrısı, tek elli",
+        "detail": "Kurban, Tyr'ın onuruna yaraşır bir ölümle ölmediğini Valhalla kayıtlarına geçirmişti."
+      }
+    ],
+    "weapons": [
+      { "id": "w1", "name": "Loki'nin zehirli rünleri", "icon": "🔮", "description": "Taşa kazılı lanet rünleri — içten çürütür." },
+      { "id": "w2", "name": "Freya'nın uyku büyüsü tozları", "icon": "✨", "description": "Sonsuz uyku veren altın tozlar — dışarıdan iz bırakmaz." },
+      { "id": "w3", "name": "Tyr'ın yargı kılıcı", "icon": "🗡️", "description": "Adalet kılıcı — yalnızca haksızı keser." }
+    ],
+    "locations": [
+      { "id": "l1", "name": "Valhalla kapısı", "icon": "🚪", "description": "Devasa meşe kapı — kurbanın nöbet yeri." },
+      { "id": "l2", "name": "Rün odası", "icon": "🪨", "description": "Loki'nin lanet rünlerini sakladığı gizli oda." },
+      { "id": "l3", "name": "Valkyrie bahçesi", "icon": "🌺", "description": "Freya'nın savaşçı listelerini tuttuğu kutsal bahçe." }
+    ],
+    "clues": [
+      {
+        "id": "c1",
+        "type": "adli",
+        "revealOrder": 1,
+        "isRevealed": true,
+        "pointCost": 0,
+        "title": "Tanrısal Muayene",
+        "text": "Kurbanın bedeninde hiçbir kesik ya da leke yok. Gözleri kapalı, yüzü huzurlu — savaş yarasına değil, derin bir uykuya çekilmişe benziyor. Ağzında altın rengi iz: peri tozuna özgü kalıntı.",
+        "mechanicType": "text",
+        "deductionHint": "Altın iz ve yarasız ölüm — w2 (uyku büyüsü tozları) tek uyumlu silah."
+      },
+      {
+        "id": "c2",
+        "type": "tanik",
+        "revealOrder": 2,
+        "isRevealed": false,
+        "pointCost": 55,
+        "title": "Kuzgunların Sesi",
+        "text": "Odin'in iki kuzgunu Huginn ve Muninn, sabah raporlarında Valkyrie bahçesinde gece geç saatte altın ışık gördüklerini Odin'e iletti — bu ışık yalnızca Freya'nın büyüsüyle açığa çıkar.",
+        "mechanicType": "text",
+        "deductionHint": "Kuzgunlar altın ışığı bahçede gördü — Freya orada büyü kullanmış."
+      },
+      {
+        "id": "c3",
+        "type": "kanit",
+        "revealOrder": 3,
+        "isRevealed": false,
+        "pointCost": 55,
+        "title": "Bahçedeki Toz İzi",
+        "text": "Valkyrie bahçesinin taş zeminine altın toz serpilmiş — analiz: Freya'nın kendi büyü kitabında tarif edilen 'Sonsuz Uyku Tozu' bileşimiyle birebir eşleşiyor. Başka tanrı bu tozu üretemez.",
+        "mechanicType": "dna_match",
+        "deductionHint": "Toz yalnızca Freya'ya ait — onu bahçeye ve silaha bağlıyor."
+      },
+      {
+        "id": "c4",
+        "type": "dogrudan",
+        "revealOrder": 4,
+        "isRevealed": false,
+        "pointCost": 55,
+        "title": "Değiştirilen Liste",
+        "text": "Freya'nın savaşçı seçim listesinde kurban Bjorn'un ismi el yazısıyla üstü çizilmiş ve yerine başkası yazılmış. Bjorn bu değişikliği Odin'e bildirmek üzereydi.",
+        "mechanicType": "text",
+        "deductionHint": "Bjorn Freya'yı ifşa edecekti — en güçlü motif."
+      },
+      {
+        "id": "c5",
+        "type": "eleme",
+        "revealOrder": 5,
+        "isRevealed": false,
+        "pointCost": 55,
+        "title": "Loki'nin Rün Odası Kaydı",
+        "text": "Rün odasının kapısına kazılı koruyucu büyü her girişi kaydeder: o gece yalnızca Loki girmiş ve çıkmış. Rün odası, Valhalla kapısından çok uzak — aynı anda iki yerde olamaz.",
+        "mechanicType": "text",
+        "deductionHint": "Loki rün odasında kayıtlı — Valhalla kapısına gidemezdi."
+      },
+      {
+        "id": "c6",
+        "type": "tanik_yuzlesme",
+        "revealOrder": 6,
+        "isRevealed": false,
+        "pointCost": 55,
+        "title": "Freya ile Yüzleşme",
+        "text": "Toz analizi ve kuzgunların tanıklığı Freya'ya gösterildi. Sessiz kaldı, ardından: 'Bjorn listenin değiştirildiğini biliyordu. Yarın Odin'e gidecekti. Bir Valkyrie'nin sırrı ölümden değerlidir.'",
+        "mechanicType": "tanik_yuzlesme",
+        "deductionHint": "Freya'nın kendi itirafı — cinayet ve motif doğrulandı."
+      }
+    ],
+    "solution": { "suspectId": "s2", "weaponId": "w2", "locationId": "l3" }
+  }
+]
