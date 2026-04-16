@@ -26,9 +26,6 @@
           "stars": "★☆☆☆☆",
           "gridSize": "3x3",
           "timeLimit": 600,
-          "basePoints": 500,
-          "penaltyPerWrongAccusation": 120,
-          "cluePointCost": 50,
           "story": "Topkapı Sarayı'nın harem dairesinde, Padişah'ın en gözde cariyesi ölü bulundu. Saray tabibi zehirlenme şüphesiyle vakayı bildirdi. Üç kişi haremin o bölümüne girebilirdi.",
           "atmosphere": "Gece yarısı. Kandil ışığı. Buhur kokusu. Dışarıdan yeniçeri nöbet sesi.",
           "suspects": [
@@ -181,9 +178,6 @@
           "stars": "★★☆☆☆",
           "gridSize": "3x3",
           "timeLimit": 540,
-          "basePoints": 650,
-          "penaltyPerWrongAccusation": 120,
-          "cluePointCost": 60,
           "story": "Cumhuriyetin ilk yıllarında Kapalıçarşı'nın en köklü antikacısı dükkânında ölü bulundu. Yanında taşıdığı, Kanuni Sultan Süleyman dönemine ait altın mühür kaybolmuştu.",
           "atmosphere": "Sabah erken. Çarşı henüz açılmış. Esnafın korkuyla fısıldaştığı dar pasaj.",
           "suspects": [
@@ -370,9 +364,6 @@
           "stars": "★★★☆☆",
           "gridSize": "3x3",
           "timeLimit": 480,
-          "basePoints": 800,
-          "penaltyPerWrongAccusation": 150,
-          "cluePointCost": 70,
           "story": "II. Abdülhamid'in paranoyasıyla örülü sarayında bir hafiye ölü bulundu. Padişahın güvendiği üç isimden biri gizli belgelerle birlikte hain olabilir.",
           "atmosphere": "Fırtınalı bir gece. Yıldız Sarayı'nın loş koridorları. Her köşede gölge.",
           "suspects": [
@@ -530,9 +521,6 @@
           "stars": "★★★★☆",
           "gridSize": "4x4",
           "timeLimit": 420,
-          "basePoints": 1000,
-          "penaltyPerWrongAccusation": 180,
-          "cluePointCost": 80,
           "story": "Haliç Tersanesi'nde inşaat halindeki savaş gemisi nedeniyle milyonluk bir sözleşme imzalanacaktı. Tersane Komutanı, imzadan bir gece önce ölü bulundu. Dört kişi tersaneye girebilirdi.",
           "atmosphere": "Denizden gelen rüzgar. Demir kokusu. Gemilerin gıcırtısı.",
           "suspects": [
@@ -750,9 +738,6 @@
           "stars": "★★★★★",
           "gridSize": "4x4",
           "timeLimit": 360,
-          "basePoints": 1500,
-          "penaltyPerWrongAccusation": 240,
-          "cluePointCost": 100,
           "story": "Ayasofya'nın müzeye dönüştürüldüğü 1934 yılında, dini mozaiklerin altındaki gizli Bizans hazinesi haritasını elinde bulunduran Rum arkeolog ölü bulundu. Dört kişi son görüşmesinde bulunmuştu.",
           "atmosphere": "Tarihin dönüm noktası. Siyasi gerilim. Her taş bir sır taşıyor.",
           "suspects": [
@@ -990,9 +975,6 @@
           "stars": "★☆☆☆☆",
           "gridSize": "3x3",
           "timeLimit": 600,
-          "basePoints": 500,
-          "penaltyPerWrongAccusation": 120,
-          "cluePointCost": 50,
           "story": "Oscar töreninin hemen ardından düzenlenen özel kokteylde ünlü bir yönetmen ölü bulundu. Birkaç saat önce en iyi film ödülünü kaybetmişti. Üç isim her zaman yanındaydı.",
           "atmosphere": "Kırmızı halı sona ermiş. Şampanya. Sahte gülüşler. Kıskançlık havada asılı.",
           "suspects": [
@@ -1152,9 +1134,6 @@
           "stars": "★★☆☆☆",
           "gridSize": "3x3",
           "timeLimit": 540,
-          "basePoints": 650,
-          "penaltyPerWrongAccusation": 120,
-          "cluePointCost": 60,
           "story": "Büyük bir film setinde, gece çekimi arasında kostüm tasarımcısı ölü bulundu. Elinde rakip stüdyoya ait gizli senaryo vardı.",
           "atmosphere": "Yapay ışıklar söndü. Set boş. Sahte dekor gerçek bir cinayet sahnesi oldu.",
           "suspects": [
@@ -1321,9 +1300,6 @@
           "stars": "★★★☆☆",
           "gridSize": "3x3",
           "timeLimit": 480,
-          "basePoints": 800,
-          "penaltyPerWrongAccusation": 150,
-          "cluePointCost": 70,
           "story": "Cannes'da En İyi Film ödülüne aday bir yapımcı, gala gecesi yatında ölü bulundu. Filminin rakip üç isim ödülü kaybetmesini istiyordu.",
           "atmosphere": "Akdeniz. Lüks yat. Parfüm ve tuz kokusu. Uzaktan müzik sesi.",
           "suspects": [
@@ -1483,9 +1459,6 @@
           "stars": "★★★★☆",
           "gridSize": "4x4",
           "timeLimit": 420,
-          "basePoints": 1000,
-          "penaltyPerWrongAccusation": 180,
-          "cluePointCost": 80,
           "story": "Yazarlar Sendikası toplantısının ardından genç bir senarist ölü bulundu. Elindeki senaryonun 5 stüdyoya satılmaya hazır olduğu biliniyordu.",
           "atmosphere": "Gece LA. Neon ışıkları. Herkes bir şeyler satmaya çalışıyor.",
           "suspects": [
@@ -1703,9 +1676,6 @@
           "stars": "★★★★★",
           "gridSize": "4x4",
           "timeLimit": 360,
-          "basePoints": 1500,
-          "penaltyPerWrongAccusation": 240,
-          "cluePointCost": 100,
           "story": "Hollywood'un en büyük ikonası, villasında ölü bulundu. Mirasını kimin alacağını bilen 4 kişi o gece oradaydı. Vasiyetname imzadan saatler önce değiştirilmişti.",
           "atmosphere": "Hills'in tepesi. Işıklı havuz. Servet ve gölge.",
           "suspects": [
@@ -1937,9 +1907,6 @@
           "stars": "★☆☆☆☆",
           "gridSize": "3x3",
           "timeLimit": 600,
-          "basePoints": 500,
-          "penaltyPerWrongAccusation": 120,
-          "cluePointCost": 50,
           "story": "Mars yörüngesindeki araştırma istasyonunda baş bilim insanı ölü bulundu. Elindeki biyo-formül galaktik ölçekte milyarlara değer. Üç kişi o gece istasyondaydı.",
           "atmosphere": "Yerçekimsiz koridor. Oksijen maskesi sesi. Dışarıda kırmızı Mars.",
           "suspects": [
@@ -2093,9 +2060,6 @@
           "stars": "★★☆☆☆",
           "gridSize": "3x3",
           "timeLimit": 540,
-          "basePoints": 650,
-          "penaltyPerWrongAccusation": 120,
-          "cluePointCost": 60,
           "story": "YZ'lerin haklarını tartışan galaktik mahkemede bir insan hakim ölü bulundu. Karar, milyonlarca YZ'nin özgürlüğünü belirleyecekti.",
           "atmosphere": "Holografik mahkeme salonu. YZ ve insan yargıçlar yan yana. Gelecek burada belirleniyor.",
           "suspects": [
@@ -2261,9 +2225,6 @@
           "stars": "★★★☆☆",
           "gridSize": "3x3",
           "timeLimit": 480,
-          "basePoints": 800,
-          "penaltyPerWrongAccusation": 150,
-          "cluePointCost": 70,
           "story": "Bir klonlama merkezinde, orijinal ile klonun birbirini suçladığı tuhaf bir cinayet vakası. Kurban genetik lisans yöneticisiydi.",
           "atmosphere": "Steril beyaz. Cam tüpler. Aynı yüzden iki farklı kişi.",
           "suspects": [
@@ -2440,9 +2401,6 @@
           "stars": "★★★★☆",
           "gridSize": "4x4",
           "timeLimit": 420,
-          "basePoints": 1000,
-          "penaltyPerWrongAccusation": 180,
-          "cluePointCost": 80,
           "story": "Jüpiter'in uydusu Europa'daki üste, karanlık madde enerjisi deneyi sırasında baş fizikçi hayatını kaybetti. Deneyin verisi çalındı. Dört şüpheli üste mahsur.",
           "atmosphere": "Buz üstü. Jüpiter gökyüzünde dev. Kaçış yok.",
           "suspects": [
@@ -2658,9 +2616,6 @@
           "stars": "★★★★★",
           "gridSize": "4x4",
           "timeLimit": 360,
-          "basePoints": 1500,
-          "penaltyPerWrongAccusation": 240,
-          "cluePointCost": 100,
           "story": "Zaman yolculuğu araştırmasının eşiğinde, baş bilim insanı geleceğe gitmiş gibi ortadan kayboldu — ancak cesedi geçmişten geldi. Dört kişi bu paradoksu yarattı.",
           "atmosphere": "Zaman akışı bozuk. Neden ve sonuç yer değiştirmiş. Katil kim — yoksa ne zaman?",
           "suspects": [
@@ -2894,9 +2849,6 @@
           "stars": "★☆☆☆☆",
           "gridSize": "3x3",
           "timeLimit": 600,
-          "basePoints": 500,
-          "penaltyPerWrongAccusation": 120,
-          "cluePointCost": 50,
           "story": "1920'lerde bir Avrupa opera evinde baş soprano gece prömiyerinden sonra soyunma odasında ölü bulundu. Müzik dünyası şoke oldu.",
           "atmosphere": "Kadife perdeler. Alkış yankıları. Çiçek kokusu ve sahnelerin arka sırası.",
           "suspects": [
@@ -3055,9 +3007,6 @@
           "stars": "★★☆☆☆",
           "gridSize": "3x3",
           "timeLimit": 540,
-          "basePoints": 650,
-          "penaltyPerWrongAccusation": 120,
-          "cluePointCost": 60,
           "story": "Yoğun kar fırtınasında bir İngiliz mansiyon evinde hafta sonu partisi. Sabah kimse çıkamıyor — ve bir misafir ölü.",
           "atmosphere": "Kar. Kapalı yol. Şömine. Ve içlerinde birinin katil olduğu 8 misafir.",
           "suspects": [
@@ -3240,9 +3189,6 @@
           "stars": "★★★☆☆",
           "gridSize": "3x3",
           "timeLimit": 480,
-          "basePoints": 800,
-          "penaltyPerWrongAccusation": 150,
-          "cluePointCost": 70,
           "story": "1987 borsa krizinin arifesinde, büyük bir yatırım bankasının baş analistinin elinde piyasayı çökertecek bilgi vardı. Sabah ofisinde ölü bulundu.",
           "atmosphere": "Dumanı tüten ofis. Ticker bant. Korku ve para kokusu.",
           "suspects": [
@@ -3407,9 +3353,6 @@
           "stars": "★★★★☆",
           "gridSize": "4x4",
           "timeLimit": 420,
-          "basePoints": 1000,
-          "penaltyPerWrongAccusation": 180,
-          "cluePointCost": 80,
           "story": "Dünyanın en büyük müzesinden bir tablo çalındı. Güvenlik şefi gece içinde ölü bulundu. Hırsızlık mı cinayet mi — yoksa ikisi de mi?",
           "atmosphere": "Kapalı müze. Güvenlik kameraları. Sanat ve ölüm.",
           "suspects": [
@@ -3626,9 +3569,6 @@
           "stars": "★★★★★",
           "gridSize": "4x4",
           "timeLimit": 360,
-          "basePoints": 1500,
-          "penaltyPerWrongAccusation": 240,
-          "cluePointCost": 100,
           "story": "Ünlü bir polisiye yazarı, yayımlanmak üzere olan romanında gerçek bir cinayeti deşifre ettiğini fark etti. Roman çıkmadan önce yazar ölü bulundu.",
           "atmosphere": "Alpler. Kar. Daktilo sesi. Ve romanın son sayfasında bir isim.",
           "suspects": [
@@ -3861,9 +3801,6 @@
           "stars": "★☆☆☆☆",
           "gridSize": "3x3",
           "timeLimit": 600,
-          "basePoints": 500,
-          "penaltyPerWrongAccusation": 120,
-          "cluePointCost": 50,
           "story": "1980'lerde kapatılan psikiyatri hastanesini araştırmak için gelen bir tarih doktoru, binada ölü bulundu. Üç kişi o gece oradaydı.",
           "atmosphere": "Kırık camlar. Islak beton. Gece yarısı. Şimşek ışığında gölgeler.",
           "suspects": [
@@ -4030,9 +3967,6 @@
           "stars": "★★☆☆☆",
           "gridSize": "3x3",
           "timeLimit": 540,
-          "basePoints": 650,
-          "penaltyPerWrongAccusation": 120,
-          "cluePointCost": 60,
           "story": "1960'larda terk edilen ve 'lanetli' denilen bir köye dönen genç bir miras sahibi, üç gün sonra ölü bulundu. Yöre halkı 'köy yaptı' diyor — ama biri yardım etti.",
           "atmosphere": "Dağ. Sis. Terk edilmiş evler. Sessizlik ve rüzgar.",
           "suspects": [
@@ -4199,9 +4133,6 @@
           "stars": "★★★☆☆",
           "gridSize": "3x3",
           "timeLimit": 480,
-          "basePoints": 800,
-          "penaltyPerWrongAccusation": 150,
-          "cluePointCost": 70,
           "story": "Boğaz'daki antika yalıda bir parapsikoloji araştırmacısı, 'yalının ruhu'nu araştırırken ölü bulundu. Üç kişi o gece içerideydi. Ve büyük antika ayna kırılmış.",
           "atmosphere": "Boğaz. Gece. Eski ahşap. Antika aynanın kırık parçaları.",
           "suspects": [
@@ -4367,9 +4298,6 @@
           "stars": "★★★★☆",
           "gridSize": "4x4",
           "timeLimit": 420,
-          "basePoints": 1000,
-          "penaltyPerWrongAccusation": 180,
-          "cluePointCost": 80,
           "story": "Dört arkadaş kış kampı için dağ kulübesine gitti. Üç gün sonra kurtarma ekibi geldiğinde bir kişi ölü, diğerleri şokta. 'Kar fırtınası yaptı' diyorlar.",
           "atmosphere": "Kar. Kesilmiş elektrik. Şömine ışığı. Ve içlerinde birinin katil olduğu kapalı bir kulübe.",
           "suspects": [
@@ -4586,9 +4514,6 @@
           "stars": "★★★★★",
           "gridSize": "4x4",
           "timeLimit": 360,
-          "basePoints": 1500,
-          "penaltyPerWrongAccusation": 240,
-          "cluePointCost": 100,
           "story": "Sis içindeki Boğaz'da yük gemisinde kaptan ölü bulundu. Gemi sahipsiz ilerliyor, dört kişi gemide. Kıyıya çarpmadan önce katili bulun.",
           "atmosphere": "Gece. Sis. Düdük sesi. Gemi sürükleniyor. Saatiniz var.",
           "suspects": [
@@ -4826,9 +4751,6 @@
           "stars": "★★☆☆☆",
           "gridSize": "3x3",
           "timeLimit": 540,
-          "basePoints": 700,
-          "penaltyPerWrongAccusation": 130,
-          "cluePointCost": 55,
           "story": "Bir Amerikan şehrinde gizemli mektuplar bırakan anonim bir katil, dördüncü kurbanını bıraktı ve yine şifreli bir mesaj gönderdi. Gazeteci, polis ve kriptograf üçü de şüpheli listesinde.",
           "atmosphere": "Soğuk gece. Sis. Gazete baskı makinelerinin gürültüsü. Ve bir zarf — içinde yıldız şeklinde çizilmiş kod.",
           "suspects": [
@@ -5058,9 +4980,6 @@
           "stars": "★★★☆☆",
           "gridSize": "3x3",
           "timeLimit": 480,
-          "basePoints": 900,
-          "penaltyPerWrongAccusation": 160,
-          "cluePointCost": 65,
           "story": "Viktorya dönemi Londra'sında karanlık sokaklarda işlenen serî cinayetler. Dedektif, cerrah ve gazeteci — üçü de o gecelerde sokaktaydı. Ama yalnızca biri katildir.",
           "atmosphere": "Gaz lambası. Sis ve çamur. Tahta kaldırım sesi. Uzaktan Big Ben çanı.",
           "suspects": [
@@ -5321,9 +5240,6 @@
           "stars": "★★★★★",
           "gridSize": "4x4",
           "timeLimit": 360,
-          "basePoints": 1600,
-          "penaltyPerWrongAccusation": 250,
-          "cluePointCost": 110,
           "story": "Posta yoluyla bomba ve zehirli mektup gönderen bir anonim katil 15 yıldır yakalanamıyor. Dördüncü paket teslim edildi — bu sefer kurban hayatta kaldı ve katili tanımlıyor. Dört şüpheli var.",
           "atmosphere": "FBI binası. Steril oda. Kırmızı bantlı paket masada. Ve 15 yıllık bir soruşturma.",
           "suspects": [
@@ -5650,9 +5566,6 @@
           "stars": "★★★★☆",
           "gridSize": "3x3",
           "timeLimit": 600,
-          "basePoints": 900,
-          "penaltyPerWrongAccusation": 150,
-          "cluePointCost": 55,
           "story": "Viyana'nın en prestijli balo salonunda, Karnaval gecesinin son valsinin bitiminden hemen sonra ünlü psikanalist Dr. Heinrich Krell ölü bulundu — salon ortasında, maskesi hâlâ yüzünde. Kurbanın cebi boşaltılmış, yalnızca kırık bir muska kalmış. Üç kişi o gece kurbanın yanından hiç ayrılmadı.",
           "atmosphere": "Kristal avcılar titriyor, pudra ve parfüm kokusu havada asılı; balo müziği durmuş ama yankısı hâlâ kulaklarda.",
           "suspects": [
@@ -5827,9 +5740,6 @@
           "stars": "★★★★★",
           "gridSize": "3x3",
           "timeLimit": 600,
-          "basePoints": 1100,
-          "penaltyPerWrongAccusation": 200,
-          "cluePointCost": 55,
           "story": "Tokyo'nun neon ışıklı Shinjuku semtinde, bir elektronik şirketi yöneticisi olan Kenji Murakami otelin 14. katındaki kilitli odada ölü bulundu. Oda anahtarı içeride, telefon ahizesi yerde, televizyon açık. Üç kişi o gece aynı katta konaklamaktaydı ve çıkış kayıtları yoktu.",
           "atmosphere": "Neon ışıkları ıslak camdan içeri vuruyor; koridorda hafif bir elektronik uğultu var — dünyada en yoğun yazılı sözleşme imzalanan gece olacaktı bu.",
           "suspects": [
@@ -6030,9 +5940,6 @@
           "stars": "★★☆☆☆",
           "gridSize": "3x3",
           "timeLimit": 540,
-          "basePoints": 700,
-          "penaltyPerWrongAccusation": 130,
-          "cluePointCost": 60,
           "story": "Olimpos Dağı'nda bir tanrı ölü bulundu. Ölümlü bir silahla, tanrısal bir mekânda. Üç şüpheli tanrı mahkemesinde yargılanıyor. Sen dedektifsin.",
           "atmosphere": "Bulutların üstü. Ambrosia kokusu. Yıldırım sesleri. Ve tanrıların fısıltısı.",
           "suspects": [
@@ -6258,9 +6165,6 @@
           "stars": "★★★☆☆",
           "gridSize": "3x3",
           "timeLimit": 480,
-          "basePoints": 900,
-          "penaltyPerWrongAccusation": 160,
-          "cluePointCost": 70,
           "story": "Ergenekon'da — Türk mitolojisinin demir dağlarla çevrili kutsal vadisinde — boy beyi ölü bulundu. Demirci, şaman ve yabancı elçi şüpheli. Demir eritilmeden önce biri harekete geçti.",
           "atmosphere": "Demir kokusu. Kor ateşi. Dağın içindeki yankı. Ve atların kişnemesi.",
           "suspects": [
@@ -6516,9 +6420,6 @@
           "stars": "★★★★★",
           "gridSize": "4x4",
           "timeLimit": 360,
-          "basePoints": 1600,
-          "penaltyPerWrongAccusation": 250,
-          "cluePointCost": 110,
           "story": "Roma'nın kuruluş destanında gizlenen bir cinayet. Aeneas'ın yolculuğu sırasında bir kahraman ölü bulundu. Dört tanrı ya da kahramanın biri sorumlu.",
           "atmosphere": "Akdeniz. Latin şiiri. Tanrıların sesleri rüzgarda. Ve bir kahraman yerde yatıyor.",
           "suspects": [
@@ -6850,9 +6751,6 @@
           "stars": "★★★★☆",
           "gridSize": "3x3",
           "timeLimit": 600,
-          "basePoints": 900,
-          "penaltyPerWrongAccusation": 150,
-          "cluePointCost": 55,
           "story": "Güneş Tanrısı Ra'nın baş rahibi Neferhor, Heliopolis'in kutsal iç tapınağında ölü bulundu — vücudu sfenks pozisyonunda, yüzü güneşe dönük bırakılmış. Kutsal anka kuşunun tüyü cesedinin üstünde. Üç tanrısal figür o gece tapınakta bulunuyordu.",
           "atmosphere": "Sütunlar arasında yağ lambası ışığı titriyor; Nil'in kokusu taş duvarlara işlemiş, kutsal ibis sesi uzaktan duyuluyor.",
           "suspects": [
@@ -7008,9 +6906,6 @@
           "stars": "★★★★☆",
           "gridSize": "3x3",
           "timeLimit": 600,
-          "basePoints": 900,
-          "penaltyPerWrongAccusation": 150,
-          "cluePointCost": 55,
           "story": "Valhalla'nın büyük kapısını koruyan yıldırım kahramanı Bjorn Ironfist, kapı önünde zırhıyla birlikte çökmüş halde bulundu — ama üzerinde bir yara bile yok. Odin'in kutsal kuzgunları yankı vermeden sessizleşti. Üç tanrısal figür o gece Valhalla'ya girdi.",
           "atmosphere": "Kuzey ışıkları gökyüzünde titrerken, demir ve kan kokusu yüklü rüzgâr Bifröst'ten esiyor.",
           "suspects": [
@@ -7192,9 +7087,6 @@
           "stars": "★★☆☆☆",
           "gridSize": "3x3",
           "timeLimit": 540,
-          "basePoints": 700,
-          "penaltyPerWrongAccusation": 130,
-          "cluePointCost": 60,
           "story": "Dünya'nın en büyük kripto borsasının baş geliştiricisi, borsanın çöktüğü gece ölü bulundu. 2 milyar dolar kayboldu. Üç kişi o geceye ait.",
           "atmosphere": "Monitör ışığı. Klavye sesi. Ve 2 milyar dolarlık boşluk.",
           "suspects": [
@@ -7477,9 +7369,6 @@
           "stars": "★★★☆☆",
           "gridSize": "3x3",
           "timeLimit": 480,
-          "basePoints": 900,
-          "penaltyPerWrongAccusation": 160,
-          "cluePointCost": 70,
           "story": "Bir yapay zeka şirketinin kurucusu ofisinde ölü bulundu. Güvenlik kamerası 'suçluyu' kaydetti — ama görüntü deepfake. Gerçek katil kim?",
           "atmosphere": "Silikon Vadi. Cam ofis. LED ışıklar. Ve bir yapay zekanın yalanı.",
           "suspects": [
@@ -7786,9 +7675,6 @@
           "stars": "★★★★★",
           "gridSize": "4x4",
           "timeLimit": 360,
-          "basePoints": 1600,
-          "penaltyPerWrongAccusation": 250,
-          "cluePointCost": 110,
           "story": "Dark web'in en büyük illegal pazar yeri kapatıldı. Piyasanın kurucusu aynı gece ölü bulundu. Dört şüpheli, hepsi dark web dünyasından.",
           "atmosphere": "Tor ağı. Şifreli mesajlar. Anonim kimlikler. Ve fiziksel bir ceset.",
           "suspects": [
@@ -8142,9 +8028,6 @@
           "stars": "★★★★☆",
           "gridSize": "3x3",
           "timeLimit": 600,
-          "basePoints": 900,
-          "penaltyPerWrongAccusation": 150,
-          "cluePointCost": 55,
           "story": "Türkiye'nin en büyük influencer ajansı TrendHub'ın CEO'su Kerem Aydoğan, ofis binasının sunucu odasında ölü bulundu. Ekranlar hâlâ açık, içeride binlerce kullanıcının kişisel verisini gösteren gösterge paneli parlıyor. Üç kişi o gece binada kalıyordu.",
           "atmosphere": "Sunucu raflarının soğutucu fanları uğulduyor; mavi LED'ler steril bir ışık veriyor — kan orada çok yanlış görünüyor.",
           "suspects": [
@@ -8338,9 +8221,6 @@
           "stars": "★★★★☆",
           "gridSize": "3x3",
           "timeLimit": 600,
-          "basePoints": 900,
-          "penaltyPerWrongAccusation": 150,
-          "cluePointCost": 55,
           "story": "VoxelCity'nin kurucusu ve baş geliştiricisi kullanıcı adı Zeta_Zero, gerçek kimliğiyle İzmir'deki evinde ölü bulundu — tam o anda platformun ana sunucusu çöktü ve 12 milyon dolarlık NFT koleksiyonu transferi başladı. Üç kişi o gece platformun yönetici kanalında aktifti.",
           "atmosphere": "Üç monitör açık, kodlar akmaya devam ediyor; gerçek dünyada ölü, dijital dünyada ise varlıkları milisaniyelerle el değiştiriyor.",
           "suspects": [
@@ -8533,9 +8413,6 @@
           "stars": "★★☆☆☆",
           "gridSize": "3x3",
           "timeLimit": 540,
-          "basePoints": 700,
-          "penaltyPerWrongAccusation": 130,
-          "cluePointCost": 60,
           "story": "Ünlü dedektifin yokluğunda Baker Street'in komşuluğunda bir cinayet işlendi. Sen olayı çözeceksin — dedektif bu sefer sen olacaksın. Üç şüpheli, sınırlı zaman.",
           "atmosphere": "Viktorya dönemi Londra. Sis ve gaz lambası. Pipo dumanı. Dedektif evde yok.",
           "suspects": [
@@ -8796,9 +8673,6 @@
           "stars": "★★★★☆",
           "gridSize": "4x4",
           "timeLimit": 420,
-          "basePoints": 1100,
-          "penaltyPerWrongAccusation": 190,
-          "cluePointCost": 85,
           "story": "Ünlü Doğu Ekspresi'nin İstanbul-Paris seferinde bir yolcu ölü bulundu. Kayıp vagon — yani herkesin alıbisi var. Ama küçük gri hücreler her şeyi bilir. Bu sefer dedektif sensin.",
           "atmosphere": "Hareket eden tren. Kar fırtınası. Şark Ekspresi'nin ritmi. Ve kapalı bir kompartıman.",
           "suspects": [
@@ -9150,9 +9024,6 @@
           "stars": "★★★★★",
           "gridSize": "4x4",
           "timeLimit": 360,
-          "basePoints": 1600,
-          "penaltyPerWrongAccusation": 250,
-          "cluePointCost": 110,
           "story": "Kiliseye bağlı tarihi kütüphanenin tamamen kilitli odasında bir cinayet. Kapı içeriden kilitli. Pencere demir parmaklıklı. Nasıl mümkün? Ve kim?",
           "atmosphere": "Gotik kütüphane. Pervane sesi yok. Kilitli kapı. Ve içeride bir ceset.",
           "suspects": [
@@ -9510,9 +9381,6 @@
           "stars": "★★★☆☆",
           "gridSize": "3x3",
           "timeLimit": 600,
-          "basePoints": 750,
-          "penaltyPerWrongAccusation": 100,
-          "cluePointCost": 55,
           "story": "St. Mary Mead köyünde saygın papaz Mr. Aubrey Helm, kilise müziği çalışması için geciktikten sonra vikare evinin çalışma odasında ölü bulundu — elinde kırık bir kalem, masasında yarım bırakılmış vaaz defteri. Miss Marple, sorgulamayı penceresinden gözlemlemekle yetinmedi.",
           "atmosphere": "Güneş battıktan sonra İngiliz köyü sisi çöküyor; hanımelleri ve ıslak çim kokusu, kilise çanının son titreşimiyle karışıyor.",
           "suspects": [
@@ -9696,9 +9564,6 @@
           "stars": "★★★★☆",
           "gridSize": "3x3",
           "timeLimit": 600,
-          "basePoints": 900,
-          "penaltyPerWrongAccusation": 150,
-          "cluePointCost": 55,
           "story": "İstanbul'un siyasi açıdan çalkantılı 1960'larında, Beyoğlu'nun arka sokaklarından birinde muhalif gazeteci Nafi Karaçay ölü bulundu — masasında yarım bırakılmış röportaj kasedi, üzerinde kırık bir çakmak. Komiser Nevzat henüz emekli olmamıştı ve bu davayı hiçbir zaman kapatmadı.",
           "atmosphere": "Beyoğlu'nda tramvay sesleri, ıslak taş kaldırım ve nargile dumanı; her köşede bir sır saklayan şehir, 1960'ların güneşi henüz doğmadan önce.",
           "suspects": [
@@ -9882,9 +9747,6 @@
           "stars": "★★☆☆☆",
           "gridSize": "3x3",
           "timeLimit": 540,
-          "basePoints": 650,
-          "penaltyPerWrongAccusation": 120,
-          "cluePointCost": 50,
           "story": "Büyükada'nın en eski köşkünde emekli bir hakim sabah ölü bulundu. Adada araç yok — fayton ya da bisikletle gidilir. Üç misafir gece ada lokantasından ayrılmamıştı.",
           "atmosphere": "Deniz kokusu. Tahta veranda. Faytonun uzak sesi. Ve köşkün içinden çıkmayan üç kişi.",
           "suspects": [
@@ -10094,9 +9956,6 @@
           "stars": "★★☆☆☆",
           "gridSize": "3x3",
           "timeLimit": 540,
-          "basePoints": 650,
-          "penaltyPerWrongAccusation": 120,
-          "cluePointCost": 50,
           "story": "Bursa'nın tarihi kapalı çarşısındaki 600 yıllık hamamda antika tekstil tüccarı taş üstünde ölü bulundu. Hamam o sabah yalnızca üç kişiye açıktı.",
           "atmosphere": "Buhar. Mermer soğukluğu. Kümbettin yankısı. Ve taşın üzerindeki bir ceset.",
           "suspects": [
@@ -10306,9 +10165,6 @@
           "stars": "★★☆☆☆",
           "gridSize": "3x3",
           "timeLimit": 540,
-          "basePoints": 650,
-          "penaltyPerWrongAccusation": 120,
-          "cluePointCost": 50,
           "story": "Kemeraltı'nın en köklü kuyumcusu sabah dükkânında ölü bulundu. Kasası kırılmamış, içi dolu — hırsızlık değil, kişisel hesaplaşma. Üç kişi dün gece anahtara sahipti.",
           "atmosphere": "Altın kokusu. Cam vitrinler. Çarşının sabah gürültüsü. Ve kilitli bir dükkânın içinde bir ceset.",
           "suspects": [
@@ -10560,9 +10416,6 @@
           "stars": "★★☆☆☆",
           "gridSize": "3x3",
           "timeLimit": 540,
-          "basePoints": 650,
-          "penaltyPerWrongAccusation": 120,
-          "cluePointCost": 50,
           "story": "Ünlü moda tasarımcısı Paris defilesi öncesi gecesi atölyesinde ölü bulundu. Koleksiyonun tasarım haklarına üç kişi talip çıkmıştı.",
           "atmosphere": "Kumaş kokusu. Mankenler. Yarım kalmış dikiş. Ve koleksiyonun telif hakları.",
           "suspects": [
@@ -10783,9 +10636,6 @@
           "stars": "★★☆☆☆",
           "gridSize": "3x3",
           "timeLimit": 540,
-          "basePoints": 650,
-          "penaltyPerWrongAccusation": 120,
-          "cluePointCost": 50,
           "story": "Uludağ'da fırtına nedeniyle mahsur kalan dört kişiden biri sabah ölü bulundu. Yolu kapalı — kimse giremez, kimse çıkamaz. Katil içerideki üçten biri.",
           "atmosphere": "Kar. Rüzgar. Şömine ateşi. Ve dışarı çıkmanın imkânsız olduğu bir ev.",
           "suspects": [
@@ -11041,9 +10891,6 @@
           "stars": "★★★☆☆",
           "gridSize": "4x4",
           "timeLimit": 480,
-          "basePoints": 900,
-          "penaltyPerWrongAccusation": 160,
-          "cluePointCost": 70,
           "story": "İstanbul Boğazı'nın marinadaki özel teknede iş dünyasının tanınan ismi ölü bulundu. Teknede gece boyunca dört kişi vardı. Boğaz sisi her şeyi örttü.",
           "atmosphere": "Deniz. Köprü ışıkları. Tekne sallantısı. Gece yarısı sisi. Ve bir güverte köşesinde hareketsiz biri.",
           "suspects": [
@@ -11393,9 +11240,6 @@
           "stars": "★★★☆☆",
           "gridSize": "4x4",
           "timeLimit": 480,
-          "basePoints": 900,
-          "penaltyPerWrongAccusation": 160,
-          "cluePointCost": 70,
           "story": "Seçim gecesi sayım sırasında parti genel merkezinde parti yöneticisi ölü bulundu. Binanın 4 farklı katında 4 kişi çalışıyordu. Siyasi sır, para ve iktidar.",
           "atmosphere": "Seçim ekranları. Telaşlı koşuşturmalar. Faks sesleri. Ve bir odada sessizlik.",
           "suspects": [
@@ -11721,9 +11565,6 @@
           "stars": "★★★☆☆",
           "gridSize": "4x4",
           "timeLimit": 480,
-          "basePoints": 900,
-          "penaltyPerWrongAccusation": 160,
-          "cluePointCost": 70,
           "story": "Çukurcuma'nın en tanınmış antika pazarında Pazar sabahı tüccar ölü bulundu. 4 kişi o sabah ilk gelen alıcılardı. Değerli bir Bizans eseri kaybolmuştu.",
           "atmosphere": "Antika kokusu. Pazar sabahının gürültüsü. Dar sokaklar. Ve boş bir vitrin rafı.",
           "suspects": [
@@ -12061,9 +11902,6 @@
           "stars": "★★★☆☆",
           "gridSize": "4x4",
           "timeLimit": 480,
-          "basePoints": 900,
-          "penaltyPerWrongAccusation": 160,
-          "cluePointCost": 70,
           "story": "Tıp fakültesinin dekan yardımcısı gece geç saatte anatomi laboratuvarında ölü bulundu. Dört kişi o gece fakültede çalışmaktaydı. Tıbbi bilgi gerektiren bir cinayet.",
           "atmosphere": "Formalin kokusu. Beyaz ışık. Boş koridor. Ve anatomi labının kilitli kapısı.",
           "suspects": [
@@ -12389,9 +12227,6 @@
           "stars": "★★★☆☆",
           "gridSize": "4x4",
           "timeLimit": 480,
-          "basePoints": 900,
-          "penaltyPerWrongAccusation": 160,
-          "cluePointCost": 70,
           "story": "Bodrum'daki uluslararası müzik festivalinin sahne arkasında festival direktörü ölü bulundu. Gece konseri başlamadan önce dört kişi backstage alanındaydı. Müzik dışında bir ölüm vakası.",
           "atmosphere": "Sahne sesleri. Gece Ege. Kalabalığın beklentisi. Ve sahne arkasının karanlık köşesi.",
           "suspects": [
@@ -12744,9 +12579,6 @@
           "stars": "★★★★★",
           "gridSize": "4x4",
           "timeLimit": 360,
-          "basePoints": 1500,
-          "penaltyPerWrongAccusation": 250,
-          "cluePointCost": 110,
           "story": "Devlet arşivlerinde 1950'lere ait gizli bir dosya bulundu — içinde o döneme ait birçok ailenin sırrı. Arşiv araştırmacısı dosyayı kamuoyuyla paylaşmak üzereydi. Sabah ofisinde ölü bulundu. Dört kişi o gece arşive erişim yetkisine sahipti.",
           "atmosphere": "Eski kâğıt kokusu. Floresan ışık. Klimanın uğultusu. Ve bir masada yarım bırakılmış transkript.",
           "suspects": [
@@ -13123,9 +12955,6 @@
           "stars": "★★★★★",
           "gridSize": "4x4",
           "timeLimit": 360,
-          "basePoints": 1500,
-          "penaltyPerWrongAccusation": 250,
-          "cluePointCost": 110,
           "story": "Kıbrıs müzakerelerinde kritik bir anlaşma imzalanmak üzereydi. Tarafsız arabulucu gece otel odasında ölü bulundu. İmzadan 8 saat önce. Dört delege o gece otelde toplantı yapıyordu.",
           "atmosphere": "Diplomatik gerilim. Otel koridoru. Klimanın sesi. Ve imzalanmamış bir anlaşma.",
           "suspects": [
@@ -13502,9 +13331,6 @@
           "stars": "★★★★★",
           "gridSize": "4x4",
           "timeLimit": 360,
-          "basePoints": 1500,
-          "penaltyPerWrongAccusation": 250,
-          "cluePointCost": 110,
           "story": "İzmit'teki büyük tersanede sabah vardiyası başlamadan önce tersane müdürü ölü bulundu. 2 milyarlık ihale kararı gün içinde açıklanacaktı. Dört kişi o gece sahada vardı.",
           "atmosphere": "Demir kokusu. Deniz isi. Vinç gıcırtısı. Ve teknenin gölgesinde bir ceset.",
           "suspects": [
@@ -13888,9 +13714,6 @@
           "stars": "★★★★★",
           "gridSize": "4x4",
           "timeLimit": 360,
-          "basePoints": 1500,
-          "penaltyPerWrongAccusation": 250,
-          "cluePointCost": 110,
           "story": "Şişli'nin prestijli hukuk bürosunda kıdemli avukat ofisinde ölü bulundu. Müvekkillerin sırlarını içeren bir dosya kayboldu. Dört kişi o gece büroda çalışıyordu.",
           "atmosphere": "Deri koltuk kokusu. Gece şehri. Lazer yazıcı sesi. Ve bir ofisin kilitli kapısı.",
           "suspects": [
@@ -14255,9 +14078,6 @@
           "stars": "★★★★★",
           "gridSize": "4x4",
           "timeLimit": 360,
-          "basePoints": 1500,
-          "penaltyPerWrongAccusation": 250,
-          "cluePointCost": 110,
           "story": "İzmir Uluslararası Fuarı'nın açılış gecesinde fuar direktörü en üst kattaki VIP odasında ölü bulundu. Dört şirket CEO'su o gece üst katta toplantı yapıyordu. Fuar standı tahsisleri anlaşmazlık konusuydu.",
           "atmosphere": "Fuar ışıkları. Açılış kalabalığı aşağıda. Üst katta sessizlik. VIP asansörü.",
           "suspects": [
