@@ -9,7 +9,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import React, { useEffect, useRef, useState } from "react";
-import { Platform, StyleSheet, Text, View } from "react-native";
+import { Platform, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { KeyboardProvider } from "react-native-keyboard-controller";
@@ -26,6 +26,7 @@ import Animated, {
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { GameProvider } from "@/context/GameContext";
 import { MissionProvider, useMission } from "@/context/MissionContext";
+import type { Mission } from "@/data/missions";
 import { PurchaseProvider } from "@/context/PurchaseContext";
 
 SplashScreen.preventAutoHideAsync();
@@ -136,90 +137,161 @@ const confettiStyles = StyleSheet.create({
   },
 });
 
+function formatMissionPts(pts: number): string {
+  if (pts >= 1000) return `+${(pts / 1000).toFixed(pts % 1000 === 0 ? 0 : 1)}K`;
+  return `+${pts}`;
+}
+
 function MissionCelebrationToast() {
   const { pendingCelebration, clearCelebration } = useMission();
   const insets = useSafeAreaInsets();
 
-  const translateY = useSharedValue(120);
-  const opacity = useSharedValue(0);
-  const currentMissionId = useRef<string | null>(null);
-  const displayMissionRef = useRef(pendingCelebration[0] ?? null);
-  const [showing, setShowing] = React.useState(false);
+  const toastY = useSharedValue(120);
+  const toastOp = useSharedValue(0);
+  const lastSingleId = useRef<string | null>(null);
+  const singleMissionRef = useRef<Mission | null>(null);
+  const [showToast, setShowToast] = useState(false);
 
-  const incomingMission = pendingCelebration[0] ?? null;
+  const modalY = useSharedValue(300);
+  const modalOp = useSharedValue(0);
+  const [showModal, setShowModal] = useState(false);
+  const [modalMissions, setModalMissions] = useState<Mission[]>([]);
 
   useEffect(() => {
-    if (!incomingMission) return;
-    if (incomingMission.id === currentMissionId.current) return;
+    if (pendingCelebration.length === 0) return;
 
-    currentMissionId.current = incomingMission.id;
-    displayMissionRef.current = incomingMission;
-    setShowing(true);
+    if (pendingCelebration.length === 1) {
+      const m = pendingCelebration[0];
+      if (m.id === lastSingleId.current) return;
+      lastSingleId.current = m.id;
+      singleMissionRef.current = m;
+      setShowToast(true);
+      toastY.value = withSpring(0, { damping: 14, stiffness: 180 });
+      toastOp.value = withTiming(1, { duration: 200 });
+      const t = setTimeout(() => {
+        toastOp.value = withTiming(0, { duration: 300 });
+        toastY.value = withTiming(90, { duration: 300 });
+        setTimeout(() => {
+          lastSingleId.current = null;
+          setShowToast(false);
+          clearCelebration();
+        }, 340);
+      }, 2700);
+      return () => clearTimeout(t);
+    }
 
-    translateY.value = withSpring(0, { damping: 14, stiffness: 180 });
-    opacity.value = withTiming(1, { duration: 200 });
+    if (showModal) return;
+    setModalMissions([...pendingCelebration]);
+    setShowModal(true);
+    modalOp.value = withTiming(1, { duration: 250 });
+    modalY.value = withSpring(0, { damping: 14, stiffness: 150 });
+  }, [pendingCelebration]);
 
-    const timer = setTimeout(() => {
-      opacity.value = withTiming(0, { duration: 300 });
-      translateY.value = withTiming(90, { duration: 300 });
-      setTimeout(() => {
-        currentMissionId.current = null;
-        setShowing(false);
-        clearCelebration();
-      }, 340);
-    }, 2700);
+  const handleCloseModal = () => {
+    modalOp.value = withTiming(0, { duration: 220 });
+    modalY.value = withTiming(300, { duration: 250 });
+    setTimeout(() => {
+      setShowModal(false);
+      setModalMissions([]);
+      clearCelebration();
+    }, 260);
+  };
 
-    return () => clearTimeout(timer);
-  }, [incomingMission?.id]);
-
-  const animatedStyle = useAnimatedStyle(() => ({
-    transform: [{ translateY: translateY.value }],
-    opacity: opacity.value,
+  const toastStyle = useAnimatedStyle(() => ({
+    transform: [{ translateY: toastY.value }],
+    opacity: toastOp.value,
   }));
 
-  const m = displayMissionRef.current;
-  if (!showing || !m) return null;
+  const modalStyle = useAnimatedStyle(() => ({
+    transform: [{ translateY: modalY.value }],
+    opacity: modalOp.value,
+  }));
 
-  const rewardStr =
-    m.reward.points >= 1000
-      ? `+${(m.reward.points / 1000).toFixed(0)}K`
-      : `+${m.reward.points}`;
+  const singleM = singleMissionRef.current;
+  const totalPoints = modalMissions.reduce((s, m) => s + m.reward.points, 0);
 
   return (
-    <Animated.View
-      style={[
-        toastStyles.container,
-        { bottom: insets.bottom + 72 },
-        animatedStyle,
-      ]}
-    >
-      {CONFETTI_POSITIONS.map((pos, i) => (
-        <ConfettiParticle
-          key={i}
-          color={CONFETTI_COLORS[i % CONFETTI_COLORS.length]}
-          dx={pos.dx}
-          dy={pos.dy}
-          rotate={pos.rotate}
-          delay={i * 30}
-          visible={showing}
-        />
-      ))}
-      <View style={toastStyles.inner}>
-        <View style={toastStyles.iconWrap}>
-          <MaterialIcons name="emoji-events" size={22} color="#D4A843" />
-        </View>
-        <View style={toastStyles.textBlock}>
-          <Text style={toastStyles.label}>GÖREV TAMAMLANDI!</Text>
-          <Text style={toastStyles.missionName} numberOfLines={1}>
-            {m.title}
-          </Text>
-        </View>
-        <View style={toastStyles.rewardWrap}>
-          <MaterialIcons name="bolt" size={14} color="#D4A843" />
-          <Text style={toastStyles.rewardText}>{rewardStr}</Text>
-        </View>
-      </View>
-    </Animated.View>
+    <>
+      {showToast && singleM && (
+        <Animated.View style={[toastStyles.container, { bottom: insets.bottom + 72 }, toastStyle]}>
+          {CONFETTI_POSITIONS.map((pos, i) => (
+            <ConfettiParticle
+              key={i}
+              color={CONFETTI_COLORS[i % CONFETTI_COLORS.length]}
+              dx={pos.dx}
+              dy={pos.dy}
+              rotate={pos.rotate}
+              delay={i * 30}
+              visible={showToast}
+            />
+          ))}
+          <View style={toastStyles.inner}>
+            <View style={toastStyles.iconWrap}>
+              <MaterialIcons name="emoji-events" size={22} color="#D4A843" />
+            </View>
+            <View style={toastStyles.textBlock}>
+              <Text style={toastStyles.label}>GÖREV TAMAMLANDI!</Text>
+              <Text style={toastStyles.missionName} numberOfLines={1}>
+                {singleM.title}
+              </Text>
+            </View>
+            <View style={toastStyles.rewardWrap}>
+              <MaterialIcons name="bolt" size={14} color="#D4A843" />
+              <Text style={toastStyles.rewardText}>{formatMissionPts(singleM.reward.points)}</Text>
+            </View>
+          </View>
+        </Animated.View>
+      )}
+
+      {showModal && (
+        <Animated.View style={[multiStyles.backdrop, modalStyle]} pointerEvents="box-none">
+          <Pressable style={multiStyles.dimArea} onPress={handleCloseModal} />
+          <View style={[multiStyles.card, { paddingBottom: Math.max(insets.bottom + 16, 28) }]}>
+            <View style={multiStyles.handle} />
+            <View style={multiStyles.header}>
+              <View style={multiStyles.headerIconWrap}>
+                <MaterialIcons name="emoji-events" size={26} color="#D4A843" />
+              </View>
+              <View style={multiStyles.headerText}>
+                <Text style={multiStyles.headerLabel}>GÖREVLER TAMAMLANDI!</Text>
+                <Text style={multiStyles.headerSub}>{modalMissions.length} görev toplandı</Text>
+              </View>
+              <View style={multiStyles.totalBadge}>
+                <MaterialIcons name="bolt" size={15} color="#000" />
+                <Text style={multiStyles.totalBadgeText}>{formatMissionPts(totalPoints)}</Text>
+              </View>
+            </View>
+
+            <View style={multiStyles.divider} />
+
+            <ScrollView
+              style={{ maxHeight: 280 }}
+              showsVerticalScrollIndicator={false}
+              contentContainerStyle={{ gap: 10 }}
+            >
+              {modalMissions.map((mission) => (
+                <View key={mission.id} style={multiStyles.missionRow}>
+                  <MaterialIcons name="check-circle" size={18} color="#4ade80" />
+                  <Text style={multiStyles.missionRowName} numberOfLines={2}>
+                    {mission.title}
+                  </Text>
+                  <View style={multiStyles.missionRowReward}>
+                    <MaterialIcons name="bolt" size={13} color="#D4A843" />
+                    <Text style={multiStyles.missionRowPoints}>
+                      {formatMissionPts(mission.reward.points)}
+                    </Text>
+                  </View>
+                </View>
+              ))}
+            </ScrollView>
+
+            <Pressable style={multiStyles.closeBtn} onPress={handleCloseModal}>
+              <Text style={multiStyles.closeBtnText}>Tamam</Text>
+            </Pressable>
+          </View>
+        </Animated.View>
+      )}
+    </>
   );
 }
 
@@ -285,6 +357,130 @@ const toastStyles = StyleSheet.create({
     color: "#D4A843",
     fontSize: 13,
     fontWeight: "800",
+  },
+});
+
+const multiStyles = StyleSheet.create({
+  backdrop: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    bottom: 0,
+    top: 0,
+    zIndex: 9999,
+    justifyContent: "flex-end",
+  },
+  dimArea: {
+    flex: 1,
+    backgroundColor: "rgba(0,0,0,0.45)",
+  },
+  card: {
+    backgroundColor: "#1A1F2E",
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
+    borderWidth: 1,
+    borderBottomWidth: 0,
+    borderColor: "#D4A84355",
+    paddingHorizontal: 20,
+    paddingTop: 12,
+    gap: 14,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: -6 },
+    shadowOpacity: 0.45,
+    shadowRadius: 12,
+    elevation: 24,
+  },
+  handle: {
+    width: 40,
+    height: 4,
+    borderRadius: 2,
+    backgroundColor: "#3A4060",
+    alignSelf: "center",
+    marginBottom: 4,
+  },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+  },
+  headerIconWrap: {
+    width: 50,
+    height: 50,
+    borderRadius: 14,
+    backgroundColor: "#D4A84322",
+    alignItems: "center",
+    justifyContent: "center",
+    flexShrink: 0,
+  },
+  headerText: {
+    flex: 1,
+    gap: 3,
+  },
+  headerLabel: {
+    color: "#D4A843",
+    fontSize: 12,
+    fontWeight: "800",
+    letterSpacing: 0.8,
+  },
+  headerSub: {
+    color: "#94A3B8",
+    fontSize: 13,
+    fontWeight: "500",
+  },
+  totalBadge: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 3,
+    backgroundColor: "#D4A843",
+    borderRadius: 10,
+    paddingHorizontal: 10,
+    paddingVertical: 7,
+    flexShrink: 0,
+  },
+  totalBadgeText: {
+    color: "#000",
+    fontSize: 14,
+    fontWeight: "800",
+  },
+  divider: {
+    height: 1,
+    backgroundColor: "#2A2F4266",
+  },
+  missionRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+  },
+  missionRowName: {
+    flex: 1,
+    color: "#F1F5F9",
+    fontSize: 14,
+    fontWeight: "600",
+    lineHeight: 20,
+  },
+  missionRowReward: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 3,
+    flexShrink: 0,
+  },
+  missionRowPoints: {
+    color: "#D4A843",
+    fontSize: 13,
+    fontWeight: "700",
+  },
+  closeBtn: {
+    backgroundColor: "#D4A843",
+    borderRadius: 14,
+    paddingVertical: 15,
+    alignItems: "center",
+    marginTop: 4,
+  },
+  closeBtnText: {
+    color: "#000",
+    fontSize: 15,
+    fontWeight: "800",
+    letterSpacing: 0.3,
   },
 });
 
