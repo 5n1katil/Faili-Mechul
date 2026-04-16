@@ -35,14 +35,14 @@
             {
               "id": "s1",
               "name": "Baş Kalfa Hatice",
-              "icon": "👵",
+              "icon": "🗝️",
               "description": "30 yıllık saray hizmetine karşın son aylarda kariyer kaybetmişti.",
               "detail": "Orta yaşlı, otoriter, tüm harem protokolünü ezbere bilir."
             },
             {
               "id": "s2",
               "name": "Genç Hekim Selim",
-              "icon": "👨",
+              "icon": "🩺",
               "description": "Sarayın yeni gözde hekimi. Avrupalı tıp anlayışını benimsemiş.",
               "detail": "26 yaşında, Viyana'da eğitim görmüş, çekingen ama zeki."
             },
@@ -539,7 +539,7 @@
             {
               "id": "s1",
               "name": "İngiliz Mühendis Bradford",
-              "icon": "🧑",
+              "icon": "🎩",
               "description": "Sözleşmeyi almak için aylardır uğraşan İngiliz şirketi temsilcisi.",
               "detail": "48 yaşında, resmi ve soğuk."
             },
@@ -553,7 +553,7 @@
             {
               "id": "s3",
               "name": "Alman Rakip Herr Vogel",
-              "icon": "🧔",
+              "icon": "⚙️",
               "description": "Alman rakip şirketin temsilcisi. Sözleşmeyi kaybetmek üzere.",
               "detail": "52 yaşında, büyük bıyıklı, sabırsız."
             },
@@ -1733,7 +1733,7 @@
             {
               "id": "s4",
               "name": "Eski Asistan Grace Lee",
-              "icon": "👩",
+              "icon": "🗂️",
               "description": "10 yıllık sadakat ama vasiyette adı yok.",
               "detail": "45 yaşında, kırık kalpli ve sessiz öfkeli."
             }
@@ -2109,7 +2109,7 @@
             {
               "id": "s2",
               "name": "Savcı Amara Diallo",
-              "icon": "👩",
+              "icon": "📢",
               "description": "YZ haklarına karşı çıkan savcı. Ölüm onun işine yarıyor.",
               "detail": "38 yaşında, sert, politikacı destekli."
             },
@@ -2688,7 +2688,7 @@
             {
               "id": "s4",
               "name": "Maktulün Geleceği (K-Prime)",
-              "icon": "👤",
+              "icon": "⌛",
               "description": "Gelecekten gelen maktulün kendisi — ölmeden önce mi, sonra mı?",
               "detail": "Bu şüpheli paradoks içinde — kim gerçek?"
             }
@@ -3078,7 +3078,7 @@
             {
               "id": "s3",
               "name": "Genç Yeğen Archie",
-              "icon": "🧑",
+              "icon": "🥃",
               "description": "Mansiyon mirasını bekliyor. Maktul mirasçı değiştirdi.",
               "detail": "27 yaşında, mirasyedi, alkol sorunu."
             }
@@ -3870,14 +3870,14 @@
             {
               "id": "s1",
               "name": "Eski Hemşire Ayşe",
-              "icon": "👩",
+              "icon": "🩹",
               "description": "Hastanenin kapanmasını hiç kabullenemedi. Hâlâ bakıyor.",
               "detail": "70 yaşında, yorgun gözlü, sırrı var."
             },
             {
               "id": "s2",
               "name": "Mülk Sahibi Fuat Bey",
-              "icon": "👴",
+              "icon": "🏗️",
               "description": "Binayı yıkıp otelyapmak istiyor. Doktor buna engel olabilirdi.",
               "detail": "55 yaşında, sabırsız, paranoyak."
             },
@@ -4039,7 +4039,7 @@
             {
               "id": "s1",
               "name": "Yaşlı Muhtar Hasan Dede",
-              "icon": "🧓",
+              "icon": "🏡",
               "description": "Köyün sırrını biliyor. Miras meselesine karşı.",
               "detail": "80 yaşında, otoriter, ölene kadar konuşmayacak gibi."
             },
@@ -4053,7 +4053,7 @@
             {
               "id": "s3",
               "name": "Komşu Köylü Fatma Ana",
-              "icon": "👵",
+              "icon": "🧺",
               "description": "60 yıldır köyün kenarında yaşıyor, her şeyi görmüş.",
               "detail": "75 yaşında, gözlemci, susmayı biliyor."
             }
@@ -4208,7 +4208,7 @@
             {
               "id": "s1",
               "name": "Yalı Sahibi Mme. Dolores",
-              "icon": "👩",
+              "icon": "🌊",
               "description": "Araştırmacının 'ruhları rahatsız ettiğini' söylüyordu.",
               "detail": "65 yaşında, Rum asıllı, gizemli."
             },
@@ -4383,7 +4383,7 @@
             {
               "id": "s2",
               "name": "Doktor Sibel",
-              "icon": "👩",
+              "icon": "🩺",
               "description": "Tıbbi otopsiyi yapabilecek tek kişi. İlk müdahaleyi o yaptı.",
               "detail": "30 yaşında, sakin, çok sakin."
             },
@@ -9898,7 +9898,7 @@
             {
               "id": "s2",
               "name": "Eski Sekreteri Nilgün",
-              "icon": "👩",
+              "icon": "📝",
               "description": "20 yıl çalıştı, emekliliğinde hiçbir şey verilmedi.",
               "detail": "58 yaşında, kırık kalpli, ama bunu belli etmez."
             },
