@@ -49,7 +49,7 @@ export default function ScoreInfoSheet({ visible, onClose }: Props) {
       note: "Her yanlış tahmin hem puan hem süre cezası",
     },
     {
-      icon: "lock-open",
+      icon: "lock_open",
       iconColor: "#f97316",
       label: "Ek İpucu",
       formula: "−300 puan",
@@ -63,7 +63,7 @@ export default function ScoreInfoSheet({ visible, onClose }: Props) {
       note: "Zor bulmacalar ekstra puan verir",
     },
     {
-      icon: "local-fire-department",
+      icon: "local_fire_department",
       iconColor: "#FF6B35",
       label: "Seri Bonusu",
       formula: "+50 puan × seri (maks. +500)",

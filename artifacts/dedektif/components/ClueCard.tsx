@@ -50,7 +50,7 @@ const CLUE_META: Record<
     borderStyle: "solid",
   },
   indirect: {
-    icon: "lightbulb-outline",
+    icon: "lightbulb_outline",
     color: "#f59e0b",
     label: "Dolaylı",
     cardTint: "#f59e0b08",
@@ -71,7 +71,7 @@ const CLUE_META: Record<
     borderStyle: "dashed",
   },
   witness: {
-    icon: "record-voice-over",
+    icon: "record_voice_over",
     color: "#3b82f6",
     label: "Tanık",
     cardTint: "#3b82f610",

@@ -28,13 +28,13 @@ const DEMO_SUSPECTS: Suspect[] = [
 ];
 const DEMO_WEAPONS: Weapon[] = [
   { id: "dw1", name: "Bıçak",   description: "", icon: "🔪" },
-  { id: "dw2", name: "Zehir",   description: "", icon: "local-pharmacy" },
-  { id: "dw3", name: "Tabanca", description: "", icon: "my-location" },
+  { id: "dw2", name: "Zehir",   description: "", icon: "local_pharmacy" },
+  { id: "dw3", name: "Tabanca", description: "", icon: "my_location" },
 ];
 const DEMO_LOCATIONS: Location[] = [
   { id: "dl1", name: "Mutfak",    description: "", icon: "restaurant" },
   { id: "dl2", name: "Bahçe",     description: "", icon: "park" },
-  { id: "dl3", name: "Kütüphane", description: "", icon: "menu-book" },
+  { id: "dl3", name: "Kütüphane", description: "", icon: "menu_book" },
 ];
 // Cevap: Zeynep + Bıçak + Bahçe
 // Gösterilen durum: Bıçak satırı ve Bahçe mekan satırı çözülmüş,
