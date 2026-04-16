@@ -190,21 +190,21 @@
             {
               "id": "s1",
               "name": "Rakip Antikacı Vasil",
-              "icon": "🧓",
+              "icon": "🏺",
               "description": "Rum asıllı antikacı. Mührü yıllardır almak istiyordu.",
               "detail": "60'lı yaşlarda, kısık gözlü, piyasada 'sert müzakereci' olarak bilinir."
             },
             {
               "id": "s2",
               "name": "Genç Çırak Mehmet",
-              "icon": "👦",
+              "icon": "🧑‍🔧",
               "description": "Maktulün 3 yıllık çırağı. Dükkan anahtarına sahip.",
               "detail": "19 yaşında, zeki, ama son ay borçlandığı söyleniyor."
             },
             {
               "id": "s3",
               "name": "Koleksiyoncu Hanım Eleni",
-              "icon": "👩",
+              "icon": "💍",
               "description": "Atina'dan gelmiş varlıklı bir Rum koleksiyoncu.",
               "detail": "45 yaşında, şapkası ve eldiveniyle dikkat çekici."
             }
@@ -759,7 +759,7 @@
             {
               "id": "s1",
               "name": "Müze Müdürü Aziz Bey",
-              "icon": "🏛️",
+              "icon": "🧐",
               "description": "Resmi düzenlemenin mimarı, hazine söylentisini reddediyor.",
               "detail": "55 yaşında, bürokratik, devlet sadakati ön planda."
             },
@@ -780,7 +780,7 @@
             {
               "id": "s4",
               "name": "Arkeologun Asistanı Fatma",
-              "icon": "🏺",
+              "icon": "👩‍🎓",
               "description": "Maktulün 5 yıllık asistanı. Haritanın varlığını bilen tek Türk.",
               "detail": "28 yaşında, zeki, korku içinde görünüyor."
             }
@@ -1168,7 +1168,7 @@
             {
               "id": "s2",
               "name": "Yardımcı Yönetmen Priya Shah",
-              "icon": "🎥",
+              "icon": "🎞️",
               "description": "Rakip stüdyoya iş görüşmesi yapıyor, sızdırma şüphesi var.",
               "detail": "38 yaşında, kararlı, hırslı."
             },
@@ -1330,7 +1330,7 @@
             {
               "id": "s1",
               "name": "Amerikalı Rakip Jake Mercer",
-              "icon": "🎥",
+              "icon": "📹",
               "description": "En güçlü rakip. Filmi 5 yıl önce maktulün sızdırdığı bir konsepte dayanıyor.",
               "detail": "50 yaşında, agresif müzakereci."
             },
@@ -1492,7 +1492,7 @@
             {
               "id": "s1",
               "name": "Ajan Rachel Kim",
-              "icon": "💼",
+              "icon": "📋",
               "description": "Senaristin yeni ajansına geçeceğini öğrendi.",
               "detail": "40 yaşında, ağının en güçlüsü."
             },
@@ -1719,7 +1719,7 @@
             {
               "id": "s2",
               "name": "Yeni Sevgili Marco Silva",
-              "icon": "🧑",
+              "icon": "🌹",
               "description": "6 aylık ilişki. Yeni vasiyette 40% miras.",
               "detail": "31 yaşında, Brezilya asıllı, önceki ilişkileri bilinmiyor."
             },
@@ -1754,7 +1754,7 @@
             {
               "id": "w3",
               "name": "Yüksekten Düşme",
-              "icon": "🏔️",
+              "icon": "🏗️",
               "description": "Balkondan düşürülme."
             },
             {
@@ -2312,7 +2312,7 @@
           "locations": [
             {
               "id": "l1",
-              "name": "Klon Odasý",
+              "name": "Klon Odası",
               "icon": "🧬",
               "description": "Klonların tutulduğu özel oda."
             },
@@ -2926,7 +2926,7 @@
             {
               "id": "w1",
               "name": "Zehirli Çiçek Buketi",
-              "icon": "☠️",
+              "icon": "💐",
               "description": "Çiçeklerin yapraklarına zehir sürülmüş."
             },
             {
@@ -3304,7 +3304,7 @@
             {
               "id": "l3",
               "name": "Çatı Kattı",
-              "icon": "🌆",
+              "icon": "🏙️",
               "description": "Binanın servis çatısı."
             }
           ],
@@ -3430,7 +3430,7 @@
             {
               "id": "s3",
               "name": "Alman Koleksiyoncu Hans Berger",
-              "icon": "💶",
+              "icon": "🕵️",
               "description": "Tabloyu 5 yıldır almak istiyor, reddedildi.",
               "detail": "65 yaşında, varlıklı, sabırsız."
             },
@@ -3642,7 +3642,7 @@
             {
               "id": "s2",
               "name": "Yazarın Kız Kardeşi Renata",
-              "icon": "👩",
+              "icon": "📖",
               "description": "Roman, ailenin eski sırrını açıklıyor.",
               "detail": "45 yaşında, sinirli, gizli bir travması var."
             },
@@ -3877,7 +3877,7 @@
             {
               "id": "s2",
               "name": "Mülk Sahibi Fuat Bey",
-              "icon": "🏚️",
+              "icon": "👴",
               "description": "Binayı yıkıp otelyapmak istiyor. Doktor buna engel olabilirdi.",
               "detail": "55 yaşında, sabırsız, paranoyak."
             },
@@ -3925,7 +3925,7 @@
             {
               "id": "l3",
               "name": "Çatı Merdiveni",
-              "icon": "🌆",
+              "icon": "🪜",
               "description": "Çürük tahta merdiven."
             }
           ],
@@ -7256,7 +7256,7 @@
             {
               "id": "l3",
               "name": "Dark Web Buluşma Noktası",
-              "icon": "🌐",
+              "icon": "🕸️",
               "description": "Anonim şifreli iletişim kanalı."
             }
           ],
@@ -7843,7 +7843,7 @@
             {
               "id": "w4",
               "name": "Boğma (Kablo)",
-              "icon": "🔩",
+              "icon": "🪢",
               "description": "Ethernet kablosu."
             }
           ],
@@ -8565,7 +8565,7 @@
             {
               "id": "w1",
               "name": "Strychinine (Striknin)",
-              "icon": "🐀",
+              "icon": "☠️",
               "description": "Klasik Viktorya dönemi zehiri — eczaneden."
             },
             {
@@ -8847,7 +8847,7 @@
             {
               "id": "w3",
               "name": "İpek Fular",
-              "icon": "🧶",
+              "icon": "🧣",
               "description": "Rus işlemeli ipek fular."
             },
             {
@@ -9891,14 +9891,14 @@
             {
               "id": "s1",
               "name": "Damadı Tarık",
-              "icon": "🪢",
+              "icon": "🤵",
               "description": "Hakimin kızıyla evli. Miras anlaşmazlığında mahkemede kaybetmişti.",
               "detail": "42 yaşında, hukuk mezunu, soğukkanlı."
             },
             {
               "id": "s2",
               "name": "Eski Sekreteri Nilgün",
-              "icon": "📎",
+              "icon": "👩‍💼",
               "description": "20 yıl çalıştı, emekliliğinde hiçbir şey verilmedi.",
               "detail": "58 yaşında, kırık kalpli, ama bunu belli etmez."
             },
@@ -9926,7 +9926,7 @@
             {
               "id": "w3",
               "name": "Yastık Boğması",
-              "icon": "😴",
+              "icon": "🛏️",
               "description": "Uyku sırasında yüz üstü bastırma."
             }
           ],
@@ -9940,7 +9940,7 @@
             {
               "id": "l2",
               "name": "Yatak Odası",
-              "icon": "🌙",
+              "icon": "🛏️",
               "description": "Üst kat, denize bakan yatak odası."
             },
             {
@@ -10329,7 +10329,7 @@
             {
               "id": "s3",
               "name": "Vergi Müfettişi Canan",
-              "icon": "📋",
+              "icon": "🔎",
               "description": "Dün vergi denetimi yaptı, kritik belgeler buldu. Bu sabah raporu yazacaktı.",
               "detail": "40 yaşında, kurallara bağlı, tehdit edilmiş hissediyordu."
             }
@@ -10569,7 +10569,7 @@
             {
               "id": "s1",
               "name": "Yardımcı Tasarımcı Hande",
-              "icon": "🪢",
+              "icon": "🧵",
               "description": "Koleksiyonun yarısını o tasarladı — ama ismi yok afişte.",
               "detail": "32 yaşında, yetenekli, sinirli."
             },
@@ -11730,7 +11730,7 @@
             {
               "id": "s1",
               "name": "Müzeci Doç. Emre",
-              "icon": "🏺",
+              "icon": "🏛️",
               "description": "Eserin sahte olduğunu biliyor ama müzeye satmayı planlamıştı.",
               "detail": "50 yaşında, akademisyen, paraya ihtiyacı var."
             },
@@ -12774,7 +12774,7 @@
             {
               "id": "s4",
               "name": "Yabancı Gazeteci Elena",
-              "icon": "🌍",
+              "icon": "📰",
               "description": "Dosyayı uluslararası platforma taşımak için orada. Maktul onu destekliyordu.",
               "detail": "37 yaşında, ödüllü gazeteci, baskı altında."
             }
