@@ -35,14 +35,14 @@
             {
               "id": "s1",
               "name": "Baş Kalfa Hatice",
-              "icon": "👩‍🦳",
+              "icon": "👵",
               "description": "30 yıllık saray hizmetine karşın son aylarda kariyer kaybetmişti.",
               "detail": "Orta yaşlı, otoriter, tüm harem protokolünü ezbere bilir."
             },
             {
               "id": "s2",
               "name": "Genç Hekim Selim",
-              "icon": "👨‍⚕️",
+              "icon": "👨",
               "description": "Sarayın yeni gözde hekimi. Avrupalı tıp anlayışını benimsemiş.",
               "detail": "26 yaşında, Viyana'da eğitim görmüş, çekingen ama zeki."
             },
@@ -197,7 +197,7 @@
             {
               "id": "s2",
               "name": "Genç Çırak Mehmet",
-              "icon": "🧑‍🔧",
+              "icon": "🔧",
               "description": "Maktulün 3 yıllık çırağı. Dükkan anahtarına sahip.",
               "detail": "19 yaşında, zeki, ama son ay borçlandığı söyleniyor."
             },
@@ -539,7 +539,7 @@
             {
               "id": "s1",
               "name": "İngiliz Mühendis Bradford",
-              "icon": "🧑‍💼",
+              "icon": "🧑",
               "description": "Sözleşmeyi almak için aylardır uğraşan İngiliz şirketi temsilcisi.",
               "detail": "48 yaşında, resmi ve soğuk."
             },
@@ -780,7 +780,7 @@
             {
               "id": "s4",
               "name": "Arkeologun Asistanı Fatma",
-              "icon": "👩‍🎓",
+              "icon": "🎓",
               "description": "Maktulün 5 yıllık asistanı. Haritanın varlığını bilen tek Türk.",
               "detail": "28 yaşında, zeki, korku içinde görünüyor."
             }
@@ -1733,7 +1733,7 @@
             {
               "id": "s4",
               "name": "Eski Asistan Grace Lee",
-              "icon": "👩‍💼",
+              "icon": "👩",
               "description": "10 yıllık sadakat ama vasiyette adı yok.",
               "detail": "45 yaşında, kırık kalpli ve sessiz öfkeli."
             }
@@ -1946,7 +1946,7 @@
             {
               "id": "s1",
               "name": "Komutan Lyra Chen",
-              "icon": "👩‍🚀",
+              "icon": "🚀",
               "description": "İstasyon komutanı. Formülün askeri uygulamasına karşı çıkan bilim insanıyla anlaşmazlığı var.",
               "detail": "42 yaşında, disiplinli, şüpheli geçmiş."
             },
@@ -2109,7 +2109,7 @@
             {
               "id": "s2",
               "name": "Savcı Amara Diallo",
-              "icon": "👩‍⚖️",
+              "icon": "👩",
               "description": "YZ haklarına karşı çıkan savcı. Ölüm onun işine yarıyor.",
               "detail": "38 yaşında, sert, politikacı destekli."
             },
@@ -2270,7 +2270,7 @@
             {
               "id": "s1",
               "name": "Dr. Elena (Orijinal)",
-              "icon": "👩‍🔬",
+              "icon": "🔬",
               "description": "Merkezin kurucusu. Klonuna her şeyini öğretti.",
               "detail": "50 yaşında, bilimsel, soğukkanlı."
             },
@@ -2470,7 +2470,7 @@
             {
               "id": "s4",
               "name": "Üs Komutanı Rex Torres",
-              "icon": "👨‍🚀",
+              "icon": "🚀",
               "description": "Son kararları o veriyor. Mali baskı altında.",
               "detail": "52 yaşında, asker ruhlu, stres altında."
             }
@@ -3437,7 +3437,7 @@
             {
               "id": "s4",
               "name": "Yeni Stajyer Camille",
-              "icon": "👩‍🎓",
+              "icon": "🎓",
               "description": "İlk haftası. Ama tüm koridorları biliyor gibi.",
               "detail": "22 yaşında, genç, çok meraklı."
             }
@@ -3870,7 +3870,7 @@
             {
               "id": "s1",
               "name": "Eski Hemşire Ayşe",
-              "icon": "👩‍⚕️",
+              "icon": "👩",
               "description": "Hastanenin kapanmasını hiç kabullenemedi. Hâlâ bakıyor.",
               "detail": "70 yaşında, yorgun gözlü, sırrı var."
             },
@@ -4208,14 +4208,14 @@
             {
               "id": "s1",
               "name": "Yalı Sahibi Mme. Dolores",
-              "icon": "👩‍🦱",
+              "icon": "👩",
               "description": "Araştırmacının 'ruhları rahatsız ettiğini' söylüyordu.",
               "detail": "65 yaşında, Rum asıllı, gizemli."
             },
             {
               "id": "s2",
               "name": "Asistan Tarık",
-              "icon": "👨‍🔬",
+              "icon": "🧪",
               "description": "Araştırmacının 10 yıllık asistanı. Ama son ay garip.",
               "detail": "35 yaşında, yorgun, bir şey gizliyor."
             },
@@ -4383,7 +4383,7 @@
             {
               "id": "s2",
               "name": "Doktor Sibel",
-              "icon": "👩‍⚕️",
+              "icon": "👩",
               "description": "Tıbbi otopsiyi yapabilecek tek kişi. İlk müdahaleyi o yaptı.",
               "detail": "30 yaşında, sakin, çok sakin."
             },
@@ -5337,7 +5337,7 @@
             {
               "id": "s2",
               "name": "FBI Ajanı Sandra Cole",
-              "icon": "🕵️‍♀️",
+              "icon": "🕵️",
               "description": "15 yıldır bu davayı yürütüyor. Çok biliyor, belki fazla.",
               "detail": "45 yaşında, soğuk, dosyaları ezber biliyor."
             },
@@ -7500,7 +7500,7 @@
             {
               "id": "s3",
               "name": "Eski Ortak Sofia Neves",
-              "icon": "👩‍💻",
+              "icon": "💻",
               "description": "Fikri çalındı ve şirketten atıldı. Dava açmak üzereydi.",
               "detail": "38 yaşında, Portekizli, öfkeli ve haklı."
             }
@@ -9180,7 +9180,7 @@
             {
               "id": "s4",
               "name": "Genç Asistan Lydia",
-              "icon": "👩‍🎓",
+              "icon": "🎓",
               "description": "Kütüphanede staj yapıyor. Küçük bir sırrı var.",
               "detail": "24 yaşında, zeki, bir şeyi gizliyor."
             }
@@ -9898,7 +9898,7 @@
             {
               "id": "s2",
               "name": "Eski Sekreteri Nilgün",
-              "icon": "👩‍💼",
+              "icon": "👩",
               "description": "20 yıl çalıştı, emekliliğinde hiçbir şey verilmedi.",
               "detail": "58 yaşında, kırık kalpli, ama bunu belli etmez."
             },

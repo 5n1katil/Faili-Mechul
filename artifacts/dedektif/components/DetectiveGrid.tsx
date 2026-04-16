@@ -225,10 +225,11 @@ function EntityLabel({
               backgroundColor: bg,
               alignItems: "center",
               justifyContent: "center",
+              overflow: "hidden",
             }}
           >
             {isEmojiIcon(icon) ? (
-              <Text style={{ fontSize: avatarIconSize, lineHeight: avatarIconSize * 1.2, includeFontPadding: false }}>
+              <Text numberOfLines={1} style={{ fontSize: avatarIconSize, lineHeight: avatarIconSize * 1.2, includeFontPadding: false, textAlign: "center" }}>
                 {icon}
               </Text>
             ) : (
@@ -272,10 +273,11 @@ function EntityLabel({
             backgroundColor: bg,
             alignItems: "center",
             justifyContent: "center",
+            overflow: "hidden",
           }}
         >
           {isEmojiIcon(icon) ? (
-            <Text style={{ fontSize: avatarIconSize, lineHeight: avatarIconSize * 1.2, includeFontPadding: false }}>
+            <Text numberOfLines={1} style={{ fontSize: avatarIconSize, lineHeight: avatarIconSize * 1.2, includeFontPadding: false, textAlign: "center" }}>
               {icon}
             </Text>
           ) : (
