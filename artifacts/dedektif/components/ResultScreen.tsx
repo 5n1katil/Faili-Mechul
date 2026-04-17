@@ -472,11 +472,11 @@ export default function ResultScreen({
               <Text style={[styles.solutionText, { color: colors.foreground }]}>{suspect?.name ?? "-"}</Text>
             </View>
             <View style={styles.solutionRow}>
-              <MaterialIcons name="gps_not_fixed" size={16} color={colors.primary} />
+              <MaterialIcons name="gps-not-fixed" size={16} color={colors.primary} />
               <Text style={[styles.solutionText, { color: colors.foreground }]}>{weapon?.name ?? "-"}</Text>
             </View>
             <View style={styles.solutionRow}>
-              <MaterialIcons name="location_on" size={16} color={colors.primary} />
+              <MaterialIcons name="location-on" size={16} color={colors.primary} />
               <Text style={[styles.solutionText, { color: colors.foreground }]}>{location?.name ?? "-"}</Text>
             </View>
           </View>

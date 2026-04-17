@@ -195,7 +195,7 @@ export default function PaywallModal({ visible, onClose, premiumPuzzleCount = 19
                 <ActivityIndicator color={colors.primaryForeground} />
               ) : (
                 <>
-                  <MaterialIcons name="lock_open" size={20} color={colors.primaryForeground} />
+                  <MaterialIcons name="lock-open" size={20} color={colors.primaryForeground} />
                   <Text style={[styles.buyBtnText, { color: colors.primaryForeground }]}>
                     Vaka Arşivini Aç — {priceString}
                   </Text>
