@@ -69,7 +69,7 @@ test("Expanding Çaylak accordion starts a game with timer and grid visible", as
   await page.waitForTimeout(1500);
 
   await expect(page.getByTestId("timer-value")).toBeVisible({ timeout: 5000 });
-  await expect(page.getByText("ŞÜPHELILER").first()).toBeVisible({ timeout: 5000 });
+  await expect(page.getByText("ŞÜPHELİLER").first()).toBeVisible({ timeout: 5000 });
 });
 
 test("Grid cell marks cycle: three presses produce the '?' indicator", async ({ page }) => {
@@ -81,7 +81,7 @@ test("Grid cell marks cycle: three presses produce the '?' indicator", async ({ 
   await page.getByTestId("start-game-btn").click({ force: true });
   await page.waitForTimeout(1500);
 
-  await expect(page.getByText("ŞÜPHELILER").first()).toBeVisible({ timeout: 5000 });
+  await expect(page.getByText("ŞÜPHELİLER").first()).toBeVisible({ timeout: 5000 });
 
   const qBefore = (await page.content()).match(/\?/g)?.length ?? 0;
 

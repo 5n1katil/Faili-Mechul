@@ -390,7 +390,7 @@ export default function DetectiveGrid({
           <View style={styles.row}>
             <View style={{ width: labelWidth }} />
             <View style={{ width: suspectBlockOuter, alignItems: "center" }}>
-              <Text style={[styles.groupLabel, { color: SUSPECT_COLOR }]}>ŞÜPHELILER</Text>
+              <Text style={[styles.groupLabel, { color: SUSPECT_COLOR }]}>ŞÜPHELİLER</Text>
             </View>
             <View style={{ width: divider }} />
             <View style={{ width: lCellsInner, alignItems: "center" }}>
