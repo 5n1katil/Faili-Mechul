@@ -2226,6 +2226,186 @@ export const PUZZLES: Puzzle[] = [
     },
     solution: { suspectId: "s3", weaponId: "w3", locationId: "l3" },
   },
+  {
+    id: "p031",
+    title: "Konakta Gece Vakti",
+    difficulty: "caylik",
+    dayIndex: 31,
+    story:
+      "Bursa'nın eski bir konağında yemek daveti düzenlendi. Sabah erkenden konağın uşağı Fuat Bey'i çalışma odasında bıçaklanmış hâlde buldu. Davettekilerin yalnızca üçü konakta gecelemişti. Sen bölge jandarmasının genç dedektifi olarak olayı çözmek için sabahın ilk ışıklarında kapıya dayandın.",
+    suspects: [
+      { id: "s1", name: "Tüccar Haluk Bey", description: "Fuat Bey'e büyük borcu olan varlıklı kumaş tüccarı.", icon: "store" },
+      { id: "s2", name: "Yeğen Semiha Hanım", description: "Merhum Fuat Bey'in tek varisi olan yeğeni; miras meselesinde beklentisi yüksek.", icon: "face-3" },
+      { id: "s3", name: "Emekli Yüzbaşı Cemil", description: "Fuat Bey'in eski askeri arkadaşı; aralarında geçmişten gelen bir hesap var.", icon: "military-tech" },
+    ],
+    weapons: [
+      { id: "w1", name: "Saplı Bıçak", description: "Mutfaktan alınmış uzun saplı et bıçağı.", icon: "content-cut" },
+      { id: "w2", name: "Hançer", description: "Duvarda asılı süs amaçlı eski Osmanlı hançeri.", icon: "construction" },
+      { id: "w3", name: "Kâğıt Bıçağı", description: "Masanın üzerindeki zarif gümüş kâğıt açacağı.", icon: "edit" },
+    ],
+    locations: [
+      { id: "l1", name: "Çalışma Odası", description: "Konağın zemin katındaki kilitli çalışma odası.", icon: "menu-book" },
+      { id: "l2", name: "Kütüphane", description: "Üst kattaki kitaplıklı oda; penceresi bahçeye bakıyor.", icon: "history-edu" },
+      { id: "l3", name: "Mutfak", description: "Konağın arka tarafındaki geniş mutfak bölümü.", icon: "restaurant" },
+    ],
+    clues: [
+      { id: "c1", text: "Fuat Bey çalışma masasının önünde bulundu; etrafında mücadele izi var, kapı içeriden kilitliydi ve anahtar masanın üzerindeydi. Ölüm burada gerçekleşti.", type: "evidence", isBonus: false },
+      { id: "c2", text: "Uşak, gece yarısı Emekli Yüzbaşı Cemil'in üst kattaki odasından yüksek sesle horlamasını duyduğunu söylüyor. Oda kapısını sabah 7'de bizzat kendisi açtı; Cemil içeride derin uykudaydı.", type: "witness", isBonus: false },
+      { id: "c3", text: "Yara izi dar ve düzgün kesilmiş; kâğıt bıçağı gibi ince ve küçük bir aletle yapılmış olamaz. Darbe uzun ve güçlü bir bıçaktan gelmiş.", type: "forensic", isBonus: false },
+      { id: "c4", text: "Duvardaki hançer askısında toz birikmiş ve hançer sıkıca yerinde duruyor; yıllar içinde paslanan menteşesi açılmamış.", type: "evidence", isBonus: false },
+      { id: "c5", text: "Sabah mutfağı kontrol eden uşak, uzun saplı et bıçaklarından birinin eksik olduğunu fark etti. Semiha Hanım'ın odasına giden koridorda küçük bir kan lekesi bulundu.", type: "witness", isBonus: true },
+      { id: "c6", text: "Semiha Hanım'ın bavulunda sakladığı gecelik kıyafetin kolunda kan lekesi bulundu. Bıçak ise konağın arka bahçesinde çiçek tarhının altına gömülmüş hâlde çıktı.", type: "direct", isBonus: true },
+    ],
+    solvabilityMeta: {
+      freeEliminations: ["l2", "l3", "s3", "w2", "w3"],
+      bonusEliminations: ["s1"],
+    },
+    solution: { suspectId: "s2", weaponId: "w1", locationId: "l1" },
+  },
+  {
+    id: "p032",
+    title: "Pazar Sabahı Baskını",
+    difficulty: "caylik",
+    dayIndex: 32,
+    story:
+      "Gaziantep'in eski çarşısında bakırcı Niyazi Usta, dükkanının deposunda baygın bulundu ve kısa süre sonra hayatını kaybetti. Dükkan sabah açılmadan önce soyulmuştu; kasadan para ve değerli bakır kaplar kayıp. Üç kişinin o sabah erken saatte çarşıda olduğu biliniyor.",
+    suspects: [
+      { id: "s1", name: "Rakip Esnaf Vahap", description: "Hemen karşı dükkânda bakır satan eski rakip; müşteri kaybını Niyazi'ye bağlıyor.", icon: "elderly" },
+      { id: "s2", name: "Çırak Selim", description: "Niyazi Usta'nın üç yıldır yanında çalışan çırağı; kovulma korkusu yaşıyor.", icon: "person" },
+      { id: "s3", name: "Seyyar Satıcı Rıza", description: "Her sabah çarşıda dolaşan seyyar satıcı; Niyazi Usta'ya geçen hafta küsmüş.", icon: "store" },
+    ],
+    weapons: [
+      { id: "w1", name: "Demir Çubuk", description: "Depoda bulunan kalın demir destek çubuğu.", icon: "build" },
+      { id: "w2", name: "Bakır Sürahi", description: "Dükkanın vitrinindeki ağır bakır sürahi.", icon: "wine-bar" },
+      { id: "w3", name: "Odun Parçası", description: "Depo kapısı yanında bulunan iri odun kütüğü.", icon: "carpenter" },
+    ],
+    locations: [
+      { id: "l1", name: "Depo", description: "Dükkanın arka tarafındaki kapalı depo bölümü.", icon: "warehouse" },
+      { id: "l2", name: "Dükkan Önü", description: "Çarşıya bakan açık vitrin ve tezgah alanı.", icon: "storefront" },
+      { id: "l3", name: "Çarşı Sokağı", description: "Dükkanın önündeki dar taş döşeli çarşı yolu.", icon: "directions-walk" },
+    ],
+    clues: [
+      { id: "c1", text: "Niyazi Usta deponun tam ortasında bulundu; etrafındaki kırık kutular ve devrilmiş raflar mücadelenin burada yaşandığını gösteriyor. Dükkan ön kapısı dışarıdan kilitliydi.", type: "evidence", isBonus: false },
+      { id: "c2", text: "Çarşının başındaki çay ocağı sahibi, Rakip Esnaf Vahap'ın o sabah çay içmek için ocakta oturduğunu, dükkânına ancak saat 08:30'da gittiğini söylüyor. Cinayet en geç 07:45'te gerçekleşmiş.", type: "witness", isBonus: false },
+      { id: "c3", text: "Baş yarası yuvarlak ve pürüzsüz bir şeyin darbesiyle oluşmuş; köşeli ve uzun bir çubukla bu iz bırakılamaz.", type: "forensic", isBonus: false },
+      { id: "c4", text: "Vitrininden alınan bakır sürahinin sapında küçük bir kan izi ve kıl parçası bulundu. Sürahi depoya yakın bir rafa bırakılmış.", type: "evidence", isBonus: false },
+      { id: "c5", text: "Çırak Selim, usta erken açtığında kendisinin henüz gelmediğini söylüyor. Ancak komşu dükkan sahibi Selim'i sabah 07:00'de dükkanın arka kapısından girdiğini gördüğünü belirtiyor.", type: "witness", isBonus: true },
+      { id: "c6", text: "Seyyar Satıcı Rıza'nın çantasında kasadan çalınan paraya ait Niyazi Usta'nın kendi eliyle işaretlediği özel zarflar bulundu. Rıza o sabah çarşıya erken geldiğini inkâr etmiyor.", type: "direct", isBonus: true },
+    ],
+    solvabilityMeta: {
+      freeEliminations: ["l2", "l3", "s1", "w1", "w3"],
+      bonusEliminations: ["s2"],
+    },
+    solution: { suspectId: "s3", weaponId: "w2", locationId: "l1" },
+  },
+  {
+    id: "p033",
+    title: "Akşam Vapurunda Gizem",
+    difficulty: "caylik",
+    dayIndex: 33,
+    story:
+      "İstanbul Boğazı'nı geçen akşam vapurunda emekli hâkim Nafiz Bey, güverte altındaki kapalı yolcu salonunda ölü bulundu. Vapur iskeleye yanaşmadan önce kaptan oturumu durdurdu. Salonda yalnızca üç yolcu kalmıştı. Sen deniz polisi dedektifi olarak vapura çıktın.",
+    suspects: [
+      { id: "s1", name: "Avukat Kerem Bey", description: "Nafiz Bey'in davasında karşı tarafı temsil eden genç avukat; mahkûm olmuştu.", icon: "badge" },
+      { id: "s2", name: "Hemşire Feriha Hanım", description: "Nafiz Bey'in eski bir tanığı; aleyhinde ifade verilmesine kin beslediği biliniyor.", icon: "medical-services" },
+      { id: "s3", name: "Öğrenci Tarık", description: "Nafiz Bey'in oğlunun yakın arkadaşı; miras davasında tanıklık etmesi bekleniyor.", icon: "person" },
+    ],
+    weapons: [
+      { id: "w1", name: "Zehirli İlaç", description: "Yüksek dozda karıştırılmış uyku ilacı; fark edilmeden içki içine katılabilir.", icon: "medication" },
+      { id: "w2", name: "İp Parçası", description: "Vapurun güvertesinde bulunan kalın halat parçası.", icon: "link" },
+      { id: "w3", name: "Cam Kırığı", description: "Salondaki kırık bardaktan elde edilen keskin cam.", icon: "broken-image" },
+    ],
+    locations: [
+      { id: "l1", name: "Yolcu Salonu", description: "Güverte altındaki kapalı yolcu bekleme salonu.", icon: "weekend" },
+      { id: "l2", name: "Açık Güverte", description: "Vapurun üst katındaki açık hava güverte alanı.", icon: "directions-boat" },
+      { id: "l3", name: "Makine Dairesi", description: "Alt kattaki makine ve pompa odası; yolculara kapalı.", icon: "engineering" },
+    ],
+    clues: [
+      { id: "c1", text: "Nafiz Bey'in üzerinde hiçbir darp veya kesik izi yok. Yanındaki bardakta çözünmüş toz kalıntısı var; ölüm zehirlenmeyle gerçekleşmiş. Cesedi yolcu salonunda bulundu.", type: "forensic", isBonus: false },
+      { id: "c2", text: "Kaptan, Öğrenci Tarık'ın yolculuk boyunca açık güvertede oturduğunu ve iskele yaklaşınca aşağı indiğini söylüyor. Nafiz Bey'in bulunduğu salon güverteden görünmüyor.", type: "witness", isBonus: false },
+      { id: "c3", text: "Bilet görevlisi Kerem Bey'in vapura binişinin kaydedildiği saatin, Nafiz Bey'in son görüldüğü saatten 20 dakika sonra olduğunu söylüyor; yani Kerem Bey salondan önce üst güverteye çıkmıştı.", type: "witness", isBonus: false },
+      { id: "c4", text: "Hemşire Feriha Hanım'ın tıbbi çantasında standart doz üzerinde bir uyku ilacı şişesi bulundu; şişede eksilen miktar bardaktaki kalıntıyla örtüşüyor.", type: "evidence", isBonus: false },
+      { id: "c5", text: "Nafiz Bey'in bardağında iki farklı kişinin parmak izi var; biri Nafiz Bey'e ait, diğeri hemşire eldiveninin bıraktığı pudra izine benziyor.", type: "indirect", isBonus: true },
+      { id: "c6", text: "Feriha Hanım'ın çantasının iç cebinde Nafiz Bey'e yazılmış yırtık bir mektup bulundu: mahkemede verdiği ifadeden dolayı ona hesap soracağını yazan kendi el yazısıyla.", type: "direct", isBonus: true },
+    ],
+    solvabilityMeta: {
+      freeEliminations: ["l2", "l3", "w2", "w3", "s3", "s1"],
+      bonusEliminations: [],
+    },
+    solution: { suspectId: "s2", weaponId: "w1", locationId: "l1" },
+  },
+  {
+    id: "p034",
+    title: "Bağda Kanlı Bıçak",
+    difficulty: "caylik",
+    dayIndex: 34,
+    story:
+      "İzmir'in Bornova ilçesinde bir zeytinlik ve bağ sahibi Hüsnü Ağa, hasat dönemi sabahında bağın içinde bıçaklanmış bulundu. Etrafındaki üzüm sepetleri devrilmişti. O sabah erken bağa giren üç kişi tespit edildi. Bölge jandarması seni olayı çözmeye davet etti.",
+    suspects: [
+      { id: "s1", name: "Uşak Mehmet", description: "Hüsnü Ağa'nın bağında yıllardır çalışan yaşlı uşak; son zamanlarda kovulma söylentisi çıkmış.", icon: "agriculture" },
+      { id: "s2", name: "Komşu Tarla Sahibi Nevzat", description: "Hüsnü Ağa ile tarla sınırı yüzünden mahkemelik olan komşu.", icon: "elderly" },
+      { id: "s3", name: "Torun Kız Nermin", description: "Hüsnü Ağa'nın genç torunu; büyükbabasının bağı satma kararına şiddetle karşı çıkıyor.", icon: "face-3" },
+    ],
+    weapons: [
+      { id: "w1", name: "Bağ Bıçağı", description: "Üzüm kesmede kullanılan kısa ve keskin bağ bıçağı.", icon: "content-cut" },
+      { id: "w2", name: "Balta", description: "Bağ kulübesinde saklanan odun baltası.", icon: "carpenter" },
+      { id: "w3", name: "Demir Kazma", description: "Toprak işlemeye yarayan ağır demir kazma.", icon: "construction" },
+    ],
+    locations: [
+      { id: "l1", name: "Bağ İçi", description: "Asmaların sık yetiştiği bağın orta kısmı.", icon: "grass" },
+      { id: "l2", name: "Bağ Kulübesi", description: "Bağın girişindeki küçük taş kulübe; aletler burada saklanıyor.", icon: "cottage" },
+      { id: "l3", name: "Tarla Sınırı", description: "Hüsnü Ağa ile komşu Nevzat'ın tarlasını ayıran taş duvar hattı.", icon: "terrain" },
+    ],
+    clues: [
+      { id: "c1", text: "Hüsnü Ağa bağın tam ortasında, asmaların arasında bulundu. Devrilmiş sepetler ve kırık dallar mücadelenin bağ içinde olduğunu kanıtlıyor.", type: "evidence", isBonus: false },
+      { id: "c2", text: "Köy muhtarı, Torun Nermin'i sabah namazı vakti köy çeşmesinde ağlarken gördüğünü söylüyor. Çeşme bağdan 3 km uzakta; oraya gidip gelmesi cinayet saatini karşılamıyor.", type: "witness", isBonus: false },
+      { id: "c3", text: "Yaranın biçimi dar, kısa ve düzgün kesilmiş; balta veya kazma gibi büyük ve ağır aletlerin bıraktığı geniş yara bu değil.", type: "forensic", isBonus: false },
+      { id: "c4", text: "Uşak Mehmet'in beline bağlı bıçak kını boş; kında taze kan izi var. Mehmet bıçağın sabah düştüğünü öne sürdü ama bağ içinde arama yapıldığında bıçak Nevzat'ın tarlasına doğru uzanan patikada bulundu.", type: "evidence", isBonus: false },
+      { id: "c5", text: "Tarla sınırındaki işçi Ahmet, sabah çok erken Nevzat'ın taş duvarın yanında beklediğini ama bağa girmediğini söylüyor. Nevzat sadece sınır kontrolü yaptığını doğruluyor.", type: "witness", isBonus: true },
+      { id: "c6", text: "Hüsnü Ağa'nın cebinden imzalanmamış bir kâğıt çıktı: Uşak Mehmet'i bu hafta sonu işten çıkardığını belirten yazılı bildirim. Mehmet'in bu kâğıttan haberi olduğu, dün akşam tartıştıkları komşu tarafından doğrulandı.", type: "direct", isBonus: true },
+    ],
+    solvabilityMeta: {
+      freeEliminations: ["l2", "l3", "s3", "w2", "w3"],
+      bonusEliminations: ["s2"],
+    },
+    solution: { suspectId: "s1", weaponId: "w1", locationId: "l1" },
+  },
+  {
+    id: "p035",
+    title: "Kervansarayda Son Gece",
+    difficulty: "caylik",
+    dayIndex: 35,
+    story:
+      "Konya'nın tarihi kervansarayından dönüştürülmüş han binasında tüccar Raşit Efendi, sabah odasında boğulmuş hâlde bulundu. Hanın sadece üç konuğu vardı; diğerleri bir gün önce ayrılmıştı. Kapı ne kilitli ne de zorlanmış; katil Raşit Efendi'nin tanıdığı biri olmalı. Sen şehir polisi dedektifi olarak sorgulamayı yürütüyorsun.",
+    suspects: [
+      { id: "s1", name: "Tüccar Ortak Sabri Bey", description: "Raşit Efendi'nin on yıllık iş ortağı; ortaklıktan ayrılmak istediği duyulmuş.", icon: "store" },
+      { id: "s2", name: "Hizmetçi Kadın Hacer", description: "Hanın tek hizmetçisi; Raşit Efendi'nin odasını düzenlemek için anahtara sahip.", icon: "face-3" },
+      { id: "s3", name: "Gezgin Derviş Salih", description: "Handa gecelemekte olan yaşlı derviş; Raşit Efendi ile yemekte tartıştığı görülmüş.", icon: "self-improvement" },
+    ],
+    weapons: [
+      { id: "w1", name: "Atkı", description: "Uzun ve kalın yün atkı; boyunda boğulma izi bırakmış.", icon: "link" },
+      { id: "w2", name: "Kemer", description: "Raşit Efendi'nin odadaki deri kemeri.", icon: "build" },
+      { id: "w3", name: "Halat", description: "Han ambarında bulunan kalın kendir halat.", icon: "anchor" },
+    ],
+    locations: [
+      { id: "l1", name: "Konak Odası", description: "Raşit Efendi'nin kaldığı birinci kattaki geniş oda.", icon: "castle" },
+      { id: "l2", name: "Han Avlusu", description: "Hanın ortasındaki açık avlu; gece boyunca bekçi dolaşıyor.", icon: "park" },
+      { id: "l3", name: "Ambar", description: "Alt kattaki kilitli ambar; yalnızca hizmetçi ve han sahibinin anahtarı var.", icon: "warehouse" },
+    ],
+    clues: [
+      { id: "c1", text: "Raşit Efendi yatağının yanında, boyunda atkı izi olan hâlde bulundu. Odada mücadele izi var; ölüm burada gerçekleşmiş.", type: "evidence", isBonus: false },
+      { id: "c2", text: "Boyundaki iz kalın ve yumuşak; deri kemer bu izi bırakamazdı çünkü kemer tokalı ve dar kenarlıdır, iz geniş ve eşit basınçlı.", type: "forensic", isBonus: false },
+      { id: "c3", text: "Han bekçisi gece boyunca avluyu dolaştı; halat her zaman ambardaydı ve ambar kilidi sabah kontrol edildiğinde açılmamıştı.", type: "witness", isBonus: false },
+      { id: "c4", text: "Caminin imamı, Gezgin Derviş Salih'in sabah namazı için tekkeye çok erkenden geldiğini ve namaz boyunca ayrılmadığını doğruluyor. Ölüm vakti namaz saatiyle örtüşüyor.", type: "witness", isBonus: false },
+      { id: "c5", text: "Boyundaki atkı koyu mavi yün; hizmetçi Hacer'in üzerindeki şalın rengi ve dokusu bire bir uyuşuyor. Hacer atkının kendisine ait olduğunu inkâr etmiyor ama 'düşürmüş' olduğunu söylüyor.", type: "indirect", isBonus: true },
+      { id: "c6", text: "Raşit Efendi'nin odasından altın kese kayıp; sabah Hacer'in odasında yastık altında bulundu. Hacer'in Raşit Efendi'ye geçen ay kişisel borcu olduğu han sahibi tarafından doğrulandı.", type: "direct", isBonus: true },
+    ],
+    solvabilityMeta: {
+      freeEliminations: ["l2", "l3", "s3", "w2", "w3"],
+      bonusEliminations: ["s1"],
+    },
+    solution: { suspectId: "s2", weaponId: "w1", locationId: "l1" },
+  },
 ];
 
 export function getPuzzleByDayIndex(dayIndex: number): Puzzle | undefined {

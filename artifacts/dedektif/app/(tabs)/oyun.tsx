@@ -52,6 +52,13 @@ import type { EntityInfo } from "@/components/EntityInfoSheet";
 import Animated, { FadeInDown } from "react-native-reanimated";
 
 const FREE_PUZZLE_COUNT = 10;
+const EXTRA_FREE_PUZZLE_IDS: ReadonlySet<string> = new Set([
+  "p031",
+  "p032",
+  "p033",
+  "p034",
+  "p035",
+]);
 
 function formatTime(s: number): string {
   const m = Math.floor(s / 60);
@@ -542,12 +549,17 @@ export default function VakalarScreen() {
   if (!gameState || !gameState.puzzle) {
     const dailyPuzzle = getDailyPuzzle();
     const archivePuzzles = PUZZLES.filter((p) => p.id !== dailyPuzzle.id);
-    const freePuzzles = archivePuzzles.slice(0, FREE_PUZZLE_COUNT);
+    const sliceFree = archivePuzzles.slice(0, FREE_PUZZLE_COUNT);
+    const extraFree = archivePuzzles.filter(
+      (p) => EXTRA_FREE_PUZZLE_IDS.has(p.id) && !sliceFree.includes(p)
+    );
+    const freePuzzles = [...sliceFree, ...extraFree];
+    const freePuzzleIds = new Set(freePuzzles.map((p) => p.id));
     const archiveOnlyPackPuzzles = PACKS
       .filter((p) => !(p.packId in PACK_PRODUCT_IDS))
       .flatMap((p) => getPuzzlesForPack(p.packId));
     const premiumPuzzles = [
-      ...archivePuzzles.slice(FREE_PUZZLE_COUNT),
+      ...archivePuzzles.filter((p) => !freePuzzleIds.has(p.id)),
       ...archiveOnlyPackPuzzles,
     ];
     const completedStandardPuzzles = [dailyPuzzle, ...archivePuzzles].filter(

@@ -1,0 +1,752 @@
+[
+  {
+    "puzzleId": "vaka_s01",
+    "title": "Konakta Gece Vakti",
+    "subtitle": "Bursa, 1971",
+    "difficulty": 1,
+    "difficultyLabel": "Çaylak",
+    "stars": "★☆☆☆☆",
+    "gridSize": "3x3",
+    "timeLimit": 600,
+    "story": "Bursa'nın eski bir konağında yemek daveti düzenlendi. Sabah erkenden konağın uşağı Fuat Bey'i çalışma odasında bıçaklanmış hâlde buldu. Davettekilerin yalnızca üçü konakta gecelemişti. Sen bölge jandarmasının genç dedektifi olarak olayı çözmek için sabahın ilk ışıklarında kapıya dayandın.",
+    "atmosphere": "Konak ahşap döşemesi gıcırdıyor, pencereden ıhlamur kokusu geliyor. Çalışma odasında yarı yanmış bir mum, masada devrilmiş mürekkep hokkası.",
+    "suspects": [
+      {
+        "id": "s1",
+        "name": "Tüccar Haluk Bey",
+        "icon": "👨",
+        "description": "Fuat Bey'e büyük borcu olan varlıklı kumaş tüccarı.",
+        "detail": "52 yaşında, şişman, terli; sorular karşısında sinirli bir edayla cevap veriyor."
+      },
+      {
+        "id": "s2",
+        "name": "Yeğen Semiha Hanım",
+        "icon": "👩",
+        "description": "Merhum Fuat Bey'in tek varisi olan yeğeni; miras meselesinde beklentisi yüksek.",
+        "detail": "34 yaşında, soğukkanlı, bakışları hesaplı; pek az konuşuyor."
+      },
+      {
+        "id": "s3",
+        "name": "Emekli Yüzbaşı Cemil",
+        "icon": "🪖",
+        "description": "Fuat Bey'in eski askeri arkadaşı; aralarında geçmişten gelen bir hesap var.",
+        "detail": "60 yaşında, dik duruşlu, ses tonu otoriter; ellerinde titreme gözlemleniyor."
+      }
+    ],
+    "weapons": [
+      {
+        "id": "w1",
+        "name": "Saplı Bıçak",
+        "icon": "🔪",
+        "description": "Mutfaktan alınmış uzun saplı et bıçağı."
+      },
+      {
+        "id": "w2",
+        "name": "Hançer",
+        "icon": "⚔️",
+        "description": "Duvarda asılı süs amaçlı eski Osmanlı hançeri."
+      },
+      {
+        "id": "w3",
+        "name": "Kâğıt Bıçağı",
+        "icon": "🔧",
+        "description": "Masanın üzerindeki zarif gümüş kâğıt açacağı."
+      }
+    ],
+    "locations": [
+      {
+        "id": "l1",
+        "name": "Çalışma Odası",
+        "icon": "🕯️",
+        "description": "Konağın zemin katındaki kilitli çalışma odası."
+      },
+      {
+        "id": "l2",
+        "name": "Kütüphane",
+        "icon": "📜",
+        "description": "Üst kattaki kitaplıklı oda; penceresi bahçeye bakıyor."
+      },
+      {
+        "id": "l3",
+        "name": "Mutfak",
+        "icon": "👨‍🍳",
+        "description": "Konağın arka tarafındaki geniş mutfak bölümü."
+      }
+    ],
+    "clues": [
+      {
+        "id": "c1",
+        "type": "kanit",
+        "revealOrder": 1,
+        "isRevealed": true,
+        "pointCost": 0,
+        "title": "Cesedin Yeri",
+        "text": "Fuat Bey çalışma masasının önünde bulundu; etrafında mücadele izi var, kapı içeriden kilitliydi ve anahtar masanın üzerindeydi. Ölüm burada gerçekleşti.",
+        "mechanicType": "text",
+        "deductionHint": "Kütüphane ve Mutfak elenebilir; cinayet Çalışma Odası'nda yaşandı."
+      },
+      {
+        "id": "c2",
+        "type": "tanik",
+        "revealOrder": 2,
+        "isRevealed": false,
+        "pointCost": 50,
+        "title": "Uşağın İfadesi",
+        "text": "Uşak, gece yarısı Emekli Yüzbaşı Cemil'in üst kattaki odasından yüksek sesle horlamasını duyduğunu söylüyor. Oda kapısını sabah 7'de bizzat kendisi açtı; Cemil içeride derin uykudaydı.",
+        "mechanicType": "text",
+        "deductionHint": "Emekli Yüzbaşı Cemil cinayet saatinde odasındaydı; elenir."
+      },
+      {
+        "id": "c3",
+        "type": "adli",
+        "revealOrder": 3,
+        "isRevealed": false,
+        "pointCost": 50,
+        "title": "Yara İncelemesi",
+        "text": "Yara izi dar ve düzgün kesilmiş; kâğıt bıçağı gibi ince ve küçük bir aletle yapılmış olamaz. Darbe uzun ve güçlü bir bıçaktan gelmiş.",
+        "mechanicType": "text",
+        "deductionHint": "Kâğıt Bıçağı bu yarayı yapamaz; elenir. Silah ya Saplı Bıçak ya da Hançer."
+      },
+      {
+        "id": "c4",
+        "type": "kanit",
+        "revealOrder": 4,
+        "isRevealed": false,
+        "pointCost": 50,
+        "title": "Hançer Yerinde",
+        "text": "Duvardaki hançer askısında toz birikmiş ve hançer sıkıca yerinde duruyor; yıllar içinde paslanan menteşesi açılmamış.",
+        "mechanicType": "text",
+        "deductionHint": "Hançer kullanılmamış; elenir. Silah Saplı Bıçak."
+      },
+      {
+        "id": "c5",
+        "type": "tanik",
+        "revealOrder": 5,
+        "isRevealed": false,
+        "pointCost": 50,
+        "title": "Mutfak Gözlemi",
+        "text": "Sabah mutfağı kontrol eden uşak, uzun saplı et bıçaklarından birinin eksik olduğunu fark etti. Semiha Hanım'ın odasına giden koridorda küçük bir kan lekesi bulundu.",
+        "mechanicType": "text",
+        "deductionHint": "Bıçak Semiha Hanım'ın koridorunda; Semiha şüphesi güçleniyor."
+      },
+      {
+        "id": "c6",
+        "type": "dogrudan",
+        "revealOrder": 6,
+        "isRevealed": false,
+        "pointCost": 50,
+        "title": "Kıyafetteki Leke",
+        "text": "Semiha Hanım'ın bavulunda sakladığı gecelik kıyafetin kolunda kan lekesi bulundu. Bıçak ise konağın arka bahçesinde çiçek tarhının altına gömülmüş hâlde çıktı.",
+        "mechanicType": "text",
+        "deductionHint": "Katil Yeğen Semiha Hanım; silah Saplı Bıçak, mekân Çalışma Odası."
+      }
+    ],
+    "solution": {
+      "suspectId": "s2",
+      "weaponId": "w1",
+      "locationId": "l1"
+    },
+    "solutionNarrative": "Yeğen Semiha Hanım, mirasın kendisine geçmesini beklerken Fuat Bey'in yeni bir vasiyetname hazırladığını öğrendi. Gece herkes uyurken mutfaktan bıçağı aldı, çalışma odasına girdi ve vasiyeti imzalamadan önce Fuat Bey'i susturdu. Cemil uyuyordu, Haluk Bey ise borcu nedeniyle şüpheli görünse de fiziksel kanıt Semiha'yı işaret ediyordu.",
+    "specialMechanic": null
+  },
+  {
+    "puzzleId": "vaka_s02",
+    "title": "Pazar Sabahı Baskını",
+    "subtitle": "Gaziantep, 1968",
+    "difficulty": 1,
+    "difficultyLabel": "Çaylak",
+    "stars": "★☆☆☆☆",
+    "gridSize": "3x3",
+    "timeLimit": 600,
+    "story": "Gaziantep'in eski çarşısında bakırcı Niyazi Usta, dükkanının deposunda baygın bulundu ve kısa süre sonra hayatını kaybetti. Dükkan sabah açılmadan önce soyulmuştu; kasadan para ve değerli bakır kaplar kayıp. Üç kişinin o sabah erken saatte çarşıda olduğu biliniyor.",
+    "atmosphere": "Çarşının taşlı yollarına sabah güneşi vuruyor, kahve ocaklarından nargile kokusu yayılıyor. Bakırcı dükkanında devirilen bir çay bardağı, yerde kırık cam parçaları.",
+    "suspects": [
+      {
+        "id": "s1",
+        "name": "Rakip Esnaf Vahap",
+        "icon": "👴",
+        "description": "Hemen karşı dükkânda bakır satan eski rakip; müşteri kaybını Niyazi'ye bağlıyor.",
+        "detail": "63 yaşında, huysuz, zayıf yapılı; her sabah erken çarşıya gelen biri."
+      },
+      {
+        "id": "s2",
+        "name": "Çırak Selim",
+        "icon": "🧑",
+        "description": "Niyazi Usta'nın üç yıldır yanında çalışan çırağı; kovulma korkusu yaşıyor.",
+        "detail": "17 yaşında, sinirli, gözleri kırmızı; olaydan haberdar olunca bayılacak gibi oldu."
+      },
+      {
+        "id": "s3",
+        "name": "Seyyar Satıcı Rıza",
+        "icon": "👨",
+        "description": "Her sabah çarşıda dolaşan seyyar satıcı; Niyazi Usta'ya geçen hafta küsmüş.",
+        "detail": "38 yaşında, hızlı adımlı, büyük bir bez çanta taşıyor."
+      }
+    ],
+    "weapons": [
+      {
+        "id": "w1",
+        "name": "Demir Çubuk",
+        "icon": "🔧",
+        "description": "Depoda bulunan kalın demir destek çubuğu."
+      },
+      {
+        "id": "w2",
+        "name": "Bakır Sürahi",
+        "icon": "🏺",
+        "description": "Dükkanın vitrinindeki ağır bakır sürahi."
+      },
+      {
+        "id": "w3",
+        "name": "Odun Parçası",
+        "icon": "🪓",
+        "description": "Depo kapısı yanında bulunan iri odun kütüğü."
+      }
+    ],
+    "locations": [
+      {
+        "id": "l1",
+        "name": "Depo",
+        "icon": "🏚️",
+        "description": "Dükkanın arka tarafındaki kapalı depo bölümü."
+      },
+      {
+        "id": "l2",
+        "name": "Dükkan Önü",
+        "icon": "🌾",
+        "description": "Çarşıya bakan açık vitrin ve tezgah alanı."
+      },
+      {
+        "id": "l3",
+        "name": "Çarşı Sokağı",
+        "icon": "🛖",
+        "description": "Dükkanın önündeki dar taş döşeli çarşı yolu."
+      }
+    ],
+    "clues": [
+      {
+        "id": "c1",
+        "type": "kanit",
+        "revealOrder": 1,
+        "isRevealed": true,
+        "pointCost": 0,
+        "title": "Saldırı Yeri",
+        "text": "Niyazi Usta deponun tam ortasında bulundu; etrafındaki kırık kutular ve devrilmiş raflar mücadelenin burada yaşandığını gösteriyor. Dükkan ön kapısı dışarıdan kilitliydi.",
+        "mechanicType": "text",
+        "deductionHint": "Dükkan Önü ve Çarşı Sokağı elenebilir; cinayet Depo'da yaşandı."
+      },
+      {
+        "id": "c2",
+        "type": "tanik",
+        "revealOrder": 2,
+        "isRevealed": false,
+        "pointCost": 50,
+        "title": "Çay Ocağı Tanığı",
+        "text": "Çarşının başındaki çay ocağı sahibi, Rakip Esnaf Vahap'ın o sabah çay içmek için ocakta oturduğunu, dükkânına ancak saat 08:30'da gittiğini söylüyor. Cinayet en geç 07:45'te gerçekleşmiş.",
+        "mechanicType": "text",
+        "deductionHint": "Vahap cinayet saatinde çay ocağındaydı; elenir."
+      },
+      {
+        "id": "c3",
+        "type": "adli",
+        "revealOrder": 3,
+        "isRevealed": false,
+        "pointCost": 50,
+        "title": "Kafadaki Darbe",
+        "text": "Baş yarası yuvarlak ve pürüzsüz bir şeyin darbesiyle oluşmuş; köşeli ve uzun bir çubukla bu iz bırakılamaz.",
+        "mechanicType": "text",
+        "deductionHint": "Demir Çubuk ve Odun Parçası bu izi yapamaz; elenir. Silah Bakır Sürahi."
+      },
+      {
+        "id": "c4",
+        "type": "kanit",
+        "revealOrder": 4,
+        "isRevealed": false,
+        "pointCost": 50,
+        "title": "Sürahideki İz",
+        "text": "Vitrininden alınan bakır sürahinin sapında küçük bir kan izi ve kıl parçası bulundu. Sürahi depoya yakın bir rafa bırakılmış.",
+        "mechanicType": "text",
+        "deductionHint": "Bakır Sürahi silah olarak kesinleşiyor."
+      },
+      {
+        "id": "c5",
+        "type": "tanik",
+        "revealOrder": 5,
+        "isRevealed": false,
+        "pointCost": 50,
+        "title": "Çırak Neredeydi?",
+        "text": "Çırak Selim, usta erken açtığında kendisinin henüz gelmediğini söylüyor. Ancak komşu dükkan sahibi Selim'i sabah 07:00'de dükkanın arka kapısından girdiğini gördüğünü belirtiyor.",
+        "mechanicType": "text",
+        "deductionHint": "Selim yalan söyledi, arka kapıdan girdi; şüphesi güçleniyor."
+      },
+      {
+        "id": "c6",
+        "type": "dogrudan",
+        "revealOrder": 6,
+        "isRevealed": false,
+        "pointCost": 50,
+        "title": "Çantadaki Para",
+        "text": "Seyyar Satıcı Rıza'nın çantasında kasadan çalınan paraya ait Niyazi Usta'nın kendi eliyle işaretlediği özel zarflar bulundu. Rıza o sabah çarşıya erken geldiğini inkâr etmiyor.",
+        "mechanicType": "text",
+        "deductionHint": "Katil Seyyar Satıcı Rıza; silah Bakır Sürahi, mekân Depo."
+      }
+    ],
+    "solution": {
+      "suspectId": "s3",
+      "weaponId": "w2",
+      "locationId": "l1"
+    },
+    "solutionNarrative": "Seyyar Satıcı Rıza, Niyazi Usta'nın kasasını ve değerli bakır kapları çalmak için sabahın erken saatinde depoya girdi. Niyazi Usta baskını fark edince Rıza vitrindon aldığı bakır sürahiyle vurdu. Vahap çay ocağındaydı, Selim arka kapıdan gelse de para Rıza'nın çantasından çıktı.",
+    "specialMechanic": null
+  },
+  {
+    "puzzleId": "vaka_s03",
+    "title": "Akşam Vapurunda Gizem",
+    "subtitle": "İstanbul Boğazı, 1973",
+    "difficulty": 1,
+    "difficultyLabel": "Çaylak",
+    "stars": "★☆☆☆☆",
+    "gridSize": "3x3",
+    "timeLimit": 600,
+    "story": "İstanbul Boğazı'nı geçen akşam vapurunda emekli hâkim Nafiz Bey, güverte altındaki kapalı yolcu salonunda ölü bulundu. Vapur iskeleye yanaşmadan önce kaptan oturumu durdurdu. Salonda yalnızca üç yolcu kalmıştı. Sen deniz polisi dedektifi olarak vapura çıktın.",
+    "atmosphere": "Boğaz rüzgârı deniz kokusunu içeri taşıyor, vapur gıcırdıyor. Yolcu salonunda loş sarı ampuller yanıyor, dışarıdan martı sesleri geliyor.",
+    "suspects": [
+      {
+        "id": "s1",
+        "name": "Avukat Kerem Bey",
+        "icon": "👨",
+        "description": "Nafiz Bey'in davasında karşı tarafı temsil eden genç avukat; mahkûm olmuştu.",
+        "detail": "35 yaşında, zeki bakışlı, takım elbiseli; soğukkanlı ama aşırı savunmacı cevaplar veriyor."
+      },
+      {
+        "id": "s2",
+        "name": "Hemşire Feriha Hanım",
+        "icon": "🩺",
+        "description": "Nafiz Bey'in eski bir tanığı; aleyhinde ifade verilmesine kin beslediği biliniyor.",
+        "detail": "45 yaşında, sert bakışlı, yanında küçük tıbbi çantası var."
+      },
+      {
+        "id": "s3",
+        "name": "Öğrenci Tarık",
+        "icon": "🧑",
+        "description": "Nafiz Bey'in oğlunun yakın arkadaşı; miras davasında tanıklık etmesi bekleniyor.",
+        "detail": "22 yaşında, panikte, elleri titryor; sürekli pencereye bakıyor."
+      }
+    ],
+    "weapons": [
+      {
+        "id": "w1",
+        "name": "Zehirli İlaç",
+        "icon": "💊",
+        "description": "Yüksek dozda karıştırılmış uyku ilacı; fark edilmeden içki içine katılabilir."
+      },
+      {
+        "id": "w2",
+        "name": "İp Parçası",
+        "icon": "🪢",
+        "description": "Vapurun güvertesinde bulunan kalın halat parçası."
+      },
+      {
+        "id": "w3",
+        "name": "Cam Kırığı",
+        "icon": "🔧",
+        "description": "Salondaki kırık bardaktan elde edilen keskin cam."
+      }
+    ],
+    "locations": [
+      {
+        "id": "l1",
+        "name": "Yolcu Salonu",
+        "icon": "🏚️",
+        "description": "Güverte altındaki kapalı yolcu bekleme salonu."
+      },
+      {
+        "id": "l2",
+        "name": "Açık Güverte",
+        "icon": "🌾",
+        "description": "Vapurun üst katındaki açık hava güverte alanı."
+      },
+      {
+        "id": "l3",
+        "name": "Makine Dairesi",
+        "icon": "🚜",
+        "description": "Alt kattaki makine ve pompa odası; yolculara kapalı."
+      }
+    ],
+    "clues": [
+      {
+        "id": "c1",
+        "type": "adli",
+        "revealOrder": 1,
+        "isRevealed": true,
+        "pointCost": 0,
+        "title": "Ölüm Sebebi",
+        "text": "Nafiz Bey'in üzerinde hiçbir darp veya kesik izi yok. Yanındaki bardakta çözünmüş toz kalıntısı var; ölüm zehirlenmeyle gerçekleşmiş. Cesedi yolcu salonunda bulundu.",
+        "mechanicType": "text",
+        "deductionHint": "İp Parçası ve Cam Kırığı elenebilir; silah Zehirli İlaç. Cinayet Yolcu Salonu'nda."
+      },
+      {
+        "id": "c2",
+        "type": "tanik",
+        "revealOrder": 2,
+        "isRevealed": false,
+        "pointCost": 50,
+        "title": "Kaptan Gözlemi",
+        "text": "Kaptan, Öğrenci Tarık'ın yolculuk boyunca açık güvertede oturduğunu ve iskele yaklaşınca aşağı indiğini söylüyor. Nafiz Bey'in bulunduğu salon güverteden görünmüyor.",
+        "mechanicType": "text",
+        "deductionHint": "Tarık yolcu salonuna inmedi; elenir."
+      },
+      {
+        "id": "c3",
+        "type": "tanik",
+        "revealOrder": 3,
+        "isRevealed": false,
+        "pointCost": 50,
+        "title": "Avukatın Hareketi",
+        "text": "Bilet görevlisi Kerem Bey'in vapura binişinin kaydedildiği saatin, Nafiz Bey'in son görüldüğü saatten 20 dakika sonra olduğunu söylüyor; yani Kerem Bey salondan önce üst güverteye çıkmıştı.",
+        "mechanicType": "text",
+        "deductionHint": "Kerem Bey Nafiz Bey salon ayrılmadan önce salonda değildi; elenir."
+      },
+      {
+        "id": "c4",
+        "type": "kanit",
+        "revealOrder": 4,
+        "isRevealed": false,
+        "pointCost": 50,
+        "title": "Çantadaki Şişe",
+        "text": "Hemşire Feriha Hanım'ın tıbbi çantasında standart doz üzerinde bir uyku ilacı şişesi bulundu; şişede eksilen miktar bardaktaki kalıntıyla örtüşüyor.",
+        "mechanicType": "text",
+        "deductionHint": "İlaç Feriha'nın çantasından; katil kesinleşiyor."
+      },
+      {
+        "id": "c5",
+        "type": "ipucu",
+        "revealOrder": 5,
+        "isRevealed": false,
+        "pointCost": 50,
+        "title": "Bardaktaki Parmak İzi",
+        "text": "Nafiz Bey'in bardağında iki farklı kişinin parmak izi var; biri Nafiz Bey'e ait, diğeri hemşire eldiveninin bıraktığı pudra izine benziyor.",
+        "mechanicType": "text",
+        "deductionHint": "Feriha bardağa dokundu; hem ilaç hem iz onu işaret ediyor."
+      },
+      {
+        "id": "c6",
+        "type": "dogrudan",
+        "revealOrder": 6,
+        "isRevealed": false,
+        "pointCost": 50,
+        "title": "Kin Mektubu",
+        "text": "Feriha Hanım'ın çantasının iç cebinde Nafiz Bey'e yazılmış yırtık bir mektup bulundu: mahkemede verdiği ifadeden dolayı ona hesap soracağını yazan kendi el yazısıyla.",
+        "mechanicType": "text",
+        "deductionHint": "Katil Hemşire Feriha Hanım; silah Zehirli İlaç, mekân Yolcu Salonu."
+      }
+    ],
+    "solution": {
+      "suspectId": "s2",
+      "weaponId": "w1",
+      "locationId": "l1"
+    },
+    "solutionNarrative": "Hemşire Feriha Hanım, Nafiz Bey'in mahkemede verdiği ifade yüzünden yıllarca taşıdığı kini o akşam boşalttı. Yanına aldığı yüksek doz uyku ilacını Nafiz Bey'in çayına karıştırdı. Tarık güvertedeydi, Kerem Bey ise salondan geç indiğinden Nafiz Bey'le kesişemezdi; yalnızca Feriha'nın hem aracı hem de saiki vardı.",
+    "specialMechanic": null
+  },
+  {
+    "puzzleId": "vaka_s04",
+    "title": "Bağda Kanlı Bıçak",
+    "subtitle": "İzmir Bornova, 1969",
+    "difficulty": 1,
+    "difficultyLabel": "Çaylak",
+    "stars": "★☆☆☆☆",
+    "gridSize": "3x3",
+    "timeLimit": 600,
+    "story": "İzmir'in Bornova ilçesinde bir zeytinlik ve bağ sahibi Hüsnü Ağa, hasat dönemi sabahında bağın içinde bıçaklanmış bulundu. Etrafındaki üzüm sepetleri devrilmişti. O sabah erken bağa giren üç kişi tespit edildi. Bölge jandarması seni olayı çözmeye davet etti.",
+    "atmosphere": "Bağda olgunlaşmış üzüm kokusu ağır, arılar vızıldıyor. Toprak kırmızı; ezilmiş üzümlerden akan şıra iz bırakmış, kuşlar daldan dala konuyor.",
+    "suspects": [
+      {
+        "id": "s1",
+        "name": "Uşak Mehmet",
+        "icon": "👨‍🌾",
+        "description": "Hüsnü Ağa'nın bağında yıllardır çalışan yaşlı uşak; son zamanlarda kovulma söylentisi çıkmış.",
+        "detail": "55 yaşında, sağlam yapılı, saçları bembeyaz; sabah en erken bağa giren kişi."
+      },
+      {
+        "id": "s2",
+        "name": "Komşu Tarla Sahibi Nevzat",
+        "icon": "👴",
+        "description": "Hüsnü Ağa ile tarla sınırı yüzünden mahkemelik olan komşu.",
+        "detail": "60 yaşında, iri, sert bakışlı; bağa izinsiz girdiğini inkâr etmiyor."
+      },
+      {
+        "id": "s3",
+        "name": "Torun Kız Nermin",
+        "icon": "👩",
+        "description": "Hüsnü Ağa'nın genç torunu; büyükbabasının bağı satma kararına şiddetle karşı çıkıyor.",
+        "detail": "20 yaşında, duygusal, saçları dağınık; gözleri kırmızı ve şişmiş."
+      }
+    ],
+    "weapons": [
+      {
+        "id": "w1",
+        "name": "Bağ Bıçağı",
+        "icon": "🔪",
+        "description": "Üzüm kesmede kullanılan kısa ve keskin bağ bıçağı."
+      },
+      {
+        "id": "w2",
+        "name": "Balta",
+        "icon": "🪓",
+        "description": "Bağ kulübesinde saklanan odun baltası."
+      },
+      {
+        "id": "w3",
+        "name": "Demir Kazma",
+        "icon": "⚔️",
+        "description": "Toprak işlemeye yarayan ağır demir kazma."
+      }
+    ],
+    "locations": [
+      {
+        "id": "l1",
+        "name": "Bağ İçi",
+        "icon": "🌾",
+        "description": "Asmaların sık yetiştiği bağın orta kısmı."
+      },
+      {
+        "id": "l2",
+        "name": "Bağ Kulübesi",
+        "icon": "🛖",
+        "description": "Bağın girişindeki küçük taş kulübe; aletler burada saklanıyor."
+      },
+      {
+        "id": "l3",
+        "name": "Tarla Sınırı",
+        "icon": "🏚️",
+        "description": "Hüsnü Ağa ile komşu Nevzat'ın tarlasını ayıran taş duvar hattı."
+      }
+    ],
+    "clues": [
+      {
+        "id": "c1",
+        "type": "kanit",
+        "revealOrder": 1,
+        "isRevealed": true,
+        "pointCost": 0,
+        "title": "Cesedin Yeri",
+        "text": "Hüsnü Ağa bağın tam ortasında, asmaların arasında bulundu. Devrilmiş sepetler ve kırık dallar mücadelenin bağ içinde olduğunu kanıtlıyor.",
+        "mechanicType": "text",
+        "deductionHint": "Bağ Kulübesi ve Tarla Sınırı elenebilir; cinayet Bağ İçi'nde yaşandı."
+      },
+      {
+        "id": "c2",
+        "type": "tanik",
+        "revealOrder": 2,
+        "isRevealed": false,
+        "pointCost": 50,
+        "title": "Torunun Yolu",
+        "text": "Köy muhtarı, Torun Nermin'i sabah namazı vakti köy çeşmesinde ağlarken gördüğünü söylüyor. Çeşme bağdan 3 km uzakta; oraya gidip gelmesi cinayet saatini karşılamıyor.",
+        "mechanicType": "text",
+        "deductionHint": "Nermin cinayet saatinde bağda olamazdı; elenir."
+      },
+      {
+        "id": "c3",
+        "type": "adli",
+        "revealOrder": 3,
+        "isRevealed": false,
+        "pointCost": 50,
+        "title": "Yara Biçimi",
+        "text": "Yaranın biçimi dar, kısa ve düzgün kesilmiş; balta veya kazma gibi büyük ve ağır aletlerin bıraktığı geniş yara bu değil.",
+        "mechanicType": "text",
+        "deductionHint": "Balta ve Demir Kazma elenebilir; silah Bağ Bıçağı."
+      },
+      {
+        "id": "c4",
+        "type": "kanit",
+        "revealOrder": 4,
+        "isRevealed": false,
+        "pointCost": 50,
+        "title": "Bıçak Nerede?",
+        "text": "Uşak Mehmet'in beline bağlı bıçak kını boş; kında taze kan izi var. Mehmet bıçağın sabah düştüğünü öne sürdü ama bağ içinde arama yapıldığında bıçak Nevzat'ın tarlasına doğru uzanan patikada bulundu.",
+        "mechanicType": "text",
+        "deductionHint": "Bıçak Mehmet'e ait; Mehmet şüphesi güçleniyor."
+      },
+      {
+        "id": "c5",
+        "type": "tanik",
+        "revealOrder": 5,
+        "isRevealed": false,
+        "pointCost": 50,
+        "title": "Nevzat'ın Tanığı",
+        "text": "Tarla sınırındaki işçi Ahmet, sabah çok erken Nevzat'ın taş duvarın yanında beklediğini ama bağa girmediğini söylüyor. Nevzat sadece sınır kontrolü yaptığını doğruluyor.",
+        "mechanicType": "text",
+        "deductionHint": "Nevzat bağa girmedi; elenir. Geriye Uşak Mehmet kalıyor."
+      },
+      {
+        "id": "c6",
+        "type": "dogrudan",
+        "revealOrder": 6,
+        "isRevealed": false,
+        "pointCost": 50,
+        "title": "Kovulma Kâğıdı",
+        "text": "Hüsnü Ağa'nın cebinden imzalanmamış bir kâğıt çıktı: Uşak Mehmet'i bu hafta sonu işten çıkardığını belirten yazılı bildirim. Mehmet'in bu kâğıttan haberi olduğu, dün akşam tartıştıkları komşu tarafından doğrulandı.",
+        "mechanicType": "text",
+        "deductionHint": "Katil Uşak Mehmet; silah Bağ Bıçağı, mekân Bağ İçi."
+      }
+    ],
+    "solution": {
+      "suspectId": "s1",
+      "weaponId": "w1",
+      "locationId": "l1"
+    },
+    "solutionNarrative": "Uşak Mehmet, kovulacağını öğrenince işverenine duyduğu öfkeyi dizginleyemedi. Hasat sabahı erkenden bağa girerek yıllardır belindebulunan bağ bıçağıyla Hüsnü Ağa'ya saldırdı. Nermin çeşmedeydi, Nevzat ise sınır duvarından içeri adım atmamıştı; katil yalnızca Mehmet olabilirdi.",
+    "specialMechanic": null
+  },
+  {
+    "puzzleId": "vaka_s05",
+    "title": "Kervansarayda Son Gece",
+    "subtitle": "Konya, 1970",
+    "difficulty": 1,
+    "difficultyLabel": "Çaylak",
+    "stars": "★☆☆☆☆",
+    "gridSize": "3x3",
+    "timeLimit": 600,
+    "story": "Konya'nın tarihi kervansarayından dönüştürülmüş han binasında tüccar Raşit Efendi, sabah odasında boğulmuş hâlde bulundu. Hanın sadece üç konuğu vardı; diğerleri bir gün önce ayrılmıştı. Kapı ne kilitli ne de zorlanmış; katil Raşit Efendi'nin tanıdığı biri olmalı. Sen şehir polisi dedektifi olarak sorgulamayı yürütüyorsun.",
+    "atmosphere": "Han avlusunda güvercin sesi, taş koridorlarda yankılanan adım sesleri. Raşit Efendi'nin odasında devrilmiş bir kandil, yerde saçılmış bozuk para.",
+    "suspects": [
+      {
+        "id": "s1",
+        "name": "Tüccar Ortak Sabri Bey",
+        "icon": "👨",
+        "description": "Raşit Efendi'nin on yıllık iş ortağı; ortaklıktan ayrılmak istediği duyulmuş.",
+        "detail": "47 yaşında, şık giyimli, sakin görünüyor ama göz temasından kaçınıyor."
+      },
+      {
+        "id": "s2",
+        "name": "Hizmetçi Kadın Hacer",
+        "icon": "🧕",
+        "description": "Hanın tek hizmetçisi; Raşit Efendi'nin odasını düzenlemek için anahtara sahip.",
+        "detail": "40 yaşında, sessiz, hızlı; sorulara kısa ama tutarlı yanıtlar veriyor."
+      },
+      {
+        "id": "s3",
+        "name": "Gezgin Derviş Salih",
+        "icon": "👴",
+        "description": "Handa gecelemekte olan yaşlı derviş; Raşit Efendi ile yemekte tartıştığı görülmüş.",
+        "detail": "68 yaşında, zayıf yapılı, cüppeli; sabah namazına çok önce kalktığını söylüyor."
+      }
+    ],
+    "weapons": [
+      {
+        "id": "w1",
+        "name": "Atkı",
+        "icon": "🪢",
+        "description": "Uzun ve kalın yün atkı; boyunda boğulma izi bırakmış."
+      },
+      {
+        "id": "w2",
+        "name": "Kemer",
+        "icon": "🔧",
+        "description": "Raşit Efendi'nin odadaki deri kemeri."
+        },
+      {
+        "id": "w3",
+        "name": "Halat",
+        "icon": "⚔️",
+        "description": "Han ambarında bulunan kalın kendir halat."
+      }
+    ],
+    "locations": [
+      {
+        "id": "l1",
+        "name": "Konak Odası",
+        "icon": "🏰",
+        "description": "Raşit Efendi'nin kaldığı birinci kattaki geniş oda."
+      },
+      {
+        "id": "l2",
+        "name": "Han Avlusu",
+        "icon": "🌾",
+        "description": "Hanın ortasındaki açık avlu; gece boyunca bekçi dolaşıyor."
+      },
+      {
+        "id": "l3",
+        "name": "Ambar",
+        "icon": "🛖",
+        "description": "Alt kattaki kilitli ambar; yalnızca hizmetçi ve han sahibinin anahtarı var."
+      }
+    ],
+    "clues": [
+      {
+        "id": "c1",
+        "type": "kanit",
+        "revealOrder": 1,
+        "isRevealed": true,
+        "pointCost": 0,
+        "title": "Boğulma ve Yer",
+        "text": "Raşit Efendi yatağının yanında, boyunda atkı izi olan hâlde bulundu. Odada mücadele izi var; ölüm burada gerçekleşmiş.",
+        "mechanicType": "text",
+        "deductionHint": "Han Avlusu ve Ambar elenebilir; cinayet Konak Odası'nda yaşandı."
+      },
+      {
+        "id": "c2",
+        "type": "adli",
+        "revealOrder": 2,
+        "isRevealed": false,
+        "pointCost": 50,
+        "title": "Boğulma İzi",
+        "text": "Boyundaki iz kalın ve yumuşak; deri kemer bu izi bırakamazdı çünkü kemer tokalı ve dar kenarlıdır, iz geniş ve eşit basınçlı.",
+        "mechanicType": "text",
+        "deductionHint": "Kemer elenebilir; silah ya Atkı ya da Halat."
+      },
+      {
+        "id": "c3",
+        "type": "tanik",
+        "revealOrder": 3,
+        "isRevealed": false,
+        "pointCost": 50,
+        "title": "Bekçinin Turu",
+        "text": "Han bekçisi gece boyunca avluyu dolaştı; halat her zaman ambardaydı ve ambar kilidi sabah kontrol edildiğinde açılmamıştı.",
+        "mechanicType": "text",
+        "deductionHint": "Halat ambarda kilitli kaldı; elenir. Silah Atkı."
+      },
+      {
+        "id": "c4",
+        "type": "tanik",
+        "revealOrder": 4,
+        "isRevealed": false,
+        "pointCost": 50,
+        "title": "Dervişin Namazı",
+        "text": "Caminin imamı, Gezgin Derviş Salih'in sabah namazı için tekkeye çok erkenden geldiğini ve namaz boyunca ayrılmadığını doğruluyor. Ölüm vakti namaz saatiyle örtüşüyor.",
+        "mechanicType": "text",
+        "deductionHint": "Derviş Salih o saat tekkede; elenir."
+      },
+      {
+        "id": "c5",
+        "type": "ipucu",
+        "revealOrder": 5,
+        "isRevealed": false,
+        "pointCost": 50,
+        "title": "Atkının Rengi",
+        "text": "Boyundaki atkı koyu mavi yün; hizmetçi Hacer'in üzerindeki şalın rengi ve dokusu bire bir uyuşuyor. Hacer atkının kendisine ait olduğunu inkâr etmiyor ama 'düşürmüş' olduğunu söylüyor.",
+        "mechanicType": "text",
+        "deductionHint": "Atkı Hacer'e ait; Hacer şüphesi güçleniyor."
+      },
+      {
+        "id": "c6",
+        "type": "dogrudan",
+        "revealOrder": 6,
+        "isRevealed": false,
+        "pointCost": 50,
+        "title": "Çalınan Kese",
+        "text": "Raşit Efendi'nin odasından altın kese kayıp; sabah Hacer'in odasında yastık altında bulundu. Hacer'in Raşit Efendi'ye geçen ay kişisel borcu olduğu han sahibi tarafından doğrulandı.",
+        "mechanicType": "text",
+        "deductionHint": "Katil Hizmetçi Hacer; silah Atkı, mekân Konak Odası."
+      }
+    ],
+    "solution": {
+      "suspectId": "s2",
+      "weaponId": "w1",
+      "locationId": "l1"
+    },
+    "solutionNarrative": "Hizmetçi Hacer, Raşit Efendi'ye olan borcunu ödemek yerine onu ortadan kaldırmayı seçti. Oda anahtarına sahip olması sayesinde gece geç saatte içeri girdi, kendi atkısıyla Raşit Efendi'yi boğdu ve altın keseyi aldı. Derviş Salih tekkede namazdaydı; Sabri Bey ise fiziksel kanıt yokken yalnızca ortaklık anlaşmazlığıyla şüpheli kalamıyordu.",
+    "specialMechanic": null
+  }
+]

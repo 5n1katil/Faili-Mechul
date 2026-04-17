@@ -118,6 +118,37 @@ const fail = (msg) => failures.push(msg);
 }
 
 // ---------------------------------------------------------------------------
+// Check 1b: data/puzzles.ts puzzle id and dayIndex must be unique
+// ---------------------------------------------------------------------------
+
+{
+  const src = readFile("data/puzzles.ts");
+  const lineOf = buildLineIndex(src);
+  const idRe = /^\s{4}id:\s*"(p\d{3})",/gm;
+  const dayRe = /^\s{4}dayIndex:\s*(\d+),/gm;
+  const ids = new Map();
+  const days = new Map();
+  let m;
+  while ((m = idRe.exec(src)) !== null) {
+    const id = m[1];
+    if (ids.has(id)) {
+      fail(`puzzles.ts:${lineOf(m.index)}  duplicate puzzle id "${id}" (first at line ${ids.get(id)})`);
+    } else {
+      ids.set(id, lineOf(m.index));
+    }
+  }
+  while ((m = dayRe.exec(src)) !== null) {
+    const d = Number(m[1]);
+    if (days.has(d)) {
+      fail(`puzzles.ts:${lineOf(m.index)}  duplicate dayIndex ${d} (first at line ${days.get(d)})`);
+    } else {
+      days.set(d, lineOf(m.index));
+    }
+  }
+  console.log(`  data/puzzles.ts: ${ids.size} unique id(s) and ${days.size} unique dayIndex value(s) checked.`);
+}
+
+// ---------------------------------------------------------------------------
 // Check 2: packs.ts EMOJI_TO_MATERIAL values
 // ---------------------------------------------------------------------------
 
