@@ -1,0 +1,902 @@
+[
+  {
+    "puzzleId": "vaka_d01",
+    "title": "Fotoğrafçının Son Karesi",
+    "subtitle": "Ankara, 1972",
+    "difficulty": 2,
+    "difficultyLabel": "Dedektif",
+    "stars": "★★☆☆☆",
+    "gridSize": "3x3",
+    "timeLimit": 540,
+    "story": "Ankara'nın eski Ulus semtinde tanınmış bir fotoğrafçı olan Faruk Bey, stüdyosunda ölü bulundu. Karanlık odanın lambası yanık, banyo teknelerinde yarı işlenmiş filmler hâlâ duruyor. Üç kişinin gün içinde stüdyoya geldiği bilinmekte; ama her biri diğerini suçluyor. Sen polis müdürlüğünün deneyimli dedektifi olarak dosyayı devraldın.",
+    "atmosphere": "Karanlık odadan zayıf kırmızı ışık sızıyor, kimyasal banyo kokusu buruna dolduruyor. Stüdyoda devrilmiş tripod, yerde kırık bir negatif kutusu.",
+    "suspects": [
+      {
+        "id": "s1",
+        "name": "Gazeteci Selda Hanım",
+        "icon": "👩",
+        "description": "Faruk Bey'in bir süre önce fotoğraflarını izinsiz yayımlayan muhalif gazeteci.",
+        "detail": "38 yaşında, kararlı, hızlı konuşuyor; elinde her zaman bir defter taşır."
+      },
+      {
+        "id": "s2",
+        "name": "Asistan Cumhur",
+        "icon": "🧑",
+        "description": "Faruk Bey'in stüdyo asistanı; patron kendisini terfi ettirmemekle suçluyordu.",
+        "detail": "26 yaşında, gergin, sürekli ellerini oğuşturuyor; stüdyonun her köşesini biliyor."
+      },
+      {
+        "id": "s3",
+        "name": "Koleksiyoner Münir Bey",
+        "icon": "👴",
+        "description": "Faruk Bey'den satın almak istediği nadir fotoğraflar için uzun süredir baskı yapan koleksiyoner.",
+        "detail": "65 yaşında, kibar görünümlü, ama inatçı; o gün stüdyoya randevusuz gelmiş."
+      }
+    ],
+    "weapons": [
+      {
+        "id": "w1",
+        "name": "Tripod Bacağı",
+        "icon": "🔧",
+        "description": "Metal tripoddan sökülen uzun ve ağır alüminyum bacak."
+      },
+      {
+        "id": "w2",
+        "name": "Kimyasal Banyo",
+        "icon": "🧪",
+        "description": "Karanlık odadaki yüksek asitli film banyosu çözeltisi."
+      },
+      {
+        "id": "w3",
+        "name": "Cam Negatif Kutusu",
+        "icon": "🏺",
+        "description": "İçi cam negatif dolu ağır metal kutu."
+      }
+    ],
+    "locations": [
+      {
+        "id": "l1",
+        "name": "Karanlık Oda",
+        "icon": "🕯️",
+        "description": "Stüdyonun arka tarafındaki kırmızı lambalı film banyosu odası."
+      },
+      {
+        "id": "l2",
+        "name": "Stüdyo Salonu",
+        "icon": "🏚️",
+        "description": "Fotoğraf çekimlerinin yapıldığı geniş ön oda."
+      },
+      {
+        "id": "l3",
+        "name": "Depo Odası",
+        "icon": "🛖",
+        "description": "Malzemelerin ve arşiv kutularının saklandığı arka oda."
+      }
+    ],
+    "clues": [
+      {
+        "id": "c1",
+        "type": "kanit",
+        "revealOrder": 1,
+        "isRevealed": true,
+        "pointCost": 0,
+        "title": "Cesedin Yeri",
+        "text": "Faruk Bey karanlık odanın içinde, banyo teknesinin yanında baş yarası ve kimyasal yanıkla bulundu. Ölüm karanlık odada gerçekleşmiş; kapısı içeriden sürgülüydü ama sürgü kırılmış hâlde.",
+        "mechanicType": "text",
+        "deductionHint": "Stüdyo Salonu ve Depo Odası elenebilir; cinayet Karanlık Oda'da yaşandı."
+      },
+      {
+        "id": "c2",
+        "type": "tanik",
+        "revealOrder": 2,
+        "isRevealed": false,
+        "pointCost": 50,
+        "title": "Komşu Dükkanın Gözlemi",
+        "text": "Aşağıdaki kırtasiyeci, Koleksiyoner Münir Bey'in öğleden sonra saat 14:00'te stüdyoya girdiğini ve 14:20'de çıktığını söylüyor. Faruk Bey'in ölüm saati 15:30-16:00 arası olarak tahmin ediliyor.",
+        "mechanicType": "text",
+        "deductionHint": "Münir Bey stüdyodan ölüm saatinden çok önce ayrıldı; elenir."
+      },
+      {
+        "id": "c3",
+        "type": "adli",
+        "revealOrder": 3,
+        "isRevealed": false,
+        "pointCost": 50,
+        "title": "Yara ve Kimyasal Analiz",
+        "text": "Baş yarası künt bir darbeyle oluşmuş; tripod bacağı gibi uzun ve boru biçimli bir nesnenin izi. Kimyasal yanıklar ise darbeden sonra oluşmuş; yani kimyasal birincil silah değil, örtbas için kullanılmış.",
+        "mechanicType": "text",
+        "deductionHint": "Kimyasal Banyo ve Cam Negatif Kutusu birincil silah olamaz; elenir. Silah Tripod Bacağı."
+      },
+      {
+        "id": "c4",
+        "type": "ipucu",
+        "revealOrder": 4,
+        "isRevealed": false,
+        "pointCost": 50,
+        "title": "Kırık Tripod",
+        "text": "Stüdyo salonundaki tripodun bir bacağı yerinden sökülmüş; sökülen yerde taze metal çizik var. Karanlık odada bulunan metal çubuk bu tripoda ait.",
+        "mechanicType": "text",
+        "deductionHint": "Tripod salondan alınıp karanlık odaya taşındı; katil salona erişimi olan biri."
+      },
+      {
+        "id": "c5",
+        "type": "tanik",
+        "revealOrder": 5,
+        "isRevealed": false,
+        "pointCost": 50,
+        "title": "Selda'nın Programı",
+        "text": "Gazete arşivi kayıtları, Selda Hanım'ın o gün saat 15:00-17:00 arasında başka bir muhabir ile röportaj yaptığını gösteriyor. Röportajı yapılan kişi de bunu doğruluyor.",
+        "mechanicType": "text",
+        "deductionHint": "Selda Hanım ölüm saatinde başka yerdeydi; elenir. Geriye yalnızca Asistan Cumhur kalıyor."
+      },
+      {
+        "id": "c6",
+        "type": "dogrudan",
+        "revealOrder": 6,
+        "isRevealed": false,
+        "pointCost": 50,
+        "title": "Cumhur'un Eldiveni",
+        "text": "Karanlık odanın rafında bulunan tek kullanımlık lastik eldivende Cumhur'un parmak izi var; eldivenin içi terle ıslanmış. Cumhur karanlık odada iş yaparken eldiven giydiğini söylese de o gün banyoda film yoktu.",
+        "mechanicType": "text",
+        "deductionHint": "Katil Asistan Cumhur; silah Tripod Bacağı, mekân Karanlık Oda."
+      }
+    ],
+    "solution": {
+      "suspectId": "s2",
+      "weaponId": "w1",
+      "locationId": "l1"
+    },
+    "solutionNarrative": "Asistan Cumhur, terfi talebinin bir kez daha reddedileceğini anlayınca saat 15:30'da stüdyo salonundaki tripodun bacağını söktü ve patronunu karanlık odaya çekti. Darbeden sonra iz örtbas etmek için kimyasal banyoyu kullandı. Münir Bey çok önce ayrılmıştı, Selda Hanım ise başka yerde röportajdaydı; yalnızca Cumhur hem araçlara hem de fırsata sahipti.",
+    "specialMechanic": null
+  },
+  {
+    "puzzleId": "vaka_d02",
+    "title": "Termal Otelde Ölüm",
+    "subtitle": "Bursa Çekirge, 1974",
+    "difficulty": 2,
+    "difficultyLabel": "Dedektif",
+    "stars": "★★☆☆☆",
+    "gridSize": "3x3",
+    "timeLimit": 540,
+    "story": "Bursa'nın Çekirge semtindeki köklü termal otelde muhasebeci Münibe Hanım havuz kenarında boğulmuş hâlde bulundu. Gece geç saatte otelde yalnızca üç misafir kalmaktaydı. Her biri farklı bir kat iddiasıyla kapıda bekliyordu. Sen bölge polis dedektifi olarak sabah erkenden otele ulaştın.",
+    "atmosphere": "Kükürt kokusu koridorlara sinmiş, buhar kaynayan havuzdan yoğun sis yükseliyor. Fayans zeminde su izleri, ıslak havlu bir köşeye atılmış.",
+    "suspects": [
+      {
+        "id": "s1",
+        "name": "Emekli Doktor Vedat Bey",
+        "icon": "🩺",
+        "description": "Münibe Hanım'ın babasının eski dostu; miras verasetinde tanık olması bekleniyor ve buna karşı çıkıyordu.",
+        "detail": "68 yaşında, otoriter, yürüyüşü ağır; baston kullanıyor."
+      },
+      {
+        "id": "s2",
+        "name": "İş Kadını Perihan Hanım",
+        "icon": "👩",
+        "description": "Münibe Hanım'ın şirket ortağı; aralarında hesap anlaşmazlığı çıktığı biliniyor.",
+        "detail": "44 yaşında, soğukkanlı, her hareketi hesaplı; geç saate kadar resepsiyonda oturmuş."
+      },
+      {
+        "id": "s3",
+        "name": "Genç Sporcu Erdal",
+        "icon": "👨",
+        "description": "Otelde kamp yapan milli takım sporcusu; Münibe Hanım'ın şirketiyle sponsorluk anlaşmazlığı yaşıyor.",
+        "detail": "24 yaşında, güçlü yapılı, sabah erken saatte havuz başında görülmüş."
+      }
+    ],
+    "weapons": [
+      {
+        "id": "w1",
+        "name": "Havlu",
+        "icon": "🪢",
+        "description": "Kalın otel havlusu; boğmaya yetecek uzunlukta."
+      },
+      {
+        "id": "w2",
+        "name": "Kimyasal Temizleyici",
+        "icon": "🧪",
+        "description": "Havuz bakımında kullanılan klorlu temizleyici şişe."
+      },
+      {
+        "id": "w3",
+        "name": "Metal Trabzan",
+        "icon": "🔧",
+        "description": "Havuz merdiveninin sökülebilir metal trabzan borusu."
+      }
+    ],
+    "locations": [
+      {
+        "id": "l1",
+        "name": "Termal Havuz",
+        "icon": "🚜",
+        "description": "Otelin alt katındaki kapalı termal havuz alanı."
+      },
+      {
+        "id": "l2",
+        "name": "Koridor",
+        "icon": "🏚️",
+        "description": "Oda katlarını birbirine bağlayan uzun otel koridoru."
+      },
+      {
+        "id": "l3",
+        "name": "Lobi",
+        "icon": "🏰",
+        "description": "Girişin hemen önündeki resepsiyon ve oturma alanı."
+      }
+    ],
+    "clues": [
+      {
+        "id": "c1",
+        "type": "kanit",
+        "revealOrder": 1,
+        "isRevealed": true,
+        "pointCost": 0,
+        "title": "Cesedin Yeri",
+        "text": "Münibe Hanım termal havuzun sığ kenarında, basamakların dibinde bulundu. Akciğerleri su dolu; boğulma burada gerçekleşmiş. Havuz kapısı o gece kilitsiz bırakılmıştı.",
+        "mechanicType": "text",
+        "deductionHint": "Koridor ve Lobi elenebilir; cinayet Termal Havuz'da yaşandı."
+      },
+      {
+        "id": "c2",
+        "type": "adli",
+        "revealOrder": 2,
+        "isRevealed": false,
+        "pointCost": 50,
+        "title": "Boyundaki İz",
+        "text": "Boynunda ince ama uzun bir sürtünme izi var; bu iz sert metal ya da sıvı temasından değil, kumaş baskısından oluşmuş.",
+        "mechanicType": "text",
+        "deductionHint": "Kimyasal Temizleyici ve Metal Trabzan bu izi bırakamaz; elenir. Silah Havlu."
+      },
+      {
+        "id": "c3",
+        "type": "tanik",
+        "revealOrder": 3,
+        "isRevealed": false,
+        "pointCost": 50,
+        "title": "Bastona Bağlı Yavaşlık",
+        "text": "Gece görevli resepsiyonisti, Emekli Doktor Vedat Bey'in baston olmadan hareketsiz kaldığını ve gece saat 22:00'den sonra odasından çıkmadığını söylüyor. Odanın numaralı kilidi o saatten sonra açılmamış.",
+        "mechanicType": "text",
+        "deductionHint": "Vedat Bey gece odasından çıkamadı; elenir."
+      },
+      {
+        "id": "c4",
+        "type": "tanik",
+        "revealOrder": 4,
+        "isRevealed": false,
+        "pointCost": 50,
+        "title": "Erdal'ın Programı",
+        "text": "Sporcu Erdal'ın antrenman günlüğü incelendiğinde sabah 05:00 alarmı kurulu; havuza erken gittiği doğru ama güvenlik kamerası kaydı onu havuza 05:15'te girdiğini gösteriyor. Cinayet en geç 04:30'da gerçekleşmiş.",
+        "mechanicType": "text",
+        "deductionHint": "Erdal havuza 45 dakika geç geldi; elenir."
+      },
+      {
+        "id": "c5",
+        "type": "ipucu",
+        "revealOrder": 5,
+        "isRevealed": false,
+        "pointCost": 50,
+        "title": "Havuzda Koku",
+        "text": "Havuzdaki suda normalin üzerinde parfüm kokusu var; Perihan Hanım'ın kullandığı pahalı parfümle birebir aynı. Otel görevlisi Perihan Hanım'ın gece yarısı havuz yönünde yürüdüğünü gördüğünü söylüyor.",
+        "mechanicType": "text",
+        "deductionHint": "Perihan Hanım havuzda; gece yarısı hareketi ve parfüm birlikte onu işaret ediyor."
+      },
+      {
+        "id": "c6",
+        "type": "dogrudan",
+        "revealOrder": 6,
+        "isRevealed": false,
+        "pointCost": 50,
+        "title": "Havlunun Monogramı",
+        "text": "Münibe Hanım'ın boynuna sarılı havlu kendi odasına ait değil; 312 numaralı odanın monogramını taşıyor. 312 numaralı oda Perihan Hanım'a kayıtlı.",
+        "mechanicType": "text",
+        "deductionHint": "Katil İş Kadını Perihan Hanım; silah Havlu, mekân Termal Havuz."
+      }
+    ],
+    "solution": {
+      "suspectId": "s2",
+      "weaponId": "w1",
+      "locationId": "l1"
+    },
+    "solutionNarrative": "Perihan Hanım, şirket hesaplarındaki usulsüzlüklerin Münibe Hanım tarafından ortaya çıkarılmak üzere olduğunu öğrenince gece yarısı kendi odasının havlusunu alarak termal havuza indi. Münibe'yi baskılayıp havluyla boğdu. Vedat Bey odadan çıkamazdı, Erdal ise çok geç geldi; tek fırsatı ve saiki olan Perihan'dı.",
+    "specialMechanic": null
+  },
+  {
+    "puzzleId": "vaka_d03",
+    "title": "Mektup Gelmedi",
+    "subtitle": "Samsun, 1971",
+    "difficulty": 2,
+    "difficultyLabel": "Dedektif",
+    "stars": "★★☆☆☆",
+    "gridSize": "3x3",
+    "timeLimit": 540,
+    "story": "Samsun'un liman mahallelerinden birinde postacı Cafer Bey, dağıtım çantası yanında akşam erken saatte bir arka sokakta bıçaklanmış bulundu. Çantasındaki birkaç mektup kayıp. O gün üç farklı kişiyle tartıştığı tanıklarca doğrulanıyor. Sen liman bölgesi dedektifi olarak soruşturmayı yürütüyorsun.",
+    "atmosphere": "Deniz tuzu ve çürük tahta kokusu, uzakta gemi düdükleri. Sokak taşları ıslak, bir kedi cesedin yanından hızla geçti. Akşam karanlığı çöküyor.",
+    "suspects": [
+      {
+        "id": "s1",
+        "name": "Bakkal Necati",
+        "icon": "👨",
+        "description": "Cafer Bey'in teslim etmediği bir koli için şikâyette bulunan mahallenin bakkalı.",
+        "detail": "50 yaşında, sinirli, sert konuşan; dükkanının hemen arkasındaki sokakta oturdu."
+      },
+      {
+        "id": "s2",
+        "name": "Liman İşçisi Tahsin",
+        "icon": "👨‍🌾",
+        "description": "Cafer Bey'in kaybolduğunu söylediği önemli bir belgeyi bekleyen liman işçisi.",
+        "detail": "35 yaşında, güçlü, aceleci; o belgenin gelmemesi iş akdini tehdit ediyordu."
+      },
+      {
+        "id": "s3",
+        "name": "Ev Hanımı Hatice Teyze",
+        "icon": "👵",
+        "description": "Cafer Bey'in yıllardır mektuplarını geç dağıttığını şikâyet eden kalabalık ailenin annesi.",
+        "detail": "58 yaşında, iri yapılı, yüksek sesli; tartışmayı o gün üçüncü kişi olarak görmüş."
+      }
+    ],
+    "weapons": [
+      {
+        "id": "w1",
+        "name": "Çakı",
+        "icon": "🔪",
+        "description": "Küçük, tek taraflı keskin katlanır çakı."
+      },
+      {
+        "id": "w2",
+        "name": "Kanca",
+        "icon": "⚔️",
+        "description": "Liman işçilerinin kullandığı demir yük kancası."
+      },
+      {
+        "id": "w3",
+        "name": "Cam Parçası",
+        "icon": "🏺",
+        "description": "Sokaktaki kırık şişe camından elde edilmiş keskin parça."
+      }
+    ],
+    "locations": [
+      {
+        "id": "l1",
+        "name": "Arka Sokak",
+        "icon": "🏚️",
+        "description": "Bakkalın hemen arkasındaki dar ve issiz sokak."
+      },
+      {
+        "id": "l2",
+        "name": "Liman Rıhtımı",
+        "icon": "🚜",
+        "description": "Gemilerin yanaştığı açık rıhtım alanı."
+      },
+      {
+        "id": "l3",
+        "name": "Posta Deposu",
+        "icon": "🛖",
+        "description": "Mektupların sınıflandırıldığı küçük depo binası."
+      }
+    ],
+    "clues": [
+      {
+        "id": "c1",
+        "type": "kanit",
+        "revealOrder": 1,
+        "isRevealed": true,
+        "pointCost": 0,
+        "title": "Olay Yeri",
+        "text": "Cafer Bey bakkalın arkasındaki dar sokakta, çantası açık ve bir kısım mektup dağılmış hâlde bulundu. Kan izi yalnızca o sokakta; olay burada gerçekleşmiş.",
+        "mechanicType": "text",
+        "deductionHint": "Liman Rıhtımı ve Posta Deposu elenebilir; cinayet Arka Sokak'ta yaşandı."
+      },
+      {
+        "id": "c2",
+        "type": "adli",
+        "revealOrder": 2,
+        "isRevealed": false,
+        "pointCost": 50,
+        "title": "Yara Biçimi",
+        "text": "Yara izi ince, düzgün ve tek hamleli; ucu sivri ama geniş olmayan bir kesici ile yapılmış. Geniş kancayla ya da düzensiz cam kenarıyla bu kadar temiz bir iz bırakmak mümkün değil.",
+        "mechanicType": "text",
+        "deductionHint": "Kanca ve Cam Parçası elenebilir; silah Çakı."
+      },
+      {
+        "id": "c3",
+        "type": "tanik",
+        "revealOrder": 3,
+        "isRevealed": false,
+        "pointCost": 50,
+        "title": "Hatice Teyze'nin Yeri",
+        "text": "Komşu, Hatice Teyze'nin o saatlerde evin balkonundan ipe çamaşır astığını gördüğünü söylüyor. Balkon sokağa bakıyor; Hatice Teyze aşağıdaki olayı duyuyor olurdu, ama oraya inemezdi o sürede.",
+        "mechanicType": "text",
+        "deductionHint": "Hatice Teyze sokağa inemedi; elenir."
+      },
+      {
+        "id": "c4",
+        "type": "tanik",
+        "revealOrder": 4,
+        "isRevealed": false,
+        "pointCost": 50,
+        "title": "Yanıltıcı Tanıklık",
+        "text": "Liman İşçisi Tahsin, o saatte rıhtımda gemi yüklemekte olduğunu söylüyor. Ancak gemi kaptanının tutanağına göre yükleme ekibi o gün üç saat erken tamamladı; Tahsin serbest bırakılmıştı.",
+        "mechanicType": "text",
+        "deductionHint": "Tahsin rıhtımda değildi; alibisi çöktü. Şüphesi güçleniyor."
+      },
+      {
+        "id": "c5",
+        "type": "ipucu",
+        "revealOrder": 5,
+        "isRevealed": false,
+        "pointCost": 50,
+        "title": "Kayıp Belge",
+        "text": "Cafer Bey'in çantasından eksik mektuplar arasında Tahsin'in iş akdi belgesi de var. Tahsin'in evinde yapılan aramada zarf bulundu; üzerinde kan izi, içindeki belge ise boydan boya yırtılmış.",
+        "mechanicType": "text",
+        "deductionHint": "Belge Tahsin'de bulundu; hem motif hem fiziksel kanıt onu işaret ediyor."
+      },
+      {
+        "id": "c6",
+        "type": "dogrudan",
+        "revealOrder": 6,
+        "isRevealed": false,
+        "pointCost": 50,
+        "title": "Çakı Kılıfı",
+        "text": "Tahsin'in kemerindeki çakı kılıfı boş; kılıfın içi henüz kurumamış kan izleriyle kaplı. Tahsin bıçağın düştüğünü öne sürse de arka sokak dahil çevre tarandığında bıçak bulunamadı.",
+        "mechanicType": "text",
+        "deductionHint": "Katil Liman İşçisi Tahsin; silah Çakı, mekân Arka Sokak."
+      }
+    ],
+    "solution": {
+      "suspectId": "s2",
+      "weaponId": "w1",
+      "locationId": "l1"
+    },
+    "solutionNarrative": "Liman İşçisi Tahsin, iş akdini tehdit eden belgenin Cafer Bey'in çantasında olduğunu biliyordu. Gemi yüklemesi erken bitince fırsatı değerlendirdi; bakkal sokağında Cafer Bey'i köşeye sıkıştırıp çakısıyla yaraladı ve belgeyi aldı. Hatice Teyze balkondaydı, Necati ise dükkanından çıkamamıştı; Tahsin'in hem saati hem de saiki tutuyordu.",
+    "specialMechanic": null
+  },
+  {
+    "puzzleId": "vaka_bk01",
+    "title": "Zeytinyağı Fabrikasında Kâbus",
+    "subtitle": "Ayvalık, 1975",
+    "difficulty": 3,
+    "difficultyLabel": "Baş Komiser",
+    "stars": "★★★☆☆",
+    "gridSize": "3x3",
+    "timeLimit": 480,
+    "story": "Ayvalık'ın en büyük zeytinyağı fabrikasının sahibi Rıfat Ağa, fabrika içinde preslerin arasında ezilmiş hâlde bulundu. Ama adli inceleme ölümün pres kazasından değil, öncesinde verilen zehirli bir içecekten kaynaklandığını ortaya koydu. Üç kişi o gün fabrikada çalışıyordu. Dedektif olarak sana verilen dosya çelişkilerle dolu; tanıklar birbirini suçluyor.",
+    "atmosphere": "Zeytinyağı kokusu her yere sinmiş, preslerin ritimli gürültüsü fabrikayı sarsıyor. Zemin kaygan, küçük yağ havuzları oluşmuş; tek ampul titreyerek yanıyor.",
+    "suspects": [
+      {
+        "id": "s1",
+        "name": "Fabrika Ustabaşı Cevdet",
+        "icon": "👨‍🍳",
+        "description": "On beş yıldır fabrikada çalışan ustabaşı; Rıfat Ağa'nın onu ortaklıktan mahrum bıraktığını öğrendi.",
+        "detail": "48 yaşında, güçlü, sessiz; sorulara kısa ve temkinli yanıtlar veriyor."
+      },
+      {
+        "id": "s2",
+        "name": "Muhasebeci Bayan Şükran",
+        "icon": "🧕",
+        "description": "Fabrikanın muhasebecisi; usulsüz kayıtları Rıfat Ağa'ya bildirmekten çekindiği için baskı altındaydı.",
+        "detail": "40 yaşında, gergin, gözlüklü; hesap defterlerini sıkıca bağrına basmış."
+      },
+      {
+        "id": "s3",
+        "name": "Satış Temsilcisi Orhan Bey",
+        "icon": "👨",
+        "description": "İstanbul'dan gelen satış temsilcisi; Rıfat Ağa ile anlaşma görüşmesi bozulmuş.",
+        "detail": "38 yaşında, şık giyimli, dışarıdan geldiğini vurguluyor; fabrikanın iç bölümlerini bilmediğini iddia ediyor."
+      }
+    ],
+    "weapons": [
+      {
+        "id": "w1",
+        "name": "Zehirli Çay",
+        "icon": "💊",
+        "description": "İçine yüksek doz sedatif karıştırılmış çay bardağı."
+      },
+      {
+        "id": "w2",
+        "name": "Pres Kolu",
+        "icon": "🔧",
+        "description": "Zeytinyağı presinin metal kumanda kolu."
+      },
+      {
+        "id": "w3",
+        "name": "Zincir",
+        "icon": "⚔️",
+        "description": "Pres makinasına bağlı güvenlik zinciri."
+      }
+    ],
+    "locations": [
+      {
+        "id": "l1",
+        "name": "Pres Odası",
+        "icon": "🏚️",
+        "description": "Büyük zeytinyağı preslerinin bulunduğu gürültülü ana oda."
+      },
+      {
+        "id": "l2",
+        "name": "Ofis",
+        "icon": "🕯️",
+        "description": "Fabrikanın üst katındaki muhasebe ve yönetim ofisi."
+      },
+      {
+        "id": "l3",
+        "name": "Depo",
+        "icon": "🛖",
+        "description": "Dolu yağ varillerin istiflendiği geniş depo."
+      }
+    ],
+    "clues": [
+      {
+        "id": "c1",
+        "type": "adli",
+        "revealOrder": 1,
+        "isRevealed": true,
+        "pointCost": 0,
+        "title": "Gerçek Ölüm Sebebi",
+        "text": "Rıfat Ağa presler arasında bulundu; ancak adli hekim kanında yüksek doz sedatif tespit etti. Ağa önce ilaçlanıp baygınken presler arasına bırakılmış. Ölüm pres odasında gerçekleşti.",
+        "mechanicType": "text",
+        "deductionHint": "Pres Kolu ve Zincir birincil silah değil; elenir. Silah Zehirli Çay. Mekân Pres Odası."
+      },
+      {
+        "id": "c2",
+        "type": "tanik",
+        "revealOrder": 2,
+        "isRevealed": false,
+        "pointCost": 50,
+        "title": "Orhan'ın Kısıtlı Erişimi",
+        "text": "Fabrika kapı görevlisi, Satış Temsilcisi Orhan Bey'in ziyaretçi kartı ile geldiğini ve yalnızca ofis katına erişim izni olduğunu söylüyor. Pres odasına giriş ziyaretçilere kapalı; kayıtlar Orhan'ın pres odası turnike kapısını geçmediğini doğruluyor.",
+        "mechanicType": "text",
+        "deductionHint": "Orhan pres odasına giremedi; elenir."
+      },
+      {
+        "id": "c3",
+        "type": "ipucu",
+        "revealOrder": 3,
+        "isRevealed": false,
+        "pointCost": 50,
+        "title": "Çay Bardağı Kime Ait?",
+        "text": "Rıfat Ağa'nın yanında bulunan çay bardağı standart fabrika bardağı değil; ofis mutfağında kullanılan ince belli özel bardak. Bu bardakları yalnızca ofis çalışanları kullanıyor.",
+        "mechanicType": "text",
+        "deductionHint": "Zehirli çayı ofis çalışanı getirdi; Ustabaşı Cevdet ofis mutfağına giremez. Şükran öne çıkıyor."
+      },
+      {
+        "id": "c4",
+        "type": "tanik",
+        "revealOrder": 4,
+        "isRevealed": false,
+        "pointCost": 50,
+        "title": "Yanıltıcı İfade",
+        "text": "Muhasebeci Şükran, öğleden sonra boyunca ofisten çıkmadığını söylüyor. Ancak fabrika içi telefon kayıtları, pres odasındaki dahili telefonu öğleden sonra saat 14:10'da birinin kullandığını gösteriyor; o saatte pres odasında yalnızca Rıfat Ağa ve Cevdet olması gerekiyordu.",
+        "mechanicType": "text",
+        "deductionHint": "Biri yalan söylüyor; Cevdet pres odasındaydı ama telefonu o mu açtı? Şükran'ın ofisten çıktığı anlaşılıyor."
+      },
+      {
+        "id": "c5",
+        "type": "kanit",
+        "revealOrder": 5,
+        "isRevealed": false,
+        "pointCost": 50,
+        "title": "İlaç Kutusu",
+        "text": "Ofis masasının alt çekmecesinde reçetesiz uyku ilacı kutusu bulundu; kutunun içindeki miktarla bardaktaki sedatif dozu örtüşüyor. Çekmece Şükran'ın masasına ait; üzerinde parmak izi var.",
+        "mechanicType": "text",
+        "deductionHint": "İlaç Şükran'ın masasından; hem araç hem erişim onu işaret ediyor."
+      },
+      {
+        "id": "c6",
+        "type": "dogrudan",
+        "revealOrder": 6,
+        "isRevealed": false,
+        "pointCost": 50,
+        "title": "Defterdeki Silinti",
+        "text": "Şükran'ın muhasebe defterinde Rıfat Ağa'nın aleyhine olan kayıtlar özenle silinmiş; silinti taze. Şükran bu kayıtları gün içinde imha etmeye çalıştığında Rıfat Ağa onu suçüstü yakalamış ve işten çıkaracağını söylemiş; komşu iş arkadaşı bu tartışmayı duymuş.",
+        "mechanicType": "text",
+        "deductionHint": "Katil Muhasebeci Şükran; silah Zehirli Çay, mekân Pres Odası."
+      }
+    ],
+    "solution": {
+      "suspectId": "s2",
+      "weaponId": "w1",
+      "locationId": "l1"
+    },
+    "solutionNarrative": "Muhasebeci Şükran, usulsüz kayıtları imha ettiği sırada Rıfat Ağa tarafından yakalandı ve işten atılacağını öğrendi. Ofis mutfağından hazırladığı çaya uyku ilacını karıştırıp Rıfat Ağa'ya ikram etti; baygın düşünce onu pres odasına taşıdı. Orhan pres odasına giremezdi, Cevdet ise ofis bardağına erişemezdi; yalnızca Şükran her iki koşulu da sağlıyordu.",
+    "specialMechanic": null
+  },
+  {
+    "puzzleId": "vaka_bk02",
+    "title": "Dağ Yolunda Pusu",
+    "subtitle": "Trabzon-Rize arası, 1973",
+    "difficulty": 3,
+    "difficultyLabel": "Baş Komiser",
+    "stars": "★★★☆☆",
+    "gridSize": "3x3",
+    "timeLimit": 480,
+    "story": "Trabzon ile Rize arasındaki dağ yolundan geçen minibüs bir barikata takıldı; şoför Ahmet Bey yol kenarında bıçaklanmış bulundu. Minibüste yalnızca üç yolcu vardı; diğerleri önceki durakta inmişti. Yol üç saat boyunca kapandı ve hiç araç geçmedi. Katil bu üç kişiden biri. Sen jandarma komutanı olarak timinizle olay yerine ulaştın.",
+    "atmosphere": "Karadeniz yağmuru sürekli çiselliyor, dağ yolu sisle kaplı. Çam ormanından uğultu sesi, uzakta şelale uğultusu. Yol kenarındaki taş duvarda kan izleri.",
+    "suspects": [
+      {
+        "id": "s1",
+        "name": "Tüccar Kadın Safiye Hanım",
+        "icon": "👩",
+        "description": "Rize'ye mal götüren yaşlı kadın tüccar; Ahmet Bey'in geç kaldığı için kendisini zor durumda bıraktığını söylüyor.",
+        "detail": "55 yaşında, iri yapılı, büyük bez çantalar taşıyor; sakin ama gözleri tedirgin."
+      },
+      {
+        "id": "s2",
+        "name": "Öğretmen Adayı Levent",
+        "icon": "🧑",
+        "description": "Atama için Rize'ye giden genç öğretmen adayı; yanında tayin belgeleri var.",
+        "detail": "23 yaşında, heyecanlı, zayıf yapılı; sürekli konuşuyor ve soruları yanıtlamaktan çekinmiyor."
+      },
+      {
+        "id": "s3",
+        "name": "Orman İşçisi Bayram",
+        "icon": "👨‍🌾",
+        "description": "Orman bölgesinden dönen deneyimli orman işçisi; yanında kesici aletler taşıyan büyük bir çanta var.",
+        "detail": "42 yaşında, güçlü yapılı, az konuşuyor; Ahmet Bey ile yolculuk başında tartıştığı görülmüş."
+      }
+    ],
+    "weapons": [
+      {
+        "id": "w1",
+        "name": "Orman Bıçağı",
+        "icon": "🔪",
+        "description": "Ağaç budama ve kesme işleri için kullanılan büyük, ağır orman bıçağı."
+      },
+      {
+        "id": "w2",
+        "name": "Taş",
+        "icon": "⚔️",
+        "description": "Yol kenarındaki duvarda gevşek duran sivri köşeli büyük taş."
+      },
+      {
+        "id": "w3",
+        "name": "Demir Levye",
+        "icon": "🔧",
+        "description": "Minibüsün araç gereç bölümündeki demir levye."
+      }
+    ],
+    "locations": [
+      {
+        "id": "l1",
+        "name": "Yol Kenarı",
+        "icon": "🌾",
+        "description": "Minibüsün durduğu noktanın hemen yanındaki taş duvarlı yol kenarı."
+      },
+      {
+        "id": "l2",
+        "name": "Orman İçi",
+        "icon": "🛖",
+        "description": "Yolun solundaki sık çam ormanı; görüş mesafesi çok kısa."
+      },
+      {
+        "id": "l3",
+        "name": "Minibüs İçi",
+        "icon": "🚜",
+        "description": "Yolculuk minibüsünün iç kabini."
+      }
+    ],
+    "clues": [
+      {
+        "id": "c1",
+        "type": "kanit",
+        "revealOrder": 1,
+        "isRevealed": true,
+        "pointCost": 0,
+        "title": "Cesedin Yeri",
+        "text": "Ahmet Bey minibüsün birkaç metre ilerisinde, taş duvarın dibinde bulundu. Kan izi yalnızca yol kenarında; sürükleme izi yok, cinayet burada gerçekleşmiş.",
+        "mechanicType": "text",
+        "deductionHint": "Orman İçi ve Minibüs İçi elenebilir; cinayet Yol Kenarı'nda yaşandı."
+      },
+      {
+        "id": "c2",
+        "type": "adli",
+        "revealOrder": 2,
+        "isRevealed": false,
+        "pointCost": 50,
+        "title": "Yara Biçimi ve Boyutu",
+        "text": "Yara geniş, derin ve tek hamleli; sivri taşla bu kadar temiz ve derin bir kesik olmaz. Levye künt olduğundan kesici iz bırakmaz. Yara uzun ve geniş bir bıçakla uyumlu.",
+        "mechanicType": "text",
+        "deductionHint": "Taş ve Demir Levye elenebilir; silah Orman Bıçağı."
+      },
+      {
+        "id": "c3",
+        "type": "tanik",
+        "revealOrder": 3,
+        "isRevealed": false,
+        "pointCost": 50,
+        "title": "Levent'in Zayıflığı",
+        "text": "Jandarma eri, Ahmet Bey'in oldukça iri yapılı ve sağlıklı bir adam olduğunu belirtiyor. Öğretmen adayı Levent'in bu adamı tek hamlede devirmesi için gereken fiziksel güce sahip olmadığı aşikâr.",
+        "mechanicType": "text",
+        "deductionHint": "Levent fiziksel olarak bu saldırıyı yapamaz; elenir."
+      },
+      {
+        "id": "c4",
+        "type": "tanik",
+        "revealOrder": 4,
+        "isRevealed": false,
+        "pointCost": 50,
+        "title": "Safiye Hanım'ın Çantaları",
+        "text": "Safiye Hanım minibüsten hiç inmediğini söylüyor. Levent de bunu doğruluyor; Safiye Hanım büyük çantaları nedeniyle dar kapıdan çabuk çıkamazdı ve pencereden görünür olurdu. Ahmet Bey dışarı çıktığında yalnızca bir kişi peşinden indi.",
+        "mechanicType": "text",
+        "deductionHint": "Safiye Hanım minibüsten inmedi; elenir. Geriye Bayram kalıyor."
+      },
+      {
+        "id": "c5",
+        "type": "ipucu",
+        "revealOrder": 5,
+        "isRevealed": false,
+        "pointCost": 50,
+        "title": "Bıçak Kılıfının Durumu",
+        "text": "Orman İşçisi Bayram'ın büyük çantasındaki orman bıçağı kılıfı ıslak ve kılıfın iç derisi taze kan kokusuyor. Bayram bıçağı sabah kullandıktan sonra temizlediğini söylüyor; ama kılıf içi hâlâ ıslak.",
+        "mechanicType": "text",
+        "deductionHint": "Bıçak yakın zamanda kullanılmış ve kılıfa geri konmuş; Bayram şüphesi kesinleşiyor."
+      },
+      {
+        "id": "c6",
+        "type": "dogrudan",
+        "revealOrder": 6,
+        "isRevealed": false,
+        "pointCost": 50,
+        "title": "Tartışmanın Sebebi",
+        "text": "Levent'in ifadesinde Bayram'ın yolculuk başında Ahmet Bey'e 'parayı geri vermezsen pişman olursun' dediğini duyduğu ortaya çıktı. Ahmet Bey'in cebindeki para bölmesi boş; yolcu listesinde Bayram adına kayıtlı ödeme tutarı eksik.",
+        "mechanicType": "text",
+        "deductionHint": "Katil Orman İşçisi Bayram; silah Orman Bıçağı, mekân Yol Kenarı."
+      }
+    ],
+    "solution": {
+      "suspectId": "s3",
+      "weaponId": "w1",
+      "locationId": "l1"
+    },
+    "solutionNarrative": "Orman İşçisi Bayram, Ahmet Bey'den geri alacağı para yüzünden yolculuk boyunca gerginleşti. Minibüs yol kenarında yavaşlayınca Ahmet'in peşinden indi ve tartışmayı bıçakla bitirdi. Safiye Hanım çantaları nedeniyle inemedi, Levent ise bu gücü kaldıramazdı; hem fiziksel hem de motif olarak tek kişi Bayram'dı.",
+    "specialMechanic": null
+  },
+  {
+    "puzzleId": "vaka_bk03",
+    "title": "Ramazan Gecesi Cinayeti",
+    "subtitle": "Konya, 1968",
+    "difficulty": 3,
+    "difficultyLabel": "Baş Komiser",
+    "stars": "★★★☆☆",
+    "gridSize": "3x3",
+    "timeLimit": 480,
+    "story": "Konya'nın tarihi çarşısına yakın bir hanın sahibi Lütfi Bey, Ramazan gecesi sahur sonrasında odası önündeki koridorda bıçaklanmış bulundu. Handa yalnızca üç misafir gecelemekteydi. Kandil ışıkları hâlâ yanıyor, müezzin sesi uzaktan geliyor. Sen emniyet müdürünün özel atadığı baş komiser olarak sabah erkenden olaydayken izler henüz taze.",
+    "atmosphere": "Gül suyu ve buhur kokusu koridora sinmiş, kandiller loş ışık veriyor. Tahta zemin gıcırdıyor; uzakta sahura kalkmış çocukların sesi duyuluyor.",
+    "suspects": [
+      {
+        "id": "s1",
+        "name": "Hacı Efendi Rüstem",
+        "icon": "👴",
+        "description": "Hac dönüşü Konya'ya uğrayan yaşlı tüccar; Lütfi Bey'den yıllar önce borç almış ama geri ödememiş.",
+        "detail": "70 yaşında, takke ve cüppeli, sesi titryor; 'günah işleyemem' diyor ama gözleri kaçıyor."
+      },
+      {
+        "id": "s2",
+        "name": "Genç Mühendis Adnan",
+        "icon": "👨",
+        "description": "Konya'ya iş için gelen altyapı mühendisi; Lütfi Bey'in otelini yıkımdan kurtarma talebini reddetmiş.",
+        "detail": "31 yaşında, çantasında teknik belgeler; mantıklı konuşuyor ama olaydan haberdar olunca soluğu kesildi."
+      },
+      {
+        "id": "s3",
+        "name": "Dul Kadın Zümrüt Hanım",
+        "icon": "👵",
+        "description": "Konya'ya akraba ziyaretine gelen dul; Lütfi Bey'in kendisine yönelik taciz girişimini yaşadığını söylüyor.",
+        "detail": "50 yaşında, kararlı bakışlı, ellerinde güçlü bir kavrayış; 'hakkımı aradım' dedi ama sonra sustu."
+      }
+    ],
+    "weapons": [
+      {
+        "id": "w1",
+        "name": "Şam Bıçağı",
+        "icon": "🔪",
+        "description": "İnce, uzun ve her iki tarafı keskin süslü Şam bıçağı."
+      },
+      {
+        "id": "w2",
+        "name": "Kandil Direği",
+        "icon": "🕯️",
+        "description": "Koridorda asılı kandillerden birinin ağır pirinç direği."
+      },
+      {
+        "id": "w3",
+        "name": "Halat",
+        "icon": "🪢",
+        "description": "Han çatı katında bulunan kalın sarma halat."
+      }
+    ],
+    "locations": [
+      {
+        "id": "l1",
+        "name": "Koridor",
+        "icon": "🏰",
+        "description": "Odaların önündeki loş kandil ışıklı uzun koridor."
+      },
+      {
+        "id": "l2",
+        "name": "Avlu",
+        "icon": "🌾",
+        "description": "Hanın ortasındaki açık avlu; gece boyunca bekçi dolaşıyor."
+      },
+      {
+        "id": "l3",
+        "name": "Çatı Katı",
+        "icon": "🛖",
+        "description": "Han eşyalarının depolandığı üst çatı katı."
+      }
+    ],
+    "clues": [
+      {
+        "id": "c1",
+        "type": "kanit",
+        "revealOrder": 1,
+        "isRevealed": true,
+        "pointCost": 0,
+        "title": "Olay Yeri",
+        "text": "Lütfi Bey odasının tam önünde, koridor zeminine yüz üstü devrilmiş hâlde bulundu. Kan yalnızca koridorda; cesedin buraya taşınmadığı belli. Cinayet koridorda yaşandı.",
+        "mechanicType": "text",
+        "deductionHint": "Avlu ve Çatı Katı elenebilir; cinayet Koridor'da yaşandı."
+      },
+      {
+        "id": "c2",
+        "type": "adli",
+        "revealOrder": 2,
+        "isRevealed": false,
+        "pointCost": 50,
+        "title": "Yara İncelemesi",
+        "text": "İki yara izi var; her ikisi de ince, uzun ve her iki kenarı keskin bir bıçakla uyumlu. Künt pirinç direk ya da halat bu kesik izleri bırakamazdı.",
+        "mechanicType": "text",
+        "deductionHint": "Kandil Direği ve Halat elenebilir; silah Şam Bıçağı."
+      },
+      {
+        "id": "c3",
+        "type": "tanik",
+        "revealOrder": 3,
+        "isRevealed": false,
+        "pointCost": 50,
+        "title": "Bekçinin Turu",
+        "text": "Han bekçisi sahur sonrası avluyu iki kez dolaştı; her seferinde kimseyi görmedi. Avluya açılan koridordan ışık sızmadığını belirtiyor; yani koridor kapısı kapalıydı ve olay içeride yaşandı.",
+        "mechanicType": "text",
+        "deductionHint": "Avlu elenmiş zaten; koridor kapısı kapalıydı, iç hat olayı doğrulandı."
+      },
+      {
+        "id": "c4",
+        "type": "tanik",
+        "revealOrder": 4,
+        "isRevealed": false,
+        "pointCost": 50,
+        "title": "Rüstem Efendi'nin Duası",
+        "text": "Adnan, sahur sonrası koridorda Hacı Rüstem'in odasından tespih sesini sürekli duyduğunu söylüyor. Sabah ezanı bitene kadar oda kapısı açılmadı; gürültülü tespih bırakmayan biri o sürede koridora çıkamazdı.",
+        "mechanicType": "text",
+        "deductionHint": "Rüstem Efendi odasında ibadet etti; elenir."
+      },
+      {
+        "id": "c5",
+        "type": "ipucu",
+        "revealOrder": 5,
+        "isRevealed": false,
+        "pointCost": 50,
+        "title": "Zümrüt Hanım'ın İtirafı",
+        "text": "Zümrüt Hanım başlangıçta koridora çıkmadığını söyledi. Ama Adnan, sahurda masada Zümrüt Hanım'ın elinde küçük bir bıçak olduğunu hatırladığını belirtti; sofra bıçağından farklı, süslüydü. Zümrüt bunu inkâr edemedi.",
+        "mechanicType": "text",
+        "deductionHint": "Zümrüt Hanım'ın elinde Şam bıçağı görüldü; şüphesi güçleniyor."
+      },
+      {
+        "id": "c6",
+        "type": "dogrudan",
+        "revealOrder": 6,
+        "isRevealed": false,
+        "pointCost": 50,
+        "title": "Bıçağın İzleri",
+        "text": "Zümrüt Hanım'ın odasında yastığın altına sarılı bezde Şam bıçağı bulundu; üzerinde kan var, taze temizlenmiş ama bez kanlı. Zümrüt o gece Lütfi Bey'in odasına geldiğini ve kendisine yönelik tacizi durdurmak zorunda kaldığını kabul etti.",
+        "mechanicType": "text",
+        "deductionHint": "Katil Dul Kadın Zümrüt Hanım; silah Şam Bıçağı, mekân Koridor."
+      }
+    ],
+    "solution": {
+      "suspectId": "s3",
+      "weaponId": "w1",
+      "locationId": "l1"
+    },
+    "solutionNarrative": "Zümrüt Hanım, Lütfi Bey'in taciz girişimine maruz kalınca sahur sonrası yanına aldığı Şam bıçağıyla koridorda yüzleşmeye çıktı. Kavga koridorda büyüdü ve Zümrüt elindeki bıçakla iki hamle indirdi. Rüstem odasında ibadet ediyordu, Adnan ise fiziksel kanıt bağlamında tamamen dışarıda kaldı; bıçak Zümrüt'ün odasında bulundu.",
+    "specialMechanic": null
+  }
+]
