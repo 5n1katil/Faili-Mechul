@@ -2406,6 +2406,222 @@ export const PUZZLES: Puzzle[] = [
     },
     solution: { suspectId: "s2", weaponId: "w1", locationId: "l1" },
   },
+  {
+    id: "p036",
+    title: "Fotoğrafçının Son Karesi",
+    difficulty: "dedektif",
+    dayIndex: 36,
+    story:
+      "Ankara'nın eski Ulus semtinde tanınmış bir fotoğrafçı olan Faruk Bey, stüdyosunda ölü bulundu. Karanlık odanın lambası yanık, banyo teknelerinde yarı işlenmiş filmler hâlâ duruyor. Üç kişinin gün içinde stüdyoya geldiği bilinmekte; ama her biri diğerini suçluyor. Sen polis müdürlüğünün deneyimli dedektifi olarak dosyayı devraldın.",
+    suspects: [
+      { id: "s1", name: "Gazeteci Selda Hanım", description: "Faruk Bey'in bir süre önce fotoğraflarını izinsiz yayımlayan muhalif gazeteci.", icon: "face-3" },
+      { id: "s2", name: "Asistan Cumhur", description: "Faruk Bey'in stüdyo asistanı; patron kendisini terfi ettirmemekle suçluyordu.", icon: "face" },
+      { id: "s3", name: "Koleksiyoner Münir Bey", description: "Faruk Bey'den satın almak istediği nadir fotoğraflar için uzun süredir baskı yapan koleksiyoner.", icon: "elderly" },
+    ],
+    weapons: [
+      { id: "w1", name: "Tripod Bacağı", description: "Metal tripoddan sökülen uzun ve ağır alüminyum bacak.", icon: "straighten" },
+      { id: "w2", name: "Kimyasal Banyo", description: "Karanlık odadaki yüksek asitli film banyosu çözeltisi.", icon: "science" },
+      { id: "w3", name: "Cam Negatif Kutusu", description: "İçi cam negatif dolu ağır metal kutu.", icon: "inventory-2" },
+    ],
+    locations: [
+      { id: "l1", name: "Karanlık Oda", description: "Stüdyonun arka tarafındaki kırmızı lambalı film banyosu odası.", icon: "camera-roll" },
+      { id: "l2", name: "Stüdyo Salonu", description: "Fotoğraf çekimlerinin yapıldığı geniş ön oda.", icon: "photo-camera" },
+      { id: "l3", name: "Depo Odası", description: "Malzemelerin ve arşiv kutularının saklandığı arka oda.", icon: "warehouse" },
+    ],
+    clues: [
+      { id: "c1", text: "Faruk Bey karanlık odanın içinde, banyo teknesinin yanında baş yarası ve kimyasal yanıkla bulundu. Ölüm karanlık odada gerçekleşmiş; kapısı içeriden sürgülüydü ama sürgü kırılmış hâlde.", type: "evidence", isBonus: false },
+      { id: "c2", text: "Aşağıdaki kırtasiyeci, Koleksiyoner Münir Bey'in öğleden sonra saat 14:00'te stüdyoya girdiğini ve 14:20'de çıktığını söylüyor. Faruk Bey'in ölüm saati 15:30-16:00 arası olarak tahmin ediliyor.", type: "witness", isBonus: false },
+      { id: "c3", text: "Baş yarası künt bir darbeyle oluşmuş; tripod bacağı gibi uzun ve boru biçimli bir nesnenin izi. Kimyasal yanıklar ise darbeden sonra oluşmuş; yani kimyasal birincil silah değil, örtbas için kullanılmış.", type: "forensic", isBonus: false },
+      { id: "c4", text: "Stüdyo salonundaki tripodun bir bacağı yerinden sökülmüş; sökülen yerde taze metal çizik var. Karanlık odada bulunan metal çubuk bu tripoda ait.", type: "indirect", isBonus: false },
+      { id: "c5", text: "Gazete arşivi kayıtları, Selda Hanım'ın o gün saat 15:00-17:00 arasında başka bir muhabir ile röportaj yaptığını gösteriyor. Röportajı yapılan kişi de bunu doğruluyor.", type: "witness", isBonus: true },
+      { id: "c6", text: "Karanlık odanın rafında bulunan tek kullanımlık lastik eldivende Cumhur'un parmak izi var; eldivenin içi terle ıslanmış. Cumhur karanlık odada iş yaparken eldiven giydiğini söylese de o gün banyoda film yoktu.", type: "direct", isBonus: true },
+    ],
+    solvabilityMeta: {
+      freeEliminations: ["l2","l3","s3","w2","w3"],
+      bonusEliminations: ["s1"],
+    },
+    solution: { suspectId: "s2", weaponId: "w1", locationId: "l1" },
+  },
+  {
+    id: "p037",
+    title: "Termal Otelde Ölüm",
+    difficulty: "dedektif",
+    dayIndex: 37,
+    story:
+      "Bursa'nın Çekirge semtindeki köklü termal otelde muhasebeci Münibe Hanım havuz kenarında boğulmuş hâlde bulundu. Gece geç saatte otelde yalnızca üç misafir kalmaktaydı. Her biri farklı bir kat iddiasıyla kapıda bekliyordu. Sen bölge polis dedektifi olarak sabah erkenden otele ulaştın.",
+    suspects: [
+      { id: "s1", name: "Emekli Doktor Vedat Bey", description: "Münibe Hanım'ın babasının eski dostu; miras verasetinde tanık olması bekleniyor ve buna karşı çıkıyordu.", icon: "medical-services" },
+      { id: "s2", name: "İş Kadını Perihan Hanım", description: "Münibe Hanım'ın şirket ortağı; aralarında hesap anlaşmazlığı çıktığı biliniyor.", icon: "face-3" },
+      { id: "s3", name: "Genç Sporcu Erdal", description: "Otelde kamp yapan milli takım sporcusu; Münibe Hanım'ın şirketiyle sponsorluk anlaşmazlığı yaşıyor.", icon: "directions-run" },
+    ],
+    weapons: [
+      { id: "w1", name: "Havlu", description: "Kalın otel havlusu; boğmaya yetecek uzunlukta.", icon: "dry-cleaning" },
+      { id: "w2", name: "Kimyasal Temizleyici", description: "Havuz bakımında kullanılan klorlu temizleyici şişe.", icon: "science" },
+      { id: "w3", name: "Metal Trabzan", description: "Havuz merdiveninin sökülebilir metal trabzan borusu.", icon: "construction" },
+    ],
+    locations: [
+      { id: "l1", name: "Termal Havuz", description: "Otelin alt katındaki kapalı termal havuz alanı.", icon: "pool" },
+      { id: "l2", name: "Koridor", description: "Oda katlarını birbirine bağlayan uzun otel koridoru.", icon: "meeting-room" },
+      { id: "l3", name: "Lobi", description: "Girişin hemen önündeki resepsiyon ve oturma alanı.", icon: "hotel" },
+    ],
+    clues: [
+      { id: "c1", text: "Münibe Hanım termal havuzun sığ kenarında, basamakların dibinde bulundu. Akciğerleri su dolu; boğulma burada gerçekleşmiş. Havuz kapısı o gece kilitsiz bırakılmıştı.", type: "evidence", isBonus: false },
+      { id: "c2", text: "Boynunda ince ama uzun bir sürtünme izi var; bu iz sert metal ya da sıvı temasından değil, kumaş baskısından oluşmuş.", type: "forensic", isBonus: false },
+      { id: "c3", text: "Gece görevli resepsiyonisti, Emekli Doktor Vedat Bey'in baston olmadan hareketsiz kaldığını ve gece saat 22:00'den sonra odasından çıkmadığını söylüyor. Odanın numaralı kilidi o saatten sonra açılmamış.", type: "witness", isBonus: false },
+      { id: "c4", text: "Sporcu Erdal'ın antrenman günlüğü incelendiğinde sabah 05:00 alarmı kurulu; havuza erken gittiği doğru ama güvenlik kamerası kaydı onu havuza 05:15'te girdiğini gösteriyor. Cinayet en geç 04:30'da gerçekleşmiş.", type: "witness", isBonus: false },
+      { id: "c5", text: "Havuzdaki suda normalin üzerinde parfüm kokusu var; Perihan Hanım'ın kullandığı pahalı parfümle birebir aynı. Otel görevlisi Perihan Hanım'ın gece yarısı havuz yönünde yürüdüğünü gördüğünü söylüyor.", type: "indirect", isBonus: true },
+      { id: "c6", text: "Münibe Hanım'ın boynuna sarılı havlu kendi odasına ait değil; 312 numaralı odanın monogramını taşıyor. 312 numaralı oda Perihan Hanım'a kayıtlı.", type: "direct", isBonus: true },
+    ],
+    solvabilityMeta: {
+      freeEliminations: ["l2","l3","w2","w3","s1","s3"],
+      bonusEliminations: [],
+    },
+    solution: { suspectId: "s2", weaponId: "w1", locationId: "l1" },
+  },
+  {
+    id: "p038",
+    title: "Mektup Gelmedi",
+    difficulty: "dedektif",
+    dayIndex: 38,
+    story:
+      "Samsun'un liman mahallelerinden birinde postacı Cafer Bey, dağıtım çantası yanında akşam erken saatte bir arka sokakta bıçaklanmış bulundu. Çantasındaki birkaç mektup kayıp. O gün üç farklı kişiyle tartıştığı tanıklarca doğrulanıyor. Sen liman bölgesi dedektifi olarak soruşturmayı yürütüyorsun.",
+    suspects: [
+      { id: "s1", name: "Bakkal Necati", description: "Cafer Bey'in teslim etmediği bir koli için şikâyette bulunan mahallenin bakkalı.", icon: "store" },
+      { id: "s2", name: "Liman İşçisi Tahsin", description: "Cafer Bey'in kaybolduğunu söylediği önemli bir belgeyi bekleyen liman işçisi.", icon: "engineering" },
+      { id: "s3", name: "Ev Hanımı Hatice Teyze", description: "Cafer Bey'in yıllardır mektuplarını geç dağıttığını şikâyet eden kalabalık ailenin annesi.", icon: "elderly-woman" },
+    ],
+    weapons: [
+      { id: "w1", name: "Çakı", description: "Küçük, tek taraflı keskin katlanır çakı.", icon: "content-cut" },
+      { id: "w2", name: "Kanca", description: "Liman işçilerinin kullandığı demir yük kancası.", icon: "anchor" },
+      { id: "w3", name: "Cam Parçası", description: "Sokaktaki kırık şişe camından elde edilmiş keskin parça.", icon: "broken-image" },
+    ],
+    locations: [
+      { id: "l1", name: "Arka Sokak", description: "Bakkalın hemen arkasındaki dar ve issiz sokak.", icon: "place" },
+      { id: "l2", name: "Liman Rıhtımı", description: "Gemilerin yanaştığı açık rıhtım alanı.", icon: "directions-boat" },
+      { id: "l3", name: "Posta Deposu", description: "Mektupların sınıflandırıldığı küçük depo binası.", icon: "local-post-office" },
+    ],
+    clues: [
+      { id: "c1", text: "Cafer Bey bakkalın arkasındaki dar sokakta, çantası açık ve bir kısım mektup dağılmış hâlde bulundu. Kan izi yalnızca o sokakta; olay burada gerçekleşmiş.", type: "evidence", isBonus: false },
+      { id: "c2", text: "Yara izi ince, düzgün ve tek hamleli; ucu sivri ama geniş olmayan bir kesici ile yapılmış. Geniş kancayla ya da düzensiz cam kenarıyla bu kadar temiz bir iz bırakmak mümkün değil.", type: "forensic", isBonus: false },
+      { id: "c3", text: "Komşu, Hatice Teyze'nin o saatlerde evin balkonundan ipe çamaşır astığını gördüğünü söylüyor. Balkon sokağa bakıyor; Hatice Teyze aşağıdaki olayı duyuyor olurdu, ama oraya inemezdi o sürede.", type: "witness", isBonus: false },
+      { id: "c4", text: "Liman İşçisi Tahsin, o saatte rıhtımda gemi yüklemekte olduğunu söylüyor. Ancak gemi kaptanının tutanağına göre yükleme ekibi o gün üç saat erken tamamladı; Tahsin serbest bırakılmıştı.", type: "witness", isBonus: false },
+      { id: "c5", text: "Cafer Bey'in çantasından eksik mektuplar arasında Tahsin'in iş akdi belgesi de var. Tahsin'in evinde yapılan aramada zarf bulundu; üzerinde kan izi, içindeki belge ise boydan boya yırtılmış.", type: "indirect", isBonus: true },
+      { id: "c6", text: "Tahsin'in kemerindeki çakı kılıfı boş; kılıfın içi henüz kurumamış kan izleriyle kaplı. Tahsin bıçağın düştüğünü öne sürse de arka sokak dahil çevre tarandığında bıçak bulunamadı.", type: "direct", isBonus: true },
+    ],
+    solvabilityMeta: {
+      freeEliminations: ["l2","l3","w2","w3","s3"],
+      bonusEliminations: ["s1"],
+    },
+    solution: { suspectId: "s2", weaponId: "w1", locationId: "l1" },
+  },
+  {
+    id: "p039",
+    title: "Zeytinyağı Fabrikasında Kâbus",
+    difficulty: "baskomiser",
+    dayIndex: 39,
+    story:
+      "Ayvalık'ın en büyük zeytinyağı fabrikasının sahibi Rıfat Ağa, fabrika içinde preslerin arasında ezilmiş hâlde bulundu. Ama adli inceleme ölümün pres kazasından değil, öncesinde verilen zehirli bir içecekten kaynaklandığını ortaya koydu. Üç kişi o gün fabrikada çalışıyordu. Dedektif olarak sana verilen dosya çelişkilerle dolu; tanıklar birbirini suçluyor.",
+    suspects: [
+      { id: "s1", name: "Fabrika Ustabaşı Cevdet", description: "On beş yıldır fabrikada çalışan ustabaşı; Rıfat Ağa'nın onu ortaklıktan mahrum bıraktığını öğrendi.", icon: "engineering" },
+      { id: "s2", name: "Muhasebeci Bayan Şükran", description: "Fabrikanın muhasebecisi; usulsüz kayıtları Rıfat Ağa'ya bildirmekten çekindiği için baskı altındaydı.", icon: "calculate" },
+      { id: "s3", name: "Satış Temsilcisi Orhan Bey", description: "İstanbul'dan gelen satış temsilcisi; Rıfat Ağa ile anlaşma görüşmesi bozulmuş.", icon: "work" },
+    ],
+    weapons: [
+      { id: "w1", name: "Zehirli Çay", description: "İçine yüksek doz sedatif karıştırılmış çay bardağı.", icon: "local-cafe" },
+      { id: "w2", name: "Pres Kolu", description: "Zeytinyağı presinin metal kumanda kolu.", icon: "settings" },
+      { id: "w3", name: "Zincir", description: "Pres makinasına bağlı güvenlik zinciri.", icon: "link" },
+    ],
+    locations: [
+      { id: "l1", name: "Pres Odası", description: "Büyük zeytinyağı preslerinin bulunduğu gürültülü ana oda.", icon: "factory" },
+      { id: "l2", name: "Ofis", description: "Fabrikanın üst katındaki muhasebe ve yönetim ofisi.", icon: "business-center" },
+      { id: "l3", name: "Depo", description: "Dolu yağ varillerin istiflendiği geniş depo.", icon: "warehouse" },
+    ],
+    clues: [
+      { id: "c1", text: "Rıfat Ağa presler arasında bulundu; ancak adli hekim kanında yüksek doz sedatif tespit etti. Ağa önce ilaçlanıp baygınken presler arasına bırakılmış. Ölüm pres odasında gerçekleşti.", type: "forensic", isBonus: false },
+      { id: "c2", text: "Fabrika kapı görevlisi, Satış Temsilcisi Orhan Bey'in ziyaretçi kartı ile geldiğini ve yalnızca ofis katına erişim izni olduğunu söylüyor. Pres odasına giriş ziyaretçilere kapalı; kayıtlar Orhan'ın pres odası turnike kapısını geçmediğini doğruluyor.", type: "witness", isBonus: false },
+      { id: "c3", text: "Rıfat Ağa'nın yanında bulunan çay bardağı standart fabrika bardağı değil; ofis mutfağında kullanılan ince belli özel bardak. Bu bardakları yalnızca ofis çalışanları kullanıyor; Ustabaşı Cevdet ofis mutfağına giremez.", type: "indirect", isBonus: false },
+      { id: "c4", text: "Muhasebeci Şükran, öğleden sonra boyunca ofisten çıkmadığını söylüyor. Ancak fabrika içi telefon kayıtları, pres odasındaki dahili telefonu öğleden sonra saat 14:10'da birinin kullandığını gösteriyor; o saatte pres odasında yalnızca Rıfat Ağa ve Cevdet olması gerekiyordu.", type: "witness", isBonus: false },
+      { id: "c5", text: "Ofis masasının alt çekmecesinde reçetesiz uyku ilacı kutusu bulundu; kutunun içindeki miktarla bardaktaki sedatif dozu örtüşüyor. Çekmece Şükran'ın masasına ait; üzerinde parmak izi var.", type: "evidence", isBonus: true },
+      { id: "c6", text: "Şükran'ın muhasebe defterinde Rıfat Ağa'nın aleyhine olan kayıtlar özenle silinmiş; silinti taze. Şükran bu kayıtları gün içinde imha etmeye çalıştığında Rıfat Ağa onu suçüstü yakalamış ve işten çıkaracağını söylemiş; komşu iş arkadaşı bu tartışmayı duymuş.", type: "direct", isBonus: true },
+    ],
+    solvabilityMeta: {
+      freeEliminations: ["l2","l3","w2","w3","s3","s1"],
+      bonusEliminations: [],
+    },
+    solution: { suspectId: "s2", weaponId: "w1", locationId: "l1" },
+  },
+  {
+    id: "p040",
+    title: "Dağ Yolunda Pusu",
+    difficulty: "baskomiser",
+    dayIndex: 40,
+    story:
+      "Trabzon ile Rize arasındaki dağ yolundan geçen minibüs bir barikata takıldı; şoför Ahmet Bey yol kenarında bıçaklanmış bulundu. Minibüste yalnızca üç yolcu vardı; diğerleri önceki durakta inmişti. Yol üç saat boyunca kapandı ve hiç araç geçmedi. Katil bu üç kişiden biri. Sen jandarma komutanı olarak timinizle olay yerine ulaştın.",
+    suspects: [
+      { id: "s1", name: "Tüccar Kadın Safiye Hanım", description: "Rize'ye mal götüren yaşlı kadın tüccar; Ahmet Bey'in geç kaldığı için kendisini zor durumda bıraktığını söylüyor.", icon: "shopping-bag" },
+      { id: "s2", name: "Öğretmen Adayı Levent", description: "Atama için Rize'ye giden genç öğretmen adayı; yanında tayin belgeleri var.", icon: "school" },
+      { id: "s3", name: "Orman İşçisi Bayram", description: "Orman bölgesinden dönen deneyimli orman işçisi; yanında kesici aletler taşıyan büyük bir çanta var.", icon: "agriculture" },
+    ],
+    weapons: [
+      { id: "w1", name: "Orman Bıçağı", description: "Ağaç budama ve kesme işleri için kullanılan büyük, ağır orman bıçağı.", icon: "content-cut" },
+      { id: "w2", name: "Taş", description: "Yol kenarındaki duvarda gevşek duran sivri köşeli büyük taş.", icon: "terrain" },
+      { id: "w3", name: "Demir Levye", description: "Minibüsün araç gereç bölümündeki demir levye.", icon: "construction" },
+    ],
+    locations: [
+      { id: "l1", name: "Yol Kenarı", description: "Minibüsün durduğu noktanın hemen yanındaki taş duvarlı yol kenarı.", icon: "place" },
+      { id: "l2", name: "Orman İçi", description: "Yolun solundaki sık çam ormanı; görüş mesafesi çok kısa.", icon: "park" },
+      { id: "l3", name: "Minibüs İçi", description: "Yolculuk minibüsünün iç kabini.", icon: "directions-bus" },
+    ],
+    clues: [
+      { id: "c1", text: "Ahmet Bey minibüsün birkaç metre ilerisinde, taş duvarın dibinde bulundu. Kan izi yalnızca yol kenarında; sürükleme izi yok, cinayet burada gerçekleşmiş.", type: "evidence", isBonus: false },
+      { id: "c2", text: "Yara geniş, derin ve tek hamleli; sivri taşla bu kadar temiz ve derin bir kesik olmaz. Levye künt olduğundan kesici iz bırakmaz. Yara uzun ve geniş bir bıçakla uyumlu.", type: "forensic", isBonus: false },
+      { id: "c3", text: "Jandarma eri, Ahmet Bey'in oldukça iri yapılı ve sağlıklı bir adam olduğunu belirtiyor. Öğretmen adayı Levent'in bu adamı tek hamlede devirmesi için gereken fiziksel güce sahip olmadığı aşikâr.", type: "witness", isBonus: false },
+      { id: "c4", text: "Safiye Hanım minibüsten hiç inmediğini söylüyor. Levent de bunu doğruluyor; Safiye Hanım büyük çantaları nedeniyle dar kapıdan çabuk çıkamazdı ve pencereden görünür olurdu. Ahmet Bey dışarı çıktığında yalnızca bir kişi peşinden indi.", type: "witness", isBonus: false },
+      { id: "c5", text: "Orman İşçisi Bayram'ın büyük çantasındaki orman bıçağı kılıfı ıslak ve kılıfın iç derisi taze kan kokusuyor. Bayram bıçağı sabah kullandıktan sonra temizlediğini söylüyor; ama kılıf içi hâlâ ıslak.", type: "indirect", isBonus: true },
+      { id: "c6", text: "Levent'in ifadesinde Bayram'ın yolculuk başında Ahmet Bey'e 'parayı geri vermezsen pişman olursun' dediğini duyduğu ortaya çıktı. Ahmet Bey'in cebindeki para bölmesi boş; yolcu listesinde Bayram adına kayıtlı ödeme tutarı eksik.", type: "direct", isBonus: true },
+    ],
+    solvabilityMeta: {
+      freeEliminations: ["l2","l3","w2","w3","s2","s1"],
+      bonusEliminations: [],
+    },
+    solution: { suspectId: "s3", weaponId: "w1", locationId: "l1" },
+  },
+  {
+    id: "p041",
+    title: "Ramazan Gecesi Cinayeti",
+    difficulty: "baskomiser",
+    dayIndex: 41,
+    story:
+      "Konya'nın tarihi çarşısına yakın bir hanın sahibi Lütfi Bey, Ramazan gecesi sahur sonrasında odası önündeki koridorda bıçaklanmış bulundu. Handa yalnızca üç misafir gecelemekteydi. Kandil ışıkları hâlâ yanıyor, müezzin sesi uzaktan geliyor. Sen emniyet müdürünün özel atadığı baş komiser olarak sabah erkenden olaydayken izler henüz taze.",
+    suspects: [
+      { id: "s1", name: "Hacı Efendi Rüstem", description: "Hac dönüşü Konya'ya uğrayan yaşlı tüccar; Lütfi Bey'den yıllar önce borç almış ama geri ödememiş.", icon: "elderly" },
+      { id: "s2", name: "Genç Mühendis Adnan", description: "Konya'ya iş için gelen altyapı mühendisi; Lütfi Bey'in otelini yıkımdan kurtarma talebini reddetmiş.", icon: "engineering" },
+      { id: "s3", name: "Dul Kadın Zümrüt Hanım", description: "Konya'ya akraba ziyaretine gelen dul; Lütfi Bey'in kendisine yönelik taciz girişimini yaşadığını söylüyor.", icon: "face-3" },
+    ],
+    weapons: [
+      { id: "w1", name: "Şam Bıçağı", description: "İnce, uzun ve her iki tarafı keskin süslü Şam bıçağı.", icon: "content-cut" },
+      { id: "w2", name: "Kandil Direği", description: "Koridorda asılı kandillerden birinin ağır pirinç direği.", icon: "wb-incandescent" },
+      { id: "w3", name: "Halat", description: "Han çatı katında bulunan kalın sarma halat.", icon: "link" },
+    ],
+    locations: [
+      { id: "l1", name: "Koridor", description: "Odaların önündeki loş kandil ışıklı uzun koridor.", icon: "meeting-room" },
+      { id: "l2", name: "Avlu", description: "Hanın ortasındaki açık avlu; gece boyunca bekçi dolaşıyor.", icon: "park" },
+      { id: "l3", name: "Çatı Katı", description: "Han eşyalarının depolandığı üst çatı katı.", icon: "roofing" },
+    ],
+    clues: [
+      { id: "c1", text: "Lütfi Bey odasının tam önünde, koridor zeminine yüz üstü devrilmiş hâlde bulundu. Kan yalnızca koridorda; cesedin buraya taşınmadığı belli. Cinayet koridorda yaşandı.", type: "evidence", isBonus: false },
+      { id: "c2", text: "İki yara izi var; her ikisi de ince, uzun ve her iki kenarı keskin bir bıçakla uyumlu. Künt pirinç direk ya da halat bu kesik izleri bırakamazdı.", type: "forensic", isBonus: false },
+      { id: "c3", text: "Han bekçisi sahur sonrası avluyu iki kez dolaştı; her seferinde kimseyi görmedi. Avluya açılan koridordan ışık sızmadığını belirtiyor; yani koridor kapısı kapalıydı ve olay içeride yaşandı.", type: "witness", isBonus: false },
+      { id: "c4", text: "Adnan, sahur sonrası koridorda Hacı Rüstem'in odasından tespih sesini sürekli duyduğunu söylüyor. Sabah ezanı bitene kadar oda kapısı açılmadı; gürültülü tespih bırakmayan biri o sürede koridora çıkamazdı.", type: "witness", isBonus: false },
+      { id: "c5", text: "Zümrüt Hanım başlangıçta koridora çıkmadığını söyledi. Ama Adnan, sahurda masada Zümrüt Hanım'ın elinde küçük bir bıçak olduğunu hatırladığını belirtti; sofra bıçağından farklı, süslüydü. Zümrüt bunu inkâr edemedi.", type: "indirect", isBonus: true },
+      { id: "c6", text: "Zümrüt Hanım'ın odasında yastığın altına sarılı bezde Şam bıçağı bulundu; üzerinde kan var, taze temizlenmiş ama bez kanlı. Zümrüt o gece Lütfi Bey'in odasına geldiğini ve kendisine yönelik tacizi durdurmak zorunda kaldığını kabul etti.", type: "direct", isBonus: true },
+    ],
+    solvabilityMeta: {
+      freeEliminations: ["l2","l3","w2","w3","s1"],
+      bonusEliminations: ["s2"],
+    },
+    solution: { suspectId: "s3", weaponId: "w1", locationId: "l1" },
+  },
 ];
 
 export function getPuzzleByDayIndex(dayIndex: number): Puzzle | undefined {

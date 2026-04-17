@@ -58,6 +58,12 @@ const EXTRA_FREE_PUZZLE_IDS: ReadonlySet<string> = new Set([
   "p033",
   "p034",
   "p035",
+  "p036",
+  "p037",
+  "p038",
+  "p039",
+  "p040",
+  "p041",
 ]);
 
 function formatTime(s: number): string {
