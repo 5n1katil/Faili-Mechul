@@ -1,8 +1,31 @@
 uploads = []
-outputs = []
 
 [[generated]]
 id = "wQyB5ElpJRJdEtyrX15DZ"
 uri = "file://artifacts/dedektif/assets/images/icon.png"
 type = "image"
 title = "detective magnifying glass icon clean"
+
+[[outputs]]
+id = "xKl_rwWTru6AN87bl2N4F"
+uri = "file://artifacts/dedektif/screenshots/ipad/01-anasayfa.png"
+type = "image"
+title = "01 — Ana Sayfa"
+
+[[outputs]]
+id = "39qlukCh6lDyIbOJ15ZPe"
+uri = "file://artifacts/dedektif/screenshots/ipad/02-vakalar.png"
+type = "image"
+title = "02 — Vaka Listesi"
+
+[[outputs]]
+id = "2nDKtJQtJpRVpwlhlm66U"
+uri = "file://artifacts/dedektif/screenshots/ipad/03-oyun.png"
+type = "image"
+title = "03 — Oyun Izgarası"
+
+[[outputs]]
+id = "dD4mCQ-ynwa1yrYgr5tju"
+uri = "file://artifacts/dedektif/screenshots/ipad/04-tamamlananlar.png"
+type = "image"
+title = "04 — Tamamlananlar"
