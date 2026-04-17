@@ -474,6 +474,7 @@ export default function VakalarScreen() {
   const handleBackToList = () => {
     setShowResult(false);
     resetCurrentGame();
+    setListTab("standart");
   };
 
   const handleGoHome = () => {
