@@ -1,4 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as FileSystem from "expo-file-system";
 import React, {
   createContext,
   useCallback,
@@ -8,6 +9,7 @@ import React, {
   useRef,
   useState,
 } from "react";
+import { Platform } from "react-native";
 import { generateUUID, syncProfileToBackend, type PrivacySettings } from "@/utils/apiClient";
 import {
   getDailyPuzzle,
@@ -658,6 +660,19 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
 
   const updateProfile = useCallback(
     (updates: { name?: string; avatar?: string; bio?: string; privacySettings?: PrivacySettings }) => {
+      if (
+        Platform.OS !== "web" &&
+        updates.avatar !== undefined &&
+        updates.avatar !== profile.avatar &&
+        profile.avatar.startsWith("gallery:") &&
+        FileSystem.documentDirectory
+      ) {
+        const oldPath = profile.avatar.slice("gallery:".length);
+        const avatarDir = `${FileSystem.documentDirectory}avatars/`;
+        if (oldPath.startsWith(avatarDir)) {
+          FileSystem.deleteAsync(oldPath, { idempotent: true }).catch(() => {});
+        }
+      }
       const updated = { ...profile, ...updates };
       saveProfile(updated);
       if (playerId) {
