@@ -347,6 +347,7 @@ export default function OnboardingScreen({ visible, onDone, closeLabel }: Props)
           style={styles.slideArea}
         >
           <ScrollView
+            style={styles.slideScrollView}
             contentContainerStyle={[
               styles.slideScroll,
               slide.showGrid && { gap: 4 },
@@ -467,10 +468,12 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 8,
   },
+  slideScrollView: {
+    flex: 1,
+  },
   slideScroll: {
     flexGrow: 1,
     alignItems: "center",
-    justifyContent: "center",
     gap: 14,
     paddingVertical: 8,
   },
