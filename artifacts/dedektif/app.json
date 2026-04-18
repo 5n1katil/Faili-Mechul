@@ -56,7 +56,9 @@
     "extra": {
       "eas": {
         "projectId": "f652b78d-775a-494c-86fc-62e60c72b564"
-      }
+      },
+      "revenueCatIosKey": "test_FqIlaUnGKKlZhpvlhDJmYeZdPMk",
+      "revenueCatAndroidKey": "test_FqIlaUnGKKlZhpvlhDJmYeZdPMk"
     },
     "owner": "yalperol"
   }

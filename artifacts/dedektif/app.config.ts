@@ -36,6 +36,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
         NSPrivacyTrackingDomains: [],
       },
       infoPlist: {
+        ITSAppUsesNonExemptEncryption: false,
         NSUserNotificationUsageDescription:
           "Günlük bulmaca hatırlatmaları için bildirim göndermek istiyoruz.",
         NSPhotoLibraryUsageDescription:
@@ -71,7 +72,11 @@ export default ({ config }: ConfigContext): ExpoConfig => {
     extra: {
       revenueCatIosKey: iosKey,
       revenueCatAndroidKey: androidKey,
+      eas: {
+        projectId: "f652b78d-775a-494c-86fc-62e60c72b564",
+      },
     },
+    owner: "yalperol",
     experiments: {
       typedRoutes: true,
       reactCompiler: true,
