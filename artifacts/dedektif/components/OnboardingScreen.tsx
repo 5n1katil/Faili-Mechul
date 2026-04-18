@@ -5,6 +5,7 @@ import {
   Modal,
   Platform,
   Pressable,
+  ScrollView,
   StyleSheet,
   Text,
   View,
@@ -274,6 +275,7 @@ interface Props {
 
 export default function OnboardingScreen({ visible, onDone, closeLabel }: Props) {
   const insets = useSafeAreaInsets();
+  const { height: screenHeight } = useWindowDimensions();
   const [slideIndex, setSlideIndex] = useState(0);
   const [key, setKey] = useState(0);
 
@@ -342,49 +344,61 @@ export default function OnboardingScreen({ visible, onDone, closeLabel }: Props)
           key={key}
           entering={FadeIn.duration(260)}
           exiting={FadeOut.duration(160)}
-          style={[styles.slideArea, slide.showGrid && { gap: 4 }]}
+          style={styles.slideArea}
         >
-          {slide.clue && (
-            <View style={styles.clueBox}>
-              <MaterialIcons name="fingerprint" size={14} color="#D4A843" />
-              <Text style={styles.clueText}>{slide.clue}</Text>
-            </View>
-          )}
-
-          {slide.showGrid ? (
-            <DemoGridWrapper />
-          ) : slide.showClueExample ? (
-            <ClueExampleBox />
-          ) : slide.showAccusation ? (
-            <MockAccusationCard />
-          ) : slideIndex === 0 ? (
-            <Image
-              source={require("@/assets/images/logo.png")}
-              style={styles.logoImage}
-              resizeMode="contain"
-            />
-          ) : (
-            <View style={[styles.iconWrapper, { backgroundColor: slide.iconBg }]}>
-              <View style={[styles.iconCircle, { borderColor: slide.iconColor + "60", backgroundColor: slide.iconBg }]}>
-                <MaterialIcons name={slide.icon} size={54} color={slide.iconColor} />
+          <ScrollView
+            contentContainerStyle={[
+              styles.slideScroll,
+              slide.showGrid && { gap: 4 },
+            ]}
+            showsVerticalScrollIndicator={false}
+            bounces={false}
+          >
+            {slide.clue && (
+              <View style={styles.clueBox}>
+                <MaterialIcons name="fingerprint" size={14} color="#D4A843" />
+                <Text style={styles.clueText}>{slide.clue}</Text>
               </View>
-            </View>
-          )}
+            )}
 
-          <Text style={styles.slideSubtitle}>
-            {slide.subtitleNoUppercase
-              ? slide.subtitle
-              : slide.subtitle.toLocaleUpperCase("tr-TR")}
-          </Text>
-          <Text style={styles.slideTitle}>{slide.title}</Text>
-          <Text style={[styles.slideBody, slide.showGrid && { fontSize: 13, lineHeight: 21 }]}>{slide.body}</Text>
+            {slide.showGrid ? (
+              <DemoGridWrapper />
+            ) : slide.showClueExample ? (
+              <ClueExampleBox />
+            ) : slide.showAccusation ? (
+              <MockAccusationCard />
+            ) : slideIndex === 0 ? (
+              <Image
+                source={require("@/assets/images/logo.png")}
+                style={[
+                  styles.logoImage,
+                  screenHeight < 700 && { width: 110, height: 110, borderRadius: 55 },
+                ]}
+                resizeMode="contain"
+              />
+            ) : (
+              <View style={[styles.iconWrapper, { backgroundColor: slide.iconBg }]}>
+                <View style={[styles.iconCircle, { borderColor: slide.iconColor + "60", backgroundColor: slide.iconBg }]}>
+                  <MaterialIcons name={slide.icon} size={54} color={slide.iconColor} />
+                </View>
+              </View>
+            )}
 
-          {slide.tip && (
-            <View style={[styles.tipBox, slide.showGrid && { paddingVertical: 8, marginTop: 0 }]}>
-              <MaterialIcons name="info-outline" size={15} color="#D4A843" />
-              <Text style={[styles.tipText, slide.showGrid && { fontSize: 12, lineHeight: 18 }]}>{slide.tip}</Text>
-            </View>
-          )}
+            <Text style={styles.slideSubtitle}>
+              {slide.subtitleNoUppercase
+                ? slide.subtitle
+                : slide.subtitle.toLocaleUpperCase("tr-TR")}
+            </Text>
+            <Text style={styles.slideTitle}>{slide.title}</Text>
+            <Text style={[styles.slideBody, slide.showGrid && { fontSize: 13, lineHeight: 21 }]}>{slide.body}</Text>
+
+            {slide.tip && (
+              <View style={[styles.tipBox, slide.showGrid && { paddingVertical: 8, marginTop: 0 }]}>
+                <MaterialIcons name="info-outline" size={15} color="#D4A843" />
+                <Text style={[styles.tipText, slide.showGrid && { fontSize: 12, lineHeight: 18 }]}>{slide.tip}</Text>
+              </View>
+            )}
+          </ScrollView>
         </Animated.View>
 
         <View style={styles.bottomArea}>
@@ -451,11 +465,14 @@ const styles = StyleSheet.create({
   },
   slideArea: {
     flex: 1,
+    paddingHorizontal: 8,
+  },
+  slideScroll: {
+    flexGrow: 1,
     alignItems: "center",
     justifyContent: "center",
     gap: 14,
-    paddingHorizontal: 8,
-    overflow: "hidden",
+    paddingVertical: 8,
   },
   logoImage: {
     width: 150,
