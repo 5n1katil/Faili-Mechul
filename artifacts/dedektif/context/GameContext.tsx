@@ -279,14 +279,15 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
       }
       setPlayerId(pid);
 
+      let parsedProfile: Record<string, unknown> | null = null;
       if (profileStr) {
-        const parsed = JSON.parse(profileStr);
+        parsedProfile = JSON.parse(profileStr);
         setProfile({
           avatar: "",
           bio: "",
           avgSolveTimeSeconds: 0,
           privacySettings: DEFAULT_PRIVACY,
-          ...parsed,
+          ...parsedProfile,
         });
       }
       if (historyStr) {
@@ -300,6 +301,33 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
       if (draftStr) {
         const draft = JSON.parse(draftStr) as SavedDraft;
         setPendingDraft(draft);
+      }
+
+      cleanupOrphanedAvatars(typeof parsedProfile?.avatar === "string" ? parsedProfile.avatar : undefined);
+    } catch {}
+  };
+
+  const cleanupOrphanedAvatars = async (currentAvatar?: string) => {
+    try {
+      if (!FileSystem.documentDirectory) return;
+      const avatarDir = `${FileSystem.documentDirectory}avatars/`;
+      const dirInfo = await FileSystem.getInfoAsync(avatarDir);
+      if (!dirInfo.exists) return;
+
+      const files = await FileSystem.readDirectoryAsync(avatarDir);
+      if (files.length === 0) return;
+
+      let activeFileName: string | null = null;
+      if (typeof currentAvatar === "string" && currentAvatar.startsWith("gallery:")) {
+        const filePath = currentAvatar.slice("gallery:".length);
+        const parts = filePath.split("/");
+        activeFileName = parts[parts.length - 1];
+      }
+
+      for (const file of files) {
+        if (file !== activeFileName) {
+          await FileSystem.deleteAsync(`${avatarDir}${file}`, { idempotent: true });
+        }
       }
     } catch {}
   };
