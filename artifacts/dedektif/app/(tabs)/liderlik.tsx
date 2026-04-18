@@ -142,7 +142,7 @@ function RankItem({ entry, rank, sortKey, colors, delay, onPress }: RankItemProp
 
         <View style={[styles.avatarWrapper, { backgroundColor: `${colors.primary}15`, borderColor: `${colors.primary}40` }]}>
           <AvatarDisplay
-            avatar={entry.avatar || "detective"}
+            avatar={entry.avatar || "d01"}
             size={36}
             color={entry.isCurrentUser ? colors.primary : colors.mutedForeground}
             backgroundColor="transparent"

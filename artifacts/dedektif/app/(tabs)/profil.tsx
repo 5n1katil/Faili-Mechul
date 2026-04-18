@@ -180,7 +180,7 @@ export default function ProfilScreen() {
           <View style={[styles.profileCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
             <View style={[styles.avatarContainer, { backgroundColor: `${colors.primary}22`, borderColor: colors.primary }]}>
               <AvatarDisplay
-                avatar={profile.avatar || "detective"}
+                avatar={profile.avatar || "d01"}
                 size={64}
                 color={colors.primary}
                 backgroundColor="transparent"
