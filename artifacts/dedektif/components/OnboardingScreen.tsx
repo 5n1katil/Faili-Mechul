@@ -85,50 +85,94 @@ function DemoGridWrapper({ contentWidth, screenHeight }: { contentWidth: number;
   );
 }
 
+const CLUE_EXAMPLES = [
+  {
+    locked: false,
+    text: "Otopsi raporu: vücutta kimyasal toksin izine rastlanmadı. Zehir kullanılmamış.",
+    hint: "→ Zehir elendi!",
+  },
+  {
+    locked: false,
+    text: "Tanıklar, cinayetten önce Mehmet Bey'in bahçede değil mutfakta olduğunu gördü.",
+    hint: "→ Bahçe elendi!",
+  },
+  {
+    locked: false,
+    text: "Kütüphane kapısı olaydan önce içten kilitliydi; katil bu odayı kullanmamış.",
+    hint: "→ Kütüphane elendi!",
+  },
+  {
+    locked: false,
+    text: "Maktulün eli kâğıt kesiğiyle yaralıydı; kavga mutfakta başlamış olabilir.",
+    hint: "→ Dikkat: Mutfak!",
+  },
+  {
+    locked: true,
+    text: "Gece boyunca hiç kimse silah sesi duymadı. Kullanılan alet sessizdi.",
+    hint: "→ Tabanca elendi!",
+  },
+];
+
 function ClueExampleBox({ contentWidth }: { contentWidth: number }) {
   const GOLD = "#D4A843";
   const RED = "#C8372D";
+
   return (
-    <View style={{ width: contentWidth, alignSelf: "center", gap: 10 }}>
-      <View style={{
-        backgroundColor: "#1A1F2E",
-        borderRadius: 12,
-        borderLeftWidth: 3,
-        borderLeftColor: GOLD,
-        flexDirection: "row",
-        alignItems: "center",
-        paddingVertical: 14,
-        paddingHorizontal: 16,
-        gap: 12,
-      }}>
-        <MaterialIcons name="fingerprint" size={22} color={GOLD} />
-        <Text style={{ flex: 1, fontSize: 14, color: "#D1D5DB", lineHeight: 21 }}>
-          "Otopsi raporu: vücutta kimyasal toksin izine rastlanmadı. Zehir kullanılmamış."
-        </Text>
-        <View style={{ backgroundColor: GOLD, borderRadius: 6, paddingHorizontal: 8, paddingVertical: 4 }}>
-          <Text style={{ fontSize: 10, fontWeight: "700", color: "#0F1117", letterSpacing: 0.5 }}>AÇIK</Text>
+    <View style={{ width: contentWidth, gap: 8 }}>
+      {/* Legend */}
+      <View style={{ flexDirection: "row", gap: 12, paddingHorizontal: 2, paddingBottom: 2 }}>
+        <View style={{ flexDirection: "row", alignItems: "center", gap: 6 }}>
+          <View style={{ backgroundColor: GOLD, borderRadius: 5, paddingHorizontal: 7, paddingVertical: 3 }}>
+            <Text style={{ fontSize: 10, fontWeight: "700", color: "#0F1117" }}>AÇIK</Text>
+          </View>
+          <Text style={{ fontSize: 12, color: "#6B7280" }}>Baştan görünür ipucu</Text>
+        </View>
+        <View style={{ flexDirection: "row", alignItems: "center", gap: 6 }}>
+          <View style={{ backgroundColor: RED, borderRadius: 5, paddingHorizontal: 7, paddingVertical: 3 }}>
+            <Text style={{ fontSize: 10, fontWeight: "700", color: "#FFF" }}>+30 sn ⏱</Text>
+          </View>
+          <Text style={{ fontSize: 12, color: "#6B7280" }}>Bonus ipucu</Text>
         </View>
       </View>
 
-      <View style={{
-        backgroundColor: "#1A1F2E",
-        borderRadius: 12,
-        borderLeftWidth: 3,
-        borderLeftColor: RED,
-        flexDirection: "row",
-        alignItems: "center",
-        paddingVertical: 14,
-        paddingHorizontal: 16,
-        gap: 12,
-      }}>
-        <MaterialIcons name="lock" size={22} color={RED} />
-        <Text style={{ flex: 1, fontSize: 14, color: "#D1D5DB", lineHeight: 21 }}>
-          "Gece boyunca hiç kimse silah sesi duymadı. Kullanılan alet sessizdi."
-        </Text>
-        <View style={{ backgroundColor: RED, borderRadius: 6, paddingHorizontal: 8, paddingVertical: 4 }}>
-          <Text style={{ fontSize: 10, fontWeight: "700", color: "#FFFFFF", letterSpacing: 0.5 }}>+30 sn ⏱</Text>
+      {/* Clue cards */}
+      {CLUE_EXAMPLES.map((clue, i) => (
+        <View key={i} style={{
+          backgroundColor: "#1A1F2E",
+          borderRadius: 10,
+          borderLeftWidth: 3,
+          borderLeftColor: clue.locked ? RED : GOLD,
+          flexDirection: "row",
+          alignItems: "center",
+          paddingVertical: 10,
+          paddingHorizontal: 12,
+          gap: 10,
+        }}>
+          <MaterialIcons
+            name={clue.locked ? "lock" : "fingerprint"}
+            size={18}
+            color={clue.locked ? RED : GOLD}
+          />
+          <View style={{ flex: 1 }}>
+            <Text style={{ fontSize: 12, color: "#D1D5DB", lineHeight: 18 }}>
+              "{clue.text}"
+            </Text>
+            <Text style={{ fontSize: 11, color: clue.locked ? RED + "BB" : GOLD + "BB", marginTop: 3, fontWeight: "600" }}>
+              {clue.hint}
+            </Text>
+          </View>
+          <View style={{
+            backgroundColor: clue.locked ? RED : GOLD,
+            borderRadius: 6,
+            paddingHorizontal: 7,
+            paddingVertical: 3,
+          }}>
+            <Text style={{ fontSize: 9, fontWeight: "700", color: clue.locked ? "#FFF" : "#0F1117", letterSpacing: 0.5 }}>
+              {clue.locked ? "+30 sn ⏱" : "AÇIK"}
+            </Text>
+          </View>
         </View>
-      </View>
+      ))}
     </View>
   );
 }
@@ -233,8 +277,8 @@ const SLIDES: Slide[] = [
     title: "İpuçları",
     subtitle: "Delilleri Değerlendir",
     showClueExample: true,
-    body: "Her bulmacada baştan 4 standart ipucu açık gelir. Bu ipuçları seni çözüme yönlendiren temel delillerdir.\n\nDaha fazla ipucuna ihtiyaç duyarsan \"Sonraki İpucu\" ile bir tane daha açabilirsin — ama dikkatli ol!",
-    tip: "Her bonus ipucu −300 puan maliyeti taşır. İpuçsuz çözdükçe puanın artar!",
+    body: "Her bulmacada baştan en az 4 standart ipucu açık gelir. Bunlar; tanıklıklar, adli raporlar ve fiziksel delillerden oluşur — her biri seni bir adım daha yaklaştırır.\n\nDaha fazlasına ihtiyaç duyarsan \"Sonraki İpucu\" ile bir tane daha açabilirsin — ama her bonus ipucu kronometreye +30 saniye ekler!",
+    tip: "İpuçsuz çözersen daha yüksek puan alırsın — sadece gerçekten gerektiğinde bonus ipucu aç!",
   },
   {
     icon: "gavel",
@@ -265,6 +309,7 @@ function SlidePage({ slide, slideIndex, screenWidth, screenHeight }: SlidePagePr
       contentContainerStyle={[
         styles.slideScroll,
         slide.showGrid && { gap: 6 },
+        slide.showClueExample && { gap: 10 },
       ]}
       showsVerticalScrollIndicator={false}
       bounces={false}
@@ -505,8 +550,9 @@ const styles = StyleSheet.create({
   slideScroll: {
     flexGrow: 1,
     alignItems: "center",
+    justifyContent: "center",
     gap: 14,
-    paddingVertical: 8,
+    paddingVertical: 16,
     paddingHorizontal: 24,
   },
   logoImage: {
