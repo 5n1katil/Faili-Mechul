@@ -1,5 +1,4 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import Constants from "expo-constants";
 import React, {
   createContext,
   useCallback,
@@ -32,11 +31,8 @@ function buildFallbackPackPrices(): Record<string, string> {
 }
 
 function getRevenueCatKey(): string {
-  const extra = Constants.expoConfig?.extra as
-    | { revenueCatIosKey?: string; revenueCatAndroidKey?: string }
-    | undefined;
-  const iosKey = extra?.revenueCatIosKey ?? process.env.EXPO_PUBLIC_REVENUECAT_IOS_KEY ?? "";
-  const androidKey = extra?.revenueCatAndroidKey ?? process.env.EXPO_PUBLIC_REVENUECAT_ANDROID_KEY ?? "";
+  const iosKey = process.env.EXPO_PUBLIC_REVENUECAT_IOS_KEY ?? "";
+  const androidKey = process.env.EXPO_PUBLIC_REVENUECAT_ANDROID_KEY ?? "";
   return Platform.OS === "ios" ? iosKey : androidKey;
 }
 
