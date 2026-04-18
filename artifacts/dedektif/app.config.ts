@@ -22,7 +22,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
     ios: {
       supportsTablet: false,
       bundleIdentifier: "com.failimechul.dedektif",
-      buildNumber: "1",
+      buildNumber: "2",
       minimumOsVersion: "13.4",
       privacyManifests: {
         NSPrivacyAccessedAPITypes: [
@@ -41,8 +41,6 @@ export default ({ config }: ConfigContext): ExpoConfig => {
           "Günlük bulmaca hatırlatmaları için bildirim göndermek istiyoruz.",
         NSPhotoLibraryUsageDescription:
           "Profil fotoğrafınızı seçmek için fotoğraf kütüphanesine erişim gerekiyor.",
-        NSUserTrackingUsageDescription:
-          "Uygulama deneyimini iyileştirmek ve içeriği kişiselleştirmek için kullanılır.",
       },
     },
     android: {
@@ -65,7 +63,6 @@ export default ({ config }: ConfigContext): ExpoConfig => {
       ],
       "expo-font",
       "expo-web-browser",
-      "expo-tracking-transparency",
       "./plugins/withRevenueCat",
       "./plugins/withPrivacyManifest",
     ],
