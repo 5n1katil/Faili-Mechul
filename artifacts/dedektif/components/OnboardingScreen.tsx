@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import type { ComponentProps } from "react";
 import {
+  FlatList,
   Image,
   Modal,
   Platform,
@@ -13,10 +14,6 @@ import {
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import Animated, {
-  FadeIn,
-  FadeOut,
-} from "react-native-reanimated";
 import DetectiveGrid from "@/components/DetectiveGrid";
 import type { Suspect, Weapon, Location } from "@/data/puzzles";
 
@@ -37,37 +34,25 @@ const DEMO_LOCATIONS: Location[] = [
   { id: "dl2", name: "Bahçe",     description: "", icon: "park" },
   { id: "dl3", name: "Kütüphane", description: "", icon: "menu_book" },
 ];
-// Cevap: Zeynep + Bıçak + Bahçe
-// Gösterilen durum: Bıçak satırı ve Bahçe mekan satırı çözülmüş,
-// otomatik çarpılamalar uygulanmış; geri kalan hücreler henüz incelenmemiş.
 const DEMO_GRID_STATE: Record<string, "cross" | "check" | "question"> = {
-  // dw1 (Bıçak) — ÇÖZÜLDÜ: Zeynep kullandı, Bahçe'de
   "dw1_ds1": "cross",  "dw1_ds2": "check",  "dw1_ds3": "cross",
   "dw1_dl1": "cross",  "dw1_dl2": "check",  "dw1_dl3": "cross",
-  // dw2 (Zehir) — Zeynep=Bıçak → Zeynep≠Zehir; Bahçe=Bıçak → Bahçe≠Zehir
   "dw2_ds2": "cross",  "dw2_dl2": "cross",
-  // dw3 (Tabanca) — aynı mantıkla Zeynep≠Tabanca, Bahçe≠Tabanca
   "dw3_ds2": "cross",  "dw3_dl2": "cross",
-  // dl1 (Mutfak) — Zeynep=Bahçe → Zeynep≠Mutfak
   "dl1_ds2": "cross",
-  // dl2 (Bahçe) — ÇÖZÜLDÜ: Zeynep'in mekanı
   "dl2_ds1": "cross",  "dl2_ds2": "check",  "dl2_ds3": "cross",
-  // dl3 (Kütüphane) — Zeynep=Bahçe → Zeynep≠Kütüphane
   "dl3_ds2": "cross",
 };
 
-const DEMO_SCALE = 0.68;
-
-function DemoGridWrapper() {
-  const { width: screenWidth } = useWindowDimensions();
-  const gridWidth = screenWidth - 48;
+function DemoGridWrapper({ contentWidth }: { contentWidth: number }) {
+  const scale = 0.88;
   const [gridHeight, setGridHeight] = useState(0);
 
   return (
     <View
       style={{
-        width: gridWidth * DEMO_SCALE,
-        height: gridHeight > 0 ? gridHeight * DEMO_SCALE : undefined,
+        width: contentWidth * scale,
+        height: gridHeight > 0 ? gridHeight * scale : undefined,
         alignSelf: "center",
         overflow: "hidden",
         borderRadius: 10,
@@ -75,8 +60,8 @@ function DemoGridWrapper() {
     >
       <View
         style={{
-          width: gridWidth,
-          transform: [{ scale: DEMO_SCALE }],
+          width: contentWidth,
+          transform: [{ scale }],
           transformOrigin: "top left",
         }}
         onLayout={(e) => setGridHeight(e.nativeEvent.layout.height)}
@@ -94,57 +79,55 @@ function DemoGridWrapper() {
   );
 }
 
-function ClueExampleBox() {
+function ClueExampleBox({ contentWidth }: { contentWidth: number }) {
   const GOLD = "#D4A843";
   const RED = "#C8372D";
   return (
-    <View style={{ width: "100%", maxWidth: 340, alignSelf: "center", gap: 8 }}>
-      {/* Standart ipucu */}
+    <View style={{ width: contentWidth, alignSelf: "center", gap: 10 }}>
       <View style={{
         backgroundColor: "#1A1F2E",
-        borderRadius: 10,
-        borderLeftWidth: 2,
+        borderRadius: 12,
+        borderLeftWidth: 3,
         borderLeftColor: GOLD,
         flexDirection: "row",
         alignItems: "center",
-        paddingVertical: 10,
-        paddingHorizontal: 12,
-        gap: 10,
+        paddingVertical: 14,
+        paddingHorizontal: 16,
+        gap: 12,
       }}>
-        <MaterialIcons name="fingerprint" size={18} color={GOLD} />
-        <Text style={{ flex: 1, fontSize: 12, color: "#D1D5DB", lineHeight: 18 }}>
+        <MaterialIcons name="fingerprint" size={22} color={GOLD} />
+        <Text style={{ flex: 1, fontSize: 14, color: "#D1D5DB", lineHeight: 21 }}>
           "Otopsi raporu: vücutta kimyasal toksin izine rastlanmadı. Zehir kullanılmamış."
         </Text>
-        <View style={{ backgroundColor: GOLD, borderRadius: 6, paddingHorizontal: 6, paddingVertical: 3 }}>
-          <Text style={{ fontSize: 9, fontWeight: "700", color: "#0F1117", letterSpacing: 0.5 }}>AÇIK</Text>
+        <View style={{ backgroundColor: GOLD, borderRadius: 6, paddingHorizontal: 8, paddingVertical: 4 }}>
+          <Text style={{ fontSize: 10, fontWeight: "700", color: "#0F1117", letterSpacing: 0.5 }}>AÇIK</Text>
         </View>
       </View>
 
-      {/* Bonus ipucu */}
       <View style={{
         backgroundColor: "#1A1F2E",
-        borderRadius: 10,
-        borderLeftWidth: 2,
+        borderRadius: 12,
+        borderLeftWidth: 3,
         borderLeftColor: RED,
         flexDirection: "row",
         alignItems: "center",
-        paddingVertical: 10,
-        paddingHorizontal: 12,
-        gap: 10,
+        paddingVertical: 14,
+        paddingHorizontal: 16,
+        gap: 12,
       }}>
-        <MaterialIcons name="lock" size={18} color={RED} />
-        <Text style={{ flex: 1, fontSize: 12, color: "#D1D5DB", lineHeight: 18 }}>
+        <MaterialIcons name="lock" size={22} color={RED} />
+        <Text style={{ flex: 1, fontSize: 14, color: "#D1D5DB", lineHeight: 21 }}>
           "Gece boyunca hiç kimse silah sesi duymadı. Kullanılan alet sessizdi."
         </Text>
-        <View style={{ backgroundColor: RED, borderRadius: 6, paddingHorizontal: 6, paddingVertical: 3 }}>
-          <Text style={{ fontSize: 9, fontWeight: "700", color: "#FFFFFF", letterSpacing: 0.5 }}>+30 sn ⏱</Text>
+        <View style={{ backgroundColor: RED, borderRadius: 6, paddingHorizontal: 8, paddingVertical: 4 }}>
+          <Text style={{ fontSize: 10, fontWeight: "700", color: "#FFFFFF", letterSpacing: 0.5 }}>+30 sn ⏱</Text>
         </View>
       </View>
     </View>
   );
 }
 
-function MockAccusationCard() {
+function MockAccusationCard({ contentWidth }: { contentWidth: number }) {
   const GOLD = "#D4A843";
   const RED = "#C8372D";
   const SEP = "#2A3050";
@@ -155,52 +138,46 @@ function MockAccusationCard() {
   ];
   return (
     <View style={{
-      width: "100%",
-      maxWidth: 320,
+      width: contentWidth,
       alignSelf: "center",
-      flexShrink: 1,
       backgroundColor: "#1A1F2E",
       borderRadius: 14,
       borderWidth: 1,
       borderColor: SEP,
       overflow: "hidden",
     }}>
-      {/* Başlık */}
-      <View style={{ flexDirection: "row", alignItems: "center", gap: 8, paddingHorizontal: 16, paddingTop: 9, paddingBottom: 8, borderBottomWidth: 1, borderBottomColor: SEP }}>
-        <MaterialIcons name="gavel" size={15} color={RED} />
-        <Text style={{ fontSize: 11, fontWeight: "800", color: GOLD, letterSpacing: 1.5 }}>SON ÇIKARIM</Text>
+      <View style={{ flexDirection: "row", alignItems: "center", gap: 8, paddingHorizontal: 16, paddingTop: 12, paddingBottom: 10, borderBottomWidth: 1, borderBottomColor: SEP }}>
+        <MaterialIcons name="gavel" size={16} color={RED} />
+        <Text style={{ fontSize: 12, fontWeight: "800", color: GOLD, letterSpacing: 1.5 }}>SON ÇIKARIM</Text>
       </View>
 
-      {/* Seçim satırları */}
       {rows.map((row, i) => (
         <View key={row.label} style={{
           flexDirection: "row",
           alignItems: "center",
           paddingHorizontal: 16,
-          paddingVertical: 8,
+          paddingVertical: 10,
           borderBottomWidth: i < rows.length - 1 ? 1 : 0,
           borderBottomColor: SEP,
         }}>
-          <Text style={{ width: 68, fontSize: 11, fontWeight: "700", color: "#6B7280", letterSpacing: 0.5 }}>{row.label}</Text>
-          <View style={{ flex: 1, flexDirection: "row", alignItems: "center", justifyContent: "space-between", backgroundColor: "#0F1117", borderRadius: 8, paddingHorizontal: 12, paddingVertical: 6 }}>
-            <Text style={{ fontSize: 13, fontWeight: "600", color: "#F9FAFB" }}>{row.value}</Text>
-            <MaterialIcons name="expand-more" size={18} color="#6B7280" />
+          <Text style={{ width: 72, fontSize: 12, fontWeight: "700", color: "#6B7280", letterSpacing: 0.5 }}>{row.label}</Text>
+          <View style={{ flex: 1, flexDirection: "row", alignItems: "center", justifyContent: "space-between", backgroundColor: "#0F1117", borderRadius: 8, paddingHorizontal: 14, paddingVertical: 8 }}>
+            <Text style={{ fontSize: 14, fontWeight: "600", color: "#F9FAFB" }}>{row.value}</Text>
+            <MaterialIcons name="expand-more" size={20} color="#6B7280" />
           </View>
         </View>
       ))}
 
-      {/* Raporu Gönder butonu */}
-      <View style={{ paddingHorizontal: 16, paddingTop: 8, paddingBottom: 6 }}>
-        <View style={{ backgroundColor: GOLD, borderRadius: 10, paddingVertical: 9, alignItems: "center", justifyContent: "center", flexDirection: "row", gap: 8 }}>
-          <MaterialIcons name="send" size={16} color="#0F1117" />
-          <Text style={{ fontSize: 14, fontWeight: "800", color: "#0F1117" }}>Raporu Gönder</Text>
+      <View style={{ paddingHorizontal: 16, paddingTop: 10, paddingBottom: 8 }}>
+        <View style={{ backgroundColor: GOLD, borderRadius: 10, paddingVertical: 11, alignItems: "center", justifyContent: "center", flexDirection: "row", gap: 8 }}>
+          <MaterialIcons name="send" size={18} color="#0F1117" />
+          <Text style={{ fontSize: 15, fontWeight: "800", color: "#0F1117" }}>Raporu Gönder</Text>
         </View>
       </View>
 
-      {/* Hata notu */}
-      <View style={{ flexDirection: "row", alignItems: "center", gap: 6, paddingHorizontal: 16, paddingBottom: 8 }}>
-        <MaterialIcons name="warning-amber" size={12} color={RED} />
-        <Text style={{ fontSize: 11, color: RED + "CC", fontWeight: "500" }}>Yanlış tahmin → +30 sn ceza eklenir, oyun devam eder</Text>
+      <View style={{ flexDirection: "row", alignItems: "center", gap: 6, paddingHorizontal: 16, paddingBottom: 10 }}>
+        <MaterialIcons name="warning-amber" size={13} color={RED} />
+        <Text style={{ flex: 1, fontSize: 12, color: RED + "CC", fontWeight: "500" }}>Yanlış tahmin → +30 sn ceza eklenir, oyun devam eder</Text>
       </View>
     </View>
   );
@@ -265,7 +242,86 @@ const SLIDES: Slide[] = [
   },
 ];
 
+interface SlidePageProps {
+  slide: Slide;
+  slideIndex: number;
+  screenWidth: number;
+  screenHeight: number;
+}
 
+function SlidePage({ slide, slideIndex, screenWidth, screenHeight }: SlidePageProps) {
+  const contentWidth = screenWidth - 48;
+  const isShortScreen = screenHeight < 700;
+
+  return (
+    <ScrollView
+      style={{ width: screenWidth }}
+      contentContainerStyle={[
+        styles.slideScroll,
+        slide.showGrid && { gap: 6 },
+      ]}
+      showsVerticalScrollIndicator={false}
+      bounces={false}
+    >
+      {slide.clue && (
+        <View style={[styles.clueBox, { width: contentWidth }]}>
+          <MaterialIcons name="fingerprint" size={15} color="#D4A843" />
+          <Text style={styles.clueText}>{slide.clue}</Text>
+        </View>
+      )}
+
+      {slide.showGrid ? (
+        <DemoGridWrapper contentWidth={contentWidth} />
+      ) : slide.showClueExample ? (
+        <ClueExampleBox contentWidth={contentWidth} />
+      ) : slide.showAccusation ? (
+        <MockAccusationCard contentWidth={contentWidth} />
+      ) : slideIndex === 0 ? (
+        <Image
+          source={require("@/assets/images/logo.png")}
+          style={[
+            styles.logoImage,
+            isShortScreen && { width: 110, height: 110, borderRadius: 55 },
+          ]}
+          resizeMode="contain"
+        />
+      ) : (
+        <View style={[styles.iconWrapper, { backgroundColor: slide.iconBg }]}>
+          <View style={[styles.iconCircle, { borderColor: slide.iconColor + "60", backgroundColor: slide.iconBg }]}>
+            <MaterialIcons name={slide.icon} size={54} color={slide.iconColor} />
+          </View>
+        </View>
+      )}
+
+      <Text style={styles.slideSubtitle}>
+        {slide.subtitleNoUppercase
+          ? slide.subtitle
+          : slide.subtitle.toLocaleUpperCase("tr-TR")}
+      </Text>
+      <Text style={styles.slideTitle}>{slide.title}</Text>
+      <Text style={[
+        styles.slideBody,
+        { width: contentWidth },
+        slide.showGrid && { fontSize: 13, lineHeight: 21 },
+      ]}>
+        {slide.body}
+      </Text>
+
+      {slide.tip && (
+        <View style={[
+          styles.tipBox,
+          { width: contentWidth },
+          slide.showGrid && { paddingVertical: 8, marginTop: 0 },
+        ]}>
+          <MaterialIcons name="info-outline" size={15} color="#D4A843" />
+          <Text style={[styles.tipText, slide.showGrid && { fontSize: 12, lineHeight: 18 }]}>
+            {slide.tip}
+          </Text>
+        </View>
+      )}
+    </ScrollView>
+  );
+}
 
 interface Props {
   visible: boolean;
@@ -275,17 +331,16 @@ interface Props {
 
 export default function OnboardingScreen({ visible, onDone, closeLabel }: Props) {
   const insets = useSafeAreaInsets();
-  const { height: screenHeight } = useWindowDimensions();
+  const { width: screenWidth, height: screenHeight } = useWindowDimensions();
   const [slideIndex, setSlideIndex] = useState(0);
-  const [key, setKey] = useState(0);
+  const flatListRef = useRef<FlatList<Slide>>(null);
 
-  const slide = SLIDES[slideIndex];
   const isLast = slideIndex === SLIDES.length - 1;
 
   useEffect(() => {
     if (visible) {
+      flatListRef.current?.scrollToOffset({ offset: 0, animated: false });
       setSlideIndex(0);
-      setKey((k) => k + 1);
     }
   }, [visible]);
 
@@ -293,14 +348,33 @@ export default function OnboardingScreen({ visible, onDone, closeLabel }: Props)
     if (isLast) {
       onDone();
     } else {
-      setSlideIndex((i) => i + 1);
-      setKey((k) => k + 1);
+      const next = slideIndex + 1;
+      flatListRef.current?.scrollToIndex({ index: next, animated: true });
+      setSlideIndex(next);
     }
   };
 
-  const handleSkip = () => {
-    onDone();
+  const handleSkip = () => onDone();
+
+  const onMomentumScrollEnd = (e: any) => {
+    const newIndex = Math.round(e.nativeEvent.contentOffset.x / screenWidth);
+    setSlideIndex(newIndex);
   };
+
+  const renderSlide = useCallback(({ item, index }: { item: Slide; index: number }) => (
+    <SlidePage
+      slide={item}
+      slideIndex={index}
+      screenWidth={screenWidth}
+      screenHeight={screenHeight}
+    />
+  ), [screenWidth, screenHeight]);
+
+  const getItemLayout = useCallback((_: any, index: number) => ({
+    length: screenWidth,
+    offset: screenWidth * index,
+    index,
+  }), [screenWidth]);
 
   return (
     <Modal
@@ -340,67 +414,19 @@ export default function OnboardingScreen({ visible, onDone, closeLabel }: Props)
           </Pressable>
         </View>
 
-        <Animated.View
-          key={key}
-          entering={FadeIn.duration(260)}
-          exiting={FadeOut.duration(160)}
-          style={styles.slideArea}
-        >
-          <ScrollView
-            style={styles.slideScrollView}
-            contentContainerStyle={[
-              styles.slideScroll,
-              slide.showGrid && { gap: 4 },
-            ]}
-            showsVerticalScrollIndicator={false}
-            bounces={false}
-          >
-            {slide.clue && (
-              <View style={styles.clueBox}>
-                <MaterialIcons name="fingerprint" size={14} color="#D4A843" />
-                <Text style={styles.clueText}>{slide.clue}</Text>
-              </View>
-            )}
-
-            {slide.showGrid ? (
-              <DemoGridWrapper />
-            ) : slide.showClueExample ? (
-              <ClueExampleBox />
-            ) : slide.showAccusation ? (
-              <MockAccusationCard />
-            ) : slideIndex === 0 ? (
-              <Image
-                source={require("@/assets/images/logo.png")}
-                style={[
-                  styles.logoImage,
-                  screenHeight < 700 && { width: 110, height: 110, borderRadius: 55 },
-                ]}
-                resizeMode="contain"
-              />
-            ) : (
-              <View style={[styles.iconWrapper, { backgroundColor: slide.iconBg }]}>
-                <View style={[styles.iconCircle, { borderColor: slide.iconColor + "60", backgroundColor: slide.iconBg }]}>
-                  <MaterialIcons name={slide.icon} size={54} color={slide.iconColor} />
-                </View>
-              </View>
-            )}
-
-            <Text style={styles.slideSubtitle}>
-              {slide.subtitleNoUppercase
-                ? slide.subtitle
-                : slide.subtitle.toLocaleUpperCase("tr-TR")}
-            </Text>
-            <Text style={styles.slideTitle}>{slide.title}</Text>
-            <Text style={[styles.slideBody, slide.showGrid && { fontSize: 13, lineHeight: 21 }]}>{slide.body}</Text>
-
-            {slide.tip && (
-              <View style={[styles.tipBox, slide.showGrid && { paddingVertical: 8, marginTop: 0 }]}>
-                <MaterialIcons name="info-outline" size={15} color="#D4A843" />
-                <Text style={[styles.tipText, slide.showGrid && { fontSize: 12, lineHeight: 18 }]}>{slide.tip}</Text>
-              </View>
-            )}
-          </ScrollView>
-        </Animated.View>
+        <FlatList
+          ref={flatListRef}
+          data={SLIDES}
+          renderItem={renderSlide}
+          keyExtractor={(_, i) => String(i)}
+          horizontal
+          pagingEnabled
+          showsHorizontalScrollIndicator={false}
+          onMomentumScrollEnd={onMomentumScrollEnd}
+          getItemLayout={getItemLayout}
+          style={styles.flatList}
+          scrollEventThrottle={16}
+        />
 
         <View style={styles.bottomArea}>
           <View style={styles.stepRow}>
@@ -433,7 +459,6 @@ export default function OnboardingScreen({ visible, onDone, closeLabel }: Props)
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 24,
   },
   topBar: {
     flexDirection: "row",
@@ -441,6 +466,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingTop: 16,
     paddingBottom: 8,
+    paddingHorizontal: 24,
   },
   dotsRow: {
     flexDirection: "row",
@@ -464,11 +490,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "500",
   },
-  slideArea: {
-    flex: 1,
-    paddingHorizontal: 8,
-  },
-  slideScrollView: {
+  flatList: {
     flex: 1,
   },
   slideScroll: {
@@ -476,6 +498,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 14,
     paddingVertical: 8,
+    paddingHorizontal: 24,
   },
   logoImage: {
     width: 150,
@@ -517,7 +540,6 @@ const styles = StyleSheet.create({
     color: "#9CA3AF",
     textAlign: "center",
     lineHeight: 24,
-    maxWidth: 340,
   },
   tipBox: {
     flexDirection: "row",
@@ -530,7 +552,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14,
     paddingVertical: 12,
     marginTop: 4,
-    maxWidth: 340,
   },
   tipText: {
     flex: 1,
@@ -542,6 +563,7 @@ const styles = StyleSheet.create({
   bottomArea: {
     paddingTop: 16,
     paddingBottom: 8,
+    paddingHorizontal: 24,
     gap: 16,
   },
   stepRow: {
@@ -576,7 +598,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     paddingHorizontal: 12,
     paddingVertical: 8,
-    maxWidth: 340,
     alignSelf: "center",
   },
   clueText: {
