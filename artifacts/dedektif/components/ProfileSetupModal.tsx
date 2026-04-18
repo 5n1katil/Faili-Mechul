@@ -13,7 +13,7 @@ import {
 import { Image } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useColors } from "@/hooks/useColors";
-import { AvatarDisplay, PRESET_AVATARS } from "@/utils/avatarHelpers";
+import { AvatarDisplay } from "@/utils/avatarHelpers";
 import AvatarPicker from "@/components/AvatarPicker";
 
 interface ProfileSetupModalProps {
@@ -24,7 +24,7 @@ interface ProfileSetupModalProps {
 export default function ProfileSetupModal({ visible, onDone }: ProfileSetupModalProps) {
   const colors = useColors();
   const [name, setName] = useState("");
-  const [avatar, setAvatar] = useState(PRESET_AVATARS[0].key);
+  const [avatar, setAvatar] = useState("d01");
   const [showPicker, setShowPicker] = useState(false);
 
   const handleStart = () => {
