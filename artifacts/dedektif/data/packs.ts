@@ -20,10 +20,11 @@ export const PACK_PRODUCT_IDS: Record<string, string> = {
   pack_003: "com.failimechul.dedektif.pack_003",
   pack_004: "com.failimechul.dedektif.pack_004",
   pack_005: "com.failimechul.dedektif.pack_005",
-  pack_fenomen: "com.failimechul.dedektif.pack_fenomen",
+  pack_fenomen:  "com.failimechul.dedektif.pack_fenomen",
   pack_mitoloji: "com.failimechul.dedektif.pack_mitoloji",
-  pack_dijital: "com.failimechul.dedektif.pack_dijital",
-  pack_edebi: "com.failimechul.dedektif.pack_edebi",
+  pack_dijital:  "com.failimechul.dedektif.pack_dijital",
+  pack_edebi:    "com.failimechul.dedektif.pack_edebi",
+  pack_vaka_arsivi: "com.failimechul.dedektif.pack_vaka_arsivi",
 };
 
 const EMOJI_TO_MATERIAL: Record<string, string> = {

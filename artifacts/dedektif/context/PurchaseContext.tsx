@@ -17,13 +17,13 @@ import { PACK_PRODUCT_IDS, PURCHASABLE_PACKS } from "@/data/packs";
 
 const PREMIUM_CACHE_KEY = "@dedektif_is_premium";
 const PACK_CACHE_PREFIX = "@dedektif_pack_";
-const PRODUCT_ID = "com.failimechul.dedektif.vaka_arsivi";
+const PRODUCT_ID = "com.failimechul.dedektif.pack_vaka_arsivi";
 const ENTITLEMENT_ID = "premium";
 const DEFAULT_PRICE_STRING = "₺79,99";
 
-// TEST MODU: true iken tüm paketler ve premium ücretsiz açılır.
-// App Store'a göndermeden önce mutlaka false yapın!
-const DEV_UNLOCK_ALL = true;
+// TEST MODU: Yalnızca geliştirme sırasında true yapın.
+// App Store'a göndermeden önce mutlaka false olmalıdır!
+const DEV_UNLOCK_ALL = false;
 
 function buildFallbackPackPrices(): Record<string, string> {
   return Object.fromEntries(
