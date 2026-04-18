@@ -4,6 +4,8 @@ import {
   FlatList,
   Image,
   Modal,
+  NativeSyntheticEvent,
+  NativeScrollEvent,
   Platform,
   Pressable,
   ScrollView,
@@ -44,15 +46,19 @@ const DEMO_GRID_STATE: Record<string, "cross" | "check" | "question"> = {
   "dl3_ds2": "cross",
 };
 
-function DemoGridWrapper({ contentWidth }: { contentWidth: number }) {
-  const scale = 0.88;
-  const [gridHeight, setGridHeight] = useState(0);
+function DemoGridWrapper({ contentWidth, screenHeight }: { contentWidth: number; screenHeight: number }) {
+  const maxGridHeight = screenHeight * 0.38;
+  const [naturalHeight, setNaturalHeight] = useState(0);
+  const scaleByHeight = naturalHeight > 0
+    ? Math.min(1, maxGridHeight / naturalHeight)
+    : 1;
+  const scale = Math.min(scaleByHeight, 0.92);
 
   return (
     <View
       style={{
         width: contentWidth * scale,
-        height: gridHeight > 0 ? gridHeight * scale : undefined,
+        height: naturalHeight > 0 ? naturalHeight * scale : undefined,
         alignSelf: "center",
         overflow: "hidden",
         borderRadius: 10,
@@ -64,7 +70,7 @@ function DemoGridWrapper({ contentWidth }: { contentWidth: number }) {
           transform: [{ scale }],
           transformOrigin: "top left",
         }}
-        onLayout={(e) => setGridHeight(e.nativeEvent.layout.height)}
+        onLayout={(e) => setNaturalHeight(e.nativeEvent.layout.height)}
       >
         <DetectiveGrid
           suspects={DEMO_SUSPECTS}
@@ -271,7 +277,7 @@ function SlidePage({ slide, slideIndex, screenWidth, screenHeight }: SlidePagePr
       )}
 
       {slide.showGrid ? (
-        <DemoGridWrapper contentWidth={contentWidth} />
+        <DemoGridWrapper contentWidth={contentWidth} screenHeight={screenHeight} />
       ) : slide.showClueExample ? (
         <ClueExampleBox contentWidth={contentWidth} />
       ) : slide.showAccusation ? (
@@ -356,7 +362,7 @@ export default function OnboardingScreen({ visible, onDone, closeLabel }: Props)
 
   const handleSkip = () => onDone();
 
-  const onMomentumScrollEnd = (e: any) => {
+  const onMomentumScrollEnd = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
     const newIndex = Math.round(e.nativeEvent.contentOffset.x / screenWidth);
     setSlideIndex(newIndex);
   };
@@ -370,7 +376,10 @@ export default function OnboardingScreen({ visible, onDone, closeLabel }: Props)
     />
   ), [screenWidth, screenHeight]);
 
-  const getItemLayout = useCallback((_: any, index: number) => ({
+  const getItemLayout = useCallback((
+    _data: ArrayLike<Slide> | null | undefined,
+    index: number,
+  ) => ({
     length: screenWidth,
     offset: screenWidth * index,
     index,
