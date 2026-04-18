@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Image, Text, View } from "react-native";
 
 export type AvatarCategory = "dedektif" | "hafiye" | "supheji" | "uzman" | "efsane";
@@ -93,7 +93,13 @@ interface AvatarDisplayProps {
 }
 
 export function AvatarDisplay({ avatar, size }: AvatarDisplayProps) {
-  if (avatar.startsWith("gallery:")) {
+  const [galleryFailed, setGalleryFailed] = useState(false);
+
+  useEffect(() => {
+    setGalleryFailed(false);
+  }, [avatar]);
+
+  if (avatar.startsWith("gallery:") && !galleryFailed) {
     const uri = avatar.slice("gallery:".length);
     return (
       <Image
@@ -104,11 +110,12 @@ export function AvatarDisplay({ avatar, size }: AvatarDisplayProps) {
           borderRadius: size / 2,
         }}
         resizeMode="cover"
+        onError={() => setGalleryFailed(true)}
       />
     );
   }
 
-  const preset = getAvatarPreset(avatar);
+  const preset = getAvatarPreset(avatar.startsWith("gallery:") ? "" : avatar);
 
   return (
     <View

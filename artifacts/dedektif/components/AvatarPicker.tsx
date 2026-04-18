@@ -14,6 +14,7 @@ import {
 import { MaterialIcons } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import * as ImagePicker from "expo-image-picker";
+import * as FileSystem from "expo-file-system";
 import {
   AvatarDisplay,
   PRESET_AVATARS,
@@ -72,7 +73,25 @@ export default function AvatarPicker({ value, onChange, visible, onClose }: Avat
       quality: 0.8,
     });
     if (!result.canceled && result.assets[0]) {
-      onChange(`gallery:${result.assets[0].uri}`);
+      const pickedUri = result.assets[0].uri;
+      let stableUri = pickedUri;
+      if (Platform.OS !== "web" && FileSystem.documentDirectory) {
+        try {
+          const avatarDir = `${FileSystem.documentDirectory}avatars/`;
+          const dirInfo = await FileSystem.getInfoAsync(avatarDir);
+          if (!dirInfo.exists) {
+            await FileSystem.makeDirectoryAsync(avatarDir, { intermediates: true });
+          }
+          const ext = pickedUri.split(".").pop()?.split("?")[0] ?? "jpg";
+          const fileName = `avatar_${Date.now()}.${ext}`;
+          const destPath = `${avatarDir}${fileName}`;
+          await FileSystem.copyAsync({ from: pickedUri, to: destPath });
+          stableUri = destPath;
+        } catch {
+          stableUri = pickedUri;
+        }
+      }
+      onChange(`gallery:${stableUri}`);
       onClose();
     }
   };
