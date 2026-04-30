@@ -34,7 +34,8 @@ const SETUP_KEY = "@dedektif_setup_done";
 
 const TIPS = [
   { icon: "grid-on" as const, text: "Vakaya başlarken önce hikayeyi oku, ardından ızgaradaki şüphelileri, silahları ve mekanları tek tek incele — hepsini tanımadan çözüme ulaşamazsın." },
-  { icon: "auto-stories" as const, text: "İpuçlarını dikkatle oku; her kelime çözüme giden yolda sana yol gösterecek. Doğru yanıtlara giderken bazen de olmayanları eleyerek cevapları bulabilirsin, bu yüzden mümkün olduğunda dedektif ızgarasını doldurmaya çalış." },
+  { icon: "auto-stories" as const, text: "İpuçlarını dikkatle oku; her kelime çözüme giden yolda sana yol gösterecek." },
+  { icon: "grid-4x4" as const, text: "Bazen olmayanları eleyerek de cevaba ulaşabilirsin — mümkün olduğunda dedektif ızgarasını doldurmaya çalış." },
   { icon: "psychology" as const, text: "Çelişkileri tespit etmek seni hızlıca çözüme götürür." },
   { icon: "gavel" as const, text: "Her yanlış suçlama +30 saniye ve 500 puan kaybettirir — emin olmadan suçlama!" },
 ];
