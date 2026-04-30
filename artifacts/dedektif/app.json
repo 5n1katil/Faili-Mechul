@@ -55,11 +55,11 @@
     },
     "extra": {
       "eas": {
-        "projectId": "f652b78d-775a-494c-86fc-62e60c72b564"
+        "projectId": "45c0a7e3-47a5-4679-848e-10412e562497"
       },
       "revenueCatIosKey": "test_FqIlaUnGKKlZhpvlhDJmYeZdPMk",
       "revenueCatAndroidKey": "test_FqIlaUnGKKlZhpvlhDJmYeZdPMk"
     },
-    "owner": "yalperol"
+    "owner": "alpimo"
   }
 }

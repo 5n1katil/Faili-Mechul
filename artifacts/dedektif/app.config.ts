@@ -8,7 +8,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
     ...config,
     name: "Faili Meçhul",
     slug: "dedektif",
-    version: "1.0.0",
+    version: "1.1.0",
     orientation: "portrait",
     icon: "./assets/images/icon.png",
     scheme: "dedektif",
@@ -70,10 +70,10 @@ export default ({ config }: ConfigContext): ExpoConfig => {
       revenueCatIosKey: iosKey,
       revenueCatAndroidKey: androidKey,
       eas: {
-        projectId: "f652b78d-775a-494c-86fc-62e60c72b564",
+        projectId: "45c0a7e3-47a5-4679-848e-10412e562497",
       },
     },
-    owner: "yalperol",
+    owner: "alpimo",
     experiments: {
       typedRoutes: true,
       reactCompiler: true,
