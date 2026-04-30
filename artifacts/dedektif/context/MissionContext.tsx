@@ -39,6 +39,7 @@ interface MissionContextType {
   isClaimable: (missionId: string) => boolean;
   claimableCount: number;
   claimablePoints: number;
+  totalAwardedPoints: number;
   claimMission: (missionId: string) => void;
   claimAll: () => void;
   loaded: boolean;
@@ -382,6 +383,13 @@ export function MissionProvider({ children }: { children: React.ReactNode }) {
     }, 0);
   }, [progressMap, awardedIds]);
 
+  const totalAwardedPoints = useMemo(() => {
+    return ALL_MISSIONS.reduce((sum, m) => {
+      if (awardedIds.includes(m.id)) return sum + m.reward.points;
+      return sum;
+    }, 0);
+  }, [awardedIds]);
+
   const claimMission = useCallback(
     (missionId: string) => {
       const mission = ALL_MISSIONS.find((m) => m.id === missionId);
@@ -437,6 +445,7 @@ export function MissionProvider({ children }: { children: React.ReactNode }) {
         isClaimable,
         claimableCount,
         claimablePoints,
+        totalAwardedPoints,
         claimMission,
         claimAll,
         loaded,

@@ -79,8 +79,9 @@ function ProgressBar({
 }) {
   const ratio = Math.min(current / target, 1);
   const fillWidth: DimensionValue = `${Math.round(ratio * 100)}%`;
+  const colors = useColors();
   return (
-    <View style={styles.progressTrack}>
+    <View style={[styles.progressTrack, { backgroundColor: `${colors.border}88` }]}>
       <View
         style={[
           styles.progressFill,
@@ -152,11 +153,11 @@ function MissionCard({
           {
             backgroundColor: colors.card,
             borderColor: awarded
-              ? `${colors.success}44`
+              ? `${colors.success}55`
               : claimable
-              ? colors.primary
+              ? `${colors.primary}88`
               : colors.border,
-            opacity: awarded ? 0.65 : 1,
+            opacity: awarded ? 0.6 : 1,
           },
         ]}
       >
@@ -209,7 +210,7 @@ function MissionCard({
                 )}
               </Text>
               <Text
-                style={[styles.missionDesc, { color: colors.mutedForeground }]}
+                style={[styles.missionDesc, { color: colors.secondaryForeground }]}
                 numberOfLines={2}
               >
                 {mission.description}
@@ -225,20 +226,33 @@ function MissionCard({
                 style={[
                   styles.rewardBadge,
                   {
-                    backgroundColor: `${colors.primary}18`,
-                    borderColor: `${colors.primary}44`,
+                    backgroundColor: awarded
+                      ? `${colors.success}18`
+                      : `${colors.primary}18`,
+                    borderColor: awarded
+                      ? `${colors.success}44`
+                      : `${colors.primary}44`,
                   },
                 ]}
               >
-                <MaterialIcons name="bolt" size={14} color={colors.primary} />
-                <Text style={[styles.rewardText, { color: colors.primary }]}>
+                <MaterialIcons
+                  name="bolt"
+                  size={14}
+                  color={awarded ? colors.success : colors.primary}
+                />
+                <Text
+                  style={[
+                    styles.rewardText,
+                    { color: awarded ? colors.success : colors.primary },
+                  ]}
+                >
                   +{formatPoints(mission.reward.points)}
                 </Text>
                 {mission.reward.badge && (
                   <MaterialIcons
                     name="workspace-premium"
                     size={13}
-                    color={colors.primary}
+                    color={awarded ? colors.success : colors.primary}
                     style={{ marginLeft: 2 }}
                   />
                 )}
@@ -251,7 +265,7 @@ function MissionCard({
               target={progress.target}
               color={awarded ? colors.success : claimable ? colors.primary : tierColor}
             />
-            <Text style={[styles.progressLabel, { color: colors.mutedForeground }]}>
+            <Text style={[styles.progressLabel, { color: colors.secondaryForeground }]}>
               {progress.current}/{progress.target}
             </Text>
           </View>
@@ -261,17 +275,17 @@ function MissionCard({
                 style={[
                   styles.playChip,
                   {
-                    borderColor: `${colors.mutedForeground}40`,
-                    backgroundColor: `${colors.mutedForeground}0A`,
+                    borderColor: `${tierColor}66`,
+                    backgroundColor: `${tierColor}12`,
                   },
                 ]}
               >
                 <MaterialIcons
-                  name="play-arrow"
+                  name="play-circle-filled"
                   size={14}
-                  color={colors.mutedForeground}
+                  color={tierColor}
                 />
-                <Text style={[styles.playChipText, { color: colors.mutedForeground }]}>
+                <Text style={[styles.playChipText, { color: tierColor }]}>
                   Oyna
                 </Text>
               </View>
@@ -301,6 +315,7 @@ function TierSection({
         <Text style={[styles.tierLabel, { color: tierColor }]}>
           {getTierLabel(tier)}
         </Text>
+        <View style={[styles.tierLine, { backgroundColor: `${tierColor}30` }]} />
       </View>
       {missions.map((m) => (
         <MissionCard key={m.id} mission={m} onPlay={() => onPlayMission(m)} />
@@ -321,13 +336,15 @@ function SectionHeader({
   const colors = useColors();
   return (
     <View style={styles.sectionHeaderRow}>
-      <MaterialIcons name={icon} size={22} color={colors.primary} />
+      <View style={[styles.sectionIconWrap, { backgroundColor: `${colors.primary}18` }]}>
+        <MaterialIcons name={icon} size={20} color={colors.primary} />
+      </View>
       <View style={styles.sectionHeaderText}>
         <Text style={[styles.sectionTitle, { color: colors.foreground }]}>
           {title}
         </Text>
         {subtitle && (
-          <Text style={[styles.sectionSubtitle, { color: colors.mutedForeground }]}>
+          <Text style={[styles.sectionSubtitle, { color: colors.secondaryForeground }]}>
             {subtitle}
           </Text>
         )}
@@ -351,12 +368,15 @@ function CollectAllButton() {
       }}
       onPressOut={() => { scale.value = withSpring(1, { damping: 12 }); }}
       onPress={hasClaimable ? claimAll : undefined}
-      style={[styles.collectAllBtn, animStyle, { opacity: hasClaimable ? 1 : 0.45 }]}
+      style={[styles.collectAllBtn, animStyle, { opacity: hasClaimable ? 1 : 0.4 }]}
     >
       <View
         style={[
           styles.collectAllInner,
-          { backgroundColor: hasClaimable ? colors.primary : colors.card },
+          {
+            backgroundColor: hasClaimable ? colors.primary : colors.card,
+            borderColor: hasClaimable ? colors.primary : colors.border,
+          },
         ]}
       >
         <MaterialIcons
@@ -384,11 +404,38 @@ function CollectAllButton() {
   );
 }
 
+function StatsCard({ totalAwardedPoints, totalScore }: { totalAwardedPoints: number; totalScore: number }) {
+  const colors = useColors();
+  return (
+    <View style={[styles.statsCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
+      <View style={styles.statItem}>
+        <MaterialIcons name="military-tech" size={18} color={colors.primary} />
+        <Text style={[styles.statValue, { color: colors.foreground }]}>
+          {formatPoints(totalAwardedPoints)}
+        </Text>
+        <Text style={[styles.statLabel, { color: colors.secondaryForeground }]}>
+          Görev Puanı
+        </Text>
+      </View>
+      <View style={[styles.statDivider, { backgroundColor: colors.border }]} />
+      <View style={styles.statItem}>
+        <MaterialIcons name="leaderboard" size={18} color="#60A5FA" />
+        <Text style={[styles.statValue, { color: colors.foreground }]}>
+          {formatPoints(totalScore)}
+        </Text>
+        <Text style={[styles.statLabel, { color: colors.secondaryForeground }]}>
+          Toplam Puanım
+        </Text>
+      </View>
+    </View>
+  );
+}
+
 export default function GorevlerScreen() {
   const colors = useColors();
   const insets = useSafeAreaInsets();
-  const { claimableCount, dailyTimeLeft, weeklyTimeLeft } = useMission();
-  const { startPuzzle, completedPuzzleIds } = useGame();
+  const { claimableCount, dailyTimeLeft, weeklyTimeLeft, totalAwardedPoints } = useMission();
+  const { startPuzzle, completedPuzzleIds, profile } = useGame();
   const router = useRouter();
 
   const handleMissionPlay = (mission: Mission) => {
@@ -417,21 +464,25 @@ export default function GorevlerScreen() {
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background, paddingTop: Platform.OS === "web" ? 67 : insets.top }]}>
-      <View style={[styles.pageHeader, { paddingHorizontal: 16, paddingVertical: 12 }]}>
-        <View>
-          <Text style={[styles.pageTitle, { color: colors.foreground }]}>
-            Görevler
-          </Text>
-          <Text style={[styles.pageSubtitle, { color: colors.mutedForeground }]}>
-            Görevleri tamamla, bonus puan kazan
-          </Text>
-        </View>
-        {claimableCount > 0 && (
-          <View style={[styles.newBadge, { backgroundColor: colors.primary }]}>
-            <Text style={styles.newBadgeText}>{claimableCount} bekliyor</Text>
+      <View style={[styles.pageHeader, { paddingHorizontal: 16, paddingTop: 14, paddingBottom: 10 }]}>
+        <View style={styles.pageTitleRow}>
+          <View style={{ flex: 1 }}>
+            <Text style={[styles.pageTitle, { color: colors.foreground }]}>
+              Görevler
+            </Text>
+            <Text style={[styles.pageSubtitle, { color: colors.secondaryForeground }]}>
+              Görevleri tamamla, bonus puan kazan
+            </Text>
           </View>
-        )}
+          {claimableCount > 0 && (
+            <View style={[styles.newBadge, { backgroundColor: colors.primary }]}>
+              <MaterialIcons name="bolt" size={13} color="#000" />
+              <Text style={styles.newBadgeText}>{claimableCount} bekliyor</Text>
+            </View>
+          )}
+        </View>
       </View>
+
       <ScrollView
         style={{ flex: 1 }}
         contentContainerStyle={[
@@ -442,21 +493,28 @@ export default function GorevlerScreen() {
         ]}
         showsVerticalScrollIndicator={false}
       >
+      <Animated.View entering={FadeInDown.delay(0).springify()}>
+        <StatsCard
+          totalAwardedPoints={totalAwardedPoints}
+          totalScore={profile.totalScore}
+        />
+      </Animated.View>
+
       <Animated.View entering={FadeInDown.delay(30).springify()}>
         <CollectAllButton />
       </Animated.View>
 
       <Animated.View entering={FadeInDown.delay(60).springify()}>
-        <View style={[styles.section, { borderColor: colors.border }]}>
+        <View style={[styles.section, { backgroundColor: colors.card, borderColor: colors.border }]}>
           <View style={styles.sectionTopRow}>
             <SectionHeader
               title="Günlük Görevler"
               icon="today"
               subtitle="Her gün sıfırlanır"
             />
-            <View style={styles.countdownChip}>
-              <MaterialIcons name="schedule" size={13} color={colors.mutedForeground} />
-              <Text style={[styles.countdownText, { color: colors.mutedForeground }]}>
+            <View style={[styles.countdownChip, { backgroundColor: `${colors.border}88` }]}>
+              <MaterialIcons name="schedule" size={12} color={colors.secondaryForeground} />
+              <Text style={[styles.countdownText, { color: colors.secondaryForeground }]}>
                 {dailyTimeLeft}
               </Text>
             </View>
@@ -473,7 +531,7 @@ export default function GorevlerScreen() {
               )
           )}
           {DAILY_MISSIONS.length === 0 && (
-            <Text style={[styles.emptyState, { color: colors.mutedForeground }]}>
+            <Text style={[styles.emptyState, { color: colors.secondaryForeground }]}>
               Bugün için görev bulunmuyor.
             </Text>
           )}
@@ -481,16 +539,16 @@ export default function GorevlerScreen() {
       </Animated.View>
 
       <Animated.View entering={FadeInDown.delay(120).springify()}>
-        <View style={[styles.section, { borderColor: colors.border }]}>
+        <View style={[styles.section, { backgroundColor: colors.card, borderColor: colors.border }]}>
           <View style={styles.sectionTopRow}>
             <SectionHeader
               title="Haftalık Görevler"
               icon="date-range"
               subtitle="Her Pazartesi sıfırlanır"
             />
-            <View style={styles.countdownChip}>
-              <MaterialIcons name="schedule" size={13} color={colors.mutedForeground} />
-              <Text style={[styles.countdownText, { color: colors.mutedForeground }]}>
+            <View style={[styles.countdownChip, { backgroundColor: `${colors.border}88` }]}>
+              <MaterialIcons name="schedule" size={12} color={colors.secondaryForeground} />
+              <Text style={[styles.countdownText, { color: colors.secondaryForeground }]}>
                 {weeklyTimeLeft}
               </Text>
             </View>
@@ -507,7 +565,7 @@ export default function GorevlerScreen() {
               )
           )}
           {WEEKLY_MISSIONS.length === 0 && (
-            <Text style={[styles.emptyState, { color: colors.mutedForeground }]}>
+            <Text style={[styles.emptyState, { color: colors.secondaryForeground }]}>
               Bu hafta için görev bulunmuyor.
             </Text>
           )}
@@ -515,7 +573,7 @@ export default function GorevlerScreen() {
       </Animated.View>
 
       <Animated.View entering={FadeInDown.delay(180).springify()}>
-        <View style={[styles.section, { borderColor: colors.border }]}>
+        <View style={[styles.section, { backgroundColor: colors.card, borderColor: colors.border }]}>
           <SectionHeader
             title="Başarımlar"
             icon="emoji-events"
@@ -533,7 +591,7 @@ export default function GorevlerScreen() {
               )
           )}
           {ACHIEVEMENT_MISSIONS.length === 0 && (
-            <Text style={[styles.emptyState, { color: colors.mutedForeground }]}>
+            <Text style={[styles.emptyState, { color: colors.secondaryForeground }]}>
               Henüz başarım bulunmuyor.
             </Text>
           )}
@@ -550,16 +608,20 @@ const styles = StyleSheet.create({
   },
   content: {
     paddingHorizontal: 16,
-    gap: 18,
+    gap: 14,
+    paddingTop: 4,
   },
   pageHeader: {
+    borderBottomWidth: 0,
+  },
+  pageTitleRow: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    marginBottom: 4,
+    gap: 12,
   },
   pageTitle: {
-    fontSize: 24,
+    fontSize: 26,
     fontWeight: "900",
     letterSpacing: 0.3,
   },
@@ -568,14 +630,47 @@ const styles = StyleSheet.create({
     marginTop: 2,
   },
   newBadge: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
     paddingHorizontal: 10,
-    paddingVertical: 5,
+    paddingVertical: 6,
     borderRadius: 20,
+    flexShrink: 0,
   },
   newBadgeText: {
     color: "#000",
     fontSize: 13,
     fontWeight: "700",
+  },
+  statsCard: {
+    flexDirection: "row",
+    borderRadius: 14,
+    borderWidth: 1,
+    overflow: "hidden",
+    paddingVertical: 14,
+    paddingHorizontal: 16,
+  },
+  statItem: {
+    flex: 1,
+    alignItems: "center",
+    gap: 4,
+  },
+  statValue: {
+    fontSize: 22,
+    fontWeight: "900",
+    letterSpacing: 0.2,
+  },
+  statLabel: {
+    fontSize: 11,
+    fontWeight: "600",
+    letterSpacing: 0.3,
+    textTransform: "uppercase",
+  },
+  statDivider: {
+    width: 1,
+    marginHorizontal: 8,
+    alignSelf: "stretch",
   },
   collectAllBtn: {
     borderRadius: 12,
@@ -588,6 +683,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 15,
     borderRadius: 12,
+    borderWidth: 1,
   },
   collectAllText: {
     flex: 1,
@@ -611,44 +707,55 @@ const styles = StyleSheet.create({
   },
   section: {
     borderWidth: 1,
-    borderRadius: 12,
+    borderRadius: 14,
     padding: 16,
-    gap: 12,
+    gap: 14,
   },
   sectionTopRow: {
     flexDirection: "row",
-    alignItems: "flex-start",
+    alignItems: "center",
     justifyContent: "space-between",
     gap: 8,
   },
   sectionHeaderRow: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 8,
+    gap: 10,
     flex: 1,
+  },
+  sectionIconWrap: {
+    width: 36,
+    height: 36,
+    borderRadius: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    flexShrink: 0,
   },
   sectionHeaderText: {
     flex: 1,
   },
   sectionTitle: {
-    fontSize: 18,
+    fontSize: 17,
     fontWeight: "800",
     letterSpacing: 0.2,
   },
   sectionSubtitle: {
-    fontSize: 13,
+    fontSize: 12,
     marginTop: 1,
   },
   countdownChip: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 3,
-    marginTop: 2,
+    gap: 4,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 8,
     flexShrink: 0,
   },
   countdownText: {
     fontSize: 12,
     fontVariant: ["tabular-nums"],
+    fontWeight: "600",
   },
   tierSection: {
     gap: 10,
@@ -657,17 +764,21 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 8,
-    marginTop: 6,
+    marginTop: 4,
   },
   tierDot: {
-    width: 9,
-    height: 9,
+    width: 8,
+    height: 8,
     borderRadius: 4,
   },
   tierLabel: {
-    fontSize: 13,
-    fontWeight: "700",
-    letterSpacing: 0.5,
+    fontSize: 11,
+    fontWeight: "800",
+    letterSpacing: 1,
+  },
+  tierLine: {
+    flex: 1,
+    height: 1,
   },
   missionCard: {
     borderRadius: 12,
@@ -699,7 +810,7 @@ const styles = StyleSheet.create({
   },
   missionTextBlock: {
     flex: 1,
-    gap: 3,
+    gap: 4,
   },
   missionTitle: {
     fontSize: 15,
@@ -711,7 +822,7 @@ const styles = StyleSheet.create({
   },
   missionDesc: {
     fontSize: 13,
-    lineHeight: 20,
+    lineHeight: 19,
   },
   rewardBadge: {
     flexDirection: "row",
@@ -735,8 +846,7 @@ const styles = StyleSheet.create({
   },
   progressTrack: {
     flex: 1,
-    height: 6,
-    backgroundColor: "#2A2F4244",
+    height: 5,
     borderRadius: 3,
     overflow: "hidden",
   },
@@ -749,6 +859,7 @@ const styles = StyleSheet.create({
     minWidth: 36,
     textAlign: "right",
     fontVariant: ["tabular-nums"],
+    fontWeight: "600",
   },
   claimBtn: {
     flexDirection: "row",
@@ -784,15 +895,15 @@ const styles = StyleSheet.create({
   playChip: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 4,
-    paddingHorizontal: 11,
+    gap: 5,
+    paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 20,
     borderWidth: 1,
   },
   playChipText: {
     fontSize: 13,
-    fontWeight: "600",
+    fontWeight: "700",
     letterSpacing: 0.2,
   },
 });
