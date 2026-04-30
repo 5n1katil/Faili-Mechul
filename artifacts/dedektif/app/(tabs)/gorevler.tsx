@@ -152,20 +152,19 @@ function MissionCard({
         style={[
           styles.missionCard,
           {
-            backgroundColor: colors.card,
+            backgroundColor: awarded ? `${colors.success}10` : colors.card,
             borderColor: awarded
-              ? `${colors.success}55`
+              ? `${colors.success}88`
               : claimable
               ? `${colors.primary}88`
               : colors.border,
-            opacity: awarded ? 0.6 : 1,
           },
         ]}
       >
         <View
           style={[
             styles.missionAccent,
-            { backgroundColor: claimable ? colors.primary : tierColor },
+            { backgroundColor: awarded ? colors.success : claimable ? colors.primary : tierColor },
           ]}
         />
         <View style={styles.missionInner}>
@@ -270,7 +269,27 @@ function MissionCard({
               {progress.current}/{progress.target}
             </Text>
           </View>
-          {inProgress && (
+          {awarded ? (
+            <View
+              style={[
+                styles.completedBanner,
+                {
+                  backgroundColor: `${colors.success}15`,
+                  borderColor: `${colors.success}55`,
+                },
+              ]}
+            >
+              <MaterialIcons name="check-circle" size={15} color={colors.success} />
+              <Text style={[styles.completedBannerText, { color: colors.success }]}>
+                TAMAMLANDI
+              </Text>
+              <MaterialIcons
+                name="verified"
+                size={14}
+                color={`${colors.success}AA`}
+              />
+            </View>
+          ) : inProgress ? (
             <View style={styles.playChipRow}>
               <View
                 style={[
@@ -296,7 +315,7 @@ function MissionCard({
                 />
               </View>
             </View>
-          )}
+          ) : null}
         </View>
       </View>
     </Pressable>
@@ -912,6 +931,24 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "700",
     letterSpacing: 0.3,
+    flex: 1,
+    textAlign: "center",
+  },
+  completedBanner: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 6,
+    paddingVertical: 9,
+    paddingHorizontal: 14,
+    borderRadius: 9,
+    borderWidth: 1,
+    marginTop: 2,
+  },
+  completedBannerText: {
+    fontSize: 12,
+    fontWeight: "800",
+    letterSpacing: 1.4,
     flex: 1,
     textAlign: "center",
   },
