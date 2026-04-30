@@ -60,21 +60,103 @@ const BADGE_INFO: Record<string, { label: string; icon: MaterialIconName; desc: 
   efsane_hazine:     { label: "Efsane Hazinesi",       icon: "emoji-events",           desc: "Toplam 200.000 puan kazandınız!", color: "#D4A843" },
 };
 
+function SectionTitle({
+  icon,
+  label,
+}: {
+  icon: MaterialIconName;
+  label: string;
+}) {
+  const colors = useColors();
+  return (
+    <View style={styles.sectionTitleRow}>
+      <MaterialIcons name={icon} size={16} color={colors.primary} />
+      <Text style={[styles.sectionTitleText, { color: colors.foreground }]}>{label}</Text>
+      <View style={[styles.sectionTitleLine, { backgroundColor: colors.border }]} />
+    </View>
+  );
+}
+
+function StatGroup({
+  label,
+  items,
+}: {
+  label: string;
+  items: { value: string | number; label: string }[];
+}) {
+  const colors = useColors();
+  return (
+    <View style={[styles.statGroup, { backgroundColor: colors.card, borderColor: colors.border }]}>
+      <Text style={[styles.statGroupLabel, { color: colors.secondaryForeground }]}>{label}</Text>
+      <View style={styles.statGroupRow}>
+        {items.map((item, i) => (
+          <React.Fragment key={i}>
+            {i > 0 && <View style={[styles.statGroupDivider, { backgroundColor: colors.border }]} />}
+            <View style={styles.statGroupItem}>
+              <Text style={[styles.statGroupValue, { color: colors.primary }]}>{item.value}</Text>
+              <Text style={[styles.statGroupItemLabel, { color: colors.secondaryForeground }]}>{item.label}</Text>
+            </View>
+          </React.Fragment>
+        ))}
+      </View>
+    </View>
+  );
+}
+
 function BadgeItem({ badgeId, colors }: { badgeId: string; colors: ReturnType<typeof useColors> }) {
   const info = BADGE_INFO[badgeId];
   if (!info) return null;
   const accentColor = info.color ?? colors.primary;
   return (
-    <View
-      style={[styles.badgeItem, { backgroundColor: colors.card, borderColor: `${accentColor}66` }]}
-    >
+    <View style={[styles.badgeItem, { backgroundColor: colors.card, borderColor: `${accentColor}66` }]}>
       <View style={[styles.badgeIcon, { backgroundColor: `${accentColor}22` }]}>
         <MaterialIcons name={info.icon} size={24} color={accentColor} />
       </View>
       <Text style={[styles.badgeLabel, { color: colors.foreground }]}>{info.label}</Text>
-      <Text style={[styles.badgeDesc, { color: colors.mutedForeground }]}>{info.desc}</Text>
+      <Text style={[styles.badgeDesc, { color: colors.secondaryForeground }]}>{info.desc}</Text>
     </View>
   );
+}
+
+function SettingsRow({
+  icon,
+  title,
+  subtitle,
+  right,
+  onPress,
+  hasDivider,
+}: {
+  icon: MaterialIconName;
+  title: string;
+  subtitle?: string;
+  right?: React.ReactNode;
+  onPress?: () => void;
+  hasDivider?: boolean;
+}) {
+  const colors = useColors();
+  const inner = (
+    <View style={[styles.settingsRowInner, hasDivider && { borderBottomWidth: 1, borderBottomColor: colors.border }]}>
+      <View style={[styles.settingsIcon, { backgroundColor: `${colors.primary}18` }]}>
+        <MaterialIcons name={icon} size={20} color={colors.primary} />
+      </View>
+      <View style={styles.settingsInfo}>
+        <Text style={[styles.settingsTitle, { color: colors.foreground }]}>{title}</Text>
+        {subtitle && (
+          <Text style={[styles.settingsSubtitle, { color: colors.secondaryForeground }]}>{subtitle}</Text>
+        )}
+      </View>
+      {right}
+    </View>
+  );
+
+  if (onPress) {
+    return (
+      <Pressable onPress={onPress} style={({ pressed }) => [{ opacity: pressed ? 0.75 : 1 }]}>
+        {inner}
+      </Pressable>
+    );
+  }
+  return inner;
 }
 
 export default function ProfilScreen() {
@@ -150,6 +232,11 @@ export default function ProfilScreen() {
     setRestoreMsg({ text: result.message, ok: result.success });
   };
 
+  const fmtTime = (sec: number) =>
+    sec > 0
+      ? `${Math.floor(sec / 60)}:${(sec % 60).toString().padStart(2, "0")}`
+      : "—";
+
   return (
     <>
       <AvatarPicker
@@ -164,353 +251,348 @@ export default function ProfilScreen() {
         closeLabel="Kapat"
       />
       <PaywallModal visible={showPaywall} onClose={() => setShowPaywall(false)} />
-      <View style={[styles.container, { backgroundColor: colors.background, paddingTop: Platform.OS === "web" ? 67 : insets.top }]}>
-      <ScrollView
-        style={{ flex: 1 }}
-        contentContainerStyle={[
-          styles.content,
-          {
-            paddingTop: 16,
-            paddingBottom: Platform.OS === "web" ? 34 + 80 : insets.bottom + 80,
-          },
+      <View
+        style={[
+          styles.container,
+          { backgroundColor: colors.background, paddingTop: Platform.OS === "web" ? 67 : insets.top },
         ]}
-        showsVerticalScrollIndicator={false}
       >
-        <Animated.View entering={FadeInDown.delay(0).springify()}>
-          <View style={[styles.profileCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
-            <View style={[styles.avatarContainer, { backgroundColor: `${colors.primary}22`, borderColor: colors.primary }]}>
-              <AvatarDisplay
-                avatar={profile.avatar || "d01"}
-                size={64}
-                color={colors.primary}
-                backgroundColor="transparent"
-              />
-              <View style={[styles.avatarEditBadge, { backgroundColor: colors.primary }]}>
-                <MaterialIcons name="edit" size={11} color={colors.primaryForeground} />
-              </View>
+        <ScrollView
+          style={{ flex: 1 }}
+          contentContainerStyle={[
+            styles.content,
+            { paddingBottom: Platform.OS === "web" ? 34 + 80 : insets.bottom + 80 },
+          ]}
+          showsVerticalScrollIndicator={false}
+        >
+
+          {/* ── Profil Kartı ───────────────────────────────────── */}
+          <Animated.View entering={FadeInDown.delay(0).springify()}>
+            <View style={[styles.profileCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
               <Pressable
                 onPress={() => setShowAvatarPicker(true)}
-                style={StyleSheet.absoluteFillObject}
                 accessibilityRole="button"
                 accessibilityLabel="Avatar değiştir"
-              />
-            </View>
-            <View style={styles.nameRow}>
-              <Text style={[styles.profileName, { color: colors.foreground }]}>{profile.name}</Text>
-            </View>
-
-            {editingBio ? (
-              <View style={styles.bioEditRow}>
-                <TextInput
-                  ref={bioInputRef}
-                  style={[styles.bioInput, { color: colors.foreground, borderColor: colors.primary, backgroundColor: `${colors.primary}10` }]}
-                  value={bioText}
-                  onChangeText={setBioText}
-                  maxLength={160}
-                  placeholder="Kendinizi tanıtın..."
-                  placeholderTextColor={colors.mutedForeground}
-                  multiline
-                  autoFocus
-                  returnKeyType="done"
-                  blurOnSubmit
-                  onBlur={handleBioSave}
-                />
-                <Text style={[styles.bioCounter, { color: colors.mutedForeground }]}>
-                  {bioText.length}/160
-                </Text>
-              </View>
-            ) : (
-              <Pressable style={styles.bioRow} onPress={() => { setBioText(profile.bio ?? ""); setEditingBio(true); }}>
-                <Text
-                  style={[
-                    styles.bioText,
-                    { color: profile.bio ? colors.mutedForeground : `${colors.mutedForeground}66` },
-                  ]}
-                  numberOfLines={2}
-                >
-                  {profile.bio || "Bio ekle..."}
-                </Text>
-                <MaterialIcons name="edit" size={14} color={`${colors.mutedForeground}88`} />
+                style={styles.avatarWrapper}
+              >
+                <View style={[styles.avatarContainer, { backgroundColor: `${colors.primary}22`, borderColor: colors.primary }]}>
+                  <AvatarDisplay
+                    avatar={profile.avatar || "d01"}
+                    size={72}
+                    color={colors.primary}
+                    backgroundColor="transparent"
+                  />
+                  <View style={[styles.avatarEditBadge, { backgroundColor: colors.primary }]}>
+                    <MaterialIcons name="edit" size={11} color={colors.primaryForeground} />
+                  </View>
+                </View>
               </Pressable>
-            )}
 
-            <View style={styles.streakRow}>
-              <MaterialIcons name="local-fire-department" size={18} color="#FF6B35" />
-              <Text style={[styles.streakLabel, { color: colors.mutedForeground }]}>
-                {profile.currentStreak} günlük seri
-              </Text>
-            </View>
-          </View>
-        </Animated.View>
+              <Text style={[styles.profileName, { color: colors.foreground }]}>{profile.name}</Text>
 
-        <Animated.View entering={FadeInDown.delay(80).springify()}>
-          <View style={styles.statsGrid}>
-            {[
-              { value: profile.gamesPlayed, label: "Oynanan" },
-              { value: profile.gamesWon, label: "Kazanılan" },
-              { value: `%${winRate}`, label: "Başarı" },
-              { value: profile.totalScore, label: "Toplam Puan" },
-              { value: profile.currentStreak, label: "Mevcut Seri" },
-              { value: profile.maxStreak, label: "En Uzun Seri" },
-              {
-                value:
-                  profile.avgSolveTimeSeconds > 0
-                    ? `${Math.floor(profile.avgSolveTimeSeconds / 60)}:${(profile.avgSolveTimeSeconds % 60).toString().padStart(2, "0")}`
-                    : "—",
-                label: "Ort. Süre",
-              },
-              {
-                value:
-                  bestTimeSeconds > 0
-                    ? `${Math.floor(bestTimeSeconds / 60)}:${(bestTimeSeconds % 60).toString().padStart(2, "0")}`
-                    : "—",
-                label: "En İyi Süre",
-              },
-              {
-                value: flawlessCount,
-                label: "Hatasız Çözüm",
-              },
-            ].map((stat, i) => (
-              <View
-                key={i}
-                style={[styles.statCard, { backgroundColor: colors.card, borderColor: colors.border }]}
-              >
-                <Text style={[styles.statValue, { color: colors.primary }]}>{stat.value}</Text>
-                <Text style={[styles.statLabel, { color: colors.mutedForeground }]}>{stat.label}</Text>
-              </View>
-            ))}
-          </View>
-        </Animated.View>
-
-        {visibleBadges.length > 0 && (
-          <Animated.View entering={FadeInDown.delay(160).springify()}>
-            <Text style={[styles.sectionTitle, { color: colors.foreground }]}>Rozetler</Text>
-            <View style={styles.badgesGrid}>
-              {visibleBadges.map((b) => (
-                <BadgeItem key={b} badgeId={b} colors={colors} />
-              ))}
-            </View>
-          </Animated.View>
-        )}
-
-        <Animated.View entering={FadeInDown.delay(220).springify()}>
-          <Pressable
-            onPress={() => setShowHowToPlay(true)}
-            style={[styles.howToPlayBtn, { backgroundColor: colors.card, borderColor: colors.border }]}
-          >
-            <View style={[styles.howToPlayIcon, { backgroundColor: `${colors.primary}18` }]}>
-              <MaterialIcons name="help-outline" size={22} color={colors.primary} />
-            </View>
-            <View style={styles.howToPlayInfo}>
-              <Text style={[styles.howToPlayTitle, { color: colors.foreground }]}>Nasıl Oynanır?</Text>
-              <Text style={[styles.howToPlayDesc, { color: colors.mutedForeground }]}>
-                Dedektif ızgarasını ve ipuçlarını öğren
-              </Text>
-            </View>
-            <MaterialIcons name="chevron-right" size={22} color={colors.mutedForeground} />
-          </Pressable>
-        </Animated.View>
-
-        <Animated.View entering={FadeInDown.delay(250).springify()}>
-          <View style={[styles.settingsRow, { backgroundColor: colors.card, borderColor: colors.border }]}>
-            <View style={[styles.howToPlayIcon, { backgroundColor: `${colors.primary}18` }]}>
-              <MaterialIcons name="volume-up" size={22} color={colors.primary} />
-            </View>
-            <View style={styles.howToPlayInfo}>
-              <Text style={[styles.howToPlayTitle, { color: colors.foreground }]}>Ses Efektleri</Text>
-              <Text style={[styles.howToPlayDesc, { color: colors.mutedForeground }]}>
-                Oyun seslerini aç veya kapat
-              </Text>
-            </View>
-            <Switch
-              value={soundEnabled}
-              onValueChange={handleSoundToggle}
-              trackColor={{ false: colors.border, true: `${colors.primary}88` }}
-              thumbColor={soundEnabled ? colors.primary : colors.mutedForeground}
-            />
-          </View>
-        </Animated.View>
-
-        <Animated.View entering={FadeInDown.delay(255).springify()}>
-          <Text style={[styles.sectionTitle, { color: colors.foreground }]}>Genel Profil Görünürlüğü</Text>
-          <View style={[styles.privacyCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
-            {([
-              { key: "showStats" as const, label: "İstatistiklerimi göster", icon: "bar-chart" as const },
-              { key: "showBadges" as const, label: "Rozetlerimi göster", icon: "military-tech" as const },
-              { key: "showBio" as const, label: "Bio'mu göster", icon: "person" as const },
-              { key: "showAvatar" as const, label: "Avatarımı göster", icon: "face" as const },
-            ]).map((item, idx, arr) => (
-              <View
-                key={item.key}
-                style={[
-                  styles.privacyRow,
-                  idx < arr.length - 1 && { borderBottomWidth: 1, borderBottomColor: colors.border },
-                ]}
-              >
-                <MaterialIcons name={item.icon} size={18} color={colors.mutedForeground} />
-                <Text style={[styles.privacyLabel, { color: colors.foreground }]}>{item.label}</Text>
-                <Switch
-                  value={profile.privacySettings?.[item.key] ?? true}
-                  onValueChange={(val) => handlePrivacyToggle(item.key, val)}
-                  trackColor={{ false: colors.border, true: `${colors.primary}88` }}
-                  thumbColor={(profile.privacySettings?.[item.key] ?? true) ? colors.primary : colors.mutedForeground}
-                />
-              </View>
-            ))}
-          </View>
-        </Animated.View>
-
-        <Animated.View entering={FadeInDown.delay(260).springify()}>
-          {isPremium ? (
-            <View
-              style={[
-                styles.premiumActiveCard,
-                {
-                  backgroundColor: "#D4A84314",
-                  borderColor: "#D4A843",
-                  shadowColor: "#D4A843",
-                  shadowOffset: { width: 0, height: 0 },
-                  shadowOpacity: 0.35,
-                  shadowRadius: 12,
-                  elevation: 8,
-                },
-              ]}
-            >
-              <View style={[styles.premiumGoldTopBar]} />
-              <View style={styles.premiumActiveInner}>
-                <View style={[styles.howToPlayIcon, { backgroundColor: "#D4A84330" }]}>
-                  <MaterialIcons name="local-police" size={24} color="#D4A843" />
+              {editingBio ? (
+                <View style={styles.bioEditRow}>
+                  <TextInput
+                    ref={bioInputRef}
+                    style={[
+                      styles.bioInput,
+                      { color: colors.foreground, borderColor: colors.primary, backgroundColor: `${colors.primary}10` },
+                    ]}
+                    value={bioText}
+                    onChangeText={setBioText}
+                    maxLength={160}
+                    placeholder="Kendinizi tanıtın..."
+                    placeholderTextColor={colors.mutedForeground}
+                    multiline
+                    autoFocus
+                    returnKeyType="done"
+                    blurOnSubmit
+                    onBlur={handleBioSave}
+                  />
+                  <Text style={[styles.bioCounter, { color: colors.mutedForeground }]}>{bioText.length}/160</Text>
                 </View>
-                <View style={styles.howToPlayInfo}>
-                  <Text style={[styles.howToPlayTitle, { color: "#D4A843", fontSize: 15, fontWeight: "800" }]}>
-                    🔱 Baş Dedektif
+              ) : (
+                <Pressable
+                  style={styles.bioRow}
+                  onPress={() => { setBioText(profile.bio ?? ""); setEditingBio(true); }}
+                >
+                  <Text
+                    style={[
+                      styles.bioText,
+                      { color: profile.bio ? colors.secondaryForeground : `${colors.mutedForeground}88` },
+                    ]}
+                    numberOfLines={2}
+                  >
+                    {profile.bio || "Bio ekle..."}
                   </Text>
-                  <Text style={[styles.howToPlayDesc, { color: "#D4A84399" }]}>
-                    Vaka Arşivi aktif · Tüm vakalar açık
-                  </Text>
-                </View>
-                <MaterialIcons name="verified" size={22} color="#D4A843" />
-              </View>
-              <View style={[styles.premiumStatRow, { borderTopColor: "#D4A84330" }]}>
-                <View style={styles.premiumStat}>
-                  <Text style={[styles.premiumStatValue, { color: "#D4A843" }]}>{profile.gamesWon}</Text>
-                  <Text style={[styles.premiumStatLabel, { color: "#D4A84399" }]}>çözülen vaka</Text>
-                </View>
-                <View style={[styles.premiumStatDivider, { backgroundColor: "#D4A84330" }]} />
-                <View style={styles.premiumStat}>
-                  <Text style={[styles.premiumStatValue, { color: "#D4A843" }]}>{flawlessCount}</Text>
-                  <Text style={[styles.premiumStatLabel, { color: "#D4A84399" }]}>hatasız çözüm</Text>
-                </View>
-                <View style={[styles.premiumStatDivider, { backgroundColor: "#D4A84330" }]} />
-                <View style={styles.premiumStat}>
-                  <Text style={[styles.premiumStatValue, { color: "#D4A843" }]}>
-                    {bestTimeSeconds > 0 ? `${Math.floor(bestTimeSeconds / 60)}:${(bestTimeSeconds % 60).toString().padStart(2, "0")}` : "—"}
-                  </Text>
-                  <Text style={[styles.premiumStatLabel, { color: "#D4A84399" }]}>en iyi süre</Text>
-                </View>
-              </View>
-            </View>
-          ) : (
-            <Pressable
-              onPress={() => setShowPaywall(true)}
-              style={({ pressed }) => [
-                styles.howToPlayBtn,
-                { backgroundColor: "#D4A84310", borderColor: "#D4A84344", opacity: pressed ? 0.75 : 1 },
-              ]}
-            >
-              <View style={[styles.howToPlayIcon, { backgroundColor: "#D4A84318" }]}>
-                <MaterialIcons name="lock-open" size={22} color="#D4A843" />
-              </View>
-              <View style={styles.howToPlayInfo}>
-                <Text style={[styles.howToPlayTitle, { color: "#D4A843" }]}>Vaka Arşivini Aç</Text>
-                <Text style={[styles.howToPlayDesc, { color: colors.mutedForeground }]}>
-                  Tüm vakalar · Tek seferlik · {priceString}
+                  <MaterialIcons name="edit" size={13} color={`${colors.mutedForeground}88`} />
+                </Pressable>
+              )}
+
+              <View style={[styles.streakPill, { backgroundColor: "#FF6B3522", borderColor: "#FF6B3544" }]}>
+                <MaterialIcons name="local-fire-department" size={16} color="#FF6B35" />
+                <Text style={styles.streakPillText}>
+                  {profile.currentStreak} günlük seri
                 </Text>
               </View>
-              <MaterialIcons name="chevron-right" size={22} color="#D4A843" />
-            </Pressable>
-          )}
-        </Animated.View>
-
-        {!isPremium && (
-          <Animated.View entering={FadeInDown.delay(265).springify()}>
-            <Pressable
-              onPress={handleRestore}
-              disabled={restoring}
-              style={({ pressed }) => [
-                styles.restoreBtn,
-                { backgroundColor: colors.card, borderColor: colors.border, opacity: (pressed || restoring) ? 0.6 : 1 },
-              ]}
-            >
-              {restoring ? (
-                <ActivityIndicator size="small" color={colors.mutedForeground} />
-              ) : (
-                <MaterialIcons name="restore" size={18} color={colors.mutedForeground} />
-              )}
-              <View style={styles.howToPlayInfo}>
-                <Text style={[styles.howToPlayTitle, { color: colors.foreground }]}>Satın Almalarımı Geri Yükle</Text>
-                {restoreMsg && (
-                  <Text style={[styles.howToPlayDesc, { color: restoreMsg.ok ? colors.success : colors.accent }]}>
-                    {restoreMsg.text}
-                  </Text>
-                )}
-                {!restoreMsg && (
-                  <Text style={[styles.howToPlayDesc, { color: colors.mutedForeground }]}>
-                    Önceki satın almayı geri yükle
-                  </Text>
-                )}
-              </View>
-            </Pressable>
+            </View>
           </Animated.View>
-        )}
 
-        {recentHistory.length > 0 && (
-          <Animated.View entering={FadeInDown.delay(280).springify()}>
-            <Text style={[styles.sectionTitle, { color: colors.foreground }]}>Son Oyunlar</Text>
-            {recentHistory.map((rec, i) => (
+          {/* ── Premium Kart ─────────────────────────────────────── */}
+          <Animated.View entering={FadeInDown.delay(60).springify()}>
+            {isPremium ? (
               <View
-                key={i}
                 style={[
-                  styles.historyItem,
+                  styles.premiumActiveCard,
                   {
-                    backgroundColor: colors.card,
-                    borderColor: rec.completed ? `${colors.success}44` : colors.border,
+                    backgroundColor: "#D4A84314",
+                    borderColor: "#D4A843",
+                    shadowColor: "#D4A843",
+                    shadowOffset: { width: 0, height: 0 },
+                    shadowOpacity: 0.35,
+                    shadowRadius: 12,
+                    elevation: 8,
                   },
                 ]}
               >
-                <View
-                  style={[
-                    styles.historyIcon,
-                    { backgroundColor: rec.completed ? `${colors.success}22` : `${colors.accent}22` },
-                  ]}
-                >
-                  <MaterialIcons
-                    name={rec.completed ? "check-circle" : "cancel"}
-                    size={20}
-                    color={rec.completed ? colors.success : colors.accent}
-                  />
+                <View style={styles.premiumGoldTopBar} />
+                <View style={styles.premiumActiveInner}>
+                  <View style={[styles.settingsIcon, { backgroundColor: "#D4A84330", width: 44, height: 44, borderRadius: 22 }]}>
+                    <MaterialIcons name="local-police" size={24} color="#D4A843" />
+                  </View>
+                  <View style={{ flex: 1 }}>
+                    <Text style={[styles.settingsTitle, { color: "#D4A843", fontSize: 16 }]}>
+                      🔱 Baş Dedektif
+                    </Text>
+                    <Text style={[styles.settingsSubtitle, { color: "#D4A84399" }]}>
+                      Vaka Arşivi aktif · Tüm vakalar açık
+                    </Text>
+                  </View>
+                  <MaterialIcons name="verified" size={22} color="#D4A843" />
                 </View>
-                <View style={styles.historyInfo}>
-                  <Text style={[styles.historyDate, { color: colors.mutedForeground }]}>
-                    {rec.date}
-                  </Text>
-                  <Text style={[styles.historyResult, { color: rec.completed ? colors.success : colors.accent }]}>
-                    {rec.completed ? "Çözüldü" : "Çözülemedi"}
-                  </Text>
-                </View>
-                <View style={styles.historyStats}>
-                  {rec.completed && (
-                    <Text style={[styles.historyScore, { color: colors.primary }]}>{rec.score}</Text>
-                  )}
-                  <Text style={[styles.historyMistakes, { color: colors.mutedForeground }]}>
-                    {rec.wrongGuesses} hata
-                  </Text>
+                <View style={[styles.premiumStatRow, { borderTopColor: "#D4A84330" }]}>
+                  <View style={styles.premiumStat}>
+                    <Text style={[styles.premiumStatValue, { color: "#D4A843" }]}>{profile.gamesWon}</Text>
+                    <Text style={[styles.premiumStatLabel, { color: "#D4A84399" }]}>çözülen vaka</Text>
+                  </View>
+                  <View style={[styles.premiumStatDivider, { backgroundColor: "#D4A84330" }]} />
+                  <View style={styles.premiumStat}>
+                    <Text style={[styles.premiumStatValue, { color: "#D4A843" }]}>{flawlessCount}</Text>
+                    <Text style={[styles.premiumStatLabel, { color: "#D4A84399" }]}>hatasız çözüm</Text>
+                  </View>
+                  <View style={[styles.premiumStatDivider, { backgroundColor: "#D4A84330" }]} />
+                  <View style={styles.premiumStat}>
+                    <Text style={[styles.premiumStatValue, { color: "#D4A843" }]}>{fmtTime(bestTimeSeconds)}</Text>
+                    <Text style={[styles.premiumStatLabel, { color: "#D4A84399" }]}>en iyi süre</Text>
+                  </View>
                 </View>
               </View>
-            ))}
+            ) : (
+              <Pressable
+                onPress={() => setShowPaywall(true)}
+                style={({ pressed }) => [
+                  styles.settingsCard,
+                  { backgroundColor: "#D4A84310", borderColor: "#D4A84355", opacity: pressed ? 0.75 : 1 },
+                ]}
+              >
+                <SettingsRow
+                  icon="lock-open"
+                  title="Vaka Arşivini Aç"
+                  subtitle={`Tüm vakalar · Tek seferlik · ${priceString}`}
+                  right={<MaterialIcons name="chevron-right" size={22} color="#D4A843" />}
+                />
+              </Pressable>
+            )}
           </Animated.View>
-        )}
-      </ScrollView>
+
+          {/* ── İstatistikler ─────────────────────────────────────── */}
+          <Animated.View entering={FadeInDown.delay(100).springify()} style={{ gap: 8 }}>
+            <SectionTitle icon="bar-chart" label="İstatistikler" />
+            <StatGroup
+              label="OYUNLAR"
+              items={[
+                { value: profile.gamesPlayed, label: "Oynanan" },
+                { value: profile.gamesWon, label: "Kazanılan" },
+                { value: `%${winRate}`, label: "Başarı" },
+              ]}
+            />
+            <StatGroup
+              label="SERİ"
+              items={[
+                { value: profile.totalScore.toLocaleString("tr-TR"), label: "Toplam Puan" },
+                { value: profile.currentStreak, label: "Mevcut Seri" },
+                { value: profile.maxStreak, label: "En Uzun Seri" },
+              ]}
+            />
+            <StatGroup
+              label="SÜRELER"
+              items={[
+                { value: fmtTime(profile.avgSolveTimeSeconds), label: "Ort. Süre" },
+                { value: fmtTime(bestTimeSeconds), label: "En İyi Süre" },
+                { value: flawlessCount, label: "Hatasız" },
+              ]}
+            />
+          </Animated.View>
+
+          {/* ── Rozetler ──────────────────────────────────────────── */}
+          {visibleBadges.length > 0 && (
+            <Animated.View entering={FadeInDown.delay(160).springify()} style={{ gap: 8 }}>
+              <SectionTitle icon="military-tech" label="Rozetler" />
+              <View style={styles.badgesGrid}>
+                {visibleBadges.map((b) => (
+                  <BadgeItem key={b} badgeId={b} colors={colors} />
+                ))}
+              </View>
+            </Animated.View>
+          )}
+
+          {/* ── Ayarlar ───────────────────────────────────────────── */}
+          <Animated.View entering={FadeInDown.delay(200).springify()} style={{ gap: 8 }}>
+            <SectionTitle icon="settings" label="Ayarlar" />
+            <View style={[styles.settingsCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
+              <SettingsRow
+                icon="help-outline"
+                title="Nasıl Oynanır?"
+                subtitle="Dedektif ızgarasını ve ipuçlarını öğren"
+                right={<MaterialIcons name="chevron-right" size={20} color={colors.secondaryForeground} />}
+                onPress={() => setShowHowToPlay(true)}
+                hasDivider
+              />
+              <SettingsRow
+                icon="volume-up"
+                title="Ses Efektleri"
+                subtitle="Oyun seslerini aç veya kapat"
+                right={
+                  <Switch
+                    value={soundEnabled}
+                    onValueChange={handleSoundToggle}
+                    trackColor={{ false: colors.border, true: `${colors.primary}88` }}
+                    thumbColor={soundEnabled ? colors.primary : colors.mutedForeground}
+                  />
+                }
+              />
+            </View>
+          </Animated.View>
+
+          {/* ── Gizlilik ──────────────────────────────────────────── */}
+          <Animated.View entering={FadeInDown.delay(230).springify()} style={{ gap: 8 }}>
+            <SectionTitle icon="shield" label="Gizlilik" />
+            <View style={[styles.settingsCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
+              {([
+                { key: "showStats" as const,  label: "İstatistiklerimi göster", icon: "bar-chart" as const },
+                { key: "showBadges" as const, label: "Rozetlerimi göster",       icon: "military-tech" as const },
+                { key: "showBio" as const,    label: "Bio'mu göster",            icon: "person" as const },
+                { key: "showAvatar" as const, label: "Avatarımı göster",         icon: "face" as const },
+              ]).map((item, idx, arr) => (
+                <SettingsRow
+                  key={item.key}
+                  icon={item.icon}
+                  title={item.label}
+                  hasDivider={idx < arr.length - 1}
+                  right={
+                    <Switch
+                      value={profile.privacySettings?.[item.key] ?? true}
+                      onValueChange={(val) => handlePrivacyToggle(item.key, val)}
+                      trackColor={{ false: colors.border, true: `${colors.primary}88` }}
+                      thumbColor={(profile.privacySettings?.[item.key] ?? true) ? colors.primary : colors.mutedForeground}
+                    />
+                  }
+                />
+              ))}
+            </View>
+          </Animated.View>
+
+          {/* ── Satın Alma Geri Yükleme ───────────────────────────── */}
+          {!isPremium && (
+            <Animated.View entering={FadeInDown.delay(250).springify()}>
+              <Pressable
+                onPress={handleRestore}
+                disabled={restoring}
+                style={({ pressed }) => [
+                  styles.settingsCard,
+                  { backgroundColor: colors.card, borderColor: colors.border, opacity: (pressed || restoring) ? 0.6 : 1 },
+                ]}
+              >
+                <View style={styles.settingsRowInner}>
+                  <View style={[styles.settingsIcon, { backgroundColor: `${colors.primary}18` }]}>
+                    {restoring ? (
+                      <ActivityIndicator size="small" color={colors.mutedForeground} />
+                    ) : (
+                      <MaterialIcons name="restore" size={20} color={colors.primary} />
+                    )}
+                  </View>
+                  <View style={styles.settingsInfo}>
+                    <Text style={[styles.settingsTitle, { color: colors.foreground }]}>
+                      Satın Almalarımı Geri Yükle
+                    </Text>
+                    {restoreMsg ? (
+                      <Text style={[styles.settingsSubtitle, { color: restoreMsg.ok ? colors.success : colors.accent }]}>
+                        {restoreMsg.text}
+                      </Text>
+                    ) : (
+                      <Text style={[styles.settingsSubtitle, { color: colors.secondaryForeground }]}>
+                        Önceki satın almayı geri yükle
+                      </Text>
+                    )}
+                  </View>
+                </View>
+              </Pressable>
+            </Animated.View>
+          )}
+
+          {/* ── Son Oyunlar ───────────────────────────────────────── */}
+          {recentHistory.length > 0 && (
+            <Animated.View entering={FadeInDown.delay(270).springify()} style={{ gap: 8 }}>
+              <SectionTitle icon="history" label="Son Oyunlar" />
+              <View style={[styles.historyCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
+                {recentHistory.map((rec, i) => (
+                  <View
+                    key={i}
+                    style={[
+                      styles.historyItem,
+                      i < recentHistory.length - 1 && { borderBottomWidth: 1, borderBottomColor: colors.border },
+                    ]}
+                  >
+                    <View
+                      style={[
+                        styles.historyIcon,
+                        { backgroundColor: rec.completed ? `${colors.success}22` : `${colors.border}` },
+                      ]}
+                    >
+                      <MaterialIcons
+                        name={rec.completed ? "check-circle" : "cancel"}
+                        size={20}
+                        color={rec.completed ? colors.success : colors.mutedForeground}
+                      />
+                    </View>
+                    <View style={styles.historyInfo}>
+                      <Text style={[styles.historyDate, { color: colors.mutedForeground }]}>
+                        {rec.date} · {rec.puzzleId}
+                      </Text>
+                      <Text
+                        style={[
+                          styles.historyResult,
+                          { color: rec.completed ? colors.foreground : colors.secondaryForeground },
+                        ]}
+                      >
+                        {rec.completed ? "Tamamlandı" : "Yarım bırakıldı"}
+                      </Text>
+                    </View>
+                    <View style={styles.historyStats}>
+                      {rec.completed && (
+                        <Text style={[styles.historyScore, { color: colors.primary }]}>{rec.score}</Text>
+                      )}
+                      <Text style={[styles.historyMistakes, { color: colors.mutedForeground }]}>
+                        {rec.wrongGuesses} hata
+                      </Text>
+                    </View>
+                  </View>
+                ))}
+              </View>
+            </Animated.View>
+          )}
+
+        </ScrollView>
       </View>
     </>
   );
@@ -518,18 +600,23 @@ export default function ProfilScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1 },
-  content: { paddingHorizontal: 16, gap: 16 },
+  content: { paddingHorizontal: 16, gap: 18, paddingTop: 16 },
+
+  /* ── Profil kartı ── */
   profileCard: {
     borderRadius: 16,
     borderWidth: 1,
-    padding: 20,
+    padding: 22,
     alignItems: "center",
-    gap: 10,
+    gap: 12,
+  },
+  avatarWrapper: {
+    alignItems: "center",
   },
   avatarContainer: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
+    width: 88,
+    height: 88,
+    borderRadius: 44,
     borderWidth: 2,
     alignItems: "center",
     justifyContent: "center",
@@ -539,34 +626,26 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 2,
     right: 2,
-    width: 20,
-    height: 20,
-    borderRadius: 10,
+    width: 22,
+    height: 22,
+    borderRadius: 11,
     alignItems: "center",
     justifyContent: "center",
   },
-  nameRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 8,
-  },
-  profileName: { fontSize: 22, fontWeight: "700" },
+  profileName: { fontSize: 24, fontWeight: "900", letterSpacing: 0.2 },
   bioRow: {
     flexDirection: "row",
     alignItems: "center",
     gap: 6,
-    paddingHorizontal: 4,
+    paddingHorizontal: 8,
   },
   bioText: {
     flex: 1,
     fontSize: 13,
-    lineHeight: 18,
+    lineHeight: 19,
     textAlign: "center",
   },
-  bioEditRow: {
-    width: "100%",
-    gap: 4,
-  },
+  bioEditRow: { width: "100%", gap: 4 },
   bioInput: {
     fontSize: 13,
     lineHeight: 18,
@@ -577,48 +656,68 @@ const styles = StyleSheet.create({
     textAlignVertical: "top",
     minHeight: 60,
   },
-  bioCounter: {
-    fontSize: 11,
-    textAlign: "right",
-    marginRight: 4,
+  bioCounter: { fontSize: 11, textAlign: "right", marginRight: 4 },
+  streakPill: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+    paddingHorizontal: 14,
+    paddingVertical: 6,
+    borderRadius: 20,
+    borderWidth: 1,
   },
-  streakRow: { flexDirection: "row", alignItems: "center", gap: 6 },
-  streakLabel: { fontSize: 13, fontWeight: "500" },
-  privacyCard: {
+  streakPillText: { color: "#FF6B35", fontSize: 13, fontWeight: "700" },
+
+  /* ── Section title ── */
+  sectionTitleRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+  },
+  sectionTitleText: {
+    fontSize: 13,
+    fontWeight: "800",
+    letterSpacing: 1,
+    textTransform: "uppercase",
+  },
+  sectionTitleLine: {
+    flex: 1,
+    height: 1,
+  },
+
+  /* ── Stat groups ── */
+  statGroup: {
     borderRadius: 14,
     borderWidth: 1,
-    overflow: "hidden",
-  },
-  privacyRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    paddingHorizontal: 14,
-    paddingVertical: 12,
-    gap: 12,
-  },
-  privacyLabel: { flex: 1, fontSize: 14, fontWeight: "500" },
-  statsGrid: {
-    flexDirection: "row",
-    flexWrap: "wrap",
+    paddingTop: 10,
+    paddingBottom: 14,
+    paddingHorizontal: 16,
     gap: 10,
   },
-  statCard: {
+  statGroupLabel: {
+    fontSize: 10,
+    fontWeight: "800",
+    letterSpacing: 1,
+    textTransform: "uppercase",
+  },
+  statGroupRow: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  statGroupDivider: {
+    width: 1,
+    height: 36,
+  },
+  statGroupItem: {
     flex: 1,
-    minWidth: "28%",
-    borderRadius: 12,
-    borderWidth: 1,
-    padding: 14,
     alignItems: "center",
-    gap: 4,
+    gap: 3,
   },
-  statValue: { fontSize: 22, fontWeight: "700" },
-  statLabel: { fontSize: 11, fontWeight: "500", textAlign: "center" },
-  sectionTitle: { fontSize: 18, fontWeight: "700" },
-  badgesGrid: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    gap: 10,
-  },
+  statGroupValue: { fontSize: 24, fontWeight: "900", letterSpacing: 0.2 },
+  statGroupItemLabel: { fontSize: 11, fontWeight: "600", textAlign: "center" },
+
+  /* ── Badges ── */
+  badgesGrid: { flexDirection: "row", flexWrap: "wrap", gap: 10 },
   badgeItem: {
     flex: 1,
     minWidth: "42%",
@@ -637,23 +736,39 @@ const styles = StyleSheet.create({
   },
   badgeLabel: { fontSize: 13, fontWeight: "700", textAlign: "center" },
   badgeDesc: { fontSize: 11, textAlign: "center", lineHeight: 16 },
-  howToPlayBtn: {
-    flexDirection: "row",
-    alignItems: "center",
+
+  /* ── Settings card ── */
+  settingsCard: {
     borderRadius: 14,
     borderWidth: 1,
-    padding: 14,
+    overflow: "hidden",
+  },
+  settingsRowInner: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 14,
+    paddingVertical: 13,
     gap: 14,
   },
+  settingsIcon: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    alignItems: "center",
+    justifyContent: "center",
+    flexShrink: 0,
+  },
+  settingsInfo: { flex: 1 },
+  settingsTitle: { fontSize: 15, fontWeight: "700" },
+  settingsSubtitle: { fontSize: 12, marginTop: 2, lineHeight: 17 },
+
+  /* ── Premium kart ── */
   premiumActiveCard: {
     borderRadius: 14,
     borderWidth: 1.5,
     overflow: "hidden",
   },
-  premiumGoldTopBar: {
-    height: 3,
-    backgroundColor: "#D4A843",
-  },
+  premiumGoldTopBar: { height: 3, backgroundColor: "#D4A843" },
   premiumActiveInner: {
     flexDirection: "row",
     alignItems: "center",
@@ -663,73 +778,38 @@ const styles = StyleSheet.create({
   premiumStatRow: {
     flexDirection: "row",
     borderTopWidth: 1,
-    marginTop: 0,
     paddingTop: 10,
     paddingHorizontal: 16,
     paddingBottom: 12,
   },
-  premiumStat: {
-    flex: 1,
-    alignItems: "center",
-    gap: 2,
-  },
-  premiumStatDivider: {
-    width: 1,
-    marginVertical: 2,
-  },
-  premiumStatValue: {
-    fontSize: 18,
-    fontWeight: "800",
-  },
-  premiumStatLabel: {
-    fontSize: 10,
-    fontWeight: "600",
-    textAlign: "center",
-  },
-  restoreBtn: {
-    flexDirection: "row",
-    alignItems: "center",
+  premiumStat: { flex: 1, alignItems: "center", gap: 2 },
+  premiumStatDivider: { width: 1, marginVertical: 2 },
+  premiumStatValue: { fontSize: 18, fontWeight: "800" },
+  premiumStatLabel: { fontSize: 10, fontWeight: "600", textAlign: "center" },
+
+  /* ── Son oyunlar ── */
+  historyCard: {
     borderRadius: 14,
     borderWidth: 1,
-    padding: 14,
-    gap: 14,
+    overflow: "hidden",
   },
-  settingsRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    borderRadius: 14,
-    borderWidth: 1,
-    padding: 14,
-    gap: 14,
-  },
-  howToPlayIcon: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  howToPlayInfo: { flex: 1 },
-  howToPlayTitle: { fontSize: 15, fontWeight: "700" },
-  howToPlayDesc: { fontSize: 12, marginTop: 2, lineHeight: 17 },
   historyItem: {
     flexDirection: "row",
     alignItems: "center",
-    borderRadius: 12,
-    borderWidth: 1,
-    padding: 12,
+    paddingHorizontal: 14,
+    paddingVertical: 12,
     gap: 12,
-    marginBottom: 8,
   },
   historyIcon: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+    width: 38,
+    height: 38,
+    borderRadius: 19,
     alignItems: "center",
     justifyContent: "center",
+    flexShrink: 0,
   },
   historyInfo: { flex: 1 },
-  historyDate: { fontSize: 12 },
+  historyDate: { fontSize: 11 },
   historyResult: { fontSize: 14, fontWeight: "600", marginTop: 2 },
   historyStats: { alignItems: "flex-end", gap: 2 },
   historyScore: { fontSize: 18, fontWeight: "700" },
