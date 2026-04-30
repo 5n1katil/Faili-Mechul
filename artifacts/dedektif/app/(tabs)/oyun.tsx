@@ -493,8 +493,7 @@ export default function VakalarScreen() {
   const handleGoHome = () => {
     setShowResult(false);
     resetCurrentGame();
-    // Navigate to home tab (index) explicitly
-    router.replace("/(tabs)" as never);
+    router.replace("/(tabs)");
   };
 
   const handleBackPress = () => {
