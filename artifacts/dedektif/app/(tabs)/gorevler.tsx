@@ -152,141 +152,142 @@ function MissionCard({
         style={[
           styles.missionCard,
           {
-            backgroundColor: awarded ? `${colors.success}10` : colors.card,
+            backgroundColor: awarded ? "#0A0D12" : colors.card,
             borderColor: awarded
-              ? `${colors.success}88`
+              ? "#D4A84388"
               : claimable
               ? `${colors.primary}88`
               : colors.border,
+            borderWidth: awarded ? 1.5 : 1,
           },
         ]}
       >
         <View
           style={[
             styles.missionAccent,
-            { backgroundColor: awarded ? colors.success : claimable ? colors.primary : tierColor },
+            { backgroundColor: awarded ? "#D4A843" : claimable ? colors.primary : tierColor },
           ]}
         />
         <View style={styles.missionInner}>
-          <View style={styles.missionHeader}>
-            <View
-              style={[
-                styles.missionIconWrap,
-                {
-                  backgroundColor: claimable
-                    ? `${colors.primary}22`
-                    : `${tierColor}22`,
-                },
-              ]}
-            >
-              {awarded ? (
-                <MaterialIcons name="check-circle" size={22} color={colors.success} />
-              ) : claimable ? (
-                <MaterialIcons name="bolt" size={22} color={colors.primary} />
-              ) : (
-                <MaterialIcons
-                  name={mission.icon as MatIconName}
-                  size={22}
-                  color={tierColor}
-                />
-              )}
-            </View>
-            <View style={styles.missionTextBlock}>
-              <Text
-                style={[
-                  styles.missionTitle,
-                  {
-                    color: awarded
-                      ? colors.success
-                      : claimable
-                      ? colors.primary
-                      : colors.foreground,
-                  },
-                ]}
-              >
-                {mission.title}
-                {awarded && (
-                  <Text style={[styles.completedTag, { color: colors.success }]}> ✓</Text>
-                )}
-              </Text>
-              <Text
-                style={[styles.missionDesc, { color: colors.secondaryForeground }]}
-                numberOfLines={2}
-              >
-                {mission.description}
-              </Text>
-            </View>
-            {claimable ? (
-              <ClaimButton
-                onPress={() => claimMission(mission.id)}
-                points={mission.reward.points}
-              />
-            ) : (
+          <View style={{ opacity: awarded ? 0.52 : 1 }}>
+            <View style={styles.missionHeader}>
               <View
                 style={[
-                  styles.rewardBadge,
+                  styles.missionIconWrap,
                   {
                     backgroundColor: awarded
-                      ? `${colors.success}18`
-                      : `${colors.primary}18`,
-                    borderColor: awarded
-                      ? `${colors.success}44`
-                      : `${colors.primary}44`,
+                      ? "#D4A84322"
+                      : claimable
+                      ? `${colors.primary}22`
+                      : `${tierColor}22`,
                   },
                 ]}
               >
-                <MaterialIcons
-                  name="bolt"
-                  size={14}
-                  color={awarded ? colors.success : colors.primary}
-                />
-                <Text
-                  style={[
-                    styles.rewardText,
-                    { color: awarded ? colors.success : colors.primary },
-                  ]}
-                >
-                  +{formatPoints(mission.reward.points)}
-                </Text>
-                {mission.reward.badge && (
+                {awarded ? (
+                  <MaterialIcons name="check-circle" size={22} color="#D4A843" />
+                ) : claimable ? (
+                  <MaterialIcons name="bolt" size={22} color={colors.primary} />
+                ) : (
                   <MaterialIcons
-                    name="workspace-premium"
-                    size={13}
-                    color={awarded ? colors.success : colors.primary}
-                    style={{ marginLeft: 2 }}
+                    name={mission.icon as MatIconName}
+                    size={22}
+                    color={tierColor}
                   />
                 )}
               </View>
-            )}
-          </View>
-          <View style={styles.progressRow}>
-            <ProgressBar
-              current={progress.current}
-              target={progress.target}
-              color={awarded ? colors.success : claimable ? colors.primary : tierColor}
-            />
-            <Text style={[styles.progressLabel, { color: colors.secondaryForeground }]}>
-              {progress.current}/{progress.target}
-            </Text>
+              <View style={styles.missionTextBlock}>
+                <Text
+                  style={[
+                    styles.missionTitle,
+                    {
+                      color: awarded
+                        ? "#D4A843"
+                        : claimable
+                        ? colors.primary
+                        : colors.foreground,
+                    },
+                  ]}
+                >
+                  {mission.title}
+                  {awarded && (
+                    <Text style={[styles.completedTag, { color: "#D4A843" }]}> ✓</Text>
+                  )}
+                </Text>
+                <Text
+                  style={[styles.missionDesc, { color: colors.secondaryForeground }]}
+                  numberOfLines={2}
+                >
+                  {mission.description}
+                </Text>
+              </View>
+              {claimable ? (
+                <ClaimButton
+                  onPress={() => claimMission(mission.id)}
+                  points={mission.reward.points}
+                />
+              ) : (
+                <View
+                  style={[
+                    styles.rewardBadge,
+                    {
+                      backgroundColor: awarded ? "#D4A84318" : `${colors.primary}18`,
+                      borderColor: awarded ? "#D4A84355" : `${colors.primary}44`,
+                    },
+                  ]}
+                >
+                  <MaterialIcons
+                    name="bolt"
+                    size={14}
+                    color={awarded ? "#D4A843" : colors.primary}
+                  />
+                  <Text
+                    style={[
+                      styles.rewardText,
+                      { color: awarded ? "#D4A843" : colors.primary },
+                    ]}
+                  >
+                    +{formatPoints(mission.reward.points)}
+                  </Text>
+                  {mission.reward.badge && (
+                    <MaterialIcons
+                      name="workspace-premium"
+                      size={13}
+                      color={awarded ? "#D4A843" : colors.primary}
+                      style={{ marginLeft: 2 }}
+                    />
+                  )}
+                </View>
+              )}
+            </View>
+            <View style={styles.progressRow}>
+              <ProgressBar
+                current={progress.current}
+                target={progress.target}
+                color={awarded ? "#D4A843" : claimable ? colors.primary : tierColor}
+              />
+              <Text style={[styles.progressLabel, { color: colors.secondaryForeground }]}>
+                {progress.current}/{progress.target}
+              </Text>
+            </View>
           </View>
           {awarded ? (
             <View
               style={[
                 styles.completedBanner,
                 {
-                  backgroundColor: `${colors.success}15`,
-                  borderColor: `${colors.success}55`,
+                  backgroundColor: "#D4A84318",
+                  borderColor: "#D4A84360",
                 },
               ]}
             >
-              <MaterialIcons name="check-circle" size={15} color={colors.success} />
-              <Text style={[styles.completedBannerText, { color: colors.success }]}>
+              <MaterialIcons name="check-circle" size={15} color="#D4A843" />
+              <Text style={[styles.completedBannerText, { color: "#D4A843" }]}>
                 TAMAMLANDI
               </Text>
               <MaterialIcons
                 name="verified"
                 size={14}
-                color={`${colors.success}AA`}
+                color="#D4A843AA"
               />
             </View>
           ) : inProgress ? (
