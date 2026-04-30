@@ -129,6 +129,12 @@ export interface BestResult {
   timeSeconds: number;
 }
 
+export interface PlayStats {
+  firstPlay: { score: number; timeSeconds: number; date: string };
+  latestPlay: { score: number; timeSeconds: number; date: string } | null;
+  playCount: number;
+}
+
 interface GameContextType {
   profile: PlayerProfile;
   playerId: string;
@@ -137,6 +143,7 @@ interface GameContextType {
   gameState: GameState | null;
   completedPuzzleIds: Set<string>;
   bestScoreForPuzzle: (id: string) => BestResult | null;
+  playStatsForPuzzle: (id: string) => PlayStats | null;
   startDailyPuzzle: () => void;
   startPuzzle: (puzzle: Puzzle) => void;
   activateTimer: () => void;
@@ -391,6 +398,24 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
       if (wins.length === 0) return null;
       const best = wins.reduce((a, b) => (b.score > a.score ? b : a));
       return { score: best.score, timeSeconds: best.timeSeconds };
+    },
+    [gameHistory]
+  );
+
+  const playStatsForPuzzle = useCallback(
+    (id: string): PlayStats | null => {
+      const wins = gameHistory
+        .filter((h) => h.puzzleId === id && h.completed)
+        .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+      if (wins.length === 0) return null;
+      const first = wins[0];
+      const last = wins[wins.length - 1];
+      const isSamePlay = wins.length === 1;
+      return {
+        firstPlay: { score: first.score, timeSeconds: first.timeSeconds, date: first.date },
+        latestPlay: isSamePlay ? null : { score: last.score, timeSeconds: last.timeSeconds, date: last.date },
+        playCount: wins.length,
+      };
     },
     [gameHistory]
   );
@@ -780,6 +805,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         gameState,
         completedPuzzleIds,
         bestScoreForPuzzle,
+        playStatsForPuzzle,
         startDailyPuzzle,
         startPuzzle,
         activateTimer,

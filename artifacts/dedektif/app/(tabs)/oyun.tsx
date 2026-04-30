@@ -23,7 +23,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useColors } from "@/hooks/useColors";
 import { useGame } from "@/context/GameContext";
-import type { BestResult } from "@/context/GameContext";
+import type { PlayStats } from "@/context/GameContext";
 import { useSounds } from "@/hooks/useSounds";
 import { usePurchase } from "@/context/PurchaseContext";
 import DetectiveGrid from "@/components/DetectiveGrid";
@@ -258,7 +258,7 @@ function PuzzleCard({
   onPress,
   delay,
   completed,
-  bestResult,
+  playStats,
   locked,
   showReplay,
 }: {
@@ -266,7 +266,7 @@ function PuzzleCard({
   onPress: () => void;
   delay: number;
   completed: boolean;
-  bestResult: BestResult | null;
+  playStats: PlayStats | null;
   locked?: boolean;
   showReplay?: boolean;
 }) {
@@ -343,19 +343,32 @@ function PuzzleCard({
             <Text style={[listStyles.playText, { color: "#D4A843" }]}>Kilidi açmak için dokun</Text>
             <MaterialIcons name="lock-open" size={18} color="#D4A843" />
           </View>
-        ) : completed && bestResult ? (
+        ) : completed && playStats ? (
           <View style={[listStyles.bestResultRow, { borderTopColor: colors.border }]}>
-            <View style={listStyles.bestResultItem}>
-              <MaterialIcons name="emoji-events" size={13} color={colors.primary} />
-              <Text style={[listStyles.bestResultLabel, { color: colors.mutedForeground }]}>En İyi:</Text>
-              <Text style={[listStyles.bestResultValue, { color: colors.primary }]}>{bestResult.score} puan</Text>
-              <MaterialIcons name="timer" size={13} color={colors.mutedForeground} />
-              <Text style={[listStyles.bestResultValue, { color: colors.mutedForeground }]}>
-                {formatTime(bestResult.timeSeconds)}
-              </Text>
+            <View style={listStyles.playStatsColumn}>
+              <View style={listStyles.bestResultItem}>
+                <MaterialIcons name="leaderboard" size={12} color={colors.primary} />
+                <Text style={[listStyles.bestResultLabel, { color: colors.mutedForeground }]}>İlk Oynanış:</Text>
+                <Text style={[listStyles.bestResultValue, { color: colors.primary }]}>{playStats.firstPlay.score.toLocaleString("tr-TR")} puan</Text>
+                <MaterialIcons name="timer" size={12} color={colors.mutedForeground} />
+                <Text style={[listStyles.bestResultValue, { color: colors.mutedForeground }]}>
+                  {formatTime(playStats.firstPlay.timeSeconds)}
+                </Text>
+              </View>
+              {playStats.latestPlay && (
+                <View style={listStyles.bestResultItem}>
+                  <MaterialIcons name="replay" size={12} color={colors.mutedForeground} />
+                  <Text style={[listStyles.bestResultLabel, { color: colors.mutedForeground }]}>Son Oynanış:</Text>
+                  <Text style={[listStyles.bestResultValue, { color: colors.mutedForeground }]}>{playStats.latestPlay.score.toLocaleString("tr-TR")} puan</Text>
+                  <MaterialIcons name="timer" size={12} color={colors.mutedForeground} />
+                  <Text style={[listStyles.bestResultValue, { color: colors.mutedForeground }]}>
+                    {formatTime(playStats.latestPlay.timeSeconds)}
+                  </Text>
+                </View>
+              )}
             </View>
             {showReplay && (
-              <View style={listStyles.bestResultItem}>
+              <View style={listStyles.replayBtn}>
                 <MaterialIcons name="replay" size={13} color={colors.primary} />
                 <Text style={[listStyles.bestResultValue, { color: colors.primary }]}>Tekrar Oyna</Text>
               </View>
@@ -389,7 +402,7 @@ export default function VakalarScreen() {
     activateTimer,
     invalidateGame,
     completedPuzzleIds,
-    bestScoreForPuzzle,
+    playStatsForPuzzle,
   } = useGame();
   const { isPremium } = usePurchase();
   const { play, playVictorySequence } = useSounds();
@@ -480,7 +493,8 @@ export default function VakalarScreen() {
   const handleGoHome = () => {
     setShowResult(false);
     resetCurrentGame();
-    router.replace("/(tabs)");
+    // Navigate to home tab (index) explicitly
+    router.replace("/(tabs)" as never);
   };
 
   const handleBackPress = () => {
@@ -727,7 +741,7 @@ export default function VakalarScreen() {
                               onPress={() => startPuzzle(puzzle)}
                               delay={100 + i * 50}
                               completed={false}
-                              bestResult={null}
+                              playStats={null}
                               locked={false}
                             />
                           )}
@@ -750,7 +764,7 @@ export default function VakalarScreen() {
                                 onPress={() => startPuzzle(puzzle)}
                                 delay={100 + (activeFree.length + i) * 40}
                                 completed={false}
-                                bestResult={null}
+                                playStats={null}
                                 locked={false}
                               />
                             )}
@@ -774,7 +788,7 @@ export default function VakalarScreen() {
                                 onPress={() => setShowPaywall(true)}
                                 delay={100 + (activeFree.length + i) * 30}
                                 completed={false}
-                                bestResult={null}
+                                playStats={null}
                                 locked={true}
                               />
                             )}
@@ -807,7 +821,7 @@ export default function VakalarScreen() {
                     <DifficultySubGroups
                       puzzles={completedPuzzles}
                       renderCard={(puzzle, i) => {
-                        const best = bestScoreForPuzzle(puzzle.id);
+                        const stats = playStatsForPuzzle(puzzle.id);
                         return (
                           <PuzzleCard
                             key={puzzle.id}
@@ -815,7 +829,7 @@ export default function VakalarScreen() {
                             onPress={() => startPuzzle(puzzle)}
                             delay={100 + i * 40}
                             completed={true}
-                            bestResult={best}
+                            playStats={stats}
                             showReplay={true}
                           />
                         );
@@ -1186,8 +1200,19 @@ const listStyles = StyleSheet.create({
     alignItems: "center",
     borderTopWidth: 1,
     paddingTop: 10,
+    gap: 8,
+  },
+  playStatsColumn: {
+    flex: 1,
+    gap: 4,
   },
   bestResultItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
+    flexWrap: "wrap",
+  },
+  replayBtn: {
     flexDirection: "row",
     alignItems: "center",
     gap: 4,

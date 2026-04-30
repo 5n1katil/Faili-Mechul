@@ -137,7 +137,7 @@ export default function PaywallModal({ visible, onClose, premiumPuzzleCount = 19
 
             <View style={styles.sectionHeader}>
               <MaterialIcons name="star" size={15} color={colors.primary} />
-              <Text style={[styles.sectionTitle, { color: colors.primary }]}>NE KAZANİYORSUNUZ?</Text>
+              <Text style={[styles.sectionTitle, { color: colors.primary }]}>NE KAZANIYORSUNUZ?</Text>
             </View>
 
             <View style={[styles.featureList, { borderColor: colors.border }]}>

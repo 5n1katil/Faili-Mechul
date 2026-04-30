@@ -277,7 +277,7 @@ const SLIDES: Slide[] = [
     title: "İpuçları",
     subtitle: "Delilleri Değerlendir",
     showClueExample: true,
-    body: "Her bulmacada baştan en az 4 standart ipucu açık gelir. Bunlar; tanıklıklar, adli raporlar ve fiziksel delillerden oluşur — her biri seni bir adım daha yaklaştırır.\n\nDaha fazlasına ihtiyaç duyarsan \"Sonraki İpucu\" ile bir tane daha açabilirsin — ama her bonus ipucu kronometreye +30 saniye ekler!",
+    body: "Her bulmacada baştan en az 4 standart ipucu açık gelir. Bunlar; tanık ifadeleri, adli raporlar ve fiziksel delillerden oluşur — her biri seni bir adım daha yaklaştırır.\n\nDaha fazlasına ihtiyaç duyarsan \"Sonraki İpucu\" ile bir tane daha açabilirsin — ama her bonus ipucu kronometreye +30 saniye ekler!",
     tip: "İpuçsuz çözersen daha yüksek puan alırsın — sadece gerçekten gerektiğinde bonus ipucu aç!",
   },
   {

@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import {
   Dimensions,
+  Modal,
   Platform,
   Pressable,
   ScrollView,
@@ -264,7 +265,7 @@ function ScoreBreakdownCard({
   ];
 
   return (
-    <View style={[styles.breakdownCard, { backgroundColor: colors.background, borderColor: colors.border }]}>
+    <View style={[styles.breakdownCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
       <View style={styles.breakdownHeader}>
         <Text style={[styles.breakdownTitle, { color: colors.mutedForeground }]}>PUAN DETAYI</Text>
         <Pressable onPress={onShowInfo} hitSlop={10} style={[styles.infoBtn, { borderColor: `${colors.mutedForeground}44` }]}>
@@ -422,19 +423,44 @@ export default function ResultScreen({
   };
 
   return (
-    <View style={[styles.overlay, { backgroundColor: "rgba(0,0,0,0.92)" }]}>
-      {success && <Confetti />}
-      <ScoreInfoSheet visible={showScoreInfo} onClose={() => setShowScoreInfo(false)} />
-      <Animated.View
-        style={[
-          styles.container,
-          { backgroundColor: colors.card, borderColor: success ? colors.primary : colors.accent },
-          containerStyle,
-        ]}
-      >
+    <Modal
+      visible={true}
+      animationType="slide"
+      transparent={false}
+      statusBarTranslucent
+      onRequestClose={onClose}
+    >
+      <View style={[styles.fullPage, { backgroundColor: colors.background }]}>
+        {success && <Confetti />}
+        <ScoreInfoSheet visible={showScoreInfo} onClose={() => setShowScoreInfo(false)} />
+
+        <View
+          style={[
+            styles.pageHeader,
+            {
+              paddingTop: Platform.OS === "web" ? 52 : insets.top + 8,
+              borderBottomColor: colors.border,
+              backgroundColor: colors.background,
+            },
+          ]}
+        >
+          <Pressable onPress={onClose} style={styles.headerBtn} hitSlop={12}>
+            <MaterialIcons name="home" size={22} color={colors.mutedForeground} />
+            <Text style={[styles.headerBtnText, { color: colors.mutedForeground }]}>Ana Sayfa</Text>
+          </Pressable>
+          <Text style={[styles.headerTitle, { color: colors.foreground }]}>
+            {success ? "VAKA ÇÖZÜLDÜ!" : "VAKA KAPATILDI"}
+          </Text>
+          <Pressable onPress={onPlayMore} style={styles.headerBtn} hitSlop={12}>
+            <Text style={[styles.headerBtnText, { color: colors.primary }]}>Vakalar</Text>
+            <MaterialIcons name="folder-open" size={22} color={colors.primary} />
+          </Pressable>
+        </View>
+
+        <Animated.View style={[{ flex: 1 }, containerStyle]}>
         <ScrollView
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={[styles.scrollContent, { paddingBottom: 24 + 49 + insets.bottom }]}
+          contentContainerStyle={[styles.scrollContent, { paddingBottom: 24 + insets.bottom }]}
         >
           <Animated.View
             style={[
@@ -450,9 +476,6 @@ export default function ResultScreen({
             />
           </Animated.View>
 
-          <Text style={[styles.resultTitle, { color: success ? colors.primary : colors.accent }]}>
-            {success ? "VAKA ÇÖZÜLDÜ!" : "VAKA KAPATILDI"}
-          </Text>
           <Text style={[styles.subtitle, { color: colors.mutedForeground }]}>
             {success ? "Harika dedektiflik çalışması!" : "Bir dahaki sefere daha dikkatli!"}
           </Text>
@@ -465,7 +488,7 @@ export default function ResultScreen({
             </View>
           )}
 
-          <View style={[styles.solutionBox, { backgroundColor: colors.background, borderColor: colors.border }]}>
+          <View style={[styles.solutionBox, { backgroundColor: colors.card, borderColor: colors.border }]}>
             <Text style={[styles.solutionTitle, { color: colors.mutedForeground }]}>ÇÖZÜM</Text>
             <View style={styles.solutionRow}>
               <MaterialIcons name="person" size={16} color={colors.primary} />
@@ -483,15 +506,15 @@ export default function ResultScreen({
 
           {success && (
             <View style={styles.statsRow}>
-              <View style={[styles.statItem, { backgroundColor: colors.background }]}>
+              <View style={[styles.statItem, { backgroundColor: colors.card }]}>
                 <AnimatedScore score={score} />
                 <Text style={[styles.statLabel, { color: colors.mutedForeground }]}>PUAN</Text>
               </View>
-              <View style={[styles.statItem, { backgroundColor: colors.background }]}>
+              <View style={[styles.statItem, { backgroundColor: colors.card }]}>
                 <Text style={[styles.statValue, { color: colors.foreground }]}>{formatTime(timeSeconds)}</Text>
                 <Text style={[styles.statLabel, { color: colors.mutedForeground }]}>SÜRE</Text>
               </View>
-              <View style={[styles.statItem, { backgroundColor: colors.background }]}>
+              <View style={[styles.statItem, { backgroundColor: colors.card }]}>
                 <Text style={[styles.statValue, { color: wrongGuesses > 0 ? colors.accent : colors.success }]}>
                   {wrongGuesses}
                 </Text>
@@ -544,32 +567,42 @@ export default function ResultScreen({
               <MaterialIcons name="play-arrow" size={20} color={colors.primaryForeground} />
               <Text style={[styles.btnText, { color: colors.primaryForeground }]}>Başka Bulmaca</Text>
             </Pressable>
-            <Pressable
-              onPress={onClose}
-              style={[styles.btnOutline, { borderColor: colors.border }]}
-            >
-              <Text style={[styles.btnOutlineText, { color: colors.mutedForeground }]}>Ana Sayfa</Text>
-            </Pressable>
           </View>
         </ScrollView>
-      </Animated.View>
-    </View>
+        </Animated.View>
+      </View>
+    </Modal>
   );
 }
 
 const styles = StyleSheet.create({
-  overlay: {
-    ...StyleSheet.absoluteFillObject,
-    alignItems: "center",
-    justifyContent: "center",
-    padding: 24,
-    zIndex: 100,
+  fullPage: {
+    flex: 1,
   },
-  container: {
-    width: "100%",
-    borderRadius: 20,
-    borderWidth: 2,
-    maxHeight: "94%",
+  pageHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: 16,
+    paddingBottom: 12,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+  },
+  headerBtn: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
+    paddingVertical: 4,
+  },
+  headerBtnText: {
+    fontSize: 13,
+    fontWeight: "600",
+  },
+  headerTitle: {
+    fontSize: 13,
+    fontWeight: "800",
+    letterSpacing: 1,
+    flex: 1,
+    textAlign: "center",
   },
   scrollContent: {
     padding: 24,
