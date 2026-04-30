@@ -145,6 +145,7 @@ function MissionCard({
   return (
     <Pressable
       onPress={handlePress}
+      disabled={awarded}
       style={({ pressed }) => [{ opacity: pressed && !awarded ? 0.75 : 1 }]}
     >
       <View
