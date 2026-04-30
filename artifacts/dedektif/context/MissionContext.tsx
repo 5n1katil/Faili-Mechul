@@ -129,12 +129,13 @@ function _computeForPeriod(
     }
     case "solve_difficulty": {
       if (!req.difficulty) return 0;
+      const normDiff = req.difficulty === "caylak" ? "caylik" : req.difficulty;
       return records.filter((h) => {
         const diff = PUZZLE_DIFFICULTY_MAP.get(h.puzzleId);
-        if (req.difficulty === "dedektif") {
+        if (normDiff === "dedektif") {
           return diff === "dedektif" || diff === "baskomiser";
         }
-        return diff === req.difficulty;
+        return diff === normDiff;
       }).length;
     }
     case "high_score_once":
@@ -163,8 +164,9 @@ function _computeAchievement(
     }
     case "solve_difficulty": {
       if (!req.difficulty) return 0;
+      const normDiff = req.difficulty === "caylak" ? "caylik" : req.difficulty;
       return allCompleted.filter(
-        (h) => PUZZLE_DIFFICULTY_MAP.get(h.puzzleId) === req.difficulty
+        (h) => PUZZLE_DIFFICULTY_MAP.get(h.puzzleId) === normDiff
       ).length;
     }
     case "streak_days":
