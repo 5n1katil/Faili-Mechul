@@ -404,22 +404,24 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
 
   const playStatsForPuzzle = useCallback(
     (id: string): PlayStats | null => {
-      const allWins = gameHistory
-        .filter((h) => h.puzzleId === id && h.completed)
-        .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+      // gameHistory is stored newest-first (prepend on save, see submitAnswer)
+      const allWins = gameHistory.filter((h) => h.puzzleId === id && h.completed);
       if (allWins.length === 0) return null;
 
-      // ranked !== false covers: ranked=true (new records) and ranked=undefined (migrated old records)
-      const rankedWins = allWins.filter((h) => h.ranked !== false);
-      const firstRanked = rankedWins[0] ?? allWins[0]; // fallback to first win if no ranked record
+      // Most recent play = first match in newest-first array
+      const latestRecord = allWins[0];
 
-      const lastAny = allWins[allWins.length - 1];
-      // Use object reference equality: same object means only one play exists
-      const isSameRecord = firstRanked === lastAny;
+      // ranked !== false covers ranked=true (new records) and ranked=undefined (migrated old records)
+      const rankedWins = allWins.filter((h) => h.ranked !== false);
+      // Oldest ranked play = last match in newest-first array (deepest in history)
+      const firstRanked = rankedWins[rankedWins.length - 1] ?? allWins[allWins.length - 1];
+
+      // Object reference equality: different object = different play record (handles same-day replays)
+      const isSameRecord = firstRanked === latestRecord;
 
       return {
         firstPlay: { score: firstRanked.score, timeSeconds: firstRanked.timeSeconds, date: firstRanked.date },
-        latestPlay: isSameRecord ? null : { score: lastAny.score, timeSeconds: lastAny.timeSeconds, date: lastAny.date },
+        latestPlay: isSameRecord ? null : { score: latestRecord.score, timeSeconds: latestRecord.timeSeconds, date: latestRecord.date },
         playCount: allWins.length,
       };
     },
