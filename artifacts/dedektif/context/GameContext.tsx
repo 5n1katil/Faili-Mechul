@@ -414,7 +414,8 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
       const firstRanked = rankedWins[0] ?? allWins[0]; // fallback to first win if no ranked record
 
       const lastAny = allWins[allWins.length - 1];
-      const isSameRecord = firstRanked.date === lastAny.date;
+      // Use object reference equality: same object means only one play exists
+      const isSameRecord = firstRanked === lastAny;
 
       return {
         firstPlay: { score: firstRanked.score, timeSeconds: firstRanked.timeSeconds, date: firstRanked.date },
