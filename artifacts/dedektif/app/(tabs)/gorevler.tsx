@@ -276,19 +276,24 @@ function MissionCard({
                 style={[
                   styles.playChip,
                   {
-                    borderColor: `${tierColor}66`,
-                    backgroundColor: `${tierColor}12`,
+                    borderColor: `${tierColor}88`,
+                    backgroundColor: `${tierColor}20`,
                   },
                 ]}
               >
                 <MaterialIcons
                   name="play-circle-filled"
-                  size={14}
+                  size={16}
                   color={tierColor}
                 />
                 <Text style={[styles.playChipText, { color: tierColor }]}>
                   Oyna
                 </Text>
+                <MaterialIcons
+                  name="chevron-right"
+                  size={16}
+                  color={`${tierColor}99`}
+                />
               </View>
             </View>
           )}
@@ -609,7 +614,7 @@ const styles = StyleSheet.create({
   },
   content: {
     paddingHorizontal: 16,
-    gap: 14,
+    gap: 10,
     paddingTop: 4,
   },
   pageHeader: {
@@ -709,8 +714,8 @@ const styles = StyleSheet.create({
   section: {
     borderWidth: 1,
     borderRadius: 14,
-    padding: 16,
-    gap: 14,
+    padding: 14,
+    gap: 10,
   },
   sectionTopRow: {
     flexDirection: "row",
@@ -759,7 +764,7 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
   tierSection: {
-    gap: 10,
+    gap: 8,
   },
   tierHeader: {
     flexDirection: "row",
@@ -793,8 +798,8 @@ const styles = StyleSheet.create({
   },
   missionInner: {
     flex: 1,
-    padding: 14,
-    gap: 10,
+    padding: 12,
+    gap: 8,
   },
   missionHeader: {
     flexDirection: "row",
@@ -891,20 +896,23 @@ const styles = StyleSheet.create({
     fontStyle: "italic",
   },
   playChipRow: {
-    alignItems: "flex-end",
+    marginTop: 2,
   },
   playChip: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 5,
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 20,
+    justifyContent: "center",
+    gap: 6,
+    paddingVertical: 10,
+    paddingHorizontal: 14,
+    borderRadius: 9,
     borderWidth: 1,
   },
   playChipText: {
-    fontSize: 13,
+    fontSize: 14,
     fontWeight: "700",
-    letterSpacing: 0.2,
+    letterSpacing: 0.3,
+    flex: 1,
+    textAlign: "center",
   },
 });
