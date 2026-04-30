@@ -404,17 +404,22 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
 
   const playStatsForPuzzle = useCallback(
     (id: string): PlayStats | null => {
-      const wins = gameHistory
+      const allWins = gameHistory
         .filter((h) => h.puzzleId === id && h.completed)
         .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
-      if (wins.length === 0) return null;
-      const first = wins[0];
-      const last = wins[wins.length - 1];
-      const isSamePlay = wins.length === 1;
+      if (allWins.length === 0) return null;
+
+      // ranked !== false covers: ranked=true (new records) and ranked=undefined (migrated old records)
+      const rankedWins = allWins.filter((h) => h.ranked !== false);
+      const firstRanked = rankedWins[0] ?? allWins[0]; // fallback to first win if no ranked record
+
+      const lastAny = allWins[allWins.length - 1];
+      const isSameRecord = firstRanked.date === lastAny.date;
+
       return {
-        firstPlay: { score: first.score, timeSeconds: first.timeSeconds, date: first.date },
-        latestPlay: isSamePlay ? null : { score: last.score, timeSeconds: last.timeSeconds, date: last.date },
-        playCount: wins.length,
+        firstPlay: { score: firstRanked.score, timeSeconds: firstRanked.timeSeconds, date: firstRanked.date },
+        latestPlay: isSameRecord ? null : { score: lastAny.score, timeSeconds: lastAny.timeSeconds, date: lastAny.date },
+        playCount: allWins.length,
       };
     },
     [gameHistory]
