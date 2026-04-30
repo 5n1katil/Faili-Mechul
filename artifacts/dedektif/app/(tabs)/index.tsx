@@ -33,10 +33,10 @@ const ONBOARDING_KEY = "@dedektif_onboarding_done";
 const SETUP_KEY = "@dedektif_setup_done";
 
 const TIPS = [
-  { icon: "grid-on" as const, text: "Izgara satırlarını ve sütunlarını sistematik ele al — her işaret önemlidir." },
+  { icon: "grid-on" as const, text: "Vakaya başlarken önce hikayeyi oku, ardından ızgaradaki şüphelileri, silahları ve mekanları tek tek incele — hepsini tanımadan çözüme ulaşamazsın." },
   { icon: "auto-stories" as const, text: "İpuçlarını dikkatle oku; her kelime çözümü işaret eder." },
   { icon: "psychology" as const, text: "Çelişkileri tespit etmek seni hızlıca çözüme götürür." },
-  { icon: "gavel" as const, text: "Yanlış suçlamalar ceza süresini ikiye katlar — emin ol, sonra suçla!" },
+  { icon: "gavel" as const, text: "Her yanlış suçlama +30 saniye ve 500 puan kaybettirir — emin olmadan suçlama!" },
 ];
 
 function useDailyCountdown() {
@@ -559,7 +559,7 @@ export default function HomeScreen() {
                 <View style={[styles.tipIconBox, { backgroundColor: `${colors.primary}15` }]}>
                   <MaterialIcons name={tip.icon} size={16} color={colors.primary} />
                 </View>
-                <Text style={[styles.tipText, { color: colors.mutedForeground }]}>
+                <Text style={[styles.tipText, { color: colors.foreground }]}>
                   {tip.text}
                 </Text>
               </View>
