@@ -35,6 +35,7 @@ type AIProfileData = {
   gamesWon: number;
   maxStreak: number;
   avgSolveTimeSeconds: number;
+  bio?: string;
 };
 
 type BackendProfileData = {
@@ -226,9 +227,12 @@ function AIProfile({ data, colors, botPad }: { data: AIProfileData; colors: Retu
         <AvatarDisplay avatar={data.avatar} size={88} color={colors.mutedForeground} />
         <Text style={[styles.name, { color: colors.foreground }]}>{data.name}</Text>
         <View style={[styles.badge, { backgroundColor: `${colors.primary}20`, borderColor: `${colors.primary}44` }]}>
-          <MaterialIcons name="smart-toy" size={13} color={colors.primary} />
-          <Text style={[styles.badgeText, { color: colors.primary }]}>AI Rakip</Text>
+          <MaterialIcons name="verified-user" size={13} color={colors.primary} />
+          <Text style={[styles.badgeText, { color: colors.primary }]}>Kayıtlı Dedektif</Text>
         </View>
+        {data.bio ? (
+          <Text style={[styles.bio, { color: colors.mutedForeground }]}>{data.bio}</Text>
+        ) : null}
       </Animated.View>
 
       <Animated.View entering={FadeInDown.delay(60).springify()}>

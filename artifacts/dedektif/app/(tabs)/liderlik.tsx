@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef } from "react";
+import React, { useState, useCallback, useRef, useEffect } from "react";
 import type { ComponentProps } from "react";
 import {
   ActivityIndicator,
@@ -225,6 +225,9 @@ export default function LiderlikScreen() {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
+  const flatListRef = useRef<FlatList<RankEntry>>(null);
+  const userScrolledRef = useRef(false);
+
   const loadLeaderboard = useCallback(async (key: SortKey) => {
     setLoading(true);
     const data = await fetchLeaderboard(SORT_KEY_TO_API[key], 50);
@@ -234,11 +237,13 @@ export default function LiderlikScreen() {
 
   useFocusEffect(
     useCallback(() => {
+      userScrolledRef.current = false;
       loadLeaderboard(sortKeyRef.current);
     }, [loadLeaderboard])
   );
 
   const handleSortChange = (key: SortKey) => {
+    userScrolledRef.current = false;
     sortKeyRef.current = key;
     setSortKey(key);
     loadLeaderboard(key);
@@ -256,21 +261,38 @@ export default function LiderlikScreen() {
     profileId: playerId ?? "me",
   };
 
-  const useApiData = apiEntries !== null && apiEntries.length > 0;
+  const npcEntries: RankEntry[] = AI_DETECTIVES.map((d) => ({
+    name: d.name,
+    avatar: d.avatar,
+    totalScore: d.totalScore,
+    gamesWon: d.gamesWon,
+    maxStreak: d.maxStreak,
+    avgSolveTimeSeconds: d.avgSolveTimeSeconds,
+    isCurrentUser: false,
+    isPremiumUser: false,
+    profileId: `ai-${d.name.toLowerCase().replace(/\s+/g, "-")}`,
+  }));
 
-  const baseEntries: RankEntry[] = useApiData
-    ? apiEntries
-        .filter((e) => e.playerId !== playerId)
-        .map(apiEntryToRank)
-    : AI_DETECTIVES.map((d) => ({
-        ...d,
-        isCurrentUser: false,
-        isPremiumUser: false,
-        profileId: `ai-${d.name.toLowerCase().replace(/\s+/g, "-")}`,
-      }));
+  const realEntries: RankEntry[] =
+    apiEntries !== null && apiEntries.length > 0
+      ? apiEntries.filter((e) => e.playerId !== playerId).map(apiEntryToRank)
+      : [];
 
-  const sorted = sortEntries([...baseEntries, myEntry], sortKey);
-  const myRank = sorted.findIndex((e) => e.isCurrentUser) + 1;
+  const sorted = sortEntries([...npcEntries, ...realEntries, myEntry], sortKey);
+  const myIndex = sorted.findIndex((e) => e.isCurrentUser);
+  const myRank = myIndex + 1;
+
+  useEffect(() => {
+    if (loading || userScrolledRef.current || myIndex < 0) return;
+    const timer = setTimeout(() => {
+      flatListRef.current?.scrollToIndex({
+        index: myIndex,
+        animated: true,
+        viewPosition: 0.5,
+      });
+    }, 600);
+    return () => clearTimeout(timer);
+  }, [loading, myIndex]);
 
   return (
     <View
@@ -286,7 +308,7 @@ export default function LiderlikScreen() {
         <View>
           <Text style={[styles.headerTitle, { color: colors.primary }]}>Dedektif Sıralaması</Text>
           <Text style={[styles.headerSub, { color: colors.mutedForeground }]}>
-            {useApiData ? "Gerçek Oyuncular" : "Tüm Zamanlar"}
+            Türkiye Geneli
           </Text>
         </View>
         {myRank > 0 && (
@@ -336,21 +358,34 @@ export default function LiderlikScreen() {
         </View>
       ) : (
         <FlatList
+          ref={flatListRef}
           data={sorted}
-          keyExtractor={(item, i) => `${item.name}-${i}`}
+          keyExtractor={(item, i) => `${item.profileId}-${i}`}
           contentContainerStyle={[
             styles.list,
             {
               paddingBottom: Platform.OS === "web" ? 34 + 80 : insets.bottom + 80,
             },
           ]}
+          onScrollBeginDrag={() => {
+            userScrolledRef.current = true;
+          }}
+          onScrollToIndexFailed={(info) => {
+            setTimeout(() => {
+              flatListRef.current?.scrollToIndex({
+                index: info.index,
+                animated: true,
+                viewPosition: 0.5,
+              });
+            }, 300);
+          }}
           renderItem={({ item, index }) => (
             <RankItem
               entry={item}
               rank={index + 1}
               sortKey={sortKey}
               colors={colors}
-              delay={index * 30}
+              delay={Math.min(index * 20, 400)}
               onPress={() => {
                 if (item.isCurrentUser) {
                   router.push("/(tabs)/profil");
