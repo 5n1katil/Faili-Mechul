@@ -407,7 +407,7 @@ export default function ProfilScreen() {
 
           {/* ── İstatistikler ─────────────────────────────────────── */}
           <Animated.View entering={FadeInDown.delay(100).springify()} style={{ gap: 8 }}>
-            <SectionTitle icon="bar-chart" label="İstatistikler" />
+            <SectionTitle icon="bar-chart" label="İSTATİSTİKLER" />
             <StatGroup
               label="OYUNLAR"
               items={[
@@ -437,7 +437,7 @@ export default function ProfilScreen() {
           {/* ── Rozetler ──────────────────────────────────────────── */}
           {visibleBadges.length > 0 && (
             <Animated.View entering={FadeInDown.delay(160).springify()} style={{ gap: 8 }}>
-              <SectionTitle icon="military-tech" label="Rozetler" />
+              <SectionTitle icon="military-tech" label="ROZETLER" />
               <View style={styles.badgesGrid}>
                 {visibleBadges.map((b) => (
                   <BadgeItem key={b} badgeId={b} colors={colors} />
@@ -448,7 +448,7 @@ export default function ProfilScreen() {
 
           {/* ── Ayarlar ───────────────────────────────────────────── */}
           <Animated.View entering={FadeInDown.delay(200).springify()} style={{ gap: 8 }}>
-            <SectionTitle icon="settings" label="Ayarlar" />
+            <SectionTitle icon="settings" label="AYARLAR" />
             <View style={[styles.settingsCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
               <SettingsRow
                 icon="help-outline"
@@ -476,7 +476,7 @@ export default function ProfilScreen() {
 
           {/* ── Gizlilik ──────────────────────────────────────────── */}
           <Animated.View entering={FadeInDown.delay(230).springify()} style={{ gap: 8 }}>
-            <SectionTitle icon="shield" label="Gizlilik" />
+            <SectionTitle icon="shield" label="GİZLİLİK" />
             <View style={[styles.settingsCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
               {([
                 { key: "showStats" as const,  label: "İstatistiklerimi göster", icon: "bar-chart" as const },
@@ -543,7 +543,7 @@ export default function ProfilScreen() {
           {/* ── Son Oyunlar ───────────────────────────────────────── */}
           {recentHistory.length > 0 && (
             <Animated.View entering={FadeInDown.delay(270).springify()} style={{ gap: 8 }}>
-              <SectionTitle icon="history" label="Son Oyunlar" />
+              <SectionTitle icon="history" label="SON OYUNLAR" />
               <View style={[styles.historyCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
                 {recentHistory.map((rec, i) => (
                   <View
@@ -678,7 +678,6 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: "800",
     letterSpacing: 1,
-    textTransform: "uppercase",
   },
   sectionTitleLine: {
     flex: 1,
