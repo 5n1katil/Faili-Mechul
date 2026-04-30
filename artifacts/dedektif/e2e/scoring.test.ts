@@ -45,15 +45,15 @@ test.describe("Scoring system", () => {
       timeElapsed: number,
       wrongGuesses: number,
       bonusCluesRevealedCount: number,
-      difficulty: "caylik" | "dedektif" | "baskomiser"
+      difficulty: "caylak" | "dedektif" | "baskomiser"
     ) => {
       const rawScore = 10000 - timeElapsed * 10 - wrongGuesses * 500 - bonusCluesRevealedCount * 300;
       const bonus = difficulty === "dedektif" ? 2000 : difficulty === "baskomiser" ? 5000 : 0;
       return Math.max(100, rawScore) + bonus;
     };
 
-    expect(computeScore(600, 0, 0, "caylik")).toBeGreaterThanOrEqual(100);
-    expect(computeScore(600, 5, 2, "caylik")).toBeGreaterThanOrEqual(100);
+    expect(computeScore(600, 0, 0, "caylak")).toBeGreaterThanOrEqual(100);
+    expect(computeScore(600, 5, 2, "caylak")).toBeGreaterThanOrEqual(100);
     expect(computeScore(10, 0, 0, "dedektif")).toBeGreaterThan(10000);
     expect(computeScore(10, 0, 0, "baskomiser")).toBeGreaterThan(13000);
   });
@@ -63,16 +63,16 @@ test.describe("Scoring system", () => {
       timeElapsed: number,
       wrongGuesses: number,
       bonusCluesRevealedCount: number,
-      difficulty: "caylik" | "dedektif" | "baskomiser"
+      difficulty: "caylak" | "dedektif" | "baskomiser"
     ) => {
       const rawScore = 10000 - timeElapsed * 10 - wrongGuesses * 500 - bonusCluesRevealedCount * 300;
       const bonus = difficulty === "dedektif" ? 2000 : difficulty === "baskomiser" ? 5000 : 0;
       return Math.max(100, rawScore) + bonus;
     };
 
-    const baseScore = computeScore(60, 0, 0, "caylik");
-    const withWrongGuess = computeScore(60 + 30, 1, 0, "caylik");
-    const withBonusClue = computeScore(60 + 30, 0, 1, "caylik");
+    const baseScore = computeScore(60, 0, 0, "caylak");
+    const withWrongGuess = computeScore(60 + 30, 1, 0, "caylak");
+    const withBonusClue = computeScore(60 + 30, 0, 1, "caylak");
 
     expect(baseScore - withWrongGuess).toBe(500 + 30 * 10);
     expect(baseScore - withBonusClue).toBe(300 + 30 * 10);

@@ -363,7 +363,7 @@ function emojiToMaterialIcon(emoji: string): string {
 }
 
 function mapDifficulty(level: number): Difficulty {
-  if (level === 1) return "caylik";
+  if (level === 1) return "caylak";
   if (level <= 3) return "dedektif";
   return "baskomiser";
 }

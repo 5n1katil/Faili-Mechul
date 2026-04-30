@@ -216,7 +216,7 @@ function PremiumInfoModal({
   );
 }
 
-const DIFFICULTY_ORDER: Difficulty[] = ["caylik", "dedektif", "baskomiser"];
+const DIFFICULTY_ORDER: Difficulty[] = ["caylak", "dedektif", "baskomiser"];
 
 function DifficultySubGroups({
   puzzles,
@@ -232,7 +232,7 @@ function DifficultySubGroups({
         if (group.length === 0) return null;
         const color = getDifficultyColor(diff as Difficulty);
         const diffIcon: MaterialIconName =
-          diff === "caylik" ? "sentiment-satisfied" :
+          diff === "caylak" ? "sentiment-satisfied" :
           diff === "dedektif" ? "search" :
           "local-police";
         return (

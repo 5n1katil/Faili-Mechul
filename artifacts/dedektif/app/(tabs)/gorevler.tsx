@@ -35,7 +35,7 @@ import {
 import { PUZZLES, type Puzzle, type Difficulty } from "@/data/puzzles";
 
 const DIFF_MAP: Record<string, Difficulty> = {
-  caylak: "caylik",
+  caylak: "caylak",
   dedektif: "dedektif",
   baskomiser: "baskomiser",
 };
@@ -50,7 +50,7 @@ function getMissionTargetPuzzle(
     mission.requirement.type === "solve_difficulty" &&
     mission.requirement.difficulty
   ) {
-    const targetDiff = DIFF_MAP[mission.requirement.difficulty] ?? "caylik";
+    const targetDiff = DIFF_MAP[mission.requirement.difficulty] ?? "caylak";
     const filtered = PUZZLES.filter((p) => p.difficulty === targetDiff);
     if (filtered.length > 0) candidates = filtered;
   }

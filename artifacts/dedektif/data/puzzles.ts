@@ -166,7 +166,7 @@ export interface Solution {
   locationId: string;
 }
 
-export type Difficulty = "caylik" | "dedektif" | "baskomiser";
+export type Difficulty = "caylak" | "dedektif" | "baskomiser";
 
 export interface Puzzle {
   id: string;
@@ -186,7 +186,7 @@ export const PUZZLES: Puzzle[] = [
   {
     id: "p001",
     title: "Konakta Gece Yarısı Cinayeti",
-    difficulty: "caylik",
+    difficulty: "caylak",
     dayIndex: 1,
     story:
       "Tarihi bir konakta şık bir yemek daveti vardı. Sabah erkenden ev sahibinin yardımcısı, kütüphanede cesedi buldu. Katil gecenin karanlığında kaybolmuştu.",
@@ -252,7 +252,7 @@ export const PUZZLES: Puzzle[] = [
   {
     id: "p002",
     title: "Boğaz'da Kayıp Elmas",
-    difficulty: "caylik",
+    difficulty: "caylak",
     dayIndex: 2,
     story:
       "İstanbul Boğazı'nda lüks bir yatta gece partisi yapılırken, efsanevi 'Boğaz Elması' çalındı ve güvenlik görevlisi hayatını kaybetti.",
@@ -450,7 +450,7 @@ export const PUZZLES: Puzzle[] = [
   {
     id: "p005",
     title: "Pazar Yerinde Şüpheli Ölüm",
-    difficulty: "caylik",
+    difficulty: "caylak",
     dayIndex: 5,
     story:
       "Pazar sabahı, kalabalık İstanbul pazarında tatlı satıcısı baygın bulundu ve sonradan hayatını kaybetti. Herkes birbirini şüpheyle süzüyordu.",
@@ -717,7 +717,7 @@ export const PUZZLES: Puzzle[] = [
   {
     id: "p009",
     title: "Tarihi Hamamda Cinayet",
-    difficulty: "caylik",
+    difficulty: "caylak",
     dayIndex: 9,
     story:
       "Sultanahmet'teki tarihi bir hamamda, tanınmış bir iş insanı masaj sırasında hayatını kaybetti. Hamam personeli şokta.",
@@ -918,7 +918,7 @@ export const PUZZLES: Puzzle[] = [
   {
     id: "p012",
     title: "Folklor Festivalinde Ölüm",
-    difficulty: "caylik",
+    difficulty: "caylak",
     dayIndex: 12,
     story:
       "Ankara'daki yıllık folklor festivalinde, organizasyonun baş koordinatörü sahnede aniden yere yığıldı.",
@@ -1191,7 +1191,7 @@ export const PUZZLES: Puzzle[] = [
   {
     id: "p016",
     title: "Termal Otelde Şüpheli Vaka",
-    difficulty: "caylik",
+    difficulty: "caylak",
     dayIndex: 16,
     story:
       "Bursa'nın ünlü kaplıcalarından birinde lüks bir thermal otelde, ünlü bir şarkıcı spa alanında ölü bulundu.",
@@ -1485,7 +1485,7 @@ export const PUZZLES: Puzzle[] = [
   {
     id: "p020",
     title: "Köy Düğününde Trajedi",
-    difficulty: "caylik",
+    difficulty: "caylak",
     dayIndex: 20,
     story:
       "Doğu Anadolu'nun şenlikli bir köyünde, düğün gecesi gelinin babası hayatını kaybetti. Müzik susmuş, şenlik kana bulanmıştı.",
@@ -1689,7 +1689,7 @@ export const PUZZLES: Puzzle[] = [
   {
     id: "p023",
     title: "Üsküdar'da Kayıp Vapur",
-    difficulty: "caylik",
+    difficulty: "caylak",
     dayIndex: 23,
     story:
       "Sis içindeki Boğaz'da sabah vapuruna binen bir yolcu hiçbir zaman karşı yakaya çıkmadı. Seyahat kayıtları tutuyordu ama bir kişi gerçeği gizlemişti.",
@@ -1893,7 +1893,7 @@ export const PUZZLES: Puzzle[] = [
   {
     id: "p026",
     title: "Sultanahmet'te Turist Tuzağı",
-    difficulty: "caylik",
+    difficulty: "caylak",
     dayIndex: 26,
     story:
       "Tarihi yarımadanın kalbinde, bir turist sarnıç içinde baygın halde bulundu. Yanında ne değerli eşyası ne de anıları kalmıştı.",
@@ -2163,7 +2163,7 @@ export const PUZZLES: Puzzle[] = [
   {
     id: "p030",
     title: "Karaköy'de Neon Gece",
-    difficulty: "caylik",
+    difficulty: "caylak",
     dayIndex: 30,
     story:
       "Karaköy'ün neon ışıklı gece kulübünde müzik durduğunda, servis çıkışında bayılmış bir müşteri bulundu. Gece herkesin sahte güldüğü bir yerdi.",
@@ -2229,7 +2229,7 @@ export const PUZZLES: Puzzle[] = [
   {
     id: "p031",
     title: "Konakta Gece Vakti",
-    difficulty: "caylik",
+    difficulty: "caylak",
     dayIndex: 31,
     story:
       "Bursa'nın eski bir konağında yemek daveti düzenlendi. Sabah erkenden konağın uşağı Fuat Bey'i çalışma odasında bıçaklanmış hâlde buldu. Davettekilerin yalnızca üçü konakta gecelemişti. Sen bölge jandarmasının genç dedektifi olarak olayı çözmek için sabahın ilk ışıklarında kapıya dayandın.",
@@ -2265,7 +2265,7 @@ export const PUZZLES: Puzzle[] = [
   {
     id: "p032",
     title: "Pazar Sabahı Baskını",
-    difficulty: "caylik",
+    difficulty: "caylak",
     dayIndex: 32,
     story:
       "Gaziantep'in eski çarşısında bakırcı Niyazi Usta, dükkanının deposunda baygın bulundu ve kısa süre sonra hayatını kaybetti. Dükkan sabah açılmadan önce soyulmuştu; kasadan para ve değerli bakır kaplar kayıp. Üç kişinin o sabah erken saatte çarşıda olduğu biliniyor.",
@@ -2301,7 +2301,7 @@ export const PUZZLES: Puzzle[] = [
   {
     id: "p033",
     title: "Akşam Vapurunda Gizem",
-    difficulty: "caylik",
+    difficulty: "caylak",
     dayIndex: 33,
     story:
       "İstanbul Boğazı'nı geçen akşam vapurunda emekli hâkim Nafiz Bey, güverte altındaki kapalı yolcu salonunda ölü bulundu. Vapur iskeleye yanaşmadan önce kaptan oturumu durdurdu. Salonda yalnızca üç yolcu kalmıştı. Sen deniz polisi dedektifi olarak vapura çıktın.",
@@ -2337,7 +2337,7 @@ export const PUZZLES: Puzzle[] = [
   {
     id: "p034",
     title: "Bağda Kanlı Bıçak",
-    difficulty: "caylik",
+    difficulty: "caylak",
     dayIndex: 34,
     story:
       "İzmir'in Bornova ilçesinde bir zeytinlik ve bağ sahibi Hüsnü Ağa, hasat dönemi sabahında bağın içinde bıçaklanmış bulundu. Etrafındaki üzüm sepetleri devrilmişti. O sabah erken bağa giren üç kişi tespit edildi. Bölge jandarması seni olayı çözmeye davet etti.",
@@ -2373,7 +2373,7 @@ export const PUZZLES: Puzzle[] = [
   {
     id: "p035",
     title: "Kervansarayda Son Gece",
-    difficulty: "caylik",
+    difficulty: "caylak",
     dayIndex: 35,
     story:
       "Konya'nın tarihi kervansarayından dönüştürülmüş han binasında tüccar Raşit Efendi, sabah odasında boğulmuş hâlde bulundu. Hanın sadece üç konuğu vardı; diğerleri bir gün önce ayrılmıştı. Kapı ne kilitli ne de zorlanmış; katil Raşit Efendi'nin tanıdığı biri olmalı. Sen şehir polisi dedektifi olarak sorgulamayı yürütüyorsun.",
@@ -2640,7 +2640,7 @@ export function getDailyPuzzle(): Puzzle {
 
 export function getDifficultyLabel(difficulty: Difficulty): string {
   switch (difficulty) {
-    case "caylik":
+    case "caylak":
       return "Çaylak";
     case "dedektif":
       return "Dedektif";
@@ -2651,7 +2651,7 @@ export function getDifficultyLabel(difficulty: Difficulty): string {
 
 export function getDifficultyColor(difficulty: Difficulty): string {
   switch (difficulty) {
-    case "caylik":
+    case "caylak":
       return "#4CAF50";
     case "dedektif":
       return "#D4A843";
