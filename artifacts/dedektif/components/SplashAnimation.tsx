@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Dimensions, Image, StyleSheet, Text, View } from "react-native";
 import Animated, {
   Easing,
@@ -9,11 +9,15 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 
-const { width, height } = Dimensions.get("window");
+const { width } = Dimensions.get("window");
 
 interface SplashAnimationProps {
   onComplete: () => void;
 }
+
+const LOGO_SIZE = Math.min(width * 0.32, 128);
+const GLOW_SIZE = LOGO_SIZE + 48;
+const GLOW_OUTER_SIZE = LOGO_SIZE + 90;
 
 export function SplashAnimation({ onComplete }: SplashAnimationProps) {
   const containerOpacity = useSharedValue(1);
@@ -26,28 +30,52 @@ export function SplashAnimation({ onComplete }: SplashAnimationProps) {
   const subtitleOpacity = useSharedValue(0);
   const subtitleY = useSharedValue(8);
 
-  useEffect(() => {
+  const animationStarted = useRef(false);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const startAnimation = useCallback(() => {
+    if (animationStarted.current) return;
+    animationStarted.current = true;
+
     const easeOut = Easing.out(Easing.cubic);
     const easeIn = Easing.in(Easing.cubic);
 
-    logoOpacity.value = withTiming(1, { duration: 480, easing: easeOut });
-    logoScale.value = withTiming(1, { duration: 700, easing: easeOut });
-    glowOpacity.value = withDelay(180, withTiming(1, { duration: 500, easing: easeOut }));
+    logoOpacity.value = withTiming(1, { duration: 450, easing: easeOut });
+    logoScale.value = withTiming(1, { duration: 650, easing: easeOut });
+    glowOpacity.value = withDelay(160, withTiming(1, { duration: 480, easing: easeOut }));
 
-    titleOpacity.value = withDelay(380, withTiming(1, { duration: 420, easing: easeOut }));
-    titleY.value = withDelay(380, withTiming(0, { duration: 420, easing: easeOut }));
+    titleOpacity.value = withDelay(360, withTiming(1, { duration: 400, easing: easeOut }));
+    titleY.value = withDelay(360, withTiming(0, { duration: 400, easing: easeOut }));
 
-    lineScale.value = withDelay(560, withTiming(1, { duration: 450, easing: easeOut }));
+    lineScale.value = withDelay(540, withTiming(1, { duration: 420, easing: easeOut }));
 
-    subtitleOpacity.value = withDelay(680, withTiming(1, { duration: 380, easing: easeOut }));
-    subtitleY.value = withDelay(680, withTiming(0, { duration: 380, easing: easeOut }));
+    subtitleOpacity.value = withDelay(660, withTiming(1, { duration: 360, easing: easeOut }));
+    subtitleY.value = withDelay(660, withTiming(0, { duration: 360, easing: easeOut }));
 
     containerOpacity.value = withDelay(
-      1700,
-      withTiming(0, { duration: 380, easing: easeIn }, (finished) => {
+      1750,
+      withTiming(0, { duration: 350, easing: easeIn }, (finished) => {
         if (finished) runOnJS(onComplete)();
       })
     );
+  }, []);
+
+  const handleImageLoad = useCallback(() => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+    }
+    startAnimation();
+  }, [startAnimation]);
+
+  useEffect(() => {
+    timeoutRef.current = setTimeout(() => {
+      startAnimation();
+    }, 150);
+
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
   }, []);
 
   const containerStyle = useAnimatedStyle(() => ({
@@ -88,6 +116,10 @@ export function SplashAnimation({ onComplete }: SplashAnimationProps) {
             <Image
               source={require("../assets/images/icon.png")}
               style={styles.logo}
+              resizeMode="cover"
+              onLoad={handleImageLoad}
+              onError={handleImageLoad}
+              fadeDuration={0}
             />
           </Animated.View>
         </View>
@@ -105,10 +137,6 @@ export function SplashAnimation({ onComplete }: SplashAnimationProps) {
     </Animated.View>
   );
 }
-
-const LOGO_SIZE = Math.min(width * 0.32, 128);
-const GLOW_SIZE = LOGO_SIZE + 48;
-const GLOW_OUTER_SIZE = LOGO_SIZE + 90;
 
 const styles = StyleSheet.create({
   container: {

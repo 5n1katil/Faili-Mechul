@@ -28,13 +28,13 @@ const DEMO_SUSPECTS: Suspect[] = [
 ];
 const DEMO_WEAPONS: Weapon[] = [
   { id: "dw1", name: "Bıçak",   description: "", icon: "🔪" },
-  { id: "dw2", name: "Zehir",   description: "", icon: "local_pharmacy" },
-  { id: "dw3", name: "Tabanca", description: "", icon: "my_location" },
+  { id: "dw2", name: "Zehir",   description: "", icon: "local-pharmacy" },
+  { id: "dw3", name: "Tabanca", description: "", icon: "security" },
 ];
 const DEMO_LOCATIONS: Location[] = [
   { id: "dl1", name: "Mutfak",    description: "", icon: "restaurant" },
   { id: "dl2", name: "Bahçe",     description: "", icon: "park" },
-  { id: "dl3", name: "Kütüphane", description: "", icon: "menu_book" },
+  { id: "dl3", name: "Kütüphane", description: "", icon: "library-books" },
 ];
 const DEMO_GRID_STATE: Record<string, "cross" | "check" | "question"> = {
   "dw1_ds1": "cross",  "dw1_ds2": "check",  "dw1_ds3": "cross",
