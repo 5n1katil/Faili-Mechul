@@ -2285,7 +2285,7 @@ export const PUZZLES: Puzzle[] = [
       { id: "l3", name: "Arka Sokak", description: "Dükkanın arka kapısına açılan dar sokak; çarşı esnafının mal girişi için kullandığı geçit.", icon: "directions-walk" },
     ],
     clues: [
-      { id: "c1", text: "Niyazi Usta deponun tam ortasında bulundu; etrafındaki kırık kutular ve devrilmiş raflar mücadelenin burada yaşandığını gösteriyor. Dükkan ön kapısı dışarıdan kilitliydi.", type: "evidence", isBonus: false },
+      { id: "c1", text: "Niyazi Usta deponun tam ortasında bulundu; etrafındaki kırık kutular ve devrilmiş raflar mücadelenin burada yaşandığını gösteriyor.", type: "evidence", isBonus: false },
       { id: "c2", text: "Çarşının başındaki çay ocağı sahibi, Rakip Esnaf Vahap'ın o sabah çay içmek için ocakta oturduğunu, dükkânına ancak saat 08:30'da gittiğini söylüyor. Cinayet en geç 07:45'te gerçekleşmiş.", type: "witness", isBonus: false },
       { id: "c3", text: "Baş yarası yuvarlak ve pürüzsüz bir cisimle oluşmuş. Köşeli ve uzun bir çubuk bu izi bırakamaz; pürüzlü ve düzensiz bir taş da bu kadar temiz bir iz bırakmaz.", type: "forensic", isBonus: false },
       { id: "c4", text: "Vitrininden alınan bakır sürahinin sapında küçük bir kan izi ve kıl parçası bulundu. Sürahi depoya yakın bir rafa bırakılmış.", type: "evidence", isBonus: false },
