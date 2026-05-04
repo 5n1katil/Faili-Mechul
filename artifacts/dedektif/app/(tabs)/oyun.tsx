@@ -493,7 +493,7 @@ export default function VakalarScreen() {
   const handleGoHome = () => {
     setShowResult(false);
     resetCurrentGame();
-    router.replace("/(tabs)");
+    router.replace("/(tabs)/index");
   };
 
   const handleBackPress = () => {
