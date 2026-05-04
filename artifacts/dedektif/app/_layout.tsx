@@ -23,6 +23,7 @@ import Animated, {
   Easing,
 } from "react-native-reanimated";
 
+import { Asset } from "expo-asset";
 import { SplashAnimation } from "@/components/SplashAnimation";
 
 import { ErrorBoundary } from "@/components/ErrorBoundary";
@@ -506,7 +507,15 @@ export default function RootLayout() {
   });
 
   useEffect(() => {
-    SplashScreen.hideAsync();
+    async function prepare() {
+      try {
+        await Asset.fromModule(require("../assets/images/icon.png")).downloadAsync();
+      } catch {
+      } finally {
+        SplashScreen.hideAsync();
+      }
+    }
+    void prepare();
   }, []);
 
   return (
