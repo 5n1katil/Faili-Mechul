@@ -2265,7 +2265,7 @@ export const PUZZLES: Puzzle[] = [
   {
     id: "p032",
     title: "Pazar Sabahı Baskını",
-    difficulty: "dedektif",
+    difficulty: "caylak",
     dayIndex: 32,
     story:
       "Gaziantep'in eski çarşısında bakırcı Niyazi Usta, sabah erken saatlerde dükkanının deposunda ağır yaralı halde bulundu ve kısa süre sonra hayatını kaybetti. Dükkan henüz açılmamıştı. Ön kapı dışarıdan kilitliydi; depoda dağınıklık ve mücadele izleri vardı. Kasadan para ve bazı bakır eşyalar kayıptı. O sabah çarşıda üç kişi bulunuyordu: rakip esnaf Vahap, çırak Selim ve kargo görevlisi Murat.",
