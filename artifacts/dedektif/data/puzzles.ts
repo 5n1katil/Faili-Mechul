@@ -2268,7 +2268,7 @@ export const PUZZLES: Puzzle[] = [
     difficulty: "caylak",
     dayIndex: 32,
     story:
-      "Gaziantep'in eski çarşısında bakırcı Niyazi Usta, sabah erken saatlerde dükkanının deposunda ağır yaralı halde bulundu ve kısa süre sonra hayatını kaybetti. Dükkan henüz açılmamıştı. Ön kapı dışarıdan kilitliydi; depoda dağınıklık ve mücadele izleri vardı. Kasadan para ve bazı bakır eşyalar kayıptı. O sabah çarşıda üç kişi bulunuyordu: rakip esnaf Vahap, çırak Selim ve kargo görevlisi Murat.",
+      "Gaziantep'in eski çarşısında bakırcı Niyazi Usta, sabah erken saatlerde dükkânının deposunda ağır yaralı halde bulundu ve kısa süre sonra hayatını kaybetti. Dükkan henüz açılmamıştı. Ön kapı dışarıdan kilitliydi. Kasadan para ve bazı bakır eşyalar kayıptı. O sabah çarşıda üç kişi bulunuyordu: rakip esnaf Vahap, çırak Selim ve kargo görevlisi Murat.",
     suspects: [
       { id: "s1", name: "Rakip Esnaf Vahap", description: "Hemen karşısındaki dükkânda bakır satan eski rakip; son aylarda maddi sıkıntı yaşıyor, müşteri kaybını Niyazi'ye bağlıyor.", icon: "elderly" },
       { id: "s2", name: "Çırak Selim", description: "Niyazi Usta'nın üç yıldır yanında çalışan çırağı; son haftalarda ustasıyla sık sık tartışıyor, dükkân anahtarına erişimi var.", icon: "person" },
@@ -2281,19 +2281,20 @@ export const PUZZLES: Puzzle[] = [
     ],
     locations: [
       { id: "l1", name: "Depo", description: "Dükkanın arka bölümündeki kapalı depo; arka kapıdan erişilebilir, ön kapıdan görünmez.", icon: "warehouse" },
-      { id: "l2", name: "Dükkan İç Alanı", description: "Vitrin ve tezgahın bulunduğu ana satış alanı; ön kapıdan doğrudan girilir.", icon: "storefront" },
+      { id: "l2", name: "Dükkan İçi", description: "Vitrin ve tezgahın bulunduğu ana satış alanı; ön kapıdan doğrudan girilir.", icon: "storefront" },
       { id: "l3", name: "Arka Sokak", description: "Dükkanın arka kapısına açılan dar sokak; çarşı esnafının mal girişi için kullandığı geçit.", icon: "directions-walk" },
     ],
     clues: [
-      { id: "c1", text: "Niyazi Usta deponun tam ortasında bulundu; etrafındaki kırık kutular ve devrilmiş raflar mücadelenin burada yaşandığını gösteriyor.", type: "evidence", isBonus: false },
-      { id: "c2", text: "Çarşının başındaki çay ocağı sahibi, Rakip Esnaf Vahap'ın o sabah çay içmek için ocakta oturduğunu, dükkânına ancak saat 08:30'da gittiğini söylüyor. Cinayet en geç 07:45'te gerçekleşmiş.", type: "witness", isBonus: false },
-      { id: "c3", text: "Baş yarası yuvarlak ve pürüzsüz bir cisimle oluşmuş. Köşeli ve uzun bir çubuk bu izi bırakamaz; pürüzlü ve düzensiz bir taş da bu kadar temiz bir iz bırakmaz.", type: "forensic", isBonus: false },
-      { id: "c4", text: "Vitrininden alınan bakır sürahinin sapında küçük bir kan izi ve kıl parçası bulundu. Sürahi depoya yakın bir rafa bırakılmış.", type: "evidence", isBonus: false },
-      { id: "c5", text: "Çırak Selim, usta erken açtığında kendisinin henüz gelmediğini söylüyor. Ancak komşu dükkan sahibi Selim'i sabah 07:00'de dükkanın arka kapısından girdiğini gördüğünü belirtiyor.", type: "witness", isBonus: true },
+      { id: "c1", text: "Mücadele izleri yalnızca depodaydı. Olay depo dışında başlamamış.", type: "evidence", isBonus: false },
+      { id: "c2", text: "Baş yarası yuvarlak ve düzgün bir cisimle oluşmuş. Demir çubuk ve taş bu izi açıklamaz.", type: "forensic", isBonus: false },
+      { id: "c3", text: "Çay ocağı sahibi, Vahap'ın olay saatinde çay ocağında olduğunu doğruluyor.", type: "witness", isBonus: false },
+      { id: "c4", text: "Kargo kayıtlarına göre Murat olaydan sonra çarşıya gelmiş.", type: "witness", isBonus: false },
+      { id: "c5", text: "Bakır sürahinin sapında kan izi bulundu.", type: "evidence", isBonus: true },
+      { id: "c6", text: "Selim, gelmediğini söyledi; fakat komşu esnaf onu arka kapıdan girerken gördü.", type: "witness", isBonus: true },
     ],
     solvabilityMeta: {
-      freeEliminations: ["l2", "l3", "s1", "w2", "w3"],
-      bonusEliminations: ["s3"],
+      freeEliminations: ["l2", "l3", "s1", "s3", "w2", "w3"],
+      bonusEliminations: [],
     },
     solution: { suspectId: "s2", weaponId: "w1", locationId: "l1" },
   },
