@@ -59,7 +59,7 @@ export default function ScoreInfoSheet({ visible, onClose }: Props) {
       icon: "upgrade",
       iconColor: "#4ade80",
       label: "Zorluk Bonusu",
-      formula: "Dedektif: +2.000\nBaşkomiser: +5.000",
+      formula: "Dedektif: +2.000\nBaş Komiser: +5.000",
       note: "Zor bulmacalar ekstra puan verir",
     },
     {

@@ -412,7 +412,7 @@ export default function ProfilScreen() {
               label="OYUNLAR"
               items={[
                 { value: profile.gamesPlayed, label: "Oynanan" },
-                { value: profile.gamesWon, label: "Kazanılan" },
+                { value: profile.gamesWon, label: "Çözülen" },
                 { value: `%${winRate}`, label: "Başarı" },
               ]}
             />

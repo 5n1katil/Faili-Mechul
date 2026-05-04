@@ -679,7 +679,7 @@ export default function VakalarScreen() {
                     { color: listTab === "tamamlananlar" ? colors.success : colors.mutedForeground },
                   ]}
                 >
-                  Bitti
+                  Tamamlananlar
                 </Text>
                 {completedPuzzles.length > 0 && (
                   <View style={[listStyles.tabCount, { backgroundColor: `${colors.success}33` }]}>
@@ -728,7 +728,7 @@ export default function VakalarScreen() {
                   ) : (
                     <>
                       <AccordionSection
-                        title="Başlangıç Seviyesi Vakalar"
+                        title="Ücretsiz Vakalar"
                         count={activeFree.length}
                       >
                         <DifficultySubGroups

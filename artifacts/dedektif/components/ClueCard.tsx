@@ -142,7 +142,7 @@ function TanikYuzlesmeBlock({ dialoglar }: { dialoglar: ClueYuzlesmeDialog[] }) 
             {d.yalan && (
               <View style={styles.yalanBadge}>
                 <MaterialIcons name="warning" size={10} color="#C8372D" />
-                <Text style={styles.yalanText}>ÇELIŞKI</Text>
+                <Text style={styles.yalanText}>ÇELİŞKİ</Text>
               </View>
             )}
           </View>
