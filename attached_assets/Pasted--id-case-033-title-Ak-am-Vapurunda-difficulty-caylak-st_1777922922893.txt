@@ -1,0 +1,179 @@
+[
+  {
+    "id": "case_033",
+    "title": "Akşam Vapurunda",
+    "difficulty": "caylak",
+    "story": "Akşam vapurunda Nafiz Bey kapalı yolcu salonunda ölü bulundu. Üç yolcu şüpheli: Tarık, Feriha ve Kerem.",
+
+    "suspects": [
+      { "id": "tarik", "name": "Tarık" },
+      { "id": "feriha", "name": "Feriha" },
+      { "id": "kerem", "name": "Kerem" }
+    ],
+
+    "weapons": [
+      { "id": "ilac", "name": "Uyku İlacı" },
+      { "id": "zincir", "name": "Zincir" },
+      { "id": "bardak", "name": "Bardak" }
+    ],
+
+    "locations": [
+      { "id": "salon", "name": "Yolcu Salonu" },
+      { "id": "guverte", "name": "Açık Güverte" },
+      { "id": "makine", "name": "Makine Bölümü" }
+    ],
+
+    "clues": [
+      {
+        "id": "c1",
+        "type": "forensic",
+        "isBonus": false,
+        "text": "Nafiz Bey'in üzerinde darp izi yok. Ölüm, içeceğe karışan bir maddeden kaynaklanmış görünüyor.",
+        "effects": [
+          { "type": "eliminateWeapon", "value": "zincir" }
+        ]
+      },
+      {
+        "id": "c2",
+        "type": "evidence",
+        "isBonus": false,
+        "text": "İçeceğin bulunduğu bardak kapalı yolcu salonundaki masadaydı.",
+        "effects": [
+          { "type": "setLocation", "value": "salon" }
+        ]
+      },
+      {
+        "id": "c3",
+        "type": "witness",
+        "isBonus": false,
+        "text": "Tarık yolculuk boyunca açık güvertede oturduğunu ve salona hiç inmediğini söylüyor; kaptan bunu doğruluyor.",
+        "effects": [
+          { "type": "eliminateSuspect", "value": "tarik" }
+        ]
+      },
+      {
+        "id": "c4",
+        "type": "witness",
+        "isBonus": false,
+        "text": "Kerem'in olay saatinde makine bölümünde görevli olduğu kayıtlarla doğrulandı.",
+        "effects": [
+          { "type": "eliminateSuspect", "value": "kerem" }
+        ]
+      },
+      {
+        "id": "c5",
+        "type": "forensic",
+        "isBonus": false,
+        "text": "İçeceğe karışan madde tamamen çözünmüş; cam bardak üzerinde darbe izi yok.",
+        "effects": [
+          { "type": "eliminateWeapon", "value": "bardak" }
+        ]
+      },
+      {
+        "id": "c6",
+        "type": "evidence",
+        "isBonus": true,
+        "text": "Feriha'nın çantasında eksilmiş bir uyku ilacı şişesi bulundu.",
+        "effects": [
+          { "type": "setWeapon", "value": "ilac" },
+          { "type": "setSuspect", "value": "feriha" }
+        ]
+      }
+    ],
+
+    "solution": {
+      "suspectId": "feriha",
+      "weaponId": "ilac",
+      "locationId": "salon"
+    }
+  },
+
+  {
+    "id": "case_030",
+    "title": "Karaköy'de Neon",
+    "difficulty": "caylak",
+    "story": "Karaköy'deki gece kulübünde bir müşteri servis çıkışında ölü bulundu. Üç çalışan şüpheli: Mete, Deniz ve Hakan.",
+
+    "suspects": [
+      { "id": "mete", "name": "Mete" },
+      { "id": "deniz", "name": "Deniz" },
+      { "id": "hakan", "name": "Hakan" }
+    ],
+
+    "weapons": [
+      { "id": "bardak", "name": "Bardak" },
+      { "id": "kablo", "name": "Kablo" },
+      { "id": "fener", "name": "Metal Fener" }
+    ],
+
+    "locations": [
+      { "id": "bar", "name": "Bar Alanı" },
+      { "id": "vip", "name": "VIP Lounge" },
+      { "id": "servis", "name": "Servis Çıkışı" }
+    ],
+
+    "clues": [
+      {
+        "id": "c1",
+        "type": "forensic",
+        "isBonus": false,
+        "text": "Adli inceleme, ölümün kafa travması sonucu olduğunu gösteriyor.",
+        "effects": [
+          { "type": "eliminateWeapon", "value": "kablo" }
+        ]
+      },
+      {
+        "id": "c2",
+        "type": "evidence",
+        "isBonus": false,
+        "text": "Kurban servis çıkışında bulundu; vücudunda sürüklenme izi yok.",
+        "effects": [
+          { "type": "setLocation", "value": "servis" }
+        ]
+      },
+      {
+        "id": "c3",
+        "type": "witness",
+        "isBonus": false,
+        "text": "DJ Mete olay sırasında sahne arkasındaydı ve bar alanından ayrılmadı.",
+        "effects": [
+          { "type": "eliminateSuspect", "value": "mete" }
+        ]
+      },
+      {
+        "id": "c4",
+        "type": "witness",
+        "isBonus": false,
+        "text": "Deniz'in olay saatinde VIP bölümde işlem yaptığı kasa kayıtlarıyla doğrulandı.",
+        "effects": [
+          { "type": "eliminateSuspect", "value": "deniz" }
+        ]
+      },
+      {
+        "id": "c5",
+        "type": "forensic",
+        "isBonus": false,
+        "text": "Kafa travması tek ve sert bir darbeden kaynaklanmış; cam kırığına rastlanmadı.",
+        "effects": [
+          { "type": "eliminateWeapon", "value": "bardak" }
+        ]
+      },
+      {
+        "id": "c6",
+        "type": "evidence",
+        "isBonus": true,
+        "text": "Servis çıkışındaki metal fenerin üzerinde kurbana ait kan izi bulundu.",
+        "effects": [
+          { "type": "setWeapon", "value": "fener" },
+          { "type": "setSuspect", "value": "hakan" }
+        ]
+      }
+    ],
+
+    "solution": {
+      "suspectId": "hakan",
+      "weaponId": "fener",
+      "locationId": "servis"
+    }
+  }
+]
