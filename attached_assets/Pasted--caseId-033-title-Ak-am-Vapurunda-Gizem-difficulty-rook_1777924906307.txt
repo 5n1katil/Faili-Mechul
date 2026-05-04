@@ -1,0 +1,142 @@
+{
+  "caseId": "033",
+  "title": "Akşam Vapurunda Gizem",
+  "difficulty": "rookie",
+  "story": {
+    "summary": "Akşam vapurunda Nafiz Bey kapalı yolcu salonunda ölü bulundu. Masasında yarım kalmış bir içecek vardı. Üç yolcu şüpheli: Tarık, Feriha ve Kerem.",
+    "fullText": "İstanbul’dan kalkan akşam vapuru, seferin ortasında kısa süreli bir elektrik kesintisi yaşadı. Işıklar geri geldiğinde, kapalı yolcu salonunda oturan Nafiz Bey masasında hareketsiz halde bulundu. İlk bakışta uyuyor gibiydi; ancak kısa süre sonra hayatını kaybettiği anlaşıldı. Masasında yarım kalmış bir içecek vardı. Etrafta kavga, bağrışma ya da darp izi yoktu. Vapur kayıtlarına göre olay anında salona erişebilecek üç kişi vardı: Tarık, Feriha ve Kerem."
+  },
+  "suspects": [
+    {
+      "id": "tarik",
+      "name": "Tarık",
+      "description": "Yolculuk boyunca üst güvertede olduğunu söylüyor. Kaptan onu uzun süre açık güvertede gördüğünü doğruluyor."
+    },
+    {
+      "id": "feriha",
+      "name": "Feriha",
+      "description": "Kapalı yolcu salonunda kısa süre bulunduğunu kabul ediyor. Nafiz Bey’i tanımadığını söylüyor."
+    },
+    {
+      "id": "kerem",
+      "name": "Kerem",
+      "description": "Vapurda görevli personel. Olay saatinde makine bölümünde olduğunu söylüyor ve kayıtlar bunu destekliyor."
+    }
+  ],
+  "weapons": [
+    {
+      "id": "poison",
+      "name": "Zehirli İçecek"
+    },
+    {
+      "id": "iron_bar",
+      "name": "Demir Çubuk"
+    },
+    {
+      "id": "glass_shard",
+      "name": "Cam Parçası"
+    }
+  ],
+  "locations": [
+    {
+      "id": "passenger_lounge",
+      "name": "Kapalı Yolcu Salonu"
+    },
+    {
+      "id": "upper_deck",
+      "name": "Açık Güverte"
+    },
+    {
+      "id": "engine_room",
+      "name": "Makine Bölümü"
+    }
+  ],
+  "clues": [
+    {
+      "id": "clue_01",
+      "type": "forensic",
+      "title": "Adli İnceleme",
+      "text": "Nafiz Bey’in üzerinde darp izi yok. Ölümün içeceğe karışan hızlı etkili bir maddeden kaynaklandığı düşünülüyor.",
+      "unlocks": [
+        {
+          "category": "weapons",
+          "remove": ["iron_bar", "glass_shard"]
+        }
+      ]
+    },
+    {
+      "id": "clue_02",
+      "type": "evidence",
+      "title": "Masa Üzerindeki Bardak",
+      "text": "İçeceğin bulunduğu bardak kapalı yolcu salonundaki masadaydı. Bardakta dışarıdan taşınma ya da kırılma izi yoktu.",
+      "unlocks": [
+        {
+          "category": "locations",
+          "confirm": ["passenger_lounge"]
+        }
+      ]
+    },
+    {
+      "id": "clue_03",
+      "type": "witness",
+      "title": "Kaptanın İfadesi",
+      "text": "Kaptan, Tarık’ı yolculuk boyunca açık güvertede gördüğünü söylüyor. Tarık’ın kapalı yolcu salonuna indiğine dair bir tanık ifadesi yok.",
+      "unlocks": [
+        {
+          "category": "suspects",
+          "remove": ["tarik"]
+        },
+        {
+          "category": "locations",
+          "remove": ["upper_deck"]
+        }
+      ]
+    },
+    {
+      "id": "clue_04",
+      "type": "record",
+      "title": "Personel Kaydı",
+      "text": "Kerem’in olay saatinde makine bölümünde görevli olduğu kayıtlarla doğrulandı. Kayıtlarda makine bölümünden ayrıldığına dair bir işaret yok.",
+      "unlocks": [
+        {
+          "category": "suspects",
+          "remove": ["kerem"]
+        },
+        {
+          "category": "locations",
+          "remove": ["engine_room"]
+        }
+      ]
+    },
+    {
+      "id": "clue_05",
+      "type": "forensic",
+      "title": "Çözünmüş Madde",
+      "text": "İçeceğe karışan madde tamamen çözünmüş. Bardak üzerinde parmak izi silinmiş; ancak bardağın yerinden oynatıldığına dair iz yok.",
+      "unlocks": [
+        {
+          "category": "weapons",
+          "confirm": ["poison"]
+        }
+      ]
+    },
+    {
+      "id": "clue_06",
+      "type": "key",
+      "title": "Salon Tanığı",
+      "text": "Bir yolcu, elektrik kesintisinden hemen önce Feriha’nın kapalı yolcu salonunda Nafiz Bey’in masasının yanında kısa süre durduğunu söylüyor.",
+      "unlocks": [
+        {
+          "category": "suspects",
+          "confirm": ["feriha"]
+        }
+      ]
+    }
+  ],
+  "solution": {
+    "killer": "feriha",
+    "weapon": "poison",
+    "location": "passenger_lounge",
+    "explanation": "Nafiz Bey darp edilmedi; ölüm zehirli içecekten kaynaklandı. Bardak kapalı yolcu salonundaydı. Tarık’ın açık güvertede olduğu, Kerem’in ise makine bölümünde bulunduğu doğrulandı. Feriha’nın elektrik kesintisinden hemen önce Nafiz Bey’in masasının yanında görülmesi, onu doğru şüpheli yapar."
+  }
+}
