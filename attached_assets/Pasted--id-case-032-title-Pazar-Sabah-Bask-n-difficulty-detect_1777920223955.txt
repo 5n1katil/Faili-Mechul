@@ -1,0 +1,113 @@
+{
+  "id": "case_032",
+  "title": "Pazar Sabahı Baskını",
+  "difficulty": "detective",
+
+  "story": "Gaziantep’in eski çarşısında bakırcı Niyazi Usta, sabah erken saatlerde dükkânının deposunda ağır yaralı halde bulundu ve kısa süre sonra hayatını kaybetti. Dükkan henüz açılmamıştı. Ön kapı dışarıdan kilitliydi. Depoda dağınıklık ve mücadele izleri vardı. Kasadan para ve bazı bakır eşyalar kayıptı. O sabah çarşıda üç kişi bulunuyordu: Rakip esnaf Vahap, çırak Selim ve kargo görevlisi Murat.",
+
+  "suspects": [
+    {
+      "id": "vahap",
+      "name": "Vahap",
+      "description": "Rakip esnaf, maddi sıkıntı yaşıyor."
+    },
+    {
+      "id": "selim",
+      "name": "Selim",
+      "description": "Çırak, dükkân anahtarına erişimi var."
+    },
+    {
+      "id": "murat",
+      "name": "Murat",
+      "description": "Kargo görevlisi, sabah teslimat yapıyor."
+    }
+  ],
+
+  "weapons": [
+    {
+      "id": "surahi",
+      "name": "Bakır Sürahi",
+      "description": "Ağır ve yuvarlak yüzeyli."
+    },
+    {
+      "id": "cubuk",
+      "name": "Demir Çubuk",
+      "description": "Uzun ve köşeli."
+    },
+    {
+      "id": "tas",
+      "name": "Taş",
+      "description": "Düzensiz ve pürüzlü."
+    }
+  ],
+
+  "locations": [
+    {
+      "id": "depo",
+      "name": "Depo"
+    },
+    {
+      "id": "dukkan",
+      "name": "Dükkan İç Alanı"
+    },
+    {
+      "id": "arka_sokak",
+      "name": "Arka Sokak"
+    }
+  ],
+
+  "clues": [
+    {
+      "id": "clue_1",
+      "type": "evidence",
+      "isBonus": false,
+      "text": "Niyazi Usta deponun ortasında bulundu. Mücadele izleri yalnızca depodaydı.",
+      "effects": [
+        { "type": "setLocation", "value": "depo" }
+      ]
+    },
+    {
+      "id": "clue_2",
+      "type": "witness",
+      "isBonus": false,
+      "text": "Çay ocağı sahibi, Vahap’ın saat 07:45’e kadar ocakta olduğunu söylüyor.",
+      "effects": [
+        { "type": "eliminateSuspect", "value": "vahap" }
+      ]
+    },
+    {
+      "id": "clue_3",
+      "type": "forensic",
+      "isBonus": false,
+      "text": "Baş yarası yuvarlak ve düzgün bir cisimle oluşmuş.",
+      "effects": [
+        { "type": "eliminateWeapon", "value": "cubuk" },
+        { "type": "eliminateWeapon", "value": "tas" }
+      ]
+    },
+    {
+      "id": "clue_4",
+      "type": "evidence",
+      "isBonus": false,
+      "text": "Bakır sürahinin sapında kan ve kil parçası bulundu.",
+      "effects": [
+        { "type": "setWeapon", "value": "surahi" }
+      ]
+    },
+    {
+      "id": "clue_5",
+      "type": "witness",
+      "isBonus": true,
+      "text": "Selim dükkâna gelmediğini söylüyor ancak saat 07:00’de arka kapıdan girdiği görüldü.",
+      "effects": [
+        { "type": "markSuspicious", "value": "selim" }
+      ]
+    }
+  ],
+
+  "solution": {
+    "suspectId": "selim",
+    "weaponId": "surahi",
+    "locationId": "depo"
+  }
+}
