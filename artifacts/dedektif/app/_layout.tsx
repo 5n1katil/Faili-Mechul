@@ -23,6 +23,8 @@ import Animated, {
   Easing,
 } from "react-native-reanimated";
 
+import { SplashAnimation } from "@/components/SplashAnimation";
+
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { GameProvider } from "@/context/GameContext";
 import { MissionProvider, useMission } from "@/context/MissionContext";
@@ -494,7 +496,9 @@ function AppWithMissions() {
 }
 
 export default function RootLayout() {
-  const [fontsLoaded, fontError] = useFonts({
+  const [splashDone, setSplashDone] = useState(false);
+
+  useFonts({
     Inter_400Regular,
     Inter_500Medium,
     Inter_600SemiBold,
@@ -502,12 +506,8 @@ export default function RootLayout() {
   });
 
   useEffect(() => {
-    if (fontsLoaded || fontError) {
-      SplashScreen.hideAsync();
-    }
-  }, [fontsLoaded, fontError]);
-
-  if (!fontsLoaded && !fontError) return null;
+    SplashScreen.hideAsync();
+  }, []);
 
   return (
     <SafeAreaProvider>
@@ -526,6 +526,9 @@ export default function RootLayout() {
           </GestureHandlerRootView>
         </QueryClientProvider>
       </ErrorBoundary>
+      {!splashDone && (
+        <SplashAnimation onComplete={() => setSplashDone(true)} />
+      )}
     </SafeAreaProvider>
   );
 }

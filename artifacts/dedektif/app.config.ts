@@ -15,8 +15,6 @@ export default ({ config }: ConfigContext): ExpoConfig => {
     userInterfaceStyle: "dark",
     newArchEnabled: true,
     splash: {
-      image: "./assets/images/splash-icon.png",
-      resizeMode: "contain",
       backgroundColor: "#0F1117",
     },
     ios: {
