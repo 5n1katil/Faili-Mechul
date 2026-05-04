@@ -2162,7 +2162,7 @@ export const PUZZLES: Puzzle[] = [
   },
   {
     id: "p030",
-    title: "Karaköy'de Neon",
+    title: "Karaköy'de Neon Gece",
     difficulty: "caylak",
     dayIndex: 30,
     story:
@@ -2270,7 +2270,7 @@ export const PUZZLES: Puzzle[] = [
   },
   {
     id: "p033",
-    title: "Akşam Vapurunda",
+    title: "Akşam Vapurunda Gizem",
     difficulty: "caylak",
     dayIndex: 33,
     story:

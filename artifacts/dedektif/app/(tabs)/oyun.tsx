@@ -53,6 +53,7 @@ import Animated, { FadeInDown } from "react-native-reanimated";
 
 const FREE_PUZZLE_COUNT = 10;
 const EXTRA_FREE_PUZZLE_IDS: ReadonlySet<string> = new Set([
+  "p030",
   "p031",
   "p032",
   "p033",
