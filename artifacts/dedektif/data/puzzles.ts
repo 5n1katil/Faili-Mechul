@@ -2270,14 +2270,14 @@ export const PUZZLES: Puzzle[] = [
     story:
       "Gaziantep'in eski çarşısında bakırcı Niyazi Usta, sabah erken saatlerde dükkânının deposunda ağır yaralı halde bulundu ve kısa süre sonra hayatını kaybetti. Dükkan henüz açılmamıştı. Ön kapı dışarıdan kilitliydi. Kasadan para ve bazı bakır eşyalar kayıptı. O sabah çarşıda üç kişi bulunuyordu: rakip esnaf Vahap, çırak Selim ve kargo görevlisi Murat.",
     suspects: [
-      { id: "s1", name: "Rakip Esnaf Vahap", description: "Hemen karşısındaki dükkânda bakır satan eski rakip; son aylarda maddi sıkıntı yaşıyor, müşteri kaybını Niyazi'ye bağlıyor.", icon: "elderly" },
-      { id: "s2", name: "Çırak Selim", description: "Niyazi Usta'nın üç yıldır yanında çalışan çırağı; son haftalarda ustasıyla sık sık tartışıyor, dükkân anahtarına erişimi var.", icon: "person" },
-      { id: "s3", name: "Kargo Görevlisi Murat", description: "Her sabah çarşıya teslimat yapan kargo görevlisi; o gün erken saatte çarşıda görülmüş.", icon: "local-shipping" },
+      { id: "s1", name: "Rakip Esnaf Vahap", description: "Rakip esnaf.", icon: "elderly" },
+      { id: "s2", name: "Çırak Selim", description: "Bakırcının çırağı.", icon: "person" },
+      { id: "s3", name: "Kargo Görevlisi Murat", description: "Kargo görevlisi.", icon: "local-shipping" },
     ],
     weapons: [
-      { id: "w1", name: "Bakır Sürahi", description: "Dükkanın vitrinindeki ağır, yuvarlak yüzeyli bakır sürahi; sapı rahatlıkla kavranabilir.", icon: "wine-bar" },
-      { id: "w2", name: "Demir Çubuk", description: "Depoda bulunan uzun ve köşeli demir destek çubuğu.", icon: "build" },
-      { id: "w3", name: "Taş", description: "Arka sokakta bulunabilecek düzensiz ve pürüzlü yüzeyli moloz taşı.", icon: "lens" },
+      { id: "w1", name: "Bakır Sürahi", description: "Ağır, yuvarlak ve düzgün yüzeyli.", icon: "wine-bar" },
+      { id: "w2", name: "Demir Çubuk", description: "Uzun, ince ve köşeli.", icon: "build" },
+      { id: "w3", name: "Taş", description: "Pürüzlü ve düzensiz yüzeyli.", icon: "lens" },
     ],
     locations: [
       { id: "l1", name: "Depo", description: "Dükkanın arka bölümündeki kapalı depo; arka kapıdan erişilebilir, ön kapıdan görünmez.", icon: "warehouse" },
@@ -2285,12 +2285,12 @@ export const PUZZLES: Puzzle[] = [
       { id: "l3", name: "Arka Sokak", description: "Dükkanın arka kapısına açılan dar sokak; çarşı esnafının mal girişi için kullandığı geçit.", icon: "directions-walk" },
     ],
     clues: [
-      { id: "c1", text: "Mücadele izleri yalnızca depodaydı. Olay depo dışında başlamamış.", type: "evidence", isBonus: false },
-      { id: "c2", text: "Baş yarası yuvarlak ve düzgün bir cisimle oluşmuş. Demir çubuk ve taş bu izi açıklamaz.", type: "forensic", isBonus: false },
-      { id: "c3", text: "Çay ocağı sahibi, Vahap'ın olay saatinde çay ocağında olduğunu doğruluyor.", type: "witness", isBonus: false },
-      { id: "c4", text: "Kargo kayıtlarına göre Murat olaydan sonra çarşıya gelmiş.", type: "witness", isBonus: false },
-      { id: "c5", text: "Bakır sürahinin sapında kan izi bulundu.", type: "evidence", isBonus: true },
-      { id: "c6", text: "Selim, gelmediğini söyledi; fakat komşu esnaf onu arka kapıdan girerken gördü.", type: "witness", isBonus: true },
+      { id: "c1", text: "Kırık kutular, devrilmiş raflar ve kan izleri yalnızca depoda bulundu. Dükkan içinde ve arka sokakta mücadele izi yok.", type: "evidence", isBonus: false },
+      { id: "c2", text: "Baş yarası tek darbeyle oluşmuş; iz yuvarlak kenarlı ve düzgün yüzeyli bir nesneye ait görünüyor.", type: "forensic", isBonus: false },
+      { id: "c3", text: "Çay ocağı sahibi, Vahap'ın olay saatinde çay ocağında oturduğunu ve dükkâna gitmediğini söylüyor.", type: "witness", isBonus: false },
+      { id: "c4", text: "Kargo teslim kaydına göre Murat, dükkâna olaydan sonra gelmiş. O sırada depo kapısı zaten kalabalık tarafından açılmıştı.", type: "evidence", isBonus: false },
+      { id: "c5", text: "Depoya yakın rafta duran bakır sürahinin sapında kan izi ve Niyazi Usta'nın ceketinden kopmuş kumaş lifi bulundu.", type: "evidence", isBonus: true },
+      { id: "c6", text: "Selim sabah gelmediğini söyledi; fakat komşu esnaf onu olaydan önce arka kapıdan içeri girerken gördü.", type: "witness", isBonus: true },
     ],
     solvabilityMeta: {
       freeEliminations: ["l2", "l3", "s1", "s3", "w2", "w3"],

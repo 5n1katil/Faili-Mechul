@@ -1,0 +1,116 @@
+{
+  "id": "case_032",
+  "title": "Pazar Sabahı Baskını",
+  "difficulty": "caylak",
+  "story": "Gaziantep'in eski çarşısında bakırcı Niyazi Usta, sabah erken saatlerde dükkânının deposunda ağır yaralı halde bulundu ve kısa süre sonra hayatını kaybetti. Dükkan henüz açılmamıştı. Ön kapı dışarıdan kilitliydi. Kasadan para ve bazı bakır eşyalar kayıptı. O sabah çarşıda üç kişi bulunuyordu: rakip esnaf Vahap, çırak Selim ve kargo görevlisi Murat.",
+  "suspects": [
+    {
+      "id": "vahap",
+      "name": "Vahap",
+      "description": "Rakip esnaf."
+    },
+    {
+      "id": "selim",
+      "name": "Selim",
+      "description": "Bakırcının çırağı."
+    },
+    {
+      "id": "murat",
+      "name": "Murat",
+      "description": "Kargo görevlisi."
+    }
+  ],
+  "weapons": [
+    {
+      "id": "surahi",
+      "name": "Bakır Sürahi",
+      "description": "Ağır, yuvarlak ve düzgün yüzeyli."
+    },
+    {
+      "id": "cubuk",
+      "name": "Demir Çubuk",
+      "description": "Uzun, ince ve köşeli."
+    },
+    {
+      "id": "tas",
+      "name": "Taş",
+      "description": "Pürüzlü ve düzensiz yüzeyli."
+    }
+  ],
+  "locations": [
+    {
+      "id": "depo",
+      "name": "Depo"
+    },
+    {
+      "id": "dukkan",
+      "name": "Dükkan İçi"
+    },
+    {
+      "id": "arka_sokak",
+      "name": "Arka Sokak"
+    }
+  ],
+  "clues": [
+    {
+      "id": "clue_1",
+      "type": "evidence",
+      "isBonus": false,
+      "text": "Kırık kutular, devrilmiş raflar ve kan izleri yalnızca depoda bulundu. Dükkan içinde ve arka sokakta mücadele izi yok.",
+      "effects": [
+        { "type": "setLocation", "value": "depo" }
+      ]
+    },
+    {
+      "id": "clue_2",
+      "type": "forensic",
+      "isBonus": false,
+      "text": "Baş yarası tek darbeyle oluşmuş; iz yuvarlak kenarlı ve düzgün yüzeyli bir nesneye ait görünüyor.",
+      "effects": [
+        { "type": "eliminateWeapon", "value": "cubuk" },
+        { "type": "eliminateWeapon", "value": "tas" }
+      ]
+    },
+    {
+      "id": "clue_3",
+      "type": "witness",
+      "isBonus": false,
+      "text": "Çay ocağı sahibi, Vahap'ın olay saatinde çay ocağında oturduğunu ve dükkâna gitmediğini söylüyor.",
+      "effects": [
+        { "type": "eliminateSuspect", "value": "vahap" }
+      ]
+    },
+    {
+      "id": "clue_4",
+      "type": "evidence",
+      "isBonus": false,
+      "text": "Kargo teslim kaydına göre Murat, dükkâna olaydan sonra gelmiş. O sırada depo kapısı zaten kalabalık tarafından açılmıştı.",
+      "effects": [
+        { "type": "eliminateSuspect", "value": "murat" }
+      ]
+    },
+    {
+      "id": "clue_5",
+      "type": "evidence",
+      "isBonus": true,
+      "text": "Depoya yakın rafta duran bakır sürahinin sapında kan izi ve Niyazi Usta'nın ceketinden kopmuş kumaş lifi bulundu.",
+      "effects": [
+        { "type": "setWeapon", "value": "surahi" }
+      ]
+    },
+    {
+      "id": "clue_6",
+      "type": "witness",
+      "isBonus": true,
+      "text": "Selim sabah gelmediğini söyledi; fakat komşu esnaf onu olaydan önce arka kapıdan içeri girerken gördü.",
+      "effects": [
+        { "type": "setSuspect", "value": "selim" }
+      ]
+    }
+  ],
+  "solution": {
+    "suspectId": "selim",
+    "weaponId": "surahi",
+    "locationId": "depo"
+  }
+}
