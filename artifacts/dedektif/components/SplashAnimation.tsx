@@ -84,10 +84,12 @@ export function SplashAnimation({ onComplete }: SplashAnimationProps) {
         <View style={styles.logoWrapper}>
           <Animated.View style={[styles.glow, glowStyle]} />
           <Animated.View style={[styles.glowOuter, glowStyle]} />
-          <Animated.Image
-            source={require("../assets/images/icon.png")}
-            style={[styles.logo, logoStyle]}
-          />
+          <Animated.View style={logoStyle}>
+            <Image
+              source={require("../assets/images/icon.png")}
+              style={styles.logo}
+            />
+          </Animated.View>
         </View>
 
         <Animated.Text style={[styles.title, titleStyle]}>
