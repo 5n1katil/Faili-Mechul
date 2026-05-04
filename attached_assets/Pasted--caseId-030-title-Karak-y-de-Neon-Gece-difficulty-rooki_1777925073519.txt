@@ -1,0 +1,142 @@
+{
+  "caseId": "030",
+  "title": "Karaköy'de Neon Gece",
+  "difficulty": "rookie",
+  "story": {
+    "summary": "Karaköy’de bir gece kulübünde müşteri servis çıkışında ölü bulundu. Üç çalışan şüpheli: Mete, Deniz ve Hakan.",
+    "fullText": "Karaköy’de yoğun bir gece. Neon ışıklar altında dolup taşan bir gece kulübünde müzik aniden kesildi. Kısa süre sonra, servis çıkışına yakın bir noktada bir müşterinin hareketsiz yattığı fark edildi. İlk bakışta düşmüş gibi görünse de yapılan incelemede olayın basit bir kaza olmadığı anlaşıldı.\n\nKurbanın vücudunda sürüklenme izi yoktu. Bu da olayın bulunduğu noktada gerçekleştiğini düşündürüyordu. Kulübün o bölümüne erişimi olan üç çalışan vardı: DJ Mete, kasada çalışan Deniz ve güvenlik görevlisi Hakan.\n\nKulüp kalabalık, müzik yüksek, görüş kısıtlıydı. Kimse doğrudan olayı görmemişti. Ama küçük detaylar, doğru birleştirildiğinde gerçeği ortaya çıkaracak."
+  },
+  "suspects": [
+    {
+      "id": "mete",
+      "name": "Mete",
+      "description": "DJ. Olay sırasında sahne arkasında olduğunu ve setini hiç bırakmadığını söylüyor."
+    },
+    {
+      "id": "deniz",
+      "name": "Deniz",
+      "description": "Kasada çalışıyor. Olay saatinde VIP bölümde işlem yaptığını söylüyor."
+    },
+    {
+      "id": "hakan",
+      "name": "Hakan",
+      "description": "Güvenlik görevlisi. Kulüp içinde devriye attığını söylüyor."
+    }
+  ],
+  "weapons": [
+    {
+      "id": "blunt_force",
+      "name": "Sert Cisim Darbesi"
+    },
+    {
+      "id": "glass",
+      "name": "Kırık Şişe"
+    },
+    {
+      "id": "fist",
+      "name": "Yumruk"
+    }
+  ],
+  "locations": [
+    {
+      "id": "service_exit",
+      "name": "Servis Çıkışı"
+    },
+    {
+      "id": "stage_back",
+      "name": "Sahne Arkası"
+    },
+    {
+      "id": "vip_area",
+      "name": "VIP Bölüm"
+    }
+  ],
+  "clues": [
+    {
+      "id": "clue_01",
+      "type": "forensic",
+      "title": "Adli İnceleme",
+      "text": "Adli inceleme, ölümün kafa bölgesine alınan tek ve güçlü bir darbe sonucu gerçekleştiğini gösteriyor. Birden fazla darbe ya da uzun süren bir mücadele izine rastlanmadı.",
+      "unlocks": [
+        {
+          "category": "weapons",
+          "remove": ["fist"]
+        }
+      ]
+    },
+    {
+      "id": "clue_02",
+      "type": "evidence",
+      "title": "Olay Yeri",
+      "text": "Kurban servis çıkışında bulundu. Vücudunda sürüklenme ya da taşınma izi yok. Bu, darbenin bulunduğu noktada gerçekleştiğini gösteriyor.",
+      "unlocks": [
+        {
+          "category": "locations",
+          "confirm": ["service_exit"]
+        }
+      ]
+    },
+    {
+      "id": "clue_03",
+      "type": "witness",
+      "title": "DJ Kabini",
+      "text": "Kulüp çalışanları, DJ Mete’nin olay boyunca sahne arkasında olduğunu ve müziğin kesilmediğini belirtiyor. DJ kabini kısa süreliğine bile boş kalmamış.",
+      "unlocks": [
+        {
+          "category": "suspects",
+          "remove": ["mete"]
+        },
+        {
+          "category": "locations",
+          "remove": ["stage_back"]
+        }
+      ]
+    },
+    {
+      "id": "clue_04",
+      "type": "record",
+      "title": "Kasa Kayıtları",
+      "text": "Deniz’in olay saatinde VIP bölümde işlem yaptığı kasa kayıtlarıyla doğrulandı. İşlem süresi boyunca sistemden çıkış yapmadığı görülüyor.",
+      "unlocks": [
+        {
+          "category": "suspects",
+          "remove": ["deniz"]
+        },
+        {
+          "category": "locations",
+          "remove": ["vip_area"]
+        }
+      ]
+    },
+    {
+      "id": "clue_05",
+      "type": "forensic",
+      "title": "Kırık İz Yok",
+      "text": "Olay yerinde kırık cam, şişe ya da kesici bir nesneye rastlanmadı. Darbenin temiz ve doğrudan bir temasla gerçekleştiği anlaşılıyor.",
+      "unlocks": [
+        {
+          "category": "weapons",
+          "remove": ["glass"]
+        }
+      ]
+    },
+    {
+      "id": "clue_06",
+      "type": "key",
+      "title": "Kamera Kör Noktası",
+      "text": "Servis çıkışı, güvenlik kameralarının doğrudan görmediği bir kör noktada bulunuyor. Güvenlik görevlisi Hakan’ın devriye güzergahı bu noktadan geçiyor.",
+      "unlocks": [
+        {
+          "category": "suspects",
+          "confirm": ["hakan"]
+        }
+      ]
+    }
+  ],
+  "solution": {
+    "killer": "hakan",
+    "weapon": "blunt_force",
+    "location": "service_exit",
+    "explanation": "Kurban sürüklenmedi, olay servis çıkışında gerçekleşti. Mete ve Deniz’in alibileri doğrulandı. Cam ya da kesici bir nesne kullanılmadı, darbe tek ve sertti. Servis çıkışı kamera kör noktasında ve bu noktadan düzenli geçen tek kişi güvenlik görevlisi Hakan’dı."
+  }
+}
