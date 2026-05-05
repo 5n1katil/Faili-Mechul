@@ -2184,11 +2184,11 @@ export const PUZZLES: Puzzle[] = [
     ],
     clues: [
       { id: "c1", text: "Adli inceleme, ölümün kafa bölgesine alınan tek ve güçlü bir darbe sonucu gerçekleştiğini gösteriyor. Uzun süren bir kavga ya da çoklu darbe izi yok.", type: "forensic", isBonus: false },
-      { id: "c2", text: "Olay yerinde kırık cam, şişe parçası ya da kesici bir nesneye rastlanmadı. Darbenin temiz ve doğrudan bir temasla gerçekleştiği anlaşılıyor.", type: "forensic", isBonus: false },
+      { id: "c2", text: "Kurbanın kıyafetlerinde ya da olay yerinde herhangi bir cam kırığı, kesik izi ya da sıvı sıçrama belirtisi bulunmadı.", type: "forensic", isBonus: false },
       { id: "c3", text: "Kurban servis çıkışında bulundu ve vücudunda sürüklenme izi yok. Bu, darbenin bulunduğu noktada gerçekleştiğini gösteriyor.", type: "evidence", isBonus: false },
       { id: "c4", text: "Kulüp çalışanları, DJ Mete'nin olay boyunca sahne arkasında olduğunu ve müziğin hiç kesilmediğini söylüyor. DJ kabini kısa süreliğine bile boş kalmamış.", type: "witness", isBonus: false },
       { id: "c5", text: "Deniz'in olay saatinde VIP bölümde işlem yaptığı kasa kayıtlarıyla doğrulandı. İşlem süresi boyunca sistemden çıkış yapmadığı görülüyor.", type: "record", isBonus: false },
-      { id: "c6", text: "Servis çıkışı, güvenlik kameralarının doğrudan görmediği bir kör noktada bulunuyor. Güvenlik görevlisinin devriye rotası bu noktadan geçiyor.", type: "witness", isBonus: true },
+      { id: "c6", text: "Servis çıkışı, güvenlik kameralarının doğrudan görmediği bir kör noktada bulunuyor ve bu alan düzenli olarak güvenlik görevlisi tarafından kontrol ediliyor.", type: "witness", isBonus: true },
     ],
     solvabilityMeta: {
       freeEliminations: ["s1", "s2", "w2", "w3", "l2", "l3"],
