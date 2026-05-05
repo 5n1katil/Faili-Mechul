@@ -1,0 +1,108 @@
+{
+  "id": "p032",
+  "title": "Pazar Sabahı Cinayeti",
+  "difficulty": "caylak",
+  "dayIndex": 32,
+  "story": "Gaziantep’in eski çarşısında bakırcı Niyazi Usta sabah erken saatlerde dükkanının deposunda ölü bulundu. Kasadan para ve bazı bakır eşyalar kayıptı.",
+  "suspects": [
+    {
+      "id": "s1",
+      "name": "Vahap",
+      "description": "Kapı esnafı. Olay saatinde dükkan içinde olduğunu söylüyor.",
+      "icon": "elderly"
+    },
+    {
+      "id": "s2",
+      "name": "Selim",
+      "description": "Bakırcı çırağı. Depo anahtarına erişimi vardı.",
+      "icon": "person"
+    },
+    {
+      "id": "s3",
+      "name": "Murat",
+      "description": "Kargo görevlisi. Sabah teslimat için arka sokaktan geldiğini söylüyor.",
+      "icon": "local_shipping"
+    }
+  ],
+  "weapons": [
+    {
+      "id": "w1",
+      "name": "Kırık Bardak",
+      "description": "Kesici cam parçası.",
+      "icon": "local_bar"
+    },
+    {
+      "id": "w2",
+      "name": "İngiliz Anahtarı",
+      "description": "Ağır metal el aleti.",
+      "icon": "build"
+    },
+    {
+      "id": "w3",
+      "name": "Bakır Ağırlık",
+      "description": "Yuvarlak kenarlı ağır tartı ağırlığı.",
+      "icon": "circle"
+    }
+  ],
+  "locations": [
+    {
+      "id": "l1",
+      "name": "Depo",
+      "description": "Dükkanın arka kısmındaki malzeme alanı.",
+      "icon": "warehouse"
+    },
+    {
+      "id": "l2",
+      "name": "Dükkan İçi",
+      "description": "Tezgah ve satış alanı.",
+      "icon": "storefront"
+    },
+    {
+      "id": "l3",
+      "name": "Arka Sokak",
+      "description": "Teslimatların yapıldığı dar geçit.",
+      "icon": "directions_walk"
+    }
+  ],
+  "clues": [
+    {
+      "id": "c1",
+      "text": "Kırık kutular, devrilmiş raflar ve kan izleri yalnızca depoda bulundu. Dükkan içinde ve arka sokakta mücadele ya da sürüklenme izi yok.",
+      "type": "evidence",
+      "isBonus": false
+    },
+    {
+      "id": "c2",
+      "text": "Baş yarası tek darbeyle oluşmuş; yara izi yuvarlak kenarlı, ağır ve düzgün yüzeyli bir nesneyle uyumlu. Kesici cam izi ya da İngiliz anahtarına özgü köşeli metal izleri görülmedi.",
+      "type": "forensic",
+      "isBonus": false
+    },
+    {
+      "id": "c3",
+      "text": "Vahap olay saatinde dükkan içinde, tezgah başında iki esnafla konuşurken görülmüş. Tanıklar onun depoya ya da arka sokağa gitmediğini doğruluyor.",
+      "type": "witness",
+      "isBonus": false
+    },
+    {
+      "id": "c4",
+      "text": "Arka sokak kamerası, Murat’ın kargo arabasıyla olaydan sonra geldiğini gösteriyor. Murat depoya ancak kalabalık toplandıktan sonra girmiş.",
+      "type": "record",
+      "isBonus": false
+    },
+    {
+      "id": "c5",
+      "text": "Depodaki tartı rafında bir bakır ağırlığın yeri boştu. Selim’in önlüğünde taze bakır tozu ve depo anahtarında silinmiş kan lekesi bulundu.",
+      "type": "evidence",
+      "isBonus": false
+    }
+  ],
+  "solvabilityMeta": {
+    "freeEliminations": ["s1", "s3", "w1", "w2", "l2", "l3"],
+    "bonusEliminations": []
+  },
+  "solution": {
+    "suspectId": "s2",
+    "weaponId": "w3",
+    "locationId": "l1"
+  }
+}
