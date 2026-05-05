@@ -1,0 +1,81 @@
+{
+  "caseId": "033",
+  "title": "Akşam Vapurunda Gizem",
+  "difficulty": "rookie",
+  "gridType": "3x3x3",
+  "story": {
+    "summary": "Akşam vapurunda Nafiz Bey ölü bulundu. Üç şüpheli, üç silah ve üç farklı alan var.",
+    "fullText": "Akşam vapurunda kısa süreli bir elektrik kesintisi yaşandı. Işıklar geri geldiğinde Nafiz Bey kapalı yolcu salonunda ölü bulundu. Ölümün içeceğe karışan bir maddeden kaynaklandığı düşünülüyor. Vapurda üç kritik alan var: kapalı salon, açık güverte ve makine bölümü. Olay anında bu alanlarla bağlantısı olan üç kişi bulunuyor: Tarık, Feriha ve Kerem. Ancak kim neredeydi ve hangi yöntem kullanıldı kesin olarak bilinmiyor."
+  },
+  "suspects": [
+    { "id": "tarik", "name": "Tarık" },
+    { "id": "feriha", "name": "Feriha" },
+    { "id": "kerem", "name": "Kerem" }
+  ],
+  "weapons": [
+    { "id": "poison", "name": "Zehir" },
+    { "id": "wrench", "name": "İngiliz Anahtarı" },
+    { "id": "glass", "name": "Cam Parçası" }
+  ],
+  "locations": [
+    { "id": "lounge", "name": "Kapalı Salon" },
+    { "id": "deck", "name": "Açık Güverte" },
+    { "id": "engine", "name": "Makine Bölümü" }
+  ],
+  "clues": [
+    {
+      "id": "c1",
+      "type": "forensic",
+      "text": "Ölüm zehirle gerçekleşti. Fiziksel darbe izine rastlanmadı.",
+      "unlocks": [
+        { "category": "weapons", "remove": ["wrench", "glass"] }
+      ]
+    },
+    {
+      "id": "c2",
+      "type": "logic",
+      "text": "Zehir kullanılan olay makine bölümünde gerçekleşmedi.",
+      "unlocks": [
+        { "category": "relations", "remove": { "weapon": "poison", "location": "engine" } }
+      ]
+    },
+    {
+      "id": "c3",
+      "type": "witness",
+      "text": "Tarık olay sırasında açık güvertedeydi.",
+      "unlocks": [
+        { "category": "relations", "confirm": { "suspect": "tarik", "location": "deck" } }
+      ]
+    },
+    {
+      "id": "c4",
+      "type": "logic",
+      "text": "Açık güvertede zehir kullanılmadı.",
+      "unlocks": [
+        { "category": "relations", "remove": { "weapon": "poison", "location": "deck" } }
+      ]
+    },
+    {
+      "id": "c5",
+      "type": "record",
+      "text": "Kerem makine bölümünde görevliydi.",
+      "unlocks": [
+        { "category": "relations", "confirm": { "suspect": "kerem", "location": "engine" } }
+      ]
+    },
+    {
+      "id": "c6",
+      "type": "logic",
+      "text": "Cam parçası kullanılan olay kapalı salonda olmadı.",
+      "unlocks": [
+        { "category": "relations", "remove": { "weapon": "glass", "location": "lounge" } }
+      ]
+    }
+  ],
+  "solution": {
+    "tarik": { "weapon": "glass", "location": "deck" },
+    "feriha": { "weapon": "poison", "location": "lounge" },
+    "kerem": { "weapon": "wrench", "location": "engine" },
+    "killer": "feriha"
+  }
+}
