@@ -601,7 +601,7 @@ export default function VakalarScreen() {
         <PaywallModal visible={showPaywall} onClose={() => setShowPaywall(false)} premiumPuzzleCount={premiumPuzzles.length} />
         <PremiumInfoModal
           visible={showPremiumInfo}
-          premiumPuzzleCount={premiumPuzzles.length}
+          premiumPuzzleCount={isPremium ? activePremium.length : premiumPuzzles.length}
           onBuy={() => { setShowPremiumInfo(false); setShowPaywall(true); }}
           onClose={() => setShowPremiumInfo(false)}
         />
