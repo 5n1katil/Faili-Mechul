@@ -2295,7 +2295,7 @@ export const PUZZLES: Puzzle[] = [
       { id: "c2", text: "Makine bölümünde yapılan detaylı incelemede herhangi bir zehirli madde kalıntısına rastlanmadı; bu bölümde zehir kullanıldığına dair bir bulgu yok.", type: "forensic", isBonus: false },
       { id: "c3", text: "Kaptan, Tarık'ın yolculuk boyunca açık güvertede olduğunu ve elektrik kesintisi sırasında da oradan ayrılmadığını doğruluyor.", type: "witness", isBonus: false },
       { id: "c4", text: "Kerem'in olay saatinde makine bölümünde görevli olduğu kayıtlarla sabit; sistem loglarında bulunduğu alanı terk ettiğine dair bir veri yok.", type: "record", isBonus: false },
-      { id: "c5", text: "Olay sonrası kapalı yolcu salonunda bulunan bardakta dışarıdan taşınma, kırılma ya da zorlanma izi yok; içecek doğrudan o masada hazırlanmış görünüyor.", type: "evidence", isBonus: false },
+      { id: "c5", text: "Açık güvertede cinayet silahı olabileceğinden şüphelenilen bir İngiliz Anahtarı bulundu.", type: "evidence", isBonus: false },
       { id: "c6", text: "Açık güvertede içecek servisi yapılmadığı, tüm içeceklerin yalnızca kapalı yolcu salonunda hazırlandığı personel tarafından doğrulandı.", type: "witness", isBonus: true },
     ],
     solvabilityMeta: {
