@@ -2234,25 +2234,25 @@ export const PUZZLES: Puzzle[] = [
   },
   {
     id: "p032",
-    title: "Pazar Sabahı Cinayeti",
+    title: "Pazar Sabahı Baskını",
     difficulty: "caylak",
     dayIndex: 32,
     story:
       "Gaziantep'in eski çarşısında bakırcı Niyazi Usta sabah erken saatlerde dükkanının deposunda ölü bulundu. Kasadan para ve bazı bakır eşyalar kayıptı.",
     suspects: [
-      { id: "s1", name: "Vahap", description: "Kapı esnafı. Olay saatinde dükkan içinde olduğunu söylüyor.", icon: "elderly" },
-      { id: "s2", name: "Selim", description: "Bakırcı çırağı. Depo anahtarına erişimi vardı.", icon: "person" },
-      { id: "s3", name: "Murat", description: "Kargo görevlisi. Sabah teslimat için arka sokaktan geldiğini söylüyor.", icon: "local-shipping" },
+      { id: "s1", name: "Vahap", description: "Kapı esnafı.", icon: "elderly" },
+      { id: "s2", name: "Selim", description: "Bakırcı çırağı.", icon: "person" },
+      { id: "s3", name: "Murat", description: "Kargo görevlisi.", icon: "local-shipping" },
     ],
     weapons: [
       { id: "w1", name: "Kırık Bardak", description: "Kesici cam parçası.", icon: "local-bar" },
-      { id: "w2", name: "İngiliz Anahtarı", description: "Ağır metal el aleti.", icon: "build" },
-      { id: "w3", name: "Bakır Ağırlık", description: "Yuvarlak kenarlı ağır tartı ağırlığı.", icon: "circle" },
+      { id: "w2", name: "İngiliz Anahtarı", description: "Metal el aleti.", icon: "build" },
+      { id: "w3", name: "Bakır Ağırlık", description: "Yuvarlak ağır nesne.", icon: "circle" },
     ],
     locations: [
-      { id: "l1", name: "Depo", description: "Dükkanın arka kısmındaki malzeme alanı.", icon: "warehouse" },
-      { id: "l2", name: "Dükkan İçi", description: "Tezgah ve satış alanı.", icon: "storefront" },
-      { id: "l3", name: "Arka Sokak", description: "Teslimatların yapıldığı dar geçit.", icon: "directions-walk" },
+      { id: "l1", name: "Depo", description: "Arka depo alanı.", icon: "warehouse" },
+      { id: "l2", name: "Dükkan İçi", description: "Satış alanı.", icon: "storefront" },
+      { id: "l3", name: "Arka Sokak", description: "Teslimat alanı.", icon: "directions-walk" },
     ],
     clues: [
       { id: "c1", text: "Kırık kutular, devrilmiş raflar ve kan izleri yalnızca depoda bulundu. Dükkan içinde ve arka sokakta mücadele ya da sürüklenme izi yok.", type: "evidence", isBonus: false },
@@ -2260,6 +2260,9 @@ export const PUZZLES: Puzzle[] = [
       { id: "c3", text: "Vahap olay saatinde dükkan içinde, tezgah başında iki esnafla konuşurken görülmüş. Tanıklar onun depoya ya da arka sokağa gitmediğini doğruluyor.", type: "witness", isBonus: false },
       { id: "c4", text: "Arka sokak kamerası, Murat'ın kargo arabasıyla olaydan sonra geldiğini gösteriyor. Murat depoya ancak kalabalık toplandıktan sonra girmiş.", type: "record", isBonus: false },
       { id: "c5", text: "Depodaki tartı rafında bir bakır ağırlığın yeri boştu. Selim'in önlüğünde taze bakır tozu ve depo anahtarında silinmiş kan lekesi bulundu.", type: "evidence", isBonus: false },
+      { id: "c6", text: "Depodaki rafların dağılımı ve kan sıçrama yönü, darbenin içeride ve doğrudan kurbana yakın mesafeden yapıldığını gösteriyor.", type: "forensic", isBonus: true },
+      { id: "c7", text: "Selim'in depo anahtarına erişimi vardı ve olay sabahı dükkana herkesten önce geldiği biliniyor.", type: "witness", isBonus: true },
+      { id: "c8", text: "Kasadan çalınan bakır eşyaların, depoda eksik olduğu fark edilen parçalarla aynı türde olduğu tespit edildi.", type: "evidence", isBonus: true },
     ],
     solvabilityMeta: {
       freeEliminations: ["s1", "s3", "w1", "w2", "l2", "l3"],
