@@ -258,7 +258,7 @@ export const PUZZLES: Puzzle[] = [
   {
     id: "p002",
     title: "Boğaz'da Kayıp Elmas",
-    difficulty: "orta",
+    difficulty: "dedektif",
     dayIndex: 1,
     story:
       "İstanbul Boğazı'nda lüks bir yatta düzenlenen sergide, paha biçilemez Boğaz Elması kayboldu. Aynı saatlerde güvenlik görevlisi Orhan ölü bulundu. Gemideki üç şüpheli sorguya alındı.",
