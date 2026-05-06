@@ -259,7 +259,7 @@ export const PUZZLES: Puzzle[] = [
     id: "p002",
     title: "Boğaz'da Kayıp Elmas",
     difficulty: "dedektif",
-    dayIndex: 1,
+    dayIndex: 2,
     story:
       "İstanbul Boğazı'nda düzenlenen lüks yat partisinde sergilenen Boğaz Elması kayboldu. Aynı saatlerde güvenlik görevlisi Orhan ölü bulundu. Yattaki üç kişi inceleme altında.",
     suspects: [
@@ -456,8 +456,8 @@ export const PUZZLES: Puzzle[] = [
   {
     id: "p005",
     title: "Pazar Yerinde Şüpheli Ölüm",
-    difficulty: "orta",
-    dayIndex: 1,
+    difficulty: "caylak",
+    dayIndex: 5,
     story:
       "Pazar sabahı kalabalık İstanbul çarşısında, ünlü tatlıcı Halit Usta tezgahının başında aniden hayatını kaybetti. Olay yerindeki üç kişi sorguya çekildi.",
     suspects: [
@@ -723,8 +723,8 @@ export const PUZZLES: Puzzle[] = [
   {
     id: "p009",
     title: "Tarihi Hamamda Cinayet",
-    difficulty: "dedektif",
-    dayIndex: 1,
+    difficulty: "caylak",
+    dayIndex: 9,
     story:
       "Sultanahmet'teki tarihi bir hamamda, tanınmış bir iş insanı aniden hayatını kaybetti. Dışarıdan kimsenin girmediği anlaşılan hamamda personeller sorguya alındı.",
     suspects: [
@@ -2169,8 +2169,8 @@ export const PUZZLES: Puzzle[] = [
   {
     id: "p030",
     title: "Karaköy'de Neon Gece",
-    difficulty: "dedektif",
-    dayIndex: 1,
+    difficulty: "caylak",
+    dayIndex: 30,
     story:
       "Karaköy'ün popüler gece kulübünde parti tüm hızıyla sürerken bir müşteri ölü bulundu. O sırada görevde olan üç çalışan inceleme altına alındı.",
     suspects: [
@@ -2205,8 +2205,8 @@ export const PUZZLES: Puzzle[] = [
   {
     id: "p031",
     title: "Konakta Gece Vakti",
-    difficulty: "dedektif",
-    dayIndex: 1,
+    difficulty: "caylak",
+    dayIndex: 31,
     story:
       "Bursa'nın eski bir konağında düzenlenen yemek daveti sonrası, konağın sadık kâhyası Fuat Bey sabah saatlerinde ölü bulundu. Davette geceleyen üç şüpheli sorguya alındı.",
     suspects: [
@@ -2241,8 +2241,8 @@ export const PUZZLES: Puzzle[] = [
   {
     id: "p032",
     title: "Pazar Sabahı Baskını",
-    difficulty: "dedektif",
-    dayIndex: 1,
+    difficulty: "caylak",
+    dayIndex: 32,
     story:
       "Gaziantep'in eski çarşısında bakırcı Niyazi Usta, sabah erken saatlerde dükkanının deposunda ölü bulundu. Kasadan para ve değerli bazı bakır eşyalar kayıptı.",
     suspects: [
