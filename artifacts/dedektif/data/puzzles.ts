@@ -281,8 +281,8 @@ export const PUZZLES: Puzzle[] = [
     story:
       "İstanbul Boğazı'nda düzenlenen lüks yat partisinde sergilenen Boğaz Elması gece yarısından sonra kasasından kayboldu. Aynı saatlerde güvenlik görevlisi Orhan, makine dairesinin bakım koridorunda ölü bulundu.",
     suspects: [
-      { id: "s1", name: "Levent Kaptan", description: "Yatın deneyimli kaptanı. Seyir köprüsünden rotayı yönetmekle görevliydi.", icon: "face_6" },
-      { id: "s2", name: "Murat Aydın", description: "İş insanı ve partinin ana sponsoru. VIP salonda konuklarla ağırlama yapıyordu.", icon: "face_3" },
+      { id: "s1", name: "Levent Kaptan", description: "Yatın deneyimli kaptanı. Seyir köprüsünden rotayı yönetmekle görevliydi.", icon: "sailing" },
+      { id: "s2", name: "Murat Aydın", description: "İş insanı ve partinin ana sponsoru. VIP salonda konuklarla ağırlama yapıyordu.", icon: "badge" },
       { id: "s3", name: "Dilek Hanım", description: "Elmasın sahibi ve sergi organizatörü. Tekneye ve kasaya tam erişim yetkisine sahipti.", icon: "face_4" },
     ],
     weapons: [
