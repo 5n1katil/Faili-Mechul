@@ -526,6 +526,10 @@ export default function VakalarScreen() {
   const handleGoHome = () => {
     setShowResult(false);
     resetCurrentGame();
+    if (Platform.OS === "web") {
+      globalThis.location.assign("/");
+      return;
+    }
     router.replace("/");
   };
 
