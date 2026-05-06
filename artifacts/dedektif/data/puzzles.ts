@@ -208,7 +208,7 @@ export const PUZZLES: Puzzle[] = [
     clues: [
       {
         id: "c1",
-        text: "Otopside Selma'nın tek ve derin bir kesici-delici yara nedeniyle öldüğü belirlendi. Barut izi, mermi çekirdeği ya da boğulma veya ağır ezilme travmasına dair bulgu bulunmadı.",
+        text: "Otopside Selma'nın tek ve derin bir kesici-delici yara nedeniyle öldüğü belirlendi. Barut izi, mermi çekirdeği ya da boğulma ve ağır ezilme travmasına dair hiçbir bulgu bulunmadı.",
         type: "forensic",
         isBonus: false,
       },
@@ -238,20 +238,32 @@ export const PUZZLES: Puzzle[] = [
       },
       {
         id: "c6",
-        text: "Kütüphanede yapılan incelemede bardak, içecek kalıntısı ya da toksik madde izi bulunamadı. Cem'in topladığı bardaklar temiz raflardan alınmıştı; zehir kullanımına dair hiçbir bulgu yoktu.",
+        text: "Bahçedeki içecek kadehleri incelendi; birinde çok düşük yoğunlukta bitkisel madde izi saptandı. Adli ekip bu izin Nazik Hanım'ın oturduğu masaya ait kadehten alındığını tespit etti.",
         type: "forensic",
-        isBonus: true,
+        isBonus: false,
       },
       {
         id: "c7",
-        text: "Bahçedeki teras iplerinin bağlantı noktaları incelendi; kopma, gerilme ya da yeniden bağlanma izi yoktu. İplerin dekorasyon düzeni gece boyunca değişmemişti.",
+        text: "Kütüphanedeki dekorasyon iplerinden biri eksikti; raf düzeninde kopma ya da çözülme izi görüldü. Cem'in o bölümden sorumlu olduğu servis defterinde kayıtlıydı.",
         type: "evidence",
-        isBonus: true,
+        isBonus: false,
       },
       {
         id: "c8",
         text: "Davetin servis listesine göre gece yarısı mutfak düzeninden yalnızca Zeynep sorumluydu. O saatlerde mutfağa başka birinin girmesi servis protokolüne aykırıydı.",
         type: "record",
+        isBonus: true,
+      },
+      {
+        id: "c9",
+        text: "Bahçedeki teras iplerinin bağlantı noktaları incelendi; kopma, gerilme ya da yeniden bağlanma izi yoktu. İplerin dekorasyon düzeni gece boyunca değişmemişti.",
+        type: "evidence",
+        isBonus: true,
+      },
+      {
+        id: "c10",
+        text: "Kütüphanede yapılan incelemede bardak, içecek kalıntısı ya da toksik madde izi bulunamadı. Cem'in topladığı bardaklar temiz raflardan alınmıştı; zehir kullanımına dair hiçbir bulgu yoktu.",
+        type: "forensic",
         isBonus: true,
       },
     ],
