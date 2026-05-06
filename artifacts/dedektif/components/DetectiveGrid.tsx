@@ -30,6 +30,8 @@ const LOCATION_BG = "#3A2800";
 const OUTER_BORDER_COLOR = "#FFFFFF50";
 const BLOCK_DIVIDER_COLOR = "#FFFFFF80";
 const CELL_SEP_COLOR = "#FFFFFF2A";
+const WEB_MAX_CELL_SIZE = 64;
+const NATIVE_MAX_CELL_SIZE = 96;
 
 interface Props {
   suspects: Suspect[];
@@ -314,7 +316,9 @@ export default function DetectiveGrid({
     // Row pixel budget: (numCols+1)*cs + (nS-1 separators) + (nL-1 separators) + 2 divider + 2 border
     // = (numCols+1)*cs + nS + nL + 2  →  solve for cs:
     const overhead = nS + nL + 2;
-    const cs = Math.max(0, Math.floor((containerWidth - overhead) / (numCols + 1)));
+    const computedSize = Math.max(0, Math.floor((containerWidth - overhead) / (numCols + 1)));
+    const maxCellSize = Platform.OS === "web" ? WEB_MAX_CELL_SIZE : NATIVE_MAX_CELL_SIZE;
+    const cs = Math.min(computedSize, maxCellSize);
     return { cellSize: cs, labelWidth: cs };
   }, [containerWidth, suspects.length, locations.length]);
 
@@ -386,7 +390,7 @@ export default function DetectiveGrid({
       onLayout={(e) => setContainerWidth(Math.floor(e.nativeEvent.layout.width))}
     >
       {containerWidth === 0 ? null : (
-        <>
+        <View style={styles.gridContent}>
           <View style={styles.row}>
             <View style={{ width: labelWidth }} />
             <View style={{ width: suspectBlockOuter, alignItems: "center" }}>
@@ -479,7 +483,7 @@ export default function DetectiveGrid({
               </View>
             </View>
           ))}
-        </>
+        </View>
       )}
     </View>
   );
@@ -492,6 +496,9 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
     alignItems: "stretch",
+  },
+  gridContent: {
+    alignSelf: "center",
   },
   groupLabel: {
     fontSize: 10,
