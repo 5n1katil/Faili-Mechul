@@ -189,7 +189,7 @@ export const PUZZLES: Puzzle[] = [
     difficulty: "caylak",
     dayIndex: 1,
     story:
-      "Tarihi konaktaki gece davetinin ardından ev sahibinin sadık yardımcısı Selma, sabah mutfak kapısının yanında kan içinde bulundu. Davetliler arasında sorgu başladı.",
+      "Tarihi konaktaki gece davetinin ardından ev sahibinin sadık yardımcısı Selma, mutfak kapısının yanında kan içinde bulundu. Adli tıp, cinayetin 23:30 ile 00:00 arasında işlendiğini tahmin ediyor. Davetliler sorguya alındı.",
     suspects: [
       { id: "s1", name: "Nazik Hanım", description: "Konuk.", icon: "elderly_woman" },
       { id: "s2", name: "Cem Bey", description: "Davetli.", icon: "man" },
@@ -198,7 +198,7 @@ export const PUZZLES: Puzzle[] = [
     weapons: [
       { id: "w1", name: "Makas", description: "Kesici alet.", icon: "content_cut" },
       { id: "w2", name: "Kimyasal", description: "Zehirli madde.", icon: "science" },
-      { id: "w3", name: "İp", description: "Boğma düzeneği.", icon: "commit" },
+      { id: "w3", name: "İp", description: "Boğma düzeneği.", icon: "🪢" },
     ],
     locations: [
       { id: "l1", name: "Kütüphane", description: "Sessiz çalışma alanı.", icon: "menu_book" },
@@ -238,7 +238,7 @@ export const PUZZLES: Puzzle[] = [
       },
       {
         id: "c6",
-        text: "Otopsi raporu: Ölüm saati kesin olarak 23:45 olarak belirlendi; mutfak kamera kayıtları bu saatte sadece tek bir kişinin girişi olduğunu gösteriyor.",
+        text: "Kamera Kaydı: Koridor kameraları incelendiğinde, cinayet saatleri olan 23:30-00:00 aralığında mutfağa yalnızca Zeynep Hanım'ın giriş yaptığı ve bir süre sonra telaşla çıktığı görülüyor.",
         type: "record",
         isBonus: true,
       },
