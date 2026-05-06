@@ -263,14 +263,14 @@ export const PUZZLES: Puzzle[] = [
     story:
       "İstanbul Boğazı'nda lüks bir yatta düzenlenen sergide, paha biçilemez Boğaz Elması kayboldu. Aynı saatlerde güvenlik görevlisi Orhan ölü bulundu. Gemideki üç şüpheli sorguya alındı.",
     suspects: [
-      { id: "s1", name: "Kaptan Levent", description: "Geminin deneyimli kaptanı. Fiziksel olarak oldukça yapılı ve ağır nesneleri kaldırabilecek kuvvette.", icon: "man" },
-      { id: "s2", name: "Sponsor Murat", description: "Partinin zengin finansörü. İnce yapılı, ağır fiziksel güç gerektiren işlere alışkın değil.", icon: "person" },
+      { id: "s1", name: "Kaptan Levent", description: "Geminin deneyimli kaptanı. Fiziksel olarak oldukça yapılı ve ağır nesneleri kaldırabilecek kuvvette.", icon: "sailing" },
+      { id: "s2", name: "Sponsor Murat", description: "Partinin zengin finansörü. İnce yapılı, ağır fiziksel güç gerektiren işlere alışkın değil.", icon: "badge" },
       { id: "s3", name: "Organizatör Eda", description: "Serginin sorumlusu. Çevik, esnek ve geminin en dar alanlarında bile rahatça hareket edebilecek yapıda.", icon: "woman" },
     ],
     weapons: [
       { id: "w1", name: "Gemi Halatı", description: "Kalın sentetik ip. Ciddi bir boğulma izi bırakır ancak doğru düğümü atmak pratiklik gerektirir.", icon: "all_inclusive" },
       { id: "w2", name: "Demir Çekiç", description: "Ağır bakım aleti. Sadece bir kez güçlüce vurularak bile ölümcül künt travma yaratabilir.", icon: "hardware" },
-      { id: "w3", name: "Gaz Tüpü", description: "Basınçlı endüstriyel tüp. Kapalı bir alanda sızıntı yaparsa saniyeler içinde zehirleyip nefessiz bırakabilir.", icon: "propane" },
+      { id: "w3", name: "Gaz Tüpü", description: "Basınçlı endüstriyel tüp. Kapalı bir alanda sızıntı yaparsa saniyeler içinde zehirleyip nefessiz bırakabilir.", icon: "propane_tank" },
     ],
     locations: [
       { id: "l1", name: "Makine Dairesi", description: "Geminin en alt katında yer alan, zemini makine yağıyla kaplı, gürültülü ve gizli alan.", icon: "settings" },
