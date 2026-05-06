@@ -198,7 +198,7 @@ export const PUZZLES: Puzzle[] = [
     weapons: [
       { id: "w1", name: "Servis Bıçağı", description: "Mutfağa ait büyük ve keskin bir et bıçağı.", icon: "content_cut" },
       { id: "w2", name: "Zehirli Karışım", description: "Bitkisel özlerden hazırlanmış toksik bir sıvı.", icon: "science" },
-      { id: "w3", name: "Dekorasyon İpi", description: "Konakta teras süslemesi için kullanılan kalın bağ ipi.", icon: "🪢" },
+      { id: "w3", name: "Dekorasyon İpi", description: "Konakta teras süslemesi için kullanılan kalın bağ ipi.", icon: "gesture" },
     ],
     locations: [
       { id: "l1", name: "Kütüphane", description: "Konağın iç kısmındaki sessiz kitaplık odası.", icon: "menu_book" },
