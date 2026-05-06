@@ -33,6 +33,12 @@ interface Props {
   onClose: () => void;
 }
 
+function normalizeMaterialIconName(icon: string | undefined, type: EntityType): string {
+  const fallback = type === "suspect" ? "person" : type === "weapon" ? "gavel" : "place";
+  if (!icon || !icon.trim()) return fallback;
+  return icon.trim().replace(/_/g, "-");
+}
+
 const TYPE_CONFIG: Record<EntityType, { label: string; color: string; bg: string; hint: string }> = {
   suspect: {
     label: "ŞÜPHELİ",
@@ -80,6 +86,7 @@ export default function EntityInfoSheet({ visible, entity, onClose }: Props) {
   if (!entity) return null;
 
   const config = TYPE_CONFIG[entity.type];
+  const normalizedIcon = normalizeMaterialIconName(entity.icon, entity.type);
 
   return (
     <Modal
@@ -109,7 +116,7 @@ export default function EntityInfoSheet({ visible, entity, onClose }: Props) {
 
           <View style={[styles.iconRing, { backgroundColor: config.bg, borderColor: config.color }]}>
             <MaterialIcons
-              name={entity.icon as ComponentProps<typeof MaterialIcons>["name"]}
+              name={normalizedIcon as ComponentProps<typeof MaterialIcons>["name"]}
               size={36}
               color={config.color}
             />

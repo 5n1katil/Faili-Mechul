@@ -197,8 +197,8 @@ export const PUZZLES: Puzzle[] = [
     ],
     weapons: [
       { id: "w1", name: "Mutfak Bıçağı", description: "Kesici mutfak ekipmanı.", icon: "content_cut" },
-      { id: "w2", name: "Şamdan", description: "Ağır metal şamdan.", icon: "chess" },
-      { id: "w3", name: "Tabanca", description: "Küçük kalibreli ateşli silah.", icon: "radio_button_checked" },
+      { id: "w2", name: "Şamdan", description: "Ağır metal şamdan.", icon: "wb_incandescent" },
+      { id: "w3", name: "Tabanca", description: "Küçük kalibreli ateşli silah.", icon: "gps_fixed" },
     ],
     locations: [
       { id: "l1", name: "Kütüphane", description: "Ahşap raflarla çevrili çalışma odası.", icon: "menu_book" },
