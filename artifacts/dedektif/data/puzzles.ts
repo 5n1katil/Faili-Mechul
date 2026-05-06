@@ -238,13 +238,13 @@ export const PUZZLES: Puzzle[] = [
       },
       {
         id: "c6",
-        text: "Servis defterine göre gece yarısı mutfak düzeninden tek bir kişi sorumluydu; o saatte başka birinin mutfağa girmesi protokole aykırıydı.",
+        text: "Servis defteri ve koridor kamera kaydına göre 23:40-00:20 arasında mutfağa yalnızca Zeynep giriş-çıkış yaptı; Nazik Hanım bahçede, Cem ise kütüphanedeydi.",
         type: "record",
         isBonus: true,
       },
       {
         id: "c7",
-        text: "Bahçedeki teras ipleri yerli yerindeydi; kütüphanede ise bardak ve yüzeylerde toksik madde izine rastlanmadı.",
+        text: "Adli rapor, ölümün kesici alet kaynaklı tek darbeyle gerçekleştiğini ve zehir/boğma bulgusu olmadığını doğruladı. Bahçedeki ipler sağlamdı, kütüphanede toksik ya da kanlı iz bulunmadı.",
         type: "evidence",
         isBonus: true,
       },
