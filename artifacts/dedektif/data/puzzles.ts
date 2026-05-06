@@ -226,19 +226,19 @@ export const PUZZLES: Puzzle[] = [
       },
       {
         id: "c4",
-        text: "Cem gece sonunda kütüphanedeki boş bardakları toplarken görüldü. Aynı saatlerde mutfak tarafında görülmediği iki hizmetli tarafından doğrulandı.",
+        text: "Cem gece sonunda kütüphanedeki boş bardakları toplarken görüldü. Aynı saat aralığında mutfak tarafında görülmediği iki hizmetli tarafından doğrulandı.",
         type: "witness",
         isBonus: false,
       },
       {
         id: "c5",
-        text: "Mutfaktaki bıçak setinde büyük servis bıçağı diğerlerinden daha yeni yıkanmıştı. Sap kısmında silinmeye çalışılmış kan kalıntısı ve Zeynep Hanım’a ait parmak izi bulundu.",
+        text: "Mutfaktaki bıçak setinde büyük servis bıçağı diğerlerinden daha yeni yıkanmıştı. Sap kısmındaki izler silinmişti; net bir parmak izi okunamadı.",
         type: "evidence",
         isBonus: false,
       },
       {
         id: "c6",
-        text: "Bahçedeki ağır şamdanlarda yalnızca mum kalıntısı ve toz vardı. Üzerlerinde kan, doku izi ya da darbe sonrası oluşabilecek ezilme belirtisi bulunmadı.",
+        text: "Bahçedeki ağır şamdanlarda yalnızca mum kalıntısı ve toz vardı. Üzerlerinde kan, doku izi ya da yeni darbe izi bulunmadı.",
         type: "forensic",
         isBonus: true,
       },
@@ -250,7 +250,7 @@ export const PUZZLES: Puzzle[] = [
       },
       {
         id: "c8",
-        text: "Selma’nın not defterinde, davet bitmeden hemen önce Zeynep Hanım’la mutfakta konuşacağına dair kısa bir not bulundu.",
+        text: "Mutfak servis listesinde, davetin son bölümünde mutfak düzeninden sorumlu kişinin Zeynep Hanım olduğu yazılıydı.",
         type: "record",
         isBonus: true,
       },
