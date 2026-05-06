@@ -2227,8 +2227,8 @@ export const PUZZLES: Puzzle[] = [
       { id: "c6", text: "Semiha Hanım'ın bavulunda sakladığı gecelik kıyafetin kolunda kan lekesi bulundu. Bıçak ise konağın arka bahçesinde çiçek tarhının altına gömülmüş hâlde çıktı.", type: "direct", isBonus: true },
     ],
     solvabilityMeta: {
-      freeEliminations: ["l2", "l3", "s3", "w2", "w3"],
-      bonusEliminations: ["s1"],
+      freeEliminations: ["s1", "s3", "w2", "w3", "l2", "l3"],
+      bonusEliminations: [],
     },
     solution: { suspectId: "s2", weaponId: "w1", locationId: "l1" },
   },
@@ -2337,8 +2337,8 @@ export const PUZZLES: Puzzle[] = [
       { id: "c6", text: "Hüsnü Ağa'nın cebinden imzalanmamış bir kâğıt çıktı: Uşak Mehmet'i bu hafta sonu işten çıkardığını belirten yazılı bildirim. Mehmet'in bu kâğıttan haberi olduğu, dün akşam tartıştıkları komşu tarafından doğrulandı.", type: "direct", isBonus: true },
     ],
     solvabilityMeta: {
-      freeEliminations: ["l2", "l3", "s3", "w2", "w3"],
-      bonusEliminations: ["s2"],
+      freeEliminations: ["s2", "s3", "w2", "w3", "l2", "l3"],
+      bonusEliminations: [],
     },
     solution: { suspectId: "s1", weaponId: "w1", locationId: "l1" },
   },
@@ -2373,8 +2373,8 @@ export const PUZZLES: Puzzle[] = [
       { id: "c6", text: "Raşit Efendi'nin odasından altın kese kayıp; sabah Hacer'in odasında yastık altında bulundu. Hacer'in Raşit Efendi'ye geçen ay kişisel borcu olduğu han sahibi tarafından doğrulandı.", type: "direct", isBonus: true },
     ],
     solvabilityMeta: {
-      freeEliminations: ["l2", "l3", "s3", "w2", "w3"],
-      bonusEliminations: ["s1"],
+      freeEliminations: ["s1", "s3", "w2", "w3", "l2", "l3"],
+      bonusEliminations: [],
     },
     solution: { suspectId: "s2", weaponId: "w1", locationId: "l1" },
   },
@@ -2409,8 +2409,8 @@ export const PUZZLES: Puzzle[] = [
       { id: "c6", text: "Karanlık odanın rafında bulunan tek kullanımlık lastik eldivende Cumhur'un parmak izi var; eldivenin içi terle ıslanmış. Cumhur karanlık odada iş yaparken eldiven giydiğini söylese de o gün banyoda film yoktu.", type: "direct", isBonus: true },
     ],
     solvabilityMeta: {
-      freeEliminations: ["l2","l3","s3","w2","w3"],
-      bonusEliminations: ["s1"],
+      freeEliminations: ["s1", "s3", "w2", "w3", "l2", "l3"],
+      bonusEliminations: [],
     },
     solution: { suspectId: "s2", weaponId: "w1", locationId: "l1" },
   },
@@ -2445,7 +2445,7 @@ export const PUZZLES: Puzzle[] = [
       { id: "c6", text: "Münibe Hanım'ın boynuna sarılı havlu kendi odasına ait değil; 312 numaralı odanın monogramını taşıyor. 312 numaralı oda Perihan Hanım'a kayıtlı.", type: "direct", isBonus: true },
     ],
     solvabilityMeta: {
-      freeEliminations: ["l2","l3","w2","w3","s1","s3"],
+      freeEliminations: ["s1", "s3", "w2", "w3", "l2", "l3"],
       bonusEliminations: [],
     },
     solution: { suspectId: "s2", weaponId: "w1", locationId: "l1" },
@@ -2481,8 +2481,8 @@ export const PUZZLES: Puzzle[] = [
       { id: "c6", text: "Tahsin'in kemerindeki çakı kılıfı boş; kılıfın içi henüz kurumamış kan izleriyle kaplı. Tahsin bıçağın düştüğünü öne sürse de arka sokak dahil çevre tarandığında bıçak bulunamadı.", type: "direct", isBonus: true },
     ],
     solvabilityMeta: {
-      freeEliminations: ["l2","l3","w2","w3","s3"],
-      bonusEliminations: ["s1"],
+      freeEliminations: ["s1", "s3", "w2", "w3", "l2", "l3"],
+      bonusEliminations: [],
     },
     solution: { suspectId: "s2", weaponId: "w1", locationId: "l1" },
   },
@@ -2517,7 +2517,7 @@ export const PUZZLES: Puzzle[] = [
       { id: "c6", text: "Şükran'ın muhasebe defterinde Rıfat Ağa'nın aleyhine olan kayıtlar özenle silinmiş; silinti taze. Şükran bu kayıtları gün içinde imha etmeye çalıştığında Rıfat Ağa onu suçüstü yakalamış ve işten çıkaracağını söylemiş; komşu iş arkadaşı bu tartışmayı duymuş.", type: "direct", isBonus: true },
     ],
     solvabilityMeta: {
-      freeEliminations: ["l2","l3","w2","w3","s3","s1"],
+      freeEliminations: ["s1", "s3", "w2", "w3", "l2", "l3"],
       bonusEliminations: [],
     },
     solution: { suspectId: "s2", weaponId: "w1", locationId: "l1" },
@@ -2553,7 +2553,7 @@ export const PUZZLES: Puzzle[] = [
       { id: "c6", text: "Levent'in ifadesinde Bayram'ın yolculuk başında Ahmet Bey'e 'parayı geri vermezsen pişman olursun' dediğini duyduğu ortaya çıktı. Ahmet Bey'in cebindeki para bölmesi boş; yolcu listesinde Bayram adına kayıtlı ödeme tutarı eksik.", type: "direct", isBonus: true },
     ],
     solvabilityMeta: {
-      freeEliminations: ["l2","l3","w2","w3","s2","s1"],
+      freeEliminations: ["s1", "s2", "w2", "w3", "l2", "l3"],
       bonusEliminations: [],
     },
     solution: { suspectId: "s3", weaponId: "w1", locationId: "l1" },
@@ -2589,8 +2589,8 @@ export const PUZZLES: Puzzle[] = [
       { id: "c6", text: "Zümrüt Hanım'ın odasında yastığın altına sarılı bezde Şam bıçağı bulundu; üzerinde kan var, taze temizlenmiş ama bez kanlı. Zümrüt o gece Lütfi Bey'in odasına geldiğini ve kendisine yönelik tacizi durdurmak zorunda kaldığını kabul etti.", type: "direct", isBonus: true },
     ],
     solvabilityMeta: {
-      freeEliminations: ["l2","l3","w2","w3","s1"],
-      bonusEliminations: ["s2"],
+      freeEliminations: ["s1", "s2", "w2", "w3", "l2", "l3"],
+      bonusEliminations: [],
     },
     solution: { suspectId: "s3", weaponId: "w1", locationId: "l1" },
   },

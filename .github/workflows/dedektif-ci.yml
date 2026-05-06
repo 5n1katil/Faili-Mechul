@@ -1,0 +1,52 @@
+name: dedektif-ci
+
+on:
+  pull_request:
+    branches: [main, develop]
+    paths:
+      - "artifacts/dedektif/**"
+      - "package.json"
+      - "pnpm-lock.yaml"
+      - "pnpm-workspace.yaml"
+      - ".github/workflows/dedektif-ci.yml"
+  push:
+    branches: [main, develop]
+    paths:
+      - "artifacts/dedektif/**"
+      - "package.json"
+      - "pnpm-lock.yaml"
+      - "pnpm-workspace.yaml"
+      - ".github/workflows/dedektif-ci.yml"
+
+jobs:
+  quality-gates:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Typecheck app
+        run: pnpm --filter @workspace/dedektif typecheck
+
+      - name: Validate puzzle icons and ids
+        run: pnpm --filter @workspace/dedektif validate
+
+      - name: Validate solvability metadata
+        run: pnpm --filter @workspace/dedektif check:solvability
+
+      - name: Build web bundle
+        run: pnpm --filter @workspace/dedektif build:web
