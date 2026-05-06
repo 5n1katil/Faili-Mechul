@@ -198,7 +198,7 @@ export const PUZZLES: Puzzle[] = [
     weapons: [
       { id: "w1", name: "Makas", description: "Kesici alet.", icon: "content_cut" },
       { id: "w2", name: "Kimyasal", description: "Zehirli madde.", icon: "science" },
-      { id: "w3", name: "İp", description: "Boğma düzeneği.", icon: "🪢" },
+      { id: "w3", name: "İp", description: "Boğma düzeneği.", icon: "gesture" },
     ],
     locations: [
       { id: "l1", name: "Kütüphane", description: "Sessiz çalışma alanı.", icon: "menu_book" },
