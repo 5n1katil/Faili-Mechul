@@ -45,6 +45,13 @@ interface Props {
   isComplete?: boolean;
 }
 
+function normalizeMaterialIconName(icon: string | undefined, type: "suspect" | "weapon" | "location"): string {
+  const fallback =
+    type === "suspect" ? "person" : type === "weapon" ? "gavel" : "place";
+  if (!icon || !icon.trim()) return fallback;
+  return icon.trim().replace(/_/g, "-");
+}
+
 function getMarkStyle(mark: GridMark) {
   if (mark === "check")    return { bg: "#0a3d1f", border: "#22c55e99" };
   if (mark === "cross")    return { bg: "#3b0f0f", border: "#ef444499" };
@@ -199,6 +206,8 @@ function EntityLabel({
   const avatarIconSize = Math.max(12, Math.floor(avatarSize * 0.54));
 
   const isEmojiIcon = (str: string): boolean => (str.codePointAt(0) ?? 0) > 127;
+  const normalizedIcon = normalizeMaterialIconName(icon, type);
+  const renderIcon = isEmojiIcon(icon) ? icon : normalizedIcon;
 
   if (isRowLabel) {
     return (
@@ -230,13 +239,13 @@ function EntityLabel({
               overflow: "hidden",
             }}
           >
-            {isEmojiIcon(icon) ? (
+            {isEmojiIcon(renderIcon) ? (
               <Text numberOfLines={1} style={{ fontSize: avatarIconSize, lineHeight: avatarIconSize * 1.2, includeFontPadding: false, textAlign: "center" }}>
-                {icon}
+                {renderIcon}
               </Text>
             ) : (
               <MaterialIcons
-                name={icon as ComponentProps<typeof MaterialIcons>["name"]}
+                name={renderIcon as ComponentProps<typeof MaterialIcons>["name"]}
                 size={avatarIconSize}
                 color={color}
               />
@@ -278,13 +287,13 @@ function EntityLabel({
             overflow: "hidden",
           }}
         >
-          {isEmojiIcon(icon) ? (
+          {isEmojiIcon(renderIcon) ? (
             <Text numberOfLines={1} style={{ fontSize: avatarIconSize, lineHeight: avatarIconSize * 1.2, includeFontPadding: false, textAlign: "center" }}>
-              {icon}
+              {renderIcon}
             </Text>
           ) : (
             <MaterialIcons
-              name={icon as ComponentProps<typeof MaterialIcons>["name"]}
+              name={renderIcon as ComponentProps<typeof MaterialIcons>["name"]}
               size={avatarIconSize}
               color={color}
             />
