@@ -270,7 +270,7 @@ export const PUZZLES: Puzzle[] = [
     weapons: [
       { id: "w1", name: "Gemi Halatı", description: "Kalın sentetik ip. Ciddi bir boğulma izi bırakır ancak doğru düğümü atmak pratiklik ve el becerisi gerektirir.", icon: "all_inclusive" },
       { id: "w2", name: "Demir Çekiç", description: "Ağır bakım aleti. Sadece bir kez güçlüce vurularak bile ölümcül künt travma yaratabilir.", icon: "hardware" },
-      { id: "w3", name: "Gaz Tüpü", description: "Basınçlı endüstriyel tüp. Kapalı bir alanda sızıntı yaparsa saniyeler içinde zehirleyip nefessiz bırakabilir.", icon: "propane" },
+      { id: "w3", name: "Gaz Tüpü", description: "Basınçlı endüstriyel tüp. Kapalı bir alanda sızıntı yaparsa saniyeler içinde zehirleyip nefessiz bırakabilir.", icon: "fire_extinguisher" },
     ],
     locations: [
       { id: "l1", name: "Makine Dairesi", description: "Geminin en alt katında yer alan, zemini makine yağıyla kaplı, gürültülü ve gizli alan.", icon: "settings" },
@@ -280,7 +280,7 @@ export const PUZZLES: Puzzle[] = [
     clues: [
       {
         id: "c1",
-        text: "Adli Rapor: Orhan'ın boynundaki derin ve kesintisiz sürtünme izleri boğularak öldürüldüğünü kanıtlıyor. Kafatasında kırık ya da ciğerlerinde zehirli gaz bulgusuna rastlanmadı.",
+        text: "Adli Rapor: Orhan'ın boynundaki derin sürtünme izleri boğularak öldürüldüğünü kanıtlıyor. Vücudunda herhangi bir travmaya ya da ciğerlerinde zehirli gaz bulgusuna rastlanmadı.",
         type: "forensic",
         isBonus: false,
       },
