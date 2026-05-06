@@ -238,7 +238,7 @@ export const PUZZLES: Puzzle[] = [
       },
       {
         id: "c6",
-        text: "Kamera Kaydı: Koridor kameraları incelendiğinde, cinayet saatleri olan 23:30-00:00 aralığında mutfağa yalnızca Zeynep Hanım'ın giriş yaptığı ve bir süre sonra telaşla çıktığı görülüyor.",
+        text: "Kamera Kaydı: Koridor kameraları incelendiğinde, Zeynep Hanım'ın 23:48'de mutfağa giriş yaptığı ve 00:15'te mutfaktan telaşla çıktığı görülüyor.",
         type: "record",
         isBonus: true,
       },
