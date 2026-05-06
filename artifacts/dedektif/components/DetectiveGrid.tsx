@@ -49,7 +49,9 @@ function normalizeMaterialIconName(icon: string | undefined, type: "suspect" | "
   const fallback =
     type === "suspect" ? "person" : type === "weapon" ? "gavel" : "place";
   if (!icon || !icon.trim()) return fallback;
-  return icon.trim().replace(/_/g, "-");
+  const normalized = icon.trim().replace(/_/g, "-");
+  if (normalized in MaterialIcons.glyphMap) return normalized;
+  return fallback;
 }
 
 function getMarkStyle(mark: GridMark) {

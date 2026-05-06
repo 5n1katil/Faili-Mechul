@@ -36,7 +36,9 @@ interface Props {
 function normalizeMaterialIconName(icon: string | undefined, type: EntityType): string {
   const fallback = type === "suspect" ? "person" : type === "weapon" ? "gavel" : "place";
   if (!icon || !icon.trim()) return fallback;
-  return icon.trim().replace(/_/g, "-");
+  const normalized = icon.trim().replace(/_/g, "-");
+  if (normalized in MaterialIcons.glyphMap) return normalized;
+  return fallback;
 }
 
 const TYPE_CONFIG: Record<EntityType, { label: string; color: string; bg: string; hint: string }> = {
