@@ -198,7 +198,7 @@ export const PUZZLES: Puzzle[] = [
     weapons: [
       { id: "w1", name: "Makas", description: "Et ve kemik parçalamak için tasarlanmış, tek hamlede derin yara açabilen ağır ve keskin mutfak aleti.", icon: "content_cut" },
       { id: "w2", name: "Kimyasal", description: "Renksiz ve kokusuz bir endüstriyel çözücü. Yiyecek veya içeceklere karıştırıldığında kurban tarafından fark edilmesi imkansız.", icon: "science" },
-      { id: "w3", name: "İp", description: "Ağır perdeleri ve dekorasyonları asmak için kullanılan kalın kenevir halat. Birini boğmak için ciddi bir kol gücü gerektirir.", icon: "commit" },
+      { id: "w3", name: "İp", description: "Ağır perdeleri ve dekorasyonları asmak için kullanılan kalın kenevir halat. Birini boğmak için ciddi bir kol gücü gerektirir.", icon: "gesture" },
     ],
     locations: [
       { id: "l1", name: "Kütüphane", description: "Kalın duvarları ve ağır meşe kapısı sayesinde dışarıya veya içeriye hiçbir sesin sızmadığı izole çalışma alanı.", icon: "menu_book" },
@@ -238,7 +238,7 @@ export const PUZZLES: Puzzle[] = [
       },
       {
         id: "c6",
-        text: "Kamera Kaydı: Koridor kameraları incelendiğinde, cinayet saatleri olan 23:30-00:00 aralığında mutfağa yalnızca Zeynep Hanım'ın giriş yaptığı ve bir süre sonra telaşla çıktığı görülüyor.",
+        text: "Kamera Kaydı: Koridor kameraları incelendiğinde, Zeynep Hanım'ın 23:48'de mutfağa giriş yaptığı ve 00:15'te mutfaktan telaşla çıktığı görülüyor.",
         type: "record",
         isBonus: true,
       },
