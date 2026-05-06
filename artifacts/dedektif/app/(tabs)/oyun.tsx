@@ -966,7 +966,7 @@ export default function VakalarScreen() {
               </Pressable>
               <View style={{ flex: 1 }}>
                 <Text style={[gameStyles.caseNumber, { color: colors.mutedForeground }]}>
-                  VAKA #{puzzle.dayIndex.toString().padStart(3, "0")}
+                  {getDifficultyLabel(puzzle.difficulty as Difficulty).toLocaleUpperCase("tr-TR")}
                 </Text>
                 <Text
                   style={[gameStyles.puzzleTitle, { color: colors.foreground }]}

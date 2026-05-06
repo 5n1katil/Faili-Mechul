@@ -69,7 +69,7 @@ function buildShareText(
   gridState: { [key: string]: GridMark }
 ): string {
   const lines: string[] = [];
-  lines.push(`Faili Meçhul #${puzzle.dayIndex} ${success ? "✅" : "❌"}`);
+  lines.push(`Faili Meçhul ${success ? "✅" : "❌"}`);
   if (success) {
     const bonusStr = bonusCluesRevealedCount > 0 ? ` | 🔓 ${bonusCluesRevealedCount} ek ipucu` : "";
     lines.push(`⏱ ${formatTime(timeSeconds)} | ⭐ ${score} puan | ❌ ${wrongGuesses} hata${bonusStr}`);
