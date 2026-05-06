@@ -89,6 +89,8 @@ export default function EntityInfoSheet({ visible, entity, onClose }: Props) {
 
   const config = TYPE_CONFIG[entity.type];
   const normalizedIcon = normalizeMaterialIconName(entity.icon, entity.type);
+  const isEmojiIcon = (str: string): boolean => (str.codePointAt(0) ?? 0) > 127;
+  const renderEmoji = isEmojiIcon(entity.icon);
 
   return (
     <Modal
@@ -117,11 +119,15 @@ export default function EntityInfoSheet({ visible, entity, onClose }: Props) {
           </View>
 
           <View style={[styles.iconRing, { backgroundColor: config.bg, borderColor: config.color }]}>
-            <MaterialIcons
-              name={normalizedIcon as ComponentProps<typeof MaterialIcons>["name"]}
-              size={36}
-              color={config.color}
-            />
+            {renderEmoji ? (
+              <Text style={{ fontSize: 34, lineHeight: 38, includeFontPadding: false }}>{entity.icon}</Text>
+            ) : (
+              <MaterialIcons
+                name={normalizedIcon as ComponentProps<typeof MaterialIcons>["name"]}
+                size={36}
+                color={config.color}
+              />
+            )}
           </View>
 
           <Text style={[styles.entityName, { color: colors.foreground }]}>{entity.name}</Text>
