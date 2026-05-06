@@ -682,6 +682,14 @@ export default function ClueCard({
   const mechanic = clue.mechanicType ?? "text";
 
   const handleBonusReveal = () => {
+    if (Platform.OS === "web") {
+      const confirmed = globalThis.confirm(
+        "Bu ipucunu açmak zaman sayacınıza +30 saniye ekler. Devam etmek istiyor musunuz?"
+      );
+      if (confirmed) onRevealBonus?.();
+      return;
+    }
+
     Alert.alert(
       "Ek İpucu",
       "Bu ipucunu açmak zaman sayacınıza +30 saniye ekler. Devam etmek istiyor musunuz?",
