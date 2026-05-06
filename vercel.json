@@ -2,5 +2,9 @@
   "installCommand": "pnpm install --frozen-lockfile",
   "buildCommand": "pnpm --filter @workspace/dedektif build:web",
   "outputDirectory": "artifacts/dedektif/dist",
-  "framework": null
+  "framework": null,
+  "routes": [
+    { "handle": "filesystem" },
+    { "src": "/.*", "dest": "/" }
+  ]
 }
