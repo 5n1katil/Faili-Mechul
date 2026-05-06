@@ -47,6 +47,7 @@ import {
   type GridMark,
 } from "@/data/puzzles";
 import { PACKS, getPuzzlesForPack, PACK_PRODUCT_IDS } from "@/data/packs";
+import { AI_DETECTIVES } from "@/data/aiDetectives";
 import PaketlerContent from "@/components/PaketlerContent";
 import type { EntityInfo } from "@/components/EntityInfoSheet";
 import Animated, { FadeInDown } from "react-native-reanimated";
@@ -71,6 +72,37 @@ function formatTime(s: number): string {
   const m = Math.floor(s / 60);
   const sec = s % 60;
   return `${m}:${sec.toString().padStart(2, "0")}`;
+}
+
+function computeScoreForRank(
+  timeElapsed: number,
+  wrongGuesses: number,
+  bonusCluesRevealedCount: number,
+  difficulty: Difficulty,
+  currentStreak = 0
+): number {
+  const rawScore = 10000 - timeElapsed * 10 - wrongGuesses * 500 - bonusCluesRevealedCount * 300;
+  const difficultyBonus = difficulty === "baskomiser" ? 5000 : difficulty === "dedektif" ? 2000 : 0;
+  const streakBonus = Math.min(currentStreak * 50, 500);
+  return Math.max(100, rawScore) + difficultyBonus + streakBonus;
+}
+
+function stableHash(input: string): number {
+  let hash = 0;
+  for (let i = 0; i < input.length; i += 1) {
+    hash = (hash * 31 + input.charCodeAt(i)) >>> 0;
+  }
+  return hash;
+}
+
+function npcScoreForPuzzle(puzzleId: string, difficulty: Difficulty, npcName: string, npcIndex: number): number {
+  const h = stableHash(`${puzzleId}-${npcName}-${npcIndex}`);
+  const jitter = (h % 121) - 60; // [-60, +60]
+  const baseTime = Math.max(90, AI_DETECTIVES[npcIndex].avgSolveTimeSeconds + jitter);
+  const wrongGuesses = h % 3; // 0..2
+  const bonusClues = (h >> 3) % 2; // 0..1
+  const streak = Math.min(10, Math.max(1, Math.floor(AI_DETECTIVES[npcIndex].maxStreak / 2)));
+  return computeScoreForRank(baseTime, wrongGuesses, bonusClues, difficulty, streak);
 }
 
 function AccordionSection({
@@ -539,14 +571,20 @@ export default function VakalarScreen() {
         : profile.lastPlayedDate === yesterday
         ? profile.currentStreak + 1
         : 1;
-    const rawScore = 10000 - currentTime * 10 - currentWrong * 500 - currentBonus * 300;
-    const diffBonus = diff === "baskomiser" ? 5000 : diff === "dedektif" ? 2000 : 0;
-    const streakBonus = Math.min(estimatedStreak * 50, 500);
-    const estimatedScore = Math.max(100, rawScore) + diffBonus + streakBonus;
+    const estimatedScore = computeScoreForRank(
+      currentTime,
+      currentWrong,
+      currentBonus,
+      diff,
+      estimatedStreak
+    );
 
     const samePuzzleScores = leaderboard
       .filter((e) => e.puzzleId === puzzleId)
       .map((e) => e.score);
+    const npcScores = AI_DETECTIVES.map((npc, idx) =>
+      npcScoreForPuzzle(puzzleId, diff, npc.name, idx)
+    );
 
     const success = submitAnswer(suspectId, weaponId, locationId);
 
@@ -554,8 +592,8 @@ export default function VakalarScreen() {
       play("error");
     } else {
       if (gameState.isRanked) {
-        const allScores = [...samePuzzleScores, estimatedScore].sort((a, b) => b - a);
-        const rank = allScores.indexOf(estimatedScore) + 1;
+        const allScores = [...samePuzzleScores, ...npcScores, estimatedScore];
+        const rank = allScores.filter((s) => s > estimatedScore).length + 1;
         setFinalRank(Math.max(1, rank));
         setTotalPlayers(allScores.length);
       } else {
