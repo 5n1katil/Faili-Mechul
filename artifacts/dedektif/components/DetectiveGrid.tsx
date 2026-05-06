@@ -30,7 +30,7 @@ const LOCATION_BG = "#3A2800";
 const OUTER_BORDER_COLOR = "#FFFFFF50";
 const BLOCK_DIVIDER_COLOR = "#FFFFFF80";
 const CELL_SEP_COLOR = "#FFFFFF2A";
-const WEB_MAX_CELL_SIZE = 64;
+const WEB_MAX_CELL_SIZE = 48;
 const NATIVE_MAX_CELL_SIZE = 96;
 
 interface Props {

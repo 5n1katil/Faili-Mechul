@@ -912,6 +912,7 @@ export default function VakalarScreen() {
         style={gameStyles.scroll}
         contentContainerStyle={[
           gameStyles.content,
+          Platform.OS === "web" && gameStyles.contentWeb,
           {
             paddingTop: 12,
             paddingBottom: Platform.OS === "web" ? 34 + 148 : insets.bottom + 148,
@@ -973,7 +974,13 @@ export default function VakalarScreen() {
 
         <Animated.View entering={FadeInDown.delay(160).springify()}>
           <Text style={[gameStyles.sectionTitle, { color: colors.foreground }]}>Dedektif Izgarası</Text>
-          <View style={[gameStyles.gridContainer, { backgroundColor: colors.card, borderColor: colors.border }]}>
+          <View
+            style={[
+              gameStyles.gridContainer,
+              Platform.OS === "web" && gameStyles.gridContainerWeb,
+              { backgroundColor: colors.card, borderColor: colors.border },
+            ]}
+          >
             <View style={gameStyles.gridWrapper}>
               <DetectiveGrid
                 suspects={puzzle.suspects}
@@ -1225,6 +1232,11 @@ const gameStyles = StyleSheet.create({
   container: { flex: 1 },
   scroll: { flex: 1 },
   content: { paddingHorizontal: 10, gap: 16 },
+  contentWeb: {
+    width: "100%",
+    maxWidth: 640,
+    alignSelf: "center",
+  },
   stickyBarWrapper: {
     position: "absolute",
     left: 0,
@@ -1262,6 +1274,11 @@ const gameStyles = StyleSheet.create({
   storyText: { fontSize: 14, lineHeight: 22 },
   sectionTitle: { fontSize: 16, fontWeight: "700", marginBottom: 8 },
   gridContainer: { borderRadius: 14, borderWidth: 1, padding: 10, overflow: "hidden" },
+  gridContainerWeb: {
+    maxWidth: 560,
+    width: "100%",
+    alignSelf: "center",
+  },
   gridWrapper: { minHeight: 240 },
   timerRow: {
     flexDirection: "row",
