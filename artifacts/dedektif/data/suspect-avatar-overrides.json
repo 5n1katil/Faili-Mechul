@@ -1,0 +1,23 @@
+{
+  "_doc": "Elle hazırlanan PNG avatarlar (build öncesi). assign-suspect-avatars.js bu anahtarları ASLA ezmez.",
+  "aksam-vapurunda-gizem:s1": "noun-yolcu-tarik-avatar.png",
+  "aksam-vapurunda-gizem:s2": "noun-yolcu-feriha-avatar.png",
+  "aksam-vapurunda-gizem:s3": "noun-makinist-kerem-avatar.png",
+  "bagda-kanli-bicak:s1": "noun-usak-mehmet-avatar.png",
+  "bagda-kanli-bicak:s2": "noun-komsu-nevzat-avatar.png",
+  "bagda-kanli-bicak:s3": "noun-torun-nermin-avatar.png",
+  "kervansarayda-son-gece:s1": "noun-ortak-sabri-bey-avatar.png",
+  "kervansarayda-son-gece:s2": "noun-hizmetci-hacer-avatar.png",
+  "kervansarayda-son-gece:s3": "noun-gezgin-dervis-salih-avatar.png",
+  "konakta-gece-yarisi-cinayeti:s1": "noun-nazik-hanim-avatar.png",
+  "konakta-gece-yarisi-cinayeti:s2": "noun-cem-bey-avatar.png",
+  "konakta-gece-yarisi-cinayeti:s3": "noun-zeynep-hanim-avatar.png",
+  "tarihi-hamamda-cinayet:s2": "noun-teacher-1908918-avatar.png",
+  "tarihi-hamamda-cinayet:s3": "noun-driver-1574358-avatar.png",
+  "karakoyde-neon-gece:s2": "noun-teacher-1908919-avatar.png",
+  "konakta-gece-vakti:s1": "noun-tuccar-vehbi-avatar.png",
+  "konakta-gece-vakti:s2": "noun-semiha-hanim-avatar.png",
+  "pazar-sabahi-baskini:s1": "noun-vahap-amca-avatar.png",
+  "pazar-sabahi-baskini:s2": "noun-cirak-selim-avatar.png",
+  "pazar-sabahi-baskini:s3": "noun-kurye-murat-pazar-avatar.png"
+}

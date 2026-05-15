@@ -2,7 +2,7 @@
   "expo": {
     "name": "Faili Meçhul",
     "slug": "dedektif",
-    "version": "1.0.0",
+    "version": "1.2.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "dedektif",
@@ -16,7 +16,7 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.failimechul.dedektif",
-      "buildNumber": "1",
+      "buildNumber": "11",
       "minimumOsVersion": "13.4",
       "infoPlist": {
         "NSCameraUsageDescription": "Profil fotoğrafınızı çekmek için kamera erişimi gerekiyor.",
@@ -40,7 +40,7 @@
       [
         "expo-router",
         {
-          "origin": "https://failimechul.app/"
+          "origin": "https://faili-mechul.vercel.app/"
         }
       ],
       "expo-font",
@@ -54,12 +54,15 @@
       "reactCompiler": true
     },
     "extra": {
+      "router": {
+        "origin": "https://faili-mechul.vercel.app"
+      },
       "eas": {
-        "projectId": "45c0a7e3-47a5-4679-848e-10412e562497"
+        "projectId": "f652b78d-775a-494c-86fc-62e60c72b564"
       },
       "revenueCatIosKey": "test_FqIlaUnGKKlZhpvlhDJmYeZdPMk",
       "revenueCatAndroidKey": "test_FqIlaUnGKKlZhpvlhDJmYeZdPMk"
     },
-    "owner": "alpimo"
+    "owner": "yalperol"
   }
 }

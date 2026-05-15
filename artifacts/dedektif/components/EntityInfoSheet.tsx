@@ -16,6 +16,9 @@ import Animated, {
 } from "react-native-reanimated";
 import { useColors } from "@/hooks/useColors";
 import type { ComponentProps } from "react";
+import CustomAvatar from "@/components/CustomAvatar";
+import { SuspectPortrait, type SuspectPortraitKey } from "@/components/SuspectPortrait";
+import { isCustomAvatarIcon } from "@/utils/avatarAssets";
 
 export type EntityType = "suspect" | "weapon" | "location";
 
@@ -25,6 +28,7 @@ export interface EntityInfo {
   name: string;
   description: string;
   icon: string;
+  suspectPortrait?: SuspectPortraitKey;
 }
 
 interface Props {
@@ -119,7 +123,19 @@ export default function EntityInfoSheet({ visible, entity, onClose }: Props) {
           </View>
 
           <View style={[styles.iconRing, { backgroundColor: config.bg, borderColor: config.color }]}>
-            {renderEmoji ? (
+            {entity.type === "suspect" ? (
+              isCustomAvatarIcon(entity.icon) ? (
+                <CustomAvatar icon={entity.icon} size={52} color={config.color} />
+              ) : entity.suspectPortrait ? (
+                <SuspectPortrait portrait={entity.suspectPortrait} size={52} color={config.color} />
+              ) : (
+                <MaterialIcons
+                  name={normalizedIcon as ComponentProps<typeof MaterialIcons>["name"]}
+                  size={36}
+                  color={config.color}
+                />
+              )
+            ) : renderEmoji ? (
               <Text style={{ fontSize: 34, lineHeight: 38, includeFontPadding: false }}>{entity.icon}</Text>
             ) : (
               <MaterialIcons

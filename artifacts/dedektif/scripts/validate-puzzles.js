@@ -5,8 +5,10 @@
  * Strict validator for icon names used by the Dedektif app.
  *
  * Checks:
- *   1. Every `icon: "..."` value in data/puzzles.ts matches a real
- *      MaterialIcons glyph name (hyphen-separated, exact match).
+ *   1. Every `icon: "..."` value in data/puzzles.ts is valid:
+ *      - suspects: any non-empty string (custom SVG avatar id, e.g.
+ *        "noun-adult-man-2144697" or "Occupations/noun-doctor-1574377")
+ *      - weapons/locations: real MaterialIcons glyph name (hyphenated)
  *   2. Every value in packs.ts EMOJI_TO_MATERIAL is a valid glyph name.
  *   3. Every `<MaterialIcons name="..." />` literal in components/ and
  *      app/ is a valid glyph name.
@@ -15,10 +17,6 @@
  *      code point), so `emojiToMaterialIcon()` cannot fall through to the
  *      default `help-outline` placeholder ("?").
  *
- * The MaterialIcons font shipped with @expo/vector-icons only renders
- * hyphenated glyph names. Underscores DO NOT render — they fall back to
- * an empty glyph that displays as "?". The validator therefore rejects
- * any underscore-style name.
  *
  * Exit codes:
  *   0 — all checks pass
@@ -102,19 +100,84 @@ const fail = (msg) => failures.push(msg);
 
 {
   const src = readFile("data/puzzles.ts");
-  const lineOf = buildLineIndex(src);
-  const re = /\bicon:\s*["']([^"']+)["']/g;
+  const lines = src.split("\n");
   const seen = new Set();
-  let m;
-  while ((m = re.exec(src)) !== null) {
-    const name = m[1];
-    if (seen.has(name)) continue;
-    seen.add(name);
-    if (!GLYPH_NAMES.has(name)) {
-      fail(`puzzles.ts:${lineOf(m.index)}  invalid icon "${name}" (must be a hyphenated MaterialIcons glyph)`);
+  let inSuspects = false;
+  let suspectDepth = 0;
+
+  // Build a line -> puzzleId lookup so suspect icons can be tracked
+  // per-puzzle for the duplicate check.
+  const puzzleAnchorsByLine = [];
+  {
+    const PUZZLE_ID_RE_LINE = /^\s{4}id:\s*"(p\d{3})",/gm;
+    let pm;
+    const lineOf = buildLineIndex(src);
+    while ((pm = PUZZLE_ID_RE_LINE.exec(src)) !== null) {
+      puzzleAnchorsByLine.push({ line: lineOf(pm.index), id: pm[1] });
     }
   }
+  function puzzleAtLine(lineNum1Based) {
+    let pick = "(outside)";
+    for (const a of puzzleAnchorsByLine) {
+      if (a.line <= lineNum1Based) pick = a.id;
+      else break;
+    }
+    return pick;
+  }
+  // puzzleId -> Map<icon, firstSeenLine>
+  const perPuzzleSuspectIcons = new Map();
+  let perPuzzleDupes = 0;
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    if (!inSuspects && /\bsuspects:\s*\[/.test(line)) {
+      inSuspects = true;
+      suspectDepth = 1;
+      continue;
+    }
+    if (inSuspects) {
+      suspectDepth += (line.match(/\[/g) || []).length - (line.match(/\]/g) || []).length;
+    }
+
+    const m = line.match(/\bicon:\s*["']([^"']*)["']/);
+    if (m) {
+      const name = m[1];
+      seen.add(name);
+      if (inSuspects) {
+        // Suspect icons are now free-form strings that map to SVG avatar files
+        // under public/avatars/. Any non-empty string is allowed.
+        if (!name.trim()) {
+          fail(`puzzles.ts:${i + 1}  empty suspect icon`);
+        } else {
+          const pid = puzzleAtLine(i + 1);
+          if (!perPuzzleSuspectIcons.has(pid)) {
+            perPuzzleSuspectIcons.set(pid, new Map());
+          }
+          const map = perPuzzleSuspectIcons.get(pid);
+          if (map.has(name)) {
+            perPuzzleDupes++;
+            fail(
+              `puzzles.ts:${i + 1}  duplicate suspect icon "${name}" inside puzzle ${pid} (first at line ${map.get(name)})`,
+            );
+          } else {
+            map.set(name, i + 1);
+          }
+        }
+      } else if (!GLYPH_NAMES.has(name)) {
+        fail(`puzzles.ts:${i + 1}  invalid icon "${name}" (must be a valid MaterialIcons glyph)`);
+      }
+    }
+
+    if (inSuspects && suspectDepth <= 0) {
+      inSuspects = false;
+      suspectDepth = 0;
+    }
+  }
+
   console.log(`  data/puzzles.ts: ${seen.size} unique icon name(s) checked.`);
+  console.log(
+    `  data/puzzles.ts: per-puzzle suspect-icon uniqueness verified across ${perPuzzleSuspectIcons.size} puzzles${perPuzzleDupes ? ` (${perPuzzleDupes} duplicate(s) found)` : ""}.`,
+  );
 }
 
 // ---------------------------------------------------------------------------
@@ -221,6 +284,39 @@ let emojiToMaterialKeys; // captured for Check 4
 }
 
 // ---------------------------------------------------------------------------
+// Check 4a: per-puzzle suspect-icon uniqueness inside puzzles_database.json
+// ---------------------------------------------------------------------------
+
+{
+  const dbPath = path.join(ROOT, "data/puzzles_database.json");
+  if (fs.existsSync(dbPath)) {
+    const db = JSON.parse(fs.readFileSync(dbPath, "utf-8"));
+    let puzzlesChecked = 0;
+    let dupes = 0;
+    for (const pack of db.packs ?? []) {
+      for (const p of pack.puzzles ?? []) {
+        puzzlesChecked++;
+        const seenIcons = new Map(); // icon -> first suspect name
+        for (const s of p.suspects ?? []) {
+          if (!s.icon) continue;
+          if (seenIcons.has(s.icon)) {
+            dupes++;
+            fail(
+              `puzzles_database.json  ${pack.packId}/${p.puzzleId}  duplicate suspect icon "${s.icon}" (first on "${seenIcons.get(s.icon)}", repeats on "${s.name}")`,
+            );
+          } else {
+            seenIcons.set(s.icon, s.name);
+          }
+        }
+      }
+    }
+    console.log(
+      `  data/puzzles_database.json: per-puzzle suspect-icon uniqueness verified across ${puzzlesChecked} puzzles${dupes ? ` (${dupes} duplicate(s) found)` : ""}.`,
+    );
+  }
+}
+
+// ---------------------------------------------------------------------------
 // Check 4: every emoji icon in puzzles_database.json has a mapping
 // ---------------------------------------------------------------------------
 
@@ -239,7 +335,7 @@ if (emojiToMaterialKeys) {
             }
           }
         };
-        collect(p.suspects);
+        // suspect icons are now SVG avatar ids, not emojis — skip them.
         collect(p.weapons);
         collect(p.locations);
       }
@@ -269,7 +365,7 @@ if (failures.length === 0) {
 console.error(`\nERROR: ${failures.length} icon validation failure(s):\n`);
 for (const f of failures) console.error(`  ✗  ${f}`);
 console.error(
-  `\nFix: use exact hyphenated MaterialIcons glyph names (e.g. "local-pharmacy", "content-cut").`,
+  `\nFix: suspect icons may be any non-empty string (custom SVG avatar id); weapon/location icons must use exact hyphenated MaterialIcons names.`,
 );
 console.error(
   `Reference: https://fonts.google.com/icons?icon.set=Material+Icons`,

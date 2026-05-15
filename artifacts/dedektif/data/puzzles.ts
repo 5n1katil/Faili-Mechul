@@ -168,6 +168,19 @@ export interface Solution {
 
 export type Difficulty = "caylak" | "dedektif" | "baskomiser";
 
+export function titleToSlug(title: string): string {
+  const tr: Record<string, string> = {
+    "ğ": "g", "ü": "u", "ş": "s", "ı": "i", "ö": "o", "ç": "c",
+    "â": "a", "Â": "a",
+  };
+  let s = title.toLowerCase();
+  for (const [k, v] of Object.entries(tr)) s = s.split(k).join(v);
+  return s
+    .replace(/['']/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+}
+
 export interface Puzzle {
   id: string;
   title: string;
@@ -184,16 +197,16 @@ export interface Puzzle {
 
 export const PUZZLES: Puzzle[] = [
   {
-    id: "p001",
+    id: "konakta-gece-yarisi-cinayeti",
     title: "Konakta Gece Yarısı Cinayeti",
     difficulty: "caylak",
     dayIndex: 1,
     story:
       "Tarihi konaktaki gece davetinin ardından ev sahibinin sadık yardımcısı Selma, mutfak kapısının yanında kan içinde bulundu. Adli tıp, cinayetin 23:30 ile 00:00 arasında işlendiğini tahmin ediyor. Davetliler sorguya alındı.",
     suspects: [
-      { id: "s1", name: "Nazik Hanım", description: "Konağın en yaşlı misafiri. Fiziksel olarak güçsüz olsa da etrafında olan bitene karşı son derece dikkatli ve gözlemci.", icon: "elderly_woman" },
-      { id: "s2", name: "Cem Bey", description: "Ev sahibinin uzaktan akrabası. Boylu poslu, ağır fiziksel işleri kolayca yapabilecek kuvvette bir yapıya sahip.", icon: "man" },
-      { id: "s3", name: "Zeynep Hanım", description: "Genç ve hırslı bir davetli. Atik yapısıyla dikkat çekiyor, stres altında çok hızlı ve fevri hareket edebiliyor.", icon: "woman" },
+      { id: "s1", name: "Nazik Hanım", description: "Konağın en yaşlı misafiri. Fiziksel olarak güçsüz olsa da etrafında olan bitene karşı son derece dikkatli ve gözlemci.", icon: "noun-nazik-hanim-avatar.png" },
+      { id: "s2", name: "Cem Bey", description: "Ev sahibinin uzaktan akrabası. Boylu poslu, ağır fiziksel işleri kolayca yapabilecek kuvvette bir yapıya sahip.", icon: "noun-cem-bey-avatar.png" },
+      { id: "s3", name: "Zeynep Hanım", description: "Genç ve hırslı bir davetli. Atik yapısıyla dikkat çekiyor, stres altında çok hızlı ve fevri hareket edebiliyor.", icon: "noun-zeynep-hanim-avatar.png" },
     ],
     weapons: [
       { id: "w1", name: "Makas", description: "Et ve kemik parçalamak için tasarlanmış, tek hamlede derin yara açabilen ağır ve keskin mutfak aleti.", icon: "content_cut" },
@@ -256,12 +269,12 @@ export const PUZZLES: Puzzle[] = [
     solution: { suspectId: "s3", weaponId: "w1", locationId: "l3" },
   },
   {
-    id: "p002",
+    id: "bogazda-kayip-elmas",
     title: "Boğaz'da Kayıp Elmas",
     difficulty: "dedektif",
     dayIndex: 1,
     story:
-      "İstanbul Boğazı'nda lüks bir yatta düzenlenen sergide, paha biçilemez Boğaz Elması kayboldu. Aynı saatlerde güvenlik görevlisi Orhan ölü bulundu. Gemideki üç şüpheli sorguya alındı.",
+      "İstanbul Boğazı'nın serin sularında süzülen lüks yatta düzenlenen o gösterişli sergi, kanlı bir geceyle son buldu. Paha biçilemez 'Boğaz Elması'nın çalındığı anlaşıldığında, geminin güvenlik şefi Orhan alt katta cansız yatıyordu. Dalgaların sesi yatı döverken, katil ve çaldığı elmas hala bu lüks kafesin içinde, üç şüpheliden birinin ardında saklanıyor.",
     suspects: [
       { id: "s1", name: "Kaptan Levent", description: "Geminin deneyimli kaptanı. Fiziksel olarak oldukça yapılı ve ağır nesneleri kaldırabilecek kuvvette.", icon: "sailing" },
       { id: "s2", name: "Sponsor Murat", description: "Partinin zengin finansörü. İnce yapılı, ağır fiziksel güç gerektiren işlere alışkın değil.", icon: "badge" },
@@ -278,45 +291,40 @@ export const PUZZLES: Puzzle[] = [
       { id: "l3", name: "VIP Salon", description: "Misafirlerin ağırlandığı, aydınlık, temiz ve geniş eğlence alanı.", icon: "star" },
     ],
     clues: [
+
       {
         id: "c1",
-        text: "Adli Rapor: Orhan'ın boynundaki derin sürtünme izleri boğularak öldürüldüğünü kanıtlıyor. Vücudunda herhangi bir travmaya ya da ciğerlerinde zehirli gaz bulgusuna rastlanmadı.",
+        text: "Olay yeri inceleme ekipleri, cinayetin aydınlık VIP Salon'da veya kameralarla izlenen Seyir Köprüsü'nde işlenmediğini kesin olarak raporladı.",
         type: "forensic",
         isBonus: false,
       },
       {
         id: "c2",
-        text: "Olay Yeri İncelemesi: Zemindeki yoğun yağ lekeleri ve devrilmiş alet çantaları, boğuşmanın yalnızca Makine Dairesi'nde yaşandığını gösteriyor. VIP Salon ve Seyir Köprüsü'nde hiçbir anormallik bulunamadı.",
-        type: "evidence",
+        text: "Kaptan Levent'in olay saatinde ne o kalın sentetik ipe ne de basınçlı gaz tüpüne dokunmadığı, elindeki tek aletin ağır bakım çekici olduğu anlaşıldı.",
+        type: "witness",
         isBonus: false,
       },
       {
         id: "c3",
-        text: "Telsiz kayıtlarına göre; Kaptan Levent olay saatinde Seyir Köprüsü'nden hiç ayrılmamış ve oradaki kırık bir paneli demir çekiçle onardığını raporlamıştır.",
-        type: "witness",
+        text: "İnce yapılı Sponsor Murat'ın, zemini yağlı ve gürültülü makine dairesine adım bile atmadığı kanıtlandı.",
+        type: "evidence",
         isBonus: false,
       },
       {
         id: "c4",
-        text: "Kamera kayıtlarına göre; Basınçlı gaz tüpleri, konuklar için hazırlanan özel gösteride kullanılmak üzere VIP Salon'a götürülmüştür.",
-        type: "record",
+        text: "Ağır demir çekicin makine dairesine hiç indirilmediği ve o karanlık alanda kesinlikle kullanılmadığı tespit edildi.",
+        type: "forensic",
         isBonus: false,
       },
       {
         id: "c5",
-        text: "Tanık İfadeleri: Sponsor Murat'ın olay saatinde konuklarıyla birlikte VIP Salon'da olduğu ve oradan hiç ayrılmadığı doğrulanmıştır.",
-        type: "witness",
-        isBonus: false,
-      },
-      {
-        id: "c6",
-        text: "Ek İnceleme: Organizatör Eda'nın ayakkabılarında yalnızca Makine Dairesi'nin zemininde bulunan ağır motor yağı lekeleri tespit edildi.",
+        text: "Organizatör Eda'nın, basınçlı gaz tüplerinin bulunduğu depolama alanına erişimi olmadığı ve bu tüpleri kullanamayacağı doğrulandı.",
         type: "evidence",
         isBonus: true,
       },
       {
-        id: "c7",
-        text: "Kesin Kanıt: Cinayette kullanılan gemi halatındaki düğüm tekniği sergi düzenlemelerinde kullanılanlarla birebir aynıydı ve liflerin arasında Eda'ya ait saç teli bulundu.",
+        id: "c6",
+        text: "Maktulün boynundaki kusursuz düğüm izi, katilin esnek nesneleri kullanmada çok usta olduğunu gösteriyordu.",
         type: "forensic",
         isBonus: true,
       },
@@ -328,12 +336,12 @@ export const PUZZLES: Puzzle[] = [
     solution: { suspectId: "s3", weaponId: "w1", locationId: "l1" },
   },
   {
-    id: "p003",
+    id: "kapalicarsida-gizem",
     title: "Kapalıçarşı'da Gizem",
     difficulty: "dedektif",
     dayIndex: 3,
     story:
-      "Kapalıçarşı'nın labirent gibi sokaklarında bir kuyumcu dükkanı yağmalandı. Dükkan sahibi hayatını kaybetti ve değerli altınlar ortadan kayboldu.",
+      "Kapalıçarşı'nın yüzlerce yıllık labirent gibi sokaklarına çöken akşam karanlığı, bir cinayeti örtbas etmeye yetmedi. Çarşının en eski kuyumcularından biri, kepenkler indikten hemen sonra dükkanında vahşice katledildi ve en nadide altınlar sırra kadem bastı. Kepenklerin dışarıdan kilitli olması, katilin çarşının kendi içinden biri olduğunu acı bir şekilde fısıldıyor.",
     suspects: [
       { id: "s1", name: "Ahmet Usta", description: "Komşu bakırcı, 30 yıllık esnaf", icon: "person" },
       { id: "s2", name: "Selma Teyze", description: "Çarşının muhasebecisi", icon: "elderly" },
@@ -350,39 +358,40 @@ export const PUZZLES: Puzzle[] = [
       { id: "l3", name: "Çarşı Koridoru", description: "Yüzlerce yıllık kıvrımlı taş koridorlar", icon: "route" },
     ],
     clues: [
+
       {
         id: "c1",
-        text: "olay kapalı ve kilitli bir mekanda gerçekleşti; açık dükkan içi ya da çarşı koridorunda herhangi bir kan izi ya da mücadele izi bulunamadı.",
-        type: "elimination",
-        isBonus: false,
-      },
-      {
-        id: "c2",
-        text: "güvenlik kamerası selma teyze'yi olay saatinde kasayı kapatırken dükkan dışında gösteriyor.",
-        type: "evidence",
-        isBonus: false,
-      },
-      {
-        id: "c3",
-        text: "kimyasal madde kullanılmış olsaydı, asit dumanı yangın alarmını tetiklerdi. alarm çalmadı.",
+        text: "Kurban, asit bazlı bir çözeltiyle zehirlenmemiş veya tunç kefeli bir ağırlıkla darp edilmemişti.",
         type: "forensic",
         isBonus: false,
       },
       {
+        id: "c2",
+        text: "30 yıllık esnaf Ahmet Usta'nın, cinayet saatinde vitrinlerin parladığı dükkan içinde olduğu güvenlik kamerasından kanıtlandı.",
+        type: "witness",
+        isBonus: false,
+      },
+      {
+        id: "c3",
+        text: "Cinayetin işlendiği mekan, yüzlerce yıllık kıvrımlı taş koridorlar veya vitrinli müşteri alanı değildi.",
+        type: "evidence",
+        isBonus: false,
+      },
+      {
         id: "c4",
-        text: "kerem genç, deponun elektronik kilit sistemini bizzat kurmuş ve kodu yalnızca o biliyordu. komşu ahmet usta ise o gece dükkânını çok önceden kapatmış ve evine gitmişti; çarşı güvenlik kamerası çıkışını kayıt altına almış.",
-        type: "direct",
+        text: "Olay yerinde bulunan ağır çelik aletin üzerindeki parmak izleri, muhasebeci Selma Teyze'ye veya Ahmet Usta'ya ait değildi.",
+        type: "forensic",
         isBonus: false,
       },
       {
         id: "c5",
-        text: "kilit incelemesinde tipik pençe anahtar çizikleri tespit edildi; bu aletle açılmış.",
-        type: "evidence",
+        text: "Selma Teyze, olay sırasında taş koridorlarda devriye gezen bekçilerle sohbet ediyordu.",
+        type: "witness",
         isBonus: true,
       },
       {
         id: "c6",
-        text: "kerem genç'in bilgisayarında depo kasası şifresini değiştirdiğine dair log bulundu; değişiklik olay gecesi yapılmıştı.",
+        text: "Elektronik kilitli depoda işlenen cinayetin faili, kilitlerde iz bırakan ağır aleti ustalıkla kullanan genç stajyerden başkası değildi.",
         type: "evidence",
         isBonus: true,
       },
@@ -394,12 +403,12 @@ export const PUZZLES: Puzzle[] = [
     solution: { suspectId: "s3", weaponId: "w3", locationId: "l2" },
   },
   {
-    id: "p004",
+    id: "universitede-karanlik-sir",
     title: "Üniversitede Karanlık Sır",
     difficulty: "dedektif",
     dayIndex: 4,
     story:
-      "İstanbul'un köklü üniversitelerinden birinde, laboratuvar yöneticisi ölü bulundu. Araştırma projesindeki kritik veriler de kaybolmuştu.",
+      "İstanbul'un köklü üniversitesindeki sessiz gece, çığır açacak bir araştırma projesinin kana bulanmasıyla yırtıldı. Laboratuvar yöneticisi, aylar süren çalışmaların en kritik gecesinde masasının başında ölü bulundu. Şifreli sunuculardan silinen kritik veriler, bu cinayetin basit bir öfkeden ziyade, soğukkanlı bir ihanet olduğunu gösteriyor.",
     suspects: [
       { id: "s1", name: "Prof. Kahraman", description: "Rekabetçi akademisyen", icon: "account-circle" },
       { id: "s2", name: "Asistan Elif", description: "Doktora öğrencisi", icon: "face" },
@@ -416,39 +425,40 @@ export const PUZZLES: Puzzle[] = [
       { id: "l3", name: "Koridorlar", description: "Gece yarısı ıssız, uzun üniversite koridorları", icon: "route" },
     ],
     clues: [
+
       {
         id: "c1",
-        text: "vücut ofiste bulundu; ancak adli izler laboratuvara işaret ediyor. cinayet orada gerçekleşti.",
+        text: "Maktulün cesedinde herhangi bir kesici alet yarası veya solunum yollarında kimyasal bir tahribat tespit edilmedi.",
         type: "forensic",
         isBonus: false,
       },
       {
         id: "c2",
-        text: "güvenlik görevlisi gece boyunca güvenlik odasında oturmuş; kameralar bunu kayıt altına almış.",
+        text: "Prof. Kahraman'ın olay saati boyunca yığınla dosyanın bulunduğu ofisinde bilgisayar başında olduğu sunucu kayıtlarıyla kanıtlandı.",
         type: "evidence",
         isBonus: false,
       },
       {
         id: "c3",
-        text: "kimyasal gaz sensörleri gece boyunca hiç tepki vermedi. gaz sızıntısı yok.",
-        type: "forensic",
+        text: "Güvenlik Görevlisi'nin, ıssız ve uzun üniversite geçitlerinde devriye attığı güvenlik kameralarınca doğrulandı.",
+        type: "evidence",
         isBonus: false,
       },
       {
         id: "c4",
-        text: "elif, laboratuvar anahtarına sahip tek doktora öğrencisiydi ve gece geç saate kadar çalışıyordu.",
-        type: "direct",
+        text: "Kasıtlı bir kablo sabotajıyla gerçekleştirilen bu cinayet, gece vardiyası çalışanı veya ofisteki profesör tarafından işlenmemişti.",
+        type: "evidence",
         isBonus: false,
       },
       {
         id: "c5",
-        text: "laboratuvarda sabote edilmiş bir elektrik kablosu bulundu; bu tür müdahale uzmanlık gerektirir.",
+        text: "Deney düzeneklerinin bulunduğu araştırma odasının kapı logları, sadece bir asistanın o saatte içeride olduğunu gösteriyordu.",
         type: "evidence",
         isBonus: true,
       },
       {
         id: "c6",
-        text: "prof. kahraman'ın o gece uçuşu vardı; bilet ve havalimanı güvenlik kaydı şehri terk ettiğini teyit ediyor.",
+        text: "Asistan Elif'in, yüksek voltajlı laboratuvar kablolarını deney odasında zekice manipüle ederek bu kusursuz cinayeti işlediği açığa çıktı.",
         type: "evidence",
         isBonus: true,
       },
@@ -460,7 +470,7 @@ export const PUZZLES: Puzzle[] = [
     solution: { suspectId: "s2", weaponId: "w1", locationId: "l1" },
   },
   {
-    id: "p005",
+    id: "pazar-yerinde-supheli-olum",
     title: "Pazar Yerinde Şüpheli Ölüm",
     difficulty: "caylak",
     dayIndex: 5,
@@ -526,12 +536,12 @@ export const PUZZLES: Puzzle[] = [
     solution: { suspectId: "s3", weaponId: "w1", locationId: "l1" },
   },
   {
-    id: "p006",
+    id: "muzede-kayip-eser",
     title: "Müzede Kayıp Eser",
     difficulty: "dedektif",
     dayIndex: 6,
     story:
-      "Ankara'daki tarihi müzede, Bizans dönemine ait değerli bir broş kayboldu. Müze bekçisi odasında yaralı bulundu.",
+      "Ankara'daki asırlık müzenin loş koridorlarında, tarihin sessizliği kanla bozuldu. Bizans dönemine ait eşsiz bir broşun çalındığı o fırtınalı gecede, gece bekçisi görev yerinde ağır yaralı olarak bulundu. Güvenlik sistemlerinin içeriden devre dışı bırakılması, şüphe oklarını doğrudan müzenin saygın çalışanlarına çeviriyor.",
     suspects: [
       { id: "s1", name: "Küratör Bey", description: "15 yıldır müzede çalışıyor", icon: "badge" },
       { id: "s2", name: "Restoratör Hanım", description: "Eserleri onarıyor", icon: "face" },
@@ -548,40 +558,41 @@ export const PUZZLES: Puzzle[] = [
       { id: "l3", name: "Güvenlik Odası", description: "Kamera görüntülerinin izlendiği kontrol merkezi", icon: "security" },
     ],
     clues: [
+
       {
         id: "c1",
-        text: "bekçi, depolama odasında bulundu. orada dövüşe ilişkin izler vardı.",
+        text: "Güvenlik kameraları, Ziyaretçi Rehber'in tüm gece boyunca eserlerin bulunduğu aydınlık salondan hiç ayrılmadığını doğruladı.",
         type: "evidence",
         isBonus: false,
       },
       {
         id: "c2",
-        text: "rehber, tur grubuyla birlikte sergi salonundaydı; 20 ziyaretçi bunu teyit ediyor.",
+        text: "Küratör Bey'in, kamera görüntülerinin izlendiği kontrol merkezinde olduğu ve olay yerine hiç gitmediği anlaşıldı.",
         type: "witness",
         isBonus: false,
       },
       {
         id: "c3",
-        text: "güvenlik kamerası kimyasal sprey kullanımını tespit ederdi; kayıtlarda böyle bir görüntü yok.",
-        type: "evidence",
+        text: "Maktulün üzerinde ağır bir mermer darbesi veya geçici felç yaratan kimyasal bir sprey bulgusuna rastlanmadı.",
+        type: "forensic",
         isBonus: false,
       },
       {
         id: "c4",
-        text: "restoratör hanım, depolama odasına erişim kodu bilen tek kişiydi ve gece mesaisi vardı.",
-        type: "direct",
+        text: "Eser onarımı yapan uzmanın, anestezik enjeksiyonlara doğrudan erişimi olan tek müze çalışanı olduğu tespit edildi.",
+        type: "evidence",
         isBonus: false,
       },
       {
         id: "c5",
-        text: "adli analiz: bekçinin kolunda ince iğne izi tespit edildi. uyutucu madde enjekte edilmiş.",
-        type: "forensic",
+        text: "Ağır mermer kaidenin ve kimyasal karışımların bulunduğu sergi salonunda veya kontrol odasında hiçbir arbede yaşanmamıştı.",
+        type: "evidence",
         isBonus: true,
       },
       {
         id: "c6",
-        text: "küratör bey, ziyaret defterini imzalayan grupla birlikte sergi salonundaydı; kayıtlı çıkış saati sabahı işaret ediyor.",
-        type: "witness",
+        text: "Restoratör Hanım'ın, kilitli eser onarım odasında bekçiye hızla etki eden o sinsi enjeksiyonu yaptığı kesinleşti.",
+        type: "evidence",
         isBonus: true,
       },
     ],
@@ -592,7 +603,7 @@ export const PUZZLES: Puzzle[] = [
     solution: { suspectId: "s2", weaponId: "w1", locationId: "l2" },
   },
   {
-    id: "p007",
+    id: "adada-haftalik-gizem",
     title: "Adada Haftalık Gizem",
     difficulty: "baskomiser",
     dayIndex: 7,
@@ -661,12 +672,12 @@ export const PUZZLES: Puzzle[] = [
     solution: { suspectId: "s3", weaponId: "w4", locationId: "l1" },
   },
   {
-    id: "p008",
+    id: "tren-yolculugunda-cinayet",
     title: "Tren Yolculuğunda Cinayet",
     difficulty: "dedektif",
     dayIndex: 8,
     story:
-      "Ankara-İstanbul ekspresinde, hareket eden trende bir iş adamı ölü bulundu. Tren istasyona varmadan katil tespiti yapılmalıydı.",
+      "Ankara-İstanbul ekspresinin ritmik tekerlek sesleri, kompartımanda işlenen sessiz bir cinayeti gizlemeye yetmedi. Tren yoğun sis altında yoluna devam ederken, birinci mevkide seyahat eden tanınmış bir iş insanı koltuğunda son nefesini vermişti. Tren bir sonraki istasyona varmadan ve katil kalabalığa karışmadan önce bu düğüm çözülmeli.",
     suspects: [
       { id: "s1", name: "İş Kadını", description: "Birinci mevki yolcusu", icon: "badge" },
       { id: "s2", name: "Üniversite Öğrencisi", description: "Ucuz bilet almıştı", icon: "face" },
@@ -683,40 +694,41 @@ export const PUZZLES: Puzzle[] = [
       { id: "l3", name: "Tuvalet", description: "Trenin arka bölümündeki küçük, kilitlenebilir tuvalet", icon: "wc" },
     ],
     clues: [
+
       {
         id: "c1",
-        text: "kurban tuvalet değil, oturma alanında bulundu. hiç oraya geçmemişti.",
-        type: "elimination",
+        text: "Adli tıp incelemesi, maktulde herhangi bir kesik veya ince bir iple boğulma izi olmadığını, ölümün hücresel bir şokla gerçekleştiğini belirledi.",
+        type: "forensic",
         isBonus: false,
       },
       {
         id: "c2",
-        text: "öğrenci bütün yolculuk boyunca koridorda müzik dinledi; birden fazla yolcu bunu gördü.",
+        text: "Üniversite öğrencisinin yolculuk boyunca sadece ahşap bölmeli dar odasında oturduğu doğrulandı.",
         type: "witness",
         isBonus: false,
       },
       {
         id: "c3",
-        text: "hareket halindeki trende halat saklamak ve kulanmak imkansız; tanıklar tüm hareketi görmüş olurdu.",
-        type: "elimination",
+        text: "İş Kadını'nın, olay anında trenin arka bölümündeki küçük kilitli alanda mahsur kaldığı görevlilerce teyit edildi.",
+        type: "witness",
         isBonus: false,
       },
       {
         id: "c4",
-        text: "emekli doktor kurbanla yemekli vagonda içki içmişti; zehir kokteylin içine karışmıştı.",
-        type: "direct",
+        text: "Cinayetin işlendiği yer, dar kompartıman veya kilitlenebilir tuvalet değildi; beyaz örtülü masaların olduğu bir alandı.",
+        type: "evidence",
         isBonus: false,
       },
       {
         id: "c5",
-        text: "adli tıp: kanda standart zehir bileşiği tespit edildi. içecek yoluyla alınmış.",
-        type: "forensic",
+        text: "Emekli doktorun tıbbi bilgisi, o renksiz ve tatsız maddeyi kurbanın bardağına hissettirmeden damlatmasını sağlamıştı.",
+        type: "evidence",
         isBonus: true,
       },
       {
         id: "c6",
-        text: "iş kadını kompartımanından çıkmadı; kondüktör kapı kontrolü sırasında onu uyurken gördü. yemekli vagona hiç geçmedi.",
-        type: "witness",
+        text: "Yemekli vagonda maktulün karşısında oturan doktorun, soğukkanlılıkla bu sinsi cinayeti işlediği açığa çıktı.",
+        type: "evidence",
         isBonus: true,
       },
     ],
@@ -727,26 +739,26 @@ export const PUZZLES: Puzzle[] = [
     solution: { suspectId: "s3", weaponId: "w1", locationId: "l2" },
   },
   {
-    id: "p009",
+    id: "tarihi-hamamda-cinayet",
     title: "Tarihi Hamamda Cinayet",
     difficulty: "caylak",
     dayIndex: 9,
     story:
-      "Sultanahmet'teki tarihi bir hamamda, tanınmış bir iş insanı aniden hayatını kaybetti. Dışarıdan kimsenin girmediği anlaşılan hamamda personeller sorguya alındı.",
+      "Sultanahmet'in asırlık kubbeleri altında yankılanan huzur verici su sesleri, dehşet dolu bir çığlıkla bıçak gibi kesildi. Tanınmış bir iş insanı, tarihi hamamın yoğun buharlı sıcaklık odasında, mermer kurnanın hemen yanında cansız yatıyordu. Kapıların içeriden sürgülü olması ve dışarıdan kimsenin girmemiş olması, katilin hala o sıcak, nefes kesici sisin ardında, peştamalların arasında gezindiğini kanıtlıyordu.",
     suspects: [
-      { id: "s1", name: "Kasiyer", description: "Girişten sorumlu.", icon: "woman" },
-      { id: "s2", name: "Yönetici", description: "Hamamın müdürü.", icon: "face_6" },
-      { id: "s3", name: "Kese Ustası", description: "Yılların tecrübesi.", icon: "man" },
+      { id: "s1", name: "Kasiyer", description: "Hamamın girişinden, dolap anahtarlarından ve kasadan sorumlu genç çalışan. Gece boyunca resepsiyondan hiç ayrılmadığını iddia ediyor.", icon: "noun-receptionist-1574384" },
+      { id: "s2", name: "Yönetici", description: "Hamamın işletme müdürü. Olay saatinde VIP müşterilerin talepleriyle ilgilendiğini ve içerideki kargaşadan haberi olmadığını söylüyor.", icon: "noun-teacher-1908918-avatar.png" },
+      { id: "s3", name: "Kese Ustası", description: "Yılların tecrübesine sahip, güçlü kolları olan emektar usta. İşinin başından hiç ayrılmadığını ve cinayeti görmediğini belirtiyor.", icon: "noun-driver-1574358-avatar.png" },
     ],
     weapons: [
-      { id: "w1", name: "Özel Sabun", description: "Alerjenik köpük.", icon: "wash" },
-      { id: "w2", name: "Tansiyon İlacı", description: "Reçeteli haplar.", icon: "medication" },
-      { id: "w3", name: "Çıplak El", description: "Fiziksel güç.", icon: "front_hand" },
+      { id: "w1", name: "Özel Sabun", description: "Alerjenik kimyasallar içeren, yanlış kullanımda solunum yollarını tıkayıp zehirleyebilen ağır kokulu özel yapım sabun.", icon: "wash" },
+      { id: "w2", name: "Tansiyon İlacı", description: "Maktulün dolabında bulunan, yüksek dozda alındığında anında kalp krizine yol açan güçlü reçeteli haplar.", icon: "medication" },
+      { id: "w3", name: "Çıplak El", description: "Hiçbir alet kullanmadan, acımasız ve doğrudan uygulanan ölümcül fiziksel boğma ve darp gücü.", icon: "front_hand" },
     ],
     locations: [
-      { id: "l1", name: "Masaj Odası", description: "Yüksek buharlı alan.", icon: "spa" },
-      { id: "l2", name: "Soğukluk", description: "Dinlenme bölümü.", icon: "ac_unit" },
-      { id: "l3", name: "Resepsiyon", description: "Kasa ve giriş.", icon: "point_of_sale" },
+      { id: "l1", name: "Masaj Odası", description: "Yoğun buharlı, göz gözü görmeyen, nefes almanın zor olduğu ve cinayetin işlendiği mermer kaplı sıcak alan.", icon: "spa" },
+      { id: "l2", name: "Soğukluk", description: "Müşterilerin hamam sonrası peştamallarla uzanıp dinlendiği, çay ve meyve servisinin yapıldığı serin bölüm.", icon: "ac_unit" },
+      { id: "l3", name: "Resepsiyon", description: "Hamamın ana girişi, kasanın, güvenlik kameralarının ve müşteri kayıtlarının tutulduğu aydınlık alan.", icon: "point_of_sale" },
     ],
     clues: [
       {
@@ -793,7 +805,7 @@ export const PUZZLES: Puzzle[] = [
     solution: { suspectId: "s3", weaponId: "w3", locationId: "l1" },
   },
   {
-    id: "p010",
+    id: "sabanci-muzesi-gasp",
     title: "Sabancı Müzesi Gasp",
     difficulty: "baskomiser",
     dayIndex: 10,
@@ -862,12 +874,12 @@ export const PUZZLES: Puzzle[] = [
     solution: { suspectId: "s2", weaponId: "w1", locationId: "l2" },
   },
   {
-    id: "p011",
+    id: "carsamba-suikasti",
     title: "Çarşamba Suikastı",
     difficulty: "dedektif",
     dayIndex: 11,
     story:
-      "Küçük bir kasaba olan Çarşamba'da, belediye başkanı ofisinde ölü bulundu. Kasaba halkı şoke olmuştu.",
+      "Çarşamba kasabasının o sakin ve durağan yapısı, belediye başkanının kendi makam odasında ölü bulunmasıyla temelinden sarsıldı. Kasaba halkı bu şokla çalkalanırken olay yerindeki incelemeler, cinayetin dışarıdan gelen biri tarafından değil, başkanın en yakınındaki yüzlerden biri tarafından ustaca planlanarak işlendiğini gösteriyordu.",
     suspects: [
       { id: "s1", name: "Muhalefet Adayı", description: "Seçimlerde rakip", icon: "badge" },
       { id: "s2", name: "Sekreter Bayan", description: "Yıllardır yanında çalışıyor", icon: "support-agent" },
@@ -884,39 +896,40 @@ export const PUZZLES: Puzzle[] = [
       { id: "l3", name: "Koridor", description: "Ofisin önündeki güvenlik kameralı geniş koridor", icon: "route" },
     ],
     clues: [
+
       {
         id: "c1",
-        text: "adli tıp: belediye başkanının kahve fincanında kimyasal toksin tespit edildi; zehirleme belediye ofisinde, masasının başında gerçekleşti.",
+        text: "Maktulün bedeninde elektrik yanığı veya ağır camla oluşabilecek kafa travması yoktu; ölüm sinsi ve içsel bir yolla gerçekleşmişti.",
         type: "forensic",
         isBonus: false,
       },
       {
         id: "c2",
-        text: "muhalefet adayı sabah seçim kampanyası toplantısındaydı; kayıtlar onu o sabah toplantı odasına yerleştiriyor, belediye ofisine hiç gelmedi.",
+        text: "Muhalefet Adayı, cinayet sabahı uzun oval masalı odada basına kapalı bir görüşmedeydi ve hiç çıkmadı.",
         type: "witness",
         isBonus: false,
       },
       {
         id: "c3",
-        text: "güvenlik kamerası inşaat müteahhidini koridorda gördü; belediye odasına girmedi, koridorda bekledi.",
+        text: "İnşaat Müteahhidi'nin sadece güvenlik kameralı geniş geçitte beklediği ve içeri hiç adım atmadığı kanıtlandı.",
         type: "evidence",
         isBonus: false,
       },
       {
         id: "c4",
-        text: "toplantı odasındaki kağıt ağırlığı yerinden kaymıştı; muhalefet adayı ve ağır cam nesne aynı mekânda buluşmuştu.",
+        text: "Cinayetin, güvenlik kameralarının kaydettiği geçitte veya resmi toplantı alanında işlenmediği olay yeri incelemesiyle sabitlendi.",
         type: "evidence",
         isBonus: false,
       },
       {
         id: "c5",
-        text: "sekreter bayan her sabah başkana kahve hazırlardı; o gün de bu rutin yaşandı ve belediye ofisindeydi.",
-        type: "direct",
+        text: "Her sabah hazırlanan içeceğe erişimi olan tek kişi, başkanın ofisindeki en yakın çalışanıydı.",
+        type: "evidence",
         isBonus: true,
       },
       {
         id: "c6",
-        text: "elektrik altyapısı o gün tamamen arızalıydı; teknik servis kayıtları panoya mühür vurduğunu belgeler — elektrik yolu o gün kullanılamaz.",
+        text: "Yılların sekreteri, gösterişli makam odasında başkanın kahvesine o ölümcül toksini karıştırarak bu kusursuz ihaneti planlamıştı.",
         type: "evidence",
         isBonus: true,
       },
@@ -928,7 +941,7 @@ export const PUZZLES: Puzzle[] = [
     solution: { suspectId: "s2", weaponId: "w2", locationId: "l1" },
   },
   {
-    id: "p012",
+    id: "folklor-festivalinde-olum",
     title: "Folklor Festivalinde Ölüm",
     difficulty: "caylak",
     dayIndex: 12,
@@ -994,7 +1007,7 @@ export const PUZZLES: Puzzle[] = [
     solution: { suspectId: "s2", weaponId: "w2", locationId: "l1" },
   },
   {
-    id: "p013",
+    id: "kutuphanede-sessiz-suc",
     title: "Kütüphanede Sessiz Suç",
     difficulty: "dedektif",
     dayIndex: 13,
@@ -1016,6 +1029,7 @@ export const PUZZLES: Puzzle[] = [
       { id: "l3", name: "Katalog Odası", description: "Kütüphane kataloğunun ve arşiv dosyalarının tutulduğu oda", icon: "folder" },
     ],
     clues: [
+
       {
         id: "c1",
         text: "el yazmaları bölümünün rafında kan izleri ve ansiklopedik bir cildin bıraktığı keskin kenar izi bulundu; ağır kitap burada kullanılmış.",
@@ -1060,7 +1074,7 @@ export const PUZZLES: Puzzle[] = [
     solution: { suspectId: "s2", weaponId: "w1", locationId: "l2" },
   },
   {
-    id: "p014",
+    id: "sahil-kasabasinda-gece",
     title: "Sahil Kasabasında Gece",
     difficulty: "baskomiser",
     dayIndex: 14,
@@ -1135,7 +1149,7 @@ export const PUZZLES: Puzzle[] = [
     solution: { suspectId: "s3", weaponId: "w2", locationId: "l3" },
   },
   {
-    id: "p015",
+    id: "saat-fabrikasinda-gizem",
     title: "Saat Fabrikasında Gizem",
     difficulty: "dedektif",
     dayIndex: 15,
@@ -1157,6 +1171,7 @@ export const PUZZLES: Puzzle[] = [
       { id: "l3", name: "Kontrol Odası", description: "Üretim sürecinin izlendiği elektronik panelli oda", icon: "dashboard" },
     ],
     clues: [
+
       {
         id: "c1",
         text: "üretim alanında dökülen yağ birikintisinin yanı başında çekiç izi ve kan sıçraması tespit edildi; alet burada kullanılmış.",
@@ -1201,7 +1216,7 @@ export const PUZZLES: Puzzle[] = [
     solution: { suspectId: "s1", weaponId: "w1", locationId: "l1" },
   },
   {
-    id: "p016",
+    id: "termal-otelde-supheli-vaka",
     title: "Termal Otelde Şüpheli Vaka",
     difficulty: "caylak",
     dayIndex: 16,
@@ -1267,7 +1282,7 @@ export const PUZZLES: Puzzle[] = [
     solution: { suspectId: "s2", weaponId: "w1", locationId: "l3" },
   },
   {
-    id: "p017",
+    id: "sehrin-kalbi-kadikoy",
     title: "Şehrin Kalbi Kadıköy",
     difficulty: "dedektif",
     dayIndex: 17,
@@ -1333,7 +1348,7 @@ export const PUZZLES: Puzzle[] = [
     solution: { suspectId: "s2", weaponId: "w1", locationId: "l1" },
   },
   {
-    id: "p018",
+    id: "beyin-takimi-sirri",
     title: "Beyin Takımı Sırrı",
     difficulty: "baskomiser",
     dayIndex: 18,
@@ -1414,7 +1429,7 @@ export const PUZZLES: Puzzle[] = [
     solution: { suspectId: "s1", weaponId: "w4", locationId: "l1" },
   },
   {
-    id: "p019",
+    id: "sarayli-seref-daveti",
     title: "Saraylı Şeref Daveti",
     difficulty: "baskomiser",
     dayIndex: 19,
@@ -1495,7 +1510,7 @@ export const PUZZLES: Puzzle[] = [
     solution: { suspectId: "s2", weaponId: "w2", locationId: "l1" },
   },
   {
-    id: "p020",
+    id: "koy-dugununde-trajedi",
     title: "Köy Düğününde Trajedi",
     difficulty: "caylak",
     dayIndex: 20,
@@ -1561,7 +1576,7 @@ export const PUZZLES: Puzzle[] = [
     solution: { suspectId: "s2", weaponId: "w1", locationId: "l3" },
   },
   {
-    id: "p021",
+    id: "galata-kulesinde-son-gece",
     title: "Galata Kulesi'nde Son Gece",
     difficulty: "dedektif",
     dayIndex: 21,
@@ -1627,7 +1642,7 @@ export const PUZZLES: Puzzle[] = [
     solution: { suspectId: "s3", weaponId: "w1", locationId: "l1" },
   },
   {
-    id: "p022",
+    id: "dolmabahcede-protokol-cinayeti",
     title: "Dolmabahçe'de Protokol Cinayeti",
     difficulty: "baskomiser",
     dayIndex: 22,
@@ -1699,7 +1714,7 @@ export const PUZZLES: Puzzle[] = [
     solution: { suspectId: "s1", weaponId: "w1", locationId: "l2" },
   },
   {
-    id: "p023",
+    id: "uskudarda-kayip-vapur",
     title: "Üsküdar'da Kayıp Vapur",
     difficulty: "caylak",
     dayIndex: 23,
@@ -1765,7 +1780,7 @@ export const PUZZLES: Puzzle[] = [
     solution: { suspectId: "s2", weaponId: "w2", locationId: "l2" },
   },
   {
-    id: "p024",
+    id: "beyoglu-pasajinda-santaj",
     title: "Beyoğlu Pasajında Şantaj",
     difficulty: "dedektif",
     dayIndex: 24,
@@ -1831,7 +1846,7 @@ export const PUZZLES: Puzzle[] = [
     solution: { suspectId: "s1", weaponId: "w3", locationId: "l2" },
   },
   {
-    id: "p025",
+    id: "ciragan-sarayinda-maskeli-balo",
     title: "Çırağan Sarayı'nda Maskeli Balo",
     difficulty: "baskomiser",
     dayIndex: 25,
@@ -1903,7 +1918,7 @@ export const PUZZLES: Puzzle[] = [
     solution: { suspectId: "s3", weaponId: "w2", locationId: "l2" },
   },
   {
-    id: "p026",
+    id: "sultanahmette-turist-tuzagi",
     title: "Sultanahmet'te Turist Tuzağı",
     difficulty: "caylak",
     dayIndex: 26,
@@ -1969,7 +1984,7 @@ export const PUZZLES: Puzzle[] = [
     solution: { suspectId: "s2", weaponId: "w3", locationId: "l2" },
   },
   {
-    id: "p027",
+    id: "adalarda-yalniz-fayton",
     title: "Adalar'da Yalnız Fayton",
     difficulty: "dedektif",
     dayIndex: 27,
@@ -2035,7 +2050,7 @@ export const PUZZLES: Puzzle[] = [
     solution: { suspectId: "s1", weaponId: "w3", locationId: "l3" },
   },
   {
-    id: "p028",
+    id: "arnavutkoyde-balikci-sirri",
     title: "Arnavutköy'de Balıkçı Sırrı",
     difficulty: "dedektif",
     dayIndex: 28,
@@ -2101,7 +2116,7 @@ export const PUZZLES: Puzzle[] = [
     solution: { suspectId: "s2", weaponId: "w3", locationId: "l2" },
   },
   {
-    id: "p029",
+    id: "topkapida-kayip-hancer",
     title: "Topkapı'da Kayıp Hançer",
     difficulty: "baskomiser",
     dayIndex: 29,
@@ -2173,34 +2188,34 @@ export const PUZZLES: Puzzle[] = [
     solution: { suspectId: "s3", weaponId: "w2", locationId: "l2" },
   },
   {
-    id: "p030",
+    id: "karakoyde-neon-gece",
     title: "Karaköy'de Neon Gece",
     difficulty: "caylak",
     dayIndex: 30,
     story:
-      "Karaköy'ün popüler gece kulübünde parti tüm hızıyla sürerken bir müşteri ölü bulundu. O sırada görevde olan üç çalışan inceleme altına alındı.",
+      "Karaköy'ün neon ışıklarıyla aydınlanan en popüler kulübünde bas sesleri duvarları titretiyordu. Ancak arka taraftaki loş ve soğuk servis koridorunda, müziğin ritmine kan karıştı. Partinin en şatafatlı anında işlenen bu cinayetin faili, hala kulübün karanlık köşelerinde geziniyor.",
     suspects: [
-      { id: "s1", name: "DJ Mete", description: "Sahne performansından sorumlu.", icon: "queue_music" },
-      { id: "s2", name: "Kasiyer Deniz", description: "Özel misafirlerle ilgileniyor.", icon: "payments" },
-      { id: "s3", name: "Güvenlik Tarık", description: "Kapı ve çıkış kontrolü.", icon: "local_police" },
+      { id: "s1", name: "DJ Mete", description: "Kulübün müziklerinden sorumlu, yüksek platformdaki kabininde tüm gece performans sergileyen kibirli sanatçı.", icon: "noun-dj-1908911" },
+      { id: "s2", name: "Organizatör Deniz", description: "VIP müşterilerin her isteğiyle ilgilenen, elinden şampanya kadehini hiç düşürmeyen güler yüzlü organizatör.", icon: "noun-teacher-1908919-avatar.png" },
+      { id: "s3", name: "Güvenlik Tarık", description: "Kapı kontrolünü ve içerideki taşkınlıkları önlemeyi sağlayan, sürekli telsiziyle talimat alan iri yarı güvenlik.", icon: "noun-police-1574386" },
     ],
     weapons: [
-      { id: "w1", name: "Ahşap Cop", description: "Ağır ve sert bir cisim.", icon: "gavel" },
-      { id: "w2", name: "Şampanya Kadehi", description: "Cam eşya.", icon: "wine_glass" },
-      { id: "w3", name: "Telsiz", description: "Haberleşme cihazı.", icon: "radio" },
+      { id: "w1", name: "Ahşap Cop", description: "Güvenlik personelinin taşıdığı kısa saplı ağır ahşap teçhizat; küt ucuyla tek darbede kafatasını çatlatabilecek yapıda.", icon: "gavel" },
+      { id: "w2", name: "Şampanya Kadehi", description: "VIP locasında servis edilen, kırıldığında boyun bölgesini kesebilecek ölümcül bir silaha dönüşen ince cam eşya.", icon: "wine-bar" },
+      { id: "w3", name: "Telsiz", description: "Personelin haberleştiği, boyna dolanıp boğmaya müsait kalın kordonlu ağır elektronik cihaz.", icon: "radio" },
     ],
     locations: [
-      { id: "l1", name: "Servis Çıkışı", description: "Arka taraftaki karanlık geçit.", icon: "door_front" },
-      { id: "l2", name: "DJ Kabini", description: "Ses sisteminin merkezi.", icon: "speaker" },
-      { id: "l3", name: "VIP Loca", description: "Özel misafir alanı.", icon: "star" },
+      { id: "l1", name: "Servis Çıkışı", description: "Kameranın görmediği, personelin molaya çıktığı, çöp konteynerlerinin bulunduğu arka taraftaki loş ve soğuk geçit.", icon: "door_front" },
+      { id: "l2", name: "DJ Kabini", description: "Devasa ses sisteminin merkezi olan, tüm kulübe tepeden bakan ve her an göz önünde olan aydınlık platform.", icon: "speaker" },
+      { id: "l3", name: "VIP Loca", description: "Özel misafirlerin ağırlandığı, kadife koltuklu, ana salondan kısmen yalıtılmış lüks eğlence bölümü.", icon: "star" },
     ],
     clues: [
-      { id: "c1", text: "Adli rapor: Kurban kafasına aldığı tek bir künt darbe ile hayatını kaybetmiş. Olay yerinde cam kırığına veya boğuşma izine rastlanmadı.", type: "forensic", isBonus: false },
-      { id: "c2", text: "Olay yeri inceleme: Kan dağılımı, cinayetin cesedin bulunduğu servis çıkışında işlendiğini ve kurbanın taşınmadığını kesinleştirdi.", type: "evidence", isBonus: false },
-      { id: "c3", text: "Hesap dökümleri, Deniz'in olay saatinde VIP locasındaki özel misafirlere şampanya servisi yaptığını ve o alandan hiç ayrılmadığını doğruluyor.", type: "witness", isBonus: false },
-      { id: "c4", text: "Müzik gece boyunca kesintisiz devam etti. DJ kabinindeki şarj istasyonunda bırakılan telsiz, Mete'nin setin başından hiç ayrılmadığını gösteriyor.", type: "evidence", isBonus: false },
-      { id: "c5", text: "Ek İfade: Güvenlik Tarık, devriye güzergahı olan servis çıkışında her zamanki görevini yapıyordu ancak kemerindeki ahşap cop ortada yoktu.", type: "witness", isBonus: true },
-      { id: "c6", text: "Adli Analiz: DJ kabini ve VIP locasında luminol testi negatif çıktı; bu iki alanda cinayete dair hiçbir kan izi bulunmadı.", type: "forensic", isBonus: true },
+      { id: "c1", text: "Kurbanın cesedi, yüksek sesli müziğin duyulmadığı ve güvenlik kamerasının kör noktası olan tek alanda bulundu.", type: "evidence", isBonus: false },
+      { id: "c2", text: "Kasiyer Deniz, gece boyunca kadife koltuklu özel alandan hiç ayrılmadı ve elindeki ince belli cam eşyayı yanından ayırmadı.", type: "witness", isBonus: false },
+      { id: "c3", text: "Haberleşme telsizi, olay saatinde DJ Mete ile birlikte yüksekteki müzik kontrol alanındaydı.", type: "evidence", isBonus: false },
+      { id: "c4", text: "Kurban cam kesiğiyle değil, kafatasına inen ağır ve küt bir darbeyle öldürüldü.", type: "forensic", isBonus: false },
+      { id: "c5", text: "Güvenlik Tarık'ın, olay mahallindeki kan izleriyle eşleşen ahşap teçhizatı kayıptı.", type: "evidence", isBonus: true },
+      { id: "c6", text: "DJ Mete ve Kasiyer Deniz'in ifadeleri, olay saatinde birbirlerinin çalıştıkları alanlarda olduklarını doğruluyordu.", type: "witness", isBonus: true },
     ],
     solvabilityMeta: {
       freeEliminations: ["s1", "s2", "w2", "w3", "l2", "l3"],
@@ -2209,34 +2224,34 @@ export const PUZZLES: Puzzle[] = [
     solution: { suspectId: "s3", weaponId: "w1", locationId: "l1" },
   },
   {
-    id: "p031",
+    id: "konakta-gece-vakti",
     title: "Konakta Gece Vakti",
     difficulty: "caylak",
     dayIndex: 31,
     story:
-      "Bursa'nın eski bir konağında düzenlenen yemek daveti sonrası, konağın sadık kâhyası Fuat Bey sabah saatlerinde ölü bulundu. Davette geceleyen üç şüpheli sorguya alındı.",
+      "Bursa'nın eteklerindeki asırlık konakta verilen o ihtişamlı yemek daveti, gece yarısı kopan fırtınayla kabusa dönüştü. Konağın kırk yıllık sadık kâhyası Fuat Bey, sabahın ilk ışıklarında kanlar içinde bulundu. Gecenin karanlık sırları, davette konaklayan misafirlerin üzerine çoktan çökmüştü.",
     suspects: [
-      { id: "s1", name: "Tüccar Vehbi", description: "Antika tüccarı.", icon: "store" },
-      { id: "s2", name: "Semiha Hanım", description: "Konağın varisi.", icon: "woman" },
-      { id: "s3", name: "Yüzbaşı Cemil", description: "Emekli subay.", icon: "military_tech" },
+      { id: "s1", name: "Tüccar Vehbi", description: "Sürekli eski evrak ve tapuları inceleyen, cinayet gecesi kilitli kapılar ardında belgelerle uğraşan şüpheli antika tüccarı.", icon: "noun-tuccar-vehbi-avatar.png" },
+      { id: "s2", name: "Semiha Hanım", description: "Konağın asıl varisi; mirasın bölünmesinden son derece rahatsız olan ve gece yarısı gizlice kütüphaneye sızan asilzade.", icon: "noun-semiha-hanim-avatar.png" },
+      { id: "s3", name: "Yüzbaşı Cemil", description: "Sürekli anılarını yazan, disiplinli ve sert mizaçlı emekli subay; geceyi yalnız başına masasında geçirmiş.", icon: "noun-soldier-1574347" },
     ],
     weapons: [
-      { id: "w1", name: "Bahçe Makası", description: "Keskin ve ağır.", icon: "content_cut" },
-      { id: "w2", name: "İngiliz Anahtarı", description: "Paslanmaz çelik.", icon: "build" },
-      { id: "w3", name: "Mektup Açacağı", description: "İnce ve sivri.", icon: "edit" },
+      { id: "w1", name: "Bahçe Makası", description: "Konağın bahçesinden gizlice içeri alınmış, ağır, paslı ve son derece keskin devasa demir makas.", icon: "content_cut" },
+      { id: "w2", name: "İngiliz Anahtarı", description: "Alt kattaki tesisat onarımı için bırakılmış, kafaya vurulduğunda anında ölümcül travma yaratan paslanmaz çelik alet.", icon: "build" },
+      { id: "w3", name: "Mektup Açacağı", description: "Yazı masasında duran, ince, sivri ve kalbe tek seferde saplanabilecek keskinlikte gümüş bıçak.", icon: "edit" },
     ],
     locations: [
-      { id: "l1", name: "Kütüphane", description: "Olay mahalli.", icon: "menu_book" },
-      { id: "l2", name: "Arşiv Odası", description: "Eski evraklar.", icon: "archive" },
-      { id: "l3", name: "Yemek Salonu", description: "Davet alanı.", icon: "restaurant" },
+      { id: "l1", name: "Kütüphane", description: "Deri kaplı kitapların bulunduğu, kalın perdelerle örtülü, loş, sessiz ve tozlu okuma odası.", icon: "menu_book" },
+      { id: "l2", name: "Arşiv Odası", description: "Konağa ait yüz yıllık tapuların ve evrakların saklandığı, sadece özel anahtarla girilebilen kilitli bölüm.", icon: "archive" },
+      { id: "l3", name: "Yemek Salonu", description: "Uzun ahşap masaların bulunduğu, davetlilere hizmet veren geniş ve aydınlık ana salon.", icon: "restaurant" },
     ],
     clues: [
-      { id: "c1", text: "Adli rapor: Maktul derin ve geniş kesici alet yaralarıyla hayatını kaybetmiştir; kafatasında darbe veya vücudunda ince delinme izi yoktur.", type: "forensic", isBonus: false },
-      { id: "c2", text: "Olay yeri inceleme: Kan izleri ve devrilmiş mobilyalar yalnızca Kütüphane'de tespit edildi, diğer odalar tamamen temizdi.", type: "evidence", isBonus: false },
-      { id: "c3", text: "Yüzbaşı Cemil, gece boyunca Yemek Salonu'nda tek başına anılarını yazdığını belirtti; masadaki kağıtlar ve kadehler bu ifadeyi doğruluyor.", type: "witness", isBonus: false },
-      { id: "c4", text: "Antikacı Vehbi'nin geceyi eski belgeleri incelemek üzere Arşiv Odası'nda geçirdiği saptandı. Odanın köşesindeki bozuk radyatörün üzerinde ağır bir İngiliz anahtarı bırakılmıştı.", type: "evidence", isBonus: false },
-      { id: "c5", text: "Ek İnceleme: Ekipler, Kütüphane penceresinin hemen dışında çamura bulanmış bir bahçe makası ve Semiha Hanım'a ait kanlı bir mendil buldu.", type: "forensic", isBonus: true },
-      { id: "c6", text: "Kamera Kaydı: Yemek Salonu ve Arşiv Odası'nın koridoru gören kameraları incelendiğinde, bu odalardaki misafirlerin cinayet saatinde dışarı çıkmadığı kesinleşti.", type: "record", isBonus: true },
+      { id: "c1", text: "Olay yeri inceleme ekipleri, tozlu evrak deposunda ve uzun ahşap masalı salonda hiçbir mücadele izine rastlamadı.", type: "evidence", isBonus: false },
+      { id: "c2", text: "Cinayette paslanmaz çelikten yapılmış alet veya ince uçlu bıçak kullanılmadığı anlaşıldı.", type: "forensic", isBonus: false },
+      { id: "c3", text: "Tüccar Vehbi'nin tüm gece boyunca kilitli bir odada tek başına evrak incelediği kanıtlandı.", type: "witness", isBonus: false },
+      { id: "c4", text: "Yüzbaşı Cemil, sabaha kadar ana yemek salonunda oturup anılarını yazdı ve kimseyle temas kurmadı.", type: "witness", isBonus: false },
+      { id: "c5", text: "Konağın varisi Semiha Hanım'ın, ağır kesici metal aleti olay mahallinde bıraktığı tespit edildi.", type: "evidence", isBonus: true },
+      { id: "c6", text: "Deri kaplı kitapların bulunduğu odanın pencere pervazında, Semiha Hanım'ın elbisesinden kopmuş siyah bir kumaş parçası bulundu.", type: "evidence", isBonus: true },
     ],
     solvabilityMeta: {
       freeEliminations: ["s1", "s3", "w2", "w3", "l2", "l3"],
@@ -2245,34 +2260,34 @@ export const PUZZLES: Puzzle[] = [
     solution: { suspectId: "s2", weaponId: "w1", locationId: "l1" },
   },
   {
-    id: "p032",
+    id: "pazar-sabahi-baskini",
     title: "Pazar Sabahı Baskını",
     difficulty: "caylak",
     dayIndex: 32,
     story:
-      "Gaziantep'in eski çarşısında bakırcı Niyazi Usta, sabah erken saatlerde dükkanının deposunda ölü bulundu. Kasadan para ve değerli bazı bakır eşyalar kayıptı.",
+      "Gaziantep'in asırlık Bakırcılar Çarşısı'nda şafak vakti, çekiç sesleri yerine bir feryat yankılandı. Niyazi Usta, sabah dükkanını açmaya geldiğinde kendi deposunda cansız halde yatıyordu. Kasadan eksilen bakır eşyalar ve karanlıkta kaybolan ayak izleri, katilin çok uzağa gitmediğini söylüyor.",
     suspects: [
-      { id: "s1", name: "Vahap Amca", description: "Yaşlı komşu esnaf.", icon: "elderly" },
-      { id: "s2", name: "Çırak Selim", description: "Dükkanın genç çalışanı.", icon: "person" },
-      { id: "s3", name: "Kurye Murat", description: "Kargo nakliyecisi.", icon: "local_shipping" },
+      { id: "s1", name: "Vahap Amca", description: "Bacaklarındaki şiddetli ağrılar nedeniyle merdiven inip çıkamayan, sürekli oturduğu yerden etrafı izleyen yaşlı komşu esnaf.", icon: "noun-vahap-amca-avatar.png" },
+      { id: "s2", name: "Çırak Selim", description: "Dükkanın genç ve telaşlı çalışanı; son günlerde acil paraya ihtiyacı olduğu biliniyor ve cinayet mahallinde görülmüş.", icon: "noun-cirak-selim-avatar.png" },
+      { id: "s3", name: "Kurye Murat", description: "Ağır yükleri taşımaya alışkın, dükkana sürekli mal getiren nakliyeci; elinden alet çantasını düşürmüyor.", icon: "noun-kurye-murat-pazar-avatar.png" },
     ],
     weapons: [
-      { id: "w1", name: "Cam Kadeh", description: "İçecek bardağı.", icon: "wine_glass" },
-      { id: "w2", name: "İngiliz Anahtarı", description: "Metal tamir aleti.", icon: "build" },
-      { id: "w3", name: "Bakır Ağırlık", description: "Ağır tartı dirhemi.", icon: "radio_button_checked" },
+      { id: "w1", name: "Cam Kadeh", description: "Çay ocağından alınmış, kırıldığında şah damarını kesebilecek ölümcül ve ince içecek bardağı.", icon: "wine_glass" },
+      { id: "w2", name: "İngiliz Anahtarı", description: "Nakliye araçlarını tamir etmekte kullanılan, üzeri gres yağı lekeleriyle dolu ağır metal tamir aleti.", icon: "build" },
+      { id: "w3", name: "Bakır Ağırlık", description: "Kuyumcu ve bakırcı terazilerinde kullanılan, avuç içine tam oturan ölümcül kütleli tartı dirhemi.", icon: "radio_button_checked" },
     ],
     locations: [
-      { id: "l1", name: "Depo", description: "Malların saklandığı alt kat.", icon: "warehouse" },
-      { id: "l2", name: "Dükkan İçi", description: "Müşteri karşılama alanı.", icon: "storefront" },
-      { id: "l3", name: "Arka Sokak", description: "Mal yükleme geçidi.", icon: "directions_walk" },
+      { id: "l1", name: "Depo", description: "Malların istiflendiği, güneş ışığı almayan, merdivenle inilen loş ve havasız alt kat; cinayetin işlendiği yer.", icon: "warehouse" },
+      { id: "l2", name: "Dükkan İçi", description: "Vitrinlerin ve kasanın bulunduğu, sokağı doğrudan gören aydınlık müşteri karşılama alanı.", icon: "storefront" },
+      { id: "l3", name: "Arka Sokak", description: "Sadece nakliye araçlarının yanaştığı, çamurlu ve kimsenin geçmediği dar mal yükleme geçidi.", icon: "directions_walk" },
     ],
     clues: [
-      { id: "c1", text: "Adli Rapor: Baş yarası, ağır ve dairesel bir cismin tek darbesiyle oluşmuş. Olay yerinde kesici cam veya köşeli alet izine rastlanmadı. Kan izleri yalnızca Depo'da yoğunlaşıyor.", type: "forensic", isBonus: false },
-      { id: "c2", text: "Komşu Vahap Amca, olay saatinde Dükkan İçi'nde oturmuş, elindeki cam kadehten şerbetini yudumluyordu; depoya hiç inmediği dükkanın kamerasıyla sabit.", type: "witness", isBonus: false },
-      { id: "c3", text: "Kurye Murat, teslimat aracının tekerleğini değiştirmek için Arka Sokak'ta elinde İngiliz anahtarıyla uğraşırken dış güvenlik kameralarına takıldı.", type: "evidence", isBonus: false },
-      { id: "c4", text: "Depodaki tartı rafında durması gereken ağır bakır dirhemin yeri boştu ve Niyazi Usta'nın kasası şifre girilerek zorlanmadan açılmıştı.", type: "evidence", isBonus: false },
-      { id: "c5", text: "Ek İnceleme: Dükkan İçi ve Arka Sokak'ta yapılan aramalarda cinayet silahı olabilecek hiçbir materyal veya boğuşma izi bulunmadı.", type: "evidence", isBonus: true },
-      { id: "c6", text: "Kesin Kanıt: Çırak Selim'in önlüğünde bulunan kan lekesi Niyazi Usta ile eşleşti; kayıp bakır ağırlık ise Selim'in çantasına gizlenmiş halde bulundu.", type: "forensic", isBonus: true },
+      { id: "c1", text: "Görgü tanıkları, yaşlı komşu Vahap Amca'nın o sabah elinde sadece ince camdan yapılmış kırılgan bir içecek bardağı taşıdığını doğruladı.", type: "witness", isBonus: false },
+      { id: "c2", text: "Kargo nakliyecisi Murat'ın tüm sabahı sadece vitrinlerin ve kasanın bulunduğu aydınlık karşılama alanında bekleyerek geçirdiği anlaşıldı.", type: "witness", isBonus: false },
+      { id: "c3", text: "Adli tıp incelemeleri, cinayetin nakliye araçlarının yanaştığı arka sokakta işlenmediğini ve suç aleti olarak kırılgan cam eşyaların kullanılmadığını kesinleştirdi.", type: "forensic", isBonus: false },
+      { id: "c4", text: "Kurye Murat'a ait olan uzun metal alet üzerinde yapılan kriminal incelemede, bu aletin cinayette kesinlikle kullanılmadığı netlik kazandı.", type: "evidence", isBonus: false },
+      { id: "c5", text: "Ek Kanıt: Çırak Selim'in, cinayetin işlendiği malların istiflendiği loş alt kattan telaşla çıkarken görüldüğü kamera kayıtlarına yansıdı.", type: "evidence", isBonus: true },
+      { id: "c6", text: "Kesin Rapor: Maktulün başındaki ölümcül yaranın, terazilerde kullanılan avuç içine tam oturan ağır bir metal dirhemle yapıldığı kanıtlandı.", type: "forensic", isBonus: true },
     ],
     solvabilityMeta: {
       freeEliminations: ["s1", "s3", "w1", "w2", "l2", "l3"],
@@ -2281,34 +2296,34 @@ export const PUZZLES: Puzzle[] = [
     solution: { suspectId: "s2", weaponId: "w3", locationId: "l1" },
   },
   {
-    id: "p033",
+    id: "aksam-vapurunda-gizem",
     title: "Akşam Vapurunda Gizem",
     difficulty: "caylak",
     dayIndex: 33,
     story:
-      "Akşam vapurunda elektrik kesintisi sırasında Nafiz Bey kapalı yolcu salonunda ölü bulundu. Üç şüpheli, üç silah ve üç farklı alan var.",
+      "Boğaz'ın hırçın sularını yaran akşam vapurunda ışıklar aniden kesildiğinde, herkes bunun sıradan bir arıza olduğunu düşündü. Ancak jeneratörler devreye girip salon aydınlandığında, Nafiz Bey koltuğunda son nefesini vermişti. Dalgaların sesi, vapurda mahsur kalan katilin ayak seslerini gizlemeye yetmeyecekti.",
     suspects: [
-      { id: "s1", name: "Tarık", description: "Yolculuk boyunca açık güvertede olduğunu söylüyor.", icon: "person" },
-      { id: "s2", name: "Feriha", description: "Kısa süreliğine salona uğradığını kabul ediyor.", icon: "person-outline" },
-      { id: "s3", name: "Kerem", description: "Makine bölümünde görevli.", icon: "engineering" },
+      { id: "s1", name: "Tarık", description: "Yolculuk boyunca dondurucu soğuğa rağmen içeri girmeyip dışarıda manzarayı izlediğini iddia eden şüpheli yolcu.", icon: "noun-yolcu-tarik-avatar.png" },
+      { id: "s2", name: "Feriha", description: "Elektrik kesintisinde kurbanın hemen yanındaki koltukta oturan, çantası çeşitli ilaçlarla dolu tedirgin kadın.", icon: "noun-yolcu-feriha-avatar.png" },
+      { id: "s3", name: "Kerem", description: "Vapurun motor arızalarıyla ilgilenen, üstü başı yağ içindeki makine dairesi görevlisi; cinayet anında aşağıda olduğunu söylüyor.", icon: "noun-makinist-kerem-avatar.png" },
     ],
     weapons: [
-      { id: "w1", name: "Zehirli İçecek", description: "İçeceğe karışan hızlı etkili madde.", icon: "local-bar" },
-      { id: "w2", name: "İngiliz Anahtarı", description: "Ağır metal alet.", icon: "build" },
-      { id: "w3", name: "Cam Parçası", description: "Kesici kırık cam.", icon: "wine-bar" },
+      { id: "w1", name: "Zehirli İçecek", description: "Sıcak çaya karıştırıldığında saniyeler içinde kalbi durduran renksiz, kokusuz ve hızlı etkili ölümcül sıvı.", icon: "local-bar" },
+      { id: "w2", name: "İngiliz Anahtarı", description: "Motor parçalarını sıkmak için kullanılan, üzeri gres yağına bulanmış devasa ve ağır demir alet.", icon: "build" },
+      { id: "w3", name: "Cam Parçası", description: "Vapurun kırık küpeştesinden koparılmış, boynu tek hamlede kesebilecek kadar sivri ve tehlikeli cam.", icon: "wine-bar" },
     ],
     locations: [
-      { id: "l1", name: "Kapalı Yolcu Salonu", description: "Yolcuların oturduğu iç alan.", icon: "chair" },
-      { id: "l2", name: "Açık Güverte", description: "Vapurun dış kısmı.", icon: "deck" },
-      { id: "l3", name: "Makine Bölümü", description: "Personelin çalıştığı alt kat.", icon: "precision-manufacturing" },
+      { id: "l1", name: "Kapalı Yolcu Salonu", description: "Ahşap bankların bulunduğu, elektrik kesintisinde tamamen zifiri karanlığa gömülen ve kurbanın bulunduğu iç alan.", icon: "chair" },
+      { id: "l2", name: "Açık Güverte", description: "Dondurucu rüzgarın estiği, yolcuların martılara simit attığı ve ıssız olan dış kısım.", icon: "deck" },
+      { id: "l3", name: "Makine Bölümü", description: "Devasa dizel motorların sağır edici bir gürültüyle çalıştığı, personelin girdiği yağ kokulu alt kat.", icon: "precision-manufacturing" },
     ],
     clues: [
-      { id: "c1", text: "Adli rapor, Nafiz Bey'in ölümünün içeceğine karışan hızlı etkili bir zehirden kaynaklandığını ve vücudunda herhangi bir darp ya da kesik izi bulunmadığını gösteriyor.", type: "forensic", isBonus: false },
-      { id: "c2", text: "Makine bölümünde yapılan detaylı incelemede herhangi bir zehirli madde kalıntısına rastlanmadı; bu bölümde zehir kullanıldığına dair bir bulgu yok.", type: "forensic", isBonus: false },
-      { id: "c3", text: "Kaptan, Tarık'ın yolculuk boyunca açık güvertede olduğunu ve elektrik kesintisi sırasında da oradan ayrılmadığını doğruluyor.", type: "witness", isBonus: false },
-      { id: "c4", text: "Kerem'in olay saatinde makine bölümünde görevli olduğu kayıtlarla sabit; sistem loglarında bulunduğu alanı terk ettiğine dair bir veri yok.", type: "record", isBonus: false },
-      { id: "c5", text: "Açık güvertede cinayet silahı olabileceğinden şüphelenilen bir İngiliz Anahtarı bulundu.", type: "evidence", isBonus: false },
-      { id: "c6", text: "Açık güvertede içecek servisi yapılmadığı, tüm içeceklerin yalnızca kapalı yolcu salonunda hazırlandığı personel tarafından doğrulandı.", type: "witness", isBonus: true },
+      { id: "c1", text: "Maktulün sadece içeceğine karıştırılan sinsi bir maddeyle öldürüldüğü anlaşıldı; vücudunda hiçbir darp veya kesik yoktu.", type: "forensic", isBonus: false },
+      { id: "c2", text: "Makinist Kerem'in motor arızasını gidermek için tüm gece ağır paslı aletlerle devasa motorların bulunduğu alt katta çalıştığı teyit edildi.", type: "witness", isBonus: false },
+      { id: "c3", text: "Vapurun dış kısmında dondurucu rüzgara karşı manzarayı izleyen Tarık'ın, elektrik kesintisi sırasında içeri hiç girmediği anlaşıldı.", type: "witness", isBonus: false },
+      { id: "c4", text: "Zehrin etkisini saniyeler içinde göstermesi, kurbanın o an bulunduğu ahşap banklı iç alanda öldüğünü kesinleştirdi.", type: "forensic", isBonus: false },
+      { id: "c5", text: "Tüllü şapkalı kadının çantasında, zehrin bulunduğu küçük bir cam şişe ele geçirildi.", type: "evidence", isBonus: true },
+      { id: "c6", text: "Feriha Hanım'ın, elektrik kesintisi anında kurbanın hemen yanındaki koltukta oturduğu diğer yolcularca doğrulandı.", type: "witness", isBonus: true },
     ],
     solvabilityMeta: {
       freeEliminations: ["s1", "s3", "w2", "w3", "l2", "l3"],
@@ -2317,34 +2332,34 @@ export const PUZZLES: Puzzle[] = [
     solution: { suspectId: "s2", weaponId: "w1", locationId: "l1" },
   },
   {
-    id: "p034",
+    id: "bagda-kanli-bicak",
     title: "Bağda Kanlı Bıçak",
     difficulty: "caylak",
     dayIndex: 34,
     story:
-      "İzmir'in Bornova ilçesinde bir zeytinlik ve bağ sahibi Hüsnü Ağa, hasat dönemi sabahında bağın içinde bıçaklanmış bulundu. Etrafındaki üzüm sepetleri devrilmişti. O sabah erken bağa giren üç kişi tespit edildi. Bölge jandarması seni olayı çözmeye davet etti.",
+      "Bornova'nın asırlık zeytinliklerinde şafak vakti, çiğ damlalarına kan karıştı. Yılların toprak ağası Hüsnü Bey, kendi bağının ortasında, devrilmiş sepetlerin arasında acımasızca katledilmiş halde bulundu. Toprak kana doyarken, o puslu serinlikte bağa giren üç kişinin ayak izleri sırrını koruyordu.",
     suspects: [
-      { id: "s1", name: "Uşak Mehmet", description: "Hüsnü Ağa'nın bağında yıllardır çalışan yaşlı uşak; son zamanlarda kovulma söylentisi çıkmış.", icon: "agriculture" },
-      { id: "s2", name: "Komşu Tarla Sahibi Nevzat", description: "Hüsnü Ağa ile tarla sınırı yüzünden mahkemelik olan komşu.", icon: "elderly" },
-      { id: "s3", name: "Torun Kız Nermin", description: "Hüsnü Ağa'nın genç torunu; büyükbabasının bağı satma kararına şiddetle karşı çıkıyor.", icon: "face-3" },
+      { id: "s1", name: "Uşak Mehmet", description: "Hüsnü Ağa'nın bağında yıllardır çalışan, yaşlılığı nedeniyle kovulma korkusuyla yaşayan emektar uşak.", icon: "noun-usak-mehmet-avatar.png" },
+      { id: "s2", name: "Komşu Tarla Sahibi Nevzat", description: "Hüsnü Ağa ile tarla sınırı yüzünden davalık olan, sınırı ihlal etmediğini savunan öfkeli komşu.", icon: "noun-komsu-nevzat-avatar.png" },
+      { id: "s3", name: "Torun Kız Nermin", description: "Büyükbabasının arazileri satma kararına şiddetle karşı çıkan, sabah erkenden bağ kulübesinde ağlarken görülen mirasçı.", icon: "noun-torun-nermin-avatar.png" },
     ],
     weapons: [
-      { id: "w1", name: "Bağ Bıçağı", description: "Üzüm kesmede kullanılan kısa ve keskin bağ bıçağı.", icon: "content-cut" },
-      { id: "w2", name: "Balta", description: "Bağ kulübesinde saklanan odun baltası.", icon: "carpenter" },
-      { id: "w3", name: "Demir Kazma", description: "Toprak işlemeye yarayan ağır demir kazma.", icon: "construction" },
+      { id: "w1", name: "Bağ Bıçağı", description: "Üzüm salkımlarını tek hamlede kesmek için özel olarak ustalar tarafından bileyenmiş kısa ve ölümcül bıçak.", icon: "content-cut" },
+      { id: "w2", name: "Balta", description: "Kışlık odun kırmak için bağ evinde bulundurulan, kemikleri bile parçalayabilen ağır ve paslı alet.", icon: "carpenter" },
+      { id: "w3", name: "Demir Kazma", description: "Sert toprağı işlemek için kullanılan, kafatasına isabet ettiğinde geniş tahribat yaratan kütleli kazma.", icon: "construction" },
     ],
     locations: [
-      { id: "l1", name: "Bağ İçi", description: "Asmaların sık yetiştiği bağın orta kısmı.", icon: "grass" },
-      { id: "l2", name: "Bağ Kulübesi", description: "Bağın girişindeki küçük taş kulübe; aletler burada saklanıyor.", icon: "cottage" },
-      { id: "l3", name: "Tarla Sınırı", description: "Hüsnü Ağa ile komşu Nevzat'ın tarlasını ayıran taş duvar hattı.", icon: "terrain" },
+      { id: "l1", name: "Bağ İçi", description: "Asmaların sıklaştığı, yapraklardan dolayı görüş mesafesinin çok düştüğü tarlanın en izole orta kısmı.", icon: "grass" },
+      { id: "l2", name: "Bağ Kulübesi", description: "Aletlerin saklandığı, girişin hemen yanındaki karanlık, penceresiz taş yapı.", icon: "cottage" },
+      { id: "l3", name: "Tarla Sınırı", description: "Hüsnü Ağa ile komşusunun arazisini bölen, üzerinden atlaması zor alçak taş duvar hattı.", icon: "terrain" },
     ],
     clues: [
-      { id: "c1", text: "Hüsnü Ağa bağın tam ortasında, asmaların arasında bulundu. Devrilmiş sepetler ve kırık dallar mücadelenin bağ içinde olduğunu kanıtlıyor.", type: "evidence", isBonus: false },
-      { id: "c2", text: "Köy muhtarı, Torun Nermin'i sabah namazı vakti köy çeşmesinde ağlarken gördüğünü söylüyor. Çeşme bağdan 3 km uzakta; oraya gidip gelmesi cinayet saatini karşılamıyor.", type: "witness", isBonus: false },
-      { id: "c3", text: "Yaranın biçimi dar, kısa ve düzgün kesilmiş; balta veya kazma gibi büyük ve ağır aletlerin bıraktığı geniş yara bu değil.", type: "forensic", isBonus: false },
-      { id: "c4", text: "Uşak Mehmet'in beline bağlı bıçak kını boş; kında taze kan izi var. Mehmet bıçağın sabah düştüğünü öne sürdü ama bağ içinde arama yapıldığında bıçak Nevzat'ın tarlasına doğru uzanan patikada bulundu.", type: "evidence", isBonus: false },
-      { id: "c5", text: "Tarla sınırındaki işçi Ahmet, sabah çok erken Nevzat'ın taş duvarın yanında beklediğini ama bağa girmediğini söylüyor. Nevzat sadece sınır kontrolü yaptığını doğruluyor.", type: "witness", isBonus: true },
-      { id: "c6", text: "Hüsnü Ağa'nın cebinden imzalanmamış bir kâğıt çıktı: Uşak Mehmet'i bu hafta sonu işten çıkardığını belirten yazılı bildirim. Mehmet'in bu kâğıttan haberi olduğu, dün akşam tartıştıkları komşu tarafından doğrulandı.", type: "direct", isBonus: true },
+      { id: "c1", text: "Cinayet silahının odun kırma baltası veya paslı demir kazma gibi geniş tahribat yaratan aletler olmadığı tespit edildi.", type: "forensic", isBonus: false },
+      { id: "c2", text: "Cesedin bulunduğu sık asmalarla kaplı orta alan, cinayetin işlendiği tek ve kesin yerdi.", type: "evidence", isBonus: false },
+      { id: "c3", text: "Genç torun Nermin'in, o sabah sadece karanlık taş yapının içinde oturup ağladığı anlaşıldı.", type: "witness", isBonus: false },
+      { id: "c4", text: "Komşu Nevzat, jandarma gelene kadar arazileri ayıran taş duvar hattının kendi tarafında beklediğini kanıtladı.", type: "witness", isBonus: false },
+      { id: "c5", text: "Uşak Mehmet'in belinde taşıdığı kısa tarım bıçağının kını, olay yerinde asmaların arasına düşmüş halde bulundu.", type: "evidence", isBonus: true },
+      { id: "c6", text: "Yaşlı uşağın ellerindeki taze kesik izleri, cinayet sırasında yaşanan boğuşmayı açıkça gösteriyordu.", type: "forensic", isBonus: true },
     ],
     solvabilityMeta: {
       freeEliminations: ["s2", "s3", "w2", "w3", "l2", "l3"],
@@ -2353,34 +2368,34 @@ export const PUZZLES: Puzzle[] = [
     solution: { suspectId: "s1", weaponId: "w1", locationId: "l1" },
   },
   {
-    id: "p035",
+    id: "kervansarayda-son-gece",
     title: "Kervansarayda Son Gece",
     difficulty: "caylak",
     dayIndex: 35,
     story:
-      "Konya'nın tarihi kervansarayından dönüştürülmüş han binasında tüccar Raşit Efendi, sabah odasında boğulmuş hâlde bulundu. Hanın sadece üç konuğu vardı; diğerleri bir gün önce ayrılmıştı. Kapı ne kilitli ne de zorlanmış; katil Raşit Efendi'nin tanıdığı biri olmalı. Sen şehir polisi dedektifi olarak sorgulamayı yürütüyorsun.",
+      "Konya'nın kalın taş duvarlı tarihi kervansarayında fırtınalı bir gecenin sabahı ölümle uyandı. Zengin tüccar Raşit Efendi, sürgüsü çekilmemiş odasında nefessiz bırakılmıştı. Hanın devasa ahşap kapıları gece boyu kilitliydi; katil bu loş koridorlarda gezinen, tanıdık bir silüetten başkası değildi.",
     suspects: [
-      { id: "s1", name: "Tüccar Ortak Sabri Bey", description: "Raşit Efendi'nin on yıllık iş ortağı; ortaklıktan ayrılmak istediği duyulmuş.", icon: "store" },
-      { id: "s2", name: "Hizmetçi Kadın Hacer", description: "Hanın tek hizmetçisi; Raşit Efendi'nin odasını düzenlemek için anahtara sahip.", icon: "face-3" },
-      { id: "s3", name: "Gezgin Derviş Salih", description: "Handa gecelemekte olan yaşlı derviş; Raşit Efendi ile yemekte tartıştığı görülmüş.", icon: "self-improvement" },
+      { id: "s1", name: "Tüccar Ortak Sabri Bey", description: "Raşit Efendi'nin ortaklıktan ayrılmak isteyen, gece boyu uykusuzluk çekip avluda volta atan iş ortağı.", icon: "noun-ortak-sabri-bey-avatar.png" },
+      { id: "s2", name: "Hizmetçi Kadın Hacer", description: "Odaları temizleyen, kışlık üniforması eksik olan ve hanın tüm kapı anahtarlarına sınırsız erişimi olan tek çalışan.", icon: "noun-hizmetci-hacer-avatar.png" },
+      { id: "s3", name: "Gezgin Derviş Salih", description: "Maktulle akşam yemeğinde sert şekilde tartışan, ardından geceyi kilitli ambarda zikir çekerek geçiren yaşlı gezgin.", icon: "noun-gezgin-dervis-salih-avatar.png" },
     ],
     weapons: [
-      { id: "w1", name: "Atkı", description: "Uzun ve kalın yün atkı; boyunda boğulma izi bırakmış.", icon: "link" },
-      { id: "w2", name: "Kemer", description: "Raşit Efendi'nin odadaki deri kemeri.", icon: "build" },
-      { id: "w3", name: "Halat", description: "Han ambarında bulunan kalın kendir halat.", icon: "anchor" },
+      { id: "w1", name: "Atkı", description: "Kış aylarında personelin soğuktan korunmak için taktığı uzun, kalın ve sessizce boğmaya çok müsait esnek yün atkı.", icon: "link" },
+      { id: "w2", name: "Kemer", description: "Tüccarların altın keselerini bağladığı, deri tokalı, boyunda farklı bir boğma izi bırakan sağlam bel kemeri.", icon: "build" },
+      { id: "w3", name: "Halat", description: "Ambardaki çuvalları bağlamak için kullanılan, deriyi tahriş eden kalın ve pürüzlü kendir halat.", icon: "anchor" },
     ],
     locations: [
-      { id: "l1", name: "Konak Odası", description: "Raşit Efendi'nin kaldığı birinci kattaki geniş oda.", icon: "castle" },
-      { id: "l2", name: "Han Avlusu", description: "Hanın ortasındaki açık avlu; gece boyunca bekçi dolaşıyor.", icon: "park" },
-      { id: "l3", name: "Ambar", description: "Alt kattaki kilitli ambar; yalnızca hizmetçi ve han sahibinin anahtarı var.", icon: "warehouse" },
+      { id: "l1", name: "Konak Odası", description: "Maktulün uyuduğu, ahşap yataklı, cinayet gecesi sürgüsü içeriden çekilmemiş birinci kat odası.", icon: "castle" },
+      { id: "l2", name: "Han Avlusu", description: "Geceleri rüzgarın uğuldadığı, sütunlarla çevrili, bekçilerin devriye gezdiği geniş açık orta alan.", icon: "park" },
+      { id: "l3", name: "Ambar", description: "Alt katta bulunan, ticaret çuvallarının istiflendiği, kapısı dışarıdan asma kilitli depolama alanı.", icon: "warehouse" },
     ],
     clues: [
-      { id: "c1", text: "Raşit Efendi yatağının yanında, boyunda atkı izi olan hâlde bulundu. Odada mücadele izi var; ölüm burada gerçekleşmiş.", type: "evidence", isBonus: false },
-      { id: "c2", text: "Boyundaki iz kalın ve yumuşak; deri kemer bu izi bırakamazdı çünkü kemer tokalı ve dar kenarlıdır, iz geniş ve eşit basınçlı.", type: "forensic", isBonus: false },
-      { id: "c3", text: "Han bekçisi gece boyunca avluyu dolaştı; halat her zaman ambardaydı ve ambar kilidi sabah kontrol edildiğinde açılmamıştı.", type: "witness", isBonus: false },
-      { id: "c4", text: "Caminin imamı, Gezgin Derviş Salih'in sabah namazı için tekkeye çok erkenden geldiğini ve namaz boyunca ayrılmadığını doğruluyor. Ölüm vakti namaz saatiyle örtüşüyor.", type: "witness", isBonus: false },
-      { id: "c5", text: "Boyundaki atkı koyu mavi yün; hizmetçi Hacer'in üzerindeki şalın rengi ve dokusu bire bir uyuşuyor. Hacer atkının kendisine ait olduğunu inkâr etmiyor ama 'düşürmüş' olduğunu söylüyor.", type: "indirect", isBonus: true },
-      { id: "c6", text: "Raşit Efendi'nin odasından altın kese kayıp; sabah Hacer'in odasında yastık altında bulundu. Hacer'in Raşit Efendi'ye geçen ay kişisel borcu olduğu han sahibi tarafından doğrulandı.", type: "direct", isBonus: true },
+      { id: "c1", text: "Tüccar Raşit Efendi'nin, kendi konak odasındaki ahşap yatağında nefessiz bırakılarak öldürüldüğü kesinleşti.", type: "evidence", isBonus: false },
+      { id: "c2", text: "Boyundaki izin, demir tokalı bir kemerle veya sert pürüzlü bir halatla değil, yumuşak dokunmuş kışlık bir eşyayla yapıldığı anlaşıldı.", type: "forensic", isBonus: false },
+      { id: "c3", text: "Yaşlı derviş Salih, tüm geceyi çuvalların istiflendiği alt kattaki kilitli depoda zikir çekerek geçirdi.", type: "witness", isBonus: false },
+      { id: "c4", text: "İpek kaftanlı Ortak Sabri Bey, uykusuzluğu nedeniyle gece boyu sütunlarla çevrili açık alanda dolaştı ve üst katlara hiç çıkmadı.", type: "witness", isBonus: false },
+      { id: "c5", text: "Hizmetçi Hacer'in kışlık üniformasının bir parçası olan esnek koyu renkli örtü, maktulün yatağının altında bulundu.", type: "evidence", isBonus: true },
+      { id: "c6", text: "Hacer'in telaşlı halleri ve maktule ait altın kesesinin kendi odasında çıkması, cinayetin ardındaki gerçeği doğrudan ortaya koydu.", type: "evidence", isBonus: true },
     ],
     solvabilityMeta: {
       freeEliminations: ["s1", "s3", "w2", "w3", "l2", "l3"],
@@ -2389,7 +2404,7 @@ export const PUZZLES: Puzzle[] = [
     solution: { suspectId: "s2", weaponId: "w1", locationId: "l1" },
   },
   {
-    id: "p036",
+    id: "fotografcinin-son-karesi",
     title: "Fotoğrafçının Son Karesi",
     difficulty: "dedektif",
     dayIndex: 36,
@@ -2425,7 +2440,7 @@ export const PUZZLES: Puzzle[] = [
     solution: { suspectId: "s2", weaponId: "w1", locationId: "l1" },
   },
   {
-    id: "p037",
+    id: "termal-otelde-olum",
     title: "Termal Otelde Ölüm",
     difficulty: "dedektif",
     dayIndex: 37,
@@ -2461,7 +2476,7 @@ export const PUZZLES: Puzzle[] = [
     solution: { suspectId: "s2", weaponId: "w1", locationId: "l1" },
   },
   {
-    id: "p038",
+    id: "mektup-gelmedi",
     title: "Mektup Gelmedi",
     difficulty: "dedektif",
     dayIndex: 38,
@@ -2497,7 +2512,7 @@ export const PUZZLES: Puzzle[] = [
     solution: { suspectId: "s2", weaponId: "w1", locationId: "l1" },
   },
   {
-    id: "p039",
+    id: "zeytinyagi-fabrikasinda-kabus",
     title: "Zeytinyağı Fabrikasında Kâbus",
     difficulty: "baskomiser",
     dayIndex: 39,
@@ -2533,7 +2548,7 @@ export const PUZZLES: Puzzle[] = [
     solution: { suspectId: "s2", weaponId: "w1", locationId: "l1" },
   },
   {
-    id: "p040",
+    id: "dag-yolunda-pusu",
     title: "Dağ Yolunda Pusu",
     difficulty: "baskomiser",
     dayIndex: 40,
@@ -2569,7 +2584,7 @@ export const PUZZLES: Puzzle[] = [
     solution: { suspectId: "s3", weaponId: "w1", locationId: "l1" },
   },
   {
-    id: "p041",
+    id: "ramazan-gecesi-cinayeti",
     title: "Ramazan Gecesi Cinayeti",
     difficulty: "baskomiser",
     dayIndex: 41,

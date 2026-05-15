@@ -1,12 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import type { ComponentProps } from "react";
 import {
-  ActivityIndicator,
   Platform,
   Pressable,
   ScrollView,
   StyleSheet,
-  Switch,
   Text,
   TextInput,
   View,
@@ -16,11 +14,11 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useColors } from "@/hooks/useColors";
 import { useGame } from "@/context/GameContext";
 import Animated, { FadeInDown } from "react-native-reanimated";
-import OnboardingScreen from "@/components/OnboardingScreen";
+import SettingsScreen from "@/components/SettingsScreen";
+import { unlockMusicFromGesture } from "@/utils/backgroundMusic";
 import PaywallModal from "@/components/PaywallModal";
 import AvatarPicker from "@/components/AvatarPicker";
 import { AvatarDisplay } from "@/utils/avatarHelpers";
-import { soundSettings } from "@/utils/soundSettings";
 import { usePurchase } from "@/context/PurchaseContext";
 import { useMission } from "@/context/MissionContext";
 import { ALL_MISSIONS } from "@/data/missions";
@@ -163,27 +161,15 @@ export default function ProfilScreen() {
   const colors = useColors();
   const insets = useSafeAreaInsets();
   const { profile, gameHistory, updateProfile } = useGame();
-  const { isPremium, restorePurchases, priceString } = usePurchase();
+  const { isPremium, priceString } = usePurchase();
   const { isAwarded } = useMission();
 
-  const [showHowToPlay, setShowHowToPlay] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
   const [showPaywall, setShowPaywall] = useState(false);
   const [showAvatarPicker, setShowAvatarPicker] = useState(false);
-  const [soundEnabled, setSoundEnabled] = useState(() => soundSettings.enabled);
-  const [restoring, setRestoring] = useState(false);
-  const [restoreMsg, setRestoreMsg] = useState<{ text: string; ok: boolean } | null>(null);
   const [editingBio, setEditingBio] = useState(false);
   const [bioText, setBioText] = useState(profile.bio ?? "");
   const bioInputRef = useRef<TextInput>(null);
-
-  useEffect(() => {
-    soundSettings.refresh().then((val) => setSoundEnabled(val));
-  }, []);
-
-  const handleSoundToggle = (val: boolean) => {
-    soundSettings.enabled = val;
-    setSoundEnabled(val);
-  };
 
   const winRate =
     profile.gamesPlayed > 0
@@ -220,18 +206,6 @@ export default function ProfilScreen() {
     updateProfile({ bio: bioText.trim() });
   };
 
-  const handlePrivacyToggle = (key: keyof typeof profile.privacySettings, val: boolean) => {
-    updateProfile({ privacySettings: { ...profile.privacySettings, [key]: val } });
-  };
-
-  const handleRestore = async () => {
-    setRestoring(true);
-    setRestoreMsg(null);
-    const result = await restorePurchases();
-    setRestoring(false);
-    setRestoreMsg({ text: result.message, ok: result.success });
-  };
-
   const fmtTime = (sec: number) =>
     sec > 0
       ? `${Math.floor(sec / 60)}:${(sec % 60).toString().padStart(2, "0")}`
@@ -245,11 +219,7 @@ export default function ProfilScreen() {
         onChange={handleAvatarChange}
         onClose={() => setShowAvatarPicker(false)}
       />
-      <OnboardingScreen
-        visible={showHowToPlay}
-        onDone={() => setShowHowToPlay(false)}
-        closeLabel="Kapat"
-      />
+      <SettingsScreen visible={showSettings} onClose={() => setShowSettings(false)} />
       <PaywallModal visible={showPaywall} onClose={() => setShowPaywall(false)} />
       <View
         style={[
@@ -449,96 +419,24 @@ export default function ProfilScreen() {
           {/* ── Ayarlar ───────────────────────────────────────────── */}
           <Animated.View entering={FadeInDown.delay(200).springify()} style={{ gap: 8 }}>
             <SectionTitle icon="settings" label="AYARLAR" />
-            <View style={[styles.settingsCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
+            <Pressable
+              onPress={() => {
+                unlockMusicFromGesture();
+                setShowSettings(true);
+              }}
+              style={({ pressed }) => [
+                styles.settingsCard,
+                { backgroundColor: colors.card, borderColor: colors.border, opacity: pressed ? 0.8 : 1 },
+              ]}
+            >
               <SettingsRow
-                icon="help-outline"
-                title="Nasıl Oynanır?"
-                subtitle="Dedektif ızgarasını ve ipuçlarını öğren"
+                icon="settings"
+                title="Ayarlar"
+                subtitle="Müzik, ses efektleri, gizlilik, premium"
                 right={<MaterialIcons name="chevron-right" size={20} color={colors.secondaryForeground} />}
-                onPress={() => setShowHowToPlay(true)}
-                hasDivider
               />
-              <SettingsRow
-                icon="volume-up"
-                title="Ses Efektleri"
-                subtitle="Oyun seslerini aç veya kapat"
-                right={
-                  <Switch
-                    value={soundEnabled}
-                    onValueChange={handleSoundToggle}
-                    trackColor={{ false: colors.border, true: `${colors.primary}88` }}
-                    thumbColor={soundEnabled ? colors.primary : colors.mutedForeground}
-                  />
-                }
-              />
-            </View>
+            </Pressable>
           </Animated.View>
-
-          {/* ── Gizlilik ──────────────────────────────────────────── */}
-          <Animated.View entering={FadeInDown.delay(230).springify()} style={{ gap: 8 }}>
-            <SectionTitle icon="shield" label="GİZLİLİK" />
-            <View style={[styles.settingsCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
-              {([
-                { key: "showStats" as const,  label: "İstatistiklerimi göster", icon: "bar-chart" as const },
-                { key: "showBadges" as const, label: "Rozetlerimi göster",       icon: "military-tech" as const },
-                { key: "showBio" as const,    label: "Bio'mu göster",            icon: "person" as const },
-                { key: "showAvatar" as const, label: "Avatarımı göster",         icon: "face" as const },
-              ]).map((item, idx, arr) => (
-                <SettingsRow
-                  key={item.key}
-                  icon={item.icon}
-                  title={item.label}
-                  hasDivider={idx < arr.length - 1}
-                  right={
-                    <Switch
-                      value={profile.privacySettings?.[item.key] ?? true}
-                      onValueChange={(val) => handlePrivacyToggle(item.key, val)}
-                      trackColor={{ false: colors.border, true: `${colors.primary}88` }}
-                      thumbColor={(profile.privacySettings?.[item.key] ?? true) ? colors.primary : colors.mutedForeground}
-                    />
-                  }
-                />
-              ))}
-            </View>
-          </Animated.View>
-
-          {/* ── Satın Alma Geri Yükleme ───────────────────────────── */}
-          {!isPremium && (
-            <Animated.View entering={FadeInDown.delay(250).springify()}>
-              <Pressable
-                onPress={handleRestore}
-                disabled={restoring}
-                style={({ pressed }) => [
-                  styles.settingsCard,
-                  { backgroundColor: colors.card, borderColor: colors.border, opacity: (pressed || restoring) ? 0.6 : 1 },
-                ]}
-              >
-                <View style={styles.settingsRowInner}>
-                  <View style={[styles.settingsIcon, { backgroundColor: `${colors.primary}18` }]}>
-                    {restoring ? (
-                      <ActivityIndicator size="small" color={colors.mutedForeground} />
-                    ) : (
-                      <MaterialIcons name="restore" size={20} color={colors.primary} />
-                    )}
-                  </View>
-                  <View style={styles.settingsInfo}>
-                    <Text style={[styles.settingsTitle, { color: colors.foreground }]}>
-                      Satın Almalarımı Geri Yükle
-                    </Text>
-                    {restoreMsg ? (
-                      <Text style={[styles.settingsSubtitle, { color: restoreMsg.ok ? colors.success : colors.accent }]}>
-                        {restoreMsg.text}
-                      </Text>
-                    ) : (
-                      <Text style={[styles.settingsSubtitle, { color: colors.secondaryForeground }]}>
-                        Önceki satın almayı geri yükle
-                      </Text>
-                    )}
-                  </View>
-                </View>
-              </Pressable>
-            </Animated.View>
-          )}
 
           {/* ── Son Oyunlar ───────────────────────────────────────── */}
           {recentHistory.length > 0 && (

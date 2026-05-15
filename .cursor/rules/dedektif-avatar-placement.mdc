@@ -1,0 +1,46 @@
+---
+description: Place new dedektif suspect/custom PNG avatars using the Hacer/Salih pipeline (to-hacer-format.js).
+alwaysApply: true
+---
+
+# Dedektif avatar placement (PNG)
+
+When adding or replacing a **custom PNG avatar** for suspects (or any entity using `CustomAvatar` with `.png`), follow the same pipeline that produced **Gezgin Derviş Salih** and **Hizmetçi Hacer** in *Kervansarayda Son Gece*.
+
+## Source art (user / Canva)
+
+- **512×512** PNG preferred.
+- **Transparent background** (checkerboard when opened locally).
+- Figure as **black lines or black silhouette** on transparency — not a filled white blob, not a cream/opaque background export.
+- Avoid crushed exports (max luminance ~32): icon will be invisible in-game.
+
+## Convert (required)
+
+From `artifacts/dedektif/`:
+
+```powershell
+node scripts/silhouette-png-prep/to-hacer-format.js <input.png> public/avatars/noun-<slug>-avatar.png
+```
+
+- **Always** run `to-hacer-format.js` for new PNGs. It outputs RGBA with **RGB = (0,0,0)** and shape in the **alpha channel** only — required for web `mask-image` tinting in `CustomAvatar.tsx`.
+- **Do not** copy raw Canva/indexed PNGs without this step.
+- **Do not** use `matte-standalone.js`, `outline-filled.js`, `lift-crushed-lines.js`, or `boost-dark-silhouette.js` unless a specific broken file needs a one-off fix.
+
+## Wire up
+
+1. Save final file as `artifacts/dedektif/public/avatars/noun-<slug>-avatar.png`.
+2. In `data/puzzles.ts` (or relevant data), set `icon: "noun-<slug>-avatar.png"`.
+3. Quick sanity check (expect ~35–55% opaque pixels, rest transparent):
+
+```powershell
+node -e "const fs=require('fs');const z=require('zlib');const p='public/avatars/noun-<slug>-avatar.png';const b=fs.readFileSync(p);let o=8,w,h,id=[];while(o<b.length){const l=b.readUInt32BE(o);const t=b.toString('ascii',o+4,o+8);const d=b.subarray(o+8,o+8+l);o+=12+l;if(t==='IHDR'){w=d.readUInt32BE(0);h=d.readUInt32BE(4);}else if(t==='IDAT')id.push(d);else if(t==='IEND')break;}const inf=z.inflateSync(Buffer.concat(id));let tr=0,op=0;for(let y=0;y<h;y++){const row=inf.subarray(y*(w*4+1)+1,y*(w*4+1)+1+w*4);for(let x=0;x<w;x++){const i=x*4;if(row[i+3]<20)tr++;else if(row[i+3]>200)op++;}}console.log({transPct:(100*tr/(w*h)).toFixed(1),opaquePct:(100*op/(w*h)).toFixed(1)});"
+```
+
+## Deploy
+
+After any change under `artifacts/dedektif/`, production deploy from **repo root** (see `vercel-deploy-after-dedektif-updates.mdc`).
+
+## Reference files
+
+- **Good:** `public/avatars/noun-gezgin-dervis-salih-avatar.png`, `noun-hizmetci-hacer-avatar.png`, `noun-ortak-sabri-bey-avatar.png`
+- **Renderer:** `components/CustomAvatar.tsx` — purple suspect tint comes from parent; mask = PNG alpha.

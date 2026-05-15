@@ -18,6 +18,10 @@ import Animated, {
 import type { GridMark, Suspect, Weapon, Location } from "@/data/puzzles";
 import type { EntityInfo } from "@/components/EntityInfoSheet";
 import type { ComponentProps } from "react";
+import CustomAvatar from "@/components/CustomAvatar";
+import { SuspectPortrait, type SuspectPortraitKey } from "@/components/SuspectPortrait";
+import { isCustomAvatarIcon } from "@/utils/avatarAssets";
+import { buildSuspectPortraitMap } from "@/utils/suspectPortraitAssignments";
 
 const SUSPECT_COLOR = "#A855F7";
 const WEAPON_COLOR = "#C8372D";
@@ -34,6 +38,7 @@ const WEB_MAX_CELL_SIZE = 48;
 const NATIVE_MAX_CELL_SIZE = 96;
 
 interface Props {
+  puzzleId?: string;
   suspects: Suspect[];
   weapons: Weapon[];
   locations: Location[];
@@ -168,6 +173,7 @@ function EntityLabel({
   entityId,
   description,
   type,
+  suspectPortrait,
   cellSize,
   labelWidth,
   onHeaderPress,
@@ -180,6 +186,7 @@ function EntityLabel({
   entityId: string;
   description: string;
   type: "suspect" | "weapon" | "location";
+  suspectPortrait?: SuspectPortraitKey;
   cellSize: number;
   labelWidth: number;
   onHeaderPress?: (entity: EntityInfo) => void;
@@ -200,16 +207,64 @@ function EntityLabel({
     if (Platform.OS !== "web") {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     }
-    onHeaderPress({ type, id: entityId, name, description, icon });
+    onHeaderPress({
+      type,
+      id: entityId,
+      name,
+      description,
+      icon,
+      ...(type === "suspect" && suspectPortrait ? { suspectPortrait } : {}),
+    });
   };
 
   const avatarSize = Math.max(24, Math.floor(cellSize * 0.78));
   const avatarRadius = Math.floor(avatarSize / 2);
-  const avatarIconSize = Math.max(12, Math.floor(avatarSize * 0.54));
+  const iconPx = Math.max(12, Math.floor(avatarSize * 0.54));
 
   const isEmojiIcon = (str: string): boolean => (str.codePointAt(0) ?? 0) > 127;
   const normalizedIcon = normalizeMaterialIconName(icon, type);
   const renderIcon = isEmojiIcon(icon) ? icon : normalizedIcon;
+
+  const renderInnerIcon = () => {
+    if (type === "suspect") {
+      const inner = Math.floor(avatarSize * 0.64);
+      if (isCustomAvatarIcon(icon)) {
+        return <CustomAvatar icon={icon} size={inner} color={color} />;
+      }
+      if (suspectPortrait) {
+        return <SuspectPortrait portrait={suspectPortrait} size={inner} color={color} />;
+      }
+      return (
+        <MaterialIcons
+          name={normalizedIcon as ComponentProps<typeof MaterialIcons>["name"]}
+          size={iconPx}
+          color={color}
+        />
+      );
+    }
+    if (isEmojiIcon(renderIcon)) {
+      return (
+        <Text
+          numberOfLines={1}
+          style={{
+            fontSize: iconPx,
+            lineHeight: iconPx * 1.2,
+            includeFontPadding: false,
+            textAlign: "center",
+          }}
+        >
+          {renderIcon}
+        </Text>
+      );
+    }
+    return (
+      <MaterialIcons
+        name={renderIcon as ComponentProps<typeof MaterialIcons>["name"]}
+        size={iconPx}
+        color={color}
+      />
+    );
+  };
 
   if (isRowLabel) {
     return (
@@ -241,17 +296,7 @@ function EntityLabel({
               overflow: "hidden",
             }}
           >
-            {isEmojiIcon(renderIcon) ? (
-              <Text numberOfLines={1} style={{ fontSize: avatarIconSize, lineHeight: avatarIconSize * 1.2, includeFontPadding: false, textAlign: "center" }}>
-                {renderIcon}
-              </Text>
-            ) : (
-              <MaterialIcons
-                name={renderIcon as ComponentProps<typeof MaterialIcons>["name"]}
-                size={avatarIconSize}
-                color={color}
-              />
-            )}
+            {renderInnerIcon()}
           </View>
         </Animated.View>
       </Pressable>
@@ -289,17 +334,7 @@ function EntityLabel({
             overflow: "hidden",
           }}
         >
-          {isEmojiIcon(renderIcon) ? (
-            <Text numberOfLines={1} style={{ fontSize: avatarIconSize, lineHeight: avatarIconSize * 1.2, includeFontPadding: false, textAlign: "center" }}>
-              {renderIcon}
-            </Text>
-          ) : (
-            <MaterialIcons
-              name={renderIcon as ComponentProps<typeof MaterialIcons>["name"]}
-              size={avatarIconSize}
-              color={color}
-            />
-          )}
+          {renderInnerIcon()}
         </View>
       </Animated.View>
     </Pressable>
@@ -307,6 +342,7 @@ function EntityLabel({
 }
 
 export default function DetectiveGrid({
+  puzzleId,
   suspects,
   weapons,
   locations,
@@ -318,6 +354,11 @@ export default function DetectiveGrid({
   isComplete,
 }: Props) {
   const [containerWidth, setContainerWidth] = useState(0);
+
+  const suspectPortraitMap = useMemo(
+    () => buildSuspectPortraitMap(puzzleId ?? "onboarding-demo", suspects),
+    [puzzleId, suspects],
+  );
 
   const { cellSize, labelWidth } = useMemo(() => {
     if (containerWidth === 0) return { cellSize: 0, labelWidth: 0 };
@@ -418,8 +459,10 @@ export default function DetectiveGrid({
             {suspects.map((s) => (
               <EntityLabel
                 key={s.id}
-                icon={s.icon} name={s.name} color={SUSPECT_COLOR} bg={SUSPECT_BG}
+                icon={s.icon}
+                name={s.name} color={SUSPECT_COLOR} bg={SUSPECT_BG}
                 entityId={s.id} description={s.description} type="suspect"
+                suspectPortrait={suspectPortraitMap[s.id]}
                 cellSize={cellSize} labelWidth={labelWidth}
                 onHeaderPress={onHeaderPress} isRowLabel={false}
               />

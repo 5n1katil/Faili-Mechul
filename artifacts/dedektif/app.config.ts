@@ -8,7 +8,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
     ...config,
     name: "Faili Meçhul",
     slug: "dedektif",
-    version: "1.1.0",
+    version: "1.2.0",
     orientation: "portrait",
     icon: "./assets/images/icon.png",
     scheme: "dedektif",
@@ -20,7 +20,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
     ios: {
       supportsTablet: false,
       bundleIdentifier: "com.failimechul.dedektif",
-      buildNumber: "2",
+      buildNumber: "11",
       minimumOsVersion: "13.4",
       privacyManifests: {
         NSPrivacyAccessedAPITypes: [
@@ -56,7 +56,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
       [
         "expo-router",
         {
-          origin: "https://failimechul.app/",
+          origin: "https://faili-mechul.vercel.app/",
         },
       ],
       "expo-font",
@@ -67,11 +67,15 @@ export default ({ config }: ConfigContext): ExpoConfig => {
     extra: {
       revenueCatIosKey: iosKey,
       revenueCatAndroidKey: androidKey,
+      /** Native `resolveAvatarUri` reads this; keep in sync with expo-router `origin`. */
+      router: {
+        origin: "https://faili-mechul.vercel.app",
+      },
       eas: {
-        projectId: "45c0a7e3-47a5-4679-848e-10412e562497",
+        projectId: "f652b78d-775a-494c-86fc-62e60c72b564",
       },
     },
-    owner: "alpimo",
+    owner: "yalperol",
     experiments: {
       typedRoutes: true,
       reactCompiler: true,

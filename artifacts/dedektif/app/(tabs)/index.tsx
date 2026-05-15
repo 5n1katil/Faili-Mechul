@@ -23,6 +23,8 @@ import {
 } from "@/data/puzzles";
 import Animated, { FadeInDown } from "react-native-reanimated";
 import OnboardingScreen from "@/components/OnboardingScreen";
+import SettingsScreen from "@/components/SettingsScreen";
+import { unlockMusicFromGesture } from "@/utils/backgroundMusic";
 import ProfileSetupModal from "@/components/ProfileSetupModal";
 import { AvatarDisplay } from "@/utils/avatarHelpers";
 import { AI_DETECTIVES } from "@/data/aiDetectives";
@@ -73,7 +75,7 @@ export default function HomeScreen() {
   const countdown = useDailyCountdown();
   const { getMissionProgress, isAwarded } = useMission();
   const [showOnboarding, setShowOnboarding] = useState(false);
-  const [helpBtnOpen, setHelpBtnOpen] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
   const [showSetup, setShowSetup] = useState(false);
   const [showStreakInfo, setShowStreakInfo] = useState(false);
 
@@ -96,7 +98,6 @@ export default function HomeScreen() {
       AsyncStorage.getItem(SETUP_KEY),
     ]);
     setShowOnboarding(false);
-    setHelpBtnOpen(false);
     if (!s) {
       setTimeout(() => setShowSetup(true), 400);
     }
@@ -108,12 +109,13 @@ export default function HomeScreen() {
     setShowSetup(false);
   };
 
-  const handleHelpPress = () => {
-    setHelpBtnOpen(true);
-    setShowOnboarding(true);
+  const handleSettingsPress = () => {
+    unlockMusicFromGesture();
+    setShowSettings(true);
   };
 
   const handleDailyPlay = () => {
+    unlockMusicFromGesture();
     startDailyPuzzle();
     router.push("/oyun");
   };
@@ -139,8 +141,8 @@ export default function HomeScreen() {
       <OnboardingScreen
         visible={showOnboarding}
         onDone={handleOnboardingDone}
-        closeLabel={helpBtnOpen ? "Kapat" : undefined}
       />
+      <SettingsScreen visible={showSettings} onClose={() => setShowSettings(false)} />
       <ProfileSetupModal
         visible={showSetup}
         onDone={handleSetupDone}
@@ -203,7 +205,7 @@ export default function HomeScreen() {
             </View>
           </View>
           <View style={styles.headerRight}>
-            <Pressable onPress={handleHelpPress} style={styles.helpBtn} hitSlop={8}>
+            <Pressable onPress={handleSettingsPress} style={styles.helpBtn} hitSlop={8} accessibilityLabel="Ayarlar">
               <MaterialIcons name="help-outline" size={22} color={colors.mutedForeground} />
             </Pressable>
             <Pressable

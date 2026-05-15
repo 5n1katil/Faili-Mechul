@@ -40,6 +40,8 @@ interface Props {
   gridState: { [key: string]: GridMark };
   finalRank: number;
   totalPlayers: number;
+  overallRank: number;
+  overallPlayers: number;
   currentStreak: number;
   isRanked: boolean;
   onPlayMore: () => void;
@@ -107,7 +109,7 @@ function buildShareText(
     lines.push("👤 ??? | 🔪 ??? | 📍 ???");
   }
   lines.push("");
-  lines.push("failimechul.app 🕵️");
+  lines.push("faili-mechul.vercel.app 🕵️");
   return lines.join("\n");
 }
 
@@ -292,26 +294,39 @@ function ScoreBreakdownCard({
 function RankCard({
   finalRank,
   totalPlayers,
+  overallRank,
+  overallPlayers,
 }: {
   finalRank: number;
   totalPlayers: number;
+  overallRank: number;
+  overallPlayers: number;
 }) {
   const colors = useColors();
-  const rankLabel =
+  const caseRankLabel =
     finalRank === 1 ? "🥇 Birinci!" : finalRank === 2 ? "🥈 İkinci" : finalRank === 3 ? "🥉 Üçüncü" : `#${finalRank}`;
-  const isTop3 = finalRank <= 3;
+  const overallRankLabel =
+    overallRank === 1 ? "🥇 1." : overallRank === 2 ? "🥈 2." : overallRank === 3 ? "🥉 3." : `#${overallRank}`;
+  const isTop3Case = finalRank <= 3;
+  const isTop3Overall = overallRank <= 3;
 
   return (
-    <View style={[styles.rankCard, { backgroundColor: colors.background, borderColor: isTop3 ? colors.primary : colors.border }]}>
-      <MaterialIcons name="leaderboard" size={14} color={isTop3 ? colors.primary : colors.mutedForeground} />
-      <View style={{ flex: 1 }}>
-        <Text style={[styles.rankLabel, { color: isTop3 ? colors.primary : colors.foreground }]}>
-          {rankLabel}
-        </Text>
-        <Text style={[styles.rankSub, { color: colors.mutedForeground }]}>
-          {totalPlayers} oyuncu arasında
-        </Text>
+    <View style={[styles.rankCard, { backgroundColor: colors.background, borderColor: colors.border }]}>
+      <View style={styles.rankRow}>
+        <MaterialIcons name="flag" size={14} color={isTop3Case ? colors.primary : colors.mutedForeground} />
+        <Text style={[styles.rankMeta, { color: colors.mutedForeground }]}>Vaka Bazlı</Text>
+        <View style={{ flex: 1 }} />
+        <Text style={[styles.rankLabel, { color: isTop3Case ? colors.primary : colors.foreground }]}>{caseRankLabel}</Text>
       </View>
+      <Text style={[styles.rankSub, { color: colors.mutedForeground }]}>{totalPlayers} dedektif arasında</Text>
+      <View style={[styles.rankDivider, { backgroundColor: colors.border }]} />
+      <View style={styles.rankRow}>
+        <MaterialIcons name="public" size={14} color={isTop3Overall ? colors.primary : colors.mutedForeground} />
+        <Text style={[styles.rankMeta, { color: colors.mutedForeground }]}>Genel Sıralama</Text>
+        <View style={{ flex: 1 }} />
+        <Text style={[styles.rankLabel, { color: isTop3Overall ? colors.primary : colors.foreground }]}>{overallRankLabel}</Text>
+      </View>
+      <Text style={[styles.rankSub, { color: colors.mutedForeground }]}>{overallPlayers} dedektif arasında</Text>
     </View>
   );
 }
@@ -326,6 +341,8 @@ export default function ResultScreen({
   gridState,
   finalRank,
   totalPlayers,
+  overallRank,
+  overallPlayers,
   currentStreak,
   isRanked,
   onPlayMore,
@@ -536,7 +553,12 @@ export default function ResultScreen({
           )}
 
           {success && isRanked && totalPlayers > 0 && (
-            <RankCard finalRank={finalRank} totalPlayers={totalPlayers} />
+            <RankCard
+              finalRank={finalRank}
+              totalPlayers={totalPlayers}
+              overallRank={overallRank}
+              overallPlayers={overallPlayers}
+            />
           )}
 
           <View style={styles.buttons}>
@@ -594,11 +616,11 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
   },
   headerBtnText: {
-    fontSize: 13,
+    fontSize: 14,
     fontWeight: "600",
   },
   headerTitle: {
-    fontSize: 13,
+    fontSize: 15,
     fontWeight: "800",
     letterSpacing: 1,
     flex: 1,
@@ -623,17 +645,18 @@ const styles = StyleSheet.create({
     letterSpacing: 1,
   },
   subtitle: {
-    fontSize: 14,
+    fontSize: 16,
     textAlign: "center",
+    lineHeight: 24,
   },
   solutionBox: {
-    borderRadius: 12,
+    borderRadius: 16,
     borderWidth: 1,
-    padding: 14,
-    gap: 8,
+    padding: 16,
+    gap: 10,
   },
   solutionTitle: {
-    fontSize: 11,
+    fontSize: 12,
     fontWeight: "700",
     letterSpacing: 2,
     marginBottom: 4,
@@ -644,7 +667,7 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   solutionText: {
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: "600",
   },
   statsRow: {
@@ -653,24 +676,24 @@ const styles = StyleSheet.create({
   },
   statItem: {
     flex: 1,
-    borderRadius: 10,
-    padding: 12,
+    borderRadius: 14,
+    padding: 14,
     alignItems: "center",
     gap: 4,
   },
   statValue: {
-    fontSize: 20,
+    fontSize: 24,
     fontWeight: "700",
   },
   statLabel: {
-    fontSize: 10,
+    fontSize: 11,
     fontWeight: "700",
     letterSpacing: 1,
   },
   breakdownCard: {
-    borderRadius: 12,
+    borderRadius: 16,
     borderWidth: 1,
-    padding: 12,
+    padding: 14,
     gap: 8,
   },
   breakdownHeader: {
@@ -680,7 +703,7 @@ const styles = StyleSheet.create({
     marginBottom: 2,
   },
   breakdownTitle: {
-    fontSize: 10,
+    fontSize: 11,
     fontWeight: "700",
     letterSpacing: 2,
   },
@@ -695,12 +718,12 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   breakdownLabel: {
-    fontSize: 12,
+    fontSize: 13,
     fontWeight: "500",
     flex: 1,
   },
   breakdownValue: {
-    fontSize: 13,
+    fontSize: 14,
     fontWeight: "700",
     fontVariant: ["tabular-nums"],
   },
@@ -709,20 +732,34 @@ const styles = StyleSheet.create({
     marginVertical: 2,
   },
   rankCard: {
+    borderRadius: 16,
+    borderWidth: 1,
+    padding: 14,
+    gap: 8,
+  },
+  rankRow: {
     flexDirection: "row",
     alignItems: "center",
-    borderRadius: 12,
-    borderWidth: 1,
-    padding: 12,
-    gap: 10,
+    gap: 8,
+  },
+  rankMeta: {
+    fontSize: 12,
+    fontWeight: "700",
+    letterSpacing: 0.4,
+    textTransform: "uppercase",
   },
   rankLabel: {
-    fontSize: 15,
-    fontWeight: "700",
+    fontSize: 17,
+    fontWeight: "800",
   },
   rankSub: {
-    fontSize: 11,
+    fontSize: 12,
     fontWeight: "500",
+    marginLeft: 22,
+  },
+  rankDivider: {
+    height: 1,
+    marginVertical: 2,
   },
   buttons: {
     gap: 10,
@@ -737,7 +774,7 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   shareBtnText: {
-    fontSize: 14,
+    fontSize: 15,
     fontWeight: "700",
   },
   btn: {
@@ -749,7 +786,7 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   btnText: {
-    fontSize: 15,
+    fontSize: 16,
     fontWeight: "700",
   },
   btnOutline: {

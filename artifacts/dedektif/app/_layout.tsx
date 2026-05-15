@@ -20,6 +20,7 @@ import Animated, {
   withSpring,
   withTiming,
   withDelay,
+  withSequence,
   Easing,
 } from "react-native-reanimated";
 
@@ -31,6 +32,8 @@ import { GameProvider } from "@/context/GameContext";
 import { MissionProvider, useMission } from "@/context/MissionContext";
 import type { Mission } from "@/data/missions";
 import { PurchaseProvider } from "@/context/PurchaseContext";
+import { useSounds } from "@/hooks/useSounds";
+import BackgroundMusicController from "@/components/BackgroundMusicController";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -148,15 +151,19 @@ function formatMissionPts(pts: number): string {
 function MissionCelebrationToast() {
   const { pendingCelebration, clearCelebration } = useMission();
   const insets = useSafeAreaInsets();
+  const { play, playVictorySequence } = useSounds();
 
   const toastY = useSharedValue(120);
   const toastOp = useSharedValue(0);
+  const toastScale = useSharedValue(0.92);
+  const rewardPulse = useSharedValue(0.88);
   const lastSingleId = useRef<string | null>(null);
   const singleMissionRef = useRef<Mission | null>(null);
   const [showToast, setShowToast] = useState(false);
 
   const modalY = useSharedValue(300);
   const modalOp = useSharedValue(0);
+  const modalBadgeScale = useSharedValue(0.9);
   const [showModal, setShowModal] = useState(false);
   const [modalMissions, setModalMissions] = useState<Mission[]>([]);
 
@@ -169,8 +176,17 @@ function MissionCelebrationToast() {
       lastSingleId.current = m.id;
       singleMissionRef.current = m;
       setShowToast(true);
+      play("success");
       toastY.value = withSpring(0, { damping: 14, stiffness: 180 });
       toastOp.value = withTiming(1, { duration: 200 });
+      toastScale.value = withSequence(
+        withSpring(1.04, { damping: 10, stiffness: 220 }),
+        withSpring(1, { damping: 12, stiffness: 180 })
+      );
+      rewardPulse.value = withSequence(
+        withDelay(80, withSpring(1.2, { damping: 9, stiffness: 260 })),
+        withSpring(1, { damping: 11, stiffness: 220 })
+      );
       const t = setTimeout(() => {
         toastOp.value = withTiming(0, { duration: 300 });
         toastY.value = withTiming(90, { duration: 300 });
@@ -186,9 +202,14 @@ function MissionCelebrationToast() {
     if (showModal) return;
     setModalMissions([...pendingCelebration]);
     setShowModal(true);
+    playVictorySequence();
     modalOp.value = withTiming(1, { duration: 250 });
     modalY.value = withSpring(0, { damping: 14, stiffness: 150 });
-  }, [pendingCelebration]);
+    modalBadgeScale.value = withSequence(
+      withDelay(80, withSpring(1.12, { damping: 10, stiffness: 240 })),
+      withSpring(1, { damping: 12, stiffness: 180 })
+    );
+  }, [clearCelebration, pendingCelebration, play, playVictorySequence, showModal]);
 
   const handleCloseModal = () => {
     modalOp.value = withTiming(0, { duration: 220 });
@@ -201,13 +222,21 @@ function MissionCelebrationToast() {
   };
 
   const toastStyle = useAnimatedStyle(() => ({
-    transform: [{ translateY: toastY.value }],
+    transform: [{ translateY: toastY.value }, { scale: toastScale.value }],
     opacity: toastOp.value,
+  }));
+
+  const rewardStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: rewardPulse.value }],
   }));
 
   const modalStyle = useAnimatedStyle(() => ({
     transform: [{ translateY: modalY.value }],
     opacity: modalOp.value,
+  }));
+
+  const modalBadgeStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: modalBadgeScale.value }],
   }));
 
   const singleM = singleMissionRef.current;
@@ -238,11 +267,12 @@ function MissionCelebrationToast() {
                 {singleM.title}
               </Text>
             </View>
-            <View style={toastStyles.rewardWrap}>
+            <Animated.View style={[toastStyles.rewardWrap, rewardStyle]}>
               <MaterialIcons name="bolt" size={14} color="#D4A843" />
               <Text style={toastStyles.rewardText}>{formatMissionPts(singleM.reward.points)}</Text>
-            </View>
+            </Animated.View>
           </View>
+          <Text style={toastStyles.rewardHint}>Puan toplandı ve toplam puanına eklendi.</Text>
         </Animated.View>
       )}
 
@@ -259,10 +289,10 @@ function MissionCelebrationToast() {
                 <Text style={multiStyles.headerLabel}>GÖREVLER TAMAMLANDI!</Text>
                 <Text style={multiStyles.headerSub}>{modalMissions.length} görev toplandı</Text>
               </View>
-              <View style={multiStyles.totalBadge}>
+              <Animated.View style={[multiStyles.totalBadge, modalBadgeStyle]}>
                 <MaterialIcons name="bolt" size={15} color="#000" />
                 <Text style={multiStyles.totalBadgeText}>{formatMissionPts(totalPoints)}</Text>
-              </View>
+              </Animated.View>
             </View>
 
             <View style={multiStyles.divider} />
@@ -360,6 +390,13 @@ const toastStyles = StyleSheet.create({
     color: "#D4A843",
     fontSize: 13,
     fontWeight: "800",
+  },
+  rewardHint: {
+    color: "#94A3B8",
+    fontSize: 11,
+    fontWeight: "600",
+    marginTop: 7,
+    textAlign: "center",
   },
 });
 
@@ -487,9 +524,10 @@ const multiStyles = StyleSheet.create({
   },
 });
 
-function AppWithMissions() {
+function AppWithMissions({ splashReady }: { splashReady: boolean }) {
   return (
     <>
+      <BackgroundMusicController splashReady={splashReady} />
       <RootLayoutNav />
       <MissionCelebrationToast />
     </>
@@ -527,7 +565,7 @@ export default function RootLayout() {
               <PurchaseProvider>
                 <GameProvider>
                   <MissionProvider>
-                    <AppWithMissions />
+                    <AppWithMissions splashReady={splashDone} />
                   </MissionProvider>
                 </GameProvider>
               </PurchaseProvider>

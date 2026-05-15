@@ -1,0 +1,19 @@
+---
+description: After any change that affects the live dedektif web app, run Vercel production deploy from repo root.
+alwaysApply: true
+---
+
+# Deploy after dedektif updates
+
+Whenever you change anything under `artifacts/dedektif/` (data, `public/avatars`, scripts, components, app code, config), **before finishing the task** run a **production** deploy from the **repository root** (`Faili-Mechul/`), not from `artifacts/dedektif/`:
+
+```powershell
+$env:NODE_TLS_REJECT_UNAUTHORIZED="0"; npx vercel deploy --prod --yes
+```
+
+On Unix shells, if TLS to Vercel fails, use `NODE_TLS_REJECT_UNAUTHORIZED=0` for that command only.
+
+- Root `vercel.json` defines the build (`pnpm --filter @workspace/dedektif build:web`) and output; deploying from `artifacts/dedektif` is wrong.
+- Confirm deploy succeeds (exit 0); production URL is `https://faili-mechul.vercel.app`.
+
+Do **not** skip deploy after asset or puzzle data edits unless the user explicitly says to defer deployment.

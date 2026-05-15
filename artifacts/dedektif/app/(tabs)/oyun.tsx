@@ -54,18 +54,18 @@ import Animated, { FadeInDown } from "react-native-reanimated";
 
 const FREE_PUZZLE_COUNT = 10;
 const EXTRA_FREE_PUZZLE_IDS: ReadonlySet<string> = new Set([
-  "p030",
-  "p031",
-  "p032",
-  "p033",
-  "p034",
-  "p035",
-  "p036",
-  "p037",
-  "p038",
-  "p039",
-  "p040",
-  "p041",
+  "karakoyde-neon-gece",
+  "konakta-gece-vakti",
+  "pazar-sabahi-baskini",
+  "aksam-vapurunda-gizem",
+  "bagda-kanli-bicak",
+  "kervansarayda-son-gece",
+  "fotografcinin-son-karesi",
+  "termal-otelde-olum",
+  "mektup-gelmedi",
+  "zeytinyagi-fabrikasinda-kabus",
+  "dag-yolunda-pusu",
+  "ramazan-gecesi-cinayeti",
 ]);
 
 function formatTime(s: number): string {
@@ -1021,6 +1021,7 @@ export default function VakalarScreen() {
           >
             <View style={gameStyles.gridWrapper}>
               <DetectiveGrid
+                puzzleId={puzzle.id}
                 suspects={puzzle.suspects}
                 weapons={puzzle.weapons}
                 locations={puzzle.locations}

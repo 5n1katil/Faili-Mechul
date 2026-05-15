@@ -509,6 +509,15 @@ export default function GorevlerScreen() {
         </View>
       </View>
 
+      <View style={styles.stickyStatsWrap}>
+        <Animated.View entering={FadeInDown.delay(0).springify()}>
+          <StatsCard
+            totalAwardedPoints={totalAwardedPoints}
+            totalScore={profile.totalScore}
+          />
+        </Animated.View>
+      </View>
+
       <ScrollView
         style={{ flex: 1 }}
         contentContainerStyle={[
@@ -519,13 +528,6 @@ export default function GorevlerScreen() {
         ]}
         showsVerticalScrollIndicator={false}
       >
-      <Animated.View entering={FadeInDown.delay(0).springify()}>
-        <StatsCard
-          totalAwardedPoints={totalAwardedPoints}
-          totalScore={profile.totalScore}
-        />
-      </Animated.View>
-
       <Animated.View entering={FadeInDown.delay(30).springify()}>
         <CollectAllButton />
       </Animated.View>
@@ -639,6 +641,10 @@ const styles = StyleSheet.create({
   },
   pageHeader: {
     borderBottomWidth: 0,
+  },
+  stickyStatsWrap: {
+    paddingHorizontal: 16,
+    paddingBottom: 8,
   },
   pageTitleRow: {
     flexDirection: "row",

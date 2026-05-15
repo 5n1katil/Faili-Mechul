@@ -415,7 +415,10 @@ export function adaptPackPuzzle(raw: RawPuzzle, packId: string): Puzzle {
       id: s.id,
       name: s.name,
       description: s.description,
-      icon: emojiToMaterialIcon(s.icon),
+      // Suspect icons in puzzles_database.json are now SVG avatar ids
+      // (rewritten by scripts/assign-suspect-avatars.js) — pass through to
+      // CustomAvatar verbatim instead of remapping through MaterialIcons.
+      icon: s.icon,
     })),
     weapons: raw.weapons.map((w) => ({
       id: w.id,
