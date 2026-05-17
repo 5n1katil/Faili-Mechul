@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import type { ComponentProps } from "react";
-import { Alert, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import { Alert, Platform, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import Animated, {
   useAnimatedStyle,
