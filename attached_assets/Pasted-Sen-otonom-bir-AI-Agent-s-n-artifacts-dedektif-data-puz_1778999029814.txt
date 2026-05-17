@@ -1,0 +1,34 @@
+Sen otonom bir AI Agent'sın. `artifacts/dedektif/data/puzzles.ts` dosyasında "Pazar Yerinde Şüpheli Ölüm" adlı Çaylak vakasını bul. Görevin, bu vakanın SADECE belirtilen özelliklerini (story, suspects açıklamaları ve ikonları, weapons açıklamaları, locations açıklamaları ve clues) aşağıdaki premium metinlerle ÜZERİNE YAZMAKTIR. Çözüme (solution) KESİNLİKLE dokunma.
+
+GÜNCELLENECEK VERİLER:
+
+"story": "İstanbul'un kalabalık ve gürültülü tarihi çarşısında, pazar sabahının neşesi ani bir ölümle donup kaldı. Ünlü tatlıcı Halit Usta, kendi tezgahının başında, altın sarısı tatlıların üzerine yığılarak son nefesini verdi. Etraftaki baharat ve şerbet kokusuna şimdi ölümün soğukluğu karışmıştı. Kalabalık panik içinde dağılırken, geride sadece üç şüpheli ve zehirli bir sır kalmıştı.",
+
+"suspects": [
+  { "id": "s1", "name": "Müşteri Hanım", "description": "Yıllardır her pazar aynı saatte alışverişe gelen, elindeki bastonuyla çarşıyı adımlayan titiz ve yaşlı müdavim.", "icon": "solid-woman-old" },
+  { "id": "s2", "name": "Tedarikçi Genç", "description": "Sabahın erken saatlerinde ağır tepsileri taşıyan, yorgunluktan gözleri kanlanmış, aceleci depo görevlisi.", "icon": "solid-man-worker" },
+  { "id": "s3", "name": "Komşu Satıcı", "description": "Halit Usta'nın başarısını yıllardır kıskanan, kendi tezgahında müşteri beklerken gözlerini yan taraftan ayırmayan rakip esnaf.", "icon": "solid-man-merchant" }
+],
+
+"weapons": [
+  { "id": "w1", "name": "Baklava", "description": "Üzeri fıstıklarla süslenmiş, taze görünümüyle iştah açan ancak içine ustaca ölümcül bir toksin zerk edilmiş tatlı." },
+  { "id": "w2", "name": "Şerbet", "description": "Büyük bakır güğümde kaynatılmış, dibinde hiçbir zehir tortusu barındırmayan berrak ve tatlı sıvı." },
+  { "id": "w3", "name": "Kimyasal Madde", "description": "Çarşının temizliğinde kullanılan, keskin kokulu ve yutulduğunda iç organları tahrip eden endüstriyel çözücü." }
+],
+
+"locations": [
+  { "id": "l1", "name": "Tezgah", "description": "Cinayetin işlendiği; tepsilerin dizildiği, şerbetin damladığı ve kurbanın son nefesini verdiği hareketli ana satış noktası." },
+  { "id": "l2", "name": "Ara Sokak", "description": "Müşterilerin kestirme olarak kullandığı, dükkanların arka kapılarına açılan loş ve dar yaya geçidi." },
+  { "id": "l3", "name": "Park", "description": "Sabah erken saatlerde toptancıların mal indirdiği, tezgah bölgesine oldukça uzak olan araç yanaşma alanı." }
+],
+
+"clues": [
+  { "id": "c1", "text": "Adli rapor, kurbanın berrak şerbetten veya keskin kokulu temizlik sıvısından zehirlenmediğini açıkça ortaya koydu.", "type": "forensic", "isBonus": false },
+  { "id": "c2", "text": "Tedarikçi gencin, sabah mesaisini sadece malların indirildiği uzak araç yanaşma alanında geçirdiği teyit edildi.", "type": "witness", "isBonus": false },
+  { "id": "c3", "text": "Yaşlı Müşteri Hanım, olay saati boyunca sadece loş arka geçitteki dükkanlardan alışveriş yapıyordu.", "type": "witness", "isBonus": false },
+  { "id": "c4", "text": "Cinayet, araçların yanaştığı uzak alanda veya dar yaya geçidinde değil; tam da tepsilerin sergilendiği ana alanda gerçekleşmişti.", "type": "evidence", "isBonus": false },
+  { "id": "c5", "text": "Kendi satış alanından ayrılmayan tek şüpheli, yıllardır Halit Usta'nın gölgesinde kalan kıskanç rakipti.", "type": "evidence", "isBonus": true },
+  { "id": "c6", "text": "Komşu Satıcı'nın, yardım etme bahanesiyle o zehirli tatlıyı doğrudan kurbanın sergi alanına yerleştirdiği güvenlik kameralarına yansıdı.", "type": "record", "isBonus": true }
+]
+
+İŞLEMİ BİTİRDİKTEN SONRA DERLE VE TEST ET.
