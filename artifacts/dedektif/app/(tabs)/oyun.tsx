@@ -47,7 +47,12 @@ import {
   type GridMark,
 } from "@/data/puzzles";
 import { PACKS, getPuzzlesForPack, PACK_PRODUCT_IDS } from "@/data/packs";
-import { AI_DETECTIVES } from "@/data/aiDetectives";
+import { fetchLeaderboard } from "@/utils/apiClient";
+import {
+  computeCaseRank,
+  computeOverallRank,
+  computeScoreForRank,
+} from "@/utils/leaderboardRank";
 import PaketlerContent from "@/components/PaketlerContent";
 import type { EntityInfo } from "@/components/EntityInfoSheet";
 import Animated, { FadeInDown } from "react-native-reanimated";
@@ -66,43 +71,16 @@ const EXTRA_FREE_PUZZLE_IDS: ReadonlySet<string> = new Set([
   "zeytinyagi-fabrikasinda-kabus",
   "dag-yolunda-pusu",
   "ramazan-gecesi-cinayeti",
+  "karanlik-senfoni",
+  "kanli-rota",
+  "derinlerdeki-sir",
+  "zehirli-tuval",
 ]);
 
 function formatTime(s: number): string {
   const m = Math.floor(s / 60);
   const sec = s % 60;
   return `${m}:${sec.toString().padStart(2, "0")}`;
-}
-
-function computeScoreForRank(
-  timeElapsed: number,
-  wrongGuesses: number,
-  bonusCluesRevealedCount: number,
-  difficulty: Difficulty,
-  currentStreak = 0
-): number {
-  const rawScore = 10000 - timeElapsed * 10 - wrongGuesses * 500 - bonusCluesRevealedCount * 300;
-  const difficultyBonus = difficulty === "baskomiser" ? 5000 : difficulty === "dedektif" ? 2000 : 0;
-  const streakBonus = Math.min(currentStreak * 50, 500);
-  return Math.max(100, rawScore) + difficultyBonus + streakBonus;
-}
-
-function stableHash(input: string): number {
-  let hash = 0;
-  for (let i = 0; i < input.length; i += 1) {
-    hash = (hash * 31 + input.charCodeAt(i)) >>> 0;
-  }
-  return hash;
-}
-
-function npcScoreForPuzzle(puzzleId: string, difficulty: Difficulty, npcName: string, npcIndex: number): number {
-  const h = stableHash(`${puzzleId}-${npcName}-${npcIndex}`);
-  const jitter = (h % 121) - 60; // [-60, +60]
-  const baseTime = Math.max(90, AI_DETECTIVES[npcIndex].avgSolveTimeSeconds + jitter);
-  const wrongGuesses = h % 3; // 0..2
-  const bonusClues = (h >> 3) % 2; // 0..1
-  const streak = Math.min(10, Math.max(1, Math.floor(AI_DETECTIVES[npcIndex].maxStreak / 2)));
-  return computeScoreForRank(baseTime, wrongGuesses, bonusClues, difficulty, streak);
 }
 
 const _accordionExpanded = new Map<string, boolean>();
@@ -444,6 +422,7 @@ export default function VakalarScreen() {
     invalidateGame,
     completedPuzzleIds,
     playStatsForPuzzle,
+    playerId,
   } = useGame();
   const { isPremium } = usePurchase();
   const { play, playVictorySequence } = useSounds();
@@ -459,6 +438,9 @@ export default function VakalarScreen() {
   const [accuLocation, setAccuLocation] = useState<string | null>(null);
   const [finalRank, setFinalRank] = useState(1);
   const [totalPlayers, setTotalPlayers] = useState(1);
+  const [overallRank, setOverallRank] = useState(1);
+  const [overallPlayers, setOverallPlayers] = useState(1);
+  const [apiTotalScores, setApiTotalScores] = useState<number[]>([]);
   const [showSheet, setShowSheet] = useState(false);
   const [showScoreInfo, setShowScoreInfo] = useState(false);
   const [showExitConfirm, setShowExitConfirm] = useState(false);
@@ -467,9 +449,11 @@ export default function VakalarScreen() {
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const gameStateRef = useRef(gameState);
   const invalidateGameRef = useRef(invalidateGame);
+  const playerIdRef = useRef(playerId);
   const listScrollRef = useRef<ScrollView>(null);
   useEffect(() => { gameStateRef.current = gameState; }, [gameState]);
   useEffect(() => { invalidateGameRef.current = invalidateGame; }, [invalidateGame]);
+  useEffect(() => { playerIdRef.current = playerId; }, [playerId]);
 
   useEffect(() => {
     if (gameState && gameState.timerActive && !gameState.isComplete) {
@@ -504,17 +488,30 @@ export default function VakalarScreen() {
 
   useFocusEffect(
     useCallback(() => {
-      if (!gameState) {
+      if (!gameStateRef.current) {
         listScrollRef.current?.scrollTo({ y: 0, animated: false });
       }
+      let cancelled = false;
+      void fetchLeaderboard("totalScore", 50).then((entries) => {
+        if (!cancelled) {
+          const pid = playerIdRef.current;
+          setApiTotalScores(
+            entries
+              .filter((e) => !pid || e.playerId !== pid)
+              .map((e) => e.totalScore)
+              .filter((s) => Number.isFinite(s))
+          );
+        }
+      });
       return () => {
+        cancelled = true;
         const gs = gameStateRef.current;
         const inv = invalidateGameRef.current;
         if (gs && gs.timerActive && !gs.isComplete && gs.isRanked) {
           inv();
         }
       };
-    }, [gameState])
+    }, [])
   );
 
   useEffect(() => {
@@ -591,26 +588,32 @@ export default function VakalarScreen() {
       estimatedStreak
     );
 
-    const samePuzzleScores = leaderboard
-      .filter((e) => e.puzzleId === puzzleId)
-      .map((e) => e.score);
-    const npcScores = AI_DETECTIVES.map((npc, idx) =>
-      npcScoreForPuzzle(puzzleId, diff, npc.name, idx)
-    );
-
     const success = submitAnswer(suspectId, weaponId, locationId);
 
     if (!success) {
       play("error");
     } else {
       if (gameState.isRanked) {
-        const allScores = [...samePuzzleScores, ...npcScores, estimatedScore];
-        const rank = allScores.filter((s) => s > estimatedScore).length + 1;
-        setFinalRank(Math.max(1, rank));
-        setTotalPlayers(allScores.length);
+        const { rank, totalPlayers: casePlayers } = computeCaseRank(
+          estimatedScore,
+          puzzleId,
+          diff,
+          leaderboard
+        );
+        const projectedTotal = profile.totalScore + estimatedScore;
+        const { rank: overall, totalPlayers: overallPool } = computeOverallRank(
+          projectedTotal,
+          apiTotalScores
+        );
+        setFinalRank(rank);
+        setTotalPlayers(casePlayers);
+        setOverallRank(overall);
+        setOverallPlayers(overallPool);
       } else {
         setFinalRank(0);
         setTotalPlayers(0);
+        setOverallRank(0);
+        setOverallPlayers(0);
       }
       setShowSheet(false);
     }
@@ -934,6 +937,8 @@ export default function VakalarScreen() {
           gridState={gridState}
           finalRank={finalRank}
           totalPlayers={totalPlayers}
+          overallRank={overallRank}
+          overallPlayers={overallPlayers}
           currentStreak={gameState.appliedStreak ?? profile.currentStreak}
           isRanked={isRanked}
           onPlayMore={handleBackToList}
