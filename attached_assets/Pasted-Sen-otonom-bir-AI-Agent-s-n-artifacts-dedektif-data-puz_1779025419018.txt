@@ -1,0 +1,251 @@
+Sen otonom bir AI Agent'sın. `artifacts/dedektif/data/puzzles.ts` dosyasında bulunan 9 adet "Çaylak" vakasının veritabanı tamamen bozulmuş, zorluk seviyeleri karışmış ve açıklamalara "cinayetin işlendiği yer" gibi spoiler içeren hatalı metinler eklenmiştir.
+
+Görevin, aşağıda listelenen 9 vakanın SADECE belirtilen dizilerini (`difficulty`, `story`, `suspects`, `weapons`, `locations`, `clues`) TAMAMEN ÜZERİNE YAZARAK GÜNCELLEMEKTİR. Çözümlere (solution) DOKUNMA (Adada Haftalık Gizem hariç, onun çözümünü s3+w3+l1 yapacaksın).
+
+Lütfen dosyayı aşağıdaki kusursuz verilerle eşitle:
+
+1. BAŞLIK: "Konakta Gece Yarısı Cinayeti"
+"difficulty": "caylak",
+"story": "Tarihi konaktaki gece davetinin ardından ev sahibinin sadık yardımcısı Selma, kan içinde bulundu. Adli tıp, cinayetin 23:30 ile 00:00 arasında işlendiğini tahmin ediyor. Fırtına nedeniyle kimsenin ayrılamadığı bu konakta, katil hala aramızda.",
+"suspects": [
+  { "id": "s1", "name": "Nazik Hanım", "description": "Konağın en yaşlı misafiri. Fiziksel olarak güçsüz olsa da etrafında olan bitene karşı son derece dikkatli ve gözlemci.", "icon": "solid-woman-old" },
+  { "id": "s2", "name": "Cem Bey", "description": "Ev sahibinin uzaktan akrabası. Boylu poslu, ağır fiziksel işleri kolayca yapabilecek kuvvette bir yapıya sahip.", "icon": "solid-man-suit" },
+  { "id": "s3", "name": "Zeynep Hanım", "description": "Genç ve hırslı bir davetli. Atik yapısıyla dikkat çekiyor, stres altında çok hızlı ve fevri hareket edebiliyor.", "icon": "solid-woman-young" }
+],
+"weapons": [
+  { "id": "w1", "name": "Makas", "description": "Et ve kemik parçalamak için tasarlanmış, tek hamlede derin yara açabilen ağır ve keskin mutfak aleti." },
+  { "id": "w2", "name": "Kimyasal", "description": "Renksiz ve kokusuz bir endüstriyel çözücü. Yiyecek veya içeceklere karıştırıldığında fark edilmesi imkansız." },
+  { "id": "w3", "name": "İp", "description": "Ağır perdeleri ve dekorasyonları asmak için kullanılan, kalın ve oldukça sağlam kenevir halat." }
+],
+"locations": [
+  { "id": "l1", "name": "Kütüphane", "description": "Kalın duvarları ve ağır meşe kapısı sayesinde dışarıya veya içeriye hiçbir sesin sızmadığı izole çalışma alanı." },
+  { "id": "l2", "name": "Bahçe", "description": "Konağın etrafını saran açık alan. Loş aydınlatması sayesinde kuytu köşelerde rahatça gizlenme imkanı sunuyor." },
+  { "id": "l3", "name": "Mutfak", "description": "Yerleri genellikle nemli ve kaygan olan, içinde onlarca tehlikeli aletin bulunduğu arka cephedeki hazırlık alanı." }
+],
+"clues": [
+  { "id": "c1", "text": "Adli rapor: Kurban zehirlenmemiş veya iple boğulmamış; derin bir kesici alet darbesiyle hayatını kaybetmiş.", "type": "forensic", "isBonus": false },
+  { "id": "c2", "text": "Nazik Hanım gece boyunca Bahçe'de çayını yudumlayarak kitap okuduğunu belirtti ve bu durum doğrulandı.", "type": "witness", "isBonus": false },
+  { "id": "c3", "text": "Cem Bey'in gece boyunca Kütüphane'den çıkmadığı ve dekorasyonlarla uğraştığı rapor edildi.", "type": "witness", "isBonus": false },
+  { "id": "c4", "text": "Kan izleri ve boğuşma kanıtları yalnızca arkadaki hazırlık alanında (Mutfak) bulunuyor.", "type": "evidence", "isBonus": false },
+  { "id": "c5", "text": "Koridor kameraları, Zeynep Hanım'ın olay saatinde Mutfak'tan telaşla çıktığını gösteriyor.", "type": "record", "isBonus": true },
+  { "id": "c6", "text": "Ağır mutfak makasının sap kısmında, Zeynep Hanım'a ait net parmak izleri tespit edildi.", "type": "forensic", "isBonus": true }
+]
+
+2. BAŞLIK: "Boğaz'da Kayıp Elmas"
+"difficulty": "caylak",
+"story": "İstanbul Boğazı'nın serin sularında süzülen lüks yatta düzenlenen o gösterişli sergi, kanlı bir geceyle son buldu. Paha biçilemez 'Boğaz Elması'nın çalındığı anlaşıldığında, geminin güvenlik şefi Orhan alt katta cansız yatıyordu.",
+"suspects": [
+  { "id": "s1", "name": "Kaptan Levent", "description": "Geminin deneyimli kaptanı. Fiziksel olarak oldukça yapılı ve ağır nesneleri kaldırabilecek kuvvette.", "icon": "solid-captain" },
+  { "id": "s2", "name": "Sponsor Murat", "description": "Partinin zengin finansörü. İnce yapılı, ağır fiziksel güç gerektiren işlere alışkın değil.", "icon": "solid-man-tie" },
+  { "id": "s3", "name": "Organizatör Eda", "description": "Serginin sorumlusu. Çevik, esnek ve geminin en dar alanlarında bile rahatça hareket edebilecek yapıda.", "icon": "solid-woman-elegant" }
+],
+"weapons": [
+  { "id": "w1", "name": "Gemi Halatı", "description": "Gemiyi bağlamak için kullanılan kalın sentetik ip. Çok sağlam ve esnek bir yapıya sahip." },
+  { "id": "w2", "name": "Demir Çekiç", "description": "Ağır bakım ve onarım aleti. Ciddi bir fiziksel kütleye sahip paslanmaz çelik donanım." },
+  { "id": "w3", "name": "Gaz Tüpü", "description": "Basınçlı endüstriyel tüp. Kapalı bir alanda sızıntı yapması durumunda zehirleyici olabilir." }
+],
+"locations": [
+  { "id": "l1", "name": "Makine Dairesi", "description": "Geminin en alt katında yer alan, zemini makine yağıyla kaplı, gürültülü ve gözden uzak alan." },
+  { "id": "l2", "name": "Seyir Köprüsü", "description": "En üst katta yer alan, geminin yönlendirildiği kameralı ve güvenli yönetim merkezi." },
+  { "id": "l3", "name": "VIP Salon", "description": "Misafirlerin ağırlandığı, aydınlık, temiz ve oldukça geniş eğlence alanı." }
+],
+"clues": [
+  { "id": "c1", "text": "Adli rapor, kurbanın aydınlık VIP Salon veya kameralı Seyir Köprüsü'nde değil, zemini yağlı ve gürültülü bir alanda öldürüldüğünü kanıtlıyor.", "type": "forensic", "isBonus": false },
+  { "id": "c2", "text": "Kaptan Levent, olay saatinde ağır bakım çekiciyle üst katlarda çalıştığını telsiz kayıtlarıyla kanıtladı.", "type": "witness", "isBonus": false },
+  { "id": "c3", "text": "Sponsor Murat, tüm geceyi VIP salonda misafirlerle geçirdiğini kameralarla doğruladı.", "type": "witness", "isBonus": false },
+  { "id": "c4", "text": "Kurbanın boynundaki derin iz, cinayette ağır bir çekiç veya gaz tüpü değil, esnek ve kalın bir sentetik ip kullanıldığını gösteriyor.", "type": "evidence", "isBonus": false },
+  { "id": "c5", "text": "Organizatör Eda'nın, esnek gemi halatlarının bulunduğu tek depoya erişimi olan yegane kişi olduğu tespit edildi.", "type": "evidence", "isBonus": true },
+  { "id": "c6", "text": "Makine Dairesi'ndeki yağlı ayak izleri, çevik yapılı Organizatör Eda'nın ayakkabılarıyla tam olarak eşleşti.", "type": "forensic", "isBonus": true }
+]
+
+3. BAŞLIK: "Kapalıçarşı'da Gizem"
+"difficulty": "caylak",
+"story": "Kapalıçarşı'nın yüzlerce yıllık labirent gibi sokaklarına çöken akşam karanlığı, bir cinayeti örtbas etmeye yetmedi. Çarşının en eski kuyumcularından biri, kepenkler indikten hemen sonra dükkanında vahşice katledildi.",
+"suspects": [
+  { "id": "s1", "name": "Ahmet Usta", "description": "Komşu bakırcı esnaf. Otuz yıllık tecrübesiyle çarşının her köşesini ezbere biliyor.", "icon": "solid-man-worker" },
+  { "id": "s2", "name": "Selma Teyze", "description": "Çarşının saygın muhasebecisi. Yaşına rağmen rakamlar ve hesaplar konusunda hata yapmaz.", "icon": "solid-woman-old" },
+  { "id": "s3", "name": "Kerem Genç", "description": "Stajyer olarak son ay işe başlayan, teknolojiye yatkın ve meraklı genç çalışan.", "icon": "solid-man-boy" }
+],
+"weapons": [
+  { "id": "w1", "name": "Ağır Terazi", "description": "Kuyumcu terazisinin tunç kefesi, birkaç kilogram ağırlığında katı bir cisim." },
+  { "id": "w2", "name": "Kimyasal Madde", "description": "Altın eritme sürecinde kullanılan, temas halinde yakıcı olan asit bazlı çözelti." },
+  { "id": "w3", "name": "Pençe Anahtar", "description": "Kalın metalleri bükmekte kullanılan, ağır ve kilitlerde iz bırakan çelik alet." }
+],
+"locations": [
+  { "id": "l1", "name": "Dükkan İçi", "description": "Vitrinlerin ve kasanın bulunduğu, sokağı doğrudan gören aydınlık müşteri alanı." },
+  { "id": "l2", "name": "Arka Depo", "description": "Sadece elektronik bir şifreyle girilebilen, penceresiz ve yalıtımlı oda." },
+  { "id": "l3", "name": "Çarşı Koridoru", "description": "Gece bekçilerinin devriye gezdiği, yüzlerce yıllık kıvrımlı taş koridorlar." }
+],
+"clues": [
+  { "id": "c1", "text": "Kurban, kimyasal bir çözeltiyle veya tunç kefeli ağır bir teraziyle darp edilmemişti; kilitlerde iz bırakan çelik bir alet kullanılmıştı.", "type": "forensic", "isBonus": false },
+  { "id": "c2", "text": "Ahmet Usta, olay saatinde kendi aydınlık dükkanının içinde vitrinleri düzenliyordu.", "type": "witness", "isBonus": false },
+  { "id": "c3", "text": "Selma Teyze, olay sırasında taş koridorlarda devriye gezen gece bekçileriyle sohbet ediyordu.", "type": "witness", "isBonus": false },
+  { "id": "c4", "text": "Olay yeri incelemesi, cinayetin elektronik kilitli penceresiz odada (Arka Depo) gerçekleştiğini doğruladı.", "type": "evidence", "isBonus": false },
+  { "id": "c5", "text": "Arka Depo'nun şifreli kilidini açabilen tek kişi genç stajyer Kerem'di.", "type": "evidence", "isBonus": true },
+  { "id": "c6", "text": "Kerem'in dolabında, cinayette kullanılan pençe anahtar üzerinde kan izleriyle birlikte bulundu.", "type": "forensic", "isBonus": true }
+]
+
+4. BAŞLIK: "Üniversitede Karanlık Sır"
+"difficulty": "caylak",
+"story": "İstanbul'un köklü üniversitesindeki sessiz gece, çığır açacak bir araştırma projesinin kana bulanmasıyla yırtıldı. Laboratuvar yöneticisi, masasının başında ölü bulundu ve kritik veriler şifreli sunuculardan silindi.",
+"suspects": [
+  { "id": "s1", "name": "Prof. Kahraman", "description": "Son derece rekabetçi ve sert mizaçlı, üniversitenin kıdemli akademisyeni.", "icon": "solid-man-glasses" },
+  { "id": "s2", "name": "Asistan Elif", "description": "Gecelerini araştırmalara adayan, projenin tüm teknik detaylarına hakim doktora öğrencisi.", "icon": "solid-woman-glasses" },
+  { "id": "s3", "name": "Güvenlik Görevlisi", "description": "Sadece gece vardiyasında çalışan, binaların fiziksel kontrollerini yapan personel.", "icon": "solid-police" }
+],
+"weapons": [
+  { "id": "w1", "name": "Elektrik Çarpması", "description": "Yüksek voltajlı cihaz kablolarının kasıtlı olarak kısa devre yaptırılması durumu." },
+  { "id": "w2", "name": "Kimyasal Gaz", "description": "Sızdırıldığında kapalı ortamda birikebilen tehlikeli ve boğucu kimyasal bileşik." },
+  { "id": "w3", "name": "Keskin Nesne", "description": "Cam bölmelerden koparılmış, damarları kesebilecek kadar sivri kırık bir parça." }
+],
+"locations": [
+  { "id": "l1", "name": "Laboratuvar", "description": "Çeşitli deney düzeneklerinin, yüksek voltajlı prizlerin ve kimyasalların bulunduğu oda." },
+  { "id": "l2", "name": "Ofis", "description": "Yığınla dosya, evrak ve bilgisayar ekranlarıyla dolu akademisyen çalışma odası." },
+  { "id": "l3", "name": "Koridorlar", "description": "Gece yarısı tamamen ıssızlaşan, güvenlik kameralarıyla izlenen uzun geçitler." }
+],
+"clues": [
+  { "id": "c1", "text": "Maktulün cesedinde kesici alet yarası veya kimyasal gaz tahribatı yoktu; ölüm yüksek voltajlı bir elektrik çarpmasıyla gerçekleşmişti.", "type": "forensic", "isBonus": false },
+  { "id": "c2", "text": "Prof. Kahraman'ın olay saati boyunca evrakların bulunduğu Ofis'inde bilgisayar başında olduğu sunucu kayıtlarıyla kanıtlandı.", "type": "record", "isBonus": false },
+  { "id": "c3", "text": "Güvenlik Görevlisi'nin, sadece uzun Koridorlar'da devriye attığı kameralarca doğrulandı.", "type": "record", "isBonus": false },
+  { "id": "c4", "text": "Olay yeri incelemesi, sabotajın deney düzeneklerinin bulunduğu Laboratuvar'da yapıldığını kesinleştirdi.", "type": "evidence", "isBonus": false },
+  { "id": "c5", "text": "Laboratuvarın dijital giriş logları, olay anında içeride sadece Asistan Elif'in bulunduğunu gösteriyor.", "type": "record", "isBonus": true },
+  { "id": "c6", "text": "Asistan Elif'in eldivenlerinde, sabotajda kullanılan yüksek voltajlı kablolara ait yanık izleri tespit edildi.", "type": "forensic", "isBonus": true }
+]
+
+5. BAŞLIK: "Pazar Yerinde Şüpheli Ölüm"
+"difficulty": "caylak",
+"story": "İstanbul'un kalabalık ve gürültülü çarşısında ünlü tatlıcı Halit Usta, tezgahının başında altın sarısı tatlıların üzerine yığılarak son nefesini verdi. Geriye üç şüpheli ve zehirli bir sır kaldı.",
+"suspects": [
+  { "id": "s1", "name": "Müşteri Hanım", "description": "Yıllardır her pazar alışverişe gelen, elindeki bastonuyla çarşıyı adımlayan yaşlı müdavim.", "icon": "solid-woman-old" },
+  { "id": "s2", "name": "Tedarikçi Genç", "description": "Ağır tepsileri taşıyan, yorgunluktan gözleri kanlanmış, aceleci depo görevlisi.", "icon": "solid-man-worker" },
+  { "id": "s3", "name": "Komşu Satıcı", "description": "Kendi alanında müşteri beklerken gözlerini yan taraftan ayırmayan rakip esnaf.", "icon": "solid-man-merchant" }
+],
+"weapons": [
+  { "id": "w1", "name": "Baklava", "description": "Üzeri fıstıklarla süslenmiş, taze görünümüyle iştah açan ünlü pazar tatlısı." },
+  { "id": "w2", "name": "Şerbet", "description": "Büyük bakır güğümde kaynatılmış, berrak ve yoğun şekerli geleneksel sıvı." },
+  { "id": "w3", "name": "Kimyasal Madde", "description": "Zemin temizliğinde kullanılan, keskin kokulu endüstriyel çözücü." }
+],
+"locations": [
+  { "id": "l1", "name": "Tezgah", "description": "Tepsilerin dizildiği, şerbetin damladığı ve müşterilerin alışveriş yaptığı ana satış noktası." },
+  { "id": "l2", "name": "Ara Sokak", "description": "Müşterilerin kestirme olarak kullandığı, dükkanların arka kapılarına açılan loş yaya geçidi." },
+  { "id": "l3", "name": "Park", "description": "Sabah erken saatlerde araçların mal indirdiği, satış alanlarına oldukça uzak nokta." }
+],
+"clues": [
+  { "id": "c1", "text": "Adli rapor, kurbanın şerbetten veya temizlik sıvısından değil, fıstıklı bir tatlıya (Baklava) zerk edilen toksinden öldüğünü kanıtladı.", "type": "forensic", "isBonus": false },
+  { "id": "c2", "text": "Tedarikçi genç, sabah mesaisini sadece malların indirildiği uzak araç yanaşma alanında (Park) geçirdiğini kanıtladı.", "type": "witness", "isBonus": false },
+  { "id": "c3", "text": "Müşteri Hanım, olay saati boyunca sadece loş arka geçitteki (Ara Sokak) dükkanlardan alışveriş yapıyordu.", "type": "witness", "isBonus": false },
+  { "id": "c4", "text": "Güvenlik kameraları, cinayetin doğrudan tepsilerin dizildiği Tezgah'ta işlendiğini gösteriyor.", "type": "evidence", "isBonus": false },
+  { "id": "c5", "text": "Halit Usta'nın tezgahına olay anında yaklaşan tek kişi, yıllardır onu kıskanan Komşu Satıcı'ydı.", "type": "evidence", "isBonus": true },
+  { "id": "c6", "text": "Komşu Satıcı'nın, zehirli tatlıyı doğrudan kurbanın sergi alanına yerleştirdiği kesinleşti.", "type": "record", "isBonus": true }
+]
+
+6. BAŞLIK: "Müzede Kayıp Eser"
+"difficulty": "caylak",
+"story": "Ankara'daki asırlık müzenin loş koridorlarında, tarihin sessizliği kanla bozuldu. Bizans dönemine ait eşsiz bir broşun çalındığı fırtınalı gecede, gece bekçisi görev yerinde ağır yaralı olarak bulundu.",
+"suspects": [
+  { "id": "s1", "name": "Küratör Bey", "description": "On beş yıldır müzede çalışan, eserlerin tarihi geçmişini ezbere bilen yönetici.", "icon": "solid-man-tie" },
+  { "id": "s2", "name": "Restoratör Hanım", "description": "Hasar görmüş eserleri hassas kimyasallarla onaran, kapalı kapılar ardında çalışan uzman.", "icon": "solid-woman-glasses" },
+  { "id": "s3", "name": "Ziyaretçi Rehber", "description": "Gündüzleri müzede turlar düzenleyen, sosyal ve konuşkan alan görevlisi.", "icon": "solid-man-smile" }
+],
+"weapons": [
+  { "id": "w1", "name": "Uyutucu İğne", "description": "Deriye temas ettiği an hızla etki eden güçlü anestezik sıvı içeren şırınga." },
+  { "id": "w2", "name": "Sergi Kaidesi", "description": "Vitrinlerin altında bulunan, kafaya isabet ettiğinde felaket yaratan ağır mermer destek." },
+  { "id": "w3", "name": "Kimyasal Sprey", "description": "Havaya sıkıldığında geçici felç ve körlük yaratan yoğun kimyasal karışım." }
+],
+"locations": [
+  { "id": "l1", "name": "Sergi Salonu", "description": "Bizans ve Osmanlı eserlerinin cam vitrinlerde sergilendiği geniş ve aydınlık salon." },
+  { "id": "l2", "name": "Depolama Odası", "description": "Sadece yetkili personelin girebildiği, restorasyon bekleyen eserlerin bulunduğu kilitli oda." },
+  { "id": "l3", "name": "Güvenlik Odası", "description": "Tüm müzenin kamera görüntülerinin izlendiği, monitörlerle dolu kontrol merkezi." }
+],
+"clues": [
+  { "id": "c1", "text": "Maktulün üzerinde ağır bir mermer darbesi veya kimyasal sprey bulgusu yoktu; kurban deriye hızla etki eden bir iğneyle uyutulmuştu.", "type": "forensic", "isBonus": false },
+  { "id": "c2", "text": "Güvenlik kameraları, Ziyaretçi Rehber'in tüm gece boyunca eserlerin bulunduğu aydınlık Sergi Salonu'ndan hiç ayrılmadığını doğruladı.", "type": "record", "isBonus": false },
+  { "id": "c3", "text": "Küratör Bey'in, kamera görüntülerinin izlendiği Güvenlik Odası'nda olduğu anlaşıldı.", "type": "witness", "isBonus": false },
+  { "id": "c4", "text": "Cinayetin, yetkili personel harici girilemeyen kilitli Depolama Odası'nda işlendiği kanıtlandı.", "type": "evidence", "isBonus": false },
+  { "id": "c5", "text": "Anestezik enjeksiyonlara doğrudan erişimi olan ve Depolama Odası'nın şifresini bilen tek kişi Restoratör Hanım'dı.", "type": "evidence", "isBonus": true },
+  { "id": "c6", "text": "Restoratör Hanım'ın çantasında, uyutucu iğnenin kullanılmış boş tüpü ele geçirildi.", "type": "forensic", "isBonus": true }
+]
+
+7. BAŞLIK: "Adada Haftalık Gizem"
+"difficulty": "caylak",
+"solution": "s3+w3+l1",
+"story": "Büyükada'da yaz tatilinin huzuru, lüks bir villada işlenen cinayetle paramparça oldu. Adayı anakaraya bağlayan feribot seferleri iptal edilince, katil kurbanıyla aynı adada mahsur kaldı.",
+"suspects": [
+  { "id": "s1", "name": "Emekli Albay", "description": "Sabahları erken uyanıp yürüyüş yapan, disiplinli ve sert mizaçlı villa komşusu.", "icon": "solid-man-military" },
+  { "id": "s2", "name": "Ressam Leyla", "description": "Bütün yazını adada manzara resimleri çizerek geçiren, sessiz ve içine kapanık sanatçı.", "icon": "solid-woman-elegant" },
+  { "id": "s3", "name": "Genç Yatçı", "description": "Özel sürat teknesiyle adaya yeni gelen, fevri hareketleri olan gizemli misafir.", "icon": "solid-man-suit" }
+],
+"weapons": [
+  { "id": "w1", "name": "Av Tüfeği", "description": "Dolapta saklanan, yakından ateşlendiğinde korkunç ses çıkaran çift namlulu ateşli silah." },
+  { "id": "w2", "name": "Zehir", "description": "Doğal bitkilerden elde edilen, yiyeceklere karıştırılan sinsi bitki toksini." },
+  { "id": "w3", "name": "Gemi Halatı", "description": "Tekneleri iskeleye bağlamak için kullanılan, son derece sağlam ve kalın denizci ipi." }
+],
+"locations": [
+  { "id": "l1", "name": "Villa Bahçesi", "description": "Akdeniz bitkileri ve yüzme havuzuyla süslü, dışarıdan izole edilmiş geniş peyzaj alanı." },
+  { "id": "l2", "name": "Sahil Şeridi", "description": "Deniz dalgalarının vurduğu, insanların yürüyüş yaptığı uzun sahil yolu." },
+  { "id": "l3", "name": "Kayalık", "description": "Adanın güney ucundaki, manzarası güzel ancak uçurum kenarında yer alan sarp alan." }
+],
+"clues": [
+  { "id": "c1", "text": "Adli rapor, kurbanın ateşli silahla vurulmadığını veya zehirlenmediğini; boynuna dolanan kalın bir gemi halatıyla boğulduğunu kanıtladı.", "type": "forensic", "isBonus": false },
+  { "id": "c2", "text": "Emekli Albay, o sabah Sahil Şeridi'nde yürüyüş yaptığını ve olay yerine hiç gelmediğini tanıklarla doğruladı.", "type": "witness", "isBonus": false },
+  { "id": "c3", "text": "Ressam Leyla'nın olay saatinde sarp ve yüksek Kayalık'ta manzara resmi çizdiği tespit edildi.", "type": "witness", "isBonus": false },
+  { "id": "c4", "text": "Olay yeri incelemesi, cinayetin doğrudan havuzla süslü Villa Bahçesi'nde işlendiğini kesinleştirdi.", "type": "evidence", "isBonus": false },
+  { "id": "c5", "text": "Genç Yatçı'nın teknesinden eksilen halat parçasının, cinayet silahı ile birebir aynı olduğu anlaşıldı.", "type": "evidence", "isBonus": true },
+  { "id": "c6", "text": "Villa bahçesindeki çamurlu ayak izleri, Genç Yatçı'nın özel yapım tekne ayakkabılarıyla tam olarak eşleşiyordu.", "type": "forensic", "isBonus": true }
+]
+
+8. BAŞLIK: "Tren Yolculuğunda Cinayet"
+"difficulty": "caylak",
+"story": "Ankara-İstanbul ekspresinin ritmik tekerlek sesleri, sessiz bir cinayeti gizlemeye yetmedi. Tren yoğun sis altında ilerlerken, birinci mevkide seyahat eden tanınmış bir iş insanı son nefesini vermişti.",
+"suspects": [
+  { "id": "s1", "name": "İş Kadını", "description": "Sürekli evrak çantasıyla gezen, gergin ve stresli birinci mevki yolcusu.", "icon": "solid-woman-suit" },
+  { "id": "s2", "name": "Üniversite Öğrencisi", "description": "Kulağında kulaklıkla yolculuk yapan, etrafıyla ilgisiz ucuz biletli genç yolcu.", "icon": "solid-man-boy" },
+  { "id": "s3", "name": "Emekli Doktor", "description": "Anatomik bilgiye sahip, yanında sürekli küçük çantalar taşıyan yaşlı yolcu.", "icon": "solid-man-old" }
+],
+"weapons": [
+  { "id": "w1", "name": "Zehirli İçecek", "description": "İçeceğe karıştırıldığında kalp krizini tetikleyen renksiz ve tatsız tıbbi sıvı." },
+  { "id": "w2", "name": "Kesici Silah", "description": "Hareketli trende saklaması kolay, tek hamlede derin yara açan küçük çakı bıçağı." },
+  { "id": "w3", "name": "Boğma Halatı", "description": "Bavuldan çıkarılan, boyuna dolandığında nefesi anında kesen ince naylon ip." }
+],
+"locations": [
+  { "id": "l1", "name": "Kompartıman", "description": "Sadece biletli yolcunun girebildiği dar, dört kişilik ahşap bölmeli özel oda." },
+  { "id": "l2", "name": "Yemekli Vagon", "description": "Beyaz örtülü masaların bulunduğu, herkesin girip çıkabildiği ortak servis alanı." },
+  { "id": "l3", "name": "Tuvalet", "description": "Trenin arka bölümünde yer alan, içeriden kilitlenebilir küçük ve dar alan." }
+],
+"clues": [
+  { "id": "c1", "text": "Adli tıp incelemesi, kurbanın kesici bir bıçakla veya halatla darp edilmediğini, tatsız bir zehirle öldürüldüğünü belirledi.", "type": "forensic", "isBonus": false },
+  { "id": "c2", "text": "Üniversite Öğrencisi'nin yolculuk boyunca sadece kendi dar Kompartıman'ında oturduğu doğrulandı.", "type": "witness", "isBonus": false },
+  { "id": "c3", "text": "İş Kadını'nın, olay anında trenin arka bölümündeki küçük kilitli alanda (Tuvalet) mahsur kaldığı teyit edildi.", "type": "witness", "isBonus": false },
+  { "id": "c4", "text": "Olay yeri incelemesi, kurbanın beyaz örtülü masaların bulunduğu Yemekli Vagon'da zehirlendiğini kesinleştirdi.", "type": "evidence", "isBonus": false },
+  { "id": "c5", "text": "Tıbbi bilgisi sayesinde bu sinsi zehri hazırlayıp Yemekli Vagon'da bardağa damlatan kişi Emekli Doktor'du.", "type": "evidence", "isBonus": true },
+  { "id": "c6", "text": "Doktorun ceket cebinde, zehrin bulunduğu küçük cam şişe ele geçirildi.", "type": "forensic", "isBonus": true }
+]
+
+9. BAŞLIK: "Tarihi Hamamda Cinayet"
+"difficulty": "caylak",
+"story": "Sultanahmet'in asırlık kubbeleri altında yankılanan su sesleri, dehşet dolu bir çığlıkla kesildi. Tanınmış bir iş insanı, tarihi hamamın sıcaklık odasında, mermer kurnanın hemen yanında cansız yatıyordu.",
+"suspects": [
+  { "id": "s1", "name": "Kasiyer", "description": "Hamamın girişinden, dolap anahtarlarından ve hesaplardan sorumlu genç çalışan.", "icon": "solid-man-young" },
+  { "id": "s2", "name": "Yönetici", "description": "Hamamın işletme müdürü. Sorun yaşandığında VIP müşterilerin talepleriyle bizzat ilgileniyor.", "icon": "solid-man-suit" },
+  { "id": "s3", "name": "Kese Ustası", "description": "Yılların tecrübesine sahip, güçlü kolları olan emektar ve sessiz çalışan.", "icon": "solid-man-strong" }
+],
+"weapons": [
+  { "id": "w1", "name": "Özel Sabun", "description": "Alerjenik kimyasallar içeren, yanlış kullanımda solunum yollarını tıkayabilen özel yapım sabun." },
+  { "id": "w2", "name": "Tansiyon İlacı", "description": "Maktulün dolabında bulunan, yüksek dozda alındığında anında kalp krizine yol açan haplar." },
+  { "id": "w3", "name": "Çıplak El", "description": "Hiçbir alet kullanmadan, acımasız ve doğrudan uygulanan fiziksel boğma gücü." }
+],
+"locations": [
+  { "id": "l1", "name": "Masaj Odası", "description": "Yoğun buharlı, göz gözü görmeyen ve nefes almanın zor olduğu mermer kaplı sıcak alan." },
+  { "id": "l2", "name": "Soğuk Oda", "description": "Müşterilerin hamam sonrası peştamallarla uzanıp dinlendiği, çay servisinin yapıldığı serin bölüm." },
+  { "id": "l3", "name": "Resepsiyon", "description": "Hamamın ana girişi, kasanın ve müşteri kayıtlarının tutulduğu aydınlık alan." }
+],
+"clues": [
+  { "id": "c1", "text": "Adli rapor: Maktulün alerjenik sabunla veya ilaçla zehirlenmediği, doğrudan çıplak ellerle boğulduğu doğrulandı.", "type": "forensic", "isBonus": false },
+  { "id": "c2", "text": "Kasiyer, olay gecesi vardiyası boyunca aydınlık Resepsiyon'dan hiç ayrılmadığını kameralarla kanıtladı.", "type": "witness", "isBonus": false },
+  { "id": "c3", "text": "Yöneticinin gece boyunca dinlenme alanında (Soğuk Oda) uyuyakaldığı tespit edildi.", "type": "witness", "isBonus": false },
+  { "id": "c4", "text": "Boğuşma izlerinin sadece yüksek nemli ve buharlı Masaj Odası'nda olduğu saptandı.", "type": "evidence", "isBonus": false },
+  { "id": "c5", "text": "Olay saatinde Masaj Odası'nda kurbanla yalnız kalan tek kişi, güçlü kollara sahip Kese Ustası'ydı.", "type": "evidence", "isBonus": true },
+  { "id": "c6", "text": "Kurbanın boynundaki ekimoz izlerinin çapı, Kese Ustası'nın elleriyle birebir eşleşti.", "type": "forensic", "isBonus": true }
+]
+
+TÜM GÜNCELLEMELERİ YAPTIKTAN SONRA PROJEYİ DERLE (BUILD) VE TEST ET.

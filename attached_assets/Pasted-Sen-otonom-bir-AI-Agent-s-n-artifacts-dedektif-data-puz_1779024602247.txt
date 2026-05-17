@@ -1,0 +1,22 @@
+Sen otonom bir AI Agent'sın. `artifacts/dedektif/data/puzzles.ts` dosyasında bulunan 9 adet "Çaylak" vakasındaki mantık hatalarını, isim tutarsızlıklarını ve açıklamalardaki 'spoiler'ları (örneğin mekan açıklamasında 'cinayet burada işlendi' yazmasını) düzeltmen gerekiyor. 
+
+Aşağıda güncel, hatasız ve premium verileri veriyorum. Görevin, ilgili vakaları bulup `story`, `suspects`, `weapons`, `locations` ve `clues` dizilerinin ÜZERİNE YAZMAKTIR. (Vakaların solution/çözüm değerlerine KESİNLİKLE DOKUNMA).
+
+1. BAŞLIK: "Pazar Yerinde Şüpheli Ölüm"
+"story": "İstanbul'un kalabalık ve gürültülü tarihi çarşısında, pazar sabahının neşesi ani bir ölümle donup kaldı. Ünlü tatlıcı Halit Usta, kendi tezgahının başında altın sarısı tatlıların üzerine yığılarak son nefesini verdi. Etraftaki baharat ve şerbet kokusuna şimdi ölümün soğukluğu karışmıştı. Geride sadece üç şüpheli ve zehirli bir sır kalmıştı.",
+"suspects": [
+  { "id": "s1", "name": "Müşteri Hanım", "description": "Yıllardır her pazar aynı saatte alışverişe gelen, elindeki bastonuyla çarşıyı adımlayan titiz ve yaşlı müdavim.", "icon": "solid-woman-old" },
+  { "id": "s2", "name": "Tedarikçi Genç", "description": "Sabahın erken saatlerinde ağır tepsileri taşıyan, yorgunluktan gözleri kanlanmış, aceleci depo görevlisi.", "icon": "solid-man-worker" },
+  { "id": "s3", "name": "Komşu Satıcı", "description": "Halit Usta'nın başarısını yıllardır kıskanan, kendi tezgahında müşteri beklerken gözlerini yan taraftan ayırmayan rakip esnaf.", "icon": "solid-man-merchant" }
+],
+"weapons": [
+  { "id": "w1", "name": "Baklava", "description": "Üzeri fıstıklarla süslenmiş, taze görünümüyle iştah açan ünlü pazar tatlısı." },
+  { "id": "w2", "name": "Şerbet", "description": "Büyük bakır güğümde kaynatılmış, berrak ve yoğun şekerli geleneksel sıvı." },
+  { "id": "w3", "name": "Kimyasal Madde", "description": "Çarşının zemin temizliğinde kullanılan, keskin kokulu endüstriyel çözücü." }
+],
+"locations": [
+  { "id": "l1", "name": "Tezgah", "description": "Tepsilerin dizildiği, şerbetin damladığı ve müşterilerin alışveriş yaptığı hareketli ana satış noktası." },
+  { "id": "l2", "name": "Ara Sokak", "description": "Müşterilerin kestirme olarak kullandığı, dükkanların arka kapılarına açılan loş ve dar yaya geçidi." },
+  { "id": "l3", "name": "Park", "description": "Sabah erken saatlerde toptancıların mal indirdiği, satış alanlarına oldukça uzak olan araç yanaşma noktası." }
+],
+"clues":
