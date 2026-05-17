@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import type { ComponentProps } from "react";
 import {
   Platform,
@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useFocusEffect } from "expo-router";
 import { useColors } from "@/hooks/useColors";
 import { useGame } from "@/context/GameContext";
 import Animated, { FadeInDown } from "react-native-reanimated";
@@ -170,6 +171,13 @@ export default function ProfilScreen() {
   const [editingBio, setEditingBio] = useState(false);
   const [bioText, setBioText] = useState(profile.bio ?? "");
   const bioInputRef = useRef<TextInput>(null);
+  const scrollRef = useRef<import("react-native").ScrollView>(null);
+
+  useFocusEffect(
+    useCallback(() => {
+      scrollRef.current?.scrollTo({ y: 0, animated: false });
+    }, [])
+  );
 
   const winRate =
     profile.gamesPlayed > 0
@@ -228,6 +236,7 @@ export default function ProfilScreen() {
         ]}
       >
         <ScrollView
+          ref={scrollRef}
           style={{ flex: 1 }}
           contentContainerStyle={[
             styles.content,

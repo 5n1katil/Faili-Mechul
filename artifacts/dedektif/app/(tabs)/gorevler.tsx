@@ -1,4 +1,4 @@
-import React, { type ComponentProps } from "react";
+import React, { useCallback, useRef, type ComponentProps } from "react";
 import {
   Platform,
   Pressable,
@@ -16,7 +16,7 @@ import Animated, {
   useSharedValue,
   withSpring,
 } from "react-native-reanimated";
-import { useRouter } from "expo-router";
+import { useFocusEffect, useRouter } from "expo-router";
 
 type MatIconName = ComponentProps<typeof MaterialIcons>["name"];
 
@@ -463,6 +463,13 @@ export default function GorevlerScreen() {
   const { claimableCount, dailyTimeLeft, weeklyTimeLeft, totalAwardedPoints } = useMission();
   const { startPuzzle, completedPuzzleIds, profile } = useGame();
   const router = useRouter();
+  const scrollRef = useRef<import("react-native").ScrollView>(null);
+
+  useFocusEffect(
+    useCallback(() => {
+      scrollRef.current?.scrollTo({ y: 0, animated: false });
+    }, [])
+  );
 
   const handleMissionPlay = (mission: Mission) => {
     const puzzle = getMissionTargetPuzzle(mission, completedPuzzleIds);
@@ -519,6 +526,7 @@ export default function GorevlerScreen() {
       </View>
 
       <ScrollView
+        ref={scrollRef}
         style={{ flex: 1 }}
         contentContainerStyle={[
           styles.content,

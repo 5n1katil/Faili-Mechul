@@ -105,6 +105,8 @@ function npcScoreForPuzzle(puzzleId: string, difficulty: Difficulty, npcName: st
   return computeScoreForRank(baseTime, wrongGuesses, bonusClues, difficulty, streak);
 }
 
+const _accordionExpanded = new Map<string, boolean>();
+
 function AccordionSection({
   title,
   count,
@@ -130,11 +132,17 @@ function AccordionSection({
 }) {
   const colors = useColors();
   const color = accentColor ?? colors.primary;
-  const [expanded, setExpanded] = useState(defaultExpanded);
+  const [expanded, setExpanded] = useState(() =>
+    _accordionExpanded.has(title) ? _accordionExpanded.get(title)! : defaultExpanded
+  );
 
   const toggle = () => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-    setExpanded((v) => !v);
+    setExpanded((v) => {
+      const next = !v;
+      _accordionExpanded.set(title, next);
+      return next;
+    });
   };
 
   return (
@@ -459,6 +467,7 @@ export default function VakalarScreen() {
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const gameStateRef = useRef(gameState);
   const invalidateGameRef = useRef(invalidateGame);
+  const listScrollRef = useRef<ScrollView>(null);
   useEffect(() => { gameStateRef.current = gameState; }, [gameState]);
   useEffect(() => { invalidateGameRef.current = invalidateGame; }, [invalidateGame]);
 
@@ -495,6 +504,9 @@ export default function VakalarScreen() {
 
   useFocusEffect(
     useCallback(() => {
+      if (!gameState) {
+        listScrollRef.current?.scrollTo({ y: 0, animated: false });
+      }
       return () => {
         const gs = gameStateRef.current;
         const inv = invalidateGameRef.current;
@@ -502,7 +514,7 @@ export default function VakalarScreen() {
           inv();
         }
       };
-    }, [])
+    }, [gameState])
   );
 
   useEffect(() => {
@@ -526,7 +538,7 @@ export default function VakalarScreen() {
   const handleGoHome = () => {
     setShowResult(false);
     resetCurrentGame();
-    router.replace("/(tabs)");
+    router.replace("/");
   };
 
   const handleBackPress = () => {
@@ -735,6 +747,7 @@ export default function VakalarScreen() {
             <PaketlerContent embedded />
           ) : (
             <ScrollView
+              ref={listScrollRef}
               style={{ flex: 1 }}
               contentContainerStyle={[
                 listStyles.listContent,
@@ -815,7 +828,6 @@ export default function VakalarScreen() {
                           accentColor="#D4A843"
                           premiumInfoIcon
                           onPremiumInfoPress={() => setShowPaywall(true)}
-                          defaultExpanded={false}
                         >
                           <DifficultySubGroups
                             puzzles={premiumPuzzles}
