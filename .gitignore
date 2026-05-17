@@ -49,3 +49,7 @@ Thumbs.db
 .local/
 
 .vercel
+
+# Accidental Expo/EAS at monorepo root (canonical: artifacts/dedektif/)
+/app.json
+/eas.json

@@ -291,6 +291,19 @@ function ScoreBreakdownCard({
   );
 }
 
+function formatRankLabel(rank: number): string {
+  if (!Number.isFinite(rank) || rank < 1) return "—";
+  if (rank === 1) return "🥇 Birinci!";
+  if (rank === 2) return "🥈 İkinci";
+  if (rank === 3) return "🥉 Üçüncü";
+  return `#${rank}`;
+}
+
+function formatPlayerCount(count: number): string {
+  if (!Number.isFinite(count) || count < 1) return "Sıralama hesaplanıyor…";
+  return `${count} dedektif arasında`;
+}
+
 function RankCard({
   finalRank,
   totalPlayers,
@@ -303,12 +316,10 @@ function RankCard({
   overallPlayers: number;
 }) {
   const colors = useColors();
-  const caseRankLabel =
-    finalRank === 1 ? "🥇 Birinci!" : finalRank === 2 ? "🥈 İkinci" : finalRank === 3 ? "🥉 Üçüncü" : `#${finalRank}`;
-  const overallRankLabel =
-    overallRank === 1 ? "🥇 1." : overallRank === 2 ? "🥈 2." : overallRank === 3 ? "🥉 3." : `#${overallRank}`;
-  const isTop3Case = finalRank <= 3;
-  const isTop3Overall = overallRank <= 3;
+  const caseRankLabel = formatRankLabel(finalRank);
+  const overallRankLabel = formatRankLabel(overallRank);
+  const isTop3Case = Number.isFinite(finalRank) && finalRank >= 1 && finalRank <= 3;
+  const isTop3Overall = Number.isFinite(overallRank) && overallRank >= 1 && overallRank <= 3;
 
   return (
     <View style={[styles.rankCard, { backgroundColor: colors.background, borderColor: colors.border }]}>
@@ -318,7 +329,7 @@ function RankCard({
         <View style={{ flex: 1 }} />
         <Text style={[styles.rankLabel, { color: isTop3Case ? colors.primary : colors.foreground }]}>{caseRankLabel}</Text>
       </View>
-      <Text style={[styles.rankSub, { color: colors.mutedForeground }]}>{totalPlayers} dedektif arasında</Text>
+      <Text style={[styles.rankSub, { color: colors.mutedForeground }]}>{formatPlayerCount(totalPlayers)}</Text>
       <View style={[styles.rankDivider, { backgroundColor: colors.border }]} />
       <View style={styles.rankRow}>
         <MaterialIcons name="public" size={14} color={isTop3Overall ? colors.primary : colors.mutedForeground} />
@@ -326,7 +337,7 @@ function RankCard({
         <View style={{ flex: 1 }} />
         <Text style={[styles.rankLabel, { color: isTop3Overall ? colors.primary : colors.foreground }]}>{overallRankLabel}</Text>
       </View>
-      <Text style={[styles.rankSub, { color: colors.mutedForeground }]}>{overallPlayers} dedektif arasında</Text>
+      <Text style={[styles.rankSub, { color: colors.mutedForeground }]}>{formatPlayerCount(overallPlayers)}</Text>
     </View>
   );
 }
@@ -552,7 +563,7 @@ export default function ResultScreen({
             />
           )}
 
-          {success && isRanked && totalPlayers > 0 && (
+          {success && isRanked && totalPlayers > 0 && overallPlayers > 0 && (
             <RankCard
               finalRank={finalRank}
               totalPlayers={totalPlayers}

@@ -139,7 +139,7 @@ export interface ClueFotoVerisi {
 export interface Clue {
   id: string;
   text: string;
-  type: "direct" | "indirect" | "elimination" | "evidence" | "witness" | "forensic";
+  type: "direct" | "indirect" | "elimination" | "evidence" | "witness" | "forensic" | "record";
   isBonus: boolean;
   mechanicType?: ClueMechanicType;
   deductionHint?: string;
