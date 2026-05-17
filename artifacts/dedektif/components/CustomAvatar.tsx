@@ -57,7 +57,10 @@ export default function CustomAvatar({
   const fileName = resolveFileName(icon);
 
   // PNG: use tintColor to apply the desired color as a monochrome mask
-  const pngSource = AVATAR_PNG_MAP[fileName] ?? AVATAR_PNG_MAP[icon];
+  const pngSource =
+    AVATAR_PNG_MAP[fileName] ??
+    AVATAR_PNG_MAP[`${icon}.png`] ??
+    AVATAR_PNG_MAP[icon];
   if (pngSource !== undefined) {
     return (
       <View

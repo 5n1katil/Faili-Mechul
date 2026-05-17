@@ -477,9 +477,9 @@ export const PUZZLES: Puzzle[] = [
     story:
       "İstanbul'un kalabalık ve gürültülü tarihi çarşısında, pazar sabahının neşesi ani bir ölümle donup kaldı. Ünlü tatlıcı Halit Usta, kendi tezgahının başında, altın sarısı tatlıların üzerine yığılarak son nefesini verdi. Etraftaki baharat ve şerbet kokusuna şimdi ölümün soğukluğu karışmıştı. Kalabalık panik içinde dağılırken, geride sadece üç şüpheli ve zehirli bir sır kalmıştı.",
     suspects: [
-      { id: "s1", name: "Müşteri Hanım", description: "Yıllardır her pazar aynı saatte alışverişe gelen, elindeki bastonuyla çarşıyı adımlayan titiz ve yaşlı müdavim.", icon: "solid-woman-old" },
-      { id: "s2", name: "Tedarikçi Genç", description: "Sabahın erken saatlerinde ağır tepsileri taşıyan, yorgunluktan gözleri kanlanmış, aceleci depo görevlisi.", icon: "solid-man-worker" },
-      { id: "s3", name: "Komşu Satıcı", description: "Halit Usta'nın başarısını yıllardır kıskanan, kendi tezgahında müşteri beklerken gözlerini yan taraftan ayırmayan rakip esnaf.", icon: "solid-man-merchant" },
+      { id: "s1", name: "Müşteri Hanım", description: "Yıllardır her pazar aynı saatte alışverişe gelen, elindeki bastonuyla çarşıyı adımlayan titiz ve yaşlı müdavim.", icon: "noun-pazar-musteri-hanim" },
+      { id: "s2", name: "Tedarikçi Genç", description: "Sabahın erken saatlerinde ağır tepsileri taşıyan, yorgunluktan gözleri kanlanmış, aceleci depo görevlisi.", icon: "noun-pazar-tedarikci-genc" },
+      { id: "s3", name: "Komşu Satıcı", description: "Halit Usta'nın başarısını yıllardır kıskanan, kendi tezgahında müşteri beklerken gözlerini yan taraftan ayırmayan rakip esnaf.", icon: "noun-pazar-komsu-satici" },
     ],
     weapons: [
       { id: "w1", name: "Baklava", description: "Üzeri fıstıklarla süslenmiş, taze görünümüyle iştah açan ancak içine ustaca ölümcül bir toksin zerk edilmiş tatlı.", icon: "cake" },

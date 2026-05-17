@@ -21,6 +21,9 @@ import p_noun_man_2666696_png from "../public/avatars/noun-man-2666696.png";
 import p_noun_mechanic_1574364_avatar_png from "../public/avatars/noun-mechanic-1574364-avatar.png";
 import p_noun_nazik_hanim_avatar_png from "../public/avatars/noun-nazik-hanim-avatar.png";
 import p_noun_ortak_sabri_bey_avatar_png from "../public/avatars/noun-ortak-sabri-bey-avatar.png";
+import p_noun_pazar_komsu_satici_png from "../public/avatars/noun-pazar-komsu-satici.png";
+import p_noun_pazar_musteri_hanim_png from "../public/avatars/noun-pazar-musteri-hanim.png";
+import p_noun_pazar_tedarikci_genc_png from "../public/avatars/noun-pazar-tedarikci-genc.png";
 import p_noun_semiha_hanim_avatar_png from "../public/avatars/noun-semiha-hanim-avatar.png";
 import p_noun_teacher_1908916_avatar_png from "../public/avatars/noun-teacher-1908916-avatar.png";
 import p_noun_teacher_1908918_avatar_png from "../public/avatars/noun-teacher-1908918-avatar.png";
@@ -308,6 +311,9 @@ export const AVATAR_PNG_MAP: Record<string, ImageSourcePropType> = {
   "noun-mechanic-1574364-avatar.png": p_noun_mechanic_1574364_avatar_png,
   "noun-nazik-hanim-avatar.png": p_noun_nazik_hanim_avatar_png,
   "noun-ortak-sabri-bey-avatar.png": p_noun_ortak_sabri_bey_avatar_png,
+  "noun-pazar-komsu-satici.png": p_noun_pazar_komsu_satici_png,
+  "noun-pazar-musteri-hanim.png": p_noun_pazar_musteri_hanim_png,
+  "noun-pazar-tedarikci-genc.png": p_noun_pazar_tedarikci_genc_png,
   "noun-semiha-hanim-avatar.png": p_noun_semiha_hanim_avatar_png,
   "noun-teacher-1908916-avatar.png": p_noun_teacher_1908916_avatar_png,
   "noun-teacher-1908918-avatar.png": p_noun_teacher_1908918_avatar_png,
