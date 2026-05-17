@@ -31,7 +31,14 @@ export default function CustomAvatar({
   const maskId = useId().replace(/:/g, "");
 
   if (Platform.OS === "web") {
-    const uri = resolveAvatarUri(icon);
+    // Prefer PNG when a bundled PNG asset exists for this icon name
+    const hasPng = AVATAR_PNG_MAP[`${icon}.png`] !== undefined;
+    const webFileName = hasPng
+      ? `${icon}.png`
+      : /\.(svg|png|webp|jpg|jpeg|gif)$/i.test(icon)
+      ? icon
+      : `${icon}.svg`;
+    const uri = `/avatars/${webFileName}`;
     const webMaskStyle = {
       WebkitMask: `url(${uri}) center/contain no-repeat`,
       mask: `url(${uri}) center/contain no-repeat`,
