@@ -209,14 +209,14 @@ export const PUZZLES: Puzzle[] = [
       { id: "s3", name: "Zeynep Hanım", description: "Genç ve hırslı bir davetli. Atik yapısıyla dikkat çekiyor, stres altında çok hızlı ve fevri hareket edebiliyor.", icon: "noun-zeynep-hanim-avatar.png" },
     ],
     weapons: [
-      { id: "w1", name: "Makas", description: "Et ve kemik parçalamak için tasarlanmış, tek hamlede derin yara açabilen ağır ve keskin mutfak aleti.", icon: "content_cut" },
+      { id: "w1", name: "Makas", description: "Et ve kemik parçalamak için tasarlanmış, tek hamlede derin yara açabilen ağır ve keskin mutfak aleti.", icon: "content-cut" },
       { id: "w2", name: "Kimyasal", description: "Renksiz ve kokusuz bir endüstriyel çözücü. Yiyecek veya içeceklere karıştırıldığında kurban tarafından fark edilmesi imkansız.", icon: "science" },
       { id: "w3", name: "İp", description: "Ağır perdeleri ve dekorasyonları asmak için kullanılan kalın kenevir halat. Birini boğmak için ciddi bir kol gücü gerektirir.", icon: "gesture" },
     ],
     locations: [
-      { id: "l1", name: "Kütüphane", description: "Kalın duvarları ve ağır meşe kapısı sayesinde dışarıya veya içeriye hiçbir sesin sızmadığı izole çalışma alanı.", icon: "menu_book" },
+      { id: "l1", name: "Kütüphane", description: "Kalın duvarları ve ağır meşe kapısı sayesinde dışarıya veya içeriye hiçbir sesin sızmadığı izole çalışma alanı.", icon: "menu-book" },
       { id: "l2", name: "Bahçe", description: "Konağın etrafını saran açık alan. Loş aydınlatması sayesinde kuytu köşelerde rahatça gizlenme imkanı sunuyor.", icon: "yard" },
-      { id: "l3", name: "Mutfak", description: "Yerleri genellikle nemli ve kaygan olan, içinde onlarca tehlikeli aletin bulunduğu arka cephedeki karmaşık hazırlık alanı.", icon: "soup_kitchen" },
+      { id: "l3", name: "Mutfak", description: "Yerleri genellikle nemli ve kaygan olan, içinde onlarca tehlikeli aletin bulunduğu arka cephedeki karmaşık hazırlık alanı.", icon: "soup-kitchen" },
     ],
     clues: [
       {
@@ -272,7 +272,7 @@ export const PUZZLES: Puzzle[] = [
     id: "bogazda-kayip-elmas",
     title: "Boğaz'da Kayıp Elmas",
     difficulty: "dedektif",
-    dayIndex: 1,
+    dayIndex: 2,
     story:
       "İstanbul Boğazı'nın serin sularında süzülen lüks yatta düzenlenen o gösterişli sergi, kanlı bir geceyle son buldu. Paha biçilemez 'Boğaz Elması'nın çalındığı anlaşıldığında, geminin güvenlik şefi Orhan alt katta cansız yatıyordu. Dalgaların sesi yatı döverken, katil ve çaldığı elmas hala bu lüks kafesin içinde, üç şüpheliden birinin ardında saklanıyor.",
     suspects: [
@@ -281,9 +281,9 @@ export const PUZZLES: Puzzle[] = [
       { id: "s3", name: "Organizatör Eda", description: "Serginin sorumlusu. Çevik, esnek ve geminin en dar alanlarında bile rahatça hareket edebilecek yapıda.", icon: "woman" },
     ],
     weapons: [
-      { id: "w1", name: "Gemi Halatı", description: "Kalın sentetik ip. Ciddi bir boğulma izi bırakır ancak doğru düğümü atmak pratiklik gerektirir.", icon: "all_inclusive" },
+      { id: "w1", name: "Gemi Halatı", description: "Kalın sentetik ip. Ciddi bir boğulma izi bırakır ancak doğru düğümü atmak pratiklik gerektirir.", icon: "all-inclusive" },
       { id: "w2", name: "Demir Çekiç", description: "Ağır bakım aleti. Sadece bir kez güçlüce vurularak bile ölümcül künt travma yaratabilir.", icon: "hardware" },
-      { id: "w3", name: "Gaz Tüpü", description: "Basınçlı endüstriyel tüp. Kapalı bir alanda sızıntı yaparsa saniyeler içinde zehirleyip nefessiz bırakabilir.", icon: "propane_tank" },
+      { id: "w3", name: "Gaz Tüpü", description: "Basınçlı endüstriyel tüp. Kapalı bir alanda sızıntı yaparsa saniyeler içinde zehirleyip nefessiz bırakabilir.", icon: "propane-tank" },
     ],
     locations: [
       { id: "l1", name: "Makine Dairesi", description: "Geminin en alt katında yer alan, zemini makine yağıyla kaplı, gürültülü ve gizli alan.", icon: "settings" },
@@ -483,13 +483,13 @@ export const PUZZLES: Puzzle[] = [
     ],
     weapons: [
       { id: "w1", name: "Baklava", description: "Üzeri fıstıklarla süslenmiş, taze görünümüyle iştah açan ancak içine ustaca ölümcül bir toksin zerk edilmiş tatlı.", icon: "cake" },
-      { id: "w2", name: "Şerbet", description: "Büyük bakır güğümde kaynatılmış, dibinde hiçbir zehir tortusu barındırmayan berrak ve tatlı sıvı.", icon: "local_drink" },
+      { id: "w2", name: "Şerbet", description: "Büyük bakır güğümde kaynatılmış, dibinde hiçbir zehir tortusu barındırmayan berrak ve tatlı sıvı.", icon: "local-drink" },
       { id: "w3", name: "Kimyasal Madde", description: "Çarşının temizliğinde kullanılan, keskin kokulu ve yutulduğunda iç organları tahrip eden endüstriyel çözücü.", icon: "science" },
     ],
     locations: [
       { id: "l1", name: "Tezgah", description: "Cinayetin işlendiği; tepsilerin dizildiği, şerbetin damladığı ve kurbanın son nefesini verdiği hareketli ana satış noktası.", icon: "store" },
-      { id: "l2", name: "Ara Sokak", description: "Müşterilerin kestirme olarak kullandığı, dükkanların arka kapılarına açılan loş ve dar yaya geçidi.", icon: "turn_right" },
-      { id: "l3", name: "Park", description: "Sabah erken saatlerde toptancıların mal indirdiği, tezgah bölgesine oldukça uzak olan araç yanaşma alanı.", icon: "local_parking" },
+      { id: "l2", name: "Ara Sokak", description: "Müşterilerin kestirme olarak kullandığı, dükkanların arka kapılarına açılan loş ve dar yaya geçidi.", icon: "turn-right" },
+      { id: "l3", name: "Park", description: "Sabah erken saatlerde toptancıların mal indirdiği, tezgah bölgesine oldukça uzak olan araç yanaşma alanı.", icon: "local-parking" },
     ],
     clues: [
       {
@@ -753,12 +753,12 @@ export const PUZZLES: Puzzle[] = [
     weapons: [
       { id: "w1", name: "Özel Sabun", description: "Alerjenik kimyasallar içeren, yanlış kullanımda solunum yollarını tıkayıp zehirleyebilen ağır kokulu özel yapım sabun.", icon: "wash" },
       { id: "w2", name: "Tansiyon İlacı", description: "Maktulün dolabında bulunan, yüksek dozda alındığında anında kalp krizine yol açan güçlü reçeteli haplar.", icon: "medication" },
-      { id: "w3", name: "Çıplak El", description: "Hiçbir alet kullanmadan, acımasız ve doğrudan uygulanan ölümcül fiziksel boğma ve darp gücü.", icon: "front_hand" },
+      { id: "w3", name: "Çıplak El", description: "Hiçbir alet kullanmadan, acımasız ve doğrudan uygulanan ölümcül fiziksel boğma ve darp gücü.", icon: "front-hand" },
     ],
     locations: [
       { id: "l1", name: "Masaj Odası", description: "Yoğun buharlı, göz gözü görmeyen, nefes almanın zor olduğu ve cinayetin işlendiği mermer kaplı sıcak alan.", icon: "spa" },
-      { id: "l2", name: "Soğukluk", description: "Müşterilerin hamam sonrası peştamallarla uzanıp dinlendiği, çay ve meyve servisinin yapıldığı serin bölüm.", icon: "ac_unit" },
-      { id: "l3", name: "Resepsiyon", description: "Hamamın ana girişi, kasanın, güvenlik kameralarının ve müşteri kayıtlarının tutulduğu aydınlık alan.", icon: "point_of_sale" },
+      { id: "l2", name: "Soğukluk", description: "Müşterilerin hamam sonrası peştamallarla uzanıp dinlendiği, çay ve meyve servisinin yapıldığı serin bölüm.", icon: "ac-unit" },
+      { id: "l3", name: "Resepsiyon", description: "Hamamın ana girişi, kasanın, güvenlik kameralarının ve müşteri kayıtlarının tutulduğu aydınlık alan.", icon: "point-of-sale" },
     ],
     clues: [
       {
@@ -2205,7 +2205,7 @@ export const PUZZLES: Puzzle[] = [
       { id: "w3", name: "Telsiz", description: "Personelin haberleştiği, boyna dolanıp boğmaya müsait kalın kordonlu ağır elektronik cihaz.", icon: "radio" },
     ],
     locations: [
-      { id: "l1", name: "Servis Çıkışı", description: "Kameranın görmediği, personelin molaya çıktığı, çöp konteynerlerinin bulunduğu arka taraftaki loş ve soğuk geçit.", icon: "door_front" },
+      { id: "l1", name: "Servis Çıkışı", description: "Kameranın görmediği, personelin molaya çıktığı, çöp konteynerlerinin bulunduğu arka taraftaki loş ve soğuk geçit.", icon: "door-front" },
       { id: "l2", name: "DJ Kabini", description: "Devasa ses sisteminin merkezi olan, tüm kulübe tepeden bakan ve her an göz önünde olan aydınlık platform.", icon: "speaker" },
       { id: "l3", name: "VIP Loca", description: "Özel misafirlerin ağırlandığı, kadife koltuklu, ana salondan kısmen yalıtılmış lüks eğlence bölümü.", icon: "star" },
     ],
@@ -2236,12 +2236,12 @@ export const PUZZLES: Puzzle[] = [
       { id: "s3", name: "Yüzbaşı Cemil", description: "Sürekli anılarını yazan, disiplinli ve sert mizaçlı emekli subay; geceyi yalnız başına masasında geçirmiş.", icon: "noun-soldier-1574347" },
     ],
     weapons: [
-      { id: "w1", name: "Bahçe Makası", description: "Konağın bahçesinden gizlice içeri alınmış, ağır, paslı ve son derece keskin devasa demir makas.", icon: "content_cut" },
+      { id: "w1", name: "Bahçe Makası", description: "Konağın bahçesinden gizlice içeri alınmış, ağır, paslı ve son derece keskin devasa demir makas.", icon: "content-cut" },
       { id: "w2", name: "İngiliz Anahtarı", description: "Alt kattaki tesisat onarımı için bırakılmış, kafaya vurulduğunda anında ölümcül travma yaratan paslanmaz çelik alet.", icon: "build" },
       { id: "w3", name: "Mektup Açacağı", description: "Yazı masasında duran, ince, sivri ve kalbe tek seferde saplanabilecek keskinlikte gümüş bıçak.", icon: "edit" },
     ],
     locations: [
-      { id: "l1", name: "Kütüphane", description: "Deri kaplı kitapların bulunduğu, kalın perdelerle örtülü, loş, sessiz ve tozlu okuma odası.", icon: "menu_book" },
+      { id: "l1", name: "Kütüphane", description: "Deri kaplı kitapların bulunduğu, kalın perdelerle örtülü, loş, sessiz ve tozlu okuma odası.", icon: "menu-book" },
       { id: "l2", name: "Arşiv Odası", description: "Konağa ait yüz yıllık tapuların ve evrakların saklandığı, sadece özel anahtarla girilebilen kilitli bölüm.", icon: "archive" },
       { id: "l3", name: "Yemek Salonu", description: "Uzun ahşap masaların bulunduğu, davetlilere hizmet veren geniş ve aydınlık ana salon.", icon: "restaurant" },
     ],
@@ -2272,14 +2272,14 @@ export const PUZZLES: Puzzle[] = [
       { id: "s3", name: "Kurye Murat", description: "Ağır yükleri taşımaya alışkın, dükkana sürekli mal getiren nakliyeci; elinden alet çantasını düşürmüyor.", icon: "noun-kurye-murat-pazar-avatar.png" },
     ],
     weapons: [
-      { id: "w1", name: "Cam Kadeh", description: "Çay ocağından alınmış, kırıldığında şah damarını kesebilecek ölümcül ve ince içecek bardağı.", icon: "wine_glass" },
+      { id: "w1", name: "Cam Kadeh", description: "Çay ocağından alınmış, kırıldığında şah damarını kesebilecek ölümcül ve ince içecek bardağı.", icon: "wine-bar" },
       { id: "w2", name: "İngiliz Anahtarı", description: "Nakliye araçlarını tamir etmekte kullanılan, üzeri gres yağı lekeleriyle dolu ağır metal tamir aleti.", icon: "build" },
-      { id: "w3", name: "Bakır Ağırlık", description: "Kuyumcu ve bakırcı terazilerinde kullanılan, avuç içine tam oturan ölümcül kütleli tartı dirhemi.", icon: "radio_button_checked" },
+      { id: "w3", name: "Bakır Ağırlık", description: "Kuyumcu ve bakırcı terazilerinde kullanılan, avuç içine tam oturan ölümcül kütleli tartı dirhemi.", icon: "radio-button-checked" },
     ],
     locations: [
       { id: "l1", name: "Depo", description: "Malların istiflendiği, güneş ışığı almayan, merdivenle inilen loş ve havasız alt kat; cinayetin işlendiği yer.", icon: "warehouse" },
       { id: "l2", name: "Dükkan İçi", description: "Vitrinlerin ve kasanın bulunduğu, sokağı doğrudan gören aydınlık müşteri karşılama alanı.", icon: "storefront" },
-      { id: "l3", name: "Arka Sokak", description: "Sadece nakliye araçlarının yanaştığı, çamurlu ve kimsenin geçmediği dar mal yükleme geçidi.", icon: "directions_walk" },
+      { id: "l3", name: "Arka Sokak", description: "Sadece nakliye araçlarının yanaştığı, çamurlu ve kimsenin geçmediği dar mal yükleme geçidi.", icon: "directions-walk" },
     ],
     clues: [
       { id: "c1", text: "Görgü tanıkları, yaşlı komşu Vahap Amca'nın o sabah elinde sadece ince camdan yapılmış kırılgan bir içecek bardağı taşıdığını doğruladı.", type: "witness", isBonus: false },

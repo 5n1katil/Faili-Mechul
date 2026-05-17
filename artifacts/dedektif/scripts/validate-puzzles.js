@@ -109,7 +109,7 @@ const fail = (msg) => failures.push(msg);
   // per-puzzle for the duplicate check.
   const puzzleAnchorsByLine = [];
   {
-    const PUZZLE_ID_RE_LINE = /^\s{4}id:\s*"(p\d{3})",/gm;
+    const PUZZLE_ID_RE_LINE = /^\s{4}id:\s*"([a-z][a-z0-9-]+)",/gm;
     let pm;
     const lineOf = buildLineIndex(src);
     while ((pm = PUZZLE_ID_RE_LINE.exec(src)) !== null) {
@@ -187,7 +187,7 @@ const fail = (msg) => failures.push(msg);
 {
   const src = readFile("data/puzzles.ts");
   const lineOf = buildLineIndex(src);
-  const idRe = /^\s{4}id:\s*"(p\d{3})",/gm;
+  const idRe = /^\s{4}id:\s*"([a-z][a-z0-9-]+)",/gm;
   const dayRe = /^\s{4}dayIndex:\s*(\d+),/gm;
   const ids = new Map();
   const days = new Map();
