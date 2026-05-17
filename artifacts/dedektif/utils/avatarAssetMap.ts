@@ -37,6 +37,9 @@ import p_noun_woman_58199_png from "../public/avatars/noun-woman-58199.png";
 import p_noun_yolcu_feriha_avatar_png from "../public/avatars/noun-yolcu-feriha-avatar.png";
 import p_noun_yolcu_tarik_avatar_png from "../public/avatars/noun-yolcu-tarik-avatar.png";
 import p_noun_zeynep_hanim_avatar_png from "../public/avatars/noun-zeynep-hanim-avatar.png";
+import p_noun_emekli_albay_avatar_png from "../public/avatars/noun-emekli-albay-avatar.png";
+import p_noun_ressam_leyla_avatar_png from "../public/avatars/noun-ressam-leyla-avatar.png";
+import p_noun_genc_yatci_avatar_png from "../public/avatars/noun-genc-yatci-avatar.png";
 
 import svg_noun_artist_1574348 from "../public/avatars/noun-artist-1574348.svg";
 import svg_noun_artist_1574354 from "../public/avatars/noun-artist-1574354.svg";
@@ -327,6 +330,9 @@ export const AVATAR_PNG_MAP: Record<string, ImageSourcePropType> = {
   "noun-yolcu-feriha-avatar.png": p_noun_yolcu_feriha_avatar_png,
   "noun-yolcu-tarik-avatar.png": p_noun_yolcu_tarik_avatar_png,
   "noun-zeynep-hanim-avatar.png": p_noun_zeynep_hanim_avatar_png,
+  "noun-emekli-albay-avatar.png": p_noun_emekli_albay_avatar_png,
+  "noun-ressam-leyla-avatar.png": p_noun_ressam_leyla_avatar_png,
+  "noun-genc-yatci-avatar.png": p_noun_genc_yatci_avatar_png,
 };
 
 export const AVATAR_SVG_MAP: Record<string, React.ComponentType<{ width?: number; height?: number; fill?: string; color?: string }>> = {

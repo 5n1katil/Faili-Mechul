@@ -413,16 +413,16 @@ export const PUZZLES: Puzzle[] = [
     solution: { suspectId: "s2", weaponId: "w1", locationId: "l2" },
   },
   {
-    id: "adada-haftalik-gizem",
-    title: "Adada Haftalık Gizem",
+    id: "adada-buyuk-gizem",
+    title: "Adada Büyük Gizem",
     difficulty: "caylak",
     dayIndex: 7,
     story:
       "Büyükada'da yaz tatilinin huzuru, lüks bir villada işlenen cinayetle paramparça oldu. Adayı anakaraya bağlayan feribot seferleri iptal edilince, katil kurbanıyla aynı adada mahsur kaldı.",
     suspects: [
-      { id: "s1", name: "Emekli Albay", description: "Sabahları erken uyanıp yürüyüş yapan, disiplinli ve sert mizaçlı villa komşusu.", icon: "solid-man-military" },
-      { id: "s2", name: "Ressam Leyla", description: "Bütün yazını adada manzara resimleri çizerek geçiren, sessiz ve içine kapanık sanatçı.", icon: "solid-woman-elegant" },
-      { id: "s3", name: "Genç Yatçı", description: "Özel sürat teknesiyle adaya yeni gelen, fevri hareketleri olan gizemli misafir.", icon: "solid-man-suit" },
+      { id: "s1", name: "Emekli Albay", description: "Sabahları erken uyanıp yürüyüş yapan, disiplinli ve sert mizaçlı villa komşusu.", icon: "noun-emekli-albay-avatar" },
+      { id: "s2", name: "Ressam Leyla", description: "Bütün yazını adada manzara resimleri çizerek geçiren, sessiz ve içine kapanık sanatçı.", icon: "noun-ressam-leyla-avatar" },
+      { id: "s3", name: "Genç Yatçı", description: "Özel sürat teknesiyle adaya yeni gelen, fevri hareketleri olan gizemli misafir.", icon: "noun-genc-yatci-avatar" },
     ],
     weapons: [
       { id: "w1", name: "Av Tüfeği", description: "Dolapta saklanan, yakından ateşlendiğinde korkunç ses çıkaran çift namlulu ateşli silah.", icon: "sports" },
