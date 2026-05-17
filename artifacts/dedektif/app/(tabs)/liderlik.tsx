@@ -361,6 +361,7 @@ export default function LiderlikScreen() {
           ref={flatListRef}
           data={sorted}
           keyExtractor={(item, i) => `${item.profileId}-${i}`}
+          showsVerticalScrollIndicator={false}
           contentContainerStyle={[
             styles.list,
             {
