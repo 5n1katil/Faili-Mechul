@@ -26,28 +26,28 @@
           "stars": "★☆☆☆☆",
           "gridSize": "3x3",
           "timeLimit": 600,
-          "story": "Topkapı Sarayı'nın harem dairesinde, Padişah'ın en gözde cariyesi ölü bulundu. Saray tabibi zehirlenme şüphesiyle vakayı bildirdi. Üç kişi haremin o bölümüne girebilirdi.",
+          "story": "Topkapı Sarayı'nın yüzlerce yıllık sırları barındıran harem dairesinde, Cihan Padişahı'nın en gözde cariyesi yatağında cansız bulundu. Saray tabibinin şüpheleri üzerine harem karantinaya alındı. Duvarlardaki çini işlemeler dilsiz birer şahit gibi dikilirken, celladın nefesi hala bu altın kafesin loş koridorlarında geziniyor.",
           "atmosphere": "Gece yarısı. Kandil ışığı. Buhur kokusu. Dışarıdan yeniçeri nöbet sesi.",
           "suspects": [
             {
               "id": "s1",
               "name": "Baş Kalfa Hatice",
               "icon": "🗝️",
-              "description": "30 yıllık saray hizmetine karşın son aylarda kariyer kaybetmişti.",
+              "description": "Otuz yıllık saray hizmetine karşın son aylarda nüfuzunu ve kariyerini genç cariyeye kaybetmiş, harem hiyerarşisini avucunun içi gibi bilen hırslı kadın.",
               "detail": "Orta yaşlı, otoriter, tüm harem protokolünü ezbere bilir."
             },
             {
               "id": "s2",
               "name": "Genç Hekim Selim",
               "icon": "🩺",
-              "description": "Sarayın yeni gözde hekimi. Avrupalı tıp anlayışını benimsemiş.",
+              "description": "Sarayın Avrupalı tıp anlayışını ve modern kimya formüllerini benimsemiş, padişahın güvenini yeni kazanmaya başlayan hırslı tıp uzmanı.",
               "detail": "26 yaşında, Viyana'da eğitim görmüş, çekingen ama zeki."
             },
             {
               "id": "s3",
               "name": "Hazinedar Hüseyin",
               "icon": "💰",
-              "description": "Saray masraflarından sorumlu. Son ay kayıp altın meselesinde adı geçti.",
+              "description": "Saray masraflarından ve harem bütçesinden sorumlu olan, son ay patlak veren kayıp altın meselesinde adı şüpheli sıfatıyla geçen bürokrat.",
               "detail": "50'li yaşlarda, şişman, her zaman terli."
             }
           ],
@@ -56,19 +56,19 @@
               "id": "w1",
               "name": "Afyon Terkibi",
               "icon": "🌺",
-              "description": "Şerbetin içine karıştırılmış doğal uyuşturucu."
+              "description": "Şerbetin veya sıvıların içine karıştırıldığında saniyeler içinde kalbi durduran, fark edilmesi imkansız, renksiz doğal uyuşturucu çözelti."
             },
             {
               "id": "w2",
               "name": "Zehirli Buhurdanlık",
               "icon": "🫧",
-              "description": "Buhur karışımına katılan arsenik tozu."
+              "description": "Buhur karışımına katılarak yakılan, kapalı odada havaya karıştığında solunum yoluyla kana karışıp iç organları eriten arsenik tozu."
             },
             {
               "id": "w3",
               "name": "Boğazlama",
               "icon": "🪢",
-              "description": "İnce ipek kordon."
+              "description": "Haremdeki ağır kadife perdeleri tutmakta kullanılan, boyna dolandığında mekanik baskıyla nefesi anında kesen ince ipek kordon."
             }
           ],
           "locations": [
@@ -76,88 +76,88 @@
               "id": "l1",
               "name": "Yatak Odası",
               "icon": "🛏️",
-              "description": "Cariyenin özel odası, kilitli kapısıyla bilinir."
+              "description": "Cariyenin şahsi dairesi; sedirleri ve kilitli ağır ahşap kapısıyla bilinen tamamen izole edilmiş uyku alanı."
             },
             {
               "id": "l2",
               "name": "Hamam Koridoru",
               "icon": "🚿",
-              "description": "Hamamdan odaya uzanan dar, loş koridor."
+              "description": "Mermer hamamdan odalara uzanan, zemini her daim nemli, loş ve muhafızların devriye saatleri arasında boş kalan dar geçit."
             },
             {
               "id": "l3",
               "name": "Müzik Salonu",
               "icon": "🎵",
-              "description": "Ud ve kanun sesleriyle dolan toplantı odası."
+              "description": "Ud ve kanun seslerinin duvarlarında yankılandığı, cariyelerin gün içinde toplandığı geniş ve havalandırması yüksek sosyal alan."
             }
           ],
           "clues": [
             {
               "id": "c1",
-              "type": "kanit",
+              "text": "Saray tabibinin adli tıp muayenesinde kurbanın boynunda herhangi bir ipek kordon eziğine rastlanmadı; dudaklardaki morarma ve ciğerlerdeki ani şişme, sinsi bir sıvının yutulduğunu kesinleştirdi.",
+              "type": "adli",
+              "mechanicType": "text",
               "revealOrder": 1,
               "isRevealed": true,
               "pointCost": 0,
               "title": "Saray Tabibi Raporu",
-              "text": "Cariyenin vücudunda darp izi ya da boğulma belirtisi yoktu. Dudakları morarmış, ciğerlerinde şişme var. Tabip 'dahili zehirlenme' kararı verdi.",
-              "mechanicType": "text",
               "deductionHint": "Boğazlama silahını eliyebilirsiniz."
             },
             {
               "id": "c2",
-              "type": "tanik",
+              "text": "Harem ağalarının devriye logları, cinayetin ud seslerinin yankılandığı geniş ve havalandırması yüksek sosyal odada işlenmediğini, kurbanın tamamen izole olduğu şahsi odasında son nefesini verdiğini kanıtladı.",
+              "type": "kanit",
+              "mechanicType": "text",
               "revealOrder": 2,
               "isRevealed": false,
               "pointCost": 50,
               "title": "Nöbetçi Yeniçeri İfadesi",
-              "text": "\"Gece ikinci nöbet değişiminde Hekim Selim'i harem koridorunda gördüm. Elinde küçük bir sandık vardı. Aceleyle odaya girdi, beş dakika sonra çıktı.\"",
-              "mechanicType": "text",
               "deductionHint": "Hekim hangi odaya girdi?"
             },
             {
               "id": "c3",
-              "type": "adli",
+              "text": "Giriş-çıkış mühürleri incelendiğinde, bütçeden sorumlu bürokratın olay gecesi padişah fermanıyla saray dışında, çarşı pazar denetiminde olduğu ve kapılardan asla geçmediği resmi kayıtlarla doğrulandı.",
+              "type": "eleme",
+              "mechanicType": "text",
               "revealOrder": 3,
               "isRevealed": false,
               "pointCost": 50,
               "title": "Buhurdanlık Analizi",
-              "text": "Müzik salonundaki buhurdanlıkta kalan külde arsenik bileşiği tespit edildi. Ancak cariye o gece müzik salonuna gitmediyse bu anlamsız olurdu.",
-              "mechanicType": "text",
               "deductionHint": "Cariye o gece neredeydi?"
             },
             {
               "id": "c4",
-              "type": "eleme",
+              "text": "Sarayın geniş sosyal salonundaki buhurdanlık küllerinde yoğun arsenik dumanı izleri bulundu; ancak kurbanın o gece kendi dairesinden dışarı hiç çıkmadığı anlaşıldığından bu bulgu elendi.",
+              "type": "kanit",
+              "mechanicType": "text",
               "revealOrder": 4,
               "isRevealed": false,
               "pointCost": 50,
               "title": "Hazinedar Defteri",
-              "text": "O gece hazinedar Hüseyin saray dışındaydı; padişah fermanıyla çarşıya gönderilmişti. Kapı kayıtları bunu doğruluyor.",
-              "mechanicType": "text",
               "deductionHint": "Bir şüpheliyi tamamen eleyin."
             },
             {
               "id": "c5",
+              "text": "Harem koridorunda yankılanan fısıltılar ve titreyen bir ses simülasyonu: 'O gece hekim efendinin elinde küçük bir ecza sandığıyla aceleyle dar geçitten geçip odaya yöneldiğini gördüm... Ancak o çıktığında şerbet kasesi hala kapının önündeki sehpanın üzerinde duruyordu...'",
               "type": "tanik",
+              "mechanicType": "ses_kaydi",
+              "sesMetni": "O gece hekim efendinin elinde küçük bir ecza sandığıyla aceleyle dar geçitten geçip odaya yöneldiğini gördüm... Ancak o çıktığında şerbet kasesi hala kapının önündeki sehpanın üzerinde duruyordu...",
               "revealOrder": 5,
               "isRevealed": false,
               "pointCost": 50,
               "title": "Baş Kalfa İfadesi",
-              "text": "\"Cariye o gece müzik salonuna gitmedi, doğrudan yatak odasına çekildi. Ben kendisi için şerbet hazırladım ve kapıya bıraktım.\"",
-              "mechanicType": "ses_kaydi",
-              "sesMetni": "[Ses kaydı simülasyonu] Hatice'nin sesi titriyor. 'Şerbeti... ben hazırladım ama içine bir şey koymadım vallahi.'",
               "deductionHint": "Şerbet önemli bir ipucu."
             },
             {
               "id": "c6",
+              "text": "Cariyenin ipek yastığının altına gizlenmiş, haremin tüm hiyerarşisini ve şerbet ikram düzenini elinde tutan kıdemli kadının kariyer öfkesini ve kurbanın parayla ilgili şüphelerini içeren imzasız saray mektubu bulundu.",
               "type": "dogrudan",
+              "mechanicType": "gorsel_ipucu",
+              "gorselAciklama": "Yastık altından çıkan eski parşömen kağıdı. Üzerinde divan hattıyla yazılmış ve Hekim Selim ile Hatice Kalfa'nın adının geçtiği, haremin şerbet ikram düzenini ile kariyer hesaplaşmalarını belgeleyen imzasız mektup. Mürekkep çatlak yerlerde taze, soluk sarı parşömen üzerinde güçlü bir öfkenin izleri görünüyor.",
               "revealOrder": 6,
               "isRevealed": false,
               "pointCost": 50,
               "title": "Gizli Mektup",
-              "text": "Cariyenin yastık altında bir mektup: 'Selim Bey, yarın padişaha söyleyeceğim. Harem parasını sen mi alıyorsun yoksa Hatice mi?' — İmzasız.",
-              "mechanicType": "gorsel_ipucu",
-              "gorselAciklama": "Yırtık kenar, aceleyle yazılmış, mürekkep lekesi sol köşede. Yazı tarzı kadına ait.",
               "deductionHint": "Bu mektup katil için tehdit oluşturuyordu."
             }
           ],
@@ -178,28 +178,28 @@
           "stars": "★★☆☆☆",
           "gridSize": "3x3",
           "timeLimit": 540,
-          "story": "Cumhuriyetin ilk yıllarında Kapalıçarşı'nın en köklü antikacısı dükkânında ölü bulundu. Yanında taşıdığı, Kanuni Sultan Süleyman dönemine ait altın mühür kaybolmuştu.",
+          "story": "Kapalıçarşı'nın labirent koridorlarına çöken sisli bir İstanbul sabahında, çarşının en eski antikacısı dükkanında ölü bulundu. Kasada duran paha biçilemez altın mühür kayıptı. Çarşının kepenkleri inmeden katili bulmalısın.",
           "atmosphere": "Sabah erken. Çarşı henüz açılmış. Esnafın korkuyla fısıldaştığı dar pasaj.",
           "suspects": [
             {
               "id": "s1",
               "name": "Rakip Antikacı Vasil",
               "icon": "🏺",
-              "description": "Rum asıllı antikacı. Mührü yıllardır almak istiyordu.",
+              "description": "Komşu dükkanın sahibi. Tarihi mühre yıllardır takıntılı olan ancak dükkanın şifreli ve gizli iç odalarına giriş yetkisi bulunmayan esnaf.",
               "detail": "60'lı yaşlarda, kısık gözlü, piyasada 'sert müzakereci' olarak bilinir."
             },
             {
               "id": "s2",
               "name": "Genç Çırak Mehmet",
               "icon": "🔧",
-              "description": "Maktulün 3 yıllık çırağı. Dükkan anahtarına sahip.",
+              "description": "Maktulün kumar borçları yüzünden sıkışmış, dükkanın her kuytusunu bilen ve gizli değerleme odasının anahtarına sahip 3 yıllık çalışanı.",
               "detail": "19 yaşında, zeki, ama son ay borçlandığı söyleniyor."
             },
             {
               "id": "s3",
               "name": "Koleksiyoncu Hanım Eleni",
               "icon": "💍",
-              "description": "Atina'dan gelmiş varlıklı bir Rum koleksiyoncu.",
+              "description": "Atina'dan mühür için gelmiş varlıklı bir elit. Antika fularlara meraklı ancak çarşının izole teknik odalarından tamamen habersiz bir yabancı.",
               "detail": "45 yaşında, şapkası ve eldiveniyle dikkat çekici."
             }
           ],
@@ -208,19 +208,19 @@
               "id": "w1",
               "name": "Ağır Tunç Vazo",
               "icon": "🏺",
-              "description": "Dükkânda sergilenen Osmanlı dönemi tunç vazo."
+              "description": "Dükkanda sergilenen, tek vuruşta kemik kırabilecek kütleye sahip, kaidesi geniş ağır Osmanlı tunç vazo."
             },
             {
               "id": "w2",
               "name": "Zehirli Kahve",
               "icon": "🧪",
-              "description": "Çarşı kahvaltısında içilen kahveye katılan madde."
+              "description": "Fark edilmeden içeceklere karıştırılan, iç organlarda ağır tahribat yaratan sinsi kimyasal çözelti."
             },
             {
               "id": "w3",
               "name": "İpek Fular",
               "icon": "🧣",
-              "description": "Mağazada satışta olan antika ipek fular."
+              "description": "Vitrinlerde satışta olan, arkadan yaklaşıldığında boğma amacıyla kullanılabilecek antika esnek kumaş."
             }
           ],
           "locations": [
@@ -228,122 +228,98 @@
               "id": "l1",
               "name": "Arka Oda",
               "icon": "🚪",
-              "description": "Sadece maktul ve çırağın bildiği gizli değerleme odası."
+              "description": "Sadece dükkan sahibi ve en yakınının bildiği, antika mühürlerin incelendiği kilitli değerleme odası."
             },
             {
               "id": "l2",
               "name": "Ana Koridor",
               "icon": "🛣️",
-              "description": "Dükkânların önündeki kapalı çarşı koridoru."
+              "description": "Dükkanların vitrinlerinin açıldığı, çarşı bekçilerinin sürekli devriye gezdiği kalabalık kapalı taş yürüyüş yolu."
             },
             {
               "id": "l3",
               "name": "Kahvehane Köşesi",
               "icon": "☕",
-              "description": "Çarşı içindeki küçük kahvehane."
+              "description": "Esnafın sabahları toplandığı, herkesin gözü önünde olan aydınlık ve açık servis alanı."
             }
           ],
           "clues": [
             {
               "id": "c1",
+              "text": "Olay yeri inceleme raporu: Kurbanın vücudunda hiçbir boğulma veya kimyasal zehirlenme izi yoktu; baş bölgesine ağır, geniş ve yuvarlak kütleli metal bir cisimle darbe indirilmişti.",
               "type": "kanit",
+              "mechanicType": "text",
               "revealOrder": 1,
               "isRevealed": true,
               "pointCost": 0,
               "title": "Ölüm Yeri Tespiti",
-              "text": "Cesedi arka odada buldular. Kapı kilitsizdi. Baş bölgesinde künt darbe izi — sert ve yuvarlak bir nesne. Mühür, kasadan alınmış.",
-              "mechanicType": "text",
               "deductionHint": "Arka oda ve künt darbe — silah ve mekan açık."
             },
             {
               "id": "c2",
-              "type": "parmak_izi",
+              "text": "Bekçi tutanakları, cinayetin herkesin gözü önünde olan kahvehanede veya bekçilerin gezdiği taş koridorlarda değil; dükkanın arkasındaki gizli odada işlendiğini kesinleştirdi.",
+              "type": "tanik",
+              "mechanicType": "text",
               "revealOrder": 2,
               "isRevealed": false,
               "pointCost": 60,
               "title": "Parmak İzi Raporu",
-              "text": "Tunç vazoda iki farklı parmak izi bulundu.",
-              "mechanicType": "parmak_izi",
-              "parmakIziVerisi": {
-                "aciklama": "Mini oyun: Üç şüphelinin parmak izi kartlarını vazo izleriyle eşleştir.",
-                "izler": [
-                  {
-                    "izId": "iz1",
-                    "konum": "Vazo üst kısım",
-                    "eslesme": "s2",
-                    "ipucu": "Küçük, ince parmak izi — genç bir ele ait."
-                  },
-                  {
-                    "izId": "iz2",
-                    "konum": "Vazo alt kısım",
-                    "eslesme": "s2",
-                    "ipucu": "Aynı kişiye ait — iki eliyle kavramış."
-                  }
-                ],
-                "sonuc": "Vazo yalnızca çırağın parmak izlerini taşıyor."
-              },
               "deductionHint": "Vazoyu kim tuttu?"
             },
             {
               "id": "c3",
-              "type": "tanik",
+              "text": "Pera Palas Oteli'nin sabah logları ve garson ifadeleri, Atinalı koleksiyonerin olay saatinde otelde kahvaltıda olduğunu ve çarşıya vaktinden önce giriş yapmadığını doğrulayarak onu temize çıkardı.",
+              "type": "eleme",
+              "mechanicType": "text",
               "revealOrder": 3,
               "isRevealed": false,
               "pointCost": 60,
               "title": "Komşu Esnaf İfadesi",
-              "text": "\"Vasil sabah açılışta benim önümden geçti, dükkânına gitti, 10 dakika sonra geri çıktı. O saatte maktulün dükkânı hâlâ kapalıydı.\"",
-              "mechanicType": "text",
               "deductionHint": "Vasil'in zamanlaması..."
             },
             {
               "id": "c4",
-              "type": "eleme",
+              "text": "Komşu esnaf Vasil'in sabah dükkanı açar açmaz kendi tezgahına geçtiği ve dükkanın kilitli iç odalarının yerini dahi bilmediği şahitlerce doğrulandı.",
+              "type": "tanik",
+              "mechanicType": "text",
               "revealOrder": 4,
               "isRevealed": false,
               "pointCost": 60,
               "title": "Eleni'nin Otel Kaydı",
-              "text": "Eleni o sabah saat 09.30'a kadar Pera Palas'ta kahvaltı yaptı. Otel müdürü ve üç garson onaylıyor. Çarşıya 10.00'den önce gelemezdi.",
-              "mechanicType": "text",
               "deductionHint": "Bir şüpheliyi tamamen eleyin."
             },
             {
               "id": "c5",
-              "type": "dogrudan",
+              "text": "Olay yerindeki ağır metal objenin üzerindeki toz katmanı ve parmak izi ızgarası analiz edildiğinde, dükkanın iç işleyişine hakim genç çalışanın parmak izi profiliyle tam eşleşme sağlandı.",
+              "type": "parmak_izi",
+              "mechanicType": "parmak_izi",
+              "parmakIziVerisi": {
+                "aciklama": "Tunç vazo üzerindeki gizli parmak izlerini eşleştir.",
+                "izler": [
+                  {
+                    "izId": "iz_01",
+                    "konum": "Vazo Sapı",
+                    "eslesme": "s2",
+                    "ipucu": "Mehmet'in dükkan temizliğinde kullandığı gres yağından kaynaklanan karakteristik doku izi; genç ve küçük parmakların dar kavrama biçimine uyuyor."
+                  }
+                ],
+                "sonuc": "Vazo yalnızca çırağın parmak izlerini taşıyor."
+              },
               "revealOrder": 5,
               "isRevealed": false,
               "pointCost": 60,
               "title": "Çırağın Borç Defteri",
-              "text": "Mehmet'in cebinde bulunan küçük defterde: '150 lira — Pazara kadar ödemek zorundayım yoksa...' Ve mühürün tahmini piyasa değeri: 200 lira.",
-              "mechanicType": "gorsel_ipucu",
-              "gorselAciklama": "Defter sayfası yırtık, aceleyle yazılmış rakamlar. Bazı kelimeler silinmeye çalışılmış.",
               "deductionHint": "Mühür çırağın borcunu kapatır mıydı?"
             },
             {
               "id": "c6",
-              "type": "tanik",
+              "text": "Çırağın tezgâh altındaki şahsi defterinde mühürün değerini ve ödemek zorunda olduğu borç miktarını gösteren gizli notlar ile komşu esnafın sabahın köründe arka odadan duyduğu boğuşma sesleri gerçeği ortaya çıkardı.",
+              "type": "dogrudan",
+              "mechanicType": "text",
               "revealOrder": 6,
               "isRevealed": false,
               "pointCost": 60,
               "title": "Çırağın Kendi İfadesi",
-              "text": "\"O sabah dükkânı ben açtım. Usta henüz gelmemişti. Arka odaya gittiğimde onu yerde buldum.\" — Ama komşu esnaf sabah 7.00'de arka odada ses duyduğunu söyledi.",
-              "mechanicType": "tanik_yuzlesme",
-              "yuzlesmeDialogu": [
-                {
-                  "soru": "Arka odaya ilk ne zaman girdiniz?",
-                  "cevap": "Usta geldikten sonra, saat sekiz buçukta.",
-                  "yalan": true
-                },
-                {
-                  "soru": "Tunç vazoyu elinize aldınız mı?",
-                  "cevap": "Hayır, hiç dokunmadım.",
-                  "yalan": true
-                },
-                {
-                  "soru": "Borçlarınız var mıydı?",
-                  "cevap": "Küçük bir borç vardı ama hallettim.",
-                  "yalan": false
-                }
-              ],
               "deductionHint": "İki farklı ifade çelişiyor."
             }
           ],
@@ -364,28 +340,28 @@
           "stars": "★★★☆☆",
           "gridSize": "3x3",
           "timeLimit": 480,
-          "story": "II. Abdülhamid'in paranoyasıyla örülü sarayında bir hafiye ölü bulundu. Padişahın güvendiği üç isimden biri gizli belgelerle birlikte hain olabilir.",
+          "story": "II. Abdülhamid'in her köşesinde hafiye ağlarının örülü olduğu Yıldız Sarayı'nda, padişaha sunulacak gizli raporları taşıyan bir jurnalci ölü bulundu. Belgeler kayıp; sarayın kalın duvarları ardındaki üç dâhiden biri imparatorluğa ihanet etti.",
           "atmosphere": "Fırtınalı bir gece. Yıldız Sarayı'nın loş koridorları. Her köşede gölge.",
           "suspects": [
             {
               "id": "s1",
               "name": "Baş Hafiye Zeki Paşa",
               "icon": "🕵️",
-              "description": "Padişahın 20 yıllık sadık hafiyesi. Son ay garip davranışlar.",
+              "description": "Padişahın 20 yıllık eski dostu. Tüm istihbarat ağını yöneten ancak Avrupa kimya formüllerine ve laboratuvar sistemlerine tamamen uzak olan asker kökenli hafiye.",
               "detail": "Ağır bıyıklı, 55 yaşında, saklanmış geçmişi olan biri."
             },
             {
               "id": "s2",
               "name": "Yaver Fehmi Bey",
               "icon": "🎖️",
-              "description": "Padişahın genç yaveri. Maktulla gizli yazışmaları vardı.",
+              "description": "Sarayın genç ve dinamik askeri yaveri. Fiziksel kaba kuvvet ve kement kullanma konusunda eğitimli, tüm gecesini padişahın divanında geçiren subay.",
               "detail": "32 yaşında, yakışıklı, İttihat ve Terakki sempatizanı söylentisi."
             },
             {
               "id": "s3",
               "name": "Saray Kütüphanecisi Nermin Hanım",
               "icon": "📚",
-              "description": "Tek kadın saray görevlisi. Tüm gizli arşive erişimi var.",
+              "description": "Tarih ve kimya eğitimi almış, tüm gizli arşive ve yabancı yazışmalara sınırsız erişimi olan, titizliğiyle tanınan kütüphane sorumlusu.",
               "detail": "40'lı yaşlarda, sessiz ve gözlemci, Fransızca biliyor."
             }
           ],
@@ -394,19 +370,19 @@
               "id": "w1",
               "name": "Revolver",
               "icon": "🔫",
-              "description": "Avrupalı yapımı küçük tabanca."
+              "description": "Avrupa yapımı, ateşlendiğinde yüksek ses çıkaran ve arkasında barut izi bırakan küçük suikast tabancası."
             },
             {
               "id": "w2",
               "name": "Zehirli Mürekkep",
               "icon": "✒️",
-              "description": "Mektup zarfının kenarına sürülen zehir."
+              "description": "Mektup zarflarına ve parşömen kenarlarına sürülen, deriyle temas ettiğinde parmak uçlarında taze asit yanığı bırakan sinsi kimyasal ajan."
             },
             {
               "id": "w3",
               "name": "Tel Kement",
               "icon": "🪢",
-              "description": "İnce çelik tel."
+              "description": "Boyna arkadan dolanarak sessizce boğma işlemi gerçekleştiren, çelikten imal edilmiş keskin kordon."
             }
           ],
           "locations": [
@@ -414,93 +390,91 @@
               "id": "l1",
               "name": "Arşiv Odası",
               "icon": "📁",
-              "description": "Kütüphanenin altındaki gizli arşiv."
+              "description": "Kütüphanenin en alt katında bulunan, yüzlerce yıllık gizli harita ve jurnallerin saklandığı loş, kilitli ve havasız bölüm."
             },
             {
               "id": "l2",
               "name": "Çamlık Köşkü",
               "icon": "🌲",
-              "description": "Saray bahçesindeki küçük köşk."
+              "description": "Saray bahçesinin ucunda yer alan, pencereleri geniş, dışarıdan geçen nöbetçilerin sürekli gözetlediği aydınlık dinlenme köşkü."
             },
             {
               "id": "l3",
               "name": "Yaver Dairesi",
               "icon": "🪟",
-              "description": "Yaverlerin kaldığı daire."
+              "description": "Nöbetçi subayların kaldığı, silahların ve askeri mühimmatların depolandığı, sürekli hareketli olan askeri alan."
             }
           ],
           "clues": [
             {
               "id": "c1",
+              "text": "Adli tabibin ilk incelemesinde kurbanın üzerinde hiçbir kurşun yarası veya çelik tel izi bulunmadı; parmak uçlarındaki asit yanığı ve sistemik felç bulgusu sinsi bir temas zehirlenmesini kanıtladı.",
               "type": "kanit",
+              "mechanicType": "text",
               "revealOrder": 1,
               "isRevealed": true,
               "pointCost": 0,
               "title": "Otopsi Notu",
-              "text": "Maktulün sağ elinde mürekkep lekesi, parmak uçlarında yanık — zehirli temas. Ölüm nedeni: sistemik zehirlenme. Kurban son bir saat içinde bir mektup açmıştı.",
-              "mechanicType": "text",
               "deductionHint": "Silah zehirli mürekkep."
             },
             {
               "id": "c2",
-              "type": "sifreli",
+              "text": "Saray nöbetçi defteri, Yaver Fehmi Bey'in olay gecesi gece yarısına kadar padişahın özel kabulünde ve delege heyetinin gözü önünde olduğunu kesinleştirdi.",
+              "type": "eleme",
+              "mechanicType": "text",
               "revealOrder": 2,
               "isRevealed": false,
               "pointCost": 70,
               "title": "Şifreli Mesaj",
-              "text": "Maktulün cebinde kırık bir şifreli mesaj bulundu.",
-              "mechanicType": "sifreli_mesaj",
-              "sifre": {
-                "sifrelenmis": "ZEKİ ARŞIVE GİTTİ — NERMİN GÖRMEDİ",
-                "sifreleTuru": "harf_yer_degistirme",
-                "cozumIpucu": "Her harf bir ileri kaydırılmış (A→B, B→C...)",
-                "cozulmus": "YDJİ ZQŞHUD HİSSİ — MDQLİM HÖQLDDİ",
-                "aciklama": "Şifreyi çözdüğünüzde: Zeki Paşa'nın arşive gittiğini, Nermin Hanım'ın bunu görmediğini söylüyor."
-              },
               "deductionHint": "Arşiv odası ipucu içeriyor."
             },
             {
               "id": "c3",
-              "type": "tanik",
+              "text": "Mücadele izlerinin ve kayıp jurnallerin izlerinin sadece kütüphanenin altındaki kilitli bölmede toplanması, cinayetin bahçe köşklerinde veya askeri dairelerde işlenmediğini ortaya koydu.",
+              "type": "kanit",
+              "mechanicType": "text",
               "revealOrder": 3,
               "isRevealed": false,
               "pointCost": 70,
-              "title": "Bahçıvan Tanıklığı",
-              "text": "\"Fırtınanın en şiddetli anında çamlık köşkünde ışık yandı. Pencereden iki gölge gördüm — biri uzun boylu, diğeri daha kısa. Sonra ışık söndü.\"",
-              "mechanicType": "text"
+              "title": "Bahçıvan Tanıklığı"
             },
             {
               "id": "c4",
-              "type": "eleme",
+              "text": "Zarfa zerk edilen 'aconitine' maddesinin sadece Avrupa'da yüksek kimya ve arşivcilik eğitimi almış kişilerce temin edilebileceği raporlandı; askeri kökenli hafiye paşası bu bilgiye sahip değildi.",
+              "type": "adli",
+              "mechanicType": "text",
               "revealOrder": 4,
               "isRevealed": false,
               "pointCost": 70,
               "title": "Yaver Odası Kaydı",
-              "text": "Yaver Fehmi Bey o gece padişahın özel davetindeydi, geceyarısına kadar. Saray defteri ve 4 kişinin tanıklığı var.",
-              "mechanicType": "text",
               "deductionHint": "Fehmi Bey elimine giriyor."
             },
             {
               "id": "c5",
-              "type": "adli",
+              "text": "Maktulün masasındaki kırık parşömen parçasında, harf yer değiştirme yöntemiyle gizlenmiş ve kütüphane sorumlusunun yabancı elçiliklerle yaptığı gizli yazışmaları deşifre eden bir kripto bulmaca çözüldü.",
+              "type": "sifreli",
+              "mechanicType": "sifreli_mesaj",
+              "sifre": {
+                "sifrelenmis": "NREMNI HNMA FRNSZ ELCISILE GRSTU",
+                "sifreleTuru": "harf_yer_degistirme",
+                "cozumIpucu": "Harflerin yerini orijinal kütüphaneci ismiyle blokla.",
+                "aciklama": "Nermin Hanım Fransız elçisiyle görüştü."
+              },
               "revealOrder": 5,
               "isRevealed": false,
               "pointCost": 70,
               "title": "Fransız Kimyager Raporu",
-              "text": "Zarfta kullanılan zehir 'aconitine' — Avrupa'da bilinçli kimya eğitimi gerektirir. İstanbul'da bu maddeye resmi kanaldan erişebilecek kişi sayısı oldukça az.",
-              "mechanicType": "text",
               "deductionHint": "Kim Fransızca ve kimya biliyor?"
             },
             {
               "id": "c6",
+              "text": "Gizli arşiv odasındaki rafların arasında, kütüphanecinin şahsi el yazısıyla tutulmuş Fransız büyükelçiliğine ait gizli teslimat notları ve maktulün bu dosyayı yakaladığı taze belgeler ele geçirildi.",
               "type": "dogrudan",
+              "mechanicType": "text",
               "revealOrder": 6,
               "isRevealed": false,
               "pointCost": 70,
               "title": "Gizli Yazışma Arşivi",
-              "text": "Arşiv odasında Nermin Hanım'ın el yazısıyla gizli notlar: Fransız büyükelçilikle yazışma tarihleri. Maktul bu arşive ulaşmıştı.",
-              "mechanicType": "gorsel_ipucu",
-              "gorselAciklama": "Düzgün, eğitimli el yazısı. Fransızca kelimeler araya serpiştirilmiş. Tarihler 6 ay öncesine gidiyor.",
               "deductionHint": "Kütüphaneci ve arşiv bağlantısı."
             }
           ],
@@ -521,35 +495,35 @@
           "stars": "★★★★☆",
           "gridSize": "4x4",
           "timeLimit": 420,
-          "story": "Haliç Tersanesi'nde inşaat halindeki savaş gemisi nedeniyle milyonluk bir sözleşme imzalanacaktı. Tersane Komutanı, imzadan bir gece önce ölü bulundu. Dört kişi tersaneye girebilirdi.",
+          "story": "Haliç Tersanesi'nin devasa iskelelerinde, Osmanlı donanmasının kaderini belirleyecek milyonluk zırhlı sözleşmesinden bir gece önce Tersane Komutanı ortadan kaldırıldı. Katran ve deniz kokan bu loş tersanede, katil hala işçilerin ve subayların arasında gizleniyor.",
           "atmosphere": "Denizden gelen rüzgar. Demir kokusu. Gemilerin gıcırtısı.",
           "suspects": [
             {
               "id": "s1",
               "name": "İngiliz Mühendis Bradford",
               "icon": "🎩",
-              "description": "Sözleşmeyi almak için aylardır uğraşan İngiliz şirketi temsilcisi.",
+              "description": "Sözleşmeyi kapmak için aylardır uğraşan yabancı şirketin kibar temsilcisi. Kaba kuvvete alışkın değil; viski ve lüks ofis ortamlarını tercih ediyor.",
               "detail": "48 yaşında, resmi ve soğuk."
             },
             {
               "id": "s2",
               "name": "Osmanlı Subayı Nuri Bey",
               "icon": "🎖️",
-              "description": "Komutanın altındaki subay. Terfi bekliyor.",
+              "description": "Komutanın altındaki hırslı subay. Büyük borçları olan ve terfi alamazsa hacizle yüzleşecek olan, tersanedeki ağır metal işleyişine hakim figür.",
               "detail": "35 yaşında, hırslı, borçlu."
             },
             {
               "id": "s3",
               "name": "Alman Rakip Herr Vogel",
               "icon": "⚙️",
-              "description": "Alman rakip şirketin temsilcisi. Sözleşmeyi kaybetmek üzere.",
+              "description": "Alman endüstri devinin temsilcisi. İngiliz mühendisle rekabet halinde olan, sadece resmi ofis alanlarına giriş izni bulunan diplomat.",
               "detail": "52 yaşında, büyük bıyıklı, sabırsız."
             },
             {
               "id": "s4",
               "name": "Tersane Bekçisi Rıza",
               "icon": "💂",
-              "description": "Tek kapı bekçisi. Giriş-çıkış defterini tutuyor.",
+              "description": "Tek kapı bekçisi. Giriş-çıkış defterini tutan, rüşvete zaafı olan ve ağır yükleri taşımaya alışkın tersane emektarı.",
               "detail": "60 yaşında, rüşvete açık olduğu söyleniyor."
             }
           ],
@@ -558,25 +532,25 @@
               "id": "w1",
               "name": "Ağır Demir Çekiç",
               "icon": "🔨",
-              "description": "Tersanede kullanılan büyük çekiç."
+              "description": "Tersane ambarlarında gemi saclarını düzeltmek için kullanılan, tek darbede kafatasını ezebilecek devasa iş aleti."
             },
             {
               "id": "w2",
               "name": "Deniz Halatı",
               "icon": "🪢",
-              "description": "Kalın gemi halatı."
+              "description": "Gemileri bağlamakta kullanılan, sert ve pürüzlü, boyna dolandığında derin sürtünme izi bırakan kenevir halat."
             },
             {
               "id": "w3",
               "name": "Tabanca",
               "icon": "🔫",
-              "description": "Avrupalı yapımı subay tabancası."
+              "description": "Subayların taşıdığı, ateşlendiğinde barut kokusu ve yüksek ses yayan askeri mühimmat."
             },
             {
               "id": "w4",
               "name": "Zehirli İçki",
               "icon": "🥃",
-              "description": "Viski kadehine karıştırılan arsenik."
+              "description": "Viski kadehlerine karıştırılarak kalbi durdurması hedeflenen ancak bu vakada maktul tarafından tamamen yutulmayan arsenik terkibi."
             }
           ],
           "locations": [
@@ -584,141 +558,102 @@
               "id": "l1",
               "name": "Gemi Güvertesi",
               "icon": "⚓",
-              "description": "İnşaat halindeki geminin ana güvertesi."
+              "description": "İnşaat halindeki zırhlının ana güvertesi; açık havada olan ve rüzgar alan geniş çalışma sahası."
             },
             {
               "id": "l2",
               "name": "Komutan Ofisi",
               "icon": "📋",
-              "description": "Tersanenin en yüksek binasındaki ofis."
+              "description": "Tersanenin en üst katında yer alan, halılarla kaplı, komutanın misafirlerini ağırladığı güvenli idari merkez."
             },
             {
               "id": "l3",
               "name": "Depo Ambarı",
               "icon": "📦",
-              "description": "Tersanenin derinliklerindeki karanlık ambar."
+              "description": "Tersanenin derinliklerinde yer alan, zemininde katran ve gemi çapa zincirlerinin bulunduğu, tamamen karanlık ve izole malzeme deposu."
             },
             {
               "id": "l4",
               "name": "Rıhtım Kenarı",
               "icon": "🌊",
-              "description": "Denize sıfır tahtadan rıhtım."
+              "description": "Denize sıfır, tahta iskelelerin bulunduğu ve dalgaların sürekli dövdüğü açık alan."
             }
           ],
           "clues": [
             {
               "id": "c1",
+              "text": "Adli rapor: Kurbanın viski kadehinde arsenik bulunmasına rağmen ölüm nedeni zehirlenme değildir; kurban depo ambarına özgü kaba ve ağır bir metal aletin indirdiği küt darbeyle katledilmiştir. Üzerindeki katran kokusu bunu doğruluyor.",
               "type": "kanit",
+              "mechanicType": "text",
               "revealOrder": 1,
               "isRevealed": true,
               "pointCost": 0,
-              "title": "Ölüm Yeri",
-              "text": "Komutan depo ambarında bulundu. Kafasında künt darbe izi. Yerde dökülen viski ve kırık bardak. Paltosunda tuz ve katran kokusu.",
-              "mechanicType": "text"
+              "title": "Ölüm Yeri"
             },
             {
               "id": "c2",
-              "type": "parmak_izi",
+              "text": "Olay yeri inceleme ekipleri cinayetin rüzgarlı açık güvertede veya denize sıfır rıhtım kenarında değil; tamamen izole, katran kokulu karanlık malzeme deposunda işlendiğini belirledi.",
+              "type": "kanit",
+              "mechanicType": "text",
               "revealOrder": 2,
               "isRevealed": false,
               "pointCost": 80,
-              "title": "Bardak Parmak İzi",
-              "text": "Kırık viski bardağında kısmi iz.",
-              "mechanicType": "parmak_izi",
-              "parmakIziVerisi": {
-                "aciklama": "Dört şüphelinin iz kartlarını kırık bardakla eşleştir.",
-                "izler": [
-                  {
-                    "izId": "iz1",
-                    "konum": "Bardak sapı",
-                    "eslesme": "s2",
-                    "ipucu": "Uzun ince parmaklar — subay eli."
-                  }
-                ],
-                "sonuc": "Bardağı son tutan: Nuri Bey."
-              }
+              "title": "Bardak Parmak İzi"
             },
             {
               "id": "c3",
+              "text": "Giriş-çıkış defteri analiz edildiğinde, İngiliz mühendisin cinayet saatinden çok önce tersaneden çıkış yaptığı, Alman temsilcinin ise sadece üst kattaki idari ofis koridorlarında görüldüğü kesinleşti.",
               "type": "tanik",
+              "mechanicType": "text",
               "revealOrder": 3,
               "isRevealed": false,
               "pointCost": 80,
-              "title": "Bradford'un İfadesi",
-              "text": "\"Ben o gece ofiste komutanla sözleşmeyi görüştüm. Saat 21.00'de ayrıldım. Komutan benden sonra Vogel'i bekliyordu.\"",
-              "mechanicType": "text"
+              "title": "Bradford'un İfadesi"
             },
             {
               "id": "c4",
-              "type": "tanik",
+              "text": "Kırık viski kadehinin sapından alınan kısmi parmak izi analizi ve ızgara eşleşmesi, dükkanın iç işleyişine ve ağır ambar ekipmanlarına hakim subayın profilini işaret etti.",
+              "type": "parmak_izi",
+              "mechanicType": "parmak_izi",
+              "parmakIziVerisi": {
+                "aciklama": "Viski kadehindeki taze parmak izini eşleştir.",
+                "izler": [
+                  {
+                    "izId": "iz_viski",
+                    "konum": "Kadeh Tabanı",
+                    "eslesme": "s2",
+                    "ipucu": "Nuri Bey'in askeri üniforma eldiven dokusuyla uyumlu taze parmak izi. Orta parmak baskısı öne çıkıyor."
+                  }
+                ],
+                "sonuc": "Bardağı son tutan: Nuri Bey."
+              },
               "revealOrder": 4,
               "isRevealed": false,
               "pointCost": 80,
               "title": "Bekçi Rıza'nın Defteri",
-              "text": "Giriş defteri: Bradford 20.30'da girdi, 21.10'da çıktı. Vogel 20.45'te girdi, 22.00'de çıktı. Nuri Bey 21.30'da girdi — çıkış kaydı yok.",
-              "mechanicType": "gorsel_ipucu",
-              "gorselAciklama": "Defterin son satırı kazınmış. Rıza bir ismi silmeye çalışmış.",
               "deductionHint": "Silinmiş kayıt kimin?"
             },
             {
               "id": "c5",
-              "type": "adli",
+              "text": "Tersane kapısındaki gizli ses kayıt cihazından alınan dalga simülasyonu: 'Nuri Bey bana 10 altın fırlattı... Giriş defterinden ismini karalamamı söyledi... Çıkış saatini boş bırakmamı istedi, mecbur kaldım amirim...'",
+              "type": "ses_kaydi",
+              "mechanicType": "ses_kaydi",
+              "sesMetni": "Nuri Bey bana 10 altın fırlattı... Giriş defterinden ismini karalamamı söyledi... Çıkış saatini boş bırakmamı istedi, mecbur kaldım amirim...",
               "revealOrder": 5,
               "isRevealed": false,
               "pointCost": 80,
               "title": "Silah Analizi",
-              "text": "Viskide arsenik iz yok. Darbede kullanılan nesne gemi çapasına ait zincir halka — depo ambarına özgü ekipman. Komutan önce içkiyi içti, sonra vuruldu.",
-              "mechanicType": "text",
               "deductionHint": "Zincir halka depo ambarında."
             },
             {
               "id": "c6",
-              "type": "tanik",
+              "text": "Komutanın çalışma masasının gizli çekmecesinde Nuri Bey'e ait ağır borç ve ipotek belgeleri ile komutanın onun terfisini iptal eden o son resmi yazısı bulundu.",
+              "type": "dogrudan",
+              "mechanicType": "text",
               "revealOrder": 6,
               "isRevealed": false,
               "pointCost": 80,
-              "title": "Vogel'in İfadesi",
-              "text": "\"Komutanla ofiste buluştuk, anlaşamadık. Nuri Bey dışarıda bekliyordu — ikimizi de görürdü. Ayrılırken Nuri Bey içeri giriyordu.\"",
-              "mechanicType": "tanik_yuzlesme",
-              "yuzlesmeDialogu": [
-                {
-                  "soru": "Nuri Bey'i gördünüz mü?",
-                  "cevap": "Evet, ofis kapısında bekliyordu.",
-                  "yalan": false
-                },
-                {
-                  "soru": "Depo ambarına gittiniz mi?",
-                  "cevap": "Hayır, doğrudan çıktım.",
-                  "yalan": false
-                },
-                {
-                  "soru": "Sözleşmeyi kaybetmek sizi nasıl etkilerdi?",
-                  "cevap": "İş dünyasında normal bir kayıp.",
-                  "yalan": true
-                }
-              ]
-            },
-            {
-              "id": "c7",
-              "type": "dogrudan",
-              "revealOrder": 7,
-              "isRevealed": false,
-              "pointCost": 80,
-              "title": "Nuri Bey'in Borç Belgesi",
-              "text": "Komutanın masasında Nuri Bey'e ait ipotek belgesi. Dipnot: 'Terfi olmadan 3 ay içinde haciz.' Komutan bu terfiyi engelleyen raporu yeni yazmıştı.",
-              "mechanicType": "text"
-            },
-            {
-              "id": "c8",
-              "type": "ses_kaydi",
-              "revealOrder": 8,
-              "isRevealed": false,
-              "pointCost": 80,
-              "title": "Bekçinin Ses Kaydı",
-              "text": "[Ses kaydı simülasyonu] Rıza fısıltıyla konuşuyor: 'Nuri Bey bana 10 altın verdi. Defterden ismini silmemi istedi. Ben de... sildim işte. Ne yapayım?'",
-              "mechanicType": "ses_kaydi",
-              "sesMetni": "Rıza'nın sesi titriyor, pişman ve korkmuş görünüyor.",
-              "deductionHint": "Bekçi rüşvet aldı."
+              "title": "Vogel'in İfadesi"
             }
           ],
           "solution": {
@@ -738,35 +673,35 @@
           "stars": "★★★★★",
           "gridSize": "4x4",
           "timeLimit": 360,
-          "story": "Ayasofya'nın müzeye dönüştürüldüğü 1934 yılında, dini mozaiklerin altındaki gizli Bizans hazinesi haritasını elinde bulunduran Rum arkeolog ölü bulundu. Dört kişi son görüşmesinde bulunmuştu.",
+          "story": "1934 yılında Ayasofya'nın müzeye dönüştürülme çalışmaları sürerken, Bizans dönemine ait gizli bir yeraltı haritasını keşfeden Rum arkeolog ölü bulundu. Harita kayıp, dehlizlerin karanlığında sinsi bir gaz hala havada asılı duruyor.",
           "atmosphere": "Tarihin dönüm noktası. Siyasi gerilim. Her taş bir sır taşıyor.",
           "suspects": [
             {
               "id": "s1",
               "name": "Müze Müdürü Aziz Bey",
               "icon": "🧐",
-              "description": "Resmi düzenlemenin mimarı, hazine söylentisini reddediyor.",
+              "description": "Resmi dönüşümün başındaki idari sorumlu. Bürokratik işlerle ilgilenen, kimya ve endüstriyel askeri teçhizatlar konusunda hiçbir bilgisi olmayan devlet görevlisi.",
               "detail": "55 yaşında, bürokratik, devlet sadakati ön planda."
             },
             {
               "id": "s2",
               "name": "İngiliz Arkeolog Pembrooke",
               "icon": "🔍",
-              "description": "British Museum adına İstanbul'da çalışıyor.",
+              "description": "British Museum adına sahada olan, 1. Dünya Savaşı'nda askeri kimya ve gaz sistemleri üzerine çalışmış, haritayı Londra'ya kaçırmak isteyen ajan-arkeolog.",
               "detail": "40 yaşında, akademik, haritanın kopyasına sahip olduğu iddia ediliyor."
             },
             {
               "id": "s3",
               "name": "Yeraltı Tüccarı Yorgo",
               "icon": "🤝",
-              "description": "Tarihi eser kaçakçısı. Haritanın piyasa değeri 10 kat büyütür.",
+              "description": "Tarihi eser kaçakçısı. Sadece antika hançerler ve meyhane ağlarıyla ilgilenen, Ayasofya'nın altındaki gizli dehlizlerin şifrelerini bilmeyen suç lideri.",
               "detail": "50'li yaşlarda, silik, her ortamda kaybolur."
             },
             {
               "id": "s4",
               "name": "Arkeologun Asistanı Fatma",
               "icon": "🎓",
-              "description": "Maktulün 5 yıllık asistanı. Haritanın varlığını bilen tek Türk.",
+              "description": "Haritanın varlığını bilen sadık asistan. Antika hançerleri ve kazı alanlarını iyi bilen ancak endüstriyel savaş gazlarına erişimi olmayan araştırmacı.",
               "detail": "28 yaşında, zeki, korku içinde görünüyor."
             }
           ],
@@ -775,25 +710,25 @@
               "id": "w1",
               "name": "Zehirli Şarap",
               "icon": "🧪",
-              "description": "Rum meyhanede içilen şaraba katılan madde."
+              "description": "Meyhanelerde ikram edilen, içildiğinde mideyi kilitleyen sinsi sıvı zehir."
             },
             {
               "id": "w2",
               "name": "Antika Hançer",
               "icon": "🗡️",
-              "description": "Bizans dönemine ait hançer."
+              "description": "Bizans dönemine ait, keskin uçlu ve vücutta açık kanamalı yara bırakan tarihi bıçak."
             },
             {
               "id": "w3",
               "name": "Taş Blok",
               "icon": "🪨",
-              "description": "Yapı iskeleti taşı."
+              "description": "Yapı iskeletinden kopan, kafaya düştüğünde ezici ve parçalayıcı travma yaratan ağır mermer blok."
             },
             {
               "id": "w4",
               "name": "Kimyasal Gaz",
               "icon": "☁️",
-              "description": "Kapalı alanda serbest bırakılan toksik gaz."
+              "description": "Kapalı alanlarda serbest bırakıldığında havaya karışan, solunduğu anda akciğerleri yakan endüstriyel hidrojensiyanür gazı."
             }
           ],
           "locations": [
@@ -801,146 +736,94 @@
               "id": "l1",
               "name": "Bizans Kripta",
               "icon": "⛪",
-              "description": "Ayasofya altındaki gizli Bizans kripta."
+              "description": "Ayasofya'nın metrelerce altındaki, havalandırması olmayan, zifiri karanlık, kilitli ve klostrofobik gizli mezar odası."
             },
             {
               "id": "l2",
               "name": "Rum Meyhane",
               "icon": "🍷",
-              "description": "Yakın çevredeki tarihi Rum meyhanesi."
+              "description": "Çarşı yakınındaki, müzikli ve kalabalık, herkesin sürekli birbirini gördüğü aydınlık eğlence mekanı."
             },
             {
               "id": "l3",
               "name": "Arkeoloji Deposu",
               "icon": "📦",
-              "description": "Müzenin altındaki arkeoloji deposu."
+              "description": "Müzenin alt katında yer alan, sadece mermer taş blokların ve kazı levhalarının üst üste yığıldığı geniş malzeme odası."
             },
             {
               "id": "l4",
               "name": "Boğaz Kıyısı",
               "icon": "🌊",
-              "description": "Sarayburnu kıyısı, kayalık alan."
+              "description": "Sarayburnu'nun azgın dalgalarının vurduğu, rüzgarlı ve tamamen açık havada olan kayalık sahil hattı."
             }
           ],
           "clues": [
             {
               "id": "c1",
+              "text": "Adli tıp raporu: Maktulün üzerinde hiçbir hançer yarası veya taş blok ezilmesi yoktur; ölüm havalandırması olmayan kapalı bir alanda solunan endüstriyel bir savaş gazından kaynaklanmıştır.",
               "type": "kanit",
+              "mechanicType": "text",
               "revealOrder": 1,
               "isRevealed": true,
               "pointCost": 0,
-              "title": "Ölüm Yeri ve Nedeni",
-              "text": "Maktul Bizans kriptasında bulundu. Nadir kimyasal madde zehirlenmesi. Harita yok. Çantası açık ve karıştırılmış.",
-              "mechanicType": "text"
+              "title": "Ölüm Yeri ve Nedeni"
             },
             {
               "id": "c2",
-              "type": "sifreli",
+              "text": "Olay yeri inceleme ekipleri, cinayetin rüzgarlı Boğaz kıyısında veya kalabalık Rum meyhanesinde işlenemeyeceğini, gazın sadece zifiri karanlık dehliz odasında birikebileceğini raporladı.",
+              "type": "kanit",
+              "mechanicType": "text",
               "revealOrder": 2,
               "isRevealed": false,
               "pointCost": 100,
-              "title": "Arkeologun Son Notu",
-              "text": "Maktulün cebinde şifreli bir not.",
-              "mechanicType": "sifreli_mesaj",
-              "sifre": {
-                "sifrelenmis": "FMPT CJMJZPS — BSTJWF HJU",
-                "sifreleTuru": "cesar_sifresi_plus1",
-                "cozumIpucu": "Her harf bir geri kaydırılmış.",
-                "cozulmus": "ELSI BILIYOR — ARSİVE GİT",
-                "aciklama": "Şifre çözülünce: 'Elsi biliyor — Arşive git.' Elsi = Yorgo'nun lakabı."
-              }
+              "title": "Arkeologun Son Notu"
             },
             {
               "id": "c3",
-              "type": "adli",
+              "text": "Karakol sorgu kayıtları, tarihi eser kaçakçısı Yorgo'nun olay saatinde Galata'da başka bir asayiş suçundan dolayı nezarette tutulduğunu resmi mühürle kanıtlayarak onu eledi.",
+              "type": "eleme",
+              "mechanicType": "text",
               "revealOrder": 3,
               "isRevealed": false,
               "pointCost": 100,
               "title": "Kimyasal Analiz",
-              "text": "Kullanılan gaz 'hidrojensiyânür' bileşiği — endüstriyel kimya bilgisi gerektirir. İngilizler 1. Dünya Savaşı'nda bu maddeyi kullandı.",
-              "mechanicType": "text",
               "deductionHint": "Kim bu kimyaya erişebilir?"
             },
             {
               "id": "c4",
-              "type": "tanik",
+              "text": "Kullanılan 'hidrojensiyanür' gazının sadece 1. Dünya Savaşı'nda askeri laboratuvarlarda uzmanlaşmış kişilerce kullanılabilen bir İngiliz mühimmat formülü olduğu saptandı.",
+              "type": "adli",
+              "mechanicType": "text",
               "revealOrder": 4,
               "isRevealed": false,
               "pointCost": 100,
-              "title": "Meyhane Sahibi İfadesi",
-              "text": "\"O gece arkeolog Pembrooke ile uzun süre oturdu. Tartıştılar, İngilizce. Arkeolog öfkeli ayrıldı. Pembrooke 10 dakika sonra çıktı.\"",
-              "mechanicType": "text"
+              "title": "Meyhane Sahibi İfadesi"
             },
             {
               "id": "c5",
-              "type": "parmak_izi",
+              "text": "Arkeologun cebinden çıkan yırtık bir kağıtta, Sezar şifreleme mantığıyla gizlenmiş ve İngiliz meslektaşının haritayı Londra'ya kaçırma planını gösteren bir kripto not deşifre edildi.",
+              "type": "sifreli",
+              "mechanicType": "sifreli_mesaj",
+              "sifre": {
+                "sifrelenmis": "PEMBROOKE LONDRA TELGRAF HARITA",
+                "sifreleTuru": "cesar_sifresi_plus1",
+                "cozumIpucu": "Harfleri alfabetik olarak bir blok kaydırarak oku.",
+                "aciklama": "Pembrooke Londra telgraf harita"
+              },
               "revealOrder": 5,
               "isRevealed": false,
               "pointCost": 100,
-              "title": "Kripta Kapı İzi",
-              "text": "Kripta giriş kapısında toz üzerinde iz.",
-              "mechanicType": "parmak_izi",
-              "parmakIziVerisi": {
-                "aciklama": "Dört şüphelinin izini kapı tokasıyla eşleştir.",
-                "izler": [
-                  {
-                    "izId": "iz1",
-                    "konum": "Kapı tokaları",
-                    "eslesme": "s2",
-                    "ipucu": "Büyük, geniş parmak izi. Akademisyen eli — mürekkep lekesi."
-                  }
-                ],
-                "sonuc": "Kriptaya son giren: Pembrooke."
-              }
+              "title": "Kripta Kapı İzi"
             },
             {
               "id": "c6",
-              "type": "eleme",
+              "text": "Kripta odasının tozlu zeminindeki bot izleri ve İngiliz arkeoloğun otel odasında ele geçirilen 'Harita bu hafta ne pahasına olursa olsun Londra'da olmalı' ibareli resmi İngiliz telgrafı haini ortaya çıkardı.",
+              "type": "dogrudan",
+              "mechanicType": "text",
               "revealOrder": 6,
               "isRevealed": false,
               "pointCost": 100,
-              "title": "Yorgo'nun Alibisi",
-              "text": "Yorgo o gece Galata'da polis tarafından başka bir davada gözaltında sorgulandı. Saat 20.00-24.00 arası kayıt altında.",
-              "mechanicType": "text"
-            },
-            {
-              "id": "c7",
-              "type": "tanik",
-              "revealOrder": 7,
-              "isRevealed": false,
-              "pointCost": 100,
-              "title": "Fatma'nın İtirafı",
-              "text": "\"Pembrooke haritanın kopyasını benden istedi. Vermedim. Ama ustama söyledim — ustam onu kripta için davet etti. 'Barışalım' dedi. Ben gitmek istedim ama ustam 'gerek yok' dedi.\"",
-              "mechanicType": "tanik_yuzlesme",
-              "yuzlesmeDialogu": [
-                {
-                  "soru": "Pembrooke'u kriptaya siz mi çağırdınız?",
-                  "cevap": "Hayır, ustam çağırdı.",
-                  "yalan": false
-                },
-                {
-                  "soru": "Haritayı verdiniz mi?",
-                  "cevap": "Hayır, kimseye vermedim.",
-                  "yalan": false
-                },
-                {
-                  "soru": "Pembrooke'un haritayı almak istediğini biliyor muydunuz?",
-                  "cevap": "Bilmiyordum.",
-                  "yalan": true
-                }
-              ]
-            },
-            {
-              "id": "c8",
-              "type": "dogrudan",
-              "revealOrder": 8,
-              "isRevealed": false,
-              "pointCost": 100,
-              "title": "British Museum Yazışması",
-              "text": "Pembrooke'un otel odasında bulunan şifreli telgraf: 'Harita bu hafta Londra'da olmalı. Her türlü önlemi al.' Gönderici: Museum Director.",
-              "mechanicType": "gorsel_ipucu",
-              "gorselAciklama": "Resmi damgalı telgraf kağıdı. 'Her türlü önlemi al' kısmının altı çizilmiş.",
-              "deductionHint": "Resmi emir mi?"
+              "title": "Yorgo'nun Alibisi"
             }
           ],
           "solution": {
