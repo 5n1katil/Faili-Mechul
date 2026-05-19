@@ -447,6 +447,8 @@ export default function VakalarScreen() {
   const [listTab, setListTab] = useState<"standart" | "paketler" | "tamamlananlar">("standart");
 
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const resultTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const homeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const gameStateRef = useRef(gameState);
   const invalidateGameRef = useRef(invalidateGame);
   const playerIdRef = useRef(playerId);
@@ -472,10 +474,13 @@ export default function VakalarScreen() {
     if (gameState?.isComplete) {
       playVictorySequence();
       setLastResultSuccess(true);
-      setTimeout(() => {
+      resultTimerRef.current = setTimeout(() => {
         setShowResult(true);
       }, 500);
     }
+    return () => {
+      if (resultTimerRef.current) clearTimeout(resultTimerRef.current);
+    };
   }, [gameState?.isComplete, playVictorySequence]);
 
   useEffect(() => {
@@ -535,8 +540,9 @@ export default function VakalarScreen() {
   };
 
   const handleGoHome = () => {
-    router.replace("/(tabs)" as const);
-    setTimeout(() => {
+    if (homeTimerRef.current) clearTimeout(homeTimerRef.current);
+    router.replace("/(tabs)/index" as const);
+    homeTimerRef.current = setTimeout(() => {
       setShowResult(false);
       resetCurrentGame();
     }, 250);
