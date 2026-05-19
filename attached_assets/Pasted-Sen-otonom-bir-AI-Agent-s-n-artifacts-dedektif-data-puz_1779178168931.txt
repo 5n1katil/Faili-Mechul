@@ -1,0 +1,85 @@
+Sen otonom bir AI Agent'sın. `artifacts/dedektif/data/puzzles.ts` dosyasında bulunan 8 "Dedektif" vakasının ipuçları (clues) yapısal olarak birbirinin tamamen aynısı (örn: "şu silahla değil bu silahla öldürüldü") şeklinde monotonlaşmıştır.
+
+Görevin, aşağıda listelenen 8 vakanın SADECE `clues` dizisini verdiğim yepyeni ve dolaylı mantık yürüttüren metinlerle ÜZERİNE YAZMAKTIR. (Orijinal şüpheli ikonlarına, hikayelere, silah/mekan açıklamalarına ve çözümlere KESİNLİKLE DOKUNMA!)
+
+1. "Boğaz'da Kayıp Elmas" (Çözüm: s3+w1+l1)
+"clues": [
+  { "id": "c1", "text": "Kurbanın boynundaki iz, boğulma eyleminin esnek bir materyalle gerçekleştirildiğini gösteriyor; kırık veya zehir yok.", "type": "forensic", "isBonus": false },
+  { "id": "c2", "text": "Zemini temiz ve beyaz halılarla kaplı olan hiçbir alanda boğuşma izine rastlanmadı.", "type": "evidence", "isBonus": false },
+  { "id": "c3", "text": "Kaptan Levent, tüm gece boyunca kameraların sürekli kayıtta olduğu güvenlik merkezinden hiç ayrılmadığını ispatladı.", "type": "witness", "isBonus": false },
+  { "id": "c4", "text": "Ağır bakım aletlerinin durduğu dolap kilitliydi ve gece boyunca hiç açılmadığı anlaşıldı.", "type": "evidence", "isBonus": false },
+  { "id": "c5", "text": "Maktulün ceketinde bulunan makine yağı lekeleri, cinayet mahallinin son derece kirli ve teknik bir alan olduğuna işaret ediyordu.", "type": "evidence", "isBonus": true },
+  { "id": "c6", "text": "Cinayetin işlendiği o dar ve erişimi zor alandaki ayak izleri, ancak çok esnek ve çevik birinin oraya girebileceğini kanıtlıyor.", "type": "forensic", "isBonus": true }
+]
+
+2. "Kapalıçarşı'da Gizem" (Çözüm: s3+w3+l2)
+"clues": [
+  { "id": "c1", "text": "Cinayet mahallinde herhangi bir asit kalıntısı bulunmadı; saldırgan kaba kuvvet gerektiren bir alet seçmişti.", "type": "forensic", "isBonus": false },
+  { "id": "c2", "text": "Gece bekçileri, dışarıdan görülebilen aydınlık alanlarda veya devriye attıkları yollarda hiçbir şüpheliye rastlamadı.", "type": "witness", "isBonus": false },
+  { "id": "c3", "text": "Kamera kayıtları, Ahmet Usta'nın olay anında kendi dükkanından sokağı izlediğini gösteriyor.", "type": "record", "isBonus": false },
+  { "id": "c4", "text": "Maktulün başındaki darbe izleri, altın tartmak için kullanılan hassas bir kütleyle değil, kilitleri zorlayabilen çelik bir aletle uyuşuyordu.", "type": "evidence", "isBonus": false },
+  { "id": "c5", "text": "Kurbanın bulunduğu yalıtımlı odaya girebilmek için karmaşık dijital güvenlik şifrelerini bilmek gerekiyordu.", "type": "evidence", "isBonus": true },
+  { "id": "c6", "text": "Genç stajyerin dolabında, çelik kilitleri bükmekte kullanılan aletin üzerine bulaşmış kan izleri ele geçirildi.", "type": "forensic", "isBonus": true }
+]
+
+3. "Üniversitede Karanlık Sır" (Çözüm: s2+w1+l1)
+"clues": [
+  { "id": "c1", "text": "Adli tıp, maktulün solunum yollarında herhangi bir tahribat veya vücudunda kesik olmadığını belirledi.", "type": "forensic", "isBonus": false },
+  { "id": "c2", "text": "Cinayet, yığınla basılı evrakın bulunduğu sıradan çalışma alanlarında işlenmiş olamazdı; ortamda ileri düzey deney ekipmanları vardı.", "type": "evidence", "isBonus": false },
+  { "id": "c3", "text": "Güvenlik kameraları, devriye personelinin tüm gece sadece uzun geçitlerde dolaştığını ve hiçbir odaya girmediğini teyit etti.", "type": "record", "isBonus": false },
+  { "id": "c4", "text": "Olay yerindeki sabotaj, sadece yüksek voltaj sistemlerine ve cihazların altyapısına hakim birinin yapabileceği kadar karmaşıktı.", "type": "evidence", "isBonus": false },
+  { "id": "c5", "text": "Kıdemli profesörün bilgisayar logları, olay saatinde kendi ofisinde aralıksız makale yazdığını doğruluyor.", "type": "record", "isBonus": true },
+  { "id": "c6", "text": "Kasıtlı olarak yaratılan ölümcül kısa devrenin bıraktığı yanık izleri, hırslı asistanın laboratuvar eldivenlerinde de bulundu.", "type": "forensic", "isBonus": true }
+]
+
+4. "Müzede Kayıp Eser" (Çözüm: s2+w1+l2)
+"clues": [
+  { "id": "c1", "text": "Kurbanın üzerinde mermer ezilmesi veya genzi yakan bir gaz bulgusu yoktu; kurban doğrudan kana karışan bir sıvı ile etkisiz hale getirilmişti.", "type": "forensic", "isBonus": false },
+  { "id": "c2", "text": "Müze yöneticisi, olay saatinde kameraların canlı izlendiği kontrol merkezinde yetkililerle toplantı halindeydi.", "type": "witness", "isBonus": false },
+  { "id": "c3", "text": "Cinayet, ziyaretçilere açık, cam vitrinlerin olduğu geniş salonlarda gerçekleşmemişti; kan izleri dışarıdan görünmeyen bir odayı işaret ediyordu.", "type": "evidence", "isBonus": false },
+  { "id": "c4", "text": "Ziyaretçi rehberinin elektronik kartı, o gece sadece aydınlık sergi alanlarında kullanılmıştı.", "type": "record", "isBonus": false },
+  { "id": "c5", "text": "Olayın yaşandığı kilitli ve penceresiz restorasyon alanına, sadece eser onarımında uzmanlaşmış yetkililer girebiliyordu.", "type": "evidence", "isBonus": true },
+  { "id": "c6", "text": "Maktule enjekte edilen güçlü anestezik, doğrudan restoratörün özel hassas alet çantasından alınmıştı.", "type": "forensic", "isBonus": true }
+]
+
+5. "Tren Yolculuğunda Cinayet" (Çözüm: s3+w1+l2)
+"clues": [
+  { "id": "c1", "text": "Maktulün boynunda halat izi veya vücudunda kesici bir alet yarası bulunamadı; ölüm içsel bir kalp durmasıydı.", "type": "forensic", "isBonus": false },
+  { "id": "c2", "text": "Kondüktör, üniversite öğrencisinin yolculuk boyunca kendi özel, kapalı ahşap odasından hiç çıkmadığını onayladı.", "type": "witness", "isBonus": false },
+  { "id": "c3", "text": "Olay yeri incelemesi, cinayetin dar ve kilitlenebilir arka alanlarda değil, masaların bulunduğu geniş bir ortak alanda işlendiğini kanıtladı.", "type": "evidence", "isBonus": false },
+  { "id": "c4", "text": "Hareket halindeki trende bardağa sinsi bir sıvı damlatmak, gergin ve elleri titreyen birinin yapabileceği bir iş değildi; soğukkanlılık gerektiriyordu.", "type": "evidence", "isBonus": false },
+  { "id": "c5", "text": "İş kadınının olay anında trenin en arkasındaki küçük ihtiyaç alanında mahsur kaldığı görevlilerce tutanak altına alındı.", "type": "record", "isBonus": true },
+  { "id": "c6", "text": "Maktulün çayındaki renksiz toksin, tıbbi anatomi bilgisine sahip yaşlı yolcunun çantasındaki küçük şişeden gelmişti.", "type": "forensic", "isBonus": true }
+]
+
+6. "Fotoğrafçının Son Karesi" (Çözüm: s2+w1+l1)
+"clues": [
+  { "id": "c1", "text": "Kafatasındaki hasar, köşeli ve ağır bir kutuyla değil, uzun ve küt bir metal çubukla vurulduğunu gösteriyordu. Asit yanıkları ise cinayet örtbasıydı.", "type": "forensic", "isBonus": false },
+  { "id": "c2", "text": "Olay, bol flaşlı ön çekim alanında veya geçmiş arşivlerin bulunduğu tozlu odada yaşanmamıştı.", "type": "evidence", "isBonus": false },
+  { "id": "c3", "text": "Yaşlı koleksiyonerin sadece eski kutuların yığıldığı arka odaya girdiği ve güncel ekipmanların olduğu bölüme geçmediği saptandı.", "type": "witness", "isBonus": false },
+  { "id": "c4", "text": "Muhalif gazetecinin sadece müşterilerin ağırlandığı ön ofise giriş izni vardı, teknik banyo alanlarına hiç yaklaşmadı.", "type": "evidence", "isBonus": false },
+  { "id": "c5", "text": "Cinayet mahallindeki kırmızı lamba ve banyo tekneleri, buranın sadece yetkili çalışanların kullandığı loş bir geliştirme odası olduğunu kanıtlıyordu.", "type": "evidence", "isBonus": true },
+  { "id": "c6", "text": "Sökülmüş uzun metal kameraman çubuğunda, terfi alamadığı için öfkeli olan asistanın terli eldiven izleri bulundu.", "type": "forensic", "isBonus": true }
+]
+
+7. "Termal Otelde Ölüm" (Çözüm: s2+w1+l1)
+"clues": [
+  { "id": "c1", "text": "Otopsi raporu, kurbanın ciğerlerinde klor zehirlenmesi veya başında metal bir kırık olmadığını; ölümün esnek bir kumaş baskısıyla gerçekleştiğini belirledi.", "type": "forensic", "isBonus": false },
+  { "id": "c2", "text": "Maktul halı kaplı geçitlerde veya geniş giriş alanında değil, her tarafı buharla kaplı ıslak zeminli bir alanda bulunmuştu.", "type": "evidence", "isBonus": false },
+  { "id": "c3", "text": "Milli sporcunun olay saatinde ana girişin bulunduğu oturma gruplarında telefonla sponsorlarıyla görüştüğü otel kameralarına yansıdı.", "type": "record", "isBonus": false },
+  { "id": "c4", "text": "Yaşlı ve bastonlu doktorun odasından hiç çıkmadığı elektronik kapı loglarıyla kesinleşti; zaten o kaygan ve sıcak alanda boğuşması imkansızdı.", "type": "evidence", "isBonus": false },
+  { "id": "c5", "text": "Kurbanın boynundaki boğma izine neden olan kalın otel kumaşının üzerinde, kurbana değil, başka bir odanın müşterisine ait özel bir işleme vardı.", "type": "evidence", "isBonus": true },
+  { "id": "c6", "text": "Hesap anlaşmazlığı yaşadığı ortağını suda kıstıran hırslı iş kadınının 312 numaralı odasına ait işlemeli eşya, doğrudan olay yerinde ele geçirildi.", "type": "forensic", "isBonus": true }
+]
+
+8. "Mektup Gelmedi" (Çözüm: s2+w1+l1)
+"clues": [
+  { "id": "c1", "text": "Maktulün yarasında paslı bir kancanın veya tırtıklı bir camın yırtıkları yoktu; son derece pürüzsüz, tek bir kesik açılmıştı.", "type": "forensic", "isBonus": false },
+  { "id": "c2", "text": "Kan izleri, gemilerin yanaştığı rüzgarlı rıhtımda veya kargoların sınıflandırıldığı binada değil, görüş açısı kapalı dar bir taş yolda toplanmıştı.", "type": "evidence", "isBonus": false },
+  { "id": "c3", "text": "Ev hanımının o saatlerde, kargoları aramak üzere sadece posta sınıflandırma binasında bulunduğu tanıklarca doğrulandı.", "type": "witness", "isBonus": false },
+  { "id": "c4", "text": "Bakkal Necati, gün boyunca kendi dükkanının önünden hiç ayrılmamıştı, o dar arka yola sapma fırsatı olmamıştı.", "type": "witness", "isBonus": false },
+  { "id": "c5", "text": "Kurbanın çantasından eksilen tek şey, öfkeli bir tersane çalışanının işine son verildiğini bildiren resmi evraktı.", "type": "evidence", "isBonus": true },
+  { "id": "c6", "text": "İşçinin kemerindeki boş kılıfta bulunan taze kan lekeleri, o pürüzsüz kesiği açan küçük ve katlanabilir aletin kime ait olduğunu gösteriyordu.", "type": "forensic", "isBonus": true }
+]
+
+İŞLEM BİTİNCE DERLE (BUILD) VE TEST ET.

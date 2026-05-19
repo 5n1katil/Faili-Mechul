@@ -1,0 +1,85 @@
+Sen otonom bir AI Agent'sın. `artifacts/dedektif/data/puzzles.ts` dosyasında bulunan 8 "Baş Komiser" (difficulty: "baskomiser") vakasının ipuçları (clues), biyografiler ve nesne açıklamalarıyla çapraz ilişki kuracak şekilde "Derin Mantık" paternlerine göre güncellenecektir.
+
+Sana çok katı bir GÜVENLİK kuralı veriyorum: Şüpheli ikonlarındaki özel .png veya emoji uzantılarına, karakter/silah/mekan açıklamalarına, hikaye metinlerine ve "solution" (çözüm) alanlarına KESİNLİKLE DOKUNMA. Sadece ve sadece aşağıda verdiğim 8 vakanın `clues` dizilerini birebir kopyalayarak ilgili vakaların üzerine yaz.
+
+1. VAKA: "Sabancı Müzesi Gasp" (Çözüm: s2+w1+l2)
+"clues": [
+  { "id": "c1", "text": "Adli rapor, kurbanın ne bir enjeksiyonla uyutulduğunu ne de kaba kuvvetle darp edildiğini gösteriyor; saldırgan arkasında hiçbir gürültü bırakmayan, yüksek voltajlı teknolojik bir cihaz seçmişti.", "type": "forensic", "isBonus": false },
+  { "id": "c2", "text": "Olay yeri inceleme ekipleri, saldırının rüzgarlı açık alanlarda veya kaba kuvvetle kapısı kırılmış tozlu depolarda gerçekleşmediğini, sistemlerin merkezi bir odada sabote edildiğini doğruladı.", "type": "evidence", "isBonus": false },
+  { "id": "c3", "text": "Kaba kuvvet gerektiren işlere alışkın olan personelin, gala başlamadan saatler önce tüm nakliye işlemlerini tamamlayıp binadan çıkış yaptığı sistem loglarından kesinleşti.", "type": "record", "isBonus": false },
+  { "id": "c4", "text": "Tüm organizasyonu yöneten kişinin, gece boyunca kalabalık ve aydınlık ana etkinlik alanında konuklarla birlikte fotoğraflandığı onlarca tanıkla teyit edildi.", "type": "witness", "isBonus": false },
+  { "id": "c5", "text": "Kameraların kör noktalarını çok iyi bilen kaslı eski askerin, o gece resmi izinli olarak şehir dışındaki bir seminerde bulunduğu İK kayıtlarınca netleştirildi.", "type": "record", "isBonus": true },
+  { "id": "c6", "text": "Elektronik sistemlere ve enstalasyonlara hakim olan gala konuğunun, sadece yetkili kartla girilebilen izole odaya sızarak tüm sistemi çökerttiği kanıtlandı.", "type": "evidence", "isBonus": true }
+]
+
+2. VAKA: "Zeytinyağı Fabrikasında Kâbus" (Çözüm: s2+w1+l1)
+"clues": [
+  { "id": "c1", "text": "Adli tıp, maktulün preslerin arasına bırakılmadan önce bilincini tamamen kaybettiğini; ölümün vücuda sinsi yoldan giren bir sedatif kimyasalla başladığını raporladı.", "type": "forensic", "isBonus": false },
+  { "id": "c2", "text": "Soruşturma, olayın halı kaplı yönetim ofislerinde veya sessiz depoda değil, doğrudan devasa makinelerin çalıştığı gürültülü ana odada nihayete erdiğini gösteriyor.", "type": "evidence", "isBonus": false },
+  { "id": "c3", "text": "İstanbul'dan gelen misafirin turnike kayıtları incelendiğinde, ziyaretçilere kapalı olan gürültülü üretim katına hiçbir zaman erişim sağlamadığı ve sadece lobi hattında kaldığı kesinleşti.", "type": "record", "isBonus": false },
+  { "id": "c4", "text": "Fabrikanın emektar ustabaşısının, idari personelin kullandığı özel mutfağa girme yetkisi olmadığı gibi, o ince belli özel ofis fincanlarına erişimi de yoktu.", "type": "evidence", "isBonus": false },
+  { "id": "c5", "text": "Zehirli çay bardağına karıştırılan doz ile birebir örtüşen reçetesiz uyku ilacı kutusu, doğrudan usulsüzlük iddiaları altındaki idari çalışanın kilitli çekmecesinden çıktı.", "type": "forensic", "isBonus": true },
+  { "id": "c6", "text": "Maktulün, işten çıkarılma tehdidiyle baskı altına aldığı çalışanı muhasebe defterindeki taze silintileri yok ederken suçüstü yakaladığı tescillendi.", "type": "evidence", "isBonus": true }
+]
+
+3. VAKA: "Dağ Yolunda Pusu" (Çözüm: s3+w1+l1)
+"clues": [
+  { "id": "c1", "text": "Olay yeri inceleme ekipleri, minibüsün iç kabininde veya sık çam ormanının derinliklerinde hiçbir mücadele ya da sürükleme izine rastlamadı; her şey yol kenarındaki taş duvarın dibinde bitti.", "type": "evidence", "isBonus": false },
+  { "id": "c2", "text": "Kurbanın üzerindeki yara izleri, kaba bir taşın veya künt bir demir levyenin yapamayacağı kadar nizami, derin ve keskin bir pala darbesiyle açılmıştı.", "type": "forensic", "isBonus": false },
+  { "id": "c3", "text": "Büyük çantaları nedeniyle dar araç kapısından hızlıca çıkması imkansız olan yaşlı kadın tüccarın, koltuğundan hiç kalkmadığı diğer yolcuların ortak ifadesiyle doğrulandı.", "type": "witness", "isBonus": false },
+  { "id": "c4", "text": "Maktulün oldukça iri yarı ve güçlü bir adam olduğu göz önüne alındığında, çelimsiz ve yanında sadece tayin evrakları olan genç öğretmenin onu tek hamlede devirmesi imkansızdı.", "type": "evidence", "isBonus": false },
+  { "id": "c5", "text": "Alet çantasında ağaç kesme işleri için büyük teçhizatlar taşıyan yolcunun kılıfında, sabah çalışmasına ait olamayacak kadar taze ve yoğun kan kokusu tespit edildi.", "type": "forensic", "isBonus": true },
+  { "id": "c6", "text": "Maktulün boşaltılmış olan nakit cüzdanındaki seri numaraları, araç içinde şoförle borç ve ödeme tartışması yaşayan orman işçisinin gizli cebindeki paralarla birebir eşleşti.", "type": "evidence", "isBonus": true }
+]
+
+4. VAKA: "Ramazan Gecesi Cinayeti" (Çözüm: s3+w1+l1)
+"clues": [
+  { "id": "c1", "text": "Hanın zeminindeki kan izleri, maktulün açık avluda veya üst kat eşya deposunda vurulmadığını, doğrudan odaların önündeki uzun loş geçitte yüzüstü devrildiğini kesinleştirdi.", "type": "evidence", "isBonus": false },
+  { "id": "c2", "text": "Otopsi raporu, maktulün pirinç bir direkle ezilmediğini veya kalın bir halatla boğulmadığını; iki tarafı da usta işi bilenmiş ince, uzun bir bıçakla iki kez yaralandığını kanıtladı.", "type": "forensic", "isBonus": false },
+  { "id": "c3", "text": "Han bekçisinin ifadesine göre sahur sonrasında avlu kapıları tamamen kapalıydı; olay tamamen odaların açıldığı iç koridor hattında gerçekleşti.", "type": "witness", "isBonus": false },
+  { "id": "c4", "text": "Makam odası ve han yıkım projeleriyle ilgilenen genç mühendisin, o saatte odasında ağır bir uyku hapı etkisinde sızıp kaldığı çay bardağı analizinden ortaya çıktı.", "type": "forensic", "isBonus": false },
+  { "id": "c5", "text": "Yaşlı tüccarın odasından yükselen gürültülü tespih ve zikir seslerinin sabah ezanına kadar kesintisiz sürdüğü, yan odadaki yolcu tarafından şerh düşüldü.", "type": "witness", "isBonus": true },
+  { "id": "c6", "text": "Kendisine yönelik taciz girişimini engellemek istediğini itiraf eden dul kadının odasında, aceleyle beze sarılarak yastık altına gizlenmiş kanlı Şam çeliği ele geçirildi.", "type": "forensic", "isBonus": true }
+]
+
+5. VAKA: "Karanlık Senfoni" (Çözüm: s4+w3+l3)
+"clues": [
+  { "id": "c1", "text": "Adli tıp bulguları, sanatçının vücudunda hiçbir dekoratif bıçak darbesi, ezilme ya da botanik zehir olmadığını; boynunu kemiğe kadar kesen son derece ince, görünmez bir metal bağla öldürüldüğünü gösterdi.", "type": "forensic", "isBonus": false },
+  { "id": "c2", "text": "Saldırı, binlerce gözün dikili olduğu açık sahnede veya sadece teknisyenlerin girebildiği tozlu tavan arasında değil; aynalarla kaplı kilitlenebilir özel odada gerçekleşti.", "type": "evidence", "isBonus": false },
+  { "id": "c3", "text": "Performansın başrolü olan narsist solistin, cinayetin işlendiği kritik dakikalarda devasa sahnede binlerce seyircinin önünde aryasını icra ettiği tescillendi.", "type": "witness", "isBonus": false },
+  { "id": "c4", "text": "Eserin katı ve disiplinli yöneticisinin, prömiyer boyunca orkestra çukurundaki platformundan bir saniye bile ayrılmadığı tüm müzisyenlerce doğrulandı.", "type": "witness", "isBonus": false },
+  { "id": "c5", "text": "Tavan arasındaki panoda meydana gelen arıza sebebiyle teknik personelin olay saati boyunca yukarıdaki loş odada mahsur kaldığı telsiz loglarınca doğrulandı.", "type": "record", "isBonus": true },
+  { "id": "c6", "text": "Sahne arkasını ve tiyatro hilelerini avucunun içi gibi bilen kin dolu eski oyuncunun, maktulün odasında ince çelik telleri kullanırken bıraktığı izler parmak izi analiziyle kesinleşti.", "type": "forensic", "isBonus": true }
+]
+
+6. VAKA: "Kanlı Rota" (Çözüm: s1+w3+l4)
+"clues": [
+  { "id": "c1", "text": "Olay yeri uzmanları, maktulde herhangi bir piroteknik yanık, pürmüz ateşi veya paraşüt ipi boğulması saptamadı; ölüm halatları kesmek için kullanılan tırtıklı, taktiksel bir bıçak darbesiyle olmuştu.", "type": "forensic", "isBonus": false },
+  { "id": "c2", "text": "Soruşturma, cinayetin ne gökyüzündeki dar sepette ne kalabalık havalanma alanında ne de vadi kayalıklarında işlendiğini; karadaki kilitli taş kulübenin içinde bittiğini kanıtladı.", "type": "evidence", "isBonus": false },
+  { "id": "c3", "text": "Uçuş boyunca kamerasıyla sadece manzara çeken turist kadının, sepetin havalandığı andan iniş anına kadar sepet alanından hiç çıkmadığı video kayıtlarıyla sabittir.", "type": "record", "isBonus": false },
+  { "id": "c4", "text": "Gaz tüplerinden sorumlu mekanikçinin, o sabah boyunca tüm ekibin gözü önünde havalanma alanındaki başka bir arızalı sepeti tamir ettiği doğrulandı.", "type": "witness", "isBonus": false },
+  { "id": "c5", "text": "Karadan takip yapan fotoğrafçının, cinayetin işlendiği saat diliminde sadece peri bacalarının bulunduğu ıssız vadi koordinatlarında çekim yaptığı GPS verilerinden doğrulandı.", "type": "record", "isBonus": true },
+  { "id": "c6", "text": "Maktulün en büyük ticari rakibi olan ve havacılık donanımlarına çok iyi hakim olan pilotun, yedek tüplerin saklandığı kilitli taş kulübede maktulü tırtıklı bıçakla kıstırdığı kesinleşti.", "type": "evidence", "isBonus": true }
+]
+
+7. VAKA: "Derinlerdeki Sır" (Çözüm: s3+w2+l4)
+"clues": [
+  { "id": "c1", "text": "Baş arkeologun bedeninde hiçbir zıpkın yarası, deniz bıçağı kesiği veya fazladan kurşun ağırlık darbesi bulunmadı; maktulün ciğerleri tamamen oksijensizlikten iflas etmişti.", "type": "forensic", "isBonus": false },
+  { "id": "c2", "text": "Kanıtlar, cinayetin su üstündeki güvertede, teknenin arkasındaki metal platformda veya kaptan köşkünde değil; denizin 40 metre altındaki zifiri karanlık ahşap enkazın içinde işlendiğini gösterdi.", "type": "evidence", "isBonus": false },
+  { "id": "c3", "text": "Tekneyi komuta eden kaptanın, dalış süresi boyunca Kaptan Köşkü'ndeki telsiz cihazlarının başından ayrılmadığı ve tekneyi sabitlediği tüm ekipçe doğrulandı.", "type": "witness", "isBonus": false },
+  { "id": "c4", "text": "Yaşı gereği fiziksel efordan kaçınan ve sadece güvertede not tutan ihtiyar tarihçinin, dalış boyunca araştırma teknesinin üst güvertesinde oturduğu kayıt altına alındı.", "type": "record", "isBonus": false },
+  { "id": "c5", "text": "Tüplü dalışta henüz acemi olan hırslı asistanın, dalış boyunca sadece yüzeye yakın ıslak metal platformda teçhizatları temizlediği sualtı kamerasına yansıdı.", "type": "evidence", "isBonus": true },
+  { "id": "c6", "text": "Denizin altındaki o klostrofobik batık enkazında, maktulün arkasından yanaşıp oksijen tüpü valflerini hissettirmeden kapatabilecek tek profesyonel yetkinliğin usta dalgıca ait olduğu kesinleşti.", "type": "evidence", "isBonus": true }
+]
+
+8. VAKA: "Zehirli Tuval" (Çözüm: s2+w2+l3)
+"clues": [
+  { "id": "c1", "text": "Otopside maktulün kafasında tokmak darbesi, boğazında palet bıçağı kesiği veya tel çerçeve izi bulunmadı; ölüm, kahvesine karıştırılan tiner bazlı şeffaf ve son derece toksik bir çözücüden kaynaklanıyordu.", "type": "forensic", "isBonus": false },
+  { "id": "c2", "text": "Cinayet, boya kokan açık çalışma alanlarında, kilitli boya deposunda veya sergi girişinde değil; ressamın kahvesini yudumladığı deri koltuklu izole arka odada gerçekleşti.", "type": "evidence", "isBonus": false },
+  { "id": "c3", "text": "Tablo için saatlerce hareketsiz duran modelin, seans boyunca ana atölyedeki podyum alanından bir milim bile kıpırdamadığı tüm atölye ışıkları altında sabitleşti.", "type": "witness", "isBonus": false },
+  { "id": "c4", "text": "Her yeri boya içindeki genç çırağın, o saatlerde havalandırması olmayan kilitli boya deposunda tuvalleri istiflediği ve içeride mahsur kaldığı kameralarca teyit edildi.", "type": "record", "isBonus": false },
+  { "id": "c5", "text": "Tablonun satışından milyonlar kazanmayı bekleyen galeri sahibinin, olay anında sergi girişindeki resepsiyon bankosunda müşterileri ağırladığı onlarca şahitle kanıtlandı.", "type": "witness", "isBonus": true },
+  { "id": "c6", "text": "Ressamın eserlerini sürekli kötüleyen, ellerini kirletmekten nefret eden titiz ve şık eleştirmenin, o temiz dinlenme odasındaki kahve fincanında şeffaf çözücüyü damlatırken bıraktığı izler kriminal laboratuvarda kesinleşti.", "type": "forensic", "isBonus": true }
+]
+
+İŞLEM BİTTİKTEN SONRA PROJEYİ TİTİZLİKLE DERLE (BUILD) REPO UYUMUNU ONAYLA.
