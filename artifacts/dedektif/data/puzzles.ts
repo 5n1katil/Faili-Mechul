@@ -1648,7 +1648,7 @@ export const PUZZLES: Puzzle[] = [
     suspects: [
       { id: "s1", name: "Hayriye", description: "Arabacı, faytonların bakımından sorumlu", icon: "solid-woman-old" },
       { id: "s2", name: "Fikret Bey", description: "Konak sahibi, Ada'nın en zengin sakini", icon: "solid-man-tie" },
-      { id: "s3", name: "Sevim", description: "Konağın aşçısı, on yıldır adada çalışıyor", icon: "solid-woman-elegant" },
+      { id: "s3", name: "Sevim", description: "Konağın aşçısı, on yıldır adada çalışıyor", icon: "noun-chef-1574379" },
     ],
     weapons: [
       { id: "w1", name: "Zehirli Muhallebi", description: "Sabah kahvaltısı için hazırlanan özel muhallebi", icon: "icecream" },
