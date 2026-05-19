@@ -472,7 +472,9 @@ export default function VakalarScreen() {
     if (gameState?.isComplete) {
       playVictorySequence();
       setLastResultSuccess(true);
-      setShowResult(true);
+      setTimeout(() => {
+        setShowResult(true);
+      }, 500);
     }
   }, [gameState?.isComplete, playVictorySequence]);
 
@@ -533,9 +535,11 @@ export default function VakalarScreen() {
   };
 
   const handleGoHome = () => {
-    setShowResult(false);
-    resetCurrentGame();
-    router.replace("/");
+    router.replace("/(tabs)" as const);
+    setTimeout(() => {
+      setShowResult(false);
+      resetCurrentGame();
+    }, 250);
   };
 
   const handleBackPress = () => {
