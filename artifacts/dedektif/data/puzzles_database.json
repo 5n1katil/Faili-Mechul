@@ -32,21 +32,21 @@
             {
               "id": "s1",
               "name": "Baş Kalfa Hatice",
-              "icon": "🗝️",
+              "icon": "noun-hizmetci-hacer-avatar.png",
               "description": "Otuz yıllık saray hizmetine karşın son aylarda nüfuzunu ve kariyerini genç cariyeye kaybetmiş, harem hiyerarşisini avucunun içi gibi bilen hırslı kadın.",
               "detail": "Orta yaşlı, otoriter, tüm harem protokolünü ezbere bilir."
             },
             {
               "id": "s2",
               "name": "Genç Hekim Selim",
-              "icon": "🩺",
+              "icon": "noun-doctor-1574377",
               "description": "Sarayın Avrupalı tıp anlayışını ve modern kimya formüllerini benimsemiş, padişahın güvenini yeni kazanmaya başlayan hırslı tıp uzmanı.",
               "detail": "26 yaşında, Viyana'da eğitim görmüş, çekingen ama zeki."
             },
             {
               "id": "s3",
               "name": "Hazinedar Hüseyin",
-              "icon": "💰",
+              "icon": "noun-tuccar-vehbi-avatar.png",
               "description": "Saray masraflarından ve harem bütçesinden sorumlu olan, son ay patlak veren kayıp altın meselesinde adı şüpheli sıfatıyla geçen bürokrat.",
               "detail": "50'li yaşlarda, şişman, her zaman terli."
             }
@@ -184,21 +184,21 @@
             {
               "id": "s1",
               "name": "Rakip Antikacı Vasil",
-              "icon": "🏺",
+              "icon": "noun-bricklaying-1574366",
               "description": "Komşu dükkanın sahibi. Tarihi mühre yıllardır takıntılı olan ancak dükkanın şifreli ve gizli iç odalarına giriş yetkisi bulunmayan esnaf.",
               "detail": "60'lı yaşlarda, kısık gözlü, piyasada 'sert müzakereci' olarak bilinir."
             },
             {
               "id": "s2",
               "name": "Genç Çırak Mehmet",
-              "icon": "🔧",
+              "icon": "noun-cirak-selim-avatar.png",
               "description": "Maktulün kumar borçları yüzünden sıkışmış, dükkanın her kuytusunu bilen ve gizli değerleme odasının anahtarına sahip 3 yıllık çalışanı.",
               "detail": "19 yaşında, zeki, ama son ay borçlandığı söyleniyor."
             },
             {
               "id": "s3",
               "name": "Koleksiyoncu Hanım Eleni",
-              "icon": "💍",
+              "icon": "noun-semiha-hanim-avatar.png",
               "description": "Atina'dan mühür için gelmiş varlıklı bir elit. Antika fularlara meraklı ancak çarşının izole teknik odalarından tamamen habersiz bir yabancı.",
               "detail": "45 yaşında, şapkası ve eldiveniyle dikkat çekici."
             }
@@ -346,21 +346,21 @@
             {
               "id": "s1",
               "name": "Baş Hafiye Zeki Paşa",
-              "icon": "🕵️",
+              "icon": "noun-detective-1574357",
               "description": "Padişahın 20 yıllık eski dostu. Tüm istihbarat ağını yöneten ancak Avrupa kimya formüllerine ve laboratuvar sistemlerine tamamen uzak olan asker kökenli hafiye.",
               "detail": "Ağır bıyıklı, 55 yaşında, saklanmış geçmişi olan biri."
             },
             {
               "id": "s2",
               "name": "Yaver Fehmi Bey",
-              "icon": "🎖️",
+              "icon": "noun-soldier-1574347",
               "description": "Sarayın genç ve dinamik askeri yaveri. Fiziksel kaba kuvvet ve kement kullanma konusunda eğitimli, tüm gecesini padişahın divanında geçiren subay.",
               "detail": "32 yaşında, yakışıklı, İttihat ve Terakki sempatizanı söylentisi."
             },
             {
               "id": "s3",
               "name": "Saray Kütüphanecisi Nermin Hanım",
-              "icon": "📚",
+              "icon": "noun-nazik-hanim-avatar.png",
               "description": "Tarih ve kimya eğitimi almış, tüm gizli arşive ve yabancı yazışmalara sınırsız erişimi olan, titizliğiyle tanınan kütüphane sorumlusu.",
               "detail": "40'lı yaşlarda, sessiz ve gözlemci, Fransızca biliyor."
             }
@@ -501,28 +501,28 @@
             {
               "id": "s1",
               "name": "İngiliz Mühendis Bradford",
-              "icon": "🎩",
+              "icon": "noun-bricklaying-1856284",
               "description": "Sözleşmeyi kapmak için aylardır uğraşan yabancı şirketin kibar temsilcisi. Kaba kuvvete alışkın değil; viski ve lüks ofis ortamlarını tercih ediyor.",
               "detail": "48 yaşında, resmi ve soğuk."
             },
             {
               "id": "s2",
               "name": "Osmanlı Subayı Nuri Bey",
-              "icon": "🎖️",
+              "icon": "noun-emekli-albay-avatar.png",
               "description": "Komutanın altındaki hırslı subay. Büyük borçları olan ve terfi alamazsa hacizle yüzleşecek olan, tersanedeki ağır metal işleyişine hakim figür.",
               "detail": "35 yaşında, hırslı, borçlu."
             },
             {
               "id": "s3",
               "name": "Alman Rakip Herr Vogel",
-              "icon": "⚙️",
+              "icon": "noun-sommelier-1574346",
               "description": "Alman endüstri devinin temsilcisi. İngiliz mühendisle rekabet halinde olan, sadece resmi ofis alanlarına giriş izni bulunan diplomat.",
               "detail": "52 yaşında, büyük bıyıklı, sabırsız."
             },
             {
               "id": "s4",
               "name": "Tersane Bekçisi Rıza",
-              "icon": "💂",
+              "icon": "noun-police-1574386",
               "description": "Tek kapı bekçisi. Giriş-çıkış defterini tutan, rüşvete zaafı olan ve ağır yükleri taşımaya alışkın tersane emektarı.",
               "detail": "60 yaşında, rüşvete açık olduğu söyleniyor."
             }
@@ -679,28 +679,28 @@
             {
               "id": "s1",
               "name": "Müze Müdürü Aziz Bey",
-              "icon": "🧐",
+              "icon": "noun-judge-1574345",
               "description": "Resmi dönüşümün başındaki idari sorumlu. Bürokratik işlerle ilgilenen, kimya ve endüstriyel askeri teçhizatlar konusunda hiçbir bilgisi olmayan devlet görevlisi.",
               "detail": "55 yaşında, bürokratik, devlet sadakati ön planda."
             },
             {
               "id": "s2",
               "name": "İngiliz Arkeolog Pembrooke",
-              "icon": "🔍",
+              "icon": "noun-detective-1574359-avatar.png",
               "description": "British Museum adına sahada olan, 1. Dünya Savaşı'nda askeri kimya ve gaz sistemleri üzerine çalışmış, haritayı Londra'ya kaçırmak isteyen ajan-arkeolog.",
               "detail": "40 yaşında, akademik, haritanın kopyasına sahip olduğu iddia ediliyor."
             },
             {
               "id": "s3",
               "name": "Yeraltı Tüccarı Yorgo",
-              "icon": "🤝",
+              "icon": "noun-ortak-sabri-bey-avatar.png",
               "description": "Tarihi eser kaçakçısı. Sadece antika hançerler ve meyhane ağlarıyla ilgilenen, Ayasofya'nın altındaki gizli dehlizlerin şifrelerini bilmeyen suç lideri.",
               "detail": "50'li yaşlarda, silik, her ortamda kaybolur."
             },
             {
               "id": "s4",
               "name": "Arkeologun Asistanı Fatma",
-              "icon": "🎓",
+              "icon": "noun-torun-nermin-avatar.png",
               "description": "Haritanın varlığını bilen sadık asistan. Antika hançerleri ve kazı alanlarını iyi bilen ancak endüstriyel savaş gazlarına erişimi olmayan araştırmacı.",
               "detail": "28 yaşında, zeki, korku içinde görünüyor."
             }
@@ -864,21 +864,21 @@
             {
               "id": "s1",
               "name": "Rakip Yönetmen Sofia Reyes",
-              "icon": "🎥",
+              "icon": "noun-singer-1908915",
               "description": "Gecenin en büyük ödülünü kazanan dahi yönetmen. Maktulle aralarında 20 yıla uzanan, sinema endüstrisinin yakından bildiği köklü bir sanatsal husumet var.",
               "detail": "45 yaşında, Meksikalı, güçlü karakter."
             },
             {
               "id": "s2",
               "name": "Yapımcı Marcus Gold",
-              "icon": "💼",
+              "icon": "noun-cem-bey-avatar.png",
               "description": "Maktulün son filminin arkasındaki dev bütçeli stüdyonun patronu. Finansal krizde olan ve sözleşme fesihleri yüzünden maktulle büyük para anlaşmazlığı yaşayan iş adamı.",
               "detail": "58 yaşında, kravatlı, soğuk bakışlı."
             },
             {
               "id": "s3",
               "name": "Genç Oyuncu Jade Lin",
-              "icon": "⭐",
+              "icon": "noun-zeynep-hanim-avatar.png",
               "description": "Yönetmenin son gişe rekortmeni filminin başrol oyuncusu. Sektör kulislerinde maktul tarafından reddedilen aşkı yüzünden gururu kırıldığı konuşulan yıldız adayı.",
               "detail": "26 yaşında, zarif, sessiz."
             }
@@ -1011,21 +1011,21 @@
             {
               "id": "s1",
               "name": "Baş Oyuncu Derek Stone",
-              "icon": "🎭",
+              "icon": "noun-sommelier-1574356",
               "description": "Filminin 188 cm boyundaki dev yıldızı. Senaryoda kendi sahnelerinin tasarımcı tarafından sabote edilip kısaltıldığını öğrenince öfke krizine giren kibirli aktör.",
               "detail": "35 yaşında, ego sorunu olan Hollywood starı."
             },
             {
               "id": "s2",
               "name": "Yardımcı Yönetmen Priya Shah",
-              "icon": "🎞️",
+              "icon": "noun-teacher-1908918-avatar.png",
               "description": "172 cm boyunda, rakip stüdyo ile gizli transfer görüşmeleri yürüten ve köstebeklik şüphesiyle tasarımcının radarında olan hırslı sinemacı.",
               "detail": "38 yaşında, kararlı, hırslı."
             },
             {
               "id": "s3",
               "name": "Set Güvenlik Görevlisi Tom Brady",
-              "icon": "💂",
+              "icon": "noun-bricklaying-1574372-avatar.png",
               "description": "183 cm boyunda, gece vardiyasında kostüm depolarının bulunduğu koridorların şifrelerinden sorumlu, eski polis, sert mizaçlı güvenlik personeli.",
               "detail": "50 yaşında, emekli polis, sert görünümlü."
             }
@@ -1163,21 +1163,21 @@
             {
               "id": "s1",
               "name": "Amerikalı Rakip Jake Mercer",
-              "icon": "📹",
+              "icon": "noun-driver-1574355",
               "description": "Festivaldeki en dişli rakip yapımcı. Kendi fikirlerinin maktul tarafından çalındığını iddia eden, yatın mutfak ve güverte işleyişinden tamamen habersiz yabancı.",
               "detail": "50 yaşında, agresif müzakereci."
             },
             {
               "id": "s2",
               "name": "Fransız Eleştirmen Isabelle Renard",
-              "icon": "📝",
+              "icon": "noun-pazar-musteri-hanim.png",
               "description": "Yazdığı zehir zemberek yazılarla filmin şansını baltalayan, entelektüel, fiziksel boğuşmalara girmekten kaçınan ve tüm geceyi salon içinde geçiren kadın.",
               "detail": "42 yaşında, sert kalemli, tahmin edilemez."
             },
             {
               "id": "s3",
               "name": "Yat Kaptanı Nikos",
-              "icon": "⚓",
+              "icon": "noun-captain-1574342",
               "description": "Maktulün şahsi kaptanı. Ödenmeyen maaşları ve maktulün gizli hesapları yüzünden öfkeli olan, güverte alanlarına ve deniz koşullarına tamamen hakim profesyonel.",
               "detail": "55 yaşında, deneyimli, sessiz."
             }
@@ -1320,28 +1320,28 @@
             {
               "id": "s1",
               "name": "Ajan Rachel Kim",
-              "icon": "📋",
+              "icon": "noun-receptionist-1574384",
               "description": "Senaristin başka bir dev ajansla anlaşacağını öğrenen şahsi ajanı. Çantası geniş olan, yazarın otoparktaki buluşma saatini bilen tek hırslı yönetici.",
               "detail": "40 yaşında, ağının en güçlüsü."
             },
             {
               "id": "s2",
               "name": "Yönetmen Brett Walsh",
-              "icon": "🎬",
+              "icon": "noun-judge-1574345",
               "description": "Senaryoyu çekmek için haftalarca kapıda bekleyen ancak yazar tarafından sert bir dille reddedilen, otopark alanlarına giriş izni olmayan sinemacı.",
               "detail": "48 yaşında, kontrolcü."
             },
             {
               "id": "s3",
               "name": "Stüdyo Hukuk Direktörü Amy Cross",
-              "icon": "⚖️",
+              "icon": "noun-woman-3758180",
               "description": "Yazarın telif davaları yüzünden stüdyosunu tehdit ettiği hukuk sorumlusu. Tüm gecesini binanın üst katındaki toplantı odasında delegelerle geçiren kadın.",
               "detail": "52 yaşında, soğuk ve hesaplı."
             },
             {
               "id": "s4",
               "name": "Rakip Senarist Carlos Vega",
-              "icon": "✍️",
+              "icon": "noun-artist-1574348",
               "description": "Benzer bir konsept üzerinde çalışan ancak yazarın eseri yüzünden her zaman ikinci planda kalan, fiziksel kaba kuvvet kullanımından kaçınan yazar.",
               "detail": "33 yaşında, kıskanç."
             }
@@ -1506,28 +1506,28 @@
             {
               "id": "s1",
               "name": "Yeğen Brandon Vale",
-              "icon": "💰",
+              "icon": "noun-human-3758075-avatar.png",
               "description": "Eski vasiyetnamede tek mirasçı olan ancak yeni düzenlemeyle tüm haklarını kaybetmek üzere olan, havuz başı partilerinden ayrılmayan kumarbaz akraba.",
               "detail": "29 yaşında, bağımlılık geçmişi."
             },
             {
               "id": "s2",
               "name": "Yeni Sevgili Marco Silva",
-              "icon": "💋",
+              "icon": "noun-human-3758078-avatar.png",
               "description": "6 aylık ilişkiyle mirasın 40%'ına konmak üzere olan genç sevgili. Sürekli üst balkonda veya yatak odasında vakit geçiren, mutfak işlerinden anlamayan figür.",
               "detail": "31 yaşında, Brezilya asıllı, önceki ilişkileri bilinmiyor."
             },
             {
               "id": "s3",
               "name": "Avukat Dana Price",
-              "icon": "⚖️",
+              "icon": "noun-yolcu-feriha-avatar.png",
               "description": "Vasiyeti resmi olarak değiştiren, hukuki işlemlerle ilgilenen ancak malikanenin içki ve servis düzenine tamamen yabancı olan bürokrat.",
               "detail": "55 yaşında, soğuk profisyonel."
             },
             {
               "id": "s4",
               "name": "Eski Asistan Grace Lee",
-              "icon": "🗂️",
+              "icon": "noun-woman-3758196",
               "description": "10 yıldır ikona sadakatle hizmet eden ancak yeni vasiyetnamede adının tamamen silindiğini öğrenince intikam yemini eden, malikanenin tüm içki ve servis düzeninden sorumlu çalışan.",
               "detail": "45 yaşında, kırık kalpli ve sessiz öfkeli."
             }
@@ -1696,21 +1696,21 @@
             {
               "id": "s1",
               "name": "Komutan Lyra Chen",
-              "icon": "🚀",
+              "icon": "noun-captain-1574344",
               "description": "İstasyon komutanı. Formülün askeri uygulamasına karşı çıkan bilim insanıyla anlaşmazlığı var.",
               "detail": "42 yaşında, disiplinli, şüpheli geçmiş."
             },
             {
               "id": "s2",
               "name": "Yapay Zeka ARES-3",
-              "icon": "🤖",
+              "icon": "noun-astronaut-1574374",
               "description": "İstasyonun yönetim yapay zekası. Formüle erişimi var ama 'duygusal karar veremez'.",
               "detail": "7 yıllık istasyon YZ'si, son güncelleme tartışmalı."
             },
             {
               "id": "s3",
               "name": "Tıp Mühendisi Osman Demir",
-              "icon": "🔧",
+              "icon": "noun-mechanic-1574363",
               "description": "İstasyonun sağlık sorumlusu. Formülü rakip şirkete sızdırdığı şüphesi var.",
               "detail": "35 yaşında, gergin, Türkiye Uzay Ajansı burslusu."
             }
@@ -1849,21 +1849,21 @@
             {
               "id": "s1",
               "name": "YZ Avukat LEXIS",
-              "icon": "⚖️",
+              "icon": "noun-detective-1574357",
               "description": "YZ haklarını savunuyor. Mahkeme kararı aleyhine dönüyordu.",
               "detail": "Son modeli yapay zeka, duygusal simülasyon kapasitesi var."
             },
             {
               "id": "s2",
               "name": "Savcı Amara Diallo",
-              "icon": "📢",
+              "icon": "noun-police-1574386",
               "description": "YZ haklarına karşı çıkan savcı. Ölüm onun işine yarıyor.",
               "detail": "38 yaşında, sert, politikacı destekli."
             },
             {
               "id": "s3",
               "name": "Lobici Viktor Crane",
-              "icon": "💼",
+              "icon": "noun-sommelier-1574346",
               "description": "YZ'leri köle iş gücü olarak kullanan şirketin lobicisi.",
               "detail": "55 yaşında, şişman, para konuşturmaya alışmış."
             }
@@ -2014,21 +2014,21 @@
             {
               "id": "s1",
               "name": "Dr. Elena (Orijinal)",
-              "icon": "🔬",
+              "icon": "noun-doctor-1574385",
               "description": "Merkezin kurucusu. Klonuna her şeyini öğretti.",
               "detail": "50 yaşında, bilimsel, soğukkanlı."
             },
             {
               "id": "s2",
               "name": "Elena-K (Klon)",
-              "icon": "🤖",
+              "icon": "noun-nurse-1908914",
               "description": "2 yıllık klon. Yasal olarak ayrı birey ama aynı hafızayla başladı.",
               "detail": "Biyolojik 50, kronolojik 2 yıl. Özerklik savaşı veriyor."
             },
             {
               "id": "s3",
               "name": "Lisans Direktörü Haruto",
-              "icon": "📋",
+              "icon": "noun-japanese-3758201",
               "description": "Klonun yasal statüsünü reddedecekti. Bu klon için ölüm emri anlamına gelir.",
               "detail": "45 yaşında, bürokratik, kurallara bağlı."
             }
@@ -2190,28 +2190,28 @@
             {
               "id": "s1",
               "name": "Fizikçi Dr. Zara Okafor",
-              "icon": "🔭",
+              "icon": "noun-teacher-1908916-avatar.png",
               "description": "Rakip teorisini ispat etmek istiyordu.",
               "detail": "40 yaşında, Nijerya Uzay Ajansı."
             },
             {
               "id": "s2",
               "name": "Mühendis Pavel Sorokin",
-              "icon": "🔧",
+              "icon": "noun-welder-1574373",
               "description": "Deneyin teknik sorumlusu. Sabotaj şüphesi.",
               "detail": "45 yaşında, Rusya menşeli, soğuk."
             },
             {
               "id": "s3",
               "name": "Ajan Keiko Mori",
-              "icon": "🕵️",
+              "icon": "noun-woman-3758198",
               "description": "Japon uzay ajansı istihbaratı. Gizli görev.",
               "detail": "33 yaşında, gözlemci, konuşkan değil."
             },
             {
               "id": "s4",
               "name": "Üs Komutanı Rex Torres",
-              "icon": "🚀",
+              "icon": "noun-captain-1574369",
               "description": "Son kararları o veriyor. Mali baskı altında.",
               "detail": "52 yaşında, asker ruhlu, stres altında."
             }
@@ -2405,28 +2405,28 @@
             {
               "id": "s1",
               "name": "Kronolojist Dr. Noa Fischer",
-              "icon": "🔭",
+              "icon": "noun-teacher-1908919-avatar.png",
               "description": "Zaman fiziği uzmanı. Paradoksun tek anlayabileceği kişi.",
               "detail": "55 yaşında, Alman, kendi geleceğini gördüğünü iddia ediyor."
             },
             {
               "id": "s2",
               "name": "Mühendis Yuki Tanaka",
-              "icon": "⚙️",
+              "icon": "noun-electrician-1574353",
               "description": "Zaman makinesi tasarımcısı. Sabotaj edebilir.",
               "detail": "38 yaşında, mükemmeliyetçi."
             },
             {
               "id": "s3",
               "name": "Güvenlik Şefi Marcus Webb",
-              "icon": "🛡️",
+              "icon": "noun-soldier-1574347",
               "description": "Projeyi kapatmak isteyen hükümet ajanı.",
               "detail": "50 yaşında, asker geçmişli."
             },
             {
               "id": "s4",
               "name": "Maktulün Geleceği (K-Prime)",
-              "icon": "⌛",
+              "icon": "noun-astronaut-1574374",
               "description": "Gelecekten gelen maktulün kendisi — ölmeden önce mi, sonra mı?",
               "detail": "Bu şüpheli paradoks içinde — kim gerçek?"
             }
@@ -2638,21 +2638,21 @@
             {
               "id": "s1",
               "name": "Kıskanç Rakip Soprano Helga",
-              "icon": "🎵",
+              "icon": "noun-singer-1574378",
               "description": "20 yıldır ana rolü oynamak istiyordu.",
               "detail": "48 yaşında, dramatik, sahnede büyüleyici."
             },
             {
               "id": "s2",
               "name": "Opera Direktörü Franz",
-              "icon": "🎼",
+              "icon": "noun-sommelier-1574346",
               "description": "Sopranonun sözleşmesini yenilemeyeceğini açıklayacaktı.",
               "detail": "60 yaşında, soğuk iş insanı."
             },
             {
               "id": "s3",
               "name": "Gizemli Hayran Karl",
-              "icon": "🌹",
+              "icon": "noun-bricklaying-1574366",
               "description": "Her gecenin ardından gülden buket gönderen anonim hayran.",
               "detail": "35 yaşında, obsesif, zararsız gibi görünüyor ama..."
             }
@@ -2796,21 +2796,21 @@
             {
               "id": "s1",
               "name": "Yarbay Rothwick",
-              "icon": "🎖️",
+              "icon": "noun-soldier-1574347",
               "description": "Eski sömürge subayı. Maktulden borcu var.",
               "detail": "58 yaşında, sert, brandy içiyor."
             },
             {
               "id": "s2",
               "name": "Ev Sahibesi Lady Pembridge",
-              "icon": "👑",
+              "icon": "noun-nazik-hanim-avatar.png",
               "description": "Mansiyon sahibi. Maktul vasiyetini değiştirmeden önce öldü.",
               "detail": "65 yaşında, zarif, gözlemci."
             },
             {
               "id": "s3",
               "name": "Genç Yeğen Archie",
-              "icon": "🥃",
+              "icon": "noun-human-3758075-avatar.png",
               "description": "Mansiyon mirasını bekliyor. Maktul mirasçı değiştirdi.",
               "detail": "27 yaşında, mirasyedi, alkol sorunu."
             }
@@ -2978,21 +2978,21 @@
             {
               "id": "s1",
               "name": "Banka Genel Müdürü Weston",
-              "icon": "💼",
+              "icon": "noun-judge-1574345",
               "description": "Analist raporunu kamuoyuyla paylaşacaktı — bu bankayi batırırdı.",
               "detail": "55 yaşında, suit içinde, steril bakışlı."
             },
             {
               "id": "s2",
               "name": "SEC Yetkilisi Margaret",
-              "icon": "⚖️",
+              "icon": "noun-teacher-1908916-avatar.png",
               "description": "Soruşturmayı kapatmak için baskı altında.",
               "detail": "48 yaşında, kararlı görünümlü ama içi çürük."
             },
             {
               "id": "s3",
               "name": "İçeriden Bilgi Veren Frank",
-              "icon": "🤫",
+              "icon": "noun-detective-1574357",
               "description": "Analistin kaynağı. Şimdi ortaya çıkabilir.",
               "detail": "40 yaşında, paranoyak, sigara tiryakisi."
             }
@@ -3142,28 +3142,28 @@
             {
               "id": "s1",
               "name": "Baş Küratör Violette",
-              "icon": "🎨",
+              "icon": "noun-artist-1574354-avatar.png",
               "description": "Tablonun gerçek olmadığını bilen tek kişiydi.",
               "detail": "52 yaşında, Fransız, sanat dedektifi."
             },
             {
               "id": "s2",
               "name": "Güvenlik Teknisyeni Leo",
-              "icon": "🔧",
+              "icon": "noun-electrician-1574353",
               "description": "Alarm sistemini biliyor. Düşük maaş şikâyeti.",
               "detail": "30 yaşında, teknik dahi, dürüst görünümlü."
             },
             {
               "id": "s3",
               "name": "Alman Koleksiyoncu Hans Berger",
-              "icon": "🕶️",
+              "icon": "noun-sommelier-1574356",
               "description": "Tabloyu 5 yıldır almak istiyor, reddedildi.",
               "detail": "65 yaşında, varlıklı, sabırsız."
             },
             {
               "id": "s4",
               "name": "Yeni Stajyer Camille",
-              "icon": "🎓",
+              "icon": "noun-torun-nermin-avatar.png",
               "description": "İlk haftası. Ama tüm koridorları biliyor gibi.",
               "detail": "22 yaşında, genç, çok meraklı."
             }
@@ -3358,28 +3358,28 @@
             {
               "id": "s1",
               "name": "Editör Heloise Vance",
-              "icon": "📝",
+              "icon": "noun-woman-3758180",
               "description": "Romanı okuyup anlayan ilk kişi. Yayımlanmasını engelledi.",
               "detail": "50 yaşında, keskin zekâlı, yayınevini koruma içgüdüsü."
             },
             {
               "id": "s2",
               "name": "Yazarın Kız Kardeşi Renata",
-              "icon": "📖",
+              "icon": "noun-zeynep-hanim-avatar.png",
               "description": "Roman, ailenin eski sırrını açıklıyor.",
               "detail": "45 yaşında, sinirli, gizli bir travması var."
             },
             {
               "id": "s3",
               "name": "İsviçre Savcısı Klein",
-              "icon": "⚖️",
+              "icon": "noun-judge-1574345",
               "description": "30 yıl önce kapatılan bir davayı roman yeniden açacak.",
               "detail": "62 yaşında, emeklilik öncesi, panikleyebilir."
             },
             {
               "id": "s4",
               "name": "Genç Gazeteci Marco",
-              "icon": "📰",
+              "icon": "noun-driver-1574355",
               "description": "Romanı sızdırıp büyük haber yapmak istiyor.",
               "detail": "28 yaşında, hırslı, sınır tanımaz."
             }
@@ -3590,21 +3590,21 @@
             {
               "id": "s1",
               "name": "Eski Hemşire Ayşe",
-              "icon": "🩹",
+              "icon": "noun-hizmetci-hacer-avatar.png",
               "description": "Hastanenin kapanmasını hiç kabullenemedi. Hâlâ bakıyor.",
               "detail": "70 yaşında, yorgun gözlü, sırrı var."
             },
             {
               "id": "s2",
               "name": "Mülk Sahibi Fuat Bey",
-              "icon": "🏗️",
+              "icon": "noun-vahap-amca-avatar.png",
               "description": "Binayı yıkıp otelyapmak istiyor. Doktor buna engel olabilirdi.",
               "detail": "55 yaşında, sabırsız, paranoyak."
             },
             {
               "id": "s3",
               "name": "Yerel Gazeteci Canan",
-              "icon": "📰",
+              "icon": "noun-nazik-hanim-avatar.png",
               "description": "Doktorla birlikte araştırma yapıyordu. Şimdi yalnız.",
               "detail": "30 yaşında, korkmuş ama meraklı."
             }
@@ -3756,21 +3756,21 @@
             {
               "id": "s1",
               "name": "Yaşlı Muhtar Hasan Dede",
-              "icon": "🏡",
+              "icon": "noun-komsu-nevzat-avatar.png",
               "description": "Köyün sırrını biliyor. Miras meselesine karşı.",
               "detail": "80 yaşında, otoriter, ölene kadar konuşmayacak gibi."
             },
             {
               "id": "s2",
               "name": "Avukat Serkan",
-              "icon": "💼",
+              "icon": "noun-cem-bey-avatar.png",
               "description": "Miras meselesini çözmek için gelen kentli avukat.",
               "detail": "38 yaşında, sinirli, köy hayatından uzak."
             },
             {
               "id": "s3",
               "name": "Komşu Köylü Fatma Ana",
-              "icon": "🧺",
+              "icon": "noun-pazar-musteri-hanim.png",
               "description": "60 yıldır köyün kenarında yaşıyor, her şeyi görmüş.",
               "detail": "75 yaşında, gözlemci, susmayı biliyor."
             }
@@ -3922,21 +3922,21 @@
             {
               "id": "s1",
               "name": "Yalı Sahibi Mme. Dolores",
-              "icon": "🌊",
+              "icon": "noun-semiha-hanim-avatar.png",
               "description": "Araştırmacının 'ruhları rahatsız ettiğini' söylüyordu.",
               "detail": "65 yaşında, Rum asıllı, gizemli."
             },
             {
               "id": "s2",
               "name": "Asistan Tarık",
-              "icon": "🧪",
+              "icon": "noun-usak-mehmet-avatar.png",
               "description": "Araştırmacının 10 yıllık asistanı. Ama son ay garip.",
               "detail": "35 yaşında, yorgun, bir şey gizliyor."
             },
             {
               "id": "s3",
               "name": "Yalı Bekçisi Yaşar",
-              "icon": "🔑",
+              "icon": "noun-komsu-nevzat-avatar.png",
               "description": "40 yıldır yalıda. Her köşeyi biliyor.",
               "detail": "65 yaşında, sakin ama sırları olan biri."
             }
@@ -4087,28 +4087,28 @@
             {
               "id": "s1",
               "name": "Mühendis Emre",
-              "icon": "🔧",
+              "icon": "noun-mechanic-1574363",
               "description": "En güçlü ve pratik kişi. İlk paniği o bastırdı.",
               "detail": "32 yaşında, lider ruhlu, stres altında değişiyor."
             },
             {
               "id": "s2",
               "name": "Doktor Sibel",
-              "icon": "🩺",
+              "icon": "noun-doctor-1574385",
               "description": "Tıbbi otopsiyi yapabilecek tek kişi. İlk müdahaleyi o yaptı.",
               "detail": "30 yaşında, sakin, çok sakin."
             },
             {
               "id": "s3",
               "name": "Öğretmen Kemal",
-              "icon": "📚",
+              "icon": "noun-makinist-kerem-avatar.png",
               "description": "Grupta en sessiz. Maktulla son konuşan.",
               "detail": "35 yaşında, içe kapanık, büyük gözlü."
             },
             {
               "id": "s4",
               "name": "Fotoğrafçı Deniz",
-              "icon": "📷",
+              "icon": "noun-artist-1574348",
               "description": "Her şeyi fotoğrafladı — ama bir fotoğraf eksik.",
               "detail": "28 yaşında, meraklı, dikkatli gözü var."
             }
@@ -4303,28 +4303,28 @@
             {
               "id": "s1",
               "name": "Baş Güverte Subayı Murat",
-              "icon": "⚓",
+              "icon": "noun-captain-1574342",
               "description": "Kaptanın en yakın çalışanı. Terfi bekliyor.",
               "detail": "40 yaşında, deneyimli, gözleri yorgun."
             },
             {
               "id": "s2",
               "name": "Gemi Mühendisi Olga",
-              "icon": "🔧",
+              "icon": "noun-electrician-1574361",
               "description": "Ukraynalı mühendis. Kaptanla para meselesi.",
               "detail": "35 yaşında, pratik, sessiz öfkeli."
             },
             {
               "id": "s3",
               "name": "Kaçak Yolcu Samir",
-              "icon": "🤫",
+              "icon": "noun-yolcu-tarik-avatar.png",
               "description": "Gemide gizlenen biri. Kim, neden?",
               "detail": "Yaşı belirsiz, kimliği yok, anlaşılmaz bir bağlantı."
             },
             {
               "id": "s4",
               "name": "Armatör Vekili Hüseyin Paşa",
-              "icon": "💼",
+              "icon": "noun-ortak-sabri-bey-avatar.png",
               "description": "Geminin sahibi adına yönetiyor. Kargo meselesinde kaptanla çatışma.",
               "detail": "60 yaşında, pahalı giyimli, sinirli."
             }
@@ -4540,21 +4540,21 @@
             {
               "id": "s1",
               "name": "Gazeteci Walter Cross",
-              "icon": "🗞️",
+              "icon": "noun-driver-1574358-avatar.png",
               "description": "Mektupları yayımlayan gazeteci. Haberler sayesinde ünlendi.",
               "detail": "42 yaşında, sigara tiryakisi, gergin."
             },
             {
               "id": "s2",
               "name": "Dedektif Ray Moreno",
-              "icon": "🕵️",
+              "icon": "noun-detective-1574359-avatar.png",
               "description": "Davayı yürüten polis dedektifi. Çözüme yaklaşıyor diye iddia ediyor.",
               "detail": "50 yaşında, yorgun gözlü, içki problemi var."
             },
             {
               "id": "s3",
               "name": "Kriptograf Dr. Ellis",
-              "icon": "🧩",
+              "icon": "noun-electrician-1574353",
               "description": "Şifreleri çözmek için çağrılan akademisyen. Şifrenin içeriğini biliyor.",
               "detail": "38 yaşında, gözlüklü, kendi şifrelerini kullanıyor."
             }
@@ -4769,21 +4769,21 @@
             {
               "id": "s1",
               "name": "Cerrah Dr. Pemberton",
-              "icon": "🩺",
+              "icon": "noun-doctor-1574377",
               "description": "Anatomiye olan obsesif ilgisiyle bilinen eski ordu cerrahı.",
               "detail": "55 yaşında, soğuk, cerrahi hassasiyetiyle konuşur."
             },
             {
               "id": "s2",
               "name": "Dedektif Inspector Holt",
-              "icon": "🎩",
+              "icon": "noun-detective-1574357",
               "description": "Suçluları takip etmekle görevli ama her vakada geç kalıyor.",
               "detail": "48 yaşında, bıyıklı, söylemediği şeyler var."
             },
             {
               "id": "s3",
               "name": "Gazeteci Miss Hartley",
-              "icon": "✒️",
+              "icon": "noun-pazar-musteri-hanim.png",
               "description": "Kadın gazeteci, her olay yerinde ilk o oluyor.",
               "detail": "32 yaşında, cesur, dönemi için alışılmadık biri."
             }
@@ -5029,28 +5029,28 @@
             {
               "id": "s1",
               "name": "Eski Profesör Aldric",
-              "icon": "🎓",
+              "icon": "noun-teacher-1908916-avatar.png",
               "description": "Üniversiteden kovulan kimya profesörü. Teknoloji düşmanı.",
               "detail": "62 yaşında, dağınık saçlı, gözlüklü, izole yaşıyor."
             },
             {
               "id": "s2",
               "name": "FBI Ajanı Sandra Cole",
-              "icon": "🕵️",
+              "icon": "noun-receptionist-1574384",
               "description": "15 yıldır bu davayı yürütüyor. Çok biliyor, belki fazla.",
               "detail": "45 yaşında, soğuk, dosyaları ezber biliyor."
             },
             {
               "id": "s3",
               "name": "Kimyager Victor Lans",
-              "icon": "🧬",
+              "icon": "noun-electrician-1574361",
               "description": "Özel sektörde çalışan kimyager. Aldric'in eski öğrencisi.",
               "detail": "38 yaşında, sakin, ama kimyasal bilgisi ürkütücü."
             },
             {
               "id": "s4",
               "name": "Posta Memuru Danny",
-              "icon": "📬",
+              "icon": "noun-kurye-murat-pazar-avatar.png",
               "description": "15 yıldır o bölgede çalışıyor. Paketlerin rotasını biliyor.",
               "detail": "55 yaşında, içe kapanık, 2 yıl önce terapi gördü."
             }
@@ -5355,21 +5355,21 @@
             {
               "id": "s1",
               "name": "Gräfin Elsa von Traben",
-              "icon": "🎭",
+              "icon": "noun-zeynep-hanim-avatar.png",
               "description": "Aristo miras sahibi, balo organizatörü",
               "detail": "45 yaşında, soluk tenli, kalın eldiven takar — kurbanın eski hastasıymış ve tedavi notlarının ifşasından korkuyormuş."
             },
             {
               "id": "s2",
               "name": "Viktor Salko",
-              "icon": "🎻",
+              "icon": "noun-singer-1574375",
               "description": "Saray orkestrasının baş kemancısı",
               "detail": "32 yaşında, sinirli bir adam; kurban onun sahte diploma belgesini ele geçirmişti."
             },
             {
               "id": "s3",
               "name": "Dr. Marta Engel",
-              "icon": "🔬",
+              "icon": "noun-nurse-1908914",
               "description": "Rakip psikanalist, kurbanın eski asistanı",
               "detail": "38 yaşında, gözlüklü, sessiz; kurbanın araştırmalarını izinsiz yayımladığı iddiasıyla dava açılmak üzereydi."
             }
@@ -5529,21 +5529,21 @@
             {
               "id": "s1",
               "name": "Haruki Sendo",
-              "icon": "💼",
+              "icon": "noun-japanese-3758201",
               "description": "Rakip şirket müzakerecisi",
               "detail": "51 yaşında, soğukkanlı; kurbanın yarın imzalanacak olan dev patenti bloke etmeye çalışıyordu."
             },
             {
               "id": "s2",
               "name": "Yuki Tanamoto",
-              "icon": "📷",
+              "icon": "noun-japanese-3758164",
               "description": "Gazeteci, araştırmacı muhabir",
               "detail": "29 yaşında, zayıf; kurbanın şirketinin çevre skandalını belgeliyordu — kurban haberin yayımlanmasını durdurmaya çalışıyordu."
             },
             {
               "id": "s3",
               "name": "İvan Petrov",
-              "icon": "🕵️",
+              "icon": "noun-sommelier-1574346",
               "description": "Sovyet sanayi casusluğu şüphelisi",
               "detail": "44 yaşında, şişman; pasaportunda sahte kimlik, kurbanın elindeki mikro film onu ifşa edecekti."
             }
@@ -5729,21 +5729,21 @@
             {
               "id": "s1",
               "name": "Ares (Savaş Tanrısı)",
-              "icon": "⚔️",
+              "icon": "noun-soldier-1574347",
               "description": "Öfkeli ve dürtüsel. Maktul onun alanına girdi.",
               "detail": "Kırmızı zırhı, savaş enerjisi. Kontrolsüz."
             },
             {
               "id": "s2",
               "name": "Hermes (Haber Tanrısı)",
-              "icon": "🪶",
+              "icon": "noun-captain-1574342",
               "description": "Her yere ulaşabilir, her şeyi bilir. Çok biliyor.",
               "detail": "Kanatlı sandalet. Hızlı, aldatıcı, akıllı."
             },
             {
               "id": "s3",
               "name": "Hera (Tanrıçaların Kraliçesi)",
-              "icon": "🦚",
+              "icon": "noun-woman-3758180",
               "description": "Zeus'un eşi. Kıskançlığıyla bilinen. Maktul Zeus'a yakındı.",
               "detail": "Tavus kuşu tüyü, soğuk bakış, hesaplı."
             }
@@ -5954,21 +5954,21 @@
             {
               "id": "s1",
               "name": "Başdemirci Temür Usta",
-              "icon": "🔨",
+              "icon": "noun-welder-1574373",
               "description": "Demir eritme töreninin ustası. Maktul törenin gününü değiştirmişti.",
               "detail": "Güçlü, yaşlı, Ergenekon'un bekçisi."
             },
             {
               "id": "s2",
               "name": "Şaman Albastı",
-              "icon": "🪘",
+              "icon": "noun-gezgin-dervis-salih-avatar.png",
               "description": "Ruhlarla konuşan, geleceği gören. Maktulün kararına karşıydı.",
               "detail": "Gizemli, yaşlı kadın, ruh dünyasıyla bağlantılı."
             },
             {
               "id": "s3",
               "name": "Rum Elçi Konstantinos",
-              "icon": "🏺",
+              "icon": "noun-sommelier-1574346",
               "description": "Dışarıdan gelen yabancı. Ergenekon'un sırrını öğrenmek istiyor.",
               "detail": "Diplomatik, zeki, Türkçe biliyor."
             }
@@ -6209,28 +6209,28 @@
             {
               "id": "s1",
               "name": "Juno (Hera'nın Roma Karşılığı)",
-              "icon": "🦚",
+              "icon": "noun-woman-3758196",
               "description": "Aeneas'a kin besleyen tanrıça. Her fırsatta engel çıkarıyor.",
               "detail": "Güçlü, kıskanç, hesaplı."
             },
             {
               "id": "s2",
               "name": "Turnus (Rakip Kral)",
-              "icon": "🛡️",
+              "icon": "noun-soldier-1574347",
               "description": "Aeneas'ın rakibi. Maktul Turnus'un sırını biliyordu.",
               "detail": "Genç, ateşli, savaşçı ruhlu."
             },
             {
               "id": "s3",
               "name": "Sinon (Truva Atı'nın Yalanı)",
-              "icon": "🐴",
+              "icon": "noun-outlaw-1574387",
               "description": "Tarihin en büyük yalanını söyleyen Yunan casusu.",
               "detail": "Soğukkanlı, ikiyüzlü, her ortama uyar."
             },
             {
               "id": "s4",
               "name": "Dido (Kartaca Kraliçesi)",
-              "icon": "👸",
+              "icon": "noun-semiha-hanim-avatar.png",
               "description": "Aeneas'a aşık olan ama terk edilen kraliçe.",
               "detail": "Tutkulu, acımasız, intikam dolu."
             }
@@ -6540,21 +6540,21 @@
             {
               "id": "s1",
               "name": "Thoth",
-              "icon": "📜",
+              "icon": "noun-priest-1574349",
               "description": "Bilgelik ve yazı tanrısı, ibis başlı",
               "detail": "Hesaplar tanrısı; Neferhor'un kendisine ait kehanetleri çarpıttığını öğrenmişti."
             },
             {
               "id": "s2",
               "name": "Set",
-              "icon": "🌪️",
+              "icon": "noun-miner-1574367",
               "description": "Kaos ve çöl tanrısı, hayvan başlı",
               "detail": "Karanlık güçlerin temsilcisi; kurbanın Ra'ya sunduğu rapor Set'i tapınaktan kovacaktı."
             },
             {
               "id": "s3",
               "name": "Sekhmet",
-              "icon": "🦁",
+              "icon": "noun-woman-3758198",
               "description": "Savaş ve şifa tanrıçası, aslan başlı",
               "detail": "Kurban, Sekhmet'in şifa ritüellerini sahte ilan etmişti — itibarı yerle bir olmuştu."
             }
@@ -6695,21 +6695,21 @@
             {
               "id": "s1",
               "name": "Loki",
-              "icon": "🐍",
+              "icon": "noun-outlaw-1574387",
               "description": "Hile ve dönüşüm tanrısı",
               "detail": "Sonsuz kurnazlığıyla tanınır; kurban Loki'nin Odin'e karşı kurduğu son komplosunu fark etmişti."
             },
             {
               "id": "s2",
               "name": "Freya",
-              "icon": "🌸",
+              "icon": "noun-girl-3758186",
               "description": "Aşk ve savaş tanrıçası",
               "detail": "Valkyrie'lerin lideri; kurban Freya'nın seçtiği savaşçıların listesini değiştirmişti — bu ona ihanet sayılırdı."
             },
             {
               "id": "s3",
               "name": "Tyr",
-              "icon": "⚔️",
+              "icon": "noun-soldier-1574347",
               "description": "Adalet ve savaş tanrısı, tek elli",
               "detail": "Kurban, Tyr'ın onuruna yaraşır bir ölümle ölmediğini Valhalla kayıtlarına geçirmişti."
             }
@@ -6876,21 +6876,21 @@
             {
               "id": "s1",
               "name": "CEO Marcus Vault",
-              "icon": "💹",
+              "icon": "noun-sommelier-1574356",
               "description": "Borsa sahibi. Para 'kayboldu' ama acaba kaybedildi mi?",
               "detail": "40 yaşında, kripto milyarderi, baskı altında."
             },
             {
               "id": "s2",
               "name": "Baş Hacker 'GhostKey'",
-              "icon": "🕶️",
+              "icon": "noun-punk-3758209",
               "description": "Kimliği bilinmeyen anonim hacker. Sisteme sızdı mı?",
               "detail": "Yaşı bilinmiyor, cinsiyeti bilinmiyor, sadece kod var."
             },
             {
               "id": "s3",
               "name": "Risk Direktörü Priya Sen",
-              "icon": "📊",
+              "icon": "noun-teacher-1908919-avatar.png",
               "description": "Borsanın risklerini bilen tek kişi. Uyarıları dikkate alınmadı.",
               "detail": "35 yaşında, matematikçi, öfkeli."
             }
@@ -7158,21 +7158,21 @@
             {
               "id": "s1",
               "name": "YZ Araştırmacısı Dr. Zhao",
-              "icon": "🤖",
+              "icon": "noun-chinese-3758168",
               "description": "Şirketi farklı bir yöne çekmek istiyordu. Etik tartışması.",
               "detail": "42 yaşında, Çin asıllı, akademik, idealist."
             },
             {
               "id": "s2",
               "name": "Yatırımcı Felix Hartmann",
-              "icon": "💶",
+              "icon": "noun-bricklaying-1856284",
               "description": "50 milyon eurosu batma noktasında. Çözüm istiyordu.",
               "detail": "55 yaşında, Alman, soğuk ve kâr odaklı."
             },
             {
               "id": "s3",
               "name": "Eski Ortak Sofia Neves",
-              "icon": "💻",
+              "icon": "noun-woman-3758180",
               "description": "Fikri çalındı ve şirketten atıldı. Dava açmak üzereydi.",
               "detail": "38 yaşında, Portekizli, öfkeli ve haklı."
             }
@@ -7464,28 +7464,28 @@
             {
               "id": "s1",
               "name": "FBI Ajanı 'Cipher'",
-              "icon": "🔐",
+              "icon": "noun-detective-1574357",
               "description": "Undercover ajan. 2 yıldır içeride. Ne kadar ileri gitti?",
               "detail": "Kimliği gizli, sadece dijital iz var."
             },
             {
               "id": "s2",
               "name": "Rakip Market Sahibi 'Void'",
-              "icon": "🌑",
+              "icon": "noun-punk-3758219",
               "description": "Rakip dark web marketi. Rakibinin düşmesi işine yarar.",
               "detail": "Anonim, acımasız, dijital ayak izi bırakmaz."
             },
             {
               "id": "s3",
               "name": "Eski Ortak 'Nexus'",
-              "icon": "🔗",
+              "icon": "noun-electrician-1574361",
               "description": "Maktul tarafından dışlanan kurucu ortak. Payını istiyor.",
               "detail": "Kızgın, intikamcı, teknik bilgisi yüksek."
             },
             {
               "id": "s4",
               "name": "İnterpol Dedektifi Marlowe",
-              "icon": "👮",
+              "icon": "noun-detective-1574359-avatar.png",
               "description": "Uluslararası operasyonu yürüten ajan. 'Temiz' mi?",
               "detail": "50 yaşında, deneyimli, amaç araçları mı meşrulaştırır?"
             }
@@ -7817,21 +7817,21 @@
             {
               "id": "s1",
               "name": "Seda Mirkan",
-              "icon": "📸",
+              "icon": "noun-ressam-leyla-avatar.png",
               "description": "Ajansın en büyük influencer müşterisi, 3M takipçili",
               "detail": "27 yaşında, karizmatik; kurban Seda'nın takipçi verilerinin sahte bot'larla şişirildiğini reklam verenlerden gizlediğini öğrenmişti."
             },
             {
               "id": "s2",
               "name": "Tarık Demirbaş",
-              "icon": "💾",
+              "icon": "noun-yolcu-tarik-avatar.png",
               "description": "Ajans veri mühendisi, back-end sorumlusu",
               "detail": "34 yaşında, içe dönük; kurban Tarık'ın veri tabanından kullanıcı bilgilerini rakip firmaya sattığını keşfetmişti — yarın kovulacak ve savcıya bildirilecekti."
             },
             {
               "id": "s3",
               "name": "Dilek Aras",
-              "icon": "📊",
+              "icon": "noun-nazik-hanim-avatar.png",
               "description": "Marka ortaklık direktörü",
               "detail": "41 yaşında, hırslı; kurban Dilek'in imzaladığı gizli komisyon sözleşmelerini denetim kuruluna açıklamak üzereydi."
             }
@@ -8010,21 +8010,21 @@
             {
               "id": "s1",
               "name": "CipherX",
-              "icon": "🎮",
+              "icon": "noun-punk-3758223",
               "description": "En büyük NFT koleksiyoncusu, gerçek adı Barış Eren",
               "detail": "28 yaşında; kurban CipherX'in sahte 'NFT mint' belgesiyle 3 milyon dolar değerinde token bastığını keşfetmişti."
             },
             {
               "id": "s2",
               "name": "NullPtr",
-              "icon": "👾",
+              "icon": "noun-electrician-1574353",
               "description": "Platform güvenlik yöneticisi, gerçek adı Cansen Yılmaz",
               "detail": "35 yaşında; akıllı sözleşme kodlarına arka kapı yerleştirmiş, kurban bunu fark etmişti."
             },
             {
               "id": "s3",
               "name": "MetaQueen",
-              "icon": "👑",
+              "icon": "noun-woman-3758196",
               "description": "VoxelCity sanal galeri direktörü, gerçek adı Pınar Koru",
               "detail": "31 yaşında; kurban MetaQueen'in kullanıcılara sahte 'eşsiz eser' satarken kopyaları farklı hesaplara da sattığını belgelemiş."
             }
@@ -8202,21 +8202,21 @@
             {
               "id": "s1",
               "name": "Emekli Albay Pemberton",
-              "icon": "🪖",
+              "icon": "noun-emekli-albay-avatar.png",
               "description": "Hindistan'dan dönen eski sömürge subayı. Sinirli ve öngörülemeyen.",
               "detail": "60 yaşında, bıyıklı, bastonu var."
             },
             {
               "id": "s2",
               "name": "Kimyager Mrs. Alderton",
-              "icon": "⚗️",
+              "icon": "noun-teacher-1908918-avatar.png",
               "description": "Mahalle eczanesi sahibi. Tüm zehirlere erişimi var.",
               "detail": "55 yaşında, gözlüklü, soğukkanlı."
             },
             {
               "id": "s3",
               "name": "Genç Gazeteci Oliver Price",
-              "icon": "📰",
+              "icon": "noun-driver-1574355",
               "description": "Her yerde olan, herkesi tanıyan genç muhabir.",
               "detail": "28 yaşında, meraklı ve aceleci."
             }
@@ -8462,28 +8462,28 @@
             {
               "id": "s1",
               "name": "Rus Prenses Natasha",
-              "icon": "👸",
+              "icon": "noun-semiha-hanim-avatar.png",
               "description": "Devrimin ardından sürgündeki aristokrat. Maktul sırrını biliyordu.",
               "detail": "50 yaşında, zarif, soğuk bakışlı."
             },
             {
               "id": "s2",
               "name": "İngiliz Kolonel Ashworth",
-              "icon": "🎖️",
+              "icon": "noun-soldier-1574347",
               "description": "Gizli servis geçmişi. İstanbul'da operasyon.",
               "detail": "55 yaşında, sert, her şeyi inkâr ediyor."
             },
             {
               "id": "s3",
               "name": "Fransız Mücevher Kaçakçısı Émile",
-              "icon": "💎",
+              "icon": "noun-sommelier-1574346",
               "description": "Kimliği şüpheli. Bagajı hiç bırakmıyor.",
               "detail": "40 yaşında, şımarık, sinirli."
             },
             {
               "id": "s4",
               "name": "Türk Dedektif Yardımcısı Hasan Bey",
-              "icon": "🔍",
+              "icon": "noun-cem-bey-avatar.png",
               "description": "İstanbul polisinden ayrılmış, trenle yolculuk yapıyor.",
               "detail": "45 yaşında, gözlemci, herkesin arasında kaybolur."
             }
@@ -8813,28 +8813,28 @@
             {
               "id": "s1",
               "name": "Arşivci Magda Stern",
-              "icon": "🗃️",
+              "icon": "noun-woman-3758198",
               "description": "Kütüphanenin 20 yıllık arşivcisi. Tüm gizli geçitleri biliyor.",
               "detail": "58 yaşında, titiz, sırrı var."
             },
             {
               "id": "s2",
               "name": "Rahip Cornelius",
-              "icon": "✝️",
+              "icon": "noun-priest-1574349",
               "description": "Kilise yöneticisi. Maktul bazı belgeler istiyordu.",
               "detail": "65 yaşında, sakin, ama gözleri kaçıyor."
             },
             {
               "id": "s3",
               "name": "Miras Avukatı Hammond",
-              "icon": "⚖️",
+              "icon": "noun-judge-1574345",
               "description": "Bir vasiyeti takip ediyor. Maktul engel çıkarıyordu.",
               "detail": "50 yaşında, sabırsız, para kokuyor."
             },
             {
               "id": "s4",
               "name": "Genç Asistan Lydia",
-              "icon": "🎓",
+              "icon": "noun-torun-nermin-avatar.png",
               "description": "Kütüphanede staj yapıyor. Küçük bir sırrı var.",
               "detail": "24 yaşında, zeki, bir şeyi gizliyor."
             }
@@ -9170,21 +9170,21 @@
             {
               "id": "s1",
               "name": "Bayan Dorothy Pryce",
-              "icon": "🎹",
+              "icon": "noun-nazik-hanim-avatar.png",
               "description": "Kilise org eğitmeni, kurbanın eski öğrencisi",
               "detail": "52 yaşında, otoriter; papazın öğrenciliği döneminde yazdığı senfoniyi intihal ettiğini düşünüyor ve mahkeme sürecini başlatmıştı."
             },
             {
               "id": "s2",
               "name": "Dr. Felix Garnett",
-              "icon": "🩺",
+              "icon": "noun-doctor-1574377",
               "description": "Köy hekimi, papazın yakın dostu",
               "detail": "61 yaşında, sevecen görünümlü; papaz Garnett'in geçmişte bir hastasını yanlış teşhisle kaybettiğini biliyordu ve bunu vaftiz defterine kaydetmişti."
             },
             {
               "id": "s3",
               "name": "Gerald Whitmore",
-              "icon": "📋",
+              "icon": "noun-bricklaying-1574366",
               "description": "Köy noteri, vasi sorumlusu",
               "detail": "45 yaşında, gergin; kurban, Whitmore'un vefat eden bir kilise üyesinin vasiyetini tahrif ettiğini gösteren belgeye ulaşmıştı."
             }
@@ -9353,21 +9353,21 @@
             {
               "id": "s1",
               "name": "Süreyya Celal",
-              "icon": "🎙️",
+              "icon": "noun-singer-1574383",
               "description": "Devlet radyosu spikeri, eski muhalefet gazetecisi",
               "detail": "48 yaşında; kurban Süreyya'nın 1960 öncesinde istihbarat birimlerine isim verdiğine dair belgeye ulaşmıştı."
             },
             {
               "id": "s2",
               "name": "Belkıs Hanım",
-              "icon": "🌹",
+              "icon": "noun-zeynep-hanim-avatar.png",
               "description": "Beyoğlu'nun tanınan meyhane sahibesi",
               "detail": "55 yaşında, güçlü kişilikli; kurban meyhanede gerçekleşen bir ölümü araştırıyor, parmağın Belkıs'a uzanacağını hissediyordu."
             },
             {
               "id": "s3",
               "name": "Rıfat Boran",
-              "icon": "💰",
+              "icon": "noun-ortak-sabri-bey-avatar.png",
               "description": "Karaborsacı, arka sokak tüccarı",
               "detail": "39 yaşında, sinirli; kurban Boran'ın kaçakçılık ağıyla ilgili röportaj materyali topluyordu."
             }
@@ -9536,21 +9536,21 @@
             {
               "id": "s1",
               "name": "Damadı Tarık",
-              "icon": "🤵",
+              "icon": "noun-cem-bey-avatar.png",
               "description": "Hakimin kızıyla evli. Miras anlaşmazlığında mahkemede kaybetmişti.",
               "detail": "42 yaşında, hukuk mezunu, soğukkanlı."
             },
             {
               "id": "s2",
               "name": "Eski Sekreteri Nilgün",
-              "icon": "📝",
+              "icon": "noun-hizmetci-hacer-avatar.png",
               "description": "20 yıl çalıştı, emekliliğinde hiçbir şey verilmedi.",
               "detail": "58 yaşında, kırık kalpli, ama bunu belli etmez."
             },
             {
               "id": "s3",
               "name": "Komşu Avukat Sabri",
-              "icon": "⚖️",
+              "icon": "noun-ortak-sabri-bey-avatar.png",
               "description": "Hakimle eski dava husumetleri. O gece köşkte misafirdi.",
               "detail": "65 yaşında, inatçı, haklı olduğuna inanır."
             }
@@ -9745,21 +9745,21 @@
             {
               "id": "s1",
               "name": "Kumaş Tüccarı Fikri Bey",
-              "icon": "🧵",
+              "icon": "noun-tuccar-vehbi-avatar.png",
               "description": "Maktulün en büyük rakibi. İpek tekelini paylaşmak zorundaydılar.",
               "detail": "55 yaşında, geniş göbekli, şeker hastalığı var."
             },
             {
               "id": "s2",
               "name": "Hamamcı Nuri Usta",
-              "icon": "🪣",
+              "icon": "noun-vahap-amca-avatar.png",
               "description": "50 yıldır hamam işletiyor. Maktul kira artışına itiraz etmişti.",
               "detail": "72 yaşında, güçlü eller, gözleri zayıf."
             },
             {
               "id": "s3",
               "name": "Muhasebeci Dilara",
-              "icon": "🧮",
+              "icon": "noun-nazik-hanim-avatar.png",
               "description": "Maktulün hesaplarında 800.000 TL zimmet tespit etmiş — ama henüz söylememişti.",
               "detail": "38 yaşında, düzgün, sessiz ama sırrı var."
             }
@@ -9954,21 +9954,21 @@
             {
               "id": "s1",
               "name": "Çırak Ferdi",
-              "icon": "🔑",
+              "icon": "noun-cirak-selim-avatar.png",
               "description": "10 yıldır çalışıyor, maaşı ödenmiyor. Ortaklık vaat edilmişti — hayata geçirilmedi.",
               "detail": "28 yaşında, sabırlı görünümlü ama sınıra gelmiş."
             },
             {
               "id": "s2",
               "name": "Rakip Kuyumcu Zeynep",
-              "icon": "💍",
+              "icon": "noun-zeynep-hanim-avatar.png",
               "description": "Maktulün müşterilerini çalıyordu. Açık çatışma haline gelmişti.",
               "detail": "45 yaşında, iş dünyasında güçlü, soğukkanlı."
             },
             {
               "id": "s3",
               "name": "Vergi Müfettişi Canan",
-              "icon": "🔎",
+              "icon": "noun-semiha-hanim-avatar.png",
               "description": "Dün vergi denetimi yaptı, kritik belgeler buldu. Bu sabah raporu yazacaktı.",
               "detail": "40 yaşında, kurallara bağlı, tehdit edilmiş hissediyordu."
             }
@@ -10205,21 +10205,21 @@
             {
               "id": "s1",
               "name": "Yardımcı Tasarımcı Hande",
-              "icon": "🧵",
+              "icon": "noun-ressam-leyla-avatar.png",
               "description": "Koleksiyonun yarısını o tasarladı — ama ismi yok afişte.",
               "detail": "32 yaşında, yetenekli, sinirli."
             },
             {
               "id": "s2",
               "name": "Tekstil Yatırımcısı Bülent",
-              "icon": "💶",
+              "icon": "noun-komsu-nevzat-avatar.png",
               "description": "Koleksiyona 2 milyon yatırdı, haklar anlaşmazlığı var.",
               "detail": "52 yaşında, iş adamı, sabırsız."
             },
             {
               "id": "s3",
               "name": "Eski Ortak Sevgi",
-              "icon": "🪡",
+              "icon": "noun-torun-nermin-avatar.png",
               "description": "5 yıl önce ortaklıktan çıkarıldı. Tasarımlarının çalındığını iddia ediyor.",
               "detail": "44 yaşında, ressam ruhlu, adaletten konuşur."
             }
@@ -10425,21 +10425,21 @@
             {
               "id": "s1",
               "name": "Mimar Selim",
-              "icon": "📐",
+              "icon": "noun-mechanic-1574363",
               "description": "Maktulün eski iş ortağı. Mimari proje hırsızlığı davası sürüyor.",
               "detail": "46 yaşında, metodolojik, planlayıcı."
             },
             {
               "id": "s2",
               "name": "Doktor Leyla",
-              "icon": "💊",
+              "icon": "noun-doctor-1574385",
               "description": "Kazara bu evde mahsur kaldı. Tıbbi bilgisi var — zehir dozunu bilir.",
               "detail": "39 yaşında, sakin, gözlemci."
             },
             {
               "id": "s3",
               "name": "Dağ Evi Sahibi Rasim",
-              "icon": "🏔️",
+              "icon": "noun-vahap-amca-avatar.png",
               "description": "Maktul bu evi satın almak istiyordu, fiyat anlaşmazlığı.",
               "detail": "60 yaşında, sert, toprağına bağlı."
             }
@@ -10680,28 +10680,28 @@
             {
               "id": "s1",
               "name": "İş Ortağı Kerem",
-              "icon": "🤝",
+              "icon": "noun-ortak-sabri-bey-avatar.png",
               "description": "Şirket hisselerinin paylaşımında anlaşmazlık — mahkeme süreci başlamış.",
               "detail": "48 yaşında, soğukkanlı, avukat tutuyor."
             },
             {
               "id": "s2",
               "name": "Denizci Kaptan Yusuf",
-              "icon": "⚓",
+              "icon": "noun-captain-1574342",
               "description": "Teknenin kaptanı. Maktul son seyahatten sonra onu işten çıkaracaktı.",
               "detail": "55 yaşında, deneyimli, sert."
             },
             {
               "id": "s3",
               "name": "Finans Direktörü Pınar",
-              "icon": "📈",
+              "icon": "noun-teacher-1908918-avatar.png",
               "description": "Maktulün hesaplarında usulsüzlük tespit etti — onu rapor edecekti.",
               "detail": "41 yaşında, düzgün, baskı altında."
             },
             {
               "id": "s4",
               "name": "Gazeteci Mert",
-              "icon": "🗞️",
+              "icon": "noun-driver-1574355",
               "description": "Maktul hakkında yıkıcı bir haber hazırlıyordu. Yayın yarın.",
               "detail": "33 yaşında, idealist, dosyası tam."
             }
@@ -11029,28 +11029,28 @@
             {
               "id": "s1",
               "name": "Genel Sekreter Hülya",
-              "icon": "📋",
+              "icon": "noun-hizmetci-hacer-avatar.png",
               "description": "Maktulün koltuğuna oturmak için sırası geldi. Ama maktul çekilmeyecekti.",
               "detail": "52 yaşında, deneyimli, hesaplı."
             },
             {
               "id": "s2",
               "name": "Mali İşler Müdürü Cahit",
-              "icon": "💵",
+              "icon": "noun-tuccar-vehbi-avatar.png",
               "description": "Parti kasasından zimmet — maktul belgelerle ele geçirmişti.",
               "detail": "47 yaşında, sinirli, köşeye sıkışmış."
             },
             {
               "id": "s3",
               "name": "Güvenlik Şefi Orhan",
-              "icon": "🚔",
+              "icon": "noun-police-1574386",
               "description": "10 yıldır bu binayı koruyor. Ama maktul onu başka birinin için değiştirecekti.",
               "detail": "58 yaşında, eski polis, sert."
             },
             {
               "id": "s4",
               "name": "Basın Danışmanı Ezgi",
-              "icon": "🎙️",
+              "icon": "noun-zeynep-hanim-avatar.png",
               "description": "Maktulün sızdırdığı haberi bilerek durdurmamıştı — maktul öğrenmişti.",
               "detail": "36 yaşında, zeki, bağlantıları var."
             }
@@ -11354,28 +11354,28 @@
             {
               "id": "s1",
               "name": "Müzeci Doç. Emre",
-              "icon": "🏛️",
+              "icon": "noun-judge-1574345",
               "description": "Eserin sahte olduğunu biliyor ama müzeye satmayı planlamıştı.",
               "detail": "50 yaşında, akademisyen, paraya ihtiyacı var."
             },
             {
               "id": "s2",
               "name": "Koleksiyoncu Fatma Hanım",
-              "icon": "💎",
+              "icon": "noun-nazik-hanim-avatar.png",
               "description": "Eseri 5 yıldır arıyor. Maktul son dakika fiyatı artırdı.",
               "detail": "63 yaşında, varlıklı, sabırsız."
             },
             {
               "id": "s3",
               "name": "Eser Kaçakçısı Dimitri",
-              "icon": "🌍",
+              "icon": "noun-sommelier-1574346",
               "description": "Yabancı alıcıya götürmek için burada. Kimliği şüpheli.",
               "detail": "45 yaşında, Rum asıllı, çift pasaportlu."
             },
             {
               "id": "s4",
               "name": "Sigorta Ajanı Sevcan",
-              "icon": "📄",
+              "icon": "noun-semiha-hanim-avatar.png",
               "description": "Eserin sigortasını değerlendiriyor. Sahte olduğunu keşfetmiş.",
               "detail": "38 yaşında, dikkatli, belgeci."
             }
@@ -11691,28 +11691,28 @@
             {
               "id": "s1",
               "name": "Asistan Dr. Tunç",
-              "icon": "🩻",
+              "icon": "noun-doctor-1574377",
               "description": "Maktul onun doktora tezini intihal ile suçlamıştı — akademik kariyer bitti.",
               "detail": "29 yaşında, parlak ama kırılgan."
             },
             {
               "id": "s2",
               "name": "Eczacılık Prof. Nilüfer",
-              "icon": "⚗️",
+              "icon": "noun-teacher-1908916-avatar.png",
               "description": "Maktulün bölüm birleştirme kararına karşı çıkıyordu — pozisyonunu kaybedecekti.",
               "detail": "54 yaşında, güçlü akademik ağı var."
             },
             {
               "id": "s3",
               "name": "Hemşire Baş Sorumlu Ayhan",
-              "icon": "🩺",
+              "icon": "noun-nurse-1908914",
               "description": "Maktulün yolsuzluk raporunu bekleyen kişi — ama maktul raporu geri çekiyordu.",
               "detail": "47 yaşında, adalet arayan, sabırlı."
             },
             {
               "id": "s4",
               "name": "Tıp Öğrencisi Berk",
-              "icon": "📖",
+              "icon": "noun-cirak-selim-avatar.png",
               "description": "Sınav hilesinin görüntüleri maktulün elindeydi. Mezuniyeti tehlikede.",
               "detail": "24 yaşında, panikleyebilir, çaresiz."
             }
@@ -12016,28 +12016,28 @@
             {
               "id": "s1",
               "name": "Baş Ses Mühendisi Alp",
-              "icon": "🎛️",
+              "icon": "noun-electrician-1574361",
               "description": "Maktul onun 20 yıllık sözleşmesini bu festival sonrası bitiriyordu.",
               "detail": "50 yaşında, ekipman ustası, bağlantısı kesiliyor."
             },
             {
               "id": "s2",
               "name": "Headliner Sanatçı Luna",
-              "icon": "🎤",
+              "icon": "noun-singer-1908915",
               "description": "Maktul son dakika set listesini değiştirmişti — büyük anlaşmazlık.",
               "detail": "32 yaşında, uluslararası yıldız, sahnede güçlü."
             },
             {
               "id": "s3",
               "name": "Güvenlik Koordinatörü Bora",
-              "icon": "🦺",
+              "icon": "noun-bricklaying-1574372-avatar.png",
               "description": "Backstage akreditasyon listesini o yönetiyor. Maktul onu atlatmıştı.",
               "detail": "43 yaşında, askeri geçmiş, disiplinli."
             },
             {
               "id": "s4",
               "name": "Sponsor Şirketi Temsilcisi Deniz",
-              "icon": "💼",
+              "icon": "noun-cem-bey-avatar.png",
               "description": "3 milyon euro sponsorluğu maktulün kararıyla iptal olabilirdi.",
               "detail": "39 yaşında, iş odaklı, kayıptan korkan."
             }
@@ -12368,28 +12368,28 @@
             {
               "id": "s1",
               "name": "Kıdemli Arşivist Hayriye Hanım",
-              "icon": "🗃️",
+              "icon": "noun-woman-3758180",
               "description": "40 yıldır bu arşivde. Dosyanın açılmaması için kurula rapor vermişti — reddedilmişti.",
               "detail": "63 yaşında, titiz, geçmişe saygılı."
             },
             {
               "id": "s2",
               "name": "Tarih Profesörü Celal",
-              "icon": "📜",
+              "icon": "noun-judge-1574345",
               "description": "Dosyanın kendi ailesini ilgilendiren bölümü var. Kamuoyu bunu öğrenmemeli.",
               "detail": "58 yaşında, karizmatik, akademik itibarı her şeyin üstünde."
             },
             {
               "id": "s3",
               "name": "Siyasetçi Oğlu Taner",
-              "icon": "🏛️",
+              "icon": "noun-sommelier-1574356",
               "description": "Babası o dosyadaki bir isim. Seçimler yaklaşıyor. Dosya çıkarsa biter.",
               "detail": "45 yaşında, temkinli, bağlantıları güçlü."
             },
             {
               "id": "s4",
               "name": "Yabancı Gazeteci Elena",
-              "icon": "📰",
+              "icon": "noun-woman-3758198",
               "description": "Dosyayı uluslararası platforma taşımak için orada. Maktul onu destekliyordu.",
               "detail": "37 yaşında, ödüllü gazeteci, baskı altında."
             }
@@ -12744,28 +12744,28 @@
             {
               "id": "s1",
               "name": "Kuzey Temsilcisi Mehmet",
-              "icon": "🤝",
+              "icon": "noun-cem-bey-avatar.png",
               "description": "Anlaşma kendi tarafının aleyhine — maktul lehine yönlendirdiği düşünülüyordu.",
               "detail": "55 yaşında, deneyimli diplomat, temkinli."
             },
             {
               "id": "s2",
               "name": "Güney Temsilcisi Nikos",
-              "icon": "🕊️",
+              "icon": "noun-sommelier-1574346",
               "description": "Anlaşmayı destekliyor ama gizli bir şart var — maktul biliyordu.",
               "detail": "60 yaşında, karizmatik, iki yüzlü deniyor."
             },
             {
               "id": "s3",
               "name": "AB Gözlemcisi Ingrid",
-              "icon": "🇪🇺",
+              "icon": "noun-teacher-1908919-avatar.png",
               "description": "Tarafsız gözlemci. Ama ülkesinin çıkarları anlaşmayla çakışıyor.",
               "detail": "48 yaşında, analitik, soğukkanlı."
             },
             {
               "id": "s4",
               "name": "Özel Güvenlik Müdürü Selim",
-              "icon": "🛡️",
+              "icon": "noun-soldier-1574347",
               "description": "Otelin güvenlik koordinatörü. Tüm odalara erişimi var.",
               "detail": "42 yaşında, eski özel kuvvetler, emir bekler."
             }
@@ -13120,28 +13120,28 @@
             {
               "id": "s1",
               "name": "Rakip Şirket Teklif Sorumlusu Baran",
-              "icon": "📊",
+              "icon": "noun-ortak-sabri-bey-avatar.png",
               "description": "İhaleyi kaybetmek üzere. Son teklifini düzeltemedi — maktul engelledi.",
               "detail": "44 yaşında, stres altında, iflasın eşiğinde."
             },
             {
               "id": "s2",
               "name": "Tersane Baş Mühendisi Füsun",
-              "icon": "⚓",
+              "icon": "noun-electrician-1574353",
               "description": "Maktulün raporu onun ihmal hatalarını gün yüzüne çıkaracaktı.",
               "detail": "51 yaşında, deneyimli, köşeye sıkışmış."
             },
             {
               "id": "s3",
               "name": "Sendika Temsilcisi Kadir",
-              "icon": "✊",
+              "icon": "noun-bricklaying-1856284",
               "description": "İşçi hakları grevini maktul engelliyordu — grev yarın başlayacaktı.",
               "detail": "47 yaşında, kararlı, sert tutumlu."
             },
             {
               "id": "s4",
               "name": "Liman Emniyet Amiri Yıldız",
-              "icon": "🚢",
+              "icon": "noun-captain-1574342",
               "description": "Tersanedeki kaçakçılık operasyonunu maktul fark etmişti.",
               "detail": "53 yaşında, üniformalı, otoriter."
             }
@@ -13503,28 +13503,28 @@
             {
               "id": "s1",
               "name": "Genç Avukat Arda",
-              "icon": "📜",
+              "icon": "noun-cirak-selim-avatar.png",
               "description": "Maktulün tezini intihal ettiği iddia ediliyor — maktul belgelere sahip.",
               "detail": "31 yaşında, parlak kariyer, kırılgan."
             },
             {
               "id": "s2",
               "name": "Kıdemli Sekreter Nurdan",
-              "icon": "📁",
+              "icon": "noun-hizmetci-hacer-avatar.png",
               "description": "20 yıllık sekreter, emekliye zorlanıyor. Dosyaları bilen tek kişi.",
               "detail": "57 yaşında, sakin, ama içi yanıyor."
             },
             {
               "id": "s3",
               "name": "Müvekkil Büyük İşadamı Recep",
-              "icon": "💰",
+              "icon": "noun-tuccar-vehbi-avatar.png",
               "description": "Dosyada onun şirketini batıracak bilgiler var. Dava yarın.",
               "detail": "62 yaşında, güçlü, acımasız."
             },
             {
               "id": "s4",
               "name": "Rakip Büro Ortağı Suat",
-              "icon": "⚖️",
+              "icon": "noun-detective-1574357",
               "description": "Müvekkil listesini çalmak için içeriye sızmış.",
               "detail": "50 yaşında, soğukkanlı, planladığı belli."
             }
@@ -13867,28 +13867,28 @@
             {
               "id": "s1",
               "name": "Teknoloji CEO'su Altan",
-              "icon": "💻",
+              "icon": "noun-komsu-nevzat-avatar.png",
               "description": "Ana standdı kaybetti — rakibine verildi. Milyonlarca lira sponsorluk.",
               "detail": "46 yaşında, teknoloji odaklı, hırslı."
             },
             {
               "id": "s2",
               "name": "Tekstil CEO'su Harika",
-              "icon": "🧶",
+              "icon": "noun-ressam-leyla-avatar.png",
               "description": "Stand konumunu maktulün kararıyla en arka sıraya alındı.",
               "detail": "53 yaşında, güçlü, pişmanlık bilmez."
             },
             {
               "id": "s3",
               "name": "Gıda Şirketi CEO'su Tarhan",
-              "icon": "🍽️",
+              "icon": "noun-makinist-kerem-avatar.png",
               "description": "Sağlık sertifikasının sahte olduğunu maktul keşfetti — açıklanacak.",
               "detail": "59 yaşında, geniş ailesi, her şeyi korumak ister."
             },
             {
               "id": "s4",
               "name": "İnşaat CEO'su Demir",
-              "icon": "🏗️",
+              "icon": "noun-vahap-amca-avatar.png",
               "description": "Fuardaki stand yapısı güvenlik standartlarına aykırı — maktul rapor yazıyordu.",
               "detail": "50 yaşında, kaslı, inşaat işine alışmış."
             }
