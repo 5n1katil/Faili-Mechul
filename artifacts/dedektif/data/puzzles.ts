@@ -528,10 +528,10 @@ export const PUZZLES: Puzzle[] = [
     story:
       "Sabancı Müzesi'ndeki özel galada, Osmanlı dönemine ait nadide bir mücevher çalındı ve güvenlik koordinatörü ağır yaralı bulundu. Güvenlik sistemlerinin içeriden kapatılmış olması, bu kusursuz soygunun arkasında galadaki dört elit isimden birinin olduğunu kanıtlıyor.",
     suspects: [
-      { id: "s1", name: "Galeri Direktörü", description: "Tüm organizasyonu yöneten, güvenlik protokollerini teorik olarak bilen ancak fiziksel müdahale yeteneği olmayan yönetici.", icon: "badge" },
-      { id: "s2", name: "Ünlü Sanatçı", description: "Gala konuğu. Kaprisli, şımarık görünen ancak teknolojik sanat enstalasyonları sayesinde elektronik sistemlere son derece hakim figür.", icon: "face" },
-      { id: "s3", name: "Güvenlik Şefi", description: "Müze güvenliğinden sorumlu, kaslı ve iri yarı eski bir asker. Kameraların kör noktalarını ezbere biliyor.", icon: "local-police" },
-      { id: "s4", name: "Nakliyeci", description: "Eserleri taşıyan lojistik sorumlusu. Sadece yükleme alanlarına erişimi olan, kaba kuvvet gerektiren işlere alışkın işçi.", icon: "engineering" },
+      { id: "s1", name: "Galeri Direktörü", description: "Tüm organizasyonu yöneten, güvenlik protokollerini teorik olarak bilen ancak fiziksel müdahale yeteneği olmayan yönetici.", icon: "solid-man-tie" },
+      { id: "s2", name: "Ünlü Sanatçı", description: "Gala konuğu. Kaprisli, şımarık görünen ancak teknolojik sanat enstalasyonları sayesinde elektronik sistemlere son derece hakim figür.", icon: "solid-man-coat" },
+      { id: "s3", name: "Güvenlik Şefi", description: "Müze güvenliğinden sorumlu, kaslı ve iri yarı eski bir asker. Kameraların kör noktalarını ezbere biliyor.", icon: "noun-soldier-1574347" },
+      { id: "s4", name: "Nakliyeci", description: "Eserleri taşıyan lojistik sorumlusu. Sadece yükleme alanlarına erişimi olan, kaba kuvvet gerektiren işlere alışkın işçi.", icon: "solid-man-worker" },
     ],
     weapons: [
       { id: "w1", name: "Elektrik Sopası", description: "Yüksek voltajlı deşarj yaparak kurbanı anında felç eden ve bayıltan, teknolojik ve sessiz bir silah.", icon: "flash-on" },
@@ -567,9 +567,9 @@ export const PUZZLES: Puzzle[] = [
     story:
       "Çarşamba kasabasının o sakin ve durağan yapısı, belediye başkanının kendi makam odasında ölü bulunmasıyla temelinden sarsıldı. Kasaba halkı şoktayken, cinayetin dışarıdan gelen biri tarafından değil, en yakınındaki yüzlerden biri tarafından işlendiği ortaya çıktı.",
     suspects: [
-      { id: "s1", name: "Muhalefet Adayı", description: "Başkanın siyasi rakibi. Makam odasına girmesi yasak olan, sadece resmi toplantılarda binaya adım atabilen figür.", icon: "badge" },
-      { id: "s2", name: "Sekreter Bayan", description: "Yıllardır başkanın sağ kolu olan, içecek servisinden randevulara kadar makam odasına sürekli girip çıkma yetkisi olan çalışan.", icon: "support-agent" },
-      { id: "s3", name: "İnşaat Müteahhit", description: "Belediyeyle ihale anlaşmazlığı yaşayan, başkanla özel görüşme talep eden ancak ofis alanlarına alınmayan öfkeli iş adamı.", icon: "engineering" },
+      { id: "s1", name: "Muhalefet Adayı", description: "Başkanın siyasi rakibi. Makam odasına girmesi yasak olan, sadece resmi toplantılarda binaya adım atabilen figür.", icon: "solid-man-coat" },
+      { id: "s2", name: "Sekreter Bayan", description: "Yıllardır başkanın sağ kolu olan, içecek servisinden randevulara kadar makam odasına sürekli girip çıkma yetkisi olan çalışan.", icon: "solid-woman-elegant" },
+      { id: "s3", name: "İnşaat Müteahhit", description: "Belediyeyle ihale anlaşmazlığı yaşayan, başkanla özel görüşme talep eden ancak ofis alanlarına alınmayan öfkeli iş adamı.", icon: "solid-man-worker" },
     ],
     weapons: [
       { id: "w1", name: "Ağır Kağıt Ağırlığı", description: "Masanın üzerindeki süslü ağır cam ağırlık; kafaya vurulduğunda kanamalı kafa travması yaratacak kütleye sahip.", icon: "square" },
@@ -669,9 +669,9 @@ export const PUZZLES: Puzzle[] = [
     story:
       "Üniversite kütüphanesinde, gece bekçisi sabah sessiz okuma salonunda bir akademisyen buldu. Çok değerli el yazmaları yok olmuştu.",
     suspects: [
-      { id: "s1", name: "Kütüphaneci", description: "30 yıllık emektarı", icon: "elderly" },
-      { id: "s2", name: "Doktora Öğrencisi", description: "El yazmalarını araştırıyordu", icon: "face" },
-      { id: "s3", name: "Temizlik Görevlisi", description: "Gece 02.00'de çalışıyor", icon: "person" },
+      { id: "s1", name: "Kütüphaneci", description: "30 yıllık emektarı", icon: "solid-man-old" },
+      { id: "s2", name: "Doktora Öğrencisi", description: "El yazmalarını araştırıyordu", icon: "solid-man-glasses" },
+      { id: "s3", name: "Temizlik Görevlisi", description: "Gece 02.00'de çalışıyor", icon: "solid-man-worker" },
     ],
     weapons: [
       { id: "w1", name: "Ağır Kitap", description: "Ansiklopedik cilt, yaklaşık iki kilogram ağırlığında", icon: "menu-book" },
@@ -736,10 +736,10 @@ export const PUZZLES: Puzzle[] = [
     story:
       "Ege kıyısındaki küçük bir balıkçı köyünde, turistik bir otel sahibi öldürüldü. Gece yarısı küçük köy karanlığa gömülüydü.",
     suspects: [
-      { id: "s1", name: "Yerli Balıkçı", description: "Otelin açılmasına karşıydı", icon: "elderly" },
-      { id: "s2", name: "Tur Rehberi", description: "Konukseverlik sektörü rakibi", icon: "support-agent" },
-      { id: "s3", name: "Mülk Sahibi", description: "Arazi anlaşmazlığı var", icon: "account-circle" },
-      { id: "s4", name: "Aşçı", description: "Kovulma korkusu yaşıyordu", icon: "person" },
+      { id: "s1", name: "Yerli Balıkçı", description: "Otelin açılmasına karşıydı", icon: "solid-man-old" },
+      { id: "s2", name: "Tur Rehberi", description: "Konukseverlik sektörü rakibi", icon: "solid-man-smile" },
+      { id: "s3", name: "Mülk Sahibi", description: "Arazi anlaşmazlığı var", icon: "solid-man-glasses" },
+      { id: "s4", name: "Aşçı", description: "Kovulma korkusu yaşıyordu", icon: "noun-chef-1574379" },
     ],
     weapons: [
       { id: "w1", name: "Balıkçı Bıçağı", description: "Balık ayıklamak için kullanılan uzun ve dar bıçak", icon: "content-cut" },
@@ -811,9 +811,9 @@ export const PUZZLES: Puzzle[] = [
     story:
       "Eskişehir'deki tarihi saat fabrikasında, fabrika müdürü öldürüldü. İşçiler sabah bunu öğrenince şoke oldu.",
     suspects: [
-      { id: "s1", name: "İşçi Başı", description: "Sendika temsilcisi", icon: "engineering" },
-      { id: "s2", name: "Muhasebe Müdürü", description: "Mali anlaşmazlık vardı", icon: "badge" },
-      { id: "s3", name: "Makine Mühendisi", description: "Fabrikayı tasarlamıştı", icon: "account-circle" },
+      { id: "s1", name: "İşçi Başı", description: "Sendika temsilcisi", icon: "solid-man-worker" },
+      { id: "s2", name: "Muhasebe Müdürü", description: "Mali anlaşmazlık vardı", icon: "solid-man-tie" },
+      { id: "s3", name: "Makine Mühendisi", description: "Fabrikayı tasarlamıştı", icon: "solid-man-glasses" },
     ],
     weapons: [
       { id: "w1", name: "Çekiç", description: "Metal parçaları işlemek için kullanılan ağır demir çekiç", icon: "hardware" },
@@ -944,9 +944,9 @@ export const PUZZLES: Puzzle[] = [
     story:
       "Kadıköy'ün işlek bir kafesinde, tanınmış bir gazeteci çay içerken aniden yere düştü. Yanındaki dizüstü bilgisayarı da kaybolmuştu.",
     suspects: [
-      { id: "s1", name: "Kafe Sahibi", description: "Politika eleştirilerinden rahatsızdı", icon: "elderly" },
-      { id: "s2", name: "Garson", description: "Genç ve yeni işe başlamış", icon: "person" },
-      { id: "s3", name: "Müşteri", description: "Masanın bitişiğinde oturuyordu", icon: "face" },
+      { id: "s1", name: "Kafe Sahibi", description: "Politika eleştirilerinden rahatsızdı", icon: "solid-man-coat" },
+      { id: "s2", name: "Garson", description: "Genç ve yeni işe başlamış", icon: "solid-man-boy" },
+      { id: "s3", name: "Müşteri", description: "Masanın bitişiğinde oturuyordu", icon: "solid-man-smile" },
     ],
     weapons: [
       { id: "w1", name: "Zehirli Çay", description: "Demliğin içine kasıtlı olarak karıştırılan renksiz toksin", icon: "local-cafe" },
@@ -1010,10 +1010,10 @@ export const PUZZLES: Puzzle[] = [
     story:
       "Türkiye'nin en seçkin araştırma kurumunda, bir ekip başkanı araştırma toplantısında ölü bulundu. Yeni keşfedilen proje verileri de yok olmuştu.",
     suspects: [
-      { id: "s1", name: "Baş Araştırmacı", description: "Kariyerini projeye adamıştı", icon: "badge" },
-      { id: "s2", name: "Veri Analisti", description: "Verilere tek erişimi olan", icon: "account-circle" },
-      { id: "s3", name: "Etik Komite Üyesi", description: "Projeye itiraz etmişti", icon: "elderly" },
-      { id: "s4", name: "Yazılım Mühendisi", description: "Güvenlik sistemini tasarladı", icon: "engineering" },
+      { id: "s1", name: "Baş Araştırmacı", description: "Kariyerini projeye adamıştı", icon: "solid-man-glasses" },
+      { id: "s2", name: "Veri Analisti", description: "Verilere tek erişimi olan", icon: "solid-woman-glasses" },
+      { id: "s3", name: "Etik Komite Üyesi", description: "Projeye itiraz etmişti", icon: "solid-man-old" },
+      { id: "s4", name: "Yazılım Mühendisi", description: "Güvenlik sistemini tasarladı", icon: "solid-man-suit" },
     ],
     weapons: [
       { id: "w1", name: "Zehirli İğne", description: "Küçük, hızlı etki eden nörotoksin enjeksiyonu", icon: "vaccines" },
@@ -1091,10 +1091,10 @@ export const PUZZLES: Puzzle[] = [
     story:
       "Dolmabahçe Sarayı'nda özel bir gala yemeğinde, değerli bir elçi zehirlendi. Sarayın prestiji tehlikedeydi.",
     suspects: [
-      { id: "s1", name: "Protokol Şefi", description: "Daveti organize etti", icon: "badge" },
-      { id: "s2", name: "Özel Aşçı", description: "Yemekleri hazırladı", icon: "person" },
-      { id: "s3", name: "Yabancı Diplomat", description: "Elçiyle tartışma yaşandı", icon: "account-circle" },
-      { id: "s4", name: "Saray Kütüphanecisi", description: "Davette geziniyordu", icon: "elderly" },
+      { id: "s1", name: "Protokol Şefi", description: "Daveti organize etti", icon: "solid-man-suit" },
+      { id: "s2", name: "Özel Aşçı", description: "Yemekleri hazırladı", icon: "noun-chef-1574379" },
+      { id: "s3", name: "Yabancı Diplomat", description: "Elçiyle tartışma yaşandı", icon: "solid-man-coat" },
+      { id: "s4", name: "Saray Kütüphanecisi", description: "Davette geziniyordu", icon: "solid-man-old" },
     ],
     weapons: [
       { id: "w1", name: "Zehirli Şarap", description: "Kadehe dökülen nadide şaraba karıştırılan arsen", icon: "wine-bar" },
@@ -1238,9 +1238,9 @@ export const PUZZLES: Puzzle[] = [
     story:
       "Gece turu sırasında Galata Kulesi'nde bir rehber gözden kayboldu. Sabah kapılar açıldığında kule tepesinde bir ceset bulundu. Katil, karanlıkta izini kaybettirmişti.",
     suspects: [
-      { id: "s1", name: "Serhat Dönmez", description: "Deneyimli şehir turu rehberi", icon: "support-agent" },
-      { id: "s2", name: "Nilgün Arslan", description: "Fotoğraf tutkunu turist", icon: "account-circle" },
-      { id: "s3", name: "Bekir Yıldız", description: "Kule güvenlik görevlisi", icon: "local-police" },
+      { id: "s1", name: "Serhat Dönmez", description: "Deneyimli şehir turu rehberi", icon: "solid-man-smile" },
+      { id: "s2", name: "Nilgün Arslan", description: "Fotoğraf tutkunu turist", icon: "solid-woman-bag" },
+      { id: "s3", name: "Bekir Yıldız", description: "Kule güvenlik görevlisi", icon: "solid-police" },
     ],
     weapons: [
       { id: "w1", name: "Yüksekten Düşürme", description: "Kule tepesindeki demir parmaklıktan öne doğru itilme", icon: "arrow-downward" },
@@ -1304,9 +1304,9 @@ export const PUZZLES: Puzzle[] = [
     story:
       "Yüksek profilli bir diplomatik ziyaret sırasında sarayın selamlık bölümünde misafirlerden biri hayatını kaybetti. Protokol gereği herkes yerini biliyordu; katil de.",
     suspects: [
-      { id: "s1", name: "Nazife Hanım", description: "Uzun süreli protokol sorumlusu", icon: "badge" },
-      { id: "s2", name: "İdris Bey", description: "Büyükelçi, diplomatik dokunulmazlık sahibi", icon: "elderly" },
-      { id: "s3", name: "Hanzade", description: "Resmi tercüman, dil uzmanı", icon: "face" },
+      { id: "s1", name: "Nazife Hanım", description: "Uzun süreli protokol sorumlusu", icon: "solid-woman-suit" },
+      { id: "s2", name: "İdris Bey", description: "Büyükelçi, diplomatik dokunulmazlık sahibi", icon: "solid-man-old" },
+      { id: "s3", name: "Hanzade", description: "Resmi tercüman, dil uzmanı", icon: "solid-woman-glasses" },
     ],
     weapons: [
       { id: "w1", name: "Zehirli Çay", description: "Özel demlenmiş, renksiz zehir karıştırılmış Türk çayı", icon: "local-cafe" },
@@ -1442,9 +1442,9 @@ export const PUZZLES: Puzzle[] = [
     story:
       "Art Nouveau Beyoğlu pasajında, bir antikacının arka deposunda gizli bir toplantı kan içinde bitti. Dedektif, pasajın karmaşık insan ağını çözmeliydi.",
     suspects: [
-      { id: "s1", name: "Orhan Aras", description: "Antikacı, kırk yıllık pasaj esnafı", icon: "elderly" },
-      { id: "s2", name: "Suna Çakır", description: "Hukuk bürosu ortağı avukat", icon: "badge" },
-      { id: "s3", name: "Talip Uzun", description: "Pasaj girişinde sebze ve meyve satan manav", icon: "person" },
+      { id: "s1", name: "Orhan Aras", description: "Antikacı, kırk yıllık pasaj esnafı", icon: "solid-man-old" },
+      { id: "s2", name: "Suna Çakır", description: "Hukuk bürosu ortağı avukat", icon: "solid-woman-suit" },
+      { id: "s3", name: "Talip Uzun", description: "Pasaj girişinde sebze ve meyve satan manav", icon: "solid-man-worker" },
     ],
     weapons: [
       { id: "w1", name: "Zehirli Şarap", description: "Antika koleksiyona ait özel şişede sunulan şarap", icon: "wine-bar" },
@@ -1508,9 +1508,9 @@ export const PUZZLES: Puzzle[] = [
     story:
       "Boğaz kıyısındaki sarayda düzenlenen maskeli baloda kimse kimseyi tanımıyordu. Sabahleyin bir maske yerde bulundu, altında ise bir gerçek.",
     suspects: [
-      { id: "s1", name: "Prens Hüseyin", description: "Saraylı ev sahibi ve organizatör", icon: "account-circle" },
-      { id: "s2", name: "Madam Silvana", description: "İtalyan soprano, gecenin yıldız sanatçısı", icon: "face" },
-      { id: "s3", name: "Teğmen Ferhat", description: "Saraya yakın protokol subayı", icon: "local-police" },
+      { id: "s1", name: "Prens Hüseyin", description: "Saraylı ev sahibi ve organizatör", icon: "solid-man-coat" },
+      { id: "s2", name: "Madam Silvana", description: "İtalyan soprano, gecenin yıldız sanatçısı", icon: "noun-singer-1574378" },
+      { id: "s3", name: "Teğmen Ferhat", description: "Saraya yakın protokol subayı", icon: "noun-soldier-1574347" },
     ],
     weapons: [
       { id: "w1", name: "Zehirli Şampanya", description: "Şampanya masasından alınan, içine madde karıştırılmış kadeh", icon: "wine-bar" },
@@ -1646,9 +1646,9 @@ export const PUZZLES: Puzzle[] = [
     story:
       "Büyükada'da motorlu araç olmaz; at arabaları hükmeder. O sabah dik tepe yolunda bir fayton frensiz yokuş aşağı gitti ve geri dönmedi.",
     suspects: [
-      { id: "s1", name: "Hayriye", description: "Arabacı, faytonların bakımından sorumlu", icon: "elderly" },
-      { id: "s2", name: "Fikret Bey", description: "Konak sahibi, Ada'nın en zengin sakini", icon: "account-circle" },
-      { id: "s3", name: "Sevim", description: "Konağın aşçısı, on yıldır adada çalışıyor", icon: "face" },
+      { id: "s1", name: "Hayriye", description: "Arabacı, faytonların bakımından sorumlu", icon: "solid-woman-old" },
+      { id: "s2", name: "Fikret Bey", description: "Konak sahibi, Ada'nın en zengin sakini", icon: "solid-man-tie" },
+      { id: "s3", name: "Sevim", description: "Konağın aşçısı, on yıldır adada çalışıyor", icon: "solid-woman-elegant" },
     ],
     weapons: [
       { id: "w1", name: "Zehirli Muhallebi", description: "Sabah kahvaltısı için hazırlanan özel muhallebi", icon: "icecream" },
@@ -1712,9 +1712,9 @@ export const PUZZLES: Puzzle[] = [
     story:
       "Boğaz kıyısı meyhanesinde bir müdavim sabah masasında baygın halde bulundu. Önündeki kadeh doluydu ama bir şeyler farklıydı.",
     suspects: [
-      { id: "s1", name: "Bora Deniz", description: "Çeyrek asrı geçkin deneyimli balıkçı", icon: "engineering" },
-      { id: "s2", name: "Esma Hanım", description: "Meyhane sahibesi, mahalle simgesi", icon: "elderly" },
-      { id: "s3", name: "Taner Öz", description: "Mahalle doktoru, ara sıra meyhanede misafir", icon: "badge" },
+      { id: "s1", name: "Bora Deniz", description: "Çeyrek asrı geçkin deneyimli balıkçı", icon: "noun-captain-1574342" },
+      { id: "s2", name: "Esma Hanım", description: "Meyhane sahibesi, mahalle simgesi", icon: "solid-woman-old" },
+      { id: "s3", name: "Taner Öz", description: "Mahalle doktoru, ara sıra meyhanede misafir", icon: "noun-doctor-1574377" },
     ],
     weapons: [
       { id: "w1", name: "Zıpkın", description: "Balıkçı teknesinden alınan uzun metal zıpkın", icon: "sports" },
@@ -1778,9 +1778,9 @@ export const PUZZLES: Puzzle[] = [
     story:
       "Topkapı Müzesi'nde hafıza tazeleme çalışması sırasında yüzyıllık bir Osmanlı hançeri kayboldu. Sabah vardiyası geldiğinde, hazine odasında bir ceset bekliyordu.",
     suspects: [
-      { id: "s1", name: "Müdür Altan", description: "Müze direktörü, otuz yıllık bürokrat", icon: "badge" },
-      { id: "s2", name: "Dr. Pervin", description: "Arkeolog, gece kazı ekibini yönetiyor", icon: "account-circle" },
-      { id: "s3", name: "Restoratör Cemil", description: "Eser onarımıyla sorumlu kıdemli restoratör", icon: "handyman" },
+      { id: "s1", name: "Müdür Altan", description: "Müze direktörü, otuz yıllık bürokrat", icon: "solid-man-glasses" },
+      { id: "s2", name: "Dr. Pervin", description: "Arkeolog, gece kazı ekibini yönetiyor", icon: "solid-woman-glasses" },
+      { id: "s3", name: "Restoratör Cemil", description: "Eser onarımıyla sorumlu kıdemli restoratör", icon: "solid-man-worker" },
     ],
     weapons: [
       { id: "w1", name: "Osmanlı Hançeri", description: "Kayıp eserin tıpatıp kopyası, reprodüksiyon hançer", icon: "content-cut" },
@@ -2066,9 +2066,9 @@ export const PUZZLES: Puzzle[] = [
     story:
       "Ankara'nın eski Ulus semtinde tanınmış bir fotoğrafçı olan Faruk Bey, stüdyosunda ölü bulundu. Kırmızı lamba yanık, banyo teknelerinde yarı işlenmiş filmler hâlâ duruyordu. Gün içinde gelen üç şüphelinin her biri diğerini suçlarken gerçek karanlıkta gizli.",
     suspects: [
-      { id: "s1", name: "Gazeteci Selda Hanım", description: "Fotoğrafları izinsiz yayımlayan muhalif muhabir. Sadece ön ofisteki açık alanlara ve çekim ekipmanlarına erişimi vardı.", icon: "face-3" },
-      { id: "s2", name: "Asistan Cumhur", description: "Fotoğrafçının stüdyo çalışanı. Terfi alamadığı için öfkeli; banyo sıvıları dahil stüdyonun tüm teknik alanlarını kullanma yetkisine sahip.", icon: "face" },
-      { id: "s3", name: "Koleksiyoner Münir Bey", description: "Nadir eserler için baskı yapan yaşlı koleksiyoner. Sadece depolanmış eski kutularla ilgilenir, güncel çekim alanlarına hiç uğramaz.", icon: "elderly" },
+      { id: "s1", name: "Gazeteci Selda Hanım", description: "Fotoğrafları izinsiz yayımlayan muhalif muhabir. Sadece ön ofisteki açık alanlara ve çekim ekipmanlarına erişimi vardı.", icon: "solid-woman-glasses" },
+      { id: "s2", name: "Asistan Cumhur", description: "Fotoğrafçının stüdyo çalışanı. Terfi alamadığı için öfkeli; banyo sıvıları dahil stüdyonun tüm teknik alanlarını kullanma yetkisine sahip.", icon: "solid-man-worker" },
+      { id: "s3", name: "Koleksiyoner Münir Bey", description: "Nadir eserler için baskı yapan yaşlı koleksiyoner. Sadece depolanmış eski kutularla ilgilenir, güncel çekim alanlarına hiç uğramaz.", icon: "solid-man-old" },
     ],
     weapons: [
       { id: "w1", name: "Tripod Bacağı", description: "Kamera sehpasından sökülmüş uzun ve ağır alüminyum boru; kafaya küt bir darbe vurulduğunda anında ölümcül olabilir.", icon: "straighten" },
@@ -2102,9 +2102,9 @@ export const PUZZLES: Puzzle[] = [
     story:
       "Bursa'nın köklü termal otelinde, muhasebeci Münibe Hanım havuz kenarında boğulmuş hâlde bulundu. Gece geç saatte otelde yalnızca üç misafir kalmaktaydı. Sular bu kez şifa değil, mükemmel tasarlanmış bir alibi getirdi.",
     suspects: [
-      { id: "s1", name: "Emekli Doktor Vedat Bey", description: "Miras verasetinde tanık olan, bastonuyla zor yürüyen, güçlü fiziksel eylemlerden kaçınan yaşlı adam.", icon: "medical-services" },
-      { id: "s2", name: "İş Kadını Perihan Hanım", description: "Hesap anlaşmazlığı yaşadığı ortağına karşı kin güden, lüks kıyafetlere ve monogramlı şahsi eşyalara düşkün hırslı kadın.", icon: "face-3" },
-      { id: "s3", name: "Genç Sporcu Erdal", description: "Milli takım sporcusu. Fiziksel kondisyonu zirvede olan, sürekli lobide veya dış alanlarda telefonla konuşarak sponsor arayan genç.", icon: "directions-run" },
+      { id: "s1", name: "Emekli Doktor Vedat Bey", description: "Miras verasetinde tanık olan, bastonuyla zor yürüyen, güçlü fiziksel eylemlerden kaçınan yaşlı adam.", icon: "noun-doctor-1574377" },
+      { id: "s2", name: "İş Kadını Perihan Hanım", description: "Hesap anlaşmazlığı yaşadığı ortağına karşı kin güden, lüks kıyafetlere ve monogramlı şahsi eşyalara düşkün hırslı kadın.", icon: "solid-woman-suit" },
+      { id: "s3", name: "Genç Sporcu Erdal", description: "Milli takım sporcusu. Fiziksel kondisyonu zirvede olan, sürekli lobide veya dış alanlarda telefonla konuşarak sponsor arayan genç.", icon: "solid-man-boy" },
     ],
     weapons: [
       { id: "w1", name: "Havlu", description: "Odalardan alınmış, boyna sıkıca dolandığında sessizce ve etkili biçimde nefesi kesen esnek, kalın otel kumaşı.", icon: "dry-cleaning" },
@@ -2138,9 +2138,9 @@ export const PUZZLES: Puzzle[] = [
     story:
       "Samsun'un liman mahallelerinden birinde postacı Cafer Bey, akşam erken saatte bir arka sokakta bıçaklanmış bulundu. Çantasındaki birkaç mektup kayıp. Gün içinde tartışma yaşadığı üç kişiden birisi, zarfın içindeki sırları korumak için cinayeti işledi.",
     suspects: [
-      { id: "s1", name: "Bakkal Necati", description: "Koli şikayeti bulunan mahalle esnafı. Sürekli dükkanının önünde bekleyen, kendi bölgesinden pek ayrılmayan tanıdık yüz.", icon: "store" },
-      { id: "s2", name: "Liman İşçisi Tahsin", description: "İşten çıkarılma belgesinin postalanmasından korkan, üzerinde her daim ağır iş aletleri taşıyan öfkeli tersane işçisi.", icon: "engineering" },
-      { id: "s3", name: "Ev Hanımı Hatice Teyze", description: "Postaların geç gelmesinden şikayetçi olan ev hanımı. Fiziksel olarak yavaş hareket eden, kargoları için depo binalarını aşındıran kadın.", icon: "elderly-woman" },
+      { id: "s1", name: "Bakkal Necati", description: "Koli şikayeti bulunan mahalle esnafı. Sürekli dükkanının önünde bekleyen, kendi bölgesinden pek ayrılmayan tanıdık yüz.", icon: "solid-man-worker" },
+      { id: "s2", name: "Liman İşçisi Tahsin", description: "İşten çıkarılma belgesinin postalanmasından korkan, üzerinde her daim ağır iş aletleri taşıyan öfkeli tersane işçisi.", icon: "noun-bricklaying-1574372" },
+      { id: "s3", name: "Ev Hanımı Hatice Teyze", description: "Postaların geç gelmesinden şikayetçi olan ev hanımı. Fiziksel olarak yavaş hareket eden, kargoları için depo binalarını aşındıran kadın.", icon: "solid-woman-old" },
     ],
     weapons: [
       { id: "w1", name: "Çakı", description: "Küçük, katlanabilir, yakından yapılan tek bir pürüzsüz hamleyle ince ve derin bir kesik açabilen cep aleti.", icon: "content-cut" },
@@ -2174,9 +2174,9 @@ export const PUZZLES: Puzzle[] = [
     story:
       "Ayvalık'ın en büyük fabrikasının sahibi Rıfat Ağa, preslerin arasında ölü bulundu. Başta bir endüstriyel kaza sanılsa da, adli inceleme bunun kusursuz planlanmış bir zehirleme vakası olduğunu ortaya çıkardı.",
     suspects: [
-      { id: "s1", name: "Fabrika Ustabaşı Cevdet", description: "On beş yıldır fabrikada çalışan ustabaşı; Rıfat Ağa'nın onu ortaklıktan mahrum bıraktığını öğrendi.", icon: "engineering" },
-      { id: "s2", name: "Muhasebeci Bayan Şükran", description: "Fabrikanın muhasebecisi; usulsüz kayıtları Rıfat Ağa'ya bildirmekten çekindiği için baskı altındaydı.", icon: "calculate" },
-      { id: "s3", name: "Satış Temsilcisi Orhan Bey", description: "İstanbul'dan gelen satış temsilcisi; Rıfat Ağa ile anlaşma görüşmesi bozulmuş.", icon: "work" },
+      { id: "s1", name: "Fabrika Ustabaşı Cevdet", description: "On beş yıldır fabrikada çalışan ustabaşı; Rıfat Ağa'nın onu ortaklıktan mahrum bıraktığını öğrendi.", icon: "solid-man-worker" },
+      { id: "s2", name: "Muhasebeci Bayan Şükran", description: "Fabrikanın muhasebecisi; usulsüz kayıtları Rıfat Ağa'ya bildirmekten çekindiği için baskı altındaydı.", icon: "solid-woman-glasses" },
+      { id: "s3", name: "Satış Temsilcisi Orhan Bey", description: "İstanbul'dan gelen satış temsilcisi; Rıfat Ağa ile anlaşma görüşmesi bozulmuş.", icon: "solid-man-tie" },
     ],
     weapons: [
       { id: "w1", name: "Zehirli Çay", description: "İçine yüksek doz sedatif karıştırılmış çay bardağı.", icon: "local-cafe" },
@@ -2210,9 +2210,9 @@ export const PUZZLES: Puzzle[] = [
     story:
       "Trabzon-Rize arasındaki dağ yolunda bir minibüs barikata takıldı ve şoför vahşice katledildi. Yol üç saat kapalı kaldı, dışarıdan kimse gelemezdi. Katil, araçtaki üç yolcudan başkası değildi.",
     suspects: [
-      { id: "s1", name: "Tüccar Kadın Safiye Hanım", description: "Rize'ye mal götüren yaşlı kadın tüccar; Ahmet Bey'in geç kaldığı için kendisini zor durumda bıraktığını söylüyor.", icon: "shopping-bag" },
-      { id: "s2", name: "Öğretmen Adayı Levent", description: "Atama için Rize'ye giden genç öğretmen adayı; yanında tayin belgeleri var.", icon: "school" },
-      { id: "s3", name: "Orman İşçisi Bayram", description: "Orman bölgesinden dönen deneyimli orman işçisi; yanında kesici aletler taşıyan büyük bir çanta var.", icon: "agriculture" },
+      { id: "s1", name: "Tüccar Kadın Safiye Hanım", description: "Rize'ye mal götüren yaşlı kadın tüccar; Ahmet Bey'in geç kaldığı için kendisini zor durumda bıraktığını söylüyor.", icon: "solid-woman-old" },
+      { id: "s2", name: "Öğretmen Adayı Levent", description: "Atama için Rize'ye giden genç öğretmen adayı; yanında tayin belgeleri var.", icon: "solid-man-boy" },
+      { id: "s3", name: "Orman İşçisi Bayram", description: "Orman bölgesinden dönen deneyimli orman işçisi; yanında kesici aletler taşıyan büyük bir çanta var.", icon: "noun-bricklaying-1574366" },
     ],
     weapons: [
       { id: "w1", name: "Orman Bıçağı", description: "Ağaç budama ve kesme işleri için kullanılan büyük, ağır orman bıçağı.", icon: "content-cut" },
@@ -2246,9 +2246,9 @@ export const PUZZLES: Puzzle[] = [
     story:
       "Konya'da tarihi bir hanın sahibi Lütfi Bey, sahur sonrasında odasının hemen önünde ölü bulundu. Kandiller yanıyor, kapılar kilitliydi. Katil, geceyi handa geçiren misafirlerden birisiydi.",
     suspects: [
-      { id: "s1", name: "Hacı Efendi Rüstem", description: "Hac dönüşü Konya'ya uğrayan yaşlı tüccar; Lütfi Bey'den yıllar önce borç almış ama geri ödememiş.", icon: "elderly" },
-      { id: "s2", name: "Genç Mühendis Adnan", description: "Konya'ya iş için gelen altyapı mühendisi; Lütfi Bey'in otelini yıkımdan kurtarma talebini reddetmiş.", icon: "engineering" },
-      { id: "s3", name: "Dul Kadın Zümrüt Hanım", description: "Konya'ya akraba ziyaretine gelen dul; Lütfi Bey'in kendisine yönelik taciz girişimini yaşadığını söylüyor.", icon: "face-3" },
+      { id: "s1", name: "Hacı Efendi Rüstem", description: "Hac dönüşü Konya'ya uğrayan yaşlı tüccar; Lütfi Bey'den yıllar önce borç almış ama geri ödememiş.", icon: "solid-man-old" },
+      { id: "s2", name: "Genç Mühendis Adnan", description: "Konya'ya iş için gelen altyapı mühendisi; Lütfi Bey'in otelini yıkımdan kurtarma talebini reddetmiş.", icon: "solid-man-glasses" },
+      { id: "s3", name: "Dul Kadın Zümrüt Hanım", description: "Konya'ya akraba ziyaretine gelen dul; Lütfi Bey'in kendisine yönelik taciz girişimini yaşadığını söylüyor.", icon: "solid-woman-elegant" },
     ],
     weapons: [
       { id: "w1", name: "Şam Bıçağı", description: "İnce, uzun ve her iki tarafı keskin süslü Şam bıçağı.", icon: "content-cut" },
