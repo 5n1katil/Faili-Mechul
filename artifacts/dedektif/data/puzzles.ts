@@ -219,11 +219,11 @@ export const PUZZLES: Puzzle[] = [
       { id: "l3", name: "Mutfak", description: "Yerleri genellikle nemli ve kaygan olan, içinde onlarca tehlikeli aletin bulunduğu arka cephedeki hazırlık alanı.", icon: "soup-kitchen" },
     ],
     clues: [
-      { id: "c1", text: "Adli rapor: Kurban zehirlenmemiş veya iple boğulmamış; derin bir kesici alet darbesiyle hayatını kaybetmiş.", type: "forensic", isBonus: false },
+      { id: "c1", text: "Kurban zehirlenmemiş veya iple boğulmamış; derin bir kesici alet darbesiyle hayatını kaybetmiş.", type: "forensic", isBonus: false },
       { id: "c2", text: "Nazik Hanım gece boyunca Bahçe'de çayını yudumlayarak kitap okuduğunu belirtti ve bu durum doğrulandı.", type: "witness", isBonus: false },
       { id: "c3", text: "Cem Bey'in gece boyunca Kütüphane'den çıkmadığı ve dekorasyonlarla uğraştığı rapor edildi.", type: "witness", isBonus: false },
-      { id: "c4", text: "Kan izleri ve boğuşma kanıtları yalnızca arkadaki hazırlık alanında (Mutfak) bulunuyor.", type: "evidence", isBonus: false },
-      { id: "c5", text: "Koridor kameraları, Zeynep Hanım'ın olay saatinde Mutfak'tan telaşla çıktığını gösteriyor.", type: "record", isBonus: true },
+      { id: "c4", text: "Kan izleri ve boğuşma kanıtları yalnızca arkadaki hazırlık alanında bulunuyor.", type: "evidence", isBonus: false },
+      { id: "c5", text: "Koridor kameraları, Zeynep Hanım'ın 23:38'de Mutfağa giriş yaptığını ve 00:15'te telaşla çıktığını gösteriyor.", type: "record", isBonus: true },
       { id: "c6", text: "Ağır mutfak makasının sap kısmında, Zeynep Hanım'a ait net parmak izleri tespit edildi.", type: "forensic", isBonus: true },
     ],
     solvabilityMeta: {
@@ -363,9 +363,9 @@ export const PUZZLES: Puzzle[] = [
       { id: "l3", name: "Park", description: "Sabah erken saatlerde araçların mal indirdiği, satış alanlarına oldukça uzak nokta.", icon: "local-parking" },
     ],
     clues: [
-      { id: "c1", text: "Adli rapor, kurbanın şerbetten veya temizlik sıvısından değil, fıstıklı bir tatlıya (Baklava) zerk edilen toksinden öldüğünü kanıtladı.", type: "forensic", isBonus: false },
-      { id: "c2", text: "Tedarikçi genç, sabah mesaisini sadece malların indirildiği uzak araç yanaşma alanında (Park) geçirdiğini kanıtladı.", type: "witness", isBonus: false },
-      { id: "c3", text: "Müşteri Hanım, olay saati boyunca sadece loş arka geçitteki (Ara Sokak) dükkanlardan alışveriş yapıyordu.", type: "witness", isBonus: false },
+      { id: "c1", text: "Kurbanın şerbetten veya temizlik sıvısından değil, fıstıklı bir tatlıya zerk edilen toksinden öldüğü kanıtlandı.", type: "forensic", isBonus: false },
+      { id: "c2", text: "Tedarikçi genç, sabah mesaisini sadece malların indirildiği uzak araç yanaşma alanında geçirdiğini kanıtladı.", type: "witness", isBonus: false },
+      { id: "c3", text: "Müşteri Hanım, olay saati boyunca sadece loş arka geçitteki dükkanlardan alışveriş yapıyordu.", type: "witness", isBonus: false },
       { id: "c4", text: "Güvenlik kameraları, cinayetin doğrudan tepsilerin dizildiği Tezgah'ta işlendiğini gösteriyor.", type: "evidence", isBonus: false },
       { id: "c5", text: "Halit Usta'nın tezgahına olay anında yaklaşan tek kişi, yıllardır onu kıskanan Komşu Satıcı'ydı.", type: "evidence", isBonus: true },
       { id: "c6", text: "Komşu Satıcı'nın, zehirli tatlıyı doğrudan kurbanın sergi alanına yerleştirdiği kesinleşti.", type: "record", isBonus: true },
@@ -507,7 +507,7 @@ export const PUZZLES: Puzzle[] = [
       { id: "l3", name: "Giriş Salonu", description: "Hamamın ana kapısı, ahşap soyunma kabinlerinin ve kasanın bulunduğu aydınlık alan.", icon: "point-of-sale" },
     ],
     clues: [
-      { id: "c1", text: "Adli rapor: Maktulün şerbetle veya acı sabunla zehirlenmediği, doğrudan çıplak ellerle boğulduğu doğrulandı.", type: "forensic", isBonus: false },
+      { id: "c1", text: "Maktulün şerbetle veya acı sabunla zehirlenmediği, doğrudan çıplak ellerle boğulduğu doğrulandı.", type: "forensic", isBonus: false },
       { id: "c2", text: "Veznedar'ın, olay gecesi vardiyası boyunca aydınlık Giriş Salonu'ndan hiç ayrılmadığı çalışanlarca doğrulandı.", type: "witness", isBonus: false },
       { id: "c3", text: "Hamam Ağası'nın gece boyunca dinlenme alanı olan Soğuk Oda'da uyuyakaldığı tespit edildi.", type: "witness", isBonus: false },
       { id: "c4", text: "Boğuşma izlerinin sadece yüksek nemli ve buharlı Sıcak Oda'da olduğu saptandı.", type: "evidence", isBonus: false },
@@ -1941,8 +1941,8 @@ export const PUZZLES: Puzzle[] = [
       { id: "c2", text: "Kargo nakliyecisi Murat'ın tüm sabahı sadece vitrinlerin ve kasanın bulunduğu aydınlık karşılama alanında bekleyerek geçirdiği anlaşıldı.", type: "witness", isBonus: false },
       { id: "c3", text: "Adli tıp incelemeleri, cinayetin nakliye araçlarının yanaştığı arka sokakta işlenmediğini ve suç aleti olarak kırılgan cam eşyaların kullanılmadığını kesinleştirdi.", type: "forensic", isBonus: false },
       { id: "c4", text: "Kurye Murat'a ait olan uzun metal alet üzerinde yapılan kriminal incelemede, bu aletin cinayette kesinlikle kullanılmadığı netlik kazandı.", type: "evidence", isBonus: false },
-      { id: "c5", text: "Ek Kanıt: Çırak Selim'in, cinayetin işlendiği malların istiflendiği loş alt kattan telaşla çıkarken görüldüğü kamera kayıtlarına yansıdı.", type: "evidence", isBonus: true },
-      { id: "c6", text: "Kesin Rapor: Maktulün başındaki ölümcül yaranın, terazilerde kullanılan avuç içine tam oturan ağır bir metal dirhemle yapıldığı kanıtlandı.", type: "forensic", isBonus: true },
+      { id: "c5", text: "Çırak Selim'in, cinayetin işlendiği malların istiflendiği loş alt kattan telaşla çıkarken görüldüğü kamera kayıtlarına yansıdı.", type: "evidence", isBonus: true },
+      { id: "c6", text: "Maktulün başındaki ölümcül yaranın, terazilerde kullanılan avuç içine tam oturan ağır bir metal dirhemle yapıldığı kanıtlandı.", type: "forensic", isBonus: true },
     ],
     solvabilityMeta: {
       freeEliminations: ["s1", "s3", "w1", "w2", "l2", "l3"],
