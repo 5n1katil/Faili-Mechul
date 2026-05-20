@@ -481,7 +481,7 @@ export default function HomeScreen() {
                     </Text>
                     <View style={{ flex: 1 }} />
                     <Text style={[styles.rankAheadScore, { color: "#D4A843" }]}>
-                      {scoreDiff.toLocaleString("tr-TR")} puan geride
+                      {scoreDiff.toLocaleString("tr-TR")} puan gerisindesin
                     </Text>
                   </View>
                 ) : (
@@ -508,7 +508,7 @@ export default function HomeScreen() {
               <View style={[styles.tipsBtnIcon, { backgroundColor: `${colors.primary}18` }]}>
                 <MaterialIcons name="lightbulb-outline" size={18} color={colors.primary} />
               </View>
-              <Text style={[styles.tipsBtnText, { color: colors.mutedForeground }]}>Dedektif İpuçları</Text>
+              <Text style={[styles.tipsBtnText, { color: colors.foreground }]}>Dedektif İpuçları</Text>
               <MaterialIcons name="chevron-right" size={18} color={colors.mutedForeground} />
             </Pressable>
           </Animated.View>
@@ -743,7 +743,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderWidth: 1,
   },
-  rankBadgeText: { fontSize: 11, fontWeight: "700", letterSpacing: 0.3 },
+  rankBadgeText: { fontSize: 13, fontWeight: "700", letterSpacing: 0.3 },
   rankPosition: { fontSize: 32, fontWeight: "900", letterSpacing: -0.5 },
   rankUserRow: { flexDirection: "row", alignItems: "center", gap: 10 },
   rankUserAvatar: {
