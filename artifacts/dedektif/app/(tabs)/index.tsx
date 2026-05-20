@@ -402,7 +402,7 @@ export default function HomeScreen() {
                 <View style={[styles.statAccent, { backgroundColor: colors.primary }]} />
                 <MaterialIcons name="check-circle-outline" size={18} color={colors.primary} style={{ marginTop: 6 }} />
                 <Text style={[styles.statValue, { color: colors.primary }]}>{profile.gamesWon}</Text>
-                <Text style={[styles.statLabel, { color: colors.mutedForeground }]}>Çözülen</Text>
+                <Text style={[styles.statLabel, { color: colors.mutedForeground }]}>Çözülen Vaka</Text>
               </View>
               <View style={[styles.statCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
                 <View style={[styles.statAccent, { backgroundColor: "#9333ea" }]} />
