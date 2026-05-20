@@ -233,6 +233,93 @@ function MockAccusationCard({ contentWidth }: { contentWidth: number }) {
   );
 }
 
+function SlideStartOptions({ contentWidth }: { contentWidth: number }) {
+  const GOLD = "#D4A843";
+  const CARD_BG = "#1A1F2E";
+  const SEP = "#2A3050";
+
+  const options = [
+    {
+      icon: "today" as MaterialIconName,
+      iconColor: GOLD,
+      accent: GOLD,
+      label: "Günlük Bulmaca",
+      desc: "Ana sayfada her gün yeni bir bulmaca seni bekler. Oyna butonuna bas, hemen başla.",
+      badge: "Her gün yenilenir",
+    },
+    {
+      icon: "folder-open" as MaterialIconName,
+      iconColor: "#A855F7",
+      accent: "#A855F7",
+      label: "Vaka Arşivi",
+      desc: "Vakalar sekmesinde zorluk derecesine göre istediğin vakayı seçerek oynayabilirsin.",
+      badge: "Çaylak · Dedektif · Usta",
+    },
+  ];
+
+  return (
+    <View style={{ width: contentWidth, gap: 12 }}>
+      {options.map((opt) => (
+        <View
+          key={opt.label}
+          style={{
+            backgroundColor: CARD_BG,
+            borderRadius: 14,
+            borderWidth: 1,
+            borderColor: opt.accent + "50",
+            overflow: "hidden",
+          }}
+        >
+          <View style={{ width: "100%", height: 3, backgroundColor: opt.accent }} />
+          <View style={{ flexDirection: "row", alignItems: "flex-start", gap: 14, padding: 16 }}>
+            <View style={{
+              width: 44,
+              height: 44,
+              borderRadius: 12,
+              backgroundColor: opt.accent + "18",
+              alignItems: "center",
+              justifyContent: "center",
+            }}>
+              <MaterialIcons name={opt.icon} size={24} color={opt.accent} />
+            </View>
+            <View style={{ flex: 1, gap: 4 }}>
+              <Text style={{ fontSize: 15, fontWeight: "800", color: "#F9FAFB" }}>{opt.label}</Text>
+              <Text style={{ fontSize: 12, color: "#9CA3AF", lineHeight: 18 }}>{opt.desc}</Text>
+              <View style={{
+                alignSelf: "flex-start",
+                marginTop: 4,
+                backgroundColor: opt.accent + "22",
+                borderRadius: 6,
+                paddingHorizontal: 8,
+                paddingVertical: 3,
+              }}>
+                <Text style={{ fontSize: 10, fontWeight: "700", color: opt.accent, letterSpacing: 0.3 }}>{opt.badge}</Text>
+              </View>
+            </View>
+          </View>
+        </View>
+      ))}
+
+      <View style={{
+        flexDirection: "row",
+        alignItems: "center",
+        gap: 8,
+        backgroundColor: GOLD + "12",
+        borderRadius: 10,
+        borderWidth: 1,
+        borderColor: GOLD + "30",
+        paddingHorizontal: 12,
+        paddingVertical: 9,
+      }}>
+        <MaterialIcons name="local-fire-department" size={16} color={GOLD} />
+        <Text style={{ flex: 1, fontSize: 12, color: GOLD + "DD", lineHeight: 17, fontWeight: "500" }}>
+          Her gün yeni bir bulmaca — üst üste oyna, serini kır!
+        </Text>
+      </View>
+    </View>
+  );
+}
+
 interface Slide {
   icon: MaterialIconName;
   iconColor: string;
@@ -245,6 +332,7 @@ interface Slide {
   showGrid?: boolean;
   showClueExample?: boolean;
   showAccusation?: boolean;
+  showStartOptions?: boolean;
   clue?: string;
 }
 
@@ -258,6 +346,16 @@ const SLIDES: Slide[] = [
     subtitleNoUppercase: true,
     body: "Faili Meçhul, mantık yürütme ile cinayet gizemini birleştiren dedüksiyon temelli bir dedektif bulmaca oyunudur.\n\nHer vakada Kim? Nerede? Neyle? sorularının tek doğru cevabını, ipuçlarını eleyerek ve dedektif ızgarasını doğru kullanarak bulman gerekir.\n\nŞüpheliler, silahlar ve mekanlar arasından doğru kombinasyonu en kısa zamanda bul, diğer dedektifler ile yarışarak liderlik tablosunda adını efsaneler arasına yazdır.",
     tip: "Unutma dedektif, suçu kanıtlanana kadar herkes masumdur...",
+  },
+  {
+    icon: "play-circle-outline",
+    iconColor: "#D4A843",
+    iconBg: "#2A1E0840",
+    title: "Oyuna Nasıl Başlarsın?",
+    subtitle: "İki Yol, Sonsuz Vaka",
+    subtitleNoUppercase: true,
+    body: "Günlük bir bulmacayla hemen oynamaya başlayabilir veya Vakalar ekranında zorluk derecesine göre bir oyun seçebilirsin.",
+    showStartOptions: true,
   },
   {
     icon: "grid-on",
@@ -321,7 +419,9 @@ function SlidePage({ slide, slideIndex, screenWidth, screenHeight }: SlidePagePr
         </View>
       )}
 
-      {slide.showGrid ? (
+      {slide.showStartOptions ? (
+        <SlideStartOptions contentWidth={contentWidth} />
+      ) : slide.showGrid ? (
         <DemoGridWrapper contentWidth={contentWidth} screenHeight={screenHeight} />
       ) : slide.showClueExample ? (
         <ClueExampleBox contentWidth={contentWidth} />
