@@ -166,8 +166,8 @@ export default function HomeScreen() {
     { id: "hatasiz", label: "Hatasız Çözüm", icon: "stars" as const, color: "#4CAF50" },
     { id: "hizli_dedektif", label: "Hızlı Dedektif", icon: "speed" as const, color: "#2196F3" },
   ];
-  const earnedBadges = BADGE_INFO.filter((b) => profile.badges.includes(b.id));
-  const unearnedBadges = BADGE_INFO.filter((b) => !profile.badges.includes(b.id));
+  const earnedBadges = BADGE_INFO.filter((b) => (profile.badges ?? []).includes(b.id));
+  const unearnedBadges = BADGE_INFO.filter((b) => !(profile.badges ?? []).includes(b.id));
 
   return (
     <>

@@ -289,13 +289,14 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
       let parsedProfile: Record<string, unknown> | null = null;
       if (profileStr) {
         parsedProfile = JSON.parse(profileStr);
-        setProfile({
+        setProfile((prev) => ({
+          ...prev,
           avatar: "",
           bio: "",
           avgSolveTimeSeconds: 0,
           privacySettings: DEFAULT_PRIVACY,
           ...parsedProfile,
-        });
+        }));
       }
       if (historyStr) {
         const raw: Record<string, unknown>[] = JSON.parse(historyStr);
