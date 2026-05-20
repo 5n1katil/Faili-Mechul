@@ -738,7 +738,7 @@ export const PUZZLES: Puzzle[] = [
     suspects: [
       { id: "s1", name: "Yerli Balıkçı", description: "Otelin açılmasına karşıydı", icon: "👴" },
       { id: "s2", name: "Tur Rehberi", description: "Konukseverlik sektörü rakibi", icon: "👨" },
-      { id: "s3", name: "Mülk Sahibi", description: "Arazi anlaşmazlığı var", icon: "👨" },
+      { id: "s3", name: "Mülk Sahibi", description: "Arazi anlaşmazlığı var", icon: "👨‍💼" },
       { id: "s4", name: "Aşçı", description: "Kovulma korkusu yaşıyordu", icon: "👨‍🍳" },
     ],
     weapons: [
@@ -946,7 +946,7 @@ export const PUZZLES: Puzzle[] = [
     suspects: [
       { id: "s1", name: "Kafe Sahibi", description: "Politika eleştirilerinden rahatsızdı", icon: "👨" },
       { id: "s2", name: "Garson", description: "Genç ve yeni işe başlamış", icon: "👦" },
-      { id: "s3", name: "Müşteri", description: "Masanın bitişiğinde oturuyordu", icon: "👨" },
+      { id: "s3", name: "Müşteri", description: "Masanın bitişiğinde oturuyordu", icon: "🧑" },
     ],
     weapons: [
       { id: "w1", name: "Zehirli Çay", description: "Demliğin içine kasıtlı olarak karıştırılan renksiz toksin", icon: "local-cafe" },
@@ -2138,7 +2138,7 @@ export const PUZZLES: Puzzle[] = [
     story:
       "Samsun'un liman mahallelerinden birinde postacı Cafer Bey, akşam erken saatte bir arka sokakta bıçaklanmış bulundu. Çantasındaki birkaç mektup kayıp. Gün içinde tartışma yaşadığı üç kişiden birisi, zarfın içindeki sırları korumak için cinayeti işledi.",
     suspects: [
-      { id: "s1", name: "Bakkal Necati", description: "Koli şikayeti bulunan mahalle esnafı. Sürekli dükkanının önünde bekleyen, kendi bölgesinden pek ayrılmayan tanıdık yüz.", icon: "👷" },
+      { id: "s1", name: "Bakkal Necati", description: "Koli şikayeti bulunan mahalle esnafı. Sürekli dükkanının önünde bekleyen, kendi bölgesinden pek ayrılmayan tanıdık yüz.", icon: "👨" },
       { id: "s2", name: "Liman İşçisi Tahsin", description: "İşten çıkarılma belgesinin postalanmasından korkan, üzerinde her daim ağır iş aletleri taşıyan öfkeli tersane işçisi.", icon: "👷" },
       { id: "s3", name: "Ev Hanımı Hatice Teyze", description: "Postaların geç gelmesinden şikayetçi olan ev hanımı. Fiziksel olarak yavaş hareket eden, kargoları için depo binalarını aşındıran kadın.", icon: "👵" },
     ],
@@ -2324,7 +2324,7 @@ export const PUZZLES: Puzzle[] = [
       { id: "s1", name: "Rakip Pilot", description: "Maktulün en büyük ticari rakibi olan, havacılık donanımlarına çok iyi hakim agresif pilot.", icon: "👨" },
       { id: "s2", name: "Turist Kadın", description: "Sadece fotoğraf çekmek için orada olan, yükseklik korkusu olan sıradan bir misafir.", icon: "👩‍💼" },
       { id: "s3", name: "Balon Mekanikçisi", description: "Gaz tüplerinden sorumlu, elleri sürekli yağlı ve kirli olan bakım personeli.", icon: "👷" },
-      { id: "s4", name: "Fotoğrafçı", description: "Turistleri karadan takip eden, sürekli kamerasıyla çekim yapan güler yüzlü çalışan.", icon: "👨" },
+      { id: "s4", name: "Fotoğrafçı", description: "Turistleri karadan takip eden, sürekli kamerasıyla çekim yapan güler yüzlü çalışan.", icon: "📸" },
     ],
     weapons: [
       { id: "w1", name: "İşaret Fişeği", description: "Acil durumlarda gökyüzüne sıkılan, yakından ateşlendiğinde ağır yanıklar bırakan piroteknik silah.", icon: "flash-on" },

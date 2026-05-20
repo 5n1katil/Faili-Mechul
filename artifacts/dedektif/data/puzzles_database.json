@@ -1320,7 +1320,7 @@
             {
               "id": "s1",
               "name": "Ajan Rachel Kim",
-              "icon": "👩",
+              "icon": "🕵️",
               "description": "Senaristin başka bir dev ajansla anlaşacağını öğrenen şahsi ajanı. Çantası geniş olan, yazarın otoparktaki buluşma saatini bilen tek hırslı yönetici.",
               "detail": "40 yaşında, ağının en güçlüsü."
             },
@@ -1334,7 +1334,7 @@
             {
               "id": "s3",
               "name": "Stüdyo Hukuk Direktörü Amy Cross",
-              "icon": "👩",
+              "icon": "👩‍💼",
               "description": "Yazarın telif davaları yüzünden stüdyosunu tehdit ettiği hukuk sorumlusu. Tüm gecesini binanın üst katındaki toplantı odasında delegelerle geçiren kadın.",
               "detail": "52 yaşında, soğuk ve hesaplı."
             },
@@ -2021,7 +2021,7 @@
             {
               "id": "s2",
               "name": "Elena-K (Klon)",
-              "icon": "👩‍⚕️",
+              "icon": "🤖",
               "description": "2 yıllık klon. Yasal olarak ayrı birey ama aynı hafızayla başladı.",
               "detail": "Biyolojik 50, kronolojik 2 yıl. Özerklik savaşı veriyor."
             },
@@ -5536,7 +5536,7 @@
             {
               "id": "s2",
               "name": "Yuki Tanamoto",
-              "icon": "👨",
+              "icon": "👩",
               "description": "Gazeteci, araştırmacı muhabir",
               "detail": "29 yaşında, zayıf; kurbanın şirketinin çevre skandalını belgeliyordu — kurban haberin yayımlanmasını durdurmaya çalışıyordu."
             },
@@ -12389,7 +12389,7 @@
             {
               "id": "s4",
               "name": "Yabancı Gazeteci Elena",
-              "icon": "👩",
+              "icon": "👩‍💻",
               "description": "Dosyayı uluslararası platforma taşımak için orada. Maktul onu destekliyordu.",
               "detail": "37 yaşında, ödüllü gazeteci, baskı altında."
             }
