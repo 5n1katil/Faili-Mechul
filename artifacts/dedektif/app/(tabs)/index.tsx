@@ -243,15 +243,14 @@ export default function HomeScreen() {
             </View>
           </View>
           <View style={styles.headerRight}>
-            <Pressable onPress={handleSettingsPress} style={styles.helpBtn} hitSlop={8} accessibilityLabel="Ayarlar">
-              <MaterialIcons name="help-outline" size={22} color={colors.mutedForeground} />
-            </Pressable>
             <Pressable
-              onPress={() => setShowStreakInfo(true)}
-              style={[styles.streakBadge, { backgroundColor: colors.card, borderColor: colors.border }]}
+              onPress={handleSettingsPress}
+              style={[styles.helpBtn, { backgroundColor: `${colors.primary}18`, borderColor: `${colors.primary}40`, borderWidth: 1.5 }]}
+              hitSlop={8}
+              accessibilityLabel="Ayarlar"
             >
-              <MaterialIcons name="local-fire-department" size={20} color="#FF6B35" />
-              <Text style={[styles.streakText, { color: colors.foreground }]}>{profile.currentStreak}</Text>
+              <MaterialIcons name="help-outline" size={24} color={colors.primary} />
+              <Text style={[styles.helpBtnLabel, { color: colors.primary }]}>Yardım</Text>
             </Pressable>
           </View>
         </View>
@@ -411,12 +410,16 @@ export default function HomeScreen() {
                 <Text style={[styles.statValue, { color: colors.foreground }]}>{profile.totalScore.toLocaleString("tr-TR")}</Text>
                 <Text style={[styles.statLabel, { color: colors.mutedForeground }]}>Toplam Puan</Text>
               </View>
-              <View style={[styles.statCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
+              <Pressable
+                onPress={() => setShowStreakInfo(true)}
+                style={[styles.statCard, { backgroundColor: colors.card, borderColor: "#FF6B3550" }]}
+              >
                 <View style={[styles.statAccent, { backgroundColor: "#FF6B35" }]} />
                 <MaterialIcons name="local-fire-department" size={18} color="#FF6B35" style={{ marginTop: 6 }} />
                 <Text style={[styles.statValue, { color: "#FF6B35" }]}>{profile.currentStreak}</Text>
                 <Text style={[styles.statLabel, { color: colors.mutedForeground }]}>Seri</Text>
-              </View>
+                <MaterialIcons name="info-outline" size={11} color="#FF6B3580" style={{ marginTop: 1 }} />
+              </Pressable>
             </View>
           </Animated.View>
 
@@ -610,17 +613,15 @@ const styles = StyleSheet.create({
   titleUnderline: { height: 2, width: 40, borderRadius: 1, marginTop: 3, marginBottom: 3 },
   appSubtitle: { fontSize: 12, fontWeight: "500" },
   headerRight: { flexDirection: "row", alignItems: "center", gap: 8 },
-  helpBtn: { width: 36, height: 36, alignItems: "center", justifyContent: "center", borderRadius: 18 },
-  streakBadge: {
+  helpBtn: {
     flexDirection: "row",
     alignItems: "center",
-    borderRadius: 20,
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-    borderWidth: 1,
     gap: 6,
+    borderRadius: 22,
+    paddingHorizontal: 14,
+    paddingVertical: 9,
   },
-  streakText: { fontSize: 18, fontWeight: "700" },
+  helpBtnLabel: { fontSize: 13, fontWeight: "700", letterSpacing: 0.2 },
 
   /* ─── Daily Card ─── */
   dailyCard: {
@@ -754,36 +755,36 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   rankUserInfo: { flex: 1, gap: 2 },
-  rankUserName: { fontSize: 14, fontWeight: "700" },
-  rankUserMeta: { fontSize: 11, fontWeight: "500" },
+  rankUserName: { fontSize: 16, fontWeight: "700" },
+  rankUserMeta: { fontSize: 12, fontWeight: "500" },
   rankTotalBadge: { paddingHorizontal: 8, paddingVertical: 4, borderRadius: 8, borderWidth: 1 },
-  rankTotalText: { fontSize: 10, fontWeight: "600" },
+  rankTotalText: { fontSize: 11, fontWeight: "600" },
   rankDivider: { borderTopWidth: 1 },
   rankAheadRow: { flexDirection: "row", alignItems: "center", gap: 7 },
-  rankAheadLabel: { fontSize: 11, fontWeight: "600" },
+  rankAheadLabel: { fontSize: 12, fontWeight: "600" },
   rankAheadAvatar: {
-    width: 28,
-    height: 28,
-    borderRadius: 14,
+    width: 30,
+    height: 30,
+    borderRadius: 15,
     borderWidth: 1,
     alignItems: "center",
     justifyContent: "center",
   },
-  rankAheadName: { fontSize: 12, fontWeight: "700", flexShrink: 1 },
-  rankAheadScore: { fontSize: 12, fontWeight: "700" },
+  rankAheadName: { fontSize: 13, fontWeight: "700", flexShrink: 1 },
+  rankAheadScore: { fontSize: 13, fontWeight: "700" },
   rankLeaderRow: { flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 6 },
-  rankLeaderText: { fontSize: 14, fontWeight: "700" },
+  rankLeaderText: { fontSize: 15, fontWeight: "700" },
   rankCardFooter: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "flex-end",
     paddingHorizontal: 15,
-    paddingBottom: 11,
-    paddingTop: 9,
+    paddingBottom: 12,
+    paddingTop: 10,
     borderTopWidth: 1,
     gap: 4,
   },
-  rankCardFooterText: { fontSize: 12, fontWeight: "500" },
+  rankCardFooterText: { fontSize: 13, fontWeight: "500" },
 
   /* ─── Tips Button ─── */
   tipsBtn: {
