@@ -539,6 +539,15 @@ export default function VakalarScreen() {
     setListTab("standart");
   };
 
+  const handleCancelStart = () => {
+    resetCurrentGame();
+    if (router.canGoBack()) {
+      router.back();
+    } else {
+      router.replace("/(tabs)/index" as const);
+    }
+  };
+
   const handleGoHome = () => {
     if (homeTimerRef.current) clearTimeout(homeTimerRef.current);
     router.replace("/(tabs)/index" as const);
@@ -961,7 +970,7 @@ export default function VakalarScreen() {
         puzzle={puzzle}
         isRanked={isRanked}
         onStart={activateTimer}
-        onCancel={handleBackToList}
+        onCancel={handleCancelStart}
       />
 
       <ExitConfirmSheet
