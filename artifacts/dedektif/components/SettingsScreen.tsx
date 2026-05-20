@@ -24,7 +24,7 @@ import {
   type VolumeStep,
 } from "@/utils/soundSettings";
 import VolumeStepControl from "@/components/VolumeStepControl";
-import OnboardingScreen from "@/components/OnboardingScreen";
+
 import PaywallModal from "@/components/PaywallModal";
 import { usePurchase } from "@/context/PurchaseContext";
 
@@ -120,7 +120,7 @@ export default function SettingsScreen({ visible, onClose }: Props) {
   const [mainVolume, setMainVolume] = useState<VolumeStep>(DEFAULT_VOLUME);
   const [caseVolume, setCaseVolume] = useState<VolumeStep>(DEFAULT_VOLUME);
   const [audioReady, setAudioReady] = useState(false);
-  const [showHowToPlay, setShowHowToPlay] = useState(false);
+
   const [showPaywall, setShowPaywall] = useState(false);
   const [restoring, setRestoring] = useState(false);
   const [restoreMsg, setRestoreMsg] = useState<{ text: string; ok: boolean } | null>(null);
@@ -134,7 +134,7 @@ export default function SettingsScreen({ visible, onClose }: Props) {
   useEffect(() => {
     if (!visible) {
       setAudioReady(false);
-      setShowHowToPlay(false);
+
       setShowPaywall(false);
       return;
     }
@@ -182,7 +182,7 @@ export default function SettingsScreen({ visible, onClose }: Props) {
     setRestoreMsg({ text: result.message, ok: result.success });
   };
 
-  const settingsModalOpen = visible && !showHowToPlay && !showPaywall;
+  const settingsModalOpen = visible && !showPaywall;
 
   return (
     <>
@@ -215,17 +215,6 @@ export default function SettingsScreen({ visible, onClose }: Props) {
             contentContainerStyle={styles.scrollContent}
             showsVerticalScrollIndicator={false}
           >
-            {/* Nasıl Oynanır — en üst */}
-            <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
-              <SettingsRow
-                icon="help-outline"
-                title="Nasıl Oynanır?"
-                subtitle="Dedektif ızgarasını ve ipuçlarını öğren"
-                right={<MaterialIcons name="chevron-right" size={20} color={colors.secondaryForeground} />}
-                onPress={() => setShowHowToPlay(true)}
-              />
-            </View>
-
             {/* Ses Ayarları */}
             <SectionHeader icon="volume-up" label="SES AYARLARI" />
 
@@ -379,11 +368,6 @@ export default function SettingsScreen({ visible, onClose }: Props) {
         </View>
       </Modal>
 
-      <OnboardingScreen
-        visible={visible && showHowToPlay}
-        onDone={() => setShowHowToPlay(false)}
-        closeLabel="Kapat"
-      />
       <PaywallModal
         visible={visible && showPaywall}
         onClose={() => setShowPaywall(false)}
