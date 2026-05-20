@@ -19,6 +19,7 @@ import {
   getDailyPuzzle,
   getDifficultyColor,
   getDifficultyLabel,
+  PUZZLES,
   type Difficulty,
 } from "@/data/puzzles";
 import Animated, { FadeInDown } from "react-native-reanimated";
@@ -87,6 +88,8 @@ export default function HomeScreen() {
   const [showSettings, setShowSettings] = useState(false);
   const [showSetup, setShowSetup] = useState(false);
   const [showStreakInfo, setShowStreakInfo] = useState(false);
+  const [showSolvedInfo, setShowSolvedInfo] = useState(false);
+  const [showScoreInfo, setShowScoreInfo] = useState(false);
   const [showTips, setShowTips] = useState(false);
 
   const dailyPuzzle = getDailyPuzzle();
@@ -148,6 +151,24 @@ export default function HomeScreen() {
 
   const diffColor = getDifficultyColor(dailyPuzzle.difficulty as Difficulty);
 
+  const recentSolves = gameHistory.filter((h) => h.completed).slice(0, 5);
+  const avgScore = profile.gamesWon > 0 ? Math.round(profile.totalScore / profile.gamesWon) : 0;
+
+  const BADGE_INFO = [
+    { id: "ilk_cozum", label: "İlk Çözüm", icon: "emoji-events" as const, color: "#D4A843" },
+    { id: "bes_cozum", label: "5 Vaka Çözüldü", icon: "military-tech" as const, color: "#D4A843" },
+    { id: "on_cozum", label: "10 Vaka Çözüldü", icon: "workspace-premium" as const, color: "#D4A843" },
+    { id: "yirmi_cozum", label: "20 Vaka Çözüldü", icon: "diamond" as const, color: "#A855F7" },
+    { id: "uzman_dedektif", label: "Uzman Dedektif", icon: "verified" as const, color: "#A855F7" },
+    { id: "soguk_iz", label: "3 Günlük Seri", icon: "local-fire-department" as const, color: "#FF6B35" },
+    { id: "hafta_serisi", label: "7 Günlük Seri", icon: "whatshot" as const, color: "#FF6B35" },
+    { id: "on_seri", label: "10 Günlük Seri", icon: "flare" as const, color: "#FF6B35" },
+    { id: "hatasiz", label: "Hatasız Çözüm", icon: "stars" as const, color: "#4CAF50" },
+    { id: "hizli_dedektif", label: "Hızlı Dedektif", icon: "speed" as const, color: "#2196F3" },
+  ];
+  const earnedBadges = BADGE_INFO.filter((b) => profile.badges.includes(b.id));
+  const unearnedBadges = BADGE_INFO.filter((b) => !profile.badges.includes(b.id));
+
   return (
     <>
       <OnboardingScreen
@@ -185,6 +206,172 @@ export default function HomeScreen() {
               style={[styles.modalBtn, { backgroundColor: colors.primary }]}
             >
               <Text style={[styles.modalBtnText, { color: colors.primaryForeground }]}>Anladım</Text>
+            </Pressable>
+          </Pressable>
+        </Pressable>
+      </Modal>
+
+      {/* Çözülen Modal */}
+      <Modal visible={showSolvedInfo} transparent animationType="fade" onRequestClose={() => setShowSolvedInfo(false)}>
+        <Pressable style={styles.modalOverlay} onPress={() => setShowSolvedInfo(false)}>
+          <Pressable
+            style={[styles.listModalCard, { backgroundColor: colors.card, borderColor: `${colors.primary}60` }]}
+            onPress={(e) => e.stopPropagation()}
+          >
+            <View style={styles.listModalHandle} />
+            <View style={styles.listModalHeader}>
+              <View style={[styles.listModalIconWrap, { backgroundColor: `${colors.primary}18` }]}>
+                <MaterialIcons name="check-circle-outline" size={22} color={colors.primary} />
+              </View>
+              <View style={{ flex: 1 }}>
+                <Text style={[styles.listModalTitle, { color: colors.foreground }]}>Çözülen Vakalar</Text>
+                <Text style={[styles.listModalSub, { color: colors.mutedForeground }]}>
+                  {profile.gamesWon} vaka başarıyla çözüldü
+                </Text>
+              </View>
+            </View>
+
+            {recentSolves.length > 0 ? (
+              <>
+                <Text style={[styles.listSectionLabel, { color: colors.mutedForeground }]}>Son çözülenler</Text>
+                {recentSolves.map((h, i) => {
+                  const puzzle = PUZZLES.find((p) => p.id === h.puzzleId);
+                  const title = puzzle?.title ?? h.puzzleId;
+                  const mins = Math.floor(h.timeSeconds / 60);
+                  const secs = h.timeSeconds % 60;
+                  return (
+                    <View
+                      key={`${h.puzzleId}-${h.date}-${i}`}
+                      style={[
+                        styles.solveRow,
+                        { borderTopColor: colors.border },
+                        i === 0 && { borderTopWidth: 0 },
+                      ]}
+                    >
+                      <View style={[styles.solveRankBubble, { backgroundColor: `${colors.primary}18` }]}>
+                        <Text style={[styles.solveRankText, { color: colors.primary }]}>{i + 1}</Text>
+                      </View>
+                      <View style={{ flex: 1, gap: 1 }}>
+                        <Text style={[styles.solveTitle, { color: colors.foreground }]} numberOfLines={1}>
+                          {title}
+                        </Text>
+                        <Text style={[styles.solveMeta, { color: colors.mutedForeground }]}>
+                          {h.date} · {mins}:{secs.toString().padStart(2, "0")}dk
+                          {h.wrongGuesses > 0 ? ` · ${h.wrongGuesses} hata` : ""}
+                        </Text>
+                      </View>
+                      <Text style={[styles.solveScore, { color: colors.primary }]}>
+                        {h.score.toLocaleString("tr-TR")}
+                      </Text>
+                    </View>
+                  );
+                })}
+              </>
+            ) : (
+              <View style={styles.emptyState}>
+                <MaterialIcons name="inbox" size={32} color={colors.mutedForeground} style={{ opacity: 0.4 }} />
+                <Text style={[styles.emptyStateText, { color: colors.mutedForeground }]}>
+                  Henüz çözülmüş vaka yok
+                </Text>
+              </View>
+            )}
+
+            {earnedBadges.length > 0 && (
+              <>
+                <View style={[styles.modalDivider, { backgroundColor: colors.border, marginVertical: 4 }]} />
+                <Text style={[styles.listSectionLabel, { color: colors.mutedForeground }]}>Kazanılan rozetler</Text>
+                <View style={styles.badgeGrid}>
+                  {earnedBadges.map((b) => (
+                    <View key={b.id} style={[styles.badgeChip, { backgroundColor: `${b.color}18`, borderColor: `${b.color}40` }]}>
+                      <MaterialIcons name={b.icon} size={13} color={b.color} />
+                      <Text style={[styles.badgeChipText, { color: b.color }]}>{b.label}</Text>
+                    </View>
+                  ))}
+                  {unearnedBadges.slice(0, 2).map((b) => (
+                    <View key={b.id} style={[styles.badgeChip, { backgroundColor: `${colors.border}50`, borderColor: colors.border, opacity: 0.5 }]}>
+                      <MaterialIcons name="lock-outline" size={13} color={colors.mutedForeground} />
+                      <Text style={[styles.badgeChipText, { color: colors.mutedForeground }]}>{b.label}</Text>
+                    </View>
+                  ))}
+                </View>
+              </>
+            )}
+
+            <Pressable
+              onPress={() => setShowSolvedInfo(false)}
+              style={[styles.modalBtn, { backgroundColor: `${colors.primary}18`, marginTop: 4 }]}
+            >
+              <Text style={[styles.modalBtnText, { color: colors.primary }]}>Kapat</Text>
+            </Pressable>
+          </Pressable>
+        </Pressable>
+      </Modal>
+
+      {/* Toplam Puan Modal */}
+      <Modal visible={showScoreInfo} transparent animationType="fade" onRequestClose={() => setShowScoreInfo(false)}>
+        <Pressable style={styles.modalOverlay} onPress={() => setShowScoreInfo(false)}>
+          <Pressable
+            style={[styles.modalCard, { backgroundColor: colors.card, borderColor: "#9333ea60" }]}
+            onPress={(e) => e.stopPropagation()}
+          >
+            <MaterialIcons name="stars" size={52} color="#9333ea" />
+            <Text style={[styles.modalTitle, { color: colors.foreground }]}>Toplam Puan</Text>
+            <Text style={[styles.scoreCount, { color: "#9333ea" }]}>
+              {profile.totalScore.toLocaleString("tr-TR")}
+            </Text>
+
+            <View style={[styles.modalDivider, { backgroundColor: colors.border }]} />
+
+            <View style={styles.scoreStatGrid}>
+              <View style={styles.scoreStatItem}>
+                <Text style={[styles.scoreStatValue, { color: colors.foreground }]}>#{myRank}</Text>
+                <Text style={[styles.scoreStatLabel, { color: colors.mutedForeground }]}>Sıralama</Text>
+              </View>
+              <View style={[styles.scoreStatDivider, { backgroundColor: colors.border }]} />
+              <View style={styles.scoreStatItem}>
+                <Text style={[styles.scoreStatValue, { color: colors.foreground }]}>
+                  {avgScore > 0 ? avgScore.toLocaleString("tr-TR") : "—"}
+                </Text>
+                <Text style={[styles.scoreStatLabel, { color: colors.mutedForeground }]}>Ort. Puan</Text>
+              </View>
+              <View style={[styles.scoreStatDivider, { backgroundColor: colors.border }]} />
+              <View style={styles.scoreStatItem}>
+                <Text style={[styles.scoreStatValue, { color: colors.foreground }]}>{profile.gamesWon}</Text>
+                <Text style={[styles.scoreStatLabel, { color: colors.mutedForeground }]}>Çözülen</Text>
+              </View>
+            </View>
+
+            <View style={[styles.modalDivider, { backgroundColor: colors.border }]} />
+
+            {personAbove ? (
+              <Text style={[styles.modalDesc, { color: colors.mutedForeground }]}>
+                <Text style={{ color: colors.foreground, fontWeight: "700" }}>{personAbove.name}</Text>
+                {"'ı geçmek için "}
+                <Text style={{ color: "#9333ea", fontWeight: "700" }}>
+                  {scoreDiff.toLocaleString("tr-TR")} puan
+                </Text>
+                {" daha kazanman gerekiyor."}
+              </Text>
+            ) : (
+              <Text style={[styles.modalDesc, { color: colors.mutedForeground }]}>
+                {"Tebrikler! "}
+                <Text style={{ color: "#D4A843", fontWeight: "700" }}>Liderlik tablosunun zirvesinde</Text>
+                {" yer alıyorsun."}
+              </Text>
+            )}
+
+            <View style={[styles.scoreTipBox, { backgroundColor: `#9333ea10`, borderColor: `#9333ea30` }]}>
+              <MaterialIcons name="info-outline" size={14} color="#9333ea" style={{ marginTop: 1 }} />
+              <Text style={[styles.scoreTipText, { color: colors.mutedForeground }]}>
+                Puan; çözüm süresi, hata sayısı, zorluk seviyesi ve günlük seriye göre hesaplanır.
+              </Text>
+            </View>
+
+            <Pressable
+              onPress={() => setShowScoreInfo(false)}
+              style={[styles.modalBtn, { backgroundColor: "#9333ea" }]}
+            >
+              <Text style={[styles.modalBtnText, { color: "#fff" }]}>Anladım</Text>
             </Pressable>
           </Pressable>
         </Pressable>
@@ -407,18 +594,26 @@ export default function HomeScreen() {
           {/* Stats Row */}
           <Animated.View entering={FadeInDown.delay(210).springify()}>
             <View style={styles.statsRow}>
-              <View style={[styles.statCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
+              <Pressable
+                onPress={() => setShowSolvedInfo(true)}
+                style={[styles.statCard, { backgroundColor: colors.card, borderColor: `${colors.primary}50` }]}
+              >
                 <View style={[styles.statAccent, { backgroundColor: colors.primary }]} />
                 <MaterialIcons name="check-circle-outline" size={18} color={colors.primary} style={{ marginTop: 6 }} />
                 <Text style={[styles.statValue, { color: colors.primary }]}>{profile.gamesWon}</Text>
-                <Text style={[styles.statLabel, { color: colors.mutedForeground }]}>Çözülen Vaka</Text>
-              </View>
-              <View style={[styles.statCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
+                <Text style={[styles.statLabel, { color: colors.mutedForeground }]}>Çözülen</Text>
+                <MaterialIcons name="info-outline" size={11} color={`${colors.primary}80`} style={{ marginTop: 1 }} />
+              </Pressable>
+              <Pressable
+                onPress={() => setShowScoreInfo(true)}
+                style={[styles.statCard, { backgroundColor: colors.card, borderColor: "#9333ea50" }]}
+              >
                 <View style={[styles.statAccent, { backgroundColor: "#9333ea" }]} />
                 <MaterialIcons name="stars" size={18} color="#9333ea" style={{ marginTop: 6 }} />
                 <Text style={[styles.statValue, { color: colors.foreground }]}>{profile.totalScore.toLocaleString("tr-TR")}</Text>
                 <Text style={[styles.statLabel, { color: colors.mutedForeground }]}>Toplam Puan</Text>
-              </View>
+                <MaterialIcons name="info-outline" size={11} color="#9333ea80" style={{ marginTop: 1 }} />
+              </Pressable>
               <Pressable
                 onPress={() => setShowStreakInfo(true)}
                 style={[styles.statCard, { backgroundColor: colors.card, borderColor: "#FF6B3550" }]}
@@ -561,6 +756,90 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   modalBtnText: { fontSize: 15, fontWeight: "700" },
+
+  /* Çözülen / List Modal */
+  listModalCard: {
+    width: "100%",
+    maxWidth: 340,
+    borderRadius: 22,
+    borderWidth: 1.5,
+    padding: 20,
+  },
+  listModalHandle: {
+    width: 36,
+    height: 4,
+    borderRadius: 2,
+    backgroundColor: "rgba(255,255,255,0.15)",
+    alignSelf: "center",
+    marginBottom: 16,
+  },
+  listModalHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+    marginBottom: 12,
+  },
+  listModalIconWrap: {
+    width: 40,
+    height: 40,
+    borderRadius: 12,
+    alignItems: "center",
+    justifyContent: "center",
+    flexShrink: 0,
+  },
+  listModalTitle: { fontSize: 16, fontWeight: "800", letterSpacing: 0.3 },
+  listModalSub: { fontSize: 12, fontWeight: "500", marginTop: 2 },
+  listSectionLabel: { fontSize: 11, fontWeight: "600", letterSpacing: 0.5, textTransform: "uppercase", marginBottom: 6 },
+  solveRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+    paddingVertical: 9,
+    borderTopWidth: 1,
+  },
+  solveRankBubble: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    alignItems: "center",
+    justifyContent: "center",
+    flexShrink: 0,
+  },
+  solveRankText: { fontSize: 11, fontWeight: "700" },
+  solveTitle: { fontSize: 13, fontWeight: "700" },
+  solveMeta: { fontSize: 11, fontWeight: "400" },
+  solveScore: { fontSize: 13, fontWeight: "800", flexShrink: 0 },
+  emptyState: { alignItems: "center", paddingVertical: 20, gap: 8 },
+  emptyStateText: { fontSize: 13, fontWeight: "500" },
+  badgeGrid: { flexDirection: "row", flexWrap: "wrap", gap: 6, marginTop: 4 },
+  badgeChip: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
+    paddingHorizontal: 8,
+    paddingVertical: 5,
+    borderRadius: 8,
+    borderWidth: 1,
+  },
+  badgeChipText: { fontSize: 11, fontWeight: "600" },
+
+  /* Toplam Puan Modal */
+  scoreCount: { fontSize: 42, fontWeight: "900", letterSpacing: -1, lineHeight: 50 },
+  scoreStatGrid: { flexDirection: "row", width: "100%", alignItems: "center" },
+  scoreStatItem: { flex: 1, alignItems: "center", gap: 2, paddingVertical: 4 },
+  scoreStatValue: { fontSize: 18, fontWeight: "800" },
+  scoreStatLabel: { fontSize: 11, fontWeight: "500" },
+  scoreStatDivider: { width: 1, height: 32, opacity: 0.5 },
+  scoreTipBox: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+    gap: 8,
+    padding: 10,
+    borderRadius: 10,
+    borderWidth: 1,
+    marginTop: 4,
+  },
+  scoreTipText: { flex: 1, fontSize: 11, lineHeight: 16 },
 
   /* Tips Modal */
   tipsModalCard: {
