@@ -83,6 +83,7 @@ export default function HomeScreen() {
   );
 
   const [showOnboarding, setShowOnboarding] = useState(false);
+  const [showHowToPlay, setShowHowToPlay] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [showSetup, setShowSetup] = useState(false);
   const [showStreakInfo, setShowStreakInfo] = useState(false);
@@ -152,6 +153,11 @@ export default function HomeScreen() {
       <OnboardingScreen
         visible={showOnboarding}
         onDone={handleOnboardingDone}
+      />
+      <OnboardingScreen
+        visible={showHowToPlay}
+        onDone={() => setShowHowToPlay(false)}
+        closeLabel="Kapat"
       />
       <SettingsScreen visible={showSettings} onClose={() => setShowSettings(false)} />
       <ProfileSetupModal
@@ -244,13 +250,20 @@ export default function HomeScreen() {
           </View>
           <View style={styles.headerRight}>
             <Pressable
+              onPress={() => { unlockMusicFromGesture(); setShowHowToPlay(true); }}
+              style={[styles.iconBtn, { backgroundColor: `${colors.primary}15`, borderColor: `${colors.primary}35` }]}
+              hitSlop={8}
+              accessibilityLabel="Nasıl Oynanır"
+            >
+              <MaterialIcons name="help-outline" size={22} color={colors.primary} />
+            </Pressable>
+            <Pressable
               onPress={handleSettingsPress}
-              style={[styles.helpBtn, { backgroundColor: `${colors.primary}18`, borderColor: `${colors.primary}40`, borderWidth: 1.5 }]}
+              style={[styles.iconBtn, { backgroundColor: colors.card, borderColor: colors.border }]}
               hitSlop={8}
               accessibilityLabel="Ayarlar"
             >
-              <MaterialIcons name="help-outline" size={24} color={colors.primary} />
-              <Text style={[styles.helpBtnLabel, { color: colors.primary }]}>Yardım</Text>
+              <MaterialIcons name="settings" size={22} color={colors.mutedForeground} />
             </Pressable>
           </View>
         </View>
@@ -333,10 +346,6 @@ export default function HomeScreen() {
                 </View>
               </View>
 
-              {/* Decorative background icon */}
-              <View style={[styles.dailyDecorIcon, { pointerEvents: "none" }]}>
-                <MaterialIcons name="person-search" size={96} color={colors.primary} style={{ opacity: 0.06 }} />
-              </View>
             </Pressable>
           </Animated.View>
 
@@ -613,15 +622,14 @@ const styles = StyleSheet.create({
   titleUnderline: { height: 2, width: 40, borderRadius: 1, marginTop: 3, marginBottom: 3 },
   appSubtitle: { fontSize: 12, fontWeight: "500" },
   headerRight: { flexDirection: "row", alignItems: "center", gap: 8 },
-  helpBtn: {
-    flexDirection: "row",
+  iconBtn: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    borderWidth: 1,
     alignItems: "center",
-    gap: 6,
-    borderRadius: 22,
-    paddingHorizontal: 14,
-    paddingVertical: 9,
+    justifyContent: "center",
   },
-  helpBtnLabel: { fontSize: 13, fontWeight: "700", letterSpacing: 0.2 },
 
   /* ─── Daily Card ─── */
   dailyCard: {
@@ -673,14 +681,6 @@ const styles = StyleSheet.create({
     borderRadius: 12,
   },
   playCtaText: { fontSize: 16, fontWeight: "800", letterSpacing: 0.4 },
-  dailyDecorIcon: {
-    position: "absolute",
-    right: -8,
-    top: "50%",
-    marginTop: -48,
-    pointerEvents: "none",
-  },
-
   /* ─── Missions ─── */
   missionsCard: {
     borderRadius: 14,
