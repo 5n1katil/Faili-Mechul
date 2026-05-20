@@ -253,7 +253,7 @@ function SlideStartOptions({ contentWidth }: { contentWidth: number }) {
       accent: "#A855F7",
       label: "Vaka Arşivi",
       desc: "Vakalar sekmesinde zorluk derecesine göre istediğin vakayı seçerek oynayabilirsin.",
-      badge: "Çaylak · Dedektif · Usta",
+      badge: "Çaylak · Dedektif · Baş Komiser",
     },
   ];
 
@@ -403,7 +403,7 @@ function SlidePage({ slide, slideIndex, screenWidth, screenHeight }: SlidePagePr
 
   return (
     <ScrollView
-      style={{ width: screenWidth }}
+      style={{ width: screenWidth, flex: 1 }}
       contentContainerStyle={[
         styles.slideScroll,
         slide.showGrid && { gap: 6 },
