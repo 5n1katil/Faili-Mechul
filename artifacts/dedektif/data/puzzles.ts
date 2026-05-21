@@ -384,9 +384,9 @@ export const PUZZLES: Puzzle[] = [
     story:
       "Ankara'daki asırlık müzenin loş koridorlarında, tarihin sessizliği kanla bozuldu. Bizans dönemine ait eşsiz bir broşun çalındığı fırtınalı gecede, gece bekçisi görev yerinde ağır yaralı olarak bulundu. Sırlar müze çalışanlarının arasında gizli.",
     suspects: [
-      { id: "s1", name: "Küratör Bey", description: "Müzenin yöneticisi. Eserlerin tarihini çok iyi bilir ancak pratik restorasyon işlemleri ve kimyasallar konusunda hiçbir yetkinliği yoktur.", icon: "🕵️" },
-      { id: "s2", name: "Restoratör Hanım", description: "Hasar görmüş eserleri hassas sivri aletler ve sıvılarla onaran, depolara giriş izni olan kapalı kapılar ardında çalışan uzman.", icon: "👩" },
-      { id: "s3", name: "Ziyaretçi Rehber", description: "Gündüzleri vitrinlerin önünde turlar düzenleyen, güvenli alanların dışına çıkma yetkisi olmayan sosyal alan görevlisi.", icon: "👨" },
+      { id: "s1", name: "Küratör Bey", description: "Müzenin yöneticisi. Eserlerin tarihini çok iyi bilir ancak pratik restorasyon işlemleri ve kimyasallar konusunda hiçbir yetkinliği yoktur.", icon: "noun-muzede-kurat-avatar.png" },
+      { id: "s2", name: "Restoratör Hanım", description: "Hasar görmüş eserleri hassas sivri aletler ve sıvılarla onaran, depolara giriş izni olan kapalı kapılar ardında çalışan uzman.", icon: "noun-muzede-rehber-avatar.png" },
+      { id: "s3", name: "Ziyaretçi Rehberi", description: "Gündüzleri vitrinlerin önünde turlar düzenleyen, güvenli alanların dışına çıkma yetkisi olmayan sosyal alan görevlisi.", icon: "noun-muzede-bekci-avatar.png" },
     ],
     weapons: [
       { id: "w1", name: "Uyutucu İğne", description: "Deriye temas ettiği an hızla kana karışıp anında etki eden güçlü anestezik sıvı içeren medikal şırınga.", icon: "vaccines" },
@@ -399,7 +399,7 @@ export const PUZZLES: Puzzle[] = [
       { id: "l3", name: "Güvenlik Odası", description: "Tüm müzenin kamera görüntülerinin canlı izlendiği, monitörlerle ve telsizlerle dolu, sürekli personelin bulunduğu kontrol merkezi.", icon: "security" },
     ],
     clues: [
-      { id: "c1", text: "Müzenin turnike sistemi, Ziyaretçi Rehber'in tüm gece boyunca sadece aydınlık sergi salonu etrafında turlar attığını elektronik olarak doğruladı.", type: "record", isBonus: false },
+      { id: "c1", text: "Müzenin turnike sistemi, Ziyaretçi Rehberi'nin tüm gece boyunca sadece aydınlık sergi salonu etrafında turlar attığını elektronik olarak doğruladı.", type: "record", isBonus: false },
       { id: "c2", text: "Mücadele izleri, kameraların canlı izlendiği personel merkezinde değil; dışarıdan yetkisiz kimsenin giremeyeceği penceresiz bir odada toplanmıştı.", type: "evidence", isBonus: false },
       { id: "c3", text: "Kurbanın ensesindeki mikroskobik giriş deliği, ağır bir mermer kaidenin eziği veya havaya sıkılan bir gazın tahribatı değildi; kana karışan sinsi bir yöntemi işaret ediyordu.", type: "forensic", isBonus: false },
       { id: "c4", text: "Küratör Bey'in, restorasyon işlemleri için gerekli özel şifrelere sahip olmadığı ve o gece üst kattaki odasından çıkmadığı asistanları tarafından onaylandı.", type: "witness", isBonus: false },
