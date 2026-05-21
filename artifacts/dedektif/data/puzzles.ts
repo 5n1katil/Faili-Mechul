@@ -2138,9 +2138,9 @@ export const PUZZLES: Puzzle[] = [
     story:
       "Samsun'un liman mahallelerinden birinde postacı Cafer Bey, akşam erken saatte bir arka sokakta bıçaklanmış bulundu. Çantasındaki birkaç mektup kayıp. Gün içinde tartışma yaşadığı üç kişiden birisi, zarfın içindeki sırları korumak için cinayeti işledi.",
     suspects: [
-      { id: "s1", name: "Bakkal Necati", description: "Koli şikayeti bulunan mahalle esnafı. Sürekli dükkanının önünde bekleyen, kendi bölgesinden pek ayrılmayan tanıdık yüz.", icon: "👨" },
-      { id: "s2", name: "Liman İşçisi Tahsin", description: "İşten çıkarılma belgesinin postalanmasından korkan, üzerinde her daim ağır iş aletleri taşıyan öfkeli tersane işçisi.", icon: "👷" },
-      { id: "s3", name: "Ev Hanımı Hatice Teyze", description: "Postaların geç gelmesinden şikayetçi olan ev hanımı. Fiziksel olarak yavaş hareket eden, kargoları için depo binalarını aşındıran kadın.", icon: "👵" },
+      { id: "s1", name: "Bakkal Necati", description: "Koli şikayeti bulunan mahalle esnafı. Sürekli dükkanının önünde bekleyen, kendi bölgesinden pek ayrılmayan tanıdık yüz.", icon: "noun-mektup-mahalle-adami-avatar.png" },
+      { id: "s2", name: "Liman İşçisi Tahsin", description: "İşten çıkarılma belgesinin postalanmasından korkan, üzerinde her daim ağır iş aletleri taşıyan öfkeli tersane işçisi.", icon: "noun-mektup-tamirci-avatar.png" },
+      { id: "s3", name: "Ev Hanımı Hatice Teyze", description: "Postaların geç gelmesinden şikayetçi olan ev hanımı. Fiziksel olarak yavaş hareket eden, kargoları için depo binalarını aşındıran kadın.", icon: "noun-mektup-komsu-kadin-avatar.png" },
     ],
     weapons: [
       { id: "w1", name: "Çakı", description: "Küçük, katlanabilir, yakından yapılan tek bir pürüzsüz hamleyle ince ve derin bir kesik açabilen cep aleti.", icon: "content-cut" },
