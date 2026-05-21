@@ -476,7 +476,7 @@ export default function VakalarScreen() {
       setLastResultSuccess(true);
       resultTimerRef.current = setTimeout(() => {
         setShowResult(true);
-      }, 500);
+      }, 200);
     }
     return () => {
       if (resultTimerRef.current) clearTimeout(resultTimerRef.current);
@@ -557,11 +557,28 @@ export default function VakalarScreen() {
 
   const handleGoHome = () => {
     if (homeTimerRef.current) clearTimeout(homeTimerRef.current);
+    // Modal'ı ve state'i önce temizle, sonra navigate et — aksi hâlde mobilde
+    // Modal önce kapanmaz ve sekme geçişi görünmez.
+    setShowResult(false);
+    resetCurrentGame();
     router.navigate("/");
-    homeTimerRef.current = setTimeout(() => {
-      setShowResult(false);
-      resetCurrentGame();
-    }, 250);
+  };
+
+  const handlePlayNext = () => {
+    const currentPuzzle = gameState?.puzzle;
+    const diff = currentPuzzle?.difficulty ?? "caylak";
+    const currentId = currentPuzzle?.id;
+    const candidates = PUZZLES.filter(
+      (p) => p.difficulty === diff && p.id !== currentId
+    );
+    if (candidates.length === 0) {
+      handleBackToList();
+      return;
+    }
+    const next = candidates[Math.floor(Math.random() * candidates.length)];
+    setShowResult(false);
+    resetCurrentGame();
+    startPuzzle(next);
   };
 
   const handleBackPress = () => {
@@ -968,6 +985,7 @@ export default function VakalarScreen() {
           currentStreak={gameState.appliedStreak ?? profile.currentStreak}
           isRanked={isRanked}
           onPlayMore={handleBackToList}
+          onPlayNext={handlePlayNext}
           onClose={handleGoHome}
         />
       )}

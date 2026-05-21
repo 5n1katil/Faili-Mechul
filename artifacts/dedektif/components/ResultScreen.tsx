@@ -45,6 +45,7 @@ interface Props {
   currentStreak: number;
   isRanked: boolean;
   onPlayMore: () => void;
+  onPlayNext: () => void;
   onClose: () => void;
 }
 
@@ -357,6 +358,7 @@ export default function ResultScreen({
   currentStreak,
   isRanked,
   onPlayMore,
+  onPlayNext,
   onClose,
 }: Props) {
   const colors = useColors();
@@ -453,7 +455,7 @@ export default function ResultScreen({
   return (
     <Modal
       visible={true}
-      animationType="slide"
+      animationType="fade"
       transparent={false}
       statusBarTranslucent
       onRequestClose={onClose}
@@ -594,7 +596,7 @@ export default function ResultScreen({
             </Pressable>
 
             <Pressable
-              onPress={onPlayMore}
+              onPress={onPlayNext}
               style={[styles.btn, { backgroundColor: colors.primary }]}
             >
               <MaterialIcons name="play-arrow" size={20} color={colors.primaryForeground} />
