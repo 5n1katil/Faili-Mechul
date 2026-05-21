@@ -25,6 +25,7 @@ export default function ExitConfirmSheet({ visible, isRanked, onContinue, onExit
       transparent
       animationType="fade"
       statusBarTranslucent
+      onRequestClose={onContinue}
     >
       <View style={[styles.overlay, { backgroundColor: "rgba(0,0,0,0.75)" }]}>
         <View style={[styles.sheet, { backgroundColor: colors.card, borderColor: colors.border }]}>

@@ -30,6 +30,7 @@ export default function PuzzleStartModal({ visible, puzzle, isRanked, onStart, o
       transparent
       animationType="fade"
       statusBarTranslucent
+      onRequestClose={onCancel}
     >
       <View style={[styles.overlay, { backgroundColor: "rgba(0,0,0,0.85)" }]}>
         <View style={[styles.sheet, { backgroundColor: colors.card, borderColor: colors.border }]}>

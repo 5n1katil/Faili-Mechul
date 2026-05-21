@@ -524,14 +524,24 @@ export default function VakalarScreen() {
   useEffect(() => {
     if (Platform.OS !== "android") return;
     const sub = BackHandler.addEventListener("hardwareBackPress", () => {
-      if (gameState && !gameState.isComplete && gameState.timerActive) {
-        setShowExitConfirm(true);
-        return true;
+      if (gameState && gameState.puzzle) {
+        // Oyun yüklüyken Android geri tuşunu her zaman kendimiz yönetiyoruz.
+        // React Navigation'ın sekme navigasyonuna müdahale etmesini engelliyoruz.
+        if (!gameState.isComplete && gameState.timerActive) {
+          // Timer aktif: çıkış onayı sor
+          setShowExitConfirm(true);
+        } else {
+          // Timer aktif değil (başlangıç ekranı veya tamamlanmış oyun): listeye dön
+          setShowResult(false);
+          resetCurrentGame();
+          setListTab("standart");
+        }
+        return true; // Geri tuşunu biz işledik, React Navigation işlemesin
       }
-      return false;
+      return false; // Liste görünümündeyken React Navigation varsayılan davranışa izin ver
     });
     return () => sub.remove();
-  }, [gameState]);
+  }, [gameState, resetCurrentGame]);
 
   const handleBackToList = () => {
     setShowResult(false);
