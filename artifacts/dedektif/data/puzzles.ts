@@ -456,9 +456,9 @@ export const PUZZLES: Puzzle[] = [
     story:
       "Ankara-İstanbul ekspresinin ritmik tekerlek sesleri, sessiz bir cinayeti gizlemeye yetmedi. Tren yoğun sis altında ilerlerken, birinci mevkide seyahat eden tanınmış bir iş insanı koltuğunda son nefesini vermişti. Tren istasyona varmadan katili bulmalısın.",
     suspects: [
-      { id: "s1", name: "İş Kadını", description: "Sürekli evrak çantasıyla gezen, gergin, sabırsız ve hassas işlemlere eli hiç yatkın olmayan birinci mevki yolcusu.", icon: "👩‍💼" },
-      { id: "s2", name: "Üniversite Öğrencisi", description: "Kulağında kulaklıkla kendi odasından hiç çıkmayan, etrafındaki insanlarla sıfır etkileşim kuran ucuz biletli genç yolcu.", icon: "👦" },
-      { id: "s3", name: "Emekli Doktor", description: "Anatomik bilgiye sahip, yanında sürekli çeşitli sıvılar ve aletlerin bulunduğu küçük tıbbi çantalar taşıyan sakin yaşlı yolcu.", icon: "👴" },
+      { id: "s1", name: "İş Kadını", description: "Sürekli evrak çantasıyla gezen, gergin, sabırsız ve hassas işlemlere eli hiç yatkın olmayan birinci mevki yolcusu.", icon: "noun-tren-kadin-yolcu-avatar.png" },
+      { id: "s2", name: "Üniversite Öğrencisi", description: "Kulağında kulaklıkla kendi odasından hiç çıkmayan, etrafındaki insanlarla sıfır etkileşim kuran ucuz biletli genç yolcu.", icon: "noun-tren-genc-yolcu-avatar.png" },
+      { id: "s3", name: "Emekli Doktor", description: "Anatomik bilgiye sahip, yanında sürekli çeşitli sıvılar ve aletlerin bulunduğu küçük tıbbi çantalar taşıyan sakin yaşlı yolcu.", icon: "noun-tren-doktor-avatar.png" },
     ],
     weapons: [
       { id: "w1", name: "Zehirli İçecek", description: "Bardağa damlatıldığında doğrudan kalp krizini tetikleyen, fark edilmesi imkansız renksiz ve tatsız tıbbi sıvı.", icon: "local-bar" },
