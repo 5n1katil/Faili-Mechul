@@ -2321,10 +2321,10 @@ export const PUZZLES: Puzzle[] = [
     story:
       "Kapadokya'da sabahın ilk ışıklarıyla havalanan turist balonu iniş yaptığında, sepetin içinde dehşet verici bir manzara vardı. Bölgenin en büyük turizm acentası sahibi kanlar içindeydi.",
     suspects: [
-      { id: "s1", name: "Rakip Pilot", description: "Maktulün en büyük ticari rakibi olan, havacılık donanımlarına çok iyi hakim agresif pilot.", icon: "👨" },
-      { id: "s2", name: "Turist Kadın", description: "Sadece fotoğraf çekmek için orada olan, yükseklik korkusu olan sıradan bir misafir.", icon: "👩‍💼" },
-      { id: "s3", name: "Balon Mekanikçisi", description: "Gaz tüplerinden sorumlu, elleri sürekli yağlı ve kirli olan bakım personeli.", icon: "👷" },
-      { id: "s4", name: "Fotoğrafçı", description: "Turistleri karadan takip eden, sürekli kamerasıyla çekim yapan güler yüzlü çalışan.", icon: "📸" },
+      { id: "s1", name: "Rakip Pilot", description: "Maktulün en büyük ticari rakibi olan, havacılık donanımlarına çok iyi hakim agresif pilot.", icon: "noun-kanli-pilot-avatar.png" },
+      { id: "s2", name: "Turist Kadın", description: "Sadece fotoğraf çekmek için orada olan, yükseklik korkusu olan sıradan bir misafir.", icon: "noun-kanli-rehber-kadin-avatar.png" },
+      { id: "s3", name: "Balon Mekanikçisi", description: "Gaz tüplerinden sorumlu, elleri sürekli yağlı ve kirli olan bakım personeli.", icon: "noun-kanli-tamirci-avatar.png" },
+      { id: "s4", name: "Fotoğrafçı", description: "Turistleri karadan takip eden, sürekli kamerasıyla çekim yapan güler yüzlü çalışan.", icon: "noun-kanli-fotograf-avatar.png" },
     ],
     weapons: [
       { id: "w1", name: "İşaret Fişeği", description: "Acil durumlarda gökyüzüne sıkılan, yakından ateşlendiğinde ağır yanıklar bırakan piroteknik silah.", icon: "flash-on" },
