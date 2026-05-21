@@ -2174,9 +2174,9 @@ export const PUZZLES: Puzzle[] = [
     story:
       "Ayvalık'ın en büyük fabrikasının sahibi Rıfat Ağa, preslerin arasında ölü bulundu. Başta bir endüstriyel kaza sanılsa da, adli inceleme bunun kusursuz planlanmış bir zehirleme vakası olduğunu ortaya çıkardı.",
     suspects: [
-      { id: "s1", name: "Fabrika Ustabaşı Cevdet", description: "On beş yıldır fabrikada çalışan ustabaşı; Rıfat Ağa'nın onu ortaklıktan mahrum bıraktığını öğrendi.", icon: "👷" },
-      { id: "s2", name: "Muhasebeci Bayan Şükran", description: "Fabrikanın muhasebecisi; usulsüz kayıtları Rıfat Ağa'ya bildirmekten çekindiği için baskı altındaydı.", icon: "👩" },
-      { id: "s3", name: "Satış Temsilcisi Orhan Bey", description: "İstanbul'dan gelen satış temsilcisi; Rıfat Ağa ile anlaşma görüşmesi bozulmuş.", icon: "🕵️" },
+      { id: "s1", name: "Fabrika Ustabaşı Cevdet", description: "On beş yıldır fabrikada çalışan ustabaşı; Rıfat Ağa'nın onu ortaklıktan mahrum bıraktığını öğrendi.", icon: "noun-fabrika-makinist-avatar.png" },
+      { id: "s2", name: "Muhasebeci Bayan Şükran", description: "Fabrikanın muhasebecisi; usulsüz kayıtları Rıfat Ağa'ya bildirmekten çekindiği için baskı altındaydı.", icon: "noun-fabrika-muhasebeci-avatar.png" },
+      { id: "s3", name: "Satış Temsilcisi Orhan Bey", description: "İstanbul'dan gelen satış temsilcisi; Rıfat Ağa ile anlaşma görüşmesi bozulmuş.", icon: "noun-fabrika-ortak-avatar.png" },
     ],
     weapons: [
       { id: "w1", name: "Zehirli Çay", description: "İçine yüksek doz sedatif karıştırılmış çay bardağı.", icon: "local-cafe" },
