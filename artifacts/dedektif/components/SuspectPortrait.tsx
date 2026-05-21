@@ -1,9 +1,9 @@
 import React from "react";
-import Svg, { Circle, Ellipse, G, Path } from "react-native-svg";
+import Svg, { Circle, Ellipse, G, Line, Path, Rect } from "react-native-svg";
 
 /**
- * Noir tek renk vektör büstler — silah/mekan hücrelerindeki Material ikonlarla aynı okuma:
- * düz dolgu, 24×24 grid, yüz veya boydan silüet.
+ * Noir tek renk vektör büstler — açık boyun + geniş omuz silüeti.
+ * 24×24 grid. Her portre: baş + boyun + omuz + gövde + meslek aksesuarı.
  */
 export const SUSPECT_PORTRAIT_KEYS = [
   "noir-f-bun-glasses",
@@ -43,280 +43,543 @@ export function isSuspectPortraitKey(s: string): s is SuspectPortraitKey {
   return (SUSPECT_PORTRAIT_KEYS as readonly string[]).includes(s);
 }
 
-function Glasses({ color }: { color: string }) {
+/**
+ * Standart boyun + omuz gövde yolu.
+ * Baş: cy=8.5, r=3.2  →  boyun x:10.2-13.8  →  omuzlar x:4.5-19.5  →  gövde y:22
+ */
+function Body({ color }: { color: string }) {
   return (
     <Path
-      d="M9 9.6h6"
-      stroke={color}
-      strokeWidth={0.65}
-      strokeLinecap="round"
-      fill="none"
+      d="M10.2 11.8 L9.8 13.8 Q7 15 5 17.5 L4.5 22 H19.5 L19 17.5 Q17 15 14.2 13.8 L13.8 11.8 Z"
+      fill={color}
+    />
+  );
+}
+
+/** Şapkalı portreler için alçaltılmış gövde (baş cy=10.5) */
+function BodyLow({ color }: { color: string }) {
+  return (
+    <Path
+      d="M10.2 13.8 L9.8 15.5 Q7 16.8 5 19 L4.5 22 H19.5 L19 19 Q17 16.8 14.2 15.5 L13.8 13.8 Z"
+      fill={color}
     />
   );
 }
 
 function renderPortrait(key: SuspectPortraitKey, color: string): React.ReactNode {
   const f = { fill: color };
+
   switch (key) {
+    /* ── Topuz + gözlük ─────────────────────────────────────────────── */
     case "noir-f-bun-glasses":
       return (
         <G>
-          <Ellipse cx={12} cy={5.2} rx={2.4} ry={1.35} {...f} />
-          <Circle cx={12} cy={10} r={3.4} {...f} />
+          {/* Topuz */}
+          <Ellipse cx={12} cy={4.2} rx={2.2} ry={1.8} {...f} />
+          <Rect x={11} y={4} width={2} height={2} {...f} />
+          {/* Baş */}
+          <Circle cx={12} cy={8.5} r={3.2} {...f} />
+          {/* Gözlük çerçevesi */}
           <Path
-            d="M8.5 13.2c1.2-.8 2.8-1 3.5-1s2.3.2 3.5 1l1.1 8.3h-9.2l1.1-8.3z"
-            {...f}
+            d="M9.2 8.5 H10.8 M13.2 8.5 H14.8 M10.8 8.5 Q12 9 13.2 8.5"
+            stroke={color}
+            strokeWidth={0.7}
+            strokeLinecap="round"
+            fill="none"
+            opacity={0.55}
           />
-          <Glasses color={color} />
+          <Body color={color} />
         </G>
       );
+
+    /* ── Kel tepeli takım ───────────────────────────────────────────── */
     case "noir-m-suit-receding":
       return (
         <G>
+          {/* Kel / saç çizgisi */}
+          <Path d="M8.8 5.8 Q12 4.5 15.2 5.8 Q13.5 5 12 5 Q10.5 5 8.8 5.8Z" {...f} />
+          {/* Baş */}
+          <Circle cx={12} cy={8.8} r={3.2} {...f} />
+          {/* Kravat */}
           <Path
-            d="M9 5.8q3-1.2 6 0 1.2 1.8 1.2 3.8 0 2.8-2.2 3.8-1.8.8-3.8.8t-3.8-.8q-2.2-1-2.2-3.8 0-2 1.2-3.8z"
-            {...f}
+            d="M12 12 L11.2 15 L12 16.5 L12.8 15 Z"
+            fill={color}
+            opacity={0.7}
           />
-          <Path d="M5.5 13.5l1.2-1.8h10.6l1.2 1.8-.3 8.5h-12.4l-.3-8.5z" {...f} />
-          <Path d="M12 13.8l-.6 8.2h1.2l-.6-8.2z" fill={color} opacity={0.85} />
+          <Body color={color} />
         </G>
       );
+
+    /* ── Kasketli hamam işçisi ──────────────────────────────────────── */
     case "noir-m-worker-towel":
       return (
         <G>
-          <Circle cx={12} cy={8.2} r={2.7} {...f} />
-          <Path d="M3.5 11.5l1.5-1.2h14l1.5 1.2-.5 10.5h-16l-.5-10.5z" {...f} />
-          <Path
-            d="M7 14.5h10"
-            stroke={color}
-            strokeWidth={0.9}
-            strokeLinecap="round"
-            fill="none"
-            opacity={0.9}
-          />
+          {/* Kafa havlusu (yatay dikdörtgen band) */}
+          <Rect x={8} y={5.5} width={8} height={2.8} rx={1.2} {...f} />
+          {/* Baş */}
+          <Circle cx={12} cy={10.5} r={3} {...f} />
+          <BodyLow color={color} />
         </G>
       );
+
+    /* ── Kaptan şapkası ─────────────────────────────────────────────── */
     case "noir-m-captain-cap":
       return (
         <G>
-          <Path d="M7 7.5l5-2.2 5 2.2v1.2H7V7.5z" {...f} />
-          <Circle cx={12} cy={11.5} r={3.2} {...f} />
-          <Path d="M6.5 14.5h11l-1 7.5h-9l-1-7.5z" {...f} />
+          {/* Şapka üstü */}
+          <Path d="M8 7.5 L12 5 L16 7.5 H8Z" {...f} />
+          {/* Şapka siperi */}
+          <Path d="M7 8.5 H17 V9.5 Q12 10 7 9.5 Z" {...f} />
+          {/* Baş */}
+          <Circle cx={12} cy={11} r={3} {...f} />
+          <BodyLow color={color} />
         </G>
       );
+
+    /* ── Yaşlı kadın şal ────────────────────────────────────────────── */
     case "noir-f-elder-shawl":
       return (
         <G>
-          <Circle cx={12} cy={9.5} r={3.2} {...f} />
+          {/* Baş */}
+          <Circle cx={12} cy={8} r={3} {...f} />
+          {/* Şal / baş örtüsü */}
+          <Path d="M8.5 9.5 Q12 7 15.5 9.5 Q14 11.5 12 11.5 Q10 11.5 8.5 9.5Z" {...f} opacity={0.8} />
+          {/* Gövde şal drape */}
           <Path
-            d="M6 13q6 2 12 0l1.5 9h-15l1.5-9z"
+            d="M9.8 11.5 L9 13.5 Q6 15.2 4.5 18 L4 22 H20 L19.5 18 Q18 15.2 15 13.5 L14.2 11.5 Z"
             {...f}
           />
-          <Path d="M8 12q4 2.5 8 0" stroke={color} strokeWidth={0.6} fill="none" opacity={0.85} />
         </G>
       );
+
+    /* ── Yaşlı adam baston ──────────────────────────────────────────── */
     case "noir-m-elder-cane":
       return (
         <G>
-          <Circle cx={12} cy={9} r={3.1} {...f} />
-          <Path d="M6 13.5h8.5v8h-6.5l-2-8z" {...f} />
+          {/* Baş */}
+          <Circle cx={11} cy={8.5} r={3.1} {...f} />
+          {/* Gövde (biraz sola kaymış) */}
           <Path
-            d="M17.5 8v14"
+            d="M9.2 11.7 L8.8 13.5 Q6 14.8 4.5 17 L4 22 H18 L17.5 17 Q15.5 14.8 12.8 13.5 L12.8 11.7 Z"
+            {...f}
+          />
+          {/* Baston */}
+          <Path
+            d="M18 13 L18 22"
             stroke={color}
-            strokeWidth={1.1}
+            strokeWidth={1.5}
+            strokeLinecap="round"
+            fill="none"
+          />
+          <Path
+            d="M16.5 13 Q18 11.5 19.5 13"
+            stroke={color}
+            strokeWidth={1.5}
             strokeLinecap="round"
             fill="none"
           />
         </G>
       );
+
+    /* ── Güvenlik düz kasket ─────────────────────────────────────────── */
     case "noir-m-security-cap":
       return (
         <G>
-          <Path d="M8.5 6.5h7L16 9H8l-.5-2.5z" {...f} />
-          <Circle cx={12} cy={11.5} r={3.1} {...f} />
-          <Path d="M6 14h12v8H6v-8z" {...f} />
+          {/* Düz kasket */}
+          <Rect x={8} y={6} width={8} height={3.2} rx={0.5} {...f} />
+          {/* Kasket siperi */}
+          <Path d="M7 9.2 H17 V10 H7 Z" {...f} opacity={0.75} />
+          {/* Baş */}
+          <Circle cx={12} cy={11} r={3} {...f} />
+          <BodyLow color={color} />
         </G>
       );
+
+    /* ── Kadın laboratuvar önlüğü ───────────────────────────────────── */
     case "noir-f-lab-coat":
       return (
         <G>
-          <Circle cx={12} cy={9.5} r={3.1} {...f} />
-          <Path d="M7.5 13h9l1.5 9h-12l1.5-9z" {...f} />
-          <Path d="M12 13v6" stroke={color} strokeWidth={0.55} fill="none" opacity={0.8} />
+          {/* Baş */}
+          <Circle cx={12} cy={8.2} r={3.1} {...f} />
+          {/* Gövde */}
+          <Path
+            d="M10.2 11.5 L9.8 13.2 Q7 14.5 5 17 L4.5 22 H19.5 L19 17 Q17 14.5 14.2 13.2 L13.8 11.5 Z"
+            {...f}
+          />
+          {/* Önlük ortası dikişi */}
+          <Path
+            d="M12 13.5 L12 20"
+            stroke={color}
+            strokeWidth={0.6}
+            strokeLinecap="round"
+            fill="none"
+            opacity={0.5}
+          />
+          {/* Yaka açıklığı */}
+          <Path
+            d="M10.5 13 L12 15 L13.5 13"
+            stroke={color}
+            strokeWidth={0.6}
+            strokeLinecap="round"
+            fill="none"
+            opacity={0.5}
+          />
         </G>
       );
+
+    /* ── Erkek laboratuvar önlüğü ───────────────────────────────────── */
     case "noir-m-lab-coat":
       return (
         <G>
-          <Circle cx={12} cy={9} r={3.2} {...f} />
-          <Path d="M6.5 12.8h11l1 9.2h-13l1-9.2z" {...f} />
-          <Path d="M12 12.8v5.5" stroke={color} strokeWidth={0.55} fill="none" opacity={0.8} />
+          {/* Baş */}
+          <Circle cx={12} cy={8} r={3.2} {...f} />
+          <Body color={color} />
+          {/* Önlük yaka + dikiş */}
+          <Path
+            d="M10 13.5 L12 16 L14 13.5"
+            stroke={color}
+            strokeWidth={0.65}
+            strokeLinecap="round"
+            fill="none"
+            opacity={0.5}
+          />
+          <Path
+            d="M12 16 L12 21"
+            stroke={color}
+            strokeWidth={0.6}
+            strokeLinecap="round"
+            fill="none"
+            opacity={0.5}
+          />
         </G>
       );
+
+    /* ── Erkek aşçı (uzun şapka) ────────────────────────────────────── */
     case "noir-m-chef":
       return (
         <G>
-          <Path d="M8 5.5c1.2-1.8 3.8-1.8 4.8 0 .6-1.2 2.4-1.2 3.2 0l1.5 3.5H6.5l1.5-3.5z" {...f} />
-          <Circle cx={12} cy={11.5} r={3} {...f} />
-          <Path d="M6.5 14.5h11l-.8 7.5h-9.4l-.8-7.5z" {...f} />
+          {/* Uzun aşçı şapkası */}
+          <Path d="M9 8.5 Q9 3 12 3 Q15 3 15 8.5 H9Z" {...f} />
+          <Path d="M8.5 8.5 H15.5 V9.5 H8.5 Z" {...f} />
+          {/* Baş */}
+          <Circle cx={12} cy={11} r={3} {...f} />
+          <BodyLow color={color} />
         </G>
       );
+
+    /* ── Kadın aşçı (kısa şapka) ────────────────────────────────────── */
     case "noir-f-chef":
       return (
         <G>
-          <Path d="M8.5 5c1 1.6 3 1.6 3.5 0 .8 1.4 2.7 1.4 3.5 0l1.8 3.8H6.7l1.8-3.8z" {...f} />
-          <Circle cx={12} cy={11.2} r={2.9} {...f} />
-          <Path d="M7.5 14h9l1 8.5h-11l1-8.5z" {...f} />
+          {/* Kısa aşçı şapkası */}
+          <Path d="M9.2 8 Q9.5 4.5 12 4.5 Q14.5 4.5 14.8 8 H9.2Z" {...f} />
+          <Path d="M8.8 8 H15.2 V9 H8.8 Z" {...f} />
+          {/* Baş */}
+          <Circle cx={12} cy={11} r={3} {...f} />
+          <BodyLow color={color} />
         </G>
       );
+
+    /* ── Erkek sanatçı bere ─────────────────────────────────────────── */
     case "noir-m-artist-beret":
       return (
         <G>
-          <Ellipse cx={11} cy={6} rx={4} ry={1.6} {...f} />
-          <Circle cx={12} cy={10.5} r={3.1} {...f} />
-          <Path d="M6.5 14l1-1.5h9l1 1.5-.5 8h-10l-.5-8z" {...f} />
+          {/* Bere (sola yatık) */}
+          <Ellipse cx={11} cy={6} rx={4.5} ry={2} {...f} />
+          <Path d="M14.5 6 L15 7.5" stroke={color} strokeWidth={1.2} strokeLinecap="round" fill="none" />
+          {/* Baş */}
+          <Circle cx={12} cy={10} r={3.1} {...f} />
+          <BodyLow color={color} />
         </G>
       );
+
+    /* ── Kadın sanatçı dalgalı saç ──────────────────────────────────── */
     case "noir-f-artist-hair":
       return (
         <G>
-          <Path d="M8 5.5q4-2 8 0v3q-4 1.5-8 0v-3z" {...f} />
-          <Circle cx={12} cy={10.5} r={3} {...f} />
-          <Path d="M7.5 13.5h9l1.2 8.5h-11.4l1.2-8.5z" {...f} />
+          {/* Dalgalı uzun saç */}
+          <Path d="M8.5 6 Q7.5 10 8 14 L9.5 13.5 Q9 10 10 7 Q8.8 6.5 8.5 6Z" {...f} />
+          <Path d="M15.5 6 Q16.5 10 16 14 L14.5 13.5 Q15 10 14 7 Q15.2 6.5 15.5 6Z" {...f} />
+          {/* Baş */}
+          <Circle cx={12} cy={9} r={3.2} {...f} />
+          {/* Gövde */}
+          <Path
+            d="M10.2 12.3 L9.8 14 Q7 15.3 5 17.8 L4.5 22 H19.5 L19 17.8 Q17 15.3 14.2 14 L13.8 12.3 Z"
+            {...f}
+          />
         </G>
       );
+
+    /* ── Erkek ofis kravatı ─────────────────────────────────────────── */
     case "noir-m-office-tie":
       return (
         <G>
-          <Circle cx={12} cy={9.5} r={3.2} {...f} />
-          <Path d="M5.5 13h13l-.5 9h-12l-.5-9z" {...f} />
-          <Path d="M12 13l-.7 9h1.4L12 13z" fill={color} opacity={0.88} />
+          {/* Baş */}
+          <Circle cx={12} cy={8.2} r={3.3} {...f} />
+          {/* Geniş takım omuzlar */}
+          <Path
+            d="M10.2 11.6 L9.5 13.2 Q6.5 14.2 4.5 16.5 L4 22 H20 L19.5 16.5 Q17.5 14.2 14.5 13.2 L13.8 11.6 Z"
+            {...f}
+          />
+          {/* Kravat */}
+          <Path d="M12 13 L11 16.5 L12 18 L13 16.5 Z" fill={color} opacity={0.65} />
         </G>
       );
+
+    /* ── Kadın ofis bluz ────────────────────────────────────────────── */
     case "noir-f-office":
       return (
         <G>
-          <Circle cx={12} cy={9.5} r={3.1} {...f} />
-          <Path d="M7 13.5h10l1 8h-12l1-8z" {...f} />
-          <Path d="M9.5 13.5l1.2 3h2.6l1.2-3" stroke={color} strokeWidth={0.5} fill="none" opacity={0.75} />
+          {/* Baş */}
+          <Circle cx={12} cy={8.2} r={3.1} {...f} />
+          <Body color={color} />
+          {/* Yaka detayı */}
+          <Path
+            d="M10.5 13 Q12 15 13.5 13"
+            stroke={color}
+            strokeWidth={0.6}
+            strokeLinecap="round"
+            fill="none"
+            opacity={0.5}
+          />
         </G>
       );
+
+    /* ── Erkek denizci ──────────────────────────────────────────────── */
     case "noir-m-sailor":
       return (
         <G>
-          <Path d="M7.5 7h9L15 9.5H9L7.5 7z" {...f} />
-          <Circle cx={12} cy={11.5} r={3} {...f} />
-          <Path d="M6 14h12l-1.2 8H7.2L6 14z" {...f} />
-          <Path d="M8 15.5h8" stroke={color} strokeWidth={0.55} fill="none" opacity={0.75} />
+          {/* Denizci şapkası */}
+          <Path d="M8 8 L12 5.5 L16 8 H8Z" {...f} />
+          <Path d="M7.5 8 H16.5 V9 H7.5 Z" {...f} />
+          {/* Baş */}
+          <Circle cx={12} cy={11} r={3} {...f} />
+          {/* Gövde V-yaka */}
+          <Path
+            d="M10.2 13.8 L9.8 15.5 Q7 16.8 5 19 L4.5 22 H19.5 L19 19 Q17 16.8 14.2 15.5 L13.8 13.8 Z"
+            {...f}
+          />
+          {/* V yaka şeridi */}
+          <Path
+            d="M10 14 L12 17 L14 14"
+            stroke={color}
+            strokeWidth={0.8}
+            strokeLinecap="round"
+            fill="none"
+            opacity={0.55}
+          />
         </G>
       );
+
+    /* ── Kapüşon ────────────────────────────────────────────────────── */
     case "noir-m-hoodie":
       return (
         <G>
-          <Path d="M8 8.5q4-2.5 8 0l1.5 3.5H6.5L8 8.5z" {...f} />
-          <Circle cx={12} cy={11.5} r={2.7} {...f} />
-          <Path d="M5.5 14.5h13l-.5 7.5h-12l-.5-7.5z" {...f} />
+          {/* Kapüşon dış şekli */}
+          <Path d="M7.5 5 Q12 3.5 16.5 5 Q18 7 17.5 10 L14.5 11 Q13 9.5 12 9.5 Q11 9.5 9.5 11 L6.5 10 Q6 7 7.5 5Z" {...f} />
+          {/* Baş */}
+          <Circle cx={12} cy={9.5} r={2.6} {...f} />
+          {/* Gövde */}
+          <Path
+            d="M10 12.2 L9.5 14 Q7 15.3 5 17.8 L4.5 22 H19.5 L19 17.8 Q17 15.3 14.5 14 L14 12.2 Z"
+            {...f}
+          />
         </G>
       );
+
+    /* ── Kadın at kuyruğu ───────────────────────────────────────────── */
     case "noir-f-ponytail":
       return (
         <G>
-          <Path d="M12 4.5c-1.5 0-2.8 1-3 2.5-.5 3 0 5.5 0 5.5s.5-2.5 0-5.5c-.2-1.5-1.5-2.5-3-2.5z" {...f} />
-          <Circle cx={12} cy={10} r={3} {...f} />
-          <Path d="M7.5 13h9l1.5 9h-12l1.5-9z" {...f} />
+          {/* Saç (yanlarda ve arka at kuyruğu) */}
+          <Path d="M8.5 6.5 Q7.5 9 8 12 L9.5 11.8 Q9 9 9.5 7 Q8.8 6.5 8.5 6.5Z" {...f} />
+          {/* At kuyruğu */}
+          <Path d="M15 7 Q17 9 16.5 13 L15.2 13.5 Q15.5 10 14.5 7.5 Q14.8 7 15 7Z" {...f} />
+          {/* Saç bandı */}
+          <Path d="M15 9 Q16 9.5 16.2 10.5" stroke={color} strokeWidth={0.8} strokeLinecap="round" fill="none" />
+          {/* Baş */}
+          <Circle cx={12} cy={9} r={3.1} {...f} />
+          {/* Gövde */}
+          <Path
+            d="M10.2 12.2 L9.8 14 Q7 15.3 5 17.8 L4.5 22 H19.5 L19 17.8 Q17 15.3 14.2 14 L13.8 12.2 Z"
+            {...f}
+          />
         </G>
       );
+
+    /* ── Erkek tam sakal ────────────────────────────────────────────── */
     case "noir-m-beard-full":
       return (
         <G>
-          <Circle cx={12} cy={9} r={3} {...f} />
-          <Path d="M9 12.5q3 4.5 6 0v2q-3 3.2-6 0v-2z" {...f} />
-          <Path d="M6.5 14h11l-1 8h-9l-1-8z" {...f} />
+          {/* Baş */}
+          <Circle cx={12} cy={8} r={3.2} {...f} />
+          {/* Tam sakal (çeneden aşağı dolgu) */}
+          <Path d="M9 10.5 Q9.5 14.5 12 14.5 Q14.5 14.5 15 10.5 Q12 13 9 10.5Z" {...f} />
+          {/* Gövde */}
+          <Path
+            d="M10 14 L9.5 15.5 Q7 16.8 5 19 L4.5 22 H19.5 L19 19 Q17 16.8 14.5 15.5 L14 14 Z"
+            {...f}
+          />
         </G>
       );
+
+    /* ── Erkek öğrenci (kare kep) ───────────────────────────────────── */
     case "noir-m-student":
       return (
         <G>
-          <Circle cx={12} cy={9.5} r={3.1} {...f} />
-          <Path d="M8 4.5l4 2 4-2v2l-4 2-4-2v-2z" {...f} />
-          <Path d="M6 14h12v8H6v-8z" {...f} />
+          {/* Kare mezuniyet kep */}
+          <Rect x={8} y={6} width={8} height={1.5} {...f} />
+          <Path d="M8 5 L12 3 L16 5 L12 7 Z" {...f} />
+          <Path d="M15.5 5.5 L15.5 9" stroke={color} strokeWidth={1.2} strokeLinecap="round" fill="none" />
+          {/* Baş */}
+          <Circle cx={12} cy={10.5} r={3} {...f} />
+          <BodyLow color={color} />
         </G>
       );
+
+    /* ── Kadın öğrenci (kare kep) ───────────────────────────────────── */
     case "noir-f-student":
       return (
         <G>
-          <Circle cx={12} cy={10} r={3} {...f} />
-          <Path d="M7 5.5l5 2.2 5-2.2v1.8l-5 2-5-2V5.5z" {...f} />
-          <Path d="M7.5 13.5h9l1.2 8h-11.4l1.2-8z" {...f} />
+          {/* Kare mezuniyet kep */}
+          <Rect x={8.5} y={6} width={7} height={1.5} {...f} />
+          <Path d="M8.5 5.2 L12 3.2 L15.5 5.2 L12 7.2 Z" {...f} />
+          <Path d="M15 5.5 L15 9" stroke={color} strokeWidth={1.2} strokeLinecap="round" fill="none" />
+          {/* Baş */}
+          <Circle cx={12} cy={10.5} r={3} {...f} />
+          <BodyLow color={color} />
         </G>
       );
+
+    /* ── Erkek baret (inşaat kasket) ────────────────────────────────── */
     case "noir-m-hard-hat":
       return (
         <G>
-          <Path d="M7.5 6.5h9c.8 2.2.8 3.8 0 4.5h-9c-.8-.7-.8-2.3 0-4.5z" {...f} />
-          <Circle cx={12} cy={11.5} r={2.9} {...f} />
-          <Path d="M5.5 14.5h13v7.5h-13v-7.5z" {...f} />
+          {/* Baret kubbe */}
+          <Path d="M7 8.5 Q7 4 12 4 Q17 4 17 8.5 H7Z" {...f} />
+          {/* Baret kenar bandı */}
+          <Path d="M6 8.5 H18 V9.5 H6 Z" {...f} opacity={0.8} />
+          {/* Baş */}
+          <Circle cx={12} cy={11} r={3} {...f} />
+          <BodyLow color={color} />
         </G>
       );
+
+    /* ── Kadın baret ────────────────────────────────────────────────── */
     case "noir-f-hard-hat":
       return (
         <G>
-          <Path d="M8 6.5h8c.7 2 .7 3.5 0 4.2H8c-.7-.7-.7-2.2 0-4.2z" {...f} />
-          <Circle cx={12} cy={11.2} r={2.8} {...f} />
-          <Path d="M7 14h10l1 8H6l1-8z" {...f} />
+          {/* Baret kubbe (biraz daha küçük) */}
+          <Path d="M7.5 8.5 Q7.5 4.5 12 4.5 Q16.5 4.5 16.5 8.5 H7.5Z" {...f} />
+          <Path d="M6.5 8.5 H17.5 V9.5 H6.5 Z" {...f} opacity={0.8} />
+          {/* Baş */}
+          <Circle cx={12} cy={11} r={3} {...f} />
+          <BodyLow color={color} />
         </G>
       );
+
+    /* ── Erkek polis şapkası ─────────────────────────────────────────── */
     case "noir-m-police":
       return (
         <G>
-          <Path d="M8 6.5h8l.5 2.5h-9l.5-2.5z" {...f} />
+          {/* Polis kasket üstü */}
+          <Path d="M8 8 Q8 5.5 12 5.5 Q16 5.5 16 8 H8Z" {...f} />
+          {/* Kep siperi */}
+          <Path d="M7 8 H17 V9.2 Q12 9.8 7 9.2 Z" {...f} opacity={0.85} />
+          {/* Rozet ipucu */}
+          <Circle cx={12} cy={7} r={0.8} fill={color} opacity={0.5} />
+          {/* Baş */}
           <Circle cx={12} cy={11} r={3} {...f} />
-          <Path d="M5.5 14h13l-1 8h-11l-1-8z" {...f} />
+          <BodyLow color={color} />
         </G>
       );
+
+    /* ── Kadın polis şapkası ─────────────────────────────────────────── */
     case "noir-f-police":
       return (
         <G>
-          <Path d="M8.5 6h7l.5 2.5H8l.5-2.5z" {...f} />
-          <Circle cx={12} cy={10.8} r={2.9} {...f} />
-          <Path d="M7 13.5h10l1.2 8.3h-12.4L7 13.5z" {...f} />
+          {/* Polis kasket üstü (biraz daha küçük) */}
+          <Path d="M8.5 8.2 Q8.5 6 12 6 Q15.5 6 15.5 8.2 H8.5Z" {...f} />
+          <Path d="M7.5 8.2 H16.5 V9.2 Q12 9.8 7.5 9.2 Z" {...f} opacity={0.85} />
+          {/* Baş */}
+          <Circle cx={12} cy={11} r={3} {...f} />
+          <BodyLow color={color} />
         </G>
       );
+
+    /* ── Erkek atletik (geniş omuzlar) ──────────────────────────────── */
     case "noir-m-athletic":
       return (
         <G>
-          <Circle cx={12} cy={8.5} r={2.6} {...f} />
-          <Path d="M4.5 12l2-2h11l2 2-1 10h-13l-1-10z" {...f} />
-          <Path d="M8 13.5h8" stroke={color} strokeWidth={0.7} fill="none" opacity={0.85} />
+          {/* Baş */}
+          <Circle cx={12} cy={7.8} r={3.1} {...f} />
+          {/* Çok geniş atletik omuzlar */}
+          <Path
+            d="M10.2 11 L9.5 12.5 Q5.5 13.5 3.5 16 L3 22 H21 L20.5 16 Q18.5 13.5 14.5 12.5 L13.8 11 Z"
+            {...f}
+          />
+          {/* Atlet yaka şeridi */}
+          <Path
+            d="M10 12.5 L12 15 L14 12.5"
+            stroke={color}
+            strokeWidth={0.7}
+            strokeLinecap="round"
+            fill="none"
+            opacity={0.5}
+          />
         </G>
       );
+
+    /* ── Kadın atletik ───────────────────────────────────────────────── */
     case "noir-f-athletic":
       return (
         <G>
-          <Circle cx={12} cy={9} r={2.8} {...f} />
-          <Path d="M6 12.5h12l1 8.5H5l1-8.5z" {...f} />
-          <Path d="M9 12l1.5 2h3L15 12" stroke={color} strokeWidth={0.55} fill="none" opacity={0.8} />
+          {/* Baş */}
+          <Circle cx={12} cy={8} r={3} {...f} />
+          {/* Geniş omuzlar */}
+          <Path
+            d="M10.2 11.1 L9.5 12.8 Q6 14 4.5 16.5 L4 22 H20 L19.5 16.5 Q18 14 14.5 12.8 L13.8 11.1 Z"
+            {...f}
+          />
+          {/* Spor yaka */}
+          <Path
+            d="M10 13 L12 15.5 L14 13"
+            stroke={color}
+            strokeWidth={0.65}
+            strokeLinecap="round"
+            fill="none"
+            opacity={0.5}
+          />
         </G>
       );
+
+    /* ── Genel erkek silüeti ─────────────────────────────────────────── */
     case "noir-generic-m":
       return (
         <G>
-          <Circle cx={12} cy={9.5} r={3.2} {...f} />
-          <Path d="M6 13.5h12l-1 8.5H7l-1-8.5z" {...f} />
+          <Circle cx={12} cy={8.2} r={3.2} {...f} />
+          <Body color={color} />
         </G>
       );
+
+    /* ── Genel kadın silüeti ─────────────────────────────────────────── */
     case "noir-generic-f":
       return (
         <G>
-          <Circle cx={12} cy={10} r={3.1} {...f} />
-          <Path d="M8 13.5c1.5-.6 3.5-.6 5 0l1.5 8h-8l1.5-8z" {...f} />
+          <Circle cx={12} cy={8.2} r={3.1} {...f} />
+          {/* Hafif daha dar omuzlar */}
+          <Path
+            d="M10.5 11.4 L10 13.2 Q7.5 14.5 5.5 17 L5 22 H19 L18.5 17 Q16.5 14.5 14 13.2 L13.5 11.4 Z"
+            {...f}
+          />
         </G>
       );
+
     default:
       return (
         <G>
-          <Circle cx={12} cy={10} r={3.2} {...f} />
-          <Path d="M7 14h10l1 8H6l1-8z" {...f} />
+          <Circle cx={12} cy={8.2} r={3.2} {...f} />
+          <Body color={color} />
         </G>
       );
   }
