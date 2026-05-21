@@ -130,7 +130,7 @@ export default function HomeScreen() {
   const handleDailyPlay = () => {
     unlockMusicFromGesture();
     startDailyPuzzle();
-    router.push("/oyun");
+    router.push({ pathname: "/(tabs)/oyun", params: { from: "home" } });
   };
 
   const allEntries = [

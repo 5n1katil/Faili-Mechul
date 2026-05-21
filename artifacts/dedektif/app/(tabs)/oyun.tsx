@@ -18,7 +18,7 @@ if (Platform.OS === "android" && UIManager.setLayoutAnimationEnabledExperimental
 import { MaterialIcons } from "@expo/vector-icons";
 import type { ComponentProps } from "react";
 type MaterialIconName = ComponentProps<typeof MaterialIcons>["name"];
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { useFocusEffect } from "@react-navigation/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useColors } from "@/hooks/useColors";
@@ -405,6 +405,8 @@ function PuzzleCard({
 }
 
 export default function VakalarScreen() {
+  const { from } = useLocalSearchParams<{ from?: string }>();
+  const launchedFromHome = from === "home";
   const colors = useColors();
   const insets = useSafeAreaInsets();
   const {
@@ -531,26 +533,42 @@ export default function VakalarScreen() {
           // Timer aktif: çıkış onayı sor
           setShowExitConfirm(true);
         } else {
-          // Timer aktif değil (başlangıç ekranı veya tamamlanmış oyun): listeye dön
+          // Timer aktif değil (başlangıç ekranı veya tamamlanmış oyun): geri dön
           setShowResult(false);
           resetCurrentGame();
-          setListTab("standart");
+          if (launchedFromHome) {
+            router.navigate("/");
+          } else {
+            setListTab("standart");
+          }
         }
         return true; // Geri tuşunu biz işledik, React Navigation işlemesin
       }
-      return false; // Liste görünümündeyken React Navigation varsayılan davranışa izin ver
+      // Liste görünümündeyken: ana sayfadan geldiyse oraya dön
+      if (launchedFromHome) {
+        router.navigate("/");
+        return true;
+      }
+      return false; // Vakalar listesindeyken React Navigation varsayılan davranışa izin ver
     });
     return () => sub.remove();
-  }, [gameState, resetCurrentGame]);
+  }, [gameState, resetCurrentGame, launchedFromHome]);
 
   const handleBackToList = () => {
     setShowResult(false);
     resetCurrentGame();
-    setListTab("standart");
+    if (launchedFromHome) {
+      router.navigate("/");
+    } else {
+      setListTab("standart");
+    }
   };
 
   const handleCancelStart = () => {
     resetCurrentGame();
+    if (launchedFromHome) {
+      router.navigate("/");
+    }
     // Vakalar sekmesi state-based navigasyon kullanır; router.back() çağrılmaz.
     // resetCurrentGame() gameState'i sıfırlar → bileşen otomatik liste görünümünü render eder.
   };
