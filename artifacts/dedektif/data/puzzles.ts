@@ -2360,10 +2360,10 @@ export const PUZZLES: Puzzle[] = [
     story:
       "Antalya açıklarında bir Roma batığını inceleyen dalış ekibi yüzeye çıktığında baş arkeolog aralarında yoktu. Denizin metrelerce altındaki karanlık, kusursuz bir cinayete sahne olmuştu.",
     suspects: [
-      { id: "s1", name: "Kaptan", description: "Tekneyi yöneten, suya hiç girmeyen ve dalış teçhizatlarını kullanmayı bilmeyen denizci.", icon: "👨‍✈️" },
-      { id: "s2", name: "Asistan Arkeolog", description: "Maktulün bulgularını kendine mal etmek isteyen, hırslı ancak tüplü dalışta acemi araştırmacı.", icon: "👩" },
-      { id: "s3", name: "Usta Dalgıç", description: "Ekibin güvenliğinden sorumlu, denizin dibinde saatlerce kalabilen ve tüm ekipmanlara hakim profesyonel.", icon: "👷" },
-      { id: "s4", name: "Tarihçi", description: "Yaşı gereği sadece güvertede not tutan, fiziksel efor gerektiren hiçbir işe karışmayan ihtiyar.", icon: "👴" },
+      { id: "s1", name: "Kaptan", description: "Tekneyi yöneten, suya hiç girmeyen ve dalış teçhizatlarını kullanmayı bilmeyen denizci.", icon: "noun-derin-kaptan-avatar.png" },
+      { id: "s2", name: "Asistan Arkeolog", description: "Maktulün bulgularını kendine mal etmek isteyen, hırslı ancak tüplü dalışta acemi araştırmacı.", icon: "noun-derin-teknisyen-avatar.png" },
+      { id: "s3", name: "Usta Dalgıç", description: "Ekibin güvenliğinden sorumlu, denizin dibinde saatlerce kalabilen ve tüm ekipmanlara hakim profesyonel.", icon: "noun-derin-dalgic-avatar.png" },
+      { id: "s4", name: "Tarihçi", description: "Yaşı gereği sadece güvertede not tutan, fiziksel efor gerektiren hiçbir işe karışmayan ihtiyar.", icon: "noun-derin-arkeolog-avatar.png" },
     ],
     weapons: [
       { id: "w1", name: "Zıpkın", description: "Su altında köpekbalıklarına karşı bulundurulan, fırlatıldığında vücudu delip geçen mızraklı tüfek.", icon: "sports" },
