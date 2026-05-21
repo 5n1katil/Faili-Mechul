@@ -276,9 +276,9 @@ export const PUZZLES: Puzzle[] = [
     story:
       "Kapalıçarşı'nın yüzlerce yıllık labirent gibi sokaklarına çöken akşam karanlığı, bir cinayeti örtbas etmeye yetmedi. Çarşının en eski kuyumcularından biri, kepenkler indikten hemen sonra dükkanında vahşice katledildi. Katil, çarşının tanıdık simalarından birisiydi.",
     suspects: [
-      { id: "s1", name: "Ahmet Usta", description: "Komşu bakırcı esnaf. Otuz yıllık tecrübesiyle çarşının her köşesini ezbere bilen, kendi dükkanından çıkmayan geleneksel usta.", icon: "👷" },
-      { id: "s2", name: "Selma Teyze", description: "Çarşının saygın ve yaşlı muhasebecisi. Rakamlar konusunda hata yapmaz ancak teknolojik cihazlar ve şifrelerle arası hiç iyi değildir.", icon: "👵" },
-      { id: "s3", name: "Kerem Genç", description: "Stajyer olarak son ay işe başlayan, dijital şifreleme ve kilit teknolojilerine son derece yatkın, meraklı genç çalışan.", icon: "👦" },
+      { id: "s1", name: "Ahmet Usta", description: "Komşu bakırcı esnaf. Otuz yıllık tecrübesiyle çarşının her köşesini ezbere bilen, kendi dükkanından çıkmayan geleneksel usta.", icon: "noun-ahmet-usta-avatar.png" },
+      { id: "s2", name: "Selma Teyze", description: "Çarşının saygın ve yaşlı muhasebecisi. Rakamlar konusunda hata yapmaz ancak teknolojik cihazlar ve şifrelerle arası hiç iyi değildir.", icon: "noun-selma-teyze-avatar.png" },
+      { id: "s3", name: "Kerem Genç", description: "Stajyer olarak son ay işe başlayan, dijital şifreleme ve kilit teknolojilerine son derece yatkın, meraklı genç çalışan.", icon: "noun-kerem-genc-avatar.png" },
     ],
     weapons: [
       { id: "w1", name: "Ağır Terazi", description: "Kuyumcu terazisinin tunç kefesi, hassas ölçümler için kullanılan ancak birkaç kilogram ağırlığında katı bir cisim.", icon: "balance" },
