@@ -2,34 +2,90 @@
 // Regenerate with: node scripts/gen-avatar-map.js
 import type { ImageSourcePropType } from "react-native";
 
+import p_noun_ahmet_usta_avatar_png from "../public/avatars/noun-ahmet-usta-avatar.png";
 import p_noun_artist_1574354_avatar_png from "../public/avatars/noun-artist-1574354-avatar.png";
+import p_noun_asistan_elif_avatar_png from "../public/avatars/noun-asistan-elif-avatar.png";
 import p_noun_bricklaying_1574372_avatar_png from "../public/avatars/noun-bricklaying-1574372-avatar.png";
 import p_noun_cem_bey_avatar_png from "../public/avatars/noun-cem-bey-avatar.png";
 import p_noun_cirak_selim_avatar_png from "../public/avatars/noun-cirak-selim-avatar.png";
+import p_noun_dag_oduncu_avatar_png from "../public/avatars/noun-dag-oduncu-avatar.png";
+import p_noun_dag_ogretmen_avatar_png from "../public/avatars/noun-dag-ogretmen-avatar.png";
+import p_noun_dag_yasli_kadin_avatar_png from "../public/avatars/noun-dag-yasli-kadin-avatar.png";
+import p_noun_derin_arkeolog_avatar_png from "../public/avatars/noun-derin-arkeolog-avatar.png";
+import p_noun_derin_dalgic_avatar_png from "../public/avatars/noun-derin-dalgic-avatar.png";
+import p_noun_derin_kaptan_avatar_png from "../public/avatars/noun-derin-kaptan-avatar.png";
+import p_noun_derin_teknisyen_avatar_png from "../public/avatars/noun-derin-teknisyen-avatar.png";
 import p_noun_detective_1574359_avatar_png from "../public/avatars/noun-detective-1574359-avatar.png";
 import p_noun_driver_1574358_avatar_png from "../public/avatars/noun-driver-1574358-avatar.png";
+import p_noun_emekli_albay_avatar_png from "../public/avatars/noun-emekli-albay-avatar.png";
+import p_noun_fabrika_makinist_avatar_png from "../public/avatars/noun-fabrika-makinist-avatar.png";
+import p_noun_fabrika_muhasebeci_avatar_png from "../public/avatars/noun-fabrika-muhasebeci-avatar.png";
+import p_noun_fabrika_ortak_avatar_png from "../public/avatars/noun-fabrika-ortak-avatar.png";
+import p_noun_foto_kadin_muhabir_avatar_png from "../public/avatars/noun-foto-kadin-muhabir-avatar.png";
+import p_noun_foto_koleksiyoner_avatar_png from "../public/avatars/noun-foto-koleksiyoner-avatar.png";
+import p_noun_foto_stajyer_avatar_png from "../public/avatars/noun-foto-stajyer-avatar.png";
+import p_noun_genc_yatci_avatar_png from "../public/avatars/noun-genc-yatci-avatar.png";
 import p_noun_gezgin_dervis_salih_avatar_png from "../public/avatars/noun-gezgin-dervis-salih-avatar.png";
+import p_noun_guvenlik_gorevlisi_avatar_png from "../public/avatars/noun-guvenlik-gorevlisi-avatar.png";
 import p_noun_hizmetci_hacer_avatar_png from "../public/avatars/noun-hizmetci-hacer-avatar.png";
 import p_noun_human_3758075_avatar_png from "../public/avatars/noun-human-3758075-avatar.png";
 import p_noun_human_3758078_avatar_png from "../public/avatars/noun-human-3758078-avatar.png";
 import p_noun_human_3758090_avatar_png from "../public/avatars/noun-human-3758090-avatar.png";
+import p_noun_kanli_fotograf_avatar_png from "../public/avatars/noun-kanli-fotograf-avatar.png";
+import p_noun_kanli_pilot_avatar_png from "../public/avatars/noun-kanli-pilot-avatar.png";
+import p_noun_kanli_rehber_kadin_avatar_png from "../public/avatars/noun-kanli-rehber-kadin-avatar.png";
+import p_noun_kanli_tamirci_avatar_png from "../public/avatars/noun-kanli-tamirci-avatar.png";
+import p_noun_kaptan_levent_avatar_png from "../public/avatars/noun-kaptan-levent-avatar.png";
+import p_noun_kerem_genc_avatar_png from "../public/avatars/noun-kerem-genc-avatar.png";
 import p_noun_komsu_nevzat_avatar_png from "../public/avatars/noun-komsu-nevzat-avatar.png";
 import p_noun_kurye_murat_pazar_avatar_png from "../public/avatars/noun-kurye-murat-pazar-avatar.png";
 import p_noun_makinist_kerem_avatar_png from "../public/avatars/noun-makinist-kerem-avatar.png";
 import p_noun_man_2666401_png from "../public/avatars/noun-man-2666401.png";
 import p_noun_man_2666696_png from "../public/avatars/noun-man-2666696.png";
 import p_noun_mechanic_1574364_avatar_png from "../public/avatars/noun-mechanic-1574364-avatar.png";
+import p_noun_mektup_komsu_kadin_avatar_png from "../public/avatars/noun-mektup-komsu-kadin-avatar.png";
+import p_noun_mektup_mahalle_adami_avatar_png from "../public/avatars/noun-mektup-mahalle-adami-avatar.png";
+import p_noun_mektup_tamirci_avatar_png from "../public/avatars/noun-mektup-tamirci-avatar.png";
+import p_noun_muzede_bekci_avatar_png from "../public/avatars/noun-muzede-bekci-avatar.png";
+import p_noun_muzede_kurat_avatar_png from "../public/avatars/noun-muzede-kurat-avatar.png";
+import p_noun_muzede_rehber_avatar_png from "../public/avatars/noun-muzede-rehber-avatar.png";
 import p_noun_nazik_hanim_avatar_png from "../public/avatars/noun-nazik-hanim-avatar.png";
+import p_noun_organizator_eda_avatar_png from "../public/avatars/noun-organizator-eda-avatar.png";
 import p_noun_ortak_sabri_bey_avatar_png from "../public/avatars/noun-ortak-sabri-bey-avatar.png";
 import p_noun_pazar_komsu_satici_png from "../public/avatars/noun-pazar-komsu-satici.png";
 import p_noun_pazar_musteri_hanim_png from "../public/avatars/noun-pazar-musteri-hanim.png";
 import p_noun_pazar_tedarikci_genc_png from "../public/avatars/noun-pazar-tedarikci-genc.png";
+import p_noun_prof_kahraman_avatar_png from "../public/avatars/noun-prof-kahraman-avatar.png";
+import p_noun_ramazan_hizmetci_kadin_avatar_png from "../public/avatars/noun-ramazan-hizmetci-kadin-avatar.png";
+import p_noun_ramazan_kapici_avatar_png from "../public/avatars/noun-ramazan-kapici-avatar.png";
+import p_noun_ramazan_tesbihli_adam_avatar_png from "../public/avatars/noun-ramazan-tesbihli-adam-avatar.png";
+import p_noun_ressam_leyla_avatar_png from "../public/avatars/noun-ressam-leyla-avatar.png";
+import p_noun_sabanci_erkek_misafir_avatar_png from "../public/avatars/noun-sabanci-erkek-misafir-avatar.png";
+import p_noun_sabanci_guvenlik_avatar_png from "../public/avatars/noun-sabanci-guvenlik-avatar.png";
+import p_noun_sabanci_kadin_misafir_avatar_png from "../public/avatars/noun-sabanci-kadin-misafir-avatar.png";
+import p_noun_sabanci_sergi_gorevlisi_avatar_png from "../public/avatars/noun-sabanci-sergi-gorevlisi-avatar.png";
+import p_noun_selma_teyze_avatar_png from "../public/avatars/noun-selma-teyze-avatar.png";
 import p_noun_semiha_hanim_avatar_png from "../public/avatars/noun-semiha-hanim-avatar.png";
+import p_noun_senfoni_seref_avatar_png from "../public/avatars/noun-senfoni-seref-avatar.png";
+import p_noun_senfoni_soprano_avatar_png from "../public/avatars/noun-senfoni-soprano-avatar.png";
+import p_noun_senfoni_teknik_avatar_png from "../public/avatars/noun-senfoni-teknik-avatar.png";
+import p_noun_senfoni_yonetmen_avatar_png from "../public/avatars/noun-senfoni-yonetmen-avatar.png";
+import p_noun_sponsor_murat_avatar_png from "../public/avatars/noun-sponsor-murat-avatar.png";
 import p_noun_teacher_1908916_avatar_png from "../public/avatars/noun-teacher-1908916-avatar.png";
 import p_noun_teacher_1908918_avatar_png from "../public/avatars/noun-teacher-1908918-avatar.png";
 import p_noun_teacher_1908919_avatar_png from "../public/avatars/noun-teacher-1908919-avatar.png";
+import p_noun_termal_genc_adam_avatar_png from "../public/avatars/noun-termal-genc-adam-avatar.png";
+import p_noun_termal_kadin_misafir_avatar_png from "../public/avatars/noun-termal-kadin-misafir-avatar.png";
+import p_noun_termal_yasli_bey_avatar_png from "../public/avatars/noun-termal-yasli-bey-avatar.png";
 import p_noun_torun_nermin_avatar_png from "../public/avatars/noun-torun-nermin-avatar.png";
+import p_noun_tren_doktor_avatar_png from "../public/avatars/noun-tren-doktor-avatar.png";
+import p_noun_tren_genc_yolcu_avatar_png from "../public/avatars/noun-tren-genc-yolcu-avatar.png";
+import p_noun_tren_kadin_yolcu_avatar_png from "../public/avatars/noun-tren-kadin-yolcu-avatar.png";
 import p_noun_tuccar_vehbi_avatar_png from "../public/avatars/noun-tuccar-vehbi-avatar.png";
+import p_noun_tuval_asistan_avatar_png from "../public/avatars/noun-tuval-asistan-avatar.png";
+import p_noun_tuval_galeri_avatar_png from "../public/avatars/noun-tuval-galeri-avatar.png";
+import p_noun_tuval_koleksiyoner_avatar_png from "../public/avatars/noun-tuval-koleksiyoner-avatar.png";
+import p_noun_tuval_ressam_avatar_png from "../public/avatars/noun-tuval-ressam-avatar.png";
 import p_noun_usak_mehmet_avatar_png from "../public/avatars/noun-usak-mehmet-avatar.png";
 import p_noun_vahap_amca_avatar_png from "../public/avatars/noun-vahap-amca-avatar.png";
 import p_noun_woman_4812161_png from "../public/avatars/noun-woman-4812161.png";
@@ -37,9 +93,6 @@ import p_noun_woman_58199_png from "../public/avatars/noun-woman-58199.png";
 import p_noun_yolcu_feriha_avatar_png from "../public/avatars/noun-yolcu-feriha-avatar.png";
 import p_noun_yolcu_tarik_avatar_png from "../public/avatars/noun-yolcu-tarik-avatar.png";
 import p_noun_zeynep_hanim_avatar_png from "../public/avatars/noun-zeynep-hanim-avatar.png";
-import p_noun_emekli_albay_avatar_png from "../public/avatars/noun-emekli-albay-avatar.png";
-import p_noun_ressam_leyla_avatar_png from "../public/avatars/noun-ressam-leyla-avatar.png";
-import p_noun_genc_yatci_avatar_png from "../public/avatars/noun-genc-yatci-avatar.png";
 
 import svg_noun_artist_1574348 from "../public/avatars/noun-artist-1574348.svg";
 import svg_noun_artist_1574354 from "../public/avatars/noun-artist-1574354.svg";
@@ -295,34 +348,90 @@ import svg_noun_woman_3758196 from "../public/avatars/noun-woman-3758196.svg";
 import svg_noun_woman_3758198 from "../public/avatars/noun-woman-3758198.svg";
 
 export const AVATAR_PNG_MAP: Record<string, ImageSourcePropType> = {
+  "noun-ahmet-usta-avatar.png": p_noun_ahmet_usta_avatar_png,
   "noun-artist-1574354-avatar.png": p_noun_artist_1574354_avatar_png,
+  "noun-asistan-elif-avatar.png": p_noun_asistan_elif_avatar_png,
   "noun-bricklaying-1574372-avatar.png": p_noun_bricklaying_1574372_avatar_png,
   "noun-cem-bey-avatar.png": p_noun_cem_bey_avatar_png,
   "noun-cirak-selim-avatar.png": p_noun_cirak_selim_avatar_png,
+  "noun-dag-oduncu-avatar.png": p_noun_dag_oduncu_avatar_png,
+  "noun-dag-ogretmen-avatar.png": p_noun_dag_ogretmen_avatar_png,
+  "noun-dag-yasli-kadin-avatar.png": p_noun_dag_yasli_kadin_avatar_png,
+  "noun-derin-arkeolog-avatar.png": p_noun_derin_arkeolog_avatar_png,
+  "noun-derin-dalgic-avatar.png": p_noun_derin_dalgic_avatar_png,
+  "noun-derin-kaptan-avatar.png": p_noun_derin_kaptan_avatar_png,
+  "noun-derin-teknisyen-avatar.png": p_noun_derin_teknisyen_avatar_png,
   "noun-detective-1574359-avatar.png": p_noun_detective_1574359_avatar_png,
   "noun-driver-1574358-avatar.png": p_noun_driver_1574358_avatar_png,
+  "noun-emekli-albay-avatar.png": p_noun_emekli_albay_avatar_png,
+  "noun-fabrika-makinist-avatar.png": p_noun_fabrika_makinist_avatar_png,
+  "noun-fabrika-muhasebeci-avatar.png": p_noun_fabrika_muhasebeci_avatar_png,
+  "noun-fabrika-ortak-avatar.png": p_noun_fabrika_ortak_avatar_png,
+  "noun-foto-kadin-muhabir-avatar.png": p_noun_foto_kadin_muhabir_avatar_png,
+  "noun-foto-koleksiyoner-avatar.png": p_noun_foto_koleksiyoner_avatar_png,
+  "noun-foto-stajyer-avatar.png": p_noun_foto_stajyer_avatar_png,
+  "noun-genc-yatci-avatar.png": p_noun_genc_yatci_avatar_png,
   "noun-gezgin-dervis-salih-avatar.png": p_noun_gezgin_dervis_salih_avatar_png,
+  "noun-guvenlik-gorevlisi-avatar.png": p_noun_guvenlik_gorevlisi_avatar_png,
   "noun-hizmetci-hacer-avatar.png": p_noun_hizmetci_hacer_avatar_png,
   "noun-human-3758075-avatar.png": p_noun_human_3758075_avatar_png,
   "noun-human-3758078-avatar.png": p_noun_human_3758078_avatar_png,
   "noun-human-3758090-avatar.png": p_noun_human_3758090_avatar_png,
+  "noun-kanli-fotograf-avatar.png": p_noun_kanli_fotograf_avatar_png,
+  "noun-kanli-pilot-avatar.png": p_noun_kanli_pilot_avatar_png,
+  "noun-kanli-rehber-kadin-avatar.png": p_noun_kanli_rehber_kadin_avatar_png,
+  "noun-kanli-tamirci-avatar.png": p_noun_kanli_tamirci_avatar_png,
+  "noun-kaptan-levent-avatar.png": p_noun_kaptan_levent_avatar_png,
+  "noun-kerem-genc-avatar.png": p_noun_kerem_genc_avatar_png,
   "noun-komsu-nevzat-avatar.png": p_noun_komsu_nevzat_avatar_png,
   "noun-kurye-murat-pazar-avatar.png": p_noun_kurye_murat_pazar_avatar_png,
   "noun-makinist-kerem-avatar.png": p_noun_makinist_kerem_avatar_png,
   "noun-man-2666401.png": p_noun_man_2666401_png,
   "noun-man-2666696.png": p_noun_man_2666696_png,
   "noun-mechanic-1574364-avatar.png": p_noun_mechanic_1574364_avatar_png,
+  "noun-mektup-komsu-kadin-avatar.png": p_noun_mektup_komsu_kadin_avatar_png,
+  "noun-mektup-mahalle-adami-avatar.png": p_noun_mektup_mahalle_adami_avatar_png,
+  "noun-mektup-tamirci-avatar.png": p_noun_mektup_tamirci_avatar_png,
+  "noun-muzede-bekci-avatar.png": p_noun_muzede_bekci_avatar_png,
+  "noun-muzede-kurat-avatar.png": p_noun_muzede_kurat_avatar_png,
+  "noun-muzede-rehber-avatar.png": p_noun_muzede_rehber_avatar_png,
   "noun-nazik-hanim-avatar.png": p_noun_nazik_hanim_avatar_png,
+  "noun-organizator-eda-avatar.png": p_noun_organizator_eda_avatar_png,
   "noun-ortak-sabri-bey-avatar.png": p_noun_ortak_sabri_bey_avatar_png,
   "noun-pazar-komsu-satici.png": p_noun_pazar_komsu_satici_png,
   "noun-pazar-musteri-hanim.png": p_noun_pazar_musteri_hanim_png,
   "noun-pazar-tedarikci-genc.png": p_noun_pazar_tedarikci_genc_png,
+  "noun-prof-kahraman-avatar.png": p_noun_prof_kahraman_avatar_png,
+  "noun-ramazan-hizmetci-kadin-avatar.png": p_noun_ramazan_hizmetci_kadin_avatar_png,
+  "noun-ramazan-kapici-avatar.png": p_noun_ramazan_kapici_avatar_png,
+  "noun-ramazan-tesbihli-adam-avatar.png": p_noun_ramazan_tesbihli_adam_avatar_png,
+  "noun-ressam-leyla-avatar.png": p_noun_ressam_leyla_avatar_png,
+  "noun-sabanci-erkek-misafir-avatar.png": p_noun_sabanci_erkek_misafir_avatar_png,
+  "noun-sabanci-guvenlik-avatar.png": p_noun_sabanci_guvenlik_avatar_png,
+  "noun-sabanci-kadin-misafir-avatar.png": p_noun_sabanci_kadin_misafir_avatar_png,
+  "noun-sabanci-sergi-gorevlisi-avatar.png": p_noun_sabanci_sergi_gorevlisi_avatar_png,
+  "noun-selma-teyze-avatar.png": p_noun_selma_teyze_avatar_png,
   "noun-semiha-hanim-avatar.png": p_noun_semiha_hanim_avatar_png,
+  "noun-senfoni-seref-avatar.png": p_noun_senfoni_seref_avatar_png,
+  "noun-senfoni-soprano-avatar.png": p_noun_senfoni_soprano_avatar_png,
+  "noun-senfoni-teknik-avatar.png": p_noun_senfoni_teknik_avatar_png,
+  "noun-senfoni-yonetmen-avatar.png": p_noun_senfoni_yonetmen_avatar_png,
+  "noun-sponsor-murat-avatar.png": p_noun_sponsor_murat_avatar_png,
   "noun-teacher-1908916-avatar.png": p_noun_teacher_1908916_avatar_png,
   "noun-teacher-1908918-avatar.png": p_noun_teacher_1908918_avatar_png,
   "noun-teacher-1908919-avatar.png": p_noun_teacher_1908919_avatar_png,
+  "noun-termal-genc-adam-avatar.png": p_noun_termal_genc_adam_avatar_png,
+  "noun-termal-kadin-misafir-avatar.png": p_noun_termal_kadin_misafir_avatar_png,
+  "noun-termal-yasli-bey-avatar.png": p_noun_termal_yasli_bey_avatar_png,
   "noun-torun-nermin-avatar.png": p_noun_torun_nermin_avatar_png,
+  "noun-tren-doktor-avatar.png": p_noun_tren_doktor_avatar_png,
+  "noun-tren-genc-yolcu-avatar.png": p_noun_tren_genc_yolcu_avatar_png,
+  "noun-tren-kadin-yolcu-avatar.png": p_noun_tren_kadin_yolcu_avatar_png,
   "noun-tuccar-vehbi-avatar.png": p_noun_tuccar_vehbi_avatar_png,
+  "noun-tuval-asistan-avatar.png": p_noun_tuval_asistan_avatar_png,
+  "noun-tuval-galeri-avatar.png": p_noun_tuval_galeri_avatar_png,
+  "noun-tuval-koleksiyoner-avatar.png": p_noun_tuval_koleksiyoner_avatar_png,
+  "noun-tuval-ressam-avatar.png": p_noun_tuval_ressam_avatar_png,
   "noun-usak-mehmet-avatar.png": p_noun_usak_mehmet_avatar_png,
   "noun-vahap-amca-avatar.png": p_noun_vahap_amca_avatar_png,
   "noun-woman-4812161.png": p_noun_woman_4812161_png,
@@ -330,9 +439,6 @@ export const AVATAR_PNG_MAP: Record<string, ImageSourcePropType> = {
   "noun-yolcu-feriha-avatar.png": p_noun_yolcu_feriha_avatar_png,
   "noun-yolcu-tarik-avatar.png": p_noun_yolcu_tarik_avatar_png,
   "noun-zeynep-hanim-avatar.png": p_noun_zeynep_hanim_avatar_png,
-  "noun-emekli-albay-avatar.png": p_noun_emekli_albay_avatar_png,
-  "noun-ressam-leyla-avatar.png": p_noun_ressam_leyla_avatar_png,
-  "noun-genc-yatci-avatar.png": p_noun_genc_yatci_avatar_png,
 };
 
 export const AVATAR_SVG_MAP: Record<string, React.ComponentType<{ width?: number; height?: number; fill?: string; color?: string }>> = {
