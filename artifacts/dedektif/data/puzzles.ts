@@ -2399,10 +2399,10 @@ export const PUZZLES: Puzzle[] = [
     story:
       "Galata'daki ünlü bir sanat atölyesinde, ülkenin en büyük ressamı şaheserini tamamlarken ölü bulundu. Boyaların kokusuna bu kez ihanet karışmıştı.",
     suspects: [
-      { id: "s1", name: "Kıskanç Çırak", description: "Ustasının gölgesinde kalmaktan nefret eden, her yeri boya içinde genç sanat öğrencisi.", icon: "👦" },
-      { id: "s2", name: "Sanat Eleştirmeni", description: "Ressamın eserlerini sürekli kötüleyen, ellerini kirletmekten nefret eden titiz ve şık adam.", icon: "🕵️" },
-      { id: "s3", name: "Model", description: "Tablo için saatlerce hareketsiz poz veren, güzel ve dikkat çekici genç kadın.", icon: "👩" },
-      { id: "s4", name: "Galeri Sahibi", description: "Tablonun satışından milyonlar kazanacak olan, sürekli hesap kitap yapan otoriter kadın.", icon: "👩‍💼" },
+      { id: "s1", name: "Kıskanç Çırak", description: "Ustasının gölgesinde kalmaktan nefret eden, her yeri boya içinde genç sanat öğrencisi.", icon: "noun-tuval-ressam-avatar.png" },
+      { id: "s2", name: "Sanat Eleştirmeni", description: "Ressamın eserlerini sürekli kötüleyen, ellerini kirletmekten nefret eden titiz ve şık adam.", icon: "noun-tuval-galeri-avatar.png" },
+      { id: "s3", name: "Model", description: "Tablo için saatlerce hareketsiz poz veren, güzel ve dikkat çekici genç kadın.", icon: "noun-tuval-koleksiyoner-avatar.png" },
+      { id: "s4", name: "Galeri Sahibi", description: "Tablonun satışından milyonlar kazanacak olan, sürekli hesap kitap yapan otoriter kadın.", icon: "noun-tuval-asistan-avatar.png" },
     ],
     weapons: [
       { id: "w1", name: "Heykeltıraş Çekici", description: "Mermer yontmak için kullanılan, kafatasına vurulduğunda anında öldüren ağır tahta tokmak.", icon: "hardware" },
