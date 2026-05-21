@@ -240,9 +240,9 @@ export const PUZZLES: Puzzle[] = [
     story:
       "İstanbul Boğazı'nın serin sularında süzülen lüks yatta düzenlenen o gösterişli sergi, kanlı bir geceyle son buldu. Paha biçilemez 'Boğaz Elması'nın çalındığı anlaşıldığında, geminin güvenlik şefi Orhan cansız yatıyordu. Dalgaların sesi yatı döverken, katil ve çaldığı elmas hala bu lüks kafesin içinde saklanıyor.",
     suspects: [
-      { id: "s1", name: "Kaptan Levent", description: "Geminin deneyimli kaptanı. Fiziksel olarak oldukça yapılı ve ağır nesneleri kolayca savurabilecek kuvvette.", icon: "👨‍✈️" },
-      { id: "s2", name: "Sponsor Murat", description: "Partinin zengin finansörü. İnce yapılı; ağır fiziksel güç gerektiren işlere ve kirli ortamlara hiç alışkın değil.", icon: "🕵️" },
-      { id: "s3", name: "Organizatör Eda", description: "Serginin sorumlusu. Çevik, esnek ve geminin en dar, gizli alanlarında bile rahatça hareket edebilecek fiziksel yapıda.", icon: "👩" },
+      { id: "s1", name: "Kaptan Levent", description: "Geminin deneyimli kaptanı. Fiziksel olarak oldukça yapılı ve ağır nesneleri kolayca savurabilecek kuvvette.", icon: "noun-kaptan-levent-avatar.png" },
+      { id: "s2", name: "Sponsor Murat", description: "Partinin zengin finansörü. İnce yapılı; ağır fiziksel güç gerektiren işlere ve kirli ortamlara hiç alışkın değil.", icon: "noun-sponsor-murat-avatar.png" },
+      { id: "s3", name: "Organizatör Eda", description: "Serginin sorumlusu. Çevik, esnek ve geminin en dar, gizli alanlarında bile rahatça hareket edebilecek fiziksel yapıda.", icon: "noun-organizator-eda-avatar.png" },
     ],
     weapons: [
       { id: "w1", name: "Gemi Halatı", description: "Gemiyi iskeleye bağlamak için kullanılan kalın sentetik ip. Çok sağlam ve kıvrılabilen esnek bir yapıya sahip.", icon: "all-inclusive" },
