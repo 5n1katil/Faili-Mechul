@@ -528,10 +528,10 @@ export const PUZZLES: Puzzle[] = [
     story:
       "Sabancı Müzesi'ndeki özel galada, Osmanlı dönemine ait nadide bir mücevher çalındı ve güvenlik koordinatörü ağır yaralı bulundu. Güvenlik sistemlerinin içeriden kapatılmış olması, bu kusursuz soygunun arkasında galadaki dört elit isimden birinin olduğunu kanıtlıyor.",
     suspects: [
-      { id: "s1", name: "Galeri Direktörü", description: "Tüm organizasyonu yöneten, güvenlik protokollerini teorik olarak bilen ancak fiziksel müdahale yeteneği olmayan yönetici.", icon: "🕵️" },
-      { id: "s2", name: "Ünlü Sanatçı", description: "Gala konuğu. Kaprisli, şımarık görünen ancak teknolojik sanat enstalasyonları sayesinde elektronik sistemlere son derece hakim figür.", icon: "👨" },
-      { id: "s3", name: "Güvenlik Şefi", description: "Müze güvenliğinden sorumlu, kaslı ve iri yarı eski bir asker. Kameraların kör noktalarını ezbere biliyor.", icon: "💂" },
-      { id: "s4", name: "Nakliyeci", description: "Eserleri taşıyan lojistik sorumlusu. Sadece yükleme alanlarına erişimi olan, kaba kuvvet gerektiren işlere alışkın işçi.", icon: "👷" },
+      { id: "s1", name: "Galeri Direktörü", description: "Tüm organizasyonu yöneten, güvenlik protokollerini teorik olarak bilen ancak fiziksel müdahale yeteneği olmayan yönetici.", icon: "noun-sabanci-erkek-misafir-avatar.png" },
+      { id: "s2", name: "Ünlü Sanatçı", description: "Gala konuğu. Kaprisli, şımarık görünen ancak teknolojik sanat enstalasyonları sayesinde elektronik sistemlere son derece hakim figür.", icon: "noun-sabanci-kadin-misafir-avatar.png" },
+      { id: "s3", name: "Güvenlik Şefi", description: "Müze güvenliğinden sorumlu, kaslı ve iri yarı eski bir asker. Kameraların kör noktalarını ezbere biliyor.", icon: "noun-sabanci-guvenlik-avatar.png" },
+      { id: "s4", name: "Nakliyeci", description: "Eserleri taşıyan lojistik sorumlusu. Sadece yükleme alanlarına erişimi olan, kaba kuvvet gerektiren işlere alışkın işçi.", icon: "noun-sabanci-sergi-gorevlisi-avatar.png" },
     ],
     weapons: [
       { id: "w1", name: "Elektrik Sopası", description: "Yüksek voltajlı deşarj yaparak kurbanı anında felç eden ve bayıltan, teknolojik ve sessiz bir silah.", icon: "flash-on" },
