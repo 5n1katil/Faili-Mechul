@@ -2282,10 +2282,10 @@ export const PUZZLES: Puzzle[] = [
     story:
       "Devlet operasında sergilenen büyük eserin prömiyer gecesinde, başkemancı odasında korkunç bir şekilde can verdi. Müzik susmadı, gösteri devam etti ancak kuliste ölümcül bir oyun oynandı.",
     suspects: [
-      { id: "s1", name: "Baş Soprano", description: "Gösterinin yıldızı. Narsist, sesiyle herkesi büyüleyen ancak kuliste herkesle kavgalı olan başrol.", icon: "👩" },
-      { id: "s2", name: "Orkestra Şefi", description: "Disiplinli ve katı. Müzikal mükemmellik için her şeyi yapabilecek takıntılı bir otorite.", icon: "🕵️" },
-      { id: "s3", name: "Işık Teknisyeni", description: "Tavan arasındaki loş odalarda çalışan, sistemleri yöneten sessiz teknik personel.", icon: "👷" },
-      { id: "s4", name: "Eski Aktör", description: "Yıllar önce sahnelerden men edilen, tiyatro hilelerini ve sahne arkasını avucunun içi gibi bilen kin dolu oyuncu.", icon: "👨" },
+      { id: "s1", name: "Baş Soprano", description: "Gösterinin yıldızı. Narsist, sesiyle herkesi büyüleyen ancak kuliste herkesle kavgalı olan başrol.", icon: "noun-senfoni-soprano-avatar.png" },
+      { id: "s2", name: "Orkestra Şefi", description: "Disiplinli ve katı. Müzikal mükemmellik için her şeyi yapabilecek takıntılı bir otorite.", icon: "noun-senfoni-seref-avatar.png" },
+      { id: "s3", name: "Işık Teknisyeni", description: "Tavan arasındaki loş odalarda çalışan, sistemleri yöneten sessiz teknik personel.", icon: "noun-senfoni-teknik-avatar.png" },
+      { id: "s4", name: "Eski Aktör", description: "Yıllar önce sahnelerden men edilen, tiyatro hilelerini ve sahne arkasını avucunun içi gibi bilen kin dolu oyuncu.", icon: "noun-senfoni-yonetmen-avatar.png" },
     ],
     weapons: [
       { id: "w1", name: "Tiyatro Hançeri", description: "Sahnede kullanılan ancak ucu sonradan keskinleştirilmiş dekoratif bıçak.", icon: "content-cut" },
