@@ -2066,9 +2066,9 @@ export const PUZZLES: Puzzle[] = [
     story:
       "Ankara'nın eski Ulus semtinde tanınmış bir fotoğrafçı olan Faruk Bey, stüdyosunda ölü bulundu. Kırmızı lamba yanık, banyo teknelerinde yarı işlenmiş filmler hâlâ duruyordu. Gün içinde gelen üç şüphelinin her biri diğerini suçlarken gerçek karanlıkta gizli.",
     suspects: [
-      { id: "s1", name: "Gazeteci Selda Hanım", description: "Fotoğrafları izinsiz yayımlayan muhalif muhabir. Sadece ön ofisteki açık alanlara ve çekim ekipmanlarına erişimi vardı.", icon: "👩" },
-      { id: "s2", name: "Asistan Cumhur", description: "Fotoğrafçının stüdyo çalışanı. Terfi alamadığı için öfkeli; banyo sıvıları dahil stüdyonun tüm teknik alanlarını kullanma yetkisine sahip.", icon: "👷" },
-      { id: "s3", name: "Koleksiyoner Münir Bey", description: "Nadir eserler için baskı yapan yaşlı koleksiyoner. Sadece depolanmış eski kutularla ilgilenir, güncel çekim alanlarına hiç uğramaz.", icon: "👴" },
+      { id: "s1", name: "Gazeteci Selda Hanım", description: "Fotoğrafları izinsiz yayımlayan muhalif muhabir. Sadece ön ofisteki açık alanlara ve çekim ekipmanlarına erişimi vardı.", icon: "noun-foto-kadin-muhabir-avatar.png" },
+      { id: "s2", name: "Asistan Cumhur", description: "Fotoğrafçının stüdyo çalışanı. Terfi alamadığı için öfkeli; banyo sıvıları dahil stüdyonun tüm teknik alanlarını kullanma yetkisine sahip.", icon: "noun-foto-stajyer-avatar.png" },
+      { id: "s3", name: "Koleksiyoner Münir Bey", description: "Nadir eserler için baskı yapan yaşlı koleksiyoner. Sadece depolanmış eski kutularla ilgilenir, güncel çekim alanlarına hiç uğramaz.", icon: "noun-foto-koleksiyoner-avatar.png" },
     ],
     weapons: [
       { id: "w1", name: "Tripod Bacağı", description: "Kamera sehpasından sökülmüş uzun ve ağır alüminyum boru; kafaya küt bir darbe vurulduğunda anında ölümcül olabilir.", icon: "straighten" },
