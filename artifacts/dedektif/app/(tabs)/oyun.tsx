@@ -541,11 +541,8 @@ export default function VakalarScreen() {
 
   const handleCancelStart = () => {
     resetCurrentGame();
-    if (router.canGoBack()) {
-      router.back();
-    }
-    // Geri navigasyon yoksa (direkt Vakalar sekmesinden): resetCurrentGame()
-    // zaten gameState'i sıfırlar ve liste görünümüne döner — router gerekmez.
+    // Vakalar sekmesi state-based navigasyon kullanır; router.back() çağrılmaz.
+    // resetCurrentGame() gameState'i sıfırlar → bileşen otomatik liste görünümünü render eder.
   };
 
   const handleGoHome = () => {
@@ -562,9 +559,6 @@ export default function VakalarScreen() {
       setShowExitConfirm(true);
     } else {
       handleBackToList();
-      if (router.canGoBack()) {
-        router.back();
-      }
     }
   };
 
@@ -572,9 +566,6 @@ export default function VakalarScreen() {
     setShowExitConfirm(false);
     invalidateGame();
     handleBackToList();
-    if (router.canGoBack()) {
-      router.back();
-    }
   };
 
   const handleCellPress = (key: string, nextMark: GridMark) => {
