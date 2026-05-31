@@ -601,16 +601,16 @@ export const PUZZLES: Puzzle[] = [
     difficulty: "caylak",
     dayIndex: 12,
     story:
-      "Ankara'nın serin bir sonbahar akşamında, binlerce kişinin coşkuyla izlediği folklor festivalinin baş koordinatörü sahnede aniden yere yığıldı. Rengarenk ışıkların altında yaşanan bu trajedi, sahne arkasındaki karanlık rekabetin üzerindeki perdeyi kaldırdı.",
+      "Ankara'nın serin bir sonbahar akşamında, binlerce kişinin coşkuyla izlediği folklor festivalinin baş koordinatörü sahnede aniden yere yığıldı. Rengarenk sahne ışıklarının altında yaşanan bu trajedi, alkış seslerini keserken sahne arkasındaki karanlık rekabetin de üzerindeki perdeyi kaldırdı.",
     suspects: [
-      { id: "s1", name: "Rakip Sanatçı", description: "Aynı gruba üye olmak istiyordu", icon: "face" },
-      { id: "s2", name: "Ses Teknikeri", description: "Sahne arkasında çalışıyor", icon: "support-agent" },
-      { id: "s3", name: "Sponsorların Temsilcisi", description: "Bütçe tartışması yaşanmıştı", icon: "account-circle" },
+      { id: "s1", name: "Rakip Sanatçı", description: "Ana ekibe dahil edilmediği için aylardır kin güden ve kulislerde dolaşan hırslı sanatçı.", icon: "face" },
+      { id: "s2", name: "Ses Teknikeri", description: "Sahnenin tüm teknik ve elektriksel altyapısını santim santim bilen tecrübeli teknisyen.", icon: "support-agent" },
+      { id: "s3", name: "Sponsorların Temsilcisi", description: "Festivalin bütçesi yüzünden maktulle ciddi krizler yaşayan ve yatırımlarını çekmekle tehdit eden yönetici.", icon: "account-circle" },
     ],
     weapons: [
-      { id: "w1", name: "Zehirli Su", description: "Su şişesine karıştırılan renksiz kimyasal madde", icon: "water-drop" },
-      { id: "w2", name: "Elektrik Darbesi", description: "Sahne ekipmanı üzerinden iletilen yüksek voltaj", icon: "flash-on" },
-      { id: "w3", name: "Gizli Enjeksiyon", description: "İnce iğneyle kalabalıkta fark edilmeden uygulanan enjeksiyon", icon: "vaccines" },
+      { id: "w1", name: "Zehirli Su", description: "Sanatçıların kişisel sularına karıştırıldığında kalbi saniyeler içinde durduran renksiz kimyasal damla.", icon: "water-drop" },
+      { id: "w2", name: "Elektrik Darbesi", description: "Sahne zeminindeki metal plakalara kasıtlı olarak yönlendirilen ve dokunulduğunda ölümcül şok yaratan ana akım.", icon: "flash-on" },
+      { id: "w3", name: "Gizli Enjeksiyon", description: "Kalabalık arasında fark edilmeden deriye temas ettirilebilen ince uçlu zehirli cerrahi iğne.", icon: "vaccines" },
     ],
     locations: [
       { id: "l1", name: "Sahne", description: "Festival meydanındaki açık hava performans sahnesi", icon: "theater-comedy" },
@@ -620,37 +620,37 @@ export const PUZZLES: Puzzle[] = [
     clues: [
       {
         id: "c1",
-        text: "Kriminal ekiplerin raporuna göre; cesette hiçbir zehir veya iğne izine rastlanmadı, kurbanın kasları devasa bir voltaj dalgasıyla kasılarak kilitlenmişti.",
+        text: "Adli tabip, kurbanın vücudunda geniş çaplı doku yanıkları ve kas spazmları tespit etti; bu bulgular, doğrudan ana şebekeden çekilen kontrolsüz bir yüksek voltaj akımını işaret ediyordu.",
         type: "forensic",
         isBonus: false,
       },
       {
         id: "c2",
-        text: "Açık hava sahnesindeki tüm kablo ve jeneratör bağlantılarının kasıtlı olarak soyulduğu, cinayetin soyunma odaları veya kontrol merkezinde değil, doğrudan performans alanında işlendiği saptandı.",
+        text: "Kriminal inceleme, güç kablolarındaki kasıtlı kesiklerin sadece dışarıdaki açık hava performans platformunda yapıldığını, kapalı odaların temiz olduğunu belirledi.",
         type: "witness",
         isBonus: false,
       },
       {
         id: "c3",
-        text: "Aynı gruba üye olmak için yanıp tutuşan rakip sanatçının, festival boyunca sadece ses ve ışık panellerinin bulunduğu teknik odada bekletildiği kameralarca doğrulandı.",
+        text: "Gösteri boyunca sahne arkası logları, rakip sanatçının sadece mikser ve ışık panellerinin bulunduğu teknik odada tutulduğunu ve dışarı adım atmadığını kanıtladı.",
         type: "witness",
         isBonus: false,
       },
       {
         id: "c4",
-        text: "Bütçe tartışmaları yüzünden öfkeli olan sponsor temsilcisinin, olay saatinden çok önce VIP soyunma odasında müzisyenlerle toplantı yapıp mekândan ayrıldığı log kayıtlarıyla kesinleşti.",
+        text: "Sponsor temsilcisinin VIP çadırında imzaladığı faturaların saat damgaları, onun trajedi anında sahne alanından çok uzakta, müzisyenlerle kilitli bir toplantıda olduğunu doğruladı.",
         type: "evidence",
         isBonus: false,
       },
       {
         id: "c5",
-        text: "Sahneye giden ana akım hattında, sadece profesyonel bir teknik personelin yapabileceği kusursuz bir 'kısa devre' köprüsü kurulmuştu.",
+        text: "Açık sahneye giden ana akım hattında kurulan o kusursuz ve ölümcül 'kısa devre' köprüsü, amatör birinin yapamayacağı kadar ileri düzey bir mühendislik gerektiriyordu.",
         type: "evidence",
         isBonus: true,
       },
       {
         id: "c6",
-        text: "Elektrik panosunun iç yüzeyinde, sahne arkasının tüm teknik işleyişinden sorumlu olan teknisyenin izole eldivenlerine ait taze yanık izleri tespit edildi.",
+        text: "Ana şalter kutusunun iç kapağında, festivalin tüm teknik işleyişinden sorumlu olan o kişinin izole eldivenlerine ait taze yanık ve erime izleri bulundu.",
         type: "evidence",
         isBonus: true,
       },
@@ -876,7 +876,7 @@ export const PUZZLES: Puzzle[] = [
     difficulty: "caylak",
     dayIndex: 16,
     story:
-      "Bursa'nın ünlü kaplıcalarından birinde lüks bir thermal otelde, ünlü bir şarkıcı spa alanında ölü bulundu.",
+      "Bursa'nın ormanlarla çevrili lüks termal otelinde, suların huzur veren şırıltısı ünlü bir şarkıcının son çığlığıyla kesildi. Yoğun buharın göz gözü görmez ettiği spa alanında, ihtişamlı bir hayat karanlık bir sırla son buldu.",
     suspects: [
       { id: "s1", name: "Otel Müdürü", description: "Finansal baskılar altında", icon: "badge" },
       { id: "s2", name: "Eski Hayranı", description: "Takıntılı bir hayran", icon: "person" },
@@ -895,37 +895,37 @@ export const PUZZLES: Puzzle[] = [
     clues: [
       {
         id: "c1",
-        text: "sauna kapısı içeriden kilitlenmiş halde bulundu; içerideki el baskısı izi ve nem izleri cinayetin burada gerçekleştiğini, boğulmanın sauna sıcağında olduğunu gösteriyor.",
+        text: "İçeriden kilitlenmiş yoğun buharlı ahşap odanın duvarlarında tespit edilen çırpınış ve el baskısı izleri, kurbanın o dar ve cehennem gibi sıcak alanda nefessiz bırakıldığını kanıtlıyordu.",
         type: "evidence",
         isBonus: false,
       },
       {
         id: "c2",
-        text: "havuz başının kenarında uyku hapı tozu kalıntısına rastlandı; dağılmış toz izleri kıyının yüzeyleriyle bütünleşmiş.",
+        text: "Açık yüzme havuzunun ıslak kenarlarında suya karışmadan kalmış mikroskobik sedatif tozları, bu sinsi planın kimyasal bir eylemden mekanik bir cinayete dönüştüğünü gösterdi.",
         type: "evidence",
         isBonus: false,
       },
       {
         id: "c3",
-        text: "otel müdürü gece boyunca resepsiyondaydı; ödeme terminali ve güvenlik kamerası onu spa alanına hiç gitmeyen olarak kayıt altına aldı.",
+        text: "Otel müdürünün olay gecesi boyunca ön bürodaki operasyonları yönettiği ve POS cihazlarından alınan kesintisiz işlem kayıtlarıyla resepsiyondan hiç ayrılmadığı saptandı.",
         type: "witness",
         isBonus: false,
       },
       {
         id: "c4",
-        text: "rakip şarkıcı spa odasında masaj randevusu aldırdı; giriş kartı kaydı onu o bölgeye yerleştiriyor.",
+        text: "Otel sistemindeki dijital kart logları, rakip şarkıcının cinayet saatinden çok önce aromaterapi kabinine girdiğini ve sadece o alanda kaldığını teyit etti.",
         type: "evidence",
         isBonus: false,
       },
       {
         id: "c5",
-        text: "otel giriş kayıtları eski hayranının sauna kabinine girdiğini ve tek başına çıktığını gösteriyor.",
+        text: "Lobideki güvenlik kameraları, gözleri kurbanı arayan takıntılı hayranın doğrudan en sıcak ve kilitlenebilir ahşap kabine yöneldiğini saniye saniye kaydetmişti.",
         type: "evidence",
         isBonus: true,
       },
       {
         id: "c6",
-        text: "rakip şarkıcı o akşam sahne programına katılmıştı; binlerce izleyici bunu doğruluyor.",
+        text: "Rakip şarkıcının o akşam binlerce kişinin izlediği açık hava konserinde sahne aldığı magazin basınının canlı yayınlarıyla belgelenerek şüpheleri ondan tamamen uzaklaştırdı.",
         type: "witness",
         isBonus: true,
       },
@@ -1170,7 +1170,7 @@ export const PUZZLES: Puzzle[] = [
     difficulty: "caylak",
     dayIndex: 20,
     story:
-      "Doğu Anadolu'nun etrafı dağlarla çevrili şenlikli bir köyünde, davul ve zurna seslerinin geceyi deldiği o anlarda gelinin babası kanlar içinde bulundu. Halayların coşkusu, karanlık bir intikamın sesini bastırmak için kullanılmıştı.",
+      "Doğu Anadolu'nun etrafı karlı dağlarla çevrili şenlikli bir köyünde, davul ve zurna sesleri geceyi delerken gelinin babası kanlar içinde bulundu. Halayların coşkusu, yıllanmış bir intikamın yankısını bastırmak için mükemmel bir kamuflajdı.",
     suspects: [
       { id: "s1", name: "Damat", description: "Aile anlaşmazlığı yaşanmıştı", icon: "person" },
       { id: "s2", name: "Köy Muhtarı", description: "Arazi davası vardı", icon: "elderly" },
@@ -1189,37 +1189,37 @@ export const PUZZLES: Puzzle[] = [
     clues: [
       {
         id: "c1",
-        text: "Adli tabip, maktulün bedeninde sinsi bir zehir veya yakın dövüşü gösteren bir bıçak kesiği olmadığını; ölümün uzak mesafeden ateşlenen ağır bir saçma tahribatıyla gerçekleştiğini raporladı.",
+        text: "Maktulün bedeninde sinsi bir toksin belirtisi veya yakın mesafeli bir kesik izi yoktu; göğüs kafesindeki geniş ve ağır saçma tahribatı, tetiğin metrelerce uzaktan çekildiğini kanıtlıyordu.",
         type: "forensic",
         isBonus: false,
       },
       {
         id: "c2",
-        text: "Jandarma incelemesi, kan izlerinin aydınlık köy meydanında veya kalabalık düğün çadırında değil; köyün en karanlık ve ıssız noktası olan kerpiç ahırın arkasında toplandığını kanıtladı.",
+        text: "Jandarma incelemesi, kan izlerinin ve barut kokusunun aydınlık köy meydanında değil; köyün en karanlık, en ıssız noktası olan kerpiç yapılı hayvan barınağının hemen arkasında toplandığını gösterdi.",
         type: "witness",
         isBonus: false,
       },
       {
         id: "c3",
-        text: "Husumetli olduğu bilinen damadın, olay saatinde yüzlerce akrabasıyla birlikte devasa düğün çadırında halay çektiği sayısız şahitle doğrulandı.",
+        text: "Husumetli olduğu bilinen damadın, olay saatinde yüzlerce akrabasıyla birlikte devasa ışıklı çadırda halay başı çektiği ve oradan bir an olsun ayrılmadığı sayısız şahitle doğrulandı.",
         type: "witness",
         isBonus: false,
       },
       {
         id: "c4",
-        text: "Köy dışından gelen yabancı fotoğrafçının, o kritik dakikalarda meydandaki ateşin etrafında portre çekimleri yaptığı dijital kameraların zaman damgalarıyla kesinleşti.",
+        text: "Şehirden gelen yabancı fotoğrafçının, o kritik dakikalarda sadece meydandaki ateşin etrafında portre çekimleri yaptığı dijital makinesindeki silinmez zaman damgalarıyla kesinleşti.",
         type: "evidence",
         isBonus: false,
       },
       {
         id: "c5",
-        text: "Köyün yaşlıları, maktulle yıllardır süren bir arazi davası olan muhtarın, düğün alanından gizlice ayrılıp karanlık hayvan barınaklarına doğru yöneldiğini gördüklerini itiraf ettiler.",
+        text: "Köyün yaşlıları, maktulle yıllardır kan davalı bir arazi kavgası olan ihtiyar adamın, düğün alanından gizlice sıvışıp karanlık ahır bölgesine doğru tek başına ilerlediğini yeminle itiraf ettiler.",
         type: "direct",
         isBonus: true,
       },
       {
         id: "c6",
-        text: "Ahırın arkasındaki çamurlu zeminde bulunan boş kovan ile köy muhtarının evinde ele geçirilen uzun namlulu tüfeğin balistik eşleşmesi %100 örtüştü.",
+        text: "Ahırın arkasındaki çamurlu zeminde bulunan boş kovanın ateşleme izi, köyün o yaşlı yöneticisinin evindeki duvarda asılı duran uzun namlulu silahın balistik raporuyla %100 eşleşti.",
         type: "evidence",
         isBonus: true,
       },
@@ -1374,7 +1374,7 @@ export const PUZZLES: Puzzle[] = [
     difficulty: "caylak",
     dayIndex: 23,
     story:
-      "Boğaz'ın buz gibi gri sisleri arasına karışan sabah vapurunda, üst düzey bir yönetici bir daha inmemek üzere kamaradan kayboldu. Dalgaların sesi ve martıların çığlıkları, denizin ortasında işlenen bu kusursuz cinayeti gizlemeye yetmedi.",
+      "Boğaz'ın buz gibi gri sisleri arasına karışan ilk sabah vapurunda, üst düzey bir yönetici bir daha inmemek üzere ortadan kayboldu. Dalgaların sesi ve martıların çığlıkları, denizin ortasında işlenen bu kusursuz cinayetin tek sessiz tanığıydı.",
     suspects: [
       { id: "s1", name: "Fatma Reis", description: "20 yıllık tecrübeli vapur kaptanı", icon: "sailing" },
       { id: "s2", name: "Muzaffer", description: "Biletçi ve güverte görevlisi", icon: "person" },
@@ -1393,37 +1393,37 @@ export const PUZZLES: Puzzle[] = [
     clues: [
       {
         id: "c1",
-        text: "Kurbanın boynundaki derin ve kalın sürtünme izleri, endüstriyel bir duman veya ağır metal ezilmesini değil; boğucu ve esnek bir kordon baskısını işaret ediyordu.",
+        text: "Kurbanın boynundaki derin ve kalın sürtünme izleri, endüstriyel bir duman zehirlenmesini veya ağır metal darbesini değil; gemileri iskeleye sabitleyen son derece kalın ve pürüzlü bir sentetik kordon baskısını işaret ediyordu.",
         type: "evidence",
         isBonus: false,
       },
       {
         id: "c2",
-        text: "Güvenlik kameraları, cinayetin yolcuların bulunduğu kalkış iskelesinde veya açık deniz manzaralı güvertede değil, yalnızca personelin girebildiği gürültülü alt katmanlarda yaşandığını saptadı.",
+        text: "Güvenlik kameraları, mücadelenin yolcuların doluştuğu iskelede veya deniz manzaralı açık teraslarda değil; yalnızca yetkili personelin girebildiği, sağır edici motor sesleriyle dolu alt katmanlarda yaşandığını saptadı.",
         type: "evidence",
         isBonus: false,
       },
       {
         id: "c3",
-        text: "Kaptanın seyir defteri ve yardımcı personelin yeminli ifadeleri, Fatma Reis'in yolculuk boyunca dümen başından bir saniye bile ayrılmadığını teyit etti.",
+        text: "Kaptanın seyir defteri ve köprü üstü güvenlik logları, yılların emektar kaptanının yolculuk boyunca dümen başından bir saniye bile ayrılmadığını kesin olarak teyit etti.",
         type: "witness",
         isBonus: false,
       },
       {
         id: "c4",
-        text: "İş seyahati yapan İrem Şen'in, turnikelerden geçtikten sonra yoğun sis yüzünden vapurun içine girmeyip iskeledeki bekleme salonunda kaldığı güvenlik loglarıyla ispatlandı.",
+        text: "İş seyahati yapan yolcu İrem'in, turnikelerden geçtikten sonra deniz tutması endişesiyle vapura hiç binmeyip iskeledeki bekleme salonunda kaldığı güvenlik kayıtlarıyla ispatlandı.",
         type: "witness",
         isBonus: false,
       },
       {
         id: "c5",
-        text: "Alt kattaki gürültülü teknik odaya girmek için gereken dijital kodun, yalnızca o sabah vardiyasında olan biletçi personeline zimmetli olduğu ortaya çıktı.",
+        text: "Alt kattaki gürültülü teknik odaya inen çelik kapının elektronik kilidini açan dijital kod, yalnızca o sabah güvertede bilet kesen ve yolcuları yönlendiren o personele zimmetliydi.",
         type: "direct",
         isBonus: true,
       },
       {
         id: "c6",
-        text: "Motor dairesinin zemininde bulunan kalın naylon lifleri ve biletçi Muzaffer'in ellerindeki taze kenevir yanıkları, kurbanın nasıl ve kim tarafından susturulduğunu kesinleştirdi.",
+        text: "Makine dairesinin yağlı zemininde kopmuş olarak bulunan kalın naylon lifleri ve biletçi Muzaffer'in avuç içlerindeki taze kenevir yanıkları, karanlık gerçeği su yüzüne çıkardı.",
         type: "evidence",
         isBonus: true,
       },
@@ -1578,7 +1578,7 @@ export const PUZZLES: Puzzle[] = [
     difficulty: "caylak",
     dayIndex: 26,
     story:
-      "Tarihi yarımadanın binlerce yıllık sırlarını barındıran taş sokaklarında, yalnız bir turist ağlayan sütunların dibinde bilincini kaybetmiş halde bulundu. Değerli eşyaları yerindeydi; bu sıradan bir gasp değil, hedefe yönelik karanlık bir hamleydi.",
+      "Tarihi yarımadanın binlerce yıllık sırlarını barındıran taş sokaklarında, yalnız bir turist ağlayan sütunların dibinde bilincini kaybetmiş halde bulundu. Değerli eşyaları yerindeydi; bu sıradan bir gasp değil, hedefe yönelik ve son derece sinsi bir hamleydi.",
     suspects: [
       { id: "s1", name: "Rüzgar", description: "Hipodrom yakınında simit satan genç satıcı", icon: "person" },
       { id: "s2", name: "Ayşen Demir", description: "Yetkili tur şirketi rehberi", icon: "support-agent" },
@@ -1597,37 +1597,37 @@ export const PUZZLES: Puzzle[] = [
     clues: [
       {
         id: "c1",
-        text: "Hastaneye kaldırılan turistin kan tahlilinde biber gazı veya künt bir demir travması bulunmadı; kurban doğrudan içeceğine katılan sersemletici bir kimyasalla etkisiz hale getirilmişti.",
+        text: "Hastaneden alınan kan tahlillerinde biber gazı veya künt bir demir travması bulgusuna rastlanmadı; kurban doğrudan sıvısına karıştırılan, kokusuz ve anında felç eden bir medikal çözeltiyle etkisiz hale getirilmişti.",
         type: "evidence",
         isBonus: false,
       },
       {
         id: "c2",
-        text: "Polis köpekleri, olayın açık havadaki Antik Meydan'da veya tarihi bedestenin dar geçitlerinde değil, doğrudan yerin altındaki loş ve ıslak taş yapının içinde gerçekleştiğini belirledi.",
+        text: "Polis köpekleri ve olay yeri inceleme, olayın açık havadaki anıtların etrafında veya tarihi bedestenin vitrinli geçitlerinde değil; doğrudan yerin altındaki o rutubetli, loş ve ıslak taş yapının içinde gerçekleştiğini belirledi.",
         type: "evidence",
         isBonus: false,
       },
       {
         id: "c3",
-        text: "Hipodrom kameraları, genç simitçi Rüzgar'ın tüm gün boyunca anıtların etrafındaki tezgahından hiç ayrılmadığını mühürlü kayıtlarla doğruladı.",
+        text: "Hipodrom meydanını gören MOBESE kameraları, genç sokak satıcısının tüm gün boyunca anıtların etrafındaki arabasından hiç ayrılmadığını mühürlü kayıtlarla doğruladı.",
         type: "witness",
         isBonus: false,
       },
       {
         id: "c4",
-        text: "Bağımsız fotoğrafçı Haluk'un olay saatlerinde Eski Bedesten'in çatısında panoramik çekimler yaptığı, makinesindeki silinmez RAW zaman damgalarıyla kanıtlandı.",
+        text: "Bağımsız fotoğrafçının olay saatlerinde Eski Bedesten'in çatısında panoramik çekimler yaptığı, makinesindeki silinemez RAW formatlı zaman damgalarıyla şüpheye yer bırakmayacak şekilde kanıtlandı.",
         type: "witness",
         isBonus: false,
       },
       {
         id: "c5",
-        text: "Rehberlik acentesinin rotasına göre, turistin o saatlerde sadece yetkili tur rehberiyle birlikte yeraltı yapılarını gezmek üzere bilet kullandığı tespit edildi.",
+        text: "Rehberlik acentesinin rotasına göre, turistin o kritik saatlerde sadece yetkili tur rehberiyle birlikte yeraltı yapılarını gezmek üzere bilet kullandığı ve yalnız olmadığı tespit edildi.",
         type: "direct",
         isBonus: true,
       },
       {
         id: "c6",
-        text: "Ağlayan sütunların hemen dibinde bulunan o küçük ve sinsi şişenin üzerinde, tur rehberi Ayşen Demir'in işaret parmağına ait taze bir ter izi bulundu.",
+        text: "Sarnıcın buz gibi sularının hemen kenarında, loş ışıkta parlayan o küçük şüpheli şişenin üzerinde, turu yönlendiren profesyonel rehberin işaret parmağına ait taze bir ter izi bulundu.",
         type: "forensic",
         isBonus: true,
       },

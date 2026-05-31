@@ -9523,14 +9523,14 @@
       "puzzles": [
         {
           "puzzleId": "yeni_c01",
-          "title": "Bebek Adası'nda Kan",
+          "title": "Büyükada'da Kan İzleri",
           "subtitle": "Büyükada, Ahşap Köşk",
           "difficulty": 1,
           "difficultyLabel": "Çaylak",
           "stars": "★★☆☆☆",
           "gridSize": "3x3",
           "timeLimit": 540,
-          "story": "Büyükada'nın en yüksek tepesine kurulan ve çam ağaçlarıyla çevrili asırlık ahşap köşkte, adaletiyle tanınan emekli bir hakim ölü bulundu. Adaya araç girişi yasaktı; fırtınalı bu gece köşkten kimse çıkmamıştı. Katil, gıcırdayan tahtaların üzerinde dolaşıyor.",
+          "story": "Büyükada'nın en yüksek tepesine kurulan ve çam ağaçlarıyla çevrili asırlık ahşap köşkte, kararlarıyla tanınan emekli bir hakim ölü bulundu. Adaya araç girişi yasaktı; fırtınalı bu gece köşkten kimse çıkmamıştı. Katil, gıcırdayan tahtaların üzerinde aramızda dolaşıyor.",
           "atmosphere": "Deniz kokusu. Tahta veranda. Faytonun uzak sesi. Ve köşkün içinden çıkmayan üç kişi.",
           "suspects": [
             {
@@ -9619,7 +9619,7 @@
               "isRevealed": true,
               "pointCost": 0,
               "title": "Adli Tıp Ön Raporu",
-              "text": "Adli Tıp uzmanı, maktulün ağzında zehir köpüğü veya kafasında vazo kırığı olmadığını; ölümün doğrudan yüzüstü nefessiz bırakılma sonucu uyku esnasında gerçekleştiğini raporladı.",
+              "text": "Adli Tıp raporuna göre, maktulün yüzündeki ağır morarmalar ve ciğerlerindeki havasızlık, kimyasal bir toksini veya sert bir porselen darbesini değil; uyku esnasında yumuşak ama ölümcül bir baskıyla nefesinin kesildiğini kanıtlıyordu.",
               "grid_effect": "w1_cay eleniyor (silah zehir değil). w3_yastik + l2_yatak olası.",
               "mechanicType": "text",
               "deductionHint": "Silah yastık boğması. Mekan yatak odası. → s3_sabri çözüm adayı."
@@ -9631,7 +9631,7 @@
               "isRevealed": false,
               "pointCost": 50,
               "title": "Faytoncu Rıza'nın İfadesi",
-              "text": "Faytoncu Rıza'nın yeminli ifadesi: 'Sabahın köründe köşkün önünden geçerken, Nilgün Hanım'ın mutfak tezgahında çay tepsisini telaşla yıkadığını bizzat gördüm.'",
+              "text": "Faytoncu Rıza'nın ifadesi netti: 'Sabahın köründe köşkün önünden geçerken, eski sekreterin alt kattaki mermer tezgahta çay tepsisini büyük bir telaşla yıkadığını bizzat gördüm.'",
               "grid_effect": "Nilgün mutfaktaydı → s2_nilgun + l3_mutfak = ✓",
               "mechanicType": "text",
               "deductionHint": "Nilgün mutfaktaydı. Hangi silah mutfakla ilişkili? → w1_cay"
@@ -9643,7 +9643,7 @@
               "isRevealed": false,
               "pointCost": 50,
               "title": "Tarık'ın Gece Kayıtları",
-              "text": "Köşkün dış kameraları incelendiğinde, Damat Tarık'ın gece boyunca kütüphane verandasında sigara içtiği ve üst kata hiç adım atmadığı netleşti.",
+              "text": "Köşkün dış güvenlik kameraları, Damat Tarık'ın gece boyunca zemin kattaki kitap dolu odanın verandasında sigara içtiğini ve üst kata giden merdivenlere hiç yaklaşmadığını mühürledi.",
               "grid_effect": "s1_tarik + l2_yatak = ✗. Tarık yatak odasına girmedi.",
               "mechanicType": "text",
               "deductionHint": "Tarık yatak odasında değildi. Sabri ise..."
@@ -9679,7 +9679,7 @@
               "isRevealed": false,
               "pointCost": 50,
               "title": "Çay Fincanı Analizi",
-              "text": "Mutfakta bulunan fincanın dibinde doğada nadir bulunan bir alkaloit izi saptandı. Nilgün Hanım'ın geçmişteki eczane stajı, bu sinsi botaniği tanıdığını kanıtlıyor.",
+              "text": "Mutfakta bulunan fincanın dibinde, doğada nadir bulunan bir alkaloit izi saptandı. Eski çalışanın geçmişteki eczane stajı, bu sinsi botaniği nereden bulduğunu ve nasıl hazırladığını açıklıyordu.",
               "grid_effect": "w1_cay → s2_nilgun bağlantısı güçlendi. s2 + w1 = ✓ olası.",
               "mechanicType": "text",
               "deductionHint": "Nilgün'ün botanik bilgisi + mutfak konumu → w1_cay + l3_mutfak = Nilgün."
@@ -9728,7 +9728,7 @@
             "weaponId": "w1",
             "locationId": "l3"
           },
-          "solutionNarrative": "Sekreter Nilgün, 20 yıllık emeğine karşılık hiçbir şey verilmemesinin öfkesiyle gece hakimin çayına 'uyku otu ekstresi' kattı. Hakim uyuyakaldı — ama bir daha uyanmadı. Parmak izi Tarık'ı kütüphaneye, faytoncu Nilgün'ü mutfağa, kamera Sabri'yi yatak odasına yerleştirdi. Çözüm zinciri tek kişiyi gösterdi: Nilgün."
+          "solutionNarrative": "Sekreter Nilgün, 20 yıllık emeğine karşılık hiçbir şey alamamasının öfkesiyle gece hakimin çayına o sinsi ilacı kattı. Hakim uyuyakaldı, ancak bir daha uyanmadı. Çapraz eleme ve kamera logları, sabriyi yatak odasında bırakırken, zehri hazırlayan eli kesin olarak Nilgün'e bağladı."
         },
         {
           "puzzleId": "yeni_c02",
@@ -9739,7 +9739,7 @@
           "stars": "★★☆☆☆",
           "gridSize": "3x3",
           "timeLimit": 540,
-          "story": "Bursa'nın tarihi kapalı çarşısındaki 600 yıllık kubbeli hamamda, kurnalarından akan suyun sesi dehşet verici bir sessizlikle kesildi. Ünlü tekstil tüccarı, yoğun buharın gizlediği o taşın üzerinde cansızdı. Dışarıdan kimsenin girmediği bu sıcak cehennemde sadece üç nefes var.",
+          "story": "Bursa'nın tarihi kapalı çarşısındaki 600 yıllık kubbeli hamamda, kurnalarından akan suyun sesi dehşet verici bir sessizlikle kesildi. Ünlü tekstil tüccarı, yoğun buharın gizlediği o mermer göbek taşının üzerinde cansız yatıyordu. Dışarıdan kimsenin girmediği bu sıcak cehennemde sadece üç nefes var.",
           "atmosphere": "Buhar. Mermer soğukluğu. Kümbettin yankısı. Ve taşın üzerindeki bir ceset.",
           "suspects": [
             {
@@ -9827,7 +9827,7 @@
               "isRevealed": true,
               "pointCost": 0,
               "title": "Hamam Doktoru Raporu",
-              "text": "Adli muayene; maktulün sert ve düz bir sabunluk mermeriyle veya boğucu bir keseyle değil, doğrudan silindirik ve ağır bir metalin kafa tasına inmesiyle katledildiğini kanıtladı.",
+              "text": "Adli muayene; kafatasına inen darbenin düz bir mermer kenarına veya boğucu bir keseye değil, tamamen silindirik, kavisli ve kütlece çok ağır bir metale ait olduğunu kanıtladı.",
               "grid_effect": "l1_gobek taşı ölüm yeri. Silindirik darbe → w1_kova olası. w2_sabunluk (düz) eleniyor bu mekân için.",
               "mechanicType": "text",
               "deductionHint": "Göbek taşı + silindirik darbe → kova izi."
@@ -9839,7 +9839,7 @@
               "isRevealed": false,
               "pointCost": 50,
               "title": "Berber Komşu İfadesi",
-              "text": "Berber esnafının ifadesine göre; rakip tüccar Fikri Bey, sıcaktan bunaldığı için tüm vaktini sadece tahta bölmeli soyunma odasında geçirmiş, buharlı yıkanma alanlarına hiç girmemişti.",
+              "text": "Berber esnafının ifadesine göre; rakip tüccar Fikri Bey, sıcaktan bunaldığı için tüm vaktini sadece tahta bölmeli kuru alanda geçirmiş, buharlı yıkanma merkezine adım dahi atmamıştı.",
               "grid_effect": "s1_fikri + l2_soyunma = ✓. s1 için l1 ve l3 = ✗.",
               "mechanicType": "text",
               "deductionHint": "Fikri soyunma odasındaydı — göbek taşına giremedi."
@@ -9864,7 +9864,7 @@
               "isRevealed": false,
               "pointCost": 50,
               "title": "Nuri Usta'nın Yeri",
-              "text": "Nuri Usta'nın olay saatinde hamamın arka tarafındaki sıcak su depolarında sızıntı tamiratı yaptığı, borulardaki taze lehim izleriyle ispatlandı.",
+              "text": "Hamam ustasının olay saatinde sıcak su depolarının bulunduğu arka loş alanda sızıntı tamiratı yaptığı, borulardaki taze ve hala sıcak lehim izleriyle ispatlandı.",
               "grid_effect": "s2_nuri + l3_depo = ✓. s2 için l1 ve l2 = ✗.",
               "mechanicType": "text",
               "deductionHint": "Nuri depodaydı. Dilara için l1_gobek kaldı."
@@ -9937,7 +9937,7 @@
             "weaponId": "w1",
             "locationId": "l1"
           },
-          "solutionNarrative": "Muhasebeci Dilara, zimmeti ifşa etmek üzere olan maktulün onu susturma tehdidine maruz kalınca göbek taşında onu bakır kovayla vurdu. Her şüpheli farklı bir silahla farklı bir mekânda belirlendi — Dilara göbek taşında, kova eliyle."
+          "solutionNarrative": "Muhasebeci Dilara, milyonluk zimmeti ifşa edilecekti ve bunu anlayınca, maktulü o yoğun buharın ortasında ağır bir bakır su kovasıyla susturdu. Tüm şüphelilerin bulunduğu konumlar netleştiğinde, göbek taşındaki silindirik izin tek bir sahibi kalmıştı."
         },
         {
           "puzzleId": "yeni_c03",
@@ -9948,7 +9948,7 @@
           "stars": "★★☆☆☆",
           "gridSize": "3x3",
           "timeLimit": 540,
-          "story": "Kemeraltı'nın altın sarısı vitrinlerinin ardında, kapıları içeriden çoklu kilitlerle sürgülenmiş asırlık kuyumcu dükkanında usta ölü bulundu. Kasadaki milyonlarca liralık altına dokunulmamıştı. Bu, hırsızlık değil, yılların biriktirdiği saf bir öfkeydi.",
+          "story": "Kemeraltı'nın altın sarısı vitrinlerinin ardında, kapıları içeriden çoklu kilitlerle sürgülenmiş asırlık kuyumcu dükkanında usta ölü bulundu. Kasadaki milyonlarca liralık altına dokunulmamıştı. Bu bir hırsızlık değil, yılların biriktirdiği saf bir öfkenin patlamasıydı.",
           "atmosphere": "Altın kokusu. Cam vitrinler. Çarşının sabah gürültüsü. Ve kilitli bir dükkânın içinde bir ceset.",
           "suspects": [
             {
@@ -10036,7 +10036,7 @@
               "isRevealed": true,
               "pointCost": 0,
               "title": "Kriminal Raporu",
-              "text": "Olay yeri raporu: Maktulün boynunda tel boğması veya teninde asit yanığı yoktu. Ölüm, kafatasına inen kare biçimli ve kütlece çok ağır bir pirinç darbesiyle gerçekleşmişti.",
+              "text": "Olay yeri uzmanları, maktulün boynunda tel boğması veya teninde kimyasal bir yanık bulamadı. Ancak kafatasındaki kare biçimli, küt ve ağır pirinç göçüğü, cinayet aletinin ne olduğunu haykırıyordu.",
               "grid_effect": "l2_vitrin ölüm yeri. Kare metal darbe → w1_terazi (kefe kare). w2 ve w3 eleniyor bu mekân için.",
               "mechanicType": "text",
               "deductionHint": "Vitrin + kare darbe → terazi. s1_ferdi + w1_terazi + l2_vitrin uyumlu."
@@ -10115,7 +10115,7 @@
               "isRevealed": false,
               "pointCost": 50,
               "title": "Zeynep'in Kasa Odasındaki Sesi",
-              "text": "Çarşının çapraz güvenlik kameraları, Rakip Kuyumcu Zeynep'in gece boyunca sadece arka kasa dairesinde hesapları incelediğini ve ön tarafa hiç geçmediğini belgeledi.",
+              "text": "Çarşının çapraz güvenlik kameraları, Rakip Kuyumcu Zeynep'in gece boyunca sadece arka çelik kapılı dairede hesapları incelediğini ve sokağı gören ön tarafa hiç geçmediğini belgeledi.",
               "grid_effect": "s2_zeynep + l1_kasa = ✓. s2 için l2 ve l3 = ✗.",
               "mechanicType": "text",
               "deductionHint": "Zeynep kasa odasında. Zeynep + w3_tel (kalan silah) = ✓."
@@ -10127,7 +10127,7 @@
               "isRevealed": false,
               "pointCost": 50,
               "title": "Asit İzi",
-              "text": "Atölyede kapağı açık unutulan asit şişesinin etrafında, Vergi Müfettişi Canan'ın kullandığı özel lateks eldivenlerin erimiş kalıntıları bulundu.",
+              "text": "İmalat bölümünde kapağı açık unutulan tehlikeli çözücü şişesinin etrafında, denetim için gelen müfettişin kullandığı özel lateks eldivenlerin erimiş siyah kalıntıları bulundu.",
               "grid_effect": "s3_canan + w2_asit = ✓. s1 ve s2 için w2 = ✗.",
               "mechanicType": "text",
               "deductionHint": "Canan + asit + atölye. Katil değil ama silahı o tuttu."
@@ -10188,7 +10188,7 @@
             "weaponId": "w1",
             "locationId": "l2"
           },
-          "solutionNarrative": "Çırak Ferdi, ortaklığının iptal edildiğini o gece öğrendi. Vitrinde maktulla karşılaştı, tartıştı ve terazi kefesiyle vurdu. Her şüpheli kendi silahı ve mekânıyla sahnede yerini aldı — çözüm tek yola gidiyordu."
+          "solutionNarrative": "Çırak Ferdi, 10 yıllık emeğinin ardından ortaklığının iptal edildiğini o gece öğrendi. Ana vitrinde ustasıyla karşılaştı, tartıştı ve o ağır terazi kefesiyle son noktayı koydu. Şüphelilerin konumu ve adli deliller, Ferdi'yi tam da o vitrinin önünde köşeye sıkıştırdı."
         },
         {
           "puzzleId": "yeni_c04",
@@ -10199,7 +10199,7 @@
           "stars": "★★☆☆☆",
           "gridSize": "3x3",
           "timeLimit": 540,
-          "story": "Nişantaşı'nın ipek ve şampanya kokan lüks atölyesinde, Paris defilesine saatler kala baş tasarımcı kanlar içinde bulundu. Yılların emeği olan o muazzam koleksiyonun hakları için atölyede bulunan üç kişi, mankenlerin cansız bakışları altında birbirini suçluyor.",
+          "story": "Nişantaşı'nın ipek ve şampanya kokan lüks atölyesinde, Paris defilesine saatler kala baş tasarımcı kanlar içinde bulundu. Yılların emeği olan o muazzam koleksiyonun hakları için atölyede bulunan üç kişi, cansız mankenlerin bakışları altında birbirini suçluyor.",
           "atmosphere": "Kumaş kokusu. Mankenler. Yarım kalmış dikiş. Ve koleksiyonun telif hakları.",
           "suspects": [
             {
@@ -10287,7 +10287,7 @@
               "isRevealed": true,
               "pointCost": 0,
               "title": "Adli Rapor",
-              "text": "Adli tıp: Maktulün vücudunda zehirli solvent veya küt bir manken ayağı ezilmesi yoktur. Cinayet, kumaş biçmek için kullanılan çok keskin ve pürüzsüz iki çelik bıçağın kapanmasıyla işlenmiştir.",
+              "text": "Adli tıp raporu, maktulün vücudunda zehirli bir solvent yanığı veya küt bir manken uzvunun ezici travması olmadığını; cinayetin profesyonel kumaş biçiminde kullanılan keskin çelik aletlerle işlendiğini ortaya koydu.",
               "grid_effect": "l1_atolye ölüm yeri. Keskin uzun alet → w1_makas. w2 ve w3 eleniyor bu mekân için.",
               "mechanicType": "text",
               "deductionHint": "Atölye + keskin alet = makas. Makas + atölye → s1_hande."
@@ -10299,7 +10299,7 @@
               "isRevealed": false,
               "pointCost": 50,
               "title": "Kapı Komşusu Güvenlik",
-              "text": "Gece bekçisinin tutanakları, yatırımcı Bülent'in sözleşme görüşmeleri için idari ofis kapısını içeriden kilitlediğini ve o odadan saatlerce çıkmadığını gösteriyor.",
+              "text": "Gece bekçisinin vardiya logları, yatırımcı Bülent'in sözleşme görüşmeleri için idari ofis kapısını içeriden kilitlediğini ve o elektronik kapıdan saatlerce çıkmadığını gösteriyordu.",
               "grid_effect": "s2_bulent + l2_ofis = ✓. s2 için l1 ve l3 = ✗.",
               "mechanicType": "text",
               "deductionHint": "Bülent ofisteydi. Ofis + Bülent → hangi silah? Kalan: w2_manken."
@@ -10311,7 +10311,7 @@
               "isRevealed": false,
               "pointCost": 50,
               "title": "Boya Odası Solvent İzi",
-              "text": "Eski ortak Sevgi'nin tırnak diplerinde ve nefesinde, yalnızca özel kumaş boyama odasında bulunan son derece ağır ve zehirli endüstriyel solvent kokusu tespit edildi.",
+              "text": "Eski ortak Sevgi'nin kıyafetlerinde ve tırnak diplerinde, yalnızca arka taraftaki özel üretim odasında bulunan son derece ağır ve baskın kimyasal boya kokusu tespit edildi.",
               "grid_effect": "s3_sevgi + l3_boya = ✓. s3 için l1 ve l2 = ✗. s3 + w3_boya = ✓.",
               "mechanicType": "text",
               "deductionHint": "Sevgi boya odasındaydı + solvent = w3_boya."
@@ -10408,18 +10408,18 @@
             "weaponId": "w1",
             "locationId": "l1"
           },
-          "solutionNarrative": "Hande, Paris defil programında adının olmadığını görünce 3 yıllık öfkesi patladı. Dikiş makasını kullandı. Her şüpheli kendi mekânına yerleşti, kendi silahını tuttu — çözüm tek yere işaret ediyordu."
+          "solutionNarrative": "Hande, Paris defilesi katalogunda kendi adının tamamen silindiğini görünce 3 yıllık öfkesi patladı. Elindeki o profesyonel dikiş makasını bu kez kumaş için değil, intikam için kullandı. Alibiler ve lokasyonlar, cinayeti onun ellerine teslim etti."
         },
         {
           "puzzleId": "yeni_c05",
-          "title": "Dağ Evinde Kar Altında",
+          "title": "Dağ Evi Kar Altında",
           "subtitle": "Uludağ, İzole Dağ Evi",
           "difficulty": 1,
           "difficultyLabel": "Çaylak",
           "stars": "★★☆☆☆",
           "gridSize": "3x3",
           "timeLimit": 540,
-          "story": "Uludağ'ı esir alan dondurucu tipi nedeniyle izole bir dağ evinde mahsur kalan dört kişiden biri sabaha uyanamadı. Elektriklerin kesik olduğu, dışarıya adım atmanın donarak ölmek anlamına geldiği bu ahşap hapishanede katil aralarında oturuyor.",
+          "story": "Uludağ'ı esir alan dondurucu bir kar fırtınası nedeniyle izole dağ evinde mahsur kalan dört kişiden biri sabaha uyanamadı. Telefonların çekmediği, dışarıya adım atmanın donarak ölmek anlamına geldiği bu ahşap hapishanede, katil şömine ateşinin karşısında kurbanını izlemişti.",
           "atmosphere": "Kar. Rüzgar. Şömine ateşi. Ve dışarı çıkmanın imkânsız olduğu bir ev.",
           "suspects": [
             {
@@ -10507,7 +10507,7 @@
               "isRevealed": true,
               "pointCost": 0,
               "title": "İlk Tespit",
-              "text": "Maktulün bedeninde şömine demiri eziği veya kar küreği travması bulunmamaktadır. Ölüm, uyku öncesi içilen sıcak suya sinsi bir şekilde karıştırılan ölümcül dozda bir tıbbi sedatiften kaynaklanmıştır.",
+              "text": "Otopsi ön bulguları, maktulün bedeninde şömine demiri eziği veya kar küreği travması bulunmadığını; ölümün, gece rutini olan sıcak içeceğe sinsi bir şekilde karıştırılan ölümcül dozda tıbbi bir bileşenden kaynaklandığını kanıtladı.",
               "grid_effect": "l2_yatak ölüm yeri. Dış yara yok → w1 ve w3 eleniyor. w2_ilac kesin.",
               "mechanicType": "text",
               "deductionHint": "Yatak + sedatif = uyku ilacı. Kim ilaca erişebilir? → Doktor Leyla."
@@ -10519,7 +10519,7 @@
               "isRevealed": false,
               "pointCost": 50,
               "title": "Rasim'in Beyanı",
-              "text": "Dağ evi sahibinin dışarıdaki jeneratörü onarmak için saatlerce dondurucu soğukta garajda uğraştığı, donmuş botları ve eldivenleriyle kanıtlanmıştır.",
+              "text": "Ev sahibinin, dışarıdaki arızalı jeneratörü onarmak için saatlerce dondurucu soğukta ve araçların arasında uğraştığı, buz tutmuş ağır botları ve eldivenlerindeki motor yağıyla mühürlendi.",
               "grid_effect": "s3_rasim + l3_garaj = ✓. s3 için l1 ve l2 = ✗. s3 + w3_kurek = ✓.",
               "mechanicType": "text",
               "deductionHint": "Rasim garajda + kürek. Artık o 3. eşleşmede."
@@ -10568,7 +10568,7 @@
               "isRevealed": false,
               "pointCost": 50,
               "title": "Selim'in Oturma Odası Gece Kaydı",
-              "text": "Evin güneş enerjili kamerasının son kaydı, Mimar Selim'in gece boyunca oturma odasındaki şöminenin başından ayrılmadığını net bir şekilde ortaya koydu.",
+              "text": "Evin güneş enerjisiyle çalışan yedek kamerasının son kaydı, mimarın gece boyunca oturma odasındaki deri koltuktan kalkmadığını ve sönen ateşi izlediğini net bir şekilde ortaya koydu.",
               "grid_effect": "s1_selim + l1_oturma = ✓. s1 için l2 ve l3 = ✗.",
               "mechanicType": "text",
               "deductionHint": "Selim oturma odasında. Leyla için kalan mekân: l2_yatak."
@@ -10648,7 +10648,7 @@
             "weaponId": "w2",
             "locationId": "l2"
           },
-          "solutionNarrative": "Doktor Leyla, 2 yıl önce aleyhine tanıklık eden maktulü fırtınanın sunduğu fırsatla susturdu. Çantasından sedatif aldı, gece içeceğine kattı. Selim oturma odasında, Rasim garajda sabitlendi — Leyla tek başına yatak odasındaydı."
+          "solutionNarrative": "Doktor Leyla, 2 yıl önce aleyhine tanıklık eden maktulü fırtınanın sunduğu o izole fırsatla susturdu. Çantasından çıkardığı o şifalı olması gereken sedatifi, gece içeceğine katarak intikamını aldı. Kamera kayıtları ve mekan tespitleri, onu yatak odasındaki tek şüpheli yaptı."
         }
       ]
     },

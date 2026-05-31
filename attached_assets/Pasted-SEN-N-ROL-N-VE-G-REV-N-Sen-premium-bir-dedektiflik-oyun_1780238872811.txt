@@ -1,0 +1,117 @@
+SENİN ROLÜN VE GÖREVİN:
+Sen premium bir dedektiflik oyunu olan "Faili Meçhul"ün Kıdemli Baş Geliştiricisisin. Sana aşağıda 10 adet "Çaylak" (Premium) vakasının YEPYENİ, edebi ve tamamen "DOLAYLI ÇIKARIM" mantığına dayanan metin verilerini veriyorum. 
+
+KIRMIZI ÇİZGİLER (GÜVENLİK ANAYASASI):
+1. Veritabanındaki `id`, `puzzleId`, `icon`, `solution`, `solvabilityMeta`, `timelineVerisi`, `sesMetni`, `parmakIziVerisi`, `mechanicType` gibi çalışan oyun ve sistem verilerine KESİNLİKLE DOKUNMA. Sadece sana verdiğim metin alanlarını GÜNCELLE.
+2. İpuçları her zaman BÜYÜK HARFLE başlar. Yazım kuralları kusursuzdur.
+3. Dosyayı baştan yaratma; mevcut JSON objelerindeki ilgili vakaları bul ve SADECE ilgili metin içeriklerini (`story`, `description`, `text`, `title`, `grid_effect`, `deductionHint`, `solutionNarrative`) bu premium halleriyle DEĞİŞTİR (Merge).
+
+AŞAĞIDAKİ VAKALARI BİREBİR GÜNCELLE:
+
+### BÖLÜM 1: İLK 5 VAKA (Standart Yapılı Premiumlar) ###
+
+1. "folklor-festivalinde-olum"
+"story": "Ankara'nın serin bir sonbahar akşamında, binlerce kişinin coşkuyla izlediği folklor festivalinin baş koordinatörü sahnede aniden yere yığıldı. Rengarenk sahne ışıklarının altında yaşanan bu trajedi, alkış seslerini keserken sahne arkasındaki karanlık rekabetin de üzerindeki perdeyi kaldırdı.",
+"suspects": [
+  { "id": "s1", "description": "Ana ekibe dahil edilmediği için aylardır kin güden ve kulislerde dolaşan hırslı sanatçı." },
+  { "id": "s2", "description": "Sahnenin tüm teknik ve elektriksel altyapısını santim santim bilen tecrübeli teknisyen." },
+  { "id": "s3", "description": "Festivalin bütçesi yüzünden maktulle ciddi krizler yaşayan ve yatırımlarını çekmekle tehdit eden yönetici." }
+],
+"weapons": [
+  { "id": "w1", "description": "Sanatçıların kişisel sularına karıştırıldığında kalbi saniyeler içinde durduran renksiz kimyasal damla." },
+  { "id": "w2", "description": "Sahne zeminindeki metal plakalara kasıtlı olarak yönlendirilen ve dokunulduğunda ölümcül şok yaratan ana akım." },
+  { "id": "w3", "description": "Kalabalık arasında fark edilmeden deriye temas ettirilebilen ince uçlu zehirli cerrahi iğne." }
+],
+"clues": [
+  { "id": "c1", "text": "Adli tabip, kurbanın vücudunda geniş çaplı doku yanıkları ve kas spazmları tespit etti; bu bulgular, doğrudan ana şebekeden çekilen kontrolsüz bir yüksek voltaj akımını işaret ediyordu.", "type": "forensic" },
+  { "id": "c2", "text": "Kriminal inceleme, güç kablolarındaki kasıtlı kesiklerin sadece dışarıdaki açık hava performans platformunda yapıldığını, kapalı odaların temiz olduğunu belirledi.", "type": "evidence" },
+  { "id": "c3", "text": "Gösteri boyunca sahne arkası logları, rakip sanatçının sadece mikser ve ışık panellerinin bulunduğu teknik odada tutulduğunu ve dışarı adım atmadığını kanıtladı.", "type": "witness" },
+  { "id": "c4", "text": "Sponsor temsilcisinin VIP çadırında imzaladığı faturaların saat damgaları, onun trajedi anında sahne alanından çok uzakta, müzisyenlerle kilitli bir toplantıda olduğunu doğruladı.", "type": "evidence" },
+  { "id": "c5", "text": "Açık sahneye giden ana akım hattında kurulan o kusursuz ve ölümcül 'kısa devre' köprüsü, amatör birinin yapamayacağı kadar ileri düzey bir mühendislik gerektiriyordu.", "type": "evidence" },
+  { "id": "c6", "text": "Ana şalter kutusunun iç kapağında, festivalin tüm teknik işleyişinden sorumlu olan o kişinin izole eldivenlerine ait taze yanık ve erime izleri bulundu.", "type": "evidence" }
+]
+
+2. "termal-otelde-supheli-vaka"
+"story": "Bursa'nın ormanlarla çevrili lüks termal otelinde, suların huzur veren şırıltısı ünlü bir şarkıcının son çığlığıyla kesildi. Yoğun buharın göz gözü görmez ettiği spa alanında, ihtişamlı bir hayat karanlık bir sırla son buldu.",
+"clues": [
+  { "id": "c1", "text": "İçeriden kilitlenmiş yoğun buharlı ahşap odanın duvarlarında tespit edilen çırpınış ve el baskısı izleri, kurbanın o dar ve cehennem gibi sıcak alanda nefessiz bırakıldığını kanıtlıyordu.", "type": "evidence" },
+  { "id": "c2", "text": "Açık yüzme havuzunun ıslak kenarlarında suya karışmadan kalmış mikroskobik sedatif tozları, bu sinsi planın kimyasal bir eylemden mekanik bir cinayete dönüştüğünü gösterdi.", "type": "evidence" },
+  { "id": "c3", "text": "Otel müdürünün olay gecesi boyunca ön bürodaki operasyonları yönettiği ve POS cihazlarından alınan kesintisiz işlem kayıtlarıyla resepsiyondan hiç ayrılmadığı saptandı.", "type": "witness" },
+  { "id": "c4", "text": "Otel sistemindeki dijital kart logları, rakip şarkıcının cinayet saatinden çok önce aromaterapi kabinine girdiğini ve sadece o alanda kaldığını teyit etti.", "type": "evidence" },
+  { "id": "c5", "text": "Lobideki güvenlik kameraları, gözleri kurbanı arayan takıntılı hayranın doğrudan en sıcak ve kilitlenebilir ahşap kabine yöneldiğini saniye saniye kaydetmişti.", "type": "evidence" },
+  { "id": "c6", "text": "Rakip şarkıcının o akşam binlerce kişinin izlediği açık hava konserinde sahne aldığı magazin basınının canlı yayınlarıyla belgelenerek şüpheleri ondan tamamen uzaklaştırdı.", "type": "witness" }
+]
+
+3. "koy-dugununde-trajedi"
+"story": "Doğu Anadolu'nun etrafı karlı dağlarla çevrili şenlikli bir köyünde, davul ve zurna sesleri geceyi delerken gelinin babası kanlar içinde bulundu. Halayların coşkusu, yıllanmış bir intikamın yankısını bastırmak için mükemmel bir kamuflajdı.",
+"clues": [
+  { "id": "c1", "text": "Maktulün bedeninde sinsi bir toksin belirtisi veya yakın mesafeli bir kesik izi yoktu; göğüs kafesindeki geniş ve ağır saçma tahribatı, tetiğin metrelerce uzaktan çekildiğini kanıtlıyordu.", "type": "forensic" },
+  { "id": "c2", "text": "Jandarma incelemesi, kan izlerinin ve barut kokusunun aydınlık köy meydanında değil; köyün en karanlık, en ıssız noktası olan kerpiç yapılı hayvan barınağının hemen arkasında toplandığını gösterdi.", "type": "witness" },
+  { "id": "c3", "text": "Husumetli olduğu bilinen damadın, olay saatinde yüzlerce akrabasıyla birlikte devasa ışıklı çadırda halay başı çektiği ve oradan bir an olsun ayrılmadığı sayısız şahitle doğrulandı.", "type": "witness" },
+  { "id": "c4", "text": "Şehirden gelen yabancı fotoğrafçının, o kritik dakikalarda sadece meydandaki ateşin etrafında portre çekimleri yaptığı dijital makinesindeki silinmez zaman damgalarıyla kesinleşti.", "type": "evidence" },
+  { "id": "c5", "text": "Köyün yaşlıları, maktulle yıllardır kan davalı bir arazi kavgası olan ihtiyar adamın, düğün alanından gizlice sıvışıp karanlık ahır bölgesine doğru tek başına ilerlediğini yeminle itiraf ettiler.", "type": "direct" },
+  { "id": "c6", "text": "Ahırın arkasındaki çamurlu zeminde bulunan boş kovanın ateşleme izi, köyün o yaşlı yöneticisinin evindeki duvarda asılı duran uzun namlulu silahın balistik raporuyla %100 eşleşti.", "type": "evidence" }
+]
+
+4. "uskudarda-kayip-vapur"
+"story": "Boğaz'ın buz gibi gri sisleri arasına karışan ilk sabah vapurunda, üst düzey bir yönetici bir daha inmemek üzere ortadan kayboldu. Dalgaların sesi ve martıların çığlıkları, denizin ortasında işlenen bu kusursuz cinayetin tek sessiz tanığıydı.",
+"clues": [
+  { "id": "c1", "text": "Kurbanın boynundaki derin ve kalın sürtünme izleri, endüstriyel bir duman zehirlenmesini veya ağır metal darbesini değil; gemileri iskeleye sabitleyen son derece kalın ve pürüzlü bir sentetik kordon baskısını işaret ediyordu.", "type": "evidence" },
+  { "id": "c2", "text": "Güvenlik kameraları, mücadelenin yolcuların doluştuğu iskelede veya deniz manzaralı açık teraslarda değil; yalnızca yetkili personelin girebildiği, sağır edici motor sesleriyle dolu alt katmanlarda yaşandığını saptadı.", "type": "evidence" },
+  { "id": "c3", "text": "Kaptanın seyir defteri ve köprü üstü güvenlik logları, yılların emektar kaptanının yolculuk boyunca dümen başından bir saniye bile ayrılmadığını kesin olarak teyit etti.", "type": "witness" },
+  { "id": "c4", "text": "İş seyahati yapan yolcu İrem'in, turnikelerden geçtikten sonra deniz tutması endişesiyle vapura hiç binmeyip iskeledeki bekleme salonunda kaldığı güvenlik kayıtlarıyla ispatlandı.", "type": "witness" },
+  { "id": "c5", "text": "Alt kattaki gürültülü teknik odaya inen çelik kapının elektronik kilidini açan dijital kod, yalnızca o sabah güvertede bilet kesen ve yolcuları yönlendiren o personele zimmetliydi.", "type": "direct" },
+  { "id": "c6", "text": "Makine dairesinin yağlı zemininde kopmuş olarak bulunan kalın naylon lifleri ve biletçi Muzaffer'in avuç içlerindeki taze kenevir yanıkları, karanlık gerçeği su yüzüne çıkardı.", "type": "evidence" }
+]
+
+5. "sultanahmette-turist-tuzagi"
+"story": "Tarihi yarımadanın binlerce yıllık sırlarını barındıran taş sokaklarında, yalnız bir turist ağlayan sütunların dibinde bilincini kaybetmiş halde bulundu. Değerli eşyaları yerindeydi; bu sıradan bir gasp değil, hedefe yönelik ve son derece sinsi bir hamleydi.",
+"clues": [
+  { "id": "c1", "text": "Hastaneden alınan kan tahlillerinde biber gazı veya künt bir demir travması bulgusuna rastlanmadı; kurban doğrudan sıvısına karıştırılan, kokusuz ve anında felç eden bir medikal çözeltiyle etkisiz hale getirilmişti.", "type": "evidence" },
+  { "id": "c2", "text": "Polis köpekleri ve olay yeri inceleme, olayın açık havadaki anıtların etrafında veya tarihi bedestenin vitrinli geçitlerinde değil; doğrudan yerin altındaki o rutubetli, loş ve ıslak taş yapının içinde gerçekleştiğini belirledi.", "type": "evidence" },
+  { "id": "c3", "text": "Hipodrom meydanını gören MOBESE kameraları, genç sokak satıcısının tüm gün boyunca anıtların etrafındaki arabasından hiç ayrılmadığını mühürlü kayıtlarla doğruladı.", "type": "witness" },
+  { "id": "c4", "text": "Bağımsız fotoğrafçının olay saatlerinde Eski Bedesten'in çatısında panoramik çekimler yaptığı, makinesindeki silinemez RAW formatlı zaman damgalarıyla şüpheye yer bırakmayacak şekilde kanıtlandı.", "type": "witness" },
+  { "id": "c5", "text": "Rehberlik acentesinin rotasına göre, turistin o kritik saatlerde sadece yetkili tur rehberiyle birlikte yeraltı yapılarını gezmek üzere bilet kullandığı ve yalnız olmadığı tespit edildi.", "type": "direct" },
+  { "id": "c6", "text": "Sarnıcın buz gibi sularının hemen kenarında, loş ışıkta parlayan o küçük şüpheli şişenin üzerinde, turu yöneten profesyonel rehberin işaret parmağına ait taze bir ter izi bulundu.", "type": "forensic" }
+]
+
+### BÖLÜM 2: SON 5 VAKA (İnteraktif Veri Tabanlı Premiumlar) ###
+(Not: Sadece metinleri güncelliyoruz, JSON yapıları ve mekanikler %100 korunuyor.)
+
+6. "yeni_c01" (Bebek Adası'nda Kan)
+"story": "Büyükada'nın en yüksek tepesine kurulan ve çam ağaçlarıyla çevrili asırlık ahşap köşkte, kararlarıyla tanınan emekli bir hakim ölü bulundu. Adaya araç girişi yasaktı; fırtınalı bu gece köşkten kimse çıkmamıştı. Katil, gıcırdayan tahtaların üzerinde aramızda dolaşıyor.",
+Clue 1 (c1) text: "Adli Tıp raporuna göre, maktulün yüzündeki ağır morarmalar ve ciğerlerindeki havasızlık, kimyasal bir toksini veya sert bir porselen darbesini değil; uyku esnasında yumuşak ama ölümcül bir baskıyla nefesinin kesildiğini kanıtlıyordu."
+Clue 2 (c2) text: "Faytoncu Rıza'nın ifadesi netti: 'Sabahın köründe köşkün önünden geçerken, eski sekreterin alt kattaki mermer tezgahta çay tepsisini büyük bir telaşla yıkadığını bizzat gördüm.'"
+Clue 3 (c3) text: "Köşkün dış güvenlik kameraları, Damat Tarık'ın gece boyunca zemin kattaki kitap dolu odanın verandasında sigara içtiğini ve üst kata giden merdivenlere hiç yaklaşmadığını mühürledi."
+Clue 5 (c5) text: "Mutfakta bulunan fincanın dibinde, doğada nadir bulunan bir alkaloit izi saptandı. Eski çalışanın geçmişteki eczane stajı, bu sinsi botaniği nereden bulduğunu ve nasıl hazırladığını açıklıyordu."
+Solution Narrative: "Sekreter Nilgün, 20 yıllık emeğine karşılık hiçbir şey alamamasının öfkesiyle gece hakimin çayına o sinsi ilacı kattı. Hakim uyuyakaldı, ancak bir daha uyanmadı. Çapraz eleme ve kamera logları, sabriyi yatak odasında bırakırken, zehri hazırlayan eli kesin olarak Nilgün'e bağladı."
+
+7. "yeni_c02" (Çarşı Hamamında Sessiz Ölüm)
+"story": "Bursa'nın tarihi kapalı çarşısındaki 600 yıllık kubbeli hamamda, kurnalarından akan suyun sesi dehşet verici bir sessizlikle kesildi. Ünlü tekstil tüccarı, yoğun buharın gizlediği o mermer göbek taşının üzerinde cansız yatıyordu. Dışarıdan kimsenin girmediği bu sıcak cehennemde sadece üç nefes var.",
+Clue 1 (c1) text: "Adli muayene; kafatasına inen darbenin düz bir mermer kenarına veya boğucu bir keseye değil, tamamen silindirik, kavisli ve kütlece çok ağır bir metale ait olduğunu kanıtladı."
+Clue 2 (c2) text: "Berber esnafının ifadesine göre; rakip tüccar Fikri Bey, sıcaktan bunaldığı için tüm vaktini sadece tahta bölmeli kuru alanda geçirmiş, buharlı yıkanma merkezine adım dahi atmamıştı."
+Clue 4 (c4) text: "Hamam ustasının olay saatinde sıcak su depolarının bulunduğu arka loş alanda sızıntı tamiratı yaptığı, borulardaki taze ve hala sıcak lehim izleriyle ispatlandı."
+Solution Narrative: "Muhasebeci Dilara, milyonluk zimmetinin ifşa edileceğini anladığında, maktulü o yoğun buharın ortasında ağır bir bakır su kovasıyla susturdu. Tüm şüphelilerin bulunduğu konumlar netleştiğinde, göbek taşındaki silindirik izin tek bir sahibi kalmıştı."
+
+8. "yeni_c03" (Kuyumcunun Altın Sırrı)
+"story": "Kemeraltı'nın altın sarısı vitrinlerinin ardında, kapıları içeriden çoklu kilitlerle sürgülenmiş asırlık kuyumcu dükkanında usta ölü bulundu. Kasadaki milyonlarca liralık altına dokunulmamıştı. Bu bir hırsızlık değil, yılların biriktirdiği saf bir öfkenin patlamasıydı.",
+Clue 1 (c1) text: "Olay yeri uzmanları, maktulün boynunda tel boğması veya teninde kimyasal bir yanık bulamadı. Ancak kafatasındaki kare biçimli, küt ve ağır pirinç göçüğü, cinayet aletinin ne olduğunu haykırıyordu."
+Clue 4 (c4) text: "Çarşının çapraz güvenlik kameraları, Rakip Kuyumcu Zeynep'in gece boyunca sadece arka çelik kapılı dairede hesapları incelediğini ve sokağı gören ön tarafa hiç geçmediğini belgeledi."
+Clue 5 (c5) text: "İmalat bölümünde kapağı açık unutulan tehlikeli çözücü şişesinin etrafında, denetim için gelen müfettişin kullandığı özel lateks eldivenlerin erimiş siyah kalıntıları bulundu."
+Solution Narrative: "Çırak Ferdi, 10 yıllık emeğinin ardından ortaklığının iptal edildiğini o gece öğrendi. Ana vitrinde ustasıyla karşılaştı, tartıştı ve o ağır terazi kefesiyle son noktayı koydu. Şüphelilerin konumu ve adli deliller, Ferdi'yi tam da o vitrinin önünde köşeye sıkıştırdı."
+
+9. "yeni_c04" (Moda Tasarımcısının Son Koleksiyonu)
+"story": "Nişantaşı'nın ipek ve şampanya kokan lüks atölyesinde, Paris defilesine saatler kala baş tasarımcı kanlar içinde bulundu. Yılların emeği olan o muazzam koleksiyonun hakları için atölyede bulunan üç kişi, cansız mankenlerin bakışları altında birbirini suçluyor.",
+Clue 1 (c1) text: "Adli tıp raporu, maktulün vücudunda zehirli bir solvent yanığı veya küt bir manken uzvunun ezici travması olmadığını; cinayetin profesyonel kumaş biçiminde kullanılan keskin çelik aletlerle işlendiğini ortaya koydu."
+Clue 2 (c2) text: "Gece bekçisinin vardiya logları, yatırımcı Bülent'in sözleşme görüşmeleri için idari ofis kapısını içeriden kilitlediğini ve o elektronik kapıdan saatlerce çıkmadığını gösteriyordu."
+Clue 3 (c3) text: "Eski ortak Sevgi'nin kıyafetlerinde ve tırnak diplerinde, yalnızca arka taraftaki özel üretim odasında bulunan son derece ağır ve baskın kimyasal boya kokusu tespit edildi."
+Solution Narrative: "Hande, Paris defilesi katalogunda kendi adının tamamen silindiğini görünce 3 yıllık öfkesi patladı. Elindeki o profesyonel dikiş makasını bu kez kumaş için değil, intikam için kullandı. Alibiler ve lokasyonlar, cinayeti onun ellerine teslim etti."
+
+10. "yeni_c05" (Dağ Evinde Kar Altında)
+"story": "Uludağ'ı esir alan dondurucu bir kar fırtınası nedeniyle izole dağ evinde mahsur kalan dört kişiden biri sabaha uyanamadı. Telefonların çekmediği, dışarıya adım atmanın donarak ölmek anlamına geldiği bu ahşap hapishanede, katil şömine ateşinin karşısında kurbanını izlemişti.",
+Clue 1 (c1) text: "Otopsi ön bulguları, maktulün bedeninde şömine demiri eziği veya kar küreği travması bulunmadığını; ölümün, gece rutini olan sıcak içeceğe sinsi bir şekilde karıştırılan ölümcül dozda tıbbi bir bileşenden kaynaklandığını kanıtladı."
+Clue 2 (c2) text: "Ev sahibinin, dışarıdaki arızalı jeneratörü onarmak için saatlerce dondurucu soğukta ve araçların arasında uğraştığı, buz tutmuş ağır botları ve eldivenlerindeki motor yağıyla mühürlendi."
+Clue 5 (c5) text: "Evin güneş enerjisiyle çalışan yedek kamerasının son kaydı, mimarın gece boyunca oturma odasındaki deri koltuktan kalkmadığını ve sönen ateşi izlediğini net bir şekilde ortaya koydu."
+Solution Narrative: "Doktor Leyla, 2 yıl önce aleyhine tanıklık eden maktulü fırtınanın sunduğu o izole fırsatla susturdu. Çantasından çıkardığı o şifalı olması gereken sedatifi, gece içeceğine katarak intikamını aldı. Kamera kayıtları ve mekan tespitleri, onu yatak odasındaki tek şüpheli yaptı."
+
+GÜNCELLEME İŞLEMİNİ DOSYA BÜTÜNLÜĞÜNÜ (JSON KEYLERİNİ VE ID'LERİ) BOZMADAN, SADECE MERGE EDEREK TAMAMLA VE BUILD AL.
