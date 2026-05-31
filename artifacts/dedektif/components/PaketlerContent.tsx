@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useRef, useEffect } from "react";
 import {
   ActivityIndicator,
   Alert,
@@ -32,6 +32,8 @@ if (Platform.OS === "android" && UIManager.setLayoutAnimationEnabledExperimental
 const PRIVACY_URL = "https://doc-hosting.flycricket.io/faili-mechul-privacy-policy/e9ef8c9c-2e2e-486c-b5ae-70d067237627/privacy";
 const TERMS_URL = "https://doc-hosting.flycricket.io/faili-mechul-terms-of-use/4f269815-97dc-472b-b9a5-d57f8e1c8673/terms";
 
+let _embeddedScrollY = 0;
+
 export default function PaketlerContent({ embedded = false }: { embedded?: boolean }) {
   const colors = useColors();
   const insets = useSafeAreaInsets();
@@ -41,9 +43,21 @@ export default function PaketlerContent({ embedded = false }: { embedded?: boole
 
   const totalPuzzles = PURCHASABLE_PACKS.reduce((sum, pack) => sum + getRawPuzzlesForPack(pack.packId).length, 0);
 
+  const scrollRef = useRef<ScrollView>(null);
+
   const [expandedPack, setExpandedPack] = useState<string | null>(null);
   const [purchasing, setPurchasing] = useState<string | null>(null);
   const [restoring, setRestoring] = useState(false);
+
+  useEffect(() => {
+    if (!embedded) return;
+    const savedY = _embeddedScrollY;
+    if (savedY > 0) {
+      setTimeout(() => {
+        scrollRef.current?.scrollTo({ y: savedY, animated: false });
+      }, 50);
+    }
+  }, [embedded]);
 
   const togglePack = useCallback((packId: string) => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
@@ -90,12 +104,15 @@ export default function PaketlerContent({ embedded = false }: { embedded?: boole
 
   return (
     <ScrollView
+      ref={scrollRef}
       style={[styles.container, { backgroundColor: colors.background }]}
       contentContainerStyle={[
         styles.content,
         { paddingTop: paddingTop + 8, paddingBottom },
       ]}
       showsVerticalScrollIndicator={false}
+      scrollEventThrottle={16}
+      onScroll={embedded ? (e) => { _embeddedScrollY = e.nativeEvent.contentOffset.y; } : undefined}
     >
       <Text style={[styles.screenTitle, { color: colors.primary }]}>
         Premium Paketler
