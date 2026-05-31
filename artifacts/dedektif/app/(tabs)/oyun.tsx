@@ -455,6 +455,7 @@ export default function VakalarScreen() {
   const invalidateGameRef = useRef(invalidateGame);
   const playerIdRef = useRef(playerId);
   const listScrollRef = useRef<ScrollView>(null);
+  const listScrollY = useRef<number>(0);
   useEffect(() => { gameStateRef.current = gameState; }, [gameState]);
   useEffect(() => { invalidateGameRef.current = invalidateGame; }, [invalidateGame]);
   useEffect(() => { playerIdRef.current = playerId; }, [playerId]);
@@ -539,7 +540,10 @@ export default function VakalarScreen() {
           if (launchedFromHome) {
             router.navigate("/");
           } else {
-            setListTab("standart");
+            const savedY = listScrollY.current;
+            setTimeout(() => {
+              listScrollRef.current?.scrollTo({ y: savedY, animated: false });
+            }, 0);
           }
         }
         return true; // Geri tuşunu biz işledik, React Navigation işlemesin
@@ -560,7 +564,10 @@ export default function VakalarScreen() {
     if (launchedFromHome) {
       router.navigate("/");
     } else {
-      setListTab("standart");
+      const savedY = listScrollY.current;
+      setTimeout(() => {
+        listScrollRef.current?.scrollTo({ y: savedY, animated: false });
+      }, 0);
     }
   };
 
@@ -821,6 +828,8 @@ export default function VakalarScreen() {
                 },
               ]}
               showsVerticalScrollIndicator={false}
+              scrollEventThrottle={16}
+              onScroll={(e) => { listScrollY.current = e.nativeEvent.contentOffset.y; }}
             >
               {listTab === "standart" ? (
                 <>
