@@ -1172,9 +1172,9 @@ export const PUZZLES: Puzzle[] = [
     story:
       "Doğu Anadolu'nun etrafı karlı dağlarla çevrili şenlikli bir köyünde, davul ve zurna sesleri geceyi delerken gelinin babası kanlar içinde bulundu. Halayların coşkusu, yıllanmış bir intikamın yankısını bastırmak için mükemmel bir kamuflajdı.",
     suspects: [
-      { id: "s1", name: "Damat", description: "Maktulle düğün öncesi büyük bir aile krizi yaşayan, yüzlerce akrabasıyla birlikte eğlencenin merkezinde olması beklenen gergin damat.", icon: "person" },
-      { id: "s2", name: "Köy Muhtarı", description: "Kurbanla sınır tarlaları yüzünden yıllardır kan davalı olan, evinde uzun namlulu silahlar bulunduran, otoriter ve öfkeli ihtiyar köy yöneticisi.", icon: "elderly" },
-      { id: "s3", name: "Düğün Fotoğrafçısı", description: "Köyün yabancısı olan, sürekli dijital ekipmanlarıyla anı yakalayan ve kalabalıktan uzak durmayı tercih eden sessiz fotoğrafçı.", icon: "face" },
+      { id: "s1", name: "Damat", description: "Maktulle düğün öncesi büyük bir aile krizi yaşayan, yüzlerce akrabasıyla birlikte eğlencenin merkezinde olması beklenen gergin damat.", icon: "noun-koy-dugunu-damat-avatar.png" },
+      { id: "s2", name: "Köy Muhtarı", description: "Kurbanla sınır tarlaları yüzünden yıllardır kan davalı olan, evinde uzun namlulu silahlar bulunduran, otoriter ve öfkeli ihtiyar köy yöneticisi.", icon: "noun-koy-dugunu-muhtar-avatar.png" },
+      { id: "s3", name: "Düğün Fotoğrafçısı", description: "Köyün yabancısı olan, sürekli dijital ekipmanlarıyla anı yakalayan ve kalabalıktan uzak durmayı tercih eden sessiz fotoğrafçı.", icon: "noun-koy-dugunu-fotografci-avatar.png" },
     ],
     weapons: [
       { id: "w1", name: "Av Tüfeği", description: "Uzak mesafeden hedefini bulduğunda göğüs kafesinde devasa ve geri dönülmez saçma tahribatları yaratan ağır namlulu av tüfeği.", icon: "sports" },
