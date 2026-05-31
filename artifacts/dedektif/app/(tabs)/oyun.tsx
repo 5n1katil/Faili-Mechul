@@ -87,6 +87,7 @@ const _accordionExpanded = new Map<string, boolean>();
 
 function AccordionSection({
   title,
+  storeKey,
   count,
   badge,
   defaultExpanded = true,
@@ -98,6 +99,7 @@ function AccordionSection({
   children,
 }: {
   title: string;
+  storeKey?: string;
   count: number;
   badge?: React.ReactNode;
   defaultExpanded?: boolean;
@@ -110,15 +112,16 @@ function AccordionSection({
 }) {
   const colors = useColors();
   const color = accentColor ?? colors.primary;
+  const key = storeKey ?? title;
   const [expanded, setExpanded] = useState(() =>
-    _accordionExpanded.has(title) ? _accordionExpanded.get(title)! : defaultExpanded
+    _accordionExpanded.has(key) ? _accordionExpanded.get(key)! : defaultExpanded
   );
 
   const toggle = () => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     setExpanded((v) => {
       const next = !v;
-      _accordionExpanded.set(title, next);
+      _accordionExpanded.set(key, next);
       return next;
     });
   };
@@ -240,9 +243,11 @@ const DIFFICULTY_ORDER: Difficulty[] = ["caylak", "dedektif", "baskomiser"];
 function DifficultySubGroups({
   puzzles,
   renderCard,
+  keyPrefix = "",
 }: {
   puzzles: (typeof PUZZLES)[number][];
   renderCard: (puzzle: (typeof PUZZLES)[number], groupIndex: number) => React.ReactNode;
+  keyPrefix?: string;
 }) {
   return (
     <>
@@ -258,6 +263,7 @@ function DifficultySubGroups({
           <AccordionSection
             key={diff}
             title={getDifficultyLabel(diff as Difficulty)}
+            storeKey={`${keyPrefix}${diff}`}
             count={group.length}
             accentColor={color}
             icon={diffIcon}
@@ -858,6 +864,7 @@ export default function VakalarScreen() {
                       >
                         <DifficultySubGroups
                           puzzles={activeFree}
+                          keyPrefix="free-"
                           renderCard={(puzzle, i) => (
                             <PuzzleCard
                               key={puzzle.id}
@@ -881,6 +888,7 @@ export default function VakalarScreen() {
                         >
                           <DifficultySubGroups
                             puzzles={activePremium}
+                            keyPrefix="premium-"
                             renderCard={(puzzle, i) => (
                               <PuzzleCard
                                 key={puzzle.id}
@@ -904,6 +912,7 @@ export default function VakalarScreen() {
                         >
                           <DifficultySubGroups
                             puzzles={premiumPuzzles}
+                            keyPrefix="locked-"
                             renderCard={(puzzle, i) => (
                               <PuzzleCard
                                 key={puzzle.id}
@@ -943,6 +952,7 @@ export default function VakalarScreen() {
                   ) : (
                     <DifficultySubGroups
                       puzzles={completedPuzzles}
+                      keyPrefix="completed-"
                       renderCard={(puzzle, i) => {
                         const stats = playStatsForPuzzle(puzzle.id);
                         return (
