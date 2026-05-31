@@ -9537,22 +9537,22 @@
               "id": "s1",
               "name": "Damadı Tarık",
               "icon": "noun-cem-bey-avatar.png",
-              "description": "Hakimin kızıyla evli. Miras anlaşmazlığında mahkemede kaybetmişti.",
-              "detail": "42 yaşında, hukuk mezunu, soğukkanlı."
+              "description": "Hakimin kızıyla evli olan, ancak miras ve arazi anlaşmazlıkları yüzünden mahkemelerde kaybetmiş, köşke zorunlu misafir gelmiş soğukkanlı damat.",
+              "detail": "42 yaşında, hukuk eğitimi almış, sürekli plan yapan zeki bir figür."
             },
             {
               "id": "s2",
               "name": "Eski Sekreteri Nilgün",
               "icon": "noun-hizmetci-hacer-avatar.png",
-              "description": "20 yıl çalıştı, emekliliğinde hiçbir şey verilmedi.",
-              "detail": "58 yaşında, kırık kalpli, ama bunu belli etmez."
+              "description": "Maktule 20 yıl boyunca sadakatle hizmet etmiş ancak emekliliğinde bir kuruş bile tazminat alamamış, botanik bilgisi yüksek eski sekreter.",
+              "detail": "58 yaşında, kırık kalpli, eski bir eczane kalfası, duygularını iyi gizler."
             },
             {
               "id": "s3",
               "name": "Komşu Avukat Sabri",
               "icon": "noun-ortak-sabri-bey-avatar.png",
-              "description": "Hakimle eski dava husumetleri. O gece köşkte misafirdi.",
-              "detail": "65 yaşında, inatçı, haklı olduğuna inanır."
+              "description": "Hakimle eski dava husumetleri yüzünden yıllardır sürtüşen, o fırtınalı gece adada mahsur kaldığı için köşkte kalmak zorunda olan komşu avukat.",
+              "detail": "65 yaşında, inatçı, kendi doğrularından asla taviz vermeyen sert bir adam."
             }
           ],
           "weapons": [
@@ -9560,19 +9560,19 @@
               "id": "w1",
               "name": "Zehirli Çay",
               "icon": "🫖",
-              "description": "Gece içilen bitkisel çaya karıştırılan alkaloiit."
+              "description": "Gece içilen bitkisel çaya ustaca karıştırılmış, doğada nadir bulunan ve kalbi yavaşça durduran botanik bir uyku otu ekstresi."
             },
             {
               "id": "w2",
               "name": "Antika Vazo",
               "icon": "🏺",
-              "description": "Hakimin koleksiyonundan ağır Osmanlı vazosu."
+              "description": "Hakimin antika koleksiyonuna ait, kafaya indirildiğinde kafatasını paramparça edecek ağırlıkta, paha biçilemez devasa Osmanlı vazosu."
             },
             {
               "id": "w3",
               "name": "Yastık Boğması",
               "icon": "🛏️",
-              "description": "Uyku sırasında yüz üstü bastırma."
+              "description": "Uyku sırasında yüz üstü bastırılarak kurbanın ciğerlerine giden havayı kesmek için kullanılan işlemeli, ağır köşk yastığı."
             }
           ],
           "locations": [
@@ -9580,19 +9580,19 @@
               "id": "l1",
               "name": "Kütüphane",
               "icon": "📚",
-              "description": "Zemin kat kütüphanesi, kitap dolu raflar."
+              "description": "Zemin katta bulunan, tavana kadar uzanan kitaplarla dolu, antika eserlerin sergilendiği ve verandalı camlara sahip kütüphane odası."
             },
             {
               "id": "l2",
               "name": "Yatak Odası",
               "icon": "🛏️",
-              "description": "Üst kat, denize bakan yatak odası."
+              "description": "Üst katta yer alan, fırtınalı denize bakan, kurbanın dinlenmek için çekildiği sessiz ve izole ana yatak odası."
             },
             {
               "id": "l3",
               "name": "Mutfak",
               "icon": "🍳",
-              "description": "Zemin kat mutfağı, çay demleme alanı."
+              "description": "Zemin katta arka bahçeye açılan, köşk sakinlerine çay ve yemek hazırlanan, tezgahları şifalı otlarla dolu mutfak alanı."
             }
           ],
           "solution_table": {
@@ -9622,7 +9622,7 @@
               "text": "Adli Tıp raporuna göre, maktulün yüzündeki ağır morarmalar ve ciğerlerindeki havasızlık, kimyasal bir toksini veya sert bir porselen darbesini değil; uyku esnasında yumuşak ama ölümcül bir baskıyla nefesinin kesildiğini kanıtlıyordu.",
               "grid_effect": "w1_cay eleniyor (silah zehir değil). w3_yastik + l2_yatak olası.",
               "mechanicType": "text",
-              "deductionHint": "Silah yastık boğması. Mekan yatak odası. → s3_sabri çözüm adayı."
+              "deductionHint": "Yumuşak ve ölümcül baskı = Yastık. Yastık nerededir? → Yatak Odası."
             },
             {
               "id": "c2",
@@ -9634,7 +9634,7 @@
               "text": "Faytoncu Rıza'nın ifadesi netti: 'Sabahın köründe köşkün önünden geçerken, eski sekreterin alt kattaki mermer tezgahta çay tepsisini büyük bir telaşla yıkadığını bizzat gördüm.'",
               "grid_effect": "Nilgün mutfaktaydı → s2_nilgun + l3_mutfak = ✓",
               "mechanicType": "text",
-              "deductionHint": "Nilgün mutfaktaydı. Hangi silah mutfakla ilişkili? → w1_cay"
+              "deductionHint": "Sekreter Nilgün + Mutfak + Çay Tepsisi. Sekreterin mekanı ve aracı belli oldu."
             },
             {
               "id": "c3",
@@ -9646,7 +9646,7 @@
               "text": "Köşkün dış güvenlik kameraları, Damat Tarık'ın gece boyunca zemin kattaki kitap dolu odanın verandasında sigara içtiğini ve üst kata giden merdivenlere hiç yaklaşmadığını mühürledi.",
               "grid_effect": "s1_tarik + l2_yatak = ✗. Tarık yatak odasına girmedi.",
               "mechanicType": "text",
-              "deductionHint": "Tarık yatak odasında değildi. Sabri ise..."
+              "deductionHint": "Damat Tarık + Zemin Kat Kütüphanesi. Üst kata çıkmamış, yatak odasında değil."
             },
             {
               "id": "c4",
@@ -9682,7 +9682,7 @@
               "text": "Mutfakta bulunan fincanın dibinde, doğada nadir bulunan bir alkaloit izi saptandı. Eski çalışanın geçmişteki eczane stajı, bu sinsi botaniği nereden bulduğunu ve nasıl hazırladığını açıklıyordu.",
               "grid_effect": "w1_cay → s2_nilgun bağlantısı güçlendi. s2 + w1 = ✓ olası.",
               "mechanicType": "text",
-              "deductionHint": "Nilgün'ün botanik bilgisi + mutfak konumu → w1_cay + l3_mutfak = Nilgün."
+              "deductionHint": "Eczane geçmişi olan sekreter Nilgün + Zehirli Çay."
             },
             {
               "id": "c6",
@@ -9746,22 +9746,22 @@
               "id": "s1",
               "name": "Kumaş Tüccarı Fikri Bey",
               "icon": "noun-tuccar-vehbi-avatar.png",
-              "description": "Maktulün en büyük rakibi. İpek tekelini paylaşmak zorundaydılar.",
-              "detail": "55 yaşında, geniş göbekli, şeker hastalığı var."
+              "description": "Maktulün ipek pazarındaki en büyük rakibi olan, rekabeti hamam duvarlarına kadar taşıyan, kilolu ve nefes darlığı çeken hırslı tüccar.",
+              "detail": "55 yaşında, kalın ve kısa parmaklı, geniş göbekli, sıcağa dayanamayan bir yapısı var."
             },
             {
               "id": "s2",
               "name": "Hamamcı Nuri Usta",
               "icon": "noun-vahap-amca-avatar.png",
-              "description": "50 yıldır hamam işletiyor. Maktul kira artışına itiraz etmişti.",
-              "detail": "72 yaşında, güçlü eller, gözleri zayıf."
+              "description": "Maktulün fahiş kira artışlarına itiraz eden, yarım asırdır bu hamamın her taşını ezbere bilen, güçlü ellere sahip yaşlı işletmeci.",
+              "detail": "72 yaşında, devasa ve nasırlı ellere sahip, gözleri zayıf ama kolları kuvvetli."
             },
             {
               "id": "s3",
               "name": "Muhasebeci Dilara",
               "icon": "noun-nazik-hanim-avatar.png",
-              "description": "Maktulün hesaplarında 800.000 TL zimmet tespit etmiş — ama henüz söylememişti.",
-              "detail": "38 yaşında, düzgün, sessiz ama sırrı var."
+              "description": "Maktulün şirket hesaplarında kendi zimmetine geçirdiği devasa açığı saklamaya çalışan, dışarıdan sakin görünen zarif muhasebeci kadın.",
+              "detail": "38 yaşında, ince ve küçük ellere sahip, sessiz ama sırlarla dolu."
             }
           ],
           "weapons": [
@@ -9769,19 +9769,19 @@
               "id": "w1",
               "name": "Kaynar Su Kovası",
               "icon": "♨️",
-              "description": "Hamamda kullanılan doldurulabilir büyük bakır kova."
+              "description": "Sıcak suları kurnalardan taşımak için kullanılan, kafaya indiğinde silindirik bir çukur bırakan ağır, kulplu bakır hamam kovası."
             },
             {
               "id": "w2",
               "name": "Sabunluk Taşı",
               "icon": "🪨",
-              "description": "Mermer sabunluk köşesinin kırık parçası."
+              "description": "Eski mermer kurnalardan kopmuş, düz bir satıha sahip, ağır ve keskin kenarlı ölümcül sabunluk taşı."
             },
             {
               "id": "w3",
               "name": "Kese Bezi Boğması",
               "icon": "🧤",
-              "description": "Hamamcı kesesiyle boğma — çok güçlü ele gerektirir."
+              "description": "Hamamcıların kullandığı, ıslatılıp bir boyuna dolandığında asla kopmayan ve boğucu bir güç gerektiren özel dokuma ipek kese bezi."
             }
           ],
           "locations": [
@@ -9789,19 +9789,19 @@
               "id": "l1",
               "name": "Göbek Taşı",
               "icon": "🔥",
-              "description": "Hamamın ortasındaki merkezi ısıtmalı mermer platform."
+              "description": "Hamamın tam merkezinde yer alan, alttan ısıtmalı, yoğun buharın ve sıcaklığın en yüksek olduğu devasa mermer platform."
             },
             {
               "id": "l2",
               "name": "Soyunma Odası",
               "icon": "🚪",
-              "description": "Girişte tahta bölmeli soyunma kabinleri."
+              "description": "Girişte yer alan, ahşap bölmelerden oluşan, hamamın sıcaklığından uzak, kuru ve serin soyunma ve dinlenme alanı."
             },
             {
               "id": "l3",
               "name": "Su Deposu Bölümü",
               "icon": "💧",
-              "description": "Hamamın arka tarafı, sıcak su depoları."
+              "description": "Hamamın en karanlık arka bölgesinde bulunan, kaynar suların depolandığı ve teknik boruların geçtiği loş alan."
             }
           ],
           "solution_table": {
@@ -9830,7 +9830,7 @@
               "text": "Adli muayene; kafatasına inen darbenin düz bir mermer kenarına veya boğucu bir keseye değil, tamamen silindirik, kavisli ve kütlece çok ağır bir metale ait olduğunu kanıtladı.",
               "grid_effect": "l1_gobek taşı ölüm yeri. Silindirik darbe → w1_kova olası. w2_sabunluk (düz) eleniyor bu mekân için.",
               "mechanicType": "text",
-              "deductionHint": "Göbek taşı + silindirik darbe → kova izi."
+              "deductionHint": "Silindirik kavisli metal = Bakır Kova. Cinayet aleti bulundu."
             },
             {
               "id": "c2",
@@ -9842,7 +9842,7 @@
               "text": "Berber esnafının ifadesine göre; rakip tüccar Fikri Bey, sıcaktan bunaldığı için tüm vaktini sadece tahta bölmeli kuru alanda geçirmiş, buharlı yıkanma merkezine adım dahi atmamıştı.",
               "grid_effect": "s1_fikri + l2_soyunma = ✓. s1 için l1 ve l3 = ✗.",
               "mechanicType": "text",
-              "deductionHint": "Fikri soyunma odasındaydı — göbek taşına giremedi."
+              "deductionHint": "Fikri Bey + Kuru Soyunma Odası. O sıcak göbek taşına hiç yaklaşmadı."
             },
             {
               "id": "c3",
@@ -9867,7 +9867,7 @@
               "text": "Hamam ustasının olay saatinde sıcak su depolarının bulunduğu arka loş alanda sızıntı tamiratı yaptığı, borulardaki taze ve hala sıcak lehim izleriyle ispatlandı.",
               "grid_effect": "s2_nuri + l3_depo = ✓. s2 için l1 ve l2 = ✗.",
               "mechanicType": "text",
-              "deductionHint": "Nuri depodaydı. Dilara için l1_gobek kaldı."
+              "deductionHint": "Nuri Usta + Su Deposu. Göbek taşı bölgesinde o da yoktu."
             },
             {
               "id": "c5",
@@ -9937,7 +9937,7 @@
             "weaponId": "w1",
             "locationId": "l1"
           },
-          "solutionNarrative": "Muhasebeci Dilara, milyonluk zimmeti ifşa edilecekti ve bunu anlayınca, maktulü o yoğun buharın ortasında ağır bir bakır su kovasıyla susturdu. Tüm şüphelilerin bulunduğu konumlar netleştiğinde, göbek taşındaki silindirik izin tek bir sahibi kalmıştı."
+          "solutionNarrative": "Muhasebeci Dilara, milyonluk zimmetinin ifşa edileceğini anladığında, maktulü o yoğun buharın ortasında ağır bir bakır su kovasıyla susturdu. Tüm şüphelilerin bulunduğu konumlar netleştiğinde, göbek taşındaki silindirik izin tek bir sahibi kalmıştı."
         },
         {
           "puzzleId": "yeni_c03",
@@ -9955,22 +9955,22 @@
               "id": "s1",
               "name": "Çırak Ferdi",
               "icon": "noun-cirak-selim-avatar.png",
-              "description": "10 yıldır çalışıyor, maaşı ödenmiyor. Ortaklık vaat edilmişti — hayata geçirilmedi.",
-              "detail": "28 yaşında, sabırlı görünümlü ama sınıra gelmiş."
+              "description": "10 yıldır aynı dükkanda köle gibi çalışan, kendisine söz verilen ortaklık hissesinin verilmediğini o gece öğrenen bıkkın çırak.",
+              "detail": "28 yaşında, kuyumcu aletlerine ve tartılara eli çok yatkın, sabrının sonuna gelmiş."
             },
             {
               "id": "s2",
               "name": "Rakip Kuyumcu Zeynep",
               "icon": "noun-zeynep-hanim-avatar.png",
-              "description": "Maktulün müşterilerini çalıyordu. Açık çatışma haline gelmişti.",
-              "detail": "45 yaşında, iş dünyasında güçlü, soğukkanlı."
+              "description": "Maktulün pazar payını çalan, açık bir fiyat savaşına girdiği ve o gece dükkana gizli hesapları incelemeye gelen hırslı rakip kuyumcu.",
+              "detail": "45 yaşında, soğukkanlı, iş dünyasında acımasız."
             },
             {
               "id": "s3",
               "name": "Vergi Müfettişi Canan",
               "icon": "noun-semiha-hanim-avatar.png",
-              "description": "Dün vergi denetimi yaptı, kritik belgeler buldu. Bu sabah raporu yazacaktı.",
-              "detail": "40 yaşında, kurallara bağlı, tehdit edilmiş hissediyordu."
+              "description": "Önceki gün dükkanda vergi denetimi yapan, maktulden tehdit aldığı için gergin olan ve sabah raporunu teslim edecek olan resmi müfettiş.",
+              "detail": "40 yaşında, kurallara bağlı, laboratuvar ve asit testlerine aşina."
             }
           ],
           "weapons": [
@@ -9978,19 +9978,19 @@
               "id": "w1",
               "name": "Kuyumcu Terazisi",
               "icon": "⚖️",
-              "description": "Hassas altın tartı terazisinin ağır metal kefesi."
+              "description": "Hassas altın tartımlarında kullanılan, saf pirinçten yapılmış, kafaya vurulduğunda kare şeklinde ölümcül bir iz bırakan ağır kefe."
             },
             {
               "id": "w2",
               "name": "Asit Solüsyonu",
               "icon": "⚗️",
-              "description": "Altın testinde kullanılan hidroklorik asit karışımı."
+              "description": "Altının saflığını ölçmek için kullanılan, deriyle temas ettiğinde saniyeler içinde kemiğe kadar eriten yoğun hidroklorik asit karışımı."
             },
             {
               "id": "w3",
               "name": "Mücevher Teli",
               "icon": "🪡",
-              "description": "Kuyumculukta kullanılan kalın gümüş tel."
+              "description": "Kolyelere şekil vermek için kullanılan, boğaza dolandığında keskinliğiyle şah damarını anında kesebilen kalın gümüş mücevher teli."
             }
           ],
           "locations": [
@@ -9998,19 +9998,19 @@
               "id": "l1",
               "name": "Kasa Odası",
               "icon": "🔒",
-              "description": "Dükkânın arka kasa odası."
+              "description": "Dükkânın arka tarafında yer alan, kalın çelik kapılı, içerisi altın külçeleriyle ve hesap defterleriyle dolu kilitli kasa odası."
             },
             {
               "id": "l2",
               "name": "Vitrin Önü",
               "icon": "🪟",
-              "description": "Dükkânın cam vitrin önündeki alan."
+              "description": "Dükkânın sokağa bakan, camları parmaklıklarla korunan, altın takıların sergilendiği ve terazinin bulunduğu ön müşteri alanı."
             },
             {
               "id": "l3",
               "name": "İmalat Atölyesi",
               "icon": "🔨",
-              "description": "Dükkânın gerisindeki mücevher yapım atölyesi."
+              "description": "Dükkânın dip köşesinde yer alan, tezgahları asit şişeleri, tel makasları ve büyüteçlerle dolu imalat ve tamir atölyesi."
             }
           ],
           "solution_table": {
@@ -10039,7 +10039,7 @@
               "text": "Olay yeri uzmanları, maktulün boynunda tel boğması veya teninde kimyasal bir yanık bulamadı. Ancak kafatasındaki kare biçimli, küt ve ağır pirinç göçüğü, cinayet aletinin ne olduğunu haykırıyordu.",
               "grid_effect": "l2_vitrin ölüm yeri. Kare metal darbe → w1_terazi (kefe kare). w2 ve w3 eleniyor bu mekân için.",
               "mechanicType": "text",
-              "deductionHint": "Vitrin + kare darbe → terazi. s1_ferdi + w1_terazi + l2_vitrin uyumlu."
+              "deductionHint": "Kare pirinç göçük = Hassas terazi kefesi. Atölye aletleri elendi."
             },
             {
               "id": "c2",
@@ -10118,7 +10118,7 @@
               "text": "Çarşının çapraz güvenlik kameraları, Rakip Kuyumcu Zeynep'in gece boyunca sadece arka çelik kapılı dairede hesapları incelediğini ve sokağı gören ön tarafa hiç geçmediğini belgeledi.",
               "grid_effect": "s2_zeynep + l1_kasa = ✓. s2 için l2 ve l3 = ✗.",
               "mechanicType": "text",
-              "deductionHint": "Zeynep kasa odasında. Zeynep + w3_tel (kalan silah) = ✓."
+              "deductionHint": "Rakip Zeynep + Çelik Kasa Odası. Ön vitrinde değildi."
             },
             {
               "id": "c5",
@@ -10130,7 +10130,7 @@
               "text": "İmalat bölümünde kapağı açık unutulan tehlikeli çözücü şişesinin etrafında, denetim için gelen müfettişin kullandığı özel lateks eldivenlerin erimiş siyah kalıntıları bulundu.",
               "grid_effect": "s3_canan + w2_asit = ✓. s1 ve s2 için w2 = ✗.",
               "mechanicType": "text",
-              "deductionHint": "Canan + asit + atölye. Katil değil ama silahı o tuttu."
+              "deductionHint": "Müfettiş Canan + Asit Şişesi + İmalat Atölyesi. Canan da elendi."
             },
             {
               "id": "c6",
@@ -10206,22 +10206,22 @@
               "id": "s1",
               "name": "Yardımcı Tasarımcı Hande",
               "icon": "noun-ressam-leyla-avatar.png",
-              "description": "Koleksiyonun yarısını o tasarladı — ama ismi yok afişte.",
-              "detail": "32 yaşında, yetenekli, sinirli."
+              "description": "Koleksiyonun yarısını bizzat kendi elleriyle çizen ancak adının defile afişlerinden son anda silindiğini gören, sinir küpü yardımcı tasarımcı.",
+              "detail": "32 yaşında, yetenekli, dikiş makaslarını ve kumaşları kusursuz kullanan öfkeli biri."
             },
             {
               "id": "s2",
               "name": "Tekstil Yatırımcısı Bülent",
               "icon": "noun-komsu-nevzat-avatar.png",
-              "description": "Koleksiyona 2 milyon yatırdı, haklar anlaşmazlığı var.",
-              "detail": "52 yaşında, iş adamı, sabırsız."
+              "description": "Tasarımlara milyonlarca lira gömen, telif haklarını üzerine almak için gece yarısı maktulle gizli sözleşme görüşmesine gelen sabırsız yatırımcı.",
+              "detail": "52 yaşında, modadan anlamayan, sadece paranın ve gücün dilinden konuşan iş adamı."
             },
             {
               "id": "s3",
               "name": "Eski Ortak Sevgi",
               "icon": "noun-torun-nermin-avatar.png",
-              "description": "5 yıl önce ortaklıktan çıkarıldı. Tasarımlarının çalındığını iddia ediyor.",
-              "detail": "44 yaşında, ressam ruhlu, adaletten konuşur."
+              "description": "Beş yıl önce şirketten olaylı bir şekilde kovulan, kendi tasarımlarının çalındığını iddia edip atölyeyi basan ressam ruhlu eski ortak.",
+              "detail": "44 yaşında, boyalara ve kimyasallara bulanmış, sanatsal ama tehlikeli bir figür."
             }
           ],
           "weapons": [
@@ -10229,19 +10229,19 @@
               "id": "w1",
               "name": "Dikiş Makası",
               "icon": "✂️",
-              "description": "Profesyonel 30 cm'lik keskin dikiş makası."
+              "description": "Kumaşları tek hamlede pürüzsüzce kesmek için özel bilenmiş, 30 santimlik, son derece ağır ve ölümcül çelik dikiş makası."
             },
             {
               "id": "w2",
               "name": "Manken Ayağı",
               "icon": "🦵",
-              "description": "Demonte metal manken bacağı, ağır ve uzun."
+              "description": "Kıyafet sergilemek için kullanılan, söküldüğünde devasa ve küt bir sopaya dönüşen demonte, ağır metal manken bacağı."
             },
             {
               "id": "w3",
               "name": "Zehirli Boya",
               "icon": "🎨",
-              "description": "Kumaş boya karışımında toksik solvent — kapalı alanda."
+              "description": "Özel kumaşları renklendirmek için kullanılan, kapalı alanda solunduğunda saniyeler içinde zehirleyen ağır endüstriyel solvent boyası."
             }
           ],
           "locations": [
@@ -10249,19 +10249,19 @@
               "id": "l1",
               "name": "Dikiş Atölyesi",
               "icon": "🧵",
-              "description": "Ana dikiş ve üretim alanı."
+              "description": "Kumaş toplarının, iğnelerin ve dikiş makinelerinin bulunduğu, elbiselerin hayata geçirildiği dağınık ve geniş ana üretim alanı."
             },
             {
               "id": "l2",
               "name": "Ofis",
               "icon": "🖊️",
-              "description": "Tasarım ve sözleşme ofisi."
+              "description": "Tasarım çizimlerinin, kilitli kasaların ve milyonluk sözleşmelerin bulunduğu, dışarıya tamamen yalıtılmış idari yönetim odası."
             },
             {
               "id": "l3",
               "name": "Boya Odası",
               "icon": "🌈",
-              "description": "Kumaş boyama ve baskı odası."
+              "description": "Havalandırması zayıf, her yerinde renkli kimyasalların ve fırçaların olduğu, tehlikeli gaz kokularının sindiği arka baskı odası."
             }
           ],
           "solution_table": {
@@ -10290,7 +10290,7 @@
               "text": "Adli tıp raporu, maktulün vücudunda zehirli bir solvent yanığı veya küt bir manken uzvunun ezici travması olmadığını; cinayetin profesyonel kumaş biçiminde kullanılan keskin çelik aletlerle işlendiğini ortaya koydu.",
               "grid_effect": "l1_atolye ölüm yeri. Keskin uzun alet → w1_makas. w2 ve w3 eleniyor bu mekân için.",
               "mechanicType": "text",
-              "deductionHint": "Atölye + keskin alet = makas. Makas + atölye → s1_hande."
+              "deductionHint": "Pürüzsüz çelik kesiği = Dikiş Makası. Bu alet nerede bulunur? → Dikiş Atölyesi."
             },
             {
               "id": "c2",
@@ -10302,7 +10302,7 @@
               "text": "Gece bekçisinin vardiya logları, yatırımcı Bülent'in sözleşme görüşmeleri için idari ofis kapısını içeriden kilitlediğini ve o elektronik kapıdan saatlerce çıkmadığını gösteriyordu.",
               "grid_effect": "s2_bulent + l2_ofis = ✓. s2 için l1 ve l3 = ✗.",
               "mechanicType": "text",
-              "deductionHint": "Bülent ofisteydi. Ofis + Bülent → hangi silah? Kalan: w2_manken."
+              "deductionHint": "Yatırımcı Bülent + Kilitli İdari Ofis. Atölye alanında değildi."
             },
             {
               "id": "c3",
@@ -10314,7 +10314,7 @@
               "text": "Eski ortak Sevgi'nin kıyafetlerinde ve tırnak diplerinde, yalnızca arka taraftaki özel üretim odasında bulunan son derece ağır ve baskın kimyasal boya kokusu tespit edildi.",
               "grid_effect": "s3_sevgi + l3_boya = ✓. s3 için l1 ve l2 = ✗. s3 + w3_boya = ✓.",
               "mechanicType": "text",
-              "deductionHint": "Sevgi boya odasındaydı + solvent = w3_boya."
+              "deductionHint": "Eski Ortak Sevgi + Boya Odası. Boyalarla meşguldü."
             },
             {
               "id": "c4",
@@ -10426,22 +10426,22 @@
               "id": "s1",
               "name": "Mimar Selim",
               "icon": "🔧",
-              "description": "Maktulün eski iş ortağı. Mimari proje hırsızlığı davası sürüyor.",
-              "detail": "46 yaşında, metodolojik, planlayıcı."
+              "description": "Maktulle devam eden devasa bir telif hırsızlığı davası olan, her adımını önceden tasarlayan saplantılı ve metodolojik mimar eski ortak.",
+              "detail": "46 yaşında, kâğıt işlerine alışkın ince parmaklı, planlı ve sürekli evi gözlemleyen biri."
             },
             {
               "id": "s2",
               "name": "Doktor Leyla",
               "icon": "👩‍⚕️",
-              "description": "Kazara bu evde mahsur kaldı. Tıbbi bilgisi var — zehir dozunu bilir.",
-              "detail": "39 yaşında, sakin, gözlemci."
+              "description": "İki yıl önce maktulün aleyhine verdiği ifade yüzünden doktorluk lisansını kaybetme tehlikesi yaşayan, sakin ama kindar tıp uzmanı.",
+              "detail": "39 yaşında, ilaç dozajlarını ve zehirleri kusursuz hesaplayabilen soğukkanlı doktor."
             },
             {
               "id": "s3",
               "name": "Dağ Evi Sahibi Rasim",
               "icon": "noun-vahap-amca-avatar.png",
-              "description": "Maktul bu evi satın almak istiyordu, fiyat anlaşmazlığı.",
-              "detail": "60 yaşında, sert, toprağına bağlı."
+              "description": "Maktulün bu değerli mülkünü zorla ve ucuza satın almak istemesinden nefret eden, toprağına ve malına aşırı bağlı, sert dağ evi sahibi.",
+              "detail": "60 yaşında, zorlu kış şartlarına alışkın, kaba kuvveti yüksek, öfkeli bir ihtiyar."
             }
           ],
           "weapons": [
@@ -10449,19 +10449,19 @@
               "id": "w1",
               "name": "Şömine Demiri",
               "icon": "🔥",
-              "description": "Kor karıştırmak için kullanılan uzun demir."
+              "description": "Şöminedeki korları karıştırmak için kullanılan, kafaya indiğinde kafatasını delebilecek sivriliğe ve ağırlığa sahip demir çubuk."
             },
             {
               "id": "w2",
               "name": "Uyku İlacı Aşırı Dozu",
               "icon": "💤",
-              "description": "Doktor çantasından alınan sedatif — içeceğe karıştırıldı."
+              "description": "Sıcak içeceklere karıştırıldığında hiçbir tat bırakmayan, ancak kalp ritmini uykuda tamamen durduran yüksek dozda tıbbi sedatif ampulü."
             },
             {
               "id": "w3",
               "name": "Kar Küreği Sapı",
               "icon": "❄️",
-              "description": "Ağır ahşap saplı kar küreği."
+              "description": "Kış şartlarında yolu açmak için kullanılan, geniş metal ağızlı ve son derece ağır, küt bir ahşap sapa sahip kar küreği."
             }
           ],
           "locations": [
@@ -10469,19 +10469,19 @@
               "id": "l1",
               "name": "Oturma Odası",
               "icon": "🛋️",
-              "description": "Şömineli ana oturma odası."
+              "description": "Evin tam merkezinde yanan büyük bir ateşin olduğu, deri koltuklarla döşenmiş geniş ve sıcak ana toplanma odası."
             },
             {
               "id": "l2",
               "name": "Yatak Odası",
               "icon": "🌙",
-              "description": "Üst kattaki misafir yatak odası."
+              "description": "Üst katta yer alan, dışarıdaki fırtınanın sesinin duyulduğu, maktulün uyumak için çekildiği izole ve sessiz misafir odası."
             },
             {
               "id": "l3",
               "name": "Garaj",
               "icon": "🚗",
-              "description": "Araçların bağlı olduğu soğuk garaj."
+              "description": "Evin dışında yer alan, dondurucu soğukta araçların ve bozuk jeneratörün bulunduğu rüzgarlı ve kapalı beton araç alanı."
             }
           ],
           "solution_table": {
@@ -10510,7 +10510,7 @@
               "text": "Otopsi ön bulguları, maktulün bedeninde şömine demiri eziği veya kar küreği travması bulunmadığını; ölümün, gece rutini olan sıcak içeceğe sinsi bir şekilde karıştırılan ölümcül dozda tıbbi bir bileşenden kaynaklandığını kanıtladı.",
               "grid_effect": "l2_yatak ölüm yeri. Dış yara yok → w1 ve w3 eleniyor. w2_ilac kesin.",
               "mechanicType": "text",
-              "deductionHint": "Yatak + sedatif = uyku ilacı. Kim ilaca erişebilir? → Doktor Leyla."
+              "deductionHint": "Kanlı bir darbe yok, tıbbi bir zehir var. Hangi şüpheli ilaçlara erişebilir? → Doktor."
             },
             {
               "id": "c2",
@@ -10522,7 +10522,7 @@
               "text": "Ev sahibinin, dışarıdaki arızalı jeneratörü onarmak için saatlerce dondurucu soğukta ve araçların arasında uğraştığı, buz tutmuş ağır botları ve eldivenlerindeki motor yağıyla mühürlendi.",
               "grid_effect": "s3_rasim + l3_garaj = ✓. s3 için l1 ve l2 = ✗. s3 + w3_kurek = ✓.",
               "mechanicType": "text",
-              "deductionHint": "Rasim garajda + kürek. Artık o 3. eşleşmede."
+              "deductionHint": "Ev Sahibi Rasim + Jeneratör Arızası = Soğuk Garaj."
             },
             {
               "id": "c3",
@@ -10571,7 +10571,7 @@
               "text": "Evin güneş enerjisiyle çalışan yedek kamerasının son kaydı, mimarın gece boyunca oturma odasındaki deri koltuktan kalkmadığını ve sönen ateşi izlediğini net bir şekilde ortaya koydu.",
               "grid_effect": "s1_selim + l1_oturma = ✓. s1 için l2 ve l3 = ✗.",
               "mechanicType": "text",
-              "deductionHint": "Selim oturma odasında. Leyla için kalan mekân: l2_yatak."
+              "deductionHint": "Mimar Selim + Oturma Odası + Şömine Ateşi."
             },
             {
               "id": "c6",
@@ -10681,29 +10681,29 @@
               "id": "s1",
               "name": "İş Ortağı Kerem",
               "icon": "noun-ortak-sabri-bey-avatar.png",
-              "description": "Şirket hisselerinin devri nedeniyle maktulle mahkemelik olan, öfkesi yatışmayan ve o gece teknede yüzleşmek için bekleyen iş ortağı.",
-              "detail": "48 yaşında, soğukkanlı, avukat tutuyor."
+              "description": "Şirket hisselerinin devri nedeniyle maktulle mahkemelik olan, iflasın eşiğindeki öfkesi yatışmayan ve teknede hesap sormayı bekleyen iş ortağı.",
+              "detail": "48 yaşında, sürekli ellerini ovuşturan, lüks giyimli, sağduyusunu kaybetmiş kurnaz bir adam."
             },
             {
               "id": "s2",
               "name": "Denizci Kaptan Yusuf",
               "icon": "👨‍✈️",
-              "description": "Teknenin dümeninde duran, maktul tarafından işten atılma tehdidi aldığı için gergince seyri sürdüren profesyonel kaptan.",
-              "detail": "55 yaşında, deneyimli, sert."
+              "description": "Teknenin dümeninde duran, işten atılma tehdidi aldığı için gergince seyri sürdüren ve halat çekmekten elleri nasırlaşmış profesyonel kaptan.",
+              "detail": "55 yaşında, rüzgardan yüzü kurumuş, emir almaktan nefret eden eski bir deniz kurdu."
             },
             {
               "id": "s3",
               "name": "Finans Direktörü Pınar",
               "icon": "noun-teacher-1908918-avatar.png",
-              "description": "Maktulün hesaplarında milyonlarca liralık usulsüzlük saptayan, elindeki raporla geceyi iç salon barında geçiren finans direktörü.",
-              "detail": "41 yaşında, düzgün, baskı altında."
+              "description": "Maktulün hesaplarında milyonlarca liralık usulsüzlük saptayan, geceyi elindeki lüks kadehlerle salon barında geçiren finans direktörü.",
+              "detail": "41 yaşında, topuklu ayakkabıları ve kırmızı rujuyla dikkat çeken, analitik düşünen soğukkanlı kadın."
             },
             {
               "id": "s4",
               "name": "Gazeteci Mert",
               "icon": "🚗",
-              "description": "Maktulün kirli çamaşırlarını ertesi gün manşet yapacak olan, elindeki dosyalarla köşe bucak bilgi arayan araştırmacı gazeteci.",
-              "detail": "33 yaşında, idealist, dosyası tam."
+              "description": "Maktulün kirli çamaşırlarını ertesi gün manşet yapacak olan, sürekli cebindeki kasetçalarla alt katlarda bilgi arayan araştırmacı gazeteci.",
+              "detail": "33 yaşında, pasaklı bir pardösü giyen, girdiği her deliği karıştıran idealist araştırmacı."
             }
           ],
           "weapons": [
@@ -10711,25 +10711,25 @@
               "id": "w1",
               "name": "Gemi Halatı",
               "icon": "🪝",
-              "description": "Güvertede gemileri iskeleye bağlamak için bekletilen kalın, pürüzlü ve boğucu naylon bağlama halatı."
+              "description": "Güvertede gemileri iskeleye bağlamak için bekletilen, birinin boğazına dolandığında derin, ağsı ve pürüzlü sürtünme yanıkları bırakan kalın naylon halat."
             },
             {
               "id": "w2",
               "name": "Şişe Viski",
               "icon": "🥃",
-              "description": "İç salon barında ikram edilen, içine yüksek dozda sedatif karıştırılmış ve denize atılma hissi veren viski bardağı."
+              "description": "İç salon barında ikram edilen, içine yüksek dozda sedatif karıştırılarak kurbanın bilincini saniyeler içinde karanlığa gömen şık kristal bardaktaki içki."
             },
             {
               "id": "w3",
               "name": "Deniz Feneri Kolu",
               "icon": "🔦",
-              "description": "Karanlıkta yolları aydınlatmak için kullanılan, kafa tasına indirildiğinde küt ve silindirik bir yarık açan ağır metal deniz feneri."
+              "description": "Karanlıkta yolları aydınlatmak için kullanılan, kafa tasına bütün gücüyle indirildiğinde kemikte kavisli ve küt bir göçük yaratan ağır metal el feneri."
             },
             {
               "id": "w4",
               "name": "Tekne Kancası",
               "icon": "🎣",
-              "description": "Motor dairesinde asılı duran, vücuda saplandığında derin yırtıklar bırakan çelik balıkçı kancası."
+              "description": "Motor dairesinde asılı duran, vücuda saplandığında eti ve kıyafetleri parçalayarak derin kancalı yırtıklar bırakan paslanmaz çelik balıkçı kancası."
             }
           ],
           "locations": [
@@ -10737,25 +10737,25 @@
               "id": "l1",
               "name": "Ön Güverte",
               "icon": "🌊",
-              "description": "Teknenin baş tarafında yer alan, Boğaz'ın soğuk rüzgarını alan, karanlık ve açık ön güverte alanı."
+              "description": "Teknenin baş tarafında yer alan, Boğaz'ın soğuk rüzgarını doğrudan alan, karanlık, ıslak ve tamamen açık ön güverte alanı."
             },
             {
               "id": "l2",
               "name": "Kaptan Köşkü",
               "icon": "🧭",
-              "description": "Üst katta yer alan, dümen ve navigasyon cihazlarının bulunduğu dar ve izole kaptan köşkü."
+              "description": "Üst katta yer alan, dümen ve navigasyon cihazlarının bulunduğu, kapısı içeriden sürgülenebilen dar, kısıtlı ve izole kaptan köşkü."
             },
             {
               "id": "l3",
               "name": "Salon",
               "icon": "🛋️",
-              "description": "Teknenin iç kısmında yer alan, deri koltukların ve barın bulunduğu lüks dinlenme salonu."
+              "description": "Teknenin iç kısmında yer alan, deri koltukların, alkol şişelerinin ve kalın halıların bulunduğu klimalı ve lüks dinlenme salonu."
             },
             {
               "id": "l4",
               "name": "Motor Dairesi",
               "icon": "⚙️",
-              "description": "Alt katta, motor gürültüsünün her şeyi bastırdığı, yağ ve yakıt kokan karanlık makine dairesi."
+              "description": "Alt katta, devasa pistonların sağır edici bir gürültüyle çalıştığı, sıcak, havasız ve yoğun mazot kokan makine dairesi."
             }
           ],
           "solution_table": {
@@ -10821,7 +10821,7 @@
               "isRevealed": false,
               "pointCost": 70,
               "title": "Halat Analizi",
-              "text": "Kaptan Yusuf'un ellerindeki kalın naylon sürtünme yanıkları, onun geceyi o sert ve pürüzlü bağlama kordonuyla manevra yaparak geçirdiğini fısıldıyordu.",
+              "text": "Kaptan Yusuf'un avuç içlerindeki derin naylon sürtünme yanıkları, onun geceyi o sert ve pürüzlü bağlama kordonuyla manevra yaparak geçirdiğini fısıldıyordu.",
               "grid_effect": "s2_yusuf + w1_halat = ✓. s1, s3, s4 için w1 = ✗.",
               "mechanicType": "text",
               "deductionHint": "Kaptan + Pürüzlü Halat + Navigasyon Köşkü. Yusuf elendi."
@@ -10833,7 +10833,7 @@
               "isRevealed": false,
               "pointCost": 70,
               "title": "Viski Bardağı DNA",
-              "text": "Finans direktörü Pınar'ın dudak boyası ve DNA'sı, iç salondaki deri koltukların hemen yanındaki sehpada duran, dibinde uyuşturucu tortusu kalmış o kristal bardağın tam kenarındaydı.",
+              "text": "Finans direktörü Pınar'ın kırmızı dudak boyası ve genetik izleri, iç salondaki deri koltukların hemen yanındaki sehpada duran zehirli kristal bardağın tam kenarındaydı.",
               "mechanicType": "dna_match",
               "dnaVerisi": {
                 "aciklama": "DNA profillerini bardak iziyle eşleştir.",
@@ -10884,7 +10884,7 @@
               "isRevealed": false,
               "pointCost": 70,
               "title": "Pınar'ın Salon Konumu",
-              "text": "Finans direktörü Pınar'ın yüksek topuklu ayakkabılarının izleri, sadece kalın halılarla kaplı ve lüks içeceklerin servis edildiği o dinlenme alanının sınırları içinde kalmıştı.",
+              "text": "Finans direktörünün yüksek topuklu ayakkabılarının bıraktığı izler, sadece kalın Hereke halılarıyla kaplı ve lüks içeceklerin servis edildiği o klimalı alanın sınırları içinde kalmıştı.",
               "grid_effect": "s3_pinar + l3_salon = ✓ kesin. s3 için l1, l2, l4 = ✗.",
               "mechanicType": "text",
               "deductionHint": "Pınar salonda izole oldu. Mert ve Kerem'in konumları hala belirsiz."
@@ -10896,7 +10896,7 @@
               "isRevealed": false,
               "pointCost": 70,
               "title": "Tekne Kancası İzi",
-              "text": "Keskin ve kavisli çelik balıkçı aletinin sapındaki terli avuç içi izi, sürekli kalem tutmaktan nasırlaşmış o araştırmacı gazetecinin parmaklarıyla birebir eşleşiyordu.",
+              "text": "Keskin ve kavisli çelik balıkçı aletinin sapındaki terli avuç içi izi, sürekli not almaktan parmakları nasırlaşmış o araştırmacı gazetecinin profiliyle birebir eşleşiyordu.",
               "mechanicType": "parmak_izi",
               "parmakIziVerisi": {
                 "aciklama": "Kancadaki izi dört şüpheliyle eşleştir.",
@@ -10920,7 +10920,7 @@
               "isRevealed": false,
               "pointCost": 70,
               "title": "Gece Hareketleri",
-              "text": "Araştırmacı gazeteci Mert'in ses kayıt cihazındaki o sağır edici piston ve motor gürültüleri, onun cinayet saatlerinde teknenin o en derin, en yağlı mekanına hapsolduğunu mühürledi.",
+              "text": "Gazeteci Mert'in ses kayıt cihazındaki o sağır edici piston ve jeneratör gürültüleri, onun cinayet saatlerinde teknenin o en derin, en sıcak ve mazot kokan mekanına hapsolduğunu mühürledi.",
               "mechanicType": "timeline_sort",
               "timelineVerisi": {
                 "aciklama": "Gece boyunca olayları doğru sıraya diz.",
@@ -10976,11 +10976,11 @@
               "isRevealed": false,
               "pointCost": 70,
               "title": "Güverte Ses Kaydı",
-              "text": "[Karanlık güverteden yankılanan ses kaydı] Maktul: 'Kerem, o hisseler yarın devredilecek.' Rüzgara karışan buz gibi bir fısıltı: 'O yarın hiç gelmeyecek.' Ardından küt bir darbe sesi.",
+              "text": "[Karanlık güverteden yankılanan ses kaydı] Maktul: 'Kerem, o hisseler yarın devredilecek.' Rüzgara karışan buz gibi bir fısıltı: 'O yarın hiç gelmeyecek.' Ardından küt ve kemik kıran bir darbe sesi.",
               "mechanicType": "ses_kaydi",
               "sesMetni": "Kerem'in 'yarın gelmeyecek' sözü sakin ve kesin. Ardından ses.",
               "grid_effect": "Kerem'in itirafı: 'Yarın gelmeyecek' — maktulü değil toplantıyı mı kastetti?",
-              "deductionHint": "'O yarın hiç gelmeyecek' + Küt Darbe Sesi = Kerem tetiği çekti."
+              "deductionHint": "'O yarın hiç gelmeyecek' sözleri, Kerem'in o el fenerini indirdiği anın ilanıydı."
             },
             {
               "id": "c10",
@@ -11030,28 +11030,28 @@
               "id": "s1",
               "name": "Genel Sekreter Hülya",
               "icon": "noun-hizmetci-hacer-avatar.png",
-              "description": "Maktulün koltuğuna geçmek için sırasını bekleyen ancak maktulün istifa etmemesi üzerine hayal kırıklığı yaşayan genel sekreter.",
+              "description": "Maktulün koltuğuna geçmek için sırasını bekleyen ancak istifanın gelmemesiyle hayal kırıklığı yaşayan, tüm gece makam odasından ekranları izleyen genel sekreter.",
               "detail": "52 yaşında, deneyimli, hesaplı."
             },
             {
               "id": "s2",
               "name": "Mali İşler Müdürü Cahit",
               "icon": "noun-tuccar-vehbi-avatar.png",
-              "description": "Parti kasasında milyonlarca liralık açık veren ve bu usulsüzlük raporu maktulün eline geçen paniğe kapılmış mali müdür.",
+              "description": "Parti kasasında milyonlarca liralık açık veren ve bu usulsüzlük raporu maktulün eline geçtiği için köşeye sıkışan paniğe kapılmış mali müdür.",
               "detail": "47 yaşında, sinirli, köşeye sıkışmış."
             },
             {
               "id": "s3",
               "name": "Güvenlik Şefi Orhan",
               "icon": "👮",
-              "description": "Binanın 10 yıllık güvenliğinden sorumlu olan ancak işine son verileceğini o gece öğrenen öfkeli güvenlik şefi.",
+              "description": "Binanın 10 yıllık güvenliğinden sorumlu olan, elinde feneri ve alet çantasıyla alt katlardaki panoları denetleyen, işten çıkarılacağını öğrenen öfkeli güvenlik şefi.",
               "detail": "58 yaşında, eski polis, sert."
             },
             {
               "id": "s4",
               "name": "Basın Danışmanı Ezgi",
               "icon": "noun-zeynep-hanim-avatar.png",
-              "description": "Sızdırılan kriz haberlerini bilerek durdurmadığı için maktulle büyük bir kavga eden soğukkanlı basın danışmanı.",
+              "description": "Sızdırılan kriz haberlerini bilerek durdurmadığı için maktulle büyük bir kavga eden, sürekli gazetecilere kahve içerek demeç veren soğukkanlı basın danışmanı.",
               "detail": "36 yaşında, zeki, bağlantıları var."
             }
           ],
@@ -11060,25 +11060,25 @@
               "id": "w1",
               "name": "Evrak Delgici",
               "icon": "📌",
-              "description": "Ofis masalarında bulunan, ağır metal bloktan yapılmış keskin kenarlı evrak delgici."
+              "description": "Ofis masalarında bulunan, ağır metal bloktan yapılmış ve kafaya küt bir güçle savrulduğunda ölümcül sonuçlar doğuran keskin kenarlı evrak delgici."
             },
             {
               "id": "w2",
               "name": "Zehirli Kahve",
               "icon": "☕",
-              "description": "Seçim gecesi uyanık kalmak için dağıtılan termos kahveye karıştırılmış ani etkili toksin."
+              "description": "Seçim gecesi uyanık kalmak için dağıtılan termos kahveye karıştırılmış, yutulduğunda kalp krizini tetikleyerek vücudu donduran sinsi zehirli kokteyl."
             },
             {
               "id": "w3",
               "name": "Elektrik Kablosu",
               "icon": "🔌",
-              "description": "Bina tesisatından sökülen, kurbanın boynuna arkadan dolanabilecek kalın elektrik kablosu."
+              "description": "Bina tesisatından sökülen, kurbanın boynuna arkadan dolanıp amansızca sıkıldığında kesik ve yanık izleri bırakan kalın elektrik kablosu."
             },
             {
               "id": "w4",
               "name": "Dosya Dolabı",
               "icon": "🗄️",
-              "description": "Arka vidaları sökülerek doğrudan kurbanın üzerine devrilmesi hedeflenen devasa metal dosya dolabı."
+              "description": "Arka montaj vidaları sökülerek, kurbanın üzerine devrildiğinde göğüs kafesini ve omurgayı tamamen ezecek ağırlıktaki devasa metal dosya dolabı."
             }
           ],
           "locations": [
@@ -11086,25 +11086,25 @@
               "id": "l1",
               "name": "Genel Sekreter Odası",
               "icon": "🏛️",
-              "description": "2. katta yer alan, lüks mobilyalarla döşenmiş, sessiz ve izole genel sekreter liderlik ofisi."
+              "description": "2. katta yer alan, lüks deri mobilyalarla döşenmiş, dışarıya tamamen izole ve sessiz genel sekreter liderlik ofisi."
             },
             {
               "id": "l2",
               "name": "Mali İşler Ofisi",
               "icon": "🧾",
-              "description": "3. katta yer alan, evrakların ve kasaların bulunduğu kilitli ve kameralı muhasebe bölümü."
+              "description": "3. katta yer alan, çelik kasaların, muhasebe evraklarının ve ağır metal rafların bulunduğu kilitli ve kameralı finans bölümü."
             },
             {
               "id": "l3",
               "name": "Güvenlik Kontrol",
               "icon": "📹",
-              "description": "Zemin katta bulunan, tüm bina kameralarının izlendiği donanımlı güvenlik merkezi."
+              "description": "Zemin katta bulunan, tüm bina kameralarının izlendiği dev ekranların ve elektrik ana panolarının yer aldığı donanımlı güvenlik merkezi."
             },
             {
               "id": "l4",
               "name": "Basın Odası",
               "icon": "📺",
-              "description": "1. katta bulunan, ekranların ve telefonların sürekli çaldığı hareketli medya koordinasyon odası."
+              "description": "1. katta bulunan, telefonların sürekli çaldığı, televizyon kanallarının açık olduğu hareketli medya koordinasyon odası."
             }
           ],
           "solution_table": {
@@ -11197,10 +11197,10 @@
               "isRevealed": false,
               "pointCost": 70,
               "title": "Basın Odası Görevlisi",
-              "text": "Basın danışmanı Ezgi'nin telefonundaki kesintisiz arama logları ve canlı yayın bağlantıları, onun geceyi sadece o kameralarla ve ekranlarla dolu odada geçirdiğini mühürledi.",
+              "text": "Basın danışmanı Ezgi'nin telefonundaki kesintisiz arama logları ve canlı yayın bağlantıları, onun geceyi sadece o ekranlarla ve gazetecilerle dolu odada geçirdiğini mühürledi.",
               "grid_effect": "s4_ezgi + l4_basin = ✓. s4 için l1, l2, l3 = ✗.",
               "mechanicType": "text",
-              "deductionHint": "Ezgi + Basın Odası. Bu mekanda hangi silahı kullandı?"
+              "deductionHint": "Ezgi + Basın Odası. Bu mekanda hangi silahla temastaydı?"
             },
             {
               "id": "c4",
@@ -11355,28 +11355,28 @@
               "id": "s1",
               "name": "Müzeci Doç. Emre",
               "icon": "⚖️",
-              "description": "Eserin sahte olduğunu fark eden ancak müzeye orijinal fiyattan satarak komisyon planlayan hırslı akademisyen.",
+              "description": "Eserin sahte olduğunu fark eden ancak müzeye orijinal fiyattan satarak komisyonu cebine indirmeyi planlayan, sürekli depolardaki eserleri inceleyen hırslı akademisyen.",
               "detail": "50 yaşında, akademisyen, paraya ihtiyacı var."
             },
             {
               "id": "s2",
               "name": "Koleksiyoncu Fatma Hanım",
               "icon": "noun-nazik-hanim-avatar.png",
-              "description": "Aynı eseri 5 yıldır arayan ve sabah maktulün fiyatı aniden katlaması üzerine öfkeden deliye dönen koleksiyoner kadın.",
+              "description": "Aynı eseri 5 yıldır arayan, maktulün fiyatı aniden katlaması üzerine öfkeden deliye dönen, vitrinleri kırıp dökecek kadar sabırsız koleksiyoner kadın.",
               "detail": "63 yaşında, varlıklı, sabırsız."
             },
             {
               "id": "s3",
               "name": "Eser Kaçakçısı Dimitri",
               "icon": "👨‍💼",
-              "description": "Uluslararası bağlantıları olan, eseri yasadışı yollarla yurt dışına çıkarmak için pusuda bekleyen sahte kimlikli kaçakçı.",
+              "description": "Uluslararası bağlantıları olan, eseri yasadışı yollarla yurt dışına çıkarmak için pazarın dar ve rutubetli geçitlerinde pusuda bekleyen sahte kimlikli kaçakçı.",
               "detail": "45 yaşında, Rum asıllı, çift pasaportlu."
             },
             {
               "id": "s4",
               "name": "Sigorta Ajanı Sevcan",
               "icon": "noun-semiha-hanim-avatar.png",
-              "description": "Eserin sigorta poliçesi için keşfe gelen ancak parçanın tamamen sahte olduğunu raporlayan sigorta uzmanı.",
+              "description": "Eserin sigorta poliçesi için keşfe gelen ancak parçanın tamamen sahte olduğunu raporlayarak işi bozan, köşede sürekli çayını yudumlayan sigorta uzmanı.",
               "detail": "38 yaşında, dikkatli, belgeci."
             }
           ],
@@ -11385,25 +11385,25 @@
               "id": "w1",
               "name": "Cam Vitrin Kapağı",
               "icon": "🪟",
-              "description": "Antikacının vitrininden sökülen, ağır meşe çerçeveli ve keskin camlı kalın kapak."
+              "description": "Antikacının ön sergi alanından sökülen, ağır meşe çerçeveli ve keskin camlı kalın vitrin kapağı."
             },
             {
               "id": "w2",
               "name": "Bronz Heykelcik",
               "icon": "🗿",
-              "description": "Raflarda sergilenen, kafaya indirildiğinde ölümcül hasar verecek ağırlıkta bronz şövalye heykelciği."
+              "description": "Arka raflarda sergilenen, kafaya indirildiğinde ölümcül bir göçük açacak ağırlıktaki som bronz şövalye heykelciği."
             },
             {
               "id": "w3",
               "name": "Zehirli Çay (Pazar Çayı)",
               "icon": "🫖",
-              "description": "Pazar esnafına sabahları ikram edilen ve içine kalp durdurucu ilaç damlatılan sıcak çay bardağı."
+              "description": "Pazar esnafına sabahları ikram edilen ve içine kalp durdurucu ilaç damlatılarak sinsi bir suikast silahına dönüşen sıcak çay."
             },
             {
               "id": "w4",
               "name": "Demir Raf Demiri",
               "icon": "🔩",
-              "description": "Depo raflarını tutturmak için kullanılan, uzun ve son derece ağır olan küt metal raf demiri."
+              "description": "Ağır yük taşımak için pazar tezgahlarında kullanılan, uzun, paslı ve son derece küt çelik montaj raf demiri."
             }
           ],
           "locations": [
@@ -11411,25 +11411,25 @@
               "id": "l1",
               "name": "Ana Dükkan",
               "icon": "🏪",
-              "description": "Antika dükkanının ön kısmı, vitrinlerin ve kasanın bulunduğu aydınlık ana müşteri alanı."
+              "description": "Antika dükkanının ön kısmı, vitrinlerin ve kasanın bulunduğu, sokağın gürültüsünü alan aydınlık ana müşteri alanı."
             },
             {
               "id": "l2",
               "name": "Depo Odası",
               "icon": "📦",
-              "description": "Dükkanın arka tarafında, değerli parçaların saklandığı penceresiz, dar ve kilitli depo odası."
+              "description": "Dükkanın arka tarafında, değerli parçaların ve envanterlerin saklandığı penceresiz, dar ve asma kilitli izole depo odası."
             },
             {
               "id": "l3",
               "name": "Pazar Aralığı",
               "icon": "🛤️",
-              "description": "Dükkanların arasından geçen, sabahları ıssız ve gölgelik olan dar taşlı pazar geçidi."
+              "description": "Dükkanların arasından geçen, sabahları ıssız, gölgelik ve rutubetli olan dar taşlı pazar geçidi."
             },
             {
               "id": "l4",
               "name": "Çay Ocağı Köşesi",
               "icon": "♨️",
-              "description": "Pazarın girişinde esnafın toplandığı, sürekli kaynayan semaverin bulunduğu küçük çay ocağı."
+              "description": "Pazarın girişinde esnafın toplandığı, sürekli kaynayan semaverin tütüp durduğu küçük ve izole çay ocağı köşesi."
             }
           ],
           "solution_table": {
@@ -11570,10 +11570,10 @@
               "isRevealed": false,
               "pointCost": 70,
               "title": "Emre'nin Depo Ziyareti",
-              "text": "Emre'nin sabah yalnızca kilitli depo odasına girdiği ve eserleri katalogladıktan sonra dar geçide sapmadan ana yoldan çıktığı kamera loglarına işlenmişti.",
+              "text": "Müzeci Emre'nin takım elbisesine bulaşan o asırlık depo tozu ve kamera logları, onun sabahın erken saatlerinde sadece o penceresiz, kilitli arka odada keşif yaptığını gösterdi.",
               "grid_effect": "s1_emre + l2_depo = ✓. s1 için l1, l3, l4 = ✗.",
               "mechanicType": "text",
-              "deductionHint": "Emre + Depo. Fatma ana dükkan ve cam vitrin kapağıyla eşleşiyor."
+              "deductionHint": "Emre + Depo Odası. Koleksiyoner Fatma Hanım'a neresi kaldı?"
             },
             {
               "id": "c7",
@@ -11582,7 +11582,7 @@
               "isRevealed": false,
               "pointCost": 70,
               "title": "Fatma Hanım'ın Beyanı",
-              "text": "Yüzleşme sırasında Fatma Hanım itiraf etti: Öfkeden deliye dönmüştü, vitrinin cam kapağını iki eliyle kavramıştı — ama birinin gelmesiyle durmuştu. Kavrama izleri ellerindeydi.",
+              "text": "Koleksiyoner Fatma Hanım'ın ipek eldivenlerindeki mikro cam kesikleri, onun öfke krizi sırasında dükkanın ön tarafındaki o devasa meşe çerçeveli vitrin kapağına saldırdığını belgeliyordu.",
               "mechanicType": "tanik_yuzlesme",
               "yuzlesmeDialogu": [
                 {
@@ -11597,7 +11597,7 @@
                 }
               ],
               "grid_effect": "s2_fatma + w1_vitrin = ✓. s2 + l1_dukkan = ✓. s1, s3, s4 için w1 = ✗.",
-              "deductionHint": "Fatma + Vitrin Kapağı + Ana Dükkan. Son parça yerine oturdu."
+              "deductionHint": "Fatma Hanım + Vitrin Kapağı + Ana Dükkan. Geriye sadece Dimitri ve geçit kaldı."
             },
             {
               "id": "c8",
@@ -11606,11 +11606,11 @@
               "isRevealed": false,
               "pointCost": 70,
               "title": "Dimitri'nin Sahte Pasaportu",
-              "text": "Jandarma aramasında Dimitri'nin çantasında sahte pasaport, kayıp Bizans eseri ve üç farklı isme ait kimlik belgeleri çıktı.",
+              "text": "Jandarma aramasında Dimitri'nin gizli bölmeli evrak çantasından çıkan o paha biçilmez Bizans eseri ve sahte pasaportlar, cinayetin ardındaki o uluslararası hırsızlık motifini aydınlattı.",
               "mechanicType": "gorsel_ipucu",
               "gorselAciklama": "Çanta içeriği fotoğrafı. Bizans eseri küçük kutuda. Pasaportlar farklı isimlerle.",
               "grid_effect": "Dimitri eseri çaldı — hem hırsız hem katil.",
-              "deductionHint": "Eser Dimitri'de. Raf demiri Dimitri'de. Pazar aralığı = Dimitri katil."
+              "deductionHint": "Bizans Eseri + Kaçakçı Dimitri = Hırsızlık ve Cinayet."
             },
             {
               "id": "c9",
@@ -11619,7 +11619,7 @@
               "isRevealed": false,
               "pointCost": 70,
               "title": "Pazar Sabahı Çizelgesi",
-              "text": "O pazar sabahı olaylarını doğru sıraya diz.",
+              "text": "Sabahın o kör karanlığında, Dimitri'nin elinde o uzun çelik parçasıyla dar ve rutubetli geçitte kurbanı beklediği anlar, güvenlik kameralarının kör noktalarındaki yansımalardan çözüldü.",
               "mechanicType": "timeline_sort",
               "timelineVerisi": {
                 "aciklama": "Pazar sabahı kronolojisi.",
@@ -11653,7 +11653,7 @@
                 "sonuc": "Dimitri raf demirini aralıkta hazırladı, maktulü bekledi."
               },
               "grid_effect": "Timeline Dimitri'yi aralıkta + demir + maktul ile buluşturuyor.",
-              "deductionHint": "Dimitri raf demirine erişti. Maktul aralığa çağrıldı. Sonuç kaçınılmazdı."
+              "deductionHint": "Dimitri + Raf Demiri + Dar Geçit = Kusursuz pusu."
             },
             {
               "id": "c10",
@@ -11662,11 +11662,11 @@
               "isRevealed": false,
               "pointCost": 70,
               "title": "Dimitri'nin Telefonu",
-              "text": "[Dimitri'nin telefon kaydı — pazar sabahı 08:20] Yabancı dilde konuşuyor: 'Eser hazır. Sorun çıkarırsa hallederim. Akşam oradasınız.'",
+              "text": "Dimitri'nin kriptolu telefonundan kurtarılan o soğuk sesli mesaj, 'Eser bende, pürüzü uzun demirle hallettim, limana geliyorum' diyerek, o karanlık geçitteki kanlı pusuyu itiraf ediyordu.",
               "mechanicType": "ses_kaydi",
               "sesMetni": "'Sorun çıkarırsa hallederim' — maktulü öngördü mü?",
               "grid_effect": "Dimitri 'sorun halletmeyi' önceden planladı.",
-              "deductionHint": "'Sorun hallederim' + Raf Demiri + Pazar Aralığı = Kaçakçı katil."
+              "deductionHint": "'Pürüzü hallettim' = Kurbanın infazı. Dimitri katil."
             }
           ],
           "solution": {
@@ -11692,28 +11692,28 @@
               "id": "s1",
               "name": "Asistan Dr. Tunç",
               "icon": "👨‍⚕️",
-              "description": "Maktul tarafından tezi intihalle suçlanan ve akademik hayatı sona ermek üzere olan çaresiz asistan doktor.",
+              "description": "Maktul tarafından tezi intihalle suçlanan, akademik hayatı sona ermek üzere olan ve geceyi sadece bilgisayarının başında geçiren çaresiz asistan doktor.",
               "detail": "29 yaşında, parlak ama kırılgan."
             },
             {
               "id": "s2",
               "name": "Eczacılık Prof. Nilüfer",
               "icon": "noun-teacher-1908916-avatar.png",
-              "description": "Bölümlerin birleştirilmesi kararıyla profesörlük kürsüsünü maktule kaptıracak olan eczacılık hocası.",
+              "description": "Bölümlerin birleştirilmesi kararıyla profesörlük kürsüsünü maktule kaptıracak olan, gece laboratuvarda dolapları karıştıran öfkeli eczacılık hocası.",
               "detail": "54 yaşında, güçlü akademik ağı var."
             },
             {
               "id": "s3",
               "name": "Hemşire Baş Sorumlu Ayhan",
               "icon": "👩‍⚕️",
-              "description": "Yolsuzluk raporlarını sümenaltı eden maktulle başı dertte olan ve gece nöbetinde bulunan başhemşire.",
+              "description": "Yolsuzluk raporlarını sümenaltı eden maktulle başı dertte olan, tıbbi cihazları taşırken tüm gece koridorda volta atan başhemşire.",
               "detail": "47 yaşında, adalet arayan, sabırlı."
             },
             {
               "id": "s4",
               "name": "Tıp Öğrencisi Berk",
               "icon": "noun-cirak-selim-avatar.png",
-              "description": "Sınav hilesi yaparken kameraya yakalanan ve maktulün şantajına boyun eğmek istemeyen tıp öğrencisi.",
+              "description": "Sınav hilesi yaparken kameraya yakalanan, maktulün şantajına boyun eğmek istemeyen ve anestezi tekniklerini çok iyi bilen tıp öğrencisi.",
               "detail": "24 yaşında, panikleyebilir, çaresiz."
             }
           ],
@@ -11722,25 +11722,25 @@
               "id": "w1",
               "name": "Formaldehit Solüsyonu",
               "icon": "🧫",
-              "description": "Kadavraları korumak için kullanılan, yutulması halinde iç organları anında çürüten yüksek konsantre kimyasal sıvı."
+              "description": "Kadavraları korumak için kullanılan, yutulması halinde iç organları anında çürüten yüksek konsantre formaldehit sıvısı."
             },
             {
               "id": "w2",
               "name": "Kemik Testere",
               "icon": "🔪",
-              "description": "Cerrahi müdahalelerde kullanılan, son derece keskin ve elektrikli dönen kemik testeresi."
+              "description": "Cerrahi müdahalelerde kullanılan, etrafa saçıldığında duvarlarda kan izleri bırakabilecek son derece keskin ve elektrikli kemik testeresi."
             },
             {
               "id": "w3",
               "name": "İlaç Dolap Kapağı",
               "icon": "🗄️",
-              "description": "Koridordaki eski eczane dolabından sökülen, ağır metal ve küt menteşeli demir kilit kapağı."
+              "description": "Tıp malzemelerinin korunduğu eski eczane dolabından sökülen, ağır metal ve küt menteşeli demir kilit kapağı."
             },
             {
               "id": "w4",
               "name": "Anestezi Gazı Tüpü",
               "icon": "💨",
-              "description": "Solunduğu anda akciğerleri kilitleyip kalp krizini simüle eden küçük, taşınabilir cerrahi gaz tüpü."
+              "description": "Odaya salındığında akciğer alveollerini kilitleyip kalp krizini simüle eden küçük, taşınabilir cerrahi anestezi gaz tüpü."
             }
           ],
           "locations": [
@@ -11748,25 +11748,25 @@
               "id": "l1",
               "name": "Anatomi Laboratuvarı",
               "icon": "🔬",
-              "description": "Paslanmaz çelik masaların ve soğutucuların bulunduğu, formaldehit kokulu karanlık kadavra çalışma odası."
+              "description": "Paslanmaz çelik masaların ve soğutucuların bulunduğu, formaldehit kokulu, dışarıdan hava almayan karanlık kadavra çalışma odası."
             },
             {
               "id": "l2",
               "name": "Eczacılık Bölümü",
               "icon": "💊",
-              "description": "Kimyasal dolaplarının bulunduğu, kameralarla sıkı korunan aydınlık ilaç araştırma bölümü."
+              "description": "Kimyasal asitlerin ve ilaç stoklarının bulunduğu, kameralarla sıkı korunan aydınlık ve steril ilaç araştırma bölümü."
             },
             {
               "id": "l3",
               "name": "Koridor (3. Kat)",
               "icon": "🚶",
-              "description": "Bölümleri birbirine bağlayan, gece yarısı tamamen ıssızlaşan uzun 3. kat koridoru."
+              "description": "Bölümleri birbirine bağlayan, gece yarısı tamamen ıssızlaşan, uzun ve yankılı 3. kat ana koridoru."
             },
             {
               "id": "l4",
               "name": "Anestezi Odası",
               "icon": "😷",
-              "description": "Sadece cerrahi operasyon maskelerinin ve solunum tüplerinin depolandığı kilitli teknik oda."
+              "description": "Sadece cerrahi maskelerin ve teknik oksijen tüplerinin depolandığı, ağır metal bir kapıyla korunan teknik anestezi odası."
             }
           ],
           "solution_table": {
@@ -11796,10 +11796,10 @@
               "isRevealed": true,
               "pointCost": 0,
               "title": "Tıp Fakültesi Raporu",
-              "text": "Adli tahlil, kurbanın vücudunda hiçbir kesici alet veya küt darp izinin olmadığını; ölümün birikmiş ve kapalı bir alanda akciğerleri adım adım felç eden sinsi bir gazın işi olduğunu ortaya koydu.",
+              "text": "Adli toksikoloji raporu, kurbanın kanında hiçbir kesici alet izi bulamadı; ancak akciğer alveollerindeki şiddetli büzüşme, odaya sinsice basılan ve kalp krizini simüle eden bir cerrahi gazı işaret ediyordu.",
               "grid_effect": "l1_anatomi ölüm yeri. Anestezi gazı → w4_gaz. w1, w2, w3 bu mekân için eleniyor.",
               "mechanicType": "text",
-              "deductionHint": "Kapalı bir ortamda sessizce öldüren gaz. Hangi oda bunun için en uygundu?"
+              "deductionHint": "Akciğerleri kilitleyen sinsi bir gaz. Kim tıbbi gazlara erişebilir?"
             },
             {
               "id": "c2",
@@ -11808,10 +11808,10 @@
               "isRevealed": false,
               "pointCost": 70,
               "title": "Gece Güvenlik Turu",
-              "text": "Kurbanın üzerine çöktüğü o paslanmaz çelik masanın hemen altındaki koku analizi, formaldehitin değil; anestezi gazının bu odanın havasına karışarak son nefesi getirdiğini ortaya koydu.",
+              "text": "Olay yerindeki paslanmaz çelik soğutucular ve havaya sinen o genzi yakan formaldehit kokusu, kurbanın son nefesini o karanlık ve izole kadavra çalışma merkezinde verdiğini mühürledi.",
               "grid_effect": "s4_berk + l4_anestezi = ✓. s4 için l1, l2, l3 = ✗.",
               "mechanicType": "text",
-              "deductionHint": "Anatomi Laboratuvarı + Anestezi Gazı. Kim tüpü buraya taşıdı?"
+              "deductionHint": "Cinayet mahalli: Kadavraların bulunduğu Anatomi Laboratuvarı."
             },
             {
               "id": "c3",
@@ -11820,7 +11820,7 @@
               "isRevealed": false,
               "pointCost": 70,
               "title": "Gaz Tüpü İzi",
-              "text": "Anestezi gaz tüpünün soğuk metal yüzeyinden sıyrılan doku kalıntıları, tüpü kavramaktan alışmamış ama o gece zorla döndüren tek kişiyi işaret ediyordu: Tıp öğrencisi Berk.",
+              "text": "O ölümcül gazı barındıran taşınabilir cerrahi tüpün soğuk metal valfinde, sınav stresiyle terlemiş o genç tıp öğrencisinin panik dolu DNA'sı tespit edildi.",
               "mechanicType": "dna_match",
               "dnaVerisi": {
                 "aciklama": "Tüp DNA'sını dört şüpheliyle eşleştir.",
@@ -11862,7 +11862,7 @@
                 "sonuc": "Gaz tüpünü tutan: Berk."
               },
               "grid_effect": "s4_berk + w4_gaz = ✓. s1, s2, s3 için w4 = ✗.",
-              "deductionHint": "Berk + Gaz Tüpü. Tüp anestezi odasından anatomi labına nasıl taşındı?"
+              "deductionHint": "Öğrenci Berk + Anestezi Gazı Tüpü."
             },
             {
               "id": "c4",
@@ -11871,10 +11871,10 @@
               "isRevealed": false,
               "pointCost": 70,
               "title": "Prof. Nilüfer'in Beyanı",
-              "text": "Prof. Nilüfer'in gece boyunca ilaç araştırma bölümünde kesintisiz çalıştığı laboratuvar giriş logları ve ağ erişim kayıtlarıyla kesinleşti.",
+              "text": "Eczacılık Profesörü Nilüfer'in laboratuvar önlüğündeki mikroskobik kristaller ve mikroskop başındaki retina onayı, onun geceyi sadece kendi aydınlık araştırma bölümünde geçirdiğini kanıtladı.",
               "grid_effect": "s2_nilufer + l2_eczaci = ✓. s2 için l1, l3, l4 = ✗. s3_ayhan + l3_koridor = ✓.",
               "mechanicType": "text",
-              "deductionHint": "Nilüfer + Eczacılık Bölümü. Hangi silahla eşleşiyor?"
+              "deductionHint": "Prof. Nilüfer + Eczacılık Araştırma Bölümü."
             },
             {
               "id": "c5",
@@ -11883,7 +11883,7 @@
               "isRevealed": false,
               "pointCost": 70,
               "title": "Dolap Kapağı İzi",
-              "text": "Eski eczane dolabının küt metal kapağında, kimyasal solüsyonları yıllarca karıştırmaktan oluşmuş o aside alışkın parmak izlerinin sahibi, Eczacılık Profesörü Nilüfer'den başkası değildi.",
+              "text": "Koridordaki o eski ve paslı eczane dolabının ağır demir kapağında, yıllarca kimyasallarla çalışmaktan tahriş olmuş o tecrübeli profesörün parmak izleri parlıyordu.",
               "mechanicType": "parmak_izi",
               "parmakIziVerisi": {
                 "aciklama": "Dolap kapağındaki izi dört şüpheliyle eşleştir.",
@@ -11898,7 +11898,7 @@
                 "sonuc": "Dolap kapağını tutan: Nilüfer."
               },
               "grid_effect": "s2_nilufer + w3_dolap = ✓. s1, s3, s4 için w3 = ✗.",
-              "deductionHint": "Nilüfer + Dolap Kapağı + Eczacılık Bölümü. Nilüfer tamam."
+              "deductionHint": "Prof. Nilüfer + Eczane Dolap Kapağı. Profesör elendi."
             },
             {
               "id": "c6",
@@ -11907,10 +11907,10 @@
               "isRevealed": false,
               "pointCost": 70,
               "title": "Koridor Kemik Testere İzi",
-              "text": "Başhemşire Ayhan'ın 3. kat koridorundaki kesintisiz ilaç envanteri sayımı, kilitli odalara hiç girmediğini ve o karanlık laboratuvardan uzak kaldığını mühürledi.",
+              "text": "Hemşire Ayhan'ın vardiya çizelgesi ve 3. kat koridorundaki kan damlaları, onun elindeki o keskin ve dönen cerrahi testereyle sadece o uzun ve ıssız geçitte devriye attığını gösterdi.",
               "grid_effect": "s3_ayhan + w2_testere = ✓. s1, s2, s4 için w2 = ✗. s3 + l3_koridor = ✓ kesin.",
               "mechanicType": "text",
-              "deductionHint": "Ayhan + Koridor. Hangi silah koridorla bağlantılı?"
+              "deductionHint": "Hemşire Ayhan + Kemik Testeresi + 3. Kat Koridoru. Ayhan elendi."
             },
             {
               "id": "c7",
@@ -11919,10 +11919,10 @@
               "isRevealed": false,
               "pointCost": 70,
               "title": "Dr. Tunç'un Konumu",
-              "text": "Dr. Tunç'un o gece kendi küçük odasında tez savunması üzerinde çalıştığı kesintisiz klavye logu ve ağ erişim kayıtları, onu anatomi labından tamamen uzak tuttu.",
+              "text": "Berk'in güvenlik kartı kayıtları, onun sadece cerrahi maskelerin depolandığı o kilitli anestezi odasından gaz tüpünü çaldığını kanıtlıyordu. Dr. Tunç ise tez savunması için tüm gece kendi izole odasındaydı.",
               "grid_effect": "s1_tunc + l1_anatomi = ✓. s1 için l2, l3, l4 = ✗. s1 + w1_formal = ✓ (kalan silah).",
               "mechanicType": "text",
-              "deductionHint": "Tunç kendi odası + Formalin kaldı. Berk gazı taşıyıp oraya bıraktı."
+              "deductionHint": "Berk + Anestezi Odası. Dr. Tunç'un alibisi de doğrulandı."
             },
             {
               "id": "c8",
@@ -11931,11 +11931,11 @@
               "isRevealed": false,
               "pointCost": 70,
               "title": "Sınav Hilesi Görüntüsü",
-              "text": "Maktulün bilgisayarında Berk'in sınav hilesi yapan görüntüleri. E-posta taslağı: 'Disiplin kuruluna bildirilecek — yarın.'",
+              "text": "Maktulün çekmecesinde bulunan fotoğraflarda Berk'in sınav sorularını çaldığı anlar yer alıyor, altında ise 'Yarın disiplin kuruluna sevki, okuldan atılacak' yazan o tehditkar not duruyordu.",
               "mechanicType": "gorsel_ipucu",
               "gorselAciklama": "Ekran görüntüsü. Berk'in yüzü net. Altta not: 'Disiplin kurulu — yarın.' Gönderilmemiş.",
               "grid_effect": "Berk'in motifi: mezuniyet = hayatı. Maktul yarın bildirecekti.",
-              "deductionHint": "Sınav Hilesi + Yarın Disiplin Kurulu = Berk için tek çıkış yolu."
+              "deductionHint": "Berk'in motifi: Okuldan atılma korkusu ve biten bir hayat."
             },
             {
               "id": "c9",
@@ -11944,7 +11944,7 @@
               "isRevealed": false,
               "pointCost": 70,
               "title": "Gece Zaman Çizelgesi",
-              "text": "O geceye ait fakülte erişim kayıtlarını doğru sıraya diz.",
+              "text": "Zaman çizelgesi analizi, Berk'in anestezi odasından çaldığı tüpü maktulün gireceği laboratuvara gizlice yerleştirip havalandırmayı kapattığı o sinsi planı saniye saniye deşifre etti.",
               "mechanicType": "timeline_sort",
               "timelineVerisi": {
                 "aciklama": "Gece kronolojisi.",
@@ -11978,7 +11978,7 @@
                 "sonuc": "Berk tüpü lab'a bıraktı, havalandırmayı kapattı, gazın birikmesini bekledi."
               },
               "grid_effect": "Berk labı kapalı gaz ortamına dönüştürdü. Pasif cinayet.",
-              "deductionHint": "Berk tüpü bıraktı, havalandırmayı kapattı, geri çekildi. Pasif ama kasıtlı."
+              "deductionHint": "Gazın odaya salınması + Havalandırmanın kapatılması = Pasif ve kusursuz cinayet."
             },
             {
               "id": "c10",
@@ -11987,11 +11987,11 @@
               "isRevealed": false,
               "pointCost": 70,
               "title": "Berk'in Sesli Notu",
-              "text": "[Berk'in telefon ses notu — anestezi odasında kaydedilmiş] 'Yarın her şey biter. Dekan beni bitirir. Ama bu gaz kapalı alanda... 2 saat yeter. Ben anestezi öğrencisiyim. Bunu biliyorum.'",
+              "text": "Berk'in telefonunda unutulan sesli notta titreyerek fısıldadığı 'Tıbbi hesaplamam doğru, o kapalı alanda gaz iki saat içinde işini bitirir' itirafı, bu kusursuz cinayeti aydınlatıyordu.",
               "mechanicType": "ses_kaydi",
               "sesMetni": "Berk'in sesi panikle karışmış hesap. '2 saat yeter' — tıbbi hesaplama.",
               "grid_effect": "Berk tıbbi bilgisiyle hesapladı — kasıtlı.",
-              "deductionHint": "'2 Saat Yeter' + Gaz Tüpü + Anatomi Labı = Berk katil."
+              "deductionHint": "'Hesaplamam doğru' + Gaz Tüpü = Berk'in soğukkanlı intikamı."
             }
           ],
           "solution": {
@@ -12017,28 +12017,28 @@
               "id": "s1",
               "name": "Baş Ses Mühendisi Alp",
               "icon": "⚡",
-              "description": "Festivalin tüm teknik altyapısını yöneten ancak sözleşmesi maktul tarafından feshedilmek üzere olan 20 yıllık emektar baş ses mühendisi.",
+              "description": "Festivalin tüm teknik altyapısını yöneten, devasa ekipmanları çıplak elleriyle kuran ancak sözleşmesi maktul tarafından feshedilmek üzere olan 20 yıllık emektar baş ses mühendisi.",
               "detail": "50 yaşında, ekipman ustası, bağlantısı kesiliyor."
             },
             {
               "id": "s2",
               "name": "Headliner Sanatçı Luna",
               "icon": "🎤",
-              "description": "Kaprisleriyle ünlü, maktulün son dakika şarkı listesini değiştirmesi üzerine odasında kriz geçiren başrol headliner kadın sanatçı.",
+              "description": "Kaprisleriyle ünlü, maktulün son dakika şarkı listesini değiştirmesi üzerine odasında kriz geçiren ve etrafı yakıp yıkan başrol kadın sanatçı.",
               "detail": "32 yaşında, uluslararası yıldız, sahnede güçlü."
             },
             {
               "id": "s3",
               "name": "Güvenlik Koordinatörü Bora",
               "icon": "noun-bricklaying-1574372-avatar.png",
-              "description": "Sahne arkasının tüm yetkilerine sahip olan ancak maktulün kendisini atlatıp yasadışı misafirler sokmasıyla prestiji sarsılan güvenlik koordinatörü.",
+              "description": "Sahne arkasının tüm yetkilerine sahip olan, kalın elektrik kablolarıyla bariyerler kuran ancak maktulün kendisini atlatmasıyla prestiji sarsılan eski asker güvenlik koordinatörü.",
               "detail": "43 yaşında, askeri geçmiş, disiplinli."
             },
             {
               "id": "s4",
               "name": "Sponsor Şirketi Temsilcisi Deniz",
               "icon": "noun-cem-bey-avatar.png",
-              "description": "Milyonlarca euroluk sponsorluğunun maktulün tek bir imzasıyla çöpe gitme ihtimaline karşı tetikte bekleyen şirket temsilcisi.",
+              "description": "Milyonlarca euroluk sponsorluğunun maktulün tek bir imzasıyla çöpe gitme ihtimaline karşı tetikte bekleyen, lüks çadırlarda şampanya içen şirket temsilcisi.",
               "detail": "39 yaşında, iş odaklı, kayıptan korkan."
             }
           ],
@@ -12047,25 +12047,25 @@
               "id": "w1",
               "name": "Mikrofon Standı",
               "icon": "🎙️",
-              "description": "Sahne performansında kullanılan ağır, küt demir döküm altlıklı klasik mikrofon standı."
+              "description": "Sahne performansında kullanılan ağır, küt demir döküm altlıklı, kafaya vurulduğunda kemikleri kırabilecek klasik mikrofon standı."
             },
             {
               "id": "w2",
               "name": "Elektrik Kablosu (Sahne)",
               "icon": "🔋",
-              "description": "Sahne jeneratöründen çekilmiş, güçlü bir boğma ve boyun kırma aracı olabilen kalın endüstriyel elektrik kablosu."
+              "description": "Sahne jeneratöründen çekilmiş, güçlü bir boğma ve boyun kırma aracı olabilen, kalın yalıtımlı endüstriyel elektrik kablosu."
             },
             {
               "id": "w3",
               "name": "Zehirli Kokteyl (Backstage)",
               "icon": "🍹",
-              "description": "Kulisteki buzlu ikramlara şırıngayla karıştırılan ve yutulduğunda kalp durması yaratan sinsi zehirli kokteyl."
+              "description": "Kulisteki buzlu ikramlara şırıngayla karıştırılan ve yutulduğunda kalp krizini tetikleyerek vücudu donduran sinsi zehirli kokteyl."
             },
             {
               "id": "w4",
               "name": "Işık Rigging Kolu",
               "icon": "💡",
-              "description": "Sahne üstü ışık montajında kullanılan, ağır çelikten yapılma sivri kilit mekanizmalı uzun rigging kolu."
+              "description": "Sahne üstü devasa ışık montajında kullanılan, ağır çelikten yapılma sivri kilit mekanizmalı uzun rigging aydınlatma kolu."
             }
           ],
           "locations": [
@@ -12073,25 +12073,25 @@
               "id": "l1",
               "name": "Ses Kontrol Kulübesi",
               "icon": "🎚️",
-              "description": "Devasa hoparlörlerin hemen yanında yer alan, binlerce düğmenin bulunduğu camlı ses kontrol kulübesi."
+              "description": "Devasa hoparlörlerin hemen yanında yer alan, binlerce düğmenin bulunduğu ve dışarıdaki sesleri geçirmeyen camlı ses kontrol kulübesi."
             },
             {
               "id": "l2",
               "name": "Sanatçı Odası",
               "icon": "🌟",
-              "description": "Aynalar, çiçekler ve lüks koltuklarla döşenmiş, kapısı içeriden kilitlenebilen baş sanatçının özel soyunma odası."
+              "description": "Aynalar, çiçekler ve lüks kadife koltuklarla döşenmiş, kapısı içeriden kilitlenebilen baş sanatçının özel soyunma odası."
             },
             {
               "id": "l3",
               "name": "Güvenlik Noktası",
               "icon": "🚧",
-              "description": "Sahne arkasına geçen herkesin aranıp akredite edildiği giriş kontrol ve güvenlik noktası."
+              "description": "Sahne arkasına geçen herkesin aranıp akredite edildiği, telsiz seslerinin hiç susmadığı demir bariyerli giriş kontrol noktası."
             },
             {
               "id": "l4",
               "name": "Sponsor VIP Çadırı",
               "icon": "🎪",
-              "description": "Şampanyaların su gibi aktığı, yatırımcıların ağırlandığı izole sponsor VIP dinlenme çadırı."
+              "description": "Şampanyaların su gibi aktığı, yatırımcıların ağırlandığı, müzik sesinden nispeten uzak izole sponsor VIP dinlenme çadırı."
             }
           ],
           "solution_table": {
@@ -12121,10 +12121,10 @@
               "isRevealed": true,
               "pointCost": 0,
               "title": "Festival Medikali Raporu",
-              "text": "Kurbanın kafatasındaki o keskin, sivri ve yukarıdan defalarca inen darbeler, basit bir düşme değil; sahne üstü bir armatürün kasıtla aşağı döndürüldüğünü haykırıyordu.",
+              "text": "Cesedin parçalanmış kafatası, yumuşak bir kablo boğması veya zehirli bir yudumdan değil; tepeden muazzam bir hızla inen, ağır çelikten yapılmış sivri bir montaj demirinin gazabından kaynaklanıyordu.",
               "grid_effect": "l2_sanatci ölüm yeri. Rigging kolu → w4_rigging. w1, w2, w3 bu mekân için eleniyor.",
               "mechanicType": "text",
-              "deductionHint": "Sahne üstü bir donanım kolu. Sanatçı odasında ne var?"
+              "deductionHint": "Yukarıdan inen ağır ve sivri çelik bir demir. Bu bir ışık montaj kolu olabilir."
             },
             {
               "id": "c2",
@@ -12133,7 +12133,7 @@
               "isRevealed": false,
               "pointCost": 70,
               "title": "Roadie İfadesi",
-              "text": "Sanatçı odasından sızan o boğucu parfüm ve kırık ayna parçaları, katil ile kurban arasındaki son yüzleşmenin tam da Luna'nın ses yalıtımlı ve kilitli özel soyunma odasında yaşandığını kanıtladı.",
+              "text": "Kurbanın etrafındaki kırık makyaj aynaları, savrulmuş güller ve lüks kadife koltuklar, cinayetin derme çatma çadırlarda değil, o ultra lüks ve ses yalıtımlı özel soyunma odasında koptuğunu mühürledi.",
               "grid_effect": "s2_luna + l2_sanatci = ✓. s2 için l1, l3, l4 = ✗.",
               "mechanicType": "tanik_yuzlesme",
               "yuzlesmeDialogu": [
@@ -12148,7 +12148,7 @@
                   "yalan": false
                 }
               ],
-              "deductionHint": "Luna + Sanatçı Odası + Kilitli kapı ve sessizlik."
+              "deductionHint": "Cinayet mahalli: Aynalar ve lüks koltuklarla dolu Sanatçı Odası."
             },
             {
               "id": "c3",
@@ -12157,7 +12157,7 @@
               "isRevealed": false,
               "pointCost": 70,
               "title": "Rigging Kolu İzi",
-              "text": "Rigging kolunun döndürme vidasında bulunan izler, sahne aletlerine alışmamış ama kini ve öfkesiyle zorla döndürmüş bir elin baskı profilini ortaya koyuyordu — DNA: Luna.",
+              "text": "Sahnenin tepesinden sökülerek ölümcül bir mızrağa dönüştürülen o çelik rigging kolunun döndürme vidasında, kibrine yenik düşen başrol sanatçısı Luna'nın ojeli tırnak kalıntıları ve DNA'sı bulundu.",
               "mechanicType": "parmak_izi",
               "parmakIziVerisi": {
                 "aciklama": "Rigging kolundaki izi dört şüpheliyle eşleştir.",
@@ -12172,7 +12172,7 @@
                 "sonuc": "Rigging kolunu döndüren: Luna."
               },
               "grid_effect": "s2_luna + w4_rigging = ✓. s1, s3, s4 için w4 = ✗.",
-              "deductionHint": "Luna + Rigging Kolu. Yerini biliyoruz, sanatçı odasındaydı."
+              "deductionHint": "Başrol Sanatçısı Luna + Rigging Montaj Kolu."
             },
             {
               "id": "c4",
@@ -12181,10 +12181,10 @@
               "isRevealed": false,
               "pointCost": 70,
               "title": "VIP Çadır Görevlisi",
-              "text": "Sponsor Deniz'in tüm gece boyunca şampanya kadehlerinin aktığı VIP çadırda yatırımcıları ağırladığı, güvenlik kamera arşivi ve konuk listesindeki kesintisiz imzalarıyla belgelendi.",
+              "text": "Sponsor temsilcisi Deniz'in ayakkabılarındaki çim izleri ve yatırımcılarla kadeh tokuşturduğu anların fotoğrafları, onun geceyi sadece o şampanyaların su gibi aktığı VIP dinlenme çadırında geçirdiğini gösterdi.",
               "grid_effect": "s4_deniz + l4_vip = ✓. s4 için l1, l2, l3 = ✗.",
               "mechanicType": "text",
-              "deductionHint": "Deniz + VIP Çadırı. O mekanda ne bulunur?"
+              "deductionHint": "Sponsor Temsilcisi Deniz + VIP Çadırı."
             },
             {
               "id": "c5",
@@ -12193,7 +12193,7 @@
               "isRevealed": false,
               "pointCost": 70,
               "title": "Kokteyl Bardağı DNA",
-              "text": "Kokteyl bardağının kristal yüzeyinden alınan doku örneği, sadece şampanya kadehlerine dokunmaya alışkın o iş odaklı temsilcinin DNA'sıyla birebir eşleşti.",
+              "text": "Sponsor VIP çadırındaki o kristal kokteyl bardağının kenarında, her şeyi kaybetme korkusuyla titreyen Deniz'in tükürük hücreleri ve parmak izleri laboratuvarı aydınlattı.",
               "mechanicType": "dna_match",
               "dnaVerisi": {
                 "aciklama": "Bardak DNA'sını dört şüpheliyle eşleştir.",
@@ -12235,7 +12235,7 @@
                 "sonuc": "Bardağa dokunan: Deniz."
               },
               "grid_effect": "s4_deniz + w3_kokteyl = ✓. s1, s2, s3 için w3 = ✗.",
-              "deductionHint": "Deniz + Zehirli Kokteyl + VIP Çadırı. Deniz tamam."
+              "deductionHint": "Deniz + Zehirli Kokteyl. Temsilci oyundan çıktı."
             },
             {
               "id": "c6",
@@ -12244,10 +12244,10 @@
               "isRevealed": false,
               "pointCost": 70,
               "title": "Güvenlik Noktası Kablo İzi",
-              "text": "Güvenlik koordinatörü Bora'nın telsiz logu ve akreditasyon sistemi, onun sahne arkası giriş noktasında her geçen kişiyi arayıp akredite ettiğini saniye saniye kaydetmişti.",
+              "text": "Akreditasyon noktasında bariyer niyetine gerilmiş o kalın endüstriyel elektrik kablosunun üzerinde, eski asker Bora'nın sert ve nasırlı avuç içi izleri saptandı.",
               "grid_effect": "s3_bora + w2_kablo = ✓. s1, s2, s4 için w2 = ✗. s3 + l3_guvenlik = ✓.",
               "mechanicType": "text",
-              "deductionHint": "Bora + Güvenlik Noktası. Hangi silah oradaydı?"
+              "deductionHint": "Güvenlikçi Bora + Elektrik Kablosu + Güvenlik Noktası. Bora oyundan çıktı."
             },
             {
               "id": "c7",
@@ -12256,10 +12256,10 @@
               "isRevealed": false,
               "pointCost": 70,
               "title": "Alp'in Ses Kulübesi Kaydı",
-              "text": "Ses mühendisi Alp'in dijital mikser logu, onun konserin ilk notasından son akorunun kesilmesine kadar ses kontrol kulübesinin camından adım bile atmadığını mühürledi.",
+              "text": "Ses kontrol kulübesinin hemen girişinde devrilmiş halde duran o ağır demir döküm mikrofon standının gövdesinde, yılların emektarı Alp'in parmak izleri parlıyordu.",
               "grid_effect": "s1_alp + l1_ses = ✓. s1 için l2, l3, l4 = ✗. s1 + w1_mikrofon = ✓ (kalan).",
               "mechanicType": "text",
-              "deductionHint": "Alp + Ses Kontrol Kulübesi + Mikrofon Standı. Tüm ızgara doldu."
+              "deductionHint": "Ses Mühendisi Alp + Mikrofon Standı + Ses Kulübesi. Geriye tek kişi kaldı."
             },
             {
               "id": "c8",
@@ -12268,11 +12268,11 @@
               "isRevealed": false,
               "pointCost": 70,
               "title": "Set Listesi Anlaşmazlığı",
-              "text": "Maktulün gönderdiği e-posta: 'Son 3 şarkı listeden çıkarıldı. Luna bunu kabul etmeli — sözleşme şartı.' Luna'nın yanıtı: 'Kabul etmiyorum. Bu son.'",
+              "text": "Maktulün telefonunda parlayan o son e-postada, sanatçının kaprislerine boyun eğilmeyip en sevdiği üç şarkının şovdan atıldığı ve bunun bedelinin ağır olacağı yazıyordu.",
               "mechanicType": "gorsel_ipucu",
               "gorselAciklama": "E-posta zinciri. Luna'nın 'Bu son' yanıtı büyük harfle, kırmızıyla.",
               "grid_effect": "Luna'nın 'Bu son' sözü — ve öyle de oldu.",
-              "deductionHint": "'Bu son' + Rigging Kolu + Sanatçı Odası = Luna'nın son hamlesi."
+              "deductionHint": "Luna'nın motifi: Sahnede kontrolü kaybetme korkusu ve öfke."
             },
             {
               "id": "c9",
@@ -12281,7 +12281,7 @@
               "isRevealed": false,
               "pointCost": 70,
               "title": "Backstage Zaman Çizelgesi",
-              "text": "Konser öncesi backstage hareketlerini doğru sıraya diz.",
+              "text": "Zaman çizelgesi, Luna'nın maktulü odasına çekip kapıyı kilitlediği o 5 karanlık dakikayı ve ardından hiçbir şey olmamış gibi sahneye çıkışını saniye saniye deşifre etti.",
               "mechanicType": "timeline_sort",
               "timelineVerisi": {
                 "aciklama": "Backstage kronolojisi.",
@@ -12315,7 +12315,7 @@
                 "sonuc": "Luna kapıyı kilitledi, 5 dakikada iş bitti, sahneye çıktı."
               },
               "grid_effect": "Luna + kilitli oda + 5 dakika + rigging = hızlı ve planlı.",
-              "deductionHint": "Luna kilitledi, tartıştı, sus oldu, sahneye çıktı. Rigging'i o döndürmüştü."
+              "deductionHint": "5 dakikalık kilitli oda infazı ve ardından gelen soğukkanlı şov."
             },
             {
               "id": "c10",
@@ -12324,11 +12324,11 @@
               "isRevealed": false,
               "pointCost": 70,
               "title": "Luna'nın Konsol Kaydı",
-              "text": "[Sahne monitör sistemi — Luna'nın kulak monitöründen] Luna sahneye çıkmadan önce teknikere: 'Sorun çözüldü. Konser başlayabilir.' Ses durgun ve soğuk.",
+              "text": "Luna'nın kulak monitörüne fısıldadığı ve teknisyenin kaydettiği 'Sahnede de hayatta da kuralları ben koyarım, o büyük sorun çözüldü' sözleri, bu vahşi infazın en soğukkanlı itirafıydı.",
               "mechanicType": "ses_kaydi",
               "sesMetni": "'Sorun çözüldü' — maktul mü?",
               "grid_effect": "'Sorun çözüldü' + sanatçı odası + rigging = Luna katil.",
-              "deductionHint": "'Sorun çözüldü' — Luna'nın soğukkanlı itirafı. Rigging kolu o söyledi."
+              "deductionHint": "'Sorun çözüldü' + Rigging Darbesi = Luna katil."
             }
           ],
           "solution": {
@@ -12362,36 +12362,36 @@
           "stars": "★★★★★",
           "gridSize": "4x4",
           "timeLimit": 360,
-          "story": "Devlet arşivlerinin derinliklerinde 1950'lere ait, üstü örtülmüş sırlar barındıran gizli bir dosya raftan indi. Araştırmacı bu dosyayı güneşe çıkarmaya hazırlanırken, sabah ofisinde cansız bulundu. Geçmişin hayaletleri, o dosyayı korumak için arşivin soğuk koridorlarında dolaşıyordu.",
+          "story": "Devlete ait tozlu arşivlerin derinliklerinde 1950'lere ait o lanetli dosya raftan indi. Gerçekleri güneşe çıkarmaya hazırlanan araştırmacı, sabah ofisinde cansız bulundu. Geçmişin hayaletleri, o sırrı korumak için arşivin soğuk koridorlarında ölüm olup dolaşıyordu.",
           "atmosphere": "Eski kâğıt kokusu. Floresan ışık. Klimanın uğultusu. Ve bir masada yarım bırakılmış transkript.",
           "suspects": [
             {
               "id": "s1",
               "name": "Kıdemli Arşivist Hayriye Hanım",
               "icon": "👩",
-              "description": "40 yıldır bu arşivde. Dosyanın açılmaması için kurula rapor vermişti — reddedilmişti.",
-              "detail": "63 yaşında, titiz, geçmişe saygılı."
+              "description": "Kırk yılını bu tozlu sayfalara adamış, dosyanın açılmasını engellemek için kurula defalarca itiraz dilekçesi sunan titiz ve kuralcı arşivist.",
+              "detail": "63 yaşında, parmakları kağıt kesikleriyle dolu, geçmişe saplantılı bir memur."
             },
             {
               "id": "s2",
               "name": "Tarih Profesörü Celal",
               "icon": "⚖️",
-              "description": "Dosyanın kendi ailesini ilgilendiren bölümü var. Kamuoyu bunu öğrenmemeli.",
-              "detail": "58 yaşında, karizmatik, akademik itibarı her şeyin üstünde."
+              "description": "Ailesinin karanlık geçmişini barındıran o lanetli sayfanın kamuoyuna sızmasını engellemek için her yolu mubah gören, nüfuzlu tarih profesörü.",
+              "detail": "58 yaşında, karizmatik, kariyerini ve aile adını korumak için gözünü karartmış biri."
             },
             {
               "id": "s3",
               "name": "Siyasetçi Oğlu Taner",
               "icon": "👨‍💼",
-              "description": "Babası o dosyadaki bir isim. Seçimler yaklaşıyor. Dosya çıkarsa biter.",
-              "detail": "45 yaşında, temkinli, bağlantıları güçlü."
+              "description": "Siyasi kariyeri babasının o dosyadaki ismine bağlı olan, seçim arifesinde patlayacak bir skandalı önlemek için gizlice arşive sızan siyasetçi oğlu.",
+              "detail": "45 yaşında, teknolojiye ve mekanik sistemlere aşina, öfkesini ustaca gizleyen bir figür."
             },
             {
               "id": "s4",
               "name": "Yabancı Gazeteci Elena",
               "icon": "👩‍💻",
-              "description": "Dosyayı uluslararası platforma taşımak için orada. Maktul onu destekliyordu.",
-              "detail": "37 yaşında, ödüllü gazeteci, baskı altında."
+              "description": "O dosyayı uluslararası arenada bir bomba gibi patlatmak üzere olan, maktulle sık sık arşivin en gizli köşelerinde görüşen yabancı gazeteci.",
+              "detail": "37 yaşında, ödüllü, hızlı hareket eden ve her taşın altından çıkan idealist muhabir."
             }
           ],
           "weapons": [
@@ -12399,25 +12399,25 @@
               "id": "w1",
               "name": "Ağır Cilt Ansiklopedi",
               "icon": "📕",
-              "description": "Metal köşeli ağır referans ansiklopedisi."
+              "description": "Raflardan çekilip kafa tasına bütün gücüyle indirildiğinde kemiği un ufak edecek ağırlıktaki, pirinç köşeli asırlık devasa referans ansiklopedisi."
             },
             {
               "id": "w2",
               "name": "Zehirli Mürekkep Spreyi",
               "icon": "🖋️",
-              "description": "Belge koruma spreyi — yüksek konsantrasyonda toksik."
+              "description": "Belge restorasyonunda kullanılan, doğrudan yüze sıkıldığında yüksek konsantrasyonuyla solunum yollarını anında kör eden zehirli mürekkep spreyi."
             },
             {
               "id": "w3",
               "name": "Arşiv Rafı Demiri",
               "icon": "📐",
-              "description": "Rafın sökülmüş metal destek çubuğu."
+              "description": "Ağır yükleri taşımak için kurulan depo raflarından sökülmüş, küt ve paslı yüzeyiyle yakın dövüşte ölümcül bir mızrağa dönüşen o sivri çelik destek demiri."
             },
             {
               "id": "w4",
               "name": "Soğutma Sistemi Gazı",
               "icon": "❄️",
-              "description": "Arşiv iklimlendirme sisteminden serbest bırakılan freon gazı."
+              "description": "Bina tesisatından odaya sızdırıldığında akciğerleri hızla dondurarak kurbanı sessiz ve iz bırakmayan bir buz uykusuna hapseden endüstriyel freon gazı."
             }
           ],
           "locations": [
@@ -12425,25 +12425,25 @@
               "id": "l1",
               "name": "Gizli Arşiv Odası",
               "icon": "🔐",
-              "description": "En kısıtlı erişimli, iklimlendirmeli oda."
+              "description": "En kısıtlı erişim yetkisiyle girilebilen, belgeleri korumak için iklimlendirme sistemleriyle donatılmış, penceresiz ve kalın çelik kapılı gizli devlet arşivi odası."
             },
             {
               "id": "l2",
               "name": "Araştırma Salonu",
               "icon": "📖",
-              "description": "Araştırmacıların çalıştığı açık salon."
+              "description": "Araştırmacıların gün boyu dirsek çürüttüğü, asırlık ansiklopedilerin durduğu, uzun ahşap masaların ve loş okuma lambalarının bulunduğu geniş aydınlık salon."
             },
             {
               "id": "l3",
               "name": "Koridor (B Bloğu)",
               "icon": "🚶",
-              "description": "Arşiv bölümleri arası ana koridor."
+              "description": "Arşiv bölümlerini birbirine bağlayan, ayak seslerinin çınladığı, demir rafların taşındığı ve gece yarısı sadece devriye atanların gölgesini barındıran uzun geçit."
             },
             {
               "id": "l4",
               "name": "Teknik Servis Odası",
               "icon": "🔧",
-              "description": "İklimlendirme ve elektrik sistemleri odası."
+              "description": "Binanın tüm soğutma ve elektrik şebekesinin kontrol edildiği, devasa valflerin bulunduğu, sadece yetkili teknik personelin şifresini bildiği dar mekanik cihaz odası."
             }
           ],
           "solution_table": {
@@ -12473,10 +12473,10 @@
               "isRevealed": true,
               "pointCost": 0,
               "title": "Adli Rapor",
-              "text": "Kurbanın akciğerlerindeki şiddetli donukluk ve ciğer çeperlerindeki kristalleşme, ağır bir travma veya sıvı zehri değil; doğrudan odaya basılan endüstriyel bir soğutucu gazı işaret ediyordu.",
+              "text": "Kurbanın akciğerlerindeki şiddetli donukluk ve ciğer çeperlerindeki mikroskobik buz kristalleri, doğrudan o izole odaya sızdırılan endüstriyel bir freon gazı felaketini fısıldıyordu.",
               "grid_effect": "l1_gizli ölüm yeri. Soğutucu gaz → w4_gaz. w1, w2, w3 bu mekân için eleniyor.",
               "mechanicType": "text",
-              "deductionHint": "Mekanik bir gaz tahribatı. İklimlendirme kontrolü kimin elinde?"
+              "deductionHint": "Mekanik bir gaz tahribatı. İklimlendirme valfleri o saatte kimin elinde olabilir?"
             },
             {
               "id": "c2",
@@ -12485,7 +12485,7 @@
               "isRevealed": false,
               "pointCost": 110,
               "title": "Gece Güvenlik Görevlisi",
-              "text": "\"Taner Bey gece yarısı elindeki ana sistem master anahtarıyla teknik servis odasına yöneldi. 'İklimlendirmede koku var' diyerek 20 dakika o kapalı kapının ardında kaldı.\"",
+              "text": "\"Siyasetçi Taner Bey, gece yarısı elindeki o master anahtarla doğrudan teknik servis odasına yöneldi. 'İklimlendirmede koku var' diyerek tam 20 dakika o kapalı kapının ardında kaldı.\"",
               "grid_effect": "s3_taner + l4_teknik = ✓. s3 için l1, l2, l3 = ✗.",
               "mechanicType": "tanik_yuzlesme",
               "yuzlesmeDialogu": [
@@ -12500,7 +12500,7 @@
                   "yalan": false
                 }
               ],
-              "deductionHint": "Siyasetçi oğlu, teknisyenlere ait olmayan bir anahtarla havalandırmanın kalbindeydi."
+              "deductionHint": "Siyasetçi oğlu, teknisyenlere ait olmayan özel bir anahtarla havalandırmanın kalbindeydi."
             },
             {
               "id": "c3",
@@ -12509,7 +12509,7 @@
               "isRevealed": false,
               "pointCost": 110,
               "title": "Gaz Vanası Parmak İzi",
-              "text": "Teknik odadaki freon gazı tahliye vanasının üzerinde, o metale hiç alışkın olmayan, zorlayarak ve kaydırarak çevrilmiş terli bir el izi tespit edildi.",
+              "text": "Teknik odadaki ağır freon gazı tahliye vanasının üzerinde, o metale hiç alışkın olmayan, zorlayarak ve kaydırarak çevrilmiş terli bir el izi laboratuvar ışıklarında parlıyordu.",
               "mechanicType": "parmak_izi",
               "parmakIziVerisi": {
                 "aciklama": "Vana kolundaki izi dört şüpheliyle eşleştir.",
@@ -12524,7 +12524,7 @@
                 "sonuc": "Vanayı açan: Taner."
               },
               "grid_effect": "s3_taner + w4_gaz = ✓. s1, s2, s4 için w4 = ✗.",
-              "deductionHint": "Taner + gaz vanası + teknik oda = çözüm tamamlandı. Katil: Taner."
+              "deductionHint": "Valf üzerindeki iz, Taner'in oraya sadece bakmak için girmediğini kanıtlıyor."
             },
             {
               "id": "c4",
@@ -12533,7 +12533,7 @@
               "isRevealed": false,
               "pointCost": 110,
               "title": "Mürekkep Spreyi DNA",
-              "text": "Arşivin gizli odasında yere düşmüş belge koruma spreyinin başlığında bir DNA örneği saptandı.",
+              "text": "Arşivin o kısıtlı erişimli gizli odasında yere düşmüş belge koruma spreyinin başlığında, sadece uluslararası basına çalışan o gazeteciye ait hücre örnekleri saptandı.",
               "mechanicType": "dna_match",
               "dnaVerisi": {
                 "aciklama": "Sprey şişesindeki DNA'yı dört şüpheliyle eşleştir.",
@@ -12575,7 +12575,7 @@
                 "sonuc": "Spreyi tutan: Elena."
               },
               "grid_effect": "s4_elena + w2_murekep = ✓. s1, s2, s3 için w2 = ✗. Elena gizli arşiv odasındaydı → s4 + l1_gizli = ✓.",
-              "deductionHint": "Elena + mürekkep + gizli arşiv odası. Ama ölüm gaz — Elena katil değil."
+              "deductionHint": "Gazeteci Elena + Gizli Arşiv Odası. Elena olay yerindeydi, peki ne zaman?"
             },
             {
               "id": "c5",
@@ -12584,10 +12584,10 @@
               "isRevealed": false,
               "pointCost": 110,
               "title": "Elena'nın Gizli Odadaki Varlığı",
-              "text": "Gazeteci Elena'nın ceketindeki tozlar onun gizli odada bulunduğunu gösteriyordu; ancak bina turnike logları, onun ölümcül gaz salınımından tam 15 dakika önce binayı terk ettiğini mühürlemişti.",
+              "text": "Gazeteci Elena'nın ceketindeki tarihi tozlar onun gizli odada bulunduğunu mühürlerken; turnike logları, onun o ölümcül gaz salınımından tam 15 dakika önce binayı tamamen terk ettiğini doğruluyordu.",
               "grid_effect": "s4_elena + l1_gizli = ✓ kesin. s4 için l2, l3, l4 = ✗. Elena gazdan önce çıkmış — katil değil.",
               "mechanicType": "text",
-              "deductionHint": "Gazeteci oradaydı ama gazdan önce çıktı. Zamanlama onu kurtarıyor."
+              "deductionHint": "Zamanlama, gazeteciyi ölüm anından tamamen siliyor."
             },
             {
               "id": "c6",
@@ -12596,7 +12596,7 @@
               "isRevealed": false,
               "pointCost": 110,
               "title": "Hayriye Hanım'ın Beyanı",
-              "text": "\"Gece boyunca araştırma salonunun dışına bir adım bile atmadım. Sadece uzaktan, B koridoru yönünden Celal'in aceleci ayak seslerini ve metalik bir sürtünme duyduğuma yemin edebilirim.\"",
+              "text": "\"Gece boyunca açık araştırma salonunun dışına bir adım bile atmadım. Sadece uzaktan, B koridoru yönünden aceleci ayak sesleri ve metalik bir sürtünme duyduğuma yemin edebilirim.\"",
               "grid_effect": "s1_hayriye + l2_salon = ✓. s1 için l1, l3, l4 = ✗.",
               "mechanicType": "tanik_yuzlesme",
               "yuzlesmeDialogu": [
@@ -12611,7 +12611,7 @@
                   "yalan": false
                 }
               ],
-              "deductionHint": "Hayriye + araştırma salonu. Celal koridorda."
+              "deductionHint": "Hayriye Hanım + Araştırma Salonu. B koridorunda dolaşan başka biri var."
             },
             {
               "id": "c7",
@@ -12620,7 +12620,7 @@
               "isRevealed": false,
               "pointCost": 110,
               "title": "Ansiklopedi Parmak İzi",
-              "text": "Araştırma salonundaki devrilmiş o devasa ansiklopedinin tozlu kapağında, yılların kağıt kesikleriyle dolu ince bir elin izleri vardı.",
+              "text": "Araştırma salonundaki masadan devrilmiş o devasa ansiklopedinin tozlu kapağında, yılların kağıt kesikleriyle dolu o ince arşivci elinin izleri vardı.",
               "mechanicType": "parmak_izi",
               "parmakIziVerisi": {
                 "aciklama": "Ansiklopedi köşesindeki izi dört şüpheliyle eşleştir.",
@@ -12635,7 +12635,7 @@
                 "sonuc": "Ansiklopediyi tutan: Hayriye."
               },
               "grid_effect": "s1_hayriye + w1_ansiklopedi = ✓. s2, s3, s4 için w1 = ✗.",
-              "deductionHint": "Hayriye + ansiklopedi + araştırma salonu. Artık Hayriye tamam."
+              "deductionHint": "Hayriye Hanım + Ağır Ansiklopedi. Hayriye tamamen elendi."
             },
             {
               "id": "c8",
@@ -12644,10 +12644,10 @@
               "isRevealed": false,
               "pointCost": 110,
               "title": "Temizlik Personeli",
-              "text": "\"Profesör Celal gece 23.00'te B bloğu koridorunda elinde uzun, ağır bir metal çubukla ilerliyordu. 'Raf taşıyorum' dedi ama o saatte orada o işin yapılması imkansızdı.\"",
+              "text": "\"Tarih Profesörü Celal gece 23.00'te B bloğu koridorunda elinde uzun, ağır bir metal çubukla ilerliyordu. 'Raf taşıyorum' dedi ama o saatte o işin yapılması imkansızdı.\"",
               "grid_effect": "s2_celal + l3_koridor = ✓. s2 için l1, l2, l4 = ✗.",
               "mechanicType": "text",
-              "deductionHint": "Profesör koridorda elinde metalle görüldü. Odanın dışında."
+              "deductionHint": "Profesör Celal, koridorda elinde metal bir objeyle görüldü."
             },
             {
               "id": "c9",
@@ -12656,11 +12656,11 @@
               "isRevealed": false,
               "pointCost": 110,
               "title": "Raf Demiri İzi",
-              "text": "Koridor B'nin zemininde, ağır ve uzun bir metalin sivri ucunun bıraktığı derin bir çizik hattı mevcuttu. Profesörün ofisindeki yeni rafta tam da o destek demiri eksikti.",
+              "text": "Koridor B'nin zemininde, ağır ve uzun bir metalin sivri ucunun bıraktığı derin bir çizik hattı mevcuttu. Profesörün odasındaki yeni rafta tam da o destek demiri eksikti.",
               "mechanicType": "gorsel_ipucu",
               "gorselAciklama": "Koridor zemininde çizgi. Raf bölümü fotoğrafı: demir montaj çubuğu eksik.",
               "grid_effect": "s2_celal + w3_demir = ✓. Celal + koridor + demir = tam eşleşme.",
-              "deductionHint": "Celal + raf demiri + koridor. Artık Celal tamam. Tüm ızgara dolu."
+              "deductionHint": "Celal + Raf Demiri + Koridor B. Celal'in sırrı çözüldü, elendi."
             },
             {
               "id": "c10",
@@ -12669,7 +12669,7 @@
               "isRevealed": false,
               "pointCost": 110,
               "title": "Taner'in Seçim Gecesi Mesajları",
-              "text": "Siyasetçinin oğlunun telefonundan kurtarılan silinmiş şifreli mesajlar.",
+              "text": "Siyasetçinin oğlunun telefonundan kurtarılan silinmiş şifreli mesajlar: 'Gaz sessiz. Babamın adı o tozlu kağıtlarla yanmayacak.' gerçeği suratlara çarpıyordu.",
               "mechanicType": "phone_chain",
               "phoneVerisi": {
                 "aciklama": "Mesaj zincirini takip et.",
@@ -12706,7 +12706,7 @@
                 "sonuc": "'Gaz sessiz' — Taner gaz yöntemini önceden planlamıştı."
               },
               "grid_effect": "Taner'in kendi mesajları planı itiraf ediyor.",
-              "deductionHint": "'Gaz sessiz' + vana izi + teknik oda = Taner katil."
+              "deductionHint": "'Gaz sessiz' mesajı, Taner'in freon yöntemini önceden planladığının dijital itirafı."
             },
             {
               "id": "c11",
@@ -12715,11 +12715,11 @@
               "isRevealed": false,
               "pointCost": 110,
               "title": "Teknik Oda Ses Sistemi",
-              "text": "[Oda içi teknik kayıt] Taner valf başında yalnızken: 'Babamın adını o tozlu kağıtlar yüzünden yaktırmam.' Ardından ağır bir basınç valfinin şiddetle çevrilme sesi duyuluyor.",
+              "text": "[Oda içi teknik kayıt] Taner valf başında yalnızken fısıldadı: 'Babamın adını yaktırmam.' Ardından ağır bir basınç valfinin şiddetle çevrilme sesi ve sızan gazın tıslaması duyuluyor.",
               "mechanicType": "ses_kaydi",
               "sesMetni": "Taner'in sesi sakin ve kararlı. Vana tıklaması.",
               "grid_effect": "Taner'in sözleri: 'baba' motifi + vana = gaz cinayetini bizzat uyguladı.",
-              "deductionHint": "Vana + 'baba' motifi + teknik oda = Taner katil, kesin."
+              "deductionHint": "Babası için işlenen bu kusursuz cinayet, teknik odadaki o dondurucu ses kaydına kurban gitti."
             }
           ],
           "solution": {
@@ -12727,7 +12727,7 @@
             "weaponId": "w4",
             "locationId": "l4"
           },
-          "solutionNarrative": "Siyasetçi Oğlu Taner, babasının adının geçtiği dosyanın açıklanmasını engellemek için teknik servis odasından freon gazını gizli arşiv odasına yönlendirdi. Elena orada araştırma yapıyordu — gazdan önce çıktı. Maktul kaldı. Mesajları, vana izi ve ses kaydı Taner'i mahkûm etti."
+          "solutionNarrative": "Siyasetçi Oğlu Taner, babasının adının geçtiği dosyanın açıklanmasını engellemek için teknik servis odasından freon gazını gizli arşiv odasına yönlendirdi. Mesajları, ağır vana izi ve o dondurucu ses kaydı, siyasi hırslarını demir parmaklıklar ardına kilitledi."
         },
         {
           "puzzleId": "yeni_b02",
@@ -12745,29 +12745,29 @@
               "id": "s1",
               "name": "Kuzey Temsilcisi Mehmet",
               "icon": "noun-cem-bey-avatar.png",
-              "description": "Anlaşma kendi tarafının aleyhine — maktul lehine yönlendirdiği düşünülüyordu.",
-              "detail": "55 yaşında, deneyimli diplomat, temkinli."
+              "description": "Anlaşmanın kendi tarafının aleyhine sonuçlanacağını anlayan, masadaki dengeyi bozmak için her türlü diplomatik manipülasyonu yapabilecek tecrübeli ve temkinli temsilci.",
+              "detail": "55 yaşında, evrak çantasıyla sürekli notlar alan, aşırı temkinli bürokrat."
             },
             {
               "id": "s2",
               "name": "Güney Temsilcisi Nikos",
               "icon": "👨‍💼",
-              "description": "Anlaşmayı destekliyor ama gizli bir şart var — maktul biliyordu.",
-              "detail": "60 yaşında, karizmatik, iki yüzlü deniyor."
+              "description": "Anlaşmayı destekliyor görünse de perde arkasında kurbanın bildiği o kirli 'gizli şart' için taviz vermeyen, iki yüzlü ve son derece karizmatik Güney temsilcisi.",
+              "detail": "60 yaşında, insanları zehirli gülümsemesiyle manipüle eden şık diplomat."
             },
             {
               "id": "s3",
               "name": "AB Gözlemcisi Ingrid",
               "icon": "noun-teacher-1908919-avatar.png",
-              "description": "Tarafsız gözlemci. Ama ülkesinin çıkarları anlaşmayla çakışıyor.",
-              "detail": "48 yaşında, analitik, soğukkanlı."
+              "description": "Ülkesinin çıkarları anlaşmayla çakıştığı için bu barış masasının devrilmesini kendi kariyeri adına faydalı bulan, buz gibi soğukkanlı AB gözlemcisi.",
+              "detail": "48 yaşında, sürekli açık havada elinde sigarasıyla not tutan analitik kadın."
             },
             {
               "id": "s4",
               "name": "Özel Güvenlik Müdürü Selim",
               "icon": "💂",
-              "description": "Otelin güvenlik koordinatörü. Tüm odalara erişimi var.",
-              "detail": "42 yaşında, eski özel kuvvetler, emir bekler."
+              "description": "Otelin tüm kameralarına, master anahtarlarına ve kilitli geçitlerine hakim olan, her odanın kapısını sorgusuzca açabilen eski özel kuvvetler mensubu güvenlik koordinatörü.",
+              "detail": "42 yaşında, karanlık alanlarda ve iletişim panolarında sürekli devriye atan sert adam."
             }
           ],
           "weapons": [
@@ -12775,25 +12775,25 @@
               "id": "w1",
               "name": "Diplomatik Evrak Çantası",
               "icon": "💼",
-              "description": "Ağır metal köşeli deri evrak çantası."
+              "description": "Diplomatik dokunulmazlığa sahip, gümrüklerden aranmadan geçen ve kafatasına sertçe indirildiğinde kemikleri kıran ağır metal köşeli deri evrak çantası."
             },
             {
               "id": "w2",
               "name": "Zehirli Şarap",
               "icon": "🍷",
-              "description": "Minibar şarabına karıştırılan alkaloit."
+              "description": "Minibardan alınan, içine sadece usta bir kimyagerin hazırlayabileceği ve kalbi saniyeler içinde felç eden sinsi bir alkaloit karıştırılmış o lüks şarap şişesi."
             },
             {
               "id": "w3",
               "name": "Oda Telefonu Kablosu",
               "icon": "☎️",
-              "description": "Sabit hat telefon kablosu — boğma."
+              "description": "Otel odalarındaki sabit hatlardan sökülmüş, kurbanın boynuna arkadan dolandığında ince, ağsı ve kesik benzeri sürtünme izleri bırakan kalın telefon kablosu."
             },
             {
               "id": "w4",
               "name": "Cam Küllük",
               "icon": "🪨",
-              "description": "Otel terasındaki ağır cam küllük."
+              "description": "Rüzgarlı teras köşelerinde duran, kaba bir güçle savrulduğunda kafatasına kalın cam kırıkları saplayan o devasa ve ağır otel küllüğü."
             }
           ],
           "locations": [
@@ -12801,25 +12801,25 @@
               "id": "l1",
               "name": "Maktulün Odası (412)",
               "icon": "🚪",
-              "description": "Arabulucunun kalan odası."
+              "description": "Koridorun en sonunda yer alan, kartlı geçişle korunan ve arabulucunun o geceyi şifreli dosyaları inceleyerek geçirdiği, minibarın açık olduğu izole yatak odası."
             },
             {
               "id": "l2",
               "name": "Toplantı Salonu",
               "icon": "🏛️",
-              "description": "Müzakere toplantılarının yapıldığı özel salon."
+              "description": "Müzakere dosyalarının, devasa meşe masanın ve sürekli çalışan ağ yazıcılarının bulunduğu lüks ve ışıklı diplomatik toplantı salonu."
             },
             {
               "id": "l3",
               "name": "Otel Terası",
               "icon": "🌙",
-              "description": "Üst kattaki açık teras alanı."
+              "description": "Binanın üst katında yer alan, Boğaz esintisini alan, insanların sigara içip küllükleri doldurduğu rüzgarlı açık hava teras alanı."
             },
             {
               "id": "l4",
               "name": "Güvenlik Kontrol Merkezi",
               "icon": "📹",
-              "description": "Kamera ve erişim kontrol odası."
+              "description": "Yüzlerce ekranın yanıp söndüğü, otelin her santimetrekaresini ve kablo ağını izleyen cihazlarla dolu sadece yetkili şifreyle girilen güvenlik kontrol merkezi."
             }
           ],
           "solution_table": {
@@ -12849,10 +12849,10 @@
               "isRevealed": true,
               "pointCost": 0,
               "title": "Otel Doktoru Raporu",
-              "text": "Kurbanın vücudunda boğulma morlukları veya darp izi yoktu; dudaklarındaki ve masasındaki şarap bardağında bulunan sinsi alkaloit, ölümün doğrudan yutularak geldiğini belgeliyordu.",
+              "text": "Maktulün dudaklarındaki hafif morarma ve kendi yatak odasındaki kristal kadehin dibinde çökelen tortu, ölümün dışarıdan bir darbeyle değil, ustalıkla sunulan şık bir sıvı ikramla geldiğini kanıtlıyordu.",
               "grid_effect": "l1_oda ölüm yeri. Alkaloit zehiri → w2_sarap. w1, w3, w4 bu mekân için eleniyor.",
               "mechanicType": "text",
-              "deductionHint": "Bir darbe değil, bir ikram. Şarabı odaya kim soktu?"
+              "deductionHint": "Bir darbe değil, sinsi bir ikram. O zehirli kadehi odaya kim soktu?"
             },
             {
               "id": "c2",
@@ -12860,8 +12860,8 @@
               "revealOrder": 2,
               "isRevealed": false,
               "pointCost": 110,
-              "title": "Kat Görevlisi",
-              "text": "\"Nikos Bey gece 22.30'da kurbanın kapısını çaldı. Elinde şık, bez bir 'hediye' torbası vardı. İçeri girdi ve 15 dakika sonra o torba olmadan dışarı çıktı.\"",
+              "title": "Kat Görevlisi İfadesi",
+              "text": "\"Güney Temsilcisi Nikos Bey gece 22.30'da kurbanın kapısını çaldı. Elinde şık, bez bir 'hediye' torbası vardı. İçeri girdi ve 15 dakika sonra o torba olmadan dışarı çıktı.\"",
               "grid_effect": "s2_nikos + l1_oda = ✓. s2 için l2, l3, l4 = ✗.",
               "mechanicType": "tanik_yuzlesme",
               "yuzlesmeDialogu": [
@@ -12885,7 +12885,7 @@
               "isRevealed": false,
               "pointCost": 110,
               "title": "Şarap Bardağı DNA",
-              "text": "Maktulün masasındaki o ölümcül şarap bardağının kristal gövdesinde sinsi bir parmak izi parlıyordu.",
+              "text": "Maktulün masasındaki o ölümcül şarap bardağının kristal gövdesinde o güler yüzlü elçinin sinsi parmak izi laboratuvar ışıklarında parlıyordu.",
               "mechanicType": "dna_match",
               "dnaVerisi": {
                 "aciklama": "Bardak DNA'sını dört şüpheliyle eşleştir.",
@@ -12927,7 +12927,7 @@
                 "sonuc": "Bardağa dokunan: Nikos."
               },
               "grid_effect": "s2_nikos + w2_sarap = ✓. s1, s3, s4 için w2 = ✗.",
-              "deductionHint": "Nikos + şarap + oda = Nikos katil. Tüm çözüm burada."
+              "deductionHint": "Güney Temsilcisi + Zehirli Şarap + Kurbanın Odası = Kusursuz Eşleşme."
             },
             {
               "id": "c4",
@@ -12936,10 +12936,10 @@
               "isRevealed": false,
               "pointCost": 110,
               "title": "Toplantı Salonu Kayıtları",
-              "text": "\"Kuzey Temsilcisi Mehmet Bey, gece boyunca toplantı salonundaki ağ yazıcısından her yarım saatte bir yeni taslak dökümleri aldı. Salondan hiç ayrılmadığı dijital olarak kanıtlandı.\"",
+              "text": "\"Kuzey Temsilcisi Mehmet Bey'in gece boyunca toplantı salonundaki ağ yazıcısından aldığı taslak dökümleri, onun salondan hiç ayrılmadığını dijital olarak kanıtladı.\"",
               "grid_effect": "s1_mehmet + l2_salon = ✓. s1 için l1, l3, l4 = ✗.",
               "mechanicType": "text",
-              "deductionHint": "Mehmet Bey kağıtlarla meşguldü, şarapla değil."
+              "deductionHint": "Mehmet Bey evraklarla meşguldü, şarapla değil."
             },
             {
               "id": "c5",
@@ -12948,7 +12948,7 @@
               "isRevealed": false,
               "pointCost": 110,
               "title": "Evrak Çantası İzi",
-              "text": "Toplantı salonunda unutulan ağır metal köşeli diplomatik evrak çantasının sapında, sürekli deri taşımaya alışkın bir elin izi tespit edildi.",
+              "text": "Toplantı salonunda unutulan ağır metal köşeli diplomatik evrak çantasının sapında, sürekli deri taşımaya alışkın bir elin ter izi saptandı.",
               "mechanicType": "parmak_izi",
               "parmakIziVerisi": {
                 "aciklama": "Çanta köşesindeki izi dört şüpheliyle eşleştir.",
@@ -12963,7 +12963,7 @@
                 "sonuc": "Çantayı tutan: Mehmet."
               },
               "grid_effect": "s1_mehmet + w1_canta = ✓. s2, s3, s4 için w1 = ✗.",
-              "deductionHint": "Mehmet + evrak çantası + toplantı salonu. Artık Mehmet tamam."
+              "deductionHint": "Mehmet Bey + Evrak Çantası + Toplantı Salonu. Mehmet Bey tamamen elendi."
             },
             {
               "id": "c6",
@@ -12972,10 +12972,10 @@
               "isRevealed": false,
               "pointCost": 110,
               "title": "Teras Barmenin İfadesi",
-              "text": "\"Gözlemci Ingrid Hanım tüm geceyi açık terasta, rüzgara karşı notlar alarak geçirdi. Küllüğü izmaritlerle doluydu, o köşeden bir an olsun kalkmadı.\"",
+              "text": "\"Gözlemci Ingrid Hanım tüm geceyi açık terasta, rüzgara karşı notlar alarak geçirdi. İzmaritlerle dolu o ağır cam küllüğün başından bir an olsun kalkmadı.\"",
               "grid_effect": "s3_ingrid + l3_teras = ✓. s3 için l1, l2, l4 = ✗. s3 + w4_kulluk = ✓ (teras + küllük).",
               "mechanicType": "text",
-              "deductionHint": "AB gözlemcisi terasta kilitli kalmış, aşağıya inmemiş."
+              "deductionHint": "AB gözlemcisi terasta izole kalmış. Silahı ve mekanı mühürlendi."
             },
             {
               "id": "c7",
@@ -12984,10 +12984,10 @@
               "isRevealed": false,
               "pointCost": 110,
               "title": "Güvenlik Merkezi Kablo İzi",
-              "text": "Güvenlik merkezindeki iletişim panosundan sökülen oda telefonu kablosunda, o gece sistemi denetlediğini söyleyen Özel Güvenlik Müdürü Selim'in terli DNA'sı bulundu.",
+              "text": "Güvenlik merkezindeki iletişim panosundan sökülen oda telefonu kablosunda, Özel Güvenlik Müdürü Selim'in terli DNA'sı bulundu.",
               "grid_effect": "s4_selim + w3_kablo = ✓. s4 + l4_guvenlik = ✓. s1, s2, s3 için w3 = ✗.",
               "mechanicType": "text",
-              "deductionHint": "Selim + kablo + güvenlik merkezi. Artık Selim tamam. Tüm ızgara dolu."
+              "deductionHint": "Güvenlik Müdürü + Kopuk Kablo + Kontrol Merkezi. Geriye sadece Nikos kaldı."
             },
             {
               "id": "c8",
@@ -12996,11 +12996,11 @@
               "isRevealed": false,
               "pointCost": 110,
               "title": "Gizli Şart Belgesi",
-              "text": "Güney Temsilcisi'nin çantasından sızan o gizli protokol kağıdının altında, maktulün kalın kırmızı kalemle yazdığı 'KABUL EDİLEMEZ' ibaresi, cinayetin ardındaki devasa motifi haykırıyordu.",
+              "text": "Güney Temsilcisi'nin çantasından sızan o gizli protokol kağıdının altında, maktulün kalın kırmızı kalemle yazdığı 'KABUL EDİLEMEZ' ibaresi parlıyordu.",
               "mechanicType": "gorsel_ipucu",
               "gorselAciklama": "Gizli protokol belgesi. 'Nikos imzası.' Altında: maktulün el yazısıyla 'KABUL EDİLEMEZ.'",
               "grid_effect": "Nikos'un motifi: gizli şart + maktulün 'kabul edilemez' notu = Nikos harekete geçti.",
-              "deductionHint": "Gizli şart reddedildi + şarap + oda = Nikos katil."
+              "deductionHint": "Gizli şartın reddedilmesi = Nikos'un diplomatik infaz kararı."
             },
             {
               "id": "c9",
@@ -13009,7 +13009,7 @@
               "isRevealed": false,
               "pointCost": 110,
               "title": "O Gecenin Zaman Çizelgesi",
-              "text": "Otel kart okuyucularının saniye saniye kaydettiği diplomatik gece trafiği.",
+              "text": "Otel kart okuyucularının saniye saniye kaydettiği gece trafiği, o şık hediye paketinin odaya tam olarak ne zaman sızdığını açığa çıkardı.",
               "mechanicType": "timeline_sort",
               "timelineVerisi": {
                 "aciklama": "Diplomatik gece kronolojisi.",
@@ -13043,7 +13043,7 @@
                 "sonuc": "Nikos zehiri önce hazırladı, sonra 'hediye' olarak götürdü."
               },
               "grid_effect": "Nikos planlı hareket etti — önce zehir, sonra ziyaret.",
-              "deductionHint": "Önceden hazırlık + ziyaret + şarap = kasıtlı, planlı cinayet."
+              "deductionHint": "Önceden hazırlanan hediye paketi + Gece ziyareti = Planlı bir cinayet."
             },
             {
               "id": "c10",
@@ -13052,7 +13052,7 @@
               "isRevealed": false,
               "pointCost": 110,
               "title": "Nikos'un Şifreli Mesajları",
-              "text": "Katilin o akşam kurduğu stratejik ve şifreli yazışmalar.",
+              "text": "Katilin o akşam danışmanıyla kurduğu stratejik ve şifreli yazışmalarda geçen 'Şaraba alışkın biri' ibaresi, zehirleme yönteminin planlı olduğunu kanıtladı.",
               "mechanicType": "phone_chain",
               "phoneVerisi": {
                 "aciklama": "Mesaj zincirini takip et.",
@@ -13082,7 +13082,7 @@
                 "sonuc": "'Şaraba alışkın biri' — Nikos zehirleme yöntemini o an seçti."
               },
               "grid_effect": "Nikos kendi mesajlarında yöntemi seçtiğini söylüyor.",
-              "deductionHint": "'Şaraba alışkın' = zehirli şarap. Nikos katil."
+              "deductionHint": "'Şaraba alışkın' ibaresi, şarabı silah olarak bizzat Nikos'un seçtiğini gösteriyor."
             },
             {
               "id": "c11",
@@ -13091,11 +13091,11 @@
               "isRevealed": false,
               "pointCost": 110,
               "title": "Nikos'un Sonraki Gün Sabahı",
-              "text": "[Otel lobisi ortam dinlemesi] Nikos telefonda fısıldıyor: 'Arabulucu o metni imzalamayacak. Ama merak etme, bugün o masaya farklı biri oturacak.' Bu sözler cinayetin önceden kurgulandığının itirafıydı.",
+              "text": "[Otel lobisi ortam dinlemesi] Nikos telefonda fısıldıyor: 'Arabulucu imzalamayacak. Ama bugün o masaya farklı biri oturacak.'",
               "mechanicType": "ses_kaydi",
               "sesMetni": "Nikos'un sesi sakin ve planlanmış. 'Farklı biri imzalar' — maktulün yerini alacak.",
               "grid_effect": "'Farklı biri imzalar' = maktulün öleceğini biliyordu. Katil Nikos.",
-              "deductionHint": "'Farklı biri imzalar' — Nikos maktulün ölümünü önceden biliyordu."
+              "deductionHint": "'Farklı biri imzalar' cümlesi, Nikos'un maktulün öleceğini saatler öncesinden bildiğini kanıtlıyor."
             }
           ],
           "solution": {
@@ -13103,7 +13103,7 @@
             "weaponId": "w2",
             "locationId": "l1"
           },
-          "solutionNarrative": "Güney Temsilcisi Nikos, gizli şartının reddedileceğini anlayınca maktulü zehirli şarapla susturdu. Oda ziyareti sırasında şarabı bıraktı. DNA, tanık ifadesi, mesajlar ve 'farklı biri imzalar' sözü onu mahkûm etti."
+          "solutionNarrative": "Güney Temsilcisi Nikos, gizli şartının reddedileceğini anlayınca maktulü zehirli şarapla susturmaya karar verdi. Planlı oda ziyareti sırasında o ölümcül hediyeyi bıraktı. Kadehteki DNA, tanık ifadesi, şifreli mesajlar ve 'farklı biri imzalar' sözü onun diplomatik maskesini darmadağın etti."
         },
         {
           "puzzleId": "yeni_b03",
@@ -13114,36 +13114,36 @@
           "stars": "★★★★★",
           "gridSize": "4x4",
           "timeLimit": 360,
-          "story": "İzmit'in devasa vinçleri ve paslı çelikleri arasında, milyarlarca liralık bir ihalenin sonucunu belirleyecek olan tersane müdürü, inşa halindeki bir geminin gölgesinde ölü bulundu. Deniz tuzu ve mazot kokan bu sabah, ihalenin kaybedenleri için bir intikam sahnesiydi.",
+          "story": "İzmit'in devasa vinçleri ve paslı çelikleri arasında, milyarlarca liralık bir ihalenin sonucunu belirleyecek olan tersane müdürü, inşa halindeki bir geminin gölgesinde ölü bulundu. Deniz tuzu ve mazot kokan bu sabah, ihalenin kaybedenleri için kanlı bir intikam sahnesiydi.",
           "atmosphere": "Demir kokusu. Deniz isi. Vinç gıcırtısı. Ve teknenin gölgesinde bir ceset.",
           "suspects": [
             {
               "id": "s1",
               "name": "Rakip Şirket Teklif Sorumlusu Baran",
               "icon": "noun-ortak-sabri-bey-avatar.png",
-              "description": "İhaleyi kaybetmek üzere. Son teklifini düzeltemedi — maktul engelledi.",
-              "detail": "44 yaşında, stres altında, iflasın eşiğinde."
+              "description": "İhaleyi kaybetmek üzere olan, son teklifi maktul tarafından sertçe reddedildiği için devasa şirketinin batışını izleyen, stres ve panik içindeki teklif sorumlusu.",
+              "detail": "44 yaşında, iflasın eşiğinde, gece yarısı havuz kenarında vinçleri inceleyen çaresiz adam."
             },
             {
               "id": "s2",
               "name": "Tersane Baş Mühendisi Füsun",
               "icon": "⚡",
-              "description": "Maktulün raporu onun ihmal hatalarını gün yüzüne çıkaracaktı.",
-              "detail": "51 yaşında, deneyimli, köşeye sıkışmış."
+              "description": "Tersanedeki ihmal hataları maktulün raporuyla gün yüzüne çıkacak olan, meslek hayatı ve özgürlüğü pamuk ipliğine bağlı, masası ağır demir borularla dolu kıdemli mühendis.",
+              "detail": "51 yaşında, elleri paslı çeliklere ve ofisindeki borulara alışkın hırslı kadın."
             },
             {
               "id": "s3",
               "name": "Sendika Temsilcisi Kadir",
               "icon": "👷",
-              "description": "İşçi hakları grevini maktul engelliyordu — grev yarın başlayacaktı.",
-              "detail": "47 yaşında, kararlı, sert tutumlu."
+              "description": "İşçi hakları için başlatacağı o devasa grevi maktulün zorla engellediği, kaynak makinelerinin başından ayrılmayan sert tutumlu ve geri adım atmayan sendika temsilcisi.",
+              "detail": "47 yaşında, kararlı, elleri kaynak elektrotlarından yanmış sert mizaçlı lider."
             },
             {
               "id": "s4",
               "name": "Liman Emniyet Amiri Yıldız",
               "icon": "👨‍✈️",
-              "description": "Tersanedeki kaçakçılık operasyonunu maktul fark etmişti.",
-              "detail": "53 yaşında, üniformalı, otoriter."
+              "description": "Limandaki milyonluk kaçakçılık operasyonunun maktul tarafından fark edildiğini anlayan, üniformasının gücünü karanlık işler için kullanan ve geceyi yakıt deposunda geçiren amir.",
+              "detail": "53 yaşında, silahlı, otoriter ve mazot kokularının sindiği bir figür."
             }
           ],
           "weapons": [
@@ -13151,25 +13151,25 @@
               "id": "w1",
               "name": "Çelik Halat Ucu",
               "icon": "🪝",
-              "description": "Vinç halatının metal uç kancası."
+              "description": "Devasa liman vinçlerinin ucunda sallanan, kafatasına indiğinde kemiği un ufak edecek ağırlıktaki paslı, çelik ve dairesel hatlı taşıma kancası."
             },
             {
               "id": "w2",
               "name": "Elektrot Teli (Kaynak)",
               "icon": "⚡",
-              "description": "Kaynak ekipmanının yüksek voltajlı elektrotu."
+              "description": "Kaynak makinelerinden sökülen, dokunulduğunda insan kalbini anında durduracak güçte yüksek voltajlı ve kavurucu iz bırakan elektrik elektrot teli."
             },
             {
               "id": "w3",
               "name": "Demir Boru Parçası",
               "icon": "🔩",
-              "description": "Boru montajından kalan yarım metre demir parça."
+              "description": "Boru montaj hatlarından arta kalan, bir metrelik uzunluğu ve küt paslı yüzeyiyle yakın dövüşte ölümcül bir silaha dönüşen ağır demir boru parçası."
             },
             {
               "id": "w4",
               "name": "Sıvı Yakıt (Ateşli)",
               "icon": "🔥",
-              "description": "Tersane yakıt deposundan alınan mazot — ateşleyici olarak."
+              "description": "Tersane yakıt deposundan alınan, alev aldığında saniyeler içinde her şeyi kül eden endüstriyel ateşleyici mazot ve yanıcı sıvı yakıt karışımı."
             }
           ],
           "locations": [
@@ -13177,25 +13177,25 @@
               "id": "l1",
               "name": "Tekne İnşa Havuzu",
               "icon": "🛳️",
-              "description": "Gemilerin inşa edildiği büyük su havuzu."
+              "description": "Dev gemilerin blok blok inşa edildiği, vinçlerin ve çelik halatların gölgesindeki, zemini deniz suyu ve pasla kaplı devasa inşa havuzu kıyısı."
             },
             {
               "id": "l2",
               "name": "Mühendis Ofisi",
               "icon": "📐",
-              "description": "Baş mühendis çalışma ofisi."
+              "description": "Teknik çizimlerin, plotter makinelerinin ve ağır metal boru parçalarının dağınık şekilde durduğu, cam duvarlı ve izole mühendis çalışma ofisi."
             },
             {
               "id": "l3",
               "name": "İşçi Toplantı Salonu",
               "icon": "🏗️",
-              "description": "Grev öncesi sendika toplantı alanı."
+              "description": "Grev hazırlıkları için pankartların boyandığı, kaynak makinelerinin ve işçi aletlerinin bulunduğu gürültülü ve loş sendika toplanma salonu."
             },
             {
               "id": "l4",
               "name": "Yakıt Deposu",
               "icon": "⛽",
-              "description": "Tersane yakıt depolama alanı."
+              "description": "Binlerce litre yanıcı maddenin depolandığı, etrafı güvenlik kameralarıyla sürekli taranan, yoğun mazot kokulu izole yakıt depolama sahası."
             }
           ],
           "solution_table": {
@@ -13225,10 +13225,10 @@
               "isRevealed": true,
               "pointCost": 0,
               "title": "Tersane Güvenlik Raporu",
-              "text": "Cesedin kafatasındaki dairesel ve son derece derin göçük, bir demir boru ezilmesini veya elektrik yanığını değil; doğrudan devasa bir vincin çelik kancasıyla alınan ölümcül bir darbeyi gösteriyordu.",
+              "text": "Cesedin kafatasındaki dairesel ve son derece derin göçük, gemi inşa havuzunun tepesinde sallanan devasa bir vincin ağır çelik kancasıyla alınan ölümcül darbeyi gösteriyordu.",
               "grid_effect": "l1_havuz ölüm yeri. Halat kancası → w1_halat. w2, w3, w4 bu mekân için eleniyor.",
               "mechanicType": "text",
-              "deductionHint": "Ağır ve dairesel metal bir kanca. Havuzda kim vardı?"
+              "deductionHint": "Ağır ve dairesel metal bir kanca. Tekne inşa havuzunda o saatte kim pusudaydı?"
             },
             {
               "id": "c2",
@@ -13237,7 +13237,7 @@
               "isRevealed": false,
               "pointCost": 110,
               "title": "Vinç Operatörü İfadesi",
-              "text": "\"Rakip şirket temsilcisi Baran, gece yarısı gemi havuzunun kenarında sinirli adımlarla turluyordu. Elinde vincin o devasa kancasını tuttuğunu gördüm, normal bir davranış değildi.\"",
+              "text": "\"Rakip şirket temsilcisi Baran, gece yarısı gemi havuzunun kenarında sinirli adımlarla turluyor, elindeki devasa vinç kancasıyla oynuyordu. Normal bir davranış değildi.\"",
               "grid_effect": "s1_baran + l1_havuz = ✓. s1 için l2, l3, l4 = ✗.",
               "mechanicType": "tanik_yuzlesme",
               "yuzlesmeDialogu": [
@@ -13252,7 +13252,7 @@
                   "yalan": false
                 }
               ],
-              "deductionHint": "Baran, cinayet silahıyla tam da olay yerinde pusuya yatmıştı."
+              "deductionHint": "Baran, cinayet silahıyla tam da olay yerinde bekliyordu."
             },
             {
               "id": "c3",
@@ -13261,7 +13261,7 @@
               "isRevealed": false,
               "pointCost": 110,
               "title": "Halat Kancası DNA",
-              "text": "O devasa metal kancanın soğuk yüzeyinde tespit edilen ter ve epitel dokuları laboratuvarda analiz edildi.",
+              "text": "O devasa metal kancanın soğuk yüzeyinde tespit edilen ter ve epitel dokuları laboratuvarda kesin bir eşleşme sağladı.",
               "mechanicType": "dna_match",
               "dnaVerisi": {
                 "aciklama": "Kanca DNA'sını dört şüpheliyle eşleştir.",
@@ -13303,7 +13303,7 @@
                 "sonuc": "Kancada DNA: Baran."
               },
               "grid_effect": "s1_baran + w1_halat = ✓. s2, s3, s4 için w1 = ✗.",
-              "deductionHint": "Baran + kanca + havuz = tam çözüm. Baran katil."
+              "deductionHint": "Baran + Çelik Kanca + Havuz Kenarı = Kusursuz Eşleşme."
             },
             {
               "id": "c4",
@@ -13312,10 +13312,10 @@
               "isRevealed": false,
               "pointCost": 110,
               "title": "Gece Vardiya Kayıtları",
-              "text": "Mühendis Füsun ofisinde çizim plotteri kullanmış, Sendikacı Kadir 4 işçiyle salonda bildiri yazmış ve Amir Yıldız yakıt deposunda kamera karşısında denetim yapmıştı. Üçünün de yeri mühürlüydü.",
+              "text": "Mühendis ofisinde çizim plotteri kullanan Füsun, salonda bildiri yazan Kadir ve yakıt deposunda denetim yapan Yıldız'ın alibileri teknolojik loglarla mühürlendi.",
               "grid_effect": "s2_fusun + l2_ofis = ✓. s3_kadir + l3_salon = ✓. s4_yildiz + l4_depo = ✓. Üçü başka yerde — Baran havuzda tek.",
               "mechanicType": "text",
-              "deductionHint": "Üç kişinin alibisi teknolojik ve şahitli olarak kanıtlandı. Havuzdaki adam tek kaldı."
+              "deductionHint": "Üç kişinin alibisi teknolojik ve şahitli olarak kanıtlandı. Havuzdaki Baran tek şüpheli kaldı."
             },
             {
               "id": "c5",
@@ -13324,7 +13324,7 @@
               "isRevealed": false,
               "pointCost": 110,
               "title": "Demir Boru İzi",
-              "text": "Mühendis ofisindeki çalışma masasının yanında duran paslı demir borunun üzerinde, sürekli çelik ve yağla uğraşan birinin parmak izi saptandı.",
+              "text": "Mühendis ofisindeki çalışma masasının yanında duran paslı demir borunun üzerinde, sürekli çelik ve çizimle uğraşan o parmak izleri saptandı.",
               "mechanicType": "parmak_izi",
               "parmakIziVerisi": {
                 "aciklama": "Boru parçasındaki izi dört şüpheliyle eşleştir.",
@@ -13339,7 +13339,7 @@
                 "sonuc": "Boruyu tutan: Füsun."
               },
               "grid_effect": "s2_fusun + w3_boru = ✓. s1, s3, s4 için w3 = ✗.",
-              "deductionHint": "Füsun + boru + mühendis ofisi. Artık Füsun tamam."
+              "deductionHint": "Füsun + Demir Boru + Mühendis Ofisi. Füsun elendi."
             },
             {
               "id": "c6",
@@ -13351,7 +13351,7 @@
               "text": "Sendika salonunda duran kaynak makinesi elektrotunda Kadir'in avuç içi izi vardı; o salon onun her gün nutuk attığı alandı.",
               "grid_effect": "s3_kadir + w2_elektrot = ✓. s1, s2, s4 için w2 = ✗.",
               "mechanicType": "text",
-              "deductionHint": "Kadir + elektrot + salon. Artık Kadir tamam."
+              "deductionHint": "Kadir + Elektrot Teli + Sendika Salonu. Kadir elendi."
             },
             {
               "id": "c7",
@@ -13359,11 +13359,11 @@
               "revealOrder": 7,
               "isRevealed": false,
               "pointCost": 110,
-              "title": "Yakıt Depo Kamera",
-              "text": "Emniyet amiri Yıldız'ın, gece boyunca yakıt deposundaki konteynerler arasında dolaştığı ve oradan hiç çıkmadığı güvenlik kameralarının zaman kodlarıyla kesinleşti.",
+              "title": "Yakıt Depo Kamerası",
+              "text": "Emniyet amiri Yıldız'ın, gece boyunca yakıt deposundaki tehlikeli konteynerler arasında dolaştığı güvenlik kameralarının zaman kodlarıyla kesinleşti.",
               "grid_effect": "s4_yildiz + w4_yakit = ✓. s4 + l4_depo = ✓ kesin. s1, s2, s3 için w4 = ✗.",
               "mechanicType": "text",
-              "deductionHint": "Yıldız + yakıt + depo. Artık Yıldız tamam. Tüm ızgara dolu."
+              "deductionHint": "Amir Yıldız + Yakıt + Depo Alanı. Yıldız elendi. Geriye sadece Baran kaldı."
             },
             {
               "id": "c8",
@@ -13372,11 +13372,11 @@
               "isRevealed": false,
               "pointCost": 110,
               "title": "İhale Teklif Belgesi",
-              "text": "Maktulün ceket cebindeki resmi belgede, Baran'ın şirketine ait teklifin 'yolsuzluk saptaması' nedeniyle kırmızı mühürle iptal edildiği yazıyordu. İflasın belgesi.",
+              "text": "Maktulün ceket cebindeki resmi belgede, Baran'ın şirketine ait ihalenin 'yolsuzluk saptaması' nedeniyle kırmızı mühürle iptal edildiği yazıyordu.",
               "mechanicType": "gorsel_ipucu",
               "gorselAciklama": "Resmi ret yazısı. 'Yolsuzluk tespiti.' Maktulün imzası. Baran'ın şirket adı üstte.",
               "grid_effect": "Baran'ın motifi: yolsuzluk tespiti + ret = şirket batıyor.",
-              "deductionHint": "'Yolsuzluk tespiti' + ret + halat + havuz = Baran katil."
+              "deductionHint": "İhalenin reddi ve yolsuzluk ifşası = Baran'ın şirketinin iflas fermanı."
             },
             {
               "id": "c9",
@@ -13385,7 +13385,7 @@
               "isRevealed": false,
               "pointCost": 110,
               "title": "Tersane Gece Çizelgesi",
-              "text": "Tersane turnikelerinden alınan gece giriş çıkış zaman çizelgesi.",
+              "text": "Tersane turnikelerinden alınan gece giriş çıkış zaman çizelgesi, ölümcül karşılaşmanın saniyelerini ortaya döktü.",
               "mechanicType": "timeline_sort",
               "timelineVerisi": {
                 "aciklama": "Tersane gece kronolojisi.",
@@ -13419,7 +13419,7 @@
                 "sonuc": "Baran maktulü bekledi. Gelince tartıştı ve halatla vurdu."
               },
               "grid_effect": "Baran önceden planladı — halat bekliyordu.",
-              "deductionHint": "Önceden hazırlık + tartışma + halat darbe = kasıtlı cinayet."
+              "deductionHint": "Baran'ın maktulü beklediği o pusu, cinayetin anlık değil, planlı olduğunu kanıtlıyor."
             },
             {
               "id": "c10",
@@ -13428,7 +13428,7 @@
               "isRevealed": false,
               "pointCost": 110,
               "title": "Baran'ın O Günkü Mesajları",
-              "text": "Baran'ın telefonu incelendiğinde, iflas korkusuyla ortağına attığı o çaresiz mesajlar bulundu.",
+              "text": "Baran'ın telefonu incelendiğinde, iflas korkusuyla ortağına attığı 'Tersanede konuşacağız' mesajı, oraya barışçıl bir niyetle gitmediğini belgeliyordu.",
               "mechanicType": "phone_chain",
               "phoneVerisi": {
                 "aciklama": "Mesaj zinciri.",
@@ -13465,7 +13465,7 @@
                 "sonuc": "'Orada konuşacağız' — müdürü mü kastediyordu?"
               },
               "grid_effect": "Baran 'orada konuşma' için gitti — konuşma darbe oldu.",
-              "deductionHint": "'Konuşacağız' + tersane + halat = Baran planını uyguladı."
+              "deductionHint": "'Tersanede konuşacağız' mesajı cinayetin ayak sesleriydi."
             },
             {
               "id": "c11",
@@ -13474,11 +13474,11 @@
               "isRevealed": false,
               "pointCost": 110,
               "title": "Havuz Kenarı Ses Kaydı",
-              "text": "[Havuz çevresi güvenlik mikrofonu] Maktul: 'O belge yarın basına verilecek Baran.' Baran'ın sert nefesi, havada ıslık çalan bir metalin sesi ve ardından suya düşen ağır bir kütle.",
+              "text": "[Havuz çevresi güvenlik mikrofonu] Maktul: 'O belge basına verilecek Baran.' Havada ıslık çalan ağır bir metalin sesi ve ardından suya düşen koca bir kütle.",
               "mechanicType": "ses_kaydi",
               "sesMetni": "Maktulün sesi sakin. Baran'ın 'hayır'ı sert ve kesin. Metalik darbe. Su.",
               "grid_effect": "Ses kaydı cinayeti belgeli hale getiriyor.",
-              "deductionHint": "'Açıklanmayacak' + metalik ses + su = Baran vurdu ve suya düşürdü."
+              "deductionHint": "'Basına verilecek' tehdidine karşılık havada savrulan çelik kancanın sesi, cinayetin mühürüydü."
             }
           ],
           "solution": {
@@ -13486,7 +13486,7 @@
             "weaponId": "w1",
             "locationId": "l1"
           },
-          "solutionNarrative": "Teklif Sorumlusu Baran, yolsuzluk tespiti nedeniyle reddedileceğini öğrenince tersane havuzunda maktulü bekledi ve çelik halat kancasıyla vurdu. Diğer üç şüphelinin yeri kesinleşince Baran tek başına havuzda kaldı. DNA, ses kaydı ve mesajlar tüm planı ortaya koydu."
+          "solutionNarrative": "Teklif Sorumlusu Baran, yaptığı yolsuzlukların ertesi gün basına verileceğini ve şirketinin batacağını öğrenince, tersane havuzunda maktulü çelik halat kancasıyla bekledi. Diğer şüphelilerin alibileri kanıtlandığında, elinde kanlı kancayla havuz kenarında kalan tek kişi oydu."
         },
         {
           "puzzleId": "yeni_b04",
@@ -13504,29 +13504,29 @@
               "id": "s1",
               "name": "Genç Avukat Arda",
               "icon": "noun-cirak-selim-avatar.png",
-              "description": "Maktulün tezini intihal ettiği iddia ediliyor — maktul belgelere sahip.",
-              "detail": "31 yaşında, parlak kariyer, kırılgan."
+              "description": "Tüm makalelerinin ve akademik başarılarının aslında maktul tarafından kendi adına tescillendiğini öğrenen, toplantı odasından çıkmayan öfkeli genç avukat.",
+              "detail": "31 yaşında, kitaplarla kafayı bozmuş, parlak kariyeri çalındığı için kırılgan ve dengesiz."
             },
             {
               "id": "s2",
               "name": "Kıdemli Sekreter Nurdan",
               "icon": "noun-hizmetci-hacer-avatar.png",
-              "description": "20 yıllık sekreter, emekliye zorlanıyor. Dosyaları bilen tek kişi.",
-              "detail": "57 yaşında, sakin, ama içi yanıyor."
+              "description": "Hayatının 20 yılını o ofise gömen ancak emekliliğe zorlandığı için içten içe intikam yeminleri eden, bürodaki o uzun zarf açacaklarına hakim sekreter.",
+              "detail": "57 yaşında, ön bankoda izole bir hayat süren, sakin görünümünün altında içi yanan bir kadın."
             },
             {
               "id": "s3",
               "name": "Müvekkil Büyük İşadamı Recep",
               "icon": "noun-tuccar-vehbi-avatar.png",
-              "description": "Dosyada onun şirketini batıracak bilgiler var. Dava yarın.",
-              "detail": "62 yaşında, güçlü, acımasız."
+              "description": "Büronun en değerli dosyası olan 'Vergi Kaçakçılığı' belgelerinin ertesi gün mahkemeye sunulacağını öğrenen, gözünü karartmış acımasız ve milyarder iş adamı.",
+              "detail": "62 yaşında, ofislere elini kolunu sallayarak giren, bilgisayar kablolarını bile silah yapabilecek kadar güçlü."
             },
             {
               "id": "s4",
               "name": "Rakip Büro Ortağı Suat",
               "icon": "🕵️",
-              "description": "Müvekkil listesini çalmak için içeriye sızmış.",
-              "detail": "50 yaşında, soğukkanlı, planladığı belli."
+              "description": "Büronun en büyük rakibi olan, müşteri listesini çalmak ve ofisin itibarını lazer yazıcılara koyduğu gazlarla yerle bir etmek için o gece sızan diğer ortak.",
+              "detail": "50 yaşında, arşiv odasında dolanan, soğukkanlı ve sabotaj planı tıkır tıkır işleyen iş adamı."
             }
           ],
           "weapons": [
@@ -13534,25 +13534,25 @@
               "id": "w1",
               "name": "Ağır Hukuk Kitabı",
               "icon": "📗",
-              "description": "Metal sırtlı kalın içtihat kitabı."
+              "description": "Toplantı raflarından alınan, kalın ve ağır metal sırtıyla kafatasına bütün gücüyle indirildiğinde kemiği ezip geçen o devasa içtihat ve hukuk kitabı."
             },
             {
               "id": "w2",
               "name": "Kâğıt Bıçağı",
               "icon": "🗡️",
-              "description": "Uzun paslanmaz kâğıt açma bıçağı."
+              "description": "Sekreter bankosunda zarfları açmak için kullanılan, uzun, ince ve paslanmaz çelikten yapılmış, tek bir hamlede şah damarını kesebilecek ölümcül kağıt bıçağı."
             },
             {
               "id": "w3",
               "name": "Yazıcı Toneri Gazı",
               "icon": "🖨️",
-              "description": "Modifiye kartuş — kapalı alanda toksik."
+              "description": "Arşivdeki yazıcı kartuşuna sinsi bir şekilde modifiye edilen, kapalı alanda solunduğunda saniyeler içinde sinir sistemini donduran ölümcül toner gazı karışımı."
             },
             {
               "id": "w4",
               "name": "Güç Kablosu (Boğma)",
               "icon": "🔌",
-              "description": "Masa üstü bilgisayarın güç kablosu."
+              "description": "Masaüstü bilgisayarlarından sökülen, kurbanın boynuna arkadan dolanıp amansızca sıkıldığında tırtıklı, kalın ve paralel sürtünme yanıkları bırakan siyah güç kablosu."
             }
           ],
           "locations": [
@@ -13560,25 +13560,25 @@
               "id": "l1",
               "name": "Kıdemli Avukat Ofisi",
               "icon": "🏢",
-              "description": "Maktulün köşe ofisi."
+              "description": "Tüm büyük kararların alındığı, ağır deri koltukların, kilitli kapıların ve bilgisayar donanımlarının bulunduğu kurbanın o geniş köşe ofisi."
             },
             {
               "id": "l2",
               "name": "Sekreterya",
               "icon": "🗂️",
-              "description": "Girişin yanındaki sekreter çalışma alanı."
+              "description": "Dış kapıdan girer girmez karşılaşılan, ziyaretçi kayıtlarının tutulduğu, kahve ve kağıt kokan, zarf açacaklarının bulunduğu sekreterya alanı."
             },
             {
               "id": "l3",
               "name": "Müvekkil Toplantı Odası",
               "icon": "🤝",
-              "description": "Müşteri görüşme odası."
+              "description": "Deri sandalyelerin çevrelediği, ortasında devasa bir meşe masanın bulunduğu, anlaşmaların ve ağır hukuk kitaplarının yer aldığı müşteri toplantı odası."
             },
             {
               "id": "l4",
               "name": "Arşiv Odası",
               "icon": "🗄️",
-              "description": "Dosyaların saklandığı arka oda."
+              "description": "Binlerce dosyanın çelik kasalarda saklandığı, lazer yazıcı ve fotokopi makinelerinin bulunduğu penceresiz, havasız arka arşiv odası."
             }
           ],
           "solution_table": {
@@ -13608,10 +13608,10 @@
               "isRevealed": true,
               "pointCost": 0,
               "title": "Adli Tespit",
-              "text": "Maktulün boynundaki derin, paralel ve yanıkımsı oluklar, bir kağıt bıçağının kesiği veya toksik bir gazın işi değil; tırtıklı ve kalın bir güç kablosunun acımasızca sıkıldığını kanıtlıyordu.",
+              "text": "Maktulün boynundaki derin, paralel ve yanıkımsı oluklar, tırtıklı ve kalın bir ofis güç kablosunun tam da o köşe ofisin deri koltuğunda acımasızca sıkıldığını kanıtlıyordu.",
               "grid_effect": "l1_ofis ölüm yeri. Kablo boğma → w4_kablo. w1, w2, w3 bu mekân için eleniyor.",
               "mechanicType": "text",
-              "deductionHint": "Boyundaki iz, ofis aletlerinden birine ait. Ofise giren kimdi?"
+              "deductionHint": "Boyundaki iz, doğrudan ofisteki bir bilgisayar kablosuna ait. Odaya giren kimdi?"
             },
             {
               "id": "c2",
@@ -13623,7 +13623,7 @@
               "text": "Büyük iş adamı Recep Bey'in gece saat 22:00'de sekreteryayı es geçip doğrudan maktulün köşe ofisine girdiği ve içeride tam 90 dakika kilitli kaldığı kameralara yansıdı.",
               "grid_effect": "s3_recep + l1_ofis = ✓. s3 için l2, l3, l4 = ✗.",
               "mechanicType": "text",
-              "deductionHint": "Recep ofisteydi, kapı kilitliydi ve süre bir cinayeti örtbas etmek için çok uzundu."
+              "deductionHint": "Recep ofisteydi, kapı kilitliydi ve bu süre basit bir tartışma için çok uzundu."
             },
             {
               "id": "c3",
@@ -13632,7 +13632,7 @@
               "isRevealed": false,
               "pointCost": 110,
               "title": "Güç Kablosu DNA",
-              "text": "Maktulün boynuna dolanan o kalın siyah güç kablosunun yüzeyinde laboratuvar sonuçları bir eşleşme yakaladı.",
+              "text": "Maktulün boynuna dolanan o kalın siyah güç kablosunun yüzeyinde laboratuvar sonuçları kesin bir genetik eşleşme yakaladı.",
               "mechanicType": "dna_match",
               "dnaVerisi": {
                 "aciklama": "Kablo DNA'sını dört şüpheliyle eşleştir.",
@@ -13674,7 +13674,7 @@
                 "sonuc": "Kabloyu tutan: Recep."
               },
               "grid_effect": "s3_recep + w4_kablo = ✓. s1, s2, s4 için w4 = ✗.",
-              "deductionHint": "Recep + kablo + ofis = tam çözüm. Katil Recep."
+              "deductionHint": "Recep + Güç Kablosu + Kıdemli Avukat Ofisi = Kusursuz Eşleşme."
             },
             {
               "id": "c4",
@@ -13686,7 +13686,7 @@
               "text": "Kıdemli sekreter Nurdan'ın, emeklilik öncesi devir teslim için tüm gece boyunca sadece ön bankodaki dosyalarla uğraştığı güvenlik kayıtlarıyla teyit edildi.",
               "grid_effect": "s2_nurdan + l2_sekreter = ✓. s2 için l1, l3, l4 = ✗.",
               "mechanicType": "text",
-              "deductionHint": "Nurdan sekreteryada. Hangi silah? → w2_bicak."
+              "deductionHint": "Nurdan sekreteryada izoleydi. O alandaki silah ne olabilirdi?"
             },
             {
               "id": "c5",
@@ -13710,7 +13710,7 @@
                 "sonuc": "Bıçağı tutan: Nurdan."
               },
               "grid_effect": "s2_nurdan + w2_bicak = ✓. s1, s3, s4 için w2 = ✗.",
-              "deductionHint": "Nurdan + kâğıt bıçağı + sekreterya. Artık Nurdan tamam."
+              "deductionHint": "Nurdan + Kağıt Bıçağı + Sekreterya. Nurdan tamamen elendi."
             },
             {
               "id": "c6",
@@ -13719,10 +13719,10 @@
               "isRevealed": false,
               "pointCost": 110,
               "title": "Toner Kartuşu İzi",
-              "text": "Arka arşiv odasındaki devasa lazer yazıcının içine sinsi bir kimyasal gaz yerleştirilmişti; modifiye edilen kartuşun üzerindeki izler doğrudan Rakip Ortak Suat'a aitti.",
+              "text": "Arka arşiv odasındaki devasa lazer yazıcının modifiye edilmiş kartuşuna sinsi bir kimyasal gaz yerleştiren kişinin izleri doğrudan Rakip Ortak Suat'a aitti.",
               "grid_effect": "s4_suat + w3_toner = ✓. s4 + l4_arsiv = ✓. s1, s2, s3 için w3 = ✗.",
               "mechanicType": "text",
-              "deductionHint": "Suat + toner + arşiv. Artık Suat tamam."
+              "deductionHint": "Rakip Ortak Suat + Zehirli Toner + Arşiv Odası. Suat'ın planı işlememiş, o elendi."
             },
             {
               "id": "c7",
@@ -13731,10 +13731,10 @@
               "isRevealed": false,
               "pointCost": 110,
               "title": "Arda'nın Toplantı Odası Kaydı",
-              "text": "Genç avukat Arda'nın, maktulün odasına yaklaşmadığı; tüm gece toplantı odasında baro sınavı denemeleri çözerken bilgisayarının ekran kaydı aldığı ortaya çıktı.",
+              "text": "Genç avukat Arda'nın, tüm gece toplantı odasında kalın içtihat kitaplarının arasında baro sınavı denemeleri çözerken bilgisayarının ekran kaydı aldığı ortaya çıktı.",
               "grid_effect": "s1_arda + l3_toplanti = ✓. s1 için l1, l2, l4 = ✗. s1 + w1_kitap = ✓ (kalan silah).",
               "mechanicType": "text",
-              "deductionHint": "Arda toplantı odasında. Kalan silah: kitap. Artık tüm ızgara dolu."
+              "deductionHint": "Arda + Ağır Hukuk Kitabı + Toplantı Odası. Geriye sadece Recep kaldı."
             },
             {
               "id": "c8",
@@ -13743,11 +13743,11 @@
               "isRevealed": false,
               "pointCost": 110,
               "title": "Kayıp Dosya",
-              "text": "Recep Bey'in şirketler grubuna ait raf tamamen boşaltılmıştı. Ertesi sabah mahkemeye sunulacak olan 'Vergi Kaçakçılığı Delilleri' klasörü buhar olup uçmuştu.",
+              "text": "Recep Bey'in şirketler grubuna ait raf tamamen boşaltılmış; ertesi sabah mahkemeye sunulacak olan 'Vergi Kaçakçılığı Delilleri' klasörü buhar olup uçmuştu.",
               "mechanicType": "gorsel_ipucu",
               "gorselAciklama": "Dosya rafı fotoğrafı. Boş slot: 'Recep K. — Vergi.' Dosya numarası kayıt sisteminde var ama fiziksel yok.",
               "grid_effect": "Recep'in motifi: vergi kaçakçılığı dosyası + yarın duruşma = bugün gece.",
-              "deductionHint": "Vergi kaçakçılığı + duruşma yarın + kablo + ofis = Recep katil."
+              "deductionHint": "Vergi Kaçakçılığı klasörünün yok olması = Recep'in milyarlarca liralık cinayet motifi."
             },
             {
               "id": "c9",
@@ -13756,7 +13756,7 @@
               "isRevealed": false,
               "pointCost": 110,
               "title": "Büro Gece Zaman Çizelgesi",
-              "text": "Güvenlik sisteminden alınan kapı hareket kronolojisi.",
+              "text": "Güvenlik sisteminden alınan kapı hareket kronolojisi, o kilitli kapının ardında 90 dakikalık bir infazın planlandığını sıraya koydu.",
               "mechanicType": "timeline_sort",
               "timelineVerisi": {
                 "aciklama": "Büro gece kronolojisi.",
@@ -13790,7 +13790,7 @@
                 "sonuc": "Recep kapıyı kilitledi, 90 dakika içinde işi bitirdi, dosyayı aldı."
               },
               "grid_effect": "Recep kilitledi + kablo + 90 dakika = planlı cinayet.",
-              "deductionHint": "Kilitleme + kablo + dosya alma = Recep planladı ve uyguladı."
+              "deductionHint": "İçeriden kilitlenen kapı ve 90 dakikalık sessizlik, planlı bir infazı işaret ediyor."
             },
             {
               "id": "c10",
@@ -13799,7 +13799,7 @@
               "isRevealed": false,
               "pointCost": 110,
               "title": "Recep'in Avukatına Mesajları",
-              "text": "İş adamı Recep'in olay gecesi kendi şahsi avukatıyla yaptığı paniğe kapılmış yazışmalar.",
+              "text": "İş adamı Recep'in şahsi avukatıyla yaptığı 'Hukuk bitti, kendim hallederim' mesajı, cinayetin başladığı anın dijital ilanıydı.",
               "mechanicType": "phone_chain",
               "phoneVerisi": {
                 "aciklama": "Mesaj zinciri.",
@@ -13829,7 +13829,7 @@
                 "sonuc": "'Kendim hallederim' — ofise gidip maktulü boğdu, dosyayı aldı."
               },
               "grid_effect": "Recep 'hallederim' dedi ve halletti.",
-              "deductionHint": "'Kendim hallederim' + 22:00 ofis girişi + kablo = Recep katil."
+              "deductionHint": "'Kendim hallederim' mesajı, hukuki yolların tükenip cinayetin başladığı anın ilanıydı."
             },
             {
               "id": "c11",
@@ -13838,11 +13838,11 @@
               "isRevealed": false,
               "pointCost": 110,
               "title": "Ofis İçi Ses",
-              "text": "[Ofis içi güvenlik mikrofonu] Maktul: 'O dosya mahkemeye gidecek Recep Bey.' Recep: 'Adalet her zaman satın alınmaz ama bazen susturulur.' Sert bir sürtünme ve kablo çekilme sesi.",
+              "text": "[Ofis içi mikrofon] Maktul: 'O dosya mahkemeye gidecek.' Recep: 'Adalet her zaman satın alınmaz ama bazen susturulur.' Sert bir sürtünme ve kablo çekilme sesi.",
               "mechanicType": "ses_kaydi",
               "sesMetni": "Recep'in 'değişir' sözü soğuk ve kesin. Ardından kablo sesi.",
               "grid_effect": "Ses kaydı cinayeti belgeliyor.",
-              "deductionHint": "'Değişir' + kablo sesi = Recep orada ve kabloysa halletti."
+              "deductionHint": "'Susturulur' kelimesinden hemen sonra gelen kablo sürtünme sesi katilin imzasını taşıyor."
             }
           ],
           "solution": {
@@ -13850,7 +13850,7 @@
             "weaponId": "w4",
             "locationId": "l1"
           },
-          "solutionNarrative": "Büyük İşadamı Recep, vergi kaçakçılığı dosyasının yarın duruşmada ibraz edilmesini engellemek için maktulü kendi ofisinde güç kablosuyla boğdu ve dosyayı aldı. DNA, kamera, ses kaydı ve mesajlar planı eksiksiz ortaya koydu."
+          "solutionNarrative": "Büyük İşadamı Recep, milyarlarca liralık vergi kaçakçılığı dosyasının ertesi sabah duruşmada ibraz edilmesini engellemek için, maktulü kendi ofisinde o kalın güç kablosuyla boğdu. Kayıp dosya, kamera logları ve 'kendim hallederim' mesajı, adaleti kendi elleriyle boğan bu adamı mahkum etti."
         },
         {
           "puzzleId": "yeni_b05",
@@ -13868,29 +13868,29 @@
               "id": "s1",
               "name": "Teknoloji CEO'su Altan",
               "icon": "noun-komsu-nevzat-avatar.png",
-              "description": "Ana standdı kaybetti — rakibine verildi. Milyonlarca lira sponsorluk.",
-              "detail": "46 yaşında, teknoloji odaklı, hırslı."
+              "description": "Fuardaki o devasa ana standı son dakika kararıyla rakibine kaptıran, milyonlarca liralık sponsorluğunun çöküşünü cam plaketleri kırarak izleyen hırslı teknoloji CEO'su.",
+              "detail": "46 yaşında, toplantı salonlarından çıkmayan, kusursuz manikürlü ellere sahip odaklı adam."
             },
             {
               "id": "s2",
               "name": "Tekstil CEO'su Harika",
               "icon": "noun-ressam-leyla-avatar.png",
-              "description": "Stand konumunu maktulün kararıyla en arka sıraya alındı.",
-              "detail": "53 yaşında, güçlü, pişmanlık bilmez."
+              "description": "Maktulün o ani ve taraflı kararıyla fuardaki standı en arka sıraya itilen, elindeki kadehle terastan her şeyi izleyen ve asla pişmanlık bilmeyen tekstil kraliçesi.",
+              "detail": "53 yaşında, dudak boyası ve şampanya kadehleriyle dolaşan, acımasız ve güçlü kadın."
             },
             {
               "id": "s3",
               "name": "Gıda Şirketi CEO'su Tarhan",
               "icon": "noun-makinist-kerem-avatar.png",
-              "description": "Sağlık sertifikasının sahte olduğunu maktul keşfetti — açıklanacak.",
-              "detail": "59 yaşında, geniş ailesi, her şeyi korumak ister."
+              "description": "Bütün gıda imparatorluğunu üzerine kurduğu o çok kritik sağlık sertifikasının sahte olduğunun keşfedilmesiyle hayatı kararan, VIP odada hesap soran köşeye sıkışmış gıda devi.",
+              "detail": "59 yaşında, her şeyi korumak için elini demirlere ve şiddete bulamaktan çekinmeyen iri adam."
             },
             {
               "id": "s4",
               "name": "İnşaat CEO'su Demir",
               "icon": "noun-vahap-amca-avatar.png",
-              "description": "Fuardaki stand yapısı güvenlik standartlarına aykırı — maktul rapor yazıyordu.",
-              "detail": "50 yaşında, kaslı, inşaat işine alışmış."
+              "description": "Fuardaki devasa mimari standının güvenlik standartlarına aykırı olduğu gerekçesiyle kapatılma raporu yazıldığını öğrenen, bodrum katlara inip sabotaj yapan inşaat patronu.",
+              "detail": "50 yaşında, kaslı, elektrik ve altyapı işlerine eli yatkın, kaba kuvveti seven müteahhit."
             }
           ],
           "weapons": [
@@ -13898,25 +13898,25 @@
               "id": "w1",
               "name": "Cam Ödül Plaket",
               "icon": "🏆",
-              "description": "Fuar açılışında verilecek ağır cam plaket."
+              "description": "Fuarın o şatafatlı açılış gecesinde kurbana takdim edilecek olan, sipsivri cam kenarlarıyla kafaya indirildiğinde ölümcül kesikler açan o devasa ve ağır cam plaket."
             },
             {
               "id": "w2",
               "name": "Zehirli Açılış Şampanyası",
               "icon": "🥂",
-              "description": "VIP şampanyasına karıştırılan alkaloit."
+              "description": "VIP kutlaması için özel şampanyaların içine şırıngayla karıştırılan, kadehten yutulduğu anda boğazı kilitleyip sessiz bir kalp krizi yaratan o renksiz alkaloit."
             },
             {
               "id": "w3",
               "name": "Projeksiyon Standı Kolu",
               "icon": "📽️",
-              "description": "Toplantı odasındaki projeksiyon montaj kolunun metal çubuğu."
+              "description": "Toplantı odalarındaki dev ekranları tavana asmak için kullanılan, söküldüğünde uzun, küt ve ağır bir metal sopaya dönüşen o kusursuz çelik projeksiyon montaj kolu."
             },
             {
               "id": "w4",
               "name": "Elektrik Panosu (Sabote)",
               "icon": "⚡",
-              "description": "Üst kat elektrik panosunun devre dışı bırakılması — asansör kilitleniyor, sprinkler devre dışı."
+              "description": "Bodrum kattaki elektrik panosunda yapılan o sinsi sabotajla, asansörü kilitleyip tüm yangın fıskiyelerini ölümcül bir güce çeviren yüksek voltajlı elektronik tuzak."
             }
           ],
           "locations": [
@@ -13924,25 +13924,25 @@
               "id": "l1",
               "name": "VIP Odası (12. Kat)",
               "icon": "🌟",
-              "description": "En üst kattaki direktör odası."
+              "description": "Sadece özel kartlarla çıkılabilen, İzmir'i panoramik gören cam duvarlı, direktörün tüm gizli kararları imzaladığı o lüks ve sessiz VIP 12. Kat ofisi."
             },
             {
               "id": "l2",
               "name": "Toplantı Odası (11. Kat)",
               "icon": "📊",
-              "description": "CEO toplantıları için özel oda."
+              "description": "CEO'ların son dakika krizlerini çözmek için bir araya geldiği, ortasında devasa bir projeksiyon cihazı ve ağır cam plaketler bulunan resmi toplantı salonu."
             },
             {
               "id": "l3",
               "name": "VIP Teras (12. Kat)",
               "icon": "🌃",
-              "description": "Üst kat açık teras alanı."
+              "description": "Kutlamaların yapıldığı, caz müziğinin çaldığı, şampanyaların su gibi aktığı ve soğuk rüzgarın estiği o gösterişli ve açık hava VIP üst kat terası."
             },
             {
               "id": "l4",
               "name": "Elektrik Odası (Bodrum)",
               "icon": "🔋",
-              "description": "Binanın ana elektrik dağıtım odası."
+              "description": "Binanın en alt noktasında bulunan, binlerce kablonun geçtiği, ağır elektrik akımı sesinin yankılandığı ve sadece teknisyenlerin girdiği karanlık bodrum elektrik odası."
             }
           ],
           "solution_table": {
@@ -13972,10 +13972,10 @@
               "isRevealed": true,
               "pointCost": 0,
               "title": "Olay Yeri Tespiti",
-              "text": "Cesedin kafatasındaki uzun ve küt çökükler, bir cam plaket kesiğine veya zehirli bir yuduma değil; sağlam bir zemin montajından sökülmüş uzun ve ağır bir çeliğin şiddetine işaret ediyordu.",
+              "text": "Cesedin kafatasındaki uzun ve küt çökükler, VIP odasının sağlam zemin montajından sökülmüş o ağır çelik projeksiyon kolunun şiddetine işaret ediyordu.",
               "grid_effect": "l1_vip ölüm yeri. Uzun metal çubuk → w3_projeksiyon. w1, w2, w4 bu mekân için eleniyor.",
               "mechanicType": "text",
-              "deductionHint": "Ağır, uzun ve silindirik bir çelik. Toplantı ekipmanı."
+              "deductionHint": "Ağır, uzun ve silindirik bir çelik. VIP odadaki toplantı ekipmanını kim kullandı?"
             },
             {
               "id": "c2",
@@ -13984,7 +13984,7 @@
               "isRevealed": false,
               "pointCost": 110,
               "title": "VIP Katı Güvenlik Görevlisi",
-              "text": "\"Gıda CEO'su Tarhan Bey VIP odaya 'özel görüşme' diyerek daldı. Çıktığında elinde projeksiyon kumandası vardı ama ceketinin içine uzun ve metalik bir parça gizlemeye çalıştığı çok belliydi.\"",
+              "text": "\"Gıda CEO'su Tarhan Bey VIP odaya 'özel görüşme' diyerek daldı. Çıktığında ceketinin içine uzun ve metalik bir parça gizlemeye çalıştığı çok belliydi.\"",
               "grid_effect": "s3_tarhan + l1_vip = ✓. s3 için l2, l3, l4 = ✗.",
               "mechanicType": "tanik_yuzlesme",
               "yuzlesmeDialogu": [
@@ -13999,7 +13999,7 @@
                   "yalan": false
                 }
               ],
-              "deductionHint": "Tarhan odaya girdi ve o metal parçayla ayrıldı."
+              "deductionHint": "Tarhan odaya girdi ve çıkarken o ölümcül metal çubuğu ceketinde saklıyordu."
             },
             {
               "id": "c3",
@@ -14008,7 +14008,7 @@
               "isRevealed": false,
               "pointCost": 110,
               "title": "Projeksiyon Kolu DNA",
-              "text": "Salondan gizlice sökülen o montaj kolunun metal yüzeyinden alınan örnekler kriminal laboratuvara gönderildi.",
+              "text": "Salondan gizlice sökülen o çelik montaj kolunun metal yüzeyinden alınan örnekler kriminal laboratuvarda bir numarayla eşleşti.",
               "mechanicType": "dna_match",
               "dnaVerisi": {
                 "aciklama": "Projeksiyon kolu DNA'sını dört şüpheliyle eşleştir.",
@@ -14050,7 +14050,7 @@
                 "sonuc": "Kolu tutan: Tarhan."
               },
               "grid_effect": "s3_tarhan + w3_projeksiyon = ✓. s1, s2, s4 için w3 = ✗.",
-              "deductionHint": "Tarhan + projeksiyon kolu + VIP odası = tam çözüm. Katil Tarhan."
+              "deductionHint": "Tarhan + Projeksiyon Kolu + VIP Odası = Kusursuz Eşleşme."
             },
             {
               "id": "c4",
@@ -14059,10 +14059,10 @@
               "isRevealed": false,
               "pointCost": 110,
               "title": "Toplantı Odası Kaydı",
-              "text": "Teknoloji CEO'su Altan'ın toplantı odasında laptop loglarıyla; Tekstil CEO'su Harika'nın ise terasta elinde şampanyayla barmen ve kameralar eşliğinde sabitlendiği kanıtlandı.",
+              "text": "Teknoloji CEO'su Altan'ın toplantı odasında laptop loglarıyla; Tekstil CEO'su Harika'nın ise terasta elinde şampanyayla barmen eşliğinde sabitlendiği kanıtlandı.",
               "grid_effect": "s1_altan + l2_toplanti = ✓. s2_harika + l3_teras = ✓. s1 için l1,l3,l4 = ✗. s2 için l1,l2,l4 = ✗.",
               "mechanicType": "text",
-              "deductionHint": "Altan toplantı odasında, Harika terasta. İkisi sabitlendi."
+              "deductionHint": "Altan ve Harika kendi izole alanlarındaydılar. İkisinin de alibisi onaylandı."
             },
             {
               "id": "c5",
@@ -14071,7 +14071,7 @@
               "isRevealed": false,
               "pointCost": 110,
               "title": "Cam Plaket İzi",
-              "text": "Toplantı odasındaki ağır cam açılış plaketinin sivri kenarlarında, teknoloji sektörüne ait o bakımlı ve manikürlü ellerin parmak izi saptandı.",
+              "text": "Toplantı odasındaki ağır cam açılış plaketinin sivri kenarlarında, teknoloji sektörüne ait o bakımlı ellerin parmak izi saptandı.",
               "mechanicType": "parmak_izi",
               "parmakIziVerisi": {
                 "aciklama": "Plaket kenarındaki izi dört şüpheliyle eşleştir.",
@@ -14086,7 +14086,7 @@
                 "sonuc": "Plaketi tutan: Altan."
               },
               "grid_effect": "s1_altan + w1_plaket = ✓. s2, s3, s4 için w1 = ✗.",
-              "deductionHint": "Altan + plaket + toplantı odası. Artık Altan tamam."
+              "deductionHint": "Altan + Cam Plaket + Toplantı Odası. Altan tamamen elendi."
             },
             {
               "id": "c6",
@@ -14095,7 +14095,7 @@
               "isRevealed": false,
               "pointCost": 110,
               "title": "Şampanya Bardağı DNA",
-              "text": "VIP terastaki zehirli şampanya kadehinin kenarında, dudak iziyle birlikte Tekstil CEO'su Harika'nın DNA hücreleri laboratuvarda eşleşti.",
+              "text": "VIP terastaki zehirli şampanya kadehinin kenarında, dudak iziyle birlikte Tekstil CEO'su Harika'nın hücreleri laboratuvarda eşleşti.",
               "mechanicType": "dna_match",
               "dnaVerisi": {
                 "aciklama": "Şampanya bardağı DNA'sını dört şüpheliyle eşleştir.",
@@ -14137,7 +14137,7 @@
                 "sonuc": "Şampanya bardağına dokunan: Harika."
               },
               "grid_effect": "s2_harika + w2_sampanya = ✓. s1, s3, s4 için w2 = ✗.",
-              "deductionHint": "Harika + şampanya + teras. Artık Harika tamam."
+              "deductionHint": "Harika + Zehirli Şampanya + VIP Teras. Harika elendi."
             },
             {
               "id": "c7",
@@ -14146,10 +14146,10 @@
               "isRevealed": false,
               "pointCost": 110,
               "title": "Elektrik Panosu İzi",
-              "text": "İnşaat CEO'su Demir'in, bina altyapısını kontrol etme bahanesiyle bodrum kattaki elektrik odasına girdiği ve ana şalterlere müdahale ettiği üzerindeki tozlarla kesinleşti.",
+              "text": "İnşaat CEO'su Demir'in, bina altyapısını kontrol etme bahanesiyle bodrum kattaki elektrik odasına inip ana şalterlere müdahale ettiği üzerindeki tozlarla kesinleşti.",
               "grid_effect": "s4_demir + l4_elektrik = ✓. s4 + w4_pano = ✓. s4 için l1,l2,l3 = ✗. s1,s2,s3 için w4 = ✗.",
               "mechanicType": "text",
-              "deductionHint": "Demir + elektrik panosu + bodrum. Artık Demir tamam. Tüm ızgara dolu."
+              "deductionHint": "Demir + Sabote Edilmiş Elektrik Panosu + Bodrum Kat. Demir elendi. Geriye Tarhan kaldı."
             },
             {
               "id": "c8",
@@ -14158,11 +14158,11 @@
               "isRevealed": false,
               "pointCost": 110,
               "title": "Sağlık Sertifikası Dosyası",
-              "text": "Maktulün çekmecesinde Tarhan'ın gıda şirketine ait laboratuvar sonuçları vardı. Kırmızı kalemle: 'Sertifika Sahte. Açılış konuşmasında basına duyurulacak.' yazıyordu.",
+              "text": "Maktulün çekmecesinde Tarhan'ın gıda şirketine ait sahte sağlık sertifikası raporunun üzerinde 'Açılış konuşmasında basına duyurulacak' yazıyordu.",
               "mechanicType": "gorsel_ipucu",
               "gorselAciklama": "Adli analiz raporu. 'Sertifika sahte — tarih manipüle edilmiş.' Alt not: 'Açılış öncesi basın bülteni hazır.'",
               "grid_effect": "Tarhan'ın motifi: sertifika ifşası + açılış gecesi = bugün gece.",
-              "deductionHint": "Tarhan'ın tüm gıda imparatorluğu bu ifşayla çökecekti."
+              "deductionHint": "Gıda imparatorluğunun sahte sertifikalarla çökme tehlikesi = Tarhan'ın cinayet motifi."
             },
             {
               "id": "c9",
@@ -14171,7 +14171,7 @@
               "isRevealed": false,
               "pointCost": 110,
               "title": "Açılış Gecesi Çizelgesi",
-              "text": "VIP asansöründen alınan çip kayıtlarıyla oluşturulan zaman çizelgesi.",
+              "text": "VIP asansöründen alınan çip kayıtları, Tarhan'ın odaya girmeden önce o ağır metali söktüğü hazırlık evresini deşifre etti.",
               "mechanicType": "timeline_sort",
               "timelineVerisi": {
                 "aciklama": "Fuar açılış gecesi kronolojisi.",
@@ -14205,7 +14205,7 @@
                 "sonuc": "Tarhan önce silahı hazırladı, sonra odaya girdi — planlı."
               },
               "grid_effect": "Tarhan kolı önceden söktü — cinayet önceden planlanmış.",
-              "deductionHint": "Önceden silah hazırlığı + VIP odası + projeksiyon = planlı cinayet."
+              "deductionHint": "Odaya girmeden önce montaj kolunun sökülmesi, cinayetin anlık değil tamamen planlı olduğunu kanıtlıyor."
             },
             {
               "id": "c10",
@@ -14214,7 +14214,7 @@
               "isRevealed": false,
               "pointCost": 110,
               "title": "Tarhan'ın Basın Danışmanına Mesajları",
-              "text": "Tarhan'ın telefonu imaj kopyasından alınan açılış öncesi panik yazışmaları.",
+              "text": "Tarhan'ın danışmanına attığı 'O zaman ben durduracağım' mesajı, cinayeti bizzat işleyeceğinin yazılı bir beyanıydı.",
               "mechanicType": "phone_chain",
               "phoneVerisi": {
                 "aciklama": "Mesaj zinciri.",
@@ -14244,7 +14244,7 @@
                 "sonuc": "'Ben durduracağım' — ve durdurdu."
               },
               "grid_effect": "Tarhan 'ben durduracağım' dedi, 20:30'da odaya girdi.",
-              "deductionHint": "'Ben durduracağım' + projeksiyon kolu + VIP odası = Tarhan katil."
+              "deductionHint": "'O zaman ben durduracağım' mesajı, iflası engellemek için her şeyi göze aldığını gösteriyor."
             },
             {
               "id": "c11",
@@ -14253,11 +14253,11 @@
               "isRevealed": false,
               "pointCost": 110,
               "title": "VIP Odası Ses Kaydı",
-              "text": "[Oda içi gizli dinleme kaydı] Maktul: 'O zehirli ürünleri fuara sokamazsın Tarhan, raporu açıklayacağım.' Tarhan: 'Senin sesin fuarın dışına çıkmayacak.' Ardından metal bir çubuğun rüzgarı yaran şiddetli sesi.",
+              "text": "[VIP oda dinleme kaydı] Maktul: 'O ürünleri fuara sokamazsın.' Tarhan: 'Senin sesin çıkmayacak.' Ardından metal bir çubuğun rüzgarı yaran şiddetli sesi.",
               "mechanicType": "ses_kaydi",
               "sesMetni": "Tarhan'ın sesi soğuk ve kesin. 'Vermeyeceksiniz' — ve sonra ses.",
               "grid_effect": "Ses kaydı cinayeti belgeli hale getiriyor.",
-              "deductionHint": "'Vermeyeceksiniz' + metalik ses = Tarhan VIP odada kolu indirdi."
+              "deductionHint": "'Senin sesin çıkmayacak' sözleri ve metalin havayı yarma sesi, o ağır projeksiyon kolunun kurbana iniş anını belgeliyor."
             }
           ],
           "solution": {
@@ -14265,7 +14265,7 @@
             "weaponId": "w3",
             "locationId": "l1"
           },
-          "solutionNarrative": "Gıda Şirketi CEO'su Tarhan, sahte sertifikasının açılış gecesi ifşa edileceğini öğrenince projeksiyon kolunu önceden söküp VIP odaya götürdü. Maktulü vurdu ve konferansa katılmaya devam etti. DNA, tanık, ses kaydı ve mesajlar tüm planı mahkûm etti."
+          "solutionNarrative": "Gıda Şirketi CEO'su Tarhan, sahte sağlık sertifikasının açılış gecesi ifşa edilip imparatorluğunun yıkılacağını öğrenince, toplantı salonundaki çelik projeksiyon kolunu önceden söküp VIP odaya daldı. Maktulün kafatasını o demirle parçaladıktan sonra konferansa katılmaya devam edecek kadar soğukkanlıydı, ancak ses kaydı ve kamera logları bu sahte maskeyi darmadağın etti."
         }
       ]
     }
