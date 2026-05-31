@@ -603,9 +603,9 @@ export const PUZZLES: Puzzle[] = [
     story:
       "Ankara'nın serin bir sonbahar akşamında, binlerce kişinin coşkuyla izlediği folklor festivalinin baş koordinatörü sahnede aniden yere yığıldı. Rengarenk sahne ışıklarının altında yaşanan bu trajedi, alkış seslerini keserken sahne arkasındaki karanlık rekabetin de üzerindeki perdeyi kaldırdı.",
     suspects: [
-      { id: "s1", name: "Rakip Sanatçı", description: "Ana ekibe dahil edilmediği için aylardır kin güden ve kulislerde dolaşan hırslı sanatçı.", icon: "face" },
-      { id: "s2", name: "Ses Teknikeri", description: "Sahnenin tüm teknik ve elektriksel altyapısını santim santim bilen tecrübeli teknisyen.", icon: "support-agent" },
-      { id: "s3", name: "Sponsorların Temsilcisi", description: "Festivalin bütçesi yüzünden maktulle ciddi krizler yaşayan ve yatırımlarını çekmekle tehdit eden yönetici.", icon: "account-circle" },
+      { id: "s1", name: "Rakip Sanatçı", description: "Ana ekibe dahil edilmediği için aylardır kin güden ve kulislerde dolaşan hırslı sanatçı.", icon: "noun-folklor-rakip-sanatci-avatar.png" },
+      { id: "s2", name: "Ses Teknikeri", description: "Sahnenin tüm teknik ve elektriksel altyapısını santim santim bilen tecrübeli teknisyen.", icon: "noun-folklor-ses-teknikeri-avatar.png" },
+      { id: "s3", name: "Sponsorların Temsilcisi", description: "Festivalin bütçesi yüzünden maktulle ciddi krizler yaşayan ve yatırımlarını çekmekle tehdit eden yönetici.", icon: "noun-folklor-sponsor-temsilcisi-avatar.png" },
     ],
     weapons: [
       { id: "w1", name: "Zehirli Su", description: "Sanatçıların kişisel sularına karıştırıldığında kalbi saniyeler içinde durduran renksiz kimyasal damla.", icon: "water-drop" },
