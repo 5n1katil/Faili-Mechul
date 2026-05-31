@@ -10785,10 +10785,10 @@
               "isRevealed": true,
               "pointCost": 0,
               "title": "Sahil Güvenlik Raporu",
-              "text": "Cesette çelik kanca yırtığı veya halat boğulması yoktu; maktulün kafatasına küt, ağır ve silindirik bir metal aletle ölümcül bir darbe indirilmişti.",
+              "text": "Cesedin kafatasındaki kavisli, pürüzsüz ve son derece ağır madeni darbe izi, geceyi aydınlatan küt ve silindirik bir objenin ölümcül bir silah gibi savrulduğunu kanıtlıyordu.",
               "grid_effect": "l1_guverte ölüm yeri. Silindirik metal → w3_fener. w1, w2, w4 bu mekân için eleniyor.",
               "mechanicType": "text",
-              "deductionHint": "Güverte + silindirik metal → fener. Fener + güverte → Kerem mi?"
+              "deductionHint": "Ağır ve silindirik madeni bir alet. Acaba güverteyi ne aydınlatıyordu?"
             },
             {
               "id": "c2",
@@ -10797,7 +10797,7 @@
               "isRevealed": false,
               "pointCost": 70,
               "title": "Kaptan Yusuf'un Beyanı",
-              "text": "Cinayetin motor dairesinde veya iç salonda değil; doğrudan teknenin baş tarafında, sisin her şeyi örttüğü rüzgarlı ve açık alanda işlendiği kanıtlandı.",
+              "text": "\"Kaptan köşkünde radar ekranlarından bir an olsun gözümü ayırmadım. Aşağıda, o rüzgarlı ve açık ön güvertede Kerem Bey'in karanlığa doğru hızla yürüdüğünü gördüm.\"",
               "grid_effect": "s2_yusuf + l2_koptan = ✓. s2 için l1, l3, l4 = ✗.",
               "mechanicType": "tanik_yuzlesme",
               "yuzlesmeDialogu": [
@@ -10812,7 +10812,7 @@
                   "yalan": false
                 }
               ],
-              "deductionHint": "Yusuf köşkte. Kerem güverteye çıkıyordu."
+              "deductionHint": "Kaptan izole köşkünde. Kerem ise açık ve soğuk güverteye doğru ilerliyor."
             },
             {
               "id": "c3",
@@ -10821,10 +10821,10 @@
               "isRevealed": false,
               "pointCost": 70,
               "title": "Halat Analizi",
-              "text": "Kaptan Yusuf'un tüm yolculuk boyunca üst kattaki izole navigasyon odasında tekneyi yönettiği, radar kayıtları ve dümen loglarıyla kesin olarak onaylandı.",
+              "text": "Kaptan Yusuf'un ellerindeki kalın naylon sürtünme yanıkları, onun geceyi o sert ve pürüzlü bağlama kordonuyla manevra yaparak geçirdiğini fısıldıyordu.",
               "grid_effect": "s2_yusuf + w1_halat = ✓. s1, s3, s4 için w1 = ✗.",
               "mechanicType": "text",
-              "deductionHint": "Yusuf + halat + köşk. Artık Yusuf tamam. Kerem için kalan: w3_fener + l1_guverte."
+              "deductionHint": "Kaptan + Pürüzlü Halat + Navigasyon Köşkü. Yusuf elendi."
             },
             {
               "id": "c4",
@@ -10833,7 +10833,7 @@
               "isRevealed": false,
               "pointCost": 70,
               "title": "Viski Bardağı DNA",
-              "text": "Finans direktörünün gece boyunca sadece lüks dinlenme salonundaki barın etrafında oturduğu ve üst veya ön alanlara hiç çıkmadığı teknenin iç kameralarına yansıdı.",
+              "text": "Finans direktörü Pınar'ın dudak boyası ve DNA'sı, iç salondaki deri koltukların hemen yanındaki sehpada duran, dibinde uyuşturucu tortusu kalmış o kristal bardağın tam kenarındaydı.",
               "mechanicType": "dna_match",
               "dnaVerisi": {
                 "aciklama": "DNA profillerini bardak iziyle eşleştir.",
@@ -10875,7 +10875,7 @@
                 "sonuc": "Bardağa dokunan: Pınar."
               },
               "grid_effect": "s3_pinar + w2_viski = ✓. s1, s2, s4 için w2 = ✗. s3 + l3_salon = ✓ (bar bağlantısı).",
-              "deductionHint": "Pınar + viski + salon. Artık Pınar tamam."
+              "deductionHint": "Pınar + Zehirli Viski Bardağı. Mekanı neresiydi?"
             },
             {
               "id": "c5",
@@ -10884,10 +10884,10 @@
               "isRevealed": false,
               "pointCost": 70,
               "title": "Pınar'ın Salon Konumu",
-              "text": "Araştırmacı gazetecinin olay saatinde alt kattaki gürültülü makine dairesinde gizli belgeleri okuduğu ve oradan hiç çıkmadığı kendi çektiği ses kayıtlarıyla anlaşıldı.",
+              "text": "Finans direktörü Pınar'ın yüksek topuklu ayakkabılarının izleri, sadece kalın halılarla kaplı ve lüks içeceklerin servis edildiği o dinlenme alanının sınırları içinde kalmıştı.",
               "grid_effect": "s3_pinar + l3_salon = ✓ kesin. s3 için l1, l2, l4 = ✗.",
               "mechanicType": "text",
-              "deductionHint": "Pınar salonda kaldı. Mert nerede?"
+              "deductionHint": "Pınar salonda izole oldu. Mert ve Kerem'in konumları hala belirsiz."
             },
             {
               "id": "c6",
@@ -10896,7 +10896,7 @@
               "isRevealed": false,
               "pointCost": 70,
               "title": "Tekne Kancası İzi",
-              "text": "Maktulün çantasından çıkan hisse devir belgesi, kurbanın mal varlığı yüzünden mahkemelik olduğu kişiyle tam da o rüzgarlı alanda yüzleştiğini kanıtladı.",
+              "text": "Keskin ve kavisli çelik balıkçı aletinin sapındaki terli avuç içi izi, sürekli kalem tutmaktan nasırlaşmış o araştırmacı gazetecinin parmaklarıyla birebir eşleşiyordu.",
               "mechanicType": "parmak_izi",
               "parmakIziVerisi": {
                 "aciklama": "Kancadaki izi dört şüpheliyle eşleştir.",
@@ -10911,7 +10911,7 @@
                 "sonuc": "Kancayı tutan: Mert."
               },
               "grid_effect": "s4_mert + w4_kanca = ✓. s1, s2, s3 için w4 = ✗.",
-              "deductionHint": "Mert + kanca. Mert nerede? Motor dairesi kaldı: s4 + l4_motor = ✓."
+              "deductionHint": "Gazeteci Mert + Çelik Kanca. Peki bu kanca teknenin neresindeydi?"
             },
             {
               "id": "c7",
@@ -10920,7 +10920,7 @@
               "isRevealed": false,
               "pointCost": 70,
               "title": "Gece Hareketleri",
-              "text": "Ağır metal deniz fenerinin sapında bulunan ter döküntüleri, hisseleri sıfırlanmak üzere olan iş ortağı Kerem'in DNA'sıyla tam eşleşme sağladı.",
+              "text": "Araştırmacı gazeteci Mert'in ses kayıt cihazındaki o sağır edici piston ve motor gürültüleri, onun cinayet saatlerinde teknenin o en derin, en yağlı mekanına hapsolduğunu mühürledi.",
               "mechanicType": "timeline_sort",
               "timelineVerisi": {
                 "aciklama": "Gece boyunca olayları doğru sıraya diz.",
@@ -10954,7 +10954,7 @@
                 "sonuc": "Kerem güverteye çıktı, ses duyuldu, elleri titreyerek indi."
               },
               "grid_effect": "s1_kerem + l1_guverte = ✓ kesin. Timeline Kerem'i güverteye yerleştiriyor.",
-              "deductionHint": "Kerem güverteye çıktı. Fener orada. Maktul orada. Çözüm: Kerem."
+              "deductionHint": "Mert + Makine Dairesi. Tüm şüpheliler yerlerine oturdu. Güverte boş kaldı."
             },
             {
               "id": "c8",
@@ -10963,11 +10963,11 @@
               "isRevealed": false,
               "pointCost": 70,
               "title": "Hisse Devir Belgesi",
-              "text": "Maktulün çantasında imzalanmayı bekleyen hisse devir belgesi: Kerem'in payı %0'a düşürülüyor. Toplantı o gece yapılacaktı.",
+              "text": "Maktulün çantasından çıkan o resmi belgede, Kerem'in yıllarını verdiği şirketteki tüm varlığının tek bir imzayla sıfırlandığı yazıyordu.",
               "mechanicType": "gorsel_ipucu",
               "gorselAciklama": "Resmi hisse devir formu. 'Kerem — % 0.' Maktulün imzası var, Kerem'in yok.",
               "grid_effect": "Kerem'in motifi: şirket payının sıfırlanması.",
-              "deductionHint": "%0 hisse + güverte + fener = Kerem katil."
+              "deductionHint": "%0 Hisse devri = Kerem'in şirketten ve hayattan silinmesi."
             },
             {
               "id": "c9",
@@ -10976,11 +10976,11 @@
               "isRevealed": false,
               "pointCost": 70,
               "title": "Güverte Ses Kaydı",
-              "text": "[Tekne harici ses kaydı — rüzgar gürültüsü arasında] Maktul: 'Kerem, yarın imzalanıyor.' Kerem: 'Yarın gelmeyecek.' Darbe sesi.",
+              "text": "[Karanlık güverteden yankılanan ses kaydı] Maktul: 'Kerem, o hisseler yarın devredilecek.' Rüzgara karışan buz gibi bir fısıltı: 'O yarın hiç gelmeyecek.' Ardından küt bir darbe sesi.",
               "mechanicType": "ses_kaydi",
               "sesMetni": "Kerem'in 'yarın gelmeyecek' sözü sakin ve kesin. Ardından ses.",
               "grid_effect": "Kerem'in itirafı: 'Yarın gelmeyecek' — maktulü değil toplantıyı mı kastetti?",
-              "deductionHint": "'Yarın gelmeyecek' + darbe sesi = cinayeti o sırada işledi."
+              "deductionHint": "'O yarın hiç gelmeyecek' + Küt Darbe Sesi = Kerem tetiği çekti."
             },
             {
               "id": "c10",
@@ -10989,7 +10989,7 @@
               "isRevealed": false,
               "pointCost": 70,
               "title": "Fenerin Parmak İzi",
-              "text": "El feneri üzerinde taze baskı izi.",
+              "text": "Kafatasını parçalayan o ağır metal silindirin sapında, iflasın eşiğine gelmiş iş ortağının o öfke dolu ve baskın parmak izleri parlıyordu.",
               "mechanicType": "parmak_izi",
               "parmakIziVerisi": {
                 "aciklama": "Fenerdeki izi dört şüpheliyle eşleştir.",
@@ -11004,7 +11004,7 @@
                 "sonuc": "Feneri tutan: Kerem."
               },
               "grid_effect": "s1_kerem + w3_fener = ✓ kesin. Tüm ızgara doldu.",
-              "deductionHint": "Kerem + fener + güverte = tam çözüm."
+              "deductionHint": "Kerem + Deniz Feneri + Ön Güverte = Kusursuz Cinayet."
             }
           ],
           "solution": {
@@ -11134,10 +11134,10 @@
               "isRevealed": true,
               "pointCost": 0,
               "title": "İlk Tespit",
-              "text": "Adli inceleme, kurbanın bir evrak delgici veya toksik kahve ile öldürülmediğini; üzerine devrilen yüzlerce kiloluk devasa bir mobilyanın altında kalarak can verdiğini gösterdi.",
+              "text": "Cesedin kaburga ve omurgasındaki o devasa, ezici kırıklar, ufak bir ofis aletinden değil; yüzlerce kiloluk bir çelik bloğun kurbanın üzerine amansızca devrilmesiyle açıklanabilirdi.",
               "grid_effect": "l2_mali ölüm yeri. Devrilmiş dolap → w4_dolap. w1, w2, w3 bu mekân için eleniyor.",
               "mechanicType": "text",
-              "deductionHint": "Mali ofis + dolap sabotajı → Cahit'in çalıştığı yer."
+              "deductionHint": "Devasa çelik bir blok kurbanı ezdi. Muhasebe departmanında ne olabilir?"
             },
             {
               "id": "c2",
@@ -11146,7 +11146,7 @@
               "isRevealed": false,
               "pointCost": 70,
               "title": "Dolap Vidaları",
-              "text": "Cinayetin medya odasında veya güvenlik merkezinde değil; doğrudan kilitli evrakların ve kasaların bulunduğu 3. kattaki muhasebe departmanında işlendiği saptandı.",
+              "text": "Çelik bloğun duvara montaj vidalarını profesyonelce yerinden söken o soğuk çelik tornavidanın sapında, muhasebe kayıtlarını örtbas etmek isteyen mali müdür Cahit'in terli parmak izleri bulundu.",
               "mechanicType": "dna_match",
               "dnaVerisi": {
                 "aciklama": "Tornavida DNA'sını dört şüpheliyle eşleştir.",
@@ -11188,7 +11188,7 @@
                 "sonuc": "Tornavida DNA: Cahit."
               },
               "grid_effect": "s2_cahit + w4_dolap = ✓. s2 + l2_mali = ✓. s1, s3, s4 için w4 = ✗.",
-              "deductionHint": "Cahit + dolap + mali ofis = tam eşleşme. Cahit katil."
+              "deductionHint": "Cahit + Sabote edilmiş çelik dolap."
             },
             {
               "id": "c3",
@@ -11197,10 +11197,10 @@
               "isRevealed": false,
               "pointCost": 70,
               "title": "Basın Odası Görevlisi",
-              "text": "Basın danışmanı Ezgi'nin gece boyunca medya odasından çıkmadığı ve gazetecilerle sürekli telefonda olduğu bina loglarıyla teyit edildi.",
+              "text": "Basın danışmanı Ezgi'nin telefonundaki kesintisiz arama logları ve canlı yayın bağlantıları, onun geceyi sadece o kameralarla ve ekranlarla dolu odada geçirdiğini mühürledi.",
               "grid_effect": "s4_ezgi + l4_basin = ✓. s4 için l1, l2, l3 = ✗.",
               "mechanicType": "text",
-              "deductionHint": "Ezgi basın odasında. Hangi silah basın odasıyla bağlantılı? → w2_kahve."
+              "deductionHint": "Ezgi + Basın Odası. Bu mekanda hangi silahı kullandı?"
             },
             {
               "id": "c4",
@@ -11209,7 +11209,7 @@
               "isRevealed": false,
               "pointCost": 70,
               "title": "Kahve Termosu İzi",
-              "text": "Genel sekreterin kendi izole ofisinde bilgisayarı başında seçim sonuçlarını anlık takip ettiği, kesintisiz klavye aktivite kayıtlarıyla kanıtlandı.",
+              "text": "Seçim gecesi uyanık kalmak için dağıtılan o özel çelik kahve termosunun kapağında, sadece kameralar karşısına çıkan medyacı bir kadının o narin ve bakımlı parmak izleri vardı.",
               "mechanicType": "parmak_izi",
               "parmakIziVerisi": {
                 "aciklama": "Termos kapağındaki izi dört şüpheliyle eşleştir.",
@@ -11224,7 +11224,7 @@
                 "sonuc": "Termosu açan: Ezgi."
               },
               "grid_effect": "s4_ezgi + w2_kahve = ✓. s1, s2, s3 için w2 = ✗.",
-              "deductionHint": "Ezgi + kahve + basın odası. Artık Ezgi tamam."
+              "deductionHint": "Ezgi + Zehirli Kahve Termosu. Artık Ezgi tamamen elendi."
             },
             {
               "id": "c5",
@@ -11233,10 +11233,10 @@
               "isRevealed": false,
               "pointCost": 70,
               "title": "Güvenlik Sisteminin Kaydı",
-              "text": "Güvenlik şefinin olay saatinde zemin kattaki kontrol merkezinde elektrik panolarını incelediği güvenlik kamerası arşiviyle doğrulandı.",
+              "text": "Güvenlik şefinin telsiz sinyalleri ve yaka kamerası görüntüleri, onun zemin kattaki o binanın beyni olan dijital izleme merkezinden hiç ayrılmadığını kanıtladı.",
               "grid_effect": "s3_orhan + l3_guvenlik = ✓. s3 için l1, l2, l4 = ✗.",
               "mechanicType": "text",
-              "deductionHint": "Orhan güvenlik merkezinde. Kablo orada → s3 + w3_kablo = ✓."
+              "deductionHint": "Güvenlik Şefi Orhan + Kontrol Merkezi."
             },
             {
               "id": "c6",
@@ -11245,10 +11245,10 @@
               "isRevealed": false,
               "pointCost": 70,
               "title": "Güvenlik Kablosu İzi",
-              "text": "Maktulün çantasında bulunan ve sabah basına verilecek olan 2.3 milyon TL'lik zimmet raporu, cinayetin ardındaki devasa finansal motifi aydınlattı.",
+              "text": "Ana panodan sökülen ve bir insanı boğabilecek kalınlıktaki o siyah yalıtımlı telin üzerinde, binanın her karışını bilen o yaşlı güvenlik şefinin DNA'sı saptandı.",
               "grid_effect": "s3_orhan + w3_kablo = ✓. s1, s2, s4 için w3 = ✗.",
               "mechanicType": "text",
-              "deductionHint": "Orhan + kablo + güvenlik. Hülya için kalan: w1_delgic + l1_sekreter."
+              "deductionHint": "Orhan + Elektrik Kablosu. Genel sekreter Hülya'nın silahı ve mekanı neydi?"
             },
             {
               "id": "c7",
@@ -11257,10 +11257,10 @@
               "isRevealed": false,
               "pointCost": 70,
               "title": "Hülya'nın Ofis Kaydı",
-              "text": "Dolabın duvara montaj vidalarını sökmekte kullanılan tornavidanın sapında, muhasebe kayıtlarını örtbas etmek isteyen mali müdür Cahit'in parmak izleri bulundu.",
+              "text": "Genel sekreterin ofis bilgisayarından alınan loglar, onun gece boyunca o izole liderlik odasında seçim veri akışını kesintisiz takip ettiğini, koridora bile çıkmadığını gösteriyordu.",
               "grid_effect": "s1_hulya + l1_sekreter = ✓. s1 için l2, l3, l4 = ✗.",
               "mechanicType": "text",
-              "deductionHint": "Hülya ofiste. Son kalan eşleşme: s1 + w1_delgic = ✓ (tek silah kaldı)."
+              "deductionHint": "Hülya + Liderlik Ofisi + Geriye kalan tek silah: Evrak Delgici."
             },
             {
               "id": "c8",
@@ -11269,11 +11269,11 @@
               "isRevealed": false,
               "pointCost": 70,
               "title": "Zimmet Belgesi",
-              "text": "Maktulün çantasında: Cahit hakkında 2.3 milyon TL zimmet raporu. Yarın yayınlanacaktı.",
+              "text": "Maktulün ceket cebinden sızan o gizli raporda, Cahit'in parti kasasından kendi hesabına geçirdiği milyonların dökümü kalem kalem işlenmişti ve tarih 'Yarın' olarak atılmıştı.",
               "mechanicType": "gorsel_ipucu",
               "gorselAciklama": "Resmi muhasebe raporu. 'Zimmet: C. Yıldız — 2.300.000 TL.' Maktulün el yazısıyla tarih: yarın.",
               "grid_effect": "Cahit'in motifi: zimmet + yarın ifşa = bugün gece harekete geçmek zorunda.",
-              "deductionHint": "2.3 milyon + dolap sabotajı + mali ofis = Cahit katil."
+              "deductionHint": "2.3 Milyon TL Zimmet = Cahit'in infaz fermanı."
             },
             {
               "id": "c9",
@@ -11282,7 +11282,7 @@
               "isRevealed": false,
               "pointCost": 70,
               "title": "Seçim Gecesi Zaman Çizelgesi",
-              "text": "O geceye ait bina erişim kayıtlarını doğru sıraya diz.",
+              "text": "Zaman çizelgesi analizi, Cahit'in elinde alet çantasıyla gizlice ofise döndüğü o karanlık dakikalarda, devasa çelik yığınının saniyeler içinde büyük bir gürültüyle yere çarptığını gösterdi.",
               "mechanicType": "timeline_sort",
               "timelineVerisi": {
                 "aciklama": "Seçim gecesi kronolojisi.",
@@ -11316,7 +11316,7 @@
                 "sonuc": "Cahit tornavidayla döndü. Kör anında dolap devrildi."
               },
               "grid_effect": "Cahit tornavidayla geri döndü + dolap + mali ofis = kesin.",
-              "deductionHint": "Tornavida + kör dakika + dolap = Cahit planlı hareket etti."
+              "deductionHint": "Tornavida + Gizlice odaya dönüş + Gürültü = Cahit planı uyguladı."
             },
             {
               "id": "c10",
@@ -11325,11 +11325,11 @@
               "isRevealed": false,
               "pointCost": 70,
               "title": "Cahit'in Kendi Ses Kaydı",
-              "text": "[Ofis diktafonu otomatik kayıt — Cahit kendi kendine] 'Yarın rapor açıklanırsa bitiyorum. Dolap hazır. Bir kaza daha fazla olmaz bu gecenin karmaşasında.'",
+              "text": "Kendi odasındaki otomatik diktafon kaydında, Cahit'in titreyen sesiyle fısıldadığı 'Bir kaza her şeyi çözer, o koca çelik blok hazır' itirafı, cinayetin soğukkanlı planını deşifre ediyordu.",
               "mechanicType": "ses_kaydi",
               "sesMetni": "Cahit'in fısıltısı. 'Dolap hazır' — önceden planlamış.",
               "grid_effect": "Cahit'in kendi sözleri planı itiraf ediyor.",
-              "deductionHint": "'Dolap hazır' + 'kaza' = kasıtlı sabotaj. Cahit katil."
+              "deductionHint": "'Çelik blok hazır' + 'Kaza' = Cahit'in kusursuz cinayeti."
             }
           ],
           "solution": {
@@ -11459,10 +11459,10 @@
               "isRevealed": true,
               "pointCost": 0,
               "title": "İlk Tespit",
-              "text": "Kurban zehirli bir içecekle veya cam vitrin kapağıyla değil; kafatasına uzun, küt ve ağır bir metal aletin defalarca vurulmasıyla öldürülmüştü.",
+              "text": "Cesedin kafatasındaki uzun, küt ve paslı göçük izleri, ölümün narin bir heykelcikten değil, endüstriyel taşıma sistemlerine ait devasa bir çelik çubuktan geldiğini haykırıyordu.",
               "grid_effect": "l3_aralik ölüm yeri. Uzun metal alet → w4_demir. w1, w2, w3 bu mekân için eleniyor.",
               "mechanicType": "text",
-              "deductionHint": "Pazar aralığı + uzun demir → raf demiri. Kim dışarıdaydı?"
+              "deductionHint": "Uzun ve paslı çelik bir çubuk. Pazar tezgahlarının kurulumunda kullanılan bir demir."
             },
             {
               "id": "c2",
@@ -11471,10 +11471,10 @@
               "isRevealed": false,
               "pointCost": 70,
               "title": "Komşu Tüccar İfadesi",
-              "text": "Cinayetin kapalı depo odasında veya dükkanın aydınlık ana alanında değil, doğrudan dükkanlar arasındaki o dar, gölgelik taş geçitte işlendiği saptandı.",
+              "text": "Kurbanın ayakkabılarındaki arnavut kaldırımı tozu ve ceketine sinen sabah çiyi, cinayetin o loş dükkanın içinde değil, dükkanlar arasındaki o dar ve rutubetli geçitte işlendiğini kanıtladı.",
               "grid_effect": "s3_dimitri + l3_aralik = ✓. s3 + w4_demir = ✓. s1, s2, s4 için w4 = ✗.",
               "mechanicType": "text",
-              "deductionHint": "Dimitri + demir + aralık = Dimitri katil."
+              "deductionHint": "Cinayet mahalli dar ve rutubetli pazar geçidi. Kim oradaydı?"
             },
             {
               "id": "c3",
@@ -11483,10 +11483,10 @@
               "isRevealed": false,
               "pointCost": 70,
               "title": "Çay Ocağı Sahibi",
-              "text": "Sigorta ajanı Sevcan'ın sabah boyunca sadece çay ocağının köşesinde raporlarını yazdığı ve oradan hiç ayrılmadığı çaycı tarafından doğrulandı.",
+              "text": "Sigorta ajanı Sevcan'ın bilgisayarındaki ekspertiz raporunun kayıt saatleri, onun tüm sabahı sadece o dumanı tüten semaverin yanındaki küçük ahşap masada geçirdiğini mühürledi.",
               "grid_effect": "s4_sevcan + l4_cayocak = ✓. s4 için l1, l2, l3 = ✗.",
               "mechanicType": "text",
-              "deductionHint": "Sevcan çay ocağında. Çay ocağı + w3_cay = s4_sevcan + w3_cay = ✓."
+              "deductionHint": "Sevcan + Çay Ocağı. Hangi silahı elinde tutuyordu?"
             },
             {
               "id": "c4",
@@ -11495,7 +11495,7 @@
               "isRevealed": false,
               "pointCost": 70,
               "title": "Çay Kabı İzi",
-              "text": "Koleksiyoner kadının olay saatinde dükkanın ana vitrini önünde sinir krizi geçirdiği ancak arka geçide hiç girmediği pazar bekçisinin ifadesiyle sabitlendi.",
+              "text": "Pazar esnafına sabahları ikram edilen o sıcak porselen demliğin kapağında, poliçeleri imzalamaya alışkın o dikkatli sigortacının düzgün parmak izleri tespit edildi.",
               "mechanicType": "parmak_izi",
               "parmakIziVerisi": {
                 "aciklama": "Çay kabındaki izi dört şüpheliyle eşleştir.",
@@ -11510,7 +11510,7 @@
                 "sonuc": "Çay kabını açan: Sevcan."
               },
               "grid_effect": "s4_sevcan + w3_cay = ✓ kesin. s1, s2, s3 için w3 = ✗.",
-              "deductionHint": "Sevcan + çay + çay ocağı. Artık Sevcan tamam."
+              "deductionHint": "Sevcan + Zehirli Çay. Sigortacı aradan çekildi."
             },
             {
               "id": "c5",
@@ -11519,7 +11519,7 @@
               "isRevealed": false,
               "pointCost": 70,
               "title": "Bronz Heykelcik DNA",
-              "text": "Müzeci Emre'nin o sabah sadece kilitli depo odasına girdiği ve eserleri inceledikten sonra dar geçide sapmadan ana yoldan çıktığı kameralarla belgelendi.",
+              "text": "Paha biçilmez antika bronz şövalye heykelciğinin soğuk yüzeyinden alınan doku örnekleri, sadece tarihi eserlerin tozunu yutmuş o hırslı akademisyen Emre'nin DNA'sıyla eşleşti.",
               "mechanicType": "dna_match",
               "dnaVerisi": {
                 "aciklama": "Heykel DNA'sını dört şüpheliyle eşleştir.",
@@ -11561,7 +11561,7 @@
                 "sonuc": "Heykelciği tutan: Emre."
               },
               "grid_effect": "s1_emre + w2_bronz = ✓. s2, s3, s4 için w2 = ✗.",
-              "deductionHint": "Emre + bronz. Emre depo odasında → s1 + l2_depo = ✓."
+              "deductionHint": "Akademisyen Emre + Bronz Heykelcik. Mekanı neresiydi?"
             },
             {
               "id": "c6",
@@ -11570,10 +11570,10 @@
               "isRevealed": false,
               "pointCost": 70,
               "title": "Emre'nin Depo Ziyareti",
-              "text": "Dar pazar aralığında ele geçirilen uzun ve küt raf demirinin üzerinde, kaçakçı Dimitri'ye ait deri döküntüleri ve kurbanın kanı bir aradaydı.",
+              "text": "Emre'nin sabah yalnızca kilitli depo odasına girdiği ve eserleri katalogladıktan sonra dar geçide sapmadan ana yoldan çıktığı kamera loglarına işlenmişti.",
               "grid_effect": "s1_emre + l2_depo = ✓. s1 için l1, l3, l4 = ✗.",
               "mechanicType": "text",
-              "deductionHint": "Emre depoda. Vitrin kapağı ana dükkan için → Fatma'ya kalıyor."
+              "deductionHint": "Emre + Depo. Fatma ana dükkan ve cam vitrin kapağıyla eşleşiyor."
             },
             {
               "id": "c7",
@@ -11582,7 +11582,7 @@
               "isRevealed": false,
               "pointCost": 70,
               "title": "Fatma Hanım'ın Beyanı",
-              "text": "Dimitri'nin otel odasında ele geçirilen şifreli mesaj: 'Eser hazır, pazar geçidinde pürüzü hallettim, akşam limanda buluşalım.' gerçeği mühürledi.",
+              "text": "Yüzleşme sırasında Fatma Hanım itiraf etti: Öfkeden deliye dönmüştü, vitrinin cam kapağını iki eliyle kavramıştı — ama birinin gelmesiyle durmuştu. Kavrama izleri ellerindeydi.",
               "mechanicType": "tanik_yuzlesme",
               "yuzlesmeDialogu": [
                 {
@@ -11597,7 +11597,7 @@
                 }
               ],
               "grid_effect": "s2_fatma + w1_vitrin = ✓. s2 + l1_dukkan = ✓. s1, s3, s4 için w1 = ✗.",
-              "deductionHint": "Fatma + vitrin kapağı + ana dükkan. Artık Fatma tamam. Tüm ızgara doldu."
+              "deductionHint": "Fatma + Vitrin Kapağı + Ana Dükkan. Son parça yerine oturdu."
             },
             {
               "id": "c8",
@@ -11606,11 +11606,11 @@
               "isRevealed": false,
               "pointCost": 70,
               "title": "Dimitri'nin Sahte Pasaportu",
-              "text": "Jandarma aramasında Dimitri'nin çantasında: sahte kimlik, 3 farklı pasaport ve kayıp Bizans eseri.",
+              "text": "Jandarma aramasında Dimitri'nin çantasında sahte pasaport, kayıp Bizans eseri ve üç farklı isme ait kimlik belgeleri çıktı.",
               "mechanicType": "gorsel_ipucu",
               "gorselAciklama": "Çanta içeriği fotoğrafı. Bizans eseri küçük kutuda. Pasaportlar farklı isimlerle.",
               "grid_effect": "Dimitri eseri çaldı — hem hırsız hem katil.",
-              "deductionHint": "Eser Dimitri'de. Demir Dimitri'nin. Aralıkta öldürüldü. Çözüm: Dimitri."
+              "deductionHint": "Eser Dimitri'de. Raf demiri Dimitri'de. Pazar aralığı = Dimitri katil."
             },
             {
               "id": "c9",
@@ -11653,7 +11653,7 @@
                 "sonuc": "Dimitri raf demirini aralıkta hazırladı, maktulü bekledi."
               },
               "grid_effect": "Timeline Dimitri'yi aralıkta + demir + maktul ile buluşturuyor.",
-              "deductionHint": "Dimitri aralıkta bekledi, maktul geldi, demir indi."
+              "deductionHint": "Dimitri raf demirine erişti. Maktul aralığa çağrıldı. Sonuç kaçınılmazdı."
             },
             {
               "id": "c10",
@@ -11666,7 +11666,7 @@
               "mechanicType": "ses_kaydi",
               "sesMetni": "'Sorun çıkarırsa hallederim' — maktulü öngördü mü?",
               "grid_effect": "Dimitri 'sorun halletmeyi' önceden planladı.",
-              "deductionHint": "'Sorun halletme' + demir + aralık = Dimitri katil."
+              "deductionHint": "'Sorun hallederim' + Raf Demiri + Pazar Aralığı = Kaçakçı katil."
             }
           ],
           "solution": {
@@ -11796,10 +11796,10 @@
               "isRevealed": true,
               "pointCost": 0,
               "title": "Tıp Fakültesi Raporu",
-              "text": "Adli rapor: Kurban kemik testeresiyle kesilmemiş veya dolap kapağıyla ezilmemişti; ölüm kapalı alanda solunan profesyonel bir anestezi karışımının ciğerleri kilitlemesiyle gerçekleşmişti.",
+              "text": "Adli tahlil, kurbanın vücudunda hiçbir kesici alet veya küt darp izinin olmadığını; ölümün birikmiş ve kapalı bir alanda akciğerleri adım adım felç eden sinsi bir gazın işi olduğunu ortaya koydu.",
               "grid_effect": "l1_anatomi ölüm yeri. Anestezi gazı → w4_gaz. w1, w2, w3 bu mekân için eleniyor.",
               "mechanicType": "text",
-              "deductionHint": "Anatomi lab + anestezi gazı. Kim taşıdı? → Berk anestezi odasından."
+              "deductionHint": "Kapalı bir ortamda sessizce öldüren gaz. Hangi oda bunun için en uygundu?"
             },
             {
               "id": "c2",
@@ -11808,10 +11808,10 @@
               "isRevealed": false,
               "pointCost": 70,
               "title": "Gece Güvenlik Turu",
-              "text": "Gazın yoğunlaşma analizleri, cinayetin uzun koridorlarda veya ilaç bölümünde değil; kapıları içeriden hava sızdırmaz hale getirilmiş o karanlık kadavra çalışma odasında işlendiğini kanıtladı.",
+              "text": "Kurbanın üzerine çöktüğü o paslanmaz çelik masanın hemen altındaki koku analizi, formaldehitin değil; anestezi gazının bu odanın havasına karışarak son nefesi getirdiğini ortaya koydu.",
               "grid_effect": "s4_berk + l4_anestezi = ✓. s4 için l1, l2, l3 = ✗.",
               "mechanicType": "text",
-              "deductionHint": "Berk anestezi odasında. Gaz tüpü elinde. Anatomi laba taşıdı mı?"
+              "deductionHint": "Anatomi Laboratuvarı + Anestezi Gazı. Kim tüpü buraya taşıdı?"
             },
             {
               "id": "c3",
@@ -11820,7 +11820,7 @@
               "isRevealed": false,
               "pointCost": 70,
               "title": "Gaz Tüpü İzi",
-              "text": "Eczacılık profesörünün tüm gece boyunca sadece ilaç araştırma bölümünde mikroskop başında olduğu fakültenin laboratuvar giriş loglarıyla kesinleşti.",
+              "text": "Anestezi gaz tüpünün soğuk metal yüzeyinden sıyrılan doku kalıntıları, tüpü kavramaktan alışmamış ama o gece zorla döndüren tek kişiyi işaret ediyordu: Tıp öğrencisi Berk.",
               "mechanicType": "dna_match",
               "dnaVerisi": {
                 "aciklama": "Tüp DNA'sını dört şüpheliyle eşleştir.",
@@ -11862,7 +11862,7 @@
                 "sonuc": "Gaz tüpünü tutan: Berk."
               },
               "grid_effect": "s4_berk + w4_gaz = ✓. s1, s2, s3 için w4 = ✗.",
-              "deductionHint": "Berk + gaz + anestezi odası. Ama tüp anatomi labdaydı — taşımış."
+              "deductionHint": "Berk + Gaz Tüpü. Tüp anestezi odasından anatomi labına nasıl taşındı?"
             },
             {
               "id": "c4",
@@ -11871,10 +11871,10 @@
               "isRevealed": false,
               "pointCost": 70,
               "title": "Prof. Nilüfer'in Beyanı",
-              "text": "Başhemşirenin olay saati boyunca 3. kat koridorunda ilaç envanteri saydığı ve kilitli odalara hiç girmediği kameralarla doğrulandı.",
+              "text": "Prof. Nilüfer'in gece boyunca ilaç araştırma bölümünde kesintisiz çalıştığı laboratuvar giriş logları ve ağ erişim kayıtlarıyla kesinleşti.",
               "grid_effect": "s2_nilufer + l2_eczaci = ✓. s2 için l1, l3, l4 = ✗. s3_ayhan + l3_koridor = ✓.",
               "mechanicType": "text",
-              "deductionHint": "Nilüfer eczacılıkta, Ayhan koridorda. İkisi aynı anda iki yerde."
+              "deductionHint": "Nilüfer + Eczacılık Bölümü. Hangi silahla eşleşiyor?"
             },
             {
               "id": "c5",
@@ -11883,7 +11883,7 @@
               "isRevealed": false,
               "pointCost": 70,
               "title": "Dolap Kapağı İzi",
-              "text": "Asistan Dr. Tunç'un olay saatinde kendi odasında tez savunması yazdığı bilgisayarının ağ kayıtlarıyla teyit edilerek listeden çıkarıldı.",
+              "text": "Eski eczane dolabının küt metal kapağında, kimyasal solüsyonları yıllarca karıştırmaktan oluşmuş o aside alışkın parmak izlerinin sahibi, Eczacılık Profesörü Nilüfer'den başkası değildi.",
               "mechanicType": "parmak_izi",
               "parmakIziVerisi": {
                 "aciklama": "Dolap kapağındaki izi dört şüpheliyle eşleştir.",
@@ -11898,7 +11898,7 @@
                 "sonuc": "Dolap kapağını tutan: Nilüfer."
               },
               "grid_effect": "s2_nilufer + w3_dolap = ✓. s1, s3, s4 için w3 = ✗.",
-              "deductionHint": "Nilüfer + dolap kapağı + eczacılık bölümü. Nilüfer tamam."
+              "deductionHint": "Nilüfer + Dolap Kapağı + Eczacılık Bölümü. Nilüfer tamam."
             },
             {
               "id": "c6",
@@ -11907,10 +11907,10 @@
               "isRevealed": false,
               "pointCost": 70,
               "title": "Koridor Kemik Testere İzi",
-              "text": "Maktulün masasında bulunan sınav hilesi belgeleri ve 'Disiplin kuruluna verilecek' taslağı, genç öğrencinin kariyerini kurtarmak için ne kadar ileri gidebileceğini gösterdi.",
+              "text": "Başhemşire Ayhan'ın 3. kat koridorundaki kesintisiz ilaç envanteri sayımı, kilitli odalara hiç girmediğini ve o karanlık laboratuvardan uzak kaldığını mühürledi.",
               "grid_effect": "s3_ayhan + w2_testere = ✓. s1, s2, s4 için w2 = ✗. s3 + l3_koridor = ✓ kesin.",
               "mechanicType": "text",
-              "deductionHint": "Ayhan + testere + koridor. Artık Ayhan tamam."
+              "deductionHint": "Ayhan + Koridor. Hangi silah koridorla bağlantılı?"
             },
             {
               "id": "c7",
@@ -11919,10 +11919,10 @@
               "isRevealed": false,
               "pointCost": 70,
               "title": "Dr. Tunç'un Konumu",
-              "text": "Anestezi derslerinden edindiği bilgiyle gaz tüpünü ölümcül silaha çeviren tıp öğrencisi Berk'in tüp üzerindeki eldiven izleri ve panik DNA'sı gerçeği aydınlattı.",
+              "text": "Dr. Tunç'un o gece kendi küçük odasında tez savunması üzerinde çalıştığı kesintisiz klavye logu ve ağ erişim kayıtları, onu anatomi labından tamamen uzak tuttu.",
               "grid_effect": "s1_tunc + l1_anatomi = ✓. s1 için l2, l3, l4 = ✗. s1 + w1_formal = ✓ (kalan silah).",
               "mechanicType": "text",
-              "deductionHint": "Tunç anatomi labda. Formalin orada. Ama katil: Berk gazı taşıdı ve oraya bıraktı."
+              "deductionHint": "Tunç kendi odası + Formalin kaldı. Berk gazı taşıyıp oraya bıraktı."
             },
             {
               "id": "c8",
@@ -11935,7 +11935,7 @@
               "mechanicType": "gorsel_ipucu",
               "gorselAciklama": "Ekran görüntüsü. Berk'in yüzü net. Altta not: 'Disiplin kurulu — yarın.' Gönderilmemiş.",
               "grid_effect": "Berk'in motifi: mezuniyet = hayatı. Maktul yarın bildirecekti.",
-              "deductionHint": "Sınav hilesi + yarın disiplin + gaz tüpü = Berk harekete geçti."
+              "deductionHint": "Sınav Hilesi + Yarın Disiplin Kurulu = Berk için tek çıkış yolu."
             },
             {
               "id": "c9",
@@ -11978,7 +11978,7 @@
                 "sonuc": "Berk tüpü lab'a bıraktı, havalandırmayı kapattı, gazın birikmesini bekledi."
               },
               "grid_effect": "Berk labı kapalı gaz ortamına dönüştürdü. Pasif cinayet.",
-              "deductionHint": "Gaz + kapalı ortam + Berk'in planı = pasif ama kasıtlı cinayet."
+              "deductionHint": "Berk tüpü bıraktı, havalandırmayı kapattı, geri çekildi. Pasif ama kasıtlı."
             },
             {
               "id": "c10",
@@ -11991,7 +11991,7 @@
               "mechanicType": "ses_kaydi",
               "sesMetni": "Berk'in sesi panikle karışmış hesap. '2 saat yeter' — tıbbi hesaplama.",
               "grid_effect": "Berk tıbbi bilgisiyle hesapladı — kasıtlı.",
-              "deductionHint": "'2 saat yeter' + gaz tüpü + anatomi lab = Berk katil."
+              "deductionHint": "'2 Saat Yeter' + Gaz Tüpü + Anatomi Labı = Berk katil."
             }
           ],
           "solution": {
@@ -12121,10 +12121,10 @@
               "isRevealed": true,
               "pointCost": 0,
               "title": "Festival Medikali Raporu",
-              "text": "Adli rapor: Kurban zehirli kokteyl içmemiş veya kabloyla boğulmamıştı; kafatası, yukarıdan sertçe indirilen ağır, çelik ve sivri mekanizmalı bir çubukla paramparça edilmişti.",
+              "text": "Kurbanın kafatasındaki o keskin, sivri ve yukarıdan defalarca inen darbeler, basit bir düşme değil; sahne üstü bir armatürün kasıtla aşağı döndürüldüğünü haykırıyordu.",
               "grid_effect": "l2_sanatci ölüm yeri. Rigging kolu → w4_rigging. w1, w2, w3 bu mekân için eleniyor.",
               "mechanicType": "text",
-              "deductionHint": "Sanatçı odası + rigging kolu → s2_luna'nın odası."
+              "deductionHint": "Sahne üstü bir donanım kolu. Sanatçı odasında ne var?"
             },
             {
               "id": "c2",
@@ -12133,7 +12133,7 @@
               "isRevealed": false,
               "pointCost": 70,
               "title": "Roadie İfadesi",
-              "text": "Cinayetin VIP çadırında veya ses kulübesinde değil; doğrudan aynalarla kaplı, ses yalıtımlı o lüks özel soyunma odasında işlendiği kesinleşti.",
+              "text": "Sanatçı odasından sızan o boğucu parfüm ve kırık ayna parçaları, katil ile kurban arasındaki son yüzleşmenin tam da Luna'nın ses yalıtımlı ve kilitli özel soyunma odasında yaşandığını kanıtladı.",
               "grid_effect": "s2_luna + l2_sanatci = ✓. s2 için l1, l3, l4 = ✗.",
               "mechanicType": "tanik_yuzlesme",
               "yuzlesmeDialogu": [
@@ -12148,7 +12148,7 @@
                   "yalan": false
                 }
               ],
-              "deductionHint": "Luna + sanatçı odası + tartışma ve sessizlik."
+              "deductionHint": "Luna + Sanatçı Odası + Kilitli kapı ve sessizlik."
             },
             {
               "id": "c3",
@@ -12157,7 +12157,7 @@
               "isRevealed": false,
               "pointCost": 70,
               "title": "Rigging Kolu İzi",
-              "text": "Şirket temsilcisi Deniz'in tüm gece boyunca sadece VIP çadırında yatırımcıları ağırladığı ve dışarı çıkmadığı kamera kayıtlarıyla belgelendi.",
+              "text": "Rigging kolunun döndürme vidasında bulunan izler, sahne aletlerine alışmamış ama kini ve öfkesiyle zorla döndürmüş bir elin baskı profilini ortaya koyuyordu — DNA: Luna.",
               "mechanicType": "parmak_izi",
               "parmakIziVerisi": {
                 "aciklama": "Rigging kolundaki izi dört şüpheliyle eşleştir.",
@@ -12172,7 +12172,7 @@
                 "sonuc": "Rigging kolunu döndüren: Luna."
               },
               "grid_effect": "s2_luna + w4_rigging = ✓. s1, s3, s4 için w4 = ✗.",
-              "deductionHint": "Luna + rigging + sanatçı odası = tam çözüm."
+              "deductionHint": "Luna + Rigging Kolu. Yerini biliyoruz, sanatçı odasındaydı."
             },
             {
               "id": "c4",
@@ -12181,10 +12181,10 @@
               "isRevealed": false,
               "pointCost": 70,
               "title": "VIP Çadır Görevlisi",
-              "text": "Ses mühendisi Alp'in konser boyunca ses kontrol kulübesinde mikserin başından hiç ayrılmadığı ve her frekansa saniyesinde müdahale ettiği dijital loglarla kanıtlandı.",
+              "text": "Sponsor Deniz'in tüm gece boyunca şampanya kadehlerinin aktığı VIP çadırda yatırımcıları ağırladığı, güvenlik kamera arşivi ve konuk listesindeki kesintisiz imzalarıyla belgelendi.",
               "grid_effect": "s4_deniz + l4_vip = ✓. s4 için l1, l2, l3 = ✗.",
               "mechanicType": "text",
-              "deductionHint": "Deniz VIP çadırında. Kokteyl orada → s4 + w3_kokteyl = ✓."
+              "deductionHint": "Deniz + VIP Çadırı. O mekanda ne bulunur?"
             },
             {
               "id": "c5",
@@ -12193,7 +12193,7 @@
               "isRevealed": false,
               "pointCost": 70,
               "title": "Kokteyl Bardağı DNA",
-              "text": "Güvenlik koordinatörü Bora'nın olay saati boyunca sadece sahne arkası giriş noktasında bilet kontrolü yaptığı ve içerilere girmediği onlarca şahitle doğrulandı.",
+              "text": "Kokteyl bardağının kristal yüzeyinden alınan doku örneği, sadece şampanya kadehlerine dokunmaya alışkın o iş odaklı temsilcinin DNA'sıyla birebir eşleşti.",
               "mechanicType": "dna_match",
               "dnaVerisi": {
                 "aciklama": "Bardak DNA'sını dört şüpheliyle eşleştir.",
@@ -12235,7 +12235,7 @@
                 "sonuc": "Bardağa dokunan: Deniz."
               },
               "grid_effect": "s4_deniz + w3_kokteyl = ✓. s1, s2, s3 için w3 = ✗.",
-              "deductionHint": "Deniz + kokteyl + VIP çadır. Artık Deniz tamam."
+              "deductionHint": "Deniz + Zehirli Kokteyl + VIP Çadırı. Deniz tamam."
             },
             {
               "id": "c6",
@@ -12244,10 +12244,10 @@
               "isRevealed": false,
               "pointCost": 70,
               "title": "Güvenlik Noktası Kablo İzi",
-              "text": "Maktulün telefonunda bulunan 'Son 3 şarkı listeden çıkarıldı. Luna bunu kabul etmeli — sözleşme şartı. Yüzyüze görüşeceğim.' mesajı cinayetin büyük tartışma sonrası işlendiğini ortaya koydu.",
+              "text": "Güvenlik koordinatörü Bora'nın telsiz logu ve akreditasyon sistemi, onun sahne arkası giriş noktasında her geçen kişiyi arayıp akredite ettiğini saniye saniye kaydetmişti.",
               "grid_effect": "s3_bora + w2_kablo = ✓. s1, s2, s4 için w2 = ✗. s3 + l3_guvenlik = ✓.",
               "mechanicType": "text",
-              "deductionHint": "Bora + kablo + güvenlik noktası. Artık Bora tamam."
+              "deductionHint": "Bora + Güvenlik Noktası. Hangi silah oradaydı?"
             },
             {
               "id": "c7",
@@ -12256,10 +12256,10 @@
               "isRevealed": false,
               "pointCost": 70,
               "title": "Alp'in Ses Kulübesi Kaydı",
-              "text": "Sahneden sinirle sökülmüş o ağır çelik rigging kolunun üzerinde, set listesinin iptal edilmesini hazmedemeyen narsist başrol sanatçısı Luna'nın tırnak ve DNA kalıntıları bulundu.",
+              "text": "Ses mühendisi Alp'in dijital mikser logu, onun konserin ilk notasından son akorunun kesilmesine kadar ses kontrol kulübesinin camından adım bile atmadığını mühürledi.",
               "grid_effect": "s1_alp + l1_ses = ✓. s1 için l2, l3, l4 = ✗. s1 + w1_mikrofon = ✓ (kalan).",
               "mechanicType": "text",
-              "deductionHint": "Alp ses kulübesinde + mikrofon standı. Artık tüm ızgara dolu."
+              "deductionHint": "Alp + Ses Kontrol Kulübesi + Mikrofon Standı. Tüm ızgara doldu."
             },
             {
               "id": "c8",
@@ -12272,7 +12272,7 @@
               "mechanicType": "gorsel_ipucu",
               "gorselAciklama": "E-posta zinciri. Luna'nın 'Bu son' yanıtı büyük harfle, kırmızıyla.",
               "grid_effect": "Luna'nın 'Bu son' sözü — ve öyle de oldu.",
-              "deductionHint": "'Bu son' + rigging + sanatçı odası = Luna katil."
+              "deductionHint": "'Bu son' + Rigging Kolu + Sanatçı Odası = Luna'nın son hamlesi."
             },
             {
               "id": "c9",
@@ -12315,7 +12315,7 @@
                 "sonuc": "Luna kapıyı kilitledi, 5 dakikada iş bitti, sahneye çıktı."
               },
               "grid_effect": "Luna + kilitli oda + 5 dakika + rigging = hızlı ve planlı.",
-              "deductionHint": "Tartışma → ses kesiliyor → Luna sahneye çıkıyor. Rigging kolunu o döndürdü."
+              "deductionHint": "Luna kilitledi, tartıştı, sus oldu, sahneye çıktı. Rigging'i o döndürmüştü."
             },
             {
               "id": "c10",
@@ -12328,7 +12328,7 @@
               "mechanicType": "ses_kaydi",
               "sesMetni": "'Sorun çözüldü' — maktul mü?",
               "grid_effect": "'Sorun çözüldü' + sanatçı odası + rigging = Luna katil.",
-              "deductionHint": "'Sorun çözüldü' demek için rigging'i o döndürmüş olmalı."
+              "deductionHint": "'Sorun çözüldü' — Luna'nın soğukkanlı itirafı. Rigging kolu o söyledi."
             }
           ],
           "solution": {

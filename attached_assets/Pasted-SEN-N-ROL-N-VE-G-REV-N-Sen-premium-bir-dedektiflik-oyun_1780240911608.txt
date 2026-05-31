@@ -1,0 +1,167 @@
+SENİN ROLÜN VE GÖREVİN:
+Sen premium bir dedektiflik oyunu olan "Faili Meçhul"ün Kıdemli Baş Geliştiricisisin. Sana aşağıda 12 adet "Dedektif" (Premium) vakasının YEPYENİ, edebi ve tamamen "DOLAYLI ÇIKARIM" mantığına dayanan metin verilerini veriyorum. 
+
+KIRMIZI ÇİZGİLER (GÜVENLİK ANAYASASI):
+1. Veritabanındaki `id`, `puzzleId`, `icon`, `solution`, `solvabilityMeta`, `timelineVerisi`, `sesMetni`, `parmakIziVerisi`, `dnaVerisi`, `mechanicType` gibi çalışan oyun ve sistem verilerine KESİNLİKLE DOKUNMA. Sadece sana verdiğim metin alanlarını GÜNCELLE.
+2. İpuçları her zaman BÜYÜK HARFLE başlar. Yazım kuralları kusursuzdur.
+3. Dosyayı baştan yaratma; mevcut JSON objelerindeki ilgili vakaları bul ve SADECE ilgili metin içeriklerini (`story`, `description`, `text`, `title`, `grid_effect`, `deductionHint`, `solutionNarrative`) bu premium halleriyle DEĞİŞTİR (Merge).
+
+AŞAĞIDAKİ VAKALARI BİREBİR GÜNCELLE:
+
+### BÖLÜM 1: İLK 7 VAKA (Standart Yapılı Premiumlar - puzzles.ts) ###
+
+1. "carsamba-suikasti"
+"story": "Çarşamba kasabasının o sakin ve durağan yapısı, belediye başkanının kendi makam odasında, deri koltuğunda ölü bulunmasıyla temelinden sarsıldı. Kasaba halkı şoktayken, cinayetin dışarıdan gelen biri tarafından değil, o kalın ahşap kapıların ardındaki en yakın yüzlerden biri tarafından işlendiği ortaya çıktı.",
+"clues": [
+  { "id": "c1", "text": "Kurbanın yüzündeki şiddetli kasılma ve midesindeki kramp bulguları, sessiz ve renksiz bir katilin doğrudan sindirim sistemine sızdığını gösteriyordu.", "type": "forensic", "isBonus": false },
+  { "id": "c2", "text": "Maktulün ceketindeki özel deri döşeme tozları ve masaya dökülen mürekkep, son nefesini sadece kendi şahsi krallığında, o ağır koltuğunda verdiğini belgeliyordu.", "type": "evidence", "isBonus": false },
+  { "id": "c3", "text": "Öfkeli müteahhitin ayakkabılarındaki çamur izleri, onun yalnızca güvenlik kameralarıyla izlenen ve dışarıya açılan bekleme koridorlarında volta attığını kanıtlıyordu.", "type": "record", "isBonus": false },
+  { "id": "c4", "text": "Siyasi rakibin o kritik saatlerde gazetecilerle canlı yayında tartışması, binanın içindeki bu sessiz infaz alanından millerce uzakta olduğunu doğruluyordu.", "type": "evidence", "isBonus": false },
+  { "id": "c5", "text": "Odaya her sabah izinsiz ve sorgusuz sualsiz kahve tepsisiyle girebilen tek silüet, yılların alışkanlığıyla masaya en çok yaklaşan kadındı.", "type": "evidence", "isBonus": true },
+  { "id": "c6", "text": "Fincanın porselen kenarındaki mikro kalıntılar, sekreterin çekmecesinde kilitli tuttuğu o nadir temizlik kimyasalının formülüyle birebir eşleşiyordu.", "type": "forensic", "isBonus": true }
+]
+
+2. "kutuphanede-sessiz-suc"
+"story": "Üniversitenin asırlık kütüphanesinde, gece bekçisi sabahın ilk ışıklarıyla sessiz okuma salonunda kan donduran bir manzarayla karşılaştı. Yüzlerce yıllık çok değerli el yazmaları yok olmuş, geriye sadece tozlu raflar ve bir akademisyenin cansız bedeni kalmıştı.",
+"clues": [
+  { "id": "c1", "text": "Kan sıçrama analizlerinin o loş ve özel korumalı asırlık belgelerin raflarını kızıla boyaması, saldırının tam da o yasak bölgenin kalbinde gerçekleştiğini mühürledi.", "type": "evidence", "isBonus": false },
+  { "id": "c2", "text": "Kafatasındaki derin, pürüzsüz ve son derece geniş göçük, ancak binlerce sayfalık, ciltli ve devasa bir bilgi yığınının ölümcül bir güçle savrulmasıyla açıklanabilirdi.", "type": "evidence", "isBonus": false },
+  { "id": "c3", "text": "Otuz yıllık emektar kütüphanecinin elektronik yaka kartı, cinayet saatinden çok önce ana kapı turnikelerinden geçerek binayı terk ettiğini sisteme kazımıştı.", "type": "witness", "isBonus": false },
+  { "id": "c4", "text": "Temizlik görevlisinin deterjan arabasındaki tekerlek izleri ve log kayıtları, onun gece yarısı sadece arşiv dosyalarının tutulduğu o dar ve soğuk odayı temizlediğini kanıtladı.", "type": "evidence", "isBonus": false },
+  { "id": "c5", "text": "Kayıp el yazmalarını haftalardır takıntılı bir şekilde araştıran akademisyenin masasında, her zaman açık duran o iki kilogramlık devasa ansiklopedik referans cildi yerinde yoktu.", "type": "forensic", "isBonus": true },
+  { "id": "c6", "text": "Gece nöbetçisinin feneri, paha biçilmez el yazmalarının saklandığı koridorun hemen çıkışında, doktora öğrencisinin soluk soluğa uzaklaşan silüetini yakalamıştı.", "type": "witness", "isBonus": true }
+]
+
+3. "saat-fabrikasinda-gizem"
+"story": "Eskişehir'in pas ve çelik kokan tarihi saat fabrikasında, dişlilerin ritmik sesi sabah saatlerinde çalan sirenlerle kesildi. Fabrika müdürü, kendi makinesinin çarkları arasında ölü bulundu. İşçi tulumlarının ardında dönen dolaplar artık sır değildi.",
+"clues": [
+  { "id": "c1", "text": "Kurbanın parçalanmış kafatası ve yaradaki paslı demir oksit kalıntıları, ölümün narin bir mühendislik harikasından değil, kaba kuvvetle savrulan çok ağır bir maden kütlesinden geldiğini gösteriyordu.", "type": "evidence", "isBonus": false },
+  { "id": "c2", "text": "Kırılmış dişliler, devrilmiş ağır sanayi tezgahları ve etrafa saçılan yoğun makine yağı, boğuşmanın tam da üretimin gerçekleştiği o gürültülü ve yağlı atölye merkezinde yaşandığını kanıtlıyordu.", "type": "evidence", "isBonus": false },
+  { "id": "c3", "text": "Muhasebe müdürünün o akşamki uçağına ait biniş kartı ve havaalanı güvenlik görüntüleri, onu bu metal cehenneminden millerce uzağa yerleştirmişti.", "type": "witness", "isBonus": false },
+  { "id": "c4", "text": "Makine mühendisinin parmak izleri ve retinal erişim kayıtları, onun tüm gece boyunca izole ve elektronik panellerle çevrili soğuk sunucu odasında kod yazdığını mühürledi.", "type": "evidence", "isBonus": false },
+  { "id": "c5", "text": "İşçilerin kulaklarını sağır eden o siren çalmadan hemen önce, fabrika müdürü ile sendika temsilcisinin gürültülü üretim bandının hemen yanında hararetli bir kavgaya tutuştukları ortaya çıktı.", "type": "forensic", "isBonus": true },
+  { "id": "c6", "text": "Yere dökülen siyah makine yağının tam ortasında yatan o ağır ve küt uçlu demir çekicin sapında, işçi başının nasırlı ellerine ait taze epitel dokular parlıyordu.", "type": "witness", "isBonus": true }
+]
+
+4. "sehrin-kalbi-kadikoy"
+"story": "Kadıköy'ün bohem tarzı, işlek bir kafesinde daktilo sesleri kesildi. Sivri dilli politik eleştirileriyle tanınan gazeteci, demli çayını yudumlarken aniden masaya yığıldı. Etraftaki onlarca insana rağmen, kimse o sessiz suikastı fark edememişti.",
+"clues": [
+  { "id": "c1", "text": "Hastaneden gelen acil toksikoloji raporunda kurbanın midesindeki şiddetli ve anlık asit reaksiyonu, ölümün doğrudan yudumlanan koyu renkli bir içecekten geldiğini belgeliyordu.", "type": "forensic", "isBonus": false },
+  { "id": "c2", "text": "Masaya devrilen iskemle ve yere saçılan porselen kırıkları, kurbanın son nefesini esintili bir terasta değil, tam da oturduğu o bohem iç mekanın kalbinde verdiğini gösterdi.", "type": "evidence", "isBonus": false },
+  { "id": "c3", "text": "Kafe sahibinin üzerindeki yoğun kasa fişi mürekkebi ve kamera açısı, onun tüm kaosu sadece uzaktan, tezgahın arkasından izlediğini doğruladı.", "type": "witness", "isBonus": false },
+  { "id": "c4", "text": "Bitişik masada oturan müşterinin pardösüsündeki sokak tozu ve dış mekan kamerasındaki kesintisiz silüeti, onun açık hava terasından bir saniye bile içeri adım atmadığını teyit etti.", "type": "witness", "isBonus": false },
+  { "id": "c5", "text": "Kurbanın önündeki o özel demliğe mutfaktayken tek dokunan ve onu masaya kadar kimsenin yaklaşmasına izin vermeden getiren kişi, o gün işe başlayan sessiz görevliydi.", "type": "direct", "isBonus": true },
+  { "id": "c6", "text": "Genç garsonun önlüğünün sol cebinde bulunan o minik ve boş cam şişedeki son damla, kurbanın demliğinden alınan numunedeki ölümcül zehirle birebir aynı kimyasal imzayı taşıyordu.", "type": "evidence", "isBonus": true }
+]
+
+5. "galata-kulesinde-son-gece"
+"story": "Yüzyıllara meydan okuyan Galata Kulesi'nde, gece turu sırasında rüzgarın uğultusuna bir çığlık karıştı. Sabah kapılar açıldığında kule tepesinde bir ceset bulundu. Katil, o dar geçitlerde ve karanlıkta izini kaybettirmişti.",
+"clues": [
+  { "id": "c1", "text": "Kurbanın omurgasındaki devasa kırıklar ve zemindeki çarpma ivmesi, bedenin hiçbir silahla dövülmediğini; yalnızca yerçekiminin o acımasız ve yüksekten düşürücü gücüne maruz kaldığını gösteriyordu.", "type": "forensic", "isBonus": false },
+  { "id": "c2", "text": "Tarihi taşların üzerindeki kan sıçramaları ve kopan ceket düğmeleri, arbedenin kapalı odalarda değil, İstanbul'u kuşbakışı gören o rüzgarlı ve açık seyir terasının dondurucu korkuluklarında yaşandığını mühürledi.", "type": "evidence", "isBonus": false },
+  { "id": "c3", "text": "Turist Nilgün'ün panik atak ilaçları ve tünel girişindeki kafenin adisyonu, onun yükseklik korkusu yüzünden kulenin basamaklarına adım dahi atmadığını ispatladı.", "type": "witness", "isBonus": false },
+  { "id": "c4", "text": "Tur rehberinin telsiz kayıtları ve gruptaki otuz kişinin yeminli beyanı, onun o kritik dakikalarda zemin kattaki teknik odada kayıp bir turisti aradığını kesinleştirdi.", "type": "witness", "isBonus": false },
+  { "id": "c5", "text": "O fırtınalı saatte seyir terasına açılan ve ağır asma kilitlerle korunan o demir kapıyı açabilecek tek anahtar, yalnızca vardiyadaki güvenlik personelinin kemerinde takılıydı.", "type": "direct", "isBonus": true },
+  { "id": "c6", "text": "Maktulün boşluğa bırakıldığı o son korkuluk demirinin hemen altında, kule bekçisinin üniformasına ait kopmuş bir apolet parçası ve taze çamurlu bot izleri parlıyordu.", "type": "forensic", "isBonus": true }
+]
+
+6. "beyoglu-pasajinda-santaj"
+"story": "Art Nouveau mimarisiyle süslü tarihi Beyoğlu pasajında, loş bir antikacının arka deposunda gizli bir anlaşma kanla mühürlendi. Etrafı paha biçilemez eşyalarla dolu bu odada, pasajın karmaşık insan ağının çürük bir ipi koptu.",
+"clues": [
+  { "id": "c1", "text": "Kurbanın kafatasındaki o geniş, beyaz tozlar bırakan ve kemiği un ufak eden devasa yara, sanat eseri ağırlığındaki küt bir taş veya mermer bloğun ölümcül darbesini fısıldıyordu.", "type": "evidence", "isBonus": false },
+  { "id": "c2", "text": "Olay yerindeki kırık antika vazolar ve havada asılı kalan asırlık toz bulutu, cinayetin pasajın ışıklı koridorlarında değil, antikacının o penceresiz ve nefes kesici arka deposunda işlendiğini kanıtladı.", "type": "evidence", "isBonus": false },
+  { "id": "c3", "text": "Avukat Suna Çakır'ın telefon sinyalleri ve çatı restoranındaki güvenlik kameraları, onun pasajın en üst katında, Boğaz'a karşı kadeh kaldırdığını mühürledi.", "type": "witness", "isBonus": false },
+  { "id": "c4", "text": "Manav Talip Uzun'un ellerindeki taze meyve lekeleri ve komşu esnafın beyanları, onun giriş kapısındaki sergisinden bir an olsun ayrılıp o karanlık depoya inmediğini doğruladı.", "type": "witness", "isBonus": false },
+  { "id": "c5", "text": "Milyonluk antika koleksiyonunun saklandığı o penceresiz arka deponun karmaşık yerleşim planını ve devasa asma kilidinin şifresini sadece mekanın kendi efendisi biliyordu.", "type": "direct", "isBonus": true },
+  { "id": "c6", "text": "Dükkan sahibinin şahsi envanterinde 'En Değerli Parçalar' arasında listelenen o devasa mermer büst kayıptı; kurbanın başucunda bulunan kaidedeki kan izleri ise Orhan Aras'ın DNA'sıyla %100 eşleşmişti.", "type": "forensic", "isBonus": true }
+]
+
+7. "arnavutkoyde-balikci-sirri"
+"story": "Arnavutköy'ün iyot ve anason kokan tarihi meyhanesinde, ahşap masalardan birine yığılmış bir müdavim bulundu. Önündeki kadeh doluydu ama kokusu her zamankinden çok daha karanlık, çok daha sinsiydi.",
+"clues": [
+  { "id": "c1", "text": "Adli toksikoloji raporu, kurbanın midesindeki alkolün içine gizlenmiş, kasları saniyeler içinde felç eden ve kalp krizini taklit eden o sinsi sıvının kimyasal haritasını çıkardı.", "type": "forensic", "isBonus": false },
+  { "id": "c2", "text": "Masaya devrilen meze tabakları, rakı kadehleri ve duvara sinen ağır anason kokusu, ölümün açık havadaki teknelerde değil, tam da o tarihi meyhanenin sıcak iç salonunda geldiğini doğruladı.", "type": "evidence", "isBonus": false },
+  { "id": "c3", "text": "Deneyimli balıkçı Bora'nın, yaklaşan fırtına yüzünden geceyi tamamen kıyı barınağındaki teknesini halatlarla sağlamlaştırarak geçirdiği liman kayıtlarıyla mühürlendi.", "type": "witness", "isBonus": false },
+  { "id": "c4", "text": "Mahalle doktoru Taner'in hastane acil servisindeki imza logları ve nöbetçi çizelgesi, onun meyhane kapısından içeri adım bile atmadığını kesinleştirdi.", "type": "witness", "isBonus": false },
+  { "id": "c5", "text": "Maktulün masasında duran ve özel bir tasarıma sahip olan o şişe, yalnızca meyhane sahibesinin şahsi anahtarıyla açılabilen o antika ahşap vitrinin baş köşesine aitti.", "type": "direct", "isBonus": true },
+  { "id": "c6", "text": "Zehirli rakı şişesinin tıpasında, sadece meyhane sahibesi Esma Hanım'ın o gece ellerine sürdüğü o nadide gül yağlı kremin mikroskobik doku kalıntıları bulundu.", "type": "evidence", "isBonus": true }
+]
+
+### BÖLÜM 2: SON 5 VAKA (İnteraktif Veri Tabanlı Premiumlar - puzzles_database.json) ###
+
+8. "yeni_d01" (Boğaz Köprüsü Altında)
+"story": "İstanbul Boğazı'nın sisler altındaki lüks teknesinde, iş dünyasının tanınmış simalarından biri ölü bulundu. Teknenin dalgalara karışan motor sesi, milyonlarca liralık bir ihaneti ve o gece güvertede dolaşan katilin ayak seslerini gizledi.",
+"clues": [
+  { "id": "c1", "title": "Sahil Güvenlik Raporu", "text": "Cesedin kafatasındaki kavisli, pürüzsüz ve son derece ağır madeni darbe izi, geceyi aydınlatan küt ve silindirik bir objenin ölümcül bir silah gibi savrulduğunu kanıtlıyordu.", "deductionHint": "Ağır ve silindirik madeni bir alet. Acaba güverteyi ne aydınlatıyordu?" },
+  { "id": "c2", "title": "Kaptan Yusuf'un Beyanı", "text": "\"Kaptan köşkünde radar ekranlarından bir an olsun gözümü ayırmadım. Aşağıda, o rüzgarlı ve açık ön güvertede Kerem Bey'in karanlığa doğru hızla yürüdüğünü gördüm.\"", "deductionHint": "Kaptan izole köşkünde. Kerem ise açık ve soğuk güverteye doğru ilerliyor." },
+  { "id": "c3", "title": "Halat Analizi", "text": "Kaptan Yusuf'un ellerindeki kalın naylon sürtünme yanıkları, onun geceyi o sert ve pürüzlü bağlama kordonuyla manevra yaparak geçirdiğini fısıldıyordu.", "deductionHint": "Kaptan + Pürüzlü Halat + Navigasyon Köşkü. Yusuf elendi." },
+  { "id": "c4", "title": "Viski Bardağı DNA", "text": "Finans direktörü Pınar'ın dudak boyası ve DNA'sı, iç salondaki deri koltukların hemen yanındaki sehpada duran, dibinde uyuşturucu tortusu kalmış o kristal bardağın tam kenarındaydı.", "deductionHint": "Pınar + Zehirli Viski Bardağı. Mekanı neresiydi?" },
+  { "id": "c5", "title": "Pınar'ın Salon Konumu", "text": "Finans direktörü Pınar'ın yüksek topuklu ayakkabılarının izleri, sadece kalın halılarla kaplı ve lüks içeceklerin servis edildiği o dinlenme alanının sınırları içinde kalmıştı.", "deductionHint": "Pınar salonda izole oldu. Mert ve Kerem'in konumları hala belirsiz." },
+  { "id": "c6", "title": "Tekne Kancası İzi", "text": "Keskin ve kavisli çelik balıkçı aletinin sapındaki terli avuç içi izi, sürekli kalem tutmaktan nasırlaşmış o araştırmacı gazetecinin parmaklarıyla birebir eşleşiyordu.", "deductionHint": "Gazeteci Mert + Çelik Kanca. Peki bu kanca teknenin neresindeydi?" },
+  { "id": "c7", "title": "Gece Hareketleri", "text": "Araştırmacı gazeteci Mert'in ses kayıt cihazındaki o sağır edici piston ve motor gürültüleri, onun cinayet saatlerinde teknenin o en derin, en yağlı mekanına hapsolduğunu mühürledi.", "deductionHint": "Mert + Makine Dairesi. Tüm şüpheliler yerlerine oturdu. Güverte boş kaldı." },
+  { "id": "c8", "title": "Hisse Devir Belgesi", "text": "Maktulün çantasından çıkan o resmi belgede, Kerem'in yıllarını verdiği şirketteki tüm varlığının tek bir imzayla sıfırlandığı yazıyordu.", "deductionHint": "%0 Hisse devri = Kerem'in şirketten ve hayattan silinmesi." },
+  { "id": "c9", "title": "Güverte Ses Kaydı", "text": "[Karanlık güverteden yankılanan ses kaydı] Maktul: 'Kerem, o hisseler yarın devredilecek.' Rüzgara karışan buz gibi bir fısıltı: 'O yarın hiç gelmeyecek.' Ardından küt bir darbe sesi.", "deductionHint": "'O yarın hiç gelmeyecek' + Küt Darbe Sesi = Kerem tetiği çekti." },
+  { "id": "c10", "title": "Fenerin Parmak İzi", "text": "Kafatasını parçalayan o ağır metal silindirin sapında, iflasın eşiğine gelmiş iş ortağının o öfke dolu ve baskın parmak izleri parlıyordu.", "deductionHint": "Kerem + Deniz Feneri + Ön Güverte = Kusursuz Cinayet." }
+]
+
+9. "yeni_d02" (Ankara'da Seçim Gecesi)
+"story": "Seçim gecesinin tansiyonuyla kaynayan genel merkez binasında, siyasetin karanlık yüzü kanlı bir sonla noktalandı. Parti yöneticisi, milyonlarca liralık sırrın kilitli olduğu bir odada ölü bulunduğunda, binadaki dört kilit isim de kendi oyununu oynuyordu.",
+"clues": [
+  { "id": "c1", "title": "İlk Tespit", "text": "Cesedin kaburga ve omurgasındaki o devasa, ezici kırıklar, ufak bir ofis aletinden değil; yüzlerce kiloluk bir çelik bloğun kurbanın üzerine amansızca devrilmesiyle açıklanabilirdi.", "deductionHint": "Devasa çelik bir blok kurbanı ezdi. Muhasebe departmanında ne olabilir?" },
+  { "id": "c2", "title": "Dolap Vidaları", "text": "Çelik bloğun duvara montaj vidalarını profesyonelce yerinden söken o soğuk çelik tornavidanın sapında, muhasebe kayıtlarını örtbas etmek isteyen mali müdür Cahit'in terli parmak izleri bulundu.", "deductionHint": "Cahit + Sabote edilmiş çelik dolap." },
+  { "id": "c3", "title": "Basın Odası Görevlisi", "text": "Basın danışmanı Ezgi'nin telefonundaki kesintisiz arama logları ve canlı yayın bağlantıları, onun geceyi sadece o kameralarla ve ekranlarla dolu odada geçirdiğini mühürledi.", "deductionHint": "Ezgi + Basın Odası. Bu mekanda hangi silahı kullandı?" },
+  { "id": "c4", "title": "Kahve Termosu İzi", "text": "Seçim gecesi uyanık kalmak için dağıtılan o özel çelik kahve termosunun kapağında, sadece kameralar karşısına çıkan medyacı bir kadının o narin ve bakımlı parmak izleri vardı.", "deductionHint": "Ezgi + Zehirli Kahve Termosu. Artık Ezgi tamamen elendi." },
+  { "id": "c5", "title": "Güvenlik Sisteminin Kaydı", "text": "Güvenlik şefinin telsiz sinyalleri ve yaka kamerası görüntüleri, onun zemin kattaki o binanın beyni olan dijital izleme merkezinden hiç ayrılmadığını kanıtladı.", "deductionHint": "Güvenlik Şefi Orhan + Kontrol Merkezi." },
+  { "id": "c6", "title": "Güvenlik Kablosu İzi", "text": "Ana panodan sökülen ve bir insanı boğabilecek kalınlıktaki o siyah yalıtımlı telin üzerinde, binanın her karışını bilen o yaşlı güvenlik şefinin DNA'sı saptandı.", "deductionHint": "Orhan + Elektrik Kablosu. Genel sekreter Hülya'nın silahı ve mekanı neydi?" },
+  { "id": "c7", "title": "Hülya'nın Ofis Kaydı", "text": "Genel sekreterin ofis bilgisayarından alınan loglar, onun gece boyunca o izole liderlik odasında seçim veri akışını kesintisiz takip ettiğini, koridora bile çıkmadığını gösteriyordu.", "deductionHint": "Hülya + Liderlik Ofisi + Geriye kalan tek silah: Evrak Delgici." },
+  { "id": "c8", "title": "Zimmet Belgesi", "text": "Maktulün ceket cebinden sızan o gizli raporda, Cahit'in parti kasasından kendi hesabına geçirdiği milyonların dökümü kalem kalem işlenmişti ve tarih 'Yarın' olarak atılmıştı.", "deductionHint": "2.3 Milyon TL Zimmet = Cahit'in infaz fermanı." },
+  { "id": "c9", "title": "Seçim Gecesi Zaman Çizelgesi", "text": "Zaman çizelgesi analizi, Cahit'in elinde alet çantasıyla gizlice ofise döndüğü o karanlık dakikalarda, devasa çelik yığınının saniyeler içinde büyük bir gürültüyle yere çarptığını gösterdi.", "deductionHint": "Tornavida + Gizlice odaya dönüş + Gürültü = Cahit planı uyguladı." },
+  { "id": "c10", "title": "Cahit'in Kendi Ses Kaydı", "text": "Kendi odasındaki otomatik diktafon kaydında, Cahit'in titreyen sesiyle fısıldadığı 'Bir kaza her şeyi çözer, o koca çelik blok hazır' itirafı, cinayetin soğukkanlı planını deşifre ediyordu.", "deductionHint": "'Çelik blok hazır' + 'Kaza' = Cahit'in kusursuz cinayeti." }
+]
+
+10. "yeni_d03" (Pazar Sabahı Antika)
+"story": "Çukurcuma'nın dar sokaklarına kurulan antika pazarında sabahın ilk ışıkları bir cinayeti aydınlattı. Ünlü tüccar cansız yatıyor ve o paha biçilemez Bizans eseri ortada yoktu. Sır, pazarın dört ilk müşterisinin gölgesinde saklı.",
+"clues": [
+  { "id": "c1", "title": "İlk Tespit", "text": "Cesedin kafatasındaki uzun, küt ve paslı göçük izleri, ölümün narin bir heykelcikten değil, endüstriyel taşıma sistemlerine ait devasa bir çelik çubuktan geldiğini haykırıyordu.", "deductionHint": "Uzun ve paslı çelik bir çubuk. Pazar tezgahlarının kurulumunda kullanılan bir demir." },
+  { "id": "c2", "title": "Komşu Tüccar İfadesi", "text": "Kurbanın ayakkabılarındaki arnavut kaldırımı tozu ve ceketine sinen sabah çiyi, cinayetin o loş dükkanın içinde değil, dükkanlar arasındaki o dar ve rutubetli geçitte işlendiğini kanıtladı.", "deductionHint": "Cinayet mahalli dar ve rutubetli pazar geçidi. Kim oradaydı?" },
+  { "id": "c3", "title": "Çay Ocağı Sahibi", "text": "Sigorta ajanı Sevcan'ın bilgisayarındaki ekspertiz raporunun kayıt saatleri, onun tüm sabahı sadece o dumanı tüten semaverin yanındaki küçük ahşap masada geçirdiğini mühürledi.", "deductionHint": "Sevcan + Çay Ocağı. Hangi silahı elinde tutuyordu?" },
+  { "id": "c4", "title": "Çay Kabı İzi", "text": "Pazar esnafına sabahları ikram edilen o sıcak porselen demliğin kapağında, poliçeleri imzalamaya alışkın o dikkatli sigortacının düzgün parmak izleri tespit edildi.", "deductionHint": "Sevcan + Zehirli Çay. Sigortacı aradan çekildi." },
+  { "id": "c5", "title": "Bronz Heykelcik DNA", "text": "Paha biçilmez antika bronz şövalye heykelciğinin soğuk yüzeyinden alınan doku örnekleri, sadece tarihi eserlerin tozunu yutmuş o hırslı akademisyen Emre'nin DNA'sıyla eşleşti.", "deductionHint": "Akademisyen Emre + Bronz Heykelcik. Mekanı neresiydi?" },
+  { "id": "c6", "title": "Emre'nin Depo Ziyareti", "text": "Müzeci Emre'nin takım elbisesine bulaşan o asırlık depo tozu ve kamera logları, onun sabahın erken saatlerinde sadece o penceresiz, kilitli arka odada keşif yaptığını gösterdi.", "deductionHint": "Emre + Depo Odası. Koleksiyoner Fatma Hanım'a neresi kaldı?" },
+  { "id": "c7", "title": "Fatma Hanım'ın Beyanı", "text": "Koleksiyoner Fatma Hanım'ın ipek eldivenlerindeki mikro cam kesikleri, onun öfke krizi sırasında dükkanın ön tarafındaki o devasa meşe çerçeveli vitrin kapağına saldırdığını belgeliyordu.", "deductionHint": "Fatma Hanım + Vitrin Kapağı + Ana Dükkan. Geriye sadece Dimitri ve geçit kaldı." },
+  { "id": "c8", "title": "Dimitri'nin Sahte Pasaportu", "text": "Jandarma aramasında Dimitri'nin gizli bölmeli evrak çantasından çıkan o paha biçilmez Bizans eseri ve sahte pasaportlar, cinayetin ardındaki o uluslararası hırsızlık motifini aydınlattı.", "deductionHint": "Bizans Eseri + Kaçakçı Dimitri = Hırsızlık ve Cinayet." },
+  { "id": "c9", "title": "Pazar Sabahı Çizelgesi", "text": "Sabahın o kör karanlığında, Dimitri'nin elinde o uzun çelik parçasıyla dar ve rutubetli geçitte kurbanı beklediği anlar, güvenlik kameralarının kör noktalarındaki yansımalardan çözüldü.", "deductionHint": "Dimitri + Raf Demiri + Dar Geçit = Kusursuz pusu." },
+  { "id": "c10", "title": "Dimitri'nin Telefonu", "text": "Dimitri'nin kriptolu telefonundan kurtarılan o soğuk sesli mesaj, 'Eser bende, pürüzü uzun demirle hallettim, limana geliyorum' diyerek, o karanlık geçitteki kanlı pusuyu itiraf ediyordu.", "deductionHint": "'Pürüzü hallettim' = Kurbanın infazı. Dimitri katil." }
+]
+
+11. "yeni_d04" (Tıp Fakültesinde Anatomi Dersi)
+"story": "Gecenin karanlığına bürünen tıp fakültesinde, formaldehit kokan anatomi laboratuvarında cansız bir dekan yardımcısı bulundu. Tıbbi bilgi gerektiren bu profesyonel cinayet, kariyeri bıçak sırtında olan dört akademisyenin soğuk savaşını gözler önüne serdi.",
+"clues": [
+  { "id": "c1", "title": "Tıp Fakültesi Raporu", "text": "Adli toksikoloji raporu, kurbanın kanında hiçbir kesici alet izi bulamadı; ancak akciğer alveollerindeki şiddetli büzüşme, odaya sinsice basılan ve kalp krizini simüle eden bir cerrahi gazı işaret ediyordu.", "deductionHint": "Akciğerleri kilitleyen sinsi bir gaz. Kim tıbbi gazlara erişebilir?" },
+  { "id": "c2", "title": "Gece Güvenlik Turu", "text": "Olay yerindeki paslanmaz çelik soğutucular ve havaya sinen o genzi yakan formaldehit kokusu, kurbanın son nefesini o karanlık ve izole kadavra çalışma merkezinde verdiğini mühürledi.", "deductionHint": "Cinayet mahalli: Kadavraların bulunduğu Anatomi Laboratuvarı." },
+  { "id": "c3", "title": "Gaz Tüpü İzi", "text": "O ölümcül gazı barındıran taşınabilir cerrahi tüpün soğuk metal valfinde, sınav stresiyle terlemiş o genç tıp öğrencisinin panik dolu DNA'sı tespit edildi.", "deductionHint": "Öğrenci Berk + Anestezi Gazı Tüpü." },
+  { "id": "c4", "title": "Prof. Nilüfer'in Beyanı", "text": "Eczacılık Profesörü Nilüfer'in laboratuvar önlüğündeki mikroskobik kristaller ve mikroskop başındaki retina onayı, onun geceyi sadece kendi aydınlık araştırma bölümünde geçirdiğini kanıtladı.", "deductionHint": "Prof. Nilüfer + Eczacılık Araştırma Bölümü." },
+  { "id": "c5", "title": "Dolap Kapağı İzi", "text": "Koridordaki o eski ve paslı eczane dolabının ağır demir kapağında, yıllarca kimyasallarla çalışmaktan tahriş olmuş o tecrübeli profesörün parmak izleri parlıyordu.", "deductionHint": "Prof. Nilüfer + Eczane Dolap Kapağı. Profesör elendi." },
+  { "id": "c6", "title": "Koridor Kemik Testere İzi", "text": "Hemşire Ayhan'ın vardiya çizelgesi ve 3. kat koridorundaki kan damlaları, onun elindeki o keskin ve dönen cerrahi testereyle sadece o uzun ve ıssız geçitte devriye attığını gösterdi.", "deductionHint": "Hemşire Ayhan + Kemik Testeresi + 3. Kat Koridoru. Ayhan elendi." },
+  { "id": "c7", "title": "Dr. Tunç'un Konumu", "text": "Berk'in güvenlik kartı kayıtları, onun sadece cerrahi maskelerin depolandığı o kilitli anestezi odasından gaz tüpünü çaldığını kanıtlıyordu. Dr. Tunç ise tez savunması için tüm gece kendi izole odasındaydı.", "deductionHint": "Berk + Anestezi Odası. Dr. Tunç'un alibisi de doğrulandı." },
+  { "id": "c8", "title": "Sınav Hilesi Görüntüsü", "text": "Maktulün çekmecesinde bulunan fotoğraflarda Berk'in sınav sorularını çaldığı anlar yer alıyor, altında ise 'Yarın disiplin kuruluna sevki, okuldan atılacak' yazan o tehditkar not duruyordu.", "deductionHint": "Berk'in motifi: Okuldan atılma korkusu ve biten bir hayat." },
+  { "id": "c9", "title": "Gece Zaman Çizelgesi", "text": "Zaman çizelgesi analizi, Berk'in anestezi odasından çaldığı tüpü maktulün gireceği laboratuvara gizlice yerleştirip havalandırmayı kapattığı o sinsi planı saniye saniye deşifre etti.", "deductionHint": "Gazın odaya salınması + Havalandırmanın kapatılması = Pasif ve kusursuz cinayet." },
+  { "id": "c10", "title": "Berk'in Sesli Notu", "text": "Berk'in telefonunda unutulan sesli notta titreyerek fısıldadığı 'Tıbbi hesaplamam doğru, o kapalı alanda gaz iki saat içinde işini bitirir' itirafı, bu kusursuz cinayeti aydınlatıyordu.", "deductionHint": "'Hesaplamam doğru' + Gaz Tüpü = Berk'in soğukkanlı intikamı." }
+]
+
+12. "yeni_d05" (Festival Sahnesinin Arkası)
+"story": "Bodrum'un sıcak yaz gecesini titreten uluslararası müzik festivalinde, binlerce kişinin çığlıkları sahne arkasındaki karanlık bir cinayeti bastırdı. Festival direktörü, sanatçı odasında ölü bulunduğunda, devasa organizasyonun perde arkasındaki o dört ismin sırları da sahneye döküldü.",
+"clues": [
+  { "id": "c1", "title": "Festival Medikali Raporu", "text": "Cesedin parçalanmış kafatası, yumuşak bir kablo boğması veya zehirli bir yudumdan değil; tepeden muazzam bir hızla inen, ağır çelikten yapılmış sivri bir montaj demirinin gazabından kaynaklanıyordu.", "deductionHint": "Yukarıdan inen ağır ve sivri çelik bir demir. Bu bir ışık montaj kolu olabilir." },
+  { "id": "c2", "title": "Roadie İfadesi", "text": "Kurbanın etrafındaki kırık makyaj aynaları, savrulmuş güller ve lüks kadife koltuklar, cinayetin derme çatma çadırlarda değil, o ultra lüks ve ses yalıtımlı özel soyunma odasında koptuğunu mühürledi.", "deductionHint": "Cinayet mahalli: Aynalar ve lüks koltuklarla dolu Sanatçı Odası." },
+  { "id": "c3", "title": "Rigging Kolu İzi", "text": "Sahnenin tepesinden sökülerek ölümcül bir mızrağa dönüştürülen o çelik rigging kolunun döndürme vidasında, kibrine yenik düşen başrol sanatçısı Luna'nın ojeli tırnak kalıntıları ve DNA'sı bulundu.", "deductionHint": "Başrol Sanatçısı Luna + Rigging Montaj Kolu." },
+  { "id": "c4", "title": "VIP Çadır Görevlisi", "text": "Sponsor temsilcisi Deniz'in ayakkabılarındaki çim izleri ve yatırımcılarla kadeh tokuşturduğu anların fotoğrafları, onun geceyi sadece o şampanyaların su gibi aktığı VIP dinlenme çadırında geçirdiğini gösterdi.", "deductionHint": "Sponsor Temsilcisi Deniz + VIP Çadırı." },
+  { "id": "c5", "title": "Kokteyl Bardağı DNA", "text": "Sponsor VIP çadırındaki o kristal kokteyl bardağının kenarında, her şeyi kaybetme korkusuyla titreyen Deniz'in tükürük hücreleri ve parmak izleri laboratuvarı aydınlattı.", "deductionHint": "Deniz + Zehirli Kokteyl. Temsilci oyundan çıktı." },
+  { "id": "c6", "title": "Güvenlik Noktası Kablo İzi", "text": "Akreditasyon noktasında bariyer niyetine gerilmiş o kalın endüstriyel elektrik kablosunun üzerinde, eski asker Bora'nın sert ve nasırlı avuç içi izleri saptandı.", "deductionHint": "Güvenlikçi Bora + Elektrik Kablosu + Güvenlik Noktası. Bora oyundan çıktı." },
+  { "id": "c7", "title": "Alp'in Ses Kulübesi Kaydı", "text": "Ses kontrol kulübesinin hemen girişinde devrilmiş halde duran o ağır demir döküm mikrofon standının gövdesinde, yılların emektarı Alp'in parmak izleri parlıyordu.", "deductionHint": "Ses Mühendisi Alp + Mikrofon Standı + Ses Kulübesi. Geriye tek kişi kaldı." },
+  { "id": "c8", "title": "Set Listesi Anlaşmazlığı", "text": "Maktulün telefonunda parlayan o son e-postada, sanatçının kaprislerine boyun eğilmeyip en sevdiği üç şarkının şovdan atıldığı ve bunun bedelinin ağır olacağı yazıyordu.", "deductionHint": "Luna'nın motifi: Sahnede kontrolü kaybetme korkusu ve öfke." },
+  { "id": "c9", "title": "Backstage Zaman Çizelgesi", "text": "Zaman çizelgesi, Luna'nın maktulü odasına çekip kapıyı kilitlediği o 5 karanlık dakikayı ve ardından hiçbir şey olmamış gibi sahneye çıkışını saniye saniye deşifre etti.", "deductionHint": "5 dakikalık kilitli oda infazı ve ardından gelen soğukkanlı şov." },
+  { "id": "c10", "title": "Luna'nın Konsol Kaydı", "text": "Luna'nın kulak monitörüne fısıldadığı ve teknisyenin kaydettiği 'Sahnede de hayatta da kuralları ben koyarım, o büyük sorun çözüldü' sözleri, bu vahşi infazın en soğukkanlı itirafıydı.", "deductionHint": "'Sorun çözüldü' + Rigging Darbesi = Luna katil." }
+]
+
+GÜNCELLEME İŞLEMİNİ DOSYA BÜTÜNLÜĞÜNÜ (JSON KEYLERİNİ VE ID'LERİ) BOZMADAN, SADECE MERGE EDEREK TAMAMLA VE BUILD AL.
