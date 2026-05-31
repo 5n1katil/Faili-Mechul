@@ -878,9 +878,9 @@ export const PUZZLES: Puzzle[] = [
     story:
       "Bursa'nın ormanlarla çevrili lüks termal otelinde, suların huzur veren şırıltısı ünlü bir şarkıcının son çığlığıyla kesildi. Yoğun buharın göz gözü görmez ettiği spa alanında, ihtişamlı bir hayat karanlık bir sırla son buldu.",
     suspects: [
-      { id: "s1", name: "Otel Müdürü", description: "Otelin biriken borçları yüzünden köşeye sıkışan ve ünlü misafirlerin skandallarından korkan, sürekli güvenlik kameralarını izleyen gergin otel müdürü.", icon: "badge" },
-      { id: "s2", name: "Eski Hayranı", description: "Maktulün her adımını gölgelerden takip eden, reddedilmeyi asla hazmedemeyen ve gözlerini ondan ayırmayan takıntılı eski hayran.", icon: "person" },
-      { id: "s3", name: "Rakip Şarkıcı", description: "Aynı gece otelin devasa açık hava sahnesinde performans sergileyen, kurbanın gölgesinde kalmaktan nefret eden hırslı rakip şarkıcı.", icon: "face" },
+      { id: "s1", name: "Otel Müdürü", description: "Otelin biriken borçları yüzünden köşeye sıkışan ve ünlü misafirlerin skandallarından korkan, sürekli güvenlik kameralarını izleyen gergin otel müdürü.", icon: "noun-termal-otel-muduru-avatar.png" },
+      { id: "s2", name: "Eski Hayranı", description: "Maktulün her adımını gölgelerden takip eden, reddedilmeyi asla hazmedemeyen ve gözlerini ondan ayırmayan takıntılı eski hayran.", icon: "noun-termal-kapici-avatar.png" },
+      { id: "s3", name: "Rakip Şarkıcı", description: "Aynı gece otelin devasa açık hava sahnesinde performans sergileyen, kurbanın gölgesinde kalmaktan nefret eden hırslı rakip şarkıcı.", icon: "noun-termal-gazeteci-avatar.png" },
     ],
     weapons: [
       { id: "w1", name: "Boğma", description: "Kurbanı yoğun buhar ve sıcaklığın olduğu ıslak bir zeminde, savunmasız bir anında çıplak ellerle nefessiz bırakan vahşi bir güç.", icon: "back-hand" },
