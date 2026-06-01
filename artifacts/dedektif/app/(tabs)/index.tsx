@@ -26,6 +26,7 @@ import Animated, { FadeInDown } from "react-native-reanimated";
 import OnboardingScreen from "@/components/OnboardingScreen";
 import SettingsScreen from "@/components/SettingsScreen";
 import { unlockMusicFromGesture } from "@/utils/backgroundMusic";
+import { setPendingNavSource } from "@/utils/pendingNavSource";
 import ProfileSetupModal from "@/components/ProfileSetupModal";
 import { AvatarDisplay } from "@/utils/avatarHelpers";
 import { AI_DETECTIVES } from "@/data/aiDetectives";
@@ -130,7 +131,8 @@ export default function HomeScreen() {
   const handleDailyPlay = () => {
     unlockMusicFromGesture();
     startDailyPuzzle();
-    router.push({ pathname: "/(tabs)/oyun", params: { from: "home" } });
+    setPendingNavSource("home");
+    router.push("/(tabs)/oyun");
   };
 
   const allEntries = [

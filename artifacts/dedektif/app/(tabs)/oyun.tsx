@@ -18,7 +18,8 @@ if (Platform.OS === "android" && UIManager.setLayoutAnimationEnabledExperimental
 import { MaterialIcons } from "@expo/vector-icons";
 import type { ComponentProps } from "react";
 type MaterialIconName = ComponentProps<typeof MaterialIcons>["name"];
-import { router, useLocalSearchParams } from "expo-router";
+import { router } from "expo-router";
+import { takePendingNavSource } from "@/utils/pendingNavSource";
 import { useFocusEffect } from "@react-navigation/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useColors } from "@/hooks/useColors";
@@ -411,9 +412,14 @@ function PuzzleCard({
 }
 
 export default function VakalarScreen() {
-  const { from } = useLocalSearchParams<{ from?: string }>();
-  const launchedFromHome = from === "home";
-  const launchedFromGorevler = from === "gorevler";
+  const launchSourceRef = useRef<"home" | "gorevler" | null>(null);
+  useFocusEffect(
+    useCallback(() => {
+      const src = takePendingNavSource();
+      if (src !== null) launchSourceRef.current = src;
+      return () => { launchSourceRef.current = null; };
+    }, [])
+  );
   const colors = useColors();
   const insets = useSafeAreaInsets();
   const {
@@ -544,9 +550,10 @@ export default function VakalarScreen() {
           // Timer aktif değil (başlangıç ekranı veya tamamlanmış oyun): geri dön
           setShowResult(false);
           resetCurrentGame();
-          if (launchedFromHome) {
+          const src = launchSourceRef.current;
+          if (src === "home") {
             router.navigate("/");
-          } else if (launchedFromGorevler) {
+          } else if (src === "gorevler") {
             router.navigate("/gorevler");
           } else {
             const savedY = listScrollY.current;
@@ -558,25 +565,27 @@ export default function VakalarScreen() {
         return true; // Geri tuşunu biz işledik, React Navigation işlemesin
       }
       // Liste görünümündeyken: kaynak sekmeye dön
-      if (launchedFromHome) {
+      const listSrc = launchSourceRef.current;
+      if (listSrc === "home") {
         router.navigate("/");
         return true;
       }
-      if (launchedFromGorevler) {
+      if (listSrc === "gorevler") {
         router.navigate("/gorevler");
         return true;
       }
       return false; // Vakalar listesindeyken React Navigation varsayılan davranışa izin ver
     });
     return () => sub.remove();
-  }, [gameState, resetCurrentGame, launchedFromHome, launchedFromGorevler]);
+  }, [gameState, resetCurrentGame]);
 
   const handleBackToList = () => {
     setShowResult(false);
     resetCurrentGame();
-    if (launchedFromHome) {
+    const src = launchSourceRef.current;
+    if (src === "home") {
       router.navigate("/");
-    } else if (launchedFromGorevler) {
+    } else if (src === "gorevler") {
       router.navigate("/gorevler");
     } else {
       const savedY = listScrollY.current;
@@ -588,9 +597,10 @@ export default function VakalarScreen() {
 
   const handleCancelStart = () => {
     resetCurrentGame();
-    if (launchedFromHome) {
+    const src = launchSourceRef.current;
+    if (src === "home") {
       router.navigate("/");
-    } else if (launchedFromGorevler) {
+    } else if (src === "gorevler") {
       router.navigate("/gorevler");
     }
     // Vakalar sekmesi state-based navigasyon kullanır; router.back() çağrılmaz.

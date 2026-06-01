@@ -17,6 +17,7 @@ import Animated, {
   withSpring,
 } from "react-native-reanimated";
 import { useFocusEffect, useRouter } from "expo-router";
+import { setPendingNavSource } from "@/utils/pendingNavSource";
 
 type MatIconName = ComponentProps<typeof MaterialIcons>["name"];
 
@@ -474,7 +475,8 @@ export default function GorevlerScreen() {
   const handleMissionPlay = (mission: Mission) => {
     const puzzle = getMissionTargetPuzzle(mission, completedPuzzleIds);
     startPuzzle(puzzle);
-    router.push({ pathname: "/oyun", params: { from: "gorevler" } });
+    setPendingNavSource("gorevler");
+    router.push("/oyun");
   };
 
   const dailyByTier = {
