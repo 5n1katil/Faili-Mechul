@@ -413,6 +413,7 @@ function PuzzleCard({
 export default function VakalarScreen() {
   const { from } = useLocalSearchParams<{ from?: string }>();
   const launchedFromHome = from === "home";
+  const launchedFromGorevler = from === "gorevler";
   const colors = useColors();
   const insets = useSafeAreaInsets();
   const {
@@ -545,6 +546,8 @@ export default function VakalarScreen() {
           resetCurrentGame();
           if (launchedFromHome) {
             router.navigate("/");
+          } else if (launchedFromGorevler) {
+            router.navigate("/gorevler");
           } else {
             const savedY = listScrollY.current;
             setTimeout(() => {
@@ -554,21 +557,27 @@ export default function VakalarScreen() {
         }
         return true; // Geri tuşunu biz işledik, React Navigation işlemesin
       }
-      // Liste görünümündeyken: ana sayfadan geldiyse oraya dön
+      // Liste görünümündeyken: kaynak sekmeye dön
       if (launchedFromHome) {
         router.navigate("/");
+        return true;
+      }
+      if (launchedFromGorevler) {
+        router.navigate("/gorevler");
         return true;
       }
       return false; // Vakalar listesindeyken React Navigation varsayılan davranışa izin ver
     });
     return () => sub.remove();
-  }, [gameState, resetCurrentGame, launchedFromHome]);
+  }, [gameState, resetCurrentGame, launchedFromHome, launchedFromGorevler]);
 
   const handleBackToList = () => {
     setShowResult(false);
     resetCurrentGame();
     if (launchedFromHome) {
       router.navigate("/");
+    } else if (launchedFromGorevler) {
+      router.navigate("/gorevler");
     } else {
       const savedY = listScrollY.current;
       setTimeout(() => {
@@ -581,6 +590,8 @@ export default function VakalarScreen() {
     resetCurrentGame();
     if (launchedFromHome) {
       router.navigate("/");
+    } else if (launchedFromGorevler) {
+      router.navigate("/gorevler");
     }
     // Vakalar sekmesi state-based navigasyon kullanır; router.back() çağrılmaz.
     // resetCurrentGame() gameState'i sıfırlar → bileşen otomatik liste görünümünü render eder.

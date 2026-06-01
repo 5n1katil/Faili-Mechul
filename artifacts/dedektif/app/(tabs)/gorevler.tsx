@@ -474,7 +474,7 @@ export default function GorevlerScreen() {
   const handleMissionPlay = (mission: Mission) => {
     const puzzle = getMissionTargetPuzzle(mission, completedPuzzleIds);
     startPuzzle(puzzle);
-    router.push("/oyun");
+    router.push({ pathname: "/oyun", params: { from: "gorevler" } });
   };
 
   const dailyByTier = {
