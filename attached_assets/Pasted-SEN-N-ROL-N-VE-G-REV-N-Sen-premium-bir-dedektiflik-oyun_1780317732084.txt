@@ -1,0 +1,161 @@
+SENİN ROLÜN VE GÖREVİN:
+Sen premium bir dedektiflik oyunu olan "Faili Meçhul"ün Kıdemli Baş Geliştiricisisin. Sana aşağıda "Hollywood Cinayetleri" (Premium Paket) içindeki 5 ADET VAKANIN YEPYENİ, sinematik atmosfere uygun, edebi ve Şüpheli-Silah-Mekan-İpucu çapraz eşleştirmesine (dedüksiyona) dayanan TAM KAPSAMLI metin verilerini veriyorum.
+
+KIRMIZI ÇİZGİLER (GÜVENLİK ANAYASASI):
+1. Veritabanındaki `id`, `puzzleId`, `icon`, `solution`, `solvabilityMeta`, `timelineVerisi`, `sesMetni`, `parmakIziVerisi`, `sifre`, `gorselAciklama`, `specialMechanic`, `mechanicType` gibi çalışan oyun ve sistem verilerine KESİNLİKLE DOKUNMA. 
+2. İpuçları her zaman BÜYÜK HARFLE başlar ve edebi bir üslupla yazılır.
+3. Asla "Şu silah kullanılmadı, cinayet şu odada olmadı" veya "O masum" gibi negatif elemeler yapma. Sadece olan biteni, çevresel, adli ve dolaylı detaylarla anlat.
+4. Dosyayı baştan yaratma; mevcut JSON objelerindeki ilgili vakaları bul ve SADECE metin içeriklerini (`story`, `atmosphere`, `description`, `detail`, `text`, `title`, `deductionHint`, `solutionNarrative`) bu premium halleriyle DEĞİŞTİR (Merge).
+
+AŞAĞIDAKİ 5 HOLLYWOOD VAKASINI BİREBİR GÜNCELLE:
+
+### BÖLÜM 1: HOLLYWOOD CİNAYETLERİ (pack_002) ###
+
+1. "hw_001" (Oscar Gecesi Zehiri)
+"story": "Oscar töreninin hemen ardından düzenlenen, Los Angeles elitlerinin akın ettiği o görkemli kırmızı halı kokteylinde ünlü bir yönetmen VIP koltuğunda ölü bulundu. Birkaç saat önce en iyi film ödülünü kaybetmenin şokunu yaşayan maktulün etrafı, onun parıltılı gölgesinde büyüyen üç yakın simayla çevriliydi. Kameralar patlarken, katil şampanya kadehlerinin arkasında gülümsüyor.",
+"atmosphere": "Kırmızı halı sona ermiş. Şampanya. Sahte gülüşler. Kıskançlık havada asılı.",
+"suspects": [
+  { "id": "s1", "description": "Gecenin en büyük ödülünü kazanarak zafer sarhoşluğu yaşayan, kameralar önünde poz veren ancak maktulle 20 yıllık köklü bir sinema husumeti bulunan dahi yönetmen.", "detail": "45 yaşında, Meksikalı, her anı basına yansıyan güçlü bir karakter." },
+  { "id": "s2", "description": "Maktulün son filminin arkasındaki dev bütçeli stüdyonun patronu. Finansal krizde olan ve sözleşme fesihleri yüzünden maktulün ölümünün ona 50 milyon dolar kazandıracağı konuşulan iş adamı.", "detail": "58 yaşında, kravatlı, soğuk bakışlı ve sadece özel VIP odalarda takılan elit figür." },
+  { "id": "s3", "description": "Yönetmenin son gişe rekortmeni filminin başrol oyuncusu. Sektör kulislerinde maktul tarafından defalarca aşağılanıp reddedilen, gururu kırılmış ve sessizleşmiş yıldız adayı.", "detail": "26 yaşında, zarif, gölgelerde dolaşan ve intikam planlayan aktris." }
+],
+"weapons": [
+  { "id": "w1", "description": "Özel bir şişeden kadehe doldurulan, alkolle birleştiğinde saniyeler içinde kalbi durduran, midede derin tortular bırakan lüks ve reçeteli sedatif madde." },
+  { "id": "w2", "description": "Yiyeceklere veya tatlılara yüksek dozda karıştırılarak kaza süsü verilmesi amacıyla tasarlanmış, laboratuvar ortamında üretilen uyuşturucu kombinasyonu." },
+  { "id": "w3", "description": "VIP localarındaki ağır kadife kordonlar veya şallarla arkadan yaklaşarak sessizce nefesi kesen, boyunda derin morluklar bırakan mekanik yöntem." }
+],
+"locations": [
+  { "id": "l1", "description": "Sadece özel davetli elitlerin ve stüdyo patronlarının şifreli kartlarla girebildiği, kalın perdelerle örtülü, kameralardan uzak lüks ve korunaklı VIP salonu." },
+  { "id": "l2", "description": "Çatı katında yer alan, Los Angeles manzaralı, rüzgarlı ve magazin muhabirlerinin uzaktan lenslerle sürekli izlediği açık ve kalabalık eğlence sahası." },
+  { "id": "l3", "description": "VIP salonunun arka tarafında yer alan, insanların hızla gelip geçtiği, ana kameraların kör noktasında kalan loş, dar ve serin geçiş koridoru." }
+],
+"clues": [
+  { "id": "c1", "title": "Otopsi Ön Raporu", "text": "Kurbanın gözbebeklerindeki ani küçülme ve midesindeki şiddetli kimyasal reaksiyon, kalbi saniyeler içinde durduran görünmez bir farmakolojik ajana işaret ediyordu.", "deductionHint": "Kan dolaşımını saniyeler içinde durduran sıvı bir farmakolojik ajan." },
+  { "id": "c2", "title": "Barmen İfadesi", "text": "Maktulün rugan ayakkabılarındaki lekesiz doku ve ceketine sinen ağır puro kokusu, son nefesini rüzgarlı açık alanlarda değil, tamamen izole edilmiş elit bir odada verdiğini kanıtlıyordu.", "deductionHint": "Mekan, elitlerin ağırlandığı izole ve kapalı iç alan." },
+  { "id": "c3", "title": "Şişe Analizi", "text": "Canlı yayın kameralarının zaman kodları, en iyi film ödülünü kazanan yönetmenin o anlarda milyonlarca izleyicinin gözü önünde zafer konuşması yaptığını mühürlüyordu.", "deductionHint": "Canlı yayın, ödüllü yönetmenin zaman çizelgesini tamamen dolduruyor." },
+  { "id": "c4", "title": "Sofia'nın Zamanlaması", "text": "Kanda bulunan o nadir farmakolojik bileşen, sadece büyük stüdyoların milyoner patronlarının şahsi doktorları aracılığıyla özel anlaşmalarla temin edilebilen bir elit reçeteydi.", "deductionHint": "Bu lüks ilaca ancak çok zengin ve bağlantılı bir stüdyo yöneticisi erişebilirdi." },
+  { "id": "c5", "title": "Kuliste Kayıt", "text": "Kokteyl salonunun arkasındaki gizli ses ağından sızan panik dalgası: 'Eğer yarın o sözleşmeyi feshederse 50 milyon dolar tazminat öderiz ve stüdyo batar... Bu gece o imza atılmadan bu iş halledilmeli...'", "deductionHint": "50 milyon dolarlık sözleşme feshi, cinayetin ardındaki devasa finansal motifti." },
+  { "id": "c6", "title": "Stüdyo Sözleşmesi", "text": "Maktulün çantasından çıkan milyon dolarlık fesih evrakları ile masadaki lüks 'özel şişe'nin üzerindeki yağlı parmak izleri birbirini kusursuzca tamamlıyordu.", "deductionHint": "Dev bütçeli sözleşmenin sahibi, zehirli şişede parmak izini bırakmış." }
+],
+"solutionNarrative": "Yapımcı Marcus Gold, 50 milyon dolarlık cezadan kurtulmak için yönetmenin şampanyasına sedatif kattı. Özel şişeyi törenden önce hazırladı. Yönetmen VIP salonunda kadehini alırken hayatını kaybetti. Lüks ilaç ve sözleşme detayları onu ipe götürdü."
+
+2. "hw_002" (Kamera Arkasında Kan)
+"story": "Milyon dolarlık bir Hollywood yapımının heyecanlı gece çekimi sırasında, set arkasındaki kostüm odasından gelen bir çığlık kameraların ses kaydını böldü. Ünlü tasarımcı yerde cansız yatıyordu ve elinde rakip stüdyoya sızdırılmak üzere hazırlanmış gizli senaryo sayfaları vardı.",
+"atmosphere": "Yapay ışıklar söndü. Set boş. Sahte dekor gerçek bir cinayet sahnesi oldu.",
+"suspects": [
+  { "id": "s1", "description": "Filmin 188 cm boyundaki dev yıldızı. Senaryoda kendi sahnelerinin tasarımcı tarafından sabote edilip kısaltıldığını öğrenince öfke krizine giren, sürekli flaşların önünde olan aktör.", "detail": "35 yaşında, ego sorunu olan Hollywood starı." },
+  { "id": "s2", "description": "172 cm boyunda, rakip stüdyo ile gizli transfer görüşmeleri yürüten, kostüm odalarında sık sık köstebeklik şüphesiyle tasarımcının radarına giren hırslı sinemacı.", "detail": "38 yaşında, kararlı, hesaplı ve hırslı." },
+  { "id": "s3", "description": "183 cm boyunda, gece vardiyasında kostüm depolarının bulunduğu koridorların şifrelerinden sorumlu, fiziksel olarak oldukça güçlü ve sert mizaçlı eski polis.", "detail": "50 yaşında, emekli polis, sert görünümlü." }
+],
+"weapons": [
+  { "id": "w1", "description": "Profesyonel çekimler için kullanılan, alüminyumdan üretilmiş, kafaya yukarıdan bir açıyla indirildiğinde kemikleri ezen son derece ağır kamera tripodu." },
+  { "id": "w2", "description": "Set ışıklarını besleyen, yüksek voltaj taşıyan ve boyna dolandığında ani elektrik şokuyla kalbi durdurup deride yanık izleri bırakan kalın sanayi kablosu." },
+  { "id": "w3", "description": "Prop/aksesuar olarak kullanılan ancak içine gizlice gerçek mermi yerleştirilerek kurbanın göğsünde patlatılan ve seti kana bulayan sahne tabancası." }
+],
+"locations": [
+  { "id": "l1", "description": "Set arkasında yer alan, sadece güney koridorundaki özel yetkili personelin şifresiyle girilebilen, kıyafetlerin, aynaların ve kumaş tozlarının bulunduğu dar depo." },
+  { "id": "l2", "description": "Yüzlerce figüranın ve kameranın bulunduğu, flaşların sürekli patladığı, yüksek tavanlı ve herkesin sürekli gözü önünde olduğu aydınlık çekim meydanı." },
+  { "id": "l3", "description": "Senaryoların kilit altında tutulduğu, bütçe kararlarının alındığı, güvenlik kameralarının 7/24 kesintisiz izlediği bilgisayarlarla dolu idari yönetim merkezi." }
+],
+"clues": [
+  { "id": "c1", "title": "Set Raporu", "text": "Kurbanın kafatasındaki o küt, ağır ve kavisli göçük, gökten inen ve set malzemesi kokan devasa bir alüminyum teçhizatın şiddetini taşıyordu.", "deductionHint": "Ağır ve alüminyum bir set ekipmanı kullanılmış." },
+  { "id": "c2", "title": "Senaryo Üstündeki Not", "text": "Yere saçılan askılar, kopuk düğmeler ve kurbanın ceketine sinen kumaş tozları, ölümcül arbedenin dar, aynalı ve kumaş kokan o penceresiz depoda koptuğunu fısıldıyordu.", "deductionHint": "Askılar, kumaş tozları ve aynalar kıyafetlerin tutulduğu depoyu işaret ediyor." },
+  { "id": "c3", "title": "Kamera Sistem Kaydı", "text": "Makyaj odasının tescilli jurnalleri, dev yıldız Derek Stone'un o kritik saatler boyunca yüzlerce hayranı ve makyöz ordusuyla çevrili olarak sahnede olduğunu mühürledi.", "deductionHint": "Başrol oyuncusunun etrafı yüzlerce şahitle sarılı." },
+  { "id": "c4", "title": "Silah Analizi", "text": "Adli biyomekanik raporu: Alüminyum ayaktan alınan darbe açısı ve hızı, saldırganın boyunun tam olarak 170-175 cm aralığında olmasını fiziksel bir zorunluluk haline getiriyordu.", "deductionHint": "Saldırganın boyu adli raporla 170-175 cm aralığına sabitlendi." },
+  { "id": "c5", "title": "Tom Brady'nin İfadesi", "text": "Sır odasındaki kırık bir ayna parçasının kenarında, transfer görüşmeleri yapan yönetmenin rakip stüdyoya senaryo sayfalarını sızdırdığını deşifre eden şifreli bir e-posta çıktısı ele geçirildi.", "deductionHint": "Şifre, senaryo sızdıran köstebeğin kimliğini ifşa ediyor." },
+  { "id": "c6", "title": "E-posta Kaydı", "text": "Güney koridoru turnike kameralarında yönetmenin o saatte şifreli depoya giren tek yetkili olduğu görüntüsü, bilgisayarındaki köstebeklik yazışmalarıyla kusursuzca birleşti.", "deductionHint": "Hem şifreli kapıdan geçmiş hem de sızıntı dosyaları bilgisayarında." }
+],
+"solutionNarrative": "Yardımcı Yönetmen Priya Shah, rakip stüdyoya senaryo sızdırıyordu. Kostüm tasarımcısı bunu keşfetti ve o gece Priya'yı kostüm odasına çağırdı. Boy avantajını kullanan Priya ağır tripodla onu susturdu ancak şifreli e-postası arkasında kaldı."
+
+3. "hw_003" (Cannes'da Kırmızı)
+"story": "Cannes Film Festivali'nin en prestijli ödülüne aday olan kibirli bir yapımcı, Fransız Rivierası'nda demirli lüks yatında ölü bulundu. Ödülü kazanmasını istemeyen rakiplerin gölgesinde, Akdeniz'in serin suları bu kez bir sanat cinayetine sahne oldu.",
+"atmosphere": "Akdeniz. Lüks yat. Parfüm ve tuz kokusu. Uzaktan müzik sesi.",
+"suspects": [
+  { "id": "s1", "description": "Kendi senaryo fikirlerinin maktul tarafından çalındığını iddia eden, yatın karmaşık mutfak ve denizcilik işleyişinden tamamen habersiz, sinirli Amerikalı yapımcı." },
+  { "id": "s2", "description": "Yazdığı zehir zemberek yazılarla filmin şansını baltalayan, fiziksel boğuşmalara girmekten kaçınan ve tüm geceyi lüks deri koltuklu salonlarda geçiren entelektüel eleştirmen." },
+  { "id": "s3", "description": "Maktulün yıllardır ödenmeyen maaşları yüzünden öfkeyle dolan, yatın güverte alanlarına, fırtına koşullarına ve ağır halatlarına tamamen hakim olan profesyonel gemici." }
+],
+"weapons": [
+  { "id": "w1", "description": "Yatın açık güvertesinden azgın dalgaların arasına itilerek kurbanın ciğerlerine deniz suyu dolmasını sağlayan, kaza süsü verilmiş mekanik eylem." },
+  { "id": "w2", "description": "İçine egzotik bir bitki toksini karıştırılan, yutulduğu anda mide krampları ve felç yaratarak kurbanı olduğu yerde donduran sinsi içecek çözeltisi." },
+  { "id": "w3", "description": "Yatın mutfağından alınan, keskin uçlu ve kurban üzerinde derin kanamalı yaralar bırakan, etrafı kırmızıya boyayan standart şef bıçağı." }
+],
+"locations": [
+  { "id": "l1", "description": "Deniz dalgalarının ve rüzgarın sürekli dövdüğü, geceleri zifiri karanlığa gömülen, küpeşteleri kaygan ve tehlikeli olan açık hava güvertesi." },
+  { "id": "l2", "description": "Kapalı, yoğun bir şekilde ışıklandırılmış, misafirlerin ağırlandığı ve içerideki seslerin dışarıya asla sızmadığı korunaklı ve halı kaplı lüks iç salon." },
+  { "id": "l3", "description": "Yatın en üst katında yer alan, dümenin ve telsiz cihazlarının bulunduğu, dışarıdan sadece kilitli bir kapıyla erişilen dar yönetim odası." }
+],
+"clues": [
+  { "id": "c1", "title": "Fransız Polis Raporu", "text": "Kurbanın ciğerlerine dolan bol miktarda tuzlu Akdeniz suyu ve saçlarındaki yosun kalıntıları, hayat mücadelesinin karanlık dalgaların arasında son bulduğunu kesinleştirdi.", "deductionHint": "Ciğerlerdeki deniz suyu, kurbanın denize düştüğünü kanıtlıyor." },
+  { "id": "c2", "title": "Kan Analizi", "text": "Kurbanın rugan ayakkabılarındaki kayma izleri ve kırık küpeşte parçaları, ölümcül hamlenin rüzgarın ve dalgaların en sert vurduğu açık hava alanında yaşandığını gösteriyordu.", "deductionHint": "Mekan, rüzgarlı ve kaygan küpeştelere sahip alan." },
+  { "id": "c3", "title": "Garson İfadesi", "text": "Yatın iç salon kameraları, Fransız eleştirmenin hararetli tartışmanın ardından lüks kamarasına kapandığını ve sabaha kadar o kapının hiç açılmadığını dijital olarak belgeledi.", "deductionHint": "Eleştirmenin gece boyunca odasında kaldığı teknolojik loglarla kanıtlandı." },
+  { "id": "c4", "title": "Güverte Küpeştesi İzi", "text": "Kaygan güverte küpeştesindeki taze el izleri, denizin hırçın ritmine ve ağır gemi halatlarının yağına alışkın profesyonel bir denizcinin avuç içi dokusuyla birebir eşleşti.", "deductionHint": "Güvertedeki yağlı izler gemi mürettebatından birine ait." },
+  { "id": "c5", "title": "Isabelle'in Odası", "text": "Kaptan köşkü telsiz logları, cinayetten dakikalar önce rakip yapımcı Jake Mercer'ın offshore hesabından şahsi gemi idarecisinin hesabına aktarılan 80.000 euro tutarındaki o karanlık işlemi deşifre etti.", "deductionHint": "Gemiyi yöneten kişi, rakip yapımcıdan yüklü miktarda bir havale almış." },
+  { "id": "c6", "title": "Kaptan Hesap Dökümü", "text": "Kurbanın kanında hiçbir dış etken madde bulunmaması ve rüzgarlı güvertede maktulün dengesini kaybettirecek hava koşullarını tek başına yönlendirebilme yeteneği, profesyonel gemicinin rolünü aydınlattı.", "deductionHint": "Deniz şartlarını silah olarak kullanan tecrübeli bir el." }
+],
+"solutionNarrative": "Kaptan Nikos, Jake Mercer'dan aldığı para karşılığında maktulü kaygan güverteden azgın dalgaların arasına itti. Kurban denizde boğularak hayatını kaybetti. Banka transferleri ve küpeştedeki yağlı avuç izleri, bu profesyonel denizcinin cinayetini aydınlattı."
+
+4. "hw_004" (Senaryo Hırsızı)
+"story": "Hollywood Yazarlar Sendikası binasındaki büyük delege toplantısının ardından, elindeki devrimsel senaryoyu stüdyolara satmaya hazırlanan genç bir yazar katledildi. Los Angeles manzaralı binanın otoparkında, senaryonun orijinal kopyasıyla birlikte katil de sırra kadem bastı.",
+"atmosphere": "Gece LA. Neon ışıkları. Herkes bir şeyler satmaya çalışıyor.",
+"suspects": [
+  { "id": "s1", "description": "Senaristin başka bir dev ajansla anlaşacağını öğrenen, elinde hep geniş bir evrak çantasıyla gezen ve yazarın arabasına bineceği saati bilen hırslı yönetici.", "detail": "40 yaşında, ağının en güçlüsü, lüks kremler kullanan bakımlı kadın." },
+  { "id": "s2", "description": "Senaryoyu çekmek için haftalarca kapıda bekleyen ancak yazar tarafından sert bir dille reddedilen, bina otoparklarına ve alt katlara giriş yetkisi olmayan sinemacı.", "detail": "48 yaşında, kontrolcü ve inatçı." },
+  { "id": "s3", "description": "Yazarın açtığı telif davaları yüzünden stüdyosunu tehdit eden, tüm gecesini binanın üst katındaki idari masalarda delegelerle imza atarak geçiren resmi hukuk sorumlusu.", "detail": "52 yaşında, soğuk ve hesaplı avukat." },
+  { "id": "s4", "description": "Aynı konsept üzerinde çalışan ancak sürekli kurbanın gölgesinde kalan, kan görmeye dayanamayan ve fiziksel kaba kuvvet kullanımından kaçınan kıskanç rakip yazar.", "detail": "33 yaşında, kıskanç ve çekingen." }
+],
+"weapons": [
+  { "id": "w1", "description": "Toplantı odalarındaki masalardan gizlice çantaya atılan, kristal camdan imal edilmiş, köşeleri keskin ve tek hamlede kafatasını çatlatabilecek ağır dekoratif obje." },
+  { "id": "w2", "description": "Kurbanın içeceklerine katılarak sessiz bir kalp krizini tetiklemesi hedeflenen, laboratuvar ortamında hazırlanmış yüksek dozlu sinsi toksik ilaç." },
+  { "id": "w3", "description": "Yakından temasla kurbanı saniyeler içinde felç etmek üzere tasarlanmış, el boyutunda, deride kavurucu yanık izleri bırakan modifiye edilmiş yüksek voltaj cihazı." },
+  { "id": "w4", "description": "Kurbanın arkasından sessizce yaklaşarak ellerle veya ince bir kordonla nefesini tamamen kesen, boyun bölgesinde morluklar bırakan kaba mekanik yöntem." }
+],
+"locations": [
+  { "id": "l1", "description": "Sendika delegelerinin saatlerce konuştuğu, masaların üzerinde kristal dekorların, dosyaların ve çay bardaklarının bulunduğu geniş, aydınlık idari oda." },
+  { "id": "l2", "description": "Binanın en alt katında yer alan, kameraların bir kısmının çalışmadığı, dar, izole, motor ve egzoz seslerinin yankılandığı karanlık beton alan." },
+  { "id": "l3", "description": "Los Angeles manzaralı, kokteyllerin düzenlendiği ve delege üyelerinin sürekli kalabalık gruplar halinde sigara içmek için çıktığı rüzgarlı açık alan." },
+  { "id": "l4", "description": "Eski sendika binasının katları arasında süzülen, dar, aynalı ve içindeki her hareketin güvenlik tarafından kaydedildiği kapalı kabin." }
+],
+"clues": [
+  { "id": "c1", "title": "Polis İlk Tespiti", "text": "Kurbanın kafatasındaki derin, keskin köşeli ve cam kırıkları barındıran yara, dekoratif bir kristalin amansız bir güçle savrulmasıyla oluşabilirdi.", "deductionHint": "Cinayet silahı keskin köşeli ve ağır bir cam obje." },
+  { "id": "c2", "title": "Telefondan Kurtarılan Mesaj", "text": "Yere dökülen motor yağı izleri ve güvenlik mikrofonlarına yansıyan egzoz sesleri, cinayetin binanın en altındaki o izole ve karanlık araç park alanında işlendiğini mühürledi.", "deductionHint": "Cinayet mahalli, araçların ve egzoz seslerinin olduğu beton alan." },
+  { "id": "c3", "title": "Araç Kapısı İzi", "text": "Hukuk direktörü Amy Cross'un tüm gece boyunca üst kattaki toplantı odasında delege başkanlarıyla bütçe imzaladığı sunucu logları ve onlarca delegenin yeminli beyanıyla kanıtlandı.", "deductionHint": "Hukuk direktörünün zaman çizelgesi şahitlerle tamamen dolu." },
+  { "id": "c4", "title": "Güvenlik Kamera Kaydı", "text": "Otopark kapısındaki araç sensör analizleri ve kapı kolundaki taze doku örnekleri, yazarın sözleşmesini iptal etmesini engellemek için peşinden koşan o bakımlı ve lüks kremler kullanan yöneticinin profilini çıkardı.", "deductionHint": "Aracın kapı kolundaki izler, lüks el kremi kullanan menajeri işaret ediyor." },
+  { "id": "c5", "title": "Carlos'un İfadesi", "text": "Asansör içi ses kayıt sisteminin dalga analizi: 'O sözleşmeyi o rakip ajansla imzalamayacaksın... Seni bitiririm! Şimdi otoparkta arabana geç, aşağıda bekliyorum, bu iş burada çözülecek...'", "deductionHint": "Ses kaydı, şüphelinin kurbanı otoparkta beklediğini açıkça belirtiyor." },
+  { "id": "c6", "title": "Silah Analizi", "text": "Toplantı odasındaki büyük kristal setinin eksik olan o ağır parçasının, tam olarak o güçlü kadın yöneticinin geniş evrak çantasına sığabilecek boyutlarda olduğu kriminal ekiplerce doğrulandı.", "deductionHint": "Eksik kristal parça, geniş evrak çantasının içine sığacak ebatlarda." },
+  { "id": "c7", "title": "Ajanlık Sözleşmesi", "text": "Yazarın bilgisayarından kurtarılan son mesajlarda, şahsi temsilcinin bu transfer yüzünden yıllık 400.000 dolarlık komisyon kaybı yaşayacağını belirten o tehditkâr satırlar cinayetin ardındaki devasa mali motifi ortaya çıkardı.", "deductionHint": "Devasa bir finansal komisyon kaybı, cinayeti işlemeye iten ana motifti." }
+],
+"solutionNarrative": "Ajan Rachel Kim, senaristin rakip ajansa geçeceğini ve komisyonlarını kaybedeceğini öğrenince kontrolünü yitirdi. Toplantı odasından kristal kül tablasını çantasına gizleyerek otoparka indi. Senaristi aracının başında bekledi ve ağır kristalle onu katletti, ardından senaryoyu da çalarak kaçtı."
+
+5. "hw_005" (Efsanenin Sonu)
+"story": "Hollywood'un en büyük ve en zengin sinema ikonası, Beverly Hills'teki malikanesinde ölü bulundu. Milyon dolarlık mirasının kime kalacağını belirleyen yeni vasiyetnamenin imzalanmasına saatler kala işlenen bu suikastın arkasında, malikanedeki dört yakın isimden biri var.",
+"atmosphere": "Hills'in tepesi. Işıklı havuz. Servet ve gölge.",
+"suspects": [
+  { "id": "s1", "description": "Eski vasiyetnamede tek mirasçı olan ancak yeni düzenlemeyle tüm haklarını kaybetmek üzere olan, bütün gününü havuz kenarındaki partilerde kumar oynayarak geçiren şımarık yeğen.", "detail": "29 yaşında, bağımlılık geçmişi ve mali krizleri olan akraba." },
+  { "id": "s2", "description": "Sadece 6 aylık bir ilişkiyle devasa mirasın yüzde 40'ına konmak üzere olan, sürekli üst kattaki balkonlarda poz veren ve malikanenin mutfak işlerinden hiç anlamayan genç sevgili.", "detail": "31 yaşında, Brezilya asıllı, narsist ve gösteriş meraklısı." },
+  { "id": "s3", "description": "Vasiyeti resmi olarak değiştiren, evrak çantasıyla toplantı odalarından çıkmayan ve malikanenin içki/servis düzenine tamamen yabancı olan soğuk bürokrat avukat.", "detail": "55 yaşında, hissiz, sadece evraklarla ilgilenen profesyonel." },
+  { "id": "s4", "description": "10 yıldır ikona sadakatle hizmet eden ancak yeni vasiyetnamede adının tamamen silindiğini öğrenince intikam yemini eden, malikanenin tüm içki, ilaç ve yemek düzeninden sorumlu emektar çalışan.", "detail": "45 yaşında, kırık kalpli, sessiz öfkeli ve evin her köşesini bilen asistan." }
+],
+"weapons": [
+  { "id": "w1", "description": "Kurbanı sert bir cisimle bayılttıktan sonra klorlu suların içine çekerek ciğerlerine su doldurmayı ve kaza süsü vermeyi amaçlayan mekanik boğulma." },
+  { "id": "w2", "description": "Yüksek dozda uyku hapı ve ağır alkolün içki kadehine sinsi bir şekilde karıştırılmasıyla, yutulduğunda kalbi saatler içinde sessizce durduran ölümcül medikal karışım." },
+  { "id": "w3", "description": "Üst balkonun mermer korkuluklarından aşağı doğru amansızca itilerek, zeminde ağır kemik kırıkları ve şiddetli iç kanamayla ölümü hedefleyen kaba kuvvet yöntemi." },
+  { "id": "w4", "description": "Akşam yemeği tabağına karıştırılması planlanan arsenikli gıda, ancak bu kurgunun mutfaktaki tabaklara hiç dokunulmadan yapıldığı anlaşıldı." }
+],
+"locations": [
+  { "id": "l1", "description": "Malikanenin devasa bahçesinde yer alan, şezlongların bulunduğu, aydınlık ve dış kameraların her saniyeyi kaydettiği açık yüzme havuzu." },
+  { "id": "l2", "description": "Zemin katta yer alan, dışarıdan ses geçirmeyen kalın perdelerle kaplı, kurbanın şahsi içki barının ve deri çalışma koltuğunun bulunduğu izole, loş kütüphane." },
+  { "id": "l3", "description": "Ana yatak odasının önünde yer alan, yüksek mermer korkuluklarla çevrili ve tepelerden tüm Los Angeles manzarasını gören açık teras hatt." },
+  { "id": "l4", "description": "Yemeklerin ve lüks içkilerin hazırlandığı, hizmetlilerin sürekli girip çıktığı, fayans zeminli ve bol ışıklı büyük villa mutfağı." }
+],
+"clues": [
+  { "id": "c1", "title": "Ölüm Yeri", "text": "Maktulün midesindeki devasa uyku ilacı tortuları ve kanındaki yüksek alkol konsantrasyonu, ölümün sessiz ve kimyasal bir kokteylle kadehin içinden geldiğini fısıldıyordu.", "deductionHint": "Alkol ve ilacın ölümcül buluşması. Silah, zehirli bir içki." },
+  { "id": "c2", "title": "Vasiyetnamede Gizli Not", "text": "Kurbanın ayak tabanlarındaki kuruluk ve üzerindeki ipek sabahlığın lekesiz hali, onun son saatlerini sadece zemin kattaki kendi izole ve şahsi barında geçirdiğini kanıtladı.", "deductionHint": "Mekan, kurbanın şahsi barının da bulunduğu Kütüphane Odası." },
+  { "id": "c3", "title": "Toksikoloji", "text": "Dış teras kameralarının kesintisiz logları, Yeğen Brandon ve Avukat Dana'nın olay saatinde terasta birlikte uzun süreli bir iş görüşmesi yaptıklarını video kaydıyla mühürledi.", "deductionHint": "Yeğen ve Avukat olay saatinde birlikte kameradaydı." },
+  { "id": "c4", "title": "Brandon'ın İfadesi", "text": "Kütüphanedeki şahsi kristal kadehin dibinde saptanan yoğun medikal çözelti kalıntıları, ölümcül dozun yalnızca o lüks içki seansında kurbana sunulduğunu kesinleştirdi.", "deductionHint": "Ölümcül sıvı sadece kütüphanedeki şahsi kadehe damlatılmış." },
+  { "id": "c5", "title": "Marco'nun İfadesi", "text": "Çalışma odasının şahsi içki dolabı kapağındaki toz tabakasından alınan parmak izi eşleşmesi, malikanenin 10 yıllık tüm içki ve servis düzenini tek başına yöneten emektar çalışanın profilini işaret etti.", "deductionHint": "İçki dolabındaki izler, servis düzenini bilen asistan Grace'e ait." },
+  { "id": "c6", "title": "Brandon ve Dana Alibisi", "text": "Maktulün gizli günlüğünde asistanın vasiyet öfkesini doğrulayan ifadeler ile mutfaktaki gizli ses cihazından alınan o sinsi mırıldanma dalgası: '10 yılımı verdim... Her şeyi o jigoloya bırakamazsın... Bugün hak ettiğim o mirası kendi ellerimle alacağım...'", "deductionHint": "'Mirası ellerimle alacağım' sözleri Grace'in ihanetini ve cinayeti itirafıdır." }
+],
+"solutionNarrative": "Eski Asistan Grace Lee, 10 yıllık sadakatine rağmen milyonluk vasiyetten dışlandığını öğrenince intikam almaya karar verdi. Malikanenin içki düzenine hakim olmasını kullanarak, kurbanın kütüphanedeki viski kadehine ölümcül uyku ilacı karışımını damlattı. Kamera kayıtları ve ses logları o sinsi planını yerle bir etti."
+
+GÜNCELLEME İŞLEMİNİ DOSYA BÜTÜNLÜĞÜNÜ BOZMADAN TAMAMLA.
