@@ -2961,6 +2961,13 @@
                     "konum": "Kadeh gövdesi",
                     "eslesme": "s3",
                     "ipucu": "Genç, daha ince iz."
+                  },
+                  {
+                    "izId": "iz3",
+                    "konum": "Kadeh tabanı",
+                    "eslesme": "s2",
+                    "ipucu": "Küçük, zarif iz — yüzük izi yok. Tanımlayıcı özellik az.",
+                    "isDecoy": true
                   }
                 ],
                 "sonuc": "Kadehi hem Rothwick hem Archie tuttu. (s1) (s3)"

@@ -10,9 +10,11 @@
     "serve": "node server/serve.js",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "validate": "node scripts/validate-puzzles.js",
+    "validate:parmak-izi": "node scripts/validate-parmak-izi.js",
     "check:solvability": "pnpm exec tsx scripts/check-solvability.js",
-    "validate:all": "npm run validate && npm run check:solvability",
-    "test:e2e": "playwright test --config=playwright.config.ts"
+    "validate:all": "npm run validate && npm run validate:parmak-izi && npm run check:solvability",
+    "test:e2e": "playwright test --config=playwright.config.ts",
+    "test:parmak-izi": "playwright test --config=playwright.config.ts e2e/parmak-izi.test.ts"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
