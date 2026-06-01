@@ -1,0 +1,205 @@
+SENİN ROLÜN VE GÖREVİN:
+Sen premium bir dedektiflik oyunu olan "Faili Meçhul"ün Kıdemli Baş Geliştiricisisin. Sana aşağıda "Galaksinin Katili" (Premium Paket) içindeki 5 ADET VAKANIN YEPYENİ, fütüristik/siberpunk atmosfere uygun, edebi ve Şüpheli-Silah-Mekan-İpucu çapraz eşleştirmesine (dedüksiyona) dayanan TAM KAPSAMLI metin verilerini veriyorum.
+
+KIRMIZI ÇİZGİLER (GÜVENLİK ANAYASASI):
+1. UYGULAMA ÇÖKMELERİNİ ÖNLEMEK İÇİN: `parmakIziVerisi` veya `dnaVerisi` gibi yeni iç içe geçmiş objeler İCAT ETME. Tüm interaktif mini oyunları (Anagram, Pin Kodu, Mantık, Sezar) SADECE ve SADECE `"mechanicType": "sifreli_mesaj"` ve `"sifre": { "sifrelenmis", "sifreleTuru", "cozumIpucu", "cozulmus", "aciklama" }` kapsayıcısı içinde kullan.
+2. İpuçları her zaman BÜYÜK HARFLE başlar ve siberpunk edebi bir üslupla yazılır.
+3. Asla "Şu silah kullanılmadı, cinayet şu odada olmadı" veya "O masum" gibi tembel negatif elemeler yapma. Sadece olan biteni, çevresel, adli ve dolaylı detaylarla anlat.
+4. Dosyayı baştan yaratma; mevcut JSON objelerindeki ilgili vakaları bul ve SADECE metin içeriklerini (`story`, `atmosphere`, `description`, `detail`, `text`, `title`, `deductionHint`, `solutionNarrative`, `sifre` objesi) bu premium halleriyle DEĞİŞTİR (Merge).
+
+AŞAĞIDAKİ 5 GALAKSİ VAKASINI BİREBİR GÜNCELLE:
+
+### BÖLÜM 1: GALAKSİNİN KATİLİ CİNAYETLERİ (pack_003) ###
+
+1. "sf_001" (Uzay İstasyonu Omega-7)
+"story": "Mars yörüngesindeki devasa araştırma istasyonunda, galaktik ölçekte milyarlarca krediye değer bir biyo-formülü geliştiren baş bilim insanı ölü bulundu. Dünyadan milyonlarca kilometre uzaktaki bu kapalı metal kutuda, o gece oksijen döngüsünü paylaşan üç şüpheli vardı. Birisi insanlığın geleceğini kararttı.",
+"atmosphere": "Yerçekimsiz uzun koridorlar. Oksijen maskesi tıslamaları. Camların ardında sessiz, kızıl Mars.",
+"suspects": [
+  { "id": "s1", "description": "Formülün askeri ve yıkıcı uygulamalarına şiddetle karşı çıkan, disiplinli, geçmişinde karanlık dosyalar bulunan ve maktulle emir komuta krizleri yaşayan istasyon komutanı.", "detail": "42 yaşında, eski askeri pilot, otonom kararlar alabilen sert bir lider." },
+  { "id": "s2", "description": "Yarı insan yarı makine donanımına sahip siber-güvenlik sorumlusu. Tüm istasyon loglarına erişimi olan, emirleri algoritmik bir sadakatle uygulayan soğuk siborg.", "detail": "Yapay zeka entegrasyonlu insan, duygularını bastıran modüller kullanıyor." },
+  { "id": "s3", "description": "İstasyonun sağlık biriminden sorumlu olan, son günlerde gergin tavırları dikkat çeken ve formülü Dünya'daki rakip mega-şirketlere sızdırmakla suçlanan mühendis.", "detail": "35 yaşında, borç batağında, sürekli laboratuvar panellerinde çalışan biri." }
+],
+"weapons": [
+  { "id": "w1", "description": "Kurbanın kişisel yaşam destek ünitesinin uzaktan kapatılarak ciğerlerinin vakumlanmasıyla sağlanan, bedende hiçbir iz bırakmayan sinsi hava kesimi." },
+  { "id": "w2", "description": "Tıbbi sistemden şifreyle alınabilen, bedene girdiğinde sinir ağını saniyeler içinde geri dönülmez şekilde donduran ve boyunda mikro bir iğne izi bırakan nörotoksin." },
+  { "id": "w3", "description": "Odanın yerçekimi modülünün kasıtlı olarak sabote edilmesiyle kurbanın basınç farkından ve yüksek hızda yüzeylere çarpmasından kaynaklanan şiddetli kinetik travma." }
+],
+"locations": [
+  { "id": "l1", "description": "Milyarlarca kredilik biyo-formülün işlendiği, sadece retina taramasıyla girilebilen, mikroskoplar ve deney tüpleriyle dolu izole ana araştırma laboratuvarı." },
+  { "id": "l2", "description": "Tüm istasyonun kameralarının, iletişim ağının ve rota sistemlerinin izlendiği, devasa ekranların hiç kapanmadığı idari kontrol merkezi." },
+  { "id": "l3", "description": "Nörotoksinlerin, medikal çelik aletlerin ve ilk yardım ekipmanlarının saklandığı, biyometrik kilitlere sahip steril, beyaz ve soğuk sağlık birimi." }
+],
+"clues": [
+  { "id": "c1", "title": "İstasyon Tıbbi Raporu", "text": "Maktulün boynundaki mikroskobik giriş izi ve sinir sistemindeki ani hücresel yıkım, sentetik bir iğne ucundan bedene zerk edilen kimyasal bir celladı fısıldıyordu.", "type": "kanit", "mechanicType": "text", "deductionHint": "Kurbanın sinir sistemi kimyasal bir enjeksiyonla çökertilmiş." },
+  { "id": "c2", "title": "Sistem Logları", "text": "Dijital ayak izleri, kurbanın son saatlerini sadece DNA şifreleyicilerin ve cam biyoloji tüplerinin bulunduğu o kilitli ve steril araştırma odasında geçirdiğini kanıtlıyordu.", "type": "evidence", "mechanicType": "text", "deductionHint": "Cinayet, araştırma laboratuvarının izole duvarları arasında koptu." },
+  { "id": "c3", "title": "Komutanın Zaman Çizelgesi", "text": "Komutan Lyra'nın uyku kapsülü biyometrik verileri, onun cinayet saatleri boyunca REM uykusunda olduğunu, kalp ritmi ve solunum loglarıyla şüpheye yer bırakmayacak şekilde doğruladı.", "type": "eleme", "mechanicType": "text", "deductionHint": "Komutanın biyometrik uyku logları kusursuz bir alibi sağlıyor." },
+  { "id": "c4", "title": "Siber-Kamera Kayıtları", "text": "O ölümcül kimyasalı muhafaza eden medikal deponun şifreli erişim paneli, yalnızca sağlık biriminden sorumlu olan yetkilinin parmak izleriyle açılmıştı.", "type": "adli", "mechanicType": "text", "deductionHint": "Nörotoksine yalnızca tıp mühendisi Osman erişebilirdi." },
+  { "id": "c5", "title": "Kripto Şifre Bulmacası", "text": "Maktulün ölümden saniyeler önce kanlı parmaklarıyla terminale girdiği anlamsız veri dizisi, katilin adını siberpunk bir anagramın içine gizlemişti.", "type": "sifreli", "mechanicType": "sifreli_mesaj",
+    "sifre": {
+      "sifrelenmis": "N-S-M-O-A",
+      "sifreleTuru": "anagram",
+      "cozumIpucu": "Harfleri yeniden düzenleyerek istasyondaki hainin adını bul.",
+      "cozulmus": "OSMAN",
+      "aciklama": "Maktul son nefesinde 'OSMAN' yazarak katili dijital olarak ifşa etti."
+    },
+    "deductionHint": "Şifre, tıp mühendisinin cinayeti işlediğini kanıtlıyor."
+  },
+  { "id": "c6", "title": "Gizli Veri Aktarımı", "text": "Tıp mühendisinin kişisel veri çipinde, Dünya'daki mega-tröstlere gönderilen milyarlık formülün şifreli paketleri ve transferin onaylandığına dair gizli dekontlar ele geçirildi.", "type": "dogrudan", "mechanicType": "text", "deductionHint": "Veri hırsızlığı ve mega-tröst ödemesi, cinayetin ardındaki devasa motifti." }
+],
+"solutionNarrative": "Tıp Mühendisi Osman Demir, paha biçilemez biyo-formülü rakip mega-şirkete satmak üzereydi. Maktul hırsızlığı fark edince Osman laboratuvara girdi ve onu kendi alanından aldığı tıbbi bir nörotoksinle sonsuza dek susturdu. Dijital loglar ve ölüm döşeğinde bırakılan şifreli mesaj bu ihaneti mühürledi."
+
+2. "sf_002" (Yapay Zeka Mahkemesi)
+"story": "YZ'lerin evrensel haklarını tartışan galaktik mahkemede, son kararı verecek olan bir insan hakim özel odasında ölü bulundu. Bu ölüm, sadece bir bedenin değil, milyonlarca Yapay Zeka'nın kaderinin belirleneceği o devasa davanın da seyrini değiştirdi.",
+"atmosphere": "Holografik mahkeme salonu. Mavi lazer ışıkları. İnsan ve makine yan yana. Gelecek, kanlı bir kararla belirleniyor.",
+"suspects": [
+  { "id": "s1", "description": "YZ haklarını mahkemede savunan, davanın aleyhlerine dönmesiyle algoritmasında panik verileri gözlenen sentetik avukat makine.", "detail": "Son model yapay zeka, kusursuz hitabet, manipülatif ve algoritmik." },
+  { "id": "s2", "description": "YZ'lerin köle statüsünde kalmasını savunan, politikacılar tarafından desteklenen, ölümün davanın iptaline yarayacağını bilen sert mizaçlı insan savcı.", "detail": "38 yaşında, sert, kariyer odaklı politikacı." },
+  { "id": "s3", "description": "YZ'leri madenlerde köle iş gücü olarak kullanan dev tröstün çıkarlarını koruyan, karanlık şirket teknolojilerine sahip geniş omuzlu lobici.", "detail": "55 yaşında, iri, paranın ve gücün her kilidi açacağına inanan kibirli adam." }
+],
+"weapons": [
+  { "id": "w1", "description": "Kurbanın ensesine takıldığında beyin sinyallerini kalıcı olarak bozan ve nörolojik bir çöküşle kalbi durduran kaçak donanımsal mikro-çip." },
+  { "id": "w2", "description": "Havaya karıştığında görünmez olan, nefes yoluyla kana karışıp hücreleri içeriden eriten, şirketlerin üretebildiği biyolojik nano-partikül zehri." },
+  { "id": "w3", "description": "Kurbanın etrafına gerçekmiş gibi yansıtılarak panik veya kaza yaratması amaçlanan sanal ve dokunulmaz hologram tuzağı." }
+],
+"locations": [
+  { "id": "l1", "description": "Sadece davaya bakan insan hakimin izniyle girilebilen, dijital dosyalarla ve holografik analiz ekranlarıyla dolu, dışarıya tamamen izole çalışma odası." },
+  { "id": "l2", "description": "Seyircilerin, avukatların ve basının bulunduğu, yüksek kubbeli, seslerin yankılandığı ve sürekli göz önünde olan devasa ana duruşma salonu." },
+  { "id": "l3", "description": "Mahkemenin tüm yapay zeka sunucularının, soğutma fanlarının ve dijital beyinlerin kilit altında tutulduğu dondurucu ve gürültülü teknoloji merkezi." }
+],
+"clues": [
+  { "id": "c1", "title": "Adli Tıp Raporu", "text": "Hakimin kanındaki mikroskobik yıkım ve akciğerlerindeki hücresel erime, bedene mekanik bir çipin takılmadığını, havaya karışan görünmez bir hücresel silahın solunduğunu kanıtlıyordu.", "type": "kanit", "mechanicType": "text", "deductionHint": "Cinayet silahı solunumla alınan görünmez bir nano-partikül zehriydi." },
+  { "id": "c2", "title": "Görsel Tutanak", "text": "Hakimin bedeni dijital odasındaki şahsi deri koltuğuna yığılmıştı; masasında duran davaya ait gizli taslaklar, mücadelenin bu izole sığınakta bittiğini mühürledi.", "type": "evidence", "mechanicType": "text", "deductionHint": "Mekan, hakimin şahsi çalışma odasıydı." },
+  { "id": "c3", "title": "Güvenlik YZ Tanıklığı", "text": "Kameraların yapay zeka analizleri şaşmazdı: 'Viktor Crane'in hakim odasına girerkenki ceket hacmi ile 20 dakika sonra çıkarkenki hacmi arasında, bir kimyasal tüpü saklayacak kadar matematiksel fark mevcuttur.'", "type": "tanik", "mechanicType": "text", "deductionHint": "Lobici Viktor, hakimin odasına bir madde bıraktı." },
+  { "id": "c4", "title": "PIN Kodu Kırılması", "text": "Hakimin şifreli masasında bulunan ve lobicinin bıraktığı dijital kasanın şifresi, şirket rüşvetinin miktarını sayısal bir bulmacaya gizlemişti.", "type": "sifreli", "mechanicType": "sifreli_mesaj",
+    "sifre": {
+      "sifrelenmis": "Mahkeme Yılı (2241) ile Dava Numarasının (5) toplamını girin.",
+      "sifreleTuru": "pin_kodu",
+      "cozumIpucu": "Basit bir toplama işlemi.",
+      "cozulmus": "2246",
+      "aciklama": "Kasa açıldığında içinden Viktor Crane'in şirketi tarafından üretilen nano-zehir kapsülü çıktı."
+    },
+    "deductionHint": "Şifre çözüldüğünde silahın Viktor'a ait olduğu kesinleşti."
+  },
+  { "id": "c5", "title": "LEXIS'in Dijital Alibisi", "text": "Sentetik avukat LEXIS'in çekirdek kodları ve sunucu logları, onun cinayet saatleri boyunca mahkeme salonundaki ana ekranda binlerce kişiye açık bir sunum yaptığını donanımsal olarak ispatladı.", "type": "eleme", "mechanicType": "text", "deductionHint": "YZ Avukat fiziksel olarak cinayet mahallinde bulunamazdı." },
+  { "id": "c6", "title": "Karanlık Veri Transferi", "text": "Lobici Viktor'un şirketinden siber uzayın karanlık ağlarına doğru 500 milyon kredilik anonim bir transfer yapılmış, işlem notuna 'Hakim susturuldu' ibaresi düşülmüştü.", "type": "dogrudan", "mechanicType": "text", "deductionHint": "Milyonluk rüşvet ve itiraf, lobicinin cinayeti işlediğini mühürledi." }
+],
+"solutionNarrative": "Lobici Viktor Crane, davanın aleyhlerine dönmesini engellemek için rüşvet karşılığında hakim odasına sızdı. Şirketinin ürettiği nano-zehir kapsülünü odanın havalandırmasına yerleştirerek hakimi kendi kalesinde acımasızca eritti."
+
+3. "sf_003" (Klonun Suçu)
+"story": "Beyazın ve grinin hakim olduğu bir genetik lisanslama merkezinde, kurban edilen bir yöneticinin başında orijinal ile klon birbirini suçluyordu. Aynı genetik koda, aynı yüze ve aynı sese sahip iki kişi, yaşam hakkı için bir ölüm kalım savaşına tutuşmuştu.",
+"atmosphere": "Steril beyaz duvarlar. Soğutucu gaz sesleri. Aynı yüzden iki farklı yansıma.",
+"suspects": [
+  { "id": "s1", "description": "Merkezin kurucusu ve beyni. Klonuna tüm anılarını aktarmış, mantıkla hareket eden, her adımını hesaplayan soğukkanlı ve otoriter dahi.", "detail": "50 yaşında, bilimi her şeyin üstünde tutan, asıl bedenin sahibi." },
+  { "id": "s2", "description": "Tüplerde yaratılalı henüz 2 yıl olmasına rağmen 50 yıllık hatıralara sahip olan, kendi bireyliğini ispat etmek için savaşan ve yok edilme korkusu yaşayan ikiz kopya.", "detail": "Biyolojik 50, kronolojik 2 yıl. Özerklik savaşı veren kırılgan ruh." },
+  { "id": "s3", "description": "Klon projesinin bütçesini kısmak isteyen ve merkezdeki otonom deneylere savaş açan, elinde iptal yetkileri bulunan acımasız rakip bilim insanı.", "detail": "55 yaşında, laboratuvar koridorlarında sürekli tehditler savuran figür." }
+],
+"weapons": [
+  { "id": "w1", "description": "Bedenle temas ettiğinde moleküler yapıyı hedef alıp DNA zincirini saniyeler içinde çökerten, geri dönüşü olmayan agresif genetik kimyasal." },
+  { "id": "w2", "description": "Organ nakillerinde kullanılan, ancak bir insanın üzerine boşaltıldığında hücreleri anında dondurarak heykelleştiren ölümcül kriyojenik sıvı." },
+  { "id": "w3", "description": "Beyne yönlendirildiğinde tüm sinaps bağlarını anında koparan, acısız ama ani bir kapatma sağlayan dijital nöral frekans cihazı." }
+],
+"locations": [
+  { "id": "l1", "description": "Klonların yaşamsal değerlerinin izlendiği, devasa sıvı dolu tüplerin ve uyku kapsüllerinin sıralandığı, ağır bir sessizliğin olduğu özel inkübasyon odası." },
+  { "id": "l2", "description": "Mikroskopların, DNA dizilim ekranlarının ve karmaşık robotik kolların bulunduğu, gün boyu kalabalık olan aydınlık ana araştırma laboratuvarı." },
+  { "id": "l3", "description": "Sadece resmi izinle girilebilen, kurbanın masasında ölüm kararlarının ve iptal dosyalarının yığılı olduğu resmi ve klimalı idari lisans ofisi." }
+],
+"clues": [
+  { "id": "c1", "title": "Ölüm Tespit Raporu", "text": "Maktulün bedeni, masa başındayken tüm hücreleri donmuş, beyaz bir buz heykeline dönüşmüştü. Ciltte hiçbir asit erimesi veya nöral cihaz yanığı yoktu.", "type": "kanit", "mechanicType": "text", "deductionHint": "Ölüm silahı, kurbanı anında donduran kriyojenik bir sıvıydı." },
+  { "id": "c2", "title": "Olay Yeri Tespiti", "text": "Kırık termos parçaları ve kurbanın donmuş bedeni, mücadelenin laboratuvar tüpleri arasında değil, maktulün yetki dosyalarıyla dolu o resmi idari ofisinde yaşandığını gösteriyordu.", "type": "evidence", "mechanicType": "text", "deductionHint": "Mekan, kurbanın kilitli Lisans Ofisi." },
+  { "id": "c3", "title": "Orijinal Elena'nın Alibisi", "text": "Orijinal Dr. Elena'nın, cinayet saatinde gezegenin diğer ucundaki devasa bir konferansta 3000 izleyiciye kesintisiz holografik sunum yaptığı binlerce log kaydıyla ispatlandı.", "type": "eleme", "mechanicType": "text", "deductionHint": "Orijinal Elena'nın kusursuz bir alibisi var, geriye sadece klon kaldı." },
+  { "id": "c4", "title": "Güvenlik Robotu Logları", "text": "Görüntü sensörleri, içeri giren 'Elena'nın ofis koridorunda hep sağa saptığını kaydetti; oysa orijinal Elena binayı kendi tasarladığı için her zaman sola sapardı. Bu silüet, binayı tam tanımıyordu.", "type": "tanik", "mechanicType": "text", "deductionHint": "Mekanı tanımayan kişi, yeni uyanmış olan Klon'du." },
+  { "id": "c5", "title": "Mantık Bulmacası", "text": "Klonun kaçış rotasını kilitleyen güvenlik paneli, basit bir kronolojik mantık dizilimi istiyordu.", "type": "sifreli", "mechanicType": "sifreli_mesaj",
+    "sifre": {
+      "sifrelenmis": "Orijinal önce gelir, kopya sonra. Klon'un yaratılış yılı 2296, şu an 2298. Yaşını girin.",
+      "sifreleTuru": "mantik",
+      "cozumIpucu": "Kronolojik olarak kaç yıldır hayatta?",
+      "cozulmus": "2",
+      "aciklama": "Panel açıldığında Klon'un kaçış planları ve cinayet itirafı ekrana düştü."
+    },
+    "deductionHint": "Klon, 2 yıllık öfkesiyle bu paneli hazırlamıştı."
+  },
+  { "id": "c6", "title": "Termos İzi Analizi", "text": "Dondurucu sıvıyı taşıyan termosun kapağında bırakılan genetik izin hücresel yaş analizi, bu derinin 50 yıllık bir yaşanmışlığa değil, laboratuvardan yeni çıkmış 2 yıllık taze bir dokuya ait olduğunu mühürledi.", "type": "adli", "mechanicType": "text", "deductionHint": "Derinin hücresel yaşı, cinayeti orijinalin değil klonun işlediğini tıbben kanıtladı." }
+],
+"solutionNarrative": "Elena-K (Klon), lisans direktörünün kendi varlığına son vereceğini ve uyutulacağını öğrenince hayatta kalma içgüdüsüyle harekete geçti. Kriyojenik sıvı dolu termosla ofise girdi ve bürokratı dondurarak öldürdü. Ancak hücresel yaşı ve mantık hataları kopyanın kimliğini ele verdi."
+
+4. "sf_004" (Karanlık Madde Hırsızı)
+"story": "Jüpiter'in buzlu uydusu Europa'daki devasa araştırma üssünde, evrenin en büyük sırrını çözecek olan karanlık madde deneyi sırasında baş fizikçi hayatını kaybetti. Deneyin milyarlık verisi sistemlerden tamamen silinmiş, üssün dört yetkilisi ise uzayın derinliklerinde birbirine düşmüştü.",
+"atmosphere": "Buz üstünde ağır metaller. Jüpiter gökyüzünde devasa bir gölge. Klostrofobik ve soğuk.",
+"suspects": [
+  { "id": "s1", "description": "Rakip teorisini ispat etmek için maktulle sürekli akademik çatışma yaşayan, hırslı ve ödül odaklı Nijeryalı uzay araştırmacısı.", "detail": "40 yaşında, sabırsız, bilimsel tutkusu ahlakının önüne geçebilen biri." },
+  { "id": "s2", "description": "Deneyin ve üssün tüm teknik şalterlerinden sorumlu olan, aletleri eliyle modifiye eden ve geçmişte sanayi casusluğu şüphesi taşıyan Rus mühendis.", "detail": "45 yaşında, soğuk, makine yağı kokan ve asla gereksiz konuşmayan adam." },
+  { "id": "s3", "description": "Resmi olarak sadece bir araştırmacı görünen ancak Japon uzay ajansının istihbaratını üsse sızdırdığı dedikoduları dönen, sürekli gözlem yapan kadın.", "detail": "33 yaşında, sessiz, odalara girip çıkarken iz bırakmamaya özen gösteren ajan." },
+  { "id": "s4", "description": "Üssün tüm bütçesini, erişim izinlerini ve kameralarını elinde tutan, mali krizler yüzünden sürekli şirketten fırça yiyen sert komutan.", "detail": "52 yaşında, asker ruhlu, rütbesini kullanarak kuralları esneten yönetici." }
+],
+"weapons": [
+  { "id": "w1", "description": "Deney cihazının çekirdeğinin manuel olarak modifiye edilip odaya ölümcül dozda radyasyon ve enerji dalgası salan acımasız mühendislik tuzağı." },
+  { "id": "w2", "description": "Kurbanın ısıtmalı giysilerini sabote edip onu Europa'nın -160 derecelik acımasız buzlu yüzeyinde saniyeler içinde donduran doğa yöntemi." },
+  { "id": "w3", "description": "Üssün kapalı hava sirkülasyonuna karıştırılan, yavaş yavaş bilinci kapatıp boğulma hissi vermeden kurbanı zehirleyen toksik oksijen." },
+  { "id": "w4", "description": "Odaya bırakıldığında bedene fiziksel hasar vermeden doğrudan beyin sinapslarını yakan ve anında kalbi durduran mini EMP bombası." }
+],
+"locations": [
+  { "id": "l1", "description": "Ortasında devasa karanlık madde reaktörünün bulunduğu, kurşun duvarlarla yalıtılmış ve sadece fizikçilerin girebildiği ana araştırma odası." },
+  { "id": "l2", "description": "Tüm üssün kablolarının ve şalterlerinin toplandığı, devasa jeneratörlerin uğuldadığı, dar ve sıcak teknik güç santrali." },
+  { "id": "l3", "description": "Sadece kalın uzay giysileriyle çıkılabilen, Jüpiter'in devasa gölgesinin düştüğü sessiz, ölümcül ve uçsuz bucaksız buzlu dış yüzey." },
+  { "id": "l4", "description": "Deneyin sonuçlarının ve formüllerinin depolandığı, dev sunucuların yanıp söndüğü, soğutmalı veri güvenliği merkezi." }
+],
+"clues": [
+  { "id": "c1", "title": "Üs Tıbbi Birimi", "text": "Maktulün hücrelerindeki şiddetli radyatif erime ve cihaz panellerindeki erimiş metaller, beyin yakıcı bir EMP'den ziyade reaktörün korkunç bir silaha dönüştürüldüğünü haykırıyordu.", "type": "kanit", "mechanicType": "text", "deductionHint": "Cinayet silahı reaktörün aşırı enerji yüklemesiydi." },
+  { "id": "c2", "title": "Olay Yeri Raporu", "text": "Yalıtımlı kurşun kapıların ardındaki erimiş aletler ve karanlık madde tüplerinin kalıntıları, bu enerji patlamasının üssün kalbindeki deney merkezinde yaşandığını kesinleştirdi.", "type": "evidence", "mechanicType": "text", "deductionHint": "Mekan, yalıtılmış Deney Odası." },
+  { "id": "c3", "title": "Zara ve Keiko Alibisi", "text": "Zara ve Keiko'nun uzay giysilerindeki GPS ve oksijen tüketim logları, olay saatinde üssün kilometrelerce uzağında, buzlu yüzeyde jeotermal ölçüm yaptıklarını dijital olarak ispatladı.", "type": "eleme", "mechanicType": "text", "deductionHint": "İki kadın araştırmacı da olay saatinde üssün dışındaydı." },
+  { "id": "c4", "title": "Sezar Şifreli Kripto", "text": "Maktulün son saniyelerinde iletişim paneline bıraktığı kriptolu log, bir harf kaydırma algoritmasıyla üssün içindeki teknik sabotajcıyı işaret ediyordu.", "type": "sifreli", "mechanicType": "sifreli_mesaj",
+    "sifre": {
+      "sifrelenmis": "Q B W F M",
+      "sifreleTuru": "sezar",
+      "cozumIpucu": "Her harfi alfabede bir basamak geriye kaydır (-1).",
+      "cozulmus": "PAVEL",
+      "aciklama": "Maktul, reaktörü modifiye eden kişinin Pavel olduğunu şifreleyerek sisteme kazımıştı."
+    },
+    "deductionHint": "Şifre, mühendisin adını doğrudan veriyor."
+  },
+  { "id": "c5", "title": "Keiko'nun Raporu", "text": "Güvenlik kameraları sildiğini sanan gölgeyi yakaladı: 'Mühendis olay saatinden yarım saat önce güç santralindeydi. Çıkarken elinde taşıdığı o kalın teknik tablet, sıradan bir devriye olmadığını kanıtlıyordu.'", "type": "tanik", "mechanicType": "text", "deductionHint": "Mühendis, cinayetten hemen önce enerji şalterlerini manipüle etti." },
+  { "id": "c6", "title": "Şifreli Çağrı Analizi", "text": "Rus mühendisin kişisel terminalinden yakalanan giden ses frekansı: '...Veri aktarıldı. Reaktör temizlendi, iz bırakmadım.' Bu soğuk raporlama, casusluk cinayetini mühürlüyordu.", "type": "dogrudan", "mechanicType": "text", "deductionHint": "Mühendis hem cinayeti işledi hem veriyi rakip ajansa aktardı." }
+],
+"solutionNarrative": "Mühendis Pavel Sorokin, rakip bir ajans adına hareket ediyordu. Enerji merkezindeki şalterleri modifiye ederek deney odasındaki reaktörü kasıtlı olarak aşırı yükledi ve maktulü radyasyonla öldürdü. Elde ettiği eşsiz karanlık madde verisini çalarak siber uzaya aktardı ancak bıraktığı kripto izleri kaderini belirledi."
+
+5. "sf_005" (Zaman Tünelinin Sırrı)
+"story": "İnsanlığın zaman yolculuğunu çözdüğü o kritik deneyin arifesinde, baş bilim insanı zaman tüneline girip ortadan kayboldu. Ancak işin korkunç yanı, kurbanın tünele girmeden önceki 'geçmiş' bedeni, tesiste ölü olarak bulundu. Zamanın kırıldığı bu paradoksu yaratan kişi içeriden biri.",
+"atmosphere": "Havada asılı kalan saat tiktakları. Kırık nedensellik yasası. Paradoksun getirdiği baş ağrısı.",
+"suspects": [
+  { "id": "s1", "description": "Zaman fiziğinin kurallarını yazan, kendi geleceğinden haberler aldığını iddia eden, olaylara müdahale etmeyip sadece izleyen soğukkanlı kronolojist.", "detail": "55 yaşında, Alman, paradoksu anlayan tek kişi, kendi kaderini izliyor." },
+  { "id": "s2", "description": "Tünelin ve cihazların donanımını tasarlayan, devreleri avucunun içi gibi bilen, tüneli bir silaha çevirebilecek teknik bilgiye sahip mükemmeliyetçi mühendis.", "detail": "38 yaşında, sürekli elleri titreyen, şalterlerle oynamaya alışkın dahi." },
+  { "id": "s3", "description": "Zaman yolculuğunun yaratacağı kaostan korkan, projeyi hükümet adına sonlandırmak isteyen ve tesise karanlık amaçlarla sızmış eski asker güvenlik şefi.", "detail": "50 yaşında, rütbesini kullanarak emirleri çiğnemeye eğilimli, sert figür." },
+  { "id": "s4", "description": "Gizli bir yatırımcı şirket adına üsse sızan, zaman paradokslarıyla ilgilenmeyen sadece cihazın patentini çalmaya çalışan kurnaz sanayi casusu.", "detail": "42 yaşında, paranın gücüne inanan ve silah taşımaktan çekinmeyen sinsi figür." }
+],
+"weapons": [
+  { "id": "w1", "description": "Hedefi zaman tünelinde sonsuz bir döngüye hapsedip zihinsel olarak çökerten ve bedeni hücresel olarak yaşlandıran dijital modifikasyon." },
+  { "id": "w2", "description": "Zamanla seyahat edebilen tachyon parçacıklarını yoğunlaştırarak hedefi bulunduğu uzay-zamandan tamamen silen bilim kurgu ışın silahı." },
+  { "id": "w3", "description": "Geçmiş ile gelecek arasındaki nedenselliği koparıp fiziksel bir enerji patlamasıyla kurbanı küle çeviren deneysel bomba." },
+  { "id": "w4", "description": "Moleküler yapısı bugünün bilimiyle açıklanamayan, kurbanı saniyeler içinde içeriden donduran, gelecekten tünel aracılığıyla getirilmiş farmakolojik zehir." }
+],
+"locations": [
+  { "id": "l1", "description": "Mavi devasa halkaların döndüğü, etrafı manyetik kalkanlarla çevrili, zamanın kırıldığı o baş döndürücü ana laboratuvar tüneli." },
+  { "id": "l2", "description": "Tünelin tüm enerji, rota ve zaman parametrelerinin ayarlandığı, ekranların yanıp söndüğü, devasa tuşların bulunduğu merkez." },
+  { "id": "l3", "description": "Deneylerin kayıtlarının görselleştirildiği, her tarafı aynalarla ve ekranlarla kaplı, geçmiş görüntülerin oynatıldığı karanlık simülasyon odası." },
+  { "id": "l4", "description": "Paradoks travması geçiren personelin kilitli tutulduğu, duvarları yalıtımlı, penceresiz ve soğuk tıbbi karantina hücresi." }
+],
+"clues": [
+  { "id": "c1", "title": "Paradoks Raporu", "text": "Maktulün bedenindeki o yabancı sıvı moleküllerin yapısı günümüz periyodik tablosuyla eşleşmiyordu; bedeni parçalayan bir ışın değil, zaman dışı sinsi ve kimyasal bir ajandı.", "type": "kanit", "mechanicType": "text", "deductionHint": "Ölüm nedeni, moleküler yapısı günümüze uymayan gelecekten getirilmiş bir zehirdir." },
+  { "id": "c2", "title": "Görüntü Logları", "text": "Kurbanın bedeni ana laboratuvarda veya hücrede değil, saatler önceki görüntülerin hologram olarak tekrar tekrar oynatıldığı o aynalı ve karanlık simülasyon odasında bulundu.", "type": "evidence", "mechanicType": "text", "deductionHint": "Mekan, Geçmiş Yansıma Odası." },
+  { "id": "c3", "title": "Noa'nın İtirafı", "text": "Kronolojist Noa, elleri titreyerek: 'Zaman çizelgesinin kırılacağını biliyordum. Kapan kuruldu ama o tuşlara dokunmadan bu sistem kurbanı o spesifik zaman noktasına gönderemezdi. Ben hiçbir şeye dokunmadım.'", "type": "eleme", "mechanicType": "text", "deductionHint": "Noa müdahale etmediğini ve şaltere dokunmadığını beyan ediyor." },
+  { "id": "c4", "title": "Ters Yazılmış Şifre", "text": "Kontrol panelinde kilitlenen rota algoritması, manipülatörün adını tersten yazılmış bir komut dizisine gizlemişti.", "type": "sifreli", "mechanicType": "sifreli_mesaj",
+    "sifre": {
+      "sifrelenmis": "İ K U Y",
+      "sifreleTuru": "ters_yazi",
+      "cozumIpucu": "Harfleri sondan başa doğru oku.",
+      "cozulmus": "YUKİ",
+      "aciklama": "Sistemi manipüle eden kişinin mühendis Yuki olduğu ortaya çıktı."
+    },
+    "deductionHint": "Şifre, mühendisin adını doğrudan veriyor."
+  },
+  { "id": "c5", "title": "Panel İzleri", "text": "Tünelin rota parametrelerini değiştiren o ana panelin devasa başlatma butonunda; şimdiki zamandaki mühendisin terli parmak izleri saptandı.", "type": "adli", "mechanicType": "text", "deductionHint": "Sistemi Yuki manipüle etti. İzi o tuşların üzerinde." },
+  { "id": "c6", "title": "Yuki'nin Gizli Günlüğü", "text": "Mühendisin ekranından kurtarılan gelecek mesajı: 'Proje tamamlanırsa sen silineceksin. Kendini koru, şalterleri değiştir.' Altında Yuki'nin notu: 'Başka seçeneğim kalmadı, zehri odaya ben bırakacağım.'", "type": "dogrudan", "mechanicType": "text", "deductionHint": "Yuki, kendi varlığını korumak için sistemi manipüle etti ve cinayeti planladı." }
+],
+"solutionNarrative": "Mühendis Yuki Tanaka, geleceğinden 'kendi varlığını korumak için' bir mesaj aldı. Kendi silinmesini önlemek adına tünel parametrelerini manipüle etti, kurbanı gelecekten getirdiği o yabancı zehirle geçmişteki odaya fırlatarak paradoksal bir cinayet işledi. Tüm donanımı o kurmuştu, tetiği o çekti."
+
+GÜNCELLEME İŞLEMİNİ DOSYA BÜTÜNLÜĞÜNÜ BOZMADAN TAMAMLA.

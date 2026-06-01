@@ -303,7 +303,7 @@
                     "ipucu": "Mehmet'in dükkan temizliğinde kullandığı gres yağından kaynaklanan karakteristik doku izi; genç ve küçük parmakların dar kavrama biçimine uyuyor."
                   }
                 ],
-                "sonuc": "Vazo yalnızca çırağın parmak izlerini taşıyor."
+                "sonuc": "Vazo yalnızca çırağın parmak izlerini taşıyor. (s2)"
               },
               "revealOrder": 5,
               "isRevealed": false,
@@ -629,7 +629,7 @@
                     "ipucu": "Nuri Bey'in askeri üniforma eldiven dokusuyla uyumlu taze parmak izi. Orta parmak baskısı öne çıkıyor."
                   }
                 ],
-                "sonuc": "Bardağı son tutan: Nuri Bey."
+                "sonuc": "Bardağı son tutan: Nuri Bey. (s2)"
               },
               "revealOrder": 4,
               "isRevealed": false,
@@ -1287,7 +1287,8 @@
                     "eslesme": "s3",
                     "ipucu": "Denizci halat yağı kalıntılarıyla harmanlanmış, Kaptan Nikos'a ait net avuç içi izi."
                   }
-                ]
+                ],
+                "sonuc": "Güvertedeki iz Kaptan Nikos'a ait. (s3)"
               },
               "revealOrder": 4,
               "isRevealed": false,
@@ -1467,7 +1468,8 @@
                     "eslesme": "s1",
                     "ipucu": "Rachel Kim'in pahalı el kremi kalıntılarıyla eşleşen taze parmak izi şablonu."
                   }
-                ]
+                ],
+                "sonuc": "Kapı kolundaki iz Rachel Kim'e ait. (s1)"
               },
               "revealOrder": 4,
               "isRevealed": false,
@@ -1670,7 +1672,8 @@
                     "eslesme": "s4",
                     "ipucu": "Grace Lee'nin temizlik eldiven dokusu ve parmak izi şablonuyla %100 tam uyum."
                   }
-                ]
+                ],
+                "sonuc": "İçki dolabındaki iz Grace Lee'ye ait. (s4)"
               },
               "revealOrder": 5,
               "isRevealed": false,
@@ -2008,7 +2011,7 @@
                     "ipucu": "Şişman, büyük parmak. Yüzük izi belirgin — Viktor'a ait marka yüzüğü."
                   }
                 ],
-                "sonuc": "Masaya dokunan: Viktor Crane."
+                "sonuc": "Masaya dokunan: Viktor Crane. (s3)"
               }
             },
             {
@@ -2196,7 +2199,7 @@
                     "ipucu": "İz taze — 2 yıllık hayat bırakıyor farklı doku sertliği."
                   }
                 ],
-                "sonuc": "Termosu tutan: Elena-K (Klon)."
+                "sonuc": "Termosu tutan: Elena-K (Klon). (s2)"
               }
             }
           ],
@@ -2358,7 +2361,7 @@
                     "ipucu": "Makine yağı izi — mühendis eli."
                   }
                 ],
-                "sonuc": "Paneli modifiye eden: Pavel Sorokin."
+                "sonuc": "Paneli modifiye eden: Pavel Sorokin. (s2)"
               }
             },
             {
@@ -2596,7 +2599,7 @@
                     "ipucu": "Yuki'nin hassas mühendis parmakları — aynı zamanda bir gelecek versiyonu da dokunmuş, iz katmanlanmış."
                   }
                 ],
-                "sonuc": "Kontrol odasını modifiye eden: Yuki Tanaka."
+                "sonuc": "Kontrol odasını modifiye eden: Yuki Tanaka. (s2)"
               }
             },
             {
@@ -2760,7 +2763,7 @@
                     "ipucu": "Küçük, titrek iz — heyecanlı ya da gergin biri."
                   }
                 ],
-                "sonuc": "Buketi hazırlayan: Karl."
+                "sonuc": "Buketi hazırlayan: Karl. (s3)"
               }
             },
             {
@@ -2934,7 +2937,7 @@
                     "ipucu": "Genç, daha ince iz."
                   }
                 ],
-                "sonuc": "Kadehi hem Rothwick hem Archie tuttu."
+                "sonuc": "Kadehi hem Rothwick hem Archie tuttu. (s1) (s3)"
               }
             },
             {
@@ -3127,7 +3130,7 @@
                     "ipucu": "Geniş, güçlü parmak. Pahalı kol saati izi belirgin."
                   }
                 ],
-                "sonuc": "Fincanı hazırlayan: Weston."
+                "sonuc": "Fincanı hazırlayan: Weston. (s1)"
               }
             },
             {
@@ -3300,7 +3303,7 @@
                     "ipucu": "Teknik, hassas iz — elektronik çalışmaya alışmış parmaklar."
                   }
                 ],
-                "sonuc": "Cihazı modifiye eden: Leo."
+                "sonuc": "Cihazı modifiye eden: Leo. (s2)"
               }
             },
             {
@@ -3526,7 +3529,7 @@
                     "ipucu": "Kadın eli, orta yaş. Bahçecilik nasırı belirgin."
                   }
                 ],
-                "sonuc": "Şişeyi hazırlayan: Renata."
+                "sonuc": "Şişeyi hazırlayan: Renata. (s2)"
               }
             },
             {
@@ -3724,7 +3727,7 @@
                     "ipucu": "Orta yaş, güçlü kavrayış. İnşaat işi yapan biri."
                   }
                 ],
-                "sonuc": "Boruyu tutan: Fuat Bey."
+                "sonuc": "Boruyu tutan: Fuat Bey. (s2)"
               }
             },
             {
@@ -3890,7 +3893,7 @@
                     "ipucu": "Genç, kentli el. Dolma kalem izi var."
                   }
                 ],
-                "sonuc": "Çayı hazırlayan: Serkan."
+                "sonuc": "Çayı hazırlayan: Serkan. (s2)"
               }
             },
             {
@@ -4071,7 +4074,7 @@
                     "ipucu": "Genç, labaratuvar izi. Kimyasal temas alışkanlığı."
                   }
                 ],
-                "sonuc": "Şişeyi açan: Tarık."
+                "sonuc": "Şişeyi açan: Tarık. (s2)"
               }
             },
             {
@@ -4256,7 +4259,7 @@
                     "ipucu": "İnce, kadın eli. Tıbbi aletlere alışmış bilek hareketi."
                   }
                 ],
-                "sonuc": "Kupayı son tutan: Sibel."
+                "sonuc": "Kupayı son tutan: Sibel. (s2)"
               }
             },
             {
@@ -4461,7 +4464,7 @@
                     "ipucu": "Denizci eli, halatla uzun yıllar çalışmış. Nasır izleri özgün."
                   }
                 ],
-                "sonuc": "Halatı tutan: Murat."
+                "sonuc": "Halatı tutan: Murat. (s1)"
               }
             },
             {
@@ -9700,7 +9703,7 @@
                     "ipucu": "Hukuk eğitimli, masa başı eli. Uzun ince parmak."
                   }
                 ],
-                "sonuc": "Vazoyu tutan: Tarık."
+                "sonuc": "Vazoyu tutan: Tarık. (s1)"
               },
               "grid_effect": "s1_tarik + w2_vazo = ✓. s2 ve s3 için w2 = ✗.",
               "deductionHint": "Tarık vazoyu tuttu → w2_vazo + l1_kutuphane = Tarık'ın çifti."
@@ -9947,7 +9950,7 @@
                     "ipucu": "Şişman parmak, bastırma izi belirgin."
                   }
                 ],
-                "sonuc": "Sabunluk parçasını tutan: Fikri Bey."
+                "sonuc": "Sabunluk parçasını tutan: Fikri Bey. (s1)"
               },
               "grid_effect": "s1_fikri + w2_sabunluk = ✓. s2 ve s3 için w2 = ✗.",
               "deductionHint": "Fikri sabunluğu tuttu → soyunma odası uyuşuyor."
@@ -10136,7 +10139,7 @@
                     "ipucu": "Çırak eli — defalarca bu aleti tutan, aşina parmak."
                   }
                 ],
-                "sonuc": "Terazi kefesini tutan: Ferdi."
+                "sonuc": "Terazi kefesini tutan: Ferdi. (s1)"
               },
               "grid_effect": "s1_ferdi + w1_terazi = ✓. s2 ve s3 için w1 = ✗.",
               "deductionHint": "Ferdi + terazi + vitrin = tam çözüm."
@@ -10368,7 +10371,7 @@
                     "ipucu": "İş adamı eli — güçlü kavrayış, yüzük izi var."
                   }
                 ],
-                "sonuc": "Manken ayağını tutan: Bülent."
+                "sonuc": "Manken ayağını tutan: Bülent. (s2)"
               },
               "grid_effect": "s2_bulent + w2_manken = ✓. s1 ve s3 için w2 = ✗.",
               "deductionHint": "Bülent + manken + ofis. Hande için kalan: w1_makas + l1_atolye."
@@ -10589,7 +10592,7 @@
                     "ipucu": "Kâğıt çalışan parmak — ince ve uzun. Aletten alışılmamış kavrayış."
                   }
                 ],
-                "sonuc": "Şömine demirini tutan: Selim."
+                "sonuc": "Şömine demirini tutan: Selim. (s1)"
               },
               "grid_effect": "s1_selim + w1_somine = ✓. s2 ve s3 için w1 = ✗.",
               "deductionHint": "Selim + şömine demiri + oturma odası = Selim'in çifti."
@@ -10941,7 +10944,7 @@
                     "ipucu": "Kalem tutan parmaklar — gazeteci eli. Aletten alışılmamış kavrayış."
                   }
                 ],
-                "sonuc": "Kancayı tutan: Mert."
+                "sonuc": "Kancayı tutan: Mert. (s4)"
               },
               "grid_effect": "s4_mert + w4_kanca = ✓. s1, s2, s3 için w4 = ✗.",
               "deductionHint": "Gazeteci Mert + Çelik Kanca. Peki bu kanca teknenin neresindeydi?"
@@ -11034,7 +11037,7 @@
                     "ipucu": "İş adamı eli — güçlü kavrayış, şiddetli baskı izi."
                   }
                 ],
-                "sonuc": "Feneri tutan: Kerem."
+                "sonuc": "Feneri tutan: Kerem. (s1)"
               },
               "grid_effect": "s1_kerem + w3_fener = ✓ kesin. Tüm ızgara doldu.",
               "deductionHint": "Kerem + Deniz Feneri + Ön Güverte = Kusursuz Cinayet."
@@ -11254,7 +11257,7 @@
                     "ipucu": "Medyacı eli — ince ve bakımlı parmaklar."
                   }
                 ],
-                "sonuc": "Termosu açan: Ezgi."
+                "sonuc": "Termosu açan: Ezgi. (s4)"
               },
               "grid_effect": "s4_ezgi + w2_kahve = ✓. s1, s2, s3 için w2 = ✗.",
               "deductionHint": "Ezgi + Zehirli Kahve Termosu. Artık Ezgi tamamen elendi."
@@ -11540,7 +11543,7 @@
                     "ipucu": "Belge imzalamaya alışmış düzgün parmaklar."
                   }
                 ],
-                "sonuc": "Çay kabını açan: Sevcan."
+                "sonuc": "Çay kabını açan: Sevcan. (s4)"
               },
               "grid_effect": "s4_sevcan + w3_cay = ✓ kesin. s1, s2, s3 için w3 = ✗.",
               "deductionHint": "Sevcan + Zehirli Çay. Sigortacı aradan çekildi."
@@ -11928,7 +11931,7 @@
                     "ipucu": "Profesör eli — yıllarca lab çalışması. Kimyasal temas alışkanlığı."
                   }
                 ],
-                "sonuc": "Dolap kapağını tutan: Nilüfer."
+                "sonuc": "Dolap kapağını tutan: Nilüfer. (s2)"
               },
               "grid_effect": "s2_nilufer + w3_dolap = ✓. s1, s3, s4 için w3 = ✗.",
               "deductionHint": "Prof. Nilüfer + Eczane Dolap Kapağı. Profesör elendi."
@@ -12202,7 +12205,7 @@
                     "ipucu": "Sahne pratiğine alışmış güçlü el — ama uzman değil, zorlamayla döndürmüş."
                   }
                 ],
-                "sonuc": "Rigging kolunu döndüren: Luna."
+                "sonuc": "Rigging kolunu döndüren: Luna. (s2)"
               },
               "grid_effect": "s2_luna + w4_rigging = ✓. s1, s3, s4 için w4 = ✗.",
               "deductionHint": "Başrol Sanatçısı Luna + Rigging Montaj Kolu."
@@ -12554,7 +12557,7 @@
                     "ipucu": "Siyasetçi eli — güçlü kavrayış ama aletten alışılmamış, zorlamayla döndürmüş."
                   }
                 ],
-                "sonuc": "Vanayı açan: Taner."
+                "sonuc": "Vanayı açan: Taner. (s3)"
               },
               "grid_effect": "s3_taner + w4_gaz = ✓. s1, s2, s4 için w4 = ✗.",
               "deductionHint": "Valf üzerindeki iz, Taner'in oraya sadece bakmak için girmediğini kanıtlıyor."
@@ -12665,7 +12668,7 @@
                     "ipucu": "Kâğıt ve mürekkebe alışmış ince arşivci parmakları."
                   }
                 ],
-                "sonuc": "Ansiklopediyi tutan: Hayriye."
+                "sonuc": "Ansiklopediyi tutan: Hayriye. (s1)"
               },
               "grid_effect": "s1_hayriye + w1_ansiklopedi = ✓. s2, s3, s4 için w1 = ✗.",
               "deductionHint": "Hayriye Hanım + Ağır Ansiklopedi. Hayriye tamamen elendi."
@@ -12993,7 +12996,7 @@
                     "ipucu": "Diplomat eli — defalarca bu çantayı taşımış, aşinalık izi belirgin."
                   }
                 ],
-                "sonuc": "Çantayı tutan: Mehmet."
+                "sonuc": "Çantayı tutan: Mehmet. (s1)"
               },
               "grid_effect": "s1_mehmet + w1_canta = ✓. s2, s3, s4 için w1 = ✗.",
               "deductionHint": "Mehmet Bey + Evrak Çantası + Toplantı Salonu. Mehmet Bey tamamen elendi."
@@ -13369,7 +13372,7 @@
                     "ipucu": "Mühendis eli — defalarca bu tip boru tutmuş, aşina kavrayış."
                   }
                 ],
-                "sonuc": "Boruyu tutan: Füsun."
+                "sonuc": "Boruyu tutan: Füsun. (s2)"
               },
               "grid_effect": "s2_fusun + w3_boru = ✓. s1, s3, s4 için w3 = ✗.",
               "deductionHint": "Füsun + Demir Boru + Mühendis Ofisi. Füsun elendi."
@@ -13740,7 +13743,7 @@
                     "ipucu": "20 yıldır bu aleti kullanan sekreter eli — alışkanlık izi belirgin."
                   }
                 ],
-                "sonuc": "Bıçağı tutan: Nurdan."
+                "sonuc": "Bıçağı tutan: Nurdan. (s2)"
               },
               "grid_effect": "s2_nurdan + w2_bicak = ✓. s1, s3, s4 için w2 = ✗.",
               "deductionHint": "Nurdan + Kağıt Bıçağı + Sekreterya. Nurdan tamamen elendi."
@@ -14116,7 +14119,7 @@
                     "ipucu": "Teknoloji işadamı eli — ince ve bakımlı parmaklar."
                   }
                 ],
-                "sonuc": "Plaketi tutan: Altan."
+                "sonuc": "Plaketi tutan: Altan. (s1)"
               },
               "grid_effect": "s1_altan + w1_plaket = ✓. s2, s3, s4 için w1 = ✗.",
               "deductionHint": "Altan + Cam Plaket + Toplantı Odası. Altan tamamen elendi."

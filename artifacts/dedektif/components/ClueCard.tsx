@@ -292,7 +292,8 @@ function ParmakIziBlock({
   const handleConfirm = () => {
     if (!selected) return;
     const iz = parmakIziVerisi.izler.find((i) => i.izId === selected);
-    if (iz && parmakIziVerisi.sonuc.includes(iz.eslesme)) {
+    const sonuc = parmakIziVerisi.sonuc ?? "";
+    if (iz && sonuc.includes(iz.eslesme)) {
       onSolve();
     } else {
       setWrongAttempt(true);
