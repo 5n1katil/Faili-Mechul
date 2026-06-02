@@ -406,22 +406,19 @@ function ParmakIziBlock({
       <View style={styles.fpSuspectGrid}>
         {suspects.map((suspect) => {
           const isSelected = selected === suspect.id;
-          const suspectImg = suspect.parmakIziDeseni ? FINGERPRINT_IMAGES[suspect.parmakIziDeseni] : null;
           return (
             <Pressable
               key={suspect.id}
               onPress={() => handleSelect(suspect.id)}
               style={[styles.fpSuspectCard, isSelected && styles.fpSuspectCardSelected]}
             >
-              <View style={styles.fpSuspectImgFrame}>
-                {suspectImg ? (
-                  <Image source={suspectImg} style={styles.fpSuspectImage} />
-                ) : (
-                  <MaterialIcons name="fingerprint" size={38} color={isSelected ? "#f97316" : "#374151"} />
-                )}
-              </View>
-              <Text style={[styles.fpSuspectName, isSelected && { color: "#f97316" }]} numberOfLines={1}>
-                {suspect.name.split(" ").slice(-1)[0]}
+              <MaterialIcons
+                name="person"
+                size={20}
+                color={isSelected ? "#f97316" : "#64748b"}
+              />
+              <Text style={[styles.fpSuspectName, isSelected && { color: "#f97316" }]} numberOfLines={2}>
+                {suspect.name}
               </Text>
             </Pressable>
           );
@@ -1590,7 +1587,6 @@ const styles = StyleSheet.create({
   fpSceneImage: {
     width: 100,
     height: 100,
-    tintColor: "#f97316",
   },
   fpSceneOverlay: {
     ...StyleSheet.absoluteFillObject,
@@ -1610,37 +1606,23 @@ const styles = StyleSheet.create({
   },
   fpSuspectCard: {
     flex: 1,
-    minWidth: 72,
-    maxWidth: 90,
+    minWidth: 80,
     alignItems: "center",
     backgroundColor: "#0F1117",
     borderRadius: 8,
     borderWidth: 1,
     borderColor: "#f9731620",
-    padding: 8,
-    gap: 5,
+    paddingVertical: 10,
+    paddingHorizontal: 8,
+    gap: 4,
   },
   fpSuspectCardSelected: {
     borderColor: "#f97316",
     backgroundColor: "#f9731615",
   },
-  fpSuspectImgFrame: {
-    width: 52,
-    height: 52,
-    borderRadius: 6,
-    backgroundColor: "#1a1000",
-    alignItems: "center",
-    justifyContent: "center",
-    overflow: "hidden",
-  },
-  fpSuspectImage: {
-    width: 48,
-    height: 48,
-    tintColor: "#e2e8f0",
-  },
   fpSuspectName: {
-    fontSize: 10,
-    fontWeight: "700",
+    fontSize: 11,
+    fontWeight: "600",
     color: "#94a3b8",
     textAlign: "center",
   },

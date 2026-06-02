@@ -187,6 +187,7 @@ function EntityLabel({
   description: string;
   type: "suspect" | "weapon" | "location";
   suspectPortrait?: SuspectPortraitKey;
+  parmakIziDeseni?: string;
   cellSize: number;
   labelWidth: number;
   onHeaderPress?: (entity: EntityInfo) => void;
@@ -214,6 +215,7 @@ function EntityLabel({
       description,
       icon,
       ...(type === "suspect" && suspectPortrait ? { suspectPortrait } : {}),
+      ...(type === "suspect" && parmakIziDeseni ? { parmakIziDeseni } : {}),
     });
   };
 
@@ -463,6 +465,7 @@ export default function DetectiveGrid({
                 name={s.name} color={SUSPECT_COLOR} bg={SUSPECT_BG}
                 entityId={s.id} description={s.description} type="suspect"
                 suspectPortrait={suspectPortraitMap[s.id]}
+                parmakIziDeseni={(s as any).parmakIziDeseni}
                 cellSize={cellSize} labelWidth={labelWidth}
                 onHeaderPress={onHeaderPress} isRowLabel={false}
               />

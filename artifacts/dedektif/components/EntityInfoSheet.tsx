@@ -1,5 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
+  Image,
   Modal,
   Pressable,
   StyleSheet,
@@ -29,7 +30,21 @@ export interface EntityInfo {
   description: string;
   icon: string;
   suspectPortrait?: SuspectPortraitKey;
+  parmakIziDeseni?: string;
 }
+
+const FINGERPRINT_IMAGES: Record<string, ReturnType<typeof require>> = {
+  fp_whorl: require("../assets/images/fingerprints/fp_whorl.png"),
+  fp_loop_right: require("../assets/images/fingerprints/fp_loop_right.png"),
+  fp_loop_left: require("../assets/images/fingerprints/fp_loop_left.png"),
+  fp_arch: require("../assets/images/fingerprints/fp_arch.png"),
+  fp_tented_arch: require("../assets/images/fingerprints/fp_tented_arch.png"),
+  fp_double_loop: require("../assets/images/fingerprints/fp_double_loop.png"),
+  fp_central_pocket: require("../assets/images/fingerprints/fp_central_pocket.png"),
+  fp_lateral_pocket: require("../assets/images/fingerprints/fp_lateral_pocket.png"),
+  fp_accidental: require("../assets/images/fingerprints/fp_accidental.png"),
+  fp_peacock: require("../assets/images/fingerprints/fp_peacock.png"),
+};
 
 interface Props {
   visible: boolean;
@@ -70,6 +85,7 @@ export default function EntityInfoSheet({ visible, entity, onClose }: Props) {
   const colors = useColors();
   const translateY = useSharedValue(400);
   const opacity = useSharedValue(0);
+  const [showFpModal, setShowFpModal] = useState(false);
 
   useEffect(() => {
     if (visible) {
@@ -157,6 +173,16 @@ export default function EntityInfoSheet({ visible, entity, onClose }: Props) {
             <Text style={[styles.hintText, { color: colors.mutedForeground }]}>{config.hint}</Text>
           </View>
 
+          {entity.type === "suspect" && entity.parmakIziDeseni && FINGERPRINT_IMAGES[entity.parmakIziDeseni] && (
+            <Pressable
+              style={styles.fpBtn}
+              onPress={() => setShowFpModal(true)}
+            >
+              <MaterialIcons name="fingerprint" size={16} color="#f97316" />
+              <Text style={styles.fpBtnText}>Parmak İzini İncele</Text>
+            </Pressable>
+          )}
+
           <View style={[styles.divider, { backgroundColor: colors.border }]} />
 
           <Pressable
@@ -168,6 +194,38 @@ export default function EntityInfoSheet({ visible, entity, onClose }: Props) {
           </Pressable>
         </Animated.View>
       </View>
+
+      {entity.parmakIziDeseni && FINGERPRINT_IMAGES[entity.parmakIziDeseni] && (
+        <Modal
+          visible={showFpModal}
+          transparent
+          animationType="fade"
+          onRequestClose={() => setShowFpModal(false)}
+          statusBarTranslucent
+        >
+          <View style={styles.fpModalOverlay}>
+            <Pressable style={StyleSheet.absoluteFill} onPress={() => setShowFpModal(false)} />
+            <View style={styles.fpModalCard}>
+              <View style={styles.fpModalHeader}>
+                <MaterialIcons name="fingerprint" size={16} color="#f97316" />
+                <Text style={styles.fpModalTitle}>PARMAK İZİ PROFİLİ</Text>
+              </View>
+              <Text style={styles.fpModalName}>{entity.name}</Text>
+              <View style={styles.fpModalImgFrame}>
+                <Image
+                  source={FINGERPRINT_IMAGES[entity.parmakIziDeseni]}
+                  style={styles.fpModalImage}
+                  resizeMode="contain"
+                />
+              </View>
+              <Pressable style={styles.fpModalClose} onPress={() => setShowFpModal(false)}>
+                <MaterialIcons name="close" size={16} color="#64748b" />
+                <Text style={styles.fpModalCloseText}>Kapat</Text>
+              </Pressable>
+            </View>
+          </View>
+        </Modal>
+      )}
     </Modal>
   );
 }
@@ -267,5 +325,89 @@ const styles = StyleSheet.create({
   closeBtnText: {
     fontSize: 13,
     fontWeight: "600",
+  },
+  fpBtn: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+    alignSelf: "stretch",
+    backgroundColor: "#1a0d00",
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "#f9731640",
+    paddingVertical: 11,
+    paddingHorizontal: 16,
+  },
+  fpBtnText: {
+    fontSize: 13,
+    fontWeight: "700",
+    color: "#f97316",
+  },
+  fpModalOverlay: {
+    flex: 1,
+    backgroundColor: "rgba(0,0,0,0.85)",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 24,
+  },
+  fpModalCard: {
+    backgroundColor: "#1A1F2E",
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: "#f9731640",
+    padding: 24,
+    alignItems: "center",
+    gap: 12,
+    width: "100%",
+    maxWidth: 340,
+  },
+  fpModalHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+  },
+  fpModalTitle: {
+    fontSize: 10,
+    fontWeight: "800",
+    color: "#f97316",
+    letterSpacing: 2,
+  },
+  fpModalName: {
+    fontSize: 15,
+    fontWeight: "700",
+    color: "#e2e8f0",
+    textAlign: "center",
+  },
+  fpModalImgFrame: {
+    width: 240,
+    height: 240,
+    borderRadius: 12,
+    backgroundColor: "#000",
+    borderWidth: 1,
+    borderColor: "#f9731630",
+    overflow: "hidden",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  fpModalImage: {
+    width: 220,
+    height: 220,
+  },
+  fpModalClose: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+    paddingHorizontal: 20,
+    paddingVertical: 9,
+    borderRadius: 10,
+    backgroundColor: "#0F1117",
+    borderWidth: 1,
+    borderColor: "#334155",
+    marginTop: 4,
+  },
+  fpModalCloseText: {
+    fontSize: 13,
+    fontWeight: "600",
+    color: "#64748b",
   },
 });
