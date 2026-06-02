@@ -301,6 +301,12 @@ function ParmakIziBlock({
 
   const scenePattern = parmakIziVerisi.sahneGorseli;
   const sceneImage = scenePattern ? FINGERPRINT_IMAGES[scenePattern] : null;
+  const matchedSuspectId = scenePattern
+    ? parmakIziVerisi.izler.find((iz) => iz.eslesme)?.eslesme ?? null
+    : null;
+  const matchedSuspect = matchedSuspectId
+    ? suspects.find((s) => s.id === matchedSuspectId) ?? null
+    : null;
 
   const handleSelect = (suspectId: string) => {
     if (isSolved) return;
@@ -337,6 +343,13 @@ function ParmakIziBlock({
       <View style={styles.miniGameSolvedBlock}>
         <MaterialIcons name="check-circle" size={20} color="#22c55e" />
         <Text style={styles.miniGameSolvedText}>Parmak İzi Eşleşti!</Text>
+        {scenePattern && matchedSuspect && (
+          <Text style={styles.fpMiniStory}>
+            {"Yapılan detaylı incelemeler sonucunda kısmi parmak izinin "}
+            <Text style={styles.fpMiniStoryBold}>{matchedSuspect.name}</Text>
+            {"'a ait olduğu tespit edilmiştir."}
+          </Text>
+        )}
         <Text style={styles.miniGameAciklama}>{parmakIziVerisi.sonuc}</Text>
       </View>
     );
@@ -388,7 +401,7 @@ function ParmakIziBlock({
       <Text style={styles.parmakIziAciklama}>{parmakIziVerisi.aciklama}</Text>
 
       <View style={styles.fpSceneContainer}>
-        <Text style={styles.fpSceneLabel}>⬛ OLAY YERİ İZİ</Text>
+        <Text style={styles.fpSceneLabel}>Olay yerinden alınan kısmi parmak izi</Text>
         <View style={styles.fpSceneFrame}>
           {sceneImage ? (
             <Image source={sceneImage} style={styles.fpSceneImage} />
@@ -1729,6 +1742,19 @@ const styles = StyleSheet.create({
     color: "#22c55eaa",
     lineHeight: 17,
     textAlign: "center",
+  },
+  fpMiniStory: {
+    fontSize: 12,
+    color: "#cbd5e1",
+    lineHeight: 18,
+    textAlign: "center",
+    fontStyle: "italic",
+    paddingHorizontal: 8,
+  },
+  fpMiniStoryBold: {
+    fontWeight: "700",
+    fontStyle: "normal",
+    color: "#f97316",
   },
   faceMatchBlock: {
     backgroundColor: "#110a1a",

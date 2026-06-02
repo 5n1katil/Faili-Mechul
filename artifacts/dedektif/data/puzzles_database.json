@@ -285,7 +285,7 @@
               "text": "Çarşının ana kapı bekçileri, sabah dükkanını açan komşu esnafın, maktulün dükkanındaki gizli bölmelerin varlığından bile haberdar olmadığını, sadece kendi vitriniyle ilgilendiğini doğruladı.",
               "type": "tanik",
               "mechanicType": "text",
-              "revealOrder": 4,
+              "revealOrder": 5,
               "isRevealed": false,
               "pointCost": 60,
               "title": "Bekçi Tutanakları",
@@ -309,7 +309,7 @@
                 "sonuc": "Vazo yalnızca çırağın parmak izlerini taşıyor. (s2)",
                 "sahneGorseli": "fp_loop_left"
               },
-              "revealOrder": 5,
+              "revealOrder": 4,
               "isRevealed": false,
               "pointCost": 60,
               "title": "Parmak İzi Raporu",
@@ -2004,7 +2004,7 @@
             {
               "id": "c4",
               "type": "adli",
-              "revealOrder": 4,
+              "revealOrder": 5,
               "isRevealed": false,
               "pointCost": 60,
               "title": "PIN Kodu Kırılması",
@@ -2015,7 +2015,7 @@
             {
               "id": "c5",
               "type": "parmak_izi",
-              "revealOrder": 5,
+              "revealOrder": 4,
               "isRevealed": false,
               "pointCost": 60,
               "title": "LEXIS'in Dijital Alibisi",
@@ -10934,7 +10934,7 @@
             {
               "id": "c4",
               "type": "dna_match",
-              "revealOrder": 4,
+              "revealOrder": 6,
               "isRevealed": false,
               "pointCost": 70,
               "title": "Viski Bardağı DNA",
@@ -10997,7 +10997,7 @@
             {
               "id": "c6",
               "type": "parmak_izi",
-              "revealOrder": 6,
+              "revealOrder": 4,
               "isRevealed": false,
               "pointCost": 70,
               "title": "Tekne Kancası İzi",
