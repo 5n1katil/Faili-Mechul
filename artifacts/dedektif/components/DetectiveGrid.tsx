@@ -174,6 +174,7 @@ function EntityLabel({
   description,
   type,
   suspectPortrait,
+  parmakIziDeseni,
   cellSize,
   labelWidth,
   onHeaderPress,
