@@ -281,17 +281,6 @@
               "deductionHint": "Yabancı misafir olay saatinde otelinden hiç ayrılmamış."
             },
             {
-              "id": "c4",
-              "text": "Çarşının ana kapı bekçileri, sabah dükkanını açan komşu esnafın, maktulün dükkanındaki gizli bölmelerin varlığından bile haberdar olmadığını, sadece kendi vitriniyle ilgilendiğini doğruladı.",
-              "type": "tanik",
-              "mechanicType": "text",
-              "revealOrder": 5,
-              "isRevealed": false,
-              "pointCost": 60,
-              "title": "Bekçi Tutanakları",
-              "deductionHint": "Komşu esnaf kilitli gizli odaya nasıl girileceğini veya nerede olduğunu bilmiyor."
-            },
-            {
               "id": "c5",
               "text": "Cinayet silahı olarak kullanılan o devasa metalin sapında, sadece mekanik aksamları ve rafları yağlamakla görevli olan, sürekli makine yağı kokan ellere ait taze doku izleri parlıyordu.",
               "type": "parmak_izi",
@@ -314,6 +303,17 @@
               "pointCost": 60,
               "title": "Parmak İzi Raporu",
               "deductionHint": "Ağır tunç vazo, sadece dükkanda fiziksel iş yapan yağlı ellerin izini taşıyor."
+            },
+            {
+              "id": "c4",
+              "text": "Çarşının ana kapı bekçileri, sabah dükkanını açan komşu esnafın, maktulün dükkanındaki gizli bölmelerin varlığından bile haberdar olmadığını, sadece kendi vitriniyle ilgilendiğini doğruladı.",
+              "type": "tanik",
+              "mechanicType": "text",
+              "revealOrder": 5,
+              "isRevealed": false,
+              "pointCost": 60,
+              "title": "Bekçi Tutanakları",
+              "deductionHint": "Komşu esnaf kilitli gizli odaya nasıl girileceğini veya nerede olduğunu bilmiyor."
             },
             {
               "id": "c6",
@@ -2002,17 +2002,6 @@
               "deductionHint": "Lobici Viktor, hakimin odasına bir madde bıraktı."
             },
             {
-              "id": "c4",
-              "type": "adli",
-              "revealOrder": 5,
-              "isRevealed": false,
-              "pointCost": 60,
-              "title": "PIN Kodu Kırılması",
-              "text": "Hakimin şifreli masasında bulunan ve lobicinin bıraktığı dijital kasanın şifresi, şirket rüşvetinin miktarını sayısal bir bulmacaya gizlemişti.",
-              "mechanicType": "text",
-              "deductionHint": "Şifre çözüldüğünde silahın Viktor'a ait olduğu kesinleşti."
-            },
-            {
               "id": "c5",
               "type": "parmak_izi",
               "revealOrder": 4,
@@ -2035,6 +2024,17 @@
                 "sahneGorseli": "fp_arch"
               },
               "deductionHint": "YZ Avukat fiziksel olarak cinayet mahallinde bulunamazdı."
+            },
+            {
+              "id": "c4",
+              "type": "adli",
+              "revealOrder": 5,
+              "isRevealed": false,
+              "pointCost": 60,
+              "title": "PIN Kodu Kırılması",
+              "text": "Hakimin şifreli masasında bulunan ve lobicinin bıraktığı dijital kasanın şifresi, şirket rüşvetinin miktarını sayısal bir bulmacaya gizlemişti.",
+              "mechanicType": "text",
+              "deductionHint": "Şifre çözüldüğünde silahın Viktor'a ait olduğu kesinleşti."
             },
             {
               "id": "c6",
@@ -10932,6 +10932,43 @@
               "deductionHint": "Kaptan + Pürüzlü Halat + Navigasyon Köşkü. Yusuf elendi."
             },
             {
+              "id": "c6",
+              "type": "parmak_izi",
+              "revealOrder": 4,
+              "isRevealed": false,
+              "pointCost": 70,
+              "title": "Tekne Kancası İzi",
+              "text": "Keskin ve kavisli çelik balıkçı aletinin sapındaki terli avuç içi izi, sürekli not almaktan parmakları nasırlaşmış o araştırmacı gazetecinin profiliyle birebir eşleşiyordu.",
+              "mechanicType": "parmak_izi",
+              "parmakIziVerisi": {
+                "aciklama": "Kancadaki izi dört şüpheliyle eşleştir.",
+                "izler": [
+                  {
+                    "izId": "iz1",
+                    "konum": "Kanca sapı",
+                    "eslesme": "s4",
+                    "ipucu": "Kalem tutan parmaklar — gazeteci eli. Aletten alışılmamış kavrayış."
+                  }
+                ],
+                "sonuc": "Kancayı tutan: Mert. (s4)",
+                "sahneGorseli": "fp_arch"
+              },
+              "grid_effect": "s4_mert + w4_kanca = ✓. s1, s2, s3 için w4 = ✗.",
+              "deductionHint": "Gazeteci Mert + Çelik Kanca. Peki bu kanca teknenin neresindeydi?"
+            },
+            {
+              "id": "c5",
+              "type": "eleme",
+              "revealOrder": 5,
+              "isRevealed": false,
+              "pointCost": 70,
+              "title": "Pınar'ın Salon Konumu",
+              "text": "Finans direktörünün yüksek topuklu ayakkabılarının bıraktığı izler, sadece kalın Hereke halılarıyla kaplı ve lüks içeceklerin servis edildiği o klimalı alanın sınırları içinde kalmıştı.",
+              "grid_effect": "s3_pinar + l3_salon = ✓ kesin. s3 için l1, l2, l4 = ✗.",
+              "mechanicType": "text",
+              "deductionHint": "Pınar salonda izole oldu. Mert ve Kerem'in konumları hala belirsiz."
+            },
+            {
               "id": "c4",
               "type": "dna_match",
               "revealOrder": 6,
@@ -10981,43 +11018,6 @@
               },
               "grid_effect": "s3_pinar + w2_viski = ✓. s1, s2, s4 için w2 = ✗. s3 + l3_salon = ✓ (bar bağlantısı).",
               "deductionHint": "Pınar + Zehirli Viski Bardağı. Mekanı neresiydi?"
-            },
-            {
-              "id": "c5",
-              "type": "eleme",
-              "revealOrder": 5,
-              "isRevealed": false,
-              "pointCost": 70,
-              "title": "Pınar'ın Salon Konumu",
-              "text": "Finans direktörünün yüksek topuklu ayakkabılarının bıraktığı izler, sadece kalın Hereke halılarıyla kaplı ve lüks içeceklerin servis edildiği o klimalı alanın sınırları içinde kalmıştı.",
-              "grid_effect": "s3_pinar + l3_salon = ✓ kesin. s3 için l1, l2, l4 = ✗.",
-              "mechanicType": "text",
-              "deductionHint": "Pınar salonda izole oldu. Mert ve Kerem'in konumları hala belirsiz."
-            },
-            {
-              "id": "c6",
-              "type": "parmak_izi",
-              "revealOrder": 4,
-              "isRevealed": false,
-              "pointCost": 70,
-              "title": "Tekne Kancası İzi",
-              "text": "Keskin ve kavisli çelik balıkçı aletinin sapındaki terli avuç içi izi, sürekli not almaktan parmakları nasırlaşmış o araştırmacı gazetecinin profiliyle birebir eşleşiyordu.",
-              "mechanicType": "parmak_izi",
-              "parmakIziVerisi": {
-                "aciklama": "Kancadaki izi dört şüpheliyle eşleştir.",
-                "izler": [
-                  {
-                    "izId": "iz1",
-                    "konum": "Kanca sapı",
-                    "eslesme": "s4",
-                    "ipucu": "Kalem tutan parmaklar — gazeteci eli. Aletten alışılmamış kavrayış."
-                  }
-                ],
-                "sonuc": "Kancayı tutan: Mert. (s4)",
-                "sahneGorseli": "fp_arch"
-              },
-              "grid_effect": "s4_mert + w4_kanca = ✓. s1, s2, s3 için w4 = ✗.",
-              "deductionHint": "Gazeteci Mert + Çelik Kanca. Peki bu kanca teknenin neresindeydi?"
             },
             {
               "id": "c7",
