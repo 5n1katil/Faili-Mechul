@@ -156,6 +156,7 @@ interface GameContextType {
   addBonusPoints: (points: number) => void;
   resetCurrentGame: () => void;
   tickTimer: () => void;
+  addTimePenalty: (seconds: number) => void;
 }
 
 const GameContext = createContext<GameContextType | null>(null);
@@ -804,6 +805,15 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     });
   }, []);
 
+  const addTimePenalty = useCallback((seconds: number) => {
+    setGameState((prev) => {
+      if (!prev || prev.isComplete) return prev;
+      const next = { ...prev, timeElapsed: prev.timeElapsed + seconds };
+      saveDraft(next);
+      return next;
+    });
+  }, []);
+
   return (
     <GameContext.Provider
       value={{
@@ -827,6 +837,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         addBonusPoints,
         resetCurrentGame,
         tickTimer,
+        addTimePenalty,
       }}
     >
       {children}

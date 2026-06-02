@@ -11,6 +11,10 @@ import { useColors } from "@/hooks/useColors";
 import { getDifficultyColor, getDifficultyLabel, type Difficulty } from "@/data/puzzles";
 import type { Puzzle } from "@/data/puzzles";
 
+function hasFingerprintClue(puzzle: Puzzle): boolean {
+  return puzzle.clues.some((c) => c.mechanicType === "parmak_izi");
+}
+
 interface Props {
   visible: boolean;
   puzzle: Puzzle;
@@ -82,6 +86,16 @@ export default function PuzzleStartModal({ visible, puzzle, isRanked, onStart, o
                 : "Bu bulmacayı daha önce çözdünüz. Bu oynayış liderlik sıralamanızı etkilemez."}
             </Text>
           </View>
+
+          {hasFingerprintClue(puzzle) && (
+            <View style={styles.fpWarningBox}>
+              <MaterialIcons name="fingerprint" size={16} color="#f97316" />
+              <Text style={styles.fpWarningText}>
+                Bu vakada parmak izi karşılaştırması var. Yanlış eşleşme seçerseniz{" "}
+                <Text style={{ fontWeight: "800" }}>−30 saniye</Text> ceza uygulanır (normal hata cezasından farklıdır).
+              </Text>
+            </View>
+          )}
 
           {isRanked && (
             <Text style={[styles.ruleText, { color: colors.mutedForeground }]}>
@@ -209,6 +223,24 @@ const styles = StyleSheet.create({
     fontSize: 12,
     lineHeight: 18,
     textAlign: "center",
+  },
+  fpWarningBox: {
+    width: "100%",
+    flexDirection: "row",
+    alignItems: "flex-start",
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "#f9731644",
+    backgroundColor: "#1a100088",
+    padding: 12,
+    gap: 8,
+  },
+  fpWarningText: {
+    flex: 1,
+    fontSize: 12,
+    fontWeight: "600",
+    lineHeight: 18,
+    color: "#fdba74",
   },
   buttons: { width: "100%", gap: 10 },
   startBtn: {

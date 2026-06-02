@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import type { ComponentProps } from "react";
-import { Alert, Platform, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import { Alert, Image, Platform, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
+import { useGame } from "@/context/GameContext";
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -21,6 +22,19 @@ import type {
 } from "@/data/puzzles";
 
 type MaterialIconName = ComponentProps<typeof MaterialIcons>["name"];
+
+const FINGERPRINT_IMAGES: Record<string, ReturnType<typeof require>> = {
+  fp_whorl: require("../assets/images/fingerprints/fp_whorl.png"),
+  fp_loop_right: require("../assets/images/fingerprints/fp_loop_right.png"),
+  fp_loop_left: require("../assets/images/fingerprints/fp_loop_left.png"),
+  fp_arch: require("../assets/images/fingerprints/fp_arch.png"),
+  fp_tented_arch: require("../assets/images/fingerprints/fp_tented_arch.png"),
+  fp_double_loop: require("../assets/images/fingerprints/fp_double_loop.png"),
+  fp_central_pocket: require("../assets/images/fingerprints/fp_central_pocket.png"),
+  fp_lateral_pocket: require("../assets/images/fingerprints/fp_lateral_pocket.png"),
+  fp_accidental: require("../assets/images/fingerprints/fp_accidental.png"),
+  fp_peacock: require("../assets/images/fingerprints/fp_peacock.png"),
+};
 
 interface Props {
   clue: Clue;
@@ -280,24 +294,41 @@ function ParmakIziBlock({
   isSolved: boolean;
   onSolve: () => void;
 }) {
+  const { gameState, addTimePenalty } = useGame();
+  const suspects = gameState?.puzzle?.suspects ?? [];
   const [selected, setSelected] = useState<string | null>(null);
   const [wrongAttempt, setWrongAttempt] = useState(false);
 
-  const handleSelect = (izId: string) => {
+  const scenePattern = parmakIziVerisi.sahneGorseli;
+  const sceneImage = scenePattern ? FINGERPRINT_IMAGES[scenePattern] : null;
+
+  const handleSelect = (suspectId: string) => {
     if (isSolved) return;
-    setSelected(izId);
+    setSelected(suspectId);
     setWrongAttempt(false);
   };
 
   const handleConfirm = () => {
     if (!selected) return;
-    const iz = parmakIziVerisi.izler.find((i) => i.izId === selected);
-    const sonuc = parmakIziVerisi.sonuc ?? "";
-    if (iz && sonuc.includes(iz.eslesme)) {
-      onSolve();
+    if (scenePattern) {
+      const suspect = suspects.find((s) => s.id === selected);
+      const isCorrect = suspect?.parmakIziDeseni === scenePattern;
+      if (isCorrect) {
+        onSolve();
+      } else {
+        addTimePenalty(30);
+        setWrongAttempt(true);
+        setSelected(null);
+      }
     } else {
-      setWrongAttempt(true);
-      setSelected(null);
+      const iz = parmakIziVerisi.izler.find((i) => i.izId === selected);
+      const sonuc = parmakIziVerisi.sonuc ?? "";
+      if (iz && sonuc.includes(iz.eslesme)) {
+        onSolve();
+      } else {
+        setWrongAttempt(true);
+        setSelected(null);
+      }
     }
   };
 
@@ -311,6 +342,43 @@ function ParmakIziBlock({
     );
   }
 
+  if (!scenePattern) {
+    return (
+      <View style={styles.parmakIziBlock}>
+        <View style={styles.gorselHeader}>
+          <MaterialIcons name="fingerprint" size={14} color="#f97316" />
+          <Text style={[styles.gorselLabel, { color: "#f97316" }]}>PARMAK İZİ ANALİZİ</Text>
+        </View>
+        <Text style={styles.parmakIziAciklama}>{parmakIziVerisi.aciklama}</Text>
+        <Text style={styles.parmakIziSelectLabel}>Kanıt izini seç:</Text>
+        {parmakIziVerisi.izler.map((iz) => {
+          const isSelected = selected === iz.izId;
+          return (
+            <Pressable
+              key={iz.izId}
+              onPress={() => handleSelect(iz.izId)}
+              style={[styles.parmakIziCard, isSelected && styles.parmakIziCardSelected]}
+            >
+              <View style={styles.parmakIziCardHeader}>
+                <MaterialIcons name="fingerprint" size={16} color={isSelected ? "#f97316" : "#64748b"} />
+                <Text style={[styles.parmakIziKonum, isSelected && { color: "#f97316" }]}>{iz.konum}</Text>
+              </View>
+              <Text style={styles.parmakIziIpucu}>{iz.ipucu}</Text>
+            </Pressable>
+          );
+        })}
+        {wrongAttempt && <Text style={styles.parmakIziWrong}>Yanlış iz — tekrar dene</Text>}
+        <Pressable
+          onPress={handleConfirm}
+          disabled={!selected}
+          style={[styles.parmakIziConfirmBtn, !selected && styles.parmakIziConfirmBtnDisabled]}
+        >
+          <Text style={styles.parmakIziConfirmText}>Eşleşmeyi Onayla</Text>
+        </Pressable>
+      </View>
+    );
+  }
+
   return (
     <View style={styles.parmakIziBlock}>
       <View style={styles.gorselHeader}>
@@ -318,28 +386,50 @@ function ParmakIziBlock({
         <Text style={[styles.gorselLabel, { color: "#f97316" }]}>PARMAK İZİ ANALİZİ</Text>
       </View>
       <Text style={styles.parmakIziAciklama}>{parmakIziVerisi.aciklama}</Text>
-      <Text style={styles.parmakIziSelectLabel}>Kanıt izini seç:</Text>
-      {parmakIziVerisi.izler.map((iz) => {
-        const isSelected = selected === iz.izId;
-        return (
-          <Pressable
-            key={iz.izId}
-            onPress={() => handleSelect(iz.izId)}
-            style={[
-              styles.parmakIziCard,
-              isSelected && styles.parmakIziCardSelected,
-            ]}
-          >
-            <View style={styles.parmakIziCardHeader}>
-              <MaterialIcons name="fingerprint" size={16} color={isSelected ? "#f97316" : "#64748b"} />
-              <Text style={[styles.parmakIziKonum, isSelected && { color: "#f97316" }]}>{iz.konum}</Text>
-            </View>
-            <Text style={styles.parmakIziIpucu}>{iz.ipucu}</Text>
-          </Pressable>
-        );
-      })}
+
+      <View style={styles.fpSceneContainer}>
+        <Text style={styles.fpSceneLabel}>⬛ OLAY YERİ İZİ</Text>
+        <View style={styles.fpSceneFrame}>
+          {sceneImage ? (
+            <>
+              <Image source={sceneImage} style={styles.fpSceneImage} blurRadius={1.5} />
+              <View style={styles.fpSceneOverlay} />
+            </>
+          ) : (
+            <MaterialIcons name="fingerprint" size={72} color="#f9731650" />
+          )}
+        </View>
+        <Text style={styles.fpSceneSubLabel}>Kısmi iz — laboruvar analizi</Text>
+      </View>
+
+      <Text style={styles.parmakIziSelectLabel}>Hangi şüpheliye ait?</Text>
+      <View style={styles.fpSuspectGrid}>
+        {suspects.map((suspect) => {
+          const isSelected = selected === suspect.id;
+          const suspectImg = suspect.parmakIziDeseni ? FINGERPRINT_IMAGES[suspect.parmakIziDeseni] : null;
+          return (
+            <Pressable
+              key={suspect.id}
+              onPress={() => handleSelect(suspect.id)}
+              style={[styles.fpSuspectCard, isSelected && styles.fpSuspectCardSelected]}
+            >
+              <View style={styles.fpSuspectImgFrame}>
+                {suspectImg ? (
+                  <Image source={suspectImg} style={styles.fpSuspectImage} />
+                ) : (
+                  <MaterialIcons name="fingerprint" size={38} color={isSelected ? "#f97316" : "#374151"} />
+                )}
+              </View>
+              <Text style={[styles.fpSuspectName, isSelected && { color: "#f97316" }]} numberOfLines={1}>
+                {suspect.name.split(" ").slice(-1)[0]}
+              </Text>
+            </Pressable>
+          );
+        })}
+      </View>
+
       {wrongAttempt && (
-        <Text style={styles.parmakIziWrong}>Yanlış iz — tekrar dene</Text>
+        <Text style={styles.parmakIziWrong}>Yanlış eşleşme — 30 sn ceza uygulandı</Text>
       )}
       <Pressable
         onPress={handleConfirm}
@@ -1473,6 +1563,86 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: "700",
     color: "#0F1117",
+  },
+  fpSceneContainer: {
+    alignItems: "center",
+    marginBottom: 10,
+    gap: 6,
+  },
+  fpSceneLabel: {
+    fontSize: 10,
+    fontWeight: "700",
+    color: "#f97316",
+    letterSpacing: 1.5,
+    alignSelf: "flex-start",
+  },
+  fpSceneFrame: {
+    width: 110,
+    height: 110,
+    borderRadius: 8,
+    backgroundColor: "#0a0a0a",
+    borderWidth: 1,
+    borderColor: "#f9731640",
+    alignItems: "center",
+    justifyContent: "center",
+    overflow: "hidden",
+  },
+  fpSceneImage: {
+    width: 100,
+    height: 100,
+    tintColor: "#f97316",
+  },
+  fpSceneOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: "#0F111780",
+  },
+  fpSceneSubLabel: {
+    fontSize: 10,
+    color: "#64748b",
+    fontStyle: "italic",
+    alignSelf: "flex-start",
+  },
+  fpSuspectGrid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 8,
+    marginBottom: 8,
+  },
+  fpSuspectCard: {
+    flex: 1,
+    minWidth: 72,
+    maxWidth: 90,
+    alignItems: "center",
+    backgroundColor: "#0F1117",
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: "#f9731620",
+    padding: 8,
+    gap: 5,
+  },
+  fpSuspectCardSelected: {
+    borderColor: "#f97316",
+    backgroundColor: "#f9731615",
+  },
+  fpSuspectImgFrame: {
+    width: 52,
+    height: 52,
+    borderRadius: 6,
+    backgroundColor: "#1a1000",
+    alignItems: "center",
+    justifyContent: "center",
+    overflow: "hidden",
+  },
+  fpSuspectImage: {
+    width: 48,
+    height: 48,
+    tintColor: "#e2e8f0",
+  },
+  fpSuspectName: {
+    fontSize: 10,
+    fontWeight: "700",
+    color: "#94a3b8",
+    textAlign: "center",
   },
   timelineBlock: {
     backgroundColor: "#1a0a0a",

@@ -16,6 +16,7 @@ export interface Suspect {
   name: string;
   description: string;
   icon: string;
+  parmakIziDeseni?: string;
 }
 
 export interface Weapon {
@@ -121,6 +122,7 @@ export interface ClueParmakIziVerisi {
   aciklama: string;
   izler: ClueParmakIziIz[];
   sonuc: string;
+  sahneGorseli?: string;
 }
 
 export interface ClueFotoSupheli {
