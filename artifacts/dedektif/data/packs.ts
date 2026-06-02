@@ -411,15 +411,19 @@ export function adaptPackPuzzle(raw: RawPuzzle, packId: string): Puzzle {
     id: `${packId}_${raw.puzzleId}`,
     title: raw.title,
     story: raw.story,
-    suspects: raw.suspects.map((s) => ({
-      id: s.id,
-      name: s.name,
-      description: s.description,
-      // Suspect icons in puzzles_database.json are now SVG avatar ids
-      // (rewritten by scripts/assign-suspect-avatars.js) — pass through to
-      // CustomAvatar verbatim instead of remapping through MaterialIcons.
-      icon: s.icon,
-    })),
+    suspects: raw.suspects.map((s) => {
+      const base = {
+        id: s.id,
+        name: s.name,
+        description: s.description,
+        // Suspect icons in puzzles_database.json are now SVG avatar ids
+        // (rewritten by scripts/assign-suspect-avatars.js) — pass through to
+        // CustomAvatar verbatim instead of remapping through MaterialIcons.
+        icon: s.icon,
+      };
+      const parmakIziDeseni = (s as Record<string, unknown>).parmakIziDeseni as string | undefined;
+      return parmakIziDeseni ? { ...base, parmakIziDeseni } : base;
+    }),
     weapons: raw.weapons.map((w) => ({
       id: w.id,
       name: w.name,

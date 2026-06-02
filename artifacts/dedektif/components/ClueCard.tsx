@@ -391,10 +391,7 @@ function ParmakIziBlock({
         <Text style={styles.fpSceneLabel}>⬛ OLAY YERİ İZİ</Text>
         <View style={styles.fpSceneFrame}>
           {sceneImage ? (
-            <>
-              <Image source={sceneImage} style={styles.fpSceneImage} blurRadius={1.5} />
-              <View style={styles.fpSceneOverlay} />
-            </>
+            <Image source={sceneImage} style={styles.fpSceneImage} />
           ) : (
             <MaterialIcons name="fingerprint" size={72} color="#f9731650" />
           )}
