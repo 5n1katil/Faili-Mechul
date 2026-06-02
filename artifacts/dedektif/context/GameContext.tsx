@@ -448,7 +448,14 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
       gridState: draft?.gridState ?? {},
       autoCrossGroups: draft?.autoCrossGroups ?? {},
       autoCrossOwners: draft?.autoCrossOwners ?? {},
-      cluesRevealed: draft?.cluesRevealed ?? standardIndices,
+      cluesRevealed: (() => {
+        if (!draft) return standardIndices;
+        const count = puzzle.clues.length;
+        const validDraft = draft.cluesRevealed.filter(
+          (idx) => idx < count && !puzzle.clues[idx]?.isBonus
+        );
+        return [...new Set([...validDraft, ...standardIndices])];
+      })(),
       timeElapsed: draft?.timeElapsed ?? 0,
       wrongGuesses: draft?.wrongGuesses ?? 0,
       isComplete: false,
