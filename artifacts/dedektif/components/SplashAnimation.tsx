@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useRef } from "react";
 import { Dimensions, Image, Platform, StyleSheet, View } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 import * as Haptics from "expo-haptics";
 import Animated, {
   Easing,
@@ -198,9 +199,17 @@ export function SplashAnimation({ onComplete }: SplashAnimationProps) {
 
   return (
     <Animated.View style={[styles.container, containerStyle]}>
-      {/* Vignette — subtle edge darkening */}
-      <View style={styles.vignetteTop} />
-      <View style={styles.vignetteBottom} />
+      {/* Vignette — gradient fade from edges to transparent */}
+      <LinearGradient
+        colors={["rgba(0,0,0,0.55)", "transparent"]}
+        style={styles.vignetteTop}
+        pointerEvents="none"
+      />
+      <LinearGradient
+        colors={["transparent", "rgba(0,0,0,0.55)"]}
+        style={styles.vignetteBottom}
+        pointerEvents="none"
+      />
 
       {/* Main content */}
       <View style={styles.inner}>
@@ -268,20 +277,14 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    height: height * 0.18,
-    backgroundColor: "#000",
-    opacity: 0.45,
-    pointerEvents: "none",
+    height: height * 0.22,
   },
   vignetteBottom: {
     position: "absolute",
     bottom: 0,
     left: 0,
     right: 0,
-    height: height * 0.18,
-    backgroundColor: "#000",
-    opacity: 0.45,
-    pointerEvents: "none",
+    height: height * 0.22,
   },
 
   inner: {
