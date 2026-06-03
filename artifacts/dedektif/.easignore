@@ -1,0 +1,24 @@
+# Test & QA
+e2e/
+screenshots/
+test-results/
+playwright.config.ts
+
+# Dev tooling
+server/
+app_new.json
+scripts/
+
+# Agent memory (monorepo root)
+.agents/
+.local/
+
+# Other workspace packages (not needed for mobile build)
+artifacts/api-server/
+artifacts/api-spec/
+artifacts/db/
+artifacts/mockup-sandbox/
+
+# Misc
+*.log
+.DS_Store

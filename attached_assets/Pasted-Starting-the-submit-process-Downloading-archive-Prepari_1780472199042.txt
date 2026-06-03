@@ -1,0 +1,43 @@
+Starting the submit process
+Downloading archive
+Preparing artifact
+Verifying archive
+Creating ascApiJsonKey.json file with ASC credentials
+Submitting iOS app to TestFlight...
+Submitting the app with fastlane pilot
+-------------------
+--- Step: pilot ---
+-------------------
+Creating authorization token for App Store Connect API
+Ready to upload new build to TestFlight (App: 6761903755)...
+Going to upload updated app to App Store Connect
+This might take a few minutes. Please don't interrupt the script.
+[altool] 2026-06-02 13:17:55.200 *** Error: Validation failed This bundle is invalid. The value for key CFBundleShortVersionString [1.2.0] in the Info.plist file must contain a higher version than that of the previously approved version [1.2.0]. Please find more information about CFBundleShortVersionString at https://developer.apple.com/documentation/bundleresources/information_property_list/cfbundleshortversionstring (ID: d17cb11b-5de7-4ae1-b2e9-0bef79a71da1) (409)
+[altool]  {
+
+[altool]     NSLocalizedDescription = "Validation failed";
+
+[altool]     NSLocalizedFailureReason = "This bundle is invalid. The value for key CFBundleShortVersionString [1.2.0] in the Info.plist file must contain a higher version than that of the previously approved version [1.2.0]. Please find more information about CFBundleShortVersionString at https://developer.apple.com/documentation/bundleresources/information_property_list/cfbundleshortversionstring (ID: d17cb11b-5de7-4ae1-b2e9-0bef79a71da1)";
+
+[altool]     NSUnderlyingError = "Error Domain=IrisAPI Code=-19241 \"Validation failed\" UserInfo={status=409, detail=This bundle is invalid. The value for key CFBundleShortVersionString [1.2.0] in the Info.plist file must contain a higher version than that of the previously approved version [1.2.0]. Please find more information about CFBundleShortVersionString at https://developer.apple.com/documentation/bundleresources/information_property_list/cfbundleshortversionstring, id=d17cb11b-5de7-4ae1-b2e9-0bef79a71da1, code=STATE_ERROR.VALIDATION_ERROR, title=Validation failed, NSLocalizedFailureReason=This bundle is invalid. The value for key CFBundleShortVersionString [1.2.0] in the Info.plist file must contain a higher version than that of the previously approved version [1.2.0]. Please find more information about CFBundleShortVersionString at https://developer.apple.com/documentation/bundleresources/information_property_list/cfbundleshortversionstring, NSLocalizedDescription=Validation failed}";
+
+[altool]     "iris-code" = "STATE_ERROR.VALIDATION_ERROR";
+
+[altool] }
+
+Application Loader output above ^
+[ContentDelivery.Uploader.600003E84140] Validation failed (409) Invalid Pre-Release Train. The train version '1.2.0' is closed for new build submissions (ID: 4044bb3c-6922-43c2-8bb8-b92275b26986)
+[ContentDelivery.Uploader.600003E84140] Validation failed (409) This bundle is invalid. The value for key CFBundleShortVersionString [1.2.0] in the Info.plist file must contain a higher version than that of the previously approved version [1.2.0]. Please find more information about CFBundleShortVersionString at https://developer.apple.com/documentation/bundleresources/information_property_list/cfbundleshortversionstring (ID: d17cb11b-5de7-4ae1-b2e9-0bef79a71da1)
+Error uploading '/var/folders/m1/8_w9962s3b79dqm00nnlm85m0000gn/T/d7df55a9-8233-4952-9222-683920a55596.ipa'.
+Validation failed Invalid Pre-Release Train. The train version '1.2.0' is closed for new build submissions (ID: 4044bb3c-6922-43c2-8bb8-b92275b26986) (409)
+Validation failed This bundle is invalid. The value for key CFBundleShortVersionString [1.2.0] in the Info.plist file must contain a higher version than that of the previously approved version [1.2.0]. Please find more information about CFBundleShortVersionString at https://developer.apple.com/documentation/bundleresources/information_property_list/cfbundleshortversionstring (ID: d17cb11b-5de7-4ae1-b2e9-0bef79a71da1) (409)
+The call to the altool completed with a non-zero exit status: 1. This indicates a failure.
+Could not download/upload from App Store Connect!
+[!] Error uploading ipa file: 
+ [Application Loader Error Output]: [ContentDelivery.Uploader.600003E84140] Validation failed (409) Invalid Pre-Release Train. The train version '1.2.0' is closed for new build submissions (ID: 4044bb3c-6922-43c2-8bb8-b92275b26986)
+[Application Loader Error Output]: [ContentDelivery.Uploader.600003E84140] Validation failed (409) This bundle is invalid. The value for key CFBundleShortVersionString [1.2.0] in the Info.plist file must contain a higher version than that of the previously approved version [1.2.0]. Please find more information about CFBundleShortVersionString at https://developer.apple.com/documentation/bundleresources/information_property_list/cfbundleshortversionstring (ID: d17cb11b-5de7-4ae1-b2e9-0bef79a71da1)
+[Application Loader Error Output]: Error uploading '/var/folders/m1/8_w9962s3b79dqm00nnlm85m0000gn/T/d7df55a9-8233-4952-9222-683920a55596.ipa'.
+[Application Loader Error Output]: Validation failed Invalid Pre-Release Train. The train version '1.2.0' is closed for new build submissions (ID: 4044bb3c-6922-43c2-8bb8-b92275b26986) (409)
+[Application Loader Error Output]: Validation failed This bundle is invalid. The value for key CFBundleShortVersionString [1.2.0] in the Info.plist file must contain a higher version than that of the previously approved version [1.2.0]. Please find more information about CFBundleShortVersionString at https://developer.apple.com/documentation/bundleresources/information_property_list/cfbundleshortversionstring (ID: d17cb11b-5de7-4ae1-b2e9-0bef79a71da1) (409)
+[Application Loader Error Output]: The call to the altool completed with a non-zero exit status: 1. This indicates a failure.
+Failed to submit the app to the store
