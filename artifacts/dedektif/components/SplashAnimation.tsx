@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useRef } from "react";
-import { Dimensions, Image, StyleSheet, View } from "react-native";
+import { Dimensions, Image, Platform, StyleSheet, View } from "react-native";
+import * as Haptics from "expo-haptics";
 import Animated, {
   Easing,
   runOnJS,
@@ -117,7 +118,14 @@ export function SplashAnimation({ onComplete }: SplashAnimationProps) {
     // ── 6. Studio badge (bottom) ──
     badgeOpacity.value = withDelay(1100, withTiming(1, { duration: 400, easing: easeOut }));
 
-    // ── 7. Exit ──
+    // ── 7. Landed haptic — subtle pulse as logo settles ──
+    if (Platform.OS !== "web") {
+      setTimeout(() => {
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light).catch(() => {});
+      }, 600);
+    }
+
+    // ── 8. Exit ──
     containerOpacity.value = withDelay(
       2800,
       withTiming(0, { duration: 400, easing: easeIn }, (finished) => {

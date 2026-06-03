@@ -1,5 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as FileSystem from "expo-file-system";
+import * as Haptics from "expo-haptics";
 import React, {
   createContext,
   useCallback,
@@ -688,7 +689,17 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
             lastPlayedDate: today,
             avgSolveTimeSeconds,
           };
+          const oldBadgeCount = profile.badges.length;
           newProfile.badges = getBadges(newProfile, newHistory);
+          const earnedNewBadge = newProfile.badges.length > oldBadgeCount;
+          if (earnedNewBadge && Platform.OS !== "web") {
+            setTimeout(() => {
+              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy).catch(() => {});
+              setTimeout(() => {
+                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy).catch(() => {});
+              }, 220);
+            }, 1400);
+          }
 
           const newLeaderEntry: LeaderboardEntry = {
             name: profile.name,
