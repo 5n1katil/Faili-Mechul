@@ -26,28 +26,28 @@
           "stars": "★☆☆☆☆",
           "gridSize": "3x3",
           "timeLimit": 600,
-          "story": "Topkapı Sarayı'nın yüzlerce yıllık sırları barındıran harem dairesinde, Cihan Padişahı'nın en gözde cariyesi yatağında cansız bulundu. Saray tabibinin şüpheleri üzerine harem karantinaya alındı. Duvarlardaki çini işlemeler dilsiz birer şahit gibi dikilirken, celladın nefesi hala bu altın kafesin loş koridorlarında geziniyor.",
+          "story": "Topkapı Sarayı'nın yüzlerce yıllık sırları barındıran harem dairesinde, Cihan Padişahı'nın en gözde cariyesi yatağında cansız bulundu. Saray tabibinin şüpheleri üzerine harem karantinaya alındı. Duvarlardaki çini işlemeler dilsiz birer şahit gibi dikilirken, celladın nefesi hala bu altın kafesin loş koridorlarında geziniyordu...",
           "atmosphere": "Gece yarısı. Titreyen kandil ışığı. Buhur kokusu. Dışarıdan gelen yeniçeri nöbet sesleri.",
           "suspects": [
             {
               "id": "s1",
               "name": "Baş Kalfa Hatice",
               "icon": "noun-hizmetci-hacer-avatar.png",
-              "description": "Otuz yıllık saray hizmetine karşın son aylarda nüfuzunu genç cariyeye kaybetmiş, harem hiyerarşisini ve şerbet ikram düzenini avucunun içi gibi bilen hırslı kadın.",
+              "description": "Otuz yıllık saray hizmetine karşın son aylarda nüfuzunu genç cariyeye kaybetmiş, harem hiyerarşisini ve sarayın tüm yeme-içme/ikram düzenini avucunun içi gibi bilen otoriter kadın.",
               "detail": "Orta yaşlı, otoriter, tüm harem protokolünü ezbere bilir."
             },
             {
               "id": "s2",
               "name": "Genç Hekim Selim",
               "icon": "👨‍⚕️",
-              "description": "Sarayın Avrupalı tıp anlayışını benimsemiş, elindeki şifalı bitkilerle sürekli koridorlarda dolanan, padişahın güvenini yeni kazanmaya başlayan Viyana eğitimli hekim.",
+              "description": "Sarayın Avrupalı tıp anlayışını benimsemiş, elindeki şifalı otlar ve ecza sandığıyla koridorlarda dolanan, padişahın güvenini yeni kazanmaya başlayan Viyana eğitimli hekim.",
               "detail": "26 yaşında, Viyana'da eğitim görmüş, çekingen ama zeki."
             },
             {
               "id": "s3",
               "name": "Hazinedar Hüseyin",
               "icon": "noun-tuccar-vehbi-avatar.png",
-              "description": "Saray masraflarından ve harem bütçesinden sorumlu olan, kayıp altın meselesinde adı şüpheli sıfatıyla geçen ve sürekli dış asitane işleriyle uğraşan terli bürokrat.",
+              "description": "Saray masraflarından ve harem bütçesinden sorumlu olan, kayıp altın meselesinde adı şüpheli sıfatıyla geçen ve sürekli dış asitane (çarşı) denetimleriyle uğraşan bürokrat.",
               "detail": "50'li yaşlarda, şişman, her zaman terli."
             }
           ],
@@ -56,19 +56,19 @@
               "id": "w1",
               "name": "Afyon Terkibi",
               "icon": "🌺",
-              "description": "Şerbetin veya sıvıların içine karıştırıldığında saniyeler içinde kalbi durduran, midede koyu renkli tortu bırakan, renksiz doğal uyuşturucu çözelti."
+              "description": "Şerbetin veya sıvıların içine karıştırıldığında saniyeler içinde kalbi durduran, midede koyu renkli ağır tortu bırakan, renksiz doğal uyuşturucu çözelti."
             },
             {
               "id": "w2",
-              "name": "Zehirli Buhurdanlık",
+              "name": "Arsenik Tozu",
               "icon": "🫧",
-              "description": "Buhur karışımına katılarak yakılan, havalandırması yüksek geniş odalarda kül bırakan ve solunum yoluyla iç organları eriten arsenik tozu."
+              "description": "Buhur ateşine atıldığında yavaşça tüten, etrafındaki eşyaların üzerine ince ve gri bir kül tabakası bırakan, solunduğunda iç organları saniyeler içinde kavuran zehirli kimyasal."
             },
             {
               "id": "w3",
-              "name": "Boğazlama",
+              "name": "İpek Kordon",
               "icon": "🪢",
-              "description": "Haremdeki ağır kadife perdeleri tutmakta kullanılan, boyna dolandığında mekanik baskıyla derin morluklar bırakarak nefesi anında kesen ince ipek kordon."
+              "description": "Haremdeki ağır kadife perdeleri tutmakta kullanılan, boyna dolandığında sert mekanik baskıyla derin morluklar bırakarak nefesi anında kesen esnek ip."
             }
           ],
           "locations": [
@@ -76,89 +76,105 @@
               "id": "l1",
               "name": "Yatak Odası",
               "icon": "🛏️",
-              "description": "Cariyenin şahsi dairesi; sedirleri ve kilitli ağır ahşap kapısıyla bilinen, zemini kalın halılarla kaplı tamamen izole uyku alanı."
+              "description": "Cariyenin şahsi dairesi; kilitli ağır ahşap kapısıyla bilinen, zemini tamamen kalın Hereke halılarıyla ve yumuşak dokularla kaplı, izole uyku alanı."
             },
             {
               "id": "l2",
               "name": "Hamam Koridoru",
               "icon": "🚿",
-              "description": "Mermer hamamdan odalara uzanan, zemini her daim nemli, loş ve muhafızların devriye saatleri arasında yankı yapan dar geçit."
+              "description": "Mermer hamamdan odalara uzanan, zemini her daim ıslak ve soğuk olan, muhafızların devriye saatleri arasında yankı yapan dar geçit."
             },
             {
               "id": "l3",
               "name": "Müzik Salonu",
               "icon": "🎵",
-              "description": "Ud ve kanun seslerinin duvarlarında yankılandığı, cariyelerin gün içinde toplandığı, havalandırması yüksek ve buhurdanlıkların tüttüğü geniş sosyal alan."
+              "description": "Ud ve kanun seslerinin duvarlarında yankılandığı, cariyelerin gün içinde toplandığı, buhurdanlıkların sürekli tüttüğü ve eşyaların islendiği geniş sosyal alan."
             }
           ],
           "clues": [
             {
               "id": "c1",
-              "text": "Kurbanın boynunda hiçbir mekanik baskı izi yoktu; aksine, dudaklarındaki morarma ve midesindeki koyu renkli tortu, sessiz ve sinsi bir sıvının yutulduğunu kanıtlıyordu.",
+              "title": "Adli Tabip Raporu",
+              "text": "Kurbanın boyun hatlarında kordon dokusuna dair bir tahribat bulunmazken; dudaklarındaki belirgin morarma ve midesinde biriken koyu renkli ağır tortu, bedene sinsi ve sıvı bir zehrin nüfuz ettiğini kanıtlıyordu.",
               "type": "adli",
               "mechanicType": "text",
               "revealOrder": 1,
               "isRevealed": true,
               "pointCost": 0,
-              "title": "Saray Tabibi Raporu",
-              "deductionHint": "Boyunda iz yok, midede tortu var. Silah sıvı formundaydı."
+              "deductionHint": "Boyunda iz yok, midede ağır sıvı tortusu var. Zehir şerbetin içindeydi."
             },
             {
               "id": "c2",
-              "text": "Kurbanın ipek geceliğinin eteklerindeki kusursuz temizlik ve ayak tabanlarındaki yumuşak doku, onun o gece serin mermerlere veya geniş taş koridorlara hiç basmadığını fısıldıyordu.",
-              "type": "kanit",
+              "title": "Cariye Kalfasının Gözlemi",
+              "text": "Kurbanın ipek geceliğinin eteklerindeki kusursuz temizlik ve çıplak ayak tabanlarındaki yumuşaklık, onun o gece serin ıslak mermerlerde veya isli salonlarda hiç yürümediğini; sadece kalın halılarla kaplı kendi izole alanında bulunduğunu fısıldıyordu.",
+              "type": "evidence",
               "mechanicType": "text",
               "revealOrder": 2,
               "isRevealed": false,
               "pointCost": 50,
-              "title": "Nöbetçi Yeniçeri İfadesi",
-              "deductionHint": "Maktul gece boyunca güvenli ve yumuşak zeminli alanından hiç ayrılmamış."
+              "deductionHint": "Maktul gece boyunca halı kaplı Yatak Odası'ndan hiç çıkmamış."
             },
             {
               "id": "c3",
-              "text": "Sarayın ağır demir kapılarındaki nöbetçi defterlerinde, gece yarısı şehre inen ve sabaha kadar asitane çarşılarında denetim yapan mühürlü bir bürokrat kafilesinin kaydı parlıyordu.",
+              "title": "Kapı Nöbetçisi Logları",
+              "text": "Sarayın ana nizamiye kapısı defterlerinde; harem bütçesinden ve masraflardan sorumlu olan yetkilinin, olay gecesi akşam ezanından sabah namazına kadar çarşı esnafını denetlemek üzere saray dışında olduğu resmi mühürlerle tasdiklenmişti.",
               "type": "eleme",
               "mechanicType": "text",
               "revealOrder": 3,
               "isRevealed": false,
               "pointCost": 50,
-              "title": "Kapı Nöbetçisi Logları",
-              "deductionHint": "Çarşı denetimine giden kişi o gece sarayda ve haremde olamazdı."
+              "deductionHint": "Hazinedar Hüseyin o gece çarşı denetimindeydi. Alibisi çok sağlam."
             },
             {
               "id": "c4",
-              "text": "Havalandırması yüksek olan geniş toplanma alanlarındaki pirinç kaplarda kavurucu bir kimyasalın külü bulundu; ancak maktulün genzinde veya ciğerlerinde en ufak bir is veya duman tahribatı yoktu.",
-              "type": "kanit",
+              "title": "Koridor Nöbetçisinin İfadesi",
+              "text": "O gece dar geçitten aceleyle geçen Viyanalı şifacının elindeki ecza sandığı titriyordu... Ancak o hedefine ulaştığında, altın işlemeli şerbet kasesi çoktan kapının eşiğindeki sehpada kurbanı bekliyordu.",
+              "type": "tanik",
               "mechanicType": "text",
               "revealOrder": 4,
               "isRevealed": false,
               "pointCost": 50,
-              "title": "Buhurdanlık Analizi",
-              "deductionHint": "Yakılan kimyasal, kurbanın nefes aldığı havaya hiç karışmamış."
+              "deductionHint": "Hekim geldiğinde ikram (şerbet) çoktan oradaydı. Hekim zehri koyan kişi değil."
             },
             {
               "id": "c5",
-              "text": "O gece dar geçitten aceleyle geçen şifacının elindeki sandık titriyordu... Ancak o hedefine ulaştığında, altın işlemeli şerbet kasesi çoktan kapının eşiğindeki sehpada sahibini bekliyordu.",
-              "type": "tanik",
-              "mechanicType": "ses_kaydi",
-              "sesMetni": "O gece hekim efendinin elinde küçük bir ecza sandığıyla aceleyle dar geçitten geçip odaya yöneldiğini gördüm... Ancak o çıktığında şerbet kasesi hala kapının önündeki sehpanın üzerinde duruyordu...",
+              "title": "Kripto Mektup",
+              "text": "Kurbanın ipek yastığının altına gizlenmiş, padişaha sunulmak üzere hazırlanmış yarım bir ihbarname bulundu. Mektup, ikram düzenini elinde tutan kişinin ihanetini anlatıyordu. Kurban, ismin harflerini sayfanın kenarına aceleyle ve karışık bir şifre olarak kazımıştı.",
+              "type": "sifreli",
+              "mechanicType": "sifreli_mesaj",
+              "sifre": {
+                "sifrelenmis": "C-E-T-İ-H-A",
+                "sifreleTuru": "anagram",
+                "cozumIpucu": "Haremin hiyerarşisini ve ikramları yöneten kalfanın adını bulmak için harfleri düzenle.",
+                "cozulmus": "HATİCE",
+                "aciklama": "Harfler yerine oturduğunda, rüşvet çarkını gizlemek için şerbete zehri damlatan kişinin Baş Kalfa Hatice olduğu kesinleşti."
+              },
               "revealOrder": 5,
               "isRevealed": false,
               "pointCost": 50,
-              "title": "Baş Kalfa İfadesi",
-              "deductionHint": "Şifacı geldiğinde ikram zaten çoktan odaya bırakılmıştı."
+              "deductionHint": "Anagram çözüldüğünde katilin Hatice olduğu gün yüzüne çıkıyor."
             },
             {
               "id": "c6",
-              "text": "İpek yastığın altında unutulan parşömende, sarayın mutfak ve ikram bütçesindeki devasa açıkları padişaha sunmaya hazırlanan bir ihbarname ile hiyerarşiyi elinde tutan kişinin rüşvet çarkı detaylandırılmıştı.",
+              "title": "Mutfak Kiler Defteri (Ek İpucu)",
+              "text": "Saray mutfağındaki nadide baharat ve afyon sakızı stoklarının saklandığı kilitli ambarın tek anahtarı, haremin tüm hiyerarşik işleyişinden sorumlu olan en kıdemli kadının kemerinde şıngırdıyordu.",
               "type": "dogrudan",
-              "mechanicType": "gorsel_ipucu",
-              "gorselAciklama": "Yastık altından çıkan eski parşömen kağıdı. Üzerinde divan hattıyla yazılmış ve Hekim Selim ile Hatice Kalfa'nın adının geçtiği, haremin şerbet ikram düzenini ile kariyer hesaplaşmalarını belgeleyen imzasız mektup. Mürekkep çatlak yerlerde taze, soluk sarı parşömen üzerinde güçlü bir öfkenin izleri görünüyor.",
+              "mechanicType": "text",
               "revealOrder": 6,
               "isRevealed": false,
-              "pointCost": 50,
-              "title": "Gizli Mektup",
-              "deductionHint": "İkram hiyerarşisini yöneten kişinin kurbanı susturmak için devasa bir motifi var."
+              "pointCost": 40,
+              "deductionHint": "Afyona sadece Baş Kalfa resmi olarak erişebilirdi."
+            },
+            {
+              "id": "c7",
+              "title": "Halı İncelemesi (Ek İpucu)",
+              "text": "Maktulün odasına serili olan kalın Hereke halılarının üzerinde, dışarıdan gelen birine ait hiçbir çamurlu çizme veya deri pabuç izine rastlanmadı; odaya şerbet tepsisini bırakan kişi, sarayın kumaş meslerini giyen bir iç çalışandı.",
+              "type": "adli",
+              "mechanicType": "text",
+              "revealOrder": 7,
+              "isRevealed": false,
+              "pointCost": 40,
+              "deductionHint": "Odaya giren kişi dışarıdan gelen (hekim veya bürokrat) değil, içeriden bir çalışandı."
             }
           ],
           "solution": {
@@ -167,7 +183,7 @@
             "locationId": "l1"
           },
           "solutionNarrative": "Baş Kalfa Hatice, cariyenin yolsuzluk meselesini padişaha bildireceğinden korktu. Haremin ikram düzenini kullanıp yatak odasına bırakılan şerbetin içine afyon terkibi kattı. Hekim Selim'in geç saatte görünmesi sadece kurbanı kontrol etmek içindi; cellat aslında o şerbet kasesindeydi.",
-          "specialMechanic": null
+          "specialMechanic": "sifreli_mesaj_cozme"
         },
         {
           "puzzleId": "ott_002",
