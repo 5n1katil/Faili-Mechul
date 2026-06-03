@@ -16,6 +16,7 @@ import * as Haptics from "expo-haptics";
 import * as StoreReview from "expo-store-review";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Animated, {
+  Easing,
   useAnimatedStyle,
   useSharedValue,
   withDelay,
@@ -363,17 +364,28 @@ export default function ResultScreen({
 }: Props) {
   const colors = useColors();
   const insets = useSafeAreaInsets();
-  const scale = useSharedValue(0);
+  const scale = useSharedValue(0.97);
   const opacity = useSharedValue(0);
   const iconScale = useSharedValue(0);
+  const { height: SCREEN_H } = Dimensions.get("window");
+  const curtainTopY = useSharedValue(0);
+  const curtainBottomY = useSharedValue(0);
   const [copied, setCopied] = useState(false);
   const [showScoreInfo, setShowScoreInfo] = useState(false);
 
   useEffect(() => {
-    scale.value = withSpring(1, { damping: 12 });
-    opacity.value = withTiming(1, { duration: 350 });
+    curtainTopY.value = withTiming(-(SCREEN_H / 2 + 10), {
+      duration: 520,
+      easing: Easing.inOut(Easing.cubic),
+    });
+    curtainBottomY.value = withTiming(SCREEN_H / 2 + 10, {
+      duration: 520,
+      easing: Easing.inOut(Easing.cubic),
+    });
+    opacity.value = withDelay(100, withTiming(1, { duration: 260 }));
+    scale.value = withDelay(180, withSpring(1, { damping: 14, stiffness: 130 }));
     iconScale.value = withDelay(
-      200,
+      360,
       withSequence(
         withSpring(1.25, { damping: 8, stiffness: 200 }),
         withSpring(1, { damping: 10 })
@@ -423,6 +435,14 @@ export default function ResultScreen({
     opacity: opacity.value,
   }));
 
+  const curtainTopStyle = useAnimatedStyle(() => ({
+    transform: [{ translateY: curtainTopY.value }],
+  }));
+
+  const curtainBottomStyle = useAnimatedStyle(() => ({
+    transform: [{ translateY: curtainBottomY.value }],
+  }));
+
   const iconStyle = useAnimatedStyle(() => ({
     transform: [{ scale: iconScale.value }],
   }));
@@ -455,7 +475,7 @@ export default function ResultScreen({
   return (
     <Modal
       visible={true}
-      animationType="fade"
+      animationType="none"
       transparent={false}
       statusBarTranslucent
       onRequestClose={onClose}
@@ -605,10 +625,40 @@ export default function ResultScreen({
           </View>
         </ScrollView>
         </Animated.View>
+
+        <Animated.View pointerEvents="none" style={[curtainStyles.top, curtainTopStyle]} />
+        <Animated.View pointerEvents="none" style={[curtainStyles.bottom, curtainBottomStyle]} />
       </View>
     </Modal>
   );
 }
+
+const _HALF_H = Dimensions.get("window").height / 2;
+
+const curtainStyles = StyleSheet.create({
+  top: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    height: _HALF_H + 10,
+    backgroundColor: "#0F1117",
+    zIndex: 100,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: "#D4A84377",
+  },
+  bottom: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    height: _HALF_H + 10,
+    backgroundColor: "#0F1117",
+    zIndex: 100,
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderTopColor: "#D4A84377",
+  },
+});
 
 const styles = StyleSheet.create({
   fullPage: {

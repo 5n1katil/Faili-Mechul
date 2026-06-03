@@ -62,6 +62,7 @@ function ClassicTabLayout() {
     <Tabs
       screenOptions={{
         headerShown: false,
+        animation: "fade",
         tabBarActiveTintColor: colors.primary,
         tabBarInactiveTintColor: colors.mutedForeground,
         tabBarStyle: {

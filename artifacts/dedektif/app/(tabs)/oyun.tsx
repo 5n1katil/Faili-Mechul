@@ -56,7 +56,12 @@ import {
 } from "@/utils/leaderboardRank";
 import PaketlerContent from "@/components/PaketlerContent";
 import type { EntityInfo } from "@/components/EntityInfoSheet";
-import Animated, { FadeInDown } from "react-native-reanimated";
+import Animated, {
+  FadeInDown,
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+} from "react-native-reanimated";
 
 const FREE_PUZZLE_COUNT = 10;
 const EXTRA_FREE_PUZZLE_IDS: ReadonlySet<string> = new Set([
@@ -420,6 +425,18 @@ export default function VakalarScreen() {
       return () => { launchSourceRef.current = null; };
     }, [])
   );
+
+  const pageScale = useSharedValue(0.97);
+  const pageAnimStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: pageScale.value }],
+  }));
+  useFocusEffect(
+    useCallback(() => {
+      pageScale.value = withSpring(1, { damping: 16, stiffness: 200 });
+      return () => { pageScale.value = 0.97; };
+    }, [pageScale])
+  );
+
   const colors = useColors();
   const insets = useSafeAreaInsets();
   const {
@@ -1026,7 +1043,7 @@ export default function VakalarScreen() {
     : null;
 
   return (
-    <View style={[gameStyles.container, { backgroundColor: colors.background, paddingTop: Platform.OS === "web" ? 67 : insets.top }]}>
+    <Animated.View style={[gameStyles.container, { backgroundColor: colors.background, paddingTop: Platform.OS === "web" ? 67 : insets.top }, pageAnimStyle]}>
       {showResult && (
         <ResultScreen
           puzzle={puzzle}
@@ -1223,7 +1240,7 @@ export default function VakalarScreen() {
         entity={selectedEntity}
         onClose={() => setSelectedEntity(null)}
       />
-    </View>
+    </Animated.View>
   );
 }
 
