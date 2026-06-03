@@ -1,24 +1,30 @@
-# Test & QA
+# Dedektif — EAS Build Archive Exclusions
+# Paths are relative to the project root (artifacts/dedektif/)
+# and matched against the full path from the repository root.
+
+# ── Test / QA artefacts ──────────────────────────────────────────────────────
 e2e/
 screenshots/
 test-results/
 playwright.config.ts
 
-# Dev tooling
+# ── Dev-only tooling inside the app package ──────────────────────────────────
+scripts/
 server/
 app_new.json
-scripts/
 
-# Agent memory (monorepo root)
+# ── Root-level workspace dirs not needed on EAS servers ──────────────────────
 .agents/
 .local/
 
-# Other workspace packages (not needed for mobile build)
+# ── Other workspace packages (not part of the mobile build) ──────────────────
 artifacts/api-server/
 artifacts/api-spec/
 artifacts/db/
 artifacts/mockup-sandbox/
 
-# Misc
+# ── Common noise ─────────────────────────────────────────────────────────────
+.git/
 *.log
+*.map
 .DS_Store
