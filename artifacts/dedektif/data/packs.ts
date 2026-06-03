@@ -391,7 +391,7 @@ export function adaptPackPuzzle(raw: RawPuzzle, packId: string): Puzzle {
       id: c.id,
       text: c.text,
       type: mapClueType(c.type),
-      isBonus: c.revealOrder > 4,
+      isBonus: typeof (c as Record<string, unknown>).isBonus === "boolean" ? (c as Record<string, unknown>).isBonus as boolean : c.revealOrder > 4,
       mechanicType: (r.mechanicType as import("./puzzles").ClueMechanicType | undefined) ?? "text",
       deductionHint: r.deductionHint as string | undefined,
       gorselAciklama: r.gorselAciklama as string | undefined,

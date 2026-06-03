@@ -1,0 +1,106 @@
+SENİN ROLÜN VE GÖREVİN:
+Sen premium bir dedektiflik oyunu olan "Faili Meçhul"ün Kıdemli Baş Geliştiricisisin. "Osmanlı Gizemleri" paketinin İLK VAKASI olan "Haremdeki Zehir" (ott_001) vakasını güncelleyeceğiz ve arayüzdeki (UI) kilitlenme mantığına kesin bir kural getireceğiz.
+
+ÖNEMLİ SİSTEM VE ARAYÜZ KURALI (FRONTEND İÇİN DİKKAT):
+Oyunumuzda standart ipucu sayısı 4 ile sınırlı DEĞİLDİR. Bir vakada 5, 6 veya daha fazla standart (açık) ipucu olabilir. 
+Eğer arayüzü çizen kodlarda (frontend) "5. ipucu ve sonrakiler otomatik olarak Ek İpucu (kilitli) olur" gibi `index >= 4` mantığına dayalı hardcoded bir sınır varsa BUNU DERHAL KALDIR. 
+Bir ipucunun kilitli (Ek İpucu) olup olmadığını dizideki sırası değil, SADECE VE SADECE JSON'dan gelen `"isBonus": true` veya `"isBonus": false` parametresi belirlemelidir.
+Bu vakada İLK 5 İPUCU STANDARTTIR (`isBonus: false`) ve AÇIK GELMELİDİR. 6. ve 7. ipuçları ise EK İPUCUDUR (`isBonus: true`) ve KİLİTLİ GELMELİDİR.
+
+YAPMAN GEREKEN:
+JSON dosyasındaki "ott_001" vakasını bul ve SADECE `clues` dizisini aşağıdaki yeni dizi ile DEĞİŞTİR. Ayrıca gerekiyorsa frontend (UI) tarafındaki ipucu listeleme (map) koşullarını yukarıdaki kurala göre düzelt.
+
+İŞTE YENİ CLUES DİZİSİ (Aynen Aktar):
+[
+  {
+    "id": "c1",
+    "title": "Adli Tabip Raporu",
+    "text": "Kurbanın boyun hatlarında kordon dokusuna dair bir tahribat bulunmazken; dudaklarındaki belirgin morarma ve midesinde biriken koyu renkli ağır tortu, bedene sinsi ve sıvı bir zehrin nüfuz ettiğini kanıtlıyordu.",
+    "type": "adli",
+    "mechanicType": "text",
+    "revealOrder": 1,
+    "isRevealed": true,
+    "pointCost": 0,
+    "isBonus": false,
+    "deductionHint": "Boyunda iz yok, midede ağır sıvı tortusu var. Zehir şerbetin içindeydi."
+  },
+  {
+    "id": "c2",
+    "title": "Cariye Kalfasının Gözlemi",
+    "text": "Kurbanın ipek geceliğinin eteklerindeki kusursuz temizlik ve çıplak ayak tabanlarındaki yumuşaklık, onun o gece serin ıslak mermerlerde veya isli salonlarda hiç yürümediğini; sadece kalın halılarla kaplı kendi izole alanında bulunduğunu fısıldıyordu.",
+    "type": "evidence",
+    "mechanicType": "text",
+    "revealOrder": 2,
+    "isRevealed": false,
+    "pointCost": 50,
+    "isBonus": false,
+    "deductionHint": "Maktul gece boyunca halı kaplı Yatak Odası'ndan hiç çıkmamış."
+  },
+  {
+    "id": "c3",
+    "title": "Kapı Nöbetçisi Logları",
+    "text": "Sarayın ana nizamiye kapısı defterlerinde; harem bütçesinden ve masraflardan sorumlu olan yetkilinin, olay gecesi akşam ezanından sabah namazına kadar çarşı esnafını denetlemek üzere saray dışında olduğu resmi mühürlerle tasdiklenmişti.",
+    "type": "eleme",
+    "mechanicType": "text",
+    "revealOrder": 3,
+    "isRevealed": false,
+    "pointCost": 50,
+    "isBonus": false,
+    "deductionHint": "Hazinedar Hüseyin o gece çarşı denetimindeydi. Alibisi çok sağlam."
+  },
+  {
+    "id": "c4",
+    "title": "Koridor Nöbetçisinin İfadesi",
+    "text": "Harem muhafızının yeminli beyanı: 'Viyanalı hekim efendi, cariyenin fenalaştığını duyup odaya sonradan koşarak geldi. İçeri girdiğinde elindeki ahşap ecza sandığının pirinç kilidi henüz açılmamıştı bile. Cariye ise çoktan o zehirli şerbeti içip yatağa yığılmıştı.'",
+    "type": "tanik",
+    "mechanicType": "text",
+    "revealOrder": 4,
+    "isRevealed": false,
+    "pointCost": 50,
+    "isBonus": false,
+    "deductionHint": "Hekim odaya ulaştığında kurban çoktan zehri yutmuştu ve hekimin çantası mühürlüydü. Hekim katil olamaz."
+  },
+  {
+    "id": "c5",
+    "title": "Kripto Mektup",
+    "text": "Kurbanın ipek yastığının altına gizlenmiş, padişaha sunulmak üzere hazırlanmış yarım bir ihbarname bulundu. Mektup, ikram düzenini elinde tutan kişinin ihanetini anlatıyordu. Kurban, ismin harflerini sayfanın kenarına aceleyle ve karışık bir şifre olarak kazımıştı.",
+    "type": "sifreli",
+    "mechanicType": "sifreli_mesaj",
+    "sifre": {
+      "sifrelenmis": "C-E-T-İ-H-A",
+      "sifreleTuru": "anagram",
+      "cozumIpucu": "Haremin hiyerarşisini ve ikramları yöneten kalfanın adını bulmak için harfleri düzenle.",
+      "cozulmus": "HATİCE",
+      "aciklama": "Harfler yerine oturduğunda, rüşvet çarkını gizlemek için şerbete zehri damlatan failin kimliği kesinleşti!"
+    },
+    "revealOrder": 5,
+    "isRevealed": false,
+    "pointCost": 50,
+    "isBonus": false,
+    "deductionHint": "Anagramı çözdüğünde katilin ismi gün yüzüne çıkacak. Harfleri doğru sıraya dizmelisin."
+  },
+  {
+    "id": "c6",
+    "title": "Mutfak Kiler Defteri",
+    "text": "Saray mutfağındaki nadide baharat ve afyon sakızı stoklarının saklandığı kilitli ambarın tek anahtarı, haremin tüm hiyerarşik işleyişinden sorumlu olan en kıdemli kadının kemerinde şıngırdıyordu.",
+    "type": "dogrudan",
+    "mechanicType": "text",
+    "revealOrder": 6,
+    "isRevealed": false,
+    "pointCost": 40,
+    "isBonus": true,
+    "deductionHint": "Afyona sadece Baş Kalfa resmi olarak erişebilirdi."
+  },
+  {
+    "id": "c7",
+    "title": "Halı İncelemesi",
+    "text": "Maktulün odasına serili olan kalın Hereke halılarının üzerinde, dışarıdan gelen birine ait hiçbir çamurlu çizme veya deri pabuç izine rastlanmadı; odaya şerbet tepsisini bırakan kişi, sarayın kumaş meslerini giyen bir iç çalışandı.",
+    "type": "adli",
+    "mechanicType": "text",
+    "revealOrder": 7,
+    "isRevealed": false,
+    "pointCost": 40,
+    "isBonus": true,
+    "deductionHint": "Odaya giren kişi dışarıdan gelen (hekim veya bürokrat) değil, içeriden bir çalışandı."
+  }
+]

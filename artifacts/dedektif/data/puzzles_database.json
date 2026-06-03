@@ -149,7 +149,7 @@
               "sifre": {
                 "sifrelenmis": "C-E-T-İ-H-A",
                 "sifreleTuru": "anagram",
-                "cozumIpucu": "Haremin hiyerarşisini ve ikramları yöneten kişinin adını bulmak için harfleri düzenle.",
+                "cozumIpucu": "Haremin hiyerarşisini ve ikramları yöneten kalfanın adını bulmak için harfleri düzenle.",
                 "cozulmus": "HATİCE",
                 "aciklama": "Harfler yerine oturduğunda, rüşvet çarkını gizlemek için şerbete zehri damlatan failin kimliği kesinleşti!"
               },
@@ -169,7 +169,7 @@
               "isRevealed": false,
               "pointCost": 40,
               "isBonus": true,
-              "deductionHint": "Afyona sadece ikramları yöneten kişi resmi olarak erişebilirdi."
+              "deductionHint": "Afyona sadece Baş Kalfa resmi olarak erişebilirdi."
             },
             {
               "id": "c7",
