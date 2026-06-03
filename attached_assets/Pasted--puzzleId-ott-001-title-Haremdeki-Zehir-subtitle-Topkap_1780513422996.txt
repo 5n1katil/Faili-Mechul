@@ -1,0 +1,175 @@
+{
+  "puzzleId": "ott_001",
+  "title": "Haremdeki Zehir",
+  "subtitle": "Topkapı Sarayı, 1887",
+  "difficulty": 1,
+  "difficultyLabel": "Çaylak",
+  "stars": "★☆☆☆☆",
+  "gridSize": "3x3",
+  "timeLimit": 600,
+  "story": "Topkapı Sarayı'nın yüzlerce yıllık sırları barındıran harem dairesinde, Cihan Padişahı'nın en gözde cariyesi yatağında cansız bulundu. Saray tabibinin şüpheleri üzerine harem karantinaya alındı. Duvarlardaki çini işlemeler dilsiz birer şahit gibi dikilirken, celladın nefesi hala bu altın kafesin loş koridorlarında geziniyordu...",
+  "atmosphere": "Gece yarısı. Titreyen kandil ışığı. Kesif bir buhur kokusu. Dışarıdan gelen yeniçeri nöbet sesleri.",
+  "suspects": [
+    {
+      "id": "s1",
+      "name": "Baş Kalfa Hatice",
+      "icon": "noun-hizmetci-hacer-avatar.png",
+      "description": "Otuz yıllık saray hizmetine karşın son aylarda nüfuzunu genç cariyeye kaybetmiş, harem hiyerarşisini ve sarayın tüm yeme-içme ikram düzenini avucunun içi gibi bilen otoriter kadın.",
+      "detail": "Orta yaşlı, otoriter, tüm harem protokolünü ezbere bilir."
+    },
+    {
+      "id": "s2",
+      "name": "Genç Hekim Selim",
+      "icon": "👨‍⚕️",
+      "description": "Sarayın Avrupalı tıp anlayışını benimsemiş, elindeki şifalı otlar ve ecza sandığıyla koridorlarda dolanan, padişahın güvenini yeni kazanmaya başlayan Viyana eğitimli hekim.",
+      "detail": "26 yaşında, Viyana'da eğitim görmüş, çekingen ama zeki."
+    },
+    {
+      "id": "s3",
+      "name": "Hazinedar Hüseyin",
+      "icon": "noun-tuccar-vehbi-avatar.png",
+      "description": "Saray masraflarından ve harem bütçesinden sorumlu olan, kayıp altın meselesinde adı şüpheli sıfatıyla geçen ve sürekli dış asitane (çarşı) denetimleriyle uğraşan bürokrat.",
+      "detail": "50'li yaşlarda, şişman, her zaman terli."
+    }
+  ],
+  "weapons": [
+    {
+      "id": "w1",
+      "name": "Afyon Terkibi",
+      "icon": "🌺",
+      "description": "Şerbetin veya sıvıların içine karıştırıldığında saniyeler içinde kalbi durduran, midede koyu renkli ağır tortu bırakan, renksiz doğal uyuşturucu çözelti."
+    },
+    {
+      "id": "w2",
+      "name": "Arsenik Tozu",
+      "icon": "🫧",
+      "description": "Buhur ateşine atıldığında yavaşça tüten, etrafındaki eşyaların üzerine ince ve gri bir kül tabakası bırakan, solunduğunda iç organları saniyeler içinde kavuran zehirli kimyasal."
+    },
+    {
+      "id": "w3",
+      "name": "İpek Kordon",
+      "icon": "🪢",
+      "description": "Haremdeki ağır kadife perdeleri tutmakta kullanılan, boyna dolandığında sert mekanik baskıyla derin morluklar bırakarak nefesi anında kesen esnek ip."
+    }
+  ],
+  "locations": [
+    {
+      "id": "l1",
+      "name": "Yatak Odası",
+      "icon": "🛏️",
+      "description": "Cariyenin şahsi dairesi; kilitli ağır ahşap kapısıyla bilinen, zemini tamamen kalın Hereke halılarıyla ve yumuşak dokularla kaplı, izole uyku alanı."
+    },
+    {
+      "id": "l2",
+      "name": "Hamam Koridoru",
+      "icon": "🚿",
+      "description": "Mermer hamamdan odalara uzanan, zemini her daim ıslak ve soğuk olan, muhafızların devriye saatleri arasında yankı yapan dar geçit."
+    },
+    {
+      "id": "l3",
+      "name": "Müzik Salonu",
+      "icon": "🎵",
+      "description": "Ud ve kanun seslerinin duvarlarında yankılandığı, cariyelerin gün içinde toplandığı, buhurdanlıkların sürekli tüttüğü ve eşyaların islendiği geniş sosyal alan."
+    }
+  ],
+  "clues": [
+    {
+      "id": "c1",
+      "title": "Adli Tabip Raporu",
+      "text": "Kurbanın boyun hatlarında kordon dokusuna dair bir tahribat bulunmazken; dudaklarındaki belirgin morarma ve midesinde biriken koyu renkli ağır tortu, bedene sinsi ve sıvı bir zehrin nüfuz ettiğini kanıtlıyordu.",
+      "type": "adli",
+      "mechanicType": "text",
+      "revealOrder": 1,
+      "isRevealed": true,
+      "pointCost": 0,
+      "isBonus": false,
+      "deductionHint": "Boyunda iz yok, midede ağır sıvı tortusu var. Zehir şerbetin içindeydi."
+    },
+    {
+      "id": "c2",
+      "title": "Cariye Kalfasının Gözlemi",
+      "text": "Kurbanın ipek geceliğinin eteklerindeki kusursuz temizlik ve çıplak ayak tabanlarındaki yumuşaklık, onun o gece serin ıslak mermerlerde veya isli salonlarda hiç yürümediğini; sadece kalın halılarla kaplı kendi izole alanında bulunduğunu fısıldıyordu.",
+      "type": "evidence",
+      "mechanicType": "text",
+      "revealOrder": 2,
+      "isRevealed": false,
+      "pointCost": 50,
+      "isBonus": false,
+      "deductionHint": "Maktul gece boyunca halı kaplı Yatak Odası'ndan hiç çıkmamış."
+    },
+    {
+      "id": "c3",
+      "title": "Kapı Nöbetçisi Logları",
+      "text": "Sarayın ana nizamiye kapısı defterlerinde; harem bütçesinden ve masraflardan sorumlu olan yetkilinin, olay gecesi akşam ezanından sabah namazına kadar çarşı esnafını denetlemek üzere saray dışında olduğu resmi mühürlerle tasdiklenmişti.",
+      "type": "eleme",
+      "mechanicType": "text",
+      "revealOrder": 3,
+      "isRevealed": false,
+      "pointCost": 50,
+      "isBonus": false,
+      "deductionHint": "Hazinedar Hüseyin o gece çarşı denetimindeydi. Alibisi çok sağlam."
+    },
+    {
+      "id": "c4",
+      "title": "Koridor Nöbetçisinin İfadesi",
+      "text": "Harem muhafızının yeminli beyanı: 'Viyanalı hekim efendi, cariyenin fenalaştığını duyup odaya sonradan koşarak geldi. İçeri girdiğinde elindeki ahşap ecza sandığının pirinç kilidi henüz açılmamıştı bile. Cariye ise çoktan o zehirli şerbeti içip yatağa yığılmıştı.'",
+      "type": "tanik",
+      "mechanicType": "text",
+      "revealOrder": 4,
+      "isRevealed": false,
+      "pointCost": 50,
+      "isBonus": false,
+      "deductionHint": "Hekim odaya ulaştığında kurban çoktan zehri yutmuştu ve hekimin çantası mühürlüydü. Hekim katil olamaz."
+    },
+    {
+      "id": "c5",
+      "title": "Kripto Mektup",
+      "text": "Kurbanın ipek yastığının altına gizlenmiş, padişaha sunulmak üzere hazırlanmış yarım bir ihbarname bulundu. Mektup, ikram düzenini elinde tutan kişinin ihanetini anlatıyordu. Kurban, ismin harflerini sayfanın kenarına aceleyle ve karışık bir şifre olarak kazımıştı.",
+      "type": "sifreli",
+      "mechanicType": "sifreli_mesaj",
+      "sifre": {
+        "sifrelenmis": "C-E-T-İ-H-A",
+        "sifreleTuru": "anagram",
+        "cozumIpucu": "Haremin hiyerarşisini ve ikramları yöneten kişinin adını bulmak için harfleri düzenle.",
+        "cozulmus": "HATİCE",
+        "aciklama": "Harfler yerine oturduğunda, rüşvet çarkını gizlemek için şerbete zehri damlatan failin kimliği kesinleşti!"
+      },
+      "revealOrder": 5,
+      "isRevealed": false,
+      "pointCost": 50,
+      "isBonus": false,
+      "deductionHint": "Anagramı çözdüğünde katilin ismi gün yüzüne çıkacak. Harfleri doğru sıraya dizmelisin."
+    },
+    {
+      "id": "c6",
+      "title": "Mutfak Kiler Defteri",
+      "text": "Saray mutfağındaki nadide baharat ve afyon sakızı stoklarının saklandığı kilitli ambarın tek anahtarı, haremin tüm hiyerarşik işleyişinden sorumlu olan en kıdemli kadının kemerinde şıngırdıyordu.",
+      "type": "dogrudan",
+      "mechanicType": "text",
+      "revealOrder": 6,
+      "isRevealed": false,
+      "pointCost": 40,
+      "isBonus": true,
+      "deductionHint": "Afyona sadece ikramları yöneten kişi resmi olarak erişebilirdi."
+    },
+    {
+      "id": "c7",
+      "title": "Halı İncelemesi",
+      "text": "Maktulün odasına serili olan kalın Hereke halılarının üzerinde, dışarıdan gelen birine ait hiçbir çamurlu çizme veya deri pabuç izine rastlanmadı; odaya şerbet tepsisini bırakan kişi, sarayın kumaş meslerini giyen bir iç çalışandı.",
+      "type": "adli",
+      "mechanicType": "text",
+      "revealOrder": 7,
+      "isRevealed": false,
+      "pointCost": 40,
+      "isBonus": true,
+      "deductionHint": "Odaya giren kişi dışarıdan gelen (hekim veya bürokrat) değil, içeriden bir çalışandı."
+    }
+  ],
+  "solution": {
+    "suspectId": "s1",
+    "weaponId": "w1",
+    "locationId": "l1"
+  },
+  "solutionNarrative": "Baş Kalfa Hatice, cariyenin yolsuzluk meselesini padişaha bildireceğinden korktu. Haremin ikram düzenini kullanıp yatak odasına bırakılan şerbetin içine afyon terkibi kattı. Hekim Selim'in geç saatte görünmesi sadece kurbanı kontrol etmek içindi; cellat aslında o şerbet kasesindeydi.",
+  "specialMechanic": "sifreli_mesaj_cozme"
+}

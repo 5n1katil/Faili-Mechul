@@ -27,13 +27,13 @@
           "gridSize": "3x3",
           "timeLimit": 600,
           "story": "Topkapı Sarayı'nın yüzlerce yıllık sırları barındıran harem dairesinde, Cihan Padişahı'nın en gözde cariyesi yatağında cansız bulundu. Saray tabibinin şüpheleri üzerine harem karantinaya alındı. Duvarlardaki çini işlemeler dilsiz birer şahit gibi dikilirken, celladın nefesi hala bu altın kafesin loş koridorlarında geziniyordu...",
-          "atmosphere": "Gece yarısı. Titreyen kandil ışığı. Buhur kokusu. Dışarıdan gelen yeniçeri nöbet sesleri.",
+          "atmosphere": "Gece yarısı. Titreyen kandil ışığı. Kesif bir buhur kokusu. Dışarıdan gelen yeniçeri nöbet sesleri.",
           "suspects": [
             {
               "id": "s1",
               "name": "Baş Kalfa Hatice",
               "icon": "noun-hizmetci-hacer-avatar.png",
-              "description": "Otuz yıllık saray hizmetine karşın son aylarda nüfuzunu genç cariyeye kaybetmiş, harem hiyerarşisini ve sarayın tüm yeme-içme/ikram düzenini avucunun içi gibi bilen otoriter kadın.",
+              "description": "Otuz yıllık saray hizmetine karşın son aylarda nüfuzunu genç cariyeye kaybetmiş, harem hiyerarşisini ve sarayın tüm yeme-içme ikram düzenini avucunun içi gibi bilen otoriter kadın.",
               "detail": "Orta yaşlı, otoriter, tüm harem protokolünü ezbere bilir."
             },
             {
@@ -101,6 +101,7 @@
               "revealOrder": 1,
               "isRevealed": true,
               "pointCost": 0,
+              "isBonus": false,
               "deductionHint": "Boyunda iz yok, midede ağır sıvı tortusu var. Zehir şerbetin içindeydi."
             },
             {
@@ -112,6 +113,7 @@
               "revealOrder": 2,
               "isRevealed": false,
               "pointCost": 50,
+              "isBonus": false,
               "deductionHint": "Maktul gece boyunca halı kaplı Yatak Odası'ndan hiç çıkmamış."
             },
             {
@@ -123,18 +125,20 @@
               "revealOrder": 3,
               "isRevealed": false,
               "pointCost": 50,
+              "isBonus": false,
               "deductionHint": "Hazinedar Hüseyin o gece çarşı denetimindeydi. Alibisi çok sağlam."
             },
             {
               "id": "c4",
               "title": "Koridor Nöbetçisinin İfadesi",
-              "text": "O gece dar geçitten aceleyle geçen Viyanalı şifacının elindeki ecza sandığı titriyordu... Ancak o hedefine ulaştığında, altın işlemeli şerbet kasesi çoktan kapının eşiğindeki sehpada kurbanı bekliyordu.",
+              "text": "Harem muhafızının yeminli beyanı: 'Viyanalı hekim efendi, cariyenin fenalaştığını duyup odaya sonradan koşarak geldi. İçeri girdiğinde elindeki ahşap ecza sandığının pirinç kilidi henüz açılmamıştı bile. Cariye ise çoktan o zehirli şerbeti içip yatağa yığılmıştı.'",
               "type": "tanik",
               "mechanicType": "text",
               "revealOrder": 4,
               "isRevealed": false,
               "pointCost": 50,
-              "deductionHint": "Hekim geldiğinde ikram (şerbet) çoktan oradaydı. Hekim zehri koyan kişi değil."
+              "isBonus": false,
+              "deductionHint": "Hekim odaya ulaştığında kurban çoktan zehri yutmuştu ve hekimin çantası mühürlüydü. Hekim katil olamaz."
             },
             {
               "id": "c5",
@@ -145,35 +149,38 @@
               "sifre": {
                 "sifrelenmis": "C-E-T-İ-H-A",
                 "sifreleTuru": "anagram",
-                "cozumIpucu": "Haremin hiyerarşisini ve ikramları yöneten kalfanın adını bulmak için harfleri düzenle.",
+                "cozumIpucu": "Haremin hiyerarşisini ve ikramları yöneten kişinin adını bulmak için harfleri düzenle.",
                 "cozulmus": "HATİCE",
-                "aciklama": "Harfler yerine oturduğunda, rüşvet çarkını gizlemek için şerbete zehri damlatan kişinin Baş Kalfa Hatice olduğu kesinleşti."
+                "aciklama": "Harfler yerine oturduğunda, rüşvet çarkını gizlemek için şerbete zehri damlatan failin kimliği kesinleşti!"
               },
               "revealOrder": 5,
               "isRevealed": false,
               "pointCost": 50,
-              "deductionHint": "Anagram çözüldüğünde katilin Hatice olduğu gün yüzüne çıkıyor."
+              "isBonus": false,
+              "deductionHint": "Anagramı çözdüğünde katilin ismi gün yüzüne çıkacak. Harfleri doğru sıraya dizmelisin."
             },
             {
               "id": "c6",
-              "title": "Mutfak Kiler Defteri (Ek İpucu)",
+              "title": "Mutfak Kiler Defteri",
               "text": "Saray mutfağındaki nadide baharat ve afyon sakızı stoklarının saklandığı kilitli ambarın tek anahtarı, haremin tüm hiyerarşik işleyişinden sorumlu olan en kıdemli kadının kemerinde şıngırdıyordu.",
               "type": "dogrudan",
               "mechanicType": "text",
               "revealOrder": 6,
               "isRevealed": false,
               "pointCost": 40,
-              "deductionHint": "Afyona sadece Baş Kalfa resmi olarak erişebilirdi."
+              "isBonus": true,
+              "deductionHint": "Afyona sadece ikramları yöneten kişi resmi olarak erişebilirdi."
             },
             {
               "id": "c7",
-              "title": "Halı İncelemesi (Ek İpucu)",
+              "title": "Halı İncelemesi",
               "text": "Maktulün odasına serili olan kalın Hereke halılarının üzerinde, dışarıdan gelen birine ait hiçbir çamurlu çizme veya deri pabuç izine rastlanmadı; odaya şerbet tepsisini bırakan kişi, sarayın kumaş meslerini giyen bir iç çalışandı.",
               "type": "adli",
               "mechanicType": "text",
               "revealOrder": 7,
               "isRevealed": false,
               "pointCost": 40,
+              "isBonus": true,
               "deductionHint": "Odaya giren kişi dışarıdan gelen (hekim veya bürokrat) değil, içeriden bir çalışandı."
             }
           ],
