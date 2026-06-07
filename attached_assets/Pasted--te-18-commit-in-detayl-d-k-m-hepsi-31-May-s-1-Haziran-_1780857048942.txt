@@ -1,0 +1,108 @@
+İşte 18 commit'in detaylı dökümü — hepsi 31 Mayıs - 1 Haziran arasında bizim birlikte yaptığımız iş:
+
+📅 31 Mayıs 2026 — İçerik yeniden yazımları (5 commit)
+#	Hash	Açıklama	Etki
+1
+14c2e44
+10 premium Çaylak vakası metinleri edebi yeniden yazım
+puzzles.ts + puzzles_database.json, 122 satır
+2
+74e7dab
+İlk 6 premium Dedektif vakası edebi yeniden yazım
+puzzles.ts, 90 satır
+3
+d12ef04
+Son 6 premium Dedektif vakası edebi yeniden yazım
+puzzles.ts + puzzles_database.json, 137 satır
+4
+af35fd9
+İlk 6 premium Baş Komiser vakası edebi yeniden yazım
+puzzles.ts, 106 satır
+5
+91a30c1
+Son 5 premium Baş Komiser vakası edebi yeniden yazım
+puzzles_database.json, 194 satır
+📅 31 Mayıs 2026 — GitHub'tan local'e sync (10 commit)
+Bu 10 commit, o anda GitHub'tan elle çekilmiş bir senkronizasyon serisi. Her dosya/asset için ayrı commit.
+
+#	Hash	Dosya	Tip
+6
+0b803c7
+app/(tabs)/oyun.tsx
+UI kod
+7
+f1bc73e
+components/PaketlerContent.tsx
+UI kod
+8
+e87e627
+components/OnboardingScreen.tsx
+UI kod
+9
+df35079
+data/puzzles.ts
+Data
+10
+d826866
+noun-termal-otel-muduru-avatar.png
+Avatar
+11
+6f406bf
+noun-termal-kapici-avatar.png
+Avatar
+12
+dbd0d98
+noun-termal-gazeteci-avatar.png
+Avatar
+13
+c10f850
+noun-koy-dugunu-damat-avatar.png
+Avatar
+14
+4312f98
+noun-koy-dugunu-muhtar-avatar.png
+Avatar
+15
+112bfeb
+noun-koy-dugunu-fotografci-avatar.png
+Avatar
+16
+a58d66e
+noun-woman-58199.png
+Avatar
+📅 1 Haziran 2026 — Osmanlı Gizemleri (2 commit)
+#	Hash	Açıklama	Etki
+17
+25a3f31
+Osmanlı Gizemleri (pack_001) 5 vaka edebi premium metin yeniden yazım
+puzzles_database.json, 130 satır
+18
+902aa67
+Osmanlı Gizemleri ipuçları dolaylı dedüksiyon prensibine göre revize
+puzzles_database.json, 71 satır
+🔍 Önemli Gözlem
+Origin/main son hafta yoğun şekilde geliştirilmiş (38 yeni commit). Replit ortamından (subrepl-* remotes) push gelmiş gibi görünüyor. Origin'deki ilgili commit'ler:
+
+37b2586 — hw_001-hw_005 Hollywood Cinayetleri edebi/sinematik metin güncellemesi (bizim Çaylak/Dedektif/Baş Komiser/Osmanlı yaklaşımımıza paralel iş)
+e072363 — Galaksinin Katili (sf_001-sf_005) fütüristik metin güncellemesi + parmak izi düzeltmesi
+7231ee9, b973aeb, 6e0a47c — Genel puzzle update'leri
+4c622b7 — Fingerprint clue'ları + suspect identification story
+8e4d340, 55ae17c, 1fd58f1 — Parmak izi mini-oyunu entegrasyonu (7 vakada test)
+80a03b3 — Premium splash animation
+4c44e8d — Haptic feedback entegrasyonu
+83d8f21 — Puzzle açıklamaları immersive iyileştirme
+⚠️ Risk Değerlendirmesi
+Eğer git reset --hard origin/main yaparsak kaybolacak içerikler:
+
+✅ Bizim Osmanlı dolaylı dedüksiyon revizyonumuz (902aa67) — Origin'de muhtemelen farklı bir Osmanlı versiyonu var
+✅ Bizim Çaylak/Dedektif/Baş Komiser premium metinlerimiz — Origin'in puzzles.ts/puzzles_database.json içinde Replit'teki versiyon var
+✅ Bizim 31 Mayıs sync'lediğimiz UI kodları — Origin'de sonradan zaten geliştirilmiş hali var (örn. parmak izi mini-oyunu, splash animasyonu vb.)
+Eğer git pull --rebase yaparsak:
+
+18 commit'in hepsi origin'in 38 commit'inin üstüne yeniden uygulanır
+puzzles.ts ve puzzles_database.json her ikisi de hem bizde hem origin'de değiştiği için ciddi merge çakışmaları olur
+Manuel çözüm gerekir, saatlerce sürebilir
+Önerim
+Origin/main GitHub'da çok daha yeni özelliklere (parmak izi mini-oyunu, splash animation, haptic feedback, premium build numarası) sahip. Bizim local'deki içerik çalışmalarımız muhtemelen origin'de farklı/güncellenmiş haliyle zaten mevcut (örn. Hollywood Cinayetleri origin'de 37b2586 ile yapılmış).
+
+Sizin "GitHub'tan en güncel hali çek" talebiniz git reset --hard origin/main ile en temiz şekilde gerçekleşir. Onaylarsanız uygulayıp ardından Vercel deploy ederim.
