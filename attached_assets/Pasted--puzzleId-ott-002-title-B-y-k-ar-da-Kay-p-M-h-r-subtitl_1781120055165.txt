@@ -1,0 +1,175 @@
+{
+  "puzzleId": "ott_002",
+  "title": "Büyük Çarşı'da Kayıp Mühür",
+  "subtitle": "Kapalıçarşı, İstanbul 1923",
+  "difficulty": 2,
+  "difficultyLabel": "Polis Memuru",
+  "stars": "★★☆☆☆",
+  "gridSize": "3x3",
+  "timeLimit": 540,
+  "story": "Kapalıçarşı'nın labirent koridorlarına çöken sisli bir İstanbul sabahında, çarşının en eski antikacısı dükkanında ölü bulundu. Kasada duran paha biçilemez altın mühür kayıptı. Çarşının kepenkleri inmeden katili bulmalısın.",
+  "atmosphere": "Sabah erken saatler. Çarşı yeni uyanıyor. Esnafın korkuyla fısıldaştığı dar ve yankılı pasaj.",
+  "suspects": [
+    {
+      "id": "s1",
+      "name": "Rakip Antikacı Vasil",
+      "description": "Komşu dükkanın sahibi. Tarihi mühre yıllardır takıntılı olan, günlerini sadece kendi vitrininin önünde geçiren ve maktulün dükkanındaki gizli arka odalara hiç adım atmamış sert müzakereci.",
+      "detail": "60'lı yaşlarda, kısık gözlü, piyasada 'sert müzakereci' olarak bilinir.",
+      "parmakIziDeseni": "fp_loop_right"
+    },
+    {
+      "id": "s2",
+      "name": "Genç Çırak Mehmet",
+      "description": "Maktulün kumar borçları yüzünden sıkışmış, dükkanın her kuytusunu, gizli değerleme odasının anahtarını ve eşyaların yerini avucunun içi gibi bilen 3 yıllık çırağı.",
+      "detail": "19 yaşında, zeki, ama son ay borçlandığı söyleniyor.",
+      "parmakIziDeseni": "fp_loop_left"
+    },
+    {
+      "id": "s3",
+      "name": "Koleksiyoncu Hanım Eleni",
+      "description": "Atina'dan mühür için gelmiş varlıklı elit. Çarşının karmaşık yollarından bihaber, günlerini sürekli şapkasını takıp etrafı izleyerek geçiren bir yabancı.",
+      "detail": "45 yaşında, şapkası ve eldiveniyle dikkat çekici.",
+      "parmakIziDeseni": "fp_arch"
+    }
+  ],
+  "weapons": [
+    {
+      "id": "w1",
+      "name": "Ağır Tunç Vazo",
+      "description": "Dükkanda sergilenen, kaidesi çok geniş olan ve kafatasına şiddetle indirildiğinde ağır kemik kırıklarıyla beraber etrafa tunç tozları saçan Osmanlı vazosu."
+    },
+    {
+      "id": "w2",
+      "name": "Zehirli Kahve",
+      "description": "Fark edilmeden içeceklere karıştırılan, iç organlarda ağır kimyasal tahribat yaratan sinsi ve koyu renkli zehirli çözelti."
+    },
+    {
+      "id": "w3",
+      "name": "İpek Fular",
+      "description": "Vitrinlerde satışta olan, arkadan yaklaşıldığında boğma amacıyla kullanıldığında boyunda ince ve ipeksi sürtünme izleri bırakan antika fular."
+    }
+  ],
+  "locations": [
+    {
+      "id": "l1",
+      "name": "Arka Oda",
+      "description": "Sadece dükkan sahibi ve çırağının girebildiği, antika mühürlerin mercekle incelendiği ve kalın perdelerle dışarıdan tamamen yalıtılmış kilitli değerleme odası."
+    },
+    {
+      "id": "l2",
+      "name": "Ana Koridor",
+      "description": "Dükkanların vitrinlerinin açıldığı, çarşı bekçilerinin fenerleriyle sürekli devriye gezdiği, ayak seslerinin yankılandığı geniş taş yürüyüş yolu."
+    },
+    {
+      "id": "l3",
+      "name": "Kahvehane Köşesi",
+      "description": "Esnafın sabahları toplandığı, herkesin gözü önünde olan, çay bardaklarının seslerinin birbirine karıştığı aydınlık ve açık servis alanı."
+    }
+  ],
+  "clues": [
+    {
+      "id": "c1",
+      "title": "Kumaş İncelemesi",
+      "text": "Vitrinlerin dizildiği o geniş ve yankılı taş yürüyüş yolunun ortasında, rüzgarla savrulmuş narin ve ipeksi bir kumaş parçası bulundu.",
+      "type": "adli",
+      "mechanicType": "text",
+      "revealOrder": 1,
+      "isRevealed": true,
+      "pointCost": 0,
+      "isBonus": false,
+      "deductionHint": "Bu narin kumaş parçasının bulunduğu yer, ızgarada o nesneyle hangi mekanı eşleştirmeni sağlıyor?"
+    },
+    {
+      "id": "c2",
+      "title": "Tanık İfadesi",
+      "text": "Garsonların yeminli ifadelerine göre, o zarif yabancı misafir olay sabahı açık çay servisi yapılan alanda yalnız başına oturuyordu.",
+      "type": "tanik",
+      "mechanicType": "text",
+      "revealOrder": 2,
+      "isRevealed": false,
+      "pointCost": 60,
+      "isBonus": false,
+      "deductionHint": "Şapkalı misafirin o sabah bulunduğu yeri ızgarada eşleştirirsen, diğer ihtimalleri elemiş olmaz mısın?"
+    },
+    {
+      "id": "c3",
+      "title": "Fiziksel Kanıt: Ayak İzleri",
+      "text": "Olay yeri inceleme ekipleri, maktulün şifreli kasalarının bulunduğu o kalın perdeli gizli odanın girişindeki tozlu zeminde, sert mizaçlı komşu antikacının o kendine has ağır demir ökçeli çizmelerine ait hiçbir izin bulunmadığını raporladı.",
+      "type": "eleme",
+      "mechanicType": "text",
+      "revealOrder": 3,
+      "isRevealed": false,
+      "pointCost": 60,
+      "isBonus": false,
+      "deductionHint": "Zemindeki bu fiziksel iz yoksunluğu, ızgaradaki o sert esnafı hangi izole mekandan kesin olarak elemeni sağlar?"
+    },
+    {
+      "id": "c4",
+      "title": "Parmak İzi Raporu",
+      "text": "Metalik döküm vazonun üzerinde, kime ait olduğu henüz tam olarak tespit edilemeyen kısmi bir parmak izi olduğu anlaşıldı. Parmak izinin detaylı incelenmesi, önemli bir delil elde etmemizi sağlayabilir.",
+      "type": "parmak_izi",
+      "mechanicType": "parmak_izi",
+      "parmakIziVerisi": {
+        "aciklama": "Metal sap üzerindeki gizli parmak izlerini incele ve şüphelilerin profillerindeki iz desenleriyle eşleştir.",
+        "izler": [
+          {
+            "izId": "iz_01",
+            "konum": "Obje Sapı",
+            "eslesme": "s2",
+            "ipucu": "Temizlikte kullanılan gres yağından kaynaklanan karakteristik doku izi."
+          }
+        ],
+        "sonuc": "Eşleştirme Başarılı!",
+        "sahneGorseli": "fp_loop_left"
+      },
+      "revealOrder": 4,
+      "isRevealed": false,
+      "pointCost": 60,
+      "isBonus": false,
+      "deductionHint": "Eşleşen yağlı doku izleri, ızgaradaki hangi şüpheliyi o ağır silahla doğrudan bağlamanı söylüyor?"
+    },
+    {
+      "id": "c5",
+      "title": "Adli Gözlem: Olay Yeri",
+      "text": "Cinayet mahalli olduğu kesinleşen o kalın perdeli kilitli odanın zemininde, iç organları tahrip edebilecek o sinsi kimyasal çözeltiye ait hiçbir kalıntı veya döküntü bulunamadı.",
+      "type": "adli",
+      "mechanicType": "text",
+      "revealOrder": 5,
+      "isRevealed": false,
+      "pointCost": 60,
+      "isBonus": false,
+      "deductionHint": "Burasının cinayet mahalli olduğu gerçeği bir yana, zehirli sızıntının olmaması, ızgarada o sinsi silahı kilitli odadan elemeni sağlamaz mı?"
+    },
+    {
+      "id": "c6",
+      "title": "Mali Motif",
+      "text": "Esnaf locasının fısıltılarına göre, tefecilere yüklü miktarda borcu olan genç çalışanın olay sabahı cinayet mahalli olan o gizli odada uzun süre tek başına kaldığı biliniyordu.",
+      "type": "dogrudan",
+      "mechanicType": "text",
+      "revealOrder": 6,
+      "isRevealed": false,
+      "pointCost": 40,
+      "isBonus": true,
+      "deductionHint": "Bu borç batağındaki gencin olay sabahı cinayet mahallinde olduğunu bilmek, onu ızgarada doğrudan o mekanla eşleştirmeni sağlamaz mı?"
+    },
+    {
+      "id": "c7",
+      "title": "Adli Gözlem",
+      "text": "Olay yeri inceleme ekipleri, cinayet mahalli olan kilitli arka odanın zeminindeki dağınık kan damlalarının, doğrudan geniş kaideli o metalik döküm objenin devrildiği noktada yoğunlaştığını tespit etti.",
+      "type": "kanit",
+      "mechanicType": "text",
+      "revealOrder": 7,
+      "isRevealed": false,
+      "pointCost": 40,
+      "isBonus": true,
+      "deductionHint": "Kan damlalarının yönü, ızgarada cinayet mahalli olan kilitli oda ile o ağır silahı kesin olarak birbirine bağlamıyor mu?"
+    }
+  ],
+  "solution": {
+    "suspectId": "s2",
+    "weaponId": "w1",
+    "locationId": "l1"
+  },
+  "solutionNarrative": "Genç Çırak Mehmet, kumar borçlarını ödemek için o eşsiz mührü çalmaya karar verdi. Ustası kilitli arka odada mührü kontrol ederken yakalandı. Panikleyen Mehmet, masadaki ağır tunç vazoyu ustasının kafasına indirdi. Olay yerindeki gres yağlı parmak izleri ihanetini mühürledi.",
+  "specialMechanic": "parmak_izi_mini_oyun"
+}
