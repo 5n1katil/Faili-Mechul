@@ -1,0 +1,178 @@
+{
+  "puzzleId": "ott_001",
+  "title": "Haremdeki Zehir",
+  "subtitle": "Topkapı Sarayı, 1887",
+  "difficulty": 1,
+  "difficultyLabel": "Çaylak",
+  "stars": "★☆☆☆☆",
+  "gridSize": "3x3",
+  "timeLimit": 600,
+  "story": "Topkapı Sarayı'nın yüzlerce yıllık sırları barındıran harem dairesinde, Cihan Padişahı'nın en gözde cariyesi yatağında cansız bulundu. Saray tabibinin şüpheleri üzerine harem karantinaya alındı. Duvarlardaki çini işlemeler dilsiz birer şahit gibi dikilirken, celladın nefesi hala bu altın kafesin loş koridorlarında geziniyordu...",
+  "atmosphere": "Gece yarısı. Titreyen kandil ışığı. Kesif bir buhur kokusu. Dışarıdan gelen yeniçeri nöbet sesleri.",
+  "suspects": [
+    {
+      "id": "s1",
+      "name": "Baş Kalfa Hatice",
+      "icon": "noun-hizmetci-hacer-avatar.png",
+      "description": "Otuz yıllık saray hizmetine karşın son aylarda nüfuzunu genç cariyeye kaybetmiş, harem hiyerarşisini ve sarayın tüm yeme-içme ikram düzenini avucunun içi gibi bilen otoriter kadın.",
+      "detail": "Orta yaşlı, otoriter, tüm harem protokolünü ezbere bilir.",
+      "parmakIziDeseni": "fp_whorl"
+    },
+    {
+      "id": "s2",
+      "name": "Genç Hekim Selim",
+      "icon": "👨‍⚕️",
+      "description": "Sarayın Avrupalı tıp anlayışını benimsemiş, elindeki şifalı otlar ve ecza sandığıyla koridorlarda dolanan, padişahın güvenini yeni kazanmaya başlayan Viyana eğitimli hekim.",
+      "detail": "26 yaşında, Viyana'da eğitim görmüş, çekingen ama zeki.",
+      "parmakIziDeseni": "fp_loop_left"
+    },
+    {
+      "id": "s3",
+      "name": "Hazinedar Hüseyin",
+      "icon": "noun-tuccar-vehbi-avatar.png",
+      "description": "Saray masraflarından ve harem bütçesinden sorumlu olan, kayıp altın meselesinde adı şüpheli sıfatıyla geçen ve sürekli dış asitane (çarşı) denetimleriyle uğraşan bürokrat.",
+      "detail": "50'li yaşlarda, şişman, her zaman terli.",
+      "parmakIziDeseni": "fp_loop_right"
+    }
+  ],
+  "weapons": [
+    {
+      "id": "w1",
+      "name": "Afyon Terkibi",
+      "icon": "🌺",
+      "description": "Şerbetin veya sıvıların içine karıştırıldığında saniyeler içinde kalbi durduran, midede koyu renkli ağır tortu bırakan, renksiz doğal uyuşturucu çözelti."
+    },
+    {
+      "id": "w2",
+      "name": "Arsenik Tozu",
+      "icon": "🫧",
+      "description": "Buhur ateşine atıldığında yavaşça tüten, etrafındaki eşyaların üzerine ince ve gri bir kül tabakası bırakan, solunduğunda iç organları saniyeler içinde kavuran zehirli kimyasal."
+    },
+    {
+      "id": "w3",
+      "name": "İpek Kordon",
+      "icon": "🪢",
+      "description": "Haremdeki ağır kadife perdeleri tutmakta kullanılan, boyna dolandığında sert mekanik baskıyla derin morluklar bırakarak nefesi anında kesen esnek ip."
+    }
+  ],
+  "locations": [
+    {
+      "id": "l1",
+      "name": "Yatak Odası",
+      "icon": "🛏️",
+      "description": "Cariyenin şahsi dairesi; kilitli ağır ahşap kapısıyla bilinen, zemini tamamen kalın Hereke halılarıyla ve yumuşak dokularla kaplı, izole uyku alanı."
+    },
+    {
+      "id": "l2",
+      "name": "Hamam Koridoru",
+      "icon": "🚿",
+      "description": "Mermer hamamdan odalara uzanan, zemini her daim ıslak ve soğuk olan, muhafızların devriye saatleri arasında yankı yapan dar geçit."
+    },
+    {
+      "id": "l3",
+      "name": "Müzik Salonu",
+      "icon": "🎵",
+      "description": "Ud ve kanun seslerinin duvarlarında yankılandığı, cariyelerin gün içinde toplandığı, buhurdanlıkların sürekli tüttüğü ve eşyaların islendiği geniş sosyal alan."
+    }
+  ],
+  "clues": [
+    {
+      "id": "c1",
+      "title": "Adli İnceleme: Nemli Zemin",
+      "text": "Sarayın rutubetli mermer geçidinde, zemindeki su birikintisinin hemen yanında, boğma amacıyla kullanıldığında boyunda ince izler bırakan o esnek kumaş ip ıslanmış halde bulundu.",
+      "type": "adli",
+      "mechanicType": "text",
+      "revealOrder": 1,
+      "isRevealed": true,
+      "pointCost": 0,
+      "isBonus": false,
+      "deductionHint": "Boğma amacıyla kullanılan bu esnek yapılı silahın bulunduğu ıslak zemin, ızgarada onu hangi soğuk geçitle doğrudan eşleştirmeni sağlıyor?"
+    },
+    {
+      "id": "c2",
+      "title": "Fiziksel Kanıt: Çamurlu İzler",
+      "text": "Olay yeri incelemesinde, maktulün şahsi dairesinin girişindeki kalın Hereke halısında, sürekli asitane dışında devriye gezen o kilolu bürokratın ağır ve çamurlu pabuçlarına ait hiçbir ize rastlanmadı.",
+      "type": "evidence",
+      "mechanicType": "text",
+      "revealOrder": 2,
+      "isRevealed": false,
+      "pointCost": 60,
+      "isBonus": false,
+      "deductionHint": "Çamurlu pabuç izlerinin yokluğu, ızgarada o ağır cüsseli şüpheliyi hangi izole mekandan tamamen elemeni gerektirmez mi?"
+    },
+    {
+      "id": "c3",
+      "title": "Kimyasal Kanıt: Gri Kül",
+      "text": "Ud ve kanunların çalındığı o geniş sosyal alanda, buhurdanlıkların birinin dibinde yavaşça tüten ve etrafına ince gri bir kül tabakası bırakan kimyasal zehir kalıntıları tespit edildi.",
+      "type": "kanit",
+      "mechanicType": "text",
+      "revealOrder": 3,
+      "isRevealed": false,
+      "pointCost": 60,
+      "isBonus": false,
+      "deductionHint": "Gri kül tabakası bırakan bu kimyasalın tütme noktası, ızgarada o sinsi zehri hangi sosyal alanla birleştiriyor?"
+    },
+    {
+      "id": "c4",
+      "title": "Adli Gözlem: İs Lekesi",
+      "text": "Harem hiyerarşisini yöneten baş kalfanın ipek kaftanında ve ellerinde, buhurdanlıkların sürekli tüttüğü ve eşyaların islendiği o sosyal alana ait en ufak bir is veya kül lekesi yoktu.",
+      "type": "adli",
+      "mechanicType": "text",
+      "revealOrder": 4,
+      "isRevealed": false,
+      "pointCost": 60,
+      "isBonus": false,
+      "deductionHint": "Kıyafetlerinde is lekesi olmaması, o kıdemli yöneticiyi buhur tüten hangi geniş alandan kesin olarak elemeni sağlar?"
+    },
+    {
+      "id": "c5",
+      "title": "Kripto Reçete",
+      "text": "Maktulün yatağının kenarında yırtık bir şifa reçetesi bulundu. Kağıdın arkasına aceleyle yazılmış ve bazı harfleri kasten silinmiş garip bir dize vardı. Bu eksik harfler, o boğucu silahı taşıyan kişiyi gizliyordu.",
+      "type": "sifreli",
+      "mechanicType": "sifreli_mesaj",
+      "sifre": {
+        "sifrelenmis": "Geceki ve_vese, c_llatın gö_gesinde k_birlenen bir tılsı_dı...",
+        "sifreleTuru": "eksik_harfler",
+        "cozumIpucu": "Cümledeki yarım kalan kelimeleri tahmin et. Bulduğun eksik harfleri sırasıyla birleştirerek şüphelinin adını ortaya çıkar.",
+        "cozulmus": "SELİM",
+        "aciklama": "Eksik harfler doğru sırayla bir araya getirildiğinde, o boğucu nesneyi elinde tutan kişinin kimliği gün yüzüne çıkacak!"
+      },
+      "revealOrder": 5,
+      "isRevealed": false,
+      "pointCost": 60,
+      "isBonus": false,
+      "deductionHint": "Şifreyi çözdüğünde elde ettiğin o gizemli isim, ızgarada o esnek silahı hangi şüpheliyle kesin olarak eşleştirmene olanak tanıyor?"
+    },
+    {
+      "id": "c6",
+      "title": "İktidar Motifi",
+      "text": "Saray hiyerarşisindeki yerini kaybetme korkusuyla yanıp tutuşan o otoriter kadına ait özel oymalı kehribar tespih tanelerinden biri, maktulün kilitli ahşap kapısının hemen iç pervazında koptuğu anlaşıldı.",
+      "type": "dogrudan",
+      "mechanicType": "text",
+      "revealOrder": 6,
+      "isRevealed": false,
+      "pointCost": 40,
+      "isBonus": true,
+      "deductionHint": "Kıskançlık krizine kapılan bu kıdemli yöneticinin tespih tanesi, onu ızgarada doğrudan cinayet mahalli olan kilitli odayla eşleştirmeni sağlamaz mı?"
+    },
+    {
+      "id": "c7",
+      "title": "Susturucu İkram",
+      "text": "Sarayın hiyerarşik sırlarını ebediyen gizlemek amacıyla gece yarısı sunulan ölümcül şerbete ait o renksiz uyuşturucu damlaları, maktulün dış dünyadan tamamen soyutlandığı kalın halılı dinlenme alanında parlıyordu.",
+      "type": "adli",
+      "mechanicType": "text",
+      "revealOrder": 7,
+      "isRevealed": false,
+      "pointCost": 40,
+      "isBonus": true,
+      "deductionHint": "Sırları susturmak için kullanılan bu sıvı silahın sıçrama izleri, ızgarada onu maktulün en savunmasız kaldığı o izole alanla bağlamanı sağlamaz mı?"
+    }
+  ],
+  "solution": {
+    "suspectId": "s1",
+    "weaponId": "w1",
+    "locationId": "l1"
+  },
+  "solutionNarrative": "Baş Kalfa Hatice, cariyenin güç kazanmasından ve kendi nüfuzunu yok etmesinden korktu. Haremin ikram düzenini kullanıp yatak odasına bırakılan şerbetin içine afyon terkibi kattı. Diğerleri kendi işleriyle meşgulken, o kendi iktidarını kanla korumayı seçti.",
+  "specialMechanic": "sifreli_mesaj_cozme"
+}
