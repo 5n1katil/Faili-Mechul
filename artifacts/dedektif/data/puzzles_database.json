@@ -34,24 +34,21 @@
               "name": "Baş Kalfa Hatice",
               "icon": "noun-hizmetci-hacer-avatar.png",
               "description": "Otuz yıllık saray hizmetine karşın son aylarda nüfuzunu genç cariyeye kaybetmiş, harem hiyerarşisini ve sarayın tüm yeme-içme ikram düzenini avucunun içi gibi bilen otoriter kadın.",
-              "detail": "Orta yaşlı, otoriter, tüm harem protokolünü ezbere bilir.",
-              "parmakIziDeseni": "fp_whorl"
+              "detail": "Orta yaşlı, otoriter, tüm harem protokolünü ezbere bilir."
             },
             {
               "id": "s2",
               "name": "Genç Hekim Selim",
               "icon": "👨‍⚕️",
               "description": "Sarayın Avrupalı tıp anlayışını benimsemiş, elindeki şifalı otlar ve ecza sandığıyla koridorlarda dolanan, padişahın güvenini yeni kazanmaya başlayan Viyana eğitimli hekim.",
-              "detail": "26 yaşında, Viyana'da eğitim görmüş, çekingen ama zeki.",
-              "parmakIziDeseni": "fp_loop_left"
+              "detail": "26 yaşında, Viyana'da eğitim görmüş, çekingen ama zeki."
             },
             {
               "id": "s3",
               "name": "Hazinedar Hüseyin",
               "icon": "noun-tuccar-vehbi-avatar.png",
               "description": "Saray masraflarından ve harem bütçesinden sorumlu olan, kayıp altın meselesinde adı şüpheli sıfatıyla geçen ve sürekli dış asitane (çarşı) denetimleriyle uğraşan bürokrat.",
-              "detail": "50'li yaşlarda, şişman, her zaman terli.",
-              "parmakIziDeseni": "fp_loop_right"
+              "detail": "50'li yaşlarda, şişman, her zaman terli."
             }
           ],
           "weapons": [
@@ -98,7 +95,7 @@
             {
               "id": "c1",
               "title": "Adli İnceleme: Nemli Zemin",
-              "text": "Sarayın rutubetli mermer geçidinde, zemindeki su birikintisinin hemen yanında, boğma amacıyla kullanıldığında boyunda ince izler bırakan o esnek kumaş ip ıslanmış halde bulundu.",
+              "text": "Sarayın rutubetli mermer geçidinde, zemindeki su birikintisinin hemen yanında, boğma amacıyla kullanılan o esnek kumaş ip ıslanmış halde bulundu.",
               "type": "adli",
               "mechanicType": "text",
               "revealOrder": 1,
@@ -109,20 +106,20 @@
             },
             {
               "id": "c2",
-              "title": "Fiziksel Kanıt: Çamurlu İzler",
-              "text": "Olay yeri incelemesinde, maktulün şahsi dairesinin girişindeki kalın Hereke halısında, sürekli asitane dışında devriye gezen o kilolu bürokratın ağır ve çamurlu pabuçlarına ait hiçbir ize rastlanmadı.",
-              "type": "evidence",
+              "title": "Nöbetçi Raporu: Hamam Devriyesi",
+              "text": "Gece yarısı hamamın mermer dehlizlerinde devriyeye çıkan muhafızlar, koridorda elinde ecza çantasıyla aceleyle yürüyen o çekingen genç şifacıyı bizzat gördüklerini beyan ettiler.",
+              "type": "tanik",
               "mechanicType": "text",
               "revealOrder": 2,
               "isRevealed": false,
               "pointCost": 60,
               "isBonus": false,
-              "deductionHint": "Çamurlu pabuç izlerinin yokluğu, ızgarada o ağır cüsseli şüpheliyi hangi izole mekandan tamamen elemeni gerektirmez mi?"
+              "deductionHint": "Tanıkların gece yarısı karşılaştığı bu genç şifacıyı, ızgarada doğrudan hangi ıslak mekanla eşleştirmen gerekir?"
             },
             {
               "id": "c3",
               "title": "Kimyasal Kanıt: Gri Kül",
-              "text": "Ud ve kanunların çalındığı o geniş sosyal alanda, buhurdanlıkların birinin dibinde yavaşça tüten ve etrafına ince gri bir kül tabakası bırakan kimyasal zehir kalıntıları tespit edildi.",
+              "text": "Ud ve kanunların çalındığı o geniş sosyal alanda, buhurdanlıklardan birinin dibinde yavaşça tüten ve etrafına ince gri bir kül tabakası bırakan kimyasal zehir kalıntıları tespit edildi.",
               "type": "kanit",
               "mechanicType": "text",
               "revealOrder": 3,
@@ -133,20 +130,20 @@
             },
             {
               "id": "c4",
-              "title": "Adli Gözlem: İs Lekesi",
-              "text": "Harem hiyerarşisini yöneten baş kalfanın ipek kaftanında ve ellerinde, buhurdanlıkların sürekli tüttüğü ve eşyaların islendiği o sosyal alana ait en ufak bir is veya kül lekesi yoktu.",
-              "type": "adli",
+              "title": "Eğlence Meclisi Kayıtları",
+              "text": "Haremdeki müzikli eğlence meclisinde, çarşı denetiminden dönen o terli bürokratın saz heyetinin hemen yanında sabaha kadar oturduğu saray kayıtlarına geçti.",
+              "type": "evidence",
               "mechanicType": "text",
               "revealOrder": 4,
               "isRevealed": false,
               "pointCost": 60,
               "isBonus": false,
-              "deductionHint": "Kıyafetlerinde is lekesi olmaması, o kıdemli yöneticiyi buhur tüten hangi geniş alandan kesin olarak elemeni sağlar?"
+              "deductionHint": "Resmi kayıtlara göre o kilolu bürokratın o geceyi geçirdiği yer, ızgarada hangi sosyal alanla eşleşmelidir?"
             },
             {
               "id": "c5",
               "title": "Kripto Reçete",
-              "text": "Maktulün yatağının kenarında yırtık bir şifa reçetesi bulundu. Kağıdın arkasına aceleyle yazılmış ve bazı harfleri kasten silinmiş garip bir dize vardı. Bu eksik harfler, o boğucu silahı taşıyan kişiyi gizliyordu.",
+              "text": "Hamam koridorundaki mermerlerin üzerinde yırtık bir şifa reçetesi bulundu. Kağıdın arkasına aceleyle yazılmış ve bazı harfleri silinmiş garip dize, o esnek boğucu silahı düşüren faili gizliyordu.",
               "type": "sifreli",
               "mechanicType": "sifreli_mesaj",
               "sifre": {
@@ -154,7 +151,7 @@
                 "sifreleTuru": "eksik_harfler",
                 "cozumIpucu": "Cümledeki yarım kalan kelimeleri tahmin et. Bulduğun eksik harfleri sırasıyla birleştirerek şüphelinin adını ortaya çıkar.",
                 "cozulmus": "SELİM",
-                "aciklama": "Eksik harfler doğru sırayla bir araya getirildiğinde, o boğucu nesneyi elinde tutan kişinin kimliği gün yüzüne çıkacak!"
+                "aciklama": "Eksik harfler doğru sırayla bir araya getirildiğinde, o boğucu nesneyi düşüren kişinin kimliği kesinleşti!"
               },
               "revealOrder": 5,
               "isRevealed": false,
@@ -165,7 +162,7 @@
             {
               "id": "c6",
               "title": "İktidar Motifi",
-              "text": "Saray hiyerarşisindeki yerini kaybetme korkusuyla yanıp tutuşan o otoriter kadına ait özel oymalı kehribar tespih tanelerinden biri, maktulün kilitli ahşap kapısının hemen iç pervazında koptuğu anlaşıldı.",
+              "text": "Saray hiyerarşisindeki yerini kaybetme korkusuyla yanıp tutuşan o otoriter kadına ait özel oymalı kehribar tespih tanelerinden biri, kurbanın can verdiği o kilitli ahşap odanın içinde bulundu.",
               "type": "dogrudan",
               "mechanicType": "text",
               "revealOrder": 6,
@@ -177,14 +174,14 @@
             {
               "id": "c7",
               "title": "Susturucu İkram",
-              "text": "Sarayın hiyerarşik sırlarını ebediyen gizlemek amacıyla gece yarısı sunulan ölümcül şerbete ait o renksiz uyuşturucu damlaları, maktulün dış dünyadan tamamen soyutlandığı kalın halılı dinlenme alanında parlıyordu.",
+              "text": "Sarayın hiyerarşik sırlarını ebediyen gizlemek amacıyla gece yarısı sunulan ölümcül şerbete ait o renksiz uyuşturucu damlaları, kurbanın can verdiği o kilitli ahşap odanın zemininde parlıyordu.",
               "type": "adli",
               "mechanicType": "text",
               "revealOrder": 7,
               "isRevealed": false,
               "pointCost": 40,
               "isBonus": true,
-              "deductionHint": "Sırları susturmak için kullanılan bu sıvı silahın sıçrama izleri, ızgarada onu maktulün en savunmasız kaldığı o izole alanla bağlamanı sağlamaz mı?"
+              "deductionHint": "Sırları susturmak için kullanılan bu sıvı silahın sıçrama izleri, ızgarada onu doğrudan cinayet mahalli olan kilitli odayla bağlamanı sağlamaz mı?"
             }
           ],
           "solution": {
