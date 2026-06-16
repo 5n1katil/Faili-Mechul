@@ -1,0 +1,33 @@
+=== FAİLİ MEÇHUL VAKA QA RAPORU ===
+Vaka: Haremdeki Zehir
+Zorluk: Çaylak
+Genel Puan: 96/100
+Durum: GELİŞTİRİLMELİ
+==================================================
+
+🔍 MANTIK VE ÇÖZÜLEBİLİRLİK — 40/40
+  • DEDÜKSİYON EKONOMİSİ ✓: Özel mekanik ipucu #5 (sifreli_mesaj) matrisin kırılma noktası (climax). Ondan önce 2 olasılık açık kalıyor, o çözülünce matris tek çözüme iniyor → Baş Kalfa Hatice · Afyon Terkibi · Yatak Odası.
+  • BONUS DOĞRULAMASI ✓: bonuslar climax çözümünü bozmuyor.
+  • ✓ Dinamik tam-ızgara (Murdle) solver: özel mekanik climax testi + masum eşleşmeler dahil.
+  • ✓ Çaylak doğrudanlık: temel ipuçlarında 4 doğrudan eşleşme (confirm) var, 1★ için akıcı.
+  ⓘ Tam-ızgara (Murdle) solver: 36 olası senaryodan 1 tanesi kurallara uyuyor. Kural okuması yapısal logicRules'tan; masum eşleşmeler de hesaba katılır.
+
+🚫 SPOILER KONTROLÜ — 20/20
+  • Mini oyun alanlarında çözümü erken ele veren ifade bulunamadı. Temiz.
+
+🧩 İPUCU ÇEŞİTLİLİĞİ VE KALİTE — 16/20
+  • Tip dağılımı: adli×2, evidence×1, kanit×1, tanik×1, sifreli×1, dogrudan×1 (+ mini oyun)
+  • İpucu 7: deductionHint cevabı ele veriyor — "Yatak Odası" adı açıkça geçiyor. Yeni kural: çıkarım, ismi söylemek yerine oyuncuyu düşündüren Sokratik soru olmalı (örn. "Listedeki silahlardan hangisi bu kadar ağır olabilir?").
+  • ✓ Tematik çeşitlilik korunmuş: mini oyun teması (sifreli_mesaj) düz ipuçlarında tekrarlanmamış.
+
+⭐ EK İPUÇLARI (BONUS) — 20/20
+  • 2 bonus ipucu var — ideal aralık.
+  • Bonus ipucu (#7): motivasyon/fırsat (saik) sinyali zayıf — bonus, oyuncuyu "neden/nasıl" ile çözüme yaklaştırmalı.
+  • ✓ Pozitif yönlendirme: bonus ipuçlarında en az bir 'confirm' (pozitif eşleşme) var — düşük/orta zorluk için doğru.
+
+🚩 MANTIKSAL TUTARLILIK
+  • Profil-ipucu-çözüm tutarlılığı: tespit edilen çelişki yok. ✓
+
+🛠️ GEMINI İÇİN DÜZELTME ÖNERİLERİ:
+  - SPOILER RİSKİ: deductionHint alanlarında geçen isimleri kaldır, Sokratik soruya çevir. Soru, oyuncuyu ızgarada belirli bir X/✓ işaretine yönlendirmeli. Örn. "Listedeki silahlardan hangisi bir kafatasını bu kütleyle parçalayabilir?"
+==================================================

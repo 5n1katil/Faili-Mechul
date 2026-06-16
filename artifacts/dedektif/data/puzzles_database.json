@@ -94,94 +94,95 @@
           "clues": [
             {
               "id": "c1",
-              "title": "Adli İnceleme: Nemli Zemin",
-              "text": "Sarayın rutubetli mermer geçidinde, zemindeki su birikintisinin hemen yanında, boğma amacıyla kullanılan o esnek kumaş ip ıslanmış halde bulundu.",
+              "title": "Adli Rapor: Kesin Ölüm Sebebi",
+              "text": "Adli tabibin kesin raporuna göre; maktulün kalbini saniyeler içinde durduran asıl ölüm sebebi, kilitli ahşap kapısının ardındaki uyku alanında içtiği o renksiz sıvıydı.",
               "type": "adli",
               "mechanicType": "text",
+              "isCrimeAnchor": true,
               "revealOrder": 1,
               "isRevealed": true,
               "pointCost": 0,
               "isBonus": false,
-              "deductionHint": "Boğma amacıyla kullanılan bu esnek yapılı silahın bulunduğu ıslak zemin, ızgarada onu hangi soğuk geçitle doğrudan eşleştirmeni sağlıyor?"
+              "deductionHint": "Adli raporun doğrudan ölüm sebebi olarak gösterdiği bu sıvı, ızgarada o renksiz silahı kesin olarak hangi izole olay mahalliyle eşleştirmeni sağlar?"
             },
             {
               "id": "c2",
-              "title": "Nöbetçi Raporu: Hamam Devriyesi",
-              "text": "Gece yarısı hamamın mermer dehlizlerinde devriyeye çıkan muhafızlar, koridorda elinde ecza çantasıyla aceleyle yürüyen o çekingen genç şifacıyı bizzat gördüklerini beyan ettiler.",
-              "type": "tanik",
+              "title": "Fiziksel Kanıt: Pabuç İzleri",
+              "text": "Olay yeri inceleme ekiplerinin maktulün şahsi dairesinde yaptığı detaylı incelemeler sonucunda; kalın Hereke halılarında, kayıp altın meselesinde şüphe çeken o bürokratın ağır pabuçlarına ait hiçbir iz bulunamadı.",
+              "type": "evidence",
               "mechanicType": "text",
               "revealOrder": 2,
               "isRevealed": false,
               "pointCost": 60,
               "isBonus": false,
-              "deductionHint": "Tanıkların gece yarısı karşılaştığı bu genç şifacıyı, ızgarada doğrudan hangi ıslak mekanla eşleştirmen gerekir?"
+              "deductionHint": "Ağır pabuç izlerinin o kilitli odada bulunamaması, o kilolu şüpheliyi ızgarada doğrudan hangi izole alandan elemeni gerektirir?"
             },
             {
               "id": "c3",
-              "title": "Kimyasal Kanıt: Gri Kül",
-              "text": "Ud ve kanunların çalındığı o geniş sosyal alanda, buhurdanlıklardan birinin dibinde yavaşça tüten ve etrafına ince gri bir kül tabakası bırakan kimyasal zehir kalıntıları tespit edildi.",
+              "title": "Kimyasal Kanıt: Su Analizi",
+              "text": "Saray tabiplerinin devriye saatlerinde yankı yapan ıslak geçitten aldığı su numunelerinin laboratuvar testlerinde, etrafına gri kül bırakan o zehirli toza dair tek bir partikül bile bulunamadı.",
               "type": "kanit",
               "mechanicType": "text",
               "revealOrder": 3,
               "isRevealed": false,
               "pointCost": 60,
               "isBonus": false,
-              "deductionHint": "Gri kül tabakası bırakan bu kimyasalın tütme noktası, ızgarada o sinsi zehri hangi sosyal alanla birleştiriyor?"
+              "deductionHint": "Bu kesin adli su analizi, o toz halindeki zehri ızgarada hangi ıslak ve soğuk mekandan tamamen elemeni sağlar?"
             },
             {
               "id": "c4",
-              "title": "Eğlence Meclisi Kayıtları",
-              "text": "Haremdeki müzikli eğlence meclisinde, çarşı denetiminden dönen o terli bürokratın saz heyetinin hemen yanında sabaha kadar oturduğu saray kayıtlarına geçti.",
-              "type": "evidence",
-              "mechanicType": "text",
-              "revealOrder": 4,
-              "isRevealed": false,
-              "pointCost": 60,
-              "isBonus": false,
-              "deductionHint": "Resmi kayıtlara göre o kilolu bürokratın o geceyi geçirdiği yer, ızgarada hangi sosyal alanla eşleşmelidir?"
-            },
-            {
-              "id": "c5",
               "title": "Kripto Reçete",
-              "text": "Hamam koridorundaki mermerlerin üzerinde yırtık bir şifa reçetesi bulundu. Kağıdın arkasına aceleyle yazılmış ve bazı harfleri silinmiş garip dize, o esnek boğucu silahı düşüren faili gizliyordu.",
+              "text": "O ıslak ve soğuk mermer geçitte aceleyle düşürülmüş olarak bulunan yırtık reçetenin arkasına karalanan eksik harflerle dolu gizemli dize, o dondurucu koridorların dilsiz sırrını barındırıyordu.",
               "type": "sifreli",
               "mechanicType": "sifreli_mesaj",
               "sifre": {
                 "sifrelenmis": "Geceki ve_vese, c_llatın gö_gesinde k_birlenen bir tılsı_dı...",
                 "sifreleTuru": "eksik_harfler",
-                "cozumIpucu": "Cümledeki yarım kalan kelimeleri tahmin et. Bulduğun eksik harfleri sırasıyla birleştirerek şüphelinin adını ortaya çıkar.",
+                "cozumIpucu": "Cümledeki boşlukların ritmine odaklan; gizlenen harfler sırasıyla okunduğunda karanlıktaki ismi fısıldayacaktır.",
                 "cozulmus": "SELİM",
-                "aciklama": "Eksik harfler doğru sırayla bir araya getirildiğinde, o boğucu nesneyi düşüren kişinin kimliği kesinleşti!"
+                "aciklama": "Reçetedeki bu gizemli bulmaca çözüldüğünde, karanlık koridorların sırrı aydınlandı ve o dondurucu mekandaki kişinin kimliği adli olarak kesinleşti!"
               },
-              "revealOrder": 5,
+              "revealOrder": 4,
               "isRevealed": false,
               "pointCost": 60,
               "isBonus": false,
-              "deductionHint": "Şifreyi çözdüğünde elde ettiğin o gizemli isim, ızgarada o esnek silahı hangi şüpheliyle kesin olarak eşleştirmene olanak tanıyor?"
+              "deductionHint": "Şifre çözüldüğünde beliren o isim, ızgarada o şüpheliyi doğrudan reçetenin düştüğü hangi ıslak mekanla eşleştirmeni sağlar?"
+            },
+            {
+              "id": "c5",
+              "title": "Tanık İfadesi: İs Lekesi",
+              "text": "Cariyelerin ifadeleri doğrultusunda ud seslerinin yankılandığı bu geniş alanda yapılan incelemelerde, etrafına gri kül bırakan o sinsi kimyasalın izleri açıkça tespit edildi.",
+              "type": "tanik",
+              "mechanicType": "text",
+              "revealOrder": 5,
+              "isRevealed": false,
+              "pointCost": 40,
+              "isBonus": true,
+              "deductionHint": "Cariyelerin bu kesin ifadesi, ızgarada o toz zehri doğrudan hangi eğlence alanıyla eşleştirmelidir?"
             },
             {
               "id": "c6",
               "title": "İktidar Motifi",
-              "text": "Saray hiyerarşisindeki yerini kaybetme korkusuyla yanıp tutuşan o otoriter kadına ait özel oymalı kehribar tespih tanelerinden biri, kurbanın can verdiği o kilitli ahşap odanın içinde bulundu.",
+              "text": "Nüfuzunu kaybetme korkusuyla yanıp tutuşan o otoriter kadının kopan özel oymalı tespihine ait tanelerden biri, maktulün can verdiği o kilitli ahşap odanın tam ortasında bulundu.",
               "type": "dogrudan",
               "mechanicType": "text",
               "revealOrder": 6,
               "isRevealed": false,
               "pointCost": 40,
               "isBonus": true,
-              "deductionHint": "Kıskançlık krizine kapılan bu kıdemli yöneticinin tespih tanesi, onu ızgarada doğrudan cinayet mahalli olan kilitli odayla eşleştirmeni sağlamaz mı?"
+              "deductionHint": "Bulunan bu tespih tanesi, o otoriter kıdemliyi ızgarada doğrudan hangi izole alanın içiyle eşleştirir?"
             },
             {
               "id": "c7",
               "title": "Susturucu İkram",
-              "text": "Sarayın hiyerarşik sırlarını ebediyen gizlemek amacıyla gece yarısı sunulan ölümcül şerbete ait o renksiz uyuşturucu damlaları, kurbanın can verdiği o kilitli ahşap odanın zemininde parlıyordu.",
+              "text": "Tüm ikram düzenini yöneten o kıdemli kadının şahsi dolabında yapılan aramalar sonucunda; midede ağır tortular bırakan o ölümcül sıvının gizlenmiş şişesi ele geçirildi.",
               "type": "adli",
               "mechanicType": "text",
               "revealOrder": 7,
               "isRevealed": false,
               "pointCost": 40,
               "isBonus": true,
-              "deductionHint": "Sırları susturmak için kullanılan bu sıvı silahın sıçrama izleri, ızgarada onu doğrudan cinayet mahalli olan kilitli odayla bağlamanı sağlamaz mı?"
+              "deductionHint": "Şişenin şahsi dolapta çıkması, ızgarada o kıdemli yöneticiyi kendisini doğrudan hangi sinsi ikramla eşleştirmene olanak tanır?"
             }
           ],
           "solution": {
