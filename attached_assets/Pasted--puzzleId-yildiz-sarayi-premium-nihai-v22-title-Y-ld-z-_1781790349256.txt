@@ -1,0 +1,153 @@
+{
+  "puzzleId": "yildiz_sarayi_premium_nihai_v22",
+  "title": "Yıldız Sarayı'nda Hain",
+  "story": "Sultan II. Abdülhamid devrinde, her köşesi hafiyelerle tutulmuş Yıldız Sarayı’nda en küçük fısıltı dahi jurnale dönüşür, her gölge şüpheyle izlenirdi. Böylesine muhkem korunan bir gecede, padişaha arz olunacak çok gizli elçilik evrakını taşıyan sadık bir haberci, sarayın loş koridorlarından birinde ölü bulundu.\n\nOlay yerindeki ürpertici sükûnet, yerdeki bozulmuş mühür izleri ve maktulün avucunda sıkıca tuttuğu şifreli parşömen, bu ölümün sıradan bir cinayet olmadığını gösteriyordu. Evrak kayıptı; ihanet ise sarayın kalın duvarları ardında vazife gören üç şüpheliden biri tarafından ustalıkla tertip edilmişti.\n\nDedektif olarak vazifeniz; Yıldız Sarayı’nın gölgelerinde saklı kalan hakikati gün yüzüne çıkarmak, hainin kim olduğunu, nerede vazife gördüğünü ve bu cinayeti hangi sinsi usulle işlediğini ortaya koymaktır.\n\nUnutmayın: Bu sarayda herkes bir sır taşır… lakin yalnızca biri katildir.",
+  "suspects": [
+    {
+      "id": "s1",
+      "name": "Baş Hafiye Zeki Paşa",
+      "icon": "🕵️",
+      "description": "Barut kokusuna alışkın, askeri nizamdan asla taviz vermeyen ve sarayın devasa istihbarat ağını demir yumrukla yöneten kıdemli komutan."
+    },
+    {
+      "id": "s2",
+      "name": "Yaver Fehmi Bey",
+      "icon": "💂",
+      "description": "Sarayın loş koridorlarında sert bot sesleriyle yankı uyandıran, yakın dövüş ve fiziksel müdahale konusunda özel eğitim almış hırslı genç subay."
+    },
+    {
+      "id": "s3",
+      "name": "Nermin Hanım",
+      "icon": "👩",
+      "description": "Parmaklarında hokka mürekkebi izleri taşıyan; yabancı dillere, kimyevi maddelere ve sarayın gizli tarihine hakim olan sessiz entelektüel."
+    }
+  ],
+  "weapons": [
+    {
+      "id": "w1",
+      "name": "Revolver",
+      "icon": "🔫",
+      "description": "Sarayın sessizliğini barut kokusuyla yırtan, namlusu her daim sıcak, Avrupa yapımı, gürültülü ve mekanik bir suikast aracı."
+    },
+    {
+      "id": "w2",
+      "name": "Zehirli Mürekkep",
+      "icon": "✒️",
+      "description": "Deriyle temas ettiği an sinir sistemini saniyeler içinde felç eden, kurbanın parmak uçlarında asidik yanıklar bırakan sinsi bir laboratuvar karışımı."
+    },
+    {
+      "id": "w3",
+      "name": "Tel Kement",
+      "icon": "🪢",
+      "description": "Kurbanı arkadan yakalayarak sessizce nefessiz bırakan, boyunda ince ve kanlı kesikler açan acımasız çelik kordon."
+    }
+  ],
+  "locations": [
+    {
+      "id": "l1",
+      "name": "Arşiv Odası",
+      "icon": "📁",
+      "description": "Yüzlerce yıllık eski haritaların ve padişahın gizli jurnallerinin kilit altında tutulduğu, eski kağıt ve rutubet kokan yeraltı mahzeni."
+    },
+    {
+      "id": "l2",
+      "name": "Çamlık Köşkü",
+      "icon": "🌲",
+      "description": "Silahlı devriyelerin sürekli gözetiminde olan, devasa pencerelerinden içeri solgun ay ışığı sızan ferah dinlenme alanı."
+    },
+    {
+      "id": "l3",
+      "name": "Yaver Dairesi",
+      "icon": "🪟",
+      "description": "Ağır mühimmat sandıklarının yığılı olduğu, nöbet değişimlerinde bot ve tüfek seslerinin hiç susmadığı hareketli karargah odası."
+    }
+  ],
+  "clues": [
+    {
+      "id": "c1",
+      "title": "Adli Rapor: Karanlıktaki Sessizlik",
+      "text": "Rutubetli yeraltı mahzeninde yapılan incelemeler, bu taş duvarlar arasında hiçbir barut kokusunun olmadığını gösteriyordu. Mekan, gürültülü bir patlamaya değil, sessiz bir ölüme şahitlik etmişti.",
+      "type": "adli",
+      "mechanicType": "text",
+      "isCrimeAnchor": true,
+      "revealOrder": 1,
+      "isRevealed": true,
+      "pointCost": 0,
+      "isBonus": false,
+      "deductionHint": "Cinayet mahallindeki bu mutlak sessizlik, listedeki hangi gürültülü suikast aracını ızgaradan elemeni gerektirir?"
+    },
+    {
+      "id": "c2",
+      "title": "Tanık İfadesi: Nöbet Defterleri",
+      "text": "Nöbet defterlerindeki kayıtlar şüpheye yer bırakmıyordu: Hırslı genç subay, cinayet gecesi boyunca mühimmat dolu ve bot seslerinin hiç susmadığı o hareketli karargahta devriyedeydi.",
+      "type": "tanik",
+      "mechanicType": "text",
+      "revealOrder": 2,
+      "isRevealed": false,
+      "pointCost": 60,
+      "isBonus": false,
+      "deductionHint": "Bot seslerinin yankılandığı bu askeri üssü, ızgarada o dinamik subayla doğrudan nasıl bağlarsın?"
+    },
+    {
+      "id": "c3",
+      "title": "Olay Yeri Taraması: Bedendeki Sırlar",
+      "text": "Olay yerinde maktulün bedeni incelendiğinde; kurbanın boynunda herhangi bir boğulma morluğuna veya derin bir kesik izine rastlanmadı. Kurban, fiziksel bir boğuşmaya veya saldırıya uğramamıştı.",
+      "type": "adli",
+      "mechanicType": "text",
+      "revealOrder": 3,
+      "isRevealed": false,
+      "pointCost": 60,
+      "isBonus": false,
+      "deductionHint": "Fiziksel bir saldırı izi barındırmayan bu gizemli mekandan, kanlı kesikler açan o yakın dövüş aletini nasıl elersin?"
+    },
+    {
+      "id": "c4",
+      "title": "Şifreli Jurnal (Akrostiş)",
+      "text": "Maktulün ceket astarında, şiir kılığına sokulmuş gizli bir istihbarat notu bulundu. Bu edebi parşömen, şüphelilerden birinin o gece nerede olduğunu sır gibi saklıyordu.",
+      "type": "sifreli",
+      "mechanicType": "sifreli_mesaj",
+      "sifre": {
+        "sifrelenmis": "Zifiri karanlık çöktüğünde saraya,\nEn güvendiğin adamlar çekilir yuvaya.\nKimse bilmez gölgelerin efendisi nerede,\nİzini kaybettirir sisli gecelerde.\n\nKapılar sürgülüyken çamlık tarafında,\nÖnemli misafirler ağırlanır otağında.\nŞüpheye yer yok, mazereti kesindir,\nKomutanın kılıcı o an kınında derindir.\nTam gece yarısı, çınlarken saatler,\nEn uzakta, güvendedir o devletliler.",
+        "sifreleTuru": "akrostis",
+        "cozumIpucu": "Şiirdeki her mısranın sadece ilk harfine odaklan. Harfleri yukarıdan aşağıya doğru birleştirdiğinde, aradığın ismin cinayet saatinde nerede olduğunu fısıldayacaktır.",
+        "cozulmus": "ZEKİ KÖŞKTE",
+        "aciklama": "Şiirin mısraları arasına ustaca gizlenmiş olan bu sinsi mazeret çözüldüğünde, karanlık koridorların sırrı aydınlandı ve hedefin o geceki konumu kesinleşti!"
+      },
+      "revealOrder": 4,
+      "isRevealed": false,
+      "pointCost": 60,
+      "isBonus": false,
+      "deductionHint": "Şifre çözüldüğünde beliren o mazeret, kıdemli komutanı ızgarada hangi ferah mekanla eşleştirmeni sağlar?"
+    },
+    {
+      "id": "c5",
+      "title": "İhanetin Yeri",
+      "text": "Bonus: Tahkikat heyeti, tarih uzmanının ihanet mektuplarını gözlerden uzak hazırlamak için daima eski haritaların bulunduğu o kilitli raflar arasında yalnız çalıştığını ortaya çıkardı. Bu tecrit, ona ihanetini planlaması için mükemmel bir fırsat sunmuştu.",
+      "type": "kanit",
+      "mechanicType": "text",
+      "revealOrder": 5,
+      "isRevealed": false,
+      "pointCost": 40,
+      "isBonus": true,
+      "deductionHint": "İhanet belgelerini sır gibi saklamak için kullanılan o yalıtılmış mekan, hangi ismin kaderiyle eşleşir?"
+    },
+    {
+      "id": "c6",
+      "title": "Cinayet Motivi",
+      "text": "Bonus: Uzmanın gizli çekmecesinde bulunan asidik yanık izleri, maktulü susturmak için kullanılan o yakıcı zehre kimin doğrudan erişimi olduğunu gösteriyordu. İhanetini saklamak için, bu sessiz ölümü bizzat kendi elleriyle hazırlamıştı.",
+      "type": "kanit",
+      "mechanicType": "text",
+      "revealOrder": 6,
+      "isRevealed": false,
+      "pointCost": 40,
+      "isBonus": true,
+      "deductionHint": "Susturmak amacıyla kullanılan bu sinsi laboratuvar zehri, onu şahsi çekmecesinde saklayan o isimle nasıl eşleşir?"
+    }
+  ],
+  "solution": {
+    "suspectId": "s3",
+    "weaponId": "w2",
+    "locationId": "l1"
+  },
+  "specialMechanic": "none"
+}
