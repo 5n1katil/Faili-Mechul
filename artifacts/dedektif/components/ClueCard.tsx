@@ -64,7 +64,7 @@ const CLUE_META: Record<
     borderStyle: "solid",
   },
   indirect: {
-    icon: "lightbulb_outline",
+    icon: "lightbulb-outline",
     color: "#f59e0b",
     label: "Dolaylı",
     cardTint: "#f59e0b08",
@@ -85,7 +85,7 @@ const CLUE_META: Record<
     borderStyle: "dashed",
   },
   witness: {
-    icon: "record_voice_over",
+    icon: "record-voice-over",
     color: "#3b82f6",
     label: "Tanık",
     cardTint: "#3b82f610",
@@ -166,20 +166,99 @@ function TanikYuzlesmeBlock({ dialoglar }: { dialoglar: ClueYuzlesmeDialog[] }) 
   );
 }
 
-function SifreliMesajBlock({ sifre }: { sifre: ClueSifre }) {
+function SifreliMesajBlock({
+  sifre,
+  isSolved,
+  onSolve,
+}: {
+  sifre: ClueSifre;
+  isSolved: boolean;
+  onSolve: () => void;
+}) {
+  const { addTimePenalty } = useGame();
+  const [input, setInput] = useState("");
+  const [hintRevealed, setHintRevealed] = useState(false);
+  const [tried, setTried] = useState(false);
+
+  const handleHint = () => {
+    if (hintRevealed) return;
+    setHintRevealed(true);
+    addTimePenalty(60);
+  };
+
+  const checkAnswer = () => {
+    const normalize = (s: string) =>
+      s.trim().toLocaleUpperCase("tr-TR").replace(/İ/g, "I").replace(/\s+/g, " ");
+    if (normalize(input) === normalize(sifre.cozulmus)) {
+      onSolve();
+      setTried(false);
+    } else {
+      setTried(true);
+    }
+  };
+
+  if (isSolved) {
+    return (
+      <View style={styles.miniGameSolvedBlock}>
+        <MaterialIcons name="check-circle" size={20} color="#22c55e" />
+        <Text style={styles.miniGameSolvedText}>Şifre Çözüldü!</Text>
+        <View style={styles.miniGameAnswer}>
+          <Text style={styles.miniGameAnswerText}>{sifre.cozulmus}</Text>
+        </View>
+        <Text style={styles.miniGameAciklama}>{sifre.aciklama}</Text>
+      </View>
+    );
+  }
+
   return (
     <View style={styles.sifreBlock}>
       <View style={styles.gorselHeader}>
         <MaterialIcons name="lock" size={14} color="#9333ea" />
-        <Text style={[styles.gorselLabel, { color: "#9333ea" }]}>ŞİFRELİ MESAJ</Text>
+        <Text style={[styles.gorselLabel, { color: "#9333ea" }]}>
+          ŞİFRELİ MESAJ ({sifre.sifreleTuru})
+        </Text>
       </View>
       <Text style={styles.sifreText}>{sifre.sifrelenmis}</Text>
       <View style={styles.sifreDivider} />
-      <View style={styles.sifreIpucu}>
-        <MaterialIcons name="vpn-key" size={12} color="#9333ea88" />
-        <Text style={styles.sifreIpucuText}>{sifre.cozumIpucu}</Text>
-      </View>
-      <Text style={styles.sifreAciklama}>{sifre.aciklama}</Text>
+
+      {hintRevealed ? (
+        <View style={styles.sifreHintRevealed}>
+          <MaterialIcons name="warning" size={12} color="#f59e0b" />
+          <Text style={[styles.sifreHintRevealedLabel, { color: "#f59e0b" }]}>
+            İpucu açıldı (ceza uygulandı)
+          </Text>
+        </View>
+      ) : null}
+
+      {hintRevealed ? (
+        <View style={styles.sifreIpucu}>
+          <Text style={styles.sifreIpucuText}>
+            İpucu: {sifre.cozumIpucu}
+          </Text>
+        </View>
+      ) : (
+        <Pressable style={styles.sifreHintBtn} onPress={handleHint}>
+          <MaterialIcons name="lightbulb-outline" size={14} color="#9333ea" />
+          <Text style={styles.sifreHintBtnText}>İpucu İste (-60 sn / ceza puanı)</Text>
+        </Pressable>
+      )}
+
+      <TextInput
+        style={[styles.sifreInput, tried && styles.anagramInputError]}
+        value={input}
+        onChangeText={(t) => { setInput(t); setTried(false); }}
+        placeholder="Cevabını yaz..."
+        placeholderTextColor="#555"
+        autoCapitalize="characters"
+        autoCorrect={false}
+        onSubmitEditing={checkAnswer}
+      />
+      {tried && (
+        <Text style={styles.anagramWrong}>Yanlış cevap — tekrar dene</Text>
+      )}
+      <Pressable style={styles.sifreCozBtn} onPress={checkAnswer}>
+        <Text style={styles.sifreCozBtnText}>Şifreyi Çöz</Text>
+      </Pressable>
     </View>
   );
 }
@@ -873,7 +952,11 @@ export default function ClueCard({
 
       case "sifreli_mesaj":
         return clue.sifre ? (
-          <SifreliMesajBlock sifre={clue.sifre} />
+          <SifreliMesajBlock
+            sifre={clue.sifre}
+            isSolved={isSolved ?? false}
+            onSolve={() => onSolveMechanic?.()}
+          />
         ) : null;
 
       case "phone_chain":
@@ -1266,6 +1349,55 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: "#c084fc",
     lineHeight: 18,
+  },
+  sifreHintBtn: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+    borderWidth: 1,
+    borderColor: "#9333ea44",
+    borderRadius: 6,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderStyle: "dashed",
+  },
+  sifreHintBtnText: {
+    fontSize: 12,
+    color: "#9333ea",
+  },
+  sifreHintRevealed: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 5,
+  },
+  sifreHintRevealedLabel: {
+    fontSize: 11,
+    fontStyle: "italic",
+  },
+  sifreInput: {
+    backgroundColor: "#1A1F2E",
+    borderWidth: 1,
+    borderColor: "#9333ea44",
+    borderRadius: 8,
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    color: "#fff",
+    fontSize: 14,
+    fontFamily: "monospace",
+    letterSpacing: 1,
+    marginTop: 4,
+  },
+  sifreCozBtn: {
+    backgroundColor: "#D4A843",
+    borderRadius: 8,
+    paddingVertical: 12,
+    alignItems: "center",
+    marginTop: 4,
+  },
+  sifreCozBtnText: {
+    color: "#0F1117",
+    fontWeight: "700",
+    fontSize: 14,
   },
   phoneBlock: {
     marginTop: 6,
