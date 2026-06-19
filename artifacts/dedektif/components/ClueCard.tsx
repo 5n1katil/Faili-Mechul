@@ -1016,7 +1016,8 @@ export default function ClueCard({
 
   const mechanicContent = isRevealed ? renderMechanicContent() : null;
   const showDeductionHint = clue.deductionHint && isRevealed &&
-    (mechanic === "text" || mechanic === "gorsel_ipucu" || mechanic === "ses_kaydi" || mechanic === "tanik_yuzlesme" || mechanic === "sifreli_mesaj" || mechanic === "phone_chain" || mechanic === "parmak_izi" || isSolved);
+    (mechanic === "text" || mechanic === "gorsel_ipucu" || mechanic === "ses_kaydi" || mechanic === "tanik_yuzlesme" || mechanic === "phone_chain" ||
+      ((mechanic === "sifreli_mesaj" || mechanic === "parmak_izi" || mechanic === "anagram" || mechanic === "dna_match" || mechanic === "timeline_sort" || mechanic === "face_match") && isSolved));
 
   return (
     <Animated.View style={[styles.container, animStyle]}>
