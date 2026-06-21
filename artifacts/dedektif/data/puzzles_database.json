@@ -779,175 +779,173 @@
           "title": "Ayasofya'nın Son Sırrı",
           "subtitle": "Ayasofya Çevresi, İstanbul 1934",
           "difficulty": 5,
-          "difficultyLabel": "Efsane Komiser",
+          "difficultyLabel": "Efsane",
           "stars": "★★★★★",
-          "gridSize": "4x4",
-          "timeLimit": 360,
-          "story": "1934 yılında Ayasofya'nın müzeye dönüştürülme çalışmaları sürerken, Bizans dönemine ait gizli bir yeraltı haritasını keşfeden Rum arkeolog ölü bulundu. Harita kayıp, dehlizlerin karanlığında sinsi bir gaz hala havada asılı duruyor.",
-          "atmosphere": "Tarihin dönüm noktası. Siyasi gerilim. Her taş bir sır taşıyor.",
+          "gridSize": "3x3",
+          "timeLimit": 480,
+          "story": "Bakanlar Kurulu'nun tarihi kararıyla Ayasofya'nın camiden müzeye dönüştürülme çalışmaları başlamıştı. Yüzlerce yıllık mozaikler gün yüzüne çıkarılırken, baş arkeolog karanlık bir gecede ölü bulundu.\n\nErtesi sabah, kurbanın elindeki eksik restorasyon notları ve olay yerindeki ağır kimyasal kokusu, bu ölümün sıradan bir kaza olmadığını haykırıyordu. Bizans'tan kalma gizli bir dehlizin haritası kayıptı ve ihanet, bu kutsal mekânın taşlarına işlenmişti.",
+          "atmosphere": "Küf ve eski kağıt kokusu. Kubbede yankılanan ayak sesleri. Titreyen gaz lambaları.",
           "suspects": [
             {
               "id": "s1",
-              "name": "Müze Müdürü Aziz Bey",
-              "icon": "⚖️",
-              "description": "Resmi dönüşümün başındaki idari sorumlu. Bürokratik yazışmalarla ilgilenen, kimya, gaz sistemleri ve yeraltı dehlizleri konusunda hiçbir bilgisi olmayan devlet görevlisi.",
-              "detail": "55 yaşında, bürokratik, devlet sadakati ön planda."
+              "name": "Mimar Zeynep Hanım",
+              "icon": "👩",
+              "description": "Restorasyon projesinin başındaki hırslı yönetici. Mozaiklerin temizlenmesi için ağır kimyasallar kullanan, gizli ödenekler konusunda merhum arkeologla sürekli çatışan detaycı figür.",
+              "detail": "32 yaşında, detaycı ve daima eldiven takar.",
+              "parmakIziDeseni": "fp_whorl"
             },
             {
               "id": "s2",
-              "name": "İngiliz Arkeolog Pembrooke",
-              "icon": "noun-detective-1574359-avatar.png",
-              "description": "British Museum adına sahada olan, 1. Dünya Savaşı'nda askeri kimya ve savaş gazları üzerine çalışmış, haritayı Londra'ya kaçırma planları yapan soğukkanlı ajan-arkeolog.",
-              "detail": "40 yaşında, akademik, haritanın kopyasına sahip olduğu iddia ediliyor."
+              "name": "Prof. Thomas",
+              "icon": "👨‍🏫",
+              "description": "Bizans eserlerine takıntılı, heyecanlı ve sabırsız yabancı araştırmacı. Yeraltı sırlarına ulaşmak için her yolu mubah gören ve tarihi eserleri saplantı haline getiren tarihçi.",
+              "detail": "55 yaşında, kollarına vuran şiddetli kas zayıflığı var.",
+              "parmakIziDeseni": "fp_arch"
             },
             {
               "id": "s3",
-              "name": "Yeraltı Tüccarı Yorgo",
-              "icon": "noun-ortak-sabri-bey-avatar.png",
-              "description": "Tarihi eser kaçakçısı. Sadece antika hançerler ve meyhane dedikodularıyla ilgilenen, Ayasofya'nın metrelerce altındaki zehirli dehlizlerin şifrelerini bilmeyen suç lideri.",
-              "detail": "50'li yaşlarda, silik, her ortamda kaybolur."
-            },
-            {
-              "id": "s4",
-              "name": "Arkeologun Asistanı Fatma",
-              "icon": "noun-torun-nermin-avatar.png",
-              "description": "Haritanın varlığını bilen sadık asistan. Antika hançerleri ve kazı alanlarını iyi bilen ancak askeri donanıma veya endüstriyel gazlara erişimi olmayan telaşlı araştırmacı.",
-              "detail": "28 yaşında, zeki, korku içinde görünüyor."
+              "name": "Bekçi Halil",
+              "icon": "👴",
+              "description": "Mabedin yıllardır koruyuculuğunu yapan iri yapılı emektar. Müzeye dönüştürme kararına içten içe öfkelenen, eski demir kapıların ve karanlık köşelerin hakimi.",
+              "detail": "65 yaşında, iri yapılı ve geleneklerine bağlı.",
+              "parmakIziDeseni": "fp_loop_right"
             }
           ],
           "weapons": [
             {
               "id": "w1",
-              "name": "Zehirli Şarap",
-              "icon": "🧪",
-              "description": "Meyhanelerde el altından ikram edilen, içildiğinde mideyi kilitleyip saatler içinde sinsi bir ölüm getiren sıvı zehir."
+              "name": "Antika Hançer",
+              "icon": "🗡️",
+              "description": "Bizans kazılarında yeni çıkarılan, üzerinde kurumuş toprak kalıntıları bulunan, tek darbede derin ve temiz bir kesik açabilen tarihi kesici alet."
             },
             {
               "id": "w2",
-              "name": "Antika Hançer",
-              "icon": "🗡️",
-              "description": "Bizans dönemine ait, ucu ustalıkla bilenmiş, saplandığı yerde açık kanamalı ve geniş bir yara bırakan tarihi ritüel bıçağı."
+              "name": "Asidik Çözücü",
+              "icon": "🧪",
+              "description": "Mozaiklerin üzerindeki sıvaları eritmek için kullanılan, solunduğunda ciğerleri yakan ve deride anında ölümcül kimyasal yanıklar bırakan sinsi laboratuvar sıvısı."
             },
             {
               "id": "w3",
-              "name": "Taş Blok",
-              "icon": "🪨",
-              "description": "Yapı iskeletinden veya kazı raflarından kopan, kafaya düştüğünde kemikleri ezici ve parçalayıcı kaba bir travma yaratan ağır mermer blok."
-            },
-            {
-              "id": "w4",
-              "name": "Kimyasal Gaz",
-              "icon": "☁️",
-              "description": "Kapalı alanlarda serbest bırakıldığında havaya karışan, solunduğu anda akciğerleri yakıp acı badem kokusu bırakan endüstriyel hidrojensiyanür gazı."
+              "name": "Ağır Demir Anahtar",
+              "icon": "🗝️",
+              "description": "Mabedin eski ahşap kapılarını açan, kafatasına sertçe vurulduğunda ağır travmaya yol açabilecek, paslı ve devasa ezici kütle."
             }
           ],
           "locations": [
             {
               "id": "l1",
-              "name": "Bizans Kripta",
-              "icon": "⛪",
-              "description": "Ayasofya'nın metrelerce altındaki, havalandırması tamamen kesik, zifiri karanlık, şifreli ve devasa taş bloklarla kaplı gizli kripta."
+              "name": "Gizli Mahzen",
+              "icon": "🕳️",
+              "description": "Zeminin metrelerce altında yer alan, rutubet ve küf kokan, asırlık toz tabakalarıyla kaplı havasız yeraltı dehlizi."
             },
             {
               "id": "l2",
-              "name": "Rum Meyhane",
-              "icon": "🍷",
-              "description": "Çarşı yakınındaki, müzikli ve kalabalık, herkesin sürekli birbirini gördüğü, şarap kokulu aydınlık Rum meyhanesi."
+              "name": "İskele Tepesi",
+              "icon": "🪜",
+              "description": "Ana kubbedeki melek mozaiklerine ulaşmak için kurulan, metrelerce yüksekteki tehlikeli, dar ve rüzgarlı ahşap restorasyon platformu."
             },
             {
               "id": "l3",
-              "name": "Arkeoloji Deposu",
-              "icon": "📦",
-              "description": "Müzenin alt katında yer alan, sadece mermer taş blokların, iskelelerin ve kazı aletlerinin üst üste yığıldığı geniş ve tozlu malzeme odası."
-            },
-            {
-              "id": "l4",
-              "name": "Boğaz Kıyısı",
-              "icon": "🌊",
-              "description": "Sarayburnu'nun azgın dalgalarının vurduğu, rüzgarlı, ferah ve tamamen açık havada olan tehlikeli kayalık sahil hattı."
+              "name": "Kazı Çadırı",
+              "icon": "⛺",
+              "description": "Mabedin dış avlusunda kurulan; içi çamurlu çizme izleri, rulo halindeki parşömenler ve restorasyon planlarıyla dolu dış çalışma alanı."
             }
           ],
           "clues": [
             {
-              "id": "c1",
-              "text": "Maktulün bedeninde tek bir çizik veya küt travma yoktu; ancak ciğerlerindeki şiddetli asidik yanıklar ve havadaki o acı badem kokusu, doğrudan odayı dolduran sinsi ve görünmez bir bulutu işaret ediyordu.",
-              "type": "kanit",
+              "id": "c2",
+              "title": "Klinik Muayene Raporu",
+              "text": "Hastane kayıtlarındaki nörolojik muayene ve kas kuvveti testleri, kollarına vuran şiddetli kas zayıflığı (miyopati) olan yabancı araştırmacının belirli bir ağırlığın üzerindeki hiçbir cismi kaldıramayacağını, hatta yerinden bile oynatamayacağını tıbbi olarak belgeledi.",
+              "type": "adli",
               "mechanicType": "text",
               "revealOrder": 1,
               "isRevealed": true,
-              "pointCost": 0,
-              "title": "Ölüm Yeri ve Nedeni",
-              "deductionHint": "Ölüm silahı hançer veya taş değil; kapalı odayı dolduran sinsi bir askeri gaz."
+              "pointCost": 60,
+              "isBonus": false,
+              "deductionHint": "Bu anatomik kısıtlama bir ağırlık sınırı koyuyor; silah profillerini incele — hangi cisim bu zayıf kollar için fazla ağır kalır?"
             },
             {
-              "id": "c2",
-              "text": "Adli inceleme, bu yoğun ve ağır ölümcül bulutun rüzgarlı sahil şeritlerinde veya havadar eğlence mekanlarında toplanamayacağını; ancak hava sirkülasyonu olmayan, metrelerce aşağıdaki kilitli taş odalarda birikebileceğini saptadı.",
-              "type": "kanit",
+              "id": "c1",
+              "title": "Vardiya Kayıtları",
+              "text": "Maktulün son nefesini verdiği o çamurlu dış çalışma alanında cinayet mahalli kordona alındı. Olay gecesi tutulan resmi vardiya defteri, mabedin o iri yapılı koruyucusunun cinayet anında metrelerce yüksekteki o rüzgarlı ahşap platformda devriye attığını kanıtlıyordu.",
+              "type": "tanik",
               "mechanicType": "text",
+              "isCrimeAnchor": true,
               "revealOrder": 2,
               "isRevealed": false,
-              "pointCost": 100,
-              "title": "Arkeologun Son Notu",
-              "deductionHint": "Cinayet rüzgarlı veya açık alanlarda değil, havasız ve metrelerce aşağıdaki dehlizde işlendi."
+              "pointCost": 0,
+              "isBonus": false,
+              "deductionHint": "Cinayetin mekanı açıkça belliyken, bu vardiya defteri ızgarada o emektar koruyucuyu hangi yüksek alanla eşleştirmeni sağlar?"
             },
             {
               "id": "c3",
-              "text": "Galata kolluk kuvvetlerinin mühürlü tutanakları, yeraltı dünyasının o silik isminin gece yarısı kavgaya karıştığı için saatlerce demir parmaklıklar ardında tutulduğunu kanıtlıyordu.",
-              "type": "eleme",
-              "mechanicType": "text",
+              "title": "Camdaki Soluk Leke",
+              "text": "Olay yerindeki laboratuvar şişesinin puslu yüzeyinde, kimyasal buharların arasında silik bir doku kalıntısı fark edildi. Bu izin gerçek sahibi belirlenirse, cinayet silahını elinde tutan kişi de açığa çıkacaktı.",
+              "type": "parmak_izi",
+              "mechanicType": "parmak_izi",
+              "parmakIziVerisi": {
+                "sahneGorseli": "fp_whorl",
+                "aciklama": "Şişenin yüzeyindeki bu izi doğru sahibiyle eşleştir; bu eşleşme, katili cinayet silahına bağlayan halkayı tamamlayacak. Camın soğuk ve kavisli yüzeyine hapsolmuş ince çizgiler, sahibinin kimliğini sessizce fısıldıyor.",
+                "izler": [
+                  {
+                    "izId": "iz_asit",
+                    "konum": "Cam Şişe Yüzeyi",
+                    "eslesme": "s1",
+                    "ipucu": "Yoğun sarmal hatlar (whorl) barındıran, soluk ve ince bir doku kalıntısı."
+                  }
+                ],
+                "sonuc": "İnce kıvrımlar ve soluk çizgiler, karanlık mahzenin gölgelerinde yankılanan fısıltılara karıştı."
+              },
               "revealOrder": 3,
               "isRevealed": false,
-              "pointCost": 100,
-              "title": "Kimyasal Analiz",
-              "deductionHint": "Kaçakçı Yorgo o gece nezaretteydi. Cinayeti işlemesi imkansız."
+              "pointCost": 60,
+              "isBonus": false,
+              "deductionHint": "Bu ince ve sarmal biyometrik doku, ızgarada hangi şüpheliyi o yakıcı sıvıya yönlendirir?"
             },
             {
               "id": "c4",
-              "text": "Kullanılan o sinsi kimyasalın, ancak Birinci Cihan Harbi'nin çamurlu siperlerinde zehirli gaz teçhizatları kullanmış, yabancı askeri mühimmat formüllerine hakim bir uzman tarafından sentezlenebileceği ortaya çıktı.",
-              "type": "adli",
+              "title": "Kriminal Zemin Analizi",
+              "text": "Laboratuvarın çamur analizleri; o yabancı araştırmacının ayakkabılarında o geceye ait tek bir toprak partikülü dahi olmadığını ve kurbanın bulunduğu o çamurlu açık alana kesinlikle adım atmadığını ispatladı.",
+              "type": "kanit",
               "mechanicType": "text",
               "revealOrder": 4,
               "isRevealed": false,
-              "pointCost": 100,
-              "title": "Meyhane Sahibi İfadesi",
-              "deductionHint": "Sıradan bir memur veya asistan bu askeri gazı üretemez. Geçmişinde savaş kimyası olan biri var."
+              "pointCost": 60,
+              "isBonus": false,
+              "deductionHint": "Toprak partiküllerinin eksikliği, ızgarada o yabancı uzmanı cinayetin işlendiği o dış mekandan nasıl uzaklaştırır?"
             },
             {
               "id": "c5",
-              "text": "Maktulün avucunda sıktığı kripto notta, 'Harita Londra'ya ulaşmalı' ibaresi Sezar şifrelemesiyle gizlenmişti; bu durum, kazı alanındaki o soğukkanlı yabancının asıl niyetini deşifre ediyordu.",
-              "type": "sifreli",
-              "mechanicType": "sifreli_mesaj",
-              "sifre": {
-                "sifrelenmis": "PEMBROOKE LONDRA TELGRAF HARITA",
-                "sifreleTuru": "cesar_sifresi_plus1",
-                "cozumIpucu": "Harfleri alfabetik olarak bir blok kaydırarak oku.",
-                "aciklama": "Pembrooke Londra telgraf harita"
-              },
+              "title": "Bütçe İhaneti",
+              "text": "Bonus: Maktulün şifreli dolabından çıkan denetim belgeleri, detaycı yöneticinin restorasyon fonlarını zimmetine geçirdiğini kanıtlıyordu. Arkeoloğun bu sahtekarlığı ihbar etmesini engellemek için onu acilen susturması gerekiyordu.",
+              "type": "dogrudan",
+              "mechanicType": "text",
               "revealOrder": 5,
               "isRevealed": false,
-              "pointCost": 100,
-              "title": "Kripta Kapı İzi",
-              "deductionHint": "İngiliz ajanın haritayı ele geçirmek ve kurbanı susturmak için devasa bir motifi vardı."
+              "pointCost": 40,
+              "isBonus": true,
+              "deductionHint": "Milyonluk vurgunu örtbas etme telaşı, ızgarada o hırslı yöneticiyi doğrudan o sinsi laboratuvar sıvısıyla nasıl eşleştirir?"
             },
             {
               "id": "c6",
-              "text": "O zifiri karanlık dehlizin tozlu zemininde, İngiliz ordusu envanterine kayıtlı askeri botların derin izleri ile kurbanın elinden zorla çekilip alınmış deri harita çantasının kopuk kayışı yan yana duruyordu.",
-              "type": "dogrudan",
+              "title": "Gümrük İstihbaratı",
+              "text": "Bonus: Gümrük muhafaza istihbaratı, sabırsız yabancı araştırmacının Londra'daki bir müzeyle gizli bir anlaşma yaptığını ve kazılarda çıkarılan o tarihi kesici aleti çalma planı kurduğunu doğruladı. Bu paha biçilemez eseri ele geçirme hırsı onu tüketiyordu.",
+              "type": "tanik",
               "mechanicType": "text",
               "revealOrder": 6,
               "isRevealed": false,
-              "pointCost": 100,
-              "title": "Yorgo'nun Alibisi",
-              "deductionHint": "Yabancı ajan gazı dehlize bıraktı ve haritayı güç kullanarak aldı."
+              "pointCost": 40,
+              "isBonus": true,
+              "deductionHint": "Bu uluslararası kaçakçılık anlaşması, ızgarada o sabırsız araştırmacıyı doğrudan hangi tarihi aletle eşleştirmeni sağlar?"
             }
           ],
           "solution": {
-            "suspectId": "s2",
-            "weaponId": "w4",
-            "locationId": "l1"
+            "suspectId": "s1",
+            "weaponId": "w2",
+            "locationId": "l3"
           },
-          "solutionNarrative": "İngiliz Arkeolog Pembrooke, British Museum'un emriyle haritayı ele geçirmek için arkeologla buluştu. Anlaşamayınca, askeri geçmişinin verdiği bilgiyle kriptanın dar alanına hidrojensiyanür gazı bastı. Haritayı çalsa da, geride bıraktığı kripto notlar ve bot izleri yakalanmasına yetti.",
-          "specialMechanic": "sifreli_mesaj_ve_parmak_izi"
+          "solutionNarrative": "Mimar Zeynep Hanım, restorasyon fonlarından çaldığı paraların baş arkeolog tarafından fark edildiğini anladı. Onu dışarıdaki kazı çadırına çağırdı. Mozaik temizliği bahanesiyle yanında getirdiği asidik çözücüyü kullanarak kurbanı acımasızca susturdu. Kimyasal şişesinin üzerinde unuttuğu sarmal parmak izi ise bu kibirli planın sonunu getirdi.",
+          "specialMechanic": "parmak_izi_mini_oyun"
         }
       ]
     },
