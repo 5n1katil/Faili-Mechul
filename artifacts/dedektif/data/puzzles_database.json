@@ -783,7 +783,7 @@
           "stars": "★★★★★",
           "gridSize": "3x3",
           "timeLimit": 480,
-          "story": "Bakanlar Kurulu'nun tarihi kararıyla Ayasofya'nın camiden müzeye dönüştürülme çalışmaları başlamıştı. Yüzlerce yıllık mozaikler gün yüzüne çıkarılırken, baş arkeolog karanlık bir gecede ölü bulundu.\n\nErtesi sabah, kurbanın elindeki eksik restorasyon notları ve olay yerindeki ağır kimyasal kokusu, bu ölümün sıradan bir kaza olmadığını haykırıyordu. Bizans'tan kalma gizli bir dehlizin haritası kayıptı ve ihanet, bu kutsal mekânın taşlarına işlenmişti.",
+          "story": "Bakanlar Kurulu'nun tarihi kararıyla Ayasofya'nın camiden müzeye dönüştürülme çalışmaları başlamıştı. Yüzlerce yıllık mozaikler gün yüzüne çıkarılırken, baş arkeolog karanlık bir gecede ölü bulundu.\n\nErtesi sabah, kurbanın elindeki eksik restorasyon notları ve olay yerindeki ağır kimyasal kokusu, bu ölümün sıradan bir kaza olmadığını haykırıyordu. Bizans'tan kalma gizli bir dehlizin haritası kayıptı ve ihanet, bu kutsal mabedin gölgelerinde gezinen üç kişiden birinin eseriydi. Dedektif olarak vazifeniz; imparatorluklara başkentlik yapmış bu kadim duvarların arasındaki hakikati gün yüzüne çıkarmak, hainin kim olduğunu, hangi alanda çalıştığını ve arkeoloğu hangi sinsi yöntemle susturduğunu çözmektir.",
           "atmosphere": "Küf ve eski kağıt kokusu. Kubbede yankılanan ayak sesleri. Titreyen gaz lambaları.",
           "suspects": [
             {
@@ -917,7 +917,7 @@
             {
               "id": "c5",
               "title": "Bütçe İhaneti",
-              "text": "Bonus: Maktulün şifreli dolabından çıkan denetim belgeleri, detaycı yöneticinin restorasyon fonlarını zimmetine geçirdiğini kanıtlıyordu. Arkeoloğun bu sahtekarlığı ihbar etmesini engellemek için onu acilen susturması gerekiyordu.",
+              "text": "Maktulün şifreli dolabından çıkan denetim belgeleri, detaycı yöneticinin restorasyon fonlarını zimmetine geçirdiğini kanıtlıyordu. Arkeoloğun bu sahtekarlığı ihbar etmesini engellemek için onu acilen susturması gerekiyordu.",
               "type": "dogrudan",
               "mechanicType": "text",
               "revealOrder": 5,
@@ -929,7 +929,7 @@
             {
               "id": "c6",
               "title": "Gümrük İstihbaratı",
-              "text": "Bonus: Gümrük muhafaza istihbaratı, sabırsız yabancı araştırmacının Londra'daki bir müzeyle gizli bir anlaşma yaptığını ve kazılarda çıkarılan o tarihi kesici aleti çalma planı kurduğunu doğruladı. Bu paha biçilemez eseri ele geçirme hırsı onu tüketiyordu.",
+              "text": "Gümrük muhafaza istihbaratı, sabırsız yabancı araştırmacının Londra'daki bir müzeyle gizli bir anlaşma yaptığını ve kazılarda çıkarılan o tarihi kesici aleti çalma planı kurduğunu doğruladı. Bu paha biçilemez eseri ele geçirme hırsı onu tüketiyordu.",
               "type": "tanik",
               "mechanicType": "text",
               "revealOrder": 6,

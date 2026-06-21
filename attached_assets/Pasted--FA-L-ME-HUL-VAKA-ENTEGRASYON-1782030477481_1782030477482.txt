@@ -1,0 +1,204 @@
+/* ============================================================
+ *  FAİLİ MEÇHUL — VAKA ENTEGRASYON TALİMATI (Replit / Cursor)
+ *  Bu vaka bir MİNİ OYUN içeriyor. Aşağıdaki adımları uygula,
+ *  sonra alttaki JSON'u vaka havuzuna ekle. JSON'a DOKUNMA;
+ *  yalnızca görsel eşlemesini bu talimata göre yap.
+ * ------------------------------------------------------------
+ *  [PARMAK İZİ MİNİ OYUNU]
+ *  Parmak izi görselleri kod havuzundaki HAZIR varlıklardır.
+ *  Geçerli desen anahtarları (her biri havuzdaki bir görsele karşılık gelir):
+ *    fp_whorl (sarmal) | fp_arch (kemer) | fp_loop_left (sol ilmek) | fp_loop_right (sağ ilmek)
+ *
+ *  1) Her şüphelinin "parmakIziDeseni" alanı, o şüphelinin profil kartında
+ *     gösterilecek parmak izi görselinin havuz anahtarıdır:
+ *       - s1 (Mimar Zeynep Hanım) → fp_whorl
+ *       - s2 (Prof. Thomas) → fp_arch
+ *       - s3 (Bekçi Halil) → fp_loop_right
+ *
+ *  2) Her parmak izi ipucundaki "parmakIziVerisi.sahneGorseli", OLAY YERİNDE
+ *     bulunan izin görselidir (oyuncu bununla şüpheli desenlerini karşılaştırır).
+ *     Doğru eşleşen şüpheli "izler[].eslesme" alanındadır:
+ *       - c3: sahne izi "fp_whorl" → doğru şüpheli s1 (Mimar Zeynep Hanım)
+ *
+ *  3) sahneGorseli ile katilin parmakIziDeseni AYNI havuz görseli olmalı —
+ *     oyuncu izi katile eşleyince eşleşme doğrulanır. (Simülatör bunu kontrol etti.)
+ *  4) Daha önceki parmak izi vakalarındaki AYNI havuz görsellerini kullan;
+ *     yeni görsel üretme — anahtarlar (fp_*) zaten havuzdaki dosyalara bağlı.
+ * ------------------------------------------------------------
+ *  specialMechanic: "parmak_izi_mini_oyun"
+ *  Sorun olursa: önce bu talimatı, sonra JSON şemasını uygula.
+ * ============================================================ */
+
+{
+  "puzzleId": "ott_005_v29_ileri_deduksiyon",
+  "title": "Ayasofya'nın Son Sırrı",
+  "subtitle": "Ayasofya Çevresi, İstanbul 1934",
+  "difficulty": 5,
+  "difficultyLabel": "Efsane",
+  "stars": "★★★★★",
+  "gridSize": "3x3",
+  "timeLimit": 480,
+  "story": "Bakanlar Kurulu'nun tarihi kararıyla Ayasofya'nın camiden müzeye dönüştürülme çalışmaları başlamıştı. Yüzlerce yıllık mozaikler gün yüzüne çıkarılırken, baş arkeolog karanlık bir gecede ölü bulundu.\n\nErtesi sabah, kurbanın elindeki eksik restorasyon notları ve olay yerindeki ağır kimyasal kokusu, bu ölümün sıradan bir kaza olmadığını haykırıyordu. Bizans'tan kalma gizli bir dehlizin haritası kayıptı ve ihanet, bu kutsal mabedin gölgelerinde gezinen üç kişiden birinin eseriydi.\n\nDedektif olarak vazifeniz; imparatorluklara başkentlik yapmış bu kadim duvarların arasındaki hakikati gün yüzüne çıkarmak, hainin kim olduğunu, hangi alanda çalıştığını ve arkeoloğu hangi sinsi yöntemle susturduğunu çözmektir.",
+  "atmosphere": "Küf ve eski kağıt kokusu. Kubbede yankılanan ayak sesleri. Titreyen gaz lambaları.",
+  "suspects": [
+    {
+      "id": "s1",
+      "name": "Mimar Zeynep Hanım",
+      "icon": "👩",
+      "description": "Restorasyon projesinin başındaki hırslı yönetici. Mozaiklerin temizlenmesi için ağır kimyasallar kullanan, gizli ödenekler konusunda merhum arkeologla sürekli çatışan detaycı figür.",
+      "detail": "32 yaşında, detaycı ve daima eldiven takar.",
+      "parmakIziDeseni": "fp_whorl"
+    },
+    {
+      "id": "s2",
+      "name": "Prof. Thomas",
+      "icon": "👨‍🏫",
+      "description": "Bizans eserlerine takıntılı, heyecanlı ve sabırsız yabancı araştırmacı. Yeraltı sırlarına ulaşmak için her yolu mubah gören ve tarihi eserleri saplantı haline getiren tarihçi.",
+      "detail": "55 yaşında, kollarına vuran şiddetli kas zayıflığı var.",
+      "parmakIziDeseni": "fp_arch"
+    },
+    {
+      "id": "s3",
+      "name": "Bekçi Halil",
+      "icon": "👴",
+      "description": "Mabedin yıllardır koruyuculuğunu yapan iri yapılı emektar. Müzeye dönüştürme kararına içten içe öfkelenen, eski demir kapıların ve karanlık köşelerin hakimi.",
+      "detail": "65 yaşında, iri yapılı ve geleneklerine bağlı.",
+      "parmakIziDeseni": "fp_loop_right"
+    }
+  ],
+  "weapons": [
+    {
+      "id": "w1",
+      "name": "Antika Hançer",
+      "icon": "🗡️",
+      "description": "Bizans kazılarında yeni çıkarılan, üzerinde kurumuş toprak kalıntıları bulunan, tek darbede derin ve temiz bir kesik açabilen tarihi kesici alet."
+    },
+    {
+      "id": "w2",
+      "name": "Asidik Çözücü",
+      "icon": "🧪",
+      "description": "Mozaiklerin üzerindeki sıvaları eritmek için kullanılan, solunduğunda ciğerleri yakan ve deride anında ölümcül kimyasal yanıklar bırakan sinsi laboratuvar sıvısı."
+    },
+    {
+      "id": "w3",
+      "name": "Ağır Demir Anahtar",
+      "icon": "🗝️",
+      "description": "Mabedin eski ahşap kapılarını açan, kafatasına sertçe vurulduğunda ağır travmaya yol açabilecek, paslı ve devasa ezici kütle."
+    }
+  ],
+  "locations": [
+    {
+      "id": "l1",
+      "name": "Gizli Mahzen",
+      "icon": "🕳️",
+      "description": "Zeminin metrelerce altında yer alan, rutubet ve küf kokan, asırlık toz tabakalarıyla kaplı havasız yeraltı dehlizi."
+    },
+    {
+      "id": "l2",
+      "name": "İskele Tepesi",
+      "icon": "🪜",
+      "description": "Ana kubbedeki melek mozaiklerine ulaşmak için kurulan, metrelerce yüksekteki tehlikeli, dar ve rüzgarlı ahşap restorasyon platformu."
+    },
+    {
+      "id": "l3",
+      "name": "Kazı Çadırı",
+      "icon": "⛺",
+      "description": "Mabedin dış avlusunda kurulan; içi çamurlu çizme izleri, rulo halindeki parşömenler ve restorasyon planlarıyla dolu dış çalışma alanı."
+    }
+  ],
+  "clues": [
+    {
+      "id": "c2",
+      "title": "Klinik Muayene Raporu",
+      "text": "Hastane kayıtlarındaki nörolojik muayene ve kas kuvveti testleri, kollarına vuran şiddetli kas zayıflığı (miyopati) olan yabancı araştırmacının belirli bir ağırlığın üzerindeki hiçbir cismi kaldıramayacağını, hatta yerinden bile oynatamayacağını tıbbi olarak belgeledi.",
+      "type": "adli",
+      "mechanicType": "text",
+      "revealOrder": 1,
+      "isRevealed": true,
+      "pointCost": 60,
+      "isBonus": false,
+      "deductionHint": "Bu anatomik kısıtlama bir ağırlık sınırı koyuyor; silah profillerini incele — hangi cisim bu zayıf kollar için fazla ağır kalır?"
+    },
+    {
+      "id": "c1",
+      "title": "Vardiya Kayıtları",
+      "text": "Maktulün son nefesini verdiği o çamurlu dış çalışma alanında cinayet mahalli kordona alındı. Olay gecesi tutulan resmi vardiya defteri, mabedin o iri yapılı koruyucusunun cinayet anında metrelerce yüksekteki o rüzgarlı ahşap platformda devriye attığını kanıtlıyordu.",
+      "type": "tanik",
+      "mechanicType": "text",
+      "isCrimeAnchor": true,
+      "revealOrder": 2,
+      "isRevealed": false,
+      "pointCost": 0,
+      "isBonus": false,
+      "deductionHint": "Cinayetin mekanı açıkça belliyken, bu vardiya defteri ızgarada o emektar koruyucuyu hangi yüksek alanla eşleştirmeni sağlar?"
+    },
+    {
+      "id": "c3",
+      "title": "Camdaki Soluk Leke",
+      "text": "Olay yerindeki laboratuvar şişesinin puslu yüzeyinde, kimyasal buharların arasında silik bir doku kalıntısı fark edildi. Bu izin gerçek sahibi belirlenirse, cinayet silahını elinde tutan kişi de açığa çıkacaktı.",
+      "type": "parmak_izi",
+      "mechanicType": "parmak_izi",
+      "parmakIziVerisi": {
+        "sahneGorseli": "fp_whorl",
+        "aciklama": "Şişenin yüzeyindeki bu izi doğru sahibiyle eşleştir; bu eşleşme, katili cinayet silahına bağlayan halkayı tamamlayacak. Camın soğuk ve kavisli yüzeyine hapsolmuş ince çizgiler, sahibinin kimliğini sessizce fısıldıyor.",
+        "izler": [
+          {
+            "izId": "iz_asit",
+            "konum": "Cam Şişe Yüzeyi",
+            "eslesme": "s1",
+            "ipucu": "Yoğun sarmal hatlar (whorl) barındıran, soluk ve ince bir doku kalıntısı."
+          }
+        ],
+        "sonuc": "İnce kıvrımlar ve soluk çizgiler, karanlık mahzenin gölgelerinde yankılanan fısıltılara karıştı."
+      },
+      "revealOrder": 3,
+      "isRevealed": false,
+      "pointCost": 60,
+      "isBonus": false,
+      "deductionHint": "Bu ince ve sarmal biyometrik doku, ızgarada hangi şüpheliyi o yakıcı sıvıya yönlendirir?"
+    },
+    {
+      "id": "c4",
+      "title": "Kriminal Zemin Analizi",
+      "text": "Laboratuvarın çamur analizleri; o yabancı araştırmacının ayakkabılarında o geceye ait tek bir toprak partikülü dahi olmadığını ve kurbanın bulunduğu o çamurlu açık alana kesinlikle adım atmadığını ispatladı.",
+      "type": "kanit",
+      "mechanicType": "text",
+      "revealOrder": 4,
+      "isRevealed": false,
+      "pointCost": 60,
+      "isBonus": false,
+      "deductionHint": "Toprak partiküllerinin eksikliği, ızgarada o yabancı uzmanı cinayetin işlendiği o dış mekandan nasıl uzaklaştırır?"
+    },
+    {
+      "id": "c5",
+      "title": "Bütçe İhaneti",
+      "text": "Bonus: Maktulün şifreli dolabından çıkan denetim belgeleri, detaycı yöneticinin restorasyon fonlarını zimmetine geçirdiğini kanıtlıyordu. Arkeoloğun bu sahtekarlığı ihbar etmesini engellemek için onu acilen susturması gerekiyordu.",
+      "type": "dogrudan",
+      "mechanicType": "text",
+      "revealOrder": 5,
+      "isRevealed": false,
+      "pointCost": 40,
+      "isBonus": true,
+      "deductionHint": "Milyonluk vurgunu örtbas etme telaşı, ızgarada o hırslı yöneticiyi doğrudan o sinsi laboratuvar sıvısıyla nasıl eşleştirir?"
+    },
+    {
+      "id": "c6",
+      "title": "Gümrük İstihbaratı",
+      "text": "Bonus: Gümrük muhafaza istihbaratı, sabırsız yabancı araştırmacının Londra'daki bir müzeyle gizli bir anlaşma yaptığını ve kazılarda çıkarılan o tarihi kesici aleti çalma planı kurduğunu doğruladı. Bu paha biçilemez eseri ele geçirme hırsı onu tüketiyordu.",
+      "type": "tanik",
+      "mechanicType": "text",
+      "revealOrder": 6,
+      "isRevealed": false,
+      "pointCost": 40,
+      "isBonus": true,
+      "deductionHint": "Bu uluslararası kaçakçılık anlaşması, ızgarada o sabırsız araştırmacıyı doğrudan hangi tarihi aletle eşleştirmeni sağlar?"
+    }
+  ],
+  "solution": {
+    "suspectId": "s1",
+    "weaponId": "w2",
+    "locationId": "l3"
+  },
+  "solutionNarrative": "Mimar Zeynep Hanım, restorasyon fonlarından çaldığı paraların baş arkeolog tarafından fark edildiğini anladı. Onu dışarıdaki kazı çadırına çağırdı. Mozaik temizliği bahanesiyle yanında getirdiği asidik çözücüyü kullanarak kurbanı acımasızca susturdu. Kimyasal şişesinin üzerinde unuttuğu sarmal parmak izi ise bu kibirli planın sonunu getirdi.",
+  "specialMechanic": "parmak_izi_mini_oyun"
+}
