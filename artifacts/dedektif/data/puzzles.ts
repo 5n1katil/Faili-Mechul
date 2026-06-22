@@ -147,6 +147,10 @@ export interface Clue {
   deductionHint?: string;
   gorselAciklama?: string;
   sesMetni?: string;
+  audioUrl?: string;
+  audioAssetId?: string;
+  audioPlanned?: boolean;
+  audioFileName?: string;
   yuzlesmeDialogu?: ClueYuzlesmeDialog[];
   sifre?: ClueSifre;
   phoneVerisi?: CluePhoneVerisi;

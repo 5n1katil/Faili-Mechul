@@ -593,194 +593,12 @@
           "specialMechanic": "sifreli_mesaj_cozme"
         },
         {
-          "puzzleId": "ott_004",
-          "title": "Tersane Komutanının Sonu",
-          "subtitle": "Haliç Tersanesi, 1890",
-          "difficulty": 4,
-          "difficultyLabel": "Başkomiser",
-          "stars": "★★★★☆",
-          "gridSize": "4x4",
-          "timeLimit": 420,
-          "story": "Haliç Tersanesi'nin devasa iskelelerinde, Osmanlı donanmasının kaderini belirleyecek milyonluk zırhlı sözleşmesinden bir gece önce Tersane Komutanı ortadan kaldırıldı. Katran ve deniz kokan bu loş tersanede, katil hala işçilerin ve subayların arasında gizleniyor.",
-          "atmosphere": "Denizden gelen rüzgar. Demir kokusu. Gemilerin gıcırtısı.",
-          "suspects": [
-            {
-              "id": "s1",
-              "name": "İngiliz Mühendis Bradford",
-              "icon": "👷",
-              "description": "Sözleşmeyi kapmak için aylardır uğraşan yabancı şirketin kibar temsilcisi. Kaba kuvvete alışkın değil, viski ve purolarla lüks ofis ortamlarını tercih eden resmi İngiliz.",
-              "detail": "48 yaşında, resmi ve soğuk."
-            },
-            {
-              "id": "s2",
-              "name": "Osmanlı Subayı Nuri Bey",
-              "icon": "noun-emekli-albay-avatar.png",
-              "description": "Komutanın altındaki hırslı subay. Büyük tefeci borçları olan ve terfi alamazsa hacizle yüzleşecek olan, tersanedeki ağır metal işleyişine ve vinçlere hakim figür.",
-              "detail": "35 yaşında, hırslı, borçlu."
-            },
-            {
-              "id": "s3",
-              "name": "Alman Rakip Herr Vogel",
-              "icon": "👨‍💼",
-              "description": "Alman endüstri devinin temsilcisi. İngiliz mühendisle amansız bir rekabet halinde olan, sadece resmi ofis alanlarına giriş izni bulunan sabırsız diplomat.",
-              "detail": "52 yaşında, büyük bıyıklı, sabırsız."
-            },
-            {
-              "id": "s4",
-              "name": "Tersane Bekçisi Rıza",
-              "icon": "👮",
-              "description": "Tek kapı bekçisi. Giriş-çıkış defterini tutan, rüşvete zaafı olan ve ağır gemi yüklerini taşımaya alışkın, ambarların kokusuna bulanmış tersane emektarı.",
-              "detail": "60 yaşında, rüşvete açık olduğu söyleniyor."
-            }
-          ],
-          "weapons": [
-            {
-              "id": "w1",
-              "name": "Ağır Demir Çekiç",
-              "icon": "🔨",
-              "description": "Tersane ambarlarında gemi saclarını düzeltmek için kullanılan, tek darbede kafatasını ezebilecek, üzerinde pas ve deniz tuzu barındıran devasa iş çekici."
-            },
-            {
-              "id": "w2",
-              "name": "Deniz Halatı",
-              "icon": "🪢",
-              "description": "Gemileri rıhtıma bağlamakta kullanılan, sert ve pürüzlü kenevirden örülmüş, boyna dolandığında derin sürtünme izi bırakan kalın bağlama halatı."
-            },
-            {
-              "id": "w3",
-              "name": "Tabanca",
-              "icon": "🔫",
-              "description": "Subayların bellerinde taşıdığı, ateşlendiğinde tüm tersanede yankılanan barut kokulu ve yüksek sesli askeri mühimmat."
-            },
-            {
-              "id": "w4",
-              "name": "Zehirli İçki",
-              "icon": "🥃",
-              "description": "Viski kadehlerine karıştırılarak kalbi durdurması hedeflenen, ancak bu vakada maktul tarafından fark edilip tamamen yutulmayan arsenik terkibi."
-            }
-          ],
-          "locations": [
-            {
-              "id": "l1",
-              "name": "Gemi Güvertesi",
-              "icon": "⚓",
-              "description": "İnşaat halindeki zırhlının ana güvertesi; açık havada olan, rüzgar alan ve martı seslerinin hiç susmadığı geniş çalışma sahası."
-            },
-            {
-              "id": "l2",
-              "name": "Komutan Ofisi",
-              "icon": "📋",
-              "description": "Tersanenin en üst katında yer alan, ağır Hereke halılarıyla kaplı, komutanın diplomatları ağırladığı güvenli idari merkez."
-            },
-            {
-              "id": "l3",
-              "name": "Depo Ambarı",
-              "icon": "📦",
-              "description": "Tersanenin derinliklerinde yer alan, zemininde sıvı katran ve dev gemi çapa zincirlerinin bulunduğu, karanlık, izole ve boğucu malzeme deposu."
-            },
-            {
-              "id": "l4",
-              "name": "Rıhtım Kenarı",
-              "icon": "🌊",
-              "description": "Denize sıfır, tahta iskelelerin bulunduğu, dalgaların sürekli kayalıkları dövdüğü, işçilerin mesai bitimi toplandığı açık alan."
-            }
-          ],
-          "clues": [
-            {
-              "id": "c1",
-              "text": "Kurbanın şah damarındaki sağlamlık ve midesindeki dokunulmamış alkol, ölümün bir zehirden değil; kafatasına inen, üzerinde deniz tuzu ve pas barındıran kaba bir demir kütlesinden geldiğini gösteriyordu.",
-              "type": "kanit",
-              "mechanicType": "text",
-              "revealOrder": 1,
-              "isRevealed": true,
-              "pointCost": 0,
-              "title": "Ölüm Yeri",
-              "deductionHint": "Zehir veya boğma yok. Ölüm, paslı ve kaba bir demir darbesiyle geldi."
-            },
-            {
-              "id": "c2",
-              "text": "Cesedin ceketine yapışan yoğun zift kalıntıları ve ağır çapa zincirlerinin pası, infazın rüzgarlı sahalarda değil, tersanenin o zifiri karanlık ve havasız derinliklerinde yapıldığını mühürledi.",
-              "type": "kanit",
-              "mechanicType": "text",
-              "revealOrder": 2,
-              "isRevealed": false,
-              "pointCost": 80,
-              "title": "Bardak Parmak İzi",
-              "deductionHint": "Cinayet mahalli, zift ve katranın bulunduğu izole bir ambar."
-            },
-            {
-              "id": "c3",
-              "text": "Liman nizamiyesi kayıtları, yabancı diplomatların o fırtınalı saatlerde çoktan sıcak ofislerine veya lüks otellerine çekildiğini, ağır sanayi bölgesinde kimsenin kalmadığını gösteriyordu.",
-              "type": "tanik",
-              "mechanicType": "text",
-              "revealOrder": 3,
-              "isRevealed": false,
-              "pointCost": 80,
-              "title": "Bradford'un İfadesi",
-              "deductionHint": "Yabancı temsilciler olay saatinde tersanenin sanayi kısımlarında değillerdi."
-            },
-            {
-              "id": "c4",
-              "text": "Kırık viski kadehinin yüzeyinde, diplomatik ve zarif ellere değil; sürekli ağır silahlar, toplar ve askeri teçhizatlar taşımaktan nasırlaşmış, üniformalı bir ele ait taze izler parlıyordu.",
-              "type": "parmak_izi",
-              "mechanicType": "parmak_izi",
-              "parmakIziVerisi": {
-                "aciklama": "Viski kadehindeki taze parmak izini eşleştir.",
-                "izler": [
-                  {
-                    "izId": "iz_viski",
-                    "konum": "Kadeh Tabanı",
-                    "eslesme": "s2",
-                    "ipucu": "Nuri Bey'in askeri üniforma eldiven dokusuyla uyumlu taze parmak izi. Orta parmak baskısı öne çıkıyor."
-                  }
-                ],
-                "sonuc": "Bardağı son tutan: Nuri Bey. (s2)"
-              },
-              "revealOrder": 4,
-              "isRevealed": false,
-              "pointCost": 80,
-              "title": "Bekçi Rıza'nın Defteri",
-              "deductionHint": "O bardaktaki iz, tersanede askeri teçhizatla uğraşan birine ait."
-            },
-            {
-              "id": "c5",
-              "text": "Tersane kapısındaki gizli ses kaydında titreyen bir fısıltı: 'Elime bir kese altın sıkıştırdı... Nizamiye defterindeki o rütbeli ismin üzerini çizmemi, gece hiç burada olmamış gibi davranmamı emretti...'",
-              "type": "ses_kaydi",
-              "mechanicType": "ses_kaydi",
-              "sesMetni": "Nuri Bey bana 10 altın fırlattı... Giriş defterinden ismini karalamamı söyledi... Çıkış saatini boş bırakmamı istedi, mecbur kaldım amirim...",
-              "revealOrder": 5,
-              "isRevealed": false,
-              "pointCost": 80,
-              "title": "Silah Analizi",
-              "deductionHint": "Nizamiyeyi tutan bekçi, bir rütbelinin tersanedeki varlığını gizlemek için rüşvet almış."
-            },
-            {
-              "id": "c6",
-              "text": "Komutanın çalışma masasının gizli çekmecesinde, ağır tefeci borçları olan o ismin terfisini ve maaş artışını kesin olarak iptal eden kırmızı mühürlü emirname duruyordu.",
-              "type": "dogrudan",
-              "mechanicType": "text",
-              "revealOrder": 6,
-              "isRevealed": false,
-              "pointCost": 80,
-              "title": "Vogel'in İfadesi",
-              "deductionHint": "İptal edilen terfi ve devasa borç sarmalı, cinayetin ardındaki devasa motiftir."
-            }
-          ],
-          "solution": {
-            "suspectId": "s2",
-            "weaponId": "w1",
-            "locationId": "l3"
-          },
-          "solutionNarrative": "Osmanlı Subayı Nuri Bey, terfi raporunu imzalatmak için komutanla görüştü. Komutan reddedince onu depo ambarına çekti. Önce zehirli içkiyi sundu, komutan fark edince ağır demir çekiçle işini bitirdi. Bekçiyi altınla susturmaya çalışsa da parmak izleri ve ses kayıtları onu ele verdi.",
-          "specialMechanic": "parmak_izi_ve_ses_kaydi"
-        },
-        {
           "puzzleId": "ott_005",
           "title": "Ayasofya'nın Son Sırrı",
           "subtitle": "Ayasofya Çevresi, İstanbul · Kasım 1934",
-          "difficulty": 5,
-          "difficultyLabel": "Efsane",
-          "stars": "★★★★★",
+          "difficulty": 4,
+          "difficultyLabel": "Başkomiser",
+          "stars": "★★★★☆",
           "gridSize": "3x3",
           "timeLimit": 480,
           "specialMechanic": "parmak_izi_mini_oyun",
@@ -952,6 +770,218 @@
             "locationId": "l3"
           },
           "solutionNarrative": "Kazı Çadırı'nın suç mahalli olduğu baştan biliniyordu. Parmak izi, Thomas'ı Antika Hançer'e; emanet cetveli ise hançeri Gizli Mahzen'e bağladı. Halil'in İskele Tepesi'ndeki nöbeti, onu çadırdan ve hançerin izlediği mahzen hattından ayırdı. Geriye Zeynep kaldı. Sağ bileğindeki atel, Ağır Demir Anahtar'ı kullanmasını imkânsız kılıyor; bu nedenle Zeynep'in elindeki tek yöntem Asidik Çözücü oluyordu. Denetim defterinin açığa çıkaracağı para aktarımı da onun sessizliğe neden ihtiyaç duyduğunu gösterdi."
+        },
+        {
+          "puzzleId": "ott_004",
+          "title": "Tersane Komutanının Sonu",
+          "subtitle": "Haliç Tersanesi, İstanbul · 1890",
+          "difficulty": 5,
+          "difficultyLabel": "Efsane",
+          "stars": "★★★★★",
+          "gridSize": "4x4",
+          "timeLimit": 420,
+          "specialMechanic": "ses_kaydi",
+          "story": "1890. Haliç Tersanesi'nde, Osmanlı donanmasının kaderini değiştirecek zırhlı sözleşmesinin imzasından bir gece önce Tersane Komutanı Hüseyin Rauf Paşa öldürüldü. Cansız bedeni, cinayetin işlendiği Depo Ambarı'nda; katran lekeli çapa zincirlerinin ve yarı açık malzeme sandıklarının arasında bulundu.\n\nSözleşmenin asıl nüshası ortadan kaybolmuş, komutanın kilitli evrak çantasından yalnızca parçalanmış bir müzakere notu kalmıştı. İngiliz, Alman, subay ve bekçi... Dördünün de tersanede kalmak için bir nedeni vardı; fakat yalnız biri, gecenin gürültüsünü kendi lehine çevirecek kadar ileri gitmişti.\n\nDedektif olarak vazifeniz; karanlık ambarın suskun tanıklarını dinlemek, komutanı susturan kişiyi, kullandığı yöntemi ve suçun işlendiği yeri kesin olarak ortaya çıkarmaktır.",
+          "atmosphere": "Denizden gelen keskin rüzgâr, katran kokusu ve sancak direklerinden yükselen halat gıcırtıları; terk edilmiş ambarın içinde ağır ağır yankılanıyordu.",
+          "suspects": [
+            {
+              "id": "s1",
+              "name": "İngiliz Mühendis Bradford",
+              "icon": "👷",
+              "description": "İngiliz şirketinin zırhlı sözleşmesi için görevlendirdiği ölçülü temsilci. Müzakereleri yazılı taahhütler ve protokol üzerinden yürütür; tersane işçilerinin arasında bile ceketinin tozlanmasına tahammül edemeyen soğuk bir pazarlıkçıdır.",
+              "detail": "48 yaşında. Sol elinin işaret parmağında eski bir mühür yüzüğünün bıraktığı ince çukur vardır."
+            },
+            {
+              "id": "s2",
+              "name": "Osmanlı Subayı Nuri Bey",
+              "icon": "🎖️",
+              "description": "Komutanın altında görev yapan, sözleşme heyetinde yer alma arzusundaki hırslı subay. Son aylarda artan borçları ve ertelenen terfisi, disiplinli görünüşünün altında keskin bir baskı yaratmıştır.",
+              "detail": "35 yaşında. Sağ avucunda kızağın metal bağlantılarından kalma eski, sertleşmiş bir nasır taşır."
+            },
+            {
+              "id": "s3",
+              "name": "Alman Rakip Herr Vogel",
+              "icon": "👨‍💼",
+              "description": "Alman endüstri şirketinin resmî temsilcisi. Sözleşmenin İngilizlere gitmesini engellemek için İstanbul'a gelmiş; nezaketini hiç bozmadan baskı kurabilen, sabırsız ve hesapçı bir diplomat.",
+              "detail": "52 yaşında. Sağ elinde siyah deri evrak çantası taşır; imzalı izin olmadan kapalı çalışma bölümlerine girmeyi reddeder."
+            },
+            {
+              "id": "s4",
+              "name": "Tersane Bekçisi Rıza",
+              "icon": "👮",
+              "description": "Gece kapılarından ve geçiş defterlerinden sorumlu, tersanenin en eski bekçisi. İşçilerin küçük kaçamaklarını görmezden gelmeye meyillidir; fakat kendi imzasını taşıyan kayıtlara karşı fazlasıyla dikkatli davranır.",
+              "detail": "60 yaşında. Boynunda, nöbet noktalarını işaretlemek için kullandığı aşınmış bakır tokalı kart taşır."
+            }
+          ],
+          "weapons": [
+            {
+              "id": "w1",
+              "name": "Ağır Demir Çekiç",
+              "icon": "🔨",
+              "description": "Gemi saclarını düzeltmek için kullanılan, iki elle kavranmadan güvenle kaldırılamayacak kadar ağır dövme demir iş çekici. Paslı başlığı tek darbede ağır travma bırakabilecek yoğunluktadır.",
+              "detail": ""
+            },
+            {
+              "id": "w2",
+              "name": "Deniz Halatı",
+              "icon": "🪢",
+              "description": "Gemileri rıhtıma bağlamakta kullanılan, ıslanınca daha da sertleşen kalın kenevir bağlama halatı. Pürüzlü lifleri temas ettiği yerde belirgin sürtünme izleri bırakır.",
+              "detail": ""
+            },
+            {
+              "id": "w3",
+              "name": "Tabanca",
+              "icon": "🔫",
+              "description": "Subayların belinde taşıdığı, kapalı bir mekânda patladığında barut kokusu ve kulakları delen yankı bırakan yüksek sesli askerî mühimmat.",
+              "detail": ""
+            },
+            {
+              "id": "w4",
+              "name": "Zehirli İçki",
+              "icon": "🥃",
+              "description": "Kristal kadehe karıştırıldığında rengini neredeyse hiç değiştirmeyen, keskin badem kokulu arsenik terkibi. Yalnızca birkaç yudumda bile ölümcül olabilecek şekilde hazırlanmıştır.",
+              "detail": ""
+            }
+          ],
+          "locations": [
+            {
+              "id": "l1",
+              "name": "Gemi Güvertesi",
+              "icon": "⚓",
+              "description": "İnşaat hâlindeki zırhlının açık ana güvertesi. Rüzgârın kesilmediği, vinç sesleri ve martı çığlıklarının birbirine karıştığı geniş çalışma sahası.",
+              "detail": ""
+            },
+            {
+              "id": "l2",
+              "name": "Komutan Ofisi",
+              "icon": "📋",
+              "description": "Tersanenin üst katındaki kilitli idari oda. Burada sözleşme taslakları, yabancı heyet kayıtları ve komutana ait mühürlü içki dolabı tutulur.",
+              "detail": ""
+            },
+            {
+              "id": "l3",
+              "name": "Depo Ambarı",
+              "icon": "📦",
+              "description": "Tersanenin derininde bulunan, zemini katranla lekeli, dev çapa zincirleri ve ağır malzeme sandıklarıyla dolu karanlık depo. Geceleri kapısı içeriden sürgülenir.",
+              "detail": ""
+            },
+            {
+              "id": "l4",
+              "name": "Rıhtım Kenarı",
+              "icon": "🌊",
+              "description": "Tahta iskelelerin denize uzandığı açık kıyı hattı. Bağlama halatları burada denetlenir; gece vardiyasında dalga sesi konuşmaları bastıracak kadar yükselir.",
+              "detail": ""
+            }
+          ],
+          "clues": [
+            {
+              "id": "c1",
+              "title": "Balistik Sessizlik",
+              "type": "adli",
+              "mechanicType": "text",
+              "text": "Olay yerinin duvarlarında, malzeme sandıklarında ve maktulün giysilerinde kurşun çekirdeği, barut isi ya da namlu artığı bulunmadı. Adli ekip, kapalı depoda yüksek sesli askerî mühimmatın o gece kesinlikle ateşlenmediğini raporladı.",
+              "deductionHint": "Kapalı bir depoda patlayan silah hangi izleri bırakırdı? Bu izlerin yokluğu, listedeki hangi silahı suç mahallinden eler?",
+              "isBonus": false,
+              "revealOrder": 1,
+              "isRevealed": true,
+              "pointCost": 0
+            },
+            {
+              "id": "c2",
+              "title": "Bağlama Teslim Fişi",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Gece yarısı düzenlenen malzeme teslim fişinde, kalın ve ıslak kenevirden örülü bir halatın teslim alanı olarak yalnız bekçinin imzası yer alıyordu. Fiş, halatın tersanenin hangi bölümünde kullanılacağını ya da nereye götürüldüğünü kayda geçirmiyordu.",
+              "deductionHint": "Teslim alan imzası ve halatın tarifi, hangi şüpheli–silah hücresine ✓ koydurur?",
+              "isBonus": false,
+              "revealOrder": 2,
+              "isRevealed": false,
+              "pointCost": 0
+            },
+            {
+              "id": "c3",
+              "title": "Katranın Sessiz Tanığı",
+              "type": "adli",
+              "mechanicType": "text",
+              "text": "Sürgülü kapının eşiğinde ve zemindeki ıslak katranda, içeri giren her ayakkabının tabanına yapışan siyah kristaller bulundu. İngiliz temsilcinin cilalı botlarından alınan örneklerde ise yalnız kuru ofis tozu vardı; katran kristaline rastlanmadı.",
+              "deductionHint": "Ambarın katranı içeri giren birinin botunda hangi izi bırakırdı? Bu izin yokluğu, hangi şüpheliyi suç mahallinin dışına iter?",
+              "isBonus": false,
+              "revealOrder": 3,
+              "isRevealed": false,
+              "pointCost": 0
+            },
+            {
+              "id": "c4",
+              "title": "Mühürlü Servis Defteri",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Gece teslim defterinde, İngiliz şirketinin resmî temsilcisine bir kristal kadeh ile küçük bir şişe verildiği yazıyordu. Şişenin yanında, “kadehe katıldığında rengini değiştirmez” notu vardı. Tersane kayıtlarında bu sıfatla yalnız bir kişi geçiyordu.",
+              "deductionHint": "İngiliz heyetine teslim edilen renksiz karışım, hangi temsilciyi hangi yöntemle eşleştirir?",
+              "isBonus": false,
+              "revealOrder": 4,
+              "isRevealed": false,
+              "pointCost": 0
+            },
+            {
+              "id": "c5",
+              "title": "Nizamiye Geçişleri",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Gece kapısının iki nüshalı defterinde, Alman şirketi temsilcisinin imzası yalnız tersaneden ayrıldığı satırda görülüyor. İç koridorun ikinci defterinde ise aynı kişiye ait giriş mührü ya da imza yok. Saatler çakışıyor: tersaneden ayrılan bu kişi, katran lekeli kapalı depoya giden koridora dönmemiş.",
+              "deductionHint": "Bu iki kayıt, hangi temsilciyi katran lekeli depodan eler?",
+              "isBonus": false,
+              "revealOrder": 5,
+              "isRevealed": false,
+              "pointCost": 0
+            },
+            {
+              "id": "c6",
+              "title": "Rıhtım Nöbet Silindiri",
+              "type": "ses_kaydi",
+              "mechanicType": "ses_kaydi",
+              "text": "Rıhtım nöbet direğine bağlı küçük fonograf silindiri, gece yarısı yapılan ikinci yoklamayı kaydetmişti. Metal damga sesiyle kesilen kısa kayıt, kıyı hattındaki görevin kim tarafından tutulduğunu ve nöbetçinin o noktadan ayrılıp ayrılmadığını ortaya koyuyor.",
+              "deductionHint": "Kaydı dinle: Nöbetçi kim ve gece boyunca hangi sahada kaldığını söylüyor?",
+              "isBonus": false,
+              "revealOrder": 6,
+              "isRevealed": false,
+              "pointCost": 0,
+              "sesMetni": "ZAMAN MEMURU (uzaktan, resmi bir tonla): Rıhtım Kenarı, ikinci yoklama. Nöbetçi?\n\nRIZA (rüzgârın ve dalgaların arasından): Rıza. Kıyı halatları yerinde; kartımı yeniden damgalıyorum.\n\n[METAL DAMGA SESİ]\n\nZAMAN MEMURU: İç koridor devriyesine geçecek misin?\n\nRIZA (kararlı): Hayır. Dalga yükseldi. Şafak sökene kadar rıhtım direğinden ayrılmam.",
+              "audioUrl": "/assets/cases/ott_004/audio/ott_004_c6_rihtim_nobet_silindiri.mp3",
+              "audioAssetId": "audio_ott_004_c6_rihtim_nobet_silindiri",
+              "audioPlanned": true,
+              "audioFileName": "ott_004_c6_rihtim_nobet_silindiri.mp3"
+            },
+            {
+              "id": "c7",
+              "title": "Güverte İnceleme İzni",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Zırhlı geminin açık ana güvertesinde yapılacak gece incelemesi için düzenlenen izin belgesinde, Alman şirketinin resmî temsilcisinin adı ve imzası yer alıyordu. İzin, incelemenin yalnız bu çalışma sahasında yapılacağını belirtiyordu.",
+              "deductionHint": "Açık güverte incelemesi için adı yazılı temsilciyi hangi mekânla eşleştirirsin?",
+              "isBonus": true,
+              "revealOrder": 7,
+              "isRevealed": false,
+              "pointCost": 40
+            },
+            {
+              "id": "c8",
+              "title": "Gece Ziyaretçi Defteri",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Gece ziyaretçi defterinde, İngiliz şirketinin temsilcisinin imzasının karşısına “sözleşme görüşmesi — üst kattaki kilitli idari oda” notu düşülmüştü. Kayıt, görüşmenin başladığı saati ve temsilcinin o gece görüştüğü yeri kesinleştiriyordu.",
+              "deductionHint": "Sözleşme görüşmesine çağrılan temsilciyi hangi mekânla eşleştirirsin?",
+              "isBonus": true,
+              "revealOrder": 8,
+              "isRevealed": false,
+              "pointCost": 40
+            }
+          ],
+          "solution": {
+            "suspectId": "s2",
+            "weaponId": "w1",
+            "locationId": "l3"
+          },
+          "solutionNarrative": "Suç mahallinin Depo Ambarı olduğu baştan beri kesindi. Rıza'nın teslim fişi, deniz halatını onun adına kaydetti; rıhtım nöbet silindiri ise gece yarısı kıyı hattındaki görevini sabitledi. Bradford'un botlarında katran kristali bulunmaması onu ambarın dışına iterken, servis defteri onu zehirli içkiyle ilişkilendirdi. Herr Vogel'in depoya hiç girmediği geçiş kayıtlarıyla anlaşıldı. Böylece karanlık ambar hattında yalnız Nuri Bey kaldı. Sahiplik kayıtları diğer araçları dışarıda bırakmış, olay yeri bulguları da gürültülü seçeneği elemişti; komutanın ölümünü açıklayan tek yöntem Ağır Demir Çekiçti. Ek belgeler, Vogel'in Gemi Güvertesi'ndeki incelemesini ve Bradford'un Komutan Ofisi'ndeki sözleşme görüşmesini ayrıca doğruladı."
         }
       ]
     },

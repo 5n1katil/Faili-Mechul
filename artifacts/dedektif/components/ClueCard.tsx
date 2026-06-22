@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import type { ComponentProps } from "react";
 import { Alert, Image, Platform, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import { Audio } from "expo-av";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useGame } from "@/context/GameContext";
 import Animated, {
@@ -121,18 +122,109 @@ function GorselIpucuBlock({ aciklama }: { aciklama: string }) {
   );
 }
 
-function SesKaydiBlock({ sesMetni }: { sesMetni: string }) {
+function SesKaydiBlock({ sesMetni, audioUrl }: { sesMetni: string; audioUrl?: string }) {
+  const [showTranscript, setShowTranscript] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const soundRef = useRef<Audio.Sound | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (soundRef.current) {
+        soundRef.current.unloadAsync();
+      }
+    };
+  }, []);
+
+  const formatTime = (ms: number) => {
+    const s = Math.floor(ms / 1000);
+    return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;
+  };
+
+  const handlePlayPause = async () => {
+    if (!audioUrl) return;
+    try {
+      if (soundRef.current) {
+        const status = await soundRef.current.getStatusAsync();
+        if (status.isLoaded) {
+          if (status.isPlaying) {
+            await soundRef.current.pauseAsync();
+            setIsPlaying(false);
+          } else {
+            await soundRef.current.playAsync();
+            setIsPlaying(true);
+          }
+          return;
+        }
+      }
+      setIsLoading(true);
+      await Audio.setAudioModeAsync({ playsInSilentModeIOS: true });
+      const { sound } = await Audio.Sound.createAsync(
+        { uri: audioUrl },
+        { shouldPlay: true },
+        (status) => {
+          if (status.isLoaded) {
+            if (status.durationMillis && status.durationMillis > 0) {
+              setProgress(status.positionMillis / status.durationMillis);
+            }
+            if (status.didJustFinish) {
+              setIsPlaying(false);
+              setProgress(0);
+            }
+          }
+        }
+      );
+      soundRef.current = sound;
+      setIsPlaying(true);
+      setIsLoading(false);
+    } catch {
+      setIsLoading(false);
+      setIsPlaying(false);
+    }
+  };
+
   return (
     <View style={styles.sesBlock}>
       <View style={styles.sesHeader}>
         <MaterialIcons name="mic" size={14} color="#3b82f6" />
-        <Text style={styles.sesLabel}>SES KAYDI TRANSKRİPTİ</Text>
+        <Text style={styles.sesLabel}>SES KAYDI</Text>
         <View style={styles.sesBadge}>
-          <View style={styles.sesDot} />
-          <Text style={styles.sesRec}>REC</Text>
+          <View style={[styles.sesDot, isPlaying && styles.sesDotActive]} />
+          <Text style={styles.sesRec}>{isPlaying ? "LIVE" : "REC"}</Text>
         </View>
       </View>
-      <Text style={styles.sesText}>{sesMetni}</Text>
+
+      {audioUrl ? (
+        <View style={styles.sesPlayerRow}>
+          <Pressable onPress={handlePlayPause} style={styles.sesPlayBtn} disabled={isLoading}>
+            <MaterialIcons
+              name={isLoading ? "hourglass-empty" : isPlaying ? "pause" : "play-arrow"}
+              size={24}
+              color="#fff"
+            />
+          </Pressable>
+          <View style={styles.sesProgressBar}>
+            <View style={[styles.sesProgressFill, { width: `${progress * 100}%` as any }]} />
+          </View>
+        </View>
+      ) : (
+        <View style={styles.sesNoAudio}>
+          <MaterialIcons name="volume-off" size={14} color="#6b7280" />
+          <Text style={styles.sesNoAudioText}>Ses dosyası yükleniyor…</Text>
+        </View>
+      )}
+
+      <Pressable onPress={() => setShowTranscript(!showTranscript)} style={styles.sesTranscriptBtn}>
+        <MaterialIcons name={showTranscript ? "expand-less" : "expand-more"} size={14} color="#3b82f6" />
+        <Text style={styles.sesTranscriptLabel}>
+          {showTranscript ? "Kaydı Gizle" : "Kayıt Çözümlemesini Göster"}
+        </Text>
+      </Pressable>
+
+      {showTranscript && (
+        <Text style={styles.sesText}>{sesMetni}</Text>
+      )}
     </View>
   );
 }
@@ -942,7 +1034,7 @@ export default function ClueCard({
 
       case "ses_kaydi":
         return clue.sesMetni ? (
-          <SesKaydiBlock sesMetni={clue.sesMetni} />
+          <SesKaydiBlock sesMetni={clue.sesMetni} audioUrl={clue.audioUrl} />
         ) : null;
 
       case "tanik_yuzlesme":
@@ -1240,6 +1332,58 @@ const styles = StyleSheet.create({
     color: "#8cb4ff",
     lineHeight: 19,
     fontStyle: "italic",
+    marginTop: 6,
+  },
+  sesDotActive: {
+    backgroundColor: "#22c55e",
+  },
+  sesPlayerRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+    marginBottom: 8,
+  },
+  sesPlayBtn: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: "#3b82f6",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  sesProgressBar: {
+    flex: 1,
+    height: 4,
+    backgroundColor: "#1e3a5f",
+    borderRadius: 2,
+    overflow: "hidden",
+  },
+  sesProgressFill: {
+    height: "100%",
+    backgroundColor: "#3b82f6",
+    borderRadius: 2,
+  },
+  sesNoAudio: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+    marginBottom: 8,
+  },
+  sesNoAudioText: {
+    fontSize: 11,
+    color: "#6b7280",
+    fontStyle: "italic",
+  },
+  sesTranscriptBtn: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
+    paddingVertical: 4,
+  },
+  sesTranscriptLabel: {
+    fontSize: 11,
+    color: "#3b82f6",
+    fontWeight: "600",
   },
   yuzlesmeBlock: {
     marginTop: 6,

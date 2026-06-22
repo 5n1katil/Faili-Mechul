@@ -67,6 +67,7 @@
   },
   "dependencies": {
     "expo-audio": "^1.1.1",
+    "expo-av": "^16.0.8",
     "expo-clipboard": "^8.0.8",
     "expo-dev-client": "~6.0.20",
     "expo-file-system": "~19.0.21",
