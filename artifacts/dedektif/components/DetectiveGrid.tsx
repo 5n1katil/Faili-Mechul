@@ -172,6 +172,7 @@ function EntityLabel({
   bg,
   entityId,
   description,
+  detail,
   type,
   suspectPortrait,
   parmakIziDeseni,
@@ -186,6 +187,7 @@ function EntityLabel({
   bg: string;
   entityId: string;
   description: string;
+  detail?: string;
   type: "suspect" | "weapon" | "location";
   suspectPortrait?: SuspectPortraitKey;
   parmakIziDeseni?: string;
@@ -214,6 +216,7 @@ function EntityLabel({
       id: entityId,
       name,
       description,
+      ...(detail ? { detail } : {}),
       icon,
       ...(type === "suspect" && suspectPortrait ? { suspectPortrait } : {}),
       ...(type === "suspect" && parmakIziDeseni ? { parmakIziDeseni } : {}),
@@ -464,7 +467,8 @@ export default function DetectiveGrid({
                 key={s.id}
                 icon={s.icon}
                 name={s.name} color={SUSPECT_COLOR} bg={SUSPECT_BG}
-                entityId={s.id} description={s.description} type="suspect"
+                entityId={s.id} description={s.description} detail={(s as any).detail}
+                type="suspect"
                 suspectPortrait={suspectPortraitMap[s.id]}
                 parmakIziDeseni={(s as any).parmakIziDeseni}
                 cellSize={cellSize} labelWidth={labelWidth}
@@ -476,7 +480,8 @@ export default function DetectiveGrid({
               <EntityLabel
                 key={loc.id}
                 icon={loc.icon} name={loc.name} color={LOCATION_COLOR} bg={LOCATION_BG}
-                entityId={loc.id} description={loc.description} type="location"
+                entityId={loc.id} description={loc.description} detail={(loc as any).detail}
+                type="location"
                 cellSize={cellSize} labelWidth={labelWidth}
                 onHeaderPress={onHeaderPress} isRowLabel={false}
               />
@@ -494,7 +499,8 @@ export default function DetectiveGrid({
             <View key={weapon.id} style={styles.row}>
               <EntityLabel
                 icon={weapon.icon} name={weapon.name} color={WEAPON_COLOR} bg={WEAPON_BG}
-                entityId={weapon.id} description={weapon.description} type="weapon"
+                entityId={weapon.id} description={weapon.description} detail={(weapon as any).detail}
+                type="weapon"
                 cellSize={cellSize} labelWidth={labelWidth}
                 onHeaderPress={onHeaderPress} isRowLabel={true}
               />
@@ -522,7 +528,8 @@ export default function DetectiveGrid({
             <View key={location.id} style={styles.row}>
               <EntityLabel
                 icon={location.icon} name={location.name} color={LOCATION_COLOR} bg={LOCATION_BG}
-                entityId={location.id} description={location.description} type="location"
+                entityId={location.id} description={location.description} detail={(location as any).detail}
+                type="location"
                 cellSize={cellSize} labelWidth={labelWidth}
                 onHeaderPress={onHeaderPress} isRowLabel={true}
               />

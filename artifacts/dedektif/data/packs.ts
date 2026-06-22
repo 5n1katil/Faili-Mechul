@@ -416,30 +416,40 @@ export function adaptPackPuzzle(raw: RawPuzzle, packId: string): Puzzle {
     title: raw.title,
     story: raw.story,
     suspects: raw.suspects.map((s) => {
+      const sr = s as Record<string, unknown>;
       const base = {
         id: s.id,
         name: s.name,
         description: s.description,
+        ...(sr.detail && typeof sr.detail === "string" ? { detail: sr.detail } : {}),
         // Suspect icons in puzzles_database.json are now SVG avatar ids
         // (rewritten by scripts/assign-suspect-avatars.js) — pass through to
         // CustomAvatar verbatim instead of remapping through MaterialIcons.
         icon: s.icon,
       };
-      const parmakIziDeseni = (s as Record<string, unknown>).parmakIziDeseni as string | undefined;
+      const parmakIziDeseni = sr.parmakIziDeseni as string | undefined;
       return parmakIziDeseni ? { ...base, parmakIziDeseni } : base;
     }),
-    weapons: raw.weapons.map((w) => ({
-      id: w.id,
-      name: w.name,
-      description: w.description,
-      icon: emojiToMaterialIcon(w.icon),
-    })),
-    locations: raw.locations.map((l) => ({
-      id: l.id,
-      name: l.name,
-      description: l.description,
-      icon: emojiToMaterialIcon(l.icon),
-    })),
+    weapons: raw.weapons.map((w) => {
+      const wr = w as Record<string, unknown>;
+      return {
+        id: w.id,
+        name: w.name,
+        description: w.description,
+        ...(wr.detail && typeof wr.detail === "string" ? { detail: wr.detail } : {}),
+        icon: emojiToMaterialIcon(w.icon),
+      };
+    }),
+    locations: raw.locations.map((l) => {
+      const lr = l as Record<string, unknown>;
+      return {
+        id: l.id,
+        name: l.name,
+        description: l.description,
+        ...(lr.detail && typeof lr.detail === "string" ? { detail: lr.detail } : {}),
+        icon: emojiToMaterialIcon(l.icon),
+      };
+    }),
     clues,
     solution: {
       suspectId: raw.solution.suspectId,

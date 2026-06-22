@@ -15,6 +15,7 @@ export interface Suspect {
   id: string;
   name: string;
   description: string;
+  detail?: string;
   icon: string;
   parmakIziDeseni?: string;
 }
@@ -23,6 +24,7 @@ export interface Weapon {
   id: string;
   name: string;
   description: string;
+  detail?: string;
   icon: string;
 }
 
@@ -30,6 +32,7 @@ export interface Location {
   id: string;
   name: string;
   description: string;
+  detail?: string;
   icon: string;
 }
 

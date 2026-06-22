@@ -28,6 +28,7 @@ export interface EntityInfo {
   id: string;
   name: string;
   description: string;
+  detail?: string;
   icon: string;
   suspectPortrait?: SuspectPortraitKey;
   parmakIziDeseni?: string;
@@ -164,6 +165,16 @@ export default function EntityInfoSheet({ visible, entity, onClose }: Props) {
 
           <Text style={[styles.entityName, { color: colors.foreground }]}>{entity.name}</Text>
           <Text style={[styles.entityDesc, { color: colors.mutedForeground }]}>{entity.description}</Text>
+
+          {!!entity.detail && (
+            <>
+              <View style={[styles.detailDivider, { backgroundColor: colors.border }]} />
+              <View style={styles.detailBlock}>
+                <Text style={[styles.detailLabel, { color: colors.mutedForeground }]}>Detay</Text>
+                <Text style={[styles.detailText, { color: colors.mutedForeground }]}>{entity.detail}</Text>
+              </View>
+            </>
+          )}
 
           <View style={[styles.hintBox, { backgroundColor: config.bg, borderColor: config.color + "30" }]}>
             <View style={styles.hintHeader}>
@@ -307,6 +318,28 @@ const styles = StyleSheet.create({
   hintText: {
     fontSize: 13,
     lineHeight: 19,
+  },
+  detailDivider: {
+    height: 1,
+    alignSelf: "stretch",
+  },
+  detailBlock: {
+    alignSelf: "stretch",
+    paddingHorizontal: 4,
+    gap: 4,
+  },
+  detailLabel: {
+    fontSize: 9,
+    fontWeight: "700",
+    letterSpacing: 1.5,
+    textTransform: "uppercase",
+    opacity: 0.6,
+  },
+  detailText: {
+    fontSize: 13,
+    lineHeight: 19,
+    textAlign: "center",
+    fontStyle: "italic",
   },
   divider: {
     height: 1,
