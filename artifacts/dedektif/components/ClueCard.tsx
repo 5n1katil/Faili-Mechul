@@ -24,6 +24,10 @@ import type {
 
 type MaterialIconName = ComponentProps<typeof MaterialIcons>["name"];
 
+const AUDIO_ASSETS: Record<string, ReturnType<typeof require>> = {
+  audio_ott_004_c6_rihtim_nobet_silindiri: require("../assets/audio/cases/ott_004/ott_004_c6_rihtim_nobet_silindiri.mp3"),
+};
+
 const FINGERPRINT_IMAGES: Record<string, ReturnType<typeof require>> = {
   fp_whorl: require("../assets/images/fingerprints/fp_whorl.png"),
   fp_loop_right: require("../assets/images/fingerprints/fp_loop_right.png"),
@@ -122,8 +126,7 @@ function GorselIpucuBlock({ aciklama }: { aciklama: string }) {
   );
 }
 
-function SesKaydiBlock({ sesMetni, audioUrl }: { sesMetni: string; audioUrl?: string }) {
-  const [showTranscript, setShowTranscript] = useState(false);
+function SesKaydiBlock({ audioAssetId }: { audioAssetId?: string }) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -137,13 +140,10 @@ function SesKaydiBlock({ sesMetni, audioUrl }: { sesMetni: string; audioUrl?: st
     };
   }, []);
 
-  const formatTime = (ms: number) => {
-    const s = Math.floor(ms / 1000);
-    return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;
-  };
+  const assetSource = audioAssetId ? AUDIO_ASSETS[audioAssetId] as import("expo-av").AVPlaybackSource : null;
 
   const handlePlayPause = async () => {
-    if (!audioUrl) return;
+    if (!assetSource) return;
     try {
       if (soundRef.current) {
         const status = await soundRef.current.getStatusAsync();
@@ -161,7 +161,7 @@ function SesKaydiBlock({ sesMetni, audioUrl }: { sesMetni: string; audioUrl?: st
       setIsLoading(true);
       await Audio.setAudioModeAsync({ playsInSilentModeIOS: true });
       const { sound } = await Audio.Sound.createAsync(
-        { uri: audioUrl },
+        assetSource,
         { shouldPlay: true },
         (status) => {
           if (status.isLoaded) {
@@ -194,37 +194,22 @@ function SesKaydiBlock({ sesMetni, audioUrl }: { sesMetni: string; audioUrl?: st
           <Text style={styles.sesRec}>{isPlaying ? "LIVE" : "REC"}</Text>
         </View>
       </View>
-
-      {audioUrl ? (
-        <View style={styles.sesPlayerRow}>
-          <Pressable onPress={handlePlayPause} style={styles.sesPlayBtn} disabled={isLoading}>
-            <MaterialIcons
-              name={isLoading ? "hourglass-empty" : isPlaying ? "pause" : "play-arrow"}
-              size={24}
-              color="#fff"
-            />
-          </Pressable>
-          <View style={styles.sesProgressBar}>
-            <View style={[styles.sesProgressFill, { width: `${progress * 100}%` as any }]} />
-          </View>
+      <View style={styles.sesPlayerRow}>
+        <Pressable
+          onPress={handlePlayPause}
+          style={[styles.sesPlayBtn, !assetSource && styles.sesPlayBtnDisabled]}
+          disabled={isLoading || !assetSource}
+        >
+          <MaterialIcons
+            name={isLoading ? "hourglass-empty" : isPlaying ? "pause" : "play-arrow"}
+            size={26}
+            color="#fff"
+          />
+        </Pressable>
+        <View style={styles.sesProgressBar}>
+          <View style={[styles.sesProgressFill, { width: `${progress * 100}%` as any }]} />
         </View>
-      ) : (
-        <View style={styles.sesNoAudio}>
-          <MaterialIcons name="volume-off" size={14} color="#6b7280" />
-          <Text style={styles.sesNoAudioText}>Ses dosyası yükleniyor…</Text>
-        </View>
-      )}
-
-      <Pressable onPress={() => setShowTranscript(!showTranscript)} style={styles.sesTranscriptBtn}>
-        <MaterialIcons name={showTranscript ? "expand-less" : "expand-more"} size={14} color="#3b82f6" />
-        <Text style={styles.sesTranscriptLabel}>
-          {showTranscript ? "Kaydı Gizle" : "Kayıt Çözümlemesini Göster"}
-        </Text>
-      </Pressable>
-
-      {showTranscript && (
-        <Text style={styles.sesText}>{sesMetni}</Text>
-      )}
+      </View>
     </View>
   );
 }
@@ -1033,9 +1018,9 @@ export default function ClueCard({
         ) : null;
 
       case "ses_kaydi":
-        return clue.sesMetni ? (
-          <SesKaydiBlock sesMetni={clue.sesMetni} audioUrl={clue.audioUrl} />
-        ) : null;
+        return (
+          <SesKaydiBlock audioAssetId={clue.audioAssetId} />
+        );
 
       case "tanik_yuzlesme":
         return clue.yuzlesmeDialogu ? (
@@ -1363,27 +1348,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#3b82f6",
     borderRadius: 2,
   },
-  sesNoAudio: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 6,
-    marginBottom: 8,
-  },
-  sesNoAudioText: {
-    fontSize: 11,
-    color: "#6b7280",
-    fontStyle: "italic",
-  },
-  sesTranscriptBtn: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 4,
-    paddingVertical: 4,
-  },
-  sesTranscriptLabel: {
-    fontSize: 11,
-    color: "#3b82f6",
-    fontWeight: "600",
+  sesPlayBtnDisabled: {
+    backgroundColor: "#1e3a5f",
+    opacity: 0.5,
   },
   yuzlesmeBlock: {
     marginTop: 6,
