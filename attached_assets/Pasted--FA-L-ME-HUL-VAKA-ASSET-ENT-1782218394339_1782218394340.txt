@@ -1,0 +1,195 @@
+/* ============================================================
+ *  FAİLİ MEÇHUL — VAKA / ASSET ENTEGRASYON TALİMATI
+ *  Bu JSON üretimden geçti. Aşağıdaki asset sözleşmesini AYNI
+ *  assetId ve yollarla uygula; JSON içindeki ilişkilere dokunma.
+ * ------------------------------------------------------------
+ *  [ŞİFRELİ MESAJ MİNİ OYUNU]
+ *    - c4: tür="caesar_3" · cevap="GECE NOBETCISI PROP TABANCASINI TESLIM ALDI"
+ *  Oyun ekranı: bulmaca + cezalı ipucu + cevap girişi + doğru cevap sonrası açıklama.
+ * ------------------------------------------------------------
+ *  specialMechanic: "sifreli_mesaj_cozme"
+ *  Asset dosyasını yeniden adlandırma; assetId, clueId ve publicPath sözleşmedir.
+ * ============================================================ */
+
+{
+  "puzzleId": "hw_002",
+  "stars": "★★☆☆☆",
+  "gridSize": "3x3",
+  "timeLimit": 540,
+  "title": "Kamera Arkasında Kan",
+  "subtitle": "Warner Bros. Stüdyosu, Gece Çekimi",
+  "difficulty": "Polis Memuru",
+  "difficultyLevel": 2,
+  "specialMechanic": "sifreli_mesaj_cozme",
+  "story": "Saat 02.16. Warner Bros. platosunda yağmur makinesi çalışırken, kostüm tasarımcısı Eliana Voss final sahnesine ait sayfalardaki izinsiz değişiklikleri fark etti. Yedi dakikalık elektrik kesintisinin ardından, sayfalar kan lekeleriyle bulundu; Eliana ise set arkasındaki karanlıkta ölüydü. O gece seti yalnızca üç kişi farklı biçimlerde kontrol ediyordu: başrol oyuncusu Derek Stone, çekim akışını yöneten Priya Shah ve erişim geçişlerinden sorumlu Tom Brady. Senin işin, bu üç kişinin hangi ekipmanla ve hangi alanda eşleştiğini çözerek sahte dekorların arasındaki gerçek cinayet planını ortaya çıkarmak.",
+  "atmosphere": "Yağmur makineleri sustu. Set ışıkları geri geldi. Dekorların ardında ise yalnızca ıslak kablolar, yarım kalmış replikler ve kaybolmuş bir senaryo sayfası kaldı.",
+  "suspects": [
+    {
+      "id": "s1",
+      "name": "Baş Oyuncu Derek Stone",
+      "icon": "👨‍💼",
+      "description": "188 santimetrelik aksiyon yıldızı. Gece sahnesinde kendi dublörüne bile yer bırakmayan, herkesin önünde sakin görünen fakat senaryo değişikliklerine tahammülsüz başrol.",
+      "detail": "35 yaşında. Ekrandaki kontrolünü set dışında da sürdürmeye alışkın; en küçük teknik aksaklığı kişisel bir meydan okuma sayıyor."
+    },
+    {
+      "id": "s2",
+      "name": "Yardımcı Yönetmen Priya Shah",
+      "icon": "👤",
+      "description": "Çekim akışını, oyuncu yerleşimlerini ve gün sonu senaryo revizyonlarını yöneten yardımcı yönetmen. Son taslaklardaki gizli değişikliklerin kendi tabletinden çıktığına dair fısıltılar var.",
+      "detail": "38 yaşında. Dakikalarla konuşur, hiçbir çekim planını tesadüfe bırakmaz; ekibin ona duyduğu güvenle korku arasındaki çizgi çok ince."
+    },
+    {
+      "id": "s3",
+      "name": "Set Güvenlik Görevlisi Tom Brady",
+      "icon": "👤",
+      "description": "Gece vardiyasındaki turnikalar, prop dolapları ve servis koridorlarından sorumlu eski polis. Setin her kilidini bilir, fakat hangi kapının ne zaman açıldığını söylemeyi sevmez.",
+      "detail": "50 yaşında. Vardiya defterini kusursuz tutar; buna rağmen insanlardan çok kilitlere güvendiği söylenir."
+    }
+  ],
+  "weapons": [
+    {
+      "id": "w1",
+      "name": "Ağır Kamera Tripodu",
+      "icon": "📷",
+      "description": "Profesyonel kamerayı sabitlemek için kullanılan, içi dolu alüminyum ayaklara sahip ağır üç ayaklı rig.",
+      "detail": "Katlanınca sıradan bir set ekipmanı gibi görünür; açıldığında tek kişinin sürüklemekte zorlanacağı kadar dengesiz ve ağırdır."
+    },
+    {
+      "id": "w2",
+      "name": "Elektrik Kablosu",
+      "icon": "⚡",
+      "description": "Yağmur makinesi ve ışık transferinde kullanılan, K-12 kodlu silikon yalıtımlı yüksek gerilim kablosu.",
+      "detail": "Siyah örgü kılıfının üzerinde parlak mavi bir güvenlik bandı bulunur; set dışına taşındığında kolay fark edilir."
+    },
+    {
+      "id": "w3",
+      "name": "Sahte Silah (Gerçek Mermi)",
+      "icon": "🔫",
+      "description": "Prop dolabında tutulan, görsel olarak sahne silahına benzeyen fakat yanlış mühimmatla ölümcül olabilecek tabanca.",
+      "detail": "Teslimi ve iadesi yalnız güvenlik zincirinden geçer; prop dolabındaki her hareket vardiya defterine işlenir."
+    }
+  ],
+  "locations": [
+    {
+      "id": "l1",
+      "name": "Kostüm Odası",
+      "icon": "👗",
+      "description": "Aynalı duvarlar, askılar ve kumaş tozlarıyla dolu; setin arka tarafındaki dar hazırlık odası.",
+      "detail": "Işık geçirmeyen perde, dışarıdaki çekim gürültüsünü keser. Odanın kapısı, yalnız yaka kartı yakınında açılan eski bir RFID okuyucusuna bağlıdır."
+    },
+    {
+      "id": "l2",
+      "name": "Ana Set",
+      "icon": "🎬",
+      "description": "Yağmur sahnesinin çekildiği, kameralar ve ışık köprüleriyle çevrili geniş ana plato.",
+      "detail": "Ham çekim kayıtları, ses kanalları ve sahne işaretleri burada aynı zaman koduna bağlanır; görünürlük fazladır ama kaos da öyledir."
+    },
+    {
+      "id": "l3",
+      "name": "Prodüksiyon Ofisi",
+      "icon": "📋",
+      "description": "Bütçe tablolarının, senaryo taslaklarının ve gün sonu erişim kayıtlarının tutulduğu kilitli idari oda.",
+      "detail": "Manyetik kapı, yazıcı kuyruğu ve duvardaki sessiz kamera saati; odaya giren herkesin dijital bir iz bırakmasını sağlar."
+    }
+  ],
+  "clues": [
+    {
+      "id": "c1",
+      "title": "K-12 Teslim Fişi",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Yağmur makinesinin gece vardiyası teslim fişinde yalnız bir stunt kartı, K-12 enerji hattıyla aynı satıra işlenmişti. Kartın sahne etiketi filmin 188 santimetrelik başrolüne aitti.",
+      "deductionHint": "Teslim fişindeki boy ve ekipman kodu, hangi şüpheli–ekipman çiftini kurar?",
+      "isBonus": false,
+      "revealOrder": 1,
+      "isRevealed": true,
+      "pointCost": 0
+    },
+    {
+      "id": "c2",
+      "title": "Kesintisiz Ses Kanalı",
+      "type": "tanik",
+      "mechanicType": "text",
+      "text": "Başrolün yaka mikrofonu, kesinti süresince sahne amirinin rutin komutlarını kesintisiz taşıdı. Aynı dakikalarda dikim bölümünün RFID anteni onun yaka kartını bir kez bile okumadı.",
+      "deductionHint": "Kesintisiz ses kanalı ve okunmayan kart, başrolü hangi dar hazırlık alanından dışarıda bırakır?",
+      "isBonus": false,
+      "revealOrder": 2,
+      "isRevealed": false,
+      "pointCost": 60
+    },
+    {
+      "id": "c3",
+      "title": "Yönlendirme Tableti",
+      "type": "dogrudan",
+      "mechanicType": "text",
+      "text": "Çekim akışını yöneten tablet, kesinti boyunca canlı çekim kanalına zaman kodlu komutlar gönderdi. Bütçe odasının manyetik kapısı ise aynı cihazın yedek kartını ya da ona bağlı personel kimliğini hiç kaydetmedi.",
+      "deductionHint": "Çekim akışını canlı yöneten kişi, hangi kilitli idari odayla eşleşemez?",
+      "isBonus": false,
+      "revealOrder": 3,
+      "isRevealed": false,
+      "pointCost": 60
+    },
+    {
+      "id": "c4",
+      "title": "Etiketin İçindeki Şifre",
+      "type": "sifreli",
+      "mechanicType": "sifreli_mesaj",
+      "text": "Tasarımcının senaryo sayfaları arasından, kostüm etiketi görünümünde hazırlanmış küçük bir kart çıktı. Üzerindeki büyük harfler aynı aralıkla kaydırılmış; not, yanlış kişiye ulaşırsa anlamsız kalacak şekilde düzenlenmişti.",
+      "deductionHint": "Kaydırılmış harfler geri döndüğünde, hangi ekipman hangi vardiya rolünün kayıtlarına giriyor?",
+      "isBonus": false,
+      "revealOrder": 4,
+      "isRevealed": false,
+      "pointCost": 60,
+      "sifre": {
+        "sifrelenmis": "JHFH QREHWFLVL SURS WDEDQFDVLQL WHVOLP DOGL",
+        "sifreleTuru": "caesar_3",
+        "cozulmus": "GECE NOBETCISI PROP TABANCASINI TESLIM ALDI",
+        "cozumIpucu": "Üç adım geriye giden harfler, vardiya raporunun gerçek cümlesini geri getirir.",
+        "aciklama": "Çözülen not, gece vardiyasındaki güvenlik zincirinde hangi ekipmanın teslim edildiğini kayıt altına alır."
+      }
+    },
+    {
+      "id": "c5",
+      "title": "Yağmur Hattı Kesintisi",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "K-12 hattının mavi güvenlik bandında yağmur makinesi suyuna ait mineral izleri bulundu. İdari terminalin servis çekmecesi ve enerji portları ise bu hattın kesinti boyunca o odaya hiç bağlanmadığını gösterdi.",
+      "deductionHint": "Mavi güvenlik bantlı güç hattı, hangi kilitli idari alana hiç bağlanmamış?",
+      "isBonus": false,
+      "revealOrder": 5,
+      "isRevealed": false,
+      "pointCost": 60
+    },
+    {
+      "id": "c6",
+      "title": "Lacivert Manşet İpliği",
+      "type": "tanik",
+      "mechanicType": "text",
+      "text": "Kostüm odasının perde kıvrımında bulunan lacivert manşet ipliği, çekim akışını yöneten kişinin o gece giydiği ceketin onarım çizgisiyle aynıydi. Dikiş atölyesi sorumlusu, bu ceketin sahne öncesi yalnız bir kez perdeye takıldığını hatırladı.",
+      "deductionHint": "Manşet ipliği, çekim akışını yöneten kişiyi hangi kapalı hazırlık odasıyla destekliyor?",
+      "isBonus": true,
+      "revealOrder": 6,
+      "isRevealed": false,
+      "pointCost": 60
+    },
+    {
+      "id": "c7",
+      "title": "Üç Ayaklı İz",
+      "type": "adli",
+      "mechanicType": "text",
+      "text": "Kostüm odasındaki ayna önünde, kumaş tozuna bastırılmış üç lastik ayak izi bulundu. İzlerin çapı, yalnız ağır kamera riglerinin katlanır ayaklarına uyuyordu.",
+      "deductionHint": "Üçlü lastik iz, hangi set ekipmanını kumaş tozuyla aynı odaya bağlar?",
+      "isBonus": true,
+      "revealOrder": 7,
+      "isRevealed": false,
+      "pointCost": 60
+    }
+  ],
+  "assetManifest": [],
+  "solution": {
+    "suspectId": "s2",
+    "weaponId": "w1",
+    "locationId": "l1"
+  },
+  "solutionNarrative": "Yardımcı Yönetmen Priya Shah, final sahnesindeki izinsiz senaryo değişikliklerinin Eliana Voss tarafından ortaya çıkarılacağını biliyordu. Güç kesintisinin yarattığı kısa boşlukta onu Kostüm Odası'na çekti ve Ağır Kamera Tripodu ile öldürdü. Şifreli vardiya notu, alternatif ekipman zincirini ayırınca; erişim kayıtları ve ekipman eşleşmeleri Priya'nın motif, araç ve mahallini tek plan üzerinde birleştirdi."
+}
