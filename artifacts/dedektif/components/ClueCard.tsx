@@ -920,6 +920,8 @@ function ProfilSenteziBlock({
   isSolved?: boolean;
   onSolve: () => void;
 }) {
+  const { gameState } = useGame();
+  const suspects = gameState?.puzzle?.suspects ?? [];
   const [selected, setSelected] = React.useState<string | null>(null);
   const [wrong, setWrong] = React.useState(false);
 
@@ -966,17 +968,23 @@ function ProfilSenteziBlock({
       </View>
       <Text style={styles.profilSelectLabel}>Hangi şüpheli bu üç işareti taşıyor?</Text>
       <View style={styles.profilOptionsRow}>
-        {profilSenteziVerisi.optionSuspectIds.map((sid) => (
-          <Pressable
-            key={sid}
-            style={[styles.profilOption, selected === sid && styles.profilOptionSelected]}
-            onPress={() => setSelected(sid)}
-          >
-            <Text style={[styles.profilOptionText, selected === sid && styles.profilOptionTextSelected]}>
-              {sid.toUpperCase()}
-            </Text>
-          </Pressable>
-        ))}
+        {profilSenteziVerisi.optionSuspectIds.map((sid) => {
+          const suspectName = suspects.find((s) => s.id === sid)?.name ?? sid.toUpperCase();
+          return (
+            <Pressable
+              key={sid}
+              style={[styles.profilOption, selected === sid && styles.profilOptionSelected]}
+              onPress={() => setSelected(sid)}
+            >
+              <View style={[styles.profilRadio, selected === sid && styles.profilRadioSelected]}>
+                {selected === sid && <View style={styles.profilRadioDot} />}
+              </View>
+              <Text style={[styles.profilOptionText, selected === sid && styles.profilOptionTextSelected]}>
+                {suspectName}
+              </Text>
+            </Pressable>
+          );
+        })}
       </View>
       <Pressable
         style={[styles.profilVerifyBtn, !selected && styles.profilVerifyBtnDisabled]}
@@ -2100,29 +2108,50 @@ const styles = StyleSheet.create({
     fontStyle: "italic",
   },
   profilOptionsRow: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    gap: 8,
+    gap: 6,
   },
   profilOption: {
     paddingHorizontal: 14,
-    paddingVertical: 8,
-    borderRadius: 20,
+    paddingVertical: 10,
+    borderRadius: 8,
     borderWidth: 1,
     borderColor: "#A855F755",
     backgroundColor: "#1a1128",
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
   },
   profilOptionSelected: {
-    backgroundColor: "#A855F7",
+    backgroundColor: "#A855F722",
     borderColor: "#A855F7",
   },
   profilOptionText: {
-    fontSize: 12,
-    fontWeight: "700",
-    color: "#A855F7",
+    fontSize: 13,
+    fontWeight: "600",
+    color: "#ccc",
+    flex: 1,
   },
   profilOptionTextSelected: {
-    color: "#fff",
+    color: "#A855F7",
+    fontWeight: "700",
+  },
+  profilRadio: {
+    width: 18,
+    height: 18,
+    borderRadius: 9,
+    borderWidth: 2,
+    borderColor: "#A855F755",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  profilRadioSelected: {
+    borderColor: "#A855F7",
+  },
+  profilRadioDot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: "#A855F7",
   },
   profilVerifyBtn: {
     flexDirection: "row",
