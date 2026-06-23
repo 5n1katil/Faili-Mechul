@@ -47,7 +47,8 @@ export type ClueMechanicType =
   | "dna_match"
   | "timeline_sort"
   | "parmak_izi"
-  | "face_match";
+  | "face_match"
+  | "profil_sentezi";
 
 export interface ClueYuzlesmeDialog {
   soru: string;
@@ -128,6 +129,23 @@ export interface ClueParmakIziVerisi {
   sahneGorseli?: string;
 }
 
+export interface ClueProfilSenteziDelilKarti {
+  id: string;
+  baslik: string;
+  metin: string;
+}
+
+export interface ClueProfilSenteziVerisi {
+  baslik: string;
+  aciklama: string;
+  delilKartlari: ClueProfilSenteziDelilKarti[];
+  optionSuspectIds: string[];
+  answerSuspectId: string;
+  answerProfileSignals: string[];
+  successText: string;
+  failureText: string;
+}
+
 export interface ClueFotoSupheli {
   suspectId: string;
   eslesme: boolean;
@@ -162,6 +180,7 @@ export interface Clue {
   timelineVerisi?: ClueTimelineVerisi;
   parmakIziVerisi?: ClueParmakIziVerisi;
   fotoVerisi?: ClueFotoVerisi;
+  profilSenteziVerisi?: ClueProfilSenteziVerisi;
 }
 
 export interface SolvabilityMeta {

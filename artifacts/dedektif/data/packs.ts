@@ -408,6 +408,7 @@ export function adaptPackPuzzle(raw: RawPuzzle, packId: string): Puzzle {
       timelineVerisi: r.timelineVerisi as import("./puzzles").ClueTimelineVerisi | undefined,
       parmakIziVerisi: r.parmakIziVerisi as import("./puzzles").ClueParmakIziVerisi | undefined,
       fotoVerisi: r.fotoVerisi as import("./puzzles").ClueFotoVerisi | undefined,
+      profilSenteziVerisi: r.profilSenteziVerisi as import("./puzzles").ClueProfilSenteziVerisi | undefined,
     };
   });
 

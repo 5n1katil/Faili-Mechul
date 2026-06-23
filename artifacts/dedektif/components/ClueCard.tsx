@@ -911,6 +911,86 @@ function TimelineSortBlock({
   );
 }
 
+function ProfilSenteziBlock({
+  profilSenteziVerisi,
+  isSolved,
+  onSolve,
+}: {
+  profilSenteziVerisi: import("../data/puzzles").ClueProfilSenteziVerisi;
+  isSolved?: boolean;
+  onSolve: () => void;
+}) {
+  const [selected, setSelected] = React.useState<string | null>(null);
+  const [wrong, setWrong] = React.useState(false);
+
+  if (isSolved) {
+    return (
+      <View style={styles.profilBlock}>
+        <View style={styles.profilHeader}>
+          <MaterialIcons name="person-search" size={14} color="#A855F7" />
+          <Text style={styles.profilHeaderText}>PROFİL SENTEZİ</Text>
+        </View>
+        <View style={styles.profilSolvedBadge}>
+          <MaterialIcons name="check-circle" size={14} color="#22c55e" />
+          <Text style={styles.profilSolvedText}>{profilSenteziVerisi.successText}</Text>
+        </View>
+      </View>
+    );
+  }
+
+  const verify = () => {
+    if (!selected) return;
+    if (selected === profilSenteziVerisi.answerSuspectId) {
+      onSolve();
+    } else {
+      setWrong(true);
+      setSelected(null);
+      setTimeout(() => setWrong(false), 2000);
+    }
+  };
+
+  return (
+    <View style={styles.profilBlock}>
+      <View style={styles.profilHeader}>
+        <MaterialIcons name="person-search" size={14} color="#A855F7" />
+        <Text style={styles.profilHeaderText}>PROFİL SENTEZİ</Text>
+      </View>
+      <Text style={styles.profilAciklama}>{profilSenteziVerisi.aciklama}</Text>
+      <View style={styles.profilDelilRow}>
+        {profilSenteziVerisi.delilKartlari.map((d) => (
+          <View key={d.id} style={styles.profilDelilKart}>
+            <Text style={styles.profilDelilBaslik}>{d.baslik}</Text>
+            <Text style={styles.profilDelilMetin}>{d.metin}</Text>
+          </View>
+        ))}
+      </View>
+      <Text style={styles.profilSelectLabel}>Hangi şüpheli bu üç işareti taşıyor?</Text>
+      <View style={styles.profilOptionsRow}>
+        {profilSenteziVerisi.optionSuspectIds.map((sid) => (
+          <Pressable
+            key={sid}
+            style={[styles.profilOption, selected === sid && styles.profilOptionSelected]}
+            onPress={() => setSelected(sid)}
+          >
+            <Text style={[styles.profilOptionText, selected === sid && styles.profilOptionTextSelected]}>
+              {sid.toUpperCase()}
+            </Text>
+          </Pressable>
+        ))}
+      </View>
+      <Pressable
+        style={[styles.profilVerifyBtn, !selected && styles.profilVerifyBtnDisabled]}
+        onPress={verify}
+        disabled={!selected}
+      >
+        <MaterialIcons name="check" size={16} color="#0F1117" />
+        <Text style={styles.profilVerifyText}>Profili Onayla</Text>
+      </Pressable>
+      {wrong && <Text style={styles.profilWrong}>{profilSenteziVerisi.failureText}</Text>}
+    </View>
+  );
+}
+
 export default function ClueCard({
   clue,
   index,
@@ -1088,6 +1168,15 @@ export default function ClueCard({
           />
         ) : null;
 
+      case "profil_sentezi":
+        return clue.profilSenteziVerisi ? (
+          <ProfilSenteziBlock
+            profilSenteziVerisi={clue.profilSenteziVerisi}
+            isSolved={isSolved}
+            onSolve={() => onSolveMechanic?.()}
+          />
+        ) : null;
+
       default:
         return null;
     }
@@ -1096,7 +1185,7 @@ export default function ClueCard({
   const mechanicContent = isRevealed ? renderMechanicContent() : null;
   const showDeductionHint = clue.deductionHint && isRevealed &&
     (mechanic === "text" || mechanic === "gorsel_ipucu" || mechanic === "ses_kaydi" || mechanic === "tanik_yuzlesme" || mechanic === "phone_chain" ||
-      ((mechanic === "sifreli_mesaj" || mechanic === "parmak_izi" || mechanic === "anagram" || mechanic === "dna_match" || mechanic === "timeline_sort" || mechanic === "face_match") && isSolved));
+      ((mechanic === "sifreli_mesaj" || mechanic === "parmak_izi" || mechanic === "anagram" || mechanic === "dna_match" || mechanic === "timeline_sort" || mechanic === "face_match" || mechanic === "profil_sentezi") && isSolved));
 
   return (
     <Animated.View style={[styles.container, animStyle]}>
@@ -1957,6 +2046,115 @@ const styles = StyleSheet.create({
     fontSize: 11,
     color: "#C8372D",
     textAlign: "center",
+  },
+  profilBlock: {
+    backgroundColor: "#130d1f",
+    borderRadius: 10,
+    padding: 14,
+    borderWidth: 1,
+    borderColor: "#A855F744",
+    marginTop: 8,
+    gap: 10,
+  },
+  profilHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+  },
+  profilHeaderText: {
+    fontSize: 10,
+    fontWeight: "800",
+    color: "#A855F7",
+    letterSpacing: 1.5,
+  },
+  profilAciklama: {
+    fontSize: 12,
+    color: "#aaa",
+    lineHeight: 17,
+  },
+  profilDelilRow: {
+    gap: 8,
+  },
+  profilDelilKart: {
+    backgroundColor: "#1a1128",
+    borderRadius: 8,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: "#A855F733",
+    gap: 4,
+  },
+  profilDelilBaslik: {
+    fontSize: 11,
+    fontWeight: "700",
+    color: "#A855F7",
+    letterSpacing: 0.5,
+  },
+  profilDelilMetin: {
+    fontSize: 12,
+    color: "#ccc",
+    lineHeight: 16,
+  },
+  profilSelectLabel: {
+    fontSize: 12,
+    color: "#aaa",
+    fontStyle: "italic",
+  },
+  profilOptionsRow: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 8,
+  },
+  profilOption: {
+    paddingHorizontal: 14,
+    paddingVertical: 8,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: "#A855F755",
+    backgroundColor: "#1a1128",
+  },
+  profilOptionSelected: {
+    backgroundColor: "#A855F7",
+    borderColor: "#A855F7",
+  },
+  profilOptionText: {
+    fontSize: 12,
+    fontWeight: "700",
+    color: "#A855F7",
+  },
+  profilOptionTextSelected: {
+    color: "#fff",
+  },
+  profilVerifyBtn: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 6,
+    backgroundColor: "#A855F7",
+    borderRadius: 8,
+    paddingVertical: 10,
+  },
+  profilVerifyBtnDisabled: {
+    backgroundColor: "#A855F744",
+  },
+  profilVerifyText: {
+    fontSize: 13,
+    fontWeight: "700",
+    color: "#fff",
+  },
+  profilWrong: {
+    fontSize: 11,
+    color: "#C8372D",
+    textAlign: "center",
+  },
+  profilSolvedBadge: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+  },
+  profilSolvedText: {
+    fontSize: 13,
+    fontWeight: "700",
+    color: "#22c55e",
   },
   miniGameSolvedBlock: {
     backgroundColor: "#0a1a0a",

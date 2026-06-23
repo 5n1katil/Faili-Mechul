@@ -1766,185 +1766,246 @@
         },
         {
           "puzzleId": "hw_005",
-          "title": "Efsanenin Sonu",
-          "subtitle": "Hollywood Hills, İkona Bir Oyuncunun Villası",
-          "difficulty": 5,
-          "difficultyLabel": "Efsane Komiser",
           "stars": "★★★★★",
           "gridSize": "4x4",
           "timeLimit": 360,
-          "story": "Hollywood'un en büyük ve en zengin sinema ikonası, Beverly Hills'teki malikanesinde ölü bulundu. Milyon dolarlık mirasının kime kalacağını belirleyen yeni vasiyetnamenin imzalanmasına saatler kala işlenen bu suikastın arkasında, malikanedeki dört yakın isimden biri var.",
-          "atmosphere": "Hills'in tepesi. Işıklı havuz. Servet ve gölge.",
+          "title": "Efsanenin Sonu",
+          "subtitle": "Hollywood Hills, Marlowe Malikanesi",
+          "difficulty": 5,
+          "difficultyLevel": 5,
+          "specialMechanic": "profil_sentezi",
+          "story": "Hollywood Hills'te sinema efsanesi Evelyn Marlowe, yeni vasiyetini imzalamaya saatler kala öldü. Ön inceleme, son saatlerinde ani bir fizyolojik çöküş yaşadığını gösterdi; ancak ölümcül sürecin evin hangi rutininde başladığı ve Marlowe'un o anda malikanenin hangi köşesinde olduğu henüz belirsizdi. Dışarıda ışıklı havuz partisi sürerken içeride dört kişi, yaklaşan imzanın hayatlarını nasıl değiştireceğini hesaplıyordu: mirası kaybedecek yeğen, payını artıracak sevgili, belgeleri yönetecek avukat ve her şeyi bilen asistan. Sen geldiğinde parti hâlâ sürüyordu; içerideki ölümden habersiz konuklar bardaklarını kaldırıyordu.",
+          "atmosphere": "Havuz ışıkları tepelerde titreşiyor. İçeride kristal bardaklar susmuş; kalın perdelerin ardında eski filmlerin afişleri geceyi izliyor.",
           "suspects": [
             {
               "id": "s1",
               "name": "Yeğen Brandon Vale",
-              "icon": "noun-human-3758075-avatar.png",
-              "description": "Eski vasiyetnamede tek mirasçı olan ancak yeni düzenlemeyle tüm haklarını kaybetmek üzere olan, bütün gününü havuz kenarındaki partilerde kumar oynayarak geçiren şımarık yeğen.",
-              "detail": "29 yaşında, bağımlılık geçmişi ve mali krizleri olan akraba."
+              "icon": "🎲",
+              "description": "Eski vasiyetnamede tek mirasçı olan; yeni düzenlemede bütün haklarını kaybedeceğini bilen, gecenin çoğunu açık davet alanındaki konuklarla geçiren savruk yeğen.",
+              "detail": "29 yaşında. Borçlarını saklamak için eski film replikleriyle şaka yapıyor; bileğinde çocukluğundan kalma, klora karşı hassas bir dövme var."
             },
             {
               "id": "s2",
               "name": "Yeni Sevgili Marco Silva",
-              "icon": "noun-human-3758078-avatar.png",
-              "description": "Sadece 6 aylık bir ilişkiyle devasa mirasın yüzde 40'ına konmak üzere olan, sürekli üst kattaki balkonlarda poz veren ve malikanenin mutfak işlerinden hiç anlamayan genç sevgili.",
-              "detail": "31 yaşında, Brezilya asıllı, narsist ve gösteriş meraklısı."
+              "icon": "🌹",
+              "description": "Altı aylık ilişkiyle vasiyetin en büyük payına yaklaşan, malikanenin kameraları önünde görünmeyi seven ve kendi imajını kaybetmekten korkan yeni sevgili.",
+              "detail": "31 yaşında. Açık alandaki antika objeleri oyuncak gibi kurcalıyor; ceketinin sol manşetinde deniz kabuğu biçimli bir kol düğmesi taşıyor."
             },
             {
               "id": "s3",
               "name": "Avukat Dana Price",
-              "icon": "noun-yolcu-feriha-avatar.png",
-              "description": "Vasiyeti resmi olarak değiştiren, evrak çantasıyla toplantı odalarından çıkmayan ve malikanenin içki/servis düzenine tamamen yabancı olan soğuk bürokrat avukat.",
-              "detail": "55 yaşında, hissiz, sadece evraklarla ilgilenen profesyonel."
+              "icon": "⚖️",
+              "description": "Yeni vasiyet metnini hazırlayan, gecenin hukukî toplantılarını yöneten ve her imza öncesi belge akışını iki kez kontrol eden soğukkanlı avukat.",
+              "detail": "55 yaşında. Lacivert mürekkepli kalemlerini renk koduna göre dizer; son taslakları servis ofisindeki güvenli yazıcıdan çıkarır."
             },
             {
               "id": "s4",
               "name": "Eski Asistan Grace Lee",
               "icon": "👩",
-              "description": "10 yıldır ikona sadakatle hizmet eden ancak yeni vasiyetnamede adının tamamen silindiğini öğrenince intikam yemini eden, malikanenin tüm içki, ilaç ve yemek düzeninden sorumlu emektar çalışan.",
-              "detail": "45 yaşında, kırık kalpli, sessiz öfkeli ve evin her köşesini bilen asistan."
+              "description": "Evelyn Marlowe'un on yıllık asistanı. İkona ait reçeteli saatleri, içki servisini ve kapalı odaların anahtarlarını herkesten iyi bilen sessiz çalışan.",
+              "detail": "45 yaşında. Bergamotlu el kremi kullanır; sol işaret parmağındaki ince yanık izi, bar dolabının mandalını her açışında aynı noktada bıraktığı teması ayırt edici kılar."
             }
           ],
           "weapons": [
             {
               "id": "w1",
-              "name": "Havuz Suyu Boğulması",
+              "name": "Kurtarma Çengeli",
               "icon": "🌊",
-              "description": "Kurbanı sert bir cisimle bayılttıktan sonra klorlu suların içine çekerek ciğerlerine su doldurmayı ve kaza süsü vermeyi amaçlayan mekanik boğulma."
+              "description": "Su hattı yanında duvara sabitlenen, teleskopik saplı ve çengelli uçlu paslanmaz kurtarma aparatı.",
+              "detail": "Kauçuk tutacağı, yalnız açık alandaki klor ve güneş yağı izlerini uzun süre tutar."
             },
             {
               "id": "w2",
-              "name": "İlaç Kombinasyonu",
+              "name": "Eşik Dozu",
               "icon": "💊",
-              "description": "Yüksek dozda uyku hapı ve ağır alkolün içki kadehine sinsi bir şekilde karıştırılmasıyla, yutulduğunda kalbi saatler içinde sessizce durduran ölümcül medikal karışım."
+              "description": "Reçeteli yatıştırıcının sert içkiyle aynı kadehte buluşması sonucu, solunumu yavaşça baskılayan ölümcül doz eşiği.",
+              "detail": "Sıvıya karıştığında rengini değiştirmez; doğru oran, kurbanın gece içki ritmini ve mevcut reçetelerini bilmeyi gerektirir."
             },
             {
               "id": "w3",
-              "name": "Yüksekten Düşme",
+              "name": "Mermerden Düşme",
               "icon": "🏗️",
-              "description": "Üst balkonun mermer korkuluklarından aşağı doğru amansızca itilerek, zeminde ağır kemik kırıkları ve şiddetli iç kanamayla ölümü hedefleyen kaba kuvvet yöntemi."
+              "description": "Yüksek korkuluğun ardından gelişecek ağır bir düşüşle, kurbanı kemik kırıkları ve iç kanamayla öldürmeye dayalı kaba kuvvet yöntemi.",
+              "detail": "Böyle bir düşüş, zeminde ağır kırıklar ve üst kattaki taş yüzeyde sürtünme kalıntıları bırakır."
             },
             {
               "id": "w4",
-              "name": "Zehirli Yemek",
+              "name": "Arsenikli Lokma",
               "icon": "🍽️",
-              "description": "Akşam yemeği tabağına karıştırılması planlanan arsenikli gıda, ancak bu kurgunun mutfaktaki tabaklara hiç dokunulmadan yapıldığı anlaşıldı."
+              "description": "Tek kişilik ikrama karıştırılan ağır metal bazlı zehirle, ölümün yemek sonrası gelişen bir kriz gibi görünmesini amaçlayan yöntem.",
+              "detail": "Porsiyon tepsisi, alerjen etiketi ve servis kapağı mutfağın hazırlık zincirinde ayrı ayrı kayıt altına alınır."
             }
           ],
           "locations": [
             {
               "id": "l1",
-              "name": "Havuz Başı",
+              "name": "Mavi Avlu",
               "icon": "🏊",
-              "description": "Malikanenin devasa bahçesinde yer alan, şezlongların bulunduğu, aydınlık ve dış kameraların her saniyeyi kaydettiği açık yüzme havuzu."
+              "description": "Malikanenin bahçesinde, şezlonglar ve aydınlatılmış su hattı boyunca uzanan açık davet alanı.",
+              "detail": "Kameralar konuk girişini kaydeder; kurtarma istasyonu ise gölgeli taraftaki duvara sabitlenmiştir."
             },
             {
               "id": "l2",
               "name": "Kütüphane",
               "icon": "📚",
-              "description": "Zemin katta yer alan, dışarıdan ses geçirmeyen kalın perdelerle kaplı, kurbanın şahsi içki barının ve deri çalışma koltuğunun bulunduğu izole, loş kütüphane."
+              "description": "Kalın perdelerle dış dünyadan ayrılan, Evelyn'in kişisel barı ve deri çalışma koltuğunun bulunduğu loş zemin kat odası.",
+              "detail": "İçki dolabının cam kapağı, her açılışta yüzeydeki taze temas filmini koruyan ince bir toz tabakasıyla kaplanır."
             },
             {
               "id": "l3",
-              "name": "Üst Balkon",
+              "name": "Seyir Noktası",
               "icon": "🌅",
-              "description": "Ana yatak odasının önünde yer alan, yüksek mermer korkuluklarla çevrili ve tepelerden tüm Los Angeles manzarasını gören açık teras hattı."
+              "description": "Ana yatak odasının önünde, Los Angeles manzarasına açılan yüksek mermer korkuluklu açık teras hattı.",
+              "detail": "Korkuluk altındaki yağmur oluğu, dış mekân lekelerini ve temas izlerini gece boyunca biriktirir."
             },
             {
               "id": "l4",
-              "name": "Mutfak",
+              "name": "Arka Hazne",
               "icon": "🍳",
-              "description": "Yemeklerin ve lüks içkilerin hazırlandığı, hizmetlilerin sürekli girip çıktığı, fayans zeminli ve bol ışıklı büyük villa mutfağı."
+              "description": "Servis ekibinin ikram hazırladığı, porsiyon tepsilerinin numaralandırıldığı büyük arka bölüm.",
+              "detail": "Her tabağın alerjen etiketi ve kapak mührü, servis kapısından çıkmadan önce dijital listeye işlenir. Servis ofisinin güvenli yazıcısı, tepsi kontrol masasıyla aynı kapalı bölümde bulunur."
             }
           ],
           "clues": [
             {
               "id": "c1",
-              "text": "Maktulün midesindeki devasa uyku ilacı tortuları ve kanındaki yüksek alkol konsantrasyonu, ölümün sessiz ve kimyasal bir kokteylle kadehin içinden geldiğini fısıldıyordu.",
-              "type": "kanit",
+              "title": "Kadeh Toksikolojisi",
+              "type": "adli",
               "mechanicType": "text",
+              "text": "Marlowe'un son kadehinde, farklı iki baskılayıcı maddenin aynı sıvıda birleştiği saptandı; Marlowe bu karışımın etkisi altında hayatını kaybetti. Yüksek açık hattın örneklerinde ise bu karışıma ait damla yolu ya da çözelti halkası bulunmadı.",
+              "deductionHint": "Bu iki baskılayıcının aynı kadehte buluşması, hangi kartı tarif ediyor; iz bulunmayan açık hat onu nereden dışlar?",
+              "isBonus": false,
               "revealOrder": 1,
               "isRevealed": true,
-              "pointCost": 0,
-              "title": "Ölüm Yeri",
-              "deductionHint": "Alkol ve ilacın ölümcül buluşması. Silah, zehirli bir içki."
+              "pointCost": 0
             },
             {
               "id": "c2",
-              "text": "Kurbanın ayak tabanlarındaki kuruluk ve üzerindeki ipek sabahlığın lekesiz hali, onun son saatlerini sadece zemin kattaki kendi izole ve şahsi barında geçirdiğini kanıtladı.",
+              "title": "Su Üstündeki Kol Düğmesi",
               "type": "kanit",
               "mechanicType": "text",
+              "text": "Bahçe kamerasına yansıyan kısa videoda, açık alandaki antika objeleri kurcaladığı bilinen genç konuk suya düşen kol düğmesini uzun saplı aparatla çıkarıyor. Görüntü bulanık, ancak sol manşetindeki deniz kabuğu biçimli metal parıltısı seçiliyor.",
+              "deductionHint": "Deniz kabuğu biçimli manşet ayrıntısı, hangi konuğu uzun saplı aparata bağlar?",
+              "isBonus": false,
               "revealOrder": 2,
               "isRevealed": false,
-              "pointCost": 100,
-              "title": "Vasiyetnamede Gizli Not",
-              "deductionHint": "Mekan, kurbanın şahsi barının da bulunduğu Kütüphane Odası."
+              "pointCost": 100
             },
             {
               "id": "c3",
-              "text": "Dış teras kameralarının kesintisiz logları, Yeğen Brandon ve Avukat Dana'nın olay saatinde terasta birlikte uzun süreli bir iş görüşmesi yaptıklarını video kaydıyla mühürledi.",
-              "type": "eleme",
+              "title": "Kabinet Geçiş Logu",
+              "type": "kanit",
               "mechanicType": "text",
+              "text": "Reçeteli dozların tutulduğu kilitli çekmecenin erişim kaydı incelendi. Parti konuklarına verilen bilekliklerden biri gece boyunca çekmece panelinde hiç tanınmadı; dışarıdan müdahale denemesi de yoktu.",
+              "deductionHint": "Kilidi hiç açmayan parti bilekliği, hangi kişiyi bu rotadan çıkarır?",
+              "isBonus": false,
               "revealOrder": 3,
               "isRevealed": false,
-              "pointCost": 100,
-              "title": "Toksikoloji",
-              "deductionHint": "Yeğen ve Avukat olay saatinde birlikte kameradaydı."
+              "pointCost": 100
             },
             {
               "id": "c4",
-              "text": "Kütüphanedeki şahsi kristal kadehin dibinde saptanan yoğun medikal çözelti kalıntıları, ölümcül dozun yalnızca o lüks içki seansında kurbana sunulduğunu kesinleştirdi.",
-              "type": "adli",
+              "title": "Sürüm Geçmişi",
+              "type": "kanit",
               "mechanicType": "text",
+              "text": "Adli saatlendirme, ölümcül sıvının son kadehe 23.10 ile 23.15 arasında eklendiğini gösteriyor. Aynı beş dakikada vasiyet uygulamasının sürüm geçmişi, hukuk temsilcisinin terminalinde kesintisiz düzeltme ve imza işlemi kaydetmiş; imza klasörü kamera kadrajından hiç çıkmamış.",
+              "deductionHint": "Kesintisiz sürüm geçmişi, hangi hukukî figürü kadeh hazırlama rotasından çıkarır?",
+              "isBonus": false,
               "revealOrder": 4,
               "isRevealed": false,
-              "pointCost": 100,
-              "title": "Brandon'ın İfadesi",
-              "deductionHint": "Ölümcül sıvı sadece kütüphanedeki şahsi kadehe damlatılmış."
+              "pointCost": 100
             },
             {
               "id": "c5",
-              "text": "Çalışma odasının şahsi içki dolabı kapağındaki toz tabakasından alınan parmak izi eşleşmesi, malikanenin 10 yıllık tüm içki ve servis düzenini tek başına yöneten emektar çalışanın profilini işaret etti.",
-              "type": "parmak_izi",
-              "mechanicType": "parmak_izi",
-              "parmakIziVerisi": {
-                "aciklama": "İçki dolabındaki taze parmak izlerini analiz et.",
-                "izler": [
-                  {
-                    "izId": "iz_dolap",
-                    "konum": "Kristal Şişe Sapı",
-                    "eslesme": "s4",
-                    "ipucu": "Grace Lee'nin temizlik eldiven dokusu ve parmak izi şablonuyla %100 tam uyum."
-                  }
-                ],
-                "sonuc": "İçki dolabındaki iz Grace Lee'ye ait. (s4)"
-              },
+              "title": "Havuzbaşındaki Üç İşaret",
+              "type": "profil_sentezi",
+              "mechanicType": "profil_sentezi",
+              "text": "Su hattı yakınındaki şezlongların yanında üç kişisel işaret bulundu: klora karşı koruyucu bir bilek bandı, eski bir film repliği karalanmış peçete ve kapatılmış bir bahis hesabı fişi.",
+              "deductionHint": "Bu üç işaret, şüpheli kartlarındaki hangi ayrıntı kümesinde birlikte görülüyor?",
+              "isBonus": false,
               "revealOrder": 5,
               "isRevealed": false,
               "pointCost": 100,
-              "title": "Marco'nun İfadesi",
-              "deductionHint": "İçki dolabındaki izler, servis düzenini bilen asistan Grace'e ait."
+              "profilSenteziVerisi": {
+                "baslik": "Geceye Ait Üç İşaret",
+                "aciklama": "Üç işaret aynı kişiye ait olmalı. Şüpheli kartlarının Tanım ve Detay bölümlerini birlikte incele; tek bir profil bütün ayrıntıları açıklar.",
+                "delilKartlari": [
+                  {
+                    "id": "bileklik",
+                    "baslik": "Koruyucu Bilek Bandı",
+                    "metin": "Şezlongun yanında, klorlu suyla teması azaltmak için bileğin üstüne sarılmış şeffaf bir koruyucu bant."
+                  },
+                  {
+                    "id": "pecete",
+                    "baslik": "Replikli Peçete",
+                    "metin": "Kokteyl peçetesine, eski siyah-beyaz filmlerden alınmış bir replik aceleyle karalanmış."
+                  },
+                  {
+                    "id": "fis",
+                    "baslik": "Kapanmış Hesap Fişi",
+                    "metin": "Küçük rakamlarla kapatılmış bir bahis hesabı fişi; sahibinin borçlarını görünmez tutmak istediğini düşündürüyor."
+                  }
+                ],
+                "optionSuspectIds": [
+                  "s1",
+                  "s2",
+                  "s3",
+                  "s4"
+                ],
+                "answerSuspectId": "s1",
+                "answerProfileSignals": [
+                  "klora karşı hassas",
+                  "eski film replikleri",
+                  "borçlarını saklamak"
+                ],
+                "successText": "Üç işaret tek bir konuk profilinde birleşti.",
+                "failureText": "Bu profil, üç işareti aynı anda açıklamıyor."
+              }
             },
             {
               "id": "c6",
-              "text": "Maktulün gizli günlüğünde asistanın vasiyet öfkesini doğrulayan ifadeler ile mutfaktaki gizli ses cihazından alınan o sinsi mırıldanma dalgası: '10 yılımı verdim... Her şeyi o jigoloya bırakamazsın... Bugün hak ettiğim o mirası kendi ellerimle alacağım...'",
-              "type": "ses_kaydi",
-              "mechanicType": "ses_kaydi",
-              "sesMetni": "10 yılımı verdim... Her şeyi o jigoloya bırakamazsın... Bugün hak ettiğim o mirası kendi ellerimle alacağım...",
+              "title": "Mavi Mürekkepli Çıkış",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Güvenli yazıcının gece kaydında, lacivert mürekkepli son vasiyet sayfaları tepsi kontrol masasının yanındaki servis ofisinden alınmış görünüyor. Aynı zaman aralığında hukuk temsilcisinin imza klasörü, arka bölümün güvenlik listesinde kayıtlı.",
+              "deductionHint": "Lacivert mürekkep, güvenli yazıcı ve imza klasörü; hangi hukukî figürü kapalı servis bölümüne yerleştirir?",
+              "isBonus": false,
               "revealOrder": 6,
               "isRevealed": false,
-              "pointCost": 100,
-              "title": "Brandon ve Dana Alibisi",
-              "deductionHint": "'Mirası ellerimle alacağım' sözleri Grace'in ihanetini ve cinayeti itirafıdır."
+              "pointCost": 100
+            },
+            {
+              "id": "c7",
+              "title": "Seyir Noktasındaki Özçekim",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Gece modundaki özçekim önbelleğinde, deniz kabuğu biçimli kol düğmesi bir an için Los Angeles ışıkları önünde parlıyor. Dosya, açık manzara hattındaki kameradan aynı dakikada alınmış.",
+              "deductionHint": "Kol düğmesi ve manzara önbelleği, hangi konuğu yüksek açık hatta yerleştirir?",
+              "isBonus": true,
+              "revealOrder": 7,
+              "isRevealed": false,
+              "pointCost": 100
+            },
+            {
+              "id": "c8",
+              "title": "Mühürlü Tadım Dosyası",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Tek kişilik tadım porsiyonunun kapağı, alerjen etiketiyle birlikte gece sonuna kadar kapalı kaldı. Şefin teslim çizelgesindeki lacivert mürekkepli hukuk onayı, bu porsiyonun incelenmek üzere belge akışına eklendiğini gösteriyor.",
+              "deductionHint": "Mühürlü tadım porsiyonu ile hukuk onayı, hangi kişiyi yemek rotasıyla eşleştirir?",
+              "isBonus": true,
+              "revealOrder": 8,
+              "isRevealed": false,
+              "pointCost": 100
             }
           ],
+          "assetManifest": [],
           "solution": {
             "suspectId": "s4",
             "weaponId": "w2",
             "locationId": "l2"
           },
-          "solutionNarrative": "Eski Asistan Grace Lee, 10 yıllık sadakatine rağmen milyonluk vasiyetten dışlandığını öğrenince intikam almaya karar verdi. Malikanenin içki düzenine hakim olmasını kullanarak, kurbanın kütüphanedeki viski kadehine ölümcül uyku ilacı karışımını damlattı. Kamera kayıtları ve ses logları o sinsi planını yerle bir etti.",
-          "specialMechanic": "sifreli_parmak_ses_yuzlesme"
+          "solutionNarrative": "Grace Lee, Evelyn Marlowe'un yeni vasiyetinde adının silindiğini öğrendiğinde yıllardır yönettiği reçete ve içki düzenini kendi lehine çevirdi. Eşik Dozu'nu, Evelyn'in gece ritmini ezbere bildiği bir anda Kütüphanedeki özel kadehe karıştırdı. Mavi Avludaki gösterişli hareketler, Seyir Noktasındaki manzara oyunu ve Arka Haznedeki mühürlü porsiyon ilk bakışta başka yollar açtı. Ancak bütün çapraz eşleşmeler bir araya geldiğinde, ölümcül karışımın sessiz asistanın kapalı oda rutininden doğduğu ortaya çıktı."
         }
       ]
     },
