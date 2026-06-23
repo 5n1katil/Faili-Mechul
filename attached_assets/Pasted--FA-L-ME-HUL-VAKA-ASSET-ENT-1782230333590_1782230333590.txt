@@ -1,0 +1,260 @@
+/* ============================================================
+ *  FAİLİ MEÇHUL — VAKA / ASSET ENTEGRASYON TALİMATI
+ *  Bu JSON üretimden geçti. Aşağıdaki asset sözleşmesini AYNI
+ *  assetId ve yollarla uygula; JSON içindeki ilişkilere dokunma.
+ * ------------------------------------------------------------
+ *  [PARMAK İZİ MİNİ OYUNU]
+ *  Parmak izi görselleri kod havuzundaki HAZIR varlıklardır.
+ *  Geçerli desen anahtarları: fp_whorl | fp_arch | fp_loop_left | fp_loop_right
+ *    - s1 (Ajan Rachel Kim) → fp_loop_right
+ *    - s2 (Yönetmen Brett Walsh) → fp_whorl
+ *    - s3 (Stüdyo Hukuk Direktörü Amy Cross) → fp_arch
+ *    - s4 (Rakip Senarist Carlos Vega) → fp_loop_left
+ *    - c4: sahne izi "fp_loop_right" → doğru profil s1
+ *  Sahne izi, eşleşen şüphelinin parmakIziDeseni ile aynı havuz anahtarını kullanmalı.
+ * ------------------------------------------------------------
+ *  [SES KAYDI — ASSET TESLİM MANİFESTİ]
+ *  1) Her MP3/WAV dosyasını aşağıdaki publicPath’in disk karşılığına koy:
+ *     Vite/React/Replit için örn. "/assets/..." → "public/assets/...".
+ *  2) Runtime’da yalnız clue.audioUrl yolunu kullan; ikinci bir hard-coded yol yazma.
+ *  3) Ses oynatılamazsa transcript butonu yine çalışmalı; bu erişilebilirlik zorunludur.
+ *
+ *    İpucu c5 · assetId=audio_hw_004_c5_acil_interkom
+ *      dosya=hw_004_c5_acil_interkom.mp3 · publicPath=/assets/cases/hw_004/audio/hw_004_c5_acil_interkom.mp3 · mime=audio/mpeg
+ *      durum=PLANLI — MP3 dosyası ayrıca eklenecek; transcript şimdiden kullanılabilir.
+ *      player: <audio src="/assets/cases/hw_004/audio/hw_004_c5_acil_interkom.mp3"> + "Kayıt Çözümlemesini Göster" (sesMetni)
+ * ------------------------------------------------------------
+ *  specialMechanic: "parmak_izi_ve_ses_kaydi"
+ *  Asset dosyasını yeniden adlandırma; assetId, clueId ve publicPath sözleşmedir.
+ * ============================================================ */
+
+{
+  "puzzleId": "hw_004",
+  "stars": "★★★★☆",
+  "gridSize": "4x4",
+  "timeLimit": 420,
+  "qaChangeNote": "hw_004 c2/c3/c5 narrative coherence revision: c2 timestamps the intact crystal set at 23:44; c3 places Carlos in the lift at 23:38; c5 natural intercom proves he remains trapped at 23:49. No logicRules changed.",
+  "title": "Senaryo Hırsızı",
+  "subtitle": "Los Angeles, Yazarlar Sendikası",
+  "difficulty": "Başkomiser",
+  "difficultyLevel": 4,
+  "specialMechanic": "parmak_izi_ve_ses_kaydi",
+  "story": "Yazarlar Sendikası’ndaki gece toplantısının ardından genç senarist Elias Ward kayboldu. Sabah, Ward’ın bedeni binanın alt katındaki Otopark bölümünde bulundu; devrimsel senaryosunun özgün kopyası ise ortada yoktu. Bina içindeki dört kişi Ward’ın son görüşmesini birbirinden farklı anlatıyordu. Ward, yeni bir ajans sözleşmesine imza atmak üzereydi. Bu karar bir yönetmenin yıllardır beklediği projeyi, bir hukuk departmanının telif dosyalarını ve bir rakip yazarın tek şansını altüst edebilirdi. Neonla bölünen koridorlarda tek soru kalıyor: Ward’ın son saatinde kim, hangi aracı yanına alarak doğru kata indi?",
+  "atmosphere": "Gece Los Angeles. Asansör kabloları uğulduyor; çatıdaki kokteyl sesi aşağıdaki beton katlara kadar boğuk bir ritim gibi iniyor.",
+  "suspects": [
+    {
+      "id": "s1",
+      "name": "Ajan Rachel Kim",
+      "icon": "🕵️",
+      "description": "Ward’ın temsilcisi. Senaristin sabah yeni bir ajansla imza atacağını bilen, toplantılara her zaman geniş evrak çantasıyla gelen etkili bir aracı.",
+      "detail": "40 yaşında. Bergamot kokulu el kremi kullanıyor; sağ başparmağının yanında eski bir kâğıt kesiğinden kalma ince çizgi izi var. Baskı altında sesini hiç yükseltmiyor.",
+      "parmakIziDeseni": "fp_loop_right"
+    },
+    {
+      "id": "s2",
+      "name": "Yönetmen Brett Walsh",
+      "icon": "⚖️",
+      "description": "Ward’ın senaryosunu filme çekmek isteyen fakat son toplantıda reddedilen deneyimli yönetmen. Delege konuşmalarından çok çatıdaki bağlantı buluşmalarında görülüyor.",
+      "detail": "48 yaşında. Her görüşmeye kendi çekim defteriyle gelir; ret cevabını kişisel bir başarısızlık gibi taşıdığı kolayca fark edilir.",
+      "parmakIziDeseni": "fp_whorl"
+    },
+    {
+      "id": "s3",
+      "name": "Stüdyo Hukuk Direktörü Amy Cross",
+      "icon": "👩‍💼",
+      "description": "Ward’ın telif iddialarını stüdyo adına yöneten hukuk direktörü. Tartışmalı dosyaları imza altına almadan binadan ayrılmayan, ölçülü ve keskin bir yönetici.",
+      "detail": "52 yaşında. Parmaklarında mürekkep lekesi bırakmayan ince nitril eldivenler taşır; metinlerdeki en küçük tarih farkını bile yakalar.",
+      "parmakIziDeseni": "fp_arch"
+    },
+    {
+      "id": "s4",
+      "name": "Rakip Senarist Carlos Vega",
+      "icon": "🎨",
+      "description": "Ward’la aynı hikâye fikri üzerinde çalışan genç senarist. Özgün kopyanın kaybolması onu ilk bakışta suçlu gibi gösteriyor; ancak gecenin her anında bir yere yetişmeye çalıştığı biliniyor.",
+      "detail": "33 yaşında. Her taslağına mavi kurşun kalemle not düşer; paniklediğinde kapalı alanlarda nefesi daralır, buna rağmen hiçbir ayrıntıyı unutmaz.",
+      "parmakIziDeseni": "fp_loop_left"
+    }
+  ],
+  "weapons": [
+    {
+      "id": "w1",
+      "name": "Ağır Kristal Kül Tablası",
+      "icon": "🪨",
+      "description": "Toplantı masalarında kullanılan, kalın kenarlı ve elde taşındığında beklenenden ağır gelen çok parçalı kristal dekor objesi.",
+      "detail": "Şeffaf yüzeyinde ışığı prizma gibi kırar; köşelerindeki keskin fasetler darbede cam kırığı ve saydam toz bırakabilir."
+    },
+    {
+      "id": "w2",
+      "name": "Reçeteli Sedatif Ampul",
+      "icon": "💊",
+      "description": "Tıbbi kilitli dolapta tutulan, sıvıya karıştığında kısa süreli bilinç baskılanması yaratabilen tek kullanımlık sedatif ampul.",
+      "detail": "Ampulün seri numarası ve taşıma zarfı, hangi departmandan çıktığını kayıt altına alan soğuk zincir etiketiyle izlenebilir."
+    },
+    {
+      "id": "w3",
+      "name": "Gösterim Güç Hattı",
+      "icon": "⚡",
+      "description": "Geçici gösterim düzeneklerini besleyen, rulo hâlinde taşınan ağır enerji hattı.",
+      "detail": "Kırmızı kılıfı, döner kilidi ve X-19 zimmet etiketiyle teknik ekip tarafından kolay ayırt edilir."
+    },
+    {
+      "id": "w4",
+      "name": "Çelik Çekme Halatı",
+      "icon": "🪢",
+      "description": "Eski kabinlerin tavan panelinde bulunan, acil fren sistemini elle devreye almak için kullanılan ince ama dayanıklı çekme halatı.",
+      "detail": "Yerinden çıkarılması tavan panelinde metal halka ve lif kopması bırakır; fiziksel mücadelede boğma aracı olarak da kullanılabilir."
+    }
+  ],
+  "locations": [
+    {
+      "id": "l1",
+      "name": "Toplantı Odası",
+      "icon": "📋",
+      "description": "Delegelerin metinleri oyladığı; kristal servis takımlarının, dosyaların ve uzun ahşap masaların bulunduğu aydınlık üst kat odası.",
+      "detail": "Çıkıştaki dijital pano, oda boşaldıktan sonra bile envanter fotoğrafını otomatik arşivler."
+    },
+    {
+      "id": "l2",
+      "name": "Otopark",
+      "icon": "🚗",
+      "description": "Binanın alt katında, kısmi kör kameralar ve araç sıraları arasında uzanan karanlık beton alan.",
+      "detail": "Egzoz ve yağ kokusu havada kalır; şoför kapılarındaki dokunuşlar gece nemiyle daha uzun süre korunabilir."
+    },
+    {
+      "id": "l3",
+      "name": "Çatı Terası",
+      "icon": "🌆",
+      "description": "Delege kokteylinin sürdüğü, Los Angeles manzarasına bakan rüzgârlı açık alan.",
+      "detail": "Geçici ışık düzenekleri ve jeneratör kabloları gece boyunca teknik ekibin zimmetindedir."
+    },
+    {
+      "id": "l4",
+      "name": "Asansör",
+      "icon": "🛗",
+      "description": "Katlar arasında çalışan, aynalı panelleri ve acil interkom sistemi olan eski kabin.",
+      "detail": "Arıza moduna geçtiğinde kart okuyucu tek kişiyi son okutma anıyla birlikte kayıt altına alır; kapılar dışarıdan açılmaz."
+    }
+  ],
+  "clues": [
+    {
+      "id": "c1",
+      "title": "Teras Aydınlatma Zimmeti",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Kokteyl bittikten sonra düzenlenen teknik zimmet fişi, X-19 etiketli rulo hattın terastaki jeneratöre bağlı kaldığını gösteriyor. Rulo, gece ekibi gelene dek alt katlara hiç indirilmemiş.",
+      "deductionHint": "Zimmet fişindeki X-19 etiketi ve jeneratör kaydı, hangi ekipmanın alt kata hiç inmediğini gösterir?",
+      "isBonus": false,
+      "revealOrder": 1,
+      "isRevealed": true,
+      "pointCost": 0
+    },
+    {
+      "id": "c2",
+      "title": "23.44 Envanter Fotoğrafı",
+      "type": "adli",
+      "mechanicType": "text",
+      "text": "Saat 23.44’te, son delege çıktıktan hemen sonra kapı üstündeki dijital pano otomatik bir envanter fotoğrafı aldı. Dört parçalı kristal servis seti eksiksiz duruyordu; masada cam kırığı, silinmiş kan izi ya da yerinden alınmış bir parça görünmüyordu.",
+      "deductionHint": "Zaman damgasında set bütün görünüyorsa, ağır cam objenin o anda olayın gerçekleştiği yerde kullanılmış olması mümkün mü?",
+      "isBonus": false,
+      "revealOrder": 2,
+      "isRevealed": false,
+      "pointCost": 80
+    },
+    {
+      "id": "c3",
+      "title": "Asansör Kart Kaydı",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Aynalı geçiş kabininin erişim günlüğünde, aynı hikâye fikri üzerinde çalışan genç senaristin ziyaretçi kartı 23.38’de kayda geçti. Aynı anda panelde arıza modu uyarısı belirdi; iç hat interkomu, kabinde kalan kişinin güvenlikle kurabildiği tek bağlantı olarak açık kaldı.",
+      "deductionHint": "23.38’de arızaya giren kabine kartını okutan kişi, hangi kapalı alanla eşleşir?",
+      "isBonus": false,
+      "revealOrder": 3,
+      "isRevealed": false,
+      "pointCost": 80
+    },
+    {
+      "id": "c4",
+      "title": "Şoför Kapısındaki Yarım İz",
+      "type": "parmak_izi",
+      "mechanicType": "parmak_izi",
+      "text": "Ward’ın aracının şoför kapısında, parfümlü el kremi filmiyle bozulmuş yarım bir parmak izi bulundu. Laboratuvar, izi dört şüphelinin referans örneğiyle eşleştirmek üzere izole etti.",
+      "deductionHint": "Krem filmi ve sağa kıvrılan ilmek yapısı, hangi profilin referans iziyle uyuşur?",
+      "isBonus": false,
+      "revealOrder": 4,
+      "isRevealed": false,
+      "pointCost": 80,
+      "parmakIziVerisi": {
+        "aciklama": "Yarım izin çizgi yapısını çöz. Bu eşleşme, gecenin hareket zincirindeki kapalı halkalardan birini açacak.",
+        "izler": [
+          {
+            "izId": "iz_sofor_kapisi",
+            "konum": "Şoför Kapısı",
+            "eslesme": "s1",
+            "ipucu": "Sağa kıvrılan ilmek yapısı, çizgilerin dönüşünde hafif aşınma taşıyor."
+          }
+        ],
+        "sonuc": "Eşleşme tespit edildi.",
+        "sahneGorseli": "fp_loop_right"
+      }
+    },
+    {
+      "id": "c5",
+      "title": "Acil Interkom Çağrısı",
+      "type": "ses_kaydi",
+      "mechanicType": "ses_kaydi",
+      "text": "Arıza moduna düşen kabinin acil interkomu, koruma odasına kısa bir konuşma iletti. Tavan hoparlöründeki parazit, iki sesi kesik kesik taşıyor.",
+      "deductionHint": "23.44 ile 23.49 arasındaki zaman çizelgesini birlikte okuduğunda, hangi kişi fotoğraftan sonra ağır cam objeye ulaşamamış olur?",
+      "isBonus": false,
+      "revealOrder": 5,
+      "isRevealed": false,
+      "pointCost": 80,
+      "sesMetni": "GÜVENLİK OPERATÖRÜ: Kabin dört, güvenlik. Bay Vega, beni duyuyor musunuz?\n\nCARLOS VEGA: Duyuyorum. Kartımı 23.38’de okuttum; o andan beri kapılar açılmadı. Ward benden son taslak notlarını istemişti.\n\nGÜVENLİK OPERATÖRÜ: Saat 23.49. Kabin arıza kilidinde. Teknik ekip gelene kadar kapılar ne içeriden ne dışarıdan açılacak.\n\nCARLOS VEGA: Lütfen Ward’a haber verin. Görüşmeye yetişemedim; evraklarım da bende kaldı.\n\nGÜVENLİK OPERATÖRÜ: Not aldım. Kabinden ayrılmaya çalışmayın; teknik ekip sizi çıkaracak.",
+      "audioUrl": "/assets/cases/hw_004/audio/hw_004_c5_acil_interkom.mp3",
+      "audioAssetId": "audio_hw_004_c5_acil_interkom",
+      "audioPlanned": true,
+      "audioFileName": "hw_004_c5_acil_interkom.mp3"
+    },
+    {
+      "id": "c6",
+      "title": "Teras Konuk Listesi",
+      "type": "tanik",
+      "mechanicType": "text",
+      "text": "Çatıdaki servis fotoğraflarında, reddedilen projeyi tartışan yönetmen aynı masada arka arkaya üç kez görünüyor. Baş garson, o kişinin terastan yalnızca kapanış anonsu için ayrıldığını söyledi.",
+      "deductionHint": "Servis fotoğrafları ve garson ifadesi, reddedilen projedeki yönetmeni hangi açık alana yerleştirir?",
+      "isBonus": true,
+      "revealOrder": 6,
+      "isRevealed": false,
+      "pointCost": 80
+    },
+    {
+      "id": "c7",
+      "title": "Komisyon Zarfı",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Geniş evrak çantasının iç dikişinde saydam kristal tozu bulundu. Aynı çantadaki komisyon çizelgesinde, Ward’ın yeni sözleşmesi gerçekleşirse temsilcinin yılda 400.000 dolar kaybedeceği hesaplanmıştı.",
+      "deductionHint": "Kristal tozu ve komisyon çizelgesi, geniş evrak çantasını hangi ağır dekor objesiyle ilişkilendirir?",
+      "isBonus": true,
+      "revealOrder": 7,
+      "isRevealed": false,
+      "pointCost": 80
+    }
+  ],
+  "assetManifest": [
+    {
+      "assetId": "audio_hw_004_c5_acil_interkom",
+      "kind": "audio",
+      "clueId": "c5",
+      "status": "pending_upload",
+      "fileName": "hw_004_c5_acil_interkom.mp3",
+      "publicPath": "/assets/cases/hw_004/audio/hw_004_c5_acil_interkom.mp3",
+      "mimeType": "audio/mpeg",
+      "durationTargetSec": 26
+    }
+  ],
+  "solution": {
+    "suspectId": "s1",
+    "weaponId": "w1",
+    "locationId": "l2"
+  },
+  "solutionNarrative": "Rachel Kim, Elias Ward’ın yeni ajansla imza atmasının kendi portföyünden yüz binlerce dolar eksilteceğini biliyordu. Toplantı odasındaki kristal set, odanın boşaltıldığı anda hâlâ tamdı; bu nedenle Rachel ağır parçayı daha sonra imzayla aldı ve evrak çantasına sakladı. Ward’ı araçların bulunduğu alt kata yönlendirdi. Şoför kapısındaki izi onu oraya bağladı; interkom kaydı Carlos’un aynı saatlerde asansörde kilitli kaldığını ayırdı. Rachel, otoparkta Ward’a ağır kristal kül tablasıyla saldırdı, özgün senaryoyu aldı ve bunu finansal bir kayıp gibi göstermeye çalıştı."
+}
