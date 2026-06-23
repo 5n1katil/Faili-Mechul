@@ -1354,31 +1354,32 @@
           "stars": "★★★☆☆",
           "gridSize": "3x3",
           "timeLimit": 480,
-          "story": "Cannes Film Festivali'nin en prestijli ödülüne aday olan kibirli bir yapımcı, Fransız Rivierası'nda demirli lüks yatında ölü bulundu. Ödülü kazanmasını istemeyen rakiplerin gölgesinde, Akdeniz'in serin suları bu kez bir sanat cinayetine sahne oldu.",
-          "atmosphere": "Akdeniz. Lüks yat. Parfüm ve tuz kokusu. Uzaktan müzik sesi.",
+          "story": "Festivalin son gecesinde, Cannes koyuna demirlemiş L'Orage yatının sahibi yapımcı Laurent Vasseur ortadan kayboldu. Şafakta kıyı güvenliği onu motor akıntısında buldu: ciğerlerinde deniz suyu vardı; ön değerlendirme bunun bir deniz boğulması olduğunu söylüyordu. Avucunda ise ıslanmış bir film şeridi kalmıştı. Vasseur, sabah jüri önünde bir senaryo hırsızlığı dosyasını açıklayacaktı. Yatta kalan üç kişi birbirini suçluyor: rekabeti parayla satın alan Amerikalı yapımcı, yazılarıyla festivalin yönünü değiştiren Fransız eleştirmen ve aylarca ücretini alamayan sessiz kaptan. Festivale ait ışıklar karada yanarken, sen denizin değil insanların sakladığı çizgiyi takip edeceksin.",
+          "atmosphere": "Kırmızı halının flaşları uzakta; yatta yalnız dizel, tuz ve ıslanmış ipek kokusu var. Kıyıdaki müzik rüzgârla kopup gelirken, güvertede bir gecenin borcu kapanmıyor.",
+          "specialMechanic": "parmak_izi",
           "suspects": [
             {
               "id": "s1",
               "name": "Amerikalı Rakip Jake Mercer",
               "icon": "🚗",
-              "description": "Kendi senaryo fikirlerinin maktul tarafından çalındığını iddia eden, yatın karmaşık mutfak ve denizcilik işleyişinden tamamen habersiz, sinirli Amerikalı yapımcı.",
-              "detail": "50 yaşında, agresif müzakereci.",
+              "description": "Vasseur'ün kendi senaryo fikirlerini çaldığını iddia eden; festivalde dağıtım anlaşmalarını sert pazarlıklarla yöneten Amerikalı yapımcı.",
+              "detail": "50 yaşında. Gülümserken bile karşısındakinin zayıf noktasını hesaplıyor; Cannes'a her yıl kendi ekibiyle, kendi güvenlik kurallarıyla geliyor.",
               "parmakIziDeseni": "fp_lateral_pocket"
             },
             {
               "id": "s2",
               "name": "Fransız Eleştirmen Isabelle Renard",
               "icon": "noun-pazar-musteri-hanim.png",
-              "description": "Yazdığı zehir zemberek yazılarla filmin şansını baltalayan, fiziksel boğuşmalara girmekten kaçınan ve tüm geceyi lüks deri koltuklu salonlarda geçiren entelektüel eleştirmen.",
-              "detail": "42 yaşında, sert kalemli, tahmin edilemez.",
+              "description": "Bir tek yazısıyla festivalin dengelerini değiştirebilen, Vasseur'ün son filmini kamuoyu önünde acımasızca eleştiren Fransız sinema yazarı.",
+              "detail": "42 yaşında. Gördüğü her ayrıntıyı sesli notlara dönüştürüyor; zarafeti, sorularının keskinliğini hiç yumuşatmıyor.",
               "parmakIziDeseni": "fp_accidental"
             },
             {
               "id": "s3",
               "name": "Yat Kaptanı Nikos",
               "icon": "👨‍✈️",
-              "description": "Maktulün yıllardır ödenmeyen maaşları yüzünden öfkeyle dolan, yatın güverte alanlarına, fırtına koşullarına ve ağır halatlarına tamamen hakim olan profesyonel gemici.",
-              "detail": "55 yaşında, deneyimli, sessiz.",
+              "description": "L'Orage'ın rotasını ve fırtına kaprislerini ezbere bilen; Vasseur'ün aylardır ertelediği ücretler yüzünden sabrını yitirmiş deneyimli kaptan.",
+              "detail": "55 yaşında. Konuklar onu sessiz bir hizmetkâr sanıyor; oysa bu yatın hangi kapısının ne zaman ses çıkardığını herkesten iyi biliyor.",
               "parmakIziDeseni": "fp_peacock"
             }
           ],
@@ -1387,19 +1388,22 @@
               "id": "w1",
               "name": "Boğulma (Deniz)",
               "icon": "🌊",
-              "description": "Yatın açık güvertesinden azgın dalgaların arasına itilerek kurbanın ciğerlerine deniz suyu dolmasını sağlayan, kaza süsü verilmiş mekanik eylem."
+              "description": "Kurbanı açık denize sürükleyerek ciğerlerine tuzlu su dolmasına yol açan, kaza gibi gösterilebilen ölümcül yöntem.",
+              "detail": "Darbe ya da bıçak izi bırakmadan da öldürür; deniz, doğru anda kullanıldığında en eski suç ortağına dönüşür."
             },
             {
               "id": "w2",
               "name": "Zehirli Kokteyl",
               "icon": "🍹",
-              "description": "İçine egzotik bir bitki toksini karıştırılan, yutulduğu anda mide krampları ve felç yaratarak kurbanı olduğu yerde donduran sinsi içecek çözeltisi."
+              "description": "Şeffaf bir içeceğin tadını değiştirmeden etki eden, kasları zayıflatıp kazaya açık hâle getiren festival gecesi karışımı.",
+              "detail": "Kokteyl kadehinde sıradan görünür; ancak servis zinciri ve şişe kapağındaki izler onu ele verebilir."
             },
             {
               "id": "w3",
               "name": "Bıçak",
               "icon": "🗡️",
-              "description": "Yatın mutfağından alınan, keskin uçlu ve kurban üzerinde derin kanamalı yaralar bırakan, etrafı kırmızıya boyayan standart şef bıçağı."
+              "description": "Yat mutfağındaki meyve ve peynir servisinde kullanılan, ince ama derin yara açabilecek keskin bıçak.",
+              "detail": "Gala servisinde sıradan bir masa aleti gibi görünür; yanlış elde olduğu anda bütün zarafetini kaybeder."
             }
           ],
           "locations": [
@@ -1407,100 +1411,121 @@
               "id": "l1",
               "name": "Yat Güvertesi",
               "icon": "🛥️",
-              "description": "Deniz dalgalarının ve rüzgarın sürekli dövdüğü, geceleri zifiri karanlığa gömülen, küpeşteleri kaygan ve tehlikeli olan açık hava güvertesi."
+              "description": "Rüzgârın sertleştiği saatlerde halatların gerildiği, küpeşteleri tuzla kayganlaşan açık üst alan.",
+              "detail": "Festivale ait ışıklar buradan kıyıda küçük görünür; birkaç adım sonrası yalnız koyun karanlığıdır."
             },
             {
               "id": "l2",
               "name": "Yat Salonu",
               "icon": "🛋️",
-              "description": "Kapalı, yoğun bir şekilde ışıklandırılmış, misafirlerin ağırlandığı ve içerideki seslerin dışarıya asla sızmadığı korunaklı ve halı kaplı lüks iç salon."
+              "description": "Halılarla ve ses yalıtımlı perdelerle çevrili, misafirlerin yemekten sonra gizli görüşmeler yaptığı kapalı ana salon.",
+              "detail": "Kıyıdaki müziğin duyulmadığı tek yer. İçeride konuşulanlar, çoğu zaman dışarıdakilerden daha tehlikelidir."
             },
             {
               "id": "l3",
               "name": "Kaptan Köşkü",
               "icon": "🧭",
-              "description": "Yatın en üst katında yer alan, dümenin ve telsiz cihazlarının bulunduğu, dışarıdan sadece kilitli bir kapıyla erişilen dar yönetim odası."
+              "description": "Dümen, rota ekranı ve telsizlerin bulunduğu; giriş çıkışları manyetik kilitle kayda geçen dar yönetim odası.",
+              "detail": "Camları koyu denize bakar. Burada yalnız rota değil, yatın bütün sessiz anlaşmaları da tutulur."
             }
           ],
           "clues": [
             {
               "id": "c1",
-              "text": "Kurbanın ciğerlerine dolan bol miktarda tuzlu Akdeniz suyu ve saçlarındaki yosun kalıntıları, hayat mücadelesinin karanlık dalgaların arasında son bulduğunu kesinleştirdi.",
+              "title": "Mutfak Dolabı Mührü",
               "type": "kanit",
               "mechanicType": "text",
+              "text": "Gala servisinden sonra kesici servis aletlerinin dolabındaki manyetik mühür olay aralığı boyunca bozulmadan kaldı. İç kamera sayacı, rakip yapımcının koridordan dönüşünden sonra dolaba ne eksik bir alet ne de yeni bir ziyaretçi kaydetti.",
+              "deductionHint": "Mührü hiç açılmayan dolap, hangi kişiyi kesici ekipmandan ayırır?",
               "revealOrder": 1,
               "isRevealed": true,
               "pointCost": 0,
-              "title": "Fransız Polis Raporu",
-              "deductionHint": "Ciğerlerdeki deniz suyu, kurbanın denize düştüğünü kanıtlıyor."
+              "isBonus": false
             },
             {
               "id": "c2",
-              "text": "Kurbanın rugan ayakkabılarındaki kayma izleri ve kırık küpeşte parçaları, ölümcül hamlenin rüzgarın ve dalgaların en sert vurduğu açık hava alanında yaşandığını gösteriyordu.",
-              "type": "kanit",
+              "title": "Kayıt Kabinindeki Fransızca Not",
+              "type": "tanik",
               "mechanicType": "text",
+              "text": "Kapalı ana salonun ses yalıtımlı kayıt kabininde 23.44 ile 00.02 arasında tek parça hâlinde kaydedilmiş Fransızca bir eleştiri notu bulundu. Ses tonu, festival boyunca sert yorumlarıyla tanınan misafirin basın kayıtlarıyla örtüşüyor.",
+              "deductionHint": "Kesintisiz Fransızca eleştiri notu, hangi konuğu kapalı ana salonla eşleştirir?",
               "revealOrder": 2,
               "isRevealed": false,
               "pointCost": 70,
-              "title": "Kan Analizi",
-              "deductionHint": "Mekan, rüzgarlı ve kaygan küpeştelere sahip alan."
+              "isBonus": false
             },
             {
               "id": "c3",
-              "text": "Yatın iç salon kameraları, Fransız eleştirmenin hararetli tartışmanın ardından lüks kamarasına kapandığını ve sabaha kadar o kapının hiç açılmadığını dijital olarak belgeledi.",
-              "type": "eleme",
+              "title": "Yağsız Sap",
+              "type": "adli",
               "mechanicType": "text",
+              "text": "Kesici servis aletinin ahşap sapında tuz kristali, halat yağı ya da güverte eldivenlerinden gelebilecek kauçuk lifleri yoktu. Buna karşılık seyir defteri, gemiyi yöneten kişinin olay aralığında iki elinde de yağlı iş eldivenleri bulunduğunu kayda geçirdi.",
+              "deductionHint": "Sapta olmayan yağ ve lifler, hangi mesleki ekipmanı kullanan kişiyi kesici araçtan ayırır?",
               "revealOrder": 3,
               "isRevealed": false,
               "pointCost": 70,
-              "title": "Garson İfadesi",
-              "deductionHint": "Eleştirmenin gece boyunca odasında kaldığı teknolojik loglarla kanıtlandı."
+              "isBonus": false
             },
             {
               "id": "c4",
-              "text": "Kaygan güverte küpeştesindeki taze el izleri, denizin hırçın ritmine ve ağır gemi halatlarının yağına alışkın profesyonel bir denizcinin avuç içi dokusuyla birebir eşleşti.",
+              "title": "Küpeştedeki Yarım İz",
               "type": "parmak_izi",
               "mechanicType": "parmak_izi",
+              "text": "İskele tarafındaki küpeştenin alt yüzeyinde, deniz tuzu yüzünden yarısı silinmiş tek bir parmak izi bulundu. İzdeki yön değişimlerini şüpheli kartlarındaki desenlerle karşılaştır.",
               "parmakIziVerisi": {
-                "aciklama": "Kaygan güverte küpeştesindeki taze el izlerini analiz et.",
+                "aciklama": "Küpeştedeki yarım izi şüpheli kartlarındaki desenlerle eşleştir. Doğru eşleşme, açık alandaki kritik bağlantıyı ortaya çıkaracak.",
                 "izler": [
                   {
-                    "izId": "iz_kupeste",
+                    "izId": "iz_iskele_kupeste",
                     "konum": "İskele Küpeştesi",
                     "eslesme": "s3",
-                    "ipucu": "Denizci halat yağı kalıntılarıyla harmanlanmış, Kaptan Nikos'a ait net avuç içi izi."
+                    "ipucu": "Merkezden dışa açılan yelpaze biçimli kıvrımlar; deniz tuzu ve halat yağının üst üste bindirdiği yarım iz."
                   }
                 ],
-                "sonuc": "Güvertedeki iz Kaptan Nikos'a ait. (s3)",
+                "sonuc": "Yelpaze biçimli kıvrımlara sahip yarım iz, karşılaştırma kartlarından biriyle tam örtüşüyor.",
                 "sahneGorseli": "fp_peacock"
               },
+              "deductionHint": "Küpeştedeki yelpaze biçimli yarım iz, hangi parmak izi kartıyla örtüşüyor?",
               "revealOrder": 4,
               "isRevealed": false,
               "pointCost": 70,
-              "title": "Güverte Küpeştesi İzi",
-              "deductionHint": "Güvertedeki yağlı izler gemi mürettebatından birine ait."
+              "isBonus": false
             },
             {
               "id": "c5",
-              "text": "Kaptan köşkü telsiz logları, cinayetten dakikalar önce rakip yapımcı Jake Mercer'ın offshore hesabından şahsi gemi idarecisinin hesabına aktarılan 80.000 euro tutarındaki o karanlık işlemi deşifre etti.",
-              "type": "dogrudan",
+              "title": "Köşk Nem Sensörü",
+              "type": "mekanik",
               "mechanicType": "text",
+              "text": "Dar yönetim odasının kapı sensörü 23.38'den 00.16'ya dek kilit konumunda kaldı; iç zemindeki nem şeridi de sıfır değişim gösterdi. Dışarıdaki tuzlu sıçrama bu kapalı odaya o gece hiç ulaşmamıştı.",
+              "deductionHint": "Deniz sıçramasının hiç ulaşmadığı kapalı oda, hangi yöntemle eşleşemez?",
               "revealOrder": 5,
               "isRevealed": false,
               "pointCost": 70,
-              "title": "Isabelle'in Odası",
-              "deductionHint": "Gemiyi yöneten kişi, rakip yapımcıdan yüklü miktarda bir havale almış."
+              "isBonus": false
             },
             {
               "id": "c6",
-              "text": "Kurbanın kanında hiçbir dış etken madde bulunmaması ve rüzgarlı güvertede maktulün dengesini kaybettirecek hava koşullarını tek başına yönlendirebilme yeteneği, profesyonel gemicinin rolünü aydınlattı.",
-              "type": "tanik",
+              "title": "Köşkteki Yazıcı Kuyruğu",
+              "type": "transaction",
               "mechanicType": "text",
+              "text": "Kaptan köşkünün küçük yazıcısı, 23.36'da Amerikalı yapımcıya ait bir şirketten gemi idarecisinin hesabına gönderilen 80.000 avroluk transfer makbuzunu iki sayfa olarak basmıştı. İlk sayfada yalnız \"son ödeme\" notu vardı.",
+              "deductionHint": "Transfer makbuzunun çıktığı dar yönetim odası, hangi kişiyi kapalı köşkle destekler?",
               "revealOrder": 6,
               "isRevealed": false,
               "pointCost": 70,
-              "title": "Kaptan Hesap Dökümü",
-              "deductionHint": "Deniz şartlarını silah olarak kullanan tecrübeli bir el."
+              "isBonus": true
+            },
+            {
+              "id": "c7",
+              "title": "Gümüş Tabağın Kenarı",
+              "type": "tanik",
+              "mechanicType": "text",
+              "text": "Yat salonundaki tadım servisinden kalan gümüş bıçağın sapında, eleştirmenin not cihazında kullandığı koyu kırmızı kalemin balmumu izi bulundu. Baş garson, not alırken meyve tabağının bütün gece aynı masada kaldığını söyledi.",
+              "deductionHint": "Kalemin balmumu izi, hangi konuğun servis bıçağıyla bağını destekliyor?",
+              "revealOrder": 7,
+              "isRevealed": false,
+              "pointCost": 70,
+              "isBonus": true
             }
           ],
           "solution": {
@@ -1508,8 +1533,7 @@
             "weaponId": "w1",
             "locationId": "l1"
           },
-          "solutionNarrative": "Kaptan Nikos, Jake Mercer'dan aldığı para karşılığında maktulü kaygan güverteden azgın dalgaların arasına itti. Kurban denizde boğularak hayatını kaybetti. Banka transferleri ve küpeştedeki yağlı avuç izleri, bu profesyonel denizcinin cinayetini aydınlattı.",
-          "specialMechanic": "parmak_izi_ve_ses_kaydi"
+          "solutionNarrative": "Jake Mercer, Laurent Vasseur'ün sabah açıklayacağı senaryo hırsızlığı dosyasının kendi dağıtım ağını sarsacağını biliyordu. Kaptan köşkünden çıkan transfer makbuzu, parayı Nikos'un idarecisine ulaştıran ikinci katmanı açtı: Mercer siparişi veren kişiydi. Cinayeti işleyen ise Nikos'tu. Vasseur'ü rüzgâr yükselirken güverteye yönlendirdi, küpeştenin yanında denize itti ve suyun işi bitirmesini bekledi. Hikâyedeki deniz suyu, köşk sensörleri ve küpeştedeki parmak izi; yöntem, mahallin ve failin tek planda birleştiğini gösterdi."
         },
         {
           "puzzleId": "hw_004",
