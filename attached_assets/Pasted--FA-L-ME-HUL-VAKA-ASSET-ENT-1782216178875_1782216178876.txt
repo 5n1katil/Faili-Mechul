@@ -1,0 +1,211 @@
+/* ============================================================
+ *  FAİLİ MEÇHUL — VAKA / ASSET ENTEGRASYON TALİMATI
+ *  Bu JSON üretimden geçti. Aşağıdaki asset sözleşmesini AYNI
+ *  assetId ve yollarla uygula; JSON içindeki ilişkilere dokunma.
+ * ------------------------------------------------------------
+ *  [SES KAYDI — ASSET TESLİM MANİFESTİ]
+ *  1) Her MP3/WAV dosyasını aşağıdaki publicPath’in disk karşılığına koy:
+ *     Vite/React/Replit için örn. "/assets/..." → "public/assets/...".
+ *  2) Runtime’da yalnız clue.audioUrl yolunu kullan; ikinci bir hard-coded yol yazma.
+ *  3) Ses oynatılamazsa transcript butonu yine çalışmalı; bu erişilebilirlik zorunludur.
+ *
+ *    İpucu c3 · assetId=audio_hw_001_c3_kulaklik_fisilti
+ *      dosya=hw_001_c3_kulaklik_fisilti.mp3 · publicPath=/assets/cases/hw_001/audio/hw_001_c3_kulaklik_fisilti.mp3 · mime=audio/mpeg
+ *      durum=PLANLI — MP3 dosyası ayrıca eklenecek; transcript şimdiden kullanılabilir.
+ *      player: <audio src="/assets/cases/hw_001/audio/hw_001_c3_kulaklik_fisilti.mp3"> + "Kayıt Çözümlemesini Göster" (sesMetni)
+ * ------------------------------------------------------------
+ *  specialMechanic: "ses_kaydi"
+ *  Asset dosyasını yeniden adlandırma; assetId, clueId ve publicPath sözleşmedir.
+ * ============================================================ */
+
+{
+  "puzzleId": "hw_001",
+  "stars": "★☆☆☆☆",
+  "gridSize": "3x3",
+  "timeLimit": 600,
+  "title": "Oscar Gecesi Zehiri",
+  "subtitle": "Beverly Hills, Oscar Töreni Sonrası",
+  "difficulty": "Çaylak",
+  "difficultyLevel": 1,
+  "specialMechanic": "ses_kaydi",
+  "story": "Saat 23.48… Asteria House’daki yayın sonrası tören sürerken Adrian Vale, En İyi Film ödülünü yirmi yıllık rakibi Sofia Reyes’e kaptırmıştı. Fakat onu asıl geren, sabah imzalanacak fesih belgesiydi; tek bir imza stüdyonun bütçesini, genç bir yıldızın geleceğini ve yıllardır kurulan ittifakları değiştirecekti.\n\n23.52’de Vale VIP kanadına geçti. Dakikalar sonra güvenlik, şifreli kapının ardındaki kadife koltukta onu hareketsiz buldu. Masada devrilmemiş bir şampanya kadehi, sönmüş bir puro ve üç sahipsiz telefon vardı.\n\nSen geldiğinde Sofia heykelciğini bırakmıyor, Jade aynadaki makyajını düzeltiyor, Marcus ise telefonunu avukatına kapatıyordu. Kameraların kaçırdığı birkaç dakikayı yeniden kur.",
+  "atmosphere": "Flaşlar dışarıda patlıyor; içeride kadife, puro dumanı ve bir fesih belgesinin ağırlığı aynı gecede asılı kalıyor.",
+  "suspects": [
+    {
+      "id": "s1",
+      "name": "Rakip Yönetmen Sofia Reyes",
+      "icon": "🎤",
+      "description": "Gecenin en büyük ödülünü alan, Adrian Vale ile yirmi yıllık yaratıcı rekabeti her röportaja sızan vizyoner yönetmen.",
+      "detail": "45 yaşında. Her kelimesini prova eder gibi seçiyor; basın karşısındaki sakinliği, öfkesini ne kadar iyi sakladığını belirsiz bırakıyor."
+    },
+    {
+      "id": "s2",
+      "name": "Yapımcı Marcus Gold",
+      "icon": "👤",
+      "description": "Vale’in son filmini finanse eden stüdyonun patronu. Sabahki fesih gerçekleşirse şirketini ağır bir tazminat yükünün beklediği bilinen, etkili yapımcı.",
+      "detail": "58 yaşında. Herkesle ilk isim üzerinden konuşuyor, fakat gecenin hiçbir anında ceketini çıkarmıyor; kontrolü kaybetmeye tahammülü yok gibi."
+    },
+    {
+      "id": "s3",
+      "name": "Genç Oyuncu Jade Lin",
+      "icon": "👤",
+      "description": "Vale’in son filminde başrolü üstlenen; yönetmenin sert eleştirileriyle sık sık gölgede kaldığı konuşulan, yükselişteki oyuncu.",
+      "detail": "26 yaşında. Kırmızı halının onayıyla değil, performansıyla hatırlanmak istiyor; dikkatle dinliyor, kolay kolay ne düşündüğünü göstermiyor."
+    }
+  ],
+  "weapons": [
+    {
+      "id": "w1",
+      "name": "Zehirli Şampanya",
+      "icon": "🥂",
+      "description": "Özel bir şişeden servis edildiğinde köpüğün rengini değiştirmeyen; alkolle birleşince kalbi yavaşlatan, pahalı ve izlenmesi güç sedatif karışım.",
+      "detail": "Kadehte sıradan şampanyadan ayırt edilmez. Etkisini belirleyen, içeceğe karıştığı andaki hassas dozudur."
+    },
+    {
+      "id": "w2",
+      "name": "Yüksek Doz İlaç Kapsülleri",
+      "icon": "💊",
+      "description": "Yiyecek veya içeceğe karıştırıldığında kaza izlenimi verebilecek, birkaç kapsüllük yüksek dozda sakinleştirici kombinasyonu.",
+      "detail": "Blister ambalajı, reçete ve seri numarası gibi kişisel eşya izleri bırakmaya elverişli bir yöntemdir."
+    },
+    {
+      "id": "w3",
+      "name": "Kadife Kordon",
+      "icon": "🪢",
+      "description": "VIP localarındaki dekoratif kordonlardan koparılarak kullanılabilecek; yakın fiziksel temas gerektiren mekanik araç.",
+      "detail": "Beden üzerinde bağ, sürtünme ya da baskı izi bırakmadan kullanılması neredeyse imkânsızdır."
+    }
+  ],
+  "locations": [
+    {
+      "id": "l1",
+      "name": "VIP Salonu",
+      "icon": "🛋️",
+      "description": "Yalnızca özel davetlilerin şifreli kartla girebildiği, kalın perdeli ve ana kameralardan uzak lüks salon.",
+      "detail": "Kadife koltuklar, düşük ışık ve özel servis masaları dışarıdaki kutlamanın gürültüsünü burada boğuk bir uğultuya dönüştürür."
+    },
+    {
+      "id": "l2",
+      "name": "Teras Bar",
+      "icon": "🍸",
+      "description": "Los Angeles manzarasına açılan, rüzgârlı ve açık havadaki; basın fotoğrafçılarının uzaktan izleyebildiği kalabalık kutlama alanı.",
+      "detail": "Gösterişli ama görünür bir alan. Işık kuleleri ve basın lensleri, gelen geçeni istemeden kayıt altına alır."
+    },
+    {
+      "id": "l3",
+      "name": "Tuvalet Koridoru",
+      "icon": "🚪",
+      "description": "VIP salonunun arkasında kalan, servis çalışanlarının ve konukların kısa süreli geçiş için kullandığı loş koridor.",
+      "detail": "Yarı kapalı aynaları, servis kapısı ve dar dönüşüyle mekânın en sessiz ama en geçici alanıdır."
+    }
+  ],
+  "clues": [
+    {
+      "id": "c1",
+      "title": "Çift Kamera Zaman Kodu",
+      "type": "tanik",
+      "mechanicType": "text",
+      "text": "Ödül konuşmasının ham yayın kaydı, gecenin kazanan yönetmenini 23.51 ile 23.55 arasında iki ayrı kesintisiz kamera açısından gösteriyor. Yayın yönetmeni, bu dört dakikada onun sahne platformundan ayrılmadığını ve kayıt odasına yalnızca aynı anda açık olan geçişin kapalı kaldığını doğruladı.",
+      "deductionHint": "İki kesintisiz kamera, kimi şifreli kapının ardındaki salondan dışarıda bırakır?",
+      "isBonus": false,
+      "revealOrder": 1,
+      "isRevealed": true,
+      "pointCost": 0
+    },
+    {
+      "id": "c2",
+      "title": "Rezerv Şişenin Teslim Zinciri",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Yedek içki şişesinin taşıma etiketi, açık hava servis arabasına hiç kaydedilmedi. Şişe numarası dışarıdaki kutlama rotasına girmeden önce kapalı servis hattına devredilmiş ve mühür değişimi iki görevli tarafından imzalanmıştı.",
+      "deductionHint": "Taşıma zincirine hiç girmeyen rezerv şişe, listedeki hangi açık kutlama alanıyla eşleşemez?",
+      "isBonus": false,
+      "revealOrder": 2,
+      "isRevealed": false,
+      "pointCost": 50
+    },
+    {
+      "id": "c3",
+      "title": "Kulaklıktaki Fısıltı",
+      "type": "ses_kaydi",
+      "mechanicType": "ses_kaydi",
+      "text": "Sahne arkasındaki yapım asistanı Mina'nın kulaklığında, olay saatinden dakikalar önce kesilmiş kısa bir kayıt bulundu. Arka planda alkışlar, aceleyle kapanan bir kapı ve yarım kalmış bir sahne anonsu duyuluyor.",
+      "deductionHint": "Kayıtta çantasında mühürlü kalan paketi, kartlardaki hangi şüpheliyle işaretlemelisin?",
+      "isBonus": false,
+      "revealOrder": 3,
+      "isRevealed": false,
+      "pointCost": 50,
+      "sesMetni": "MINA (fısıltıyla): Bayan Reyes, suyunuz. Doktorun bıraktığı iki kapsül de sağlık çantanızda.\n\nSOFIA (gergin ama kontrollü): Birini şimdi alacağım. Diğeri mühürlü kalsın; servis masasına gitmeyecek.\n\nMINA: Vale biraz önce sizinle konuşmak istediğini söyledi.\n\nSOFIA: Bu gece benim çantamdan ona hiçbir şey verilmeyecek. Konuşma kartlarını getir.\n\nSUNUCU (uzaktan, alkışların içinden): ...En İyi Film ödülünün sahibi...",
+      "audioUrl": "/assets/cases/hw_001/audio/hw_001_c3_kulaklik_fisilti.mp3",
+      "audioAssetId": "audio_hw_001_c3_kulaklik_fisilti",
+      "audioPlanned": true,
+      "audioFileName": "hw_001_c3_kulaklik_fisilti.mp3"
+    },
+    {
+      "id": "c4",
+      "title": "Teras Servis Numunesi",
+      "type": "adli",
+      "mechanicType": "text",
+      "text": "Açık hava servis alanından alınan temizlik numunelerinde yalnızca narenciye kabuğu, cam kırığı ve içki döküntüsü bulundu. İki gözlü folyo pakete ait hiçbir kalıntı saptanmadı; görevliler kişisel sağlık çantası kabul edilmediğini de kayda geçirdi.",
+      "deductionHint": "Folyo pakete ait hiçbir iz taşımayan açık alanda, listedeki hangi yöntem yer alamaz?",
+      "isBonus": false,
+      "revealOrder": 4,
+      "isRevealed": false,
+      "pointCost": 50
+    },
+    {
+      "id": "c5",
+      "title": "Şişe Yetkilendirme Kodu",
+      "type": "dogrudan",
+      "mechanicType": "text",
+      "text": "Kapalı salondaki servis masasından alınan yedek güvenlik etiketinin tek kullanımlık kodu, stüdyo kasasından çıkan rezerv şişe emriyle eşleşti. Kodu o gece yalnız stüdyonun patronunun kişisel cihazı onaylamış; işlem kaydı başka bir kullanıcıya açılmamıştı.",
+      "deductionHint": "Tek kullanımlık onay kodu, rezerv şişeyi hangi kişinin hesabına bağlar?",
+      "isBonus": false,
+      "revealOrder": 5,
+      "isRevealed": false,
+      "pointCost": 50
+    },
+    {
+      "id": "c6",
+      "title": "Fesih Taslağı",
+      "type": "dogrudan",
+      "mechanicType": "text",
+      "text": "Vale’in çantasındaki fesih taslağı, stüdyonun ödeyeceği 50 milyon doları açıkça gösteriyordu. Aynı dakikaya ait şifreli giriş terminali, stüdyonun patronuna ait kişisel kartın VIP Salonuna açıldığını kaydetmişti.",
+      "deductionHint": "Ekonomik baskı ile kapalı salona erişim hangi kişide kesişiyor?",
+      "isBonus": true,
+      "revealOrder": 6,
+      "isRevealed": false,
+      "pointCost": 50
+    },
+    {
+      "id": "c7",
+      "title": "Kırık İnci Küpe",
+      "type": "tanik",
+      "mechanicType": "text",
+      "text": "Teras Bar’ın korkuluk dibinde bulunan tek inci küpe, yükselişteki genç oyuncunun gecenin başında taktığı çiftle eşleşti. Makyözün notu, oyuncunun rüzgâr saçını bozduğu için o bölgeye ikinci kez gittiğini doğruladı.",
+      "deductionHint": "İnci küpe ve makyöz notu, hangi kişinin açık kutlama alanında bulunduğunu doğrular?",
+      "isBonus": true,
+      "revealOrder": 7,
+      "isRevealed": false,
+      "pointCost": 50
+    }
+  ],
+  "assetManifest": [
+    {
+      "assetId": "audio_hw_001_c3_kulaklik_fisilti",
+      "kind": "audio",
+      "clueId": "c3",
+      "status": "pending_upload",
+      "fileName": "hw_001_c3_kulaklik_fisilti.mp3",
+      "publicPath": "/assets/cases/hw_001/audio/hw_001_c3_kulaklik_fisilti.mp3",
+      "mimeType": "audio/mpeg",
+      "durationTargetSec": 28
+    }
+  ],
+  "solution": {
+    "suspectId": "s2",
+    "weaponId": "w1",
+    "locationId": "l1"
+  },
+  "solutionNarrative": "Marcus Gold, Adrian Vale’in sabah imzalayacağı fesih belgesinin stüdyosuna 50 milyon dolarlık yük getireceğini biliyordu. Rezerv şişe emrini kendi cihazından onayladı ve Vale VIP Salonunda kadehini aldığında Zehirli Şampanya devreye girdi. Hikâyede kurulan suç mahalli, teslim zinciri ve son yetkilendirme kaydı aynı planın üç halkasını birleştirdi: Marcus, şişe ve VIP Salonu."
+}
