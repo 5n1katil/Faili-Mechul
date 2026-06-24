@@ -1,0 +1,283 @@
+/* ============================================================
+ *  FAİLİ MEÇHUL — VAKA / ASSET ENTEGRASYON TALİMATI
+ *  Bu JSON üretimden geçti. Aşağıdaki asset sözleşmesini AYNI
+ *  assetId ve yollarla uygula; JSON içindeki ilişkilere dokunma.
+ * ------------------------------------------------------------
+ *  [ŞİFRELİ MESAJ MİNİ OYUNU]
+ *    - c2: tür="termal_hafiza_siralama" · cevap="KEIKO VERİ"
+ *  Oyun ekranı: bulmaca + cezalı ipucu + cevap girişi + doğru cevap sonrası açıklama.
+ * ------------------------------------------------------------
+ *  specialMechanic: "sifreli_mesaj"
+ *  Asset dosyasını yeniden adlandırma; assetId, clueId ve publicPath sözleşmedir.
+ * ============================================================ */
+
+{
+  "puzzleId": "sf_004",
+  "stars": "★★★★☆",
+  "gridSize": "4x4",
+  "timeLimit": 420,
+  "qaRevision": "sf_004_v26_4_termal_hafiza_premium",
+  "qaChangeLog": [
+    "Hikâye ve atmosfer Europa kuşatması, Kara Saat ve düşük sıcaklık belleği temasıyla genişletildi.",
+    "c2 ikili ASCII çözümü yerine termal bellek sıralama mini oyununa dönüştürüldü.",
+    "Mini oyun çözümü KEIKO VERİ; mevcut s3↔l4 mantık kuralı ve ana çözüm aynen korundu."
+  ],
+  "title": "Karanlık Madde Hırsızı",
+  "subtitle": "Europa Jüpiter Üssü, 2312",
+  "difficulty": "Başkomiser",
+  "difficultyLevel": 4,
+  "specialMechanic": "sifreli_mesaj",
+  "story": "2312’de Europa’nın kuzey kutup üssü, Jüpiter’in gölgesinin buz kabuğunu tamamen örttüğü ‘Kara Saat’ nöbetindeydi. Dış antenler sustuğunda, üs kendi içine kapandı; koridor ışıkları acil durum mavisine döndü, reaktör çekirdeği ise yalnızca içeridekilerin duyabileceği derin bir uğultuyla çalışmayı sürdürdü. Tam bu karanlık pencerede, karanlık madde deneyinin baş fizikçisi son kontrol dizisini başlattı. Yetmiş dört saniye sonra alarm çaldı: bilim insanı ölmüştü, deneyin milyarlarca kredilik ham verisi ise sanki hiç var olmamış gibi soğuk arşivden silinmişti.\n\nÜssün güvenlik kapıları otomatik olarak kilitlenince içeride yalnız dört yetkili kaldı. Rakip teorisini yıllardır kabul ettirmeye çalışan fizikçi, her şalterin sesini tanıyan mühendis, görev tanımı bilinmeyen sessiz gözlemci ve şirketten gelen son uyarıyı saklayan komutan… Her birinin karanlıkta kalmak için bir nedeni vardı. Ancak Europa’da hiçbir iz gerçekten kaybolmaz: buz, metal ve düşük sıcaklık belleği yapılan her hareketi kendi diliyle saklar. Bu vakada doğru cevaba ulaşmak için yalnız kimin yalan söylediğini değil, Jüpiter’in gölgesinde hangi izlerin hangi sırayla donduğunu da okumak gerekir.",
+  "atmosphere": "Üssün dışındaki buz tabakası basınç altında ince ince inliyor; her titreşim, koridorlardaki metal duvarlardan boğuk bir kalp atışı gibi geri dönüyor. Pencerelerin ardında Jüpiter bütün gökyüzünü kaplayan siyah-kızıl bir duvar, içerideyse soğutma hatlarından yükselen beyaz buhar var. Kapılar sessizce kapanırken, uzakta dönen reaktörün ışığı insanların yüzlerini bir an maviye, bir an zifiri karanlığa boyuyor.",
+  "suspects": [
+    {
+      "id": "s1",
+      "name": "Fizikçi Dr. Zara Okafor",
+      "icon": "🧑🏾‍🔬",
+      "description": "Rakip teorisini kabul ettirmek için baş fizikçiyle çatışan, deney verilerini her zaman ikinci kez kontrol eden araştırmacı.",
+      "detail": "40 yaşında. Isı kontrollerini sayılara göre ezberler; dış yüzey görevlerinde buz tozu birikmesine tahammül edemez, koruyucu eldivenlerini sık sık değiştirir."
+    },
+    {
+      "id": "s2",
+      "name": "Mühendis Pavel Sorokin",
+      "icon": "👷",
+      "description": "Üssün teknik şalterlerinden ve reaktör çekirdeğinin bakımından sorumlu, makinelerle insanlardan daha rahat konuşan mühendis.",
+      "detail": "45 yaşında. Makine yağı kokar; ağır yük hücrelerini açmadan önce sarı emniyet mandalını iki kez çevirir ve loglarda kendi imzasını hiç bırakmaz."
+    },
+    {
+      "id": "s3",
+      "name": "Ajan Keiko Mori",
+      "icon": "🛰️",
+      "description": "Resmî görev tanımı belirsiz tutulan, üs çalışanlarını izleyen ve soğuk veri ağlarına sessizce girip çıkan saha görevlisi.",
+      "detail": "33 yaşında. Antistatik eldiveninin bileğinde üçgen gümüş şerit taşır; kısa gözlem raporlarını ikili kod bloklarıyla düzenler."
+    },
+    {
+      "id": "s4",
+      "name": "Üs Komutanı Rex Torres",
+      "icon": "🧑‍✈️",
+      "description": "Bütçe krizleri yüzünden şirketle sık sık çatışan, erişim kartlarının ve acil enerji planlarının sahibi üs komutanı.",
+      "detail": "52 yaşında. Emir verirken analog pusulasını masaya bırakır; jeneratör koridorlarında askerî botlarının mıknatıslı tabanı iz bırakır."
+    }
+  ],
+  "weapons": [
+    {
+      "id": "w1",
+      "name": "Enerji Aşırı Yükü",
+      "icon": "☢️",
+      "description": "Reaktör çekirdeğini manuel olarak zorlayıp ölümcül radyasyon ve enerji dalgası salan teknik sabotaj.",
+      "detail": "Kurşun kalkanlarda erimiş metal ve reaktör panellerinde ters faz çizgileri bırakır."
+    },
+    {
+      "id": "w2",
+      "name": "Buz Tuzağı",
+      "icon": "❄️",
+      "description": "Isıtmalı giysiyi dış yüzeyde devre dışı bırakarak kurbanı Europa soğuğuna bırakma yöntemi.",
+      "detail": "Uzay giysisinin bağlantılarında kırağı çökmesi ve dış yüzey buz tozu görülür."
+    },
+    {
+      "id": "w3",
+      "name": "Zehirli Oksijen Karışımı",
+      "icon": "💨",
+      "description": "Kapalı hava devrine katılan toksik karışımla bilinci yavaşça kapatan gaz sabotajı.",
+      "detail": "Filtre kasetinde koyu yeşil kimyasal halka ve solunum hortumunda reçinemsi iz bırakır."
+    },
+    {
+      "id": "w4",
+      "name": "Nöral Bomba",
+      "icon": "💣",
+      "description": "Yakın mesafede sinapsları yakmayı hedefleyen mini elektromanyetik düzenek.",
+      "detail": "Hedef yüzeyde kısa, mor renkli akım çizgileri ve elektronik duman bırakır."
+    }
+  ],
+  "locations": [
+    {
+      "id": "l1",
+      "name": "Deney Odası",
+      "icon": "⚗️",
+      "description": "Karanlık madde reaktörünün kurşun duvarlarla çevrili ana deney bölmesi.",
+      "detail": "Çekirdek panellerindeki sarı emniyet mandalı yalnız teknik bakımdan önce açılır."
+    },
+    {
+      "id": "l2",
+      "name": "Enerji Merkezi",
+      "icon": "⚡",
+      "description": "Üssün jeneratörleri, şalterleri ve yük hücrelerinin bulunduğu dar güç koridoru.",
+      "detail": "Mıknatıslı botlar, bakımlı metal zeminde sıra halinde kısa oval izler bırakır."
+    },
+    {
+      "id": "l3",
+      "name": "Dış Yüzey",
+      "icon": "🌑",
+      "description": "Europa buzuna açılan, yalnız uzay giysisiyle çıkılabilen ölümcül dış görev alanı.",
+      "detail": "Hava kilidi dışındaki buz tozu, gelen kişinin manşet ve çizme contalarına yapışır."
+    },
+    {
+      "id": "l4",
+      "name": "Veri Merkezi",
+      "icon": "💾",
+      "description": "Deney kayıtlarını ve soğuk sunucuları barındıran, antistatik korumalı veri kasası bölümü.",
+      "detail": "Kablo kanallarında antistatik şeritler ve ikili rapor bloklarının saklandığı bakım cepleri bulunur."
+    }
+  ],
+  "clues": [
+    {
+      "id": "c1",
+      "title": "Kurşun Kalkan Taraması",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Maktulün bedeninde yoğun radyatif yanma, reaktör kalkanında ters faz çizgileri ve erimiş metal saptandı. Hava kilidinde ise aynı faz bozulmasına ait hiçbir iz yoktu.",
+      "deductionHint": "Radyatif yanma ve ters faz çizgileri hangi yöntemi gösterir; aynı iz yoksa bu yöntem hangi rota ile eşleşemez?",
+      "isBonus": false,
+      "revealOrder": 1,
+      "isRevealed": true,
+      "pointCost": 0
+    },
+    {
+      "id": "c2",
+      "title": "Kriyo Bellek: Gölge Sırası",
+      "type": "sifreli",
+      "mechanicType": "sifreli_mesaj",
+      "text": "Alarmdan sonra erişim kaydı dokuz termal parçaya bölünmüş halde bulundu. Kriyo bellek, karakterleri her zaman en düşük sıcaklıktan en yükseğe yazar; parçalar doğru ısı sırasına konmadan kayıt okunamıyor.",
+      "deductionHint": "Dokuz sıcaklık değerini en soğuktan en sıcağa sırala. Oluşan ilk kelime hangi kişiyi, ikinci kelime hangi birimi gösteriyor?",
+      "isBonus": false,
+      "revealOrder": 2,
+      "isRevealed": false,
+      "pointCost": 50,
+      "sifre": {
+        "sifrelenmis": "KRİYO BELLEK · GÖLGE SIRASI\nKURAL: Sıcaklıkları en düşükten en yükseğe sırala; köşeli parantezdeki harfleri birleştir.\nİlk 5 harf kişi, son 4 harf birim.\n\nA  −110,1° [E]   B  −152,4° [K]   C   −95,4° [İ]\nD  −131,7° [K]   E  −124,6° [O]   F  −117,3° [V]\nG  −102,8° [R]   H  −138,9° [I]   I  −145,8° [E]\n\nCEVAP BİÇİMİ: KİŞİ BİRİM",
+        "sifreleTuru": "termal_hafiza_siralama",
+        "cozumIpucu": "Eksi derecelerde sayı büyüdükçe hava ısınır: −152,4 en soğuk, −95,4 en sıcak parçadır. Harfleri bu sıraya koy.",
+        "cozulmus": "KEIKO VERİ",
+        "aciklama": "Doğru dizi, karanlıkta kalan erişim sahibini ve onun geçtiği hattı ızgarada işaretlemeni sağlar.",
+        "presentation": {
+          "mode": "thermal_sequence",
+          "answerFormat": "KİŞİ BİRİM",
+          "orderRule": "en_soguktan_en_sicaga",
+          "cards": [
+            {
+              "id": "A",
+              "temperatureC": -110.1,
+              "glyph": "E",
+              "note": "sunucu kapağındaki donmuş titreşim"
+            },
+            {
+              "id": "B",
+              "temperatureC": -152.4,
+              "glyph": "K",
+              "note": "üçgen gümüş şeritten yansıyan soğuk iz"
+            },
+            {
+              "id": "C",
+              "temperatureC": -95.4,
+              "glyph": "İ",
+              "note": "kesilen arşiv darbesi"
+            },
+            {
+              "id": "D",
+              "temperatureC": -131.7,
+              "glyph": "K",
+              "note": "bakım cebindeki sessiz gölge"
+            },
+            {
+              "id": "E",
+              "temperatureC": -124.6,
+              "glyph": "O",
+              "note": "antistatik kanalda kalan soluk ısı"
+            },
+            {
+              "id": "F",
+              "temperatureC": -117.3,
+              "glyph": "V",
+              "note": "dondurulmuş veri paketi"
+            },
+            {
+              "id": "G",
+              "temperatureC": -102.8,
+              "glyph": "R",
+              "note": "sıfırlanan erişim izi"
+            },
+            {
+              "id": "H",
+              "temperatureC": -138.9,
+              "glyph": "I",
+              "note": "ikili gözlem bloğunun kenar izi"
+            },
+            {
+              "id": "I",
+              "temperatureC": -145.8,
+              "glyph": "E",
+              "note": "bilek şeridinin metal yansıması"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "c3",
+      "title": "Kalkan Kapısı Kaydı",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Yalıtılmış reaktör bölümünün kurşun kapısı, olay aralığında rakip teorinin sorumlusuna ait araştırma kartını hiç tanımadı. Kartın zorlanmış bir kopyası da sistemde görünmüyor.",
+      "deductionHint": "Tanımlanamayan araştırma kartı, hangi kişiyi yalıtımlı çalışma alanından çıkarır?",
+      "isBonus": false,
+      "revealOrder": 3,
+      "isRevealed": false,
+      "pointCost": 50
+    },
+    {
+      "id": "c4",
+      "title": "Buz Contası İncelemesi",
+      "type": "adli",
+      "mechanicType": "text",
+      "text": "Görev dönüş istasyonunda, rakip teorinin sorumlusuna ait eldiven contalarında geceye ait taze Europa regoliti bulunmadı. Aynı kişi bakım istasyonundan kuru çıktı.",
+      "deductionHint": "Contasında taze Europa regoliti olmayan araştırmacı, hangi rotayla eşleşemez?",
+      "isBonus": false,
+      "revealOrder": 4,
+      "isRevealed": false,
+      "pointCost": 50
+    },
+    {
+      "id": "c5",
+      "title": "Sarı Mandal Protokolü",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Reaktör kontrol panelinde, sarı emniyet mandalının iki kez çevrildiğini gösteren tork izi bulundu. Mandalın altında, makine yağıyla karışmış tek yönlü teknik kalıntı vardı.",
+      "deductionHint": "İki kez çevrilen sarı mandal ve makine yağı, hangi teknik profili hangi düzenekle bağlar?",
+      "isBonus": false,
+      "revealOrder": 5,
+      "isRevealed": false,
+      "pointCost": 50
+    },
+    {
+      "id": "c6",
+      "title": "Pusula İzi",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Dış görev dönüş istasyonunun metal zemininde, analog pusula tabanının dairesel izi ve mıknatıslı botların kısa oval dizisi bulundu.",
+      "deductionHint": "Pusula ve mıknatıslı bot izleri, hangi komutanı buzla kaplı dış rotaya bağlar?",
+      "isBonus": true,
+      "revealOrder": 6,
+      "isRevealed": false,
+      "pointCost": 40
+    },
+    {
+      "id": "c7",
+      "title": "Soğuk Sunucu Logu",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Soğuk kasadaki erişim sırası, üçgen şeritli bakım eldiveninin ardından kapalı bir oksijen katkı ampulünün dışarı alındığını gösteriyor.",
+      "deductionHint": "Üçgen şeritli bakım eldiveni, hangi gözlem profilini kapalı atmosfer ampulüyle bağlar?",
+      "isBonus": true,
+      "revealOrder": 7,
+      "isRevealed": false,
+      "pointCost": 40
+    }
+  ],
+  "assetManifest": [],
+  "solution": {
+    "suspectId": "s2",
+    "weaponId": "w1",
+    "locationId": "l1"
+  },
+  "solutionNarrative": "Pavel Sorokin, reaktör çekirdeğinin sarı emniyet mandalını iki kez çevirip sistemi aşırı yüke zorladı. Zara yalıtılmış deney bölümüne ve dış yüzeye ulaşmamış, Keiko ise veri kasasındaki gözlem ağında, Rex ise güç koridorunda kalmıştı. Enerji dalgası yalnız Pavel’in teknik rutininde Deney Odasıyla kesişti."
+}

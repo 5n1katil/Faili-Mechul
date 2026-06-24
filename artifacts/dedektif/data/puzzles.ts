@@ -62,6 +62,20 @@ export interface ClueSifreKomutAlani {
   cevap: string;
 }
 
+export interface ClueSifreThermalCard {
+  id: string;
+  temperatureC: number;
+  glyph: string;
+  note: string;
+}
+
+export interface ClueSifrePresentation {
+  mode: string;
+  answerFormat?: string;
+  orderRule?: string;
+  cards?: ClueSifreThermalCard[];
+}
+
 export interface ClueSifre {
   sifrelenmis: string;
   sifreleTuru: string;
@@ -69,6 +83,7 @@ export interface ClueSifre {
   cozulmus: string;
   aciklama: string;
   komutAlanlari?: ClueSifreKomutAlani[];
+  presentation?: ClueSifrePresentation;
 }
 
 export interface CluePhoneMessage {

@@ -246,6 +246,181 @@ function TanikYuzlesmeBlock({ dialoglar }: { dialoglar: ClueYuzlesmeDialog[] }) 
   );
 }
 
+function ThermalSequenceBlock({
+  sifre,
+  isSolved,
+  onSolve,
+}: {
+  sifre: ClueSifre;
+  isSolved: boolean;
+  onSolve: () => void;
+}) {
+  const { addTimePenalty } = useGame();
+  const cards = sifre.presentation!.cards!;
+  const [order, setOrder] = useState<number[]>(cards.map((_, i) => i));
+  const [selected, setSelected] = useState<number | null>(null);
+  const [wrong, setWrong] = useState(false);
+  const [hintRevealed, setHintRevealed] = useState(false);
+  const [glyphsRevealed, setGlyphsRevealed] = useState(false);
+
+  const sortedIndices = [...cards.map((_, i) => i)].sort(
+    (a, b) => cards[a].temperatureC - cards[b].temperatureC
+  );
+
+  const handleCardPress = (pos: number) => {
+    if (glyphsRevealed) return;
+    if (selected === null) {
+      setSelected(pos);
+    } else if (selected === pos) {
+      setSelected(null);
+    } else {
+      const newOrder = [...order];
+      [newOrder[selected], newOrder[pos]] = [newOrder[pos], newOrder[selected]];
+      setOrder(newOrder);
+      setSelected(null);
+      setWrong(false);
+    }
+  };
+
+  const checkOrder = () => {
+    const isCorrect = order.every((cardIdx, pos) => cardIdx === sortedIndices[pos]);
+    if (isCorrect) {
+      setGlyphsRevealed(true);
+      setTimeout(() => onSolve(), 1400);
+    } else {
+      setWrong(true);
+      setTimeout(() => setWrong(false), 2000);
+    }
+  };
+
+  const handleHint = () => {
+    if (hintRevealed) return;
+    setHintRevealed(true);
+    addTimePenalty(60);
+  };
+
+  if (isSolved) {
+    const solvedGlyphs = sortedIndices.map((ci) => cards[ci].glyph).join("");
+    const word1 = solvedGlyphs.slice(0, 5);
+    const word2 = solvedGlyphs.slice(5);
+    return (
+      <View style={styles.thermalSolvedBlock}>
+        <View style={styles.thermalSolvedHeader}>
+          <MaterialIcons name="check-circle" size={18} color="#22c55e" />
+          <Text style={styles.thermalSolvedTitle}>Kriyo Bellek Çözüldü!</Text>
+        </View>
+        <View style={styles.thermalSolvedGlyphs}>
+          <View style={styles.thermalGlyphWord}>
+            {word1.split("").map((g, i) => (
+              <View key={i} style={styles.thermalGlyphChip}>
+                <Text style={styles.thermalGlyphChipText}>{g}</Text>
+              </View>
+            ))}
+          </View>
+          <Text style={styles.thermalGlyphSep}> </Text>
+          <View style={styles.thermalGlyphWord}>
+            {word2.split("").map((g, i) => (
+              <View key={i} style={styles.thermalGlyphChip}>
+                <Text style={styles.thermalGlyphChipText}>{g}</Text>
+              </View>
+            ))}
+          </View>
+        </View>
+        <View style={styles.miniGameAnswer}>
+          <Text style={styles.miniGameAnswerText}>{sifre.cozulmus}</Text>
+        </View>
+        <Text style={styles.miniGameAciklama}>{sifre.aciklama}</Text>
+      </View>
+    );
+  }
+
+  return (
+    <View style={styles.thermalBlock}>
+      <View style={styles.thermalTitleBar}>
+        <View style={[styles.terminalDot, { backgroundColor: "#0ea5e9" }]} />
+        <View style={[styles.terminalDot, { backgroundColor: "#38bdf8" }]} />
+        <View style={[styles.terminalDot, { backgroundColor: "#7dd3fc" }]} />
+        <Text style={styles.thermalTitleText}>KRİYO BELLEK // TERMAL SIRALAMA</Text>
+      </View>
+      <Text style={styles.thermalInstruction}>
+        Parçaları <Text style={styles.thermalAccent}>en soğuktan en sıcağa</Text> sırala — doğru dizide gizli kimlik ortaya çıkar.
+      </Text>
+      <View style={styles.thermalCardList}>
+        {order.map((cardIdx, pos) => {
+          const card = cards[cardIdx];
+          const isSelected = selected === pos;
+          const isSwapTarget = selected !== null && selected !== pos;
+          return (
+            <Pressable
+              key={pos}
+              style={[
+                styles.thermalCard,
+                isSelected && styles.thermalCardSelected,
+                wrong && styles.thermalCardWrong,
+              ]}
+              onPress={() => handleCardPress(pos)}
+            >
+              <View style={styles.thermalCardPos}>
+                <Text style={[styles.thermalCardPosText, isSelected && { color: "#38bdf8" }]}>
+                  {pos + 1}
+                </Text>
+              </View>
+              <View style={styles.thermalCardCenter}>
+                <Text style={[styles.thermalCardTemp, isSelected && { color: "#38bdf8" }]}>
+                  {card.temperatureC.toFixed(1)}°C
+                </Text>
+                <Text style={styles.thermalCardNote} numberOfLines={1}>{card.note}</Text>
+              </View>
+              <View style={styles.thermalCardRight}>
+                <Text style={styles.thermalCardId}>{card.id}</Text>
+                <View style={[styles.thermalGlyphLock, glyphsRevealed && styles.thermalGlyphUnlocked]}>
+                  <Text style={[styles.thermalGlyphLockText, glyphsRevealed && styles.thermalGlyphUnlockedText]}>
+                    {glyphsRevealed ? card.glyph : "?"}
+                  </Text>
+                </View>
+              </View>
+              {isSelected && (
+                <View style={styles.thermalCardSwapHint}>
+                  <MaterialIcons name="swap-vert" size={12} color="#38bdf8" />
+                </View>
+              )}
+            </Pressable>
+          );
+        })}
+      </View>
+
+      {wrong && (
+        <View style={styles.thermalErrorRow}>
+          <MaterialIcons name="error-outline" size={13} color="#ef4444" />
+          <Text style={styles.thermalErrorText}>Sıralama yanlış — dizi kriyo kurala uymadı</Text>
+        </View>
+      )}
+
+      {hintRevealed ? (
+        <View style={styles.sifreHintRevealed}>
+          <MaterialIcons name="warning" size={12} color="#f59e0b" />
+          <Text style={[styles.sifreHintRevealedLabel, { color: "#f59e0b" }]}>İpucu açıldı (ceza uygulandı)</Text>
+        </View>
+      ) : null}
+      {hintRevealed ? (
+        <View style={styles.sifreIpucu}>
+          <Text style={styles.sifreIpucuText}>{sifre.cozumIpucu}</Text>
+        </View>
+      ) : (
+        <Pressable style={styles.sifreHintBtn} onPress={handleHint}>
+          <MaterialIcons name="lightbulb-outline" size={14} color="#0ea5e9" />
+          <Text style={[styles.sifreHintBtnText, { color: "#0ea5e9" }]}>İpucu İste (-60 sn / ceza puanı)</Text>
+        </Pressable>
+      )}
+
+      <Pressable style={styles.thermalSubmitBtn} onPress={checkOrder}>
+        <MaterialIcons name="done-all" size={15} color="#0F1117" />
+        <Text style={styles.thermalSubmitText}>Kriyo Sırayı Doğrula</Text>
+      </Pressable>
+    </View>
+  );
+}
+
 function SifreliMesajBlock({
   sifre,
   isSolved,
@@ -293,6 +468,10 @@ function SifreliMesajBlock({
       setTimeout(() => setKomutWrong(false), 2000);
     }
   };
+
+  if (sifre.presentation?.mode === "thermal_sequence") {
+    return <ThermalSequenceBlock sifre={sifre} isSolved={isSolved} onSolve={onSolve} />;
+  }
 
   if (isSolved) {
     return (
@@ -1803,6 +1982,213 @@ const styles = StyleSheet.create({
     color: "#0F1117",
     fontWeight: "700",
     fontSize: 14,
+  },
+  thermalBlock: {
+    backgroundColor: "#060d1a",
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: "#0ea5e940",
+    overflow: "hidden",
+    marginTop: 4,
+  },
+  thermalTitleBar: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 5,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    backgroundColor: "#071525",
+    borderBottomWidth: 1,
+    borderBottomColor: "#0ea5e930",
+  },
+  thermalTitleText: {
+    color: "#7dd3fc",
+    fontSize: 10,
+    fontWeight: "700",
+    letterSpacing: 1.2,
+    marginLeft: 4,
+    fontFamily: "monospace",
+  },
+  thermalInstruction: {
+    color: "#94a3b8",
+    fontSize: 12,
+    lineHeight: 17,
+    paddingHorizontal: 12,
+    paddingTop: 10,
+    paddingBottom: 8,
+  },
+  thermalAccent: {
+    color: "#38bdf8",
+    fontWeight: "600",
+  },
+  thermalCardList: {
+    paddingHorizontal: 12,
+    gap: 5,
+    paddingBottom: 4,
+  },
+  thermalCard: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#0c1b2e",
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: "#1e3a5f",
+    paddingVertical: 8,
+    paddingHorizontal: 10,
+    gap: 10,
+  },
+  thermalCardSelected: {
+    borderColor: "#38bdf8",
+    backgroundColor: "#0a2540",
+  },
+  thermalCardWrong: {
+    borderColor: "#ef444466",
+    backgroundColor: "#1a0a0a",
+  },
+  thermalCardPos: {
+    width: 22,
+    height: 22,
+    borderRadius: 11,
+    backgroundColor: "#1e3a5f",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  thermalCardPosText: {
+    color: "#64748b",
+    fontSize: 11,
+    fontWeight: "700",
+  },
+  thermalCardCenter: {
+    flex: 1,
+    gap: 2,
+  },
+  thermalCardTemp: {
+    color: "#bae6fd",
+    fontSize: 14,
+    fontWeight: "700",
+    fontFamily: "monospace",
+    letterSpacing: 0.5,
+  },
+  thermalCardNote: {
+    color: "#475569",
+    fontSize: 10,
+    lineHeight: 13,
+    fontStyle: "italic",
+  },
+  thermalCardRight: {
+    alignItems: "center",
+    gap: 3,
+  },
+  thermalCardId: {
+    color: "#475569",
+    fontSize: 10,
+    fontWeight: "700",
+    letterSpacing: 1,
+  },
+  thermalGlyphLock: {
+    width: 26,
+    height: 26,
+    borderRadius: 4,
+    backgroundColor: "#1e3a5f",
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: 1,
+    borderColor: "#1e3a5f",
+  },
+  thermalGlyphUnlocked: {
+    backgroundColor: "#0ea5e920",
+    borderColor: "#38bdf8",
+  },
+  thermalGlyphLockText: {
+    color: "#475569",
+    fontSize: 12,
+    fontWeight: "700",
+  },
+  thermalGlyphUnlockedText: {
+    color: "#38bdf8",
+    fontWeight: "700",
+  },
+  thermalCardSwapHint: {
+    position: "absolute",
+    right: 6,
+    top: 6,
+  },
+  thermalErrorRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 5,
+    paddingHorizontal: 12,
+    paddingTop: 6,
+  },
+  thermalErrorText: {
+    color: "#ef4444",
+    fontSize: 11,
+  },
+  thermalSubmitBtn: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 6,
+    margin: 12,
+    marginTop: 10,
+    backgroundColor: "#0ea5e9",
+    borderRadius: 8,
+    paddingVertical: 10,
+  },
+  thermalSubmitText: {
+    color: "#0F1117",
+    fontWeight: "700",
+    fontSize: 13,
+    letterSpacing: 0.3,
+  },
+  thermalSolvedBlock: {
+    backgroundColor: "#060d1a",
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: "#22c55e40",
+    padding: 14,
+    gap: 10,
+    marginTop: 4,
+  },
+  thermalSolvedHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+  },
+  thermalSolvedTitle: {
+    color: "#22c55e",
+    fontWeight: "700",
+    fontSize: 14,
+  },
+  thermalSolvedGlyphs: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
+    flexWrap: "wrap",
+  },
+  thermalGlyphWord: {
+    flexDirection: "row",
+    gap: 4,
+  },
+  thermalGlyphSep: {
+    color: "#38bdf8",
+    fontSize: 16,
+  },
+  thermalGlyphChip: {
+    width: 30,
+    height: 36,
+    borderRadius: 6,
+    backgroundColor: "#0ea5e920",
+    borderWidth: 1,
+    borderColor: "#38bdf8",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  thermalGlyphChipText: {
+    color: "#38bdf8",
+    fontSize: 14,
+    fontWeight: "800",
+    letterSpacing: 0.5,
   },
   phoneBlock: {
     marginTop: 6,
