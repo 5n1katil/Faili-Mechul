@@ -1,0 +1,197 @@
+{
+  "puzzleId": "sf_002",
+  "stars": "★★☆☆☆",
+  "gridSize": "3x3",
+  "timeLimit": 540,
+  "title": "Yapay Zeka Mahkemesi",
+  "subtitle": "Neo-İstanbul, 2241",
+  "difficulty": "Polis Memuru",
+  "difficultyLevel": 2,
+  "specialMechanic": "profil_sentezi",
+  "story": "2241’de Neo-İstanbul Holografik Adalet Kompleksi, yapay zekâların hukuki statüsünü belirleyecek karar için dolup taşıyordu. Duruşma arasından sonra insan hâkim, yalnız çalıştığı özel bölümde ölü bulundu; karar metni ekranda yarım kalmış, salonun üstünde mavi projeksiyon ışıkları donmuştu. Bu ölüm yalnız bir kişiyi değil, milyonlarca sentetik bilincin geleceğini askıya aldı. YZ avukatı kararın hemen öncesinde binlerce kişiye hitap ediyordu; savcı siyasi kameraların odağındaydı; lobici ise şirketlerinin kaybedeceği serveti hesaplıyordu. Davanın en kritik gecesinde, görünmez bir boşluk kimin lehine açıldı?",
+  "atmosphere": "Holografik sütunlar mahkeme mermerine mavi gölgeler düşürüyor. İnsan sesleri ile sunucu fanları aynı anda yükseliyor; adalet, kod satırları arasında nefes alıyor.",
+  "suspects": [
+    {
+      "id": "s1",
+      "name": "YZ Avukat LEXIS",
+      "icon": "🧠",
+      "description": "YZ haklarını savunan, duruşmalarda holografik senaryolar kuran sentetik avukat.",
+      "detail": "Şeffaf şakak soğutucusunun çevresinde mavi ışık halkası taşır; itirazlarını fiziksel notla değil, üç boyutlu simülasyonla kaydeder."
+    },
+    {
+      "id": "s2",
+      "name": "Savcı Amara Diallo",
+      "icon": "⚖️",
+      "description": "YZ’lerin köle statüsünde kalmasını isteyen, kamuoyu desteğini iyi kullanan insan savcı.",
+      "detail": "38 yaşında. Her itiraz dosyasını bordo mühür mumu ve iki elle yazılmış kısa notla taşır; sol yakasında küçük bir meclis rozeti bulunur."
+    },
+    {
+      "id": "s3",
+      "name": "Lobici Viktor Crane",
+      "icon": "👔",
+      "description": "Maden tröstlerinin YZ işgücünden çıkarını koruyan, kapalı görüşmelerde şirket cihazları taşıyan lobici.",
+      "detail": "55 yaşında. Kalın omuzlu ceketinin iç astarında şirket biyoseal kartuşu saklar; mahkeme odalarında asla kendi adına imza atmaz."
+    }
+  ],
+  "weapons": [
+    {
+      "id": "w1",
+      "name": "Nöro-Sinyal Silahı",
+      "icon": "⚡",
+      "description": "Ense yakınında çalıştırıldığında sinir iletimini bozacak kaçak mikroçip düzeni.",
+      "detail": "Hedefte elektromanyetik sıcaklık halkası ve deri altı temas izi bırakır."
+    },
+    {
+      "id": "w2",
+      "name": "Nano-Zehir",
+      "icon": "🔬",
+      "description": "Solunumla kana karışan, hücreleri görünmez parçacıklarla bozan şirket üretimi nano-aerosol.",
+      "detail": "Kararlı formu yalnız kurumsal biyoseal kartuşuyla güvenli biçimde taşınabilir."
+    },
+    {
+      "id": "w3",
+      "name": "Hologram Tuzağı",
+      "icon": "💠",
+      "description": "Panik ve yanlış yönlendirme yaratmak için mahkeme uzamını sahte görüntülerle dolduran simülasyon düzeni.",
+      "detail": "Açıldığında duvarlarda mavi projeksiyon artığı ve faz kayması bırakır."
+    }
+  ],
+  "locations": [
+    {
+      "id": "l1",
+      "name": "Hakim Odası",
+      "icon": "🏛️",
+      "description": "Davanın gizli taslaklarının tutulduğu, yalnız hâkimin kilidiyle açılan izole çalışma odası.",
+      "detail": "Hava devri, koridordan bağımsız kapalı bir filtrasyon halkasıyla çalışır."
+    },
+    {
+      "id": "l2",
+      "name": "Mahkeme Salonu",
+      "icon": "🏢",
+      "description": "Holografik jürinin, avukatların ve basının aynı anda bulunduğu yüksek kubbeli ana duruşma alanı.",
+      "detail": "Kürsü kenarındaki ahşap masalar, elde yazılmış kısa notları ve mühür mumunu kolayca tutar."
+    },
+    {
+      "id": "l3",
+      "name": "Sunucu Odası",
+      "icon": "🖥️",
+      "description": "Dijital hafızaların ve soğutma hatlarının kilit altında tutulduğu, yalnız teknik kartla girilebilen teknoloji bölmesi.",
+      "detail": "Soğutma sıvısı dışarıyla karışmaz; havalandırma şaftları mahkeme katından yalıtılmıştır."
+    }
+  ],
+  "clues": [
+    {
+      "id": "c1",
+      "title": "Akciğer Mikro-Örneği",
+      "type": "adli",
+      "mechanicType": "text",
+      "text": "Hâkimin akciğer örneğinde, ölüm anında hava yoluyla taşınmış şirket sınıfı mikro-partiküller saptandı. Bu görünmez aerosol, hâkimin can verdiği anda solunum zincirini çökertmişti; aynı partikülün izine soğutma hatlarının kapalı devresinde rastlanmadı.",
+      "deductionHint": "Hava yoluyla taşınan mikro-partiküller hangi yöntemi tarif eder; kapalı soğutma hattında iz yoksa bu yöntem hangi teknoloji bölümüyle eşleşemez?",
+      "isBonus": false,
+      "revealOrder": 1,
+      "isRevealed": true,
+      "pointCost": 0
+    },
+    {
+      "id": "c2",
+      "title": "Faz Kayması Kayıtları",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Ana duruşma oturumundan sonra, salon duvarlarında mavi projeksiyon artığı ve tek bir simülasyon anahtarının izleri kaldı. Oturumun savunma tarafındaki görsel canlandırması bu anahtarla eşleşiyor.",
+      "deductionHint": "Mavi projeksiyon artığı ve savunma canlandırması, hangi kişi–düzenek eşleşmesini kurar?",
+      "isBonus": false,
+      "revealOrder": 2,
+      "isRevealed": false,
+      "pointCost": 50
+    },
+    {
+      "id": "c3",
+      "title": "Kürsü Kenarındaki Üç İşaret",
+      "type": "profil_sentezi",
+      "mechanicType": "profil_sentezi",
+      "text": "Kürsü kenarındaki masada üç küçük işaret bulundu: bordo mühür mumu, iki elle yazılmış itiraz notu ve sol yakaya takılmış metal rozetin bıraktığı oval iz.",
+      "deductionHint": "Bu üç işaret, şüpheli kartlarındaki hangi ayrıntı kümesinde birlikte görülüyor?",
+      "isBonus": false,
+      "revealOrder": 3,
+      "isRevealed": false,
+      "pointCost": 50,
+      "profilSenteziVerisi": {
+        "baslik": "Kürsü Profili",
+        "aciklama": "Üç işaret aynı kişiye ait olmalı. Şüpheli kartlarının Tanım ve Detay alanlarını birlikte incele; eşleşme seni olay örgüsündeki bir konuma bağlayacak.",
+        "delilKartlari": [
+          {
+            "id": "mum",
+            "baslik": "Bordo Mühür",
+            "metin": "Kürsü masasının kenarında, yeni kırılmış koyu bordo mühür mumu."
+          },
+          {
+            "id": "not",
+            "baslik": "İtiraz Notu",
+            "metin": "Aynı kâğıtta iki farklı el pozisyonunu gösteren kısa, elle yazılmış bir itiraz notu."
+          },
+          {
+            "id": "rozet",
+            "baslik": "Yaka İzi",
+            "metin": "Ahşap yüzeyde, sol yakaya takılan küçük oval metal rozetin bıraktığı temas izi."
+          }
+        ],
+        "optionSuspectIds": [
+          "s1",
+          "s2",
+          "s3"
+        ],
+        "answerSuspectId": "s2",
+        "answerProfileSignals": [
+          "bordo mühür mumu",
+          "iki elle yazılmış kısa not",
+          "sol yakasında küçük bir meclis rozeti"
+        ],
+        "successText": "Üç işaret tek bir profil üzerinde birleşti.",
+        "failureText": "Bu profil, üç işareti aynı anda açıklamıyor."
+      }
+    },
+    {
+      "id": "c4",
+      "title": "Biyoseal Erişim Kaydı",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Nano-aerosol taşıma kasasının erişim sensörü, siyasi dava rozetine ait standart duruşma kartını hiç tanımadı. Kilitte zorlanma veya dışarıdan açılma girişimi de yoktu.",
+      "deductionHint": "Standart duruşma kartını hiç tanımayan taşıma kasası, hangi kişiyi görünmez parçacık rotasından çıkarır?",
+      "isBonus": false,
+      "revealOrder": 4,
+      "isRevealed": false,
+      "pointCost": 50
+    },
+    {
+      "id": "c5",
+      "title": "Kilitli Filtre İzi",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Hakim odasının filtre kapağında, kurumsal biyoseal kartuşundan taşmış nano-kapsül tozu ve kalın astarlı ceket lifleri bulundu.",
+      "deductionHint": "Kurumsal biyoseal kartuşu ve kalın astarlı ceket lifi, hangi kişiyi görünmez parçacıkla bağlar?",
+      "isBonus": true,
+      "revealOrder": 5,
+      "isRevealed": false,
+      "pointCost": 40
+    },
+    {
+      "id": "c6",
+      "title": "Kapalı Oda Kartı",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "İzole çalışma odasının kilidinde, bir görüşme boyunca aynı özel şirket geçiş kartının açma-kapama ritmi kayda geçti.",
+      "deductionHint": "Özel şirket geçiş kartı, hangi kişiyi izole çalışma odasına bağlar?",
+      "isBonus": true,
+      "revealOrder": 6,
+      "isRevealed": false,
+      "pointCost": 40
+    }
+  ],
+  "assetManifest": [],
+  "solution": {
+    "suspectId": "s3",
+    "weaponId": "w2",
+    "locationId": "l1"
+  },
+  "solutionNarrative": "Viktor Crane, tröstün üretimi olan nano-aerosolü hâkimin kapalı hava devrine bıraktı. LEXIS duruşma salonunda hologram düzeniyle, Amara ise kürsüdeki kendi rutiniyle başka rotalara yerleşti. Biyoseal erişimi ve kapalı oda kartı, görünmez zehrin Hakim Odasında Viktor’la kesiştiğini gösterdi."
+}

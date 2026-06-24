@@ -2223,39 +2223,37 @@
         },
         {
           "puzzleId": "sf_002",
-          "title": "Yapay Zeka Mahkemesi",
-          "subtitle": "Neo-İstanbul, 2241",
-          "difficulty": 2,
-          "difficultyLabel": "Polis Memuru",
           "stars": "★★☆☆☆",
           "gridSize": "3x3",
           "timeLimit": 540,
-          "story": "YZ'lerin evrensel haklarını tartışan galaktik mahkemede, son kararı verecek olan bir insan hakim özel odasında ölü bulundu. Bu ölüm, sadece bir bedenin değil, milyonlarca Yapay Zeka'nın kaderinin belirleneceği o devasa davanın da seyrini değiştirdi.",
-          "atmosphere": "Holografik mahkeme salonu. Mavi lazer ışıkları. İnsan ve makine yan yana. Gelecek, kanlı bir kararla belirleniyor.",
+          "title": "Yapay Zeka Mahkemesi",
+          "subtitle": "Neo-İstanbul, 2241",
+          "difficulty": 2,
+          "difficultyLevel": 2,
+          "specialMechanic": "profil_sentezi",
+          "story": "2241'de Neo-İstanbul Holografik Adalet Kompleksi, yapay zekâların hukuki statüsünü belirleyecek karar için dolup taşıyordu. Duruşma arasından sonra insan hâkim, yalnız çalıştığı özel bölümde ölü bulundu; karar metni ekranda yarım kalmış, salonun üstünde mavi projeksiyon ışıkları donmuştu. Bu ölüm yalnız bir kişiyi değil, milyonlarca sentetik bilincin geleceğini askıya aldı. YZ avukatı kararın hemen öncesinde binlerce kişinin gözleri önündeydi; savcı duruşma düzenini bizzat sürdürüyordu; lobici ise kapalı koridorlarda kendi kanallarını işletiyordu.",
+          "atmosphere": "Holografik sütunlar mahkeme mermerine mavi gölgeler düşürüyor. İnsan sesleri ile sunucu fanları aynı anda yükseliyor; adalet, kod satırları arasında nefes alıyor.",
           "suspects": [
             {
               "id": "s1",
               "name": "YZ Avukat LEXIS",
-              "icon": "🕵️",
-              "description": "YZ haklarını mahkemede savunan, davanın aleyhlerine dönmesiyle algoritmasında panik verileri gözlenen sentetik avukat makine.",
-              "detail": "Son model yapay zeka, kusursuz hitabet, manipülatif ve algoritmik.",
-              "parmakIziDeseni": "fp_loop_right"
+              "icon": "🧠",
+              "description": "YZ haklarını savunan, duruşmalarda holografik senaryolar kuran sentetik avukat.",
+              "detail": "Şeffaf şakak soğutucusunun çevresinde mavi ışık halkası taşır; itirazlarını fiziksel notla değil, üç boyutlu simülasyonla kaydeder."
             },
             {
               "id": "s2",
               "name": "Savcı Amara Diallo",
-              "icon": "👮",
-              "description": "YZ'lerin köle statüsünde kalmasını savunan, politikacılar tarafından desteklenen, ölümün davanın iptaline yarayacağını bilen sert mizaçlı insan savcı.",
-              "detail": "38 yaşında, sert, kariyer odaklı politikacı.",
-              "parmakIziDeseni": "fp_loop_left"
+              "icon": "⚖️",
+              "description": "YZ'lerin köle statüsünde kalmasını isteyen, kamuoyu desteğini iyi kullanan insan savcı.",
+              "detail": "38 yaşında. Her itiraz dosyasını bordo mühür mumu ve iki elle yazılmış kısa notla taşır; sol yakasında küçük bir meclis rozeti bulunur."
             },
             {
               "id": "s3",
               "name": "Lobici Viktor Crane",
-              "icon": "👨‍💼",
-              "description": "YZ'leri madenlerde köle iş gücü olarak kullanan dev tröstün çıkarlarını koruyan, karanlık şirket teknolojilerine sahip geniş omuzlu lobici.",
-              "detail": "55 yaşında, iri, paranın ve gücün her kilidi açacağına inanan kibirli adam.",
-              "parmakIziDeseni": "fp_arch"
+              "icon": "👔",
+              "description": "Maden tröstlerinin YZ işgücünden çıkarını koruyan, kapalı görüşmelerde şirket cihazları taşıyan lobici.",
+              "detail": "55 yaşında. Kalın omuzlu ceketinin iç astarında şirket biyoseal kartuşu saklar; mahkeme odalarında asla kendi adına imza atmaz."
             }
           ],
           "weapons": [
@@ -2263,19 +2261,22 @@
               "id": "w1",
               "name": "Nöro-Sinyal Silahı",
               "icon": "⚡",
-              "description": "Kurbanın ensesine takıldığında beyin sinyallerini kalıcı olarak bozan ve nörolojik bir çöküşle kalbi durduran kaçak donanımsal mikro-çip."
+              "description": "Ense yakınında çalıştırıldığında sinir iletimini bozacak kaçak mikroçip düzeni.",
+              "detail": "Hedefte elektromanyetik sıcaklık halkası ve deri altı temas izi bırakır."
             },
             {
               "id": "w2",
               "name": "Nano-Zehir",
               "icon": "🔬",
-              "description": "Havaya karıştığında görünmez olan, nefes yoluyla kana karışıp hücreleri içeriden eriten, şirketlerin üretebildiği biyolojik nano-partikül zehri."
+              "description": "Solunumla kana karışan, hücreleri görünmez parçacıklarla bozan şirket üretimi nano-aerosol.",
+              "detail": "Kararlı formu yalnız kurumsal biyoseal kartuşuyla güvenli biçimde taşınabilir."
             },
             {
               "id": "w3",
               "name": "Hologram Tuzağı",
               "icon": "💠",
-              "description": "Kurbanın etrafına gerçekmiş gibi yansıtılarak panik veya kaza yaratması amaçlanan sanal ve dokunulmaz hologram tuzağı."
+              "description": "Panik ve yanlış yönlendirme yaratmak için mahkeme uzamını sahte görüntülerle dolduran simülasyon düzeni.",
+              "detail": "Açıldığında duvarlarda mavi projeksiyon artığı ve faz kayması bırakır."
             }
           ],
           "locations": [
@@ -2283,117 +2284,139 @@
               "id": "l1",
               "name": "Hakim Odası",
               "icon": "🏛️",
-              "description": "Sadece davaya bakan insan hakimin izniyle girilebilen, dijital dosyalarla ve holografik analiz ekranlarıyla dolu, dışarıya tamamen izole çalışma odası."
+              "description": "Davanın gizli taslaklarının tutulduğu, yalnız hâkimin kilidiyle açılan izole çalışma odası.",
+              "detail": "Hava devri, koridordan bağımsız kapalı bir filtrasyon halkasıyla çalışır."
             },
             {
               "id": "l2",
               "name": "Mahkeme Salonu",
               "icon": "🏢",
-              "description": "Seyircilerin, avukatların ve basının bulunduğu, yüksek kubbeli, seslerin yankılandığı ve sürekli göz önünde olan devasa ana duruşma salonu."
+              "description": "Holografik jürinin, avukatların ve basının aynı anda bulunduğu yüksek kubbeli ana duruşma alanı.",
+              "detail": "Kürsü kenarındaki ahşap masalar, elde yazılmış kısa notları ve mühür mumunu kolayca tutar."
             },
             {
               "id": "l3",
               "name": "Sunucu Odası",
               "icon": "🖥️",
-              "description": "Mahkemenin tüm yapay zeka sunucularının, soğutma fanlarının ve dijital beyinlerin kilit altında tutulduğu dondurucu ve gürültülü teknoloji merkezi."
+              "description": "Dijital hafızaların ve soğutma hatlarının kilit altında tutulduğu, yalnız teknik kartla girilebilen teknoloji bölmesi.",
+              "detail": "Soğutma sıvısı dışarıyla karışmaz; havalandırma şaftları mahkeme katından yalıtılmıştır."
             }
           ],
           "clues": [
             {
               "id": "c1",
-              "type": "kanit",
+              "title": "Akciğer Mikro-Örneği",
+              "type": "adli",
+              "mechanicType": "text",
+              "text": "Hâkimin akciğer örneğinde, ölüm anında hava yoluyla taşınmış şirket sınıfı mikro-partiküller saptandı. Bu görünmez aerosol, hâkimin can verdiği anda solunum zincirini çökertmişti; aynı partikülün izine soğutma hatlarının kapalı devresinde rastlanmadı.",
+              "deductionHint": "Hava yoluyla taşınan mikro-partiküller hangi yöntemi tarif eder; kapalı soğutma hattında iz yoksa bu yöntem hangi teknoloji bölümüyle eşleşemez?",
+              "isBonus": false,
               "revealOrder": 1,
               "isRevealed": true,
-              "pointCost": 0,
-              "title": "Adli Tıp Raporu",
-              "text": "Hakimin kanındaki mikroskobik yıkım ve akciğerlerindeki hücresel erime, bedene mekanik bir çipin takılmadığını, havaya karışan görünmez bir hücresel silahın solunduğunu kanıtlıyordu.",
-              "mechanicType": "text",
-              "deductionHint": "Cinayet silahı solunumla alınan görünmez bir nano-partikül zehriydi."
+              "pointCost": 0
             },
             {
               "id": "c2",
-              "type": "tanik",
+              "title": "Faz Kayması Kayıtları",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Ana duruşma oturumundan sonra, salon duvarlarında mavi projeksiyon artığı ve tek bir simülasyon anahtarının izleri kaldı. Oturumun savunma tarafındaki görsel canlandırması bu anahtarla eşleşiyor.",
+              "deductionHint": "Mavi projeksiyon artığı ve savunma canlandırması, hangi kişi–düzenek eşleşmesini kurar?",
+              "isBonus": false,
               "revealOrder": 2,
               "isRevealed": false,
-              "pointCost": 60,
-              "title": "Görsel Tutanak",
-              "text": "Hakimin bedeni dijital odasındaki şahsi deri koltuğuna yığılmıştı; masasında duran davaya ait gizli taslaklar, mücadelenin bu izole sığınakta bittiğini mühürledi.",
-              "mechanicType": "text",
-              "deductionHint": "Mekan, hakimin şahsi çalışma odasıydı."
+              "pointCost": 50
             },
             {
               "id": "c3",
-              "type": "sifreli",
+              "title": "Kürsü Kenarındaki Üç İşaret",
+              "type": "profil_sentezi",
+              "mechanicType": "profil_sentezi",
+              "text": "Kürsü kenarındaki masada üç küçük işaret bulundu: bordo mühür mumu, iki elle yazılmış itiraz notu ve sol yakaya takılmış metal rozetin bıraktığı oval iz.",
+              "deductionHint": "Bu üç işaret, şüpheli kartlarındaki hangi ayrıntı kümesinde birlikte görülüyor?",
+              "isBonus": false,
               "revealOrder": 3,
               "isRevealed": false,
-              "pointCost": 60,
-              "title": "Güvenlik YZ Tanıklığı",
-              "text": "Kameraların yapay zeka analizleri şaşmazdı: 'Viktor Crane'in hakim odasına girerkenki ceket hacmi ile 20 dakika sonra çıkarkenki hacmi arasında, bir kimyasal tüpü saklayacak kadar matematiksel fark mevcuttur.'",
-              "mechanicType": "sifreli_mesaj",
-              "sifre": {
-                "sifrelenmis": "Mahkeme Yılı (2241) ile Dava Numarasının (5) toplamını girin.",
-                "sifreleTuru": "pin_kodu",
-                "cozumIpucu": "Basit bir toplama işlemi.",
-                "cozulmus": "2246",
-                "aciklama": "Kasa açıldığında içinden Viktor Crane'in şirketi tarafından üretilen nano-zehir kapsülü çıktı."
-              },
-              "deductionHint": "Lobici Viktor, hakimin odasına bir madde bıraktı."
-            },
-            {
-              "id": "c5",
-              "type": "parmak_izi",
-              "revealOrder": 4,
-              "isRevealed": false,
-              "pointCost": 60,
-              "title": "LEXIS'in Dijital Alibisi",
-              "text": "Sentetik avukat LEXIS'in çekirdek kodları ve sunucu logları, onun cinayet saatleri boyunca mahkeme salonundaki ana ekranda binlerce kişiye açık bir sunum yaptığını donanımsal olarak ispatladı.",
-              "mechanicType": "parmak_izi",
-              "parmakIziVerisi": {
-                "aciklama": "Üç şüpheliyi masa iziyle eşleştir.",
-                "izler": [
+              "pointCost": 50,
+              "profilSenteziVerisi": {
+                "baslik": "Kürsü Profili",
+                "aciklama": "Üç işaret aynı kişiye ait olmalı. Şüpheli kartlarının Tanım ve Detay alanlarını birlikte incele; eşleşme seni olay örgüsündeki bir konuma bağlayacak.",
+                "delilKartlari": [
                   {
-                    "izId": "iz1",
-                    "konum": "Masa yüzeyi",
-                    "eslesme": "s3",
-                    "ipucu": "Şişman, büyük parmak. Yüzük izi belirgin — Viktor'a ait marka yüzüğü."
+                    "id": "mum",
+                    "baslik": "Bordo Mühür",
+                    "metin": "Kürsü masasının kenarında, yeni kırılmış koyu bordo mühür mumu."
+                  },
+                  {
+                    "id": "not",
+                    "baslik": "İtiraz Notu",
+                    "metin": "Aynı kâğıtta iki farklı el pozisyonunu gösteren kısa, elle yazılmış bir itiraz notu."
+                  },
+                  {
+                    "id": "rozet",
+                    "baslik": "Yaka İzi",
+                    "metin": "Ahşap yüzeyde, sol yakaya takılan küçük oval metal rozetin bıraktığı temas izi."
                   }
                 ],
-                "sonuc": "Masaya dokunan: Viktor Crane. (s3)",
-                "sahneGorseli": "fp_arch"
-              },
-              "deductionHint": "YZ Avukat fiziksel olarak cinayet mahallinde bulunamazdı."
+                "optionSuspectIds": [
+                  "s1",
+                  "s2",
+                  "s3"
+                ],
+                "answerSuspectId": "s2",
+                "answerProfileSignals": [
+                  "bordo mühür mumu",
+                  "iki elle yazılmış kısa not",
+                  "sol yakasında küçük bir meclis rozeti"
+                ],
+                "successText": "Üç işaret tek bir profil üzerinde birleşti.",
+                "failureText": "Bu profil, üç işareti aynı anda açıklamıyor."
+              }
             },
             {
               "id": "c4",
-              "type": "adli",
+              "title": "Biyoseal Erişim Kaydı",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Nano-aerosol taşıma kasasının erişim sensörü, siyasi dava rozetine ait standart duruşma kartını hiç tanımadı. Kilitte zorlanma veya dışarıdan açılma girişimi de yoktu.",
+              "deductionHint": "Standart duruşma kartını hiç tanımayan taşıma kasası, hangi kişiyi görünmez parçacık rotasından çıkarır?",
+              "isBonus": false,
+              "revealOrder": 4,
+              "isRevealed": false,
+              "pointCost": 50
+            },
+            {
+              "id": "c5",
+              "title": "Kilitli Filtre İzi",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Hakim odasının filtre kapağında, kurumsal biyoseal kartuşundan taşmış nano-kapsül tozu ve kalın astarlı ceket lifleri bulundu.",
+              "deductionHint": "Kurumsal biyoseal kartuşu ve kalın astarlı ceket lifi, hangi kişiyi görünmez parçacıkla bağlar?",
+              "isBonus": true,
               "revealOrder": 5,
               "isRevealed": false,
-              "pointCost": 60,
-              "title": "PIN Kodu Kırılması",
-              "text": "Hakimin şifreli masasında bulunan ve lobicinin bıraktığı dijital kasanın şifresi, şirket rüşvetinin miktarını sayısal bir bulmacaya gizlemişti.",
-              "mechanicType": "text",
-              "deductionHint": "Şifre çözüldüğünde silahın Viktor'a ait olduğu kesinleşti."
+              "pointCost": 40
             },
             {
               "id": "c6",
-              "type": "dogrudan",
+              "title": "Kapalı Oda Kartı",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "İzole çalışma odasının kilidinde, bir görüşme boyunca aynı özel şirket geçiş kartının açma-kapama ritmi kayda geçti.",
+              "deductionHint": "Özel şirket geçiş kartı, hangi kişiyi izole çalışma odasına bağlar?",
+              "isBonus": true,
               "revealOrder": 6,
               "isRevealed": false,
-              "pointCost": 60,
-              "title": "Karanlık Veri Transferi",
-              "text": "Lobici Viktor'un şirketinden siber uzayın karanlık ağlarına doğru 500 milyon kredilik anonim bir transfer yapılmış, işlem notuna 'Hakim susturuldu' ibaresi düşülmüştü.",
-              "mechanicType": "gorsel_ipucu",
-              "gorselAciklama": "Holografik transfer ekranı. Rakamlar büyük, ağ haritası karmaşık ama bir uç noktada LEXIS kimliği.",
-              "deductionHint": "Milyonluk rüşvet ve itiraf, lobicinin cinayeti işlediğini mühürledi."
+              "pointCost": 40
             }
           ],
+          "assetManifest": [],
           "solution": {
             "suspectId": "s3",
             "weaponId": "w2",
             "locationId": "l1"
           },
-          "solutionNarrative": "Lobici Viktor Crane, davanın aleyhlerine dönmesini engellemek için rüşvet karşılığında hakim odasına sızdı. Şirketinin ürettiği nano-zehir kapsülünü odanın havalandırmasına yerleştirerek hakimi kendi kalesinde acımasızca eritti.",
-          "specialMechanic": "sifreli_parmak_izi"
+          "solutionNarrative": "Viktor Crane, tröstün üretimi olan nano-aerosolü hâkimin kapalı hava devrine bıraktı. LEXIS duruşma salonunda hologram düzeniyle, Amara ise kürsüdeki kendi rutiniyle başka rotalara yerleşti. Biyoseal erişimi ve kapalı oda kartı, görünmez zehrin Hakim Odasında Viktor'la kesiştiğini gösterdi."
         },
         {
           "puzzleId": "sf_003",
