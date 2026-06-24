@@ -258,6 +258,8 @@ function SifreliMesajBlock({
   const [input, setInput] = useState("");
   const [hintRevealed, setHintRevealed] = useState(false);
   const [tried, setTried] = useState(false);
+  const [komutSecimler, setKomutSecimler] = useState<Record<number, string>>({});
+  const [komutWrong, setKomutWrong] = useState(false);
 
   const handleHint = () => {
     if (hintRevealed) return;
@@ -276,6 +278,21 @@ function SifreliMesajBlock({
     }
   };
 
+  const checkKomut = () => {
+    const alanlar = sifre.komutAlanlari!;
+    const allCorrect = alanlar.every((alan, i) => {
+      const normalize = (s: string) =>
+        s.trim().toLocaleUpperCase("tr-TR").replace(/İ/g, "I");
+      return normalize(komutSecimler[i] ?? "") === normalize(alan.cevap);
+    });
+    if (allCorrect) {
+      onSolve();
+    } else {
+      setKomutWrong(true);
+      setTimeout(() => setKomutWrong(false), 2000);
+    }
+  };
+
   if (isSolved) {
     return (
       <View style={styles.miniGameSolvedBlock}>
@@ -285,6 +302,75 @@ function SifreliMesajBlock({
           <Text style={styles.miniGameAnswerText}>{sifre.cozulmus}</Text>
         </View>
         <Text style={styles.miniGameAciklama}>{sifre.aciklama}</Text>
+      </View>
+    );
+  }
+
+  if (sifre.komutAlanlari && sifre.komutAlanlari.length > 0) {
+    const allSelected = sifre.komutAlanlari.every((_, i) => !!komutSecimler[i]);
+    return (
+      <View style={styles.terminalBlock}>
+        <View style={styles.terminalTitleBar}>
+          <View style={styles.terminalDot} />
+          <View style={[styles.terminalDot, { backgroundColor: "#f59e0b" }]} />
+          <View style={[styles.terminalDot, { backgroundColor: "#22c55e" }]} />
+          <Text style={styles.terminalTitleText}>OMEGA-7 // KOMUT KURTARMA</Text>
+        </View>
+        <Text style={styles.terminalContext}>{sifre.sifrelenmis}</Text>
+        <View style={styles.terminalDivider} />
+        {sifre.komutAlanlari.map((alan, i) => (
+          <View key={i} style={styles.terminalField}>
+            <Text style={styles.terminalFieldLabel}>{alan.etiket}</Text>
+            <View style={styles.terminalOptions}>
+              {alan.secenekler.map((opt) => {
+                const isSelected = komutSecimler[i] === opt;
+                return (
+                  <Pressable
+                    key={opt}
+                    style={[styles.terminalOption, isSelected && styles.terminalOptionSelected]}
+                    onPress={() => setKomutSecimler((prev) => ({ ...prev, [i]: opt }))}
+                  >
+                    <Text style={[styles.terminalOptionText, isSelected && styles.terminalOptionTextSelected]}>
+                      {opt}
+                    </Text>
+                  </Pressable>
+                );
+              })}
+            </View>
+          </View>
+        ))}
+        <View style={styles.terminalDivider} />
+        {hintRevealed ? (
+          <View style={styles.sifreHintRevealed}>
+            <MaterialIcons name="warning" size={12} color="#f59e0b" />
+            <Text style={[styles.sifreHintRevealedLabel, { color: "#f59e0b" }]}>
+              İpucu açıldı (ceza uygulandı)
+            </Text>
+          </View>
+        ) : null}
+        {hintRevealed ? (
+          <View style={styles.sifreIpucu}>
+            <Text style={styles.sifreIpucuText}>{sifre.cozumIpucu}</Text>
+          </View>
+        ) : (
+          <Pressable style={styles.sifreHintBtn} onPress={handleHint}>
+            <MaterialIcons name="lightbulb-outline" size={14} color="#9333ea" />
+            <Text style={styles.sifreHintBtnText}>İpucu İste (-60 sn / ceza puanı)</Text>
+          </Pressable>
+        )}
+        {komutWrong && (
+          <Text style={styles.anagramWrong}>Seçimlerini kontrol et — en az bir alan yanlış</Text>
+        )}
+        <Pressable
+          style={[styles.terminalSubmitBtn, !allSelected && styles.terminalSubmitBtnDisabled]}
+          onPress={checkKomut}
+          disabled={!allSelected}
+        >
+          <MaterialIcons name="terminal" size={14} color={allSelected ? "#0F1117" : "#555"} />
+          <Text style={[styles.terminalSubmitText, !allSelected && { color: "#555" }]}>
+            Komutları Doğrula
+          </Text>
+        </Pressable>
       </View>
     );
   }
@@ -1523,6 +1609,113 @@ const styles = StyleSheet.create({
     fontSize: 9,
     fontWeight: "700",
     color: "#C8372D",
+    letterSpacing: 0.5,
+  },
+  terminalBlock: {
+    backgroundColor: "#080c10",
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "#1e3a2a",
+    marginTop: 8,
+    overflow: "hidden",
+  },
+  terminalTitleBar: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+    backgroundColor: "#0e1a13",
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: "#1e3a2a",
+  },
+  terminalDot: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    backgroundColor: "#C8372D",
+  },
+  terminalTitleText: {
+    fontSize: 10,
+    fontWeight: "800",
+    color: "#22c55e",
+    letterSpacing: 1.5,
+    marginLeft: 4,
+    fontFamily: "monospace",
+  },
+  terminalContext: {
+    fontFamily: "monospace",
+    fontSize: 11,
+    color: "#4a7c59",
+    lineHeight: 17,
+    padding: 12,
+    paddingBottom: 0,
+  },
+  terminalDivider: {
+    height: 1,
+    backgroundColor: "#1e3a2a",
+    marginVertical: 8,
+    marginHorizontal: 12,
+  },
+  terminalField: {
+    paddingHorizontal: 12,
+    marginBottom: 10,
+    gap: 6,
+  },
+  terminalFieldLabel: {
+    fontFamily: "monospace",
+    fontSize: 11,
+    fontWeight: "700",
+    color: "#22c55e",
+    letterSpacing: 1,
+  },
+  terminalOptions: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 6,
+  },
+  terminalOption: {
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+    borderRadius: 4,
+    borderWidth: 1,
+    borderColor: "#1e3a2a",
+    backgroundColor: "#0d1810",
+  },
+  terminalOptionSelected: {
+    backgroundColor: "#0a2e18",
+    borderColor: "#22c55e",
+  },
+  terminalOptionText: {
+    fontFamily: "monospace",
+    fontSize: 11,
+    color: "#4a7c59",
+    fontWeight: "600",
+  },
+  terminalOptionTextSelected: {
+    color: "#22c55e",
+  },
+  terminalSubmitBtn: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 6,
+    backgroundColor: "#22c55e",
+    marginHorizontal: 12,
+    marginBottom: 12,
+    borderRadius: 6,
+    paddingVertical: 10,
+  },
+  terminalSubmitBtnDisabled: {
+    backgroundColor: "#0e1a13",
+    borderWidth: 1,
+    borderColor: "#1e3a2a",
+  },
+  terminalSubmitText: {
+    fontFamily: "monospace",
+    fontSize: 12,
+    fontWeight: "800",
+    color: "#0F1117",
     letterSpacing: 0.5,
   },
   sifreBlock: {

@@ -1,0 +1,183 @@
+/* ============================================================
+ *  FAİLİ MEÇHUL — VAKA / ASSET ENTEGRASYON TALİMATI
+ *  Bu JSON üretimden geçti. Aşağıdaki asset sözleşmesini AYNI
+ *  assetId ve yollarla uygula; JSON içindeki ilişkilere dokunma.
+ * ------------------------------------------------------------
+ *  [ŞİFRELİ MESAJ MİNİ OYUNU]
+ *    - c4: tür="komut_kurtarma" · cevap="ARES-3 / TIBBİ MODÜL / KARANTİNA"
+ *  Oyun ekranı: bulmaca + cezalı ipucu + cevap girişi + doğru cevap sonrası açıklama.
+ * ------------------------------------------------------------
+ *  specialMechanic: "sifreli_mesaj"
+ *  Asset dosyasını yeniden adlandırma; assetId, clueId ve publicPath sözleşmedir.
+ * ============================================================ */
+
+{
+  "puzzleId": "sf_001",
+  "stars": "★☆☆☆☆",
+  "gridSize": "3x3",
+  "timeLimit": 600,
+  "title": "Uzay İstasyonu Omega-7",
+  "subtitle": "Mars Yörüngesi, 2157",
+  "difficulty": "Çaylak",
+  "difficultyLevel": 1,
+  "specialMechanic": "sifreli_mesaj",
+  "story": "2157’de Mars yörüngesindeki Omega-7, insanlığın en pahalı biyo-formülünü koruyan bir araştırma istasyonuydu. Vardiya değişimine dakikalar kala baş bilim insanı, dışarıda sessizce dönen kızıl gezegene bakan kapalı araştırma halkasında ölü bulundu. Formülün yedek çekirdeği yerindeydi; fakat erişim kayıtlarının bir satırı, sanki biri tüm istasyonun hafızasından koparmış gibi kayıptı. Komutan düzeni korumaya çalışıyor, siborg güvenlik görevlisi protokolleri tekrar ediyor, tıp mühendisi ise panellerin başında gereğinden uzun kalıyordu. Aynı oksijeni paylaşan üç kişi arasında, formülün değerini bir ölümden daha büyük gören biri vardı.",
+  "atmosphere": "Yerçekimsiz koridorlarda metalin uğultusu dolaşıyor. Camların ardında Mars kızıl ve sessiz; içeride oksijen tıslaması, sırların nefesinden daha yüksek.",
+  "suspects": [
+    {
+      "id": "s1",
+      "name": "Komutan Lyra Chen",
+      "icon": "👩‍✈️",
+      "description": "İstasyonun uçuş ve yaşam destek disiplininden sorumlu, formülün askerî kullanımına karşı çıkan sert komutan.",
+      "detail": "42 yaşında. Eski test pilotu; acil oksijen by-pass tatbikatlarını bizzat yürütür, ama vardiya bitiminde uyku kapsülüne kapanmayı alışkanlık haline getirmiş."
+    },
+    {
+      "id": "s2",
+      "name": "Yapay Zeka ARES-3",
+      "icon": "🤖",
+      "description": "İstasyon güvenliğini yöneten, yarı insan yarı makine arayüzlü siber güvenlik sorumlusu.",
+      "detail": "Duygu bastırma modülleri kullanır. Karantina alarmında ilk komutu kişilere değil, tıbbi izolasyon bölmesine yönlendiren değişmez bir protokolü vardır."
+    },
+    {
+      "id": "s3",
+      "name": "Tıp Mühendisi Osman Demir",
+      "icon": "🔧",
+      "description": "Sağlık birimi sistemlerini kalibre eden, son dönemde Dünya’daki tröstlerle şifreli bağlantılar kurduğu iddia edilen tıp mühendisi.",
+      "detail": "35 yaşında. Borç dosyaları yüzünden gergin; laboratuvar panellerini herkesten hızlı okur, ancak tıbbi sarf malzemelerini kayıt dışı çıkarma yetkisi yoktur."
+    }
+  ],
+  "weapons": [
+    {
+      "id": "w1",
+      "name": "Oksijen Kesimi",
+      "icon": "💨",
+      "description": "Yaşam destek akışını kısa süreliğine keserek kurbanı havasız bırakmaya dayanan uzaktan sabotaj yöntemi.",
+      "detail": "By-pass hattı yalnız acil uçuş protokolünde kullanılabilir; filtrelerde kompozit oksijen tozu bırakır."
+    },
+    {
+      "id": "w2",
+      "name": "Nörotoksik Enjeksiyon",
+      "icon": "💉",
+      "description": "Mikro iğneyle verilen, sinir iletimini saniyeler içinde kilitleyen sentetik nörotoksin.",
+      "detail": "Taşıyıcı sıvı, steril bölme filtrelerinde görünür kristal kalıntısı bırakır; doğru doz tıbbi çizelge bilgisi ister."
+    },
+    {
+      "id": "w3",
+      "name": "Yerçekimi Kapanı",
+      "icon": "🌀",
+      "description": "Yerçekimi modülünü ani tersleme ile bozarak çarpma travması yaratmayı amaçlayan sistemsel tuzak.",
+      "detail": "Kabin duvarlarında eşmerkezli çarpma izleri ve kıyafette manyetik sürtünme bırakır."
+    }
+  ],
+  "locations": [
+    {
+      "id": "l1",
+      "name": "Laboratuvar A",
+      "icon": "🔬",
+      "description": "Biyo-formülün işlendiği, retina kilitli ve DNA örnekleriyle dolu ana araştırma odası.",
+      "detail": "Merkez paneli, bilim ekibi dışında yalnız acil teknik bakım sırasında açılır."
+    },
+    {
+      "id": "l2",
+      "name": "Kontrol Merkezi",
+      "icon": "🖥️",
+      "description": "İstasyon kameralarının, hava döngüsünün ve rota sistemlerinin izlendiği ekranlarla çevrili komuta alanı.",
+      "detail": "Yaşam destek tatbikatlarının bütün izleri burada eşzamanlı kayda geçer."
+    },
+    {
+      "id": "l3",
+      "name": "Tıbbi Modül",
+      "icon": "🏥",
+      "description": "İlaç kasaları ve izolasyon kabinleri bulunan, biyometrik kapılı sağlık bölmesi.",
+      "detail": "Karantina protokolünde güvenlik arayüzü bu modüle kilitlenir; steril filtreler giren her sıvı için iz tutar."
+    }
+  ],
+  "clues": [
+    {
+      "id": "c1",
+      "title": "Steril Filtre Analizi",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Maktulün boynundaki mikro giriş izinin çevresinde sinir iletimini donduran sentetik taşıyıcı saptandı. Aynı taşıyıcıya ait kristal filtre kalıntısı ise sağlık bölmesinin havalandırmasında yoktu.",
+      "deductionHint": "Mikro iğne izi hangi yöntemi tarif eder; sağlık bölümündeki filtrelerde taşıyıcı yoksa bu yöntem hangi alanla eşleşemez?",
+      "isBonus": false,
+      "revealOrder": 1,
+      "isRevealed": true,
+      "pointCost": 0
+    },
+    {
+      "id": "c2",
+      "title": "By-pass Tatbikatı",
+      "type": "evidence",
+      "mechanicType": "text",
+      "text": "Vardiya öncesi acil tatbikat kaydında, yaşam destek by-pass hattını yalnız uçuş komutanının açtığı; hat üzerindeki taze kompozit tozunun tatbikatın hemen ardından mühürlendiği görünüyor.",
+      "deductionHint": "Acil by-pass hattını bizzat kullanan kişi, hangi sabotaj rotasıyla eşleşir?",
+      "isBonus": false,
+      "revealOrder": 2,
+      "isRevealed": false,
+      "pointCost": 50
+    },
+    {
+      "id": "c3",
+      "title": "Uyku Kapsülü Biyometrisi",
+      "type": "eleme",
+      "mechanicType": "text",
+      "text": "Uyku kapsülünün kapalı devre kaydı, bir görevlinin olay penceresi boyunca kapsülden çıkmadığını; kapsül kapısının ana araştırma kanadındaki yalıtımlı çalışma alanından tamamen ayrı tutulduğunu gösteriyor.",
+      "deductionHint": "Uyku kapsülünde kesintisiz kalan kişi, hangi yalıtımlı araştırma alanında olamaz?",
+      "isBonus": false,
+      "revealOrder": 3,
+      "isRevealed": false,
+      "pointCost": 50
+    },
+    {
+      "id": "c4",
+      "title": "Karantina Konsolu: Komut Kurtarma",
+      "type": "sifreli",
+      "mechanicType": "sifreli_mesaj",
+      "text": "Alarmdan sonra karantina konsolunun belleğinden üç satırlık, hasarlı bir yedek çıkarıldı. Kayıt başlığı silinmiş.",
+      "deductionHint": "Güvenliği yöneten sistem, izolasyon kabinleri bulunan bölüm ve alarm modu birlikte hangi eşleşmeyi verir?",
+      "isBonus": false,
+      "revealOrder": 4,
+      "isRevealed": false,
+      "pointCost": 50,
+      "sifre": {
+        "sifrelenmis": "OMEGA-7 // KARANTİNA KONSOLU\nKOMUT KURTARMA MODU — 3 KAYIP ALAN\n\nTerminal isimleri silebildi; işlev etiketleri kaldı.\nŞüpheli ve mekân kartlarını inceleyerek her satırın gerçek karşılığını bul.\n\n[ 1 ] ARAYÜZ KİMLİĞİ\nUÇUŞ HATTI   ·   GÜVENLİK HATTI   ·   TIBBİ KALİBRASYON\n\n[ 2 ] HEDEF BÖLME\nDENEY TÜPLERİ   ·   İZOLASYON KABİNLERİ   ·   KAMERA AĞI\n\n[ 3 ] ACİL MOD\nBY-PASS   ·   KARANTİNA   ·   TERSLEME\n\nGİRİŞ BİÇİMİ\nSİSTEM ADI / MEKÂN ADI / MOD\n\nNot: Terminal, karantina alarmında ilk komutu kişilere değil izolasyon bölmesine yönelten arayüzü kaydetti.",
+        "sifreleTuru": "komut_kurtarma",
+        "cozumIpucu": "Önce şüpheli kartlarından güvenliği yöneten arayüzü bul. Ardından mekân kartlarında izolasyon kabinlerinin bulunduğu bölümü seç. Son alan, alarmın hangi moda geçtiğini söyler.",
+        "cozulmus": "ARES-3 / TIBBİ MODÜL / KARANTİNA",
+        "aciklama": "Konsol bütünlüğü geri yüklendi. Seçtiğin üç alan aynı acil durum yönlendirmesine ait; karantina sistemi bu hattı alarm boyunca sabit tutmuş."
+      }
+    },
+    {
+      "id": "c5",
+      "title": "Şifreli Veri Paketi",
+      "type": "dogrudan",
+      "mechanicType": "text",
+      "text": "Yerçekimi bakım planındaki kapalı imza, alarm anında acil alanı ters yöne çeviren algoritmik karar kaydını taşıyor. İstasyon çekirdeği bu hamleyi yalnız siborg güvenlik katmanının kullanabildiğini belirtiyor.",
+      "deductionHint": "Ters yönlü alarm kararı, hangi sistem görevini ağırlaştıran düzenekle eşleşir?",
+      "isBonus": true,
+      "revealOrder": 5,
+      "isRevealed": false,
+      "pointCost": 40
+    },
+    {
+      "id": "c6",
+      "title": "Retina Eşiği",
+      "type": "adli",
+      "mechanicType": "text",
+      "text": "Laboratuvarın ikinci iç kapısı, olaydan sonra yalnız bir bilim teknik kartını tanıdı; güvenlik arayüzü ve komutanın uçuş kartı sırada yoktu.",
+      "deductionHint": "Araştırma paneline tanınan teknik kart, hangi kişiyi laboratuvara bağlar?",
+      "isBonus": true,
+      "revealOrder": 6,
+      "isRevealed": false,
+      "pointCost": 40
+    }
+  ],
+  "assetManifest": [],
+  "solution": {
+    "suspectId": "s3",
+    "weaponId": "w2",
+    "locationId": "l1"
+  },
+  "solutionNarrative": "Osman Demir, biyo-formülü dışarı aktarmak için bilim insanını Laboratuvar A’da mikro iğneyle verdiği nörotoksinle susturdu. Lyra’nın by-pass tatbikatı ve uyku kapsülü kaydı onu iki farklı rotaya yerleştirirken, ARES-3 karantina protokolüyle Tıbbi Modüle kilitlendi. Geriye, nörotoksinin laboratuvarla kesiştiği tek kişi kaldı."
+}

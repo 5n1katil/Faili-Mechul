@@ -56,12 +56,19 @@ export interface ClueYuzlesmeDialog {
   yalan: boolean;
 }
 
+export interface ClueSifreKomutAlani {
+  etiket: string;
+  secenekler: string[];
+  cevap: string;
+}
+
 export interface ClueSifre {
   sifrelenmis: string;
   sifreleTuru: string;
   cozumIpucu: string;
   cozulmus: string;
   aciklama: string;
+  komutAlanlari?: ClueSifreKomutAlani[];
 }
 
 export interface CluePhoneMessage {
