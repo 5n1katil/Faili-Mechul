@@ -28,6 +28,7 @@ const AUDIO_ASSETS: Record<string, ReturnType<typeof require>> = {
   audio_ott_004_c6_rihtim_nobet_silindiri: require("../assets/audio/cases/ott_004/ott_004_c6_rihtim_nobet_silindiri.mp3"),
   audio_hw_001_c3_kulaklik_fisilti: require("../assets/audio/cases/hw_001/hw_001_c3_kulaklik_fisilti.mp3"),
   audio_hw_004_c5_acil_interkom: require("../assets/audio/cases/hw_004/hw_004_c5_acil_interkom.mp3"),
+  audio_sf_003_c2_a3_tarama_kaydi: require("../assets/audio/cases/sf_003/sf_003_c2_a3_tarama_kaydi.mp3"),
 };
 
 const FINGERPRINT_IMAGES: Record<string, ReturnType<typeof require>> = {

@@ -1,0 +1,218 @@
+/* ============================================================
+ *  FAİLİ MEÇHUL — VAKA / ASSET ENTEGRASYON TALİMATI
+ *  Bu JSON üretimden geçti. Aşağıdaki asset sözleşmesini AYNI
+ *  assetId ve yollarla uygula; JSON içindeki ilişkilere dokunma.
+ * ------------------------------------------------------------
+ *  [SES KAYDI — ASSET TESLİM MANİFESTİ]
+ *  1) Her MP3/WAV dosyasını aşağıdaki publicPath’in disk karşılığına koy:
+ *     Vite/React/Replit için örn. "/assets/..." → "public/assets/...".
+ *  2) Runtime’da yalnız clue.audioUrl yolunu kullan; ikinci bir hard-coded yol yazma.
+ *  3) Ses oynatılamazsa transcript butonu yine çalışmalı; bu erişilebilirlik zorunludur.
+ *
+ *    İpucu c2 · assetId=audio_sf_003_c2_a3_tarama_kaydi
+ *      dosya=sf_003_c2_a3_tarama_kaydi.mp3 · publicPath=/assets/cases/sf_003/audio/sf_003_c2_a3_tarama_kaydi.mp3 · mime=audio/mpeg
+ *      durum=PLANLI — MP3 dosyası ayrıca eklenecek; transcript şimdiden kullanılabilir.
+ *      player: <audio src="/assets/cases/sf_003/audio/sf_003_c2_a3_tarama_kaydi.mp3"> + "Kayıt Çözümlemesini Göster" (sesMetni)
+ * ------------------------------------------------------------
+ *  specialMechanic: "ses_kaydi"
+ *  Asset dosyasını yeniden adlandırma; assetId, clueId ve publicPath sözleşmedir.
+ * ============================================================ */
+
+{
+  "puzzleId": "sf_003",
+  "stars": "★★★☆☆",
+  "gridSize": "3x3",
+  "timeLimit": 480,
+  "qaRevision": "sf_003_v26_2_sinematik_audio_evidence",
+  "qaChangeLog": [
+    "c2 ses kaydı bürokratik numune sayımı yerine Haruto’nun A-3 Genom Tarama İstasyonundaki kritik gece incelemesine dönüştürüldü.",
+    "Konuşanlar, yer, zaman penceresi ve matris çıkarımı sesin içinde açıklaştırıldı.",
+    "Ses kaydı yalnız Haruto Sato ↔ Genetik Lab eşleşmesini destekler; katil, silah ya da cinayet mekânını ifşa etmez.",
+    "Ses varlığı sözleşmesi yeni dosya adıyla güncellendi."
+  ],
+  "title": "Klonun Suçu",
+  "subtitle": "Genetik Araştırma Merkezi, 2298",
+  "difficulty": "Dedektif",
+  "difficultyLevel": 3,
+  "specialMechanic": "ses_kaydi",
+  "story": "2298’de Genetik Lisans Merkezi’nin gece ışıkları beyaza döndüğünde, ana koridorun güvenlik hatları art arda sustu. Şafaktan hemen önce Lisans Direktörü Haruto Sato çalışma masasının başında ölü bulundu; önündeki açık dosya ise bir insanın yaşamını tek bir idari imzayla askıya alabilecek kadar soğuk ve kesindi. Merkezin en büyük sırrı o anda aynı koridorda karşı karşıya duruyordu: dünyaca ünlü genetikçi Dr. Elena Voronova ve iki yıl önce yetiştirilen kopyası Elena-K. Aynı yüze, ses tonuna ve çocukluk anılarına sahip bu iki kadın birbirlerinin cümlelerini tamamlayabiliyor, ama tesisin koridorlarında bambaşka alışkanlıklar bırakıyordu.\n\nKayıt sistemi gecenin kritik dakikalarından geriye yalnız kırık parçalar bıraktı: soğuk taşıma ekipmanından gelen metalik kalıntılar, uzak bir konferansa bağlı kalan nöral bir imza ve kesilmiş bir masa mikrofonu kaydı. Haruto’nun imzası olmadan bir hayatın silinmesi mümkün değildi; Haruto öldüğünde ise hangi Elena’nın korunmak için harekete geçtiği, hangisinin geçmişini kullanarak yalan söylediği belirsiz kaldı. Bu vaka, katili aynı yüzden değil; o yüzün hangi koridora döndüğünden, hangi kapıyı açtığından ve hangi alışkanlığı tekrar ettiğinden tanımayı gerektiriyor.",
+  "atmosphere": "Steril koridorlar gece modunda mavi değil, ameliyathane beyazı yanıyor. İnkübasyon tanklarının soluk ışığı, cam yüzeylerde iki Elena’yı bir değil iki kez yansıtıyor; havalandırmada antiseptik koku, uzakta ise hiç susmayan servo motorların ince uğultusu var.",
+  "suspects": [
+    {
+      "id": "s1",
+      "name": "Dr. Elena Voronova",
+      "icon": "👩‍⚕️",
+      "description": "Merkezin kurucusu, özgün genetik haritanın sahibi ve klonunun anı aktarımını denetleyen bilim insanı.",
+      "detail": "50 yaşında. Resmî konferanslarını kendi nöral imzasıyla uzaktan yürütür; inkübasyon odasına girdiğinde tüm kayıtları iki kez doğrulayan titiz bir alışkanlığı vardır."
+    },
+    {
+      "id": "s2",
+      "name": "Elena-K",
+      "icon": "🧬",
+      "description": "Elena’nın iki yıl önce üretilen kopyası; geçmişe ait anıları taşısa da kendisine ait bir geleceği olup olmadığını bilmeyen klon.",
+      "detail": "Kronolojik yaşı iki yıldır. Uzun koridorlarda eski hafızasının tersine sağa dönme eğilimi gösterir; soğuk taşıma termosunu kendi numarasıyla damgalar."
+    },
+    {
+      "id": "s3",
+      "name": "Lisans Direktörü Haruto Sato",
+      "icon": "📄",
+      "description": "Klon projesinin devam izinlerini imzalayan, bütçe kesintileriyle merkezi baskılayan idari direktör.",
+      "detail": "55 yaşında. Genetik laboratuvardaki numune sayımlarına bizzat katılır; her girişte metal uçlu lisans kalemini masaya iki kez vurur."
+    }
+  ],
+  "weapons": [
+    {
+      "id": "w1",
+      "name": "Genetik Bozucu Madde",
+      "icon": "☢️",
+      "description": "Hücre dizilimini kimyasal olarak çözen, temas sonrası geri döndürülemez genetik hasar yaratan aşındırıcı madde.",
+      "detail": "Cam tüplerde asidik kabarcık ve koruyucu yüzeyde sarı erime halkası bırakır."
+    },
+    {
+      "id": "w2",
+      "name": "Kriyojenik Sıvı",
+      "icon": "❄️",
+      "description": "Biyolojik dokuyu saniyeler içinde dondurabilen, taşınırken özel termos isteyen yoğun kriyojenik sıvı.",
+      "detail": "Buz kristalleri ve ince metal termal toz üretir; sıradan kaplarda kararlı kalmaz."
+    },
+    {
+      "id": "w3",
+      "name": "Nöral Kesici",
+      "icon": "⚡",
+      "description": "Yakın mesafeden sinaps akışını kesen, kişisel nöral imzayla kalibre edilen kompakt frekans cihazı.",
+      "detail": "Hedefin çevresinde mavi arklı yanık ve kişiye özgü kalibrasyon kaydı bırakır."
+    }
+  ],
+  "locations": [
+    {
+      "id": "l1",
+      "name": "Klon Odası",
+      "icon": "🧫",
+      "description": "İnkübasyon tanklarının ve yaşam çizelgelerinin tutulduğu, sessiz ve izole biyolojik bakım odası.",
+      "detail": "Nöral konferans bağlantısının kaynak konsolu bu odadaki biyometrik masaya bağlanır."
+    },
+    {
+      "id": "l2",
+      "name": "Genetik Lab",
+      "icon": "🧪",
+      "description": "Numune sayımlarının, robot kolların ve genom ekranlarının bulunduğu ana araştırma laboratuvarı.",
+      "detail": "Lisans denetimleri sırasında metal uçlu kalem sesleri kayıt mikrofonlarında belirginleşir."
+    },
+    {
+      "id": "l3",
+      "name": "Lisans Ofisi",
+      "icon": "📑",
+      "description": "İptal kararlarının ve yaşam hakkı dosyalarının kilit altında tutulduğu resmî yönetim odası.",
+      "detail": "Kriyojenik taşıma ekipmanı için masa altındaki damla oluğu, soğuk metal tozunu uzun süre saklar."
+    }
+  ],
+  "clues": [
+    {
+      "id": "c1",
+      "title": "Termal Doku Raporu",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Maktulün dokusunda ani kristalleşme ve taşıma kabına özgü ince metal termal toz saptandı. Aynı soğuk tozuna inkübasyon tanklarının altındaki damla oluklarında rastlanmadı.",
+      "deductionHint": "Ani kristalleşme hangi yöntemi tarif eder; aynı termal tozun bulunmadığı bakım çevrimi, bu yöntemi nereden dışlar?",
+      "isBonus": false,
+      "revealOrder": 1,
+      "isRevealed": true,
+      "pointCost": 0
+    },
+    {
+      "id": "c2",
+      "title": "A-3 İç Hat Kaydı",
+      "type": "ses_kaydi",
+      "mechanicType": "ses_kaydi",
+      "text": "A-3 genom tarama istasyonunun dahili kaydı, cinayet penceresinin başladığı anda kesintisiz alınmış. Kaydın sonunda kabin kilidinin etkinleştiği ve tarama bitmeden kapının açılamayacağı duyuluyor.",
+      "deductionHint": "Kayıtta adı geçen kişi, tarama bitene kadar kilitli kalan hangi çalışma alanındadır?",
+      "isBonus": false,
+      "revealOrder": 2,
+      "isRevealed": false,
+      "pointCost": 50,
+      "sesMetni": "GENETİK LAB — A-3 GENOM TARAMA İSTASYONU\nCİNAYET PENCERESİNİN BAŞLANGICI\n\n[Numune kasetlerini taşıyan robot kolun sesi duyulur. Arka planda derin, düzenli bir tarama uğultusu vardır.]\n\nGECE TEKNİSYENİ: Bay Sato, A-3’ü açtım. Gece yarısından sonra özerklik dosyasındaki erişim etiketi değiştirilmiş.\n\nHARUTO SATO: Benim onayım olmadan mı?\n\nGECE TEKNİSYENİ: Sistem kullanıcıyı gizlemiş. Ama ham dizideki son iki revizyonu geri çağırabiliyoruz.\n\nHARUTO SATO: Çağırın. Yarın kurul, değiştirilmiş bir kayıtla karar vermeyecek.\n\nGECE TEKNİSYENİ: Tarama erişim geçmişiyle birlikte çalışırsa on iki dakika sürer. Kabin de işlem bitene kadar kilitli kalır.\n\nHARUTO SATO: İyi. Sonuç kesinleşmeden kimseyi aramayın.\n\nSİSTEM: A-3 taraması başlatıldı. Kabin kilidi etkin. İçerideki tek yetkili: Lisans Direktörü Haruto Sato.\n\nHARUTO SATO: Başlatın.\n\n[Robot kol hızlanır. Kayıt ani bir parazitle kesilir.]\n\nKAYIT BİTER.",
+      "audioUrl": "/assets/cases/sf_003/audio/sf_003_c2_a3_tarama_kaydi.mp3",
+      "audioAssetId": "audio_sf_003_c2_a3_tarama_kaydi",
+      "audioPlanned": true,
+      "audioFileName": "sf_003_c2_a3_tarama_kaydi.mp3"
+    },
+    {
+      "id": "c3",
+      "title": "Uzak Konferans Kalibrasyonu",
+      "type": "adli",
+      "mechanicType": "text",
+      "text": "Cinayet penceresinde kullanılan sinaps ayarlı cihazın yerel kalibrasyon yuvası boş kaldı. Aynı dakikalarda kurucunun benzersiz zihin imzası, uzak konferans yayınını kesintisiz besliyordu.",
+      "deductionHint": "Uzak yayına kesintisiz bağlı olan zihin imzası, hangi kişiyi yakın sinyal düzeneği rotasından çıkarır?",
+      "isBonus": false,
+      "revealOrder": 3,
+      "isRevealed": false,
+      "pointCost": 50
+    },
+    {
+      "id": "c4",
+      "title": "Kaynak Konsolu İzi",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Konferans yayınını başlatan kaynak konsolu, inkübasyon bakım alanındaki biyometrik masaya bağlandı. Kaynak imza, özgün genom haritasının sahibiyle eşleşiyor.",
+      "deductionHint": "Biyometrik kaynak imzası, hangi kişiyi inkübasyon bakım alanına bağlar?",
+      "isBonus": false,
+      "revealOrder": 4,
+      "isRevealed": false,
+      "pointCost": 50
+    },
+    {
+      "id": "c5",
+      "title": "Koridor Yön Hatası",
+      "type": "eleme",
+      "mechanicType": "text",
+      "text": "Eski yerleşim planının tek yönlü kavşağında, içeri giren ikiz silüet ters koridora döndü. İncelenen dosya yüzeylerinde yakın frekans düzeneklerinin bıraktığı mavi ark izi bulunmadı.",
+      "deductionHint": "Yerleşim planını yeni öğrenen silüet ve mavi ark izinin yokluğu, hangi kişiyi yakın sinyal rotasından çıkarır?",
+      "isBonus": false,
+      "revealOrder": 5,
+      "isRevealed": false,
+      "pointCost": 50
+    },
+    {
+      "id": "c6",
+      "title": "Damgalı Termos",
+      "type": "dogrudan",
+      "mechanicType": "text",
+      "text": "Lisans Ofisinin masa altındaki damla oluğunda, iki yıllık kayıt numarasıyla işaretlenmiş soğuk taşıma termosuna ait metal kapak parçası bulundu.",
+      "deductionHint": "Kronolojik numarası iki yıl önce başlayan taşıma ekipmanı, hangi kişiyi resmî ofise bağlar?",
+      "isBonus": true,
+      "revealOrder": 6,
+      "isRevealed": false,
+      "pointCost": 40
+    },
+    {
+      "id": "c7",
+      "title": "İptal Dosyası",
+      "type": "tanik",
+      "mechanicType": "text",
+      "text": "Haruto’nun imza klasöründe, klonun yaşam lisansını askıya alma taslağı bulundu; dosya cinayet zamanından önce Genetik Labdeki numune sayımına eklenmişti.",
+      "deductionHint": "İptal taslağı ve numune sayımı, hangi direktörü hangi cihaz rotasıyla destekler?",
+      "isBonus": true,
+      "revealOrder": 7,
+      "isRevealed": false,
+      "pointCost": 40
+    }
+  ],
+  "assetManifest": [
+    {
+      "assetId": "audio_sf_003_c2_a3_tarama_kaydi",
+      "kind": "audio",
+      "clueId": "c2",
+      "status": "pending_upload",
+      "fileName": "sf_003_c2_a3_tarama_kaydi.mp3",
+      "publicPath": "/assets/cases/sf_003/audio/sf_003_c2_a3_tarama_kaydi.mp3",
+      "mimeType": "audio/mpeg",
+      "durationTargetSec": 58
+    }
+  ],
+  "solution": {
+    "suspectId": "s2",
+    "weaponId": "w2",
+    "locationId": "l3"
+  },
+  "solutionNarrative": "Elena-K, yaşam lisansının askıya alınacağını öğrenince kriyojenik sıvı taşıyan damgalı termosuyla Lisans Ofisine girdi. Orijinal Elena kaynak konsolunda, Haruto ise Genetik Labdeki sayımdaydı. Klonun yeni yerleşim hatası ve termos parçacığı, dondurucu sıvının ofiste onunla kesiştiğini gösterdi."
+}

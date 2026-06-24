@@ -2420,36 +2420,37 @@
         },
         {
           "puzzleId": "sf_003",
-          "title": "Klonun Suçu",
-          "subtitle": "Genetik Araştırma Merkezi, 2298",
-          "difficulty": 3,
-          "difficultyLabel": "Dedektif",
           "stars": "★★★☆☆",
           "gridSize": "3x3",
           "timeLimit": 480,
-          "story": "Beyazın ve grinin hakim olduğu bir genetik lisanslama merkezinde, kurban edilen bir yöneticinin başında orijinal ile klon birbirini suçluyordu. Aynı genetik koda, aynı yüze ve aynı sese sahip iki kişi, yaşam hakkı için bir ölüm kalım savaşına tutuşmuştu.",
-          "atmosphere": "Steril beyaz duvarlar. Soğutucu gaz sesleri. Aynı yüzden iki farklı yansıma.",
+          "title": "Klonun Suçu",
+          "subtitle": "Genetik Araştırma Merkezi, 2298",
+          "difficulty": 3,
+          "difficultyLevel": 3,
+          "specialMechanic": "ses_kaydi",
+          "story": "2298'de Genetik Lisans Merkezi'nin gece ışıkları beyaza döndüğünde, ana koridorun güvenlik hatları art arda sustu. Şafaktan hemen önce Lisans Direktörü Haruto Sato çalışma masasının başında ölü bulundu; önündeki açık dosya ise bir insanın yaşamını tek bir idari imzayla askıya alabilecek kadar soğuk ve kesindi. Merkezin en büyük sırrı o anda aynı koridorda karşı karşıya duruyordu: dünyaca ünlü genetikçi Dr. Elena Voronova, iki yıl önce üretilen ve tüm anılarını taşıyan kendi kopyasıyla. Kimin geçmişi, kimin geleceği — ve kimin elinde kriyojenik soğutma termosunun kapağı.",
+          "atmosphere": "Steril koridorlar gece modunda mavi değil, ameliyathane beyazı yanıyor. İnkübasyon tanklarının soluk ışığı, cam yüzeylerde iki Elena'yı bir değil iki kez yansıtıyor; havalandırmada antiseptik koku, uzakta ise hiç susmayan servo motorların ince uğultusu var.",
           "suspects": [
             {
               "id": "s1",
-              "name": "Dr. Elena (Orijinal)",
+              "name": "Dr. Elena Voronova",
               "icon": "👩‍⚕️",
-              "description": "Merkezin kurucusu ve beyni. Klonuna tüm anılarını aktarmış, mantıkla hareket eden, her adımını hesaplayan soğukkanlı ve otoriter dahi.",
-              "detail": "50 yaşında, bilimi her şeyin üstünde tutan, asıl bedenin sahibi."
+              "description": "Merkezin kurucusu, özgün genetik haritanın sahibi ve klonunun anı aktarımını denetleyen bilim insanı.",
+              "detail": "50 yaşında. Resmî konferanslarını kendi nöral imzasıyla uzaktan yürütür; inkübasyon odasına girdiğinde tüm kayıtları iki kez doğrulayan titiz bir alışkanlığı vardır."
             },
             {
               "id": "s2",
-              "name": "Elena-K (Klon)",
-              "icon": "🤖",
-              "description": "Tüplerde yaratılalı henüz 2 yıl olmasına rağmen 50 yıllık hatıralara sahip olan, kendi bireyliğini ispat etmek için savaşan ve yok edilme korkusu yaşayan ikiz kopya.",
-              "detail": "Biyolojik 50, kronolojik 2 yıl. Özerklik savaşı veren kırılgan ruh."
+              "name": "Elena-K",
+              "icon": "🧬",
+              "description": "Elena'nın iki yıl önce üretilen kopyası; geçmişe ait anıları taşısa da kendisine ait bir geleceği olup olmadığını bilmeyen klon.",
+              "detail": "Kronolojik yaşı iki yıldır. Uzun koridorlarda eski hafızasının tersine sağa dönme eğilimi gösterir; soğuk taşıma termosunu kendi numarasıyla damgalar."
             },
             {
               "id": "s3",
-              "name": "Lisans Direktörü Haruto",
-              "icon": "👨",
-              "description": "Klon projesinin bütçesini kısmak isteyen ve merkezdeki otonom deneylere savaş açan, elinde iptal yetkileri bulunan acımasız rakip bilim insanı.",
-              "detail": "55 yaşında, laboratuvar koridorlarında sürekli tehditler savuran figür."
+              "name": "Lisans Direktörü Haruto Sato",
+              "icon": "📄",
+              "description": "Klon projesinin devam izinlerini imzalayan, bütçe kesintileriyle merkezi baskılayan idari direktör.",
+              "detail": "55 yaşında. Genetik laboratuvardaki numune sayımlarına bizzat katılır; her girişte metal uçlu lisans kalemini masaya iki kez vurur."
             }
           ],
           "weapons": [
@@ -2457,138 +2458,148 @@
               "id": "w1",
               "name": "Genetik Bozucu Madde",
               "icon": "☢️",
-              "description": "Bedenle temas ettiğinde moleküler yapıyı hedef alıp DNA zincirini saniyeler içinde çökerten, geri dönüşü olmayan agresif genetik kimyasal."
+              "description": "Hücre dizilimini kimyasal olarak çözen, temas sonrası geri döndürülemez genetik hasar yaratan aşındırıcı madde.",
+              "detail": "Cam tüplerde asidik kabarcık ve koruyucu yüzeyde sarı erime halkası bırakır."
             },
             {
               "id": "w2",
               "name": "Kriyojenik Sıvı",
               "icon": "❄️",
-              "description": "Organ nakillerinde kullanılan, ancak bir insanın üzerine boşaltıldığında hücreleri anında dondurarak heykelleştiren ölümcül kriyojenik sıvı."
+              "description": "Biyolojik dokuyu saniyeler içinde dondurabilen, taşınırken özel termos isteyen yoğun kriyojenik sıvı.",
+              "detail": "Buz kristalleri ve ince metal termal toz üretir; sıradan kaplarda kararlı kalmaz."
             },
             {
               "id": "w3",
               "name": "Nöral Kesici",
               "icon": "⚡",
-              "description": "Beyne yönlendirildiğinde tüm sinaps bağlarını anında koparan, acısız ama ani bir kapatma sağlayan dijital nöral frekans cihazı."
+              "description": "Yakın mesafeden sinaps akışını kesen, kişisel nöral imzayla kalibre edilen kompakt frekans cihazı.",
+              "detail": "Hedefin çevresinde mavi arklı yanık ve kişiye özgü kalibrasyon kaydı bırakır."
             }
           ],
           "locations": [
             {
               "id": "l1",
               "name": "Klon Odası",
-              "icon": "🧬",
-              "description": "Klonların yaşamsal değerlerinin izlendiği, devasa sıvı dolu tüplerin ve uyku kapsüllerinin sıralandığı, ağır bir sessizliğin olduğu özel inkübasyon odası."
+              "icon": "🧫",
+              "description": "İnkübasyon tanklarının ve yaşam çizelgelerinin tutulduğu, sessiz ve izole biyolojik bakım odası.",
+              "detail": "Nöral konferans bağlantısının kaynak konsolu bu odadaki biyometrik masaya bağlanır."
             },
             {
               "id": "l2",
               "name": "Genetik Lab",
-              "icon": "🖥️",
-              "description": "Mikroskopların, DNA dizilim ekranlarının ve karmaşık robotik kolların bulunduğu, gün boyu kalabalık olan aydınlık ana araştırma laboratuvarı."
+              "icon": "🧪",
+              "description": "Numune sayımlarının, robot kolların ve genom ekranlarının bulunduğu ana araştırma laboratuvarı.",
+              "detail": "Lisans denetimleri sırasında metal uçlu kalem sesleri kayıt mikrofonlarında belirginleşir."
             },
             {
               "id": "l3",
               "name": "Lisans Ofisi",
-              "icon": "📄",
-              "description": "Sadece resmi izinle girilebilen, kurbanın masasında ölüm kararlarının ve iptal dosyalarının yığılı olduğu resmi ve klimalı idari lisans ofisi."
+              "icon": "📋",
+              "description": "İptal kararlarının ve yaşam hakkı dosyalarının kilit altında tutulduğu resmî yönetim odası.",
+              "detail": "Kriyojenik taşıma ekipmanı için masa altındaki damla oluğu, soğuk metal tozunu uzun süre saklar."
             }
           ],
           "clues": [
             {
               "id": "c1",
+              "title": "Termal Doku Raporu",
               "type": "kanit",
+              "mechanicType": "text",
+              "text": "Maktulün dokusunda ani kristalleşme ve taşıma kabına özgü ince metal termal toz saptandı. Aynı soğuk tozuna inkübasyon tanklarının altındaki damla oluklarında rastlanmadı.",
+              "deductionHint": "Ani kristalleşme hangi yöntemi tarif eder; aynı termal tozun bulunmadığı bakım çevrimi, bu yöntemi nereden dışlar?",
+              "isBonus": false,
               "revealOrder": 1,
               "isRevealed": true,
-              "pointCost": 0,
-              "title": "Ölüm Tespit Raporu",
-              "text": "Maktulün bedeni, masa başındayken tüm hücreleri donmuş, beyaz bir buz heykeline dönüşmüştü. Ciltte hiçbir asit erimesi veya nöral cihaz yanığı yoktu.",
-              "mechanicType": "text",
-              "deductionHint": "Ölüm silahı, kurbanı anında donduran kriyojenik bir sıvıydı."
+              "pointCost": 0
             },
             {
               "id": "c2",
-              "type": "adli",
+              "title": "A-3 İç Hat Kaydı",
+              "type": "ses_kaydi",
+              "mechanicType": "ses_kaydi",
+              "text": "A-3 genom tarama istasyonunun dahili kaydı, cinayet penceresinin başladığı anda kesintisiz alınmış. Kaydın sonunda kabin kilidinin etkinleştiği ve tarama bitmeden kapının açılamayacağı duyuluyor.",
+              "deductionHint": "Kayıtta adı geçen kişi, tarama bitene kadar kilitli kalan hangi çalışma alanındadır?",
+              "isBonus": false,
               "revealOrder": 2,
               "isRevealed": false,
-              "pointCost": 70,
-              "title": "Olay Yeri Tespiti",
-              "text": "Kırık termos parçaları ve kurbanın donmuş bedeni, mücadelenin laboratuvar tüpleri arasında değil, maktulün yetki dosyalarıyla dolu o resmi idari ofisinde yaşandığını gösteriyordu.",
-              "mechanicType": "text",
-              "deductionHint": "Mekan, kurbanın kilitli Lisans Ofisi."
+              "pointCost": 50,
+              "sesMetni": "GENETİK LAB — A-3 GENOM TARAMA İSTASYONU\nCİNAYET PENCERESİNİN BAŞLANGICI\n\n[Numune kasetlerini taşıyan robot kolun sesi duyulur. Arka planda derin, düzenli bir tarama uğultusu vardır.]\n\nGECE TEKNİSYENİ: Bay Sato, A-3'ü açtım. Gece yarısından sonra özerklik dosyasındaki erişim etiketi değiştirilmiş.\n\nHARUTO SATO: Benim onayım olmadan mı?\n\nGECE TEKNİSYENİ: Sistem kullanıcıyı gizlemiş. Ama ham dizideki son iki revizyonu görüyorum — imza tutarsızlığı var.\n\nHARUTO SATO: Kapatın sistemi. Hiçbir şeyi taşımadan önce ben kontrol ederim.\n\n[Tarama ünitesinin kapak kilidi etkinleşiyor. Kabin mühürleniyor.]\n\nSISTEM SESİ: A-3 tarama süreci aktif. Kabin kilitli — prosedür tamamlanana dek giriş-çıkış devre dışı.\n\n[Kayıt burada kesiliyor.]",
+              "audioUrl": "/assets/cases/sf_003/audio/sf_003_c2_a3_tarama_kaydi.mp3",
+              "audioAssetId": "audio_sf_003_c2_a3_tarama_kaydi",
+              "audioPlanned": false,
+              "audioFileName": "sf_003_c2_a3_tarama_kaydi.mp3"
             },
             {
               "id": "c3",
-              "type": "tanik",
+              "title": "Uzak Konferans Kalibrasyonu",
+              "type": "adli",
+              "mechanicType": "text",
+              "text": "Cinayet penceresinde kullanılan sinaps ayarlı cihazın yerel kalibrasyon yuvası boş kaldı. Aynı dakikalarda kurucunun benzersiz zihin imzası, uzak konferans yayınını kesintisiz besliyordu.",
+              "deductionHint": "Uzak yayına kesintisiz bağlı olan zihin imzası, hangi kişiyi yakın sinyal düzeneği rotasından çıkarır?",
+              "isBonus": false,
               "revealOrder": 3,
               "isRevealed": false,
-              "pointCost": 70,
-              "title": "Orijinal Elena'nın Alibisi",
-              "text": "Orijinal Dr. Elena'nın, cinayet saatinde gezegenin diğer ucundaki devasa bir konferansta 3000 izleyiciye kesintisiz holografik sunum yaptığı binlerce log kaydıyla ispatlandı.",
-              "mechanicType": "tanik_yuzlesme",
-              "yuzlesmeDialogu": [
-                {
-                  "soru": "Hangisi girdi?",
-                  "cevap": "Elena-K. Klon henüz ofis yerleşimini tam öğrenmemiş.",
-                  "yalan": false
-                },
-                {
-                  "soru": "Çıkışta ne yaptı?",
-                  "cevap": "Hızla çıktı. Elinde küçük termos vardı.",
-                  "yalan": false
-                }
-              ],
-              "deductionHint": "Orijinal Elena'nın kusursuz bir alibisi var, geriye sadece klon kaldı."
+              "pointCost": 50
             },
             {
               "id": "c4",
-              "type": "sifreli",
+              "title": "Kaynak Konsolu İzi",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Konferans yayınını başlatan kaynak konsolu, inkübasyon bakım alanındaki biyometrik masaya bağlandı. Kaynak imza, özgün genom haritasının sahibiyle eşleşiyor.",
+              "deductionHint": "Biyometrik kaynak imzası, hangi kişiyi inkübasyon bakım alanına bağlar?",
+              "isBonus": false,
               "revealOrder": 4,
               "isRevealed": false,
-              "pointCost": 70,
-              "title": "Güvenlik Robotu Logları",
-              "text": "Görüntü sensörleri, içeri giren 'Elena'nın ofis koridorunda hep sağa saptığını kaydetti; oysa orijinal Elena binayı kendi tasarladığı için her zaman sola sapardı. Bu silüet, binayı tam tanımıyordu.",
-              "mechanicType": "sifreli_mesaj",
-              "sifre": {
-                "sifrelenmis": "Orijinal önce gelir, kopya sonra. Klon'un yaratılış yılı 2296, şu an 2298. Yaşını girin.",
-                "sifreleTuru": "mantik",
-                "cozumIpucu": "Kronolojik olarak kaç yıldır hayatta?",
-                "cozulmus": "2",
-                "aciklama": "Panel açıldığında Klon'un kaçış planları ve cinayet itirafı ekrana düştü."
-              },
-              "deductionHint": "Mekanı tanımayan kişi, yeni uyanmış olan Klon'du."
+              "pointCost": 50
             },
             {
               "id": "c5",
+              "title": "Koridor Yön Hatası",
               "type": "eleme",
+              "mechanicType": "text",
+              "text": "Eski yerleşim planının tek yönlü kavşağında, içeri giren ikiz silüet ters koridora döndü. İncelenen dosya yüzeylerinde yakın frekans düzeneklerinin bıraktığı mavi ark izi bulunmadı.",
+              "deductionHint": "Yerleşim planını yeni öğrenen silüet ve mavi ark izinin yokluğu, hangi kişiyi yakın sinyal rotasından çıkarır?",
+              "isBonus": false,
               "revealOrder": 5,
               "isRevealed": false,
-              "pointCost": 70,
-              "title": "Mantık Bulmacası",
-              "text": "Klonun kaçış rotasını kilitleyen güvenlik paneli, basit bir kronolojik mantık dizilimi istiyordu.",
-              "mechanicType": "text",
-              "deductionHint": "Klon, 2 yıllık öfkesiyle bu paneli hazırlamıştı."
+              "pointCost": 50
             },
             {
               "id": "c6",
-              "type": "parmak_izi",
+              "title": "Damgalı Termos",
+              "type": "dogrudan",
+              "mechanicType": "text",
+              "text": "Lisans Ofisinin masa altındaki damla oluğunda, iki yıllık kayıt numarasıyla işaretlenmiş soğuk taşıma termosuna ait metal kapak parçası bulundu.",
+              "deductionHint": "Kronolojik numarası iki yıl önce başlayan taşıma ekipmanı, hangi kişiyi resmî ofise bağlar?",
+              "isBonus": true,
               "revealOrder": 6,
               "isRevealed": false,
-              "pointCost": 70,
-              "title": "Termos İzi Analizi",
-              "text": "Dondurucu sıvıyı taşıyan termosun kapağında bırakılan genetik izin hücresel yaş analizi, bu derinin 50 yıllık bir yaşanmışlığa değil, laboratuvardan yeni çıkmış 2 yıllık taze bir dokuya ait olduğunu mühürledi.",
-              "mechanicType": "parmak_izi",
-              "parmakIziVerisi": {
-                "aciklama": "Elena ve Elena-K izlerini karşılaştır — farklı yaş izleri.",
-                "izler": [
-                  {
-                    "izId": "iz1",
-                    "konum": "Termos kapağı",
-                    "eslesme": "s2",
-                    "ipucu": "İz taze — 2 yıllık hayat bırakıyor farklı doku sertliği."
-                  }
-                ],
-                "sonuc": "Termosu tutan: Elena-K (Klon). (s2)"
-              },
-              "deductionHint": "Derinin hücresel yaşı, cinayeti orijinalin değil klonun işlediğini tıbben kanıtladı."
+              "pointCost": 40
+            },
+            {
+              "id": "c7",
+              "title": "İptal Dosyası",
+              "type": "tanik",
+              "mechanicType": "text",
+              "text": "Haruto'nun imza klasöründe, klonun yaşam lisansını askıya alma taslağı bulundu; dosya cinayet zamanından önce Genetik Labdeki numune sayımına eklenmişti.",
+              "deductionHint": "İptal taslağı ve numune sayımı, hangi direktörü hangi cihaz rotasıyla destekler?",
+              "isBonus": true,
+              "revealOrder": 7,
+              "isRevealed": false,
+              "pointCost": 40
+            }
+          ],
+          "assetManifest": [
+            {
+              "assetId": "audio_sf_003_c2_a3_tarama_kaydi",
+              "kind": "audio",
+              "clueId": "c2",
+              "status": "delivered",
+              "fileName": "sf_003_c2_a3_tarama_kaydi.mp3",
+              "publicPath": "/assets/cases/sf_003/audio/sf_003_c2_a3_tarama_kaydi.mp3",
+              "mimeType": "audio/mpeg",
+              "durationTargetSec": 58
             }
           ],
           "solution": {
@@ -2596,8 +2607,7 @@
             "weaponId": "w2",
             "locationId": "l3"
           },
-          "solutionNarrative": "Elena-K (Klon), lisans direktörünün kendi varlığına son vereceğini ve uyutulacağını öğrenince hayatta kalma içgüdüsüyle harekete geçti. Kriyojenik sıvı dolu termosla ofise girdi ve bürokratı dondurarak öldürdü. Ancak hücresel yaşı ve mantık hataları kopyanın kimliğini ele verdi.",
-          "specialMechanic": "parmak_izi_sifreli"
+          "solutionNarrative": "Elena-K, yaşam lisansının askıya alınacağını öğrenince kriyojenik sıvı taşıyan damgalı termosuyla Lisans Ofisine girdi. Orijinal Elena kaynak konsolunda, Haruto ise Genetik Labdeki sayımdaydı. Klonun yeni yerleşim hatası ve termos parçacığı, dondurucu sıvının ofiste onunla kesiştiğini gösterdi."
         },
         {
           "puzzleId": "sf_004",
