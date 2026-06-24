@@ -1,0 +1,244 @@
+{
+  "puzzleId": "sf_005",
+  "stars": "★★★★★",
+  "gridSize": "4x4",
+  "timeLimit": 360,
+  "title": "Zaman Tünelinin Sırrı",
+  "subtitle": "Kronos Araştırma Üssü, 2387",
+  "difficulty": "Efsane Komiser",
+  "difficultyLevel": 5,
+  "specialMechanic": "profil_sentezi",
+  "story": "2387’de Kronos Araştırma Üssü, insanlığın ilk geri dönüş garantili zaman geçişini test etmek üzereydi. Test gecesi, üssün bütün saatleri aynı ana senkronlandı: 02.17. Baş bilim insanı geçiş halkasının önüne geldiğinde kontrol ekranları bir anlığına kendi kendini üç kez yeniledi; ardından tünelin içinden onun sesi duyuldu, fakat ses sahibinden iki saniye önce konuşmuştu. Bilim insanı halkaya adım attı ve görüntüsü beyaz ışığın içinde kayboldu. Dakikalar sonra güvenlik alarmı ikinci kez çaldı: aynı kişinin daha genç görünen bedeni, tesisin başka bir noktasında bulundu. Biri tünele girmişti; diğeri ise hiç çıkamayacak kadar sessizdi.\n\nKronos’un kayıtları gerçeği tek bir sıraya koymayı reddediyor. Bazı kameralar geleceği önce gösteriyor, bazı aynalar geçen saatten kalan hareketleri tekrar ediyor, kapı sensörleri ise bir kişinin aynı anda iki yönde yürüdüğünü yazıyordu. Kronolojist Dr. Noa Fischer bunu 'yansıma taşması' diye açıklıyor; mühendis Yuki Tanaka faz dengeleyicilerinin kusursuz çalıştığını söylüyor. Güvenlik Şefi Marcus Webb bütün geçişleri askeri karantinaya aldı. K-Prime ise yalnız cam yüzeylerde beliriyor ve baş bilim insanının gelecekteki kararlarının bu geceyi çoktan değiştirdiğini fısıldıyor.\n\nÜssün içindeki herkes, zamanın kırıldığını kabul ediyor; hiçbiri ilk çatlağı kimin açtığını söylemiyor. Görevin, aynı yüzün farklı yaşlarda bıraktığı gölgeleri ayırmak değil; hangi izlerin gerçekten bu ana, hangilerinin geçmişten sarkan bir yansımaya ait olduğunu bulmak. Çünkü Kronos’ta en güvenilir tanık bir kamera değil: üzerinde fiziksel ağırlık kalan küçük bir alışkanlık.",
+  "atmosphere": "Kronos’ta sessizlik hiçbir zaman tam değildir. Manyetik halkaların içinden düşük bir uğultu gelir; tavandaki uyarı ışıkları gecikmeli yanıp söner, aynalı panellerdeki yansımalar ise bir nefes geriden hareket eder. Cam zeminin altında mavi elektrik akarken metal duvarlara dokunan herkes kendi sesini iki kez duyar: biri şimdi, biri sanki birkaç dakika sonra. Üssün havasında ozon, soğuk metal ve kapanmış bir fırtınanın kokusu vardır.",
+  "suspects": [
+    {
+      "id": "s1",
+      "name": "Kronolojist Dr. Noa Fischer",
+      "icon": "⏳",
+      "description": "Zaman fiziğinin güvenlik sınırlarını yazan, olaylara müdahale etmese de her olasılığı kaydettiğini söyleyen kronolojist.",
+      "detail": "55 yaşında. Üç kadranlı mekanik kronometresini hep sol cebinde taşır; karar notlarını ters yönde başlayan kısa cümlelerle yazar ve kontrol ekranlarını üç kez kontrol eder."
+    },
+    {
+      "id": "s2",
+      "name": "Mühendis Yuki Tanaka",
+      "icon": "⚡",
+      "description": "Tünelin donanımını ve faz dengeleyicilerini kuran, cihazların insanlardan daha güvenilir olduğuna inanan mühendis.",
+      "detail": "38 yaşında. Ellerindeki titremeyi lehim işiyle saklar; geçmiş yansıma projektörünün sol panelini her bakımda kendi kırmızı izolasyon bandıyla işaretler."
+    },
+    {
+      "id": "s3",
+      "name": "Güvenlik Şefi Marcus Webb",
+      "icon": "🛡️",
+      "description": "Projenin tehlikesi yüzünden hükümet adına kapatılmasını isteyen, erişim kapılarını ve acil hücreleri denetleyen eski asker.",
+      "detail": "50 yaşında. Kapı kilitlerinde askeri bypass anahtarı kullanır; süresiz karantina emri yazarken sesini kaydetmeyi asla sevmez."
+    },
+    {
+      "id": "s4",
+      "name": "K-Prime",
+      "icon": "🪞",
+      "description": "Maktulün ileri zaman çizgisinden geldiği iddia edilen, patent dosyalarını kendi çıkarı için izleyen gelecekteki yansıma.",
+      "detail": "Yaşını söylemez. İzole hücrelerin kapılarında kullanılan ışık kırıcı jel izlerini tanır; yüz yüze konuşmak yerine yansımaların arasından mesaj bırakır."
+    }
+  ],
+  "weapons": [
+    {
+      "id": "w1",
+      "name": "Zaman Döngüsü Tuzağı",
+      "icon": "⏱️",
+      "description": "Hedefi kapalı bir zaman çevrimine sıkıştırarak hücresel ritmini parçalayan parametre sabotajı.",
+      "detail": "Kontrol ekranlarında aynı saniyenin üç kez yinelenmesine ve üçlü zaman damgasına yol açar."
+    },
+    {
+      "id": "w2",
+      "name": "Tachyon Kesiti",
+      "icon": "⚡",
+      "description": "Kısa menzilde uzay-zaman dokusunu yararak hedefte ince enerji kesileri oluşturan yoğun parçacık darbesi.",
+      "detail": "Koruyucu camda mor doğrusal saçaklar ve havada ozon kokusu bırakır."
+    },
+    {
+      "id": "w3",
+      "name": "Paradoks Bombası",
+      "icon": "💥",
+      "description": "Nedensellik katmanlarını anlık olarak çökerten, fiziksel şok izini yalıtılmış alanda bırakan deneysel patlayıcı.",
+      "detail": "İzole duvarlarda ters yönlü çatlak ağı ve siyah zaman tozu oluşturur."
+    },
+    {
+      "id": "w4",
+      "name": "Gelecekten Gelen Zehir",
+      "icon": "☠️",
+      "description": "Bugünün moleküler kayıtlarında bulunmayan, sıvıya karıştığında vücudu içeriden durduran ileri zaman farmakolojik ajanı.",
+      "detail": "Moleküler imzası tanımsızdır; doğru kullanım, kurbanın geçiş ritmini ve yansıma programını bilmeyi gerektirir."
+    }
+  ],
+  "locations": [
+    {
+      "id": "l1",
+      "name": "Zaman Tüneli",
+      "icon": "🌀",
+      "description": "Manyetik halkaların çevrelediği, geçiş koordinatlarının yüklendiği ana zaman geçidi.",
+      "detail": "Enerji alanının altındaki hava kanalı, dışarıdan getirilen sıvı için stabil bir taşıma yolu sağlamaz."
+    },
+    {
+      "id": "l2",
+      "name": "Kontrol Odası",
+      "icon": "🖥️",
+      "description": "Geçişin rota, faz ve geri dönüş parametrelerinin izlendiği yoğun ekranlı merkez.",
+      "detail": "Üçlü zaman damgaları ve mekanik kronometre ritimleri bu odadaki karar masasına kaydedilir."
+    },
+    {
+      "id": "l3",
+      "name": "Geçmiş Yansıma Odası",
+      "icon": "🪞",
+      "description": "Önceki zaman kesitlerini aynalar ve projektörlerle yeniden oynatan karanlık simülasyon odası.",
+      "detail": "Sol projektör paneli, bakım sonrası kırmızı izolasyon bandıyla işaretlenir; odanın cam zemini sıvı damlalarını saklar."
+    },
+    {
+      "id": "l4",
+      "name": "İzole Hücre",
+      "icon": "🔒",
+      "description": "Paradoks travması yaşayan personelin tutulduğu, yalıtımlı duvarlı ve kapalı karantina bölümü.",
+      "detail": "Işık kırıcı jel, hücre kapılarının eşiklerinde ince parlak bir film bırakır."
+    }
+  ],
+  "clues": [
+    {
+      "id": "c1",
+      "title": "Moleküler Çökelti",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Maktulün kanında güncel kataloglarda karşılığı olmayan bir sıvı atomik imza saptandı; doku içeriden durma belirtisi gösteriyordu. Ana halkaların altındaki hava kanalında ise aynı sıvıya ait damla ya da birikinti yoktu.",
+      "deductionHint": "Tanımsız sıvı imzası hangi yöntemi gösterir; geçit kanalında damla yoksa bu yöntem hangi rota ile eşleşemez?",
+      "isBonus": false,
+      "revealOrder": 1,
+      "isRevealed": true,
+      "pointCost": 0
+    },
+    {
+      "id": "c2",
+      "title": "Kırık Ayna: Üç Gerçek, Bir Gölge",
+      "type": "profil_sentezi",
+      "mechanicType": "profil_sentezi",
+      "text": "Karar masası çevresinde dört kayıt kırıntısı toplandı. Üçü yüzeye gerçekten dokunmuş; biri gecikmeli görüntü katmanında asılı kalıyor.",
+      "deductionHint": "Fiziksel iz bırakan üç kırıntıyı ayır. Bu üç alışkanlık aynı şüpheli kartında birlikte görülüyor mu?",
+      "isBonus": false,
+      "revealOrder": 2,
+      "isRevealed": false,
+      "pointCost": 50,
+      "profilSenteziVerisi": {
+        "baslik": "Kırık Ayna: Üç Gerçek, Bir Gölge",
+        "aciklama": "Dört kırıntıdan yalnız üçü bu ana ait fiziksel iz taşıyor. Camda yalnız ışık olarak beliren kartı dışarıda bırak; geriye kalan üç alışkanlığın aynı şüpheli kartında birleştiği kişiyi seç.",
+        "delilKartlari": [
+          {
+            "id": "sol_cep_dislisi",
+            "baslik": "Fiziksel İz 01 — Sol Cep Dişlisi",
+            "metin": "Parametre kolunun yanında, sol cepten çıkarılmış küçük bir mekanik kronometrenin üç halkalı dişine uyan yağlı yarım ay aşınması var. İz, cam zeminde baskıyla oturmuş."
+          },
+          {
+            "id": "ters_satir",
+            "baslik": "Fiziksel İz 02 — Ters Başlayan Satır",
+            "metin": "Karar notunun ilk kelimeleri sağdan sola yazılmış, satırın ortasında normal akışa dönmüş. Mürekkep, masadaki anlık mühürle aynı anda kurumuş."
+          },
+          {
+            "id": "uclu_kontrol",
+            "baslik": "Fiziksel İz 03 — Üçlü Kontrol",
+            "metin": "Aynı faz değeri tek tek üç kez onaylanmış. Anahtarın yanında üç paralel tıklama izi ve üç ayrı mekanik mühür bulunuyor."
+          },
+          {
+            "id": "kirmizi_golge",
+            "baslik": "Görüntü Gölgesi — Kırmızı Bant",
+            "metin": "Sol panelin karşısında kırmızı bir izolasyon bandı beliriyor; fakat camda yapışkan, lif, ısı ya da temas izi yok. Görüntü her döngüde yarım saniye gecikiyor."
+          }
+        ],
+        "optionSuspectIds": [
+          "s1",
+          "s2",
+          "s3",
+          "s4"
+        ],
+        "answerSuspectId": "s1",
+        "answerProfileSignals": [
+          "üç kadranlı mekanik kronometre",
+          "ters yönde başlayan kısa cümleler",
+          "üç kez kontrol eder"
+        ],
+        "successText": "Üç fiziksel alışkanlık tek profilde birleşti; kırmızı bant bu ana ait değildi.",
+        "failureText": "Bu profil üç fiziksel izi aynı anda açıklamıyor. Temas izi bırakmayan kırmızı görüntüyü dışarıda bırak.",
+        "presentation": {
+          "mode": "mirror_trace_triage",
+          "objective": "Üç fiziksel izi aynı kişide birleştir; temas bırakmayan görüntüyü dışarıda bırak.",
+          "selectionRule": "three_real_one_echo",
+          "echoCardId": "kirmizi_golge",
+          "fallbackMode": "suspect_selection",
+          "playerPrompt": "Üç gerçek izi birlikte açıklayan şüpheliyi seç."
+        }
+      }
+    },
+    {
+      "id": "c3",
+      "title": "Eşik Jel Sürütüsü",
+      "type": "adli",
+      "mechanicType": "text",
+      "text": "Kapalı karantina kapısının eşiğinden alınan sürüntüde, güncel kataloglarda karşılığı olmayan sıvıya ait hiçbir iz bulunmadı. Eşik yalnız ışığı kıran parlak bir jel filmi taşıyordu.",
+      "deductionHint": "Tanımsız sıvı kapı eşiğinde yoksa, hangi kimyasal yöntem bu kapalı rotayla eşleşemez?",
+      "isBonus": false,
+      "revealOrder": 3,
+      "isRevealed": false,
+      "pointCost": 50
+    },
+    {
+      "id": "c4",
+      "title": "Üçlü Faz Damgası",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Ayar ekranındaki üçlü faz damga dizisi, kapalı çevrim modelini yeniden başlatan eski bir test aparatının çalıştırıldığını gösteriyor. Aparatın kalibrasyon imzası yalnız kronoloji güvenlik notlarıyla uyumlu.",
+      "deductionHint": "Üçlü faz damgası ve kalibrasyon notu, hangi kişiyi kapalı çevrim rotasına bağlar?",
+      "isBonus": false,
+      "revealOrder": 4,
+      "isRevealed": false,
+      "pointCost": 50
+    },
+    {
+      "id": "c5",
+      "title": "Sol Panel Bakımı",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Cam yüzeyli simülasyon projektörünün sol panelinde, titrek lehim çizgilerini sabitlemek için çekilmiş kırmızı izolasyon bandı bulundu. Panelin bakım çizelgesindeki mühendis işareti, aynı bantla kapatılmış.",
+      "deductionHint": "Kırmızı izolasyon bandı ve lehim çizgileri, hangi teknik profili cam yüzeyli simülasyon rotasına bağlar?",
+      "isBonus": false,
+      "revealOrder": 5,
+      "isRevealed": false,
+      "pointCost": 50
+    },
+    {
+      "id": "c6",
+      "title": "Bypass Anahtarı",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Bir kapı kilidinin bakım geçmişinde, askeri bypass anahtarıyla açılmış acil geçiş kaydı bulundu. Aynı rota, ana halkaların güvenlik çevresinden geçiyor.",
+      "deductionHint": "Askerî bypass anahtarı, hangi güvenlik profilini ana geçit rotasına bağlar?",
+      "isBonus": true,
+      "revealOrder": 6,
+      "isRevealed": false,
+      "pointCost": 40
+    },
+    {
+      "id": "c7",
+      "title": "Işık Kırıcı Jel",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Karantina kapısındaki ince parlak film, yansımalardan mesaj bırakan birinin tanıdığı ışık kırıcı jelle aynı kimyasal karakteri taşıyor.",
+      "deductionHint": "Işık kırıcı jel, hangi gelecek yansımasını kapalı bölümdeki paradoks düzeneğine bağlar?",
+      "isBonus": true,
+      "revealOrder": 7,
+      "isRevealed": false,
+      "pointCost": 40
+    }
+  ],
+  "assetManifest": [],
+  "solution": {
+    "suspectId": "s2",
+    "weaponId": "w4",
+    "locationId": "l3"
+  },
+  "solutionNarrative": "Yuki Tanaka, gelecekte kendi varlığının silineceğini ima eden sistem kaydını gördükten sonra yansıma projektörünün bakım erişimini kullandı. Gelecekten gelen sıvıyı geçmiş kesitin oynatıldığı odaya bırakarak baş bilim insanının geçmiş bedenini zehirledi. Noa kontrol çevriminde, Marcus ana geçit güvenliğinde, K-Prime ise izolasyon bölümündeki başka bir tehditle eşleşti; ölümcül sıvı yalnız Yuki’nin işaretlediği aynalı rotada kaldı."
+}
