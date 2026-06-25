@@ -244,6 +244,78 @@ function PremiumInfoModal({
   );
 }
 
+function TabButton3D({
+  label, icon, active, count, onPress, activeColor,
+}: {
+  label: string; icon: MaterialIconName; active: boolean; count?: number;
+  onPress: () => void; activeColor: string;
+}) {
+  const colors = useColors();
+  const scale = useSharedValue(1);
+  const animStyle = useAnimatedStyle(() => ({ transform: [{ scale: scale.value }] }));
+  return (
+    <Animated.View style={[{ flex: 1 }, animStyle]}>
+      <Pressable
+        onPressIn={() => { scale.value = withSpring(0.93, { damping: 12, stiffness: 320 }); }}
+        onPressOut={() => { scale.value = withSpring(1, { damping: 10, stiffness: 280 }); }}
+        onPress={onPress}
+        style={[
+          listStyles.tabBtn3d,
+          active
+            ? { backgroundColor: `${activeColor}1E`, borderColor: activeColor, borderBottomColor: `${activeColor}CC`, borderBottomWidth: 3, shadowColor: activeColor, shadowOpacity: 0.5, shadowRadius: 10, shadowOffset: { width: 0, height: 4 }, elevation: 8 }
+            : { backgroundColor: colors.card, borderColor: colors.border },
+        ]}
+      >
+        <MaterialIcons name={icon} size={15} color={active ? activeColor : colors.mutedForeground} />
+        <Text style={[listStyles.tabBtnText3d, { color: active ? activeColor : colors.mutedForeground }]}>
+          {label}
+        </Text>
+        {count !== undefined && count > 0 && (
+          <View style={[listStyles.tabCount3d, { backgroundColor: active ? `${activeColor}33` : `${colors.mutedForeground}22` }]}>
+            <Text style={[listStyles.tabCountText3d, { color: active ? activeColor : colors.mutedForeground }]}>{count}</Text>
+          </View>
+        )}
+      </Pressable>
+    </Animated.View>
+  );
+}
+
+function FilterPill3D({
+  label, icon, isSelected, onPress, color, count,
+}: {
+  label: string; icon: MaterialIconName; isSelected: boolean;
+  onPress: () => void; color: string; count?: number;
+}) {
+  const colors = useColors();
+  const scale = useSharedValue(1);
+  const animStyle = useAnimatedStyle(() => ({ transform: [{ scale: scale.value }] }));
+  return (
+    <Animated.View style={[{ flex: 1 }, animStyle]}>
+      <Pressable
+        onPressIn={() => { scale.value = withSpring(0.88, { damping: 10, stiffness: 320 }); }}
+        onPressOut={() => { scale.value = withSpring(1, { damping: 10, stiffness: 280 }); }}
+        onPress={onPress}
+        style={[
+          listStyles.filterPill3d,
+          isSelected
+            ? { backgroundColor: `${color}22`, borderColor: color, borderBottomColor: `${color}BB`, borderBottomWidth: 3, shadowColor: color, shadowOpacity: 0.4, shadowRadius: 8, shadowOffset: { width: 0, height: 3 }, elevation: 6 }
+            : { backgroundColor: colors.card, borderColor: colors.border, borderBottomWidth: 1 },
+        ]}
+      >
+        <MaterialIcons name={icon} size={13} color={isSelected ? color : colors.mutedForeground} />
+        <Text style={[listStyles.filterPillText3d, { color: isSelected ? color : colors.mutedForeground }]}>
+          {label}
+        </Text>
+        {count !== undefined && count > 0 && (
+          <View style={[listStyles.filterPillCount3d, { backgroundColor: isSelected ? `${color}33` : `${colors.mutedForeground}18` }]}>
+            <Text style={[listStyles.filterPillCountText3d, { color: isSelected ? color : colors.mutedForeground }]}>{count}</Text>
+          </View>
+        )}
+      </Pressable>
+    </Animated.View>
+  );
+}
+
 const DIFFICULTY_ORDER: Difficulty[] = ["caylak", "dedektif", "baskomiser"];
 
 function DifficultySubGroups({
@@ -485,8 +557,10 @@ export default function VakalarScreen() {
   const [showSheet, setShowSheet] = useState(false);
   const [showScoreInfo, setShowScoreInfo] = useState(false);
   const [showExitConfirm, setShowExitConfirm] = useState(false);
-  const [listTab, setListTab] = useState<"vakalar" | "paketler">("vakalar");
-  const [diffFilter, setDiffFilter] = useState<Difficulty | "all">("all");
+  const [listTab, setListTab] = useState<"vakalar" | "premium">("vakalar");
+  const [diffFilter, setDiffFilter] = useState<Difficulty | "all" | "tamamlananlar">("all");
+  const [premiumSubTab, setPremiumSubTab] = useState<"vakalar" | "paketler">("vakalar");
+  const [premiumVakalarExpanded, setPremiumVakalarExpanded] = useState(false);
 
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const resultTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -771,12 +845,9 @@ export default function VakalarScreen() {
 
     const premiumPuzzleIdSet = new Set(premiumPuzzles.map((p) => p.id));
     const availableActive = [...activeFree, ...(isPremium ? activePremium : [])];
-    const filteredActive = diffFilter === "all"
+    const filteredActive = (diffFilter === "all" || diffFilter === "tamamlananlar")
       ? availableActive
-      : availableActive.filter((p) => p.difficulty === diffFilter);
-    const filteredCompleted = diffFilter === "all"
-      ? completedPuzzles
-      : completedPuzzles.filter((p) => p.difficulty === diffFilter);
+      : availableActive.filter((p) => p.difficulty === (diffFilter as Difficulty));
     const totalActiveCount = availableActive.length;
 
     return (
@@ -790,48 +861,130 @@ export default function VakalarScreen() {
         />
         <View style={[gameStyles.container, { backgroundColor: colors.background, paddingTop: Platform.OS === "web" ? 67 : insets.top }]}>
 
-          {/* ── Top Tab Bar: Vakalar | Paketler ── */}
-          <View style={[listStyles.tabBar, { paddingTop: 12, backgroundColor: colors.background, borderBottomColor: colors.border }]}>
+          {/* ── Page Header ── */}
+          <View style={[listStyles.pageHeader, { paddingHorizontal: 16, paddingTop: 14, paddingBottom: 6 }]}>
+            <View style={{ flex: 1 }}>
+              <Text style={[listStyles.pageTitle, { color: colors.foreground }]}>Vakalar</Text>
+              <Text style={[listStyles.pageSubtitle, { color: colors.mutedForeground }]}>Davaları çöz · puan kazan</Text>
+            </View>
+            {completedPuzzles.length > 0 && (
+              <Pressable
+                onPress={() => { setListTab("vakalar"); setDiffFilter("tamamlananlar"); }}
+                style={[listStyles.completedHeaderBadge, { backgroundColor: `${colors.success}18`, borderColor: `${colors.success}44` }]}
+              >
+                <MaterialIcons name="check-circle" size={13} color={colors.success} />
+                <Text style={[listStyles.completedHeaderText, { color: colors.success }]}>{completedPuzzles.length} çözüldü</Text>
+              </Pressable>
+            )}
+          </View>
+
+          {/* ── 3D Tab Bar ── */}
+          <View style={[listStyles.tabBar, { paddingTop: 4, paddingBottom: 12, backgroundColor: colors.background, borderBottomColor: colors.border }]}>
             <View style={listStyles.tabBarInner}>
-              <Pressable
+              <TabButton3D
+                label="Vakalar"
+                icon="folder-open"
+                active={listTab === "vakalar"}
+                count={totalActiveCount}
                 onPress={() => setListTab("vakalar")}
-                style={[
-                  listStyles.tabBtn,
-                  listTab === "vakalar"
-                    ? { backgroundColor: `${colors.primary}20`, borderColor: colors.primary }
-                    : { backgroundColor: colors.card, borderColor: colors.border },
-                ]}
-              >
-                <MaterialIcons name="folder-open" size={14} color={listTab === "vakalar" ? colors.primary : colors.mutedForeground} />
-                <Text style={[listStyles.tabBtnText, { color: listTab === "vakalar" ? colors.primary : colors.mutedForeground }]}>
-                  Vakalar
-                </Text>
-                {totalActiveCount > 0 && (
-                  <View style={[listStyles.tabCount, { backgroundColor: `${colors.primary}33` }]}>
-                    <Text style={[listStyles.tabCountText, { color: colors.primary }]}>{totalActiveCount}</Text>
-                  </View>
-                )}
-              </Pressable>
-              <Pressable
-                onPress={() => setListTab("paketler")}
-                style={[
-                  listStyles.tabBtn,
-                  listTab === "paketler"
-                    ? { backgroundColor: "#D4A84320", borderColor: "#D4A843" }
-                    : { backgroundColor: colors.card, borderColor: colors.border },
-                ]}
-              >
-                <MaterialIcons name="workspace-premium" size={14} color={listTab === "paketler" ? "#D4A843" : colors.mutedForeground} />
-                <Text style={[listStyles.tabBtnText, { color: listTab === "paketler" ? "#D4A843" : colors.mutedForeground }]}>
-                  Paketler
-                </Text>
-              </Pressable>
+                activeColor={colors.primary}
+              />
+              <TabButton3D
+                label="Premium"
+                icon="workspace-premium"
+                active={listTab === "premium"}
+                onPress={() => setListTab("premium")}
+                activeColor="#D4A843"
+              />
             </View>
           </View>
 
-          {listTab === "paketler" ? (
-            <PaketlerContent embedded />
+          {listTab === "premium" ? (
+            /* ══════════ PREMIUM TAB ══════════ */
+            <View style={{ flex: 1 }}>
+              <View style={[listStyles.premSubFilterRow, { backgroundColor: colors.background, borderBottomColor: colors.border }]}>
+                <TabButton3D
+                  label="Premium Vakalar"
+                  icon="lock"
+                  active={premiumSubTab === "vakalar"}
+                  count={premiumPuzzles.length}
+                  onPress={() => setPremiumSubTab("vakalar")}
+                  activeColor="#D4A843"
+                />
+                <TabButton3D
+                  label="Paketler"
+                  icon="inventory-2"
+                  active={premiumSubTab === "paketler"}
+                  onPress={() => setPremiumSubTab("paketler")}
+                  activeColor="#D4A843"
+                />
+              </View>
+
+              {premiumSubTab === "paketler" ? (
+                <PaketlerContent embedded />
+              ) : (
+                <ScrollView
+                  style={{ flex: 1 }}
+                  contentContainerStyle={[listStyles.listContent, { paddingTop: 12, paddingBottom: Platform.OS === "web" ? 34 + 80 : insets.bottom + 80 }]}
+                  showsVerticalScrollIndicator={false}
+                >
+                  <Animated.View entering={FadeInDown.delay(0).springify()}>
+                    <Pressable
+                      onPress={() => {
+                        if (!isPremium) { setShowPaywall(true); return; }
+                        setPremiumVakalarExpanded(!premiumVakalarExpanded);
+                      }}
+                      style={[listStyles.premAccordionHeader, { backgroundColor: "#D4A84318", borderColor: isPremium ? "#D4A84355" : "#D4A84388", shadowColor: "#D4A843", shadowOpacity: 0.15, shadowRadius: 8, shadowOffset: { width: 0, height: 2 }, elevation: 4 }]}
+                    >
+                      <View style={[listStyles.premAccordionIcon, { backgroundColor: "#D4A84322" }]}>
+                        <MaterialIcons name="workspace-premium" size={22} color="#D4A843" />
+                      </View>
+                      <View style={{ flex: 1 }}>
+                        <Text style={[listStyles.premAccordionTitle, { color: "#D4A843" }]}>
+                          Premium Vakalar ({premiumPuzzles.length})
+                        </Text>
+                        <Text style={[listStyles.premAccordionSub, { color: "#D4A84399" }]}>
+                          {isPremium
+                            ? (premiumVakalarExpanded ? "Listeyi gizle" : "Tümünü göster")
+                            : "Kilidi açmak için dokun"}
+                        </Text>
+                      </View>
+                      {!isPremium ? (
+                        <View style={[listStyles.premAccordionLockWrap, { backgroundColor: "#D4A84322" }]}>
+                          <MaterialIcons name="lock-open" size={18} color="#D4A843" />
+                        </View>
+                      ) : (
+                        <MaterialIcons
+                          name={premiumVakalarExpanded ? "expand-less" : "expand-more"}
+                          size={24}
+                          color="#D4A843"
+                        />
+                      )}
+                    </Pressable>
+                  </Animated.View>
+
+                  {isPremium && premiumVakalarExpanded && premiumPuzzles.map((puzzle, i) => {
+                    const isCompleted = completedPuzzleIds.has(puzzle.id);
+                    const stats = isCompleted ? playStatsForPuzzle(puzzle.id) : null;
+                    return (
+                      <PuzzleCard
+                        key={puzzle.id}
+                        puzzle={puzzle}
+                        onPress={() => startPuzzle(puzzle)}
+                        delay={40 + i * 28}
+                        completed={isCompleted}
+                        playStats={stats}
+                        locked={false}
+                        showReplay={isCompleted}
+                        premiumBadge={!isCompleted}
+                      />
+                    );
+                  })}
+                </ScrollView>
+              )}
+            </View>
           ) : (
+            /* ══════════ VAKALAR TAB ══════════ */
             <ScrollView
               ref={listScrollRef}
               style={{ flex: 1 }}
@@ -840,119 +993,138 @@ export default function VakalarScreen() {
               scrollEventThrottle={16}
               onScroll={(e) => { listScrollY.current = e.nativeEvent.contentOffset.y; }}
             >
-              {/* ── Difficulty filter pills ── */}
+              {/* ── 3D Difficulty pills ── */}
               <View style={listStyles.diffFilterRow}>
                 {(["caylak", "dedektif", "baskomiser"] as Difficulty[]).map((diff) => {
                   const isSelected = diffFilter === diff;
                   const color = getDifficultyColor(diff);
-                  const icon: MaterialIconName =
-                    diff === "caylak" ? "sentiment-satisfied" :
-                    diff === "dedektif" ? "search" :
-                    "local-police";
+                  const icon: MaterialIconName = diff === "caylak" ? "sentiment-satisfied" : diff === "dedektif" ? "search" : "local-police";
                   const count = availableActive.filter((p) => p.difficulty === diff).length;
                   return (
-                    <Pressable
+                    <FilterPill3D
                       key={diff}
+                      label={getDifficultyLabel(diff)}
+                      icon={icon}
+                      isSelected={isSelected}
                       onPress={() => setDiffFilter(isSelected ? "all" : diff)}
-                      style={[
-                        listStyles.diffFilterBtn,
-                        isSelected
-                          ? { backgroundColor: `${color}22`, borderColor: color }
-                          : { backgroundColor: colors.card, borderColor: colors.border },
-                      ]}
-                    >
-                      <MaterialIcons name={icon} size={13} color={isSelected ? color : colors.mutedForeground} />
-                      <Text style={[listStyles.diffFilterText, { color: isSelected ? color : colors.mutedForeground }]}>
-                        {getDifficultyLabel(diff)}
-                      </Text>
-                      {count > 0 && (
-                        <View style={[listStyles.diffFilterCount, { backgroundColor: isSelected ? `${color}33` : `${colors.mutedForeground}22` }]}>
-                          <Text style={[listStyles.diffFilterCountText, { color: isSelected ? color : colors.mutedForeground }]}>{count}</Text>
-                        </View>
-                      )}
-                    </Pressable>
+                      color={color}
+                      count={count}
+                    />
                   );
                 })}
               </View>
 
-              {/* ── Hero card: Aktif Vakalar ── */}
-              <Animated.View entering={FadeInDown.delay(0).springify()}>
-                <View style={[listStyles.heroCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
-                  <View style={listStyles.heroCardLeft}>
-                    <View style={[listStyles.heroCardIcon, { backgroundColor: `${colors.primary}18` }]}>
-                      <MaterialIcons name="folder-open" size={22} color={colors.primary} />
-                    </View>
-                    <View>
-                      <Text style={[listStyles.heroCardTitle, { color: colors.foreground }]}>Aktif Vakalar</Text>
-                      <Text style={[listStyles.heroCardSub, { color: colors.mutedForeground }]}>
-                        {filteredActive.length} vaka
-                        {diffFilter !== "all" ? ` · ${getDifficultyLabel(diffFilter as Difficulty)}` : ` · tümü`}
+              {/* ── Tamamlananlar wide pill ── */}
+              <Animated.View entering={FadeInDown.delay(30).springify()}>
+                <Pressable
+                  onPress={() => setDiffFilter(diffFilter === "tamamlananlar" ? "all" : "tamamlananlar")}
+                  style={[
+                    listStyles.tamamlananlarPill,
+                    diffFilter === "tamamlananlar"
+                      ? { backgroundColor: `${colors.success}22`, borderColor: colors.success, borderBottomWidth: 3, borderBottomColor: `${colors.success}AA`, shadowColor: colors.success, shadowOpacity: 0.35, shadowRadius: 8, shadowOffset: { width: 0, height: 3 }, elevation: 6 }
+                      : { backgroundColor: colors.card, borderColor: colors.border },
+                  ]}
+                >
+                  <View style={[listStyles.tamamlananlarPillIcon, { backgroundColor: diffFilter === "tamamlananlar" ? `${colors.success}22` : `${colors.mutedForeground}18` }]}>
+                    <MaterialIcons name="check-circle" size={16} color={diffFilter === "tamamlananlar" ? colors.success : colors.mutedForeground} />
+                  </View>
+                  <Text style={[listStyles.tamamlananlarPillText, { color: diffFilter === "tamamlananlar" ? colors.success : colors.mutedForeground }]}>
+                    Tamamlananlar
+                  </Text>
+                  {completedPuzzles.length > 0 && (
+                    <View style={[listStyles.tamamlananlarPillCount, { backgroundColor: diffFilter === "tamamlananlar" ? `${colors.success}33` : `${colors.mutedForeground}18` }]}>
+                      <Text style={[listStyles.tamamlananlarPillCountText, { color: diffFilter === "tamamlananlar" ? colors.success : colors.mutedForeground }]}>
+                        {completedPuzzles.length}
                       </Text>
                     </View>
-                  </View>
-                  {!isPremium && premiumPuzzles.length > 0 && (
-                    <Pressable
-                      onPress={() => setShowPaywall(true)}
-                      style={[listStyles.heroCardCta, { backgroundColor: "#D4A84318", borderColor: "#D4A84444" }]}
-                    >
-                      <MaterialIcons name="lock-open" size={12} color="#D4A843" />
-                      <Text style={[listStyles.heroCardCtaText, { color: "#D4A843" }]}>+{premiumPuzzles.length} vaka</Text>
-                    </Pressable>
                   )}
-                </View>
+                  <View style={{ flex: 1 }} />
+                  <MaterialIcons
+                    name={diffFilter === "tamamlananlar" ? "keyboard-arrow-up" : "keyboard-arrow-down"}
+                    size={20}
+                    color={diffFilter === "tamamlananlar" ? colors.success : colors.mutedForeground}
+                  />
+                </Pressable>
               </Animated.View>
 
-              {/* ── Active puzzle list ── */}
-              {filteredActive.length === 0 && filteredCompleted.length === 0 ? (
-                <View style={[listStyles.emptyBox, { borderColor: colors.border }]}>
-                  <MaterialIcons name="check-circle-outline" size={40} color={colors.success} />
-                  <Text style={[listStyles.emptyTitle, { color: colors.foreground }]}>
-                    {diffFilter === "all" ? "Tüm Vakalar Çözüldü!" : `${getDifficultyLabel(diffFilter as Difficulty)} vakası kalmadı`}
-                  </Text>
-                  <Text style={[listStyles.emptyText, { color: colors.mutedForeground }]}>
-                    Aşağıda tamamlananları görebilirsiniz.
-                  </Text>
-                </View>
+              {diffFilter === "tamamlananlar" ? (
+                /* ── Tamamlananlar list ── */
+                completedPuzzles.length === 0 ? (
+                  <View style={[listStyles.emptyBox, { borderColor: colors.border }]}>
+                    <MaterialIcons name="folder-open" size={40} color={colors.mutedForeground} />
+                    <Text style={[listStyles.emptyTitle, { color: colors.foreground }]}>Henüz Çözülen Vaka Yok</Text>
+                    <Text style={[listStyles.emptyText, { color: colors.mutedForeground }]}>
+                      Aktif vakalardan birini çözdükten sonra burada görünecek.
+                    </Text>
+                  </View>
+                ) : (
+                  completedPuzzles.map((puzzle, i) => {
+                    const stats = playStatsForPuzzle(puzzle.id);
+                    return (
+                      <PuzzleCard
+                        key={puzzle.id}
+                        puzzle={puzzle}
+                        onPress={() => startPuzzle(puzzle)}
+                        delay={60 + i * 30}
+                        completed={true}
+                        playStats={stats}
+                        showReplay={true}
+                      />
+                    );
+                  })
+                )
               ) : (
+                /* ── Active Vakalar ── */
                 <>
-                  {filteredActive.map((puzzle, i) => (
-                    <PuzzleCard
-                      key={puzzle.id}
-                      puzzle={puzzle}
-                      onPress={() => startPuzzle(puzzle)}
-                      delay={80 + i * 35}
-                      completed={false}
-                      playStats={null}
-                      locked={false}
-                      premiumBadge={premiumPuzzleIdSet.has(puzzle.id)}
-                    />
-                  ))}
-
-                  {/* ── Tamamlananlar section ── */}
-                  {filteredCompleted.length > 0 && (
-                    <>
-                      <Animated.View entering={FadeInDown.delay(50).springify()} style={listStyles.listHeader}>
-                        <MaterialIcons name="check-circle" size={20} color={colors.success} />
-                        <Text style={[listStyles.listHeaderText, { color: colors.success }]}>Tamamlananlar</Text>
-                        <View style={[listStyles.tabCount, { backgroundColor: `${colors.success}22` }]}>
-                          <Text style={[listStyles.tabCountText, { color: colors.success }]}>{filteredCompleted.length}</Text>
+                  <Animated.View entering={FadeInDown.delay(0).springify()}>
+                    <View style={[listStyles.heroCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
+                      <View style={listStyles.heroCardLeft}>
+                        <View style={[listStyles.heroCardIcon, { backgroundColor: `${colors.primary}18` }]}>
+                          <MaterialIcons name="folder-open" size={22} color={colors.primary} />
                         </View>
-                      </Animated.View>
-                      {filteredCompleted.map((puzzle, i) => {
-                        const stats = playStatsForPuzzle(puzzle.id);
-                        return (
-                          <PuzzleCard
-                            key={puzzle.id}
-                            puzzle={puzzle}
-                            onPress={() => startPuzzle(puzzle)}
-                            delay={80 + i * 35}
-                            completed={true}
-                            playStats={stats}
-                            showReplay={true}
-                          />
-                        );
-                      })}
-                    </>
+                        <View>
+                          <Text style={[listStyles.heroCardTitle, { color: colors.foreground }]}>Aktif Vakalar</Text>
+                          <Text style={[listStyles.heroCardSub, { color: colors.mutedForeground }]}>
+                            {filteredActive.length} vaka
+                            {diffFilter !== "all" ? ` · ${getDifficultyLabel(diffFilter as Difficulty)}` : ` · tümü`}
+                          </Text>
+                        </View>
+                      </View>
+                      {!isPremium && premiumPuzzles.length > 0 && (
+                        <Pressable
+                          onPress={() => setListTab("premium")}
+                          style={[listStyles.heroCardCta, { backgroundColor: "#D4A84318", borderColor: "#D4A84444" }]}
+                        >
+                          <MaterialIcons name="lock-open" size={12} color="#D4A843" />
+                          <Text style={[listStyles.heroCardCtaText, { color: "#D4A843" }]}>+{premiumPuzzles.length}</Text>
+                        </Pressable>
+                      )}
+                    </View>
+                  </Animated.View>
+
+                  {filteredActive.length === 0 ? (
+                    <View style={[listStyles.emptyBox, { borderColor: colors.border }]}>
+                      <MaterialIcons name="check-circle-outline" size={40} color={colors.success} />
+                      <Text style={[listStyles.emptyTitle, { color: colors.foreground }]}>
+                        {diffFilter === "all" ? "Tüm Vakalar Çözüldü!" : `${getDifficultyLabel(diffFilter as Difficulty)} vakası kalmadı`}
+                      </Text>
+                      <Text style={[listStyles.emptyText, { color: colors.mutedForeground }]}>
+                        Tamamlananlar filtresine bakabilirsiniz.
+                      </Text>
+                    </View>
+                  ) : (
+                    filteredActive.map((puzzle, i) => (
+                      <PuzzleCard
+                        key={puzzle.id}
+                        puzzle={puzzle}
+                        onPress={() => startPuzzle(puzzle)}
+                        delay={80 + i * 35}
+                        completed={false}
+                        playStats={null}
+                        locked={false}
+                        premiumBadge={premiumPuzzleIdSet.has(puzzle.id)}
+                      />
+                    ))
                   )}
                 </>
               )}
@@ -1434,6 +1606,162 @@ const listStyles = StyleSheet.create({
     paddingVertical: 3,
     borderWidth: 1,
     gap: 4,
+  },
+  tabBtn3d: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 13,
+    paddingHorizontal: 12,
+    borderRadius: 12,
+    borderWidth: 1.5,
+    gap: 7,
+  },
+  tabBtnText3d: {
+    fontSize: 13,
+    fontFamily: "PlayfairDisplay",
+    fontWeight: "600",
+    letterSpacing: 0.2,
+  },
+  tabCount3d: {
+    borderRadius: 9,
+    paddingHorizontal: 7,
+    paddingVertical: 2,
+  },
+  tabCountText3d: {
+    fontSize: 12,
+    fontWeight: "700",
+  },
+  filterPill3d: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 10,
+    paddingHorizontal: 8,
+    borderRadius: 11,
+    borderWidth: 1.5,
+    gap: 5,
+  },
+  filterPillText3d: {
+    fontSize: 12,
+    fontFamily: "PlayfairDisplay",
+    fontWeight: "600",
+    letterSpacing: 0.1,
+  },
+  filterPillCount3d: {
+    borderRadius: 7,
+    paddingHorizontal: 5,
+    paddingVertical: 1,
+    minWidth: 18,
+    alignItems: "center",
+  },
+  filterPillCountText3d: {
+    fontSize: 11,
+    fontWeight: "700",
+  },
+  tamamlananlarPill: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingVertical: 11,
+    paddingHorizontal: 14,
+    borderRadius: 12,
+    borderWidth: 1.5,
+    gap: 10,
+  },
+  tamamlananlarPillIcon: {
+    width: 28,
+    height: 28,
+    borderRadius: 8,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  tamamlananlarPillText: {
+    fontSize: 14,
+    fontFamily: "PlayfairDisplay",
+    fontWeight: "600",
+    letterSpacing: 0.2,
+  },
+  tamamlananlarPillCount: {
+    borderRadius: 8,
+    paddingHorizontal: 7,
+    paddingVertical: 2,
+    minWidth: 22,
+    alignItems: "center",
+  },
+  tamamlananlarPillCountText: {
+    fontSize: 12,
+    fontWeight: "700",
+  },
+  premSubFilterRow: {
+    flexDirection: "row",
+    gap: 8,
+    paddingHorizontal: 16,
+    paddingBottom: 10,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+  },
+  premAccordionHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderRadius: 14,
+    borderWidth: 1,
+    paddingHorizontal: 14,
+    paddingVertical: 14,
+    gap: 12,
+  },
+  premAccordionIcon: {
+    width: 44,
+    height: 44,
+    borderRadius: 12,
+    alignItems: "center",
+    justifyContent: "center",
+    flexShrink: 0,
+  },
+  premAccordionTitle: {
+    fontSize: 16,
+    fontFamily: "PlayfairDisplay",
+    fontWeight: "600",
+    letterSpacing: 0.2,
+  },
+  premAccordionSub: {
+    fontSize: 12,
+    marginTop: 2,
+  },
+  premAccordionLockWrap: {
+    width: 36,
+    height: 36,
+    borderRadius: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    flexShrink: 0,
+  },
+  pageHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+  },
+  pageTitle: {
+    fontSize: 26,
+    fontFamily: "PlayfairDisplay",
+    fontWeight: "700",
+    letterSpacing: 0.3,
+  },
+  pageSubtitle: {
+    fontSize: 12,
+    marginTop: 1,
+  },
+  completedHeaderBadge: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 5,
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+    borderRadius: 10,
+    borderWidth: 1,
+  },
+  completedHeaderText: {
+    fontSize: 12,
+    fontFamily: "PlayfairDisplay",
+    fontWeight: "600",
   },
 });
 
