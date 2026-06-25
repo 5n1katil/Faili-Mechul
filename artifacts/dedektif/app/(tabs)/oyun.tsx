@@ -1068,7 +1068,9 @@ export default function VakalarScreen() {
               </View>
 
               {premiumSubTab === "paketler" ? (
-                <PaketlerContent embedded />
+                <Animated.View entering={FadeInDown.delay(0).springify()} style={{ flex: 1 }}>
+                  <PaketlerContent embedded />
+                </Animated.View>
               ) : (
                 <ScrollView
                   style={{ flex: 1 }}
