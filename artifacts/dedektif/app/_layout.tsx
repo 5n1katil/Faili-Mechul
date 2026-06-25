@@ -549,6 +549,7 @@ export default function RootLayout() {
     DMSans_400Regular,
     DMSans_500Medium,
     MightySouly: require("../assets/fonts/MightySouly.ttf"),
+    PlayfairDisplay: require("../assets/fonts/PlayfairDisplay.ttf"),
   });
 
   useEffect(() => {
