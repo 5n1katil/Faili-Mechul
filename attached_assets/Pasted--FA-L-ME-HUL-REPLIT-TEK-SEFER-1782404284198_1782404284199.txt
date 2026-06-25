@@ -1,0 +1,416 @@
+/* ============================================================
+ *  FAİLİ MEÇHUL — REPLIT TEK SEFERLİK ENTEGRASYON PAKETİ
+ *  Bu metni Replit Agent sohbetine TEK PARÇA olarak yapıştır.
+ *  Görev: sadece JSON kaydetme. Vaka verisini mevcut kaynakta
+ *  yükle, aşağıdaki eksik renderer altyapısını ekle ve çalıştır.
+ * ------------------------------------------------------------
+ *  Vaka: Son Söz: Kıyıdaki Adam · puzzleId=rc_003
+ *  1) Önce mevcut vaka veri kaydını ve mini-oyun dispatcherını bul.
+ *  2) Var olan rendererları bozma; yalnız eksik olan dalı ekle.
+ *  3) Aşağıdaki vaka JSON’unu uygulamanın KANONİK case kaynağına ekle.
+ *  4) Kod değişikliklerinden sonra aşağıdaki kabul testlerini tarayıcıda yap.
+ *  5) Sadece açıklama yazma: dosyaları gerçekten güncelle ve test sonucunu bildir.
+ * ============================================================ */
+
+===== DOSYA OLUŞTUR / EKSİKSE EKLE: src/components/caseMechanics/TornRouteReconstructionMiniGame.jsx =====
+// src/components/caseMechanics/TornRouteReconstructionMiniGame.jsx
+import { useMemo, useState } from "react";
+
+export default function TornRouteReconstructionMiniGame({ clue, onSolved, onRequestHint }) {
+  const [selected, setSelected] = useState([]);
+  const [result, setResult] = useState(null);
+  const [hintOpen, setHintOpen] = useState(false);
+  const [hintUsed, setHintUsed] = useState(false);
+  const sifre = clue?.sifre ?? {};
+  const p = sifre.presentation ?? {};
+  const pieces = Array.isArray(p.pieces) ? p.pieces : [];
+  const correctOrder = Array.isArray(p.correctOrder) ? p.correctOrder : [];
+  const interaction = p.interaction ?? {};
+  const pieceById = useMemo(() => new Map(pieces.map((piece) => [piece.id, piece])), [pieces]);
+  const valid = pieces.length >= 4 && correctOrder.length >= 3 && correctOrder.every((id) => pieceById.has(id));
+  const max = correctOrder.length;
+  const toggle = (id) => {
+    setResult(null);
+    setSelected((before) => before.includes(id)
+      ? before.filter((value) => value !== id)
+      : (before.length < max ? [...before, id] : before));
+  };
+  const reset = () => { setSelected([]); setResult(null); };
+  const submit = () => {
+    const ok = selected.length === correctOrder.length && selected.every((id, index) => id === correctOrder[index]);
+    setResult({ ok, message: ok ? (interaction.successMessage ?? "Rota doğru kuruldu.") : (interaction.failureMessage ?? "Yırtıkları ve rota sözcüklerini yeniden kontrol et.") });
+    if (ok) onSolved?.({ clueId: clue.id, mechanic: "torn_route_reconstruction", order: selected });
+  };
+  const openHint = () => {
+    if (!hintUsed) {
+      onRequestHint?.({ clueId: clue.id, penaltySeconds: Number(sifre.hintPenaltySeconds ?? 60) });
+      setHintUsed(true);
+    }
+    setHintOpen(true);
+  };
+  if (!valid) return <div role="alert">Bu vaka için yırtık rota parçaları eksik veya tutarsız.</div>;
+
+  const shell = { background:"#10131f", border:"1px solid #262c44", borderRadius:12, padding:14, color:"#e8eaf2" };
+  const pieceStyle = { position:"relative", minHeight:105, border:"1px solid #5a5135", borderRadius:10, background:"#23251c", color:"#f4eccb", padding:10, textAlign:"left", cursor:"pointer" };
+
+  return (
+    <section style={shell} aria-label={p.accessibility?.description ?? "Yırtık rota sayfası"}>
+      <h4 style={{ margin:"0 0 6px", color:"#f0a830" }}>{p.title ?? "Yırtık Rota Sayfası"}</h4>
+      <p style={{ margin:"0 0 10px", color:"#8b91ad", fontSize:13 }}>{p.subtitle ?? "Parçaları sağ ve sol yırtık izlerine göre sırala."}</p>
+      {p.purposeHint ? <p style={{ margin:"0 0 12px", padding:10, borderLeft:"2px solid #e0b54e", background:"rgba(224,181,78,.06)", color:"#ecd99a", fontSize:13 }}><b>ÇÖZÜMÜN İŞLEVİ</b><br/>{p.purposeHint}</p> : null}
+
+      <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(170px,1fr))", gap:9 }}>
+        {pieces.map((piece) => {
+          const pos = selected.indexOf(piece.id);
+          return <button key={piece.id} type="button" onClick={() => toggle(piece.id)} aria-pressed={pos >= 0} style={{ ...pieceStyle, borderColor:pos >= 0 ? "#22c55e" : "#5a5135", background:pos >= 0 ? "#213426" : "#23251c" }}>
+            <span style={{ display:"flex", justifyContent:"space-between", gap:8, fontSize:10, color:"#cdbb79" }}><span>◁ {piece.leftTear}</span><span>{piece.label}</span><span>{piece.rightTear} ▷</span></span>
+            <span style={{ display:"block", marginTop:16, fontFamily:"serif", fontWeight:700, lineHeight:1.35 }}>{piece.text}</span>
+            {pos >= 0 ? <span style={{ position:"absolute", right:8, bottom:7, width:20, height:20, borderRadius:"50%", background:"#22c55e", color:"#07110a", display:"grid", placeItems:"center", fontWeight:900 }}>{pos + 1}</span> : null}
+          </button>;
+        })}
+      </div>
+
+      <div style={{ marginTop:12, padding:10, border:"1px dashed #655d45", borderRadius:10, background:"#10120e" }}>
+        <b style={{ fontSize:10, letterSpacing:1.2, color:"#f0a830" }}>SEÇİLEN ROTA SIRASI</b>
+        <div style={{ display:"flex", gap:6, flexWrap:"wrap", marginTop:8 }}>
+          {selected.length ? selected.map((id, index) => <span key={id} style={{ fontSize:12, color:"#d6dae8" }}>{index ? " → " : ""}{pieceById.get(id)?.label}</span>) : <span style={{ fontSize:12, color:"#8b91ad" }}>Önce yırtık parçaları seç.</span>}
+        </div>
+      </div>
+
+      <div style={{ display:"flex", gap:8, flexWrap:"wrap", marginTop:10 }}>
+        <button type="button" onClick={reset} style={{ flex:1, padding:10, borderRadius:8, border:"1px solid #262c44", background:"#1c2138", color:"#e8eaf2" }}>{interaction.resetLabel ?? "Dizilişi Temizle"}</button>
+        <button type="button" onClick={submit} style={{ flex:1, padding:10, border:0, borderRadius:8, background:"#e0b54e", color:"#1a1205", fontWeight:700 }}>{interaction.submitLabel ?? "Rotayı Doğrula"}</button>
+      </div>
+
+      <button type="button" onClick={openHint} disabled={hintUsed} style={{ width:"100%", marginTop:10, padding:10, borderRadius:8, border:"1px dashed #b45309", background:"transparent", color:"#fbbf24" }}>{hintUsed ? "İpucu açıldı" : "İpucu iste (-" + Number(sifre.hintPenaltySeconds ?? 60) + " sn)"}</button>
+      {hintOpen ? <p style={{ margin:"8px 0 0", padding:9, borderLeft:"2px solid #b45309", background:"rgba(180,83,9,.08)", color:"#fbbf24", fontSize:13 }}>{sifre.cozumIpucu}</p> : null}
+      {result ? <p role="status" style={{ margin:"10px 0 0", padding:10, borderRadius:8, background:result.ok ? "rgba(34,197,94,.12)" : "rgba(220,38,38,.12)", color:result.ok ? "#86efac" : "#fca5a5" }}>{result.ok ? "✓ " : "✕ "}{result.message}</p> : null}
+      {result?.ok ? <>
+        <p style={{ margin:"10px 0 0", padding:10, border:"1px solid #22c55e", borderRadius:8, background:"rgba(34,197,94,.08)", color:"#b7f7c8" }}><b>TAMAMLANAN ROTA</b><br/>{p.routeResult}</p>
+        {sifre.aciklama ? <p style={{ margin:"10px 0 0", color:"#8b91ad", fontStyle:"italic", fontSize:13 }}>{sifre.aciklama}</p> : null}
+      </> : null}
+    </section>
+  );
+}
+===== DOSYA SONU =====
+
+===== MEVCUT MİNİ-OYUN DISPATCHERINA EKLENECEK DAL =====
+import TornRouteReconstructionMiniGame from "./caseMechanics/TornRouteReconstructionMiniGame";
+
+// Mevcut MiniGameRenderer / switch bloğunda, genel sifreli_mesaj fallback'INDEN ÖNCE ekle:
+if (clue?.mechanicType === "sifreli_mesaj" && clue?.sifre?.presentation?.style === "torn_route_reconstruction") {
+  return <TornRouteReconstructionMiniGame clue={clue} onSolved={onSolved} onRequestHint={onRequestHint} />;
+}
+===== YAMA SONU =====
+
+===== ZORUNLU KABUL TESTLERİ =====
+1. rc_003 vakasında İpucu c3 açıldığında 5 yırtık rota parçası aynı anda görünür.
+- Oyuncu parçaları dokunarak seçer; seçili sıra görünür kalır. Doğru sıra/rota, gönderimden önce görünmez.
+- Doğru sıra yalnız p3 → p5 → p1 → p4 olduğunda başarı + onSolved üretir; yanlış sıra doğru rotayı sızdırmaz.
+- purposeHint görünürdür; ipucu isteği yalnız ilk tıklamada onRequestHint 60 sn ile çağrılır. Mobilde parça kartları tek sütuna düşer.
+2. Eski klasik sifreli_mesaj, parmak_izi, profil_sentezi ve genel ses_kaydi rendererları regresyona uğramaz.
+===== TEST LİSTESİ SONU =====
+
+===== KANONİK VAKA VERİSİ — mevcut case registry’de rc_003 olarak ekle/değiştir =====
+{
+  "puzzleId": "rc_003",
+  "packId": "pack_004",
+  "packSlug": "realcrime",
+  "stars": "★★★☆☆",
+  "gridSize": "3x3",
+  "timeLimit": 480,
+  "legalNote": "Tüm karakterler, mekânlar, belgeler ve ölüm kurgusaldır. Vaka yalnız tarihî faili meçhul kıyı dosyalarının belge yapısından ve atmosferinden esinlenir; gerçek kişiler veya mağdurlar temsil edilmez.",
+  "historicalInspiration": "1940’ların sonunda Güney Avustralya kıyısında kimliği belirsiz bir adamın yanında bulunan koparılmış son sayfa parçası, şiir kitabı ve çözülememiş notların belge bilmecesinden esinlenilmiştir.",
+  "uiContracts": {
+    "sifreli_mesaj": {
+      "yirtik_rota_yapbozu": {
+        "requiredPresentationStyle": "torn_route_reconstruction",
+        "requiredFields": [
+          "pieces",
+          "correctOrder",
+          "routeResult",
+          "interaction",
+          "purposeHint"
+        ],
+        "fallback": "Render all torn pieces as selectable cards. The selected order must remain visible; do not reveal the correct order, route result, or matched clue pair before submission."
+      }
+    }
+  },
+  "title": "Son Söz: Kıyıdaki Adam",
+  "subtitle": "1948 Güney Kıyısı Dosyası · Yırtık Rota Sayfası · Kurgusal",
+  "difficulty": "Dedektif",
+  "difficultyLevel": 3,
+  "specialMechanic": "yirtik_rota_sifre",
+  "story": "1948’in sezon dışı ilk sabahında, Karadeniz kıyısındaki Kıyı Bendi’nde takım elbiseli bir adam oturur halde bulundu. Ceketindeki bütün etiketler kesilmiş, cüzdanı boşaltılmıştı. Avucunda ise yalnızca bir kıyı rehberinin son sayfasından kopmuş dört yırtık köşe ve tuzla sertleşmiş pusula çizimleri vardı. Otel defterindeki eğik imza, adamın harita kopyacısı Faruk Veli olduğunu düşündürdü. Faruk’un önceki gece birine, eski servis geçitlerini artık saklamayacağını söylediği duyulmuştu.\n\nDalgakıranın sesi, kayıp kimlikten daha inatçıydı. Yırtık sayfa, sıradan bir yön tarifi değil; kıyıdaki üç kişinin birbirinden ayrı tuttuğu bir rotayı geri çağırıyordu. Sayfayı yeniden kurmak, yalnızca Faruk’un son yürüyüşünü değil, kimin başka bir yerde görünmek istediğini de gösterecek.",
+  "atmosphere": "Lodos, taş bendi gece boyunca döver. Uzakta fenerin camı aralıklı yanar; kıyıdaki paslı kapılar her rüzgârda kendi kendine kapanır. Islak kâğıt, yosun ve gaz yağı kokusu aynı notun üzerinde buluşur.",
+  "suspects": [
+    {
+      "id": "s1",
+      "name": "Selma Acar",
+      "icon": "🧺",
+      "description": "Kıyı Bendi’ne bakan küçük pansiyonu işleten, Faruk’un son konaklama kaydını bizzat tutmuş ev sahibi.",
+      "detail": "Gece servisinden sonra çay sepetini Eski Kayıkhane’ye bırakır; sağ bileğindeki eski kırık nedeniyle ağır halat çekmez ve ilaç şişelerini mavi balmumuyla mühürler."
+    },
+    {
+      "id": "s2",
+      "name": "İlyas Demir",
+      "icon": "🏮",
+      "description": "Kıyı fenerinin gece bakımını yapan, Faruk’un harita kopyalarındaki eski servis geçitlerini herkesten iyi bilen görevli.",
+      "detail": "Fener Altı Geçidi’nin sürgüsünü her vardiyada kendi açar; gaz yağı şişelerini kehribar renkli tıpayla kapatır ve dışarıdan gelenleri ana kapı yerine taş geçitten geçirir."
+    },
+    {
+      "id": "s3",
+      "name": "Nihat Serin",
+      "icon": "📜",
+      "description": "Liman giriş kayıtlarını ve mühürlü eşya defterlerini tutan, Faruk’un bazı eski sevkiyatları kopyaladığını öğrenen yazman.",
+      "detail": "Mor vernikli gümrük mühür telini kısa keser; bilet gişesinin arkasındaki karton arşivde çalışır ve her sayfanın köşesine üç köşeli tarih işareti koyar."
+    }
+  ],
+  "weapons": [
+    {
+      "id": "w1",
+      "name": "Kurşun Şamandıra",
+      "icon": "⚓",
+      "description": "Ağ hattını dengede tutan, avuç içine sığan ağır kurşun parça.",
+      "detail": "Tuzlu suyla matlaştığında bile gri kurşun tozu bırakır."
+    },
+    {
+      "id": "w2",
+      "name": "Sessiz Şurup",
+      "icon": "🧪",
+      "description": "Zakkum alkaloidiyle düşük doz uyku damlasını birleştiren, acı tadı kolayca maskelenebilen sıvı karışım.",
+      "detail": "Kehribar renkli tıpa reçinesi ve acı badem benzeri keskin bir koku bırakır."
+    },
+    {
+      "id": "w3",
+      "name": "Gümrük Mühür Teli",
+      "icon": "🪤",
+      "description": "Mühürlü sandıkları kapatmak için kullanılan, kesildiğinde mor vernik ve ince metal çapak bırakan sert tel.",
+      "detail": "Kıvrıldığında parmakta ince çizgi ve mor vernik zerresi bırakır."
+    }
+  ],
+  "locations": [
+    {
+      "id": "l1",
+      "name": "Liman Bilet Gişesi",
+      "icon": "🎟️",
+      "description": "Kıyı yolculuklarının yazıldığı, gümrük defterlerinin arka odada saklandığı dar taş gişe.",
+      "detail": "Kartpostal, bilet koçanı ve mor vernikli mühür malzemeleri arka çekmecelerde tutulur."
+    },
+    {
+      "id": "l2",
+      "name": "Işıkaltı Menfezi",
+      "icon": "🏮",
+      "description": "Kıyı ışığının altında, bent ile servis kapısını birbirine bağlayan dar taş koridor.",
+      "detail": "Kireçli sürgü oluğu, gaz yağı kokusu ve yağmurdan korunmuş kehribar tıpa kırıntılarıyla ayırt edilir."
+    },
+    {
+      "id": "l3",
+      "name": "Eski Kayıkhane",
+      "icon": "🛶",
+      "description": "Kullanılmayan ağların ve kurşun şamandıraların bırakıldığı, pansiyon arkasındaki alçak ahşap yapı.",
+      "detail": "Çay sepetleri için küçük bir yan kapısı vardır; zeminde eski ağ lifleri ve kurşun tozu birikir."
+    }
+  ],
+  "clues": [
+    {
+      "id": "c1",
+      "title": "Dudak Çizgisindeki Reçine",
+      "type": "adli",
+      "mechanicType": "text",
+      "text": "Serumda zakkumun kalp ritmini bozan alkaloidi, düşük doz uyku damlasıyla birlikte saptandı. Ödünç alınan sağlık çantasındaki bütün şişeler mavi balmumlu kapakla mühürlüydü; maktulün dudak çizgisindeki kehribar reçine onlardan değildi.",
+      "deductionHint": "Aynı kimyasal karışım ve iki farklı kapak izi, listede hangi aracı; hangi kişinin şişe alışkanlığını birbirinden ayırır?",
+      "isBonus": false,
+      "revealOrder": 1,
+      "isRevealed": true,
+      "pointCost": 0
+    },
+    {
+      "id": "c2",
+      "title": "Sepetteki Lifler",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Gece servisi için kullanılan çay sepetinin kulpunda yalnız açık renk jüt lifi vardı. Kesilmiş metal araçların bıraktığı mor vernik ve ince çapak, sepetin içinde ya da taşıyan kişinin bileklik sargısında hiç yoktu.",
+      "deductionHint": "Kesilmiş bir metal aracın kalması gereken iki iz yoksa, bu araç kimden uzak durur?",
+      "isBonus": false,
+      "revealOrder": 2,
+      "isRevealed": false,
+      "pointCost": 60
+    },
+    {
+      "id": "c3",
+      "title": "Son Sayfanın Kıyı Rotası",
+      "type": "sifreli",
+      "mechanicType": "sifreli_mesaj",
+      "text": "Maktulün avucundaki dört yırtık köşe, aynı kıyı rehberinin son sayfasından kopmuştu. Her parçada bir yol sözcüğü ve sağ-sol yırtık izi vardı; beşinci parça ise rota cümlesine uymayan ayrı bir baskıdan geliyordu.",
+      "deductionHint": "Açık kenarla başlayan ve kapalı köşeyle biten tek yırtık zincirini kurduğunda, rota hangi iki kıyı noktasını bağlıyor?",
+      "isBonus": false,
+      "revealOrder": 3,
+      "isRevealed": false,
+      "pointCost": 60,
+      "sifre": {
+        "sifrelenmis": "Yırtık rota parçalarını kenar işaretlerine göre soldan sağa diz.",
+        "sifreleTuru": "yirtik_rota_yapbozu",
+        "cozumIpucu": "İlk parça solunda AÇIK işaretini, son parça sağında KAPALI işaretini taşır. Arada yalnız aynı yırtık işaretleri birbirine bağlanabilir; rota sözcükleri de kesintisiz bir cümle oluşturmalıdır.",
+        "cozulmus": "PANSİYON ARKA KAPISI / ESKİ KAYIKHANE",
+        "aciklama": "Rota tamamlandığında, çıkarım ızgarasında bir şüpheli–mekân bağlantısı kesinleşir; bu bağlantı nihai çözümü tek başına vermez.",
+        "presentation": {
+          "style": "torn_route_reconstruction",
+          "title": "Yırtık Rota Sayfası",
+          "subtitle": "Kıyı rehberinin parçalarını, sağ ve sol yırtık izleri birbirini tamamlayacak biçimde diz.",
+          "purposeHint": "Doğru rota, çıkarım ızgarasında bir şüpheli–mekân bağlantısını kesinleştirecek.",
+          "pieces": [
+            {
+              "id": "p1",
+              "label": "Parça I",
+              "leftTear": "≈",
+              "rightTear": "◒",
+              "text": "YOLU → ESKİ"
+            },
+            {
+              "id": "p2",
+              "label": "Parça II",
+              "leftTear": "✦",
+              "rightTear": "⊗",
+              "text": "BİLET GİŞESİ / KAPALI"
+            },
+            {
+              "id": "p3",
+              "label": "Parça III",
+              "leftTear": "AÇIK",
+              "rightTear": "⌇",
+              "text": "PANSİYON ARKA"
+            },
+            {
+              "id": "p4",
+              "label": "Parça IV",
+              "leftTear": "◒",
+              "rightTear": "KAPALI",
+              "text": "KAYIKHANE"
+            },
+            {
+              "id": "p5",
+              "label": "Parça V",
+              "leftTear": "⌇",
+              "rightTear": "≈",
+              "text": "KAPISI → TUZ"
+            }
+          ],
+          "correctOrder": [
+            "p3",
+            "p5",
+            "p1",
+            "p4"
+          ],
+          "routeResult": "PANSİYON ARKA KAPISI → TUZ YOLU → ESKİ KAYIKHANE",
+          "decoyPieceIds": [
+            "p2"
+          ],
+          "interaction": {
+            "mode": "arrange_pieces",
+            "submitLabel": "Rotayı Doğrula",
+            "resetLabel": "Dizilişi Temizle",
+            "successMessage": "Yırtıklar birbirine oturdu. Rota artık kıyı rehberinde kesintisiz okunuyor.",
+            "failureMessage": "Bu zincir kıyı çizgisini kesiyor. Sağdaki yırtık, sonraki parçanın solundaki işaretle aynı olmalı; rota da AÇIK ile başlayıp KAPALI ile bitmeli."
+          },
+          "accessibility": {
+            "description": "Beş yırtık rota parçasından dördünü seçip soldan sağa sırala. Doğru zincir AÇIK işaretiyle başlar, eşleşen yırtık izleriyle devam eder ve KAPALI işaretiyle biter.",
+            "showSelectedOrder": true
+          },
+          "mobile": {
+            "stackCards": true,
+            "minPieceWidthPx": 150
+          },
+          "challenge": "Bir parça rota cümlesine ait değildir. Rota yalnız kenar işaretleriyle değil, sözcüklerin kıyı boyunca anlamlı bir güzergâh kurmasıyla da doğrulanır."
+        }
+      }
+    },
+    {
+      "id": "c4",
+      "title": "Tam Kalan Rulo",
+      "type": "tanik",
+      "mechanicType": "text",
+      "text": "Gece vardiyasını devralan çırak, bakım görevlisinin anahtarını hiç bırakmadığını ve depodaki mor vernikli tel rulolarının sabah sayımında hâlâ tam olduğunu söyledi. O kişinin avuç içindeki gaz yağı izi dışında kesik tel kaynaklı çizik görülmedi.",
+      "deductionHint": "Tam kalan rulolar ve eldeki çizik yokluğu, hangi aracı dışlar?",
+      "isBonus": false,
+      "revealOrder": 4,
+      "isRevealed": false,
+      "pointCost": 60
+    },
+    {
+      "id": "c5",
+      "title": "Kireç Oluğu",
+      "type": "eleme",
+      "mechanicType": "text",
+      "text": "Kıyı ışığının altındaki kireçli sürgü oluğunda gaz yağı damlası ve kehribar tıpa kırıntısı korundu; mor vernik zerresi, metal çapak ya da tel sürtünmesi bulunmadı.",
+      "deductionHint": "Kireçli oluk çok küçük artıkları bile tutuyorsa, mor vernikli tel hangi geçitte kullanılmamış olmalıdır?",
+      "isBonus": false,
+      "revealOrder": 5,
+      "isRevealed": false,
+      "pointCost": 60
+    },
+    {
+      "id": "c6",
+      "title": "Üç Köşeli Tarih İşareti",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Bilet gişesinin arkasındaki karton arşivde kesilmiş bir tel parçası ve kenarına üç köşeli tarih işareti atılmış boş bir gümrük koçanı bulundu.",
+      "deductionHint": "Üç köşeli tarih işareti ve kesilmiş tel, hangi masa başı alışkanlığını hangi araca bağlar?",
+      "isBonus": true,
+      "revealOrder": 6,
+      "isRevealed": false,
+      "pointCost": 45
+    },
+    {
+      "id": "c7",
+      "title": "Kurşun Tozu",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Kayıkhane yan kapısının eşiğinde, Selma’nın çay sepetinin tekerinden gelen ince jüt lifleriyle birlikte mat gri kurşun tozu bulundu.",
+      "deductionHint": "Jüt lifleriyle birlikteki kurşun tozu, Selma’nın gece servis rotasında hangi ağır aracı işaret eder?",
+      "isBonus": true,
+      "revealOrder": 7,
+      "isRevealed": false,
+      "pointCost": 45
+    }
+  ],
+  "assetManifest": [],
+  "solution": {
+    "suspectId": "s2",
+    "weaponId": "w2",
+    "locationId": "l2"
+  },
+  "solutionNarrative": "İlyas Demir, Faruk’un eski servis geçitlerini haritaya aktardığını öğrenince onu Işıkaltı Menfezi’nde buluşmaya çağırdı. Kehribar tıpalı Sessiz Şurubu uyku damlasına karıştırdı; Faruk geçitte fenalaştıktan sonra bedenini kıyı bendine taşıdı. Yırtık rota sayfasını da Selma’nın kayıkhane güzergâhını öne çıkaracak biçimde bırakarak soruşturmayı yanlış rotaya yöneltmek istedi.",
+  "replitIntegration": {
+    "schema": "fm_replit_runtime_contract_v1",
+    "copyTarget": "Replit Agent prompt",
+    "canonicalCaseFile": "src/data/cases/rc_003.json",
+    "policy": "Var olan renderer varsa onu bozma; yoksa bu paketteki component ve dispatcher dalını ekle.",
+    "mechanics": [
+      {
+        "clueId": "c3",
+        "mechanicType": "sifreli_mesaj",
+        "renderer": "torn_route_reconstruction",
+        "componentFile": "src/components/caseMechanics/TornRouteReconstructionMiniGame.jsx",
+        "dispatcherBranch": "clue.mechanicType === \"sifreli_mesaj\" && clue.sifre?.presentation?.style === \"torn_route_reconstruction\"",
+        "completionEvent": "onSolved({ clueId, mechanic: \"torn_route_reconstruction\" })",
+        "hintEvent": "onRequestHint({ clueId, penaltySeconds: 60 })",
+        "requiredData": [
+          "pieces",
+          "correctOrder",
+          "routeResult",
+          "interaction",
+          "purposeHint"
+        ],
+        "nonNegotiable": [
+          "Tüm yırtık parçaları aynı anda görünür yap; yalnız doğru rota sonuç alanını başlangıçta gizle.",
+          "Oyuncunun seçtiği sıra görünür kalmalı; parçaların doğru sırasını otomatik yerleştirme.",
+          "Doğru sıra yalnız submit sonrasında onSolved üretmeli; yanlış diziliş cevap/rota ifşa etmemeli.",
+          "purposeHint alanını spoiler vermeden görünür göster; açıklamayı yalnız başarıdan sonra aç.",
+          "Mobil ekranda parça kartlarını tek sütuna düşür; seçilen sıra kaybolmamalı."
+        ]
+      }
+    ]
+  }
+}
+===== VAKA VERİSİ SONU =====

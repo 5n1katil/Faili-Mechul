@@ -1,0 +1,547 @@
+/* ============================================================
+ *  FAİLİ MEÇHUL — REPLIT TEK SEFERLİK ENTEGRASYON PAKETİ
+ *  Bu metni Replit Agent sohbetine TEK PARÇA olarak yapıştır.
+ *  Görev: sadece JSON kaydetme. Vaka verisini mevcut kaynakta
+ *  yükle, aşağıdaki eksik renderer altyapısını ekle ve çalıştır.
+ * ------------------------------------------------------------
+ *  Vaka: Kuzey Geçidindeki Kırık Pusula · puzzleId=rc_005
+ *  1) Önce mevcut vaka veri kaydını ve mini-oyun dispatcherını bul.
+ *  2) Var olan rendererları bozma; yalnız eksik olan dalı ekle.
+ *  3) Aşağıdaki vaka JSON’unu uygulamanın KANONİK case kaynağına ekle.
+ *  4) Kod değişikliklerinden sonra aşağıdaki kabul testlerini tarayıcıda yap.
+ *  5) Sadece açıklama yazma: dosyaları gerçekten güncelle ve test sonucunu bildir.
+ * ============================================================ */
+
+===== DOSYA OLUŞTUR / EKSİKSE EKLE: src/components/caseMechanics/BrokenCompassCalibrationMiniGame.jsx =====
+// src/components/caseMechanics/BrokenCompassCalibrationMiniGame.jsx
+import { useMemo, useState } from "react";
+
+const normalizeRotation = (value) => ((Number(value ?? 0) % 360) + 360) % 360;
+
+export default function BrokenCompassCalibrationMiniGame({ clue, onSolved, onRequestHint }) {
+  const sifre = clue?.sifre ?? {};
+  const p = sifre.presentation ?? {};
+  const segments = Array.isArray(p.segments) ? p.segments : [];
+  const slots = Array.isArray(p.slots) ? p.slots : [];
+  const correctPlacement = Array.isArray(p.correctPlacement) ? p.correctPlacement : [];
+  const segmentById = useMemo(() => new Map(segments.map((segment) => [segment.id, segment])), [segments]);
+  const initialRotations = useMemo(() => Object.fromEntries(segments.map((segment) => [segment.id, normalizeRotation(segment.initialRotation)])), [segments]);
+  const [order, setOrder] = useState([]);
+  const [rotations, setRotations] = useState(initialRotations);
+  const [result, setResult] = useState(null);
+  const [hintOpen, setHintOpen] = useState(false);
+  const [hintUsed, setHintUsed] = useState(false);
+  const [solved, setSolved] = useState(false);
+  const interaction = p.interaction ?? {};
+  const valid = segments.length >= 5 && slots.length === 4 && correctPlacement.length === slots.length;
+
+  const CompassFace = ({ segment, rotation }) => {
+    const marks = Array.isArray(segment.marks) ? segment.marks : [];
+    const at = (index) => marks[index] ?? "·";
+    const face = { width:54, height:54, border:"1px solid " + (segment.metal === "krom" ? "#aebfd8" : "#b99b57"), borderRadius:"50%", position:"relative", margin:"0 auto", color:segment.metal === "krom" ? "#e2eafa" : "#f6e9bf", background:segment.metal === "krom" ? "radial-gradient(circle,#394656,#151923 68%)" : "radial-gradient(circle,#40331b,#17150d 68%)", transform:"rotate(" + rotation + "deg)" };
+    const mark = { position:"absolute", fontSize:9, fontWeight:800, lineHeight:1 };
+    return <div style={face}><span style={{ ...mark, top:4, left:"50%", transform:"translateX(-50%)" }}>{at(0)}</span><span style={{ ...mark, right:4, top:"50%", transform:"translateY(-50%)" }}>{at(1)}</span><span style={{ ...mark, bottom:4, left:"50%", transform:"translateX(-50%)" }}>{at(2)}</span><span style={{ ...mark, left:4, top:"50%", transform:"translateY(-50%)" }}>{at(3)}</span><span style={{ position:"absolute", inset:0, display:"grid", placeItems:"center", fontFamily:"serif", fontSize:17 }}>{segment.innerRune ?? "◌"}</span></div>;
+  };
+  const toggle = (segmentId) => { setResult(null); setOrder((before) => before.includes(segmentId) ? before.filter((id) => id !== segmentId) : (before.length < slots.length ? [...before, segmentId] : before)); };
+  const rotate = (segmentId, delta) => { setResult(null); setRotations((before) => ({ ...before, [segmentId]: normalizeRotation((before[segmentId] ?? 0) + delta) })); };
+  const reset = () => { setOrder([]); setRotations(initialRotations); setResult(null); setSolved(false); };
+  const askHint = () => { if (!hintUsed) { onRequestHint?.({ clueId: clue.id, penaltySeconds: Number(sifre.hintPenaltySeconds ?? 60) }); setHintUsed(true); } setHintOpen(true); };
+  const submit = () => {
+    const ok = order.length === slots.length && correctPlacement.every((need, index) => need.slotId === slots[index]?.id && need.segmentId === order[index] && normalizeRotation(rotations[need.segmentId]) === normalizeRotation(need.rotation));
+    setResult({ ok, message: ok ? (interaction.successMessage ?? "İç halka kapandı.") : (interaction.failureMessage ?? "Halka henüz kapanmadı.") });
+    if (ok && !solved) { setSolved(true); onSolved?.({ clueId: clue.id, mechanic: "broken_compass_calibration" }); }
+  };
+  if (!valid) return <p role="alert">Bu vaka için kırık pusula kalibrasyon verisi eksik veya tutarsız.</p>;
+  const shell = { background:"#101510", border:"1px solid #5e6044", borderRadius:12, padding:14, color:"#e8eaf2" };
+  const fragmentBase = { minHeight:108, border:"1px solid #655d45", borderRadius:10, padding:8, textAlign:"center", cursor:"pointer", color:"#f6e9bf" };
+
+  return (
+    <section style={shell} aria-label={p.accessibility?.description ?? "Kırık pusula kalibrasyonu"}>
+      <h4 style={{ margin:"0 0 6px", color:"#f0a830" }}>🧭 {p.title ?? "Kırık Pusula Kalibrasyonu"}</h4>
+      <p style={{ margin:"0 0 10px", color:"#8b91ad", fontSize:13 }}>{p.subtitle ?? "Parçaların çentiklerini halka boyunca eşleştir."}</p>
+      {p.purposeHint ? <p style={{ margin:"0 0 10px", padding:10, borderLeft:"2px solid #e0b54e", background:"rgba(224,181,78,.06)", color:"#ecd99a", fontSize:13 }}><b>ÇÖZÜMÜN İŞLEVİ</b><br />{p.purposeHint}</p> : null}
+      <p style={{ margin:"0 0 10px", padding:9, border:"1px solid #4e563f", borderRadius:8, color:"#d9e7c5", fontSize:12 }}><b>{p.sceneLabel ?? "SEYRÜSEFER KAYDI"}</b><br />{p.northKey}</p>
+      <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(120px,1fr))", gap:8 }}>
+        {segments.map((segment) => { const pos=order.indexOf(segment.id); const rotation=normalizeRotation(rotations[segment.id]); return <button key={segment.id} type="button" onClick={() => toggle(segment.id)} aria-pressed={pos>=0} style={{ ...fragmentBase, borderColor:pos>=0 ? "#22c55e" : (segment.metal === "krom" ? "#6e7c92" : "#655d45"), background:pos>=0 ? "#213426" : (segment.metal === "krom" ? "#1b2230" : "#30291d") }}><span style={{ display:"block", fontSize:10, color:segment.metal === "krom" ? "#c7d5ec" : "#cdbb79", marginBottom:5 }}>{segment.label} · {segment.metal}</span><span style={{ display:"flex", justifyContent:"space-between", gap:6, color:segment.metal === "krom" ? "#c7d5ec" : "#d1bd80", fontSize:10, marginBottom:5 }}><span>◁ {segment.leftNotch ?? "?"}</span><span>{segment.rightNotch ?? "?"} ▷</span></span><CompassFace segment={segment} rotation={rotation} />{pos>=0 ? <span style={{ display:"block", marginTop:6, fontSize:10, color:"#86efac" }}>Yuva {pos + 1}</span> : null}</button>; })}
+      </div>
+      <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(135px,1fr))", gap:8, marginTop:12 }}>
+        {slots.map((slot,index) => { const segment=segmentById.get(order[index]); if(!segment) return <div key={slot.id} style={{ minHeight:120, border:"1px dashed #655d45", borderRadius:10, padding:9, textAlign:"center", color:"#8b91ad" }}><b style={{ color:"#cdbb79", fontSize:10 }}>{slot.label} · {slot.requiredMark}</b><p style={{ fontSize:11 }}>Bu yuvaya bir kadran yerleştir.</p></div>; const rotation=normalizeRotation(rotations[segment.id]); return <div key={slot.id} style={{ minHeight:140, border:"1px solid #655d45", borderRadius:10, padding:9, textAlign:"center", background:"#11150f" }}><b style={{ color:"#cdbb79", fontSize:10 }}>{slot.label} · {slot.requiredMark}</b><div style={{ display:"flex", justifyContent:"space-between", gap:6, color:segment.metal === "krom" ? "#c7d5ec" : "#d1bd80", fontSize:10, margin:"6px 0" }}><span>◁ {segment.leftNotch ?? "?"}</span><span>{segment.rightNotch ?? "?"} ▷</span></div><CompassFace segment={segment} rotation={rotation} /><div style={{ fontSize:10, color:"#8b91ad", margin:"6px 0" }}>{segment.label} · {rotation}°</div><div style={{ display:"flex", justifyContent:"center", gap:6 }}><button type="button" onClick={() => rotate(segment.id,-90)}>↶ 90°</button><button type="button" onClick={() => rotate(segment.id,90)}>↷ 90°</button></div></div>; })}
+      </div>
+      <div style={{ display:"flex", gap:8, flexWrap:"wrap", marginTop:10 }}><button type="button" onClick={reset} style={{ flex:1, padding:10, borderRadius:8, border:"1px solid #262c44", background:"#1c2138", color:"#e8eaf2" }}>{interaction.resetLabel ?? "Kalibrasyonu Temizle"}</button><button type="button" onClick={submit} style={{ flex:1, padding:10, border:0, borderRadius:8, background:"#e0b54e", color:"#1a1205", fontWeight:700 }}>{interaction.submitLabel ?? "Pusulayı Kalibre Et"}</button></div>
+      <button type="button" onClick={askHint} disabled={hintUsed} style={{ width:"100%", marginTop:10, padding:10, borderRadius:8, border:"1px dashed #b45309", background:"transparent", color:"#fbbf24" }}>{hintUsed ? "İpucu açıldı" : "İpucu iste (-" + Number(sifre.hintPenaltySeconds ?? 60) + " sn)"}</button>
+      {hintOpen ? <p style={{ margin:"8px 0 0", padding:9, borderLeft:"2px solid #b45309", background:"rgba(180,83,9,.08)", color:"#fbbf24", fontSize:13 }}>{sifre.cozumIpucu}</p> : null}
+      {result ? <p role="status" style={{ margin:"10px 0 0", padding:10, borderRadius:8, background:result.ok ? "rgba(34,197,94,.12)" : "rgba(220,38,38,.12)", color:result.ok ? "#86efac" : "#fca5a5" }}>{result.ok ? "✓ " : "✕ "}{result.message}</p> : null}
+      {result?.ok ? <><p style={{ margin:"10px 0 0", padding:10, border:"1px solid #22c55e", borderRadius:8, background:"rgba(34,197,94,.08)", color:"#b7f7c8" }}><b>OKUNAN ROTA NOTU</b><br />{p.routeResult}</p>{sifre.aciklama ? <p style={{ margin:"10px 0 0", color:"#8b91ad", fontStyle:"italic", fontSize:13 }}>{sifre.aciklama}</p> : null}</> : null}
+    </section>
+  );
+}
+===== DOSYA SONU =====
+
+===== MEVCUT MİNİ-OYUN DISPATCHERINA EKLENECEK DAL =====
+// Mevcut mini-oyun dispatcher’ında genel sifreli_mesaj fallback’INDEN ÖNCE ekle.
+import BrokenCompassCalibrationMiniGame from "./caseMechanics/BrokenCompassCalibrationMiniGame";
+
+const compassStyle = String(clue?.sifre?.presentation?.style ?? "").toLowerCase();
+if (clue?.mechanicType === "sifreli_mesaj" && compassStyle === "broken_compass_calibration") {
+  return (
+    <BrokenCompassCalibrationMiniGame
+      clue={clue}
+      onSolved={({ clueId }) => markMiniGameSolved?.(clueId)}
+      onRequestHint={({ clueId, penaltySeconds }) => requestHint?.({ clueId, penaltySeconds })}
+    />
+  );
+}
+// Buradan sonra mevcut klasik şifre renderer’ı aynen çalışmaya devam etmeli.
+===== YAMA SONU =====
+
+===== ZORUNLU KABUL TESTLERİ =====
+1. rc_005 vakasında İpucu c3 açıldığında 5 kadran parçası ve 4 yön yuvası görünür.
+- Oyuncu en fazla dört parça seçer; seçili sıra ve her parçanın 90° dönüşü görünür kalır. Krom parçanın sahte olduğu ayrıca etiketlenmez.
+- Rota sonucu başlangıçta gizlidir. Yalnız p1@north/180° → p2@east/270° → p3@south/90° → p4@west/0° dizilimi başarı + onSolved üretir.
+- purposeHint ve yön anahtarı görünürdür; yanlış seçim veya dönüş doğru rota notunu/açıklamayı sızdırmaz. Mobilde parça ve yuva kartları okunur kalır.
+2. Eski klasik sifreli_mesaj, parmak_izi, profil_sentezi ve genel ses_kaydi rendererları regresyona uğramaz.
+===== TEST LİSTESİ SONU =====
+
+===== KANONİK VAKA VERİSİ — mevcut case registry’de rc_005 olarak ekle/değiştir =====
+{
+  "puzzleId": "rc_005",
+  "packId": "pack_004",
+  "packSlug": "realcrime",
+  "stars": "★★★★★",
+  "gridSize": "4x4",
+  "timeLimit": 360,
+  "legalNote": "Tüm karakterler, mekânlar, sefer kayıtları ve ölüm kurgusaldır. Vaka yalnızca tarihî dağ seferi gizemlerinin izolasyon, çelişkili rota kaydı ve kayıp navigasyon ekipmanı atmosferinden esinlenir; gerçek kişi veya mağdurlar temsil edilmez.",
+  "historicalInspiration": "1950’lerdeki kuzey dağ seferleri çevresinde oluşan terk edilmiş kamp, sert hava, çelişkili rota kaydı ve kırılmış seyrüsefer ekipmanı motiflerinin anlatı atmosferinden esinlenilmiştir.",
+  "uiContracts": {
+    "sifreli_mesaj": {
+      "kirik_pusula_kalibrasyonu": {
+        "requiredPresentationStyle": "broken_compass_calibration",
+        "requiredFields": [
+          "sceneLabel",
+          "subtitle",
+          "purposeHint",
+          "segments",
+          "slots",
+          "correctPlacement",
+          "routeResult",
+          "interaction"
+        ],
+        "fallback": "Render every fragment, allow selecting four slots and rotating each fragment by 90 degrees, keep selected order visible, and reveal the route result only after a correct submit."
+      }
+    }
+  },
+  "title": "Kuzey Geçidindeki Kırık Pusula",
+  "subtitle": "1959 Dağ Seferi Dosyası · Kırılmış Seyrüsefer Kaydı · Kurgusal",
+  "difficulty": "Efsane Komiser",
+  "difficultyLevel": 5,
+  "specialMechanic": "sifreli_mesaj_kirik_pusula",
+  "story": "1959’un Şubatında Kuzey Geçidi Araştırma Seferi, planlı dönüşünden bir gece önce beyaz bir fırtınaya yakalandı. Seferin başjeoloğu Arda Koral, kaybolan rota işaretlerini yeniden kontrol etmek için ekibin önünden ayrıldı. Telsiz bağlantısı kesildiğinde yamaçtaki tek işaret lambası hâlâ yanıyordu.\n\nErtesi sabah Arda, geçidin alt kıvrımındaki kapalı barınağın iç bölümünde ölü bulundu; çevrede sürüklenme, çığ ya da dışarıdan zorlanma izi yoktu. İç cebinde dört bakır parçaya ayrılmış eski bir pusula, yanında ise köşeleri koparılmış bir rota kâğıdı vardı. Arda, fırtınadan önce manyetik sapma defterindeki işaretlerin sonradan değiştirildiğini söylemişti. Pusula bir kaza sırasında kırılmamıştı: biri, o geceki gerçek rotayı ve geçidin dışında kimin bulunduğunu saklamak için onu bilerek parçalamıştı. Cevap şimdi kırık metal halkada ve herkesin yanlış hatırlamak istediği yönlerde saklıydı.",
+  "atmosphere": "Rüzgâr, geçidin yüzeyine ince buz tozu savurur. Kapalı barınakta ıslak yün, yakıt ve soğuk metal kokusu kalmıştır. Pusula parçaları masada yan yana geldiğinde, fırtınanın içinde unutulmuş bir yön yeniden belirir.",
+  "suspects": [
+    {
+      "id": "s1",
+      "name": "Meteorolog Nermin Akça",
+      "icon": "🌬️",
+      "description": "Seferin rüzgâr ölçümlerini ve kar yoğunluğu çizelgelerini tutan deneyimli meteorolog.",
+      "detail": "Mavi bantlı alüminyum kar sondasını Rüzgâr Direği dışında kullanmaz; ölçüm defterine yeşil kurşunla yön oku çizer, kırmızı saplı dağ aletlerini çantasına koymaz."
+    },
+    {
+      "id": "s2",
+      "name": "Malzeme Sorumlusu Bora Sarp",
+      "icon": "🧰",
+      "description": "Yakıt, sığınak malzemesi ve telsiz yedeklerinin zimmetini tutan sefer görevlisi.",
+      "detail": "İki pirinç perçinli ocak baca manşonunu bez torbasında taşır; yakıt mühürlerini tarih sırasıyla saklar, sayım bitmeden taş sığınağa uğramaz."
+    },
+    {
+      "id": "s3",
+      "name": "Sefer Fotoğrafçısı Elif Deren",
+      "icon": "📷",
+      "description": "Beyaz fırtınada rota fotoğraflarını ve buz çizgilerini kayda alan bağımsız fotoğrafçı.",
+      "detail": "Kehribar film kutularını siyah kamera çantasında tutar; üç ayaklı tripodunu Buzul Eşiği’nde kurar, kırmızı saplı buz kazması yerine magnezyum işaret fişeği taşır."
+    },
+    {
+      "id": "s4",
+      "name": "Dağ Rehberi Cem Onat",
+      "icon": "🧭",
+      "description": "Geçidin güvenli rotasını belirleyen, sığınak anahtarına ve geçit işaretlerine erişimi olan kıdemli rehber.",
+      "detail": "Kırmızı saplı buz kazmasını kemerine bağlar; Taş Sığınak’ın iç kapısının anahtarını siyah kordonla boynunda taşır, fırtınada ekibi kısa yol diye kuzey yarığına yönlendirmeyi savunur."
+    }
+  ],
+  "weapons": [
+    {
+      "id": "w1",
+      "name": "Mavi Bantlı Kar Sondası",
+      "icon": "📏",
+      "description": "Rüzgârla taşınan karın sertliğini ölçmek için kullanılan, ince alüminyum uçlu arazi sondası.",
+      "detail": "Uç kısmında mavi izolasyon bandı ve dereceli kar işaretleri bulunur."
+    },
+    {
+      "id": "w2",
+      "name": "Pirinç Perçinli Ocak Manşonu",
+      "icon": "🔥",
+      "description": "Sefer ocağının baca bağlantısını sabitlemek için kullanılan, iki pirinç perçinli sıcaklık manşonu.",
+      "detail": "Is ve yakıt mührü izi tutar; bez torbada taşınır."
+    },
+    {
+      "id": "w3",
+      "name": "Kırmızı Saplı Buz Kazması",
+      "icon": "⛏️",
+      "description": "Dik buz yüzeylerinde denge almak ve sabitlenmek için kullanılan, dar kama uçlu dağ aleti.",
+      "detail": "Sapındaki kırmızı emaye, taş yüzeyde ve kumaşta ince döküntü bırakabilir."
+    },
+    {
+      "id": "w4",
+      "name": "Magnezyum İşaret Fişeği",
+      "icon": "🚩",
+      "description": "Düşük görüşte rota noktasını işaretlemek için kullanılan parlak magnezyum işaret düzeneği.",
+      "detail": "Siyah bir taşıma kılıfı ve kısa süreli beyaz yanık tortusu bırakır."
+    }
+  ],
+  "locations": [
+    {
+      "id": "l1",
+      "name": "Rüzgâr Direği",
+      "icon": "🌫️",
+      "description": "Geçidin açık yamacında, rüzgâr ölçer ve kar derinliği çizelgesinin sabitlendiği metal direk.",
+      "detail": "Mavi bantlı kar sondasının ölçüm ucu ve yön okları burada görülür."
+    },
+    {
+      "id": "l2",
+      "name": "Telsiz Kulübesi",
+      "icon": "📻",
+      "description": "Yedek batarya, yakıt fişi ve sefer saatinin tutulduğu küçük ahşap iletişim kulübesi.",
+      "detail": "Yakıt fişleri ile bez torbalı bakım malzemeleri burada sayılır."
+    },
+    {
+      "id": "l3",
+      "name": "Taş Sığınak",
+      "icon": "🪨",
+      "description": "Geçidin alt kıvrımında, iç kapısı siyah kordonlu tek anahtarla açılan dar taş barınak.",
+      "detail": "Kapalı bölümünde rüzgâr kesilir; kırmızı emaye döküntüsü taş zeminde kolay fark edilir."
+    },
+    {
+      "id": "l4",
+      "name": "Buzul Eşiği",
+      "icon": "🧊",
+      "description": "Fotoğraf için geniş görüş veren, buz yarığının üstündeki açık ve tehlikeli geçiş hattı.",
+      "detail": "Tripod ayakları ve işaret fişeği tortusu kar kabuğunda belirgin iz bırakır."
+    }
+  ],
+  "clues": [
+    {
+      "id": "c1",
+      "title": "Emaye Pul ve Kesit",
+      "type": "adli",
+      "mechanicType": "text",
+      "text": "Adli muayene, Hakan’ın ölümüne ince kama kesitli bir metal aletin yol açtığını; parkasındaki iki paralel çizgide koyu emaye pul kaldığını saptadı. Dereceli ölçüm çubuğunda bu kesit ya da kaplama bulunmaz.",
+      "deductionHint": "İzlerin biçimi, hangi iki kartın aynı rotada buluşamayacağını düşündürüyor?",
+      "isBonus": false,
+      "revealOrder": 1,
+      "isRevealed": true,
+      "pointCost": 0
+    },
+    {
+      "id": "c2",
+      "title": "Mühürlü Bez Torba",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Fırtınada ıslanmış bez torbanın içinden iki küçük metal yuvalı bir ısı bağlantı halkası ile aynı akşamın numaralı sarf mühürleri çıktı. Torbanın düğümü, zimmet defterinde tarif edilen bakım düzeniyle birebir örtüşüyordu.",
+      "deductionHint": "Metal yuvalı halka, sarf mühürleri ve bez torba hangi görevlinin günlük bakım aracını birlikte tarif ediyor?",
+      "isBonus": false,
+      "revealOrder": 2,
+      "isRevealed": false,
+      "pointCost": 80
+    },
+    {
+      "id": "c3",
+      "title": "Kırık Pusulanın İç Halkası",
+      "type": "sifreli",
+      "mechanicType": "sifreli_mesaj",
+      "text": "Hakan’ın iç cebinden çıkan pusula başlığı dört bakır kadrana ayrılmıştı. Beşinci parça aynı alaşımdan görünse de ışığı farklı yansıtıyordu; gerçek parçalardaki yarım oklar ve dış çentikler hâlâ seçilebiliyordu.",
+      "deductionHint": "Bakır parçaların sağ–sol çentiklerini kapalı bir halka yapacak sıraya koy; ardından üstteki dış işaretleri yön yuvalarındaki simgelerle eşleştir.",
+      "isBonus": false,
+      "revealOrder": 3,
+      "isRevealed": false,
+      "pointCost": 80,
+      "sifre": {
+        "sifrelenmis": "KIRIK PUSULA / DÖRT GERÇEK KADRANI YÖNLENDİR",
+        "sifreleTuru": "kirik_pusula_kalibrasyonu",
+        "cozumIpucu": "Parlak krom kenarlı parçayı dışarıda bırak. Dört bakır parçanın sağ–sol çentikleri kapalı bir halka oluşturur; doğru sırayı bulduktan sonra her kadranı döndürerek üstteki dış işareti yön yuvasındaki simgeyle eşleştir.",
+        "cozulmus": "ELİF / BUZUL EŞİĞİ",
+        "aciklama": "Pusula halkası doğru kurulduğunda, dedektif ızgarasında bir şüpheli–mekân bağlantısı kesinleşir; nihai üçlüyü tek başına söylemez.",
+        "presentation": {
+          "style": "broken_compass_calibration",
+          "title": "Kırık Pusula Kalibrasyonu",
+          "subtitle": "Dört bakır parçayı seç; kenar çentiklerini halka boyunca eşleştir, dış işareti yön yuvasına çevir.",
+          "sceneLabel": "KUZEY GEÇİDİ / KIRILMIŞ SEYRÜSEFER PUSULASI",
+          "purposeHint": "Kadranları doğru yönlendirdiğinde, ızgarada bir şüpheli–mekân bağlantısını kesinleştirecek rota notu açılır.",
+          "northKey": "KULÜBE DEFTERİ: ❄ kuzey · △ doğu · □ güney · ○ batı",
+          "slots": [
+            {
+              "id": "north",
+              "label": "KUZEY",
+              "requiredMark": "❄"
+            },
+            {
+              "id": "east",
+              "label": "DOĞU",
+              "requiredMark": "△"
+            },
+            {
+              "id": "south",
+              "label": "GÜNEY",
+              "requiredMark": "□"
+            },
+            {
+              "id": "west",
+              "label": "BATI",
+              "requiredMark": "○"
+            }
+          ],
+          "segments": [
+            {
+              "id": "p1",
+              "label": "Kadran I",
+              "metal": "bakır",
+              "slotHint": "❄",
+              "marks": [
+                "△",
+                "○",
+                "❄",
+                "□"
+              ],
+              "initialRotation": 0,
+              "correctSlot": "north",
+              "correctRotation": 180,
+              "innerRune": "ᚱ",
+              "leftNotch": "⋔",
+              "rightNotch": "⌒"
+            },
+            {
+              "id": "p2",
+              "label": "Kadran II",
+              "metal": "bakır",
+              "slotHint": "△",
+              "marks": [
+                "○",
+                "△",
+                "□",
+                "❄"
+              ],
+              "initialRotation": 90,
+              "correctSlot": "east",
+              "correctRotation": 270,
+              "innerRune": "ᚬ",
+              "leftNotch": "⌒",
+              "rightNotch": "⊔"
+            },
+            {
+              "id": "p3",
+              "label": "Kadran III",
+              "metal": "bakır",
+              "slotHint": "□",
+              "marks": [
+                "△",
+                "❄",
+                "○",
+                "□"
+              ],
+              "initialRotation": 270,
+              "correctSlot": "south",
+              "correctRotation": 90,
+              "innerRune": "ᚦ",
+              "leftNotch": "⊔",
+              "rightNotch": "⌟"
+            },
+            {
+              "id": "p4",
+              "label": "Kadran IV",
+              "metal": "bakır",
+              "slotHint": "○",
+              "marks": [
+                "○",
+                "□",
+                "❄",
+                "△"
+              ],
+              "initialRotation": 180,
+              "correctSlot": "west",
+              "correctRotation": 0,
+              "innerRune": "ᚾ",
+              "leftNotch": "⌟",
+              "rightNotch": "⋔"
+            },
+            {
+              "id": "p5",
+              "label": "Kadran V",
+              "metal": "krom",
+              "slotHint": "✕",
+              "marks": [
+                "✕",
+                "✕",
+                "✕",
+                "✕"
+              ],
+              "initialRotation": 0,
+              "isDecoy": true,
+              "innerRune": "—",
+              "leftNotch": "⊠",
+              "rightNotch": "⊠"
+            }
+          ],
+          "correctPlacement": [
+            {
+              "segmentId": "p1",
+              "slotId": "north",
+              "rotation": 180
+            },
+            {
+              "segmentId": "p2",
+              "slotId": "east",
+              "rotation": 270
+            },
+            {
+              "segmentId": "p3",
+              "slotId": "south",
+              "rotation": 90
+            },
+            {
+              "segmentId": "p4",
+              "slotId": "west",
+              "rotation": 0
+            }
+          ],
+          "routeResult": "ELİF · BUZUL EŞİĞİ",
+          "interaction": {
+            "mode": "select_place_rotate_submit",
+            "selectLabel": "Kadranı Halkaya Yerleştir",
+            "rotateLeftLabel": "↶ 90°",
+            "rotateRightLabel": "↷ 90°",
+            "resetLabel": "Kalibrasyonu Temizle",
+            "submitLabel": "Pusulayı Kalibre Et",
+            "successMessage": "İç halka kapandı. Rota notu okunuyor: ELİF · BUZUL EŞİĞİ.",
+            "failureMessage": "Halka henüz kapanmadı. Krom kenarlı sahte parçayı çıkar; yön işaretlerini kulübe defterindeki sıraya göre döndür."
+          },
+          "accessibility": {
+            "description": "Beş kadrandan yalnız dördü bakırdır. Bakır parçaları kuzey, doğu, güney ve batı yuvalarına seçip 90 derece adımlarla döndürün. Her yuvadaki dış işaret kulübe defterindeki yön işaretiyle aynı olmalıdır.",
+            "keyboardFriendly": true
+          },
+          "mobile": {
+            "singleColumnSegments": true,
+            "minCardWidthPx": 138,
+            "stickySelection": true
+          },
+          "challenge": "Parlak krom kenarlı beşinci kadran pusulanın parçası değildir. Bakır parçaların sağ ve sol çentikleri kapalı bir halka kurar; ardından her parçanın üstteki dış işareti, yerleştiği yön yuvasının işaretiyle aynı olmalıdır."
+        },
+        "answerAliases": [
+          "ELİF / BUZUL EŞİĞİ",
+          "ELİF BUZUL EŞİĞİ",
+          "ELIF / BUZUL ESIĞI",
+          "ELIF BUZUL ESIGI"
+        ]
+      }
+    },
+    {
+      "id": "c4",
+      "title": "İç Kapıdaki Boş Satır",
+      "type": "tanik",
+      "mechanicType": "text",
+      "text": "Gece nöbetçisi, sayım görevlisinin numaralı fişleri bitirdikten sonra kendi çalışma çevresinden ayrılmadığını söyledi. Kapalı bölümün iç kapısındaki imza satırı o saat için boş kaldı; zeminde yalnız tek bir dönüş izi vardı.",
+      "deductionHint": "Sayım işi bitince yerinden ayrılmayan görevli, iç kapıdaki boş imzayla birlikte hangi noktadan dışlanır?",
+      "isBonus": false,
+      "revealOrder": 4,
+      "isRevealed": false,
+      "pointCost": 80
+    },
+    {
+      "id": "c5",
+      "title": "Kamera Çantasındaki Eksik İz",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Siyah çekim çantasından kehribar film kutuları ve üç ayaklı sehpa kilitleri çıktı. İç astarda ince metal uca ait taşıma kayışı sürtünmesi ya da koyu emaye pul yoktu; buna karşılık kısa süreli beyaz yanık tortusu vardı.",
+      "deductionHint": "Çantada bulunmayan taşıma izi ile görünen beyaz tortu, hangi araçla kurulabilecek bağlantıyı dışarıda bırakır?",
+      "isBonus": false,
+      "revealOrder": 5,
+      "isRevealed": false,
+      "pointCost": 80
+    },
+    {
+      "id": "c6",
+      "title": "Ölçüm İşaretindeki Bant",
+      "type": "adli",
+      "mechanicType": "text",
+      "text": "Açık yamaca sabitlenmiş metal düzeneğin tabanında, dereceli bir ölçüm ucuna karışmış alüminyum çubuk bulundu. Yüzeyde kurum, beyaz yanık tortusu ya da koyu emaye pul yoktu.",
+      "deductionHint": "Ölçüm ucunun bulunduğu sabit düzenek, hangi araç–nokta bağını sabitler?",
+      "isBonus": false,
+      "revealOrder": 6,
+      "isRevealed": false,
+      "pointCost": 80
+    },
+    {
+      "id": "c7",
+      "title": "Yeşil Kurşunlu Ölçüm Sayfası",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Ölçüm çizelgesinin arkasındaki yeşil kurşun okları, dereceli çubuğun üç ayrı kayıtta aynı açık işarete yerleştirildiğini gösteriyordu. Kenarda üç ayaklı sehpa ya da sarf mühürü izi yoktu.",
+      "deductionHint": "Yeşil yön okları, hangi ölçüm rutinini hangi ince araçla birleştirir?",
+      "isBonus": true,
+      "revealOrder": 7,
+      "isRevealed": false,
+      "pointCost": 55
+    },
+    {
+      "id": "c8",
+      "title": "Siyah Kordondaki Pul",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Kapalı bölümün anahtar kordonunda, karla karışmış iki koyu emaye pul ve bilek kayışına uyan siyah lif bulundu. Kordon, fırtınada dış kapıyı açan kişinin boynunda taşınmıştı.",
+      "deductionHint": "Koyu emaye ve siyah kordon, hangi rehber rutinini hangi dağ aletiyle birleştirir?",
+      "isBonus": true,
+      "revealOrder": 8,
+      "isRevealed": false,
+      "pointCost": 55
+    }
+  ],
+  "assetManifest": [],
+  "solution": {
+    "suspectId": "s4",
+    "weaponId": "w3",
+    "locationId": "l3"
+  },
+  "solutionNarrative": "Dağ Rehberi Cem Onat, Hakan’ın manyetik sapma defterindeki oynama izlerini sefer dönüşünde açıklayacağını öğrenince onu Taş Sığınak’ın kapalı bölümüne çağırdı. Hakan’ın ölümüne Cem’in kırmızı saplı buz kazması yol açtı. Kırık pusula, Cem’in saklamak istediği yönü değil, Elif’in fırtına sırasında Buzul Eşiği’nde olduğunu gösteriyordu; geriye kalan ızgara eşleşmeleri gerçek üçlüyü bıraktı.",
+  "replitIntegration": {
+    "schema": "fm_replit_runtime_contract_v1",
+    "copyTarget": "Replit Agent prompt",
+    "canonicalCaseFile": "src/data/cases/rc_005.json",
+    "policy": "Var olan renderer varsa onu bozma; yoksa bu paketteki component ve dispatcher dalını ekle.",
+    "mechanics": [
+      {
+        "clueId": "c3",
+        "mechanicType": "sifreli_mesaj",
+        "renderer": "broken_compass_calibration",
+        "componentFile": "src/components/caseMechanics/BrokenCompassCalibrationMiniGame.jsx",
+        "dispatcherBranch": "clue.mechanicType === \"sifreli_mesaj\" && clue.sifre?.presentation?.style === \"broken_compass_calibration\"",
+        "completionEvent": "onSolved({ clueId, mechanic: \"broken_compass_calibration\" })",
+        "hintEvent": "onRequestHint({ clueId, penaltySeconds: 60 })",
+        "requiredData": [
+          "sceneLabel",
+          "purposeHint",
+          "northKey",
+          "segments",
+          "slots",
+          "correctPlacement",
+          "routeResult",
+          "interaction"
+        ],
+        "nonNegotiable": [
+          "Beş kadranı veri içinden render et; krom parçada isDecoy bilgisini oyuncuya ayrı etiketle gösterme.",
+          "Oyuncunun yerleştirdiği sıra ve her kadranın 90° dönüşü görünür kalmalı; doğru dizilişi otomatik kurma.",
+          "routeResult ve açıklama yalnız doğru submit sonrasında görünmeli; yanlış deneme doğru rotayı sızdırmamalı.",
+          "purposeHint ile kuzey anahtarını görünür göster; ipucu yalnız ilk tıklamada ceza callbacki üretmeli.",
+          "Mobilde parça paleti ve dört yön yuvası okunabilir kalmalı; hiçbir hedef isim component içine sabitlenmemeli."
+        ]
+      }
+    ]
+  }
+}
+===== VAKA VERİSİ SONU =====

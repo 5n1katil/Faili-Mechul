@@ -820,6 +820,173 @@ function ThermalSequenceBlock({
   );
 }
 
+function TornRouteReconstructionBlock({
+  sifre,
+  isSolved,
+  onSolve,
+}: {
+  sifre: ClueSifre;
+  isSolved: boolean;
+  onSolve: () => void;
+}) {
+  const { addTimePenalty } = useGame();
+  const p = sifre.presentation ?? {};
+  const pieces: Array<{ id: string; label: string; leftTear: string; rightTear: string; text: string }> =
+    Array.isArray((p as Record<string, unknown>).pieces) ? (p as Record<string, unknown>).pieces as Array<{ id: string; label: string; leftTear: string; rightTear: string; text: string }> : [];
+  const correctOrder: string[] = Array.isArray((p as Record<string, unknown>).correctOrder) ? (p as Record<string, unknown>).correctOrder as string[] : [];
+  const interaction: Record<string, string> = ((p as Record<string, unknown>).interaction as Record<string, string>) ?? {};
+  const max = correctOrder.length;
+
+  const [selected, setSelected] = React.useState<string[]>([]);
+  const [result, setResult] = React.useState<{ ok: boolean; message: string } | null>(null);
+  const [hintRevealed, setHintRevealed] = React.useState(false);
+
+  if (isSolved) {
+    return (
+      <View style={styles.miniGameSolvedBlock}>
+        <MaterialIcons name="check-circle" size={20} color="#22c55e" />
+        <Text style={styles.miniGameSolvedText}>Rota Kuruldu!</Text>
+        <View style={styles.miniGameAnswer}>
+          <Text style={styles.miniGameAnswerText}>{String((p as Record<string, unknown>).routeResult ?? "")}</Text>
+        </View>
+        <Text style={styles.miniGameAciklama}>{sifre.aciklama}</Text>
+      </View>
+    );
+  }
+
+  const toggle = (id: string) => {
+    setResult(null);
+    setSelected(prev =>
+      prev.includes(id)
+        ? prev.filter(v => v !== id)
+        : prev.length < max ? [...prev, id] : prev
+    );
+  };
+
+  const reset = () => { setSelected([]); setResult(null); };
+
+  const submit = () => {
+    const ok =
+      selected.length === correctOrder.length &&
+      selected.every((id, i) => id === correctOrder[i]);
+    const message = ok
+      ? (interaction.successMessage ?? "Rota doğru kuruldu.")
+      : (interaction.failureMessage ?? "Yırtık sırası hatalı — tekrar dene.");
+    setResult({ ok, message });
+    if (ok) onSolve();
+  };
+
+  const handleHint = () => {
+    if (hintRevealed) return;
+    addTimePenalty(60);
+    setHintRevealed(true);
+  };
+
+  return (
+    <View style={styles.tornRouteBlock}>
+      <View style={styles.tornRouteHeader}>
+        <MaterialIcons name="route" size={14} color="#D4A843" />
+        <Text style={styles.tornRouteHeaderText}>
+          {String((p as Record<string, unknown>).title ?? "YIRTIK ROTA SAYFASI")}
+        </Text>
+      </View>
+      {(p as Record<string, unknown>).purposeHint ? (
+        <View style={styles.tornRoutePurposeHint}>
+          <Text style={styles.tornRoutePurposeLabel}>ÇÖZÜMÜN İŞLEVİ</Text>
+          <Text style={styles.tornRoutePurposeText}>{String((p as Record<string, unknown>).purposeHint)}</Text>
+        </View>
+      ) : null}
+      {(p as Record<string, unknown>).subtitle ? (
+        <Text style={styles.tornRouteSubtitle}>{String((p as Record<string, unknown>).subtitle)}</Text>
+      ) : null}
+      <View style={styles.tornRoutePiecesGrid}>
+        {pieces.map(piece => {
+          const pos = selected.indexOf(piece.id);
+          const isSelected = pos >= 0;
+          return (
+            <Pressable
+              key={piece.id}
+              style={[styles.tornRoutePiece, isSelected && styles.tornRoutePieceSelected]}
+              onPress={() => toggle(piece.id)}
+            >
+              <View style={styles.tornRouteTearRow}>
+                <Text style={styles.tornRouteTear}>◁ {piece.leftTear}</Text>
+                <Text style={styles.tornRoutePieceLabel}>{piece.label}</Text>
+                <Text style={styles.tornRouteTear}>{piece.rightTear} ▷</Text>
+              </View>
+              <Text style={styles.tornRoutePieceText}>{piece.text}</Text>
+              {isSelected && (
+                <View style={styles.tornRouteBadge}>
+                  <Text style={styles.tornRouteBadgeText}>{pos + 1}</Text>
+                </View>
+              )}
+            </Pressable>
+          );
+        })}
+      </View>
+      <View style={styles.tornRouteOrderBox}>
+        <Text style={styles.tornRouteOrderLabel}>SEÇİLEN ROTA SIRASI</Text>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginTop: 6 }}>
+          <View style={{ flexDirection: "row", alignItems: "center", flexWrap: "nowrap" }}>
+            {selected.length === 0 ? (
+              <Text style={styles.tornRouteOrderEmpty}>Önce yırtık parçaları seç.</Text>
+            ) : selected.map((id, i) => {
+              const pc = pieces.find(x => x.id === id);
+              return (
+                <React.Fragment key={id}>
+                  {i > 0 && <Text style={styles.tornRouteArrow}> → </Text>}
+                  <Text style={styles.tornRouteOrderItem}>{pc?.label}</Text>
+                </React.Fragment>
+              );
+            })}
+          </View>
+        </ScrollView>
+      </View>
+      <View style={styles.tornRouteBtnRow}>
+        <Pressable style={styles.tornRouteResetBtn} onPress={reset}>
+          <Text style={styles.tornRouteResetText}>{interaction.resetLabel ?? "Temizle"}</Text>
+        </Pressable>
+        <Pressable
+          style={[styles.tornRouteSubmitBtn, selected.length !== max && styles.tornRouteSubmitBtnDisabled]}
+          onPress={submit}
+          disabled={selected.length !== max}
+        >
+          <Text style={styles.tornRouteSubmitText}>{interaction.submitLabel ?? "Rotayı Doğrula"}</Text>
+        </Pressable>
+      </View>
+      <Pressable
+        style={[styles.tornRouteHintBtn, hintRevealed && styles.tornRouteHintBtnUsed]}
+        onPress={handleHint}
+        disabled={hintRevealed}
+      >
+        <Text style={styles.tornRouteHintText}>
+          {hintRevealed ? "İpucu açıldı" : "İpucu iste (-60 sn)"}
+        </Text>
+      </Pressable>
+      {hintRevealed && (
+        <View style={styles.tornRouteHintReveal}>
+          <Text style={styles.tornRouteHintRevealText}>{sifre.cozumIpucu}</Text>
+        </View>
+      )}
+      {result && (
+        <View style={[styles.tornRouteResult, result.ok ? styles.tornRouteResultOk : styles.tornRouteResultFail]}>
+          <Text style={[styles.tornRouteResultText, result.ok ? styles.tornRouteResultTextOk : styles.tornRouteResultTextFail]}>
+            {result.ok ? "✓ " : "✕ "}{result.message}
+          </Text>
+        </View>
+      )}
+      {result?.ok && (
+        <View style={styles.tornRouteRouteResult}>
+          <Text style={styles.tornRouteRouteResultLabel}>TAMAMLANAN ROTA</Text>
+          <Text style={styles.tornRouteRouteResultText}>
+            {String((p as Record<string, unknown>).routeResult ?? "")}
+          </Text>
+        </View>
+      )}
+    </View>
+  );
+}
+
 function SifreliMesajBlock({
   sifre,
   isSolved,
@@ -867,6 +1034,10 @@ function SifreliMesajBlock({
       setTimeout(() => setKomutWrong(false), 2000);
     }
   };
+
+  if (sifre.presentation?.style === "torn_route_reconstruction") {
+    return <TornRouteReconstructionBlock sifre={sifre} isSolved={isSolved} onSolve={onSolve} />;
+  }
 
   if (sifre.presentation?.style === "symbol_crossgrid") {
     return <SymbolCrossgridBlock sifre={sifre} isSolved={isSolved} onSolve={onSolve} />;
@@ -1580,6 +1751,118 @@ function TimelineSortBlock({
   );
 }
 
+function FrameShadowProfileBlock({
+  profilSenteziVerisi,
+  isSolved,
+  onSolve,
+  suspects,
+}: {
+  profilSenteziVerisi: import("../data/puzzles").ClueProfilSenteziVerisi;
+  isSolved?: boolean;
+  onSolve: () => void;
+  suspects: import("../data/puzzles").Suspect[];
+}) {
+  const presentation = profilSenteziVerisi.presentation ?? {};
+  const [selectedId, setSelectedId] = React.useState<string | null>(null);
+  const [result, setResult] = React.useState<{ ok: boolean; message: string } | null>(null);
+
+  if (isSolved) {
+    return (
+      <View style={styles.profilBlock}>
+        <View style={styles.profilHeader}>
+          <MaterialIcons name="image-search" size={14} color="#D4A843" />
+          <Text style={styles.profilHeaderText}>ÇERÇEVE GÖLGESİ PROFİLİ</Text>
+        </View>
+        <View style={styles.profilSolvedBadge}>
+          <MaterialIcons name="check-circle" size={14} color="#22c55e" />
+          <Text style={styles.profilSolvedText}>{profilSenteziVerisi.successText}</Text>
+        </View>
+      </View>
+    );
+  }
+
+  const select = (suspectId: string) => {
+    if (result?.ok) return;
+    setSelectedId(suspectId);
+    const ok = suspectId === profilSenteziVerisi.answerSuspectId;
+    setResult({
+      ok,
+      message: ok ? profilSenteziVerisi.successText : profilSenteziVerisi.failureText,
+    });
+    if (ok) onSolve();
+  };
+
+  return (
+    <View style={styles.frameShadowBlock}>
+      <View style={styles.profilHeader}>
+        <MaterialIcons name="image-search" size={14} color="#D4A843" />
+        <Text style={styles.profilHeaderText}>
+          {String(presentation.sceneLabel ?? "ÇERÇEVE GÖLGESİ PROFİLİ")}
+        </Text>
+      </View>
+      <View style={styles.frameShadowScene}>
+        <View style={styles.frameShadowSilhouette} />
+        <Text style={styles.frameShadowReflectionNote}>
+          {String(presentation.reflectionNote ?? "Yüz seçilemiyor; fiziksel izleri karşılaştır.")}
+        </Text>
+      </View>
+      {presentation.purposeHint ? (
+        <View style={styles.tornRoutePurposeHint}>
+          <Text style={styles.tornRoutePurposeLabel}>ÇÖZÜMÜN İŞLEVİ</Text>
+          <Text style={styles.tornRoutePurposeText}>{String(presentation.purposeHint)}</Text>
+        </View>
+      ) : null}
+      <Text style={styles.profilAciklama}>{profilSenteziVerisi.aciklama}</Text>
+      <Text style={styles.frameShadowEvidenceLabel}>
+        {String(presentation.physicalEvidenceLabel ?? "FİZİKSEL İŞARETLER")}
+      </Text>
+      <View style={styles.profilDelilRow}>
+        {profilSenteziVerisi.delilKartlari.map((card, i) => (
+          <View key={card.id ?? String(i)} style={styles.profilDelilKart}>
+            <Text style={styles.profilDelilBaslik}>{card.baslik}</Text>
+            <Text style={styles.profilDelilMetin}>{card.metin}</Text>
+          </View>
+        ))}
+      </View>
+      <Text style={styles.frameShadowSelectLabel}>PROFİLİ SEÇ — ŞÜPHELİ KARTLARINI İNCELE</Text>
+      <View style={styles.profilOptionsRow}>
+        {profilSenteziVerisi.optionSuspectIds.map(sid => {
+          const suspectName = suspects.find(s => s.id === sid)?.name ?? sid.toUpperCase();
+          const isSelected = selectedId === sid;
+          const isCorrect = isSelected && result?.ok;
+          const isWrong = isSelected && result && !result.ok;
+          return (
+            <Pressable
+              key={sid}
+              style={[
+                styles.profilOption,
+                isSelected && styles.profilOptionSelected,
+                isCorrect ? styles.frameShadowOptionCorrect : undefined,
+                isWrong ? styles.frameShadowOptionWrong : undefined,
+              ]}
+              onPress={() => select(sid)}
+            >
+              <View style={[styles.profilRadio, isSelected && styles.profilRadioSelected]}>
+                {isSelected && <View style={styles.profilRadioDot} />}
+              </View>
+              <Text style={[styles.profilOptionText, isSelected && styles.profilOptionTextSelected]}>
+                {suspectName}
+              </Text>
+            </Pressable>
+          );
+        })}
+      </View>
+      {result && (
+        <View style={[styles.tornRouteResult, result.ok ? styles.tornRouteResultOk : styles.tornRouteResultFail]}>
+          <Text style={[styles.tornRouteResultText, result.ok ? styles.tornRouteResultTextOk : styles.tornRouteResultTextFail]}>
+            {result.ok ? "✓ " : "✕ "}{result.message}
+          </Text>
+        </View>
+      )}
+    </View>
+  );
+}
+
 function ProfilSenteziBlock({
   profilSenteziVerisi,
   isSolved,
@@ -1593,6 +1876,17 @@ function ProfilSenteziBlock({
   const suspects = gameState?.puzzle?.suspects ?? [];
   const [selected, setSelected] = React.useState<string | null>(null);
   const [wrong, setWrong] = React.useState(false);
+
+  if (profilSenteziVerisi.presentation?.style === "frame_shadow_profile") {
+    return (
+      <FrameShadowProfileBlock
+        profilSenteziVerisi={profilSenteziVerisi}
+        isSolved={isSolved}
+        onSolve={onSolve}
+        suspects={suspects}
+      />
+    );
+  }
 
   if (isSolved) {
     return (
@@ -3671,5 +3965,298 @@ const styles = StyleSheet.create({
     color: "#555",
     letterSpacing: 0.5,
     marginBottom: 5,
+  },
+
+  tornRouteBlock: {
+    marginTop: 10,
+    padding: 12,
+    borderWidth: 1,
+    borderColor: "#2e3550",
+    borderRadius: 12,
+    backgroundColor: "#10131f",
+  },
+  tornRouteHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+    marginBottom: 8,
+  },
+  tornRouteHeaderText: {
+    fontSize: 11,
+    fontWeight: "700",
+    letterSpacing: 1.2,
+    color: "#D4A843",
+  },
+  tornRoutePurposeHint: {
+    marginBottom: 10,
+    padding: 9,
+    borderLeftWidth: 2,
+    borderLeftColor: "#D4A843",
+    backgroundColor: "rgba(212,168,67,0.06)",
+    borderRadius: 4,
+  },
+  tornRoutePurposeLabel: {
+    fontSize: 9,
+    fontWeight: "800",
+    letterSpacing: 1.2,
+    color: "#D4A843",
+    marginBottom: 3,
+  },
+  tornRoutePurposeText: {
+    fontSize: 12,
+    color: "#ecd99a",
+    lineHeight: 17,
+  },
+  tornRouteSubtitle: {
+    fontSize: 12,
+    color: "#8b91ad",
+    marginBottom: 10,
+    lineHeight: 16,
+  },
+  tornRoutePiecesGrid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 8,
+    marginBottom: 10,
+  },
+  tornRoutePiece: {
+    width: "47%",
+    minWidth: 140,
+    borderWidth: 1,
+    borderColor: "#5a5135",
+    borderRadius: 10,
+    backgroundColor: "#1c1e14",
+    padding: 10,
+    position: "relative",
+  },
+  tornRoutePieceSelected: {
+    borderColor: "#22c55e",
+    backgroundColor: "#172b1e",
+  },
+  tornRouteTearRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: 8,
+  },
+  tornRouteTear: {
+    fontSize: 9,
+    color: "#cdbb79",
+  },
+  tornRoutePieceLabel: {
+    fontSize: 9,
+    fontWeight: "700",
+    color: "#cdbb79",
+  },
+  tornRoutePieceText: {
+    fontSize: 13,
+    fontWeight: "700",
+    color: "#f4eccb",
+    lineHeight: 18,
+  },
+  tornRouteBadge: {
+    position: "absolute",
+    right: 8,
+    bottom: 8,
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    backgroundColor: "#22c55e",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  tornRouteBadgeText: {
+    fontSize: 11,
+    fontWeight: "900",
+    color: "#07110a",
+  },
+  tornRouteOrderBox: {
+    marginBottom: 10,
+    padding: 9,
+    borderWidth: 1,
+    borderStyle: "dashed",
+    borderColor: "#655d45",
+    borderRadius: 10,
+    backgroundColor: "#10120e",
+  },
+  tornRouteOrderLabel: {
+    fontSize: 9,
+    fontWeight: "800",
+    letterSpacing: 1.2,
+    color: "#D4A843",
+  },
+  tornRouteOrderEmpty: {
+    fontSize: 12,
+    color: "#8b91ad",
+  },
+  tornRouteOrderItem: {
+    fontSize: 12,
+    color: "#d6dae8",
+  },
+  tornRouteArrow: {
+    fontSize: 12,
+    color: "#8b91ad",
+  },
+  tornRouteBtnRow: {
+    flexDirection: "row",
+    gap: 8,
+    marginBottom: 8,
+  },
+  tornRouteResetBtn: {
+    flex: 1,
+    padding: 10,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: "#2e3550",
+    backgroundColor: "#1c2138",
+    alignItems: "center",
+  },
+  tornRouteResetText: {
+    fontSize: 13,
+    color: "#e8eaf2",
+  },
+  tornRouteSubmitBtn: {
+    flex: 1,
+    padding: 10,
+    borderRadius: 8,
+    backgroundColor: "#D4A843",
+    alignItems: "center",
+  },
+  tornRouteSubmitBtnDisabled: {
+    opacity: 0.4,
+  },
+  tornRouteSubmitText: {
+    fontSize: 13,
+    fontWeight: "700",
+    color: "#1a1205",
+  },
+  tornRouteHintBtn: {
+    padding: 10,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderStyle: "dashed",
+    borderColor: "#b45309",
+    alignItems: "center",
+    marginBottom: 6,
+  },
+  tornRouteHintBtnUsed: {
+    opacity: 0.5,
+  },
+  tornRouteHintText: {
+    fontSize: 13,
+    color: "#fbbf24",
+  },
+  tornRouteHintReveal: {
+    marginBottom: 6,
+    padding: 9,
+    borderLeftWidth: 2,
+    borderLeftColor: "#b45309",
+    backgroundColor: "rgba(180,83,9,0.08)",
+    borderRadius: 4,
+  },
+  tornRouteHintRevealText: {
+    fontSize: 12,
+    color: "#fbbf24",
+    lineHeight: 17,
+  },
+  tornRouteResult: {
+    marginTop: 8,
+    padding: 10,
+    borderRadius: 8,
+  },
+  tornRouteResultOk: {
+    backgroundColor: "rgba(34,197,94,0.12)",
+  },
+  tornRouteResultFail: {
+    backgroundColor: "rgba(220,38,38,0.12)",
+  },
+  tornRouteResultText: {
+    fontSize: 13,
+    lineHeight: 18,
+  },
+  tornRouteResultTextOk: {
+    color: "#86efac",
+  },
+  tornRouteResultTextFail: {
+    color: "#fca5a5",
+  },
+  tornRouteRouteResult: {
+    marginTop: 8,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: "#22c55e",
+    borderRadius: 8,
+    backgroundColor: "rgba(34,197,94,0.08)",
+  },
+  tornRouteRouteResultLabel: {
+    fontSize: 9,
+    fontWeight: "800",
+    letterSpacing: 1.2,
+    color: "#22c55e",
+    marginBottom: 4,
+  },
+  tornRouteRouteResultText: {
+    fontSize: 13,
+    fontWeight: "700",
+    color: "#b7f7c8",
+    lineHeight: 18,
+  },
+
+  frameShadowBlock: {
+    marginTop: 10,
+    padding: 12,
+    borderWidth: 1,
+    borderColor: "#2e3550",
+    borderRadius: 12,
+    backgroundColor: "#10131f",
+  },
+  frameShadowScene: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+    marginVertical: 10,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: "#3d3520",
+    borderRadius: 12,
+    backgroundColor: "#0d100f",
+  },
+  frameShadowSilhouette: {
+    width: 52,
+    height: 66,
+    borderRadius: 26,
+    backgroundColor: "#1a1f2e",
+    borderWidth: 1,
+    borderColor: "rgba(212,168,67,0.2)",
+    flexShrink: 0,
+  },
+  frameShadowReflectionNote: {
+    flex: 1,
+    fontSize: 12,
+    color: "#d7d0b6",
+    lineHeight: 17,
+  },
+  frameShadowEvidenceLabel: {
+    fontSize: 9,
+    fontWeight: "800",
+    letterSpacing: 1.4,
+    color: "#D4A843",
+    marginBottom: 7,
+    marginTop: 2,
+  },
+  frameShadowSelectLabel: {
+    fontSize: 9,
+    fontWeight: "800",
+    letterSpacing: 1.2,
+    color: "#c084fc",
+    marginTop: 10,
+    marginBottom: 6,
+  },
+  frameShadowOptionCorrect: {
+    borderColor: "#22c55e",
+    backgroundColor: "rgba(34,197,94,0.1)",
+  },
+  frameShadowOptionWrong: {
+    borderColor: "#dc2626",
+    backgroundColor: "rgba(220,38,38,0.08)",
   },
 });

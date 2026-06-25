@@ -178,6 +178,15 @@ export interface ClueProfilSenteziDelilKarti {
   metin: string;
 }
 
+export interface ClueProfilSenteziPresentation {
+  style?: string;
+  sceneLabel?: string;
+  reflectionNote?: string;
+  physicalEvidenceLabel?: string;
+  purposeHint?: string;
+  [key: string]: unknown;
+}
+
 export interface ClueProfilSenteziVerisi {
   baslik: string;
   aciklama: string;
@@ -187,6 +196,7 @@ export interface ClueProfilSenteziVerisi {
   answerProfileSignals: string[];
   successText: string;
   failureText: string;
+  presentation?: ClueProfilSenteziPresentation;
 }
 
 export interface ClueFotoSupheli {

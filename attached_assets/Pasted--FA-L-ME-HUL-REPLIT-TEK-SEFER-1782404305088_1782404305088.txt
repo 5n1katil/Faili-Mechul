@@ -1,0 +1,407 @@
+/* ============================================================
+ *  FAİLİ MEÇHUL — REPLIT TEK SEFERLİK ENTEGRASYON PAKETİ
+ *  Bu metni Replit Agent sohbetine TEK PARÇA olarak yapıştır.
+ *  Görev: sadece JSON kaydetme. Vaka verisini mevcut kaynakta
+ *  yükle, aşağıdaki eksik renderer altyapısını ekle ve çalıştır.
+ * ------------------------------------------------------------
+ *  Vaka: Boş Çerçevenin Gölgesi · puzzleId=rc_004
+ *  1) Önce mevcut vaka veri kaydını ve mini-oyun dispatcherını bul.
+ *  2) Var olan rendererları bozma; yalnız eksik olan dalı ekle.
+ *  3) Aşağıdaki vaka JSON’unu uygulamanın KANONİK case kaynağına ekle.
+ *  4) Kod değişikliklerinden sonra aşağıdaki kabul testlerini tarayıcıda yap.
+ *  5) Sadece açıklama yazma: dosyaları gerçekten güncelle ve test sonucunu bildir.
+ * ============================================================ */
+
+===== DOSYA OLUŞTUR / EKSİKSE EKLE: src/components/caseMechanics/FrameShadowProfileMiniGame.jsx =====
+// src/components/caseMechanics/FrameShadowProfileMiniGame.jsx
+import { useMemo, useState } from "react";
+
+export default function FrameShadowProfileMiniGame({ clue, suspects = [], onSolved }) {
+  const [selectedId, setSelectedId] = useState(null);
+  const [result, setResult] = useState(null);
+  const puzzle = clue?.profilSenteziVerisi ?? {};
+  const presentation = puzzle.presentation ?? {};
+  const evidence = Array.isArray(puzzle.delilKartlari) ? puzzle.delilKartlari : [];
+  const optionIds = Array.isArray(puzzle.optionSuspectIds) ? puzzle.optionSuspectIds : [];
+  const candidates = useMemo(() => optionIds.map((id) => suspects.find((s) => s.id === id)).filter(Boolean), [optionIds, suspects]);
+  const valid = evidence.length >= 2 && candidates.length >= 2 && Boolean(puzzle.answerSuspectId);
+
+  const select = (suspectId) => {
+    setSelectedId(suspectId);
+    const ok = suspectId === puzzle.answerSuspectId;
+    setResult({
+      ok,
+      message: ok
+        ? (puzzle.successText ?? "Fiziksel işaretler tek bir profilde birleşti.")
+        : (puzzle.failureText ?? "Bu profil bütün fiziksel işaretleri aynı anda açıklamıyor."),
+    });
+    if (ok) onSolved?.({ clueId: clue.id, mechanic: "frame_shadow_profile", suspectId });
+  };
+
+  if (!valid) return <p role="alert">Bu vaka için çerçeve profili verisi eksik veya tutarsız.</p>;
+
+  const shell = { marginTop:12, padding:14, border:"1px solid #6d5b34", borderRadius:12, background:"linear-gradient(180deg,#11131a,#0b0e14)", color:"#e8eaf2" };
+  const stage = { display:"grid", gridTemplateColumns:"92px minmax(0,1fr)", gap:12, alignItems:"center", margin:"10px 0 12px", padding:11, border:"1px solid #5d4e2e", borderRadius:12, background:"#15130f" };
+  const evidenceCard = { border:"1px solid #5a5135", borderRadius:10, padding:10, background:"#171820", color:"#d6dae8" };
+
+  return (
+    <section aria-label={presentation.sceneLabel ?? "Çerçeve gölgesi profili"} style={shell}>
+      <h4 style={{ margin:"0 0 6px", color:"#f0a830", fontSize:13 }}>🧩 {puzzle.baslik ?? "Çerçeve Gölgesinin Profili"}</h4>
+      <div style={stage}>
+        <div aria-hidden="true" style={{ width:70, height:88, justifySelf:"center", borderRadius:"36px 36px 12px 12px", background:"radial-gradient(circle at 50% 28%,#0b0d14 0 18px,transparent 19px),linear-gradient(180deg,#31374a,#0d1018 62%)", boxShadow:"inset 0 0 0 2px rgba(224,181,78,.24)" }} />
+        <div>
+          <div style={{ color:"#e0b54e", fontSize:10, letterSpacing:1.6, fontWeight:800 }}>{presentation.sceneLabel ?? "YANSIMA KAYDI"}</div>
+          <p style={{ margin:"5px 0 0", color:"#d7d0b6", fontSize:13, lineHeight:1.5 }}>{presentation.reflectionNote ?? "Yüz seçilemiyor; yüzeyde kalan gerçek işaretleri karşılaştır."}</p>
+        </div>
+      </div>
+      {presentation.purposeHint ? <p style={{ margin:"0 0 12px", padding:10, borderLeft:"2px solid #e0b54e", background:"rgba(224,181,78,.06)", color:"#ecd99a", fontSize:13 }}><b>ÇÖZÜMÜN İŞLEVİ</b><br />{presentation.purposeHint}</p> : null}
+      <p style={{ margin:"0 0 9px", color:"#8b91ad", fontSize:13 }}>{puzzle.aciklama}</p>
+      <div style={{ color:"#f0a830", fontSize:10, fontWeight:800, letterSpacing:1.4, marginBottom:7 }}>{presentation.physicalEvidenceLabel ?? "FİZİKSEL İŞARETLER"}</div>
+      <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(155px,1fr))", gap:8 }}>
+        {evidence.map((card, index) => <article key={index} style={evidenceCard}><b style={{ display:"block", color:"#e0b54e", fontSize:10, letterSpacing:.7, marginBottom:4 }}>{card.baslik ?? card.title ?? "İŞARET"}</b><span style={{ fontSize:12, lineHeight:1.45 }}>{card.metin ?? card.text}</span></article>)}
+      </div>
+      <div style={{ marginTop:12, color:"#c084fc", fontSize:10, letterSpacing:1.2 }}>PROFİLİ SEÇ — ŞÜPHELİ KARTLARINI İNCELE</div>
+      <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(150px,1fr))", gap:8, marginTop:7 }}>
+        {candidates.map((suspect) => {
+          const isSelected = selectedId === suspect.id;
+          return <button key={suspect.id} type="button" onClick={() => select(suspect.id)} style={{ border:"1px solid " + (isSelected ? (result?.ok ? "#22c55e" : "#dc2626") : "#4d483b"), borderRadius:10, padding:10, textAlign:"left", cursor:"pointer", color:"#e8eaf2", background:isSelected ? (result?.ok ? "rgba(34,197,94,.12)" : "rgba(220,38,38,.10)") : "#151821" }}>{suspect.name}</button>;
+        })}
+      </div>
+      {result ? <p role="status" style={{ margin:"10px 0 0", padding:10, borderRadius:8, background:result.ok ? "rgba(34,197,94,.12)" : "rgba(220,38,38,.12)", color:result.ok ? "#86efac" : "#fca5a5" }}>{result.ok ? "✓ " : "✕ "}{result.message}</p> : null}
+    </section>
+  );
+}
+===== DOSYA SONU =====
+
+===== MEVCUT MİNİ-OYUN DISPATCHERINA EKLENECEK DAL =====
+// Mevcut mini-oyun dispatcher’ında genel profil_sentezi fallback’INDEN ÖNCE ekle.
+import FrameShadowProfileMiniGame from "./caseMechanics/FrameShadowProfileMiniGame";
+
+const profileStyle = String(clue?.profilSenteziVerisi?.presentation?.style ?? "").toLowerCase();
+if (clue?.mechanicType === "profil_sentezi" && profileStyle === "frame_shadow_profile") {
+  return (
+    <FrameShadowProfileMiniGame
+      clue={clue}
+      suspects={caseData?.suspects ?? suspects ?? []}
+      onSolved={({ clueId }) => markMiniGameSolved?.(clueId)}
+    />
+  );
+}
+// Buradan sonra mevcut genel ProfilSynthesis renderer’ı aynen çalışmaya devam etmeli.
+===== YAMA SONU =====
+
+===== ZORUNLU KABUL TESTLERİ =====
+1. rc_004 vakasında İpucu c2 açıldığında "Çerçeve Gölgesinin Profili" görünür; yansıma notu ve 3 fiziksel işaret kartı aynı anda render edilir.
+- "Bu profili çözdüğünde, dedektif ızgarasında bir şüphelinin olay gecesi hangi bölümde çalıştığı kesinleşecek." görünürdür; doğru profil seçilmeden başarı metni veya cevap görünmez.
+- Yalnız optionSuspectIds içindeki şüpheliler seçenek olur. Doğru s1 seçimi onSolved üretir; yanlış seçim yalnız işaretleri yeniden karşılaştırmaya yönlendirir.
+- Mobilde gölge sahnesi ve kartlar tek kolon akışında okunur; hiçbir isim veya hedef profil bileşen içine hard-code edilmez.
+2. Eski klasik sifreli_mesaj, parmak_izi, profil_sentezi ve genel ses_kaydi rendererları regresyona uğramaz.
+===== TEST LİSTESİ SONU =====
+
+===== KANONİK VAKA VERİSİ — mevcut case registry’de rc_004 olarak ekle/değiştir =====
+{
+  "puzzleId": "rc_004",
+  "packId": "pack_004",
+  "packSlug": "realcrime",
+  "stars": "★★★★☆",
+  "gridSize": "4x4",
+  "timeLimit": 480,
+  "legalNote": "Tüm karakterler, mekânlar, belgeler ve ölüm kurgusaldır. Vaka yalnızca tarihî kimliği belirsiz dosyalardaki sahte kimlik, sökülmüş etiket ve seyahat kaydı motiflerinden esinlenir; gerçek kişiler veya mağdurlar temsil edilmez.",
+  "historicalInspiration": "1970’lerde Avrupa’daki kimliği belirsiz bir seyahat dosyasında görülen çoklu takma adlar, etiketleri sökülmüş eşyalar ve açıklanamayan yolculuk kayıtlarının belge-gizem atmosferinden esinlenilmiştir.",
+  "uiContracts": {
+    "profil_sentezi": {
+      "cerceve_golgesi_profili": {
+        "requiredPresentationStyle": "frame_shadow_profile",
+        "requiredFields": [
+          "sceneLabel",
+          "reflectionNote",
+          "physicalEvidenceLabel",
+          "purposeHint",
+          "delilKartlari",
+          "optionSuspectIds",
+          "answerSuspectId"
+        ],
+        "fallback": "Render the reflection note, all physical-evidence cards, and selectable suspect cards. Do not show the answer until the player makes a choice."
+      }
+    }
+  },
+  "title": "Boş Çerçevenin Gölgesi",
+  "subtitle": "1972 Liman Müzesi Dosyası · Kimliği Silinen Ziyaretçi · Kurgusal",
+  "difficulty": "Başkomiser",
+  "difficultyLevel": 4,
+  "specialMechanic": "profil_sentezi",
+  "story": "1972’de Kuzey Limanı Sanat Müzesi, sahibi bilinmeyen bir kadın portresini sergilemeye hazırlanıyordu. Portreyi getiren sandıklardaki bütün etiketler sökülmüş, kayıt defterlerinde aynı el yazısıyla açılmış dört ayrı ziyaretçi adı bulunmuştu. Müzenin arşiv sorumlusu Cihan Eren, bu adların tek bir kişiye ait olduğunu belgelediği gece, Boş Çerçeve Deposu’nda ölü bulundu. Duvara asılı yaldızlı çerçevenin içinde tablo yoktu; yalnız cilasında yüzü seçilemeyen bir insan gölgesi kalmıştı.\n\nİlk bakışta gölge, katilin yüzünü saklayan kusursuz bir perde gibiydi. Fakat çerçevenin iç pervazında omuz askısı, ince bir zincir ve mavi kopya kalemi tozu gibi gerçek dünyaya ait üç küçük iz vardı. Bu dosyada görüntüye değil, görüntünün bırakamayacağı fiziksel ayrıntılara güvenmek gerekir.",
+  "atmosphere": "Yağmurlu liman camlarında şehir ışıkları titrer. Boş çerçeveler depoda sırt sırta durur; vernik, eski kağıt ve ıslak yün kokusu karışır. Her yansıma bir tanık gibi görünür, ama yalnız bazıları gerçek bir iz taşır.",
+  "suspects": [
+    {
+      "id": "s1",
+      "name": "Kayıt Sorumlusu Mina Karaca",
+      "icon": "📚",
+      "description": "Sergi sandıkları ile ziyaretçi defterlerini yöneten, kayıp etiketlerin kopyalarını arşivleyen titiz kayıt sorumlusu.",
+      "detail": "Her gün sol omzunda metal tokalı ağır dosya çantası taşır; büyüteçli gözlüğü ince bir gümüş zincirdedir; giriş kayıtlarını mavi kopya kalemiyle işaretler ve arşiv kâğıtlarına eldivensiz dokunur."
+    },
+    {
+      "id": "s2",
+      "name": "Gezici Restoratör Leyla Sav",
+      "icon": "🖌️",
+      "description": "Yurt dışından gelen eserleri incelemek için çağrılan, sandık teslimlerinde kimlik denetiminden muaf tutulan gezici restoratör.",
+      "detail": "Çalışırken sağ eline ince gri eldiven takar; terpentini ve taze mürekkebi aynı odada bulundurmaktan nefret eder; UV inceleme lambalarının besleme kablolarını kendi denetler."
+    },
+    {
+      "id": "s3",
+      "name": "Koleksiyon Danışmanı Faruk Mert",
+      "icon": "🪙",
+      "description": "Portreyi satın alan vakfın temsilcisi; depodaki eski çerçevelerin değerini tek tek incelemekte ısrarcı koleksiyon danışmanı.",
+      "detail": "Antika ambalaj kilitlerini açmak için küçük bronz çerçeve kıskacını yanında taşır; takım çantasına düz balmumu tabletleri ve keten bez koyar."
+    },
+    {
+      "id": "s4",
+      "name": "Gece Bekçisi İhsan Doru",
+      "icon": "🔦",
+      "description": "Kapanıştan sonra Portre Salonu’nun raylı askılarını ve acil çıkışlarını denetleyen gece bekçisi.",
+      "detail": "Her vardiyada siyah saplı ince tel kesicisini raylı askıların yanında taşır; salon ışıkları sönünce kontrol çizelgesine kurşun kalemle saat yazar."
+    }
+  ],
+  "weapons": [
+    {
+      "id": "w1",
+      "name": "Ray Kablo Makası",
+      "icon": "✂️",
+      "description": "Sergi raylarının içindeki kabloları ve küçük askı tellerini ayırmak için kullanılan siyah saplı kesme aleti.",
+      "detail": "Taze tel çapakları ile siyah kauçuk izleri bırakır."
+    },
+    {
+      "id": "w2",
+      "name": "Frekans Ünitesi",
+      "icon": "⚡",
+      "description": "Pigment katmanlarını taramak için kullanılan, eski tip yüksek gerilimli aydınlatma düzeneği.",
+      "detail": "Temasta bakır nokta yanıkları ve kısa süreli ark izi bırakır."
+    },
+    {
+      "id": "w3",
+      "name": "Pirinç Kilit Pensesi",
+      "icon": "🗜️",
+      "description": "Antika sandık ve çerçeve kilitlerini sökmekte kullanılan, ağır sarı metal gövdeli küçük pense.",
+      "detail": "Keten lifleri ve balmumu izlerini kolayca tutar."
+    },
+    {
+      "id": "w4",
+      "name": "Renk Açıcı Kapsül",
+      "icon": "🧪",
+      "description": "Vernik lekelerini çözmek için kullanılan, kırıldığında yoğun uçucu buhar çıkaran cam kapsül.",
+      "detail": "Cam kıymığı ve keskin çözücü kokusu bırakır."
+    }
+  ],
+  "locations": [
+    {
+      "id": "l1",
+      "name": "Kayıt Odası",
+      "icon": "🗂️",
+      "description": "Ziyaretçi defterleri, gümrük kopyaları ve sandık etiketlerinin saklandığı dar arşiv bölümü.",
+      "detail": "Mavi kopya kalemi tozu ve metal dosya tokaları bu odada sık görülür."
+    },
+    {
+      "id": "l2",
+      "name": "Portre Salonu",
+      "icon": "🖼️",
+      "description": "Kimliği belirsiz portrenin açılış öncesi sergilendiği, raylı askı sistemli ana salon.",
+      "detail": "Sergi telleri ve siyah kauçuk sap izleri çoğunlukla buradaki raylarda kalır."
+    },
+    {
+      "id": "l3",
+      "name": "Boş Çerçeve Deposu",
+      "icon": "🪞",
+      "description": "Sökülmüş çerçevelerin, eski lambaların ve kullanılmayan yaldızlı pervazların tutulduğu kilitli alt depo.",
+      "detail": "Eski yüksek gerilimli inceleme lambasının sabit yuvası yalnız bu depodaki metal raftadır."
+    },
+    {
+      "id": "l4",
+      "name": "Restorasyon Atölyesi",
+      "icon": "🧫",
+      "description": "Pigment, vernik ve çerçeve onarımının yapıldığı üst kat çalışma alanı.",
+      "detail": "Balmumu tabletleri, keten bezler ve bronz kilit araçları burada sık kullanılır."
+    }
+  ],
+  "clues": [
+    {
+      "id": "c1",
+      "title": "Bakır Halkanın Yanığı",
+      "type": "adli",
+      "mechanicType": "text",
+      "text": "Adli muayene, Cihan’ın ölümüne sağ avcunda üç bakır temas noktası bırakan ani bir elektrik boşalmasının yol açtığını saptadı. Aydınlatma başlığındaki erimiş lif, ısıya dayanıklı gri eldiven dokusundaydı; mavi kopya pigmenti ya da çıplak parmak yağları yoktu.",
+      "deductionHint": "Bakır temas noktaları ile erimiş elyaf hangi yöntemi düşündürür?",
+      "isBonus": false,
+      "revealOrder": 1,
+      "isRevealed": true,
+      "pointCost": 0
+    },
+    {
+      "id": "c2",
+      "title": "Pervazdaki Gerçek İzler",
+      "type": "profil_sentezi",
+      "mechanicType": "profil_sentezi",
+      "text": "Yaldızlı pervazın içindeki gölge yüz vermiyordu. Buna karşılık cilada üç somut temas izi korunmuştu: askı sürtmesi, ince zincir çizgisi ve mavi kopya tozu.",
+      "deductionHint": "Gölgenin yüzünü tahmin etmek yerine, üç fiziksel işareti şüpheli kartlarındaki günlük alışkanlıklarla birlikte okuyun: bu izlerin tamamı hangi profilde birleşiyor?",
+      "isBonus": false,
+      "revealOrder": 2,
+      "isRevealed": false,
+      "pointCost": 70,
+      "profilSenteziVerisi": {
+        "baslik": "Çerçeve Gölgesinin Profili",
+        "aciklama": "Yansıma yüzü ters ve bulanık. Kararı gölgeye değil, pervazın üzerinde kalan üç fiziksel işarete göre ver; şüpheli kartlarının Tanım ve Detay alanlarını birlikte incele.",
+        "presentation": {
+          "style": "frame_shadow_profile",
+          "sceneLabel": "BOŞ ÇERÇEVE / YANSIMA KAYDI",
+          "reflectionNote": "Yüz seçilemiyor: camdaki liman ışıkları silueti ters çevirmiş. Fiziksel izler ise yansıma gibi davranmaz.",
+          "physicalEvidenceLabel": "ÇERÇEVEDE KALAN FİZİKSEL İŞARETLER",
+          "purposeHint": "Bu profili çözdüğünde, dedektif ızgarasında bir şüphelinin olay gecesi hangi bölümde çalıştığı kesinleşecek.",
+          "interaction": {
+            "mode": "select_profile",
+            "submitMode": "immediate",
+            "successLabel": "Profili Doğrula"
+          }
+        },
+        "delilKartlari": [
+          {
+            "baslik": "SOL OMUZ SÜRTMESİ",
+            "metin": "İç pervazın sol üstünde, metal tokaya benzeyen dar ve paralel bir sürtme izi var. Askı, pervaza sol taraftan yaslanmış."
+          },
+          {
+            "baslik": "İNCE ZİNCİR ÇİZGİSİ",
+            "metin": "Yaldızın üzerinde iki kısa, parlak çizgi kaldı. Zincir hareket ederken yüzeye iki kez hafifçe vurmuş."
+          },
+          {
+            "baslik": "MAVİ KOPYA TOZU",
+            "metin": "Alt pervazın içine, kuru kâğıtla silinmeyen donuk mavi pigment oturmuş. Bu toz, boya ya da vernik değil."
+          }
+        ],
+        "optionSuspectIds": [
+          "s1",
+          "s2",
+          "s3",
+          "s4"
+        ],
+        "answerSuspectId": "s1",
+        "answerProfileSignals": [
+          "sol omzunda",
+          "gümüş zincir",
+          "mavi kopya kalemi"
+        ],
+        "successText": "Üç işaret tek profilde birleşti. Gölgeden çok, yanında taşıdığı gündelik eşyalar konuşuyor.",
+        "failureText": "Bu profil işaretlerin yalnız bir kısmını açıklıyor. Omuz sürtmesi, zincir çizgisi ve mavi tozu aynı anda karşılamalı."
+      }
+    },
+    {
+      "id": "c3",
+      "title": "Siyah Sapta Kalanlar",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Siyah saplı kesme aletinin ekleminde kurşun kalem grafiti ve taze tel çapakları vardı. Aynı yüzeyde gri elyaf, uçucu çözücü izi ya da pigment temizleme kalıntısı bulunmadı.",
+      "deductionHint": "Bu alet hangi çalışma profilinin rutinine uymaz?",
+      "isBonus": false,
+      "revealOrder": 3,
+      "isRevealed": false,
+      "pointCost": 70
+    },
+    {
+      "id": "c4",
+      "title": "Balmumlu Keten",
+      "type": "tanik",
+      "mechanicType": "text",
+      "text": "Sandıkçı, akşam kilitleri açarken keten bezinin üzerine düz balmumu tabletini koyan değer biçme görevlisini gördüğünü söyledi. Aynı masada ağır, sarı metal çeneli küçük bir aletin bıraktığı paralel sıkıştırma izleri vardı.",
+      "deductionHint": "Mühür sökme rutini hangi iki kartı yan yana getirir?",
+      "isBonus": false,
+      "revealOrder": 4,
+      "isRevealed": false,
+      "pointCost": 70
+    },
+    {
+      "id": "c5",
+      "title": "Kapanış Kartı",
+      "type": "eleme",
+      "mechanicType": "text",
+      "text": "Asansör kartı, gri sağ eldivenli uzmanın 21.09’da üst kata çıktığını ve aynı kartla 22.02’ye kadar geri dönmediğini kaydediyor. Ana sergi bölümünün ışıkları ise 21.05’te kapandı.",
+      "deductionHint": "Kart saati hangi kişiyi ana sergi bölümünden dışlar?",
+      "isBonus": false,
+      "revealOrder": 5,
+      "isRevealed": false,
+      "pointCost": 70
+    },
+    {
+      "id": "c6",
+      "title": "Yaldızlı Kablo Çapağı",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Üst kattaki çalışma tezgâhında, siyah kauçuk sap izi taşıyan iletken çapakları yaldız tozuna karışmıştı. Aynı karışım ana sergi rayında ya da defter masasının yanında görülmedi.",
+      "deductionHint": "Yaldızla karışmış metal çapakları hangi araç–çalışma alanı bağlantısını kurar?",
+      "isBonus": false,
+      "revealOrder": 6,
+      "isRevealed": false,
+      "pointCost": 70
+    },
+    {
+      "id": "c7",
+      "title": "Mavi Tozlu Kutu",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Kayıt Odası çekmecesinde, kırılmış cam kapsüllerin taşındığı kutunun üzerinde mavi kopya kalemi tozu ve eski solvent kokusu bulundu. Kutuda metal tokalı dosya çantasının bıraktığı iki dar iz de vardı.",
+      "deductionHint": "Mavi tozlu kutu hangi arşiv rutinini hangi cam nesneyle buluşturur?",
+      "isBonus": true,
+      "revealOrder": 7,
+      "isRevealed": false,
+      "pointCost": 45
+    },
+    {
+      "id": "c8",
+      "title": "Vardiya Dolabındaki Kesik",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Gece vardiyası dolabında, siyah saplı aletin ağzına uyan iki tel parçası ve kısa bir ray kontrol listesi bulundu. Listedeki son saat, üst kat tezgâhındaki çapaklarla aynı dakikaya yakındı.",
+      "deductionHint": "Vardiya dolabındaki tel parçaları hangi görevliyi aynı kesme aletiyle buluşturur?",
+      "isBonus": true,
+      "revealOrder": 8,
+      "isRevealed": false,
+      "pointCost": 45
+    }
+  ],
+  "assetManifest": [],
+  "solution": {
+    "suspectId": "s2",
+    "weaponId": "w2",
+    "locationId": "l3"
+  },
+  "solutionNarrative": "Leyla Sav, sandıklardaki farklı adların kendi kaçak teslim rotasını örttüğünü fark eden Cihan’ı susturmak için frekans ünitesini alt depodaki sabit yuvada tuzakladı. Yaldızlı pervazdaki gölge Mina’nın masum kayıt rotasına aitti; Leyla bu görüntünün şüpheyi yanlış yöne çekeceğine güvendi. Avuçtaki ark izi ve ızgaradaki karşılıklar gerçek üçlüyü bıraktı.",
+  "replitIntegration": {
+    "schema": "fm_replit_runtime_contract_v1",
+    "copyTarget": "Replit Agent prompt",
+    "canonicalCaseFile": "src/data/cases/rc_004.json",
+    "policy": "Var olan renderer varsa onu bozma; yoksa bu paketteki component ve dispatcher dalını ekle.",
+    "mechanics": [
+      {
+        "clueId": "c2",
+        "mechanicType": "profil_sentezi",
+        "renderer": "frame_shadow_profile",
+        "componentFile": "src/components/caseMechanics/FrameShadowProfileMiniGame.jsx",
+        "dispatcherBranch": "clue.mechanicType === \"profil_sentezi\" && clue.profilSenteziVerisi?.presentation?.style === \"frame_shadow_profile\"",
+        "completionEvent": "onSolved({ clueId, mechanic: \"frame_shadow_profile\" })",
+        "requiredData": [
+          "presentation.sceneLabel",
+          "presentation.reflectionNote",
+          "presentation.physicalEvidenceLabel",
+          "presentation.purposeHint",
+          "delilKartlari",
+          "optionSuspectIds",
+          "answerSuspectId"
+        ],
+        "nonNegotiable": [
+          "Yansıma notunu ve üç fiziksel işaret kartını aynı anda görünür render et; yüz ya da hedef profil baştan işaretlenmemeli.",
+          "Şüpheli seçenekleri yalnız optionSuspectIds üzerinden vaka verisinden çöz; isimleri component içine sabitleme.",
+          "purposeHint görünür olmalı; doğru profil seçilmeden başarı/açıklama görünmemeli.",
+          "Doğru seçim onSolved callbackini yalnız bir kez çağırmalı; yanlış seçim yalnız fiziksel işaretlerin tamamını yeniden karşılaştırmaya yönlendirmeli.",
+          "Mobilde gölge sahnesi ve işaret kartları tek kolon akışında okunabilir kalmalı."
+        ]
+      }
+    ]
+  }
+}
+===== VAKA VERİSİ SONU =====

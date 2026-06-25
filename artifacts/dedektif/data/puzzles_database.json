@@ -3724,383 +3724,494 @@
         },
         {
           "puzzleId": "rc_003",
-          "title": "Wall Street'in Sırrı",
-          "subtitle": "1980'ler New York İlhamlı — Kurgusal",
-          "difficulty": 3,
-          "difficultyLabel": "Dedektif",
+          "packId": "pack_004",
+          "packSlug": "realcrime",
           "stars": "★★★☆☆",
           "gridSize": "3x3",
           "timeLimit": 480,
-          "story": "1987 borsa krizinin arifesinde, büyük bir yatırım bankasının baş analistinin elinde piyasayı çökertecek bilgi vardı. Sabah ofisinde ölü bulundu.",
-          "atmosphere": "Dumanı tüten ofis. Ticker bant. Korku ve para kokusu.",
+          "title": "Son Söz: Kıyıdaki Adam",
+          "subtitle": "1948 Güney Kıyısı Dosyası · Yırtık Rota Sayfası · Kurgusal",
+          "difficulty": "Dedektif",
+          "difficultyLevel": 3,
+          "specialMechanic": "yirtik_rota_sifre",
+          "story": "1948'in sezon dışı ilk sabahında, Karadeniz kıyısındaki Kıyı Bendi'nde takım elbiseli bir adam oturur halde bulundu. Ceketindeki bütün etiketler kesilmiş, cüzdanı boşaltılmıştı. Avucunda ise yalnızca bir kıyı rehberinin son sayfasından kopmuş dört yırtık köşe ve tuzla sertleşmiş pusula çizimleri vardı. Otel defterindeki eğik imza, adamın harita kopyacısı Faruk Veli olduğunu düşündürdü.",
+          "atmosphere": "Lodos, taş bendi gece boyunca döver. Uzakta fenerin camı aralıklı yanar; kıyıdaki paslı kapılar her rüzgârda kendi kendine kapanır. Islak kâğıt, yosun ve gaz yağı kokusu aynı notun üzerinde buluşur.",
           "suspects": [
             {
               "id": "s1",
-              "name": "Banka Genel Müdürü Weston",
-              "icon": "⚖️",
-              "description": "Analist raporunu kamuoyuyla paylaşacaktı — bu bankayi batırırdı.",
-              "detail": "55 yaşında, suit içinde, steril bakışlı."
+              "name": "Selma Acar",
+              "icon": "🧺",
+              "description": "Kıyı Bendi'ne bakan küçük pansiyonu işleten, Faruk'un son konaklama kaydını bizzat tutmuş ev sahibi.",
+              "detail": "Gece servisinden sonra çay sepetini Eski Kayıkhane'ye bırakır; sağ bileğindeki eski kırık nedeniyle ağır halat çekmez ve ilaç şişelerini mavi balmumuyla mühürler."
             },
             {
               "id": "s2",
-              "name": "SEC Yetkilisi Margaret",
-              "icon": "noun-teacher-1908916-avatar.png",
-              "description": "Soruşturmayı kapatmak için baskı altında.",
-              "detail": "48 yaşında, kararlı görünümlü ama içi çürük."
+              "name": "İlyas Demir",
+              "icon": "🏮",
+              "description": "Kıyı fenerinin gece bakımını yapan, Faruk'un harita kopyalarındaki eski servis geçitlerini herkesten iyi bilen görevli.",
+              "detail": "Fener Altı Geçidi'nin sürgüsünü her vardiyada kendi açar; gaz yağı şişelerini kehribar renkli tıpayla kapatır ve dışarıdan gelenleri ana kapı yerine taş geçitten geçirir."
             },
             {
               "id": "s3",
-              "name": "İçeriden Bilgi Veren Frank",
-              "icon": "🕵️",
-              "description": "Analistin kaynağı. Şimdi ortaya çıkabilir.",
-              "detail": "40 yaşında, paranoyak, sigara tiryakisi."
+              "name": "Nihat Serin",
+              "icon": "📜",
+              "description": "Liman giriş kayıtlarını ve mühürlü eşya defterlerini tutan, Faruk'un bazı eski sevkiyatları kopyaladığını öğrenen yazman.",
+              "detail": "Mor vernikli gümrük mühür telini kısa keser; bilet gişesinin arkasındaki karton arşivde çalışır ve her sayfanın köşesine üç köşeli tarih işareti koyar."
             }
           ],
           "weapons": [
             {
               "id": "w1",
-              "name": "Zehirli Kahve",
-              "icon": "☕",
-              "description": "Ofis kahvesine katılan madde."
+              "name": "Kurşun Şamandıra",
+              "icon": "⚓",
+              "description": "Ağ hattını dengede tutan, avuç içine sığan ağır kurşun parça.",
+              "detail": "Tuzlu suyla matlaştığında bile gri kurşun tozu bırakır."
             },
             {
               "id": "w2",
-              "name": "Yüksek Kattan Düşürme",
-              "icon": "🏢",
-              "description": "57. kat penceresi."
+              "name": "Sessiz Şurup",
+              "icon": "🧪",
+              "description": "Zakkum alkaloidiyle düşük doz uyku damlasını birleştiren, acı tadı kolayca maskelenebilen sıvı karışım.",
+              "detail": "Kehribar renkli tıpa reçinesi ve acı badem benzeri keskin bir koku bırakır."
             },
             {
               "id": "w3",
-              "name": "İlaç Aşırı Dozu",
-              "icon": "💊",
-              "description": "İntihar gibi gösterilen cinayet."
+              "name": "Gümrük Mühür Teli",
+              "icon": "🪤",
+              "description": "Mühürlü sandıkları kapatmak için kullanılan, kesildiğinde mor vernik ve ince metal çapak bırakan sert tel.",
+              "detail": "Kıvrıldığında parmakta ince çizgi ve mor vernik zerresi bırakır."
             }
           ],
           "locations": [
             {
               "id": "l1",
-              "name": "Ofis",
-              "icon": "💻",
-              "description": "Analistin kişisel ofisi."
+              "name": "Liman Bilet Gişesi",
+              "icon": "🎟️",
+              "description": "Kıyı yolculuklarının yazıldığı, gümrük defterlerinin arka odada saklandığı dar taş gişe.",
+              "detail": "Kartpostal, bilet koçanı ve mor vernikli mühür malzemeleri arka çekmecelerde tutulur."
             },
             {
               "id": "l2",
-              "name": "Konferans Odası",
-              "icon": "📊",
-              "description": "Üst kat konferans salonu."
+              "name": "Işıkaltı Menfezi",
+              "icon": "🏮",
+              "description": "Kıyı ışığının altında, bent ile servis kapısını birbirine bağlayan dar taş koridor.",
+              "detail": "Kireçli sürgü oluğu, gaz yağı kokusu ve yağmurdan korunmuş kehribar tıpa kırıntılarıyla ayırt edilir."
             },
             {
               "id": "l3",
-              "name": "Çatı Kattı",
-              "icon": "🏙️",
-              "description": "Binanın servis çatısı."
+              "name": "Eski Kayıkhane",
+              "icon": "🛶",
+              "description": "Kullanılmayan ağların ve kurşun şamandıraların bırakıldığı, pansiyon arkasındaki alçak ahşap yapı.",
+              "detail": "Çay sepetleri için küçük bir yan kapısı vardır; zeminde eski ağ lifleri ve kurşun tozu birikir."
             }
           ],
           "clues": [
             {
               "id": "c1",
-              "type": "kanit",
+              "title": "Dudak Çizgisindeki Reçine",
+              "type": "adli",
+              "mechanicType": "text",
+              "text": "Serumda zakkumun kalp ritmini bozan alkaloidi, düşük doz uyku damlasıyla birlikte saptandı. Ödünç alınan sağlık çantasındaki bütün şişeler mavi balmumlu kapakla mühürlüydü; maktulün dudak çizgisindeki kehribar reçine onlardan değildi.",
+              "deductionHint": "Aynı kimyasal karışım ve iki farklı kapak izi, listede hangi aracı; hangi kişinin şişe alışkanlığını birbirinden ayırır?",
+              "isBonus": false,
               "revealOrder": 1,
               "isRevealed": true,
-              "pointCost": 0,
-              "title": "Adli Tıp Raporu",
-              "text": "İlaç aşırı dozu — ama parmak kaslarında gerilim var. İntihar değil, ilaç zorla verildi. Ofis masasında kahve fincanı.",
-              "mechanicType": "text"
+              "pointCost": 0
             },
             {
               "id": "c2",
-              "type": "sifreli",
+              "title": "Sepetteki Lifler",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Gece servisi için kullanılan çay sepetinin kulpunda yalnız açık renk jüt lifi vardı. Kesilmiş metal araçların bıraktığı mor vernik ve ince çapak, sepetin içinde ya da taşıyan kişinin bileklik sargısında hiç yoktu.",
+              "deductionHint": "Kesilmiş bir metal aracın kalması gereken iki iz yoksa, bu araç kimden uzak durur?",
+              "isBonus": false,
               "revealOrder": 2,
               "isRevealed": false,
-              "pointCost": 70,
-              "title": "Analistin Şifreli Dosyası",
-              "text": "Bilgisayarda şifreli klasör.",
-              "mechanicType": "sifreli_mesaj",
-              "sifre": {
-                "sifrelenmis": "WSTN RPRTU BLDR — MRG BLR — FRK KKTR",
-                "sifreleTuru": "sesli_harf_kisalt",
-                "cozumIpucu": "Sesli harfleri ekle.",
-                "cozulmus": "WESTON RAPORU BİLDİR — MARGARET BİLİR — FRANK KORKUTUR",
-                "aciklama": "Analist üçünü de suçlayan bir dosya hazırlamıştı."
-              }
+              "pointCost": 60
             },
             {
               "id": "c3",
-              "type": "tanik",
+              "title": "Son Sayfanın Kıyı Rotası",
+              "type": "sifreli",
+              "mechanicType": "sifreli_mesaj",
+              "text": "Maktulün avucundaki dört yırtık köşe, aynı kıyı rehberinin son sayfasından kopmuştu. Her parçada bir yol sözcüğü ve sağ-sol yırtık izi vardı; beşinci parça ise rota cümlesine uymayan ayrı bir baskıdan geliyordu.",
+              "deductionHint": "Açık kenarla başlayan ve kapalı köşeyle biten tek yırtık zincirini kurduğunda, rota hangi iki kıyı noktasını bağlıyor?",
+              "isBonus": false,
               "revealOrder": 3,
               "isRevealed": false,
-              "pointCost": 70,
-              "title": "Sekreter İfadesi",
-              "text": "\"Sabah çok erken Weston ofise geldi. Sekretere 'analistle özel toplantı' dedi. 20 dakika sonra çıktı. Analist hiç çıkmadı.\"",
-              "mechanicType": "text"
-            },
-            {
-              "id": "c4",
-              "type": "parmak_izi",
-              "revealOrder": 4,
-              "isRevealed": false,
-              "pointCost": 70,
-              "title": "Kahve Fincanı İzi",
-              "text": "Fincan üzerinde iz analizi.",
-              "mechanicType": "parmak_izi",
-              "parmakIziVerisi": {
-                "aciklama": "Üç şüphelinin izini fincanla eşleştir.",
-                "izler": [
-                  {
-                    "izId": "iz1",
-                    "konum": "Fincan kulpu",
-                    "eslesme": "s1",
-                    "ipucu": "Geniş, güçlü parmak. Pahalı kol saati izi belirgin."
+              "pointCost": 60,
+              "sifre": {
+                "sifrelenmis": "Yırtık rota parçalarını kenar işaretlerine göre soldan sağa diz.",
+                "sifreleTuru": "yirtik_rota_yapbozu",
+                "cozumIpucu": "İlk parça solunda AÇIK işaretini, son parça sağında KAPALI işaretini taşır. Arada yalnız aynı yırtık işaretleri birbirine bağlanabilir; rota sözcükleri de kesintisiz bir cümle oluşturmalıdır.",
+                "cozulmus": "PANSİYON ARKA KAPISI / ESKİ KAYIKHANE",
+                "aciklama": "Rota tamamlandığında, çıkarım ızgarasında bir şüpheli–mekân bağlantısı kesinleşir; bu bağlantı nihai çözümü tek başına vermez.",
+                "presentation": {
+                  "style": "torn_route_reconstruction",
+                  "title": "Yırtık Rota Sayfası",
+                  "subtitle": "Kıyı rehberinin parçalarını, sağ ve sol yırtık izleri birbirini tamamlayacak biçimde diz.",
+                  "purposeHint": "Doğru rota, çıkarım ızgarasında bir şüpheli–mekân bağlantısını kesinleştirecek.",
+                  "pieces": [
+                    {
+                      "id": "p1",
+                      "label": "Parça I",
+                      "leftTear": "≈",
+                      "rightTear": "◒",
+                      "text": "YOLU → ESKİ"
+                    },
+                    {
+                      "id": "p2",
+                      "label": "Parça II",
+                      "leftTear": "✦",
+                      "rightTear": "⊗",
+                      "text": "BİLET GİŞESİ / KAPALI"
+                    },
+                    {
+                      "id": "p3",
+                      "label": "Parça III",
+                      "leftTear": "AÇIK",
+                      "rightTear": "⌇",
+                      "text": "PANSİYON ARKA"
+                    },
+                    {
+                      "id": "p4",
+                      "label": "Parça IV",
+                      "leftTear": "◒",
+                      "rightTear": "KAPALI",
+                      "text": "KAYIKHANE"
+                    },
+                    {
+                      "id": "p5",
+                      "label": "Parça V",
+                      "leftTear": "⌇",
+                      "rightTear": "≈",
+                      "text": "KAPISI → TUZ"
+                    }
+                  ],
+                  "correctOrder": [
+                    "p3",
+                    "p5",
+                    "p1",
+                    "p4"
+                  ],
+                  "routeResult": "PANSİYON ARKA KAPISI → TUZ YOLU → ESKİ KAYIKHANE",
+                  "decoyPieceIds": [
+                    "p2"
+                  ],
+                  "interaction": {
+                    "mode": "arrange_pieces",
+                    "submitLabel": "Rotayı Doğrula",
+                    "resetLabel": "Dizilişi Temizle",
+                    "successMessage": "Yırtıklar birbirine oturdu. Rota artık kıyı rehberinde kesintisiz okunuyor.",
+                    "failureMessage": "Bu zincir kıyı çizgisini kesiyor. Sağdaki yırtık, sonraki parçanın solundaki işaretle aynı olmalı; rota da AÇIK ile başlayıp KAPALI ile bitmeli."
                   }
-                ],
-                "sonuc": "Fincanı hazırlayan: Weston. (s1)"
+                }
               }
             },
             {
+              "id": "c4",
+              "title": "Tam Kalan Rulo",
+              "type": "tanik",
+              "mechanicType": "text",
+              "text": "Gece vardiyasını devralan çırak, bakım görevlisinin anahtarını hiç bırakmadığını ve depodaki mor vernikli tel rulolarının sabah sayımında hâlâ tam olduğunu söyledi.",
+              "deductionHint": "Tam kalan rulolar ve eldeki çizik yokluğu, hangi aracı dışlar?",
+              "isBonus": false,
+              "revealOrder": 4,
+              "isRevealed": false,
+              "pointCost": 60
+            },
+            {
               "id": "c5",
+              "title": "Kireç Oluğu",
               "type": "eleme",
+              "mechanicType": "text",
+              "text": "Kıyı ışığının altındaki kireçli sürgü oluğunda gaz yağı damlası ve kehribar tıpa kırıntısı korundu; mor vernik zerresi, metal çapak ya da tel sürtünmesi bulunmadı.",
+              "deductionHint": "Kireçli oluk çok küçük artıkları bile tutuyorsa, mor vernikli tel hangi geçitte kullanılmamış olmalıdır?",
+              "isBonus": false,
               "revealOrder": 5,
               "isRevealed": false,
-              "pointCost": 70,
-              "title": "Frank ve Margaret Alibisi",
-              "text": "Frank o sabah JFK'de — uçuş kaydı var. Margaret Washington'da kongre toplantısında — C-SPAN'da görüntülendi.",
-              "mechanicType": "text"
+              "pointCost": 60
             },
             {
               "id": "c6",
-              "type": "dogrudan",
+              "title": "Üç Köşeli Tarih İşareti",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Bilet gişesinin arkasındaki karton arşivde kesilmiş bir tel parçası ve kenarına üç köşeli tarih işareti atılmış boş bir gümrük koçanı bulundu.",
+              "deductionHint": "Üç köşeli tarih işareti ve kesilmiş tel, hangi masa başı alışkanlığını hangi araca bağlar?",
+              "isBonus": true,
               "revealOrder": 6,
               "isRevealed": false,
-              "pointCost": 70,
-              "title": "Banka İç Yazışma",
-              "text": "Weston'ın asistanına şifreli e-posta: 'Sabah temizlendi. Rapor yok. Devam et.' Gönderim saati: sabah 07.43 — analistin ölüm saatiyle örtüşüyor.",
-              "mechanicType": "gorsel_ipucu",
-              "gorselAciklama": "Kurumsal e-posta ama şifreli ekle. 'Temizlendi' kelimesi kurumsal dilde kullanılmaz."
+              "pointCost": 45
+            },
+            {
+              "id": "c7",
+              "title": "Kurşun Tozu",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Kayıkhane yan kapısının eşiğinde, Selma'nın çay sepetinin tekerinden gelen ince jüt lifleriyle birlikte mat gri kurşun tozu bulundu.",
+              "deductionHint": "Jüt lifleriyle birlikteki kurşun tozu, Selma'nın gece servis rotasında hangi ağır aracı işaret eder?",
+              "isBonus": true,
+              "revealOrder": 7,
+              "isRevealed": false,
+              "pointCost": 45
             }
           ],
+          "assetManifest": [],
           "solution": {
-            "suspectId": "s1",
-            "weaponId": "w3",
-            "locationId": "l1"
+            "suspectId": "s2",
+            "weaponId": "w2",
+            "locationId": "l2"
           },
-          "solutionNarrative": "Genel Müdür Weston, raporun kamuoyuna çıkmasını engellemek için analistin kahvesine ilaç kattı. Ölümü intihar gibi düzenledi. Şifreli e-posta onu ele verdi.",
-          "specialMechanic": "parmak_izi_sifreli"
+          "solutionNarrative": "İlyas Demir, Faruk'un eski servis geçitlerini haritaya aktardığını öğrenince onu Işıkaltı Menfezi'nde buluşmaya çağırdı. Kehribar tıpalı Sessiz Şurubu uyku damlasına karıştırdı; Faruk geçitte fenalaştıktan sonra bedenini kıyı bendine taşıdı. Yırtık rota sayfasını da Selma'nın kayıkhane güzergâhını öne çıkaracak biçimde bırakarak soruşturmayı yanlış rotaya yöneltmek istedi."
         },
         {
           "puzzleId": "rc_004",
-          "title": "Müze Hırsızlığının Ardındaki Ölüm",
-          "subtitle": "Paris Louvre İlhamlı — Kurgusal",
-          "difficulty": 4,
-          "difficultyLabel": "Başkomiser",
+          "packId": "pack_004",
+          "packSlug": "realcrime",
           "stars": "★★★★☆",
           "gridSize": "4x4",
-          "timeLimit": 420,
-          "story": "Dünyanın en büyük müzesinden bir tablo çalındı. Güvenlik şefi gece içinde ölü bulundu. Hırsızlık mı cinayet mi — yoksa ikisi de mi?",
-          "atmosphere": "Kapalı müze. Güvenlik kameraları. Sanat ve ölüm.",
+          "timeLimit": 480,
+          "title": "Boş Çerçevenin Gölgesi",
+          "subtitle": "1972 Liman Müzesi Dosyası · Kimliği Silinen Ziyaretçi · Kurgusal",
+          "difficulty": "Başkomiser",
+          "difficultyLevel": 4,
+          "specialMechanic": "profil_sentezi",
+          "story": "1972'de Kuzey Limanı Sanat Müzesi, sahibi bilinmeyen bir kadın portresini sergilemeye hazırlanıyordu. Portreyi getiren sandıklardaki bütün etiketler sökülmüş, kayıt defterlerinde aynı el yazısıyla açılmış dört ayrı ziyaretçi adı bulunmuştu. Müzenin arşiv sorumlusu Cihan Eren, bu adların tek bir kişiye ait olduğunu belgelediği gece, Boş Çerçeve Deposu'nda ölü bulundu.",
+          "atmosphere": "Yağmurlu liman camlarında şehir ışıkları titrer. Boş çerçeveler depoda sırt sırta durur; vernik, eski kağıt ve ıslak yün kokusu karışır. Her yansıma bir tanık gibi görünür, ama yalnız bazıları gerçek bir iz taşır.",
           "suspects": [
             {
               "id": "s1",
-              "name": "Baş Küratör Violette",
-              "icon": "noun-artist-1574354-avatar.png",
-              "description": "Tablonun gerçek olmadığını bilen tek kişiydi.",
-              "detail": "52 yaşında, Fransız, sanat dedektifi."
+              "name": "Kayıt Sorumlusu Mina Karaca",
+              "icon": "📚",
+              "description": "Sergi sandıkları ile ziyaretçi defterlerini yöneten, kayıp etiketlerin kopyalarını arşivleyen titiz kayıt sorumlusu.",
+              "detail": "Her gün sol omzunda metal tokalı ağır dosya çantası taşır; büyüteçli gözlüğü ince bir gümüş zincirdedir; giriş kayıtlarını mavi kopya kalemiyle işaretler ve arşiv kâğıtlarına eldivensiz dokunur."
             },
             {
               "id": "s2",
-              "name": "Güvenlik Teknisyeni Leo",
-              "icon": "⚡",
-              "description": "Alarm sistemini biliyor. Düşük maaş şikâyeti.",
-              "detail": "30 yaşında, teknik dahi, dürüst görünümlü."
+              "name": "Gezici Restoratör Leyla Sav",
+              "icon": "🖌️",
+              "description": "Yurt dışından gelen eserleri incelemek için çağrılan, sandık teslimlerinde kimlik denetiminden muaf tutulan gezici restoratör.",
+              "detail": "Çalışırken sağ eline ince gri eldiven takar; terpentini ve taze mürekkebi aynı odada bulundurmaktan nefret eder; UV inceleme lambalarının besleme kablolarını kendi denetler."
             },
             {
               "id": "s3",
-              "name": "Alman Koleksiyoncu Hans Berger",
-              "icon": "👨‍💼",
-              "description": "Tabloyu 5 yıldır almak istiyor, reddedildi.",
-              "detail": "65 yaşında, varlıklı, sabırsız."
+              "name": "Koleksiyon Danışmanı Faruk Mert",
+              "icon": "🪙",
+              "description": "Portreyi satın alan vakfın temsilcisi; depodaki eski çerçevelerin değerini tek tek incelemekte ısrarcı koleksiyon danışmanı.",
+              "detail": "Antika ambalaj kilitlerini açmak için küçük bronz çerçeve kıskacını yanında taşır; takım çantasına düz balmumu tabletleri ve keten bez koyar."
             },
             {
               "id": "s4",
-              "name": "Yeni Stajyer Camille",
-              "icon": "noun-torun-nermin-avatar.png",
-              "description": "İlk haftası. Ama tüm koridorları biliyor gibi.",
-              "detail": "22 yaşında, genç, çok meraklı."
+              "name": "Gece Bekçisi İhsan Doru",
+              "icon": "🔦",
+              "description": "Kapanıştan sonra Portre Salonu'nun raylı askılarını ve acil çıkışlarını denetleyen gece bekçisi.",
+              "detail": "Her vardiyada siyah saplı ince tel kesicisini raylı askıların yanında taşır; salon ışıkları sönünce kontrol çizelgesine kurşun kalemle saat yazar."
             }
           ],
           "weapons": [
             {
               "id": "w1",
-              "name": "Elektrik Şoku",
-              "icon": "⚡",
-              "description": "Modifiye güvenlik cihazı."
+              "name": "Ray Kablo Makası",
+              "icon": "✂️",
+              "description": "Sergi raylarının içindeki kabloları ve küçük askı tellerini ayırmak için kullanılan siyah saplı kesme aleti.",
+              "detail": "Taze tel çapakları ile siyah kauçuk izleri bırakır."
             },
             {
               "id": "w2",
-              "name": "Boğma",
-              "icon": "🪢",
-              "description": "İpek atkı."
+              "name": "Frekans Ünitesi",
+              "icon": "⚡",
+              "description": "Pigment katmanlarını taramak için kullanılan, eski tip yüksek gerilimli aydınlatma düzeneği.",
+              "detail": "Temasta bakır nokta yanıkları ve kısa süreli ark izi bırakır."
             },
             {
               "id": "w3",
-              "name": "Zehirli Enjeksiyon",
-              "icon": "💉",
-              "description": "Hızlı etkili nörotoksin."
+              "name": "Pirinç Kilit Pensesi",
+              "icon": "🗜️",
+              "description": "Antika sandık ve çerçeve kilitlerini sökmekte kullanılan, ağır sarı metal gövdeli küçük pense.",
+              "detail": "Keten lifleri ve balmumu izlerini kolayca tutar."
             },
             {
               "id": "w4",
-              "name": "Künt Darbe",
-              "icon": "🔨",
-              "description": "Metal heykel kaidesi."
+              "name": "Renk Açıcı Kapsül",
+              "icon": "🧪",
+              "description": "Vernik lekelerini çözmek için kullanılan, kırıldığında yoğun uçucu buhar çıkaran cam kapsül.",
+              "detail": "Cam kıymığı ve keskin çözücü kokusu bırakır."
             }
           ],
           "locations": [
             {
               "id": "l1",
-              "name": "Tablo Salonu",
-              "icon": "🖼️",
-              "description": "Çalınan tablonun asılı olduğu salon."
+              "name": "Kayıt Odası",
+              "icon": "🗂️",
+              "description": "Ziyaretçi defterleri, gümrük kopyaları ve sandık etiketlerinin saklandığı dar arşiv bölümü.",
+              "detail": "Mavi kopya kalemi tozu ve metal dosya tokaları bu odada sık görülür."
             },
             {
               "id": "l2",
-              "name": "Güvenlik Merkezi",
-              "icon": "📹",
-              "description": "Kamera merkezi."
+              "name": "Portre Salonu",
+              "icon": "🖼️",
+              "description": "Kimliği belirsiz portrenin açılış öncesi sergilendiği, raylı askı sistemli ana salon.",
+              "detail": "Sergi telleri ve siyah kauçuk sap izleri çoğunlukla buradaki raylarda kalır."
             },
             {
               "id": "l3",
-              "name": "Depo Katı",
-              "icon": "📦",
-              "description": "Müze alt kat deposu."
+              "name": "Boş Çerçeve Deposu",
+              "icon": "🪞",
+              "description": "Sökülmüş çerçevelerin, eski lambaların ve kullanılmayan yaldızlı pervazların tutulduğu kilitli alt depo.",
+              "detail": "Eski yüksek gerilimli inceleme lambasının sabit yuvası yalnız bu depodaki metal raftadır."
             },
             {
               "id": "l4",
               "name": "Restorasyon Atölyesi",
-              "icon": "🔍",
-              "description": "Eserlerin restore edildiği atölye."
+              "icon": "🧫",
+              "description": "Pigment, vernik ve çerçeve onarımının yapıldığı üst kat çalışma alanı.",
+              "detail": "Balmumu tabletleri, keten bezler ve bronz kilit araçları burada sık kullanılır."
             }
           ],
           "clues": [
             {
               "id": "c1",
-              "type": "kanit",
+              "title": "Bakır Halkanın Yanığı",
+              "type": "adli",
+              "mechanicType": "text",
+              "text": "Adli muayene, Cihan'ın ölümüne sağ avcunda üç bakır temas noktası bırakan ani bir elektrik boşalmasının yol açtığını saptadı. Aydınlatma başlığındaki erimiş lif, ısıya dayanıklı gri eldiven dokusundaydı; mavi kopya pigmenti ya da çıplak parmak yağları yoktu.",
+              "deductionHint": "Bakır temas noktaları ile erimiş elyaf hangi yöntemi düşündürür?",
+              "isBonus": false,
               "revealOrder": 1,
               "isRevealed": true,
-              "pointCost": 0,
-              "title": "Ölüm Yeri",
-              "text": "Güvenlik şefi depo katında bulundu. Elektrik yanığı izleri. Modifiye cihaz.",
-              "mechanicType": "text"
+              "pointCost": 0
             },
             {
               "id": "c2",
-              "type": "sifreli",
+              "title": "Pervazdaki Gerçek İzler",
+              "type": "profil_sentezi",
+              "mechanicType": "profil_sentezi",
+              "text": "Yaldızlı pervazın içindeki gölge yüz vermiyordu. Buna karşılık cilada üç somut temas izi korunmuştu: askı sürtmesi, ince zincir çizgisi ve mavi kopya tozu.",
+              "deductionHint": "Gölgenin yüzünü tahmin etmek yerine, üç fiziksel işareti şüpheli kartlarındaki günlük alışkanlıklarla birlikte okuyun: bu izlerin tamamı hangi profilde birleşiyor?",
+              "isBonus": false,
               "revealOrder": 2,
               "isRevealed": false,
-              "pointCost": 80,
-              "title": "Güvenlik Şefinin Son Mesajı",
-              "text": "Telefonda yarım kalmış şifreli mesaj.",
-              "mechanicType": "sifreli_mesaj",
-              "sifre": {
-                "sifrelenmis": "LEO-DPKP-VLLT-BLDR",
-                "sifreleTuru": "kisaltma",
-                "cozumIpucu": "Kısaltmaları açın.",
-                "cozulmus": "LEO-DEPO KAPISI-VIOLETTE-BİLİYOR",
-                "aciklama": "Güvenlik şefi Leo'nun depo kapısını açtığını ve Violette'nin bunu bildiğini söylüyor."
+              "pointCost": 70,
+              "profilSenteziVerisi": {
+                "baslik": "Çerçeve Gölgesinin Profili",
+                "aciklama": "Yansıma yüzü ters ve bulanık. Kararı gölgeye değil, pervazın üzerinde kalan üç fiziksel işarete göre ver; şüpheli kartlarının Tanım ve Detay alanlarını birlikte incele.",
+                "presentation": {
+                  "style": "frame_shadow_profile",
+                  "sceneLabel": "BOŞ ÇERÇEVE / YANSIMA KAYDI",
+                  "reflectionNote": "Yüz seçilemiyor: camdaki liman ışıkları silueti ters çevirmiş. Fiziksel izler ise yansıma gibi davranmaz.",
+                  "physicalEvidenceLabel": "ÇERÇEVEDE KALAN FİZİKSEL İŞARETLER",
+                  "purposeHint": "Bu profili çözdüğünde, dedektif ızgarasında bir şüphelinin olay gecesi hangi bölümde çalıştığı kesinleşecek."
+                },
+                "delilKartlari": [
+                  {
+                    "id": "e1",
+                    "baslik": "SOL OMUZ SÜRTMESİ",
+                    "metin": "İç pervazın sol üstünde, metal tokaya benzeyen dar ve paralel bir sürtme izi var. Askı, pervaza sol taraftan yaslanmış."
+                  },
+                  {
+                    "id": "e2",
+                    "baslik": "İNCE ZİNCİR ÇİZGİSİ",
+                    "metin": "Yaldızın üzerinde iki kısa, parlak çizgi kaldı. Zincir hareket ederken yüzeye iki kez hafifçe vurmuş."
+                  },
+                  {
+                    "id": "e3",
+                    "baslik": "MAVİ KOPYA TOZU",
+                    "metin": "Alt pervazın içine, kuru kâğıtla silinmeyen donuk mavi pigment oturmuş. Bu toz, boya ya da vernik değil."
+                  }
+                ],
+                "optionSuspectIds": [
+                  "s1",
+                  "s2",
+                  "s3",
+                  "s4"
+                ],
+                "answerSuspectId": "s1",
+                "successText": "Üç işaret tek profilde birleşti. Gölgeden çok, yanında taşıdığı gündelik eşyalar konuşuyor.",
+                "failureText": "Bu profil işaretlerin yalnız bir kısmını açıklıyor. Omuz sürtmesi, zincir çizgisi ve mavi tozu aynı anda karşılamalı."
               }
             },
             {
               "id": "c3",
-              "type": "parmak_izi",
+              "title": "Siyah Sapta Kalanlar",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Siyah saplı kesme aletinin ekleminde kurşun kalem grafiti ve taze tel çapakları vardı. Aynı yüzeyde gri elyaf, uçucu çözücü izi ya da pigment temizleme kalıntısı bulunmadı.",
+              "deductionHint": "Bu alet hangi çalışma profilinin rutinine uymaz?",
+              "isBonus": false,
               "revealOrder": 3,
               "isRevealed": false,
-              "pointCost": 80,
-              "title": "Modifiye Cihaz İzi",
-              "text": "Elektrik cihazında iz.",
-              "mechanicType": "parmak_izi",
-              "parmakIziVerisi": {
-                "aciklama": "Dört şüphelinin izini cihazla eşleştir.",
-                "izler": [
-                  {
-                    "izId": "iz1",
-                    "konum": "Cihaz paneli",
-                    "eslesme": "s2",
-                    "ipucu": "Teknik, hassas iz — elektronik çalışmaya alışmış parmaklar."
-                  }
-                ],
-                "sonuc": "Cihazı modifiye eden: Leo. (s2)"
-              }
+              "pointCost": 70
             },
             {
               "id": "c4",
+              "title": "Balmumlu Keten",
               "type": "tanik",
+              "mechanicType": "text",
+              "text": "Sandıkçı, akşam kilitleri açarken keten bezinin üzerine düz balmumu tabletini koyan değer biçme görevlisini gördüğünü söyledi.",
+              "deductionHint": "Mühür sökme rutini hangi iki kartı yan yana getirir?",
+              "isBonus": false,
               "revealOrder": 4,
               "isRevealed": false,
-              "pointCost": 80,
-              "title": "Camille'nin İfadesi",
-              "text": "\"Leo o gece Violette ile depo katında konuştu. Sesler yükseldi. Leo 'sen beni kullandın' dedi. Violette 'bu senin seçimindi' dedi.\"",
-              "mechanicType": "tanik_yuzlesme",
-              "yuzlesmeDialogu": [
-                {
-                  "soru": "Leo ve Violette'yi duydunuz mu?",
-                  "cevap": "Evet, tartışıyorlardı.",
-                  "yalan": false
-                },
-                {
-                  "soru": "Siz ne yapıyordunuz orada?",
-                  "cevap": "Geç kalmıştım, çantamı almaya geldim.",
-                  "yalan": true
-                }
-              ]
+              "pointCost": 70
             },
             {
               "id": "c5",
-              "type": "adli",
+              "title": "Kapanış Kartı",
+              "type": "eleme",
+              "mechanicType": "text",
+              "text": "Asansör kartı, gri sağ eldivenli uzmanın 21.09'da üst kata çıktığını ve aynı kartla 22.02'ye kadar geri dönmediğini kaydediyor.",
+              "deductionHint": "Kart saati hangi kişiyi ana sergi bölümünden dışlar?",
+              "isBonus": false,
               "revealOrder": 5,
               "isRevealed": false,
-              "pointCost": 80,
-              "title": "Teknik Analiz",
-              "text": "Cihazın modifikasyonu uzmanlık işi. Leo bunu yapabilir. Ama planlamak için müze düzenini iyi bilen biri gerekli.",
-              "mechanicType": "text"
+              "pointCost": 70
             },
             {
               "id": "c6",
-              "type": "eleme",
+              "title": "Yaldızlı Kablo Çapağı",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Üst kattaki çalışma tezgâhında, siyah kauçuk sap izi taşıyan iletken çapakları yaldız tozuna karışmıştı.",
+              "deductionHint": "Yaldızla karışmış metal çapakları hangi araç–çalışma alanı bağlantısını kurar?",
+              "isBonus": false,
               "revealOrder": 6,
               "isRevealed": false,
-              "pointCost": 80,
-              "title": "Hans ve Camille Kaydı",
-              "text": "Hans o gece Berlin'de otel kaydı var. Camille kayıt sisteminde 21.00'de müzeden çıktı gösteriyor — ama Camille'nin kart erişimi hâlâ aktifti.",
-              "mechanicType": "text"
+              "pointCost": 70
             },
             {
               "id": "c7",
-              "type": "dogrudan",
+              "title": "Mavi Tozlu Kutu",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Kayıt Odası çekmecesinde, kırılmış cam kapsüllerin taşındığı kutunun üzerinde mavi kopya kalemi tozu ve eski solvent kokusu bulundu.",
+              "deductionHint": "Mavi tozlu kutu hangi arşiv rutinini hangi cam nesneyle buluşturur?",
+              "isBonus": true,
               "revealOrder": 7,
               "isRevealed": false,
-              "pointCost": 80,
-              "title": "Violette'nin Gizli Anlaşması",
-              "text": "Violette, tablonun sahte olduğunu biliyordu. Hans Berger'le anlaşma: sahteyi çaldırt, sigortadan para al, gerçeği gizlice sat. Leo araç, artık gereksiz.",
-              "mechanicType": "gorsel_ipucu",
-              "gorselAciklama": "Şifreli e-posta zinciri. Violette ve Hans arasında. Leo'nun adı sadece bir kez geçiyor: 'Teknik sorun halloldu.'"
+              "pointCost": 45
             },
             {
               "id": "c8",
-              "type": "ses_kaydi",
+              "title": "Vardiya Dolabındaki Kesik",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Gece vardiyası dolabında, siyah saplı aletin ağzına uyan iki tel parçası ve kısa bir ray kontrol listesi bulundu.",
+              "deductionHint": "Vardiya dolabındaki tel parçaları hangi görevliyi aynı kesme aletiyle buluşturur?",
+              "isBonus": true,
               "revealOrder": 8,
               "isRevealed": false,
-              "pointCost": 80,
-              "title": "Violette-Leo Son Konuşması",
-              "text": "[Ses kaydı] Leo: 'Anlaşmamız buydu. Para alacaktım.' Violette: 'Para olmaz. Bilgin tehlikeli.' Kısa sessizlik. Elektrik sesi.",
-              "mechanicType": "ses_kaydi",
-              "sesMetni": "Ses kesik. Son kısım kayıp."
+              "pointCost": 45
             }
           ],
+          "assetManifest": [],
           "solution": {
-            "suspectId": "s1",
-            "weaponId": "w1",
+            "suspectId": "s2",
+            "weaponId": "w2",
             "locationId": "l3"
           },
-          "solutionNarrative": "Küratör Violette, Hans ile sahte tablo planını kurdu. Leo'yu sistemi modifiye etmek için kullandı. Leo parası isteyince Violette Leo'nun modifiye ettiği cihazı ona karşı kullandı.",
-          "specialMechanic": "tam_mekanik_seti"
+          "solutionNarrative": "Leyla Sav, sandıklardaki farklı adların kendi kaçak teslim rotasını örttüğünü fark eden Cihan'ı susturmak için frekans ünitesini alt depodaki sabit yuvada tuzakladı. Yaldızlı pervazdaki gölge Mina'nın masum kayıt rotasına aitti; Leyla bu görüntünün şüpheyi yanlış yöne çekeceğine güvendi. Avuçtaki ark izi ve ızgaradaki karşılıklar gerçek üçlüyü bıraktı."
         },
         {
           "puzzleId": "rc_005",
