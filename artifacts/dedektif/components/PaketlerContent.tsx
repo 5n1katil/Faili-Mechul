@@ -119,7 +119,7 @@ export default function PaketlerContent({ embedded = false }: { embedded?: boole
         <MaterialIcons name="workspace-premium" size={22} color="#D4A843" />
         <Text style={styles.premHeaderTitle}>Premium Paketler</Text>
         <View style={styles.premHeaderBadge}>
-          <Text style={styles.premHeaderBadgeText}>{PURCHASABLE_PACKS.length}</Text>
+          <Text style={styles.premHeaderBadgeText}>{PURCHASABLE_PACKS.length} Paket</Text>
         </View>
       </View>
       <Text style={[styles.screenSubtitle, { color: colors.mutedForeground }]}>
