@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import type { ComponentProps } from "react";
-import { Alert, Image, Platform, Pressable, ScrollView, StyleSheet, Text, TextInput, View, useWindowDimensions } from "react-native";
+import { Alert, Image, Platform, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 import { Audio } from "expo-av";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useGame } from "@/context/GameContext";
@@ -256,7 +256,6 @@ function SymbolCrossgridBlock({
   onSolve: () => void;
 }) {
   const { addTimePenalty } = useGame();
-  const { width: screenWidth } = useWindowDimensions();
   const pres = sifre.presentation!;
   const rowSymbols = pres.rowSymbols ?? [];
   const colSymbols = pres.columnSymbols ?? [];
@@ -265,10 +264,14 @@ function SymbolCrossgridBlock({
   const answerAliases = (pres.answerAliases ?? []) as string[];
   const interaction = pres.interaction ?? {};
 
+  const [blockWidth, setBlockWidth] = useState(0);
   const TOTAL_COLS = colSymbols.length + 1;
-  const CELL = Math.max(26, Math.floor((screenWidth - 28) / TOTAL_COLS));
-  const symFont = Math.max(9, Math.floor(CELL * 0.36));
-  const letterFont = Math.max(9, Math.floor(CELL * 0.38));
+  // blockWidth is the crossgridBlock outer width; grid has marginH:12 + border:1 each side
+  const CELL = blockWidth > 0
+    ? Math.max(22, Math.floor((blockWidth - 26) / TOTAL_COLS))
+    : 30;
+  const symFont = Math.max(8, Math.floor(CELL * 0.36));
+  const letterFont = Math.max(8, Math.floor(CELL * 0.38));
 
   const [chipIndices, setChipIndices] = useState<(number | null)[]>(
     cipherSyms.map(() => null)
@@ -345,7 +348,10 @@ function SymbolCrossgridBlock({
   }
 
   return (
-    <View style={styles.crossgridBlock}>
+    <View
+      style={styles.crossgridBlock}
+      onLayout={(e) => setBlockWidth(e.nativeEvent.layout.width)}
+    >
       <View style={styles.crossgridTitleBar}>
         <MaterialIcons name="grid-on" size={13} color="#e0b54e" />
         <Text style={styles.crossgridTitleText}>{pres.title ?? "EŞLEME TAHTASI"}</Text>
@@ -358,38 +364,38 @@ function SymbolCrossgridBlock({
         </View>
       ) : null}
 
-      {/* Fixed-width grid — no horizontal scroll */}
-      <View style={[styles.crossgridScroll, { marginHorizontal: 12 }]}>
-        {/* Column headers */}
-        <View style={styles.crossgridRow}>
-          <View style={[styles.crossgridCell, styles.crossgridCorner, { width: CELL, height: CELL }]}>
-            <Text style={[styles.crossgridCornerText, { fontSize: symFont }]}>↘</Text>
-          </View>
-          {colSymbols.map((sym, ci) => (
-            <View key={ci} style={[styles.crossgridCell, styles.crossgridColHeader, { width: CELL, height: CELL }]}>
-              <Text style={[styles.crossgridHeaderText, { fontSize: symFont }]}>{sym}</Text>
+      {/* Grid — sized precisely from measured block width */}
+      {blockWidth > 0 ? (
+        <View style={[styles.crossgridScroll, { marginHorizontal: 12 }]}>
+          <View style={styles.crossgridRow}>
+            <View style={[styles.crossgridCell, styles.crossgridCorner, { width: CELL, height: CELL }]}>
+              <Text style={[styles.crossgridCornerText, { fontSize: symFont }]}>↘</Text>
             </View>
-          ))}
-        </View>
-        {/* Data rows */}
-        {rowSymbols.map((rowSym, ri) => (
-          <View key={ri} style={styles.crossgridRow}>
-            <View style={[styles.crossgridCell, styles.crossgridRowHeader, { width: CELL, height: CELL }]}>
-              <Text style={[styles.crossgridHeaderText, { fontSize: symFont }]}>{rowSym}</Text>
-            </View>
-            {(cells[ri] ?? []).map((letter, ci) => (
-              <View key={ci} style={[styles.crossgridCell, styles.crossgridDataCell, { width: CELL, height: CELL }]}>
-                <Text style={[styles.crossgridCellText, { fontSize: letterFont }]}>{letter}</Text>
+            {colSymbols.map((sym, ci) => (
+              <View key={ci} style={[styles.crossgridCell, styles.crossgridColHeader, { width: CELL, height: CELL }]}>
+                <Text style={[styles.crossgridHeaderText, { fontSize: symFont }]}>{sym}</Text>
               </View>
             ))}
           </View>
-        ))}
-      </View>
+          {rowSymbols.map((rowSym, ri) => (
+            <View key={ri} style={styles.crossgridRow}>
+              <View style={[styles.crossgridCell, styles.crossgridRowHeader, { width: CELL, height: CELL }]}>
+                <Text style={[styles.crossgridHeaderText, { fontSize: symFont }]}>{rowSym}</Text>
+              </View>
+              {(cells[ri] ?? []).map((letter, ci) => (
+                <View key={ci} style={[styles.crossgridCell, styles.crossgridDataCell, { width: CELL, height: CELL }]}>
+                  <Text style={[styles.crossgridCellText, { fontSize: letterFont }]}>{letter}</Text>
+                </View>
+              ))}
+            </View>
+          ))}
+        </View>
+      ) : null}
 
-      {/* Interactive cipher chips */}
+      {/* Interactive cipher chips — flexWrap so they flow into 2 rows naturally */}
       <View style={styles.crossgridCipherSection}>
         <Text style={styles.crossgridCipherLabel}>ŞİFRE — Sembole tıkla, harfi bul</Text>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.crossgridChipsRow}>
+        <View style={styles.crossgridChipsRow}>
           {cipherSyms.map((sym, i) => {
             if (sym === "/") {
               return (
@@ -415,8 +421,8 @@ function SymbolCrossgridBlock({
               </Pressable>
             );
           })}
-        </ScrollView>
-        {/* Live assembled answer preview */}
+        </View>
+        {/* Live answer preview */}
         <View style={styles.crossgridAnswerPreview}>
           <Text style={[styles.crossgridAnswerPreviewText, wrong && { color: "#ef4444" }]}>
             {buildAnswer()}
@@ -2481,9 +2487,10 @@ const styles = StyleSheet.create({
   },
   crossgridChipsRow: {
     flexDirection: "row",
+    flexWrap: "wrap",
     alignItems: "center",
     paddingTop: 8,
-    gap: 4,
+    gap: 6,
   },
   crossgridChip: {
     alignItems: "center",
