@@ -1236,15 +1236,15 @@ export default function VakalarScreen() {
                       : { backgroundColor: colors.card, borderColor: colors.border },
                   ]}
                 >
-                  <View style={[listStyles.tamamlananlarPillIcon, { backgroundColor: diffFilter === "tamamlananlar" ? `${colors.success}22` : `${colors.mutedForeground}18` }]}>
-                    <MaterialIcons name="check-circle" size={16} color={diffFilter === "tamamlananlar" ? colors.success : colors.mutedForeground} />
+                  <View style={[listStyles.tamamlananlarPillIcon, { backgroundColor: diffFilter === "tamamlananlar" ? `${colors.success}22` : "#FFFFFF14" }]}>
+                    <MaterialIcons name="check-circle" size={16} color={diffFilter === "tamamlananlar" ? colors.success : "#C8CAE0"} />
                   </View>
-                  <Text style={[listStyles.tamamlananlarPillText, { color: diffFilter === "tamamlananlar" ? colors.success : colors.mutedForeground }]}>
+                  <Text style={[listStyles.tamamlananlarPillText, { color: diffFilter === "tamamlananlar" ? colors.success : "#E2E4F0" }]}>
                     Tamamlananlar
                   </Text>
                   {completedPuzzles.length > 0 && (
-                    <View style={[listStyles.tamamlananlarPillCount, { backgroundColor: diffFilter === "tamamlananlar" ? `${colors.success}33` : `${colors.mutedForeground}18` }]}>
-                      <Text style={[listStyles.tamamlananlarPillCountText, { color: diffFilter === "tamamlananlar" ? colors.success : colors.mutedForeground }]}>
+                    <View style={[listStyles.tamamlananlarPillCount, { backgroundColor: diffFilter === "tamamlananlar" ? `${colors.success}33` : "#FFFFFF20" }]}>
+                      <Text style={[listStyles.tamamlananlarPillCountText, { color: diffFilter === "tamamlananlar" ? colors.success : "#F0F2FF" }]}>
                         {completedPuzzles.length}
                       </Text>
                     </View>
@@ -1253,7 +1253,7 @@ export default function VakalarScreen() {
                   <MaterialIcons
                     name={diffFilter === "tamamlananlar" ? "keyboard-arrow-up" : "keyboard-arrow-down"}
                     size={20}
-                    color={diffFilter === "tamamlananlar" ? colors.success : colors.mutedForeground}
+                    color={diffFilter === "tamamlananlar" ? colors.success : "#C8CAE0"}
                   />
                 </Pressable>
               </Animated.View>
@@ -1631,10 +1631,17 @@ const listStyles = StyleSheet.create({
   puzzleCard: {
     borderRadius: 14,
     borderWidth: 1,
-    padding: 14,
+    paddingTop: 14,
+    paddingHorizontal: 14,
+    paddingBottom: 0,
     gap: 8,
     marginBottom: 4,
     overflow: "hidden",
+    shadowColor: "#000",
+    shadowOpacity: 0.28,
+    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 4 },
+    elevation: 5,
   },
   puzzleCardTop: {
     flexDirection: "row",
@@ -1678,7 +1685,11 @@ const listStyles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     borderTopWidth: 1,
+    marginTop: 4,
+    marginHorizontal: -14,
+    paddingHorizontal: 14,
     paddingTop: 10,
+    paddingBottom: 12,
   },
   playText: { fontSize: 13, fontWeight: "600" },
   bestResultRow: {
