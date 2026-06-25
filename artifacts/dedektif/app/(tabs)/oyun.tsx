@@ -268,35 +268,41 @@ function PremiumTabButton({ active, onPress }: { active: boolean; onPress: () =>
     );
   }, []);
 
-  const glowAnim = useAnimatedStyle(() => ({
-    shadowOpacity: 0.35 + pulse.value * 0.65,
-    shadowRadius: 10 + pulse.value * 28,
-    borderColor: `rgba(255, 145, 0, ${0.5 + pulse.value * 0.5})`,
-    borderWidth: 2 + pulse.value * 1.5,
-    elevation: 10 + pulse.value * 18,
-  }));
-
+  // Animate only opacity — works on all platforms, zero layout impact
+  const glowOpacity = useAnimatedStyle(() => ({ opacity: 0.2 + pulse.value * 0.8 }));
   const scaleAnim = useAnimatedStyle(() => ({ transform: [{ scale: scale.value }] }));
 
   return (
     <Animated.View style={[{ flex: 1 }, scaleAnim]}>
+      {/* Glow halo — absolute overlay, opacity only, never affects layout */}
       <Animated.View
+        pointerEvents="none"
+        style={[
+          StyleSheet.absoluteFillObject,
+          {
+            borderRadius: 14,
+            borderWidth: 2,
+            borderColor: NEON_ORANGE,
+            shadowColor: NEON_ORANGE,
+            shadowOffset: { width: 0, height: 0 },
+            shadowOpacity: 1,
+            shadowRadius: 18,
+            elevation: 20,
+          },
+          glowOpacity,
+        ]}
+      />
+      {/* Static button — never changes size */}
+      <View
         style={[
           listStyles.tabBtn3d,
           {
             flex: 1,
-            shadowColor: NEON_ORANGE,
-            shadowOffset: { width: 0, height: 2 },
+            borderWidth: 2,
+            borderColor: `${NEON_ORANGE}77`,
+            backgroundColor: active ? `${NEON_ORANGE}22` : `${NEON_ORANGE}0D`,
           },
-          active
-            ? {
-                backgroundColor: `${NEON_ORANGE}28`,
-                borderBottomColor: `${NEON_ORANGE}FF`,
-                borderBottomWidth: 5,
-                shadowOffset: { width: 0, height: 5 },
-              }
-            : { backgroundColor: `${NEON_ORANGE}12` },
-          glowAnim,
+          active ? { borderBottomWidth: 5, borderColor: `${NEON_ORANGE}EE` } : {},
         ]}
       >
         <Pressable
@@ -310,7 +316,7 @@ function PremiumTabButton({ active, onPress }: { active: boolean; onPress: () =>
             Premium
           </Text>
         </Pressable>
-      </Animated.View>
+      </View>
     </Animated.View>
   );
 }
