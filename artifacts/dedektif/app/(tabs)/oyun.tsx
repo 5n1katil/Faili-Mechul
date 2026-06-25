@@ -62,8 +62,8 @@ import Animated, {
   useSharedValue,
   withSpring,
   withRepeat,
-  withSequence,
   withTiming,
+  Easing,
 } from "react-native-reanimated";
 
 const FREE_PUZZLE_COUNT = 10;
@@ -250,29 +250,31 @@ function PremiumInfoModal({
 const INACTIVE_COLOR = "#C0C0D0";
 const PREMIUM_GOLD = "#D4A843";
 
+const NEON_ORANGE = "#FF6800";
+
 function PremiumTabButton({ active, onPress }: { active: boolean; onPress: () => void }) {
-  const glow = useSharedValue(0);
+  const angle = useSharedValue(0);
   const scale = useSharedValue(1);
 
   React.useEffect(() => {
-    glow.value = withRepeat(
-      withSequence(
-        withTiming(1, { duration: 1100 }),
-        withTiming(0, { duration: 1100 }),
-      ),
+    angle.value = withRepeat(
+      withTiming(360, { duration: 2600, easing: Easing.linear }),
       -1,
       false,
     );
   }, []);
 
-  const glowAnim = useAnimatedStyle(() => ({
-    shadowOpacity: active ? 0.95 : 0.22 + glow.value * 0.6,
-    shadowRadius: active ? 16 : 5 + glow.value * 14,
-    borderColor: active
-      ? PREMIUM_GOLD
-      : `rgba(212,168,67,${0.3 + glow.value * 0.5})`,
-    borderBottomColor: active ? `${PREMIUM_GOLD}CC` : `rgba(212,168,67,${0.25 + glow.value * 0.55})`,
-  }));
+  const orbitGlow = useAnimatedStyle(() => {
+    const rad = (angle.value * Math.PI) / 180;
+    const r = active ? 9 : 7;
+    return {
+      shadowColor: NEON_ORANGE,
+      shadowOffset: { width: Math.cos(rad) * r, height: Math.sin(rad) * r },
+      shadowOpacity: active ? 0.95 : 0.8,
+      shadowRadius: active ? 14 : 10,
+      elevation: 14,
+    };
+  });
 
   const scaleAnim = useAnimatedStyle(() => ({ transform: [{ scale: scale.value }] }));
 
@@ -283,14 +285,13 @@ function PremiumTabButton({ active, onPress }: { active: boolean; onPress: () =>
           listStyles.tabBtn3d,
           {
             flex: 1,
-            shadowColor: PREMIUM_GOLD,
-            shadowOffset: { width: 0, height: 3 },
-            elevation: 10,
+            borderColor: `${NEON_ORANGE}99`,
+            borderBottomColor: `${NEON_ORANGE}CC`,
           },
           active
-            ? { backgroundColor: `${PREMIUM_GOLD}1E`, borderBottomWidth: 3 }
-            : { backgroundColor: `${PREMIUM_GOLD}0C`, borderBottomWidth: 1 },
-          glowAnim,
+            ? { backgroundColor: `${NEON_ORANGE}18`, borderBottomWidth: 3 }
+            : { backgroundColor: `${NEON_ORANGE}0A`, borderBottomWidth: 1 },
+          orbitGlow,
         ]}
       >
         <Pressable
@@ -1058,6 +1059,38 @@ export default function VakalarScreen() {
               scrollEventThrottle={16}
               onScroll={(e) => { listScrollY.current = e.nativeEvent.contentOffset.y; }}
             >
+              {/* ── Standart Vakalar header card (always at top) ── */}
+              <Animated.View entering={FadeInDown.delay(0).springify()}>
+                <View style={[listStyles.standartCard, { backgroundColor: colors.card, borderColor: "#C8581A44", shadowColor: "#C8581A", shadowOpacity: 0.2, shadowRadius: 10, shadowOffset: { width: 0, height: 4 }, elevation: 6 }]}>
+                  <View style={[listStyles.standartCardAccent, { backgroundColor: "#C8581A" }]} />
+                  <View style={{ flex: 1, paddingVertical: 13, paddingHorizontal: 14, gap: 8 }}>
+                    <View style={listStyles.standartCardTop}>
+                      <View style={[listStyles.heroCardIcon, { backgroundColor: "#C8581A18", width: 40, height: 40 }]}>
+                        <MaterialIcons name="folder-open" size={22} color="#C8581A" />
+                      </View>
+                      <View style={{ flex: 1 }}>
+                        <Text style={[listStyles.standartCardTitle, { color: "#F0F0F8" }]}>Standart Vakalar</Text>
+                        <Text style={[listStyles.heroCardSub, { color: INACTIVE_COLOR }]}>Ücretsiz · erişilebilir</Text>
+                      </View>
+                    </View>
+                    <View style={listStyles.standartStatsRow}>
+                      <View style={[listStyles.standartStat, { backgroundColor: "#C8581A14", borderColor: "#C8581A30" }]}>
+                        <Text style={[listStyles.standartStatNum, { color: "#E87A3A" }]}>{freePuzzles.length}</Text>
+                        <Text style={[listStyles.standartStatLabel, { color: INACTIVE_COLOR }]}>Toplam</Text>
+                      </View>
+                      <View style={[listStyles.standartStat, { backgroundColor: "#FFFFFF08", borderColor: "#FFFFFF18" }]}>
+                        <Text style={[listStyles.standartStatNum, { color: "#F0F0F8" }]}>{filteredActive.filter(p => !premiumPuzzleIdSet.has(p.id)).length}</Text>
+                        <Text style={[listStyles.standartStatLabel, { color: INACTIVE_COLOR }]}>Aktif</Text>
+                      </View>
+                      <View style={[listStyles.standartStat, { backgroundColor: `${colors.success}10`, borderColor: `${colors.success}28` }]}>
+                        <Text style={[listStyles.standartStatNum, { color: colors.success }]}>{completedPuzzles.filter(p => !premiumPuzzleIdSet.has(p.id)).length}</Text>
+                        <Text style={[listStyles.standartStatLabel, { color: INACTIVE_COLOR }]}>Çözüldü</Text>
+                      </View>
+                    </View>
+                  </View>
+                </View>
+              </Animated.View>
+
               {/* ── 3D Difficulty pills ── */}
               <View style={listStyles.diffFilterRow}>
                 {(["caylak", "dedektif", "baskomiser"] as Difficulty[]).map((diff) => {
@@ -1139,41 +1172,8 @@ export default function VakalarScreen() {
                   })
                 )
               ) : (
-                /* ── Standart Vakalar ── */
+                /* ── Active puzzle list ── */
                 <>
-                  <Animated.View entering={FadeInDown.delay(0).springify()}>
-                    <View style={[listStyles.standartCard, { backgroundColor: colors.card, borderColor: "#C8581A44" }]}>
-                      <View style={[listStyles.standartCardAccent, { backgroundColor: "#C8581A" }]} />
-                      <View style={{ flex: 1, paddingVertical: 12, paddingHorizontal: 14, gap: 6 }}>
-                        <View style={listStyles.standartCardTop}>
-                          <View style={[listStyles.heroCardIcon, { backgroundColor: "#C8581A18", width: 38, height: 38 }]}>
-                            <MaterialIcons name="folder-open" size={20} color="#C8581A" />
-                          </View>
-                          <View style={{ flex: 1 }}>
-                            <Text style={[listStyles.heroCardTitle, { color: "#F0F0F8" }]}>Standart Vakalar</Text>
-                            <Text style={[listStyles.heroCardSub, { color: INACTIVE_COLOR }]}>
-                              Ücretsiz · erişilebilir
-                            </Text>
-                          </View>
-                        </View>
-                        <View style={listStyles.standartStatsRow}>
-                          <View style={[listStyles.standartStat, { backgroundColor: "#C8581A14", borderColor: "#C8581A30" }]}>
-                            <Text style={[listStyles.standartStatNum, { color: "#E87A3A" }]}>{freePuzzles.length}</Text>
-                            <Text style={[listStyles.standartStatLabel, { color: INACTIVE_COLOR }]}>Toplam</Text>
-                          </View>
-                          <View style={[listStyles.standartStat, { backgroundColor: "#FFFFFF08", borderColor: "#FFFFFF18" }]}>
-                            <Text style={[listStyles.standartStatNum, { color: "#F0F0F8" }]}>{filteredActive.filter(p => !premiumPuzzleIdSet.has(p.id)).length}</Text>
-                            <Text style={[listStyles.standartStatLabel, { color: INACTIVE_COLOR }]}>Aktif</Text>
-                          </View>
-                          <View style={[listStyles.standartStat, { backgroundColor: `${colors.success}10`, borderColor: `${colors.success}28` }]}>
-                            <Text style={[listStyles.standartStatNum, { color: colors.success }]}>{completedPuzzles.filter(p => !premiumPuzzleIdSet.has(p.id)).length}</Text>
-                            <Text style={[listStyles.standartStatLabel, { color: INACTIVE_COLOR }]}>Çözüldü</Text>
-                          </View>
-                        </View>
-                      </View>
-                    </View>
-                  </Animated.View>
-
                   {filteredActive.length === 0 ? (
                     <View style={[listStyles.emptyBox, { borderColor: colors.border }]}>
                       <MaterialIcons name="check-circle-outline" size={40} color={colors.success} />
@@ -1708,21 +1708,26 @@ const listStyles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
-    paddingVertical: 10,
+    paddingVertical: 12,
     paddingHorizontal: 8,
-    borderRadius: 11,
+    borderRadius: 13,
     borderWidth: 1.5,
-    gap: 4,
-    minHeight: 64,
+    gap: 5,
+    minHeight: 72,
+    shadowOffset: { width: 0, height: 4 },
+    shadowRadius: 8,
+    shadowOpacity: 0.35,
+    elevation: 6,
   },
   filterPillText3d: {
-    fontSize: 12,
+    fontSize: 13,
     fontFamily: "PlayfairDisplay",
-    fontWeight: "600",
-    letterSpacing: 0.1,
+    fontWeight: "700",
+    letterSpacing: 0.2,
+    textAlign: "center",
   },
   filterPillCount3d: {
-    borderRadius: 7,
+    borderRadius: 8,
     paddingHorizontal: 5,
     paddingVertical: 1,
     minWidth: 18,
@@ -1841,6 +1846,13 @@ const listStyles = StyleSheet.create({
     borderWidth: 1,
     flexDirection: "row",
     overflow: "hidden",
+  },
+  standartCardTitle: {
+    fontSize: 17,
+    fontFamily: "PlayfairDisplay",
+    fontWeight: "700",
+    color: "#F0F0F8",
+    letterSpacing: 0.3,
   },
   standartCardAccent: {
     width: 4,
