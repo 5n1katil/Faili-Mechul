@@ -244,6 +244,8 @@ function PremiumInfoModal({
   );
 }
 
+const INACTIVE_COLOR = "#C0C0D0";
+
 function TabButton3D({
   label, icon, active, count, onPress, activeColor,
 }: {
@@ -261,18 +263,19 @@ function TabButton3D({
         onPress={onPress}
         style={[
           listStyles.tabBtn3d,
+          { flex: 1 },
           active
             ? { backgroundColor: `${activeColor}1E`, borderColor: activeColor, borderBottomColor: `${activeColor}CC`, borderBottomWidth: 3, shadowColor: activeColor, shadowOpacity: 0.5, shadowRadius: 10, shadowOffset: { width: 0, height: 4 }, elevation: 8 }
-            : { backgroundColor: colors.card, borderColor: colors.border },
+            : { backgroundColor: colors.card, borderColor: `${colors.border}CC` },
         ]}
       >
-        <MaterialIcons name={icon} size={15} color={active ? activeColor : colors.mutedForeground} />
-        <Text style={[listStyles.tabBtnText3d, { color: active ? activeColor : colors.mutedForeground }]}>
+        <MaterialIcons name={icon} size={15} color={active ? activeColor : INACTIVE_COLOR} />
+        <Text style={[listStyles.tabBtnText3d, { color: active ? activeColor : INACTIVE_COLOR }]}>
           {label}
         </Text>
         {count !== undefined && count > 0 && (
-          <View style={[listStyles.tabCount3d, { backgroundColor: active ? `${activeColor}33` : `${colors.mutedForeground}22` }]}>
-            <Text style={[listStyles.tabCountText3d, { color: active ? activeColor : colors.mutedForeground }]}>{count}</Text>
+          <View style={[listStyles.tabCount3d, { backgroundColor: active ? `${activeColor}33` : "#FFFFFF18" }]}>
+            <Text style={[listStyles.tabCountText3d, { color: active ? activeColor : INACTIVE_COLOR }]}>{count}</Text>
           </View>
         )}
       </Pressable>
@@ -299,16 +302,16 @@ function FilterPill3D({
           listStyles.filterPill3d,
           isSelected
             ? { backgroundColor: `${color}22`, borderColor: color, borderBottomColor: `${color}BB`, borderBottomWidth: 3, shadowColor: color, shadowOpacity: 0.4, shadowRadius: 8, shadowOffset: { width: 0, height: 3 }, elevation: 6 }
-            : { backgroundColor: colors.card, borderColor: colors.border, borderBottomWidth: 1 },
+            : { backgroundColor: colors.card, borderColor: `${colors.border}CC`, borderBottomWidth: 1 },
         ]}
       >
-        <MaterialIcons name={icon} size={13} color={isSelected ? color : colors.mutedForeground} />
-        <Text style={[listStyles.filterPillText3d, { color: isSelected ? color : colors.mutedForeground }]}>
+        <MaterialIcons name={icon} size={12} color={isSelected ? color : INACTIVE_COLOR} />
+        <Text style={[listStyles.filterPillText3d, { color: isSelected ? color : INACTIVE_COLOR }]} numberOfLines={1}>
           {label}
         </Text>
         {count !== undefined && count > 0 && (
-          <View style={[listStyles.filterPillCount3d, { backgroundColor: isSelected ? `${color}33` : `${colors.mutedForeground}18` }]}>
-            <Text style={[listStyles.filterPillCountText3d, { color: isSelected ? color : colors.mutedForeground }]}>{count}</Text>
+          <View style={[listStyles.filterPillCount3d, { backgroundColor: isSelected ? `${color}33` : "#FFFFFF18" }]}>
+            <Text style={[listStyles.filterPillCountText3d, { color: isSelected ? color : INACTIVE_COLOR }]}>{count}</Text>
           </View>
         )}
       </Pressable>
@@ -414,12 +417,8 @@ function PuzzleCard({
           <View style={listStyles.puzzleCardRight}>
             {locked ? (
               <View style={[listStyles.lockBadge, { backgroundColor: "#D4A84322", borderColor: "#D4A84366" }]}>
+                <MaterialIcons name="lock" size={11} color="#D4A843" />
                 <Text style={[listStyles.lockText, { color: "#D4A843" }]}>Premium</Text>
-              </View>
-            ) : premiumBadge ? (
-              <View style={[listStyles.premBadge, { backgroundColor: "#D4A84315", borderColor: "#D4A84344" }]}>
-                <MaterialIcons name="workspace-premium" size={11} color="#D4A843" />
-                <Text style={[listStyles.lockText, { color: "#D4A843" }]}>Pack</Text>
               </View>
             ) : completed ? (
               <View style={[listStyles.solvedBadge, { backgroundColor: `${colors.success}22`, borderColor: `${colors.success}55` }]}>
@@ -428,8 +427,8 @@ function PuzzleCard({
               </View>
             ) : (
               <View style={listStyles.puzzleCardMeta}>
-                <MaterialIcons name="person" size={13} color={colors.mutedForeground} />
-                <Text style={[listStyles.metaText, { color: colors.mutedForeground }]}>
+                <MaterialIcons name="person" size={13} color={INACTIVE_COLOR} />
+                <Text style={[listStyles.metaText, { color: INACTIVE_COLOR }]}>
                   {puzzle.suspects.length} şüpheli
                 </Text>
               </View>
@@ -438,17 +437,15 @@ function PuzzleCard({
         </View>
 
         <Text
-          style={[listStyles.puzzleTitle, { color: locked ? colors.mutedForeground : colors.foreground }]}
+          style={[listStyles.puzzleTitle, { color: "#F0F0F8" }]}
           numberOfLines={2}
         >
           {puzzle.title}
         </Text>
 
-        {!locked && (
-          <Text style={[listStyles.puzzleStory, { color: colors.mutedForeground }]} numberOfLines={2}>
-            {puzzle.story}
-          </Text>
-        )}
+        <Text style={[listStyles.puzzleStory, { color: locked ? "#8888AA" : "#A8A8C0" }]} numberOfLines={2}>
+          {puzzle.story}
+        </Text>
 
         {locked ? (
           <View style={[listStyles.playRow, { borderTopColor: colors.border }]}>
@@ -902,22 +899,40 @@ export default function VakalarScreen() {
           {listTab === "premium" ? (
             /* ══════════ PREMIUM TAB ══════════ */
             <View style={{ flex: 1 }}>
-              <View style={[listStyles.premSubFilterRow, { backgroundColor: colors.background, borderBottomColor: colors.border }]}>
-                <TabButton3D
-                  label="Premium Vakalar"
-                  icon="lock"
-                  active={premiumSubTab === "vakalar"}
-                  count={premiumPuzzles.length}
-                  onPress={() => setPremiumSubTab("vakalar")}
-                  activeColor="#D4A843"
-                />
-                <TabButton3D
-                  label="Paketler"
-                  icon="inventory-2"
-                  active={premiumSubTab === "paketler"}
-                  onPress={() => setPremiumSubTab("paketler")}
-                  activeColor="#D4A843"
-                />
+              {/* Premium segment control — clearly subordinate to main tab bar */}
+              <View style={[listStyles.premSegmentWrap, { backgroundColor: colors.background, borderBottomColor: colors.border }]}>
+                <View style={[listStyles.premSegmentTrack, { backgroundColor: "#FFFFFF0A", borderColor: "#FFFFFF14" }]}>
+                  <Pressable
+                    onPress={() => setPremiumSubTab("vakalar")}
+                    style={[
+                      listStyles.premSegmentBtn,
+                      premiumSubTab === "vakalar" && { backgroundColor: "#D4A84322", borderBottomColor: "#D4A843", borderBottomWidth: 2 },
+                    ]}
+                  >
+                    <MaterialIcons name="lock" size={13} color={premiumSubTab === "vakalar" ? "#D4A843" : INACTIVE_COLOR} />
+                    <Text style={[listStyles.premSegmentText, { color: premiumSubTab === "vakalar" ? "#D4A843" : INACTIVE_COLOR }]}>
+                      Premium Vakalar
+                    </Text>
+                    <View style={[listStyles.premSegmentCount, { backgroundColor: premiumSubTab === "vakalar" ? "#D4A84333" : "#FFFFFF14" }]}>
+                      <Text style={[listStyles.premSegmentCountText, { color: premiumSubTab === "vakalar" ? "#D4A843" : INACTIVE_COLOR }]}>
+                        {premiumPuzzles.length}
+                      </Text>
+                    </View>
+                  </Pressable>
+                  <View style={[listStyles.premSegmentDivider, { backgroundColor: "#FFFFFF14" }]} />
+                  <Pressable
+                    onPress={() => setPremiumSubTab("paketler")}
+                    style={[
+                      listStyles.premSegmentBtn,
+                      premiumSubTab === "paketler" && { backgroundColor: "#D4A84322", borderBottomColor: "#D4A843", borderBottomWidth: 2 },
+                    ]}
+                  >
+                    <MaterialIcons name="inventory-2" size={13} color={premiumSubTab === "paketler" ? "#D4A843" : INACTIVE_COLOR} />
+                    <Text style={[listStyles.premSegmentText, { color: premiumSubTab === "paketler" ? "#D4A843" : INACTIVE_COLOR }]}>
+                      Premium Paketler
+                    </Text>
+                  </Pressable>
+                </View>
               </View>
 
               {premiumSubTab === "paketler" ? (
@@ -928,55 +943,45 @@ export default function VakalarScreen() {
                   contentContainerStyle={[listStyles.listContent, { paddingTop: 12, paddingBottom: Platform.OS === "web" ? 34 + 80 : insets.bottom + 80 }]}
                   showsVerticalScrollIndicator={false}
                 >
-                  <Animated.View entering={FadeInDown.delay(0).springify()}>
-                    <Pressable
-                      onPress={() => {
-                        if (!isPremium) { setShowPaywall(true); return; }
-                        setPremiumVakalarExpanded(!premiumVakalarExpanded);
-                      }}
-                      style={[listStyles.premAccordionHeader, { backgroundColor: "#D4A84318", borderColor: isPremium ? "#D4A84355" : "#D4A84388", shadowColor: "#D4A843", shadowOpacity: 0.15, shadowRadius: 8, shadowOffset: { width: 0, height: 2 }, elevation: 4 }]}
-                    >
-                      <View style={[listStyles.premAccordionIcon, { backgroundColor: "#D4A84322" }]}>
-                        <MaterialIcons name="workspace-premium" size={22} color="#D4A843" />
-                      </View>
-                      <View style={{ flex: 1 }}>
-                        <Text style={[listStyles.premAccordionTitle, { color: "#D4A843" }]}>
-                          Premium Vakalar ({premiumPuzzles.length})
-                        </Text>
-                        <Text style={[listStyles.premAccordionSub, { color: "#D4A84399" }]}>
-                          {isPremium
-                            ? (premiumVakalarExpanded ? "Listeyi gizle" : "Tümünü göster")
-                            : "Kilidi açmak için dokun"}
-                        </Text>
-                      </View>
-                      {!isPremium ? (
-                        <View style={[listStyles.premAccordionLockWrap, { backgroundColor: "#D4A84322" }]}>
-                          <MaterialIcons name="lock-open" size={18} color="#D4A843" />
+                  {/* Buy CTA banner for non-premium users */}
+                  {!isPremium && (
+                    <Animated.View entering={FadeInDown.delay(0).springify()}>
+                      <Pressable
+                        onPress={() => setShowPaywall(true)}
+                        style={[listStyles.premUnlockBanner, { backgroundColor: "#D4A84314", borderColor: "#D4A84355", shadowColor: "#D4A843", shadowOpacity: 0.18, shadowRadius: 10, shadowOffset: { width: 0, height: 3 }, elevation: 5 }]}
+                      >
+                        <View style={[listStyles.premAccordionIcon, { backgroundColor: "#D4A84322", width: 46, height: 46 }]}>
+                          <MaterialIcons name="workspace-premium" size={24} color="#D4A843" />
                         </View>
-                      ) : (
-                        <MaterialIcons
-                          name={premiumVakalarExpanded ? "expand-less" : "expand-more"}
-                          size={24}
-                          color="#D4A843"
-                        />
-                      )}
-                    </Pressable>
-                  </Animated.View>
+                        <View style={{ flex: 1 }}>
+                          <Text style={[listStyles.premAccordionTitle, { color: "#D4A843", fontSize: 15 }]}>
+                            Vaka Arşivi · {premiumPuzzles.length} Vaka
+                          </Text>
+                          <Text style={[listStyles.premAccordionSub, { color: "#D4A84388", marginTop: 2 }]}>
+                            Tüm premium vakaları tek seferlik açmak için dokun
+                          </Text>
+                        </View>
+                        <View style={[listStyles.premUnlockBtn, { backgroundColor: "#D4A843" }]}>
+                          <MaterialIcons name="lock-open" size={16} color="#0F1117" />
+                        </View>
+                      </Pressable>
+                    </Animated.View>
+                  )}
 
-                  {isPremium && premiumVakalarExpanded && premiumPuzzles.map((puzzle, i) => {
+                  {/* Always-visible premium puzzle list */}
+                  {premiumPuzzles.map((puzzle, i) => {
                     const isCompleted = completedPuzzleIds.has(puzzle.id);
                     const stats = isCompleted ? playStatsForPuzzle(puzzle.id) : null;
                     return (
                       <PuzzleCard
                         key={puzzle.id}
                         puzzle={puzzle}
-                        onPress={() => startPuzzle(puzzle)}
+                        onPress={() => isPremium ? startPuzzle(puzzle) : setShowPaywall(true)}
                         delay={40 + i * 28}
                         completed={isCompleted}
                         playStats={stats}
-                        locked={false}
-                        showReplay={isCompleted}
-                        premiumBadge={!isCompleted}
+                        locked={!isPremium}
+                        showReplay={isCompleted && isPremium}
                       />
                     );
                   })}
@@ -1074,31 +1079,47 @@ export default function VakalarScreen() {
                   })
                 )
               ) : (
-                /* ── Active Vakalar ── */
+                /* ── Standart Vakalar ── */
                 <>
                   <Animated.View entering={FadeInDown.delay(0).springify()}>
-                    <View style={[listStyles.heroCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
-                      <View style={listStyles.heroCardLeft}>
-                        <View style={[listStyles.heroCardIcon, { backgroundColor: `${colors.primary}18` }]}>
-                          <MaterialIcons name="folder-open" size={22} color={colors.primary} />
+                    <View style={[listStyles.standartCard, { backgroundColor: colors.card, borderColor: `${colors.primary}30` }]}>
+                      <View style={[listStyles.standartCardAccent, { backgroundColor: colors.primary }]} />
+                      <View style={{ flex: 1, paddingVertical: 12, paddingHorizontal: 14, gap: 6 }}>
+                        <View style={listStyles.standartCardTop}>
+                          <View style={[listStyles.heroCardIcon, { backgroundColor: `${colors.primary}18`, width: 38, height: 38 }]}>
+                            <MaterialIcons name="folder-open" size={20} color={colors.primary} />
+                          </View>
+                          <View style={{ flex: 1 }}>
+                            <Text style={[listStyles.heroCardTitle, { color: "#F0F0F8" }]}>Standart Vakalar</Text>
+                            <Text style={[listStyles.heroCardSub, { color: INACTIVE_COLOR }]}>
+                              Ücretsiz · erişilebilir
+                            </Text>
+                          </View>
+                          {!isPremium && premiumPuzzles.length > 0 && (
+                            <Pressable
+                              onPress={() => setListTab("premium")}
+                              style={[listStyles.heroCardCta, { backgroundColor: "#D4A84318", borderColor: "#D4A84444" }]}
+                            >
+                              <MaterialIcons name="workspace-premium" size={12} color="#D4A843" />
+                              <Text style={[listStyles.heroCardCtaText, { color: "#D4A843" }]}>+{premiumPuzzles.length}</Text>
+                            </Pressable>
+                          )}
                         </View>
-                        <View>
-                          <Text style={[listStyles.heroCardTitle, { color: colors.foreground }]}>Aktif Vakalar</Text>
-                          <Text style={[listStyles.heroCardSub, { color: colors.mutedForeground }]}>
-                            {filteredActive.length} vaka
-                            {diffFilter !== "all" ? ` · ${getDifficultyLabel(diffFilter as Difficulty)}` : ` · tümü`}
-                          </Text>
+                        <View style={listStyles.standartStatsRow}>
+                          <View style={[listStyles.standartStat, { backgroundColor: `${colors.primary}12`, borderColor: `${colors.primary}28` }]}>
+                            <Text style={[listStyles.standartStatNum, { color: colors.primary }]}>{freePuzzles.length}</Text>
+                            <Text style={[listStyles.standartStatLabel, { color: INACTIVE_COLOR }]}>Toplam</Text>
+                          </View>
+                          <View style={[listStyles.standartStat, { backgroundColor: "#FFFFFF08", borderColor: "#FFFFFF18" }]}>
+                            <Text style={[listStyles.standartStatNum, { color: "#F0F0F8" }]}>{filteredActive.filter(p => !premiumPuzzleIdSet.has(p.id)).length}</Text>
+                            <Text style={[listStyles.standartStatLabel, { color: INACTIVE_COLOR }]}>Aktif</Text>
+                          </View>
+                          <View style={[listStyles.standartStat, { backgroundColor: `${colors.success}10`, borderColor: `${colors.success}28` }]}>
+                            <Text style={[listStyles.standartStatNum, { color: colors.success }]}>{completedPuzzles.filter(p => !premiumPuzzleIdSet.has(p.id)).length}</Text>
+                            <Text style={[listStyles.standartStatLabel, { color: INACTIVE_COLOR }]}>Çözüldü</Text>
+                          </View>
                         </View>
                       </View>
-                      {!isPremium && premiumPuzzles.length > 0 && (
-                        <Pressable
-                          onPress={() => setListTab("premium")}
-                          style={[listStyles.heroCardCta, { backgroundColor: "#D4A84318", borderColor: "#D4A84444" }]}
-                        >
-                          <MaterialIcons name="lock-open" size={12} color="#D4A843" />
-                          <Text style={[listStyles.heroCardCtaText, { color: "#D4A843" }]}>+{premiumPuzzles.length}</Text>
-                        </Pressable>
-                      )}
                     </View>
                   </Animated.View>
 
@@ -1122,7 +1143,6 @@ export default function VakalarScreen() {
                         completed={false}
                         playStats={null}
                         locked={false}
-                        premiumBadge={premiumPuzzleIdSet.has(puzzle.id)}
                       />
                     ))
                   )}
@@ -1633,14 +1653,15 @@ const listStyles = StyleSheet.create({
     fontWeight: "700",
   },
   filterPill3d: {
+    flex: 1,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
     paddingVertical: 10,
-    paddingHorizontal: 8,
+    paddingHorizontal: 6,
     borderRadius: 11,
     borderWidth: 1.5,
-    gap: 5,
+    gap: 4,
   },
   filterPillText3d: {
     fontSize: 12,
@@ -1762,6 +1783,104 @@ const listStyles = StyleSheet.create({
     fontSize: 12,
     fontFamily: "PlayfairDisplay",
     fontWeight: "600",
+  },
+  standartCard: {
+    borderRadius: 14,
+    borderWidth: 1,
+    flexDirection: "row",
+    overflow: "hidden",
+  },
+  standartCardAccent: {
+    width: 4,
+    alignSelf: "stretch",
+  },
+  standartCardTop: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+  },
+  standartStatsRow: {
+    flexDirection: "row",
+    gap: 8,
+  },
+  standartStat: {
+    flex: 1,
+    alignItems: "center",
+    paddingVertical: 7,
+    paddingHorizontal: 4,
+    borderRadius: 9,
+    borderWidth: 1,
+    gap: 2,
+  },
+  standartStatNum: {
+    fontSize: 17,
+    fontFamily: "PlayfairDisplay",
+    fontWeight: "700",
+    letterSpacing: 0.2,
+  },
+  standartStatLabel: {
+    fontSize: 10,
+    fontWeight: "600",
+    letterSpacing: 0.4,
+    textTransform: "uppercase",
+  },
+  premSegmentWrap: {
+    paddingHorizontal: 16,
+    paddingBottom: 12,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+  },
+  premSegmentTrack: {
+    flexDirection: "row",
+    borderRadius: 12,
+    borderWidth: 1,
+    overflow: "hidden",
+  },
+  premSegmentBtn: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 11,
+    paddingHorizontal: 10,
+    gap: 6,
+  },
+  premSegmentText: {
+    fontSize: 13,
+    fontFamily: "PlayfairDisplay",
+    fontWeight: "600",
+    letterSpacing: 0.1,
+  },
+  premSegmentCount: {
+    borderRadius: 7,
+    paddingHorizontal: 6,
+    paddingVertical: 1,
+    minWidth: 20,
+    alignItems: "center",
+  },
+  premSegmentCountText: {
+    fontSize: 11,
+    fontWeight: "700",
+  },
+  premSegmentDivider: {
+    width: 1,
+    alignSelf: "stretch",
+  },
+  premUnlockBanner: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderRadius: 14,
+    borderWidth: 1,
+    paddingHorizontal: 14,
+    paddingVertical: 14,
+    gap: 12,
+  },
+  premUnlockBtn: {
+    width: 38,
+    height: 38,
+    borderRadius: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    flexShrink: 0,
   },
 });
 
