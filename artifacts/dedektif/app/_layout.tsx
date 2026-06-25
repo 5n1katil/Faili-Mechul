@@ -5,6 +5,10 @@ import {
   Inter_700Bold,
   useFonts,
 } from "@expo-google-fonts/inter";
+import {
+  Roboto_400Regular,
+  Roboto_500Medium,
+} from "@expo-google-fonts/roboto";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
@@ -542,6 +546,9 @@ export default function RootLayout() {
     Inter_500Medium,
     Inter_600SemiBold,
     Inter_700Bold,
+    Roboto_400Regular,
+    Roboto_500Medium,
+    MightySouly: require("../assets/fonts/MightySouly.ttf"),
   });
 
   useEffect(() => {

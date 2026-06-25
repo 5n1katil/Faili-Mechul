@@ -898,10 +898,10 @@ const styles = StyleSheet.create({
   },
   headerBrand: { flexDirection: "row", alignItems: "center", gap: 10 },
   headerLogo: { width: 52, height: 52, borderRadius: 26 },
-  greetingSmall: { fontSize: 13, fontWeight: "500", marginBottom: 2 },
-  appTitle: { fontSize: 22, fontWeight: "900", letterSpacing: 3 },
+  greetingSmall: { fontSize: 13, fontFamily: "Roboto_500Medium", marginBottom: 2 },
+  appTitle: { fontSize: 26, fontFamily: "MightySouly", letterSpacing: 2 },
   titleUnderline: { height: 2, width: 40, borderRadius: 1, marginTop: 3, marginBottom: 3 },
-  appSubtitle: { fontSize: 12, fontWeight: "500" },
+  appSubtitle: { fontSize: 12, fontFamily: "Roboto_400Regular" },
   headerRight: { flexDirection: "row", alignItems: "center", gap: 8 },
   iconBtn: {
     width: 40,
