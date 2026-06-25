@@ -1294,7 +1294,8 @@ const listStyles = StyleSheet.create({
   },
   tabBtnText: {
     fontSize: 13,
-    fontWeight: "700",
+    fontFamily: "PlayfairDisplay",
+    fontWeight: "600",
   },
   tabCount: {
     borderRadius: 9,

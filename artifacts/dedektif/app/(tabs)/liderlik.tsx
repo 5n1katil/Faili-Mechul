@@ -442,7 +442,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     borderWidth: 1.5,
   },
-  filterTabText: { fontSize: 12, fontWeight: "700" },
+  filterTabText: { fontSize: 12, fontFamily: "PlayfairDisplay", fontWeight: "600" },
   list: { padding: 12, gap: 0 },
   loadingContainer: {
     flex: 1,
@@ -476,7 +476,7 @@ const styles = StyleSheet.create({
   },
   rankInfo: { flex: 1, minWidth: 0 },
   nameRow: { flexDirection: "row", alignItems: "center", gap: 5, marginBottom: 3, flexWrap: "nowrap" },
-  rankName: { fontSize: 14, fontWeight: "700", flexShrink: 1 },
+  rankName: { fontSize: 14, fontFamily: "PlayfairDisplay", fontWeight: "600", flexShrink: 1 },
   youBadge: {
     paddingHorizontal: 6,
     paddingVertical: 1,

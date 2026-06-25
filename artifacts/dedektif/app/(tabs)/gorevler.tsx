@@ -858,11 +858,13 @@ const styles = StyleSheet.create({
   },
   missionTitle: {
     fontSize: 15,
-    fontWeight: "700",
+    fontFamily: "PlayfairDisplay",
+    fontWeight: "600",
   },
   completedTag: {
     fontSize: 15,
-    fontWeight: "700",
+    fontFamily: "PlayfairDisplay",
+    fontWeight: "600",
   },
   missionDesc: {
     fontSize: 13,
