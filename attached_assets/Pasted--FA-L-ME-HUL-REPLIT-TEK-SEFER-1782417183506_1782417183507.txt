@@ -1,0 +1,418 @@
+/* ============================================================
+ *  FAİLİ MEÇHUL — REPLIT TEK SEFERLİK ENTEGRASYON PAKETİ
+ *  Bu metni Replit Agent sohbetine TEK PARÇA olarak yapıştır.
+ *  Görev: sadece JSON kaydetme. Vaka verisini mevcut kaynakta
+ *  yükle, aşağıdaki eksik renderer altyapısını ekle ve çalıştır.
+ * ------------------------------------------------------------
+ *  Vaka: Son Valsin Dördüncü Ölçüsü · puzzleId=fen_premium_004
+ *  1) Önce mevcut vaka veri kaydını ve mini-oyun dispatcherını bul.
+ *  2) Var olan rendererları bozma; yalnız eksik olan dalı ekle.
+ *  3) Aşağıdaki vaka JSON’unu uygulamanın KANONİK case kaynağına ekle.
+ *  4) Kod değişikliklerinden sonra aşağıdaki kabul testlerini tarayıcıda yap.
+ *  5) Sadece açıklama yazma: dosyaları gerçekten güncelle ve test sonucunu bildir.
+ * ============================================================ */
+
+===== ZORUNLU KABUL TESTLERİ =====
+1. Eski klasik sifreli_mesaj, parmak_izi, profil_sentezi ve genel ses_kaydi rendererları regresyona uğramaz.
+===== TEST LİSTESİ SONU =====
+
+===== KANONİK VAKA VERİSİ — mevcut case registry’de fen_premium_004 olarak ekle/değiştir =====
+{
+  "puzzleId": "fen_premium_004",
+  "stars": "★★★★☆",
+  "gridSize": "4x4",
+  "timeLimit": 420,
+  "qaNarrativeContract": {
+    "premiumStoryGate": "pass",
+    "storyLengthWords": 156,
+    "storyClue": {
+      "visibleEvidence": "Varda’nın saat zincirinden kopmuş kâğıtta dört ölçü ve farklı renkte şarap damgaları vardır.",
+      "mechanicBridge": "Bu detay, c4’teki Vals Ölçüsü Dikişi mini oyununu hikâyenin delili yapar.",
+      "matrixBoundary": "Anlatı tek başına fail, araç veya mekânı kesinleştirmez."
+    },
+    "narrativeFunctions": [
+      "Maskeli balo atmosferini kurar.",
+      "Dört şüphelinin aynı geceki işlevlerini ayrıştırır.",
+      "Müzik ve mahzen delilini mini oyunla birleştirir."
+    ]
+  },
+  "title": "Son Valsin Dördüncü Ölçüsü",
+  "subtitle": "1914 · Aurelien · Maskeli kış balosu",
+  "difficulty": "Başkomiser",
+  "difficultyLevel": 4,
+  "specialMechanic": "waltz_score_stitch",
+  "story": "1914’ün kış balosunda Aurelien Sarayı, kristal avizelerin altında yüzlerce maskeyi aynı anda taşıyordu. Son vals başladığında herkes müziğin temposuna bakıyordu; bittiğinde ise psikanalist Dr. Leon Varda’nın maskesi hâlâ yüzündeydi, fakat sesi yoktu.\n\nVarda’nın saat zincirinden kopmuş küçük bir nota kâğıdı bulundu. Üzerindeki dört ölçü, saray orkestrasının çaldığı valsle aynı değildi. Her ölçünün kenarına farklı renkte bir şarap damgası konmuştu; ilk bakışta bir müzikçinin takıntısı gibi duran bu sıra, mahzen anahtarının hangi elde dolaştığını söyleyebilirdi.\n\nKontes Elara gece boyunca konuk listesini denetledi. Başkahya Maksim, kış bahçesindeki servis akışını yönetiyordu. Dr. Marta, Varda’nın eski araştırma ortağı olarak baloya davetsiz gelmişti. Orkestra şefi Viktor ise son ölçünün neden değiştirildiğini kimseye açıklamıyordu. Müzik sustuğunda, gerçek prova yeni başlıyordu.",
+  "atmosphere": "Parfüm, soğuk taş ve şampanya köpüğü. Valsin son akoru tavanda asılı kalmış; mahzenden gelen serinlik salona ince bir çizgi gibi sızıyordu.",
+  "suspects": [
+    {
+      "id": "s1",
+      "name": "Kontes Elara Vonn",
+      "icon": "👑",
+      "description": "Balo gecesinin ev sahibi ve konuk listesinin tek sorumlusu.",
+      "detail": "Davet defterini kendi eliyle işaretler; eski aile mühürlerini ve salon düzenini kusursuz bilir."
+    },
+    {
+      "id": "s2",
+      "name": "Başkahya Maksim Rehn",
+      "icon": "🗝️",
+      "description": "Servis akışını yöneten, kış bahçesi anahtarlarını taşıyan saray başkahyası.",
+      "detail": "Şampanya kasalarının hangi masaya gittiğini kayıt defterine yazar; konuklardan çok kapıları izler."
+    },
+    {
+      "id": "s3",
+      "name": "Dr. Marta Ilven",
+      "icon": "⚕️",
+      "description": "Varda’nın eski araştırma ortağı olan rakip psikolog.",
+      "detail": "Kış bahçesindeki not defterine eski vaka başlıkları karalar; kalabalıkta bile sessizce gözlemler."
+    },
+    {
+      "id": "s4",
+      "name": "Orkestra Şefi Viktor Saran",
+      "icon": "🎻",
+      "description": "Balo orkestrasını yöneten, son valsin notalarını değiştiren müzisyen.",
+      "detail": "Şarap mahzenindeki eski şişeleri müzik terimleriyle adlandırır; nota kâğıtlarını kırmızı mühürle bağlar."
+    }
+  ],
+  "weapons": [
+    {
+      "id": "w1",
+      "name": "Fildişi Baston",
+      "icon": "🦯",
+      "description": "Ucu metal çivili, tören kıyafetinin parçası olan ağır baston.",
+      "detail": ""
+    },
+    {
+      "id": "w2",
+      "name": "Arsenikli Şampanya",
+      "icon": "🥂",
+      "description": "Özel şişeye önceden katılmış, kokusu bastırılmış köpüklü şarap.",
+      "detail": ""
+    },
+    {
+      "id": "w3",
+      "name": "İpek Şal",
+      "icon": "🧣",
+      "description": "Uzun, ince ve bir düğüm atıldığında iz bırakabilecek ipek şal.",
+      "detail": ""
+    },
+    {
+      "id": "w4",
+      "name": "Nota Sehpası Ucu",
+      "icon": "🎼",
+      "description": "Orkestra sehpasından sökülen, dar ve sivri metal tutucu.",
+      "detail": ""
+    }
+  ],
+  "locations": [
+    {
+      "id": "l1",
+      "name": "Büyük Balo Salonu",
+      "icon": "💃",
+      "description": "Kristal avizelerin altında dans pistinin bulunduğu ana salon.",
+      "detail": ""
+    },
+    {
+      "id": "l2",
+      "name": "Kış Bahçesi",
+      "icon": "🌿",
+      "description": "Sarayın cam tavanlı, servis arabalarının geçtiği yeşil bölümü.",
+      "detail": ""
+    },
+    {
+      "id": "l3",
+      "name": "Şarap Mahzeni",
+      "icon": "🍾",
+      "description": "Alt kattaki soğuk taş mahzen; özel şişeler burada tutulur.",
+      "detail": ""
+    },
+    {
+      "id": "l4",
+      "name": "Orkestra Locası",
+      "icon": "🎻",
+      "description": "Notaların ve metronomun bulunduğu, salonu yukarıdan gören dar loca.",
+      "detail": ""
+    }
+  ],
+  "clues": [
+    {
+      "id": "c1",
+      "title": "Köpük Tortusu",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Varda’nın içtiği ölümcül şampanyanın bardağında kalan soluk tortu, içeceğin balo salonunda değil mahzen sıcaklığında bekletildiğini gösteriyor.",
+      "deductionHint": "Tortu, hangi araç–mekân eşleşmesini kapatır?",
+      "isBonus": false,
+      "revealOrder": 1,
+      "isRevealed": true,
+      "pointCost": 0
+    },
+    {
+      "id": "c2",
+      "title": "Servis Sehpası",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Kış bahçesindeki servis arabasında, nota sehpasının metal ucuna uygun çizik izleri bulundu.",
+      "deductionHint": "Çizik izi hangi araç–mekân bağını doğrular?",
+      "isBonus": false,
+      "revealOrder": 2,
+      "isRevealed": false,
+      "pointCost": 60
+    },
+    {
+      "id": "c3",
+      "title": "Salon Zemini",
+      "type": "tanik",
+      "mechanicType": "text",
+      "text": "Dans pistinin cilasında, baston ucunun salon ortasında temas etmediğini gösteren kesintisiz ayak izi şeridi kaldı.",
+      "deductionHint": "Kesintisiz iz şeridi, hangi araç–mekân bağını kapatır?",
+      "isBonus": false,
+      "revealOrder": 3,
+      "isRevealed": false,
+      "pointCost": 60
+    },
+    {
+      "id": "c4",
+      "title": "Dördüncü Ölçünün Dikişi",
+      "type": "sifreli",
+      "mechanicType": "sifreli_mesaj",
+      "text": "Kopmuş nota kâğıdındaki dört ölçü, şarap mühürleriyle birlikte yalnız bir vals akışına oturuyordu.",
+      "deductionHint": "Ölçüleri doğru motifle eşleştir; aynı melodide tekrar eden tek dikiş, hangi şişenin hangi elde hazırlandığını gösterir.",
+      "isBonus": false,
+      "revealOrder": 4,
+      "isRevealed": false,
+      "pointCost": 60,
+      "sifre": {
+        "sifrelenmis": "1–2–3 / 1–2–3 / 1–2–3 / ?",
+        "sifreleTuru": "vals ölçüsü dikişi",
+        "cozumIpucu": "İlk üç ölçünün tekrarlayan vurgusunu değil, yalnız son ölçüde değişen rengi izle.",
+        "cozulmus": "AURELIEN 14",
+        "aciklama": "Dördüncü ölçü tamamlandığında, mühürlerin aynı şişe zincirine ait olduğu anlaşılır.",
+        "presentation": {
+          "style": "waltz_score_stitch",
+          "title": "Vals Ölçüsü Dikişi",
+          "subtitle": "Dört ölçüyü şarap damgalarının tekrar eden motifleriyle eşleştir.",
+          "purposeHint": "Doğru notalama, ızgarada bir kişi–araç eşleşmesini doğrudan doğrulayacak.",
+          "measures": [
+            {
+              "id": "m1",
+              "label": "Ölçü I",
+              "note": "Kısa yay / açık damga",
+              "options": [
+                {
+                  "id": "a",
+                  "label": "Kırmızı mühür – ince çizgi"
+                },
+                {
+                  "id": "b",
+                  "label": "Mavi mühür – çift halka"
+                },
+                {
+                  "id": "c",
+                  "label": "Altın mühür – nokta"
+                }
+              ]
+            },
+            {
+              "id": "m2",
+              "label": "Ölçü II",
+              "note": "Kısa yay / kapalı damga",
+              "options": [
+                {
+                  "id": "a",
+                  "label": "Mavi mühür – çift halka"
+                },
+                {
+                  "id": "b",
+                  "label": "Kırmızı mühür – ince çizgi"
+                },
+                {
+                  "id": "c",
+                  "label": "Altın mühür – nokta"
+                }
+              ]
+            },
+            {
+              "id": "m3",
+              "label": "Ölçü III",
+              "note": "Uzun yay / dönüş",
+              "options": [
+                {
+                  "id": "a",
+                  "label": "Altın mühür – nokta"
+                },
+                {
+                  "id": "b",
+                  "label": "Mavi mühür – çift halka"
+                },
+                {
+                  "id": "c",
+                  "label": "Kırmızı mühür – ince çizgi"
+                }
+              ]
+            },
+            {
+              "id": "m4",
+              "label": "Ölçü IV",
+              "note": "Kırık ölçü / son dönüş",
+              "options": [
+                {
+                  "id": "a",
+                  "label": "Kırmızı mühür – ince çizgi"
+                },
+                {
+                  "id": "b",
+                  "label": "Altın mühür – nokta"
+                },
+                {
+                  "id": "c",
+                  "label": "Mavi mühür – çift halka"
+                }
+              ]
+            }
+          ],
+          "correctAssignments": [
+            {
+              "itemId": "m1",
+              "answerId": "a"
+            },
+            {
+              "itemId": "m2",
+              "answerId": "b"
+            },
+            {
+              "itemId": "m3",
+              "answerId": "c"
+            },
+            {
+              "itemId": "m4",
+              "answerId": "a"
+            }
+          ],
+          "resultText": "Mühür dizisi, özel şampanya şişesinin Viktor’un nota bağıyla aynı zincirde hazırlandığını gösterir: Orkestra Şefi Viktor Saran ↔ Arsenikli Şampanya.",
+          "interaction": {
+            "mode": "score_match",
+            "submitLabel": "Ölçüyü Tamamla",
+            "successMessage": "Dört ölçü aynı şişe mühür zincirinde birleşti.",
+            "failureMessage": "Seçtiğin damgalar valsin tekrar eden vurgusunu taşımıyor."
+          }
+        }
+      }
+    },
+    {
+      "id": "c5",
+      "title": "Mahzen Rafı",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Şarap mahzenindeki raf tozunda baston ucuna ait metal talaşı değil, yalnız ipek lifleri bulundu.",
+      "deductionHint": "Raf tozu, hangi araç–mekân bağını kapatır?",
+      "isBonus": false,
+      "revealOrder": 5,
+      "isRevealed": false,
+      "pointCost": 60
+    },
+    {
+      "id": "b1",
+      "title": "Kış Bahçesi Defteri",
+      "type": "tanik",
+      "mechanicType": "text",
+      "text": "Servis çırakları, başkahyanın vals başlamadan önce kış bahçesi anahtarlarını kontrol ettiğini aynı ayrıntıyla anlattı.",
+      "deductionHint": "Bu ifade hangi kişi–mekân bağını doğrular?",
+      "isBonus": true,
+      "revealOrder": 6,
+      "isRevealed": false,
+      "pointCost": 60
+    },
+    {
+      "id": "b2",
+      "title": "Davet Defteri",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Kontesin parmak izli imza kalemi, büyük balo salonundaki konuk listesinde gece boyunca kullanılmıştı.",
+      "deductionHint": "Bu kayıt hangi kişi–mekân bağını doğrular?",
+      "isBonus": true,
+      "revealOrder": 7,
+      "isRevealed": false,
+      "pointCost": 60
+    }
+  ],
+  "assetManifest": [],
+  "solution": {
+    "suspectId": "s4",
+    "weaponId": "w2",
+    "locationId": "l3"
+  },
+  "solutionNarrative": "Viktor Saran, şarap mahzeninde hazırladığı arsenikli şişeyi son valsin servis akışına soktu. Kopmuş notadaki dördüncü ölçü, onun kırmızı mühürle bağladığı şişe zincirini açtı. Balo salonundaki ölüm gösterişli görünse de, planın gerçek mekânı mahzenin soğuk raflarıydı.",
+  "replitIntegration": {
+    "schema": "fm_replit_runtime_contract_v1",
+    "copyTarget": "Replit Agent prompt",
+    "canonicalCaseFile": "src/data/cases/fen_premium_004.json",
+    "policy": "Var olan renderer varsa onu bozma; yoksa bu paketteki component ve dispatcher dalını ekle.",
+    "mechanics": [
+      {
+        "clueId": "c4",
+        "mechanicType": "sifreli_mesaj",
+        "renderer": "waltz_score_stitch",
+        "completionEvent": "onSolved({ clueId, mechanic: \"sifreli_mesaj\" })"
+      },
+      {
+        "clueId": "c4",
+        "mechanicType": "sifreli_mesaj",
+        "renderer": "waltz_score_stitch",
+        "componentFile": "src/components/caseMechanics/FenomenMechanicRenderer.jsx",
+        "dispatcherBranch": "clue.mechanicType === \"sifreli_mesaj\" && [\"cipher_disc_alignment\",\"timeline_board\",\"parcel_xray_layers\",\"waltz_score_stitch\",\"ventilation_valve_network\"] .includes(clue.sifre?.presentation?.style)",
+        "completionEvent": "onSolved({ clueId, mechanic: \"waltz_score_stitch\" })",
+        "hintEvent": "onRequestHint({ clueId, penaltySeconds: 60 })",
+        "requiredData": [
+          "title",
+          "subtitle",
+          "purposeHint",
+          "resultText",
+          "interaction",
+          "style-specific data"
+        ],
+        "nonNegotiable": [
+          "JSON dışı çözüm anahtarı kullanma.",
+          "Başarı öncesinde resultText görünmez kalmalı.",
+          "Yanlış deneme doğru rotayı/cevabı göstermemeli.",
+          "Mobilde kartlar tek sütuna akmalı."
+        ]
+      }
+    ]
+  }
+}
+===== VAKA VERİSİ SONU =====
+
+===== FENOMEN v27 ÖZEL MİNİ OYUN RENDERER’I — DOSYA OLUŞTUR / EKSİKSE EKLE =====
+// src/components/caseMechanics/FenomenMechanicRenderer.jsx
+import { useMemo, useState } from "react";
+const styles = new Set(["cipher_disc_alignment","timeline_board","parcel_xray_layers","waltz_score_stitch","ventilation_valve_network"]);
+export const isFenomenMechanic = (clue) => styles.has(String(clue?.sifre?.presentation?.style ?? "").toLowerCase());
+export default function FenomenMechanicRenderer({ clue, onSolved, onRequestHint }) {
+  const p = clue?.sifre?.presentation ?? {}; const style=String(p.style ?? "").toLowerCase();
+  const [choices,setChoices]=useState({}); const [order,setOrder]=useState([]);
+  const [discs,setDiscs]=useState(()=>Object.fromEntries((p.discs??[]).map(d=>[d.id,d.initial??d.symbols?.[0]??""])));
+  const [valves,setValves]=useState(()=>Object.fromEntries((p.valves??[]).map(v=>[v.id,v.initial??"kapali"])));
+  const [result,setResult]=useState(null); const [hint,setHint]=useState(false);
+  const rotate=(d,delta)=>setDiscs(prev=>{const a=d.symbols??[];const n=Math.max(0,a.indexOf(prev[d.id]));return {...prev,[d.id]:a[(n+delta+a.length)%a.length]};});
+  const toggleOrder=(id)=>setOrder(prev=>prev.includes(id)?prev.filter(x=>x!==id):[...prev,id]);
+  const submit=()=>{let ok=false;if(style==="cipher_disc_alignment")ok=(p.correctCode??[]).every(x=>discs[x.discId]===x.symbol);else if(style==="timeline_board")ok=(p.correctOrder??[]).every((id,i)=>order[i]===id)&&order.length===(p.correctOrder??[]).length;else if(style==="ventilation_valve_network")ok=(p.correctStates??[]).every(x=>valves[x.valveId]===x.state);else ok=(p.correctAssignments??[]).every(x=>choices[x.itemId]===x.answerId);setResult(ok);if(ok)onSolved?.({clueId:clue.id,mechanic:style});};
+  const requestHint=()=>{setHint(true);onRequestHint?.({clueId:clue.id,penaltySeconds:60});};
+  if(!styles.has(style))return null;
+  return <section style={{padding:14,border:"1px solid #303a55",borderRadius:12}}><h4>{p.title}</h4><p>{p.subtitle}</p><p><b>ÇÖZÜMÜN İŞLEVİ</b><br/>{p.purposeHint}</p>
+    {style==="cipher_disc_alignment"&&<div style={grid}>{(p.discs??[]).map(d=><div key={d.id} style={card}><b>{d.label}</b><div style={disc}>{discs[d.id]}</div><button onClick={()=>rotate(d,-1)}>↶</button><button onClick={()=>rotate(d,1)}>↷</button></div>)}</div>}
+    {style==="timeline_board"&&<div style={{display:"grid",gap:8}}>{(p.events??[]).map(e=><button key={e.id} onClick={()=>toggleOrder(e.id)} style={card}><b>{e.label}</b><br/><small>{e.text}</small>{order.includes(e.id)?<em> · {order.indexOf(e.id)+1}. sıra</em>:null}</button>)}</div>}
+    {style==="parcel_xray_layers"&&<div style={grid}>{(p.layers??[]).map(x=><label key={x.id} style={card}><b>{x.label}</b><small>{x.scan}</small><select onChange={e=>setChoices({...choices,[x.id]:e.target.value})}><option value="">Bulgu seç…</option>{(p.findings??[]).map(f=><option key={f.id} value={f.id}>{f.label}</option>)}</select></label>)}</div>}
+    {style==="waltz_score_stitch"&&<div style={grid}>{(p.measures??[]).map(x=><label key={x.id} style={card}><b>{x.label}</b><small>{x.note}</small><select onChange={e=>setChoices({...choices,[x.id]:e.target.value})}><option value="">Mühür seç…</option>{(x.options??[]).map(o=><option key={o.id} value={o.id}>{o.label}</option>)}</select></label>)}</div>}
+    {style==="ventilation_valve_network"&&<div style={grid}>{(p.valves??[]).map(v=><button key={v.id} onClick={()=>setValves({...valves,[v.id]:valves[v.id]==="acik"?"kapali":"acik"})} style={card}><b>{v.label}</b><br/>{valves[v.id]==="acik"?"AÇIK":"KAPALI"}</button>)}</div>}
+    <button onClick={submit}>{p.interaction?.submitLabel??"Doğrula"}</button><button onClick={requestHint} disabled={hint}>İpucu iste (-60 sn)</button>{hint?<p>{clue?.sifre?.cozumIpucu}</p>:null}{result===false?<p>✕ {p.interaction?.failureMessage}</p>:null}{result===true?<p>✓ {p.interaction?.successMessage}<br/>{p.resultText}</p>:null}</section>;
+}
+const grid={display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(145px,1fr))",gap:8};const card={border:"1px solid #303a55",padding:10,borderRadius:10,display:"grid",gap:7};const disc={fontSize:24,textAlign:"center",padding:8};
+===== DOSYA SONU =====
+===== MEVCUT MİNİ-OYUN DISPATCHERINA EKLENECEK DAL =====
+// Mevcut genel sifreli_mesaj renderer'INDEN ÖNCE ekle.
+import FenomenMechanicRenderer, { isFenomenMechanic } from "@/components/caseMechanics/FenomenMechanicRenderer";
+if (isFenomenMechanic(clue)) return <FenomenMechanicRenderer clue={clue} onSolved={({ clueId }) => markMiniGameSolved?.(clueId)} onRequestHint={({ clueId, penaltySeconds }) => applyHintPenalty?.({ clueId, penaltySeconds })} />;
+===== YAMA SONU =====
+===== FENOMEN v27 KABUL TESTLERİ =====
+- c4: waltz_score_stitch JSON verisinden çalışır; doğru sonuç öncesi resultText görünmez, yanlış deneme çözümü sızdırmaz, mobilde kartlar tek kolon akışına iner.
+===== TESTLER SONU =====
