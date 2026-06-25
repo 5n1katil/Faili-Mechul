@@ -318,8 +318,10 @@ function PuzzleCard({
             borderColor: completed
               ? `${colors.success}55`
               : locked
-              ? "#D4A84322"
-              : colors.border,
+              ? "#D4A84333"
+              : `${diffColor}33`,
+            borderLeftColor: completed ? colors.success : locked ? "#D4A843" : diffColor,
+            borderLeftWidth: 3.5,
             opacity: pressed ? 0.78 : 1,
           },
           completed && !locked && { backgroundColor: `${colors.success}08` },
@@ -413,9 +415,9 @@ function PuzzleCard({
             )}
           </View>
         ) : (
-          <View style={[listStyles.playRow, { borderTopColor: colors.border }]}>
-            <Text style={[listStyles.playText, { color: colors.primary }]}>Oynamak için dokun</Text>
-            <MaterialIcons name="chevron-right" size={20} color={colors.primary} />
+          <View style={[listStyles.playRow, { borderTopColor: `${diffColor}44`, backgroundColor: `${diffColor}0A` }]}>
+            <Text style={[listStyles.playText, { color: diffColor }]}>Oynamak için dokun</Text>
+            <MaterialIcons name="chevron-right" size={20} color={diffColor} />
           </View>
         )}
       </Pressable>

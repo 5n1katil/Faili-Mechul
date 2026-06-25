@@ -434,9 +434,11 @@ function CollectAllButton() {
 function StatsCard({ totalAwardedPoints, totalScore }: { totalAwardedPoints: number; totalScore: number }) {
   const colors = useColors();
   return (
-    <View style={[styles.statsCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
-      <View style={styles.statItem}>
-        <MaterialIcons name="military-tech" size={18} color={colors.primary} />
+    <View style={styles.statsRow}>
+      <View style={[styles.statCard, { backgroundColor: `${colors.primary}12`, borderColor: `${colors.primary}33` }]}>
+        <View style={[styles.statIconWrap, { backgroundColor: `${colors.primary}22` }]}>
+          <MaterialIcons name="military-tech" size={20} color={colors.primary} />
+        </View>
         <Text style={[styles.statValue, { color: colors.foreground }]}>
           {formatPoints(totalAwardedPoints)}
         </Text>
@@ -444,9 +446,10 @@ function StatsCard({ totalAwardedPoints, totalScore }: { totalAwardedPoints: num
           Görev Puanı
         </Text>
       </View>
-      <View style={[styles.statDivider, { backgroundColor: colors.border }]} />
-      <View style={styles.statItem}>
-        <MaterialIcons name="leaderboard" size={18} color="#60A5FA" />
+      <View style={[styles.statCard, { backgroundColor: "#60A5FA12", borderColor: "#60A5FA33" }]}>
+        <View style={[styles.statIconWrap, { backgroundColor: "#60A5FA22" }]}>
+          <MaterialIcons name="leaderboard" size={20} color="#60A5FA" />
+        </View>
         <Text style={[styles.statValue, { color: colors.foreground }]}>
           {formatPoints(totalScore)}
         </Text>
@@ -543,16 +546,16 @@ export default function GorevlerScreen() {
       </Animated.View>
 
       <Animated.View entering={FadeInDown.delay(60).springify()}>
-        <View style={[styles.section, { backgroundColor: colors.card, borderColor: colors.border }]}>
+        <View style={[styles.section, { backgroundColor: colors.card, borderColor: `${colors.primary}33`, borderTopColor: colors.primary, borderTopWidth: 2.5 }]}>
           <View style={styles.sectionTopRow}>
             <SectionHeader
               title="Günlük Görevler"
               icon="today"
               subtitle="Her gün sıfırlanır"
             />
-            <View style={[styles.countdownChip, { backgroundColor: `${colors.border}88` }]}>
-              <MaterialIcons name="schedule" size={12} color={colors.secondaryForeground} />
-              <Text style={[styles.countdownText, { color: colors.secondaryForeground }]}>
+            <View style={[styles.countdownChip, { backgroundColor: `${colors.primary}10`, borderColor: `${colors.primary}44` }]}>
+              <MaterialIcons name="schedule" size={12} color={colors.primary} />
+              <Text style={[styles.countdownText, { color: colors.primary }]}>
                 {dailyTimeLeft}
               </Text>
             </View>
@@ -577,16 +580,16 @@ export default function GorevlerScreen() {
       </Animated.View>
 
       <Animated.View entering={FadeInDown.delay(120).springify()}>
-        <View style={[styles.section, { backgroundColor: colors.card, borderColor: colors.border }]}>
+        <View style={[styles.section, { backgroundColor: colors.card, borderColor: "#60A5FA33", borderTopColor: "#60A5FA", borderTopWidth: 2.5 }]}>
           <View style={styles.sectionTopRow}>
             <SectionHeader
               title="Haftalık Görevler"
               icon="date-range"
               subtitle="Her Pazartesi sıfırlanır"
             />
-            <View style={[styles.countdownChip, { backgroundColor: `${colors.border}88` }]}>
-              <MaterialIcons name="schedule" size={12} color={colors.secondaryForeground} />
-              <Text style={[styles.countdownText, { color: colors.secondaryForeground }]}>
+            <View style={[styles.countdownChip, { backgroundColor: "#60A5FA10", borderColor: "#60A5FA44" }]}>
+              <MaterialIcons name="schedule" size={12} color="#60A5FA" />
+              <Text style={[styles.countdownText, { color: "#60A5FA" }]}>
                 {weeklyTimeLeft}
               </Text>
             </View>
@@ -611,7 +614,7 @@ export default function GorevlerScreen() {
       </Animated.View>
 
       <Animated.View entering={FadeInDown.delay(180).springify()}>
-        <View style={[styles.section, { backgroundColor: colors.card, borderColor: colors.border }]}>
+        <View style={[styles.section, { backgroundColor: colors.card, borderColor: "#D4A84333", borderTopColor: "#D4A843", borderTopWidth: 2.5 }]}>
           <SectionHeader
             title="Başarımlar"
             icon="emoji-events"
@@ -699,21 +702,38 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 4,
   },
+  statsRow: {
+    flexDirection: "row",
+    gap: 10,
+  },
+  statCard: {
+    flex: 1,
+    borderRadius: 14,
+    borderWidth: 1,
+    paddingHorizontal: 14,
+    paddingVertical: 14,
+    alignItems: "center",
+    gap: 6,
+  },
+  statIconWrap: {
+    width: 36,
+    height: 36,
+    borderRadius: 10,
+    alignItems: "center",
+    justifyContent: "center",
+  },
   statValue: {
-    fontSize: 22,
-    fontWeight: "900",
+    fontSize: 26,
+    fontFamily: "PlayfairDisplay",
+    fontWeight: "700",
     letterSpacing: 0.2,
   },
   statLabel: {
     fontSize: 11,
     fontWeight: "600",
-    letterSpacing: 0.3,
+    letterSpacing: 0.5,
     textTransform: "uppercase",
-  },
-  statDivider: {
-    width: 1,
-    marginHorizontal: 8,
-    alignSelf: "stretch",
+    textAlign: "center",
   },
   collectAllBtn: {
     borderRadius: 12,
@@ -791,15 +811,16 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 4,
-    paddingHorizontal: 8,
-    paddingVertical: 4,
+    paddingHorizontal: 9,
+    paddingVertical: 5,
     borderRadius: 8,
+    borderWidth: 1,
     flexShrink: 0,
   },
   countdownText: {
     fontSize: 12,
     fontVariant: ["tabular-nums"],
-    fontWeight: "600",
+    fontWeight: "700",
   },
   tierSection: {
     gap: 8,
@@ -943,14 +964,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     gap: 6,
-    paddingVertical: 10,
+    paddingVertical: 11,
     paddingHorizontal: 14,
     borderRadius: 9,
-    borderWidth: 1,
+    borderWidth: 1.5,
   },
   playChipText: {
     fontSize: 14,
-    fontWeight: "700",
+    fontFamily: "PlayfairDisplay",
+    fontWeight: "600",
     letterSpacing: 0.3,
     flex: 1,
     textAlign: "center",
