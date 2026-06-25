@@ -1027,80 +1027,48 @@ export default function VakalarScreen() {
             <View style={{ flex: 1 }}>
               {/* Premium icon tile selector */}
               <View style={[listStyles.premIconTabRow, { backgroundColor: colors.background, borderBottomColor: colors.border }]}>
-                {/* Vakalar tile */}
-                <Pressable
-                  onPress={() => setPremiumSubTab("vakalar")}
-                  style={[
-                    listStyles.premIconTab,
-                    premiumSubTab === "vakalar"
-                      ? {
-                          backgroundColor: "#D4A84322",
-                          borderColor: "#D4A843",
-                          borderBottomColor: "#D4A843",
-                          borderBottomWidth: 4,
-                          shadowColor: "#D4A843",
-                          shadowOpacity: 0.5,
-                          shadowRadius: 12,
-                          shadowOffset: { width: 0, height: 3 },
-                          elevation: 10,
-                        }
-                      : { backgroundColor: "#D4A8430A", borderColor: "#D4A84325", borderBottomWidth: StyleSheet.hairlineWidth },
-                  ]}
-                >
-                  <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
-                    <View style={[listStyles.premIconTabBadge, {
-                      backgroundColor: premiumSubTab === "vakalar" ? "#D4A84330" : "#FFFFFF0C",
-                      borderColor: premiumSubTab === "vakalar" ? "#D4A84360" : "#FFFFFF18",
-                    }]}>
-                      <MaterialIcons name="auto-stories" size={20} color={premiumSubTab === "vakalar" ? "#D4A843" : "#666880"} />
-                    </View>
-                    <View style={{ gap: 2 }}>
-                      <Text style={{ color: premiumSubTab === "vakalar" ? "#D4A843" : "#888AAA", fontSize: 13, fontWeight: "700", fontFamily: "PlayfairDisplay" }}>
-                        Vakalar
-                      </Text>
-                      <Text style={{ color: premiumSubTab === "vakalar" ? "#D4A843CC" : "#55576A", fontSize: 11, fontWeight: "600" }}>
-                        {premiumPuzzles.length} vaka
-                      </Text>
-                    </View>
-                  </View>
-                </Pressable>
-                {/* Paketler tile */}
-                <Pressable
-                  onPress={() => setPremiumSubTab("paketler")}
-                  style={[
-                    listStyles.premIconTab,
-                    premiumSubTab === "paketler"
-                      ? {
-                          backgroundColor: "#D4A84322",
-                          borderColor: "#D4A843",
-                          borderBottomColor: "#D4A843",
-                          borderBottomWidth: 4,
-                          shadowColor: "#D4A843",
-                          shadowOpacity: 0.5,
-                          shadowRadius: 12,
-                          shadowOffset: { width: 0, height: 3 },
-                          elevation: 10,
-                        }
-                      : { backgroundColor: "#D4A8430A", borderColor: "#D4A84325", borderBottomWidth: StyleSheet.hairlineWidth },
-                  ]}
-                >
-                  <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
-                    <View style={[listStyles.premIconTabBadge, {
-                      backgroundColor: premiumSubTab === "paketler" ? "#D4A84330" : "#FFFFFF0C",
-                      borderColor: premiumSubTab === "paketler" ? "#D4A84360" : "#FFFFFF18",
-                    }]}>
-                      <MaterialIcons name="inventory-2" size={20} color={premiumSubTab === "paketler" ? "#D4A843" : "#666880"} />
-                    </View>
-                    <View style={{ gap: 2 }}>
-                      <Text style={{ color: premiumSubTab === "paketler" ? "#D4A843" : "#888AAA", fontSize: 13, fontWeight: "700", fontFamily: "PlayfairDisplay" }}>
-                        Paketler
-                      </Text>
-                      <Text style={{ color: premiumSubTab === "paketler" ? "#D4A843CC" : "#55576A", fontSize: 11, fontWeight: "600" }}>
-                        {PURCHASABLE_PACKS.length} paket · {TOTAL_PURCHASABLE_PUZZLES} vaka
-                      </Text>
-                    </View>
-                  </View>
-                </Pressable>
+                <View style={[listStyles.premPillWrap, { borderColor: "#D4A84330", backgroundColor: "#D4A8430A" }]}>
+                  {/* Vakalar pill */}
+                  <Pressable
+                    onPress={() => setPremiumSubTab("vakalar")}
+                    style={[
+                      listStyles.premPillBtn,
+                      premiumSubTab === "vakalar" && {
+                        backgroundColor: "#D4A84322",
+                        borderColor: "#D4A843",
+                        shadowColor: "#D4A843",
+                        shadowOpacity: 0.35,
+                        shadowRadius: 6,
+                        elevation: 4,
+                      },
+                    ]}
+                  >
+                    <Text style={[listStyles.premPillBtnText, { color: premiumSubTab === "vakalar" ? "#D4A843" : "#888AAA" }]}>
+                      Vakalar
+                    </Text>
+                  </Pressable>
+                  {/* Center divider */}
+                  <View style={[listStyles.premPillSep, { backgroundColor: "#D4A84330" }]} />
+                  {/* Paketler pill */}
+                  <Pressable
+                    onPress={() => setPremiumSubTab("paketler")}
+                    style={[
+                      listStyles.premPillBtn,
+                      premiumSubTab === "paketler" && {
+                        backgroundColor: "#D4A84322",
+                        borderColor: "#D4A843",
+                        shadowColor: "#D4A843",
+                        shadowOpacity: 0.35,
+                        shadowRadius: 6,
+                        elevation: 4,
+                      },
+                    ]}
+                  >
+                    <Text style={[listStyles.premPillBtnText, { color: premiumSubTab === "paketler" ? "#D4A843" : "#888AAA" }]}>
+                      Paketler
+                    </Text>
+                  </Pressable>
+                </View>
               </View>
 
               {premiumSubTab === "paketler" ? (
@@ -2072,41 +2040,35 @@ const listStyles = StyleSheet.create({
     flexShrink: 0,
   },
   premIconTabRow: {
-    flexDirection: "row",
     paddingHorizontal: 16,
     paddingTop: 8,
     paddingBottom: 8,
-    gap: 10,
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
-  premIconTab: {
+  premPillWrap: {
+    flexDirection: "row",
+    borderRadius: 22,
+    borderWidth: 1,
+    overflow: "hidden",
+  },
+  premPillBtn: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
     paddingVertical: 8,
-    paddingHorizontal: 10,
-    borderRadius: 14,
-    borderWidth: 1.5,
-    gap: 6,
+    borderRadius: 20,
+    margin: 3,
+    borderWidth: 1,
+    borderColor: "transparent",
   },
-  premIconTabBadge: {
-    width: 40,
-    height: 40,
-    borderRadius: 12,
-    borderWidth: 1.5,
-    alignItems: "center",
-    justifyContent: "center",
+  premPillSep: {
+    width: 1,
+    alignSelf: "stretch",
+    marginVertical: 6,
   },
-  premIconTabCount: {
-    borderRadius: 10,
-    paddingHorizontal: 10,
-    paddingVertical: 3,
-    minWidth: 28,
-    alignItems: "center",
-  },
-  premIconTabCountText: {
-    fontSize: 14,
-    fontWeight: "800",
+  premPillBtnText: {
+    fontSize: 13,
+    fontWeight: "700",
     fontFamily: "PlayfairDisplay",
   },
   premVakalarHeader: {
