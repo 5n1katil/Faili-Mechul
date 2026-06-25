@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import type { ComponentProps } from "react";
-import { Alert, Image, Platform, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
+import { Alert, Image, Platform, Pressable, ScrollView, StyleSheet, Text, TextInput, View, useWindowDimensions } from "react-native";
 import { Audio } from "expo-av";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useGame } from "@/context/GameContext";
@@ -256,24 +256,66 @@ function SymbolCrossgridBlock({
   onSolve: () => void;
 }) {
   const { addTimePenalty } = useGame();
+  const { width: screenWidth } = useWindowDimensions();
   const pres = sifre.presentation!;
   const rowSymbols = pres.rowSymbols ?? [];
   const colSymbols = pres.columnSymbols ?? [];
   const cells = pres.cells ?? [];
-  const cipherDisplay = pres.cipherDisplay ?? "";
+  const cipherSyms = (pres.cipherSymbols ?? []) as string[];
   const answerAliases = (pres.answerAliases ?? []) as string[];
   const interaction = pres.interaction ?? {};
-  const CELL = 38;
 
-  const [input, setInput] = useState("");
+  const TOTAL_COLS = colSymbols.length + 1;
+  const CELL = Math.max(26, Math.floor((screenWidth - 28) / TOTAL_COLS));
+  const symFont = Math.max(9, Math.floor(CELL * 0.36));
+  const letterFont = Math.max(9, Math.floor(CELL * 0.38));
+
+  const [chipIndices, setChipIndices] = useState<(number | null)[]>(
+    cipherSyms.map(() => null)
+  );
   const [wrong, setWrong] = useState(false);
   const [hintRevealed, setHintRevealed] = useState(false);
+
+  const getColLetters = (sym: string): string[] => {
+    const ci = colSymbols.indexOf(sym);
+    if (ci < 0) return [];
+    return rowSymbols.map((_, ri) => cells[ri]?.[ci] ?? "?");
+  };
+
+  const tapChip = (i: number, sym: string) => {
+    if (sym === "/") return;
+    const letters = getColLetters(sym);
+    if (letters.length === 0) return;
+    setChipIndices(prev => {
+      const next = [...prev];
+      const cur = next[i];
+      next[i] = cur === null ? 0 : cur < letters.length - 1 ? cur + 1 : null;
+      return next;
+    });
+    setWrong(false);
+  };
+
+  const buildAnswer = () =>
+    cipherSyms.map((sym, i) => {
+      if (sym === "/") return " / ";
+      const idx = chipIndices[i];
+      if (idx === null) return "?";
+      return getColLetters(sym)[idx] ?? "?";
+    }).join("");
+
+  const allFilled = cipherSyms.every((sym, i) => sym === "/" || chipIndices[i] !== null);
 
   const normalize = (s: string) =>
     s.trim().toLocaleUpperCase("tr-TR").replace(/İ/g, "I").replace(/\s+/g, " ");
 
   const checkAnswer = () => {
-    const norm = normalize(input);
+    if (!allFilled) {
+      setWrong(true);
+      setTimeout(() => setWrong(false), 2200);
+      return;
+    }
+    const answer = buildAnswer();
+    const norm = normalize(answer);
     const valid = [sifre.cozulmus, ...answerAliases].map(normalize);
     if (valid.includes(norm)) {
       onSolve();
@@ -316,36 +358,70 @@ function SymbolCrossgridBlock({
         </View>
       ) : null}
 
-      <ScrollView horizontal showsHorizontalScrollIndicator style={styles.crossgridScroll}>
-        <View>
-          <View style={styles.crossgridRow}>
-            <View style={[styles.crossgridCell, styles.crossgridCorner, { width: CELL, height: CELL }]}>
-              <Text style={styles.crossgridCornerText}>↘</Text>
-            </View>
-            {colSymbols.map((sym, ci) => (
-              <View key={ci} style={[styles.crossgridCell, styles.crossgridColHeader, { width: CELL, height: CELL }]}>
-                <Text style={styles.crossgridHeaderText}>{sym}</Text>
-              </View>
-            ))}
+      {/* Fixed-width grid — no horizontal scroll */}
+      <View style={[styles.crossgridScroll, { marginHorizontal: 12 }]}>
+        {/* Column headers */}
+        <View style={styles.crossgridRow}>
+          <View style={[styles.crossgridCell, styles.crossgridCorner, { width: CELL, height: CELL }]}>
+            <Text style={[styles.crossgridCornerText, { fontSize: symFont }]}>↘</Text>
           </View>
-          {rowSymbols.map((rowSym, ri) => (
-            <View key={ri} style={styles.crossgridRow}>
-              <View style={[styles.crossgridCell, styles.crossgridRowHeader, { width: CELL, height: CELL }]}>
-                <Text style={styles.crossgridHeaderText}>{rowSym}</Text>
-              </View>
-              {(cells[ri] ?? []).map((letter, ci) => (
-                <View key={ci} style={[styles.crossgridCell, styles.crossgridDataCell, { width: CELL, height: CELL }]}>
-                  <Text style={styles.crossgridCellText}>{letter}</Text>
-                </View>
-              ))}
+          {colSymbols.map((sym, ci) => (
+            <View key={ci} style={[styles.crossgridCell, styles.crossgridColHeader, { width: CELL, height: CELL }]}>
+              <Text style={[styles.crossgridHeaderText, { fontSize: symFont }]}>{sym}</Text>
             </View>
           ))}
         </View>
-      </ScrollView>
+        {/* Data rows */}
+        {rowSymbols.map((rowSym, ri) => (
+          <View key={ri} style={styles.crossgridRow}>
+            <View style={[styles.crossgridCell, styles.crossgridRowHeader, { width: CELL, height: CELL }]}>
+              <Text style={[styles.crossgridHeaderText, { fontSize: symFont }]}>{rowSym}</Text>
+            </View>
+            {(cells[ri] ?? []).map((letter, ci) => (
+              <View key={ci} style={[styles.crossgridCell, styles.crossgridDataCell, { width: CELL, height: CELL }]}>
+                <Text style={[styles.crossgridCellText, { fontSize: letterFont }]}>{letter}</Text>
+              </View>
+            ))}
+          </View>
+        ))}
+      </View>
 
-      <View style={styles.crossgridCipherRow}>
-        <Text style={styles.crossgridCipherLabel}>ŞİFRE</Text>
-        <Text style={styles.crossgridCipherText}>{cipherDisplay}</Text>
+      {/* Interactive cipher chips */}
+      <View style={styles.crossgridCipherSection}>
+        <Text style={styles.crossgridCipherLabel}>ŞİFRE — Sembole tıkla, harfi bul</Text>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.crossgridChipsRow}>
+          {cipherSyms.map((sym, i) => {
+            if (sym === "/") {
+              return (
+                <View key={i} style={styles.crossgridChipSep}>
+                  <Text style={styles.crossgridChipSepText}>/</Text>
+                </View>
+              );
+            }
+            const idx = chipIndices[i];
+            const letters = getColLetters(sym);
+            const currentLetter = idx !== null ? (letters[idx] ?? "?") : null;
+            const isSet = idx !== null;
+            return (
+              <Pressable
+                key={i}
+                style={[styles.crossgridChip, isSet && styles.crossgridChipActive]}
+                onPress={() => tapChip(i, sym)}
+              >
+                <Text style={[styles.crossgridChipSymbol, isSet && { color: "#e0b54e" }]}>{sym}</Text>
+                <Text style={[styles.crossgridChipLetter, isSet && styles.crossgridChipLetterActive]}>
+                  {isSet ? currentLetter : "?"}
+                </Text>
+              </Pressable>
+            );
+          })}
+        </ScrollView>
+        {/* Live assembled answer preview */}
+        <View style={styles.crossgridAnswerPreview}>
+          <Text style={[styles.crossgridAnswerPreviewText, wrong && { color: "#ef4444" }]}>
+            {buildAnswer()}
+          </Text>
+        </View>
       </View>
 
       {hintRevealed ? (
@@ -365,18 +441,17 @@ function SymbolCrossgridBlock({
         </Pressable>
       )}
 
-      <TextInput
-        style={[styles.sifreInput, wrong && styles.anagramInputError, { marginHorizontal: 12 }]}
-        value={input}
-        onChangeText={(t) => { setInput(t); setWrong(false); }}
-        placeholder={interaction.inputLabel ?? "Çözülmüş metni yaz..."}
-        placeholderTextColor="#555"
-        autoCapitalize="characters"
-        autoCorrect={false}
-        onSubmitEditing={checkAnswer}
-      />
-      {wrong && <Text style={[styles.anagramWrong, { marginHorizontal: 12 }]}>{interaction.failureMessage ?? "Yanlış cevap — tekrar dene"}</Text>}
-      <Pressable style={[styles.crossgridSubmitBtn]} onPress={checkAnswer}>
+      {wrong && (
+        <Text style={[styles.anagramWrong, { marginHorizontal: 12 }]}>
+          {!allFilled
+            ? "Tüm sembolleri çöz — eksik harf var"
+            : (interaction.failureMessage ?? "Yanlış — sembolleri tekrar dene")}
+        </Text>
+      )}
+      <Pressable
+        style={[styles.crossgridSubmitBtn, !allFilled && { opacity: 0.5 }]}
+        onPress={checkAnswer}
+      >
         <MaterialIcons name="search" size={15} color="#1a1205" />
         <Text style={styles.crossgridSubmitText}>{interaction.submitLabel ?? "Şifreyi Çöz"}</Text>
       </Pressable>
@@ -2387,11 +2462,83 @@ const styles = StyleSheet.create({
     lineHeight: 16,
   },
   crossgridScroll: {
-    marginHorizontal: 12,
     marginBottom: 2,
     borderWidth: 1,
     borderColor: "#262c44",
     borderRadius: 8,
+    overflow: "hidden",
+  },
+  crossgridCipherSection: {
+    marginHorizontal: 12,
+    marginTop: 10,
+    marginBottom: 4,
+    backgroundColor: "#161a2b",
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "#262c44",
+    paddingVertical: 10,
+    paddingHorizontal: 8,
+  },
+  crossgridChipsRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingTop: 8,
+    gap: 4,
+  },
+  crossgridChip: {
+    alignItems: "center",
+    justifyContent: "center",
+    minWidth: 36,
+    paddingHorizontal: 6,
+    paddingVertical: 6,
+    borderRadius: 8,
+    borderWidth: 1.5,
+    borderColor: "#2e3450",
+    backgroundColor: "#10131f",
+    gap: 2,
+  },
+  crossgridChipActive: {
+    borderColor: "#e0b54e",
+    backgroundColor: "#1c1708",
+  },
+  crossgridChipSymbol: {
+    fontSize: 15,
+    color: "#6b7399",
+    lineHeight: 18,
+  },
+  crossgridChipLetter: {
+    fontSize: 17,
+    fontWeight: "700",
+    color: "#3d4566",
+    lineHeight: 20,
+  },
+  crossgridChipLetterActive: {
+    color: "#e0b54e",
+  },
+  crossgridChipSep: {
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: 2,
+  },
+  crossgridChipSepText: {
+    color: "#6b7399",
+    fontSize: 18,
+    fontWeight: "300",
+    lineHeight: 40,
+  },
+  crossgridAnswerPreview: {
+    marginTop: 10,
+    alignItems: "center",
+    paddingVertical: 6,
+    borderTopWidth: 1,
+    borderTopColor: "#262c44",
+  },
+  crossgridAnswerPreviewText: {
+    color: "#e0b54e",
+    fontSize: 15,
+    fontWeight: "700",
+    letterSpacing: 2,
+    fontFamily: "monospace",
   },
   crossgridRow: {
     flexDirection: "row",
