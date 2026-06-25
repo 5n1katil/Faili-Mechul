@@ -539,7 +539,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  profileName: { fontSize: 24, fontWeight: "900", letterSpacing: 0.2 },
+  profileName: { fontSize: 22, fontFamily: "PlayfairDisplay", fontWeight: "400", letterSpacing: 0.2 },
   bioRow: {
     flexDirection: "row",
     alignItems: "center",

@@ -1253,9 +1253,10 @@ const listStyles = StyleSheet.create({
     marginBottom: 4,
   },
   listHeaderText: {
-    fontSize: 22,
-    fontWeight: "900",
-    letterSpacing: 0.5,
+    fontSize: 21,
+    fontFamily: "PlayfairDisplay",
+    fontWeight: "400",
+    letterSpacing: 0.3,
   },
   premiumHeader: {
     marginTop: 16,
@@ -1346,7 +1347,7 @@ const listStyles = StyleSheet.create({
     borderWidth: 1,
   },
   diffText: { fontSize: 11, fontWeight: "700" },
-  puzzleTitle: { fontSize: 15, fontWeight: "700", lineHeight: 22 },
+  puzzleTitle: { fontSize: 15, fontFamily: "PlayfairDisplay", fontWeight: "400", lineHeight: 22 },
   puzzleStory: { fontSize: 12, lineHeight: 18 },
   solvedBadge: {
     flexDirection: "row",
@@ -1442,12 +1443,12 @@ const gameStyles = StyleSheet.create({
     marginTop: 2,
   },
   caseNumber: { fontSize: 10, fontWeight: "700", letterSpacing: 2, marginBottom: 2 },
-  puzzleTitle: { fontSize: 18, fontWeight: "700", lineHeight: 26 },
+  puzzleTitle: { fontSize: 17, fontFamily: "PlayfairDisplay", fontWeight: "400", lineHeight: 25 },
   storyBox: { borderRadius: 12, borderWidth: 1, padding: 14, gap: 8 },
   storyHeader: { flexDirection: "row", alignItems: "center", gap: 8 },
   storyLabel: { fontSize: 11, fontWeight: "700", letterSpacing: 1 },
   storyText: { fontSize: 14, lineHeight: 22 },
-  sectionTitle: { fontSize: 16, fontWeight: "700", marginBottom: 8 },
+  sectionTitle: { fontSize: 16, fontFamily: "PlayfairDisplay", fontWeight: "400", marginBottom: 8 },
   gridContainer: { borderRadius: 14, borderWidth: 1, padding: 10, overflow: "hidden" },
   gridContainerWeb: {
     maxWidth: 560,
@@ -1584,7 +1585,8 @@ const premiumInfoStyles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    fontWeight: "900",
+    fontFamily: "PlayfairDisplay",
+    fontWeight: "400",
     color: "#D4A843",
     textAlign: "center",
     letterSpacing: 0.5,

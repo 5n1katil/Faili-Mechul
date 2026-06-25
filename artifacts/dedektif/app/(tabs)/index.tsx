@@ -603,7 +603,7 @@ export default function HomeScreen() {
                 <View style={[styles.statAccent, { backgroundColor: colors.primary }]} />
                 <MaterialIcons name="check-circle-outline" size={18} color={colors.primary} style={{ marginTop: 6 }} />
                 <Text style={[styles.statValue, { color: colors.primary }]}>{profile.gamesWon}</Text>
-                <Text style={[styles.statLabel, { color: colors.mutedForeground }]}>Çözülen</Text>
+                <Text style={[styles.statLabel, { color: "#FFFFFF" }]}>Çözülen</Text>
                 <MaterialIcons name="info-outline" size={11} color={`${colors.primary}80`} style={{ marginTop: 1 }} />
               </Pressable>
               <Pressable
@@ -613,7 +613,7 @@ export default function HomeScreen() {
                 <View style={[styles.statAccent, { backgroundColor: "#9333ea" }]} />
                 <MaterialIcons name="stars" size={18} color="#9333ea" style={{ marginTop: 6 }} />
                 <Text style={[styles.statValue, { color: colors.foreground }]}>{profile.totalScore.toLocaleString("tr-TR")}</Text>
-                <Text style={[styles.statLabel, { color: colors.mutedForeground }]}>Toplam Puan</Text>
+                <Text style={[styles.statLabel, { color: "#FFFFFF" }]}>Toplam Puan</Text>
                 <MaterialIcons name="info-outline" size={11} color="#9333ea80" style={{ marginTop: 1 }} />
               </Pressable>
               <Pressable
@@ -623,7 +623,7 @@ export default function HomeScreen() {
                 <View style={[styles.statAccent, { backgroundColor: "#FF6B35" }]} />
                 <MaterialIcons name="local-fire-department" size={18} color="#FF6B35" style={{ marginTop: 6 }} />
                 <Text style={[styles.statValue, { color: "#FF6B35" }]}>{profile.currentStreak}</Text>
-                <Text style={[styles.statLabel, { color: colors.mutedForeground }]}>Seri</Text>
+                <Text style={[styles.statLabel, { color: "#FFFFFF" }]}>Seri</Text>
                 <MaterialIcons name="info-outline" size={11} color="#FF6B3580" style={{ marginTop: 1 }} />
               </Pressable>
             </View>
@@ -940,7 +940,7 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   doneText: { fontSize: 12, fontWeight: "600" },
-  dailyTitle: { fontSize: 21, fontWeight: "900", lineHeight: 27, letterSpacing: 0.2 },
+  dailyTitle: { fontSize: 18, fontFamily: "PlayfairDisplay", fontWeight: "600", lineHeight: 24, letterSpacing: 0.2 },
   countdownRow: {
     flexDirection: "row",
     justifyContent: "space-between",

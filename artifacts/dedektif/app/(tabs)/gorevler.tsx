@@ -663,8 +663,9 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   pageTitle: {
-    fontSize: 26,
-    fontWeight: "900",
+    fontSize: 24,
+    fontFamily: "PlayfairDisplay",
+    fontWeight: "400",
     letterSpacing: 0.3,
   },
   pageSubtitle: {

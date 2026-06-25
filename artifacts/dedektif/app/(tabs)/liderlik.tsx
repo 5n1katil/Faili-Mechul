@@ -413,7 +413,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
   },
-  headerTitle: { fontSize: 22, fontWeight: "800", letterSpacing: -0.3 },
+  headerTitle: { fontSize: 22, fontFamily: "PlayfairDisplay", fontWeight: "400", letterSpacing: 0 },
   headerSub: { fontSize: 12, fontWeight: "500", marginTop: 2 },
   myRankBadge: {
     flexDirection: "row",
