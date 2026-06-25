@@ -1682,6 +1682,303 @@ function MorseTransceiverBlock({
   );
 }
 
+function ArchiveIndexReconstructionBlock({
+  sifre,
+  isSolved,
+  onSolve,
+}: {
+  sifre: ClueSifre;
+  isSolved: boolean;
+  onSolve: () => void;
+}) {
+  const { addTimePenalty } = useGame();
+  const p = sifre.presentation ?? {};
+  const pr = p as Record<string, unknown>;
+  const files = Array.isArray(pr.files)
+    ? (pr.files as Array<{ id: string; code: string; date: string; note: string }>)
+    : [];
+  const slots = Array.isArray(pr.slots)
+    ? (pr.slots as Array<{ id: string; label: string }>)
+    : [];
+  const correctAssignments = Array.isArray(pr.correctAssignments)
+    ? (pr.correctAssignments as Array<{ itemId: string; answerId: string }>)
+    : [];
+  const interaction: Record<string, string> = (pr.interaction as Record<string, string>) ?? {};
+
+  const [choices, setChoices] = React.useState<Record<string, string>>({});
+  const [result, setResult] = React.useState<{ ok: boolean; message: string } | null>(null);
+  const [hintRevealed, setHintRevealed] = React.useState(false);
+
+  if (isSolved) {
+    return (
+      <View style={styles.miniGameSolvedBlock}>
+        <MaterialIcons name="folder-special" size={20} color="#22c55e" />
+        <Text style={styles.miniGameSolvedText}>Arşiv Dizini Kuruldu!</Text>
+        <View style={styles.miniGameAnswer}>
+          <Text style={styles.miniGameAnswerText}>{String(pr.resultText ?? "")}</Text>
+        </View>
+        <Text style={styles.miniGameAciklama}>{sifre.aciklama}</Text>
+      </View>
+    );
+  }
+
+  const setChoice = (fileId: string, slotId: string) => {
+    setResult(null);
+    setChoices(prev => ({ ...prev, [fileId]: slotId }));
+  };
+
+  const allAssigned = files.length > 0 && files.every(f => !!choices[f.id]);
+
+  const submit = () => {
+    const ok = correctAssignments.every(a => choices[a.itemId] === a.answerId);
+    const message = ok
+      ? (interaction.successMessage ?? "Dosyalar kendi raflarına döndü.")
+      : (interaction.failureMessage ?? "Tarih ve kod aynı raf düzenini vermiyor.");
+    setResult({ ok, message });
+    if (ok) onSolve();
+  };
+
+  const handleHint = () => {
+    if (hintRevealed) return;
+    addTimePenalty(60);
+    setHintRevealed(true);
+  };
+
+  return (
+    <View style={styles.archiveBlock}>
+      <View style={styles.archiveHeader}>
+        <MaterialIcons name="folder-special" size={14} color="#D4A843" />
+        <Text style={styles.archiveHeaderText}>
+          {String(pr.title ?? "ARŞİV DİZİNİ")}
+        </Text>
+      </View>
+      {pr.purposeHint ? (
+        <View style={styles.archivePurposeHint}>
+          <Text style={styles.archivePurposeLabel}>ÇÖZÜMÜN İŞLEVİ</Text>
+          <Text style={styles.archivePurposeText}>{String(pr.purposeHint)}</Text>
+        </View>
+      ) : null}
+      {pr.subtitle ? (
+        <Text style={styles.archiveSubtitle}>{String(pr.subtitle)}</Text>
+      ) : null}
+      <View style={styles.archiveFileList}>
+        {files.map(file => {
+          const selected = choices[file.id];
+          return (
+            <View key={file.id} style={styles.archiveFileCard}>
+              <View style={styles.archiveFileTop}>
+                <Text style={styles.archiveFileCode}>{file.code}</Text>
+                <Text style={styles.archiveFileDate}>{file.date}</Text>
+              </View>
+              <Text style={styles.archiveFileNote}>{file.note}</Text>
+              <View style={styles.archiveSlotList}>
+                {slots.map(slot => {
+                  const isChosen = selected === slot.id;
+                  return (
+                    <Pressable
+                      key={slot.id}
+                      style={[styles.archiveSlotOption, isChosen && styles.archiveSlotOptionSelected]}
+                      onPress={() => setChoice(file.id, slot.id)}
+                    >
+                      <View style={[styles.archiveSlotRadio, isChosen && styles.archiveSlotRadioSelected]}>
+                        {isChosen && <View style={styles.archiveSlotRadioDot} />}
+                      </View>
+                      <Text style={[styles.archiveSlotLabel, isChosen && styles.archiveSlotLabelSelected]}>
+                        {slot.label}
+                      </Text>
+                    </Pressable>
+                  );
+                })}
+              </View>
+            </View>
+          );
+        })}
+      </View>
+      <Pressable
+        style={[styles.archiveSubmitBtn, !allAssigned && styles.archiveSubmitBtnDisabled]}
+        onPress={submit}
+        disabled={!allAssigned}
+      >
+        <Text style={styles.archiveSubmitText}>{interaction.submitLabel ?? "Dizini Kur"}</Text>
+      </Pressable>
+      <Pressable
+        style={[styles.archiveHintBtn, hintRevealed && styles.archiveHintBtnUsed]}
+        onPress={handleHint}
+        disabled={hintRevealed}
+      >
+        <Text style={styles.archiveHintText}>
+          {hintRevealed ? "İpucu açıldı" : "İpucu iste (-60 sn)"}
+        </Text>
+      </Pressable>
+      {hintRevealed && (
+        <View style={styles.archiveHintReveal}>
+          <Text style={styles.archiveHintRevealText}>{sifre.cozumIpucu}</Text>
+        </View>
+      )}
+      {result && (
+        <View style={[styles.archiveResult, result.ok ? styles.archiveResultOk : styles.archiveResultFail]}>
+          <Text style={[styles.archiveResultText, result.ok ? styles.archiveResultTextOk : styles.archiveResultTextFail]}>
+            {result.ok ? "✓ " : "✕ "}{result.message}
+          </Text>
+        </View>
+      )}
+      {result?.ok && (
+        <View style={styles.archiveGridEffect}>
+          <Text style={styles.archiveGridEffectLabel}>IZGARA ETKİSİ</Text>
+          <Text style={styles.archiveGridEffectText}>{String(pr.resultText ?? "")}</Text>
+        </View>
+      )}
+      {result?.ok && sifre.aciklama ? (
+        <Text style={styles.archiveAciklama}>{sifre.aciklama}</Text>
+      ) : null}
+    </View>
+  );
+}
+
+function MechanicalLockSequenceBlock({
+  sifre,
+  isSolved,
+  onSolve,
+}: {
+  sifre: ClueSifre;
+  isSolved: boolean;
+  onSolve: () => void;
+}) {
+  const { addTimePenalty } = useGame();
+  const p = sifre.presentation ?? {};
+  const pr = p as Record<string, unknown>;
+  const dialDefs = Array.isArray(pr.dials)
+    ? (pr.dials as Array<{ id: string; label: string; symbols: string[]; initial?: string }>)
+    : [];
+  const correctCode = Array.isArray(pr.correctCode)
+    ? (pr.correctCode as Array<{ dialId: string; symbol: string }>)
+    : [];
+  const interaction: Record<string, string> = (pr.interaction as Record<string, string>) ?? {};
+
+  const [dialValues, setDialValues] = React.useState<Record<string, string>>(() =>
+    Object.fromEntries(dialDefs.map(d => [d.id, d.initial ?? d.symbols?.[0] ?? ""]))
+  );
+  const [result, setResult] = React.useState<{ ok: boolean; message: string } | null>(null);
+  const [hintRevealed, setHintRevealed] = React.useState(false);
+
+  if (isSolved) {
+    return (
+      <View style={styles.miniGameSolvedBlock}>
+        <MaterialIcons name="lock-open" size={20} color="#22c55e" />
+        <Text style={styles.miniGameSolvedText}>Kilit Açıldı!</Text>
+        <View style={styles.miniGameAnswer}>
+          <Text style={styles.miniGameAnswerText}>{String(pr.resultText ?? "")}</Text>
+        </View>
+        <Text style={styles.miniGameAciklama}>{sifre.aciklama}</Text>
+      </View>
+    );
+  }
+
+  const rotate = (dial: { id: string; symbols: string[] }, delta: number) => {
+    setResult(null);
+    const syms = dial.symbols ?? [];
+    const cur = dialValues[dial.id] ?? syms[0];
+    const idx = Math.max(0, syms.indexOf(cur));
+    const next = syms[(idx + delta + syms.length) % syms.length];
+    setDialValues(prev => ({ ...prev, [dial.id]: next }));
+  };
+
+  const submit = () => {
+    const ok = correctCode.length > 0 && correctCode.every(e => dialValues[e.dialId] === e.symbol);
+    const message = ok
+      ? (interaction.successMessage ?? "Dört kadran aynı sefer kaydına oturdu.")
+      : (interaction.failureMessage ?? "Kadranlar aynı tekrar dizisini vermiyor.");
+    setResult({ ok, message });
+    if (ok) onSolve();
+  };
+
+  const handleHint = () => {
+    if (hintRevealed) return;
+    addTimePenalty(60);
+    setHintRevealed(true);
+  };
+
+  return (
+    <View style={styles.lockBlock}>
+      <View style={styles.lockHeader}>
+        <MaterialIcons name="lock" size={14} color="#D4A843" />
+        <Text style={styles.lockHeaderText}>
+          {String(pr.title ?? "MEKANİK KİLİT DİZİSİ")}
+        </Text>
+      </View>
+      {pr.purposeHint ? (
+        <View style={styles.lockPurposeHint}>
+          <Text style={styles.lockPurposeLabel}>ÇÖZÜMÜN İŞLEVİ</Text>
+          <Text style={styles.lockPurposeText}>{String(pr.purposeHint)}</Text>
+        </View>
+      ) : null}
+      {pr.subtitle ? (
+        <Text style={styles.lockSubtitle}>{String(pr.subtitle)}</Text>
+      ) : null}
+      <View style={styles.lockDialGrid}>
+        {dialDefs.map(dial => {
+          const cur = dialValues[dial.id] ?? dial.symbols?.[0] ?? "";
+          return (
+            <View key={dial.id} style={styles.lockDialCard}>
+              <Text style={styles.lockDialLabel}>{dial.label}</Text>
+              <View style={styles.lockDialFace}>
+                <Text style={styles.lockDialSymbol}>{cur}</Text>
+              </View>
+              <View style={styles.lockDialControls}>
+                <Pressable
+                  style={styles.lockRotateBtn}
+                  onPress={() => rotate(dial, -1)}
+                >
+                  <Text style={styles.lockRotateText}>↺</Text>
+                </Pressable>
+                <Pressable
+                  style={styles.lockRotateBtn}
+                  onPress={() => rotate(dial, 1)}
+                >
+                  <Text style={styles.lockRotateText}>↻</Text>
+                </Pressable>
+              </View>
+            </View>
+          );
+        })}
+      </View>
+      <Pressable style={styles.lockSubmitBtn} onPress={submit}>
+        <Text style={styles.lockSubmitText}>{interaction.submitLabel ?? "Kilidi Aç"}</Text>
+      </Pressable>
+      <Pressable
+        style={[styles.lockHintBtn, hintRevealed && styles.lockHintBtnUsed]}
+        onPress={handleHint}
+        disabled={hintRevealed}
+      >
+        <Text style={styles.lockHintText}>
+          {hintRevealed ? "İpucu açıldı" : "İpucu iste (-60 sn)"}
+        </Text>
+      </Pressable>
+      {hintRevealed && (
+        <View style={styles.lockHintReveal}>
+          <Text style={styles.lockHintRevealText}>{sifre.cozumIpucu}</Text>
+        </View>
+      )}
+      {result && (
+        <View style={[styles.lockResult, result.ok ? styles.lockResultOk : styles.lockResultFail]}>
+          <Text style={[styles.lockResultText, result.ok ? styles.lockResultTextOk : styles.lockResultTextFail]}>
+            {result.ok ? "✓ " : "✕ "}{result.message}
+          </Text>
+        </View>
+      )}
+      {result?.ok && (
+        <View style={styles.lockGridEffect}>
+          <Text style={styles.lockGridEffectLabel}>IZGARA ETKİSİ</Text>
+          <Text style={styles.lockGridEffectText}>{String(pr.resultText ?? "")}</Text>
+        </View>
+      )}
+      {result?.ok && sifre.aciklama ? (
+        <Text style={styles.lockAciklama}>{sifre.aciklama}</Text>
+      ) : null}
+    </View>
+  );
+}
+
 function SifreliMesajBlock({
   sifre,
   isSolved,
@@ -1748,6 +2045,14 @@ function SifreliMesajBlock({
 
   if (sifre.presentation?.style === "morse_transceiver") {
     return <MorseTransceiverBlock sifre={sifre} isSolved={isSolved} onSolve={onSolve} />;
+  }
+
+  if (sifre.presentation?.style === "archive_index_reconstruction") {
+    return <ArchiveIndexReconstructionBlock sifre={sifre} isSolved={isSolved} onSolve={onSolve} />;
+  }
+
+  if (sifre.presentation?.style === "mechanical_lock_sequence") {
+    return <MechanicalLockSequenceBlock sifre={sifre} isSolved={isSolved} onSolve={onSolve} />;
   }
 
   if (sifre.presentation?.style === "symbol_crossgrid") {
@@ -6009,6 +6314,418 @@ const styles = StyleSheet.create({
     lineHeight: 18,
   },
   morseAciklama: {
+    marginTop: 8,
+    fontSize: 12,
+    color: "#8b91ad",
+    fontStyle: "italic",
+    lineHeight: 17,
+  },
+
+  archiveBlock: {
+    marginTop: 10,
+    padding: 12,
+    borderWidth: 1,
+    borderColor: "#2a2010",
+    borderRadius: 12,
+    backgroundColor: "#0d0a04",
+  },
+  archiveHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+    marginBottom: 10,
+  },
+  archiveHeaderText: {
+    fontSize: 11,
+    fontWeight: "800",
+    letterSpacing: 1.4,
+    color: "#D4A843",
+  },
+  archivePurposeHint: {
+    marginBottom: 10,
+    padding: 9,
+    borderLeftWidth: 2,
+    borderLeftColor: "#D4A843",
+    backgroundColor: "rgba(212,168,67,0.06)",
+    borderRadius: 6,
+  },
+  archivePurposeLabel: {
+    fontSize: 9,
+    fontWeight: "800",
+    letterSpacing: 1.2,
+    color: "#D4A843",
+    marginBottom: 3,
+  },
+  archivePurposeText: {
+    fontSize: 12,
+    color: "#ecd99a",
+    lineHeight: 17,
+  },
+  archiveSubtitle: {
+    fontSize: 12,
+    color: "#8b91ad",
+    marginBottom: 10,
+    lineHeight: 17,
+  },
+  archiveFileList: {
+    gap: 10,
+    marginBottom: 12,
+  },
+  archiveFileCard: {
+    padding: 10,
+    borderWidth: 1,
+    borderColor: "#2a2010",
+    borderRadius: 10,
+    backgroundColor: "#120e04",
+  },
+  archiveFileTop: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 4,
+  },
+  archiveFileCode: {
+    fontSize: 13,
+    fontWeight: "800",
+    color: "#D4A843",
+    letterSpacing: 1,
+  },
+  archiveFileDate: {
+    fontSize: 11,
+    color: "#8b7a4a",
+    fontStyle: "italic",
+  },
+  archiveFileNote: {
+    fontSize: 11,
+    color: "#a09060",
+    marginBottom: 8,
+    lineHeight: 16,
+  },
+  archiveSlotList: {
+    gap: 4,
+  },
+  archiveSlotOption: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+    padding: 7,
+    borderWidth: 1,
+    borderColor: "#2a2010",
+    borderRadius: 7,
+    backgroundColor: "#0d0a04",
+  },
+  archiveSlotOptionSelected: {
+    borderColor: "#D4A843",
+    backgroundColor: "rgba(212,168,67,0.1)",
+  },
+  archiveSlotRadio: {
+    width: 14,
+    height: 14,
+    borderRadius: 7,
+    borderWidth: 1,
+    borderColor: "#4b4030",
+    alignItems: "center",
+    justifyContent: "center",
+    flexShrink: 0,
+  },
+  archiveSlotRadioSelected: {
+    borderColor: "#D4A843",
+  },
+  archiveSlotRadioDot: {
+    width: 7,
+    height: 7,
+    borderRadius: 3.5,
+    backgroundColor: "#D4A843",
+  },
+  archiveSlotLabel: {
+    fontSize: 11,
+    color: "#7a6a3a",
+    flex: 1,
+    lineHeight: 16,
+  },
+  archiveSlotLabelSelected: {
+    color: "#ecd99a",
+  },
+  archiveSubmitBtn: {
+    padding: 11,
+    borderRadius: 8,
+    backgroundColor: "#D4A843",
+    alignItems: "center",
+    marginBottom: 8,
+  },
+  archiveSubmitBtnDisabled: {
+    opacity: 0.4,
+  },
+  archiveSubmitText: {
+    fontSize: 13,
+    fontWeight: "700",
+    color: "#1a1205",
+  },
+  archiveHintBtn: {
+    padding: 10,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderStyle: "dashed",
+    borderColor: "#b45309",
+    alignItems: "center",
+    marginBottom: 8,
+  },
+  archiveHintBtnUsed: {
+    opacity: 0.5,
+  },
+  archiveHintText: {
+    fontSize: 13,
+    color: "#fbbf24",
+  },
+  archiveHintReveal: {
+    marginBottom: 8,
+    padding: 9,
+    borderLeftWidth: 2,
+    borderLeftColor: "#b45309",
+    backgroundColor: "rgba(180,83,9,0.08)",
+    borderRadius: 6,
+  },
+  archiveHintRevealText: {
+    fontSize: 12,
+    color: "#fbbf24",
+    lineHeight: 17,
+  },
+  archiveResult: {
+    marginTop: 8,
+    padding: 10,
+    borderRadius: 8,
+  },
+  archiveResultOk: {
+    backgroundColor: "rgba(34,197,94,0.12)",
+  },
+  archiveResultFail: {
+    backgroundColor: "rgba(220,38,38,0.12)",
+  },
+  archiveResultText: {
+    fontSize: 13,
+    lineHeight: 18,
+  },
+  archiveResultTextOk: {
+    color: "#86efac",
+  },
+  archiveResultTextFail: {
+    color: "#fca5a5",
+  },
+  archiveGridEffect: {
+    marginTop: 8,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: "#D4A843",
+    borderRadius: 8,
+    backgroundColor: "rgba(212,168,67,0.08)",
+  },
+  archiveGridEffectLabel: {
+    fontSize: 9,
+    fontWeight: "800",
+    letterSpacing: 1.2,
+    color: "#D4A843",
+    marginBottom: 4,
+  },
+  archiveGridEffectText: {
+    fontSize: 13,
+    fontWeight: "700",
+    color: "#f3d77d",
+    lineHeight: 18,
+  },
+  archiveAciklama: {
+    marginTop: 8,
+    fontSize: 12,
+    color: "#8b91ad",
+    fontStyle: "italic",
+    lineHeight: 17,
+  },
+
+  lockBlock: {
+    marginTop: 10,
+    padding: 12,
+    borderWidth: 1,
+    borderColor: "#3a2a10",
+    borderRadius: 12,
+    backgroundColor: "#0e0906",
+  },
+  lockHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+    marginBottom: 10,
+  },
+  lockHeaderText: {
+    fontSize: 11,
+    fontWeight: "800",
+    letterSpacing: 1.4,
+    color: "#D4A843",
+  },
+  lockPurposeHint: {
+    marginBottom: 10,
+    padding: 9,
+    borderLeftWidth: 2,
+    borderLeftColor: "#D4A843",
+    backgroundColor: "rgba(212,168,67,0.06)",
+    borderRadius: 6,
+  },
+  lockPurposeLabel: {
+    fontSize: 9,
+    fontWeight: "800",
+    letterSpacing: 1.2,
+    color: "#D4A843",
+    marginBottom: 3,
+  },
+  lockPurposeText: {
+    fontSize: 12,
+    color: "#ecd99a",
+    lineHeight: 17,
+  },
+  lockSubtitle: {
+    fontSize: 12,
+    color: "#8b91ad",
+    marginBottom: 10,
+    lineHeight: 17,
+  },
+  lockDialGrid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 8,
+    marginBottom: 12,
+  },
+  lockDialCard: {
+    flex: 1,
+    minWidth: 72,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: "#6e5a34",
+    borderRadius: 10,
+    alignItems: "center",
+    gap: 8,
+    backgroundColor: "#150f06",
+  },
+  lockDialLabel: {
+    fontSize: 9,
+    fontWeight: "800",
+    letterSpacing: 0.8,
+    color: "#a08040",
+    textAlign: "center",
+  },
+  lockDialFace: {
+    width: 52,
+    height: 52,
+    borderRadius: 26,
+    borderWidth: 1,
+    borderColor: "#b99b57",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#1a1206",
+  },
+  lockDialSymbol: {
+    fontSize: 22,
+    color: "#f4e6ae",
+  },
+  lockDialControls: {
+    flexDirection: "row",
+    gap: 6,
+  },
+  lockRotateBtn: {
+    width: 34,
+    height: 34,
+    borderRadius: 17,
+    borderWidth: 1,
+    borderColor: "#6e5a34",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#1a1206",
+  },
+  lockRotateText: {
+    fontSize: 18,
+    color: "#D4A843",
+  },
+  lockSubmitBtn: {
+    padding: 11,
+    borderRadius: 8,
+    backgroundColor: "#D4A843",
+    alignItems: "center",
+    marginBottom: 8,
+  },
+  lockSubmitText: {
+    fontSize: 13,
+    fontWeight: "700",
+    color: "#1a1205",
+  },
+  lockHintBtn: {
+    padding: 10,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderStyle: "dashed",
+    borderColor: "#b45309",
+    alignItems: "center",
+    marginBottom: 8,
+  },
+  lockHintBtnUsed: {
+    opacity: 0.5,
+  },
+  lockHintText: {
+    fontSize: 13,
+    color: "#fbbf24",
+  },
+  lockHintReveal: {
+    marginBottom: 8,
+    padding: 9,
+    borderLeftWidth: 2,
+    borderLeftColor: "#b45309",
+    backgroundColor: "rgba(180,83,9,0.08)",
+    borderRadius: 6,
+  },
+  lockHintRevealText: {
+    fontSize: 12,
+    color: "#fbbf24",
+    lineHeight: 17,
+  },
+  lockResult: {
+    marginTop: 8,
+    padding: 10,
+    borderRadius: 8,
+  },
+  lockResultOk: {
+    backgroundColor: "rgba(34,197,94,0.12)",
+  },
+  lockResultFail: {
+    backgroundColor: "rgba(220,38,38,0.12)",
+  },
+  lockResultText: {
+    fontSize: 13,
+    lineHeight: 18,
+  },
+  lockResultTextOk: {
+    color: "#86efac",
+  },
+  lockResultTextFail: {
+    color: "#fca5a5",
+  },
+  lockGridEffect: {
+    marginTop: 8,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: "#D4A843",
+    borderRadius: 8,
+    backgroundColor: "rgba(212,168,67,0.08)",
+  },
+  lockGridEffectLabel: {
+    fontSize: 9,
+    fontWeight: "800",
+    letterSpacing: 1.2,
+    color: "#D4A843",
+    marginBottom: 4,
+  },
+  lockGridEffectText: {
+    fontSize: 13,
+    fontWeight: "700",
+    color: "#f3d77d",
+    lineHeight: 18,
+  },
+  lockAciklama: {
     marginTop: 8,
     fontSize: 12,
     color: "#8b91ad",
