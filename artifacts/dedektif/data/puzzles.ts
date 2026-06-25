@@ -220,7 +220,7 @@ export interface Clue {
     title?: string;
     subtitle?: string;
     purposeHint?: string;
-    segments?: { id: string; label?: string; startSec: number; endSec: number }[];
+    segments?: { id: string; label?: string; audioAssetId?: string }[];
     question?: string;
     options?: { id: string; label?: string }[];
     correctOptionId?: string;

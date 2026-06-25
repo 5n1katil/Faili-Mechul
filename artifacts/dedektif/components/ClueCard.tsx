@@ -30,6 +30,9 @@ const AUDIO_ASSETS: Record<string, ReturnType<typeof require>> = {
   audio_hw_004_c5_acil_interkom: require("../assets/audio/cases/hw_004/hw_004_c5_acil_interkom.mp3"),
   audio_sf_003_c2_a3_tarama_kaydi: require("../assets/audio/cases/sf_003/sf_003_c2_a3_tarama_kaydi.mp3"),
   rc_002_c3_dahili_hat: require("../assets/audio/cases/rc_002/rc_002_c3_dahili_hat.mp3"),
+  rc_002_c3_hat_a: require("../assets/audio/cases/rc_002/rc_002_c3_hat_a.mp3"),
+  rc_002_c3_hat_b: require("../assets/audio/cases/rc_002/rc_002_c3_hat_b.mp3"),
+  rc_002_c3_hat_c: require("../assets/audio/cases/rc_002/rc_002_c3_hat_c.mp3"),
 };
 
 const FINGERPRINT_IMAGES: Record<string, ReturnType<typeof require>> = {
@@ -150,32 +153,24 @@ function TelephoneSwitchboardBlock({
   const [wrong, setWrong] = useState(false);
   const [hintRevealed, setHintRevealed] = useState(false);
   const [transcriptOpen, setTranscriptOpen] = useState(false);
-  const stopAtMsRef = useRef<number | null>(null);
 
   useEffect(() => {
     return () => { sound?.unloadAsync(); };
   }, [sound]);
 
-  const playSegment = async (seg: { id: string; startSec: number; endSec: number }) => {
+  const playSegment = async (seg: { id: string; label?: string; audioAssetId?: string }) => {
     try {
       if (sound) { await sound.unloadAsync(); setSound(null); }
       setActiveSegId(seg.id);
-      stopAtMsRef.current = seg.endSec * 1000;
-      const assetSource = clue.audioAssetId ? AUDIO_ASSETS[clue.audioAssetId] as import("expo-av").AVPlaybackSource : null;
+      const assetSource = seg.audioAssetId ? AUDIO_ASSETS[seg.audioAssetId] as import("expo-av").AVPlaybackSource : null;
       if (!assetSource) return;
       await Audio.setAudioModeAsync({ playsInSilentModeIOS: true });
       const { sound: newSound } = await Audio.Sound.createAsync(
         assetSource,
-        { shouldPlay: false, positionMillis: seg.startSec * 1000 },
+        { shouldPlay: false },
         (status) => {
-          if (status.isLoaded) {
-            const stopAt = stopAtMsRef.current;
-            if (stopAt !== null && status.positionMillis >= stopAt) {
-              newSound.pauseAsync();
-              stopAtMsRef.current = null;
-              setActiveSegId(null);
-            }
-            if (status.didJustFinish) { setActiveSegId(null); }
+          if (status.isLoaded && status.didJustFinish) {
+            setActiveSegId(null);
           }
         }
       );
@@ -187,7 +182,6 @@ function TelephoneSwitchboardBlock({
   const stopPlayback = async () => {
     if (sound) { await sound.pauseAsync(); }
     setActiveSegId(null);
-    stopAtMsRef.current = null;
   };
 
   const chooseOption = (optionId: string) => {

@@ -3608,26 +3608,22 @@
               "audioPuzzle": {
                 "style": "telephone_switchboard",
                 "title": "Dahili Hat Düzeni",
-                "subtitle": "Makarada üç kısa kesit var. Hangi hattın, taş geçitteki gece nöbetini anlattığını bul.",
                 "purposeHint": "Doğru hattı belirlediğinde, çıkarım ızgarasında bir şüpheli–mekân bağlantısı kesinleşecek.",
                 "segments": [
                   {
                     "id": "hat_a",
-                    "label": "Hat A · 00:02–00:08",
-                    "startSec": 2,
-                    "endSec": 8
+                    "label": "Hat A",
+                    "audioAssetId": "rc_002_c3_hat_a"
                   },
                   {
                     "id": "hat_b",
-                    "label": "Hat B · 00:10–00:16",
-                    "startSec": 10,
-                    "endSec": 16
+                    "label": "Hat B",
+                    "audioAssetId": "rc_002_c3_hat_b"
                   },
                   {
                     "id": "hat_c",
-                    "label": "Hat C · 00:18–00:31",
-                    "startSec": 18,
-                    "endSec": 31
+                    "label": "Hat C",
+                    "audioAssetId": "rc_002_c3_hat_c"
                   }
                 ],
                 "question": "Geçitte yağ lambasını açık bırakıp dış sürgünün anahtarını taşıdığını söyleyen kesit hangisi?",
@@ -3654,7 +3650,8 @@
                   "mode": "listen_and_select",
                   "submitLabel": "Hattı Sabitle",
                   "showTranscriptOnDemand": true
-                }
+                },
+                "subtitle": "Makarada üç kısa kayıt var. Hangi hattın taş geçitteki gece nöbetini anlattığını bul."
               }
             },
             {
