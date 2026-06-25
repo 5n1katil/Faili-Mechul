@@ -62,6 +62,7 @@ import Animated, {
   useSharedValue,
   withSpring,
   withRepeat,
+  withSequence,
   withTiming,
   Easing,
 } from "react-native-reanimated";
@@ -253,71 +254,44 @@ const PREMIUM_GOLD = "#D4A843";
 const NEON_ORANGE = "#FF6800";
 
 function PremiumTabButton({ active, onPress }: { active: boolean; onPress: () => void }) {
-  const angle = useSharedValue(0);
+  const pulse = useSharedValue(0);
   const scale = useSharedValue(1);
 
   React.useEffect(() => {
-    angle.value = withRepeat(
-      withTiming(360, { duration: 2400, easing: Easing.linear }),
+    pulse.value = withRepeat(
+      withSequence(
+        withTiming(1, { duration: 750, easing: Easing.out(Easing.quad) }),
+        withTiming(0, { duration: 1250, easing: Easing.in(Easing.quad) }),
+      ),
       -1,
       false,
     );
   }, []);
 
-  // Elliptical orbit around button border: rx≈58, ry≈20
-  const cometStyle = useAnimatedStyle(() => {
-    const rad = (angle.value * Math.PI) / 180;
-    return {
-      transform: [
-        { translateX: Math.cos(rad) * 58 },
-        { translateY: Math.sin(rad) * 20 },
-      ],
-    };
-  });
+  const glowAnim = useAnimatedStyle(() => ({
+    shadowOpacity: 0.25 + pulse.value * 0.7,
+    shadowRadius: 6 + pulse.value * 18,
+    borderColor: `rgba(255, 140, 0, ${0.4 + pulse.value * 0.6})`,
+    borderWidth: 1.5 + pulse.value * 0.5,
+  }));
 
   const scaleAnim = useAnimatedStyle(() => ({ transform: [{ scale: scale.value }] }));
 
   return (
-    <Animated.View style={[{ flex: 1, position: "relative" }, scaleAnim]}>
-      {/* Orbiting comet dot */}
-      <Animated.View
-        pointerEvents="none"
-        style={[
-          {
-            position: "absolute",
-            width: 22,
-            height: 7,
-            borderRadius: 4,
-            backgroundColor: NEON_ORANGE,
-            top: "50%",
-            left: "50%",
-            marginTop: -3.5,
-            marginLeft: -11,
-            zIndex: 10,
-            shadowColor: NEON_ORANGE,
-            shadowRadius: 10,
-            shadowOpacity: 1,
-            shadowOffset: { width: 0, height: 0 },
-            elevation: 20,
-          },
-          cometStyle,
-        ]}
-      />
+    <Animated.View style={[{ flex: 1 }, scaleAnim]}>
       <Animated.View
         style={[
           listStyles.tabBtn3d,
           {
             flex: 1,
-            borderColor: `${NEON_ORANGE}66`,
             shadowColor: NEON_ORANGE,
-            shadowOpacity: active ? 0.6 : 0.35,
-            shadowRadius: active ? 14 : 8,
-            shadowOffset: { width: 0, height: 3 },
-            elevation: 10,
+            shadowOffset: { width: 0, height: 0 },
+            elevation: 12,
           },
           active
-            ? { backgroundColor: `${NEON_ORANGE}20`, borderBottomColor: `${NEON_ORANGE}DD`, borderBottomWidth: 4 }
-            : { backgroundColor: `${NEON_ORANGE}0C`, borderBottomWidth: 1 },
+            ? { backgroundColor: `${NEON_ORANGE}22`, borderBottomColor: `${NEON_ORANGE}EE`, borderBottomWidth: 4 }
+            : { backgroundColor: `${NEON_ORANGE}0E` },
+          glowAnim,
         ]}
       >
         <Pressable
