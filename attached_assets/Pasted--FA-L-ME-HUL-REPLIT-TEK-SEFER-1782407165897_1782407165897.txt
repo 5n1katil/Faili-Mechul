@@ -1,0 +1,447 @@
+/* ============================================================
+ *  FAİLİ MEÇHUL — REPLIT TEK SEFERLİK ENTEGRASYON PAKETİ
+ *  Bu metni Replit Agent sohbetine TEK PARÇA olarak yapıştır.
+ *  Görev: sadece JSON kaydetme. Vaka verisini mevcut kaynakta
+ *  yükle, aşağıdaki eksik renderer altyapısını ekle ve çalıştır.
+ * ------------------------------------------------------------
+ *  Vaka: Mavi Etiketin Son Durağı · puzzleId=pp_001
+ *  1) Önce mevcut vaka veri kaydını ve mini-oyun dispatcherını bul.
+ *  2) Var olan rendererları bozma; yalnız eksik olan dalı ekle.
+ *  3) Aşağıdaki vaka JSON’unu uygulamanın KANONİK case kaynağına ekle.
+ *  4) Kod değişikliklerinden sonra aşağıdaki kabul testlerini tarayıcıda yap.
+ *  5) Sadece açıklama yazma: dosyaları gerçekten güncelle ve test sonucunu bildir.
+ * ============================================================ */
+
+
+===== PREMIUM v26 ÖZEL MİNİ OYUN RENDERER'I — DOSYA OLUŞTUR / EKSİKSE EKLE =====
+// src/components/caseMechanics/PremiumMechanicRenderer.jsx
+import { useMemo, useState } from "react";
+
+const premiumStyles = new Set([
+  "luggage_label_match",
+  "negative_contact_sheet",
+  "morse_transceiver",
+  "archive_index_reconstruction",
+  "mechanical_lock_sequence",
+]);
+
+export const isPremiumMechanic = (clue) =>
+  clue?.mechanicType === "sifreli_mesaj" &&
+  premiumStyles.has(clue?.sifre?.presentation?.style);
+
+export default function PremiumMechanicRenderer({ clue, onSolved, onRequestHint }) {
+  const p = clue?.sifre?.presentation ?? {};
+  const style = p.style;
+  const [choices, setChoices] = useState({});
+  const [dials, setDials] = useState(() =>
+    Object.fromEntries((p.dials ?? []).map((d) => [d.id, d.initial ?? d.symbols?.[0] ?? ""]))
+  );
+  const [result, setResult] = useState(null);
+  const [hintOpen, setHintOpen] = useState(false);
+  const [hintUsed, setHintUsed] = useState(false);
+
+  const setChoice = (itemId, answerId) =>
+    setChoices((old) => ({ ...old, [itemId]: answerId }));
+
+  const rotate = (dial, delta) => {
+    const symbols = dial.symbols ?? [];
+    const current = dials[dial.id] ?? symbols[0];
+    const index = Math.max(0, symbols.indexOf(current));
+    const next = symbols[(index + delta + symbols.length) % symbols.length];
+    setDials((old) => ({ ...old, [dial.id]: next }));
+    setResult(null);
+  };
+
+  const valid = useMemo(() => {
+    if (!premiumStyles.has(style)) return false;
+    if (style === "mechanical_lock_sequence") {
+      return (p.correctCode ?? []).length === (p.dials ?? []).length &&
+        (p.correctCode ?? []).every((entry) => dials[entry.dialId] === entry.symbol);
+    }
+    return (p.correctAssignments ?? []).length > 0 &&
+      (p.correctAssignments ?? []).every((entry) => choices[entry.itemId] === entry.answerId);
+  }, [choices, dials, p, style]);
+
+  const submit = () => {
+    if (valid) {
+      setResult("ok");
+      onSolved?.({ clueId: clue.id, mechanic: style });
+    } else setResult("no");
+  };
+
+  const useHint = () => {
+    setHintOpen(true);
+    if (!hintUsed) {
+      setHintUsed(true);
+      onRequestHint?.({ clueId: clue.id, penaltySeconds: 60 });
+    }
+  };
+
+  const select = (itemId, options, placeholder) => (
+    <select value={choices[itemId] ?? ""} onChange={(e) => { setChoice(itemId, e.target.value); setResult(null); }}>
+      <option value="">{placeholder}</option>
+      {options.map((option) => <option key={option.id ?? option} value={option.id ?? option}>{option.label ?? option}</option>)}
+    </select>
+  );
+
+  const card = (title, body) => <article style={styles.card}><b>{title}</b>{body}</article>;
+  let board = null;
+
+  if (style === "luggage_label_match") {
+    board = <div style={styles.grid}>{(p.cases ?? []).map((item) => card(item.label, <><small>{item.stamp} · {item.note}</small>{select(item.id, p.routes ?? [], "Rotayı seç…")}</>))}</div>;
+  } else if (style === "negative_contact_sheet") {
+    board = <div style={styles.grid}>{(p.checks ?? []).map((item) => card(item.label, <><div style={styles.pair}><div style={styles.positive}>{item.positive}</div><div style={styles.negative}>{item.negative}</div></div>{select(item.id, item.options ?? [], "Farkı seç…")}</>))}</div>;
+  } else if (style === "morse_transceiver") {
+    board = <><div style={styles.chart}>{(p.chart ?? []).map((item) => <span key={item.char}><b>{item.char}</b> {item.code}</span>)}</div><div style={styles.grid}>{(p.signals ?? []).map((item) => card(item.label, <><div style={styles.morse}>{item.code}</div>{select(item.id, item.options ?? [], "Harfi seç…")}</>))}</div></>;
+  } else if (style === "archive_index_reconstruction") {
+    board = <div style={styles.archive}>{(p.files ?? []).map((item) => card(item.code ?? item.label, <><small>{item.date}<br />{item.note}</small>{select(item.id, p.slots ?? [], "Raf gözü…")}</>))}</div>;
+  } else if (style === "mechanical_lock_sequence") {
+    board = <div style={styles.dials}>{(p.dials ?? []).map((dial) => <article key={dial.id} style={styles.dial}><b>{dial.label}</b><div style={styles.symbol}>{dials[dial.id]}</div><div style={styles.controls}><button onClick={() => rotate(dial, -1)}>↶</button><button onClick={() => rotate(dial, 1)}>↷</button></div></article>)}</div>;
+  }
+
+  return <section style={styles.wrap}>
+    <h4 style={styles.title}>{p.title}</h4>
+    <p style={styles.sub}>{p.subtitle}</p>
+    <p style={styles.purpose}><b>ÇÖZÜMÜN İŞLEVİ</b><br />{p.purposeHint}</p>
+    {board}
+    {p.hint && <><button style={styles.ghost} onClick={useHint}>💡 İpucu iste</button>{hintOpen && <p style={styles.hint}>{p.hint}</p>}</>}
+    <button style={styles.submit} onClick={submit}>{p.interaction?.submitLabel ?? "Kaydı doğrula"}</button>
+    {result === "ok" && <p style={styles.ok}><b>IZGARA ETKİSİ</b><br />{p.resultText}</p>}
+    {result === "no" && <p style={styles.no}>{p.interaction?.failureMessage ?? "Kayıtlar aynı düzeni vermiyor. Ayrıntıları yeniden karşılaştır."}</p>}
+  </section>;
+}
+
+const styles = {
+  wrap:{marginTop:10,padding:12,border:"1px solid #2d3650",borderRadius:12,background:"#101522",color:"#e8eaf2"},
+  title:{margin:"0 0 4px",color:"#e0b54e",fontSize:14},sub:{margin:"0 0 8px",fontSize:12,color:"#a9b0ca"},
+  purpose:{margin:"0 0 10px",padding:9,borderLeft:"2px solid #e0b54e",background:"rgba(224,181,78,.06)",fontSize:12,lineHeight:1.45},
+  grid:{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(160px,1fr))",gap:8},archive:{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(145px,1fr))",gap:8},
+  card:{border:"1px solid #303a55",borderRadius:10,padding:10,display:"grid",gap:8,fontSize:12},pair:{display:"grid",gridTemplateColumns:"1fr 1fr",gap:6},
+  positive:{minHeight:54,padding:7,display:"grid",alignItems:"end",background:"#eef2fb",color:"#151a25",fontSize:10,fontWeight:700},negative:{minHeight:54,padding:7,display:"grid",alignItems:"end",background:"#20283d",color:"#eef2fb",fontSize:10,fontWeight:700},
+  chart:{display:"flex",gap:8,flexWrap:"wrap",padding:8,marginBottom:8,border:"1px solid #303a55",borderRadius:8,fontSize:11},morse:{fontSize:18,letterSpacing:3,color:"#f3d77d"},
+  dials:{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(100px,1fr))",gap:8},dial:{border:"1px solid #6e5a34",borderRadius:10,padding:9,textAlign:"center",display:"grid",gap:8},symbol:{height:48,border:"1px solid #b99b57",borderRadius:"50%",display:"grid",placeItems:"center",fontSize:22,color:"#f4e6ae"},
+  controls:{display:"grid",gridTemplateColumns:"1fr 1fr",gap:5},submit:{width:"100%",marginTop:10,padding:10,border:0,borderRadius:8,background:"#e0b54e",color:"#1a1205",fontWeight:700},ghost:{width:"100%",marginTop:8,padding:8,border:"1px dashed #caa544",borderRadius:8,background:"transparent",color:"#e0b54e"},
+  hint:{padding:8,borderRadius:8,background:"rgba(224,181,78,.08)",fontSize:12},ok:{padding:10,border:"1px solid #22c55e",borderRadius:8,background:"rgba(34,197,94,.1)",color:"#bbf7d0",fontSize:12},no:{padding:10,border:"1px solid #dc2626",borderRadius:8,background:"rgba(220,38,38,.1)",color:"#fecaca",fontSize:12}
+};
+===== DOSYA SONU =====
+
+===== MEVCUT MİNİ-OYUN DISPATCHERINA EKLENECEK DAL =====
+// Mevcut genel sifreli_mesaj renderer'INDEN ÖNCE ekle.
+import PremiumMechanicRenderer, { isPremiumMechanic } from "@/components/caseMechanics/PremiumMechanicRenderer";
+
+if (isPremiumMechanic(clue)) {
+  return (
+    <PremiumMechanicRenderer
+      clue={clue}
+      onSolved={({ clueId }) => markMiniGameSolved?.(clueId)}
+      onRequestHint={({ clueId, penaltySeconds }) => applyHintPenalty?.({ clueId, penaltySeconds })}
+    />
+  );
+}
+// Buradan sonra mevcut genel şifre renderer'ı aynen çalışmalı.
+===== YAMA SONU =====
+
+===== PREMIUM v26 KABUL TESTLERİ =====
+- c5: luggage_label_match renderer'ı JSON verisinden çalışır; doğru sonuç öncesinde resultText görünmez, yanlış deneme doğru eşlemeyi açmaz, mobilde kartlar tek kolon akışına iner.
+===== TESTLER SONU =====
+===== ZORUNLU KABUL TESTLERİ =====
+1. Eski klasik sifreli_mesaj, parmak_izi, profil_sentezi ve genel ses_kaydi rendererları regresyona uğramaz.
+===== TEST LİSTESİ SONU =====
+
+===== KANONİK VAKA VERİSİ — mevcut case registry’de pp_001 olarak ekle/değiştir =====
+{
+  "puzzleId": "pp_001",
+  "stars": "★☆☆☆☆",
+  "gridSize": "3x3",
+  "timeLimit": 600,
+  "qaNarrativeContract": {
+    "premiumStoryGate": "pass",
+    "storyLengthWords": 154,
+    "storyClue": {
+      "visibleEvidence": "Cemil’in avucunda mavi mürekkepli, kırık köşeli ve 17 numaralı bir etiket parçası vardır.",
+      "mechanicBridge": "Bu ayrıntı, c5 Valiz Etiketi Eşleme mini oyunundaki Etiket M-17 kartını oyuncunun hikâyeden tanımasını sağlar.",
+      "matrixBoundary": "Anlatı tek başına fail, araç veya mekânı kesinleştirmez; yalnız mini oyunun belge parçasını anlamlandırır."
+    },
+    "narrativeFunctions": [
+      "Kapanış saatinin güvenilmezliğini, durmuş elektrik saatleri üzerinden kurar.",
+      "Üç şüphelinin aynı gece gar çevresinde bulunması için kısa ve ayrı gerekçeler verir.",
+      "Bavulun seyahat izi taşımamasıyla olayın istasyon içinde hazırlanmış olabileceğine dair yumuşak bir araştırma sorusu açar.",
+      "Mavi mürekkepli, kırık köşeli 17 numaralı etiket parçasını mini oyundaki Etiket M-17 kartına organik biçimde bağlar."
+    ]
+  },
+  "title": "Mavi Etiketin Son Durağı",
+  "subtitle": "1938 · Meridyen Garı · Emanet holü",
+  "difficulty": "Çaylak",
+  "difficultyLevel": 1,
+  "specialMechanic": "sifreli_mesaj",
+  "story": "1938’in son haftasında Meridyen Garı, kış yağmurunun altında kapanış seferine yetişen yolcularla doluydu. Saat 22.10 treni perondan ayrılırken emanet holünün camlarını buhar kapladı; iki dakika sonra ana salonun bütün saatleri aynı dakikada durdu.\n\nTicaret kuryesi Cemil Erkan, kayıp bir kumaş sevkiyatının teslim kaydını araştırmak için emanet holüne girmişti. Kısa süre sonra kilitli bavul sıralarının önünde ölü bulundu. Yanındaki deri bavulun kimlik kartı kazınmış, evrakları aceleyle karıştırılmıştı. Cemil’in sağ elinde mavi mürekkepli, köşesi kırılmış bir etiket parçası vardı: üzerinde yalnızca solgun bir “17” seçiliyordu.\n\nO gece Posta Kâtibi Arda posta vagonuna dönmek üzereydi; Biletçi Nihat, unutulmuş etiketleri kasasında biriktiriyordu; Otel Tercümanı Feride ise yabancı bir yolcunun yazışması için santralde dış hat arıyordu.\n\nİlk bakışta olay bir hırsızlık gibi görünüyordu. Ancak Cemil’in paltosunda kömür tozu varken bavulun sapında perondan, yağmurdan ya da yolculuktan kalma tek bir iz yoktu. Sanki bavul gara gelmemiş; garın içinde hazırlanmıştı. Peron görevlisinin duyduğu son söz şuydu: “Etiketin arkası temiz değil.”",
+  "atmosphere": "Islak kömür, sıcak metal ve eski kâğıt kokusu. Yıldızlı cam tavanın altında emanet holünü yalnız yeşil banko lambası aydınlatıyor; bütün saatler 22.10’u gösterse de gar artık o dakikadan sonra hiçbir şeye güvenmiyor.",
+  "suspects": [
+    {
+      "id": "s1",
+      "name": "Posta Kâtibi Arda",
+      "icon": "✉️",
+      "description": "Gece vardiyasında mühürlü torbaları teslim alan kâtip.",
+      "detail": "Eski hat tarifelerini ezbere bilir; kaybolan paketlerin numarasını küçük bir deftere işaretler."
+    },
+    {
+      "id": "s2",
+      "name": "Biletçi Nihat",
+      "icon": "🎟️",
+      "description": "İstasyonun bilet penceresinde çalışan, düzen takıntılı görevli.",
+      "detail": "Boş zamanında yıpranmış bagaj etiketlerini biriktirir; rengi solmuş damgaları ve bilet penceresinin düzenini ayırt edebilir."
+    },
+    {
+      "id": "s3",
+      "name": "Otel Tercümanı Feride",
+      "icon": "🧳",
+      "description": "Gecikmiş yolcular için otel ve gümrük işlerini yöneten serbest tercüman.",
+      "detail": "Yanında her zaman ince deri bir valiz taşır; yabancı yolcuların yazışmalarını ve otel santralindeki çağrıları çevirir."
+    }
+  ],
+  "weapons": [
+    {
+      "id": "w1",
+      "name": "Siyanürlü Etiket Tutkalı",
+      "icon": "🧪",
+      "description": "Eski bagaj etiketlerinin arkasına sürülen, keskin badem kokulu yapıştırıcı.",
+      "detail": ""
+    },
+    {
+      "id": "w2",
+      "name": "Kargo Makası",
+      "icon": "✂️",
+      "description": "Posta vagonundaki sicim ve mühür iplerini kesmek için kullanılan ağır makas.",
+      "detail": ""
+    },
+    {
+      "id": "w3",
+      "name": "Fren Kolu Anahtarı",
+      "icon": "🔧",
+      "description": "Vagon fren kolunu açmak için kullanılan kısa, dökme demir anahtar.",
+      "detail": ""
+    }
+  ],
+  "locations": [
+    {
+      "id": "l1",
+      "name": "Posta Vagonu",
+      "icon": "🚃",
+      "description": "Mühürlü torbaların taşındığı dar servis vagonu.",
+      "detail": ""
+    },
+    {
+      "id": "l2",
+      "name": "Emanet Dolapları",
+      "icon": "🗄️",
+      "description": "Garın kilitli bavul sıraları ve teslim penceresi; kapalı kutu serisi burada tutulur.",
+      "detail": ""
+    },
+    {
+      "id": "l3",
+      "name": "Peron Alt Geçidi",
+      "icon": "🚇",
+      "description": "Rayların altından geçen, sesin boğuklaştığı taş koridor.",
+      "detail": ""
+    }
+  ],
+  "clues": [
+    {
+      "id": "c1",
+      "title": "Yapıştırıcı Kalıntısı",
+      "type": "adli",
+      "mechanicType": "text",
+      "text": "Adli laboratuvar, keskin badem kokulu yapıştırıcıyı ölümcül madde olarak saptadı. Kalıntıdaki mavi reçine, kilitli bavul sıralarındaki kapalı kutu serisinin koduyla uyuşuyor.",
+      "deductionHint": "Ölümcül maddeyi belirledin; bu madde hangi iş akışına bağlanıyor?",
+      "isBonus": false,
+      "revealOrder": 1,
+      "isRevealed": true,
+      "pointCost": 0
+    },
+    {
+      "id": "c2",
+      "title": "Geçit Nöbeti",
+      "type": "tanik",
+      "mechanicType": "text",
+      "text": "Nöbetçinin vardiya kaydı, bilet penceresindeki görevlinin son tren kalkana kadar yerinden ayrılmadığını gösteriyor.",
+      "deductionHint": "Kayıtlı bir vardiya, hangi taş koridor olasılığını kapatır?",
+      "isBonus": false,
+      "revealOrder": 2,
+      "isRevealed": false,
+      "pointCost": 60
+    },
+    {
+      "id": "c3",
+      "title": "Vagon Zimmeti",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Mühürlü torbaların taşındığı dar servis aracının zimmet fişinde, sicim kesmeye yarayan ağır makasın kalkıştan önce yalnız servis rafında asılı olduğu yazıyor.",
+      "deductionHint": "Zimmette tek bir raf görünüyorsa hangi eşleşme işaretlenir?",
+      "isBonus": false,
+      "revealOrder": 3,
+      "isRevealed": false,
+      "pointCost": 60
+    },
+    {
+      "id": "c4",
+      "title": "Otel Telefonu",
+      "type": "tanik",
+      "mechanicType": "text",
+      "text": "Otel santralinin pulsa kaydı, yabancı yolcu yazışmalarıyla ilgilenen kadının kilitli bavul sıralarına uğramadan önce uzun bir dış hat görüşmesi yaptığını doğruluyor.",
+      "deductionHint": "Bir telefon kaydı, hangi teslim noktasını onun için kapatır?",
+      "isBonus": false,
+      "revealOrder": 4,
+      "isRevealed": false,
+      "pointCost": 60
+    },
+    {
+      "id": "c5",
+      "title": "Etiketlerin Sessiz Rotası",
+      "type": "sifreli",
+      "mechanicType": "sifreli_mesaj",
+      "text": "Mühür odasının çekmecesinde üç, birbirini tutmayan bavul etiketi bulundu.",
+      "deductionHint": "Damga rengi değil; aynı yolun üç ayrı aşamada bıraktığı izler karar verdirir.",
+      "isBonus": false,
+      "revealOrder": 5,
+      "isRevealed": false,
+      "pointCost": 60,
+      "sifre": {
+        "sifrelenmis": "MAVİ-17 / KIRMIZI-04 / SİYAH-29",
+        "sifreleTuru": "valiz etiketi eşleme",
+        "cozumIpucu": "Damgaların sırası, her bagajın geçtiği tek hattı birlikte anlatır; yalnız bir rota üç kayda da uyuyor.",
+        "cozulmus": "DOĞRULAMA KODU 714",
+        "aciklama": "Eşleşme tamamlandığında, ızgarada bir olanaksız bağı kapatacak kadar somut bir halka oluşur.",
+        "presentation": {
+          "style": "luggage_label_match",
+          "title": "Valiz Etiketi Eşleme",
+          "subtitle": "Her etiket aynı yolculuğun farklı bir durağını anlatır. Üç bagajı doğru rotayla eşleştir.",
+          "purposeHint": "Damgaları doğru rotaya bağlamak, ızgarada hangi kişi–araç bağının mümkün olmadığını gösterecek.",
+          "cases": [
+            {
+              "id": "b1",
+              "label": "Etiket M-17",
+              "stamp": "Meridyen · gece 22.10",
+              "note": "Mavi mürekkep, kırık köşe"
+            },
+            {
+              "id": "b2",
+              "label": "Etiket K-04",
+              "stamp": "Kıyı Hattı · sabah",
+              "note": "Kırmızı gümrük halkası"
+            },
+            {
+              "id": "b3",
+              "label": "Etiket S-29",
+              "stamp": "Sarnıç Garı · akşam",
+              "note": "Siyah fren deposu damgası"
+            }
+          ],
+          "routes": [
+            {
+              "id": "r1",
+              "label": "Posta torbası: Meridyen → Kıyı Hattı → Sarnıç"
+            },
+            {
+              "id": "r2",
+              "label": "Otel bagajı: Kıyı Hattı → Sarnıç → Meridyen"
+            },
+            {
+              "id": "r3",
+              "label": "Servis sandığı: Sarnıç → Meridyen → Kıyı Hattı"
+            }
+          ],
+          "correctAssignments": [
+            {
+              "itemId": "b1",
+              "answerId": "r1"
+            },
+            {
+              "itemId": "b2",
+              "answerId": "r2"
+            },
+            {
+              "itemId": "b3",
+              "answerId": "r3"
+            }
+          ],
+          "resultText": "Fren kolu anahtarının kaydı, otel bagajına değil posta torbasına aittir: Feride × Fren Kolu Anahtarı.",
+          "interaction": {
+            "mode": "select_match",
+            "submitLabel": "Etiketleri Doğrula",
+            "successMessage": "Etiket zinciri tek bir bagaj düzeninde birleşti.",
+            "failureMessage": "Damga sırası aynı yolculuğu anlatmıyor."
+          }
+        }
+      }
+    },
+    {
+      "id": "b1",
+      "title": "Mühür Tozu",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Teslim penceresinin iç yüzünde Nihat'ın kullandığı kırmızı mumdan ince bir iz bulundu.",
+      "deductionHint": "Bu iz hangi görevliyi hangi teslim noktasına yaklaştırır?",
+      "isBonus": true,
+      "revealOrder": 6,
+      "isRevealed": false,
+      "pointCost": 60
+    },
+    {
+      "id": "b2",
+      "title": "Gece Memuru",
+      "type": "tanik",
+      "mechanicType": "text",
+      "text": "Posta görevlisi Arda'nın, fren anahtarını servis vagonundan aldığını iki hamal da hatırladı.",
+      "deductionHint": "Bu hatırlama hangi kişi–araç bağını doğrular?",
+      "isBonus": true,
+      "revealOrder": 7,
+      "isRevealed": false,
+      "pointCost": 60
+    }
+  ],
+  "assetManifest": [],
+  "solution": {
+    "suspectId": "s2",
+    "weaponId": "w1",
+    "locationId": "l2"
+  },
+  "solutionNarrative": "Biletçi Nihat, son seferin ardından emanet holüne geçtiğinde Cemil’in aradığı kaydın onu eski etiket serisine götüreceğini biliyordu. Mavi etiketin arkasına sürülmüş siyanürlü tutkalla teması, olayı bir kavga gibi değil, yanlış teslimatın ortasında gelişen sessiz bir çöküş gibi gösterdi. Arda’nın posta vagonu zimmeti ve Feride’nin telefon kaydı, iki alternatif rotayı ayrı ayrı kapattı; Cemil’in avucunda kalan kırık M-17 parçası ise Nihat’ın kurduğu etiket zincirini görünür kılan son iz oldu.",
+  "replitIntegration": {
+    "schema": "fm_replit_runtime_contract_v1",
+    "copyTarget": "Replit Agent prompt",
+    "canonicalCaseFile": "src/data/cases/pp_001.json",
+    "policy": "Var olan renderer varsa onu bozma; yoksa bu paketteki component ve dispatcher dalını ekle.",
+    "mechanics": [
+      {
+        "clueId": "c5",
+        "mechanicType": "sifreli_mesaj",
+        "renderer": "luggage_label_match",
+        "completionEvent": "onSolved({ clueId, mechanic: \"sifreli_mesaj\" })"
+      },
+      {
+        "clueId": "c5",
+        "mechanicType": "sifreli_mesaj",
+        "renderer": "luggage_label_match",
+        "componentFile": "src/components/caseMechanics/PremiumMechanicRenderer.jsx",
+        "dispatcherBranch": "clue.mechanicType === \"sifreli_mesaj\" && [\"luggage_label_match\",\"negative_contact_sheet\",\"morse_transceiver\",\"archive_index_reconstruction\",\"mechanical_lock_sequence\"].includes(clue.sifre?.presentation?.style)",
+        "completionEvent": "onSolved({ clueId, mechanic: \"luggage_label_match\" })",
+        "hintEvent": "onRequestHint({ clueId, penaltySeconds: 60 })",
+        "requiredData": [
+          "title",
+          "subtitle",
+          "purposeHint",
+          "resultText",
+          "interaction",
+          "style-specific data"
+        ],
+        "nonNegotiable": [
+          "Veriyi component içine hard-code etme.",
+          "Başarı öncesinde resultText veya çözüm eşleşmesini gösterme.",
+          "Yanlış deneme doğru eşlemeyi otomatik kurmamalı.",
+          "Mobilde kartlar/diallar tek sütuna akmalı."
+        ]
+      }
+    ]
+  }
+}
+===== VAKA VERİSİ SONU =====

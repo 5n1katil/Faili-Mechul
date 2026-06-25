@@ -15339,6 +15339,266 @@
           "solutionNarrative": "Gıda Şirketi CEO'su Tarhan, sahte sağlık sertifikasının açılış gecesi ifşa edilip imparatorluğunun yıkılacağını öğrenince, toplantı salonundaki çelik projeksiyon kolunu önceden söküp VIP odaya daldı. Maktulün kafatasını o demirle parçaladıktan sonra konferansa katılmaya devam edecek kadar soğukkanlıydı, ancak ses kaydı ve kamera logları bu sahte maskeyi darmadağın etti."
         }
       ]
+    },
+    {
+      "packId": "pack_pp",
+      "packTitle": "Dönem Vakaları",
+      "packSubtitle": "1930’lar–1970’ler · Tarihi Kesitler",
+      "packIcon": "🚃",
+      "packTheme": "period",
+      "packColor": "#3D2B1F",
+      "accentColor": "#B8860B",
+      "isPremium": true,
+      "price": 29.99,
+      "currency": "TRY",
+      "description": "1930’lardan 1970’lere uzanan tarihi kesitlerden özgün cinayet vakaları.",
+      "puzzles": [
+        {
+          "puzzleId": "pp_001",
+          "packId": "pack_pp",
+          "packSlug": "period",
+          "stars": "★☆☆☆☆",
+          "gridSize": "3x3",
+          "timeLimit": 600,
+          "title": "Mavi Etiketin Son Durağı",
+          "subtitle": "1938 · Meridyen Garı · Emanet holü",
+          "difficulty": "Çaylak",
+          "difficultyLevel": 1,
+          "specialMechanic": "sifreli_mesaj",
+          "story": "1938’in son haftasında Meridyen Garı, kış yağmurunun altında kapanış seferine yetişen yolcularla doluydu. Saat 22.10 treni perondan ayrılırken emanet holünün camlarını buhar kapladı; iki dakika sonra ana salonun bütün saatleri aynı dakikada durdu.\n\nTicaret kuryesi Cemil Erkan, kayıp bir kumaş sevkiyatının teslim kaydını araştırmak için emanet holüne girmişti. Kısa süre sonra kilitli bavul sıralarının önünde ölü bulundu. Yanında yalnızca mavi mürekkepli, kırık köşeli 17 numaralı bir etiket parçası vardı.",
+          "atmosphere": "Islak kömür, sıcak metal ve eski kâğıt kokusu. Yıldızlı cam tavanın altında emanet holünü yalnız yeşil banko lambası aydınlatıyor; bütün saatler 22.10’u gösterse de gar artık o dakikadan sonra hiçbir şeye güvenmiyor.",
+          "suspects": [
+            {
+              "id": "s1",
+              "name": "Posta Kâtibi Arda",
+              "icon": "✉️",
+              "description": "Gece vardiyasında mühürlü torbaları teslim alan kâtip.",
+              "detail": "Eski hat tarifelerini ezbere bilir; kaybolan paketlerin numarasını küçük bir deftere işaretler."
+            },
+            {
+              "id": "s2",
+              "name": "Biletçi Nihat",
+              "icon": "🎟️",
+              "description": "İstasyonun bilet penceresinde çalışan, düzen takıntılı görevli.",
+              "detail": "Boş zamanında yıpranmış bagaj etiketlerini biriktirir; rengi solmuş damgaları ve bilet penceresinin düzenini ayırt edebilir."
+            },
+            {
+              "id": "s3",
+              "name": "Otel Tercümanı Feride",
+              "icon": "🧳",
+              "description": "Gecikmiş yolcular için otel ve gümrük işlerini yöneten serbest tercüman.",
+              "detail": "Yanında her zaman ince deri bir valiz taşır; yabancı yolcuların yazışmalarını ve otel santralindeki çağrıları çevirir."
+            }
+          ],
+          "weapons": [
+            {
+              "id": "w1",
+              "name": "Siyanürlü Etiket Tutkalı",
+              "icon": "🧪",
+              "description": "Eski bagaj etiketlerinin arkasına sürülen, keskin badem kokulu yapıştırıcı.",
+              "detail": ""
+            },
+            {
+              "id": "w2",
+              "name": "Kargo Makası",
+              "icon": "✂️",
+              "description": "Posta vagonundaki sicim ve mühür iplerini kesmek için kullanılan ağır makas.",
+              "detail": ""
+            },
+            {
+              "id": "w3",
+              "name": "Fren Kolu Anahtarı",
+              "icon": "🔧",
+              "description": "Vagon fren kolunu açmak için kullanılan kısa, dökme demir anahtar.",
+              "detail": ""
+            }
+          ],
+          "locations": [
+            {
+              "id": "l1",
+              "name": "Posta Vagonu",
+              "icon": "🚃",
+              "description": "Mühürlü torbaların taşındığı dar servis vagonu.",
+              "detail": ""
+            },
+            {
+              "id": "l2",
+              "name": "Emanet Dolapları",
+              "icon": "🗄️",
+              "description": "Garın kilitli bavul sıraları ve teslim penceresi; kapalı kutu serisi burada tutulur.",
+              "detail": ""
+            },
+            {
+              "id": "l3",
+              "name": "Peron Alt Geçidi",
+              "icon": "🚇",
+              "description": "Rayların altından geçen, sesin boğuklaştığı taş koridor.",
+              "detail": ""
+            }
+          ],
+          "clues": [
+            {
+              "id": "c1",
+              "title": "Yapıştırıcı Kalıntısı",
+              "type": "adli",
+              "mechanicType": "text",
+              "text": "Adli laboratuvar, keskin badem kokulu yapıştırıcıyı ölümcül madde olarak saptadı. Kalıntıdaki mavi reçine, kilitli bavul sıralarındaki kapalı kutu serisinin koduyla uyuşuyor.",
+              "deductionHint": "Ölümcül maddeyi belirledin; bu madde hangi iş akışına bağlanıyor?",
+              "isBonus": false,
+              "revealOrder": 1,
+              "isRevealed": true,
+              "pointCost": 0
+            },
+            {
+              "id": "c2",
+              "title": "Geçit Nöbeti",
+              "type": "tanik",
+              "mechanicType": "text",
+              "text": "Nöbetçinin vardiya kaydı, bilet penceresindeki görevlinin son tren kalkana kadar yerinden ayrılmadığını gösteriyor.",
+              "deductionHint": "Kayıtlı bir vardiya, hangi taş koridor olasılığını kapatır?",
+              "isBonus": false,
+              "revealOrder": 2,
+              "isRevealed": false,
+              "pointCost": 60
+            },
+            {
+              "id": "c3",
+              "title": "Vagon Zimmeti",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Mühürlü torbaların taşındığı dar servis aracının zimmet fişinde, sicim kesmeye yarayan ağır makasın kalkıştan önce yalnız servis rafında asılı olduğu yazıyor.",
+              "deductionHint": "Zimmette tek bir raf görünüyorsa hangi eşleşme işaretlenir?",
+              "isBonus": false,
+              "revealOrder": 3,
+              "isRevealed": false,
+              "pointCost": 60
+            },
+            {
+              "id": "c4",
+              "title": "Otel Telefonu",
+              "type": "tanik",
+              "mechanicType": "text",
+              "text": "Otel santralinin pulsa kaydı, yabancı yolcu yazışmalarıyla ilgilenen kadının kilitli bavul sıralarına uğramadan önce uzun bir dış hat görüşmesi yaptığını doğruluyor.",
+              "deductionHint": "Bir telefon kaydı, hangi teslim noktasını onun için kapatır?",
+              "isBonus": false,
+              "revealOrder": 4,
+              "isRevealed": false,
+              "pointCost": 60
+            },
+            {
+              "id": "c5",
+              "title": "Etiketlerin Sessiz Rotası",
+              "type": "sifreli",
+              "mechanicType": "sifreli_mesaj",
+              "text": "Mühür odasının çekmecesinde üç, birbirini tutmayan bavul etiketi bulundu.",
+              "deductionHint": "Damga rengi değil; aynı yolun üç ayrı aşamada bıraktığı izler karar verdirir.",
+              "isBonus": false,
+              "revealOrder": 5,
+              "isRevealed": false,
+              "pointCost": 60,
+              "sifre": {
+                "sifrelenmis": "MAVİ-17 / KIRMIZI-04 / SİYAH-29",
+                "sifreleTuru": "valiz etiketi eşleme",
+                "cozumIpucu": "Damgaların sırası, her bagajın geçtiği tek hattı birlikte anlatır; yalnız bir rota üç kayda da uyuyor.",
+                "cozulmus": "DOĞRULAMA KODU 714",
+                "aciklama": "Eşleşme tamamlandığında, ızgarada bir olanaksız bağı kapatacak kadar somut bir halka oluşur.",
+                "presentation": {
+                  "style": "luggage_label_match",
+                  "title": "Valiz Etiketi Eşleme",
+                  "subtitle": "Her etiket aynı yolculuğun farklı bir durağını anlatır. Üç bagajı doğru rotayla eşleştir.",
+                  "purposeHint": "Damgaları doğru rotaya bağlamak, ızgarada hangi kişi–araç bağının mümkün olmadığını gösterecek.",
+                  "cases": [
+                    {
+                      "id": "b1",
+                      "label": "Etiket M-17",
+                      "stamp": "Meridyen · gece 22.10",
+                      "note": "Mavi mürekkep, kırık köşe"
+                    },
+                    {
+                      "id": "b2",
+                      "label": "Etiket K-04",
+                      "stamp": "Kıyı Hattı · sabah",
+                      "note": "Kırmızı gümrük halkası"
+                    },
+                    {
+                      "id": "b3",
+                      "label": "Etiket S-29",
+                      "stamp": "Sarnıç Garı · akşam",
+                      "note": "Siyah fren deposu damgası"
+                    }
+                  ],
+                  "routes": [
+                    {
+                      "id": "r1",
+                      "label": "Posta torbası: Meridyen → Kıyı Hattı → Sarnıç"
+                    },
+                    {
+                      "id": "r2",
+                      "label": "Otel bagajı: Kıyı Hattı → Sarnıç → Meridyen"
+                    },
+                    {
+                      "id": "r3",
+                      "label": "Servis sandığı: Sarnıç → Meridyen → Kıyı Hattı"
+                    }
+                  ],
+                  "correctAssignments": [
+                    {
+                      "itemId": "b1",
+                      "answerId": "r1"
+                    },
+                    {
+                      "itemId": "b2",
+                      "answerId": "r2"
+                    },
+                    {
+                      "itemId": "b3",
+                      "answerId": "r3"
+                    }
+                  ],
+                  "resultText": "Fren kolu anahtarının kaydı, otel bagajına değil posta torbasına aittir: Feride × Fren Kolu Anahtarı.",
+                  "interaction": {
+                    "mode": "select_match",
+                    "submitLabel": "Etiketleri Doğrula",
+                    "successMessage": "Etiket zinciri tek bir bagaj düzeninde birleşti.",
+                    "failureMessage": "Damga sırası aynı yolculuğu anlatmıyor."
+                  }
+                }
+              }
+            },
+            {
+              "id": "b1",
+              "title": "Mühür Tozu",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Teslim penceresinin iç yüzünde Nihat’ın kullandığı kırmızı mumdan ince bir iz bulundu.",
+              "deductionHint": "Bu iz hangi görevliyi hangi teslim noktasına yaklaştırır?",
+              "isBonus": true,
+              "revealOrder": 6,
+              "isRevealed": false,
+              "pointCost": 60
+            },
+            {
+              "id": "b2",
+              "title": "Gece Memuru",
+              "type": "tanik",
+              "mechanicType": "text",
+              "text": "Posta görevlisi Arda’nın, fren anahtarını servis vagonundan aldığını iki hamal da hatırladı.",
+              "deductionHint": "Bu hatırlama hangi kişi–araç bağını doğrular?",
+              "isBonus": true,
+              "revealOrder": 7,
+              "isRevealed": false,
+              "pointCost": 60
+            }
+          ],
+          "assetManifest": [],
+          "solution": {
+            "suspectId": "s2",
+            "weaponId": "w1",
+            "locationId": "l2"
+          },
+          "solutionNarrative": "Biletçi Nihat, son seferin ardından emanet holüne geçtiğinde Cemil’in aradığı kaydın onu eski etiket serisine götüreceğini biliyordu. Mavi etiketin arkasına sürülmüş siyanürlü tutkalla teması, olayı bir kavga gibi değil, yanlış teslimatın ortasında gelişen sessiz bir çöküş gibi gösterdi. Arda’nın posta vagonu zimmeti ve Feride’nin telefon kaydı, iki alternatif rotayı ayrı ayrı kapattı; Cemil’in avucunda kalan kırık M-17 parçası ise Nihat’ın kurduğu etiket zincirini görünür kılan son iz oldu."
+        }
+      ]
     }
   ]
 }

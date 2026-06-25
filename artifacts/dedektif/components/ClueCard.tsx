@@ -1217,6 +1217,157 @@ function BrokenCompassCalibrationBlock({
   );
 }
 
+function LuggageLabelMatchBlock({
+  sifre,
+  isSolved,
+  onSolve,
+}: {
+  sifre: ClueSifre;
+  isSolved: boolean;
+  onSolve: () => void;
+}) {
+  const { addTimePenalty } = useGame();
+  const p = sifre.presentation ?? {};
+  const pr = p as Record<string, unknown>;
+  const cases = Array.isArray(pr.cases)
+    ? (pr.cases as Array<{ id: string; label: string; stamp: string; note: string }>)
+    : [];
+  const routes = Array.isArray(pr.routes)
+    ? (pr.routes as Array<{ id: string; label: string }>)
+    : [];
+  const correctAssignments = Array.isArray(pr.correctAssignments)
+    ? (pr.correctAssignments as Array<{ itemId: string; answerId: string }>)
+    : [];
+  const interaction: Record<string, string> = (pr.interaction as Record<string, string>) ?? {};
+
+  const [choices, setChoices] = React.useState<Record<string, string>>({});
+  const [result, setResult] = React.useState<{ ok: boolean; message: string } | null>(null);
+  const [hintRevealed, setHintRevealed] = React.useState(false);
+
+  if (isSolved) {
+    return (
+      <View style={styles.miniGameSolvedBlock}>
+        <MaterialIcons name="luggage" size={20} color="#22c55e" />
+        <Text style={styles.miniGameSolvedText}>Etiketler Doğrulandı!</Text>
+        <View style={styles.miniGameAnswer}>
+          <Text style={styles.miniGameAnswerText}>{String(pr.resultText ?? "")}</Text>
+        </View>
+        <Text style={styles.miniGameAciklama}>{sifre.aciklama}</Text>
+      </View>
+    );
+  }
+
+  const setChoice = (itemId: string, answerId: string) => {
+    setResult(null);
+    setChoices(prev => ({ ...prev, [itemId]: answerId }));
+  };
+
+  const allAssigned = cases.length > 0 && cases.every(c => !!choices[c.id]);
+
+  const submit = () => {
+    const ok = correctAssignments.every(a => choices[a.itemId] === a.answerId);
+    const message = ok
+      ? (interaction.successMessage ?? "Etiket zinciri doğrulandı.")
+      : (interaction.failureMessage ?? "Damga sırası aynı yolculuğu anlatmıyor.");
+    setResult({ ok, message });
+    if (ok) onSolve();
+  };
+
+  const handleHint = () => {
+    if (hintRevealed) return;
+    addTimePenalty(60);
+    setHintRevealed(true);
+  };
+
+  return (
+    <View style={styles.luggageBlock}>
+      <View style={styles.luggageHeader}>
+        <MaterialIcons name="luggage" size={14} color="#D4A843" />
+        <Text style={styles.luggageHeaderText}>
+          {String(pr.title ?? "VALİZ ETİKETİ EŞLEME")}
+        </Text>
+      </View>
+      {pr.purposeHint ? (
+        <View style={styles.luggagePurposeHint}>
+          <Text style={styles.luggagePurposeLabel}>ÇÖZÜMÜN İŞLEVİ</Text>
+          <Text style={styles.luggagePurposeText}>{String(pr.purposeHint)}</Text>
+        </View>
+      ) : null}
+      {pr.subtitle ? (
+        <Text style={styles.luggageSubtitle}>{String(pr.subtitle)}</Text>
+      ) : null}
+      <View style={styles.luggageCasesGrid}>
+        {cases.map(item => {
+          const selected = choices[item.id];
+          return (
+            <View key={item.id} style={styles.luggageCaseCard}>
+              <Text style={styles.luggageCaseLabel}>{item.label}</Text>
+              <Text style={styles.luggageCaseStamp}>{item.stamp}</Text>
+              <Text style={styles.luggageCaseNote}>{item.note}</Text>
+              <View style={styles.luggageRouteList}>
+                {routes.map(route => {
+                  const isChosen = selected === route.id;
+                  return (
+                    <Pressable
+                      key={route.id}
+                      style={[styles.luggageRouteOption, isChosen && styles.luggageRouteOptionSelected]}
+                      onPress={() => setChoice(item.id, route.id)}
+                    >
+                      <View style={[styles.luggageRadio, isChosen && styles.luggageRadioSelected]}>
+                        {isChosen && <View style={styles.luggageRadioDot} />}
+                      </View>
+                      <Text style={[styles.luggageRouteLabel, isChosen && styles.luggageRouteLabelSelected]}>
+                        {route.label}
+                      </Text>
+                    </Pressable>
+                  );
+                })}
+              </View>
+            </View>
+          );
+        })}
+      </View>
+      <Pressable
+        style={[styles.luggageSubmitBtn, !allAssigned && styles.luggageSubmitBtnDisabled]}
+        onPress={submit}
+        disabled={!allAssigned}
+      >
+        <Text style={styles.luggageSubmitText}>{interaction.submitLabel ?? "Etiketleri Doğrula"}</Text>
+      </Pressable>
+      <Pressable
+        style={[styles.luggageHintBtn, hintRevealed && styles.luggageHintBtnUsed]}
+        onPress={handleHint}
+        disabled={hintRevealed}
+      >
+        <Text style={styles.luggageHintText}>
+          {hintRevealed ? "İpucu açıldı" : "İpucu iste (-60 sn)"}
+        </Text>
+      </Pressable>
+      {hintRevealed && (
+        <View style={styles.luggageHintReveal}>
+          <Text style={styles.luggageHintRevealText}>{sifre.cozumIpucu}</Text>
+        </View>
+      )}
+      {result && (
+        <View style={[styles.luggageResult, result.ok ? styles.luggageResultOk : styles.luggageResultFail]}>
+          <Text style={[styles.luggageResultText, result.ok ? styles.luggageResultTextOk : styles.luggageResultTextFail]}>
+            {result.ok ? "✓ " : "✕ "}{result.message}
+          </Text>
+        </View>
+      )}
+      {result?.ok && (
+        <View style={styles.luggageGridEffect}>
+          <Text style={styles.luggageGridEffectLabel}>IZGARA ETKİSİ</Text>
+          <Text style={styles.luggageGridEffectText}>{String(pr.resultText ?? "")}</Text>
+        </View>
+      )}
+      {result?.ok && sifre.aciklama ? (
+        <Text style={styles.luggageAciklama}>{sifre.aciklama}</Text>
+      ) : null}
+    </View>
+  );
+}
+
 function SifreliMesajBlock({
   sifre,
   isSolved,
@@ -1271,6 +1422,10 @@ function SifreliMesajBlock({
 
   if (sifre.presentation?.style === "broken_compass_calibration") {
     return <BrokenCompassCalibrationBlock sifre={sifre} isSolved={isSolved} onSolve={onSolve} />;
+  }
+
+  if (sifre.presentation?.style === "luggage_label_match") {
+    return <LuggageLabelMatchBlock sifre={sifre} isSolved={isSolved} onSolve={onSolve} />;
   }
 
   if (sifre.presentation?.style === "symbol_crossgrid") {
@@ -4851,6 +5006,221 @@ const styles = StyleSheet.create({
     lineHeight: 18,
   },
   compassAciklama: {
+    marginTop: 8,
+    fontSize: 12,
+    color: "#8b91ad",
+    fontStyle: "italic",
+    lineHeight: 17,
+  },
+
+  luggageBlock: {
+    marginTop: 10,
+    padding: 12,
+    borderWidth: 1,
+    borderColor: "#3d2b1a",
+    borderRadius: 12,
+    backgroundColor: "#0e0b07",
+  },
+  luggageHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+    marginBottom: 10,
+  },
+  luggageHeaderText: {
+    fontSize: 11,
+    fontWeight: "800",
+    letterSpacing: 1.4,
+    color: "#D4A843",
+  },
+  luggagePurposeHint: {
+    marginBottom: 10,
+    padding: 9,
+    borderLeftWidth: 2,
+    borderLeftColor: "#D4A843",
+    backgroundColor: "rgba(212,168,67,0.06)",
+    borderRadius: 6,
+  },
+  luggagePurposeLabel: {
+    fontSize: 9,
+    fontWeight: "800",
+    letterSpacing: 1.2,
+    color: "#D4A843",
+    marginBottom: 3,
+  },
+  luggagePurposeText: {
+    fontSize: 12,
+    color: "#ecd99a",
+    lineHeight: 17,
+  },
+  luggageSubtitle: {
+    fontSize: 12,
+    color: "#8b91ad",
+    marginBottom: 10,
+    lineHeight: 17,
+  },
+  luggageCasesGrid: {
+    gap: 10,
+    marginBottom: 12,
+  },
+  luggageCaseCard: {
+    padding: 10,
+    borderWidth: 1,
+    borderColor: "#3d2b1a",
+    borderRadius: 10,
+    backgroundColor: "#16100a",
+  },
+  luggageCaseLabel: {
+    fontSize: 11,
+    fontWeight: "800",
+    letterSpacing: 0.8,
+    color: "#D4A843",
+    marginBottom: 2,
+  },
+  luggageCaseStamp: {
+    fontSize: 11,
+    color: "#a8956a",
+    marginBottom: 2,
+  },
+  luggageCaseNote: {
+    fontSize: 11,
+    color: "#6b7280",
+    marginBottom: 8,
+    fontStyle: "italic",
+  },
+  luggageRouteList: {
+    gap: 6,
+  },
+  luggageRouteOption: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+    gap: 8,
+    padding: 8,
+    borderWidth: 1,
+    borderColor: "#2d2015",
+    borderRadius: 8,
+    backgroundColor: "#1a1208",
+  },
+  luggageRouteOptionSelected: {
+    borderColor: "#22c55e",
+    backgroundColor: "rgba(34,197,94,0.08)",
+  },
+  luggageRadio: {
+    width: 16,
+    height: 16,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: "#4b5563",
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 1,
+    flexShrink: 0,
+  },
+  luggageRadioSelected: {
+    borderColor: "#22c55e",
+  },
+  luggageRadioDot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: "#22c55e",
+  },
+  luggageRouteLabel: {
+    fontSize: 12,
+    color: "#9ca3af",
+    flex: 1,
+    lineHeight: 17,
+  },
+  luggageRouteLabelSelected: {
+    color: "#86efac",
+  },
+  luggageSubmitBtn: {
+    padding: 11,
+    borderRadius: 8,
+    backgroundColor: "#D4A843",
+    alignItems: "center",
+    marginBottom: 8,
+  },
+  luggageSubmitBtnDisabled: {
+    opacity: 0.4,
+  },
+  luggageSubmitText: {
+    fontSize: 13,
+    fontWeight: "700",
+    color: "#1a1205",
+  },
+  luggageHintBtn: {
+    padding: 10,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderStyle: "dashed",
+    borderColor: "#b45309",
+    alignItems: "center",
+    marginBottom: 8,
+  },
+  luggageHintBtnUsed: {
+    opacity: 0.5,
+  },
+  luggageHintText: {
+    fontSize: 13,
+    color: "#fbbf24",
+  },
+  luggageHintReveal: {
+    marginBottom: 8,
+    padding: 9,
+    borderLeftWidth: 2,
+    borderLeftColor: "#b45309",
+    backgroundColor: "rgba(180,83,9,0.08)",
+    borderRadius: 6,
+  },
+  luggageHintRevealText: {
+    fontSize: 12,
+    color: "#fbbf24",
+    lineHeight: 17,
+  },
+  luggageResult: {
+    marginTop: 8,
+    padding: 10,
+    borderRadius: 8,
+  },
+  luggageResultOk: {
+    backgroundColor: "rgba(34,197,94,0.12)",
+  },
+  luggageResultFail: {
+    backgroundColor: "rgba(220,38,38,0.12)",
+  },
+  luggageResultText: {
+    fontSize: 13,
+    lineHeight: 18,
+  },
+  luggageResultTextOk: {
+    color: "#86efac",
+  },
+  luggageResultTextFail: {
+    color: "#fca5a5",
+  },
+  luggageGridEffect: {
+    marginTop: 8,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: "#22c55e",
+    borderRadius: 8,
+    backgroundColor: "rgba(34,197,94,0.08)",
+  },
+  luggageGridEffectLabel: {
+    fontSize: 9,
+    fontWeight: "800",
+    letterSpacing: 1.2,
+    color: "#4ade80",
+    marginBottom: 4,
+  },
+  luggageGridEffectText: {
+    fontSize: 13,
+    fontWeight: "700",
+    color: "#b7f7c8",
+    lineHeight: 18,
+  },
+  luggageAciklama: {
     marginTop: 8,
     fontSize: 12,
     color: "#8b91ad",

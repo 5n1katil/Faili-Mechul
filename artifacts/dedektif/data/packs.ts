@@ -155,6 +155,8 @@ const EMOJI_TO_MATERIAL: Record<string, string> = {
   "🗡": "content-cut",
   "🗡️": "content-cut",
   "🚀": "rocket-launch",
+  "🚃": "tram",
+  "🚇": "directions-subway",
   "🚩": "flag",
   "🚗": "directions-car",
   "🚪": "door-front",
