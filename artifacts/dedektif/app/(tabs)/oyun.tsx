@@ -61,6 +61,9 @@ import Animated, {
   useAnimatedStyle,
   useSharedValue,
   withSpring,
+  withRepeat,
+  withSequence,
+  withTiming,
 } from "react-native-reanimated";
 
 const FREE_PUZZLE_COUNT = 10;
@@ -245,6 +248,66 @@ function PremiumInfoModal({
 }
 
 const INACTIVE_COLOR = "#C0C0D0";
+const PREMIUM_GOLD = "#D4A843";
+
+function PremiumTabButton({ active, onPress }: { active: boolean; onPress: () => void }) {
+  const glow = useSharedValue(0);
+  const scale = useSharedValue(1);
+
+  React.useEffect(() => {
+    glow.value = withRepeat(
+      withSequence(
+        withTiming(1, { duration: 1100 }),
+        withTiming(0, { duration: 1100 }),
+      ),
+      -1,
+      false,
+    );
+  }, []);
+
+  const glowAnim = useAnimatedStyle(() => ({
+    shadowOpacity: active ? 0.95 : 0.22 + glow.value * 0.6,
+    shadowRadius: active ? 16 : 5 + glow.value * 14,
+    borderColor: active
+      ? PREMIUM_GOLD
+      : `rgba(212,168,67,${0.3 + glow.value * 0.5})`,
+    borderBottomColor: active ? `${PREMIUM_GOLD}CC` : `rgba(212,168,67,${0.25 + glow.value * 0.55})`,
+  }));
+
+  const scaleAnim = useAnimatedStyle(() => ({ transform: [{ scale: scale.value }] }));
+
+  return (
+    <Animated.View style={[{ flex: 1 }, scaleAnim]}>
+      <Animated.View
+        style={[
+          listStyles.tabBtn3d,
+          {
+            flex: 1,
+            shadowColor: PREMIUM_GOLD,
+            shadowOffset: { width: 0, height: 3 },
+            elevation: 10,
+          },
+          active
+            ? { backgroundColor: `${PREMIUM_GOLD}1E`, borderBottomWidth: 3 }
+            : { backgroundColor: `${PREMIUM_GOLD}0C`, borderBottomWidth: 1 },
+          glowAnim,
+        ]}
+      >
+        <Pressable
+          onPressIn={() => { scale.value = withSpring(0.93, { damping: 12, stiffness: 320 }); }}
+          onPressOut={() => { scale.value = withSpring(1, { damping: 10, stiffness: 280 }); }}
+          onPress={onPress}
+          style={{ flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 6, flex: 1, paddingVertical: 11 }}
+        >
+          <MaterialIcons name="workspace-premium" size={16} color={PREMIUM_GOLD} />
+          <Text style={[listStyles.tabBtnText3d, { color: PREMIUM_GOLD, fontWeight: "700" }]}>
+            Premium
+          </Text>
+        </Pressable>
+      </Animated.View>
+    </Animated.View>
+  );
+}
 
 function TabButton3D({
   label, icon, active, count, onPress, activeColor,
@@ -305,15 +368,15 @@ function FilterPill3D({
             : { backgroundColor: colors.card, borderColor: `${colors.border}CC`, borderBottomWidth: 1 },
         ]}
       >
-        <MaterialIcons name={icon} size={12} color={isSelected ? color : INACTIVE_COLOR} />
-        <Text style={[listStyles.filterPillText3d, { color: isSelected ? color : INACTIVE_COLOR }]} numberOfLines={1}>
-          {label}
-        </Text>
+        <MaterialIcons name={icon} size={13} color={isSelected ? color : `${color}88`} />
         {count !== undefined && count > 0 && (
-          <View style={[listStyles.filterPillCount3d, { backgroundColor: isSelected ? `${color}33` : "#FFFFFF18" }]}>
-            <Text style={[listStyles.filterPillCountText3d, { color: isSelected ? color : INACTIVE_COLOR }]}>{count}</Text>
+          <View style={[listStyles.filterPillCount3d, { backgroundColor: isSelected ? `${color}33` : `${color}18` }]}>
+            <Text style={[listStyles.filterPillCountText3d, { color: isSelected ? color : `${color}BB` }]}>{count}</Text>
           </View>
         )}
+        <Text style={[listStyles.filterPillText3d, { color: isSelected ? color : INACTIVE_COLOR, textAlign: "center", flex: 1 }]}>
+          {label}
+        </Text>
       </Pressable>
     </Animated.View>
   );
@@ -886,12 +949,9 @@ export default function VakalarScreen() {
                 onPress={() => setListTab("vakalar")}
                 activeColor={colors.primary}
               />
-              <TabButton3D
-                label="Premium"
-                icon="workspace-premium"
+              <PremiumTabButton
                 active={listTab === "premium"}
                 onPress={() => setListTab("premium")}
-                activeColor="#D4A843"
               />
             </View>
           </View>
@@ -1082,12 +1142,12 @@ export default function VakalarScreen() {
                 /* ── Standart Vakalar ── */
                 <>
                   <Animated.View entering={FadeInDown.delay(0).springify()}>
-                    <View style={[listStyles.standartCard, { backgroundColor: colors.card, borderColor: `${colors.primary}30` }]}>
-                      <View style={[listStyles.standartCardAccent, { backgroundColor: colors.primary }]} />
+                    <View style={[listStyles.standartCard, { backgroundColor: colors.card, borderColor: "#C8581A44" }]}>
+                      <View style={[listStyles.standartCardAccent, { backgroundColor: "#C8581A" }]} />
                       <View style={{ flex: 1, paddingVertical: 12, paddingHorizontal: 14, gap: 6 }}>
                         <View style={listStyles.standartCardTop}>
-                          <View style={[listStyles.heroCardIcon, { backgroundColor: `${colors.primary}18`, width: 38, height: 38 }]}>
-                            <MaterialIcons name="folder-open" size={20} color={colors.primary} />
+                          <View style={[listStyles.heroCardIcon, { backgroundColor: "#C8581A18", width: 38, height: 38 }]}>
+                            <MaterialIcons name="folder-open" size={20} color="#C8581A" />
                           </View>
                           <View style={{ flex: 1 }}>
                             <Text style={[listStyles.heroCardTitle, { color: "#F0F0F8" }]}>Standart Vakalar</Text>
@@ -1095,19 +1155,10 @@ export default function VakalarScreen() {
                               Ücretsiz · erişilebilir
                             </Text>
                           </View>
-                          {!isPremium && premiumPuzzles.length > 0 && (
-                            <Pressable
-                              onPress={() => setListTab("premium")}
-                              style={[listStyles.heroCardCta, { backgroundColor: "#D4A84318", borderColor: "#D4A84444" }]}
-                            >
-                              <MaterialIcons name="workspace-premium" size={12} color="#D4A843" />
-                              <Text style={[listStyles.heroCardCtaText, { color: "#D4A843" }]}>+{premiumPuzzles.length}</Text>
-                            </Pressable>
-                          )}
                         </View>
                         <View style={listStyles.standartStatsRow}>
-                          <View style={[listStyles.standartStat, { backgroundColor: `${colors.primary}12`, borderColor: `${colors.primary}28` }]}>
-                            <Text style={[listStyles.standartStatNum, { color: colors.primary }]}>{freePuzzles.length}</Text>
+                          <View style={[listStyles.standartStat, { backgroundColor: "#C8581A14", borderColor: "#C8581A30" }]}>
+                            <Text style={[listStyles.standartStatNum, { color: "#E87A3A" }]}>{freePuzzles.length}</Text>
                             <Text style={[listStyles.standartStatLabel, { color: INACTIVE_COLOR }]}>Toplam</Text>
                           </View>
                           <View style={[listStyles.standartStat, { backgroundColor: "#FFFFFF08", borderColor: "#FFFFFF18" }]}>
@@ -1654,14 +1705,15 @@ const listStyles = StyleSheet.create({
   },
   filterPill3d: {
     flex: 1,
-    flexDirection: "row",
+    flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
     paddingVertical: 10,
-    paddingHorizontal: 6,
+    paddingHorizontal: 8,
     borderRadius: 11,
     borderWidth: 1.5,
     gap: 4,
+    minHeight: 64,
   },
   filterPillText3d: {
     fontSize: 12,
