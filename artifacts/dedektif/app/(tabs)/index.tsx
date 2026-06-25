@@ -427,12 +427,12 @@ export default function HomeScreen() {
               resizeMode="contain"
             />
             <View>
-              <Text style={[styles.greetingSmall, { color: colors.mutedForeground }]}>
+              <Text style={[styles.greetingSmall, { color: "#FFFFFF" }]}>
                 Merhaba, {profile.name}
               </Text>
               <Text style={[styles.appTitle, { color: colors.primary }]}>FAİLİ MEÇHUL</Text>
               <View style={[styles.titleUnderline, { backgroundColor: colors.primary }]} />
-              <Text style={[styles.appSubtitle, { color: colors.mutedForeground }]}>
+              <Text style={[styles.appSubtitle, { color: "rgba(255,255,255,0.75)" }]}>
                 Dedektif Bulmaca Oyunu
               </Text>
             </View>
@@ -899,7 +899,7 @@ const styles = StyleSheet.create({
   headerBrand: { flexDirection: "row", alignItems: "center", gap: 10 },
   headerLogo: { width: 52, height: 52, borderRadius: 26 },
   greetingSmall: { fontSize: 13, fontFamily: "DMSans_500Medium", marginBottom: 2 },
-  appTitle: { fontSize: 27, fontFamily: "PlayfairDisplay", fontWeight: "800", letterSpacing: 1 },
+  appTitle: { fontSize: 23, fontFamily: "PlayfairDisplay", fontWeight: "400", letterSpacing: 0.5 },
   titleUnderline: { height: 2, width: 40, borderRadius: 1, marginTop: 3, marginBottom: 3 },
   appSubtitle: { fontSize: 12, fontFamily: "DMSans_400Regular" },
   headerRight: { flexDirection: "row", alignItems: "center", gap: 8 },
