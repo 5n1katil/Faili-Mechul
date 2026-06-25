@@ -291,30 +291,23 @@ function MissionCard({
               />
             </View>
           ) : inProgress ? (
-            <View style={styles.playChipRow}>
-              <View
-                style={[
-                  styles.playChip,
-                  {
-                    borderColor: `${tierColor}88`,
-                    backgroundColor: `${tierColor}20`,
-                  },
-                ]}
-              >
-                <MaterialIcons
-                  name="play-circle-filled"
-                  size={16}
-                  color={tierColor}
-                />
-                <Text style={[styles.playChipText, { color: tierColor }]}>
-                  Oyna
-                </Text>
-                <MaterialIcons
-                  name="chevron-right"
-                  size={16}
-                  color={`${tierColor}99`}
-                />
-              </View>
+            <View
+              style={[
+                styles.playChipRow,
+                {
+                  borderTopColor: `${tierColor}44`,
+                  backgroundColor: `${tierColor}0A`,
+                },
+              ]}
+            >
+              <Text style={[styles.playChipText, { color: tierColor }]}>
+                Oynamak için dokun
+              </Text>
+              <MaterialIcons
+                name="chevron-right"
+                size={20}
+                color={tierColor}
+              />
             </View>
           ) : null}
         </View>
@@ -958,7 +951,15 @@ const styles = StyleSheet.create({
     fontStyle: "italic",
   },
   playChipRow: {
-    marginTop: 2,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    borderTopWidth: 1,
+    marginTop: 4,
+    marginHorizontal: -12,
+    paddingHorizontal: 12,
+    paddingTop: 10,
+    paddingBottom: 12,
   },
   playChip: {
     flexDirection: "row",
@@ -971,12 +972,8 @@ const styles = StyleSheet.create({
     borderWidth: 1.5,
   },
   playChipText: {
-    fontSize: 14,
-    fontFamily: "PlayfairDisplay",
+    fontSize: 13,
     fontWeight: "600",
-    letterSpacing: 0.3,
-    flex: 1,
-    textAlign: "center",
   },
   completedBanner: {
     flexDirection: "row",
