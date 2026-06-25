@@ -309,7 +309,7 @@ function PremiumTabButton({ active, onPress }: { active: boolean; onPress: () =>
           onPressIn={() => { scale.value = withSpring(0.93, { damping: 12, stiffness: 320 }); }}
           onPressOut={() => { scale.value = withSpring(1, { damping: 10, stiffness: 280 }); }}
           onPress={onPress}
-          style={{ flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 7, flex: 1, paddingVertical: 13 }}
+          style={{ flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 7, flex: 1, paddingVertical: 9 }}
         >
           <MaterialIcons name="workspace-premium" size={19} color={PREMIUM_GOLD} />
           <Text style={[listStyles.tabBtnText3d, { color: PREMIUM_GOLD, fontWeight: "700", fontSize: 15, letterSpacing: 0.3 }]}>
@@ -1793,7 +1793,7 @@ const listStyles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    paddingVertical: 13,
+    paddingVertical: 9,
     paddingHorizontal: 12,
     borderRadius: 12,
     borderWidth: 1.5,
@@ -2060,8 +2060,8 @@ const listStyles = StyleSheet.create({
   premIconTabRow: {
     flexDirection: "row",
     paddingHorizontal: 16,
-    paddingTop: 12,
-    paddingBottom: 12,
+    paddingTop: 8,
+    paddingBottom: 8,
     gap: 10,
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
@@ -2069,7 +2069,7 @@ const listStyles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    paddingVertical: 12,
+    paddingVertical: 8,
     paddingHorizontal: 10,
     borderRadius: 14,
     borderWidth: 1.5,
