@@ -69,11 +69,32 @@ export interface ClueSifreThermalCard {
   note: string;
 }
 
+export interface ClueSifrejGridInteraction {
+  mode?: string;
+  inputLabel?: string;
+  submitLabel?: string;
+  successMessage?: string;
+  failureMessage?: string;
+}
+
 export interface ClueSifrePresentation {
-  mode: string;
+  mode?: string;
+  style?: string;
   answerFormat?: string;
   orderRule?: string;
   cards?: ClueSifreThermalCard[];
+  rowSymbols?: string[];
+  columnSymbols?: string[];
+  cells?: string[][];
+  cipherSymbols?: string[];
+  cipherDisplay?: string;
+  answerAliases?: string[];
+  interaction?: ClueSifrejGridInteraction;
+  purposeHint?: string;
+  title?: string;
+  subtitle?: string;
+  mobile?: { minCellPx?: number };
+  [key: string]: unknown;
 }
 
 export interface ClueSifre {

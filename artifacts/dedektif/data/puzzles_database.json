@@ -3135,165 +3135,353 @@
       "puzzles": [
         {
           "puzzleId": "rc_001",
-          "title": "Opera Sahnesindeki Gölge",
-          "subtitle": "Viyana Operası İlhamlı — Kurgusal",
-          "difficulty": 1,
-          "difficultyLabel": "Çaylak",
           "stars": "★☆☆☆☆",
           "gridSize": "3x3",
           "timeLimit": 600,
-          "story": "1920'lerde bir Avrupa opera evinde baş soprano gece prömiyerinden sonra soyunma odasında ölü bulundu. Müzik dünyası şoke oldu.",
-          "atmosphere": "Kadife perdeler. Alkış yankıları. Çiçek kokusu ve sahnelerin arka sırası.",
+          "legalNote": "Tüm karakterler, mekânlar, belgeler ve cinayet kurgusaldır. Vaka yalnız tarihî faili meçhul dosyaların anlatı yapısından ve atmosferinden esinlenir; gerçek kişiler veya mağdurlar temsil edilmez.",
+          "title": "Siyah Dairenin Mektubu",
+          "subtitle": "1969 Kıyı Gazetesi Dosyası · Şifreli Mektup Vakası · Kurgusal",
+          "difficulty": 1,
+          "difficultyLevel": 1,
+          "specialMechanic": "sifreli_mesaj",
+          "story": "1969 yazının son gecesinde, San Rivo Kıyı Gazetesi'nin ön sayfasına yine imzasız bir zarf bırakıldı. Mektubun altında, çevresine dört küçük çentik atılmış siyah bir daire vardı; şehir bu işareti artık korkuyla tanıyordu. Ancak bu kez zarfın iç kapağına, matbaa provasını andıran kare bir eşleme tahtası çizilmiş; kenarına da aynı sembollerden oluşan kısa bir dizi iliştirilmişti. Editör Cemil Vardar, mektubu yayımlamaya değil çözmeye karar verdi. Sabah 06.14'te bodrum atölyesinde hareketsiz bulundu.",
+          "atmosphere": "Kurşun harfler soğuduktan sonra bile matbaanın duvarları tıkırdar. Dışarıda okyanus sisi gaz lambalarını yutar; içeride mürekkep, mum ve ıslak tahta kokusu birbirine karışır. Eşleme tahtasının soluk cetvel çizgileri, sanki her yeni baskıyla biraz daha belirginleşir.",
           "suspects": [
             {
               "id": "s1",
-              "name": "Kıskanç Rakip Soprano Helga",
-              "icon": "🎤",
-              "description": "20 yıldır ana rolü oynamak istiyordu.",
-              "detail": "48 yaşında, dramatik, sahnede büyüleyici.",
-              "parmakIziDeseni": "fp_double_loop"
+              "name": "Leyla Aras",
+              "icon": "📰",
+              "description": "Kıyı Gazetesi'nin cinayet sütununu yazan, editörle açıkça tartışmış hırslı muhabir.",
+              "detail": "Kayıp mektupları ilk kez yayımlamak isteyen kişidir; sahne arkasında değil, arşiv masasında kahve lekeli notlarla çalışır."
             },
             {
               "id": "s2",
-              "name": "Opera Direktörü Franz",
-              "icon": "👨‍💼",
-              "description": "Sopranonun sözleşmesini yenilemeyeceğini açıklayacaktı.",
-              "detail": "60 yaşında, soğuk iş insanı.",
-              "parmakIziDeseni": "fp_central_pocket"
+              "name": "Kurye Cem Akın",
+              "icon": "📬",
+              "description": "Gazeteye şifreli zarfı teslim eden, sakin ve yardımsever görünümüyle herkesin güvenini kazanan genç kurye.",
+              "detail": "Dağıtım çantasını hep sağ omzunda taşır; boş teslim fişlerini asla çöpe atmaz, pres odasına girdiğinde sol eldivenini çıkarır."
             },
             {
               "id": "s3",
-              "name": "Gizemli Hayran Karl",
-              "icon": "👷",
-              "description": "Her gecenin ardından gülden buket gönderen anonim hayran.",
-              "detail": "35 yaşında, obsesif, zararsız gibi görünüyor ama...",
-              "parmakIziDeseni": "fp_lateral_pocket"
+              "name": "Dizgici Orhan Bilir",
+              "icon": "🖋️",
+              "description": "Kurşun harfleri ve gecenin son baskısını yöneten, editörün manşet değişikliklerinden yorulmuş kıdemli dizgici.",
+              "detail": "Baskı kayışının gerginliğini kendi elleriyle ayarlar; sağ başparmağında yıllardır taşıdığı yarım ay biçimli mürekkep lekesi vardır."
             }
           ],
           "weapons": [
             {
               "id": "w1",
-              "name": "Zehirli Çiçek Buketi",
-              "icon": "💐",
-              "description": "Çiçeklerin yapraklarına zehir sürülmüş."
+              "name": "Kurşun Harf Kalıbı",
+              "icon": "📋",
+              "description": "Eski matbaa presinden sökülen, ağır ve köşeli kurşun karakter bloğu.",
+              "detail": "Temasta koyu mürekkep ve ezilme izi bırakır."
             },
             {
               "id": "w2",
-              "name": "Boğazlama",
-              "icon": "🪢",
-              "description": "Sahne halatı."
+              "name": "Mikro Mühür Düzeneği",
+              "icon": "✉️",
+              "description": "Mumla kapatılmış zarfın içinden açılırken deri altına küçük bir metal uç bırakan düzenek.",
+              "detail": "Kırmızı mum kalıntısı ve çok küçük dairesel bir delik bırakır."
             },
             {
               "id": "w3",
-              "name": "Arsenik Şarap",
-              "icon": "🍷",
-              "description": "Kutlama şarabına katılan arsenik."
+              "name": "Baskı Presi Kayışı",
+              "icon": "🪢",
+              "description": "Ağır baskı silindirini çeviren, sert lifli deri kayış.",
+              "detail": "Lif kopması ve bilekte sürtünme bırakır."
             }
           ],
           "locations": [
             {
               "id": "l1",
-              "name": "Soyunma Odası",
-              "icon": "🪞",
-              "description": "Sopranonun özel soyunma odası."
+              "name": "Gazete Arşivi",
+              "icon": "🗄️",
+              "description": "Eski sayılarla dolu, editörün kapalı dosyaları sakladığı tozlu alt arşiv.",
+              "detail": "Raflarda basınçlı pres yağı ya da taze mum kullanılmaz."
             },
             {
               "id": "l2",
-              "name": "Sahne Arkası",
-              "icon": "🎬",
-              "description": "Sahne gerisindeki kapalı alan."
+              "name": "Baskı Atölyesi",
+              "icon": "🏭",
+              "description": "Kurşun harflerin dizildiği ve gece sayısının basıldığı gürültülü bodrum atölyesi.",
+              "detail": "Son baskıdan sonra zemin mum damlaları ve kurşun harf tozuyla kaplanır."
             },
             {
               "id": "l3",
-              "name": "VIP Loca",
-              "icon": "🎭",
-              "description": "Üst kattaki özel seyirci locası."
+              "name": "Posta Deposu",
+              "icon": "📦",
+              "description": "Teslim torbalarının tartıldığı, mühürlü zarfların ayrıldığı arka depo.",
+              "detail": "Dış teslim fişleri burada numaralanır; her girişte tahta zeminde ıslak taban izi kalır."
             }
           ],
           "clues": [
             {
               "id": "c1",
-              "type": "kanit",
+              "title": "Editörün Parmak Ucu",
+              "type": "adli",
+              "mechanicType": "text",
+              "text": "Editörün ölümüne yol açan yarada, mumla kapatılmış zarf açılırken oluşmuş kadar küçük ve düzenli bir metal delik saptandı. Arşiv raflarının çevresinde aynı kırmızı mumdan tek parça bulunmadı.",
+              "deductionHint": "Ölümcül yarayı açan düzenli küçük delik hangi aracı tarif eder; kırmızı mumun olmadığı bölüm bu aracı nereden dışlar?",
+              "isBonus": false,
               "revealOrder": 1,
               "isRevealed": true,
-              "pointCost": 0,
-              "title": "Otopsi Sonucu",
-              "text": "Sistemik zehirlenme. Cilt teması yoluyla — ellerinde zehir izi. Son temas ettiği nesne: çiçek buketi.",
-              "mechanicType": "text"
+              "pointCost": 0
             },
             {
               "id": "c2",
-              "type": "parmak_izi",
+              "title": "Pres Yağı Testi",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Alt arşivdeki kitap ciltlerinin arasında yalnız eski toz vardı; ağır deri lifine ya da yeni pres yağına rastlanmadı. Editörün ceketinde ise hiçbir ezilme lekesi görülmedi.",
+              "deductionHint": "Ağır, lifli bir aracın bu bölümde kullanılmadığını gösteren iki fiziksel bulgu hangisidir?",
+              "isBonus": false,
               "revealOrder": 2,
               "isRevealed": false,
-              "pointCost": 50,
-              "title": "Buket Ambalajı",
-              "text": "Çiçek ambalaj kağıdında iz.",
-              "mechanicType": "parmak_izi",
-              "parmakIziVerisi": {
-                "aciklama": "Üç şüphelinin izini ambalaj iziyle eşleştir.",
-                "izler": [
-                  {
-                    "izId": "iz1",
-                    "konum": "Ambalaj kağıdı",
-                    "eslesme": "s3",
-                    "ipucu": "Küçük, titrek iz — heyecanlı ya da gergin biri."
-                  }
-                ],
-                "sonuc": "Buketi hazırlayan: Karl. (s3)",
-                "sahneGorseli": "fp_lateral_pocket"
-              }
+              "pointCost": 50
             },
             {
               "id": "c3",
-              "type": "tanik",
+              "title": "Siyah Dairenin Eşleme Tahtası",
+              "type": "sifreli",
+              "mechanicType": "sifreli_mesaj",
+              "text": "Zarfın iç kapağında, siyah dairenin altına dokuz satır ve dokuz sütundan oluşan kare bir cetvel çizilmişti. Sol ve üst kenardaki işaretler aynı kümeye aitti; sıraları farklıydı. Hücrelerin tamamı tek tek harflerle doldurulmuştu.",
+              "deductionHint": "Her sembolde aynı işaretin satırı ile sütunu kesiştiğinde hangi karakter beliriyor?",
+              "isBonus": false,
               "revealOrder": 3,
               "isRevealed": false,
               "pointCost": 50,
-              "title": "Soyunma Odası Hizmetçisi İfadesi",
-              "text": "\"Karl her gece buket getirirdi. Bu gece erken geldi — sopranoanın odasına kendisi bıraktı, normalde biz alırdık.\"",
-              "mechanicType": "text"
+              "sifre": {
+                "sifrelenmis": "ŞİFRE\n◐ ◓ ◒ ◉ ⊚  /  ◆ ◉ △ ◈ ⟡",
+                "sifreleTuru": "sembol_izgara_eslestirme",
+                "cozumIpucu": "Tahtadaki 81 hücrenin hepsinde harf vardır; rastgele görünen harfleri doğrudan okumayın. Bir sembolün gerçek harfini bulmak için, o sembolün soldaki satırını ve üstteki aynı sembolün sütununu eşleştirin.",
+                "cozulmus": "ORHAN / KAYIŞ",
+                "aciklama": "Şifre çözüldüğünde, çıkarım ızgarasında bir şüpheli–araç bağlantısı kesinleşir; siyah dairenin ardındaki rota böylece görünür hâle gelir.",
+                "answerAliases": [
+                  "ORHAN / KAYIŞ",
+                  "ORHAN/KAYIŞ",
+                  "ORHAN KAYIŞ",
+                  "ORHAN / KAYIS",
+                  "ORHAN/KAYIS",
+                  "ORHAN KAYIS",
+                  "ORHAN KAYISI"
+                ],
+                "presentation": {
+                  "style": "symbol_crossgrid",
+                  "title": "EŞLEME TAHTASI",
+                  "subtitle": "Matbaa prova cetveli · Satır ve sütunda aynı sembolü eşleştir.",
+                  "rowSymbols": [
+                    "⟡",
+                    "◉",
+                    "◒",
+                    "◆",
+                    "⊚",
+                    "◈",
+                    "◓",
+                    "△",
+                    "◐"
+                  ],
+                  "columnSymbols": [
+                    "◐",
+                    "△",
+                    "◓",
+                    "◈",
+                    "◆",
+                    "◉",
+                    "⟡",
+                    "⊚",
+                    "◒"
+                  ],
+                  "cells": [
+                    [
+                      "R",
+                      "K",
+                      "A",
+                      "N",
+                      "I",
+                      "O",
+                      "Ş",
+                      "Y",
+                      "H"
+                    ],
+                    [
+                      "H",
+                      "Ş",
+                      "N",
+                      "R",
+                      "O",
+                      "A",
+                      "I",
+                      "K",
+                      "Y"
+                    ],
+                    [
+                      "Y",
+                      "O",
+                      "Ş",
+                      "A",
+                      "R",
+                      "K",
+                      "N",
+                      "I",
+                      "H"
+                    ],
+                    [
+                      "A",
+                      "I",
+                      "O",
+                      "Ş",
+                      "K",
+                      "Y",
+                      "H",
+                      "R",
+                      "N"
+                    ],
+                    [
+                      "K",
+                      "H",
+                      "Y",
+                      "O",
+                      "Ş",
+                      "R",
+                      "A",
+                      "N",
+                      "I"
+                    ],
+                    [
+                      "N",
+                      "A",
+                      "K",
+                      "I",
+                      "Y",
+                      "O",
+                      "R",
+                      "H",
+                      "Ş"
+                    ],
+                    [
+                      "Ş",
+                      "Y",
+                      "R",
+                      "H",
+                      "A",
+                      "N",
+                      "K",
+                      "I",
+                      "O"
+                    ],
+                    [
+                      "I",
+                      "Y",
+                      "N",
+                      "K",
+                      "O",
+                      "Ş",
+                      "H",
+                      "A",
+                      "R"
+                    ],
+                    [
+                      "O",
+                      "R",
+                      "H",
+                      "A",
+                      "N",
+                      "K",
+                      "Y",
+                      "I",
+                      "Ş"
+                    ]
+                  ],
+                  "cipherSymbols": [
+                    "◐",
+                    "◓",
+                    "◒",
+                    "◉",
+                    "⊚",
+                    "/",
+                    "◆",
+                    "◉",
+                    "△",
+                    "◈",
+                    "⟡"
+                  ],
+                  "cipherDisplay": "◐ ◓ ◒ ◉ ⊚  /  ◆ ◉ △ ◈ ⟡",
+                  "answerAliases": [
+                    "ORHAN / KAYIŞ",
+                    "ORHAN/KAYIŞ",
+                    "ORHAN KAYIŞ",
+                    "ORHAN / KAYIS",
+                    "ORHAN/KAYIS",
+                    "ORHAN KAYIS",
+                    "ORHAN KAYISI"
+                  ],
+                  "interaction": {
+                    "inputLabel": "Çözülmüş metni yaz...",
+                    "submitLabel": "Şifreyi Çöz",
+                    "successMessage": "Tahtadaki satırlar birbirine oturdu: ORHAN / KAYIŞ.",
+                    "failureMessage": "Henüz değil. Tahtadaki bütün harfler dolgu dizgidir; her sembol için yalnız aynı sembolün satır ve sütun kesişimini oku."
+                  },
+                  "purposeHint": "Şifreyi çözdüğünde, çıkarım ızgarasındaki bir şüpheli–araç bağlantısı kesinleşecek."
+                }
+              }
             },
             {
               "id": "c4",
-              "type": "eleme",
+              "title": "Kahve Lekeli Prova",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Arşiv masasından alınan kahve lekeli prova kâğıdında, ağır dizgi bloğunun bıraktığı düzenli basınç izi görüldü. Aynı açık kahve mürekkebi çalışma notlarında da vardı.",
+              "deductionHint": "Kahve lekeli prova ve düzenli basınç izi, hangi arşiv çalışanını ağır metal kalıpla bağlar?",
+              "isBonus": false,
               "revealOrder": 4,
               "isRevealed": false,
-              "pointCost": 50,
-              "title": "Franz ve Helga Alibisi",
-              "text": "Franz ve Helga prömiyer sonrası basın toplantısındaydı — 200 kişi ve kamera kayıtları doğruluyor. Soyunma odasına giremezlerdi.",
-              "mechanicType": "text"
+              "pointCost": 50
             },
             {
               "id": "c5",
-              "type": "dogrudan",
+              "title": "Soyut Harf Tozu",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Çalışma kapısında metal dizgi tozu vardı; fakat soyunma şeklinde kopmuş koyu liflere rastlanmadı. Kapı eşiğinde yalnız kırmızı mum parçaları bulundu.",
+              "deductionHint": "Koyu deri liflerinin bulunmaması, ağır kayışın hangi çalışma alanında kullanılmadığını gösterir?",
+              "isBonus": false,
               "revealOrder": 5,
               "isRevealed": false,
-              "pointCost": 50,
-              "title": "Karl'ın Günlüğü",
-              "text": "'Artık benim olmalıydı. Sahneyi terk edip benimle olsaydı yaşardı. Ama sözleşme yenilendi, gitmeyecek. Ben olmadan bir daha sahneye çıkamaz.'",
-              "mechanicType": "gorsel_ipucu",
-              "gorselAciklama": "Küçük deri kapaklı günlük. El yazısı obsesif ve düzensiz. Bazı kelimeler defalarca tekrar edilmiş."
+              "pointCost": 50
             },
             {
               "id": "c6",
-              "type": "ses_kaydi",
+              "title": "Arşivdeki Kurşun Tozu",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Arşiv raflarının altındaki iş çizelgesinde, dizgi vardiyasına ait yarım ay mühür ve kurşun harf tozu bulunan bir giriş kartı bulundu.",
+              "deductionHint": "Yarım ay mühürlü giriş kartı, hangi çalışma alışkanlığını hangi arşiv bölümüne bağlar?",
+              "isBonus": true,
               "revealOrder": 6,
               "isRevealed": false,
-              "pointCost": 50,
-              "title": "Operatör Kaydı",
-              "text": "[Telefon kaydı] Karl aradı: 'Bu gece özel bir şey hazırladım. Beni hatırlayacak.' — Kime aradığı bilinmiyor.",
-              "mechanicType": "ses_kaydi",
-              "sesMetni": "Ses sakin ama altında gerginlik var. 'Hatırlayacak' kelimesinde duraksadı."
+              "pointCost": 40
+            },
+            {
+              "id": "c7",
+              "title": "Son Teslim Rotası",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Gece bekçisi, şehir dışı muhabir notlarının teslim torbalarının tartıldığı arka depoda bulunduğunu; sıralama masasının altında aynı açık kahve lekesinden iz kaldığını yazdı.",
+              "deductionHint": "Teslim torbaları arasındaki çalışma notları ve aynı kahve lekesi, hangi muhabiri arka dağıtım hattına yerleştirir?",
+              "isBonus": true,
+              "revealOrder": 7,
+              "isRevealed": false,
+              "pointCost": 40
             }
           ],
+          "assetManifest": [],
           "solution": {
-            "suspectId": "s3",
-            "weaponId": "w1",
-            "locationId": "l1"
+            "suspectId": "s2",
+            "weaponId": "w2",
+            "locationId": "l2"
           },
-          "solutionNarrative": "Hayran Karl, sopranının bir daha sahneyi bırakmayacağını anlayınca çiçeklere zehir sürdü. Soyunma odasına bıraktı. Soprano çiçeklere dokunduğunda zehir cilt temasıyla geçti.",
-          "specialMechanic": "parmak_izi_mini_oyun"
+          "solutionNarrative": "Kurye Cem Akın, editörü baskı atölyesine çağırdı ve kırmızı mumla kapatılmış zarfın içindeki mikro mühür düzeneğini burada devreye soktu. Cemil zarfı açarken aldığı küçük ama ölümcül yara, taşıyıcının etkisini doğrudan kanına geçirdi. Teslim fişi, mum kalıntısı ve atölye rotası gösteriş için çizilen siyah daireyi değil, gerçek failin izini kapattı."
         },
         {
           "puzzleId": "rc_002",

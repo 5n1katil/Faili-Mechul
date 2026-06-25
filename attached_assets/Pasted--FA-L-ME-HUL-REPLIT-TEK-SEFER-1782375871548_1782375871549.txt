@@ -1,0 +1,623 @@
+/* ============================================================
+ *  FAİLİ MEÇHUL — REPLIT TEK SEFERLİK ENTEGRASYON PAKETİ
+ *  Bu metni Replit Agent sohbetine TEK PARÇA olarak yapıştır.
+ *  Görev: sadece JSON kaydetme. Vaka verisini mevcut kaynakta
+ *  yükle, aşağıdaki eksik renderer altyapısını ekle ve çalıştır.
+ * ------------------------------------------------------------
+ *  Vaka: Siyah Dairenin Mektubu · puzzleId=rc_001
+ *  1) Önce mevcut vaka veri kaydını ve mini-oyun dispatcherını bul.
+ *  2) Var olan rendererları bozma; yalnız eksik olan dalı ekle.
+ *  3) Aşağıdaki vaka JSON’unu uygulamanın KANONİK case kaynağına ekle.
+ *  4) Kod değişikliklerinden sonra aşağıdaki kabul testlerini tarayıcıda yap.
+ *  5) Sadece açıklama yazma: dosyaları gerçekten güncelle ve test sonucunu bildir.
+ * ============================================================ */
+
+===== DOSYA OLUŞTUR / EKSİKSE EKLE: src/components/caseMechanics/SymbolCrossgridMiniGame.jsx =====
+// src/components/caseMechanics/SymbolCrossgridMiniGame.jsx
+import { useMemo, useState } from "react";
+
+const normalizeAnswer = (value) =>
+  String(value ?? "")
+    .toLocaleLowerCase("tr-TR")
+    .replace(/[^\p{L}\p{N}]/gu, "")
+    .trim();
+
+export default function SymbolCrossgridMiniGame({ clue, onSolved, onRequestHint }) {
+  const [answer, setAnswer] = useState("");
+  const [result, setResult] = useState(null);
+  const [hintOpen, setHintOpen] = useState(false);
+  const [hintUsed, setHintUsed] = useState(false);
+
+  const sifre = clue?.sifre ?? {};
+  const presentation = sifre.presentation ?? {};
+  const rows = Array.isArray(presentation.rowSymbols) ? presentation.rowSymbols : [];
+  const columns = Array.isArray(presentation.columnSymbols) ? presentation.columnSymbols : [];
+  const cells = Array.isArray(presentation.cells) ? presentation.cells : [];
+  const validBoard =
+    rows.length > 0 &&
+    rows.length === columns.length &&
+    cells.length === rows.length &&
+    cells.every((row) => Array.isArray(row) && row.length === columns.length);
+
+  const acceptedAnswers = useMemo(() => {
+    const aliases = [
+      sifre.cozulmus,
+      ...(Array.isArray(sifre.answerAliases) ? sifre.answerAliases : []),
+      ...(Array.isArray(presentation.answerAliases) ? presentation.answerAliases : []),
+    ];
+    return aliases.map(normalizeAnswer).filter(Boolean);
+  }, [sifre, presentation]);
+
+  const interaction = presentation.interaction ?? {};
+  const purposeHint = presentation.purposeHint ?? presentation.objectiveHint ?? "";
+  const hintPenaltySeconds = Number(sifre.hintPenaltySeconds ?? 60);
+  const minCell = Math.max(36, Number(presentation.mobile?.minCellPx ?? 42));
+
+  const submit = () => {
+    const correct = acceptedAnswers.includes(normalizeAnswer(answer));
+    if (correct) {
+      setResult({ ok: true, message: interaction.successMessage ?? "Şifre çözüldü." });
+      onSolved?.({ clueId: clue.id, mechanic: "symbol_crossgrid", answer: answer.trim() });
+      return;
+    }
+    setResult({ ok: false, message: interaction.failureMessage ?? "Henüz değil. Aynı sembolün satırı ile sütununu eşleştir." });
+  };
+
+  const openHint = () => {
+    if (!hintUsed) {
+      onRequestHint?.({ clueId: clue.id, penaltySeconds: hintPenaltySeconds });
+      setHintUsed(true);
+    }
+    setHintOpen(true);
+  };
+
+  if (!validBoard) {
+    return <div role="alert">Bu vaka için sembol eşleme tahtası eksik veya kare değil.</div>;
+  }
+
+  const shell = { background: "#10131f", border: "1px solid #262c44", borderRadius: 12, padding: 14, color: "#e8eaf2" };
+  const cell = { width: minCell, minWidth: minCell, height: minCell, border: "1px solid #262c44", textAlign: "center", fontWeight: 700 };
+  const header = { ...cell, position: "sticky", top: 0, zIndex: 2, background: "#1c2138", color: "#e0b54e" };
+  const rowHeader = { ...cell, position: "sticky", left: 0, zIndex: 1, background: "#171c2e", color: "#f0a830" };
+  const corner = { ...header, left: 0, zIndex: 3, background: "#14192a" };
+
+  return (
+    <section style={shell} aria-label={presentation.accessibility?.description ?? "Sembol eşleme tahtası"}>
+      <h4 style={{ margin: "0 0 6px", color: "#f0a830" }}>{presentation.title ?? "Eşleme Tahtası"}</h4>
+      <p style={{ margin: "0 0 10px", color: "#8b91ad", fontSize: 13 }}>{presentation.subtitle ?? "Satır ve sütunda aynı sembolü eşleştir."}</p>
+      {purposeHint ? <p style={{ margin: "0 0 12px", padding: 10, borderLeft: "2px solid #e0b54e", background: "rgba(224,181,78,.06)", color: "#ecd99a", fontSize: 13 }}><b>ÇÖZÜMÜN İŞLEVİ</b><br />{purposeHint}</p> : null}
+      <div style={{ overflowX: "auto", border: "1px solid #262c44", borderRadius: 10, padding: 8 }}>
+        <table style={{ borderCollapse: "separate", borderSpacing: 0, margin: "0 auto" }}>
+          <thead>
+            <tr>
+              <th style={corner}>↘</th>
+              {columns.map((symbol) => <th key={symbol} scope="col" style={header}>{symbol}</th>)}
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((symbol, rowIndex) => (
+              <tr key={symbol}>
+                <th scope="row" style={rowHeader}>{symbol}</th>
+                {columns.map((columnSymbol, columnIndex) => (
+                  <td key={columnSymbol} style={{ ...cell, background: "#161a2b", color: "#dbe2f7" }}>{cells[rowIndex][columnIndex]}</td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <div style={{ marginTop: 12, padding: 10, borderRadius: 8, background: "#161a2b", color: "#e0b54e", letterSpacing: 2, textAlign: "center" }}>{presentation.cipherDisplay ?? (presentation.cipherSymbols ?? []).join(" ")}</div>
+      <button type="button" onClick={openHint} disabled={hintUsed} style={{ width: "100%", marginTop: 10, padding: 10, borderRadius: 8, border: "1px dashed #b45309", background: "transparent", color: "#fbbf24" }}>{hintUsed ? "İpucu açıldı" : "İpucu iste (-" + hintPenaltySeconds + " sn)"}</button>
+      {hintOpen ? <p style={{ margin: "8px 0 0", padding: 9, borderLeft: "2px solid #b45309", background: "rgba(180,83,9,.08)", color: "#fbbf24", fontSize: 13 }}>{sifre.cozumIpucu}</p> : null}
+      <input value={answer} onChange={(event) => setAnswer(event.target.value)} onKeyDown={(event) => event.key === "Enter" && submit()} aria-label={interaction.inputLabel ?? "Çözülmüş metni yaz"} placeholder={interaction.inputLabel ?? "Çözülmüş metni yaz..."} style={{ width: "100%", boxSizing: "border-box", marginTop: 10, padding: 11, borderRadius: 8, border: "1px solid #262c44", background: "#161a2b", color: "#e8eaf2", textAlign: "center" }} />
+      <button type="button" onClick={submit} style={{ width: "100%", marginTop: 10, padding: 11, border: 0, borderRadius: 8, background: "#e0b54e", color: "#1a1205", fontWeight: 700 }}>{interaction.submitLabel ?? "Şifreyi Çöz"}</button>
+      {result ? <p role="status" style={{ margin: "10px 0 0", padding: 10, borderRadius: 8, background: result.ok ? "rgba(34,197,94,.12)" : "rgba(220,38,38,.12)", color: result.ok ? "#86efac" : "#fca5a5" }}>{result.ok ? "✓ " : "✕ "}{result.message}</p> : null}
+      {result?.ok && sifre.aciklama ? <p style={{ margin: "10px 0 0", color: "#8b91ad", fontStyle: "italic" }}>{sifre.aciklama}</p> : null}
+    </section>
+  );
+}
+===== DOSYA SONU =====
+
+===== MEVCUT MİNİ-OYUN DISPATCHERINA EKLENECEK DAL =====
+// Mevcut mini-oyun / clue renderer'ında, genel şifre fallback'inden ÖNCE ekle.
+import SymbolCrossgridMiniGame from "./caseMechanics/SymbolCrossgridMiniGame";
+
+// ... mevcut renderMiniGame({ clue, markMiniGameSolved, requestHint }) fonksiyonunda:
+const presentationStyle = String(clue?.sifre?.presentation?.style ?? "").toLowerCase();
+if (clue?.mechanicType === "sifreli_mesaj" && presentationStyle === "symbol_crossgrid") {
+  return (
+    <SymbolCrossgridMiniGame
+      clue={clue}
+      onSolved={({ clueId }) => markMiniGameSolved?.(clueId)}
+      onRequestHint={({ clueId, penaltySeconds }) => requestHint?.({ clueId, penaltySeconds })}
+    />
+  );
+}
+// Buradan sonra mevcut klasik şifre renderer'ı aynen çalışmaya devam etmeli.
+===== YAMA SONU =====
+
+===== ZORUNLU KABUL TESTLERİ =====
+1. rc_001 vakasında İpucu c3 açıldığında 9×9 sembol tahtası görünür.
+2. Tablodaki tüm hücreler görünür harftir; çözüm hücreleri ilk yüklemede farklı renkte/parlak değildir.
+3. Satır ve sütun başlıkları aynı sembol kümesini farklı sırada gösterir; küçük ekranda tablo yatay kayar ve başlıklar görünür kalır.
+4. purposeHint görünür, doğru cevap/açıklama ise cevap gönderilene kadar görünmez.
+5. Yanlış cevap yalnız hata mesajı verir; doğru cevap ORHAN / KAYIŞ ve JSON’daki aliaslar için başarı + açıklama açılır.
+6. Doğru cevap onSolved callbackini, ipucu isteği yalnız ilk tıklamada onRequestHint callbackini çağırır.
+7. Eski klasik sifreli_mesaj, parmak_izi, profil_sentezi ve ses_kaydi rendererları regresyona uğramaz.
+===== TEST LİSTESİ SONU =====
+
+===== KANONİK VAKA VERİSİ — mevcut case registry’de rc_001 olarak ekle/değiştir =====
+{
+  "puzzleId": "rc_001",
+  "packId": "pack_004",
+  "packSlug": "realcrime",
+  "stars": "★☆☆☆☆",
+  "gridSize": "3x3",
+  "timeLimit": 600,
+  "legalNote": "Tüm karakterler, mekânlar, belgeler ve cinayet kurgusaldır. Vaka yalnız tarihî faili meçhul dosyaların anlatı yapısından ve atmosferinden esinlenir; gerçek kişiler veya mağdurlar temsil edilmez.",
+  "historicalInspiration": "1960’ların sonlarında yerel gazetelere sembollü mektuplar ve çözülemeyen şifreler gönderen faili meçhul dosyaların basın-gizem dinamiğinden esinlenilmiştir.",
+  "uiContracts": {
+    "sifreli_mesaj": {
+      "sembol_izgara_eslestirme": {
+        "requiredPresentationStyle": "symbol_crossgrid",
+        "requiredFields": [
+          "rowSymbols",
+          "columnSymbols",
+          "cells",
+          "cipherSymbols",
+          "answerAliases",
+          "interaction"
+        ],
+        "fallback": "Render the 9×9 grid as a horizontally scrollable table with sticky header row and first column."
+      }
+    }
+  },
+  "title": "Siyah Dairenin Mektubu",
+  "subtitle": "1969 Kıyı Gazetesi Dosyası · Şifreli Mektup Vakası · Kurgusal",
+  "difficulty": "Çaylak",
+  "difficultyLevel": 1,
+  "specialMechanic": "sifreli_mesaj",
+  "story": "1969 yazının son gecesinde, San Rivo Kıyı Gazetesi’nin ön sayfasına yine imzasız bir zarf bırakıldı. Mektubun altında, çevresine dört küçük çentik atılmış siyah bir daire vardı; şehir bu işareti artık korkuyla tanıyordu. Ancak bu kez zarfın iç kapağına, matbaa provasını andıran kare bir eşleme tahtası çizilmiş; kenarına da aynı sembollerden oluşan kısa bir dizi iliştirilmişti. Editör Cemil Vardar, mektubu yayımlamaya değil, ertesi sabah göndereni adını vererek ifşa etmeye karar verdi. Baskı kapanmadan yirmi dakika önce, bodrumdan gelen pres sesi kesildi. Editörün masası boştu; yalnız yarım yakılmış bir teslim fişi, açılmış bir zarf ve siyah dairenin altındaki o tuhaf sembol tahtası duruyordu.\n\nŞafak söktüğünde Cemil matbaanın alt katında cansız bulundu. Polis, zarfın sıradan bir tehdit değil, kurbanı açmaya zorlayan ince bir düzenek olduğunu anladı. Şehir siyah dairenin mistik olduğuna inanmak istiyordu; oysa gerçek, baskı atölyesinin yağ kokusu, teslim defterinin ıslak kâğıdı ve birinin özellikle görünür kılmak istediği rota içindeydi. Eşleme tahtasını çözmek katilin adını doğrudan vermez: önce hangi şüphelinin hangi araçla sahte biçimde yan yana getirildiğini ayırt etmeniz gerekir.",
+  "atmosphere": "Kurşun harfler soğuduktan sonra bile matbaanın duvarları tıkırdar. Dışarıda okyanus sisi gaz lambalarını yutar; içeride mürekkep, mum ve ıslak tahta kokusu birbirine karışır. Eşleme tahtasının soluk cetvel çizgileri, sanki her yeni baskıyla biraz daha belirginleşir.",
+  "suspects": [
+    {
+      "id": "s1",
+      "name": "Leyla Aras",
+      "icon": "📰",
+      "description": "Kıyı Gazetesi’nin cinayet sütununu yazan, editörle açıkça tartışmış hırslı muhabir.",
+      "detail": "Kayıp mektupları ilk kez yayımlamak isteyen kişidir; sahne arkasında değil, arşiv masasında kahve lekeli notlarla çalışır."
+    },
+    {
+      "id": "s2",
+      "name": "Kurye Cem Akın",
+      "icon": "📬",
+      "description": "Gazeteye şifreli zarfı teslim eden, sakin ve yardımsever görünümüyle herkesin güvenini kazanan genç kurye.",
+      "detail": "Dağıtım çantasını hep sağ omzunda taşır; boş teslim fişlerini asla çöpe atmaz, pres odasına girdiğinde sol eldivenini çıkarır."
+    },
+    {
+      "id": "s3",
+      "name": "Dizgici Orhan Bilir",
+      "icon": "🖋️",
+      "description": "Kurşun harfleri ve gecenin son baskısını yöneten, editörün manşet değişikliklerinden yorulmuş kıdemli dizgici.",
+      "detail": "Baskı kayışının gerginliğini kendi elleriyle ayarlar; sağ başparmağında yıllardır taşıdığı yarım ay biçimli mürekkep lekesi vardır."
+    }
+  ],
+  "weapons": [
+    {
+      "id": "w1",
+      "name": "Kurşun Harf Kalıbı",
+      "icon": "🔠",
+      "description": "Eski matbaa presinden sökülen, ağır ve köşeli kurşun karakter bloğu.",
+      "detail": "Temasta koyu mürekkep ve ezilme izi bırakır."
+    },
+    {
+      "id": "w2",
+      "name": "Mikro Mühür Düzeneği",
+      "icon": "✉️",
+      "description": "Mumla kapatılmış zarfın içinden açılırken deri altına küçük bir metal uç bırakan düzenek.",
+      "detail": "Kırmızı mum kalıntısı ve çok küçük dairesel bir delik bırakır."
+    },
+    {
+      "id": "w3",
+      "name": "Baskı Presi Kayışı",
+      "icon": "🪢",
+      "description": "Ağır baskı silindirini çeviren, sert lifli deri kayış.",
+      "detail": "Lif kopması ve bilekte sürtünme bırakır."
+    }
+  ],
+  "locations": [
+    {
+      "id": "l1",
+      "name": "Gazete Arşivi",
+      "icon": "🗄️",
+      "description": "Eski sayılarla dolu, editörün kapalı dosyaları sakladığı tozlu alt arşiv.",
+      "detail": "Raflarda basınçlı pres yağı ya da taze mum kullanılmaz."
+    },
+    {
+      "id": "l2",
+      "name": "Baskı Atölyesi",
+      "icon": "📰",
+      "description": "Kurşun harflerin dizildiği ve gece sayısının basıldığı gürültülü bodrum atölyesi.",
+      "detail": "Son baskıdan sonra zemin mum damlaları ve kurşun harf tozuyla kaplanır."
+    },
+    {
+      "id": "l3",
+      "name": "Posta Deposu",
+      "icon": "📦",
+      "description": "Teslim torbalarının tartıldığı, mühürlü zarfların ayrıldığı arka depo.",
+      "detail": "Dış teslim fişleri burada numaralanır; her girişte tahta zeminde ıslak taban izi kalır."
+    }
+  ],
+  "clues": [
+    {
+      "id": "c1",
+      "title": "Editörün Parmak Ucu",
+      "type": "adli",
+      "mechanicType": "text",
+      "text": "Editörün ölümüne yol açan yarada, mumla kapatılmış zarf açılırken oluşmuş kadar küçük ve düzenli bir metal delik saptandı. Arşiv raflarının çevresinde aynı kırmızı mumdan tek parça bulunmadı.",
+      "deductionHint": "Ölümcül yarayı açan düzenli küçük delik hangi aracı tarif eder; kırmızı mumun olmadığı bölüm bu aracı nereden dışlar?",
+      "isBonus": false,
+      "revealOrder": 1,
+      "isRevealed": true,
+      "pointCost": 0
+    },
+    {
+      "id": "c2",
+      "title": "Pres Yağı Testi",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Alt arşivdeki kitap ciltlerinin arasında yalnız eski toz vardı; ağır deri lifine ya da yeni pres yağına rastlanmadı. Editörün ceketinde ise hiçbir ezilme lekesi görülmedi.",
+      "deductionHint": "Ağır, lifli bir aracın bu bölümde kullanılmadığını gösteren iki fiziksel bulgu hangisidir?",
+      "isBonus": false,
+      "revealOrder": 2,
+      "isRevealed": false,
+      "pointCost": 50
+    },
+    {
+      "id": "c3",
+      "title": "Siyah Dairenin Eşleme Tahtası",
+      "type": "sifreli",
+      "mechanicType": "sifreli_mesaj",
+      "text": "Zarfın iç kapağında, siyah dairenin altına dokuz satır ve dokuz sütundan oluşan kare bir cetvel çizilmişti. Sol ve üst kenardaki işaretler aynı kümeye aitti; sıraları farklıydı. Hücrelerin tamamı tek tek harflerle doldurulmuştu.",
+      "deductionHint": "Her sembolde aynı işaretin satırı ile sütunu kesiştiğinde hangi karakter beliriyor?",
+      "isBonus": false,
+      "revealOrder": 3,
+      "isRevealed": false,
+      "pointCost": 50,
+      "sifre": {
+        "sifrelenmis": "ŞİFRE\n◐ ◓ ◒ ◉ ⊚  /  ◆ ◉ △ ◈ ⟡",
+        "sifreleTuru": "sembol_izgara_eslestirme",
+        "cozumIpucu": "Tahtadaki 81 hücrenin hepsinde harf vardır; rastgele görünen harfleri doğrudan okumayın. Bir sembolün gerçek harfini bulmak için, o sembolün soldaki satırını ve üstteki aynı sembolün sütununu eşleştirin.",
+        "cozulmus": "ORHAN / KAYIŞ",
+        "aciklama": "Şifre çözüldüğünde, çıkarım ızgarasında bir şüpheli–araç bağlantısı kesinleşir; siyah dairenin ardındaki rota böylece görünür hâle gelir.",
+        "presentation": {
+          "style": "symbol_crossgrid",
+          "title": "Eşleme Tahtası",
+          "subtitle": "Matbaa prova cetveli · Satır ve sütunda aynı sembolü eşleştir.",
+          "boardLabel": "SİYAH DAİRE / İÇ HALKA CETVELİ",
+          "rowHeaderLabel": "SATIR",
+          "columnHeaderLabel": "SÜTUN",
+          "rowSymbols": [
+            "⟡",
+            "◉",
+            "◒",
+            "◆",
+            "⊚",
+            "◈",
+            "◓",
+            "△",
+            "◐"
+          ],
+          "columnSymbols": [
+            "◐",
+            "△",
+            "◓",
+            "◈",
+            "◆",
+            "◉",
+            "⟡",
+            "⊚",
+            "◒"
+          ],
+          "cells": [
+            [
+              "R",
+              "K",
+              "A",
+              "N",
+              "I",
+              "O",
+              "Ş",
+              "Y",
+              "H"
+            ],
+            [
+              "H",
+              "Ş",
+              "N",
+              "R",
+              "O",
+              "A",
+              "I",
+              "K",
+              "Y"
+            ],
+            [
+              "Y",
+              "O",
+              "Ş",
+              "A",
+              "R",
+              "K",
+              "N",
+              "I",
+              "H"
+            ],
+            [
+              "A",
+              "I",
+              "O",
+              "Ş",
+              "K",
+              "Y",
+              "H",
+              "R",
+              "N"
+            ],
+            [
+              "K",
+              "H",
+              "Y",
+              "O",
+              "Ş",
+              "R",
+              "A",
+              "N",
+              "I"
+            ],
+            [
+              "N",
+              "A",
+              "K",
+              "I",
+              "Y",
+              "O",
+              "R",
+              "H",
+              "Ş"
+            ],
+            [
+              "Ş",
+              "Y",
+              "R",
+              "H",
+              "A",
+              "N",
+              "K",
+              "I",
+              "O"
+            ],
+            [
+              "I",
+              "Y",
+              "N",
+              "K",
+              "O",
+              "Ş",
+              "H",
+              "A",
+              "R"
+            ],
+            [
+              "O",
+              "R",
+              "H",
+              "A",
+              "N",
+              "K",
+              "Y",
+              "I",
+              "Ş"
+            ]
+          ],
+          "cipherSymbols": [
+            "◐",
+            "◓",
+            "◒",
+            "◉",
+            "⊚",
+            "/",
+            "◆",
+            "◉",
+            "△",
+            "◈",
+            "⟡"
+          ],
+          "cipherDisplay": "◐ ◓ ◒ ◉ ⊚  /  ◆ ◉ △ ◈ ⟡",
+          "answerFormat": "ORHAN / KAYIŞ",
+          "answerAliases": [
+            "ORHAN / KAYIŞ",
+            "ORHAN/KAYIŞ",
+            "ORHAN KAYIŞ",
+            "ORHAN / KAYIS",
+            "ORHAN/KAYIS",
+            "ORHAN KAYIS",
+            "ORHAN KAYISI"
+          ],
+          "interaction": {
+            "mode": "decode_and_submit",
+            "inputLabel": "Çözülmüş metni yaz...",
+            "submitLabel": "Şifreyi Çöz",
+            "successMessage": "Tahtadaki satırlar birbirine oturdu: ORHAN / KAYIŞ.",
+            "failureMessage": "Henüz değil. Tahtadaki bütün harfler dolgu dizgidir; her sembol için yalnız aynı sembolün satır ve sütun kesişimini oku.",
+            "normalizeAnswer": true
+          },
+          "accessibility": {
+            "description": "Dokuz sembollü 9×9 tabloda 81 hücrenin tamamı harftir. Yalnız aynı sembolün satır ve sütun kesişimi o sembolün şifre harfini verir.",
+            "useTextLabels": false,
+            "minimumCellSizePx": 38
+          },
+          "mobile": {
+            "allowHorizontalScroll": true,
+            "stickyHeaders": true,
+            "minCellPx": 38,
+            "maxBoardWidthPx": 560
+          },
+          "challenge": "Cetvelde boş hücre yoktur: bütün harfler ilk bakışta olası görünecek şekilde dizilmiştir. Geçerli harfi bulmanın tek yolu, şifredeki sembolün soldaki satırı ile üstteki aynı sembolün sütununu eşleştirmektir.",
+          "allCellsAreLetters": true,
+          "decoyPolicy": {
+            "mode": "full_letter_field",
+            "description": "Tahtadaki 81 hücrenin tamamında harf bulunur. Harfler, matbaa provasındaki dolgu dizgileridir; yalnızca aynı sembolün satır-sütun kesişimindeki harf şifre için geçerlidir.",
+            "renderTargetsDistinctly": false,
+            "doNotUseMutedCells": true
+          },
+          "decodeIntersections": [
+            {
+              "symbol": "◐",
+              "rowIndex": 8,
+              "columnIndex": 0,
+              "letter": "O"
+            },
+            {
+              "symbol": "◓",
+              "rowIndex": 6,
+              "columnIndex": 2,
+              "letter": "R"
+            },
+            {
+              "symbol": "◒",
+              "rowIndex": 2,
+              "columnIndex": 8,
+              "letter": "H"
+            },
+            {
+              "symbol": "◉",
+              "rowIndex": 1,
+              "columnIndex": 5,
+              "letter": "A"
+            },
+            {
+              "symbol": "⊚",
+              "rowIndex": 4,
+              "columnIndex": 7,
+              "letter": "N"
+            },
+            {
+              "symbol": "◆",
+              "rowIndex": 3,
+              "columnIndex": 4,
+              "letter": "K"
+            },
+            {
+              "symbol": "△",
+              "rowIndex": 7,
+              "columnIndex": 1,
+              "letter": "Y"
+            },
+            {
+              "symbol": "◈",
+              "rowIndex": 5,
+              "columnIndex": 3,
+              "letter": "I"
+            },
+            {
+              "symbol": "⟡",
+              "rowIndex": 0,
+              "columnIndex": 6,
+              "letter": "Ş"
+            }
+          ],
+          "purposeHint": "Şifreyi çözdüğünde, çıkarım ızgarasındaki bir şüpheli–araç bağlantısı kesinleşecek."
+        }
+      }
+    },
+    {
+      "id": "c4",
+      "title": "Kahve Lekeli Prova",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Arşiv masasından alınan kahve lekeli prova kâğıdında, ağır dizgi bloğunun bıraktığı düzenli basınç izi görüldü. Aynı açık kahve mürekkebi çalışma notlarında da vardı.",
+      "deductionHint": "Kahve lekeli prova ve düzenli basınç izi, hangi arşiv çalışanını ağır metal kalıpla bağlar?",
+      "isBonus": false,
+      "revealOrder": 4,
+      "isRevealed": false,
+      "pointCost": 50
+    },
+    {
+      "id": "c5",
+      "title": "Soyut Harf Tozu",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Çalışma kapısında metal dizgi tozu vardı; fakat soyunma şeklinde kopmuş koyu liflere rastlanmadı. Kapı eşiğinde yalnız kırmızı mum parçaları bulundu.",
+      "deductionHint": "Koyu deri liflerinin bulunmaması, ağır kayışın hangi çalışma alanında kullanılmadığını gösterir?",
+      "isBonus": false,
+      "revealOrder": 5,
+      "isRevealed": false,
+      "pointCost": 50
+    },
+    {
+      "id": "c6",
+      "title": "Arşivdeki Kurşun Tozu",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Arşiv raflarının altındaki iş çizelgesinde, dizgi vardiyasına ait yarım ay mühür ve kurşun harf tozu bulunan bir giriş kartı bulundu.",
+      "deductionHint": "Yarım ay mühürlü giriş kartı, hangi çalışma alışkanlığını hangi arşiv bölümüne bağlar?",
+      "isBonus": true,
+      "revealOrder": 6,
+      "isRevealed": false,
+      "pointCost": 40
+    },
+    {
+      "id": "c7",
+      "title": "Son Teslim Rotası",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Gece bekçisi, şehir dışı muhabir notlarının teslim torbalarının tartıldığı arka depoda bulunduğunu; sıralama masasının altında aynı açık kahve lekesinden iz kaldığını yazdı.",
+      "deductionHint": "Teslim torbaları arasındaki çalışma notları ve aynı kahve lekesi, hangi muhabiri arka dağıtım hattına yerleştirir?",
+      "isBonus": true,
+      "revealOrder": 7,
+      "isRevealed": false,
+      "pointCost": 40
+    }
+  ],
+  "assetManifest": [],
+  "solution": {
+    "suspectId": "s2",
+    "weaponId": "w2",
+    "locationId": "l2"
+  },
+  "solutionNarrative": "Kurye Cem Akın, editörü baskı atölyesine çağırdı ve kırmızı mumla kapatılmış zarfın içindeki mikro mühür düzeneğini burada devreye soktu. Cemil zarfı açarken aldığı küçük ama ölümcül yara, taşıyıcının etkisini doğrudan kanına geçirdi. Teslim fişi, mum kalıntısı ve atölye rotası gösteriş için çizilen siyah daireyi değil, gerçek failin izini kapattı.",
+  "replitIntegration": {
+    "schema": "fm_replit_runtime_contract_v1",
+    "copyTarget": "Replit Agent prompt",
+    "canonicalCaseFile": "src/data/cases/rc_001.json",
+    "policy": "Var olan renderer varsa onu bozma; yoksa bu paketteki component ve dispatcher dalını ekle.",
+    "mechanics": [
+      {
+        "clueId": "c3",
+        "mechanicType": "sifreli_mesaj",
+        "renderer": "symbol_crossgrid",
+        "componentFile": "src/components/caseMechanics/SymbolCrossgridMiniGame.jsx",
+        "dispatcherBranch": "clue.mechanicType === \"sifreli_mesaj\" && clue.sifre?.presentation?.style === \"symbol_crossgrid\"",
+        "completionEvent": "onSolved({ clueId, mechanic: \"symbol_crossgrid\" })",
+        "hintEvent": "onRequestHint({ clueId, penaltySeconds: 60 })",
+        "requiredData": [
+          "rowSymbols",
+          "columnSymbols",
+          "cells",
+          "cipherSymbols",
+          "answerAliases",
+          "interaction"
+        ],
+        "nonNegotiable": [
+          "81 hücre dahil tüm cells değerlerini görünür biçimde render et.",
+          "Çözüm kesişimlerini baştan işaretleme, renklendirme veya otomatik seçme.",
+          "purposeHint/objectiveHint alanını görünür göster; çözümü söyleme.",
+          "Açıklamayı yalnız doğru cevap sonrasında aç.",
+          "Küçük ekranlarda yatay kaydırma ve sticky üst/satır başlıkları kullan."
+        ]
+      }
+    ]
+  }
+}
+===== VAKA VERİSİ SONU =====

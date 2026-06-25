@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import type { ComponentProps } from "react";
-import { Alert, Image, Platform, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import { Alert, Image, Platform, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 import { Audio } from "expo-av";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useGame } from "@/context/GameContext";
@@ -246,6 +246,144 @@ function TanikYuzlesmeBlock({ dialoglar }: { dialoglar: ClueYuzlesmeDialog[] }) 
   );
 }
 
+function SymbolCrossgridBlock({
+  sifre,
+  isSolved,
+  onSolve,
+}: {
+  sifre: ClueSifre;
+  isSolved: boolean;
+  onSolve: () => void;
+}) {
+  const { addTimePenalty } = useGame();
+  const pres = sifre.presentation!;
+  const rowSymbols = pres.rowSymbols ?? [];
+  const colSymbols = pres.columnSymbols ?? [];
+  const cells = pres.cells ?? [];
+  const cipherDisplay = pres.cipherDisplay ?? "";
+  const answerAliases = (pres.answerAliases ?? []) as string[];
+  const interaction = pres.interaction ?? {};
+  const CELL = 38;
+
+  const [input, setInput] = useState("");
+  const [wrong, setWrong] = useState(false);
+  const [hintRevealed, setHintRevealed] = useState(false);
+
+  const normalize = (s: string) =>
+    s.trim().toLocaleUpperCase("tr-TR").replace(/İ/g, "I").replace(/\s+/g, " ");
+
+  const checkAnswer = () => {
+    const norm = normalize(input);
+    const valid = [sifre.cozulmus, ...answerAliases].map(normalize);
+    if (valid.includes(norm)) {
+      onSolve();
+    } else {
+      setWrong(true);
+      setTimeout(() => setWrong(false), 2200);
+    }
+  };
+
+  const handleHint = () => {
+    if (hintRevealed) return;
+    setHintRevealed(true);
+    addTimePenalty(60);
+  };
+
+  if (isSolved) {
+    return (
+      <View style={styles.miniGameSolvedBlock}>
+        <MaterialIcons name="check-circle" size={20} color="#22c55e" />
+        <Text style={styles.miniGameSolvedText}>Şifre Çözüldü!</Text>
+        <View style={styles.miniGameAnswer}>
+          <Text style={styles.miniGameAnswerText}>{sifre.cozulmus}</Text>
+        </View>
+        <Text style={styles.miniGameAciklama}>{sifre.aciklama}</Text>
+      </View>
+    );
+  }
+
+  return (
+    <View style={styles.crossgridBlock}>
+      <View style={styles.crossgridTitleBar}>
+        <MaterialIcons name="grid-on" size={13} color="#e0b54e" />
+        <Text style={styles.crossgridTitleText}>{pres.title ?? "EŞLEME TAHTASI"}</Text>
+      </View>
+      {pres.subtitle ? <Text style={styles.crossgridSubtitle}>{pres.subtitle as string}</Text> : null}
+      {pres.purposeHint ? (
+        <View style={styles.crossgridPurpose}>
+          <Text style={styles.crossgridPurposeLabel}>ÇÖZÜMÜN İŞLEVİ</Text>
+          <Text style={styles.crossgridPurposeText}>{pres.purposeHint as string}</Text>
+        </View>
+      ) : null}
+
+      <ScrollView horizontal showsHorizontalScrollIndicator style={styles.crossgridScroll}>
+        <View>
+          <View style={styles.crossgridRow}>
+            <View style={[styles.crossgridCell, styles.crossgridCorner, { width: CELL, height: CELL }]}>
+              <Text style={styles.crossgridCornerText}>↘</Text>
+            </View>
+            {colSymbols.map((sym, ci) => (
+              <View key={ci} style={[styles.crossgridCell, styles.crossgridColHeader, { width: CELL, height: CELL }]}>
+                <Text style={styles.crossgridHeaderText}>{sym}</Text>
+              </View>
+            ))}
+          </View>
+          {rowSymbols.map((rowSym, ri) => (
+            <View key={ri} style={styles.crossgridRow}>
+              <View style={[styles.crossgridCell, styles.crossgridRowHeader, { width: CELL, height: CELL }]}>
+                <Text style={styles.crossgridHeaderText}>{rowSym}</Text>
+              </View>
+              {(cells[ri] ?? []).map((letter, ci) => (
+                <View key={ci} style={[styles.crossgridCell, styles.crossgridDataCell, { width: CELL, height: CELL }]}>
+                  <Text style={styles.crossgridCellText}>{letter}</Text>
+                </View>
+              ))}
+            </View>
+          ))}
+        </View>
+      </ScrollView>
+
+      <View style={styles.crossgridCipherRow}>
+        <Text style={styles.crossgridCipherLabel}>ŞİFRE</Text>
+        <Text style={styles.crossgridCipherText}>{cipherDisplay}</Text>
+      </View>
+
+      {hintRevealed ? (
+        <View style={styles.sifreHintRevealed}>
+          <MaterialIcons name="warning" size={12} color="#f59e0b" />
+          <Text style={[styles.sifreHintRevealedLabel, { color: "#f59e0b" }]}>İpucu açıldı (ceza uygulandı)</Text>
+        </View>
+      ) : null}
+      {hintRevealed ? (
+        <View style={[styles.sifreIpucu, { marginHorizontal: 12 }]}>
+          <Text style={styles.sifreIpucuText}>{sifre.cozumIpucu}</Text>
+        </View>
+      ) : (
+        <Pressable style={[styles.sifreHintBtn, { marginHorizontal: 12 }]} onPress={handleHint}>
+          <MaterialIcons name="lightbulb-outline" size={14} color="#e0b54e" />
+          <Text style={[styles.sifreHintBtnText, { color: "#e0b54e" }]}>İpucu İste (-60 sn / ceza puanı)</Text>
+        </Pressable>
+      )}
+
+      <TextInput
+        style={[styles.sifreInput, wrong && styles.anagramInputError, { marginHorizontal: 12 }]}
+        value={input}
+        onChangeText={(t) => { setInput(t); setWrong(false); }}
+        placeholder={interaction.inputLabel ?? "Çözülmüş metni yaz..."}
+        placeholderTextColor="#555"
+        autoCapitalize="characters"
+        autoCorrect={false}
+        onSubmitEditing={checkAnswer}
+      />
+      {wrong && <Text style={[styles.anagramWrong, { marginHorizontal: 12 }]}>{interaction.failureMessage ?? "Yanlış cevap — tekrar dene"}</Text>}
+      <Pressable style={[styles.crossgridSubmitBtn]} onPress={checkAnswer}>
+        <MaterialIcons name="search" size={15} color="#1a1205" />
+        <Text style={styles.crossgridSubmitText}>{interaction.submitLabel ?? "Şifreyi Çöz"}</Text>
+      </Pressable>
+    </View>
+  );
+}
+
 function ThermalSequenceBlock({
   sifre,
   isSolved,
@@ -468,6 +606,10 @@ function SifreliMesajBlock({
       setTimeout(() => setKomutWrong(false), 2000);
     }
   };
+
+  if (sifre.presentation?.style === "symbol_crossgrid") {
+    return <SymbolCrossgridBlock sifre={sifre} isSolved={isSolved} onSolve={onSolve} />;
+  }
 
   if (sifre.presentation?.mode === "thermal_sequence") {
     return <ThermalSequenceBlock sifre={sifre} isSolved={isSolved} onSolve={onSolve} />;
@@ -2189,6 +2331,145 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "800",
     letterSpacing: 0.5,
+  },
+  crossgridBlock: {
+    backgroundColor: "#10131f",
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: "#2a2210",
+    overflow: "hidden",
+    marginTop: 4,
+  },
+  crossgridTitleBar: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    backgroundColor: "#18140a",
+    borderBottomWidth: 1,
+    borderBottomColor: "#2e2410",
+  },
+  crossgridTitleText: {
+    color: "#e0b54e",
+    fontSize: 10,
+    fontWeight: "700",
+    letterSpacing: 1.4,
+    fontFamily: "monospace",
+  },
+  crossgridSubtitle: {
+    color: "#8b91ad",
+    fontSize: 11,
+    paddingHorizontal: 12,
+    paddingTop: 8,
+    paddingBottom: 4,
+    lineHeight: 16,
+  },
+  crossgridPurpose: {
+    marginHorizontal: 12,
+    marginBottom: 8,
+    padding: 9,
+    borderLeftWidth: 2,
+    borderLeftColor: "#e0b54e",
+    backgroundColor: "#1c1708",
+    borderRadius: 4,
+  },
+  crossgridPurposeLabel: {
+    color: "#e0b54e",
+    fontSize: 9,
+    fontWeight: "700",
+    letterSpacing: 1,
+    marginBottom: 3,
+  },
+  crossgridPurposeText: {
+    color: "#ecd99a",
+    fontSize: 11,
+    lineHeight: 16,
+  },
+  crossgridScroll: {
+    marginHorizontal: 12,
+    marginBottom: 2,
+    borderWidth: 1,
+    borderColor: "#262c44",
+    borderRadius: 8,
+  },
+  crossgridRow: {
+    flexDirection: "row",
+  },
+  crossgridCell: {
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: 0.5,
+    borderColor: "#262c44",
+  },
+  crossgridCorner: {
+    backgroundColor: "#14192a",
+  },
+  crossgridCornerText: {
+    color: "#e0b54e",
+    fontSize: 12,
+    fontWeight: "700",
+  },
+  crossgridColHeader: {
+    backgroundColor: "#1c2138",
+  },
+  crossgridRowHeader: {
+    backgroundColor: "#171c2e",
+  },
+  crossgridHeaderText: {
+    color: "#e0b54e",
+    fontSize: 12,
+    fontWeight: "700",
+  },
+  crossgridDataCell: {
+    backgroundColor: "#161a2b",
+  },
+  crossgridCellText: {
+    color: "#dbe2f7",
+    fontSize: 12,
+    fontWeight: "600",
+  },
+  crossgridCipherRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+    marginHorizontal: 12,
+    marginVertical: 8,
+    padding: 10,
+    borderRadius: 8,
+    backgroundColor: "#161a2b",
+  },
+  crossgridCipherLabel: {
+    color: "#8b91ad",
+    fontSize: 9,
+    fontWeight: "700",
+    letterSpacing: 1,
+  },
+  crossgridCipherText: {
+    color: "#e0b54e",
+    fontSize: 14,
+    fontWeight: "700",
+    letterSpacing: 3,
+    fontFamily: "monospace",
+    flex: 1,
+    textAlign: "center",
+  },
+  crossgridSubmitBtn: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 6,
+    margin: 12,
+    marginTop: 8,
+    backgroundColor: "#e0b54e",
+    borderRadius: 8,
+    paddingVertical: 11,
+  },
+  crossgridSubmitText: {
+    color: "#1a1205",
+    fontWeight: "700",
+    fontSize: 13,
+    letterSpacing: 0.3,
   },
   phoneBlock: {
     marginTop: 6,
