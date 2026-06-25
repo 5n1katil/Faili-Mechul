@@ -566,7 +566,7 @@ function PuzzleCard({
         </View>
 
         <Text
-          style={[listStyles.puzzleTitle, { color: "#F0F0F8" }]}
+          style={[listStyles.puzzleTitle, { color: "#D4A843" }]}
           numberOfLines={2}
         >
           {puzzle.title}
@@ -1148,7 +1148,7 @@ export default function VakalarScreen() {
                         <MaterialIcons name="folder-open" size={22} color="#C8581A" />
                       </View>
                       <View style={{ flex: 1 }}>
-                        <Text style={[listStyles.standartCardTitle, { color: "#F0F0F8" }]}>Standart Vakalar</Text>
+                        <Text style={[listStyles.standartCardTitle, { color: "#D4A843" }]}>Standart Vakalar</Text>
                         <Text style={[listStyles.heroCardSub, { color: INACTIVE_COLOR }]}>Ücretsiz · erişilebilir</Text>
                       </View>
                     </View>
