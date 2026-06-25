@@ -1,0 +1,365 @@
+/* ============================================================
+ *  FAİLİ MEÇHUL — REPLIT TEK SEFERLİK ENTEGRASYON PAKETİ
+ *  Bu metni Replit Agent sohbetine TEK PARÇA olarak yapıştır.
+ *  Görev: sadece JSON kaydetme. Vaka verisini mevcut kaynakta
+ *  yükle, aşağıdaki eksik renderer altyapısını ekle ve çalıştır.
+ * ------------------------------------------------------------
+ *  Vaka: Kül Takımyıldızı · puzzleId=fen_premium_001
+ *  1) Önce mevcut vaka veri kaydını ve mini-oyun dispatcherını bul.
+ *  2) Var olan rendererları bozma; yalnız eksik olan dalı ekle.
+ *  3) Aşağıdaki vaka JSON’unu uygulamanın KANONİK case kaynağına ekle.
+ *  4) Kod değişikliklerinden sonra aşağıdaki kabul testlerini tarayıcıda yap.
+ *  5) Sadece açıklama yazma: dosyaları gerçekten güncelle ve test sonucunu bildir.
+ * ============================================================ */
+
+===== ZORUNLU KABUL TESTLERİ =====
+1. Eski klasik sifreli_mesaj, parmak_izi, profil_sentezi ve genel ses_kaydi rendererları regresyona uğramaz.
+===== TEST LİSTESİ SONU =====
+
+===== KANONİK VAKA VERİSİ — mevcut case registry’de fen_premium_001 olarak ekle/değiştir =====
+{
+  "puzzleId": "fen_premium_001",
+  "stars": "★☆☆☆☆",
+  "gridSize": "3x3",
+  "timeLimit": 600,
+  "qaNarrativeContract": {
+    "premiumStoryGate": "pass",
+    "storyLengthWords": 156,
+    "storyClue": {
+      "visibleEvidence": "Adnan’ın avucunda yıldız işaretli yarım daire kâğıt parçası bulunur.",
+      "mechanicBridge": "Bu ayrıntı, c5’teki Yıldız Disk Hizalama bulmacasının sahne içindeki kaynağını açıklar.",
+      "matrixBoundary": "Anlatı tek başına fail, araç veya mekânı kesinleştirmez."
+    },
+    "narrativeFunctions": [
+      "Şehir ve baskı atmosferini kurar.",
+      "Üç şüphelinin aynı gece olay çevresinde bulunma gerekçelerini verir.",
+      "Şifre diskini mini oyuna organik biçimde bağlar."
+    ]
+  },
+  "title": "Kül Takımyıldızı",
+  "subtitle": "1967 · Kıyı kenti Valmera · Gece baskısı",
+  "difficulty": "Çaylak",
+  "difficultyLevel": 1,
+  "specialMechanic": "cipher_disc_alignment",
+  "story": "1967’nin sonbaharında Valmera, sisin denizi değil sokak lambalarını yuttuğu gecelerden birini yaşıyordu. Aster Gazetesi’nin gece baskısına, köşeleri kurumla kararmış bir zarf ulaştı. İçindeki yıldız biçimli işaretler yalnızca bir sonraki başlığı değil, kimin susması gerektiğini de anlatıyordu.\n\nKripto tarihçisi Dr. Adnan Yel, işaretlerin üniversite kütüphanesindeki eski gök atlaslarından kopyalandığını fark edince, arşiv raflarının önünde hareketsiz bulundu. Boğazındaki ince izden çok, avucunda sıkışan yarım daire kâğıt parçası dikkat çekti: ortasında dört kırık yıldız, kenarında eski bir matbaa numarası vardı.\n\nO gece Editör Selin, sabaha yetişecek özel ekin provasını kontrol ediyordu. Kent Müfettişi Tamer, gazeteye gelen tehdit mektubunu teslim almak için uğramıştı. Adnan ise gök atlaslarının bulunduğu sessiz salona, “işaretler baskıdan önce yazılmış” diyerek tek başına girmişti. Zarfın yıldızları, ilk kez bir şifre değil; bir rota gibi görünüyordu.",
+  "atmosphere": "Deniz sisi, sıcak kurşun harfler ve kütüphane tozu. Baskı makinesinin tekdüze sesi kesildiğinde, uzaktaki liman feneri camlara yıldız şekilleri düşürüyordu.",
+  "suspects": [
+    {
+      "id": "s1",
+      "name": "Editör Selin Aras",
+      "icon": "📰",
+      "description": "Aster Gazetesi’nin gece baskısını yöneten editör.",
+      "detail": "Kurşun harfleri elle dizmeyi bilir; prova sayfalarındaki en küçük kesim izini bile fark eder."
+    },
+    {
+      "id": "s2",
+      "name": "Kripto Tarihçisi Dr. Adnan Yel",
+      "icon": "✦",
+      "description": "Eski alfabeler ve yıldız katalogları üzerine çalışan akademisyen.",
+      "detail": "Kütüphane atlaslarının kenar notlarını yıllardır kataloglar; dairesel şifre dizilerini çözmesiyle tanınır."
+    },
+    {
+      "id": "s3",
+      "name": "Kent Müfettişi Tamer Sönmez",
+      "icon": "🕵️",
+      "description": "Gazeteye gelen tehdit mektuplarını inceleyen belediye müfettişi.",
+      "detail": "Mühürlü belgeleri zincir içinde taşır; baskı atölyelerindeki tipografi araçlarına yabancıdır."
+    }
+  ],
+  "weapons": [
+    {
+      "id": "w1",
+      "name": "Deri Kordon",
+      "icon": "🪢",
+      "description": "Düzgün çekildiğinde dar iz bırakan, ince ama dayanıklı koyu deri şerit.",
+      "detail": ""
+    },
+    {
+      "id": "w2",
+      "name": "Kurşun Harf Kesicisi",
+      "icon": "✂️",
+      "description": "Matbaa kalıplarının kenarını kesmeye yarayan ağır, kısa ağızlı alet.",
+      "detail": ""
+    },
+    {
+      "id": "w3",
+      "name": "Baskı Bloğu Bıçağı",
+      "icon": "🔪",
+      "description": "Ahşap prova bloklarını inceltmek için kullanılan keskin ucu kısa bıçak.",
+      "detail": ""
+    }
+  ],
+  "locations": [
+    {
+      "id": "l1",
+      "name": "Aster Baskıhanesi",
+      "icon": "🖨️",
+      "description": "Gece ekinin hazırlandığı, metal kalıp kokulu arka atölye.",
+      "detail": ""
+    },
+    {
+      "id": "l2",
+      "name": "Gök Atlasları Salonu",
+      "icon": "📚",
+      "description": "Üniversite kütüphanesinin nadir eserler bölümü; yıldız haritaları burada tutulur.",
+      "detail": ""
+    },
+    {
+      "id": "l3",
+      "name": "Sisli Liman Geçidi",
+      "icon": "⚓",
+      "description": "Gazete binasıyla rıhtım arasındaki, gece devriyesinin takip ettiği taş geçit.",
+      "detail": ""
+    }
+  ],
+  "clues": [
+    {
+      "id": "c1",
+      "title": "Kordonun Lifleri",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Kurbanın canını alan ince koyu deri lifleri, gök atlası salonundaki koruma masasının altında bulunan aynı cilt şeridiyle eşleşti.",
+      "deductionHint": "Liflerin çıktığı koruma düzeni, hangi araç–mekân bağını doğrular?",
+      "isBonus": false,
+      "revealOrder": 1,
+      "isRevealed": true,
+      "pointCost": 0
+    },
+    {
+      "id": "c2",
+      "title": "Geçit Defteri",
+      "type": "tanik",
+      "mechanicType": "text",
+      "text": "Liman devriyesinin imzalı çizelgesi, atlas araştırmacısının son feribot kalkana kadar geçitte görünmediğini kayda geçiriyor.",
+      "deductionHint": "Bir devriye çizelgesi, hangi taş geçit olasılığını kapatır?",
+      "isBonus": false,
+      "revealOrder": 2,
+      "isRevealed": false,
+      "pointCost": 60
+    },
+    {
+      "id": "c3",
+      "title": "Kurşun Kalıp Rafı",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Gece ekinin prova fişinde, ağır kesicinin baskı başlamadan önce yalnız arka atölye rafına asıldığı yazıyor.",
+      "deductionHint": "Zimmette tek bir raf varsa hangi eşleşme işaretlenir?",
+      "isBonus": false,
+      "revealOrder": 3,
+      "isRevealed": false,
+      "pointCost": 60
+    },
+    {
+      "id": "c4",
+      "title": "Kütüphane Giriş Fişi",
+      "type": "tanik",
+      "mechanicType": "text",
+      "text": "Nadir eser turnikesi, tehdit mektubunu teslim eden müfettişin kartının olay aralığında salona okutulmadığını gösteriyor.",
+      "deductionHint": "Bir turnike fişi, hangi sessiz salon olasılığını kapatır?",
+      "isBonus": false,
+      "revealOrder": 4,
+      "isRevealed": false,
+      "pointCost": 60
+    },
+    {
+      "id": "c5",
+      "title": "Yıldız Disklerinin Hizası",
+      "type": "sifreli",
+      "mechanicType": "sifreli_mesaj",
+      "text": "Zarfın içinden dört ince karton disk çıktı. Her birinin üstünde yarım yıldız ve solmuş bir prova numarası vardı.",
+      "deductionHint": "Diskleri aynı basım dizisini verecek şekilde çevir; dört işaret tek bir atölye kaydına bağlanır.",
+      "isBonus": false,
+      "revealOrder": 5,
+      "isRevealed": false,
+      "pointCost": 60,
+      "sifre": {
+        "sifrelenmis": "VALMERA DİSK KAYDI · ✶⊙⌁◈ · 47-12-31-09",
+        "sifreleTuru": "yıldız disk hizalama",
+        "cozumIpucu": "Aynı sembolün yanında görünen küçük rakam, diskin hangi sıra ile çevrildiğini fısıldar.",
+        "cozulmus": "VALMERA 47",
+        "aciklama": "Diskler aynı prova kaydına oturduğunda, yıldızların hangi atölye zincirine ait olduğu anlaşılır.",
+        "presentation": {
+          "style": "cipher_disc_alignment",
+          "title": "Yıldız Disk Hizalama",
+          "subtitle": "Dört şifre diskini prova numaralarının aynı dizisini verecek biçimde çevir.",
+          "purposeHint": "Doğru hizalama, ızgarada bir kişi–araç bağının mümkün olmadığını gösterecek.",
+          "discs": [
+            {
+              "id": "d1",
+              "label": "Kuzey Diski",
+              "symbols": [
+                "✶",
+                "⊙",
+                "⌁",
+                "◈"
+              ],
+              "initial": "✶"
+            },
+            {
+              "id": "d2",
+              "label": "Batı Diski",
+              "symbols": [
+                "⊙",
+                "⌁",
+                "◈",
+                "✶"
+              ],
+              "initial": "⊙"
+            },
+            {
+              "id": "d3",
+              "label": "Güney Diski",
+              "symbols": [
+                "⌁",
+                "◈",
+                "✶",
+                "⊙"
+              ],
+              "initial": "⌁"
+            },
+            {
+              "id": "d4",
+              "label": "Doğu Diski",
+              "symbols": [
+                "◈",
+                "✶",
+                "⊙",
+                "⌁"
+              ],
+              "initial": "◈"
+            }
+          ],
+          "correctCode": [
+            {
+              "discId": "d1",
+              "symbol": "◈"
+            },
+            {
+              "discId": "d2",
+              "symbol": "✶"
+            },
+            {
+              "discId": "d3",
+              "symbol": "⊙"
+            },
+            {
+              "discId": "d4",
+              "symbol": "⌁"
+            }
+          ],
+          "resultText": "Hizalanan prova kodu, baskı bloğu bıçağının belediye mühür zincirinde olmadığını gösterir: Kent Müfettişi Tamer Sönmez × Baskı Bloğu Bıçağı.",
+          "interaction": {
+            "mode": "rotate_discs",
+            "submitLabel": "Diskleri Hizala",
+            "successMessage": "Dört disk aynı prova numarasına oturdu.",
+            "failureMessage": "Semboller aynı baskı dizisini vermiyor."
+          }
+        }
+      }
+    },
+    {
+      "id": "b1",
+      "title": "Cilt Tozu",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Koruma masasındaki lacivert cilt tozu, yıldız haritalarını kataloglayan akademisyenin ceket manşetindeki tozla aynı bağlayıcıyı taşıyordu.",
+      "deductionHint": "Bu toz hangi kişi–mekân bağını doğrular?",
+      "isBonus": true,
+      "revealOrder": 6,
+      "isRevealed": false,
+      "pointCost": 60
+    },
+    {
+      "id": "b2",
+      "title": "Prova Ustası",
+      "type": "tanik",
+      "mechanicType": "text",
+      "text": "Baskı ustası, prova bloklarını incelten kısa bıçağın vardiya bitiminde editörün masasına bırakıldığını hatırladı.",
+      "deductionHint": "Bu hatırlama hangi kişi–araç bağını doğrular?",
+      "isBonus": true,
+      "revealOrder": 7,
+      "isRevealed": false,
+      "pointCost": 60
+    }
+  ],
+  "assetManifest": [],
+  "solution": {
+    "suspectId": "s2",
+    "weaponId": "w1",
+    "locationId": "l2"
+  },
+  "solutionNarrative": "Dr. Adnan Yel, yıldız kataloglarındaki eski notların kendi sahte yayınlarını ortaya çıkaracağını öğrenince kütüphanede Cemre’yi deri kordonla susturdu. Lifler ve disklerin açtığı prova zinciri, tehdidin limandan değil atlas salonundan başladığını gösterdi. Diğer araçlar, soruşturmanın ayrıştırdığı ama cinayete dönüşmeyen iş akışlarının parçalarıydı.",
+  "replitIntegration": {
+    "schema": "fm_replit_runtime_contract_v1",
+    "copyTarget": "Replit Agent prompt",
+    "canonicalCaseFile": "src/data/cases/fen_premium_001.json",
+    "policy": "Var olan renderer varsa onu bozma; yoksa bu paketteki component ve dispatcher dalını ekle.",
+    "mechanics": [
+      {
+        "clueId": "c5",
+        "mechanicType": "sifreli_mesaj",
+        "renderer": "cipher_disc_alignment",
+        "completionEvent": "onSolved({ clueId, mechanic: \"sifreli_mesaj\" })"
+      },
+      {
+        "clueId": "c5",
+        "mechanicType": "sifreli_mesaj",
+        "renderer": "cipher_disc_alignment",
+        "componentFile": "src/components/caseMechanics/FenomenMechanicRenderer.jsx",
+        "dispatcherBranch": "clue.mechanicType === \"sifreli_mesaj\" && [\"cipher_disc_alignment\",\"timeline_board\",\"parcel_xray_layers\",\"waltz_score_stitch\",\"ventilation_valve_network\"] .includes(clue.sifre?.presentation?.style)",
+        "completionEvent": "onSolved({ clueId, mechanic: \"cipher_disc_alignment\" })",
+        "hintEvent": "onRequestHint({ clueId, penaltySeconds: 60 })",
+        "requiredData": [
+          "title",
+          "subtitle",
+          "purposeHint",
+          "resultText",
+          "interaction",
+          "style-specific data"
+        ],
+        "nonNegotiable": [
+          "JSON dışı çözüm anahtarı kullanma.",
+          "Başarı öncesinde resultText görünmez kalmalı.",
+          "Yanlış deneme doğru rotayı/cevabı göstermemeli.",
+          "Mobilde kartlar tek sütuna akmalı."
+        ]
+      }
+    ]
+  }
+}
+===== VAKA VERİSİ SONU =====
+
+===== FENOMEN v27 ÖZEL MİNİ OYUN RENDERER’I — DOSYA OLUŞTUR / EKSİKSE EKLE =====
+// src/components/caseMechanics/FenomenMechanicRenderer.jsx
+import { useMemo, useState } from "react";
+const styles = new Set(["cipher_disc_alignment","timeline_board","parcel_xray_layers","waltz_score_stitch","ventilation_valve_network"]);
+export const isFenomenMechanic = (clue) => styles.has(String(clue?.sifre?.presentation?.style ?? "").toLowerCase());
+export default function FenomenMechanicRenderer({ clue, onSolved, onRequestHint }) {
+  const p = clue?.sifre?.presentation ?? {}; const style=String(p.style ?? "").toLowerCase();
+  const [choices,setChoices]=useState({}); const [order,setOrder]=useState([]);
+  const [discs,setDiscs]=useState(()=>Object.fromEntries((p.discs??[]).map(d=>[d.id,d.initial??d.symbols?.[0]??""])));
+  const [valves,setValves]=useState(()=>Object.fromEntries((p.valves??[]).map(v=>[v.id,v.initial??"kapali"])));
+  const [result,setResult]=useState(null); const [hint,setHint]=useState(false);
+  const rotate=(d,delta)=>setDiscs(prev=>{const a=d.symbols??[];const n=Math.max(0,a.indexOf(prev[d.id]));return {...prev,[d.id]:a[(n+delta+a.length)%a.length]};});
+  const toggleOrder=(id)=>setOrder(prev=>prev.includes(id)?prev.filter(x=>x!==id):[...prev,id]);
+  const submit=()=>{let ok=false;if(style==="cipher_disc_alignment")ok=(p.correctCode??[]).every(x=>discs[x.discId]===x.symbol);else if(style==="timeline_board")ok=(p.correctOrder??[]).every((id,i)=>order[i]===id)&&order.length===(p.correctOrder??[]).length;else if(style==="ventilation_valve_network")ok=(p.correctStates??[]).every(x=>valves[x.valveId]===x.state);else ok=(p.correctAssignments??[]).every(x=>choices[x.itemId]===x.answerId);setResult(ok);if(ok)onSolved?.({clueId:clue.id,mechanic:style});};
+  const requestHint=()=>{setHint(true);onRequestHint?.({clueId:clue.id,penaltySeconds:60});};
+  if(!styles.has(style))return null;
+  return <section style={{padding:14,border:"1px solid #303a55",borderRadius:12}}><h4>{p.title}</h4><p>{p.subtitle}</p><p><b>ÇÖZÜMÜN İŞLEVİ</b><br/>{p.purposeHint}</p>
+    {style==="cipher_disc_alignment"&&<div style={grid}>{(p.discs??[]).map(d=><div key={d.id} style={card}><b>{d.label}</b><div style={disc}>{discs[d.id]}</div><button onClick={()=>rotate(d,-1)}>↶</button><button onClick={()=>rotate(d,1)}>↷</button></div>)}</div>}
+    {style==="timeline_board"&&<div style={{display:"grid",gap:8}}>{(p.events??[]).map(e=><button key={e.id} onClick={()=>toggleOrder(e.id)} style={card}><b>{e.label}</b><br/><small>{e.text}</small>{order.includes(e.id)?<em> · {order.indexOf(e.id)+1}. sıra</em>:null}</button>)}</div>}
+    {style==="parcel_xray_layers"&&<div style={grid}>{(p.layers??[]).map(x=><label key={x.id} style={card}><b>{x.label}</b><small>{x.scan}</small><select onChange={e=>setChoices({...choices,[x.id]:e.target.value})}><option value="">Bulgu seç…</option>{(p.findings??[]).map(f=><option key={f.id} value={f.id}>{f.label}</option>)}</select></label>)}</div>}
+    {style==="waltz_score_stitch"&&<div style={grid}>{(p.measures??[]).map(x=><label key={x.id} style={card}><b>{x.label}</b><small>{x.note}</small><select onChange={e=>setChoices({...choices,[x.id]:e.target.value})}><option value="">Mühür seç…</option>{(x.options??[]).map(o=><option key={o.id} value={o.id}>{o.label}</option>)}</select></label>)}</div>}
+    {style==="ventilation_valve_network"&&<div style={grid}>{(p.valves??[]).map(v=><button key={v.id} onClick={()=>setValves({...valves,[v.id]:valves[v.id]==="acik"?"kapali":"acik"})} style={card}><b>{v.label}</b><br/>{valves[v.id]==="acik"?"AÇIK":"KAPALI"}</button>)}</div>}
+    <button onClick={submit}>{p.interaction?.submitLabel??"Doğrula"}</button><button onClick={requestHint} disabled={hint}>İpucu iste (-60 sn)</button>{hint?<p>{clue?.sifre?.cozumIpucu}</p>:null}{result===false?<p>✕ {p.interaction?.failureMessage}</p>:null}{result===true?<p>✓ {p.interaction?.successMessage}<br/>{p.resultText}</p>:null}</section>;
+}
+const grid={display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(145px,1fr))",gap:8};const card={border:"1px solid #303a55",padding:10,borderRadius:10,display:"grid",gap:7};const disc={fontSize:24,textAlign:"center",padding:8};
+===== DOSYA SONU =====
+===== MEVCUT MİNİ-OYUN DISPATCHERINA EKLENECEK DAL =====
+// Mevcut genel sifreli_mesaj renderer'INDEN ÖNCE ekle.
+import FenomenMechanicRenderer, { isFenomenMechanic } from "@/components/caseMechanics/FenomenMechanicRenderer";
+if (isFenomenMechanic(clue)) return <FenomenMechanicRenderer clue={clue} onSolved={({ clueId }) => markMiniGameSolved?.(clueId)} onRequestHint={({ clueId, penaltySeconds }) => applyHintPenalty?.({ clueId, penaltySeconds })} />;
+===== YAMA SONU =====
+===== FENOMEN v27 KABUL TESTLERİ =====
+- c5: cipher_disc_alignment JSON verisinden çalışır; doğru sonuç öncesi resultText görünmez, yanlış deneme çözümü sızdırmaz, mobilde kartlar tek kolon akışına iner.
+===== TESTLER SONU =====

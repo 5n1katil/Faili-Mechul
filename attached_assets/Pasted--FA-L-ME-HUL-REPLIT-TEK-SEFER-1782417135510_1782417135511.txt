@@ -1,0 +1,317 @@
+/* ============================================================
+ *  FAİLİ MEÇHUL — REPLIT TEK SEFERLİK ENTEGRASYON PAKETİ
+ *  Bu metni Replit Agent sohbetine TEK PARÇA olarak yapıştır.
+ *  Görev: sadece JSON kaydetme. Vaka verisini mevcut kaynakta
+ *  yükle, aşağıdaki eksik renderer altyapısını ekle ve çalıştır.
+ * ------------------------------------------------------------
+ *  Vaka: Gaz Lambasının Altındaki Kesik · puzzleId=fen_premium_002
+ *  1) Önce mevcut vaka veri kaydını ve mini-oyun dispatcherını bul.
+ *  2) Var olan rendererları bozma; yalnız eksik olan dalı ekle.
+ *  3) Aşağıdaki vaka JSON’unu uygulamanın KANONİK case kaynağına ekle.
+ *  4) Kod değişikliklerinden sonra aşağıdaki kabul testlerini tarayıcıda yap.
+ *  5) Sadece açıklama yazma: dosyaları gerçekten güncelle ve test sonucunu bildir.
+ * ============================================================ */
+
+===== ZORUNLU KABUL TESTLERİ =====
+1. Eski klasik sifreli_mesaj, parmak_izi, profil_sentezi ve genel ses_kaydi rendererları regresyona uğramaz.
+===== TEST LİSTESİ SONU =====
+
+===== KANONİK VAKA VERİSİ — mevcut case registry’de fen_premium_002 olarak ekle/değiştir =====
+{
+  "puzzleId": "fen_premium_002",
+  "stars": "★★☆☆☆",
+  "gridSize": "3x3",
+  "timeLimit": 540,
+  "qaNarrativeContract": {
+    "premiumStoryGate": "pass",
+    "storyLengthWords": 154,
+    "storyClue": {
+      "visibleEvidence": "Defterin son sayfasında farklı mürekkeplerle yazılmış dört saat bulunur.",
+      "mechanicBridge": "Bu ayrıntı, c2’deki Gece Zaman Şeridi bulmacasını hikâyeye bağlar.",
+      "matrixBoundary": "Anlatı tek başına fail, araç veya mekânı kesinleştirmez."
+    },
+    "narrativeFunctions": [
+      "Gaz lambalı sokak atmosferini kurar.",
+      "Şüphelilerin gece içindeki doğal rollerini açıklar.",
+      "Zaman çizelgesinin neden kritik olduğunu adil biçimde hazırlar."
+    ]
+  },
+  "title": "Gaz Lambasının Altındaki Kesik",
+  "subtitle": "1891 · Hallowbridge · Gece devriyesi",
+  "difficulty": "Polis Memuru",
+  "difficultyLevel": 2,
+  "specialMechanic": "timeline_board",
+  "story": "1891 kışında Hallowbridge’in Darrow Mahallesi, gaz lambalarının bile sisin içinde kaybolduğu bir geceye uyandı. Sokak boyunca duyulan tek ses, aralıklı nal sesleri ve uzağa çekilen bir at arabasının tekerleriydi.\n\nSabah saatlerinde anatomist Efran Vale’in not defteri, Blackwell Sokağı’nın kaldırım taşları arasından çıktı. Defterin son sayfasında dört saat yazılıydı; fakat biri, mürekkebin üzerine aceleyle ikinci bir saat eklemişti. Olayın gerçeği, sokakla morg arasındaki zamandan çok, bu dört kaydın hangi sırayla yazıldığına bağlıydı.\n\nEski ordu cerrahı Dr. Haldun Vey, gece kliniğinden çıkmıştı. Müfettiş Rıza, mahalle şikâyetleri için devriye defteri tutuyordu. Muhabir Mina ise baskıya yetiştirmek için gazete arşivine kapanmıştı. Hepsi karanlığın içinde bir iz bırakmıştı; ancak yalnız biri, zamanın boşluğunu kendi lehine çevirebilmişti.",
+  "atmosphere": "Islak taş, gaz yağı ve taze basılmış gazete kokusu. Dar sokakta lambanın sarı ışığı, her gölgeyi olduğundan daha uzun gösteriyor.",
+  "suspects": [
+    {
+      "id": "s1",
+      "name": "Muhabir Mina Koral",
+      "icon": "📰",
+      "description": "Hallowbridge Chronicle için gece dosyaları hazırlayan muhabir.",
+      "detail": "Kayıt kâğıtlarının kenarına saat notu düşer; arşivdeki telgrafların tarihlerini ezbere bilir."
+    },
+    {
+      "id": "s2",
+      "name": "Müfettiş Rıza Merin",
+      "icon": "🕵️",
+      "description": "Mahalle şikâyetlerini izleyen deneyimli gece müfettişi.",
+      "detail": "Devriye fenerini ve tutanak kalemini yanından ayırmaz; kilitli emanet dolaplarını kendisi teslim alır."
+    },
+    {
+      "id": "s3",
+      "name": "Cerrah Dr. Haldun Vey",
+      "icon": "⚕️",
+      "description": "Eski ordu cerrahı, dar mahallede gece kliniği işleten hekim.",
+      "detail": "Neşterlerini bezlere ayrı ayrı sarar; uzun yürüyüşlerde sağ ayağını hafif sürüklediği bilinir."
+    }
+  ],
+  "weapons": [
+    {
+      "id": "w1",
+      "name": "Gaz Lambası Kolu",
+      "icon": "🪔",
+      "description": "Sokak lambasının bakım kapağından sökülebilen kısa dökme demir kol.",
+      "detail": ""
+    },
+    {
+      "id": "w2",
+      "name": "Cerrahi Sonda",
+      "icon": "🗡️",
+      "description": "İnce, tek ağızlı cerrahi alet; maharetli elde derin ve dar iz bırakır.",
+      "detail": ""
+    },
+    {
+      "id": "w3",
+      "name": "Morg Anahtarı",
+      "icon": "🗝️",
+      "description": "Alt kattaki soğuk odaya ait, eski pirinç anahtar.",
+      "detail": ""
+    }
+  ],
+  "locations": [
+    {
+      "id": "l1",
+      "name": "Blackwell Sokağı",
+      "icon": "🌫️",
+      "description": "Gaz lambaları ve dar arka kapılarıyla bilinen taş sokak.",
+      "detail": ""
+    },
+    {
+      "id": "l2",
+      "name": "Saint Varo Morgu",
+      "icon": "🏥",
+      "description": "Kayıt defterlerinin ve soğuk odaların bulunduğu hastane alt katı.",
+      "detail": ""
+    },
+    {
+      "id": "l3",
+      "name": "Chronicle Arşivi",
+      "icon": "🗂️",
+      "description": "Gazete kupürlerinin ve telgraf rulolarının tutulduğu bodrum arşivi.",
+      "detail": ""
+    }
+  ],
+  "clues": [
+    {
+      "id": "c1",
+      "title": "Kesinin Derinliği",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Kurbanın canını alan ince uçlu aletin oluşturduğu dar sıçrama çizgileri, açık sokak hava akımında ve Blackwell kaldırımında oluşmuştu.",
+      "deductionHint": "Dar iz ve açık hava akımı, hangi araç–mekân bağını destekler?",
+      "isBonus": false,
+      "revealOrder": 1,
+      "isRevealed": true,
+      "pointCost": 0
+    },
+    {
+      "id": "c2",
+      "title": "Dört Saatlik Şerit",
+      "type": "sifreli",
+      "mechanicType": "sifreli_mesaj",
+      "text": "Defterdeki dört zaman damgası, farklı mürekkeplerle yazılmış kısa olay notlarının yanına eklenmişti.",
+      "deductionHint": "Kartları, bir olayın diğerini mümkün kılan tek zaman sırasına göre diz.",
+      "isBonus": false,
+      "revealOrder": 2,
+      "isRevealed": false,
+      "pointCost": 60,
+      "sifre": {
+        "sifrelenmis": "22:15 / 22:40 / 23:05 / 23:30",
+        "sifreleTuru": "zaman şeridi sıralama",
+        "cozumIpucu": "Bir kartın metnindeki sonuç, sonraki kartın başlangıç koşuludur.",
+        "cozulmus": "DARR0W 91",
+        "aciklama": "Zaman şeridi doğru sıralandığında, anahtarın olay anında hangi zincirde olmadığını gösterir.",
+        "presentation": {
+          "style": "timeline_board",
+          "title": "Gece Zaman Şeridi",
+          "subtitle": "Dört tanık notunu neden–sonuç akışına göre sırala.",
+          "purposeHint": "Doğru sıra, ızgarada bir araç–mekân eşleşmesinin olay anında mümkün olmadığını gösterecek.",
+          "events": [
+            {
+              "id": "t1",
+              "label": "Klinik kapısı kapanır",
+              "text": "Hekimin çantası karanlıkta sokak yönüne döner."
+            },
+            {
+              "id": "t2",
+              "label": "Gaz lambası sönüp yanar",
+              "text": "Sokak bir dakika boyunca gölgede kalır."
+            },
+            {
+              "id": "t3",
+              "label": "Morg defteri açılır",
+              "text": "Anahtar, gece bekçisinden teslim alınır."
+            },
+            {
+              "id": "t4",
+              "label": "Telgraf rulosu basılır",
+              "text": "Muhabirin ilk notu arşive ulaşır."
+            }
+          ],
+          "correctOrder": [
+            "t1",
+            "t2",
+            "t3",
+            "t4"
+          ],
+          "resultText": "Zaman şeridi, morg anahtarının olay anında Saint Varo Morgu zincirinde olmadığını gösterir: Morg Anahtarı × Saint Varo Morgu.",
+          "interaction": {
+            "mode": "order_cards",
+            "submitLabel": "Zamanı Yerine Koy",
+            "successMessage": "Notlar tek bir gece akışında birleşti.",
+            "failureMessage": "Bu sıra, bir kartın sonucunu önceki olaydan önceye taşıyor."
+          }
+        }
+      }
+    },
+    {
+      "id": "c3",
+      "title": "Devriye Dolabı",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Gece devriyesinin teslim fişi, dökme demir lambalık kolunun vardiya başlangıcında müfettişin fener takımına konduğunu gösteriyor.",
+      "deductionHint": "Tek teslim fişi, hangi kişi–araç bağını doğrular?",
+      "isBonus": false,
+      "revealOrder": 3,
+      "isRevealed": false,
+      "pointCost": 60
+    },
+    {
+      "id": "c4",
+      "title": "Arşiv Kapısı",
+      "type": "tanik",
+      "mechanicType": "text",
+      "text": "Gazete arşivinin giriş defteri, cerrahın kapısının olay aralığında açılmadığını; içeride yalnız basın çalışanlarının kaldığını kaydediyor.",
+      "deductionHint": "Bir giriş defteri, hangi arşiv olasılığını kapatır?",
+      "isBonus": false,
+      "revealOrder": 4,
+      "isRevealed": false,
+      "pointCost": 60
+    },
+    {
+      "id": "b1",
+      "title": "Taş Tozu",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Cerrahın sürüklediği sağ ayakkabıdaki gri taş tozu, Blackwell kaldırımındaki yeni derz dolgusuyla aynı mineral yapıya sahipti.",
+      "deductionHint": "Bu toz hangi kişi–mekân bağını doğrular?",
+      "isBonus": true,
+      "revealOrder": 5,
+      "isRevealed": false,
+      "pointCost": 60
+    },
+    {
+      "id": "b2",
+      "title": "Kopya Masası",
+      "type": "tanik",
+      "mechanicType": "text",
+      "text": "Arşiv memuru, morg anahtarının muhabirin çantasından değil, müfettişin teslim çantasından çıktığını belirtti.",
+      "deductionHint": "Bu ifade hangi kişi–araç bağını doğrular?",
+      "isBonus": true,
+      "revealOrder": 6,
+      "isRevealed": false,
+      "pointCost": 60
+    }
+  ],
+  "assetManifest": [],
+  "solution": {
+    "suspectId": "s3",
+    "weaponId": "w2",
+    "locationId": "l1"
+  },
+  "solutionNarrative": "Dr. Haldun Vey, Blackwell Sokağı’nda Efran Vale’i cerrahi sondasıyla öldürdü; ardından tanıkların saatlerini birbirine karıştırarak suçun yönünü başka kayıtlara çevirmeye çalıştı. Zaman şeridi, olaydan sonra değiştirilen sırayı söktü. Taş tozu ve sokak izi, Haldun’u hem araca hem de Blackwell Sokağı’na bağladı.",
+  "replitIntegration": {
+    "schema": "fm_replit_runtime_contract_v1",
+    "copyTarget": "Replit Agent prompt",
+    "canonicalCaseFile": "src/data/cases/fen_premium_002.json",
+    "policy": "Var olan renderer varsa onu bozma; yoksa bu paketteki component ve dispatcher dalını ekle.",
+    "mechanics": [
+      {
+        "clueId": "c2",
+        "mechanicType": "sifreli_mesaj",
+        "renderer": "timeline_board",
+        "completionEvent": "onSolved({ clueId, mechanic: \"sifreli_mesaj\" })"
+      },
+      {
+        "clueId": "c2",
+        "mechanicType": "sifreli_mesaj",
+        "renderer": "timeline_board",
+        "componentFile": "src/components/caseMechanics/FenomenMechanicRenderer.jsx",
+        "dispatcherBranch": "clue.mechanicType === \"sifreli_mesaj\" && [\"cipher_disc_alignment\",\"timeline_board\",\"parcel_xray_layers\",\"waltz_score_stitch\",\"ventilation_valve_network\"] .includes(clue.sifre?.presentation?.style)",
+        "completionEvent": "onSolved({ clueId, mechanic: \"timeline_board\" })",
+        "hintEvent": "onRequestHint({ clueId, penaltySeconds: 60 })",
+        "requiredData": [
+          "title",
+          "subtitle",
+          "purposeHint",
+          "resultText",
+          "interaction",
+          "style-specific data"
+        ],
+        "nonNegotiable": [
+          "JSON dışı çözüm anahtarı kullanma.",
+          "Başarı öncesinde resultText görünmez kalmalı.",
+          "Yanlış deneme doğru rotayı/cevabı göstermemeli.",
+          "Mobilde kartlar tek sütuna akmalı."
+        ]
+      }
+    ]
+  }
+}
+===== VAKA VERİSİ SONU =====
+
+===== FENOMEN v27 ÖZEL MİNİ OYUN RENDERER’I — DOSYA OLUŞTUR / EKSİKSE EKLE =====
+// src/components/caseMechanics/FenomenMechanicRenderer.jsx
+import { useMemo, useState } from "react";
+const styles = new Set(["cipher_disc_alignment","timeline_board","parcel_xray_layers","waltz_score_stitch","ventilation_valve_network"]);
+export const isFenomenMechanic = (clue) => styles.has(String(clue?.sifre?.presentation?.style ?? "").toLowerCase());
+export default function FenomenMechanicRenderer({ clue, onSolved, onRequestHint }) {
+  const p = clue?.sifre?.presentation ?? {}; const style=String(p.style ?? "").toLowerCase();
+  const [choices,setChoices]=useState({}); const [order,setOrder]=useState([]);
+  const [discs,setDiscs]=useState(()=>Object.fromEntries((p.discs??[]).map(d=>[d.id,d.initial??d.symbols?.[0]??""])));
+  const [valves,setValves]=useState(()=>Object.fromEntries((p.valves??[]).map(v=>[v.id,v.initial??"kapali"])));
+  const [result,setResult]=useState(null); const [hint,setHint]=useState(false);
+  const rotate=(d,delta)=>setDiscs(prev=>{const a=d.symbols??[];const n=Math.max(0,a.indexOf(prev[d.id]));return {...prev,[d.id]:a[(n+delta+a.length)%a.length]};});
+  const toggleOrder=(id)=>setOrder(prev=>prev.includes(id)?prev.filter(x=>x!==id):[...prev,id]);
+  const submit=()=>{let ok=false;if(style==="cipher_disc_alignment")ok=(p.correctCode??[]).every(x=>discs[x.discId]===x.symbol);else if(style==="timeline_board")ok=(p.correctOrder??[]).every((id,i)=>order[i]===id)&&order.length===(p.correctOrder??[]).length;else if(style==="ventilation_valve_network")ok=(p.correctStates??[]).every(x=>valves[x.valveId]===x.state);else ok=(p.correctAssignments??[]).every(x=>choices[x.itemId]===x.answerId);setResult(ok);if(ok)onSolved?.({clueId:clue.id,mechanic:style});};
+  const requestHint=()=>{setHint(true);onRequestHint?.({clueId:clue.id,penaltySeconds:60});};
+  if(!styles.has(style))return null;
+  return <section style={{padding:14,border:"1px solid #303a55",borderRadius:12}}><h4>{p.title}</h4><p>{p.subtitle}</p><p><b>ÇÖZÜMÜN İŞLEVİ</b><br/>{p.purposeHint}</p>
+    {style==="cipher_disc_alignment"&&<div style={grid}>{(p.discs??[]).map(d=><div key={d.id} style={card}><b>{d.label}</b><div style={disc}>{discs[d.id]}</div><button onClick={()=>rotate(d,-1)}>↶</button><button onClick={()=>rotate(d,1)}>↷</button></div>)}</div>}
+    {style==="timeline_board"&&<div style={{display:"grid",gap:8}}>{(p.events??[]).map(e=><button key={e.id} onClick={()=>toggleOrder(e.id)} style={card}><b>{e.label}</b><br/><small>{e.text}</small>{order.includes(e.id)?<em> · {order.indexOf(e.id)+1}. sıra</em>:null}</button>)}</div>}
+    {style==="parcel_xray_layers"&&<div style={grid}>{(p.layers??[]).map(x=><label key={x.id} style={card}><b>{x.label}</b><small>{x.scan}</small><select onChange={e=>setChoices({...choices,[x.id]:e.target.value})}><option value="">Bulgu seç…</option>{(p.findings??[]).map(f=><option key={f.id} value={f.id}>{f.label}</option>)}</select></label>)}</div>}
+    {style==="waltz_score_stitch"&&<div style={grid}>{(p.measures??[]).map(x=><label key={x.id} style={card}><b>{x.label}</b><small>{x.note}</small><select onChange={e=>setChoices({...choices,[x.id]:e.target.value})}><option value="">Mühür seç…</option>{(x.options??[]).map(o=><option key={o.id} value={o.id}>{o.label}</option>)}</select></label>)}</div>}
+    {style==="ventilation_valve_network"&&<div style={grid}>{(p.valves??[]).map(v=><button key={v.id} onClick={()=>setValves({...valves,[v.id]:valves[v.id]==="acik"?"kapali":"acik"})} style={card}><b>{v.label}</b><br/>{valves[v.id]==="acik"?"AÇIK":"KAPALI"}</button>)}</div>}
+    <button onClick={submit}>{p.interaction?.submitLabel??"Doğrula"}</button><button onClick={requestHint} disabled={hint}>İpucu iste (-60 sn)</button>{hint?<p>{clue?.sifre?.cozumIpucu}</p>:null}{result===false?<p>✕ {p.interaction?.failureMessage}</p>:null}{result===true?<p>✓ {p.interaction?.successMessage}<br/>{p.resultText}</p>:null}</section>;
+}
+const grid={display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(145px,1fr))",gap:8};const card={border:"1px solid #303a55",padding:10,borderRadius:10,display:"grid",gap:7};const disc={fontSize:24,textAlign:"center",padding:8};
+===== DOSYA SONU =====
+===== MEVCUT MİNİ-OYUN DISPATCHERINA EKLENECEK DAL =====
+// Mevcut genel sifreli_mesaj renderer'INDEN ÖNCE ekle.
+import FenomenMechanicRenderer, { isFenomenMechanic } from "@/components/caseMechanics/FenomenMechanicRenderer";
+if (isFenomenMechanic(clue)) return <FenomenMechanicRenderer clue={clue} onSolved={({ clueId }) => markMiniGameSolved?.(clueId)} onRequestHint={({ clueId, penaltySeconds }) => applyHintPenalty?.({ clueId, penaltySeconds })} />;
+===== YAMA SONU =====
+===== FENOMEN v27 KABUL TESTLERİ =====
+- c2: timeline_board JSON verisinden çalışır; doğru sonuç öncesi resultText görünmez, yanlış deneme çözümü sızdırmaz, mobilde kartlar tek kolon akışına iner.
+===== TESTLER SONU =====

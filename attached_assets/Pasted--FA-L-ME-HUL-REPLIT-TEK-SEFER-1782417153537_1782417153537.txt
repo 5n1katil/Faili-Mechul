@@ -1,0 +1,347 @@
+/* ============================================================
+ *  FAİLİ MEÇHUL — REPLIT TEK SEFERLİK ENTEGRASYON PAKETİ
+ *  Bu metni Replit Agent sohbetine TEK PARÇA olarak yapıştır.
+ *  Görev: sadece JSON kaydetme. Vaka verisini mevcut kaynakta
+ *  yükle, aşağıdaki eksik renderer altyapısını ekle ve çalıştır.
+ * ------------------------------------------------------------
+ *  Vaka: Kızıl Şeritli Sandık · puzzleId=fen_premium_003
+ *  1) Önce mevcut vaka veri kaydını ve mini-oyun dispatcherını bul.
+ *  2) Var olan rendererları bozma; yalnız eksik olan dalı ekle.
+ *  3) Aşağıdaki vaka JSON’unu uygulamanın KANONİK case kaynağına ekle.
+ *  4) Kod değişikliklerinden sonra aşağıdaki kabul testlerini tarayıcıda yap.
+ *  5) Sadece açıklama yazma: dosyaları gerçekten güncelle ve test sonucunu bildir.
+ * ============================================================ */
+
+===== ZORUNLU KABUL TESTLERİ =====
+1. Eski klasik sifreli_mesaj, parmak_izi, profil_sentezi ve genel ses_kaydi rendererları regresyona uğramaz.
+===== TEST LİSTESİ SONU =====
+
+===== KANONİK VAKA VERİSİ — mevcut case registry’de fen_premium_003 olarak ekle/değiştir =====
+{
+  "puzzleId": "fen_premium_003",
+  "stars": "★★★☆☆",
+  "gridSize": "3x3",
+  "timeLimit": 510,
+  "qaNarrativeContract": {
+    "premiumStoryGate": "pass",
+    "storyLengthWords": 160,
+    "storyClue": {
+      "visibleEvidence": "Kızıl şeridin altında üç istasyon damgası yanlış sırada görünür.",
+      "mechanicBridge": "Bu ayrıntı, c3’teki Paket Röntgen Katmanları mini oyununa organik giriş verir.",
+      "matrixBoundary": "Anlatı tek başına fail, araç veya mekânı kesinleştirmez."
+    },
+    "narrativeFunctions": [
+      "Karantina gerilimini kurar.",
+      "Şüphelilerin paket zincirindeki rollerini ayrıştırır.",
+      "Röntgen mini oyununa dair fiziksel kanıtı önceden görünür kılar."
+    ]
+  },
+  "title": "Kızıl Şeritli Sandık",
+  "subtitle": "1996 · Northgate Teknoloji Enstitüsü · Karantina masası",
+  "difficulty": "Dedektif",
+  "difficultyLevel": 3,
+  "specialMechanic": "parcel_xray_layers",
+  "story": "1996’da Northgate Teknoloji Enstitüsü, yıllardır kimliği belirsiz paketler alan araştırma kurumlarından biriydi. Bu kez kutunun çevresindeki kızıl şerit, eskilerinden daha inceydi; dış yüzeyde yalnızca “Gürültüye değil, düzenin kendisine güven” cümlesi yazıyordu.\n\nPaket açılmadan yakalandı. Röntgen taramasında iç içe dört katman, boşlukta duran bir kartuş ve elle kesilmiş bir metal halka görüldü. Daha eski paketlerin aksine, gönderici bu kez bir ipucu bırakmıştı: şeridin altındaki kâğıda üç istasyon damgası, yanlış sırada basılmıştı.\n\nEski sistem profesörü Arel Karan, yıllardır şehir dışındaki taş kulübede yaşıyordu. Teslimat ağını bilen posta teknisyeni Dilan, o gece üniversite posta odasında vardiyadaydı. Kimyager Ozan ise karantina ekibine güvenlik çözücüsü satmak için binaya çağrılmıştı. Paket, hâlâ kapalıydı; fakat içindeki düzen çoktan birinin hikâyesini anlatmaya başlamıştı.",
+  "atmosphere": "X-ray ekranının soluk mavisi, kırmızı şerit ve ozon kokusu. Karantina odasında hiç kimse kutuya dokunmuyor; herkes onun içinden gelecek sesi bekliyordu.",
+  "suspects": [
+    {
+      "id": "s1",
+      "name": "Sistem Profesörü Arel Karan",
+      "icon": "🧠",
+      "description": "Üniversiteden ayrıldıktan sonra taş kulübede yaşayan eski sistem kuramcısı.",
+      "detail": "Eski mekanik paket çizimlerini arşivler; her düzenekte aynı kalın siyah çizim kalemini kullanır."
+    },
+    {
+      "id": "s2",
+      "name": "Posta Teknisyeni Dilan Er",
+      "icon": "📮",
+      "description": "Kampüs içi teslimat hatlarını ve gönderi kasalarını denetleyen teknisyen.",
+      "detail": "Barkod şeritlerinin istasyon sırasını ezbere bilir; vardiya kartını her geçitte okutmak zorundadır."
+    },
+    {
+      "id": "s3",
+      "name": "Kimyager Ozan Levent",
+      "icon": "⚗️",
+      "description": "Karantina laboratuvarına güvenlik çözücüleri sağlayan bağımsız kimyager.",
+      "detail": "Tozlu cam tüpleri ve reaktif şişeleri taşır; paket mekaniklerinden çok sıvı numunelerinde uzmandır."
+    }
+  ],
+  "weapons": [
+    {
+      "id": "w1",
+      "name": "Yaylı İğne Düzeneği",
+      "icon": "🪤",
+      "description": "Kapağı zorlanınca devreye giren, yayla fırlatılan kısa metal iğne sistemi.",
+      "detail": ""
+    },
+    {
+      "id": "w2",
+      "name": "Kızıl Şerit Patlatıcısı",
+      "icon": "🧨",
+      "description": "Şerit gerildiğinde çalışan küçük basınç kapsülü.",
+      "detail": ""
+    },
+    {
+      "id": "w3",
+      "name": "Basınçlı Aerosol Kartuşu",
+      "icon": "🫧",
+      "description": "Açılma anında kapalı alana toksik sis veren metal kartuş.",
+      "detail": ""
+    }
+  ],
+  "locations": [
+    {
+      "id": "l1",
+      "name": "Üniversite Posta Odası",
+      "icon": "🏫",
+      "description": "Kampüs içi paketlerin ayrıldığı, etiket tarayıcılarıyla dolu depo.",
+      "detail": ""
+    },
+    {
+      "id": "l2",
+      "name": "Karantina İnceleme Odası",
+      "icon": "🔐",
+      "description": "Şüpheli paketlerin açılmadan görüntülendiği güvenlik odası.",
+      "detail": ""
+    },
+    {
+      "id": "l3",
+      "name": "Taş Kulübe Atölyesi",
+      "icon": "🌲",
+      "description": "Şehir dışında, elektrik hattı zayıf eski bir bakım kulübesi.",
+      "detail": ""
+    }
+  ],
+  "clues": [
+    {
+      "id": "c1",
+      "title": "Boşluk Haritası",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Kurbanın canına kasteden aerosollü kartuşun röntgen boşluğu, standart iç hat kutu şablonuna sığmayan daha geniş bir yuvaya göre kesilmişti.",
+      "deductionHint": "Görüntüdeki boşluk, hangi araç–mekân bağını kapatır?",
+      "isBonus": false,
+      "revealOrder": 1,
+      "isRevealed": true,
+      "pointCost": 0
+    },
+    {
+      "id": "c2",
+      "title": "İnceleme Masası",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Karantina masasındaki kırık zemberek, yaylı iğne düzeneğinin güvenlik kapağı altında kaldığını gösteriyor.",
+      "deductionHint": "Bu zemberek hangi araç–mekân eşleşmesini doğrular?",
+      "isBonus": false,
+      "revealOrder": 2,
+      "isRevealed": false,
+      "pointCost": 60
+    },
+    {
+      "id": "c3",
+      "title": "X-Ray Katman Sıralaması",
+      "type": "sifreli",
+      "mechanicType": "sifreli_mesaj",
+      "text": "Şerit altındaki üç istasyon damgası ve röntgendeki dört katman bulundu.",
+      "deductionHint": "Katmanları doğru denetim bulgusuyla eşleştir; yalnız bir yerleşim, damgaların sırasını bozmaz.",
+      "isBonus": false,
+      "revealOrder": 3,
+      "isRevealed": false,
+      "pointCost": 60,
+      "sifre": {
+        "sifrelenmis": "KIRMIZI / BAKIR / KEÇE / CAM",
+        "sifreleTuru": "paket röntgen katmanları",
+        "cozumIpucu": "Dış yüzeyden içe doğru her katman, bir sonraki malzemeyi daraltır; damga sırasını ters çevirme.",
+        "cozulmus": "X-RAY 442",
+        "aciklama": "Katmanlar doğru sıraya yerleşince, kartuşun hangi üretim zincirine ait olmadığı görünür.",
+        "presentation": {
+          "style": "parcel_xray_layers",
+          "title": "Paket Röntgen Katmanları",
+          "subtitle": "Dört iç katmanı, röntgendeki güvenlik bulgularıyla eşleştir.",
+          "purposeHint": "Doğru katman düzeni, ızgarada bir kişi–araç eşleşmesinin mümkün olmadığını gösterecek.",
+          "layers": [
+            {
+              "id": "x1",
+              "label": "Dış Kılıf",
+              "scan": "Kızıl şerit altında lifli kâğıt"
+            },
+            {
+              "id": "x2",
+              "label": "Koruma Halkası",
+              "scan": "Manyetik olmayan ince metal"
+            },
+            {
+              "id": "x3",
+              "label": "Sönüm Katmanı",
+              "scan": "Sertleşmiş keçe"
+            },
+            {
+              "id": "x4",
+              "label": "Kartuş Yatağı",
+              "scan": "Cam tozu içermeyen boşluk"
+            }
+          ],
+          "findings": [
+            {
+              "id": "f1",
+              "label": "İstasyon 1: lifli kâğıt yüzeyi"
+            },
+            {
+              "id": "f2",
+              "label": "İstasyon 2: mekanik halka presi"
+            },
+            {
+              "id": "f3",
+              "label": "İstasyon 3: darbe sönüm keçesi"
+            },
+            {
+              "id": "f4",
+              "label": "İstasyon 4: atölye tipi boş kartuş yatağı"
+            }
+          ],
+          "correctAssignments": [
+            {
+              "itemId": "x1",
+              "answerId": "f1"
+            },
+            {
+              "itemId": "x2",
+              "answerId": "f2"
+            },
+            {
+              "itemId": "x3",
+              "answerId": "f3"
+            },
+            {
+              "itemId": "x4",
+              "answerId": "f4"
+            }
+          ],
+          "resultText": "Katman düzeni aerosol kartuşunun laboratuvar tüp standardında olmadığını gösterir: Kimyager Ozan Levent × Basınçlı Aerosol Kartuşu.",
+          "interaction": {
+            "mode": "assign_layers",
+            "submitLabel": "Röntgeni Eşleştir",
+            "successMessage": "Katmanlar tek bir kapatma düzeninde birleşti.",
+            "failureMessage": "Bu eşleşme, damga sırasıyla ve röntgen boşluklarıyla birlikte tutarlı değil."
+          }
+        }
+      }
+    },
+    {
+      "id": "c4",
+      "title": "Vardiya Tarayıcısı",
+      "type": "tanik",
+      "mechanicType": "text",
+      "text": "Kampüs geçiş listesi, posta teknisyeninin o saatte paket hattındaki kilitli tarayıcıya kartını okuttuğunu kaydediyor.",
+      "deductionHint": "Kartlı geçiş, hangi kişi–mekân bağını doğrular?",
+      "isBonus": false,
+      "revealOrder": 4,
+      "isRevealed": false,
+      "pointCost": 60
+    },
+    {
+      "id": "b1",
+      "title": "Kulübe Külü",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Atölye sobasındaki ince siyah kalem artığı, paket çizimlerinde kullanılan kalın çizim kalemiyle aynı yoğunlukta çıktı.",
+      "deductionHint": "Bu kalıntı hangi kişi–mekân bağını doğrular?",
+      "isBonus": true,
+      "revealOrder": 5,
+      "isRevealed": false,
+      "pointCost": 60
+    },
+    {
+      "id": "b2",
+      "title": "Zemberek Satışı",
+      "type": "tanik",
+      "mechanicType": "text",
+      "text": "Karantina görevlisi, yaylı iğne kasasının kimyagerin getirdiği reaktif kutusundan değil teslimat hattının arızalı kasasından çıktığını söyledi.",
+      "deductionHint": "Bu ifade hangi kişi–araç bağını doğrular?",
+      "isBonus": true,
+      "revealOrder": 6,
+      "isRevealed": false,
+      "pointCost": 60
+    }
+  ],
+  "assetManifest": [],
+  "solution": {
+    "suspectId": "s1",
+    "weaponId": "w3",
+    "locationId": "l3"
+  },
+  "solutionNarrative": "Arel Karan, taş kulübesinde hazırladığı aerosollü sandığı eski kampüs zincirine karıştırdı. Röntgen katmanları, Ozan’ın kimyasal tüplerinden değil Arel’in mekanik çizimlerinin izlediği atölye standardından çıktığını gösterdi. Dilan’ın posta odası kaydı ise olayın teslimat kısmını açıklar, tasarımın kaynağını değil.",
+  "replitIntegration": {
+    "schema": "fm_replit_runtime_contract_v1",
+    "copyTarget": "Replit Agent prompt",
+    "canonicalCaseFile": "src/data/cases/fen_premium_003.json",
+    "policy": "Var olan renderer varsa onu bozma; yoksa bu paketteki component ve dispatcher dalını ekle.",
+    "mechanics": [
+      {
+        "clueId": "c3",
+        "mechanicType": "sifreli_mesaj",
+        "renderer": "parcel_xray_layers",
+        "completionEvent": "onSolved({ clueId, mechanic: \"sifreli_mesaj\" })"
+      },
+      {
+        "clueId": "c3",
+        "mechanicType": "sifreli_mesaj",
+        "renderer": "parcel_xray_layers",
+        "componentFile": "src/components/caseMechanics/FenomenMechanicRenderer.jsx",
+        "dispatcherBranch": "clue.mechanicType === \"sifreli_mesaj\" && [\"cipher_disc_alignment\",\"timeline_board\",\"parcel_xray_layers\",\"waltz_score_stitch\",\"ventilation_valve_network\"] .includes(clue.sifre?.presentation?.style)",
+        "completionEvent": "onSolved({ clueId, mechanic: \"parcel_xray_layers\" })",
+        "hintEvent": "onRequestHint({ clueId, penaltySeconds: 60 })",
+        "requiredData": [
+          "title",
+          "subtitle",
+          "purposeHint",
+          "resultText",
+          "interaction",
+          "style-specific data"
+        ],
+        "nonNegotiable": [
+          "JSON dışı çözüm anahtarı kullanma.",
+          "Başarı öncesinde resultText görünmez kalmalı.",
+          "Yanlış deneme doğru rotayı/cevabı göstermemeli.",
+          "Mobilde kartlar tek sütuna akmalı."
+        ]
+      }
+    ]
+  }
+}
+===== VAKA VERİSİ SONU =====
+
+===== FENOMEN v27 ÖZEL MİNİ OYUN RENDERER’I — DOSYA OLUŞTUR / EKSİKSE EKLE =====
+// src/components/caseMechanics/FenomenMechanicRenderer.jsx
+import { useMemo, useState } from "react";
+const styles = new Set(["cipher_disc_alignment","timeline_board","parcel_xray_layers","waltz_score_stitch","ventilation_valve_network"]);
+export const isFenomenMechanic = (clue) => styles.has(String(clue?.sifre?.presentation?.style ?? "").toLowerCase());
+export default function FenomenMechanicRenderer({ clue, onSolved, onRequestHint }) {
+  const p = clue?.sifre?.presentation ?? {}; const style=String(p.style ?? "").toLowerCase();
+  const [choices,setChoices]=useState({}); const [order,setOrder]=useState([]);
+  const [discs,setDiscs]=useState(()=>Object.fromEntries((p.discs??[]).map(d=>[d.id,d.initial??d.symbols?.[0]??""])));
+  const [valves,setValves]=useState(()=>Object.fromEntries((p.valves??[]).map(v=>[v.id,v.initial??"kapali"])));
+  const [result,setResult]=useState(null); const [hint,setHint]=useState(false);
+  const rotate=(d,delta)=>setDiscs(prev=>{const a=d.symbols??[];const n=Math.max(0,a.indexOf(prev[d.id]));return {...prev,[d.id]:a[(n+delta+a.length)%a.length]};});
+  const toggleOrder=(id)=>setOrder(prev=>prev.includes(id)?prev.filter(x=>x!==id):[...prev,id]);
+  const submit=()=>{let ok=false;if(style==="cipher_disc_alignment")ok=(p.correctCode??[]).every(x=>discs[x.discId]===x.symbol);else if(style==="timeline_board")ok=(p.correctOrder??[]).every((id,i)=>order[i]===id)&&order.length===(p.correctOrder??[]).length;else if(style==="ventilation_valve_network")ok=(p.correctStates??[]).every(x=>valves[x.valveId]===x.state);else ok=(p.correctAssignments??[]).every(x=>choices[x.itemId]===x.answerId);setResult(ok);if(ok)onSolved?.({clueId:clue.id,mechanic:style});};
+  const requestHint=()=>{setHint(true);onRequestHint?.({clueId:clue.id,penaltySeconds:60});};
+  if(!styles.has(style))return null;
+  return <section style={{padding:14,border:"1px solid #303a55",borderRadius:12}}><h4>{p.title}</h4><p>{p.subtitle}</p><p><b>ÇÖZÜMÜN İŞLEVİ</b><br/>{p.purposeHint}</p>
+    {style==="cipher_disc_alignment"&&<div style={grid}>{(p.discs??[]).map(d=><div key={d.id} style={card}><b>{d.label}</b><div style={disc}>{discs[d.id]}</div><button onClick={()=>rotate(d,-1)}>↶</button><button onClick={()=>rotate(d,1)}>↷</button></div>)}</div>}
+    {style==="timeline_board"&&<div style={{display:"grid",gap:8}}>{(p.events??[]).map(e=><button key={e.id} onClick={()=>toggleOrder(e.id)} style={card}><b>{e.label}</b><br/><small>{e.text}</small>{order.includes(e.id)?<em> · {order.indexOf(e.id)+1}. sıra</em>:null}</button>)}</div>}
+    {style==="parcel_xray_layers"&&<div style={grid}>{(p.layers??[]).map(x=><label key={x.id} style={card}><b>{x.label}</b><small>{x.scan}</small><select onChange={e=>setChoices({...choices,[x.id]:e.target.value})}><option value="">Bulgu seç…</option>{(p.findings??[]).map(f=><option key={f.id} value={f.id}>{f.label}</option>)}</select></label>)}</div>}
+    {style==="waltz_score_stitch"&&<div style={grid}>{(p.measures??[]).map(x=><label key={x.id} style={card}><b>{x.label}</b><small>{x.note}</small><select onChange={e=>setChoices({...choices,[x.id]:e.target.value})}><option value="">Mühür seç…</option>{(x.options??[]).map(o=><option key={o.id} value={o.id}>{o.label}</option>)}</select></label>)}</div>}
+    {style==="ventilation_valve_network"&&<div style={grid}>{(p.valves??[]).map(v=><button key={v.id} onClick={()=>setValves({...valves,[v.id]:valves[v.id]==="acik"?"kapali":"acik"})} style={card}><b>{v.label}</b><br/>{valves[v.id]==="acik"?"AÇIK":"KAPALI"}</button>)}</div>}
+    <button onClick={submit}>{p.interaction?.submitLabel??"Doğrula"}</button><button onClick={requestHint} disabled={hint}>İpucu iste (-60 sn)</button>{hint?<p>{clue?.sifre?.cozumIpucu}</p>:null}{result===false?<p>✕ {p.interaction?.failureMessage}</p>:null}{result===true?<p>✓ {p.interaction?.successMessage}<br/>{p.resultText}</p>:null}</section>;
+}
+const grid={display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(145px,1fr))",gap:8};const card={border:"1px solid #303a55",padding:10,borderRadius:10,display:"grid",gap:7};const disc={fontSize:24,textAlign:"center",padding:8};
+===== DOSYA SONU =====
+===== MEVCUT MİNİ-OYUN DISPATCHERINA EKLENECEK DAL =====
+// Mevcut genel sifreli_mesaj renderer'INDEN ÖNCE ekle.
+import FenomenMechanicRenderer, { isFenomenMechanic } from "@/components/caseMechanics/FenomenMechanicRenderer";
+if (isFenomenMechanic(clue)) return <FenomenMechanicRenderer clue={clue} onSolved={({ clueId }) => markMiniGameSolved?.(clueId)} onRequestHint={({ clueId, penaltySeconds }) => applyHintPenalty?.({ clueId, penaltySeconds })} />;
+===== YAMA SONU =====
+===== FENOMEN v27 KABUL TESTLERİ =====
+- c3: parcel_xray_layers JSON verisinden çalışır; doğru sonuç öncesi resultText görünmez, yanlış deneme çözümü sızdırmaz, mobilde kartlar tek kolon akışına iner.
+===== TESTLER SONU =====
