@@ -413,7 +413,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
   },
-  headerTitle: { fontSize: 22, fontFamily: "PlayfairDisplay", fontWeight: "400", letterSpacing: 0 },
+  headerTitle: { fontSize: 22, fontFamily: "PlayfairDisplay", fontWeight: "700", letterSpacing: 0 },
   headerSub: { fontSize: 12, fontWeight: "500", marginTop: 2 },
   myRankBadge: {
     flexDirection: "row",
@@ -502,6 +502,6 @@ const styles = StyleSheet.create({
   avgTimeRow: { flexDirection: "row", alignItems: "center", gap: 3, marginTop: 2 },
   avgTimeText: { fontSize: 10 },
   rankScore: { alignItems: "flex-end", minWidth: 52 },
-  scoreValue: { fontSize: 18, fontWeight: "800" },
+  scoreValue: { fontSize: 18, fontFamily: "PlayfairDisplay", fontWeight: "600" },
   scoreLabel: { fontSize: 10, fontWeight: "500" },
 });

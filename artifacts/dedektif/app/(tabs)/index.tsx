@@ -1025,7 +1025,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   rankBadgeText: { fontSize: 13, fontFamily: "PlayfairDisplay", fontWeight: "600", letterSpacing: 0.3 },
-  rankPosition: { fontSize: 32, fontWeight: "900", letterSpacing: -0.5 },
+  rankPosition: { fontSize: 32, fontFamily: "PlayfairDisplay", fontWeight: "700", letterSpacing: -0.5 },
   rankUserRow: { flexDirection: "row", alignItems: "center", gap: 10 },
   rankUserAvatar: {
     width: 40,

@@ -665,7 +665,7 @@ const styles = StyleSheet.create({
   pageTitle: {
     fontSize: 24,
     fontFamily: "PlayfairDisplay",
-    fontWeight: "400",
+    fontWeight: "700",
     letterSpacing: 0.3,
   },
   pageSubtitle: {
