@@ -1,0 +1,347 @@
+/* ============================================================
+ *  FAİLİ MEÇHUL — REPLIT TEK SEFERLİK ENTEGRASYON PAKETİ
+ *  Bu metni Replit Agent sohbetine TEK PARÇA olarak yapıştır.
+ *  Görev: sadece JSON kaydetme. Vaka verisini mevcut kaynakta
+ *  yükle, aşağıdaki eksik renderer altyapısını ekle ve çalıştır.
+ * ------------------------------------------------------------
+ *  Vaka: Ra’nın Gözü · puzzleId=mit_004
+ *  1) Önce mevcut vaka veri kaydını ve mini-oyun dispatcherını bul.
+ *  2) Var olan rendererları bozma; yalnız eksik olan dalı ekle.
+ *  3) Aşağıdaki vaka JSON’unu uygulamanın KANONİK case kaynağına ekle.
+ *  4) Kod değişikliklerinden sonra aşağıdaki kabul testlerini tarayıcıda yap.
+ *  5) Sadece açıklama yazma: dosyaları gerçekten güncelle ve test sonucunu bildir.
+ * ============================================================ */
+
+===== ZORUNLU KABUL TESTLERİ =====
+1. Eski klasik sifreli_mesaj, parmak_izi, profil_sentezi ve genel ses_kaydi rendererları regresyona uğramaz.
+===== TEST LİSTESİ SONU =====
+
+===== KANONİK VAKA VERİSİ — mevcut case registry’de mit_004 olarak ekle/değiştir =====
+{
+  "puzzleId": "mit_004",
+  "stars": "★★★★☆",
+  "gridSize": "3x3",
+  "timeLimit": 480,
+  "qaNarrativeContract": {
+    "premiumStoryGate": "pass",
+    "storyLengthWords": 148,
+    "storyClue": {
+      "visibleEvidence": "Dört güneş taşı koridorda yerinden oynatılmıştır.",
+      "mechanicBridge": "Bu ayrıntı c3’teki Ra’nın Güneş Taşı Dizisi mini oyununun fiziksel kaynağıdır.",
+      "matrixBoundary": "Anlatı tek başına fail, araç veya mekânı kesinleştirmez."
+    },
+    "narrativeFunctions": [
+      "Mısır tapınak atmosferini kurar.",
+      "Üç tanrısal figürün gerilimini ayırır.",
+      "Güneş taşlarını çözüme doğal biçimde bağlar."
+    ]
+  },
+  "title": "Ra’nın Gözü",
+  "subtitle": "Heliopolis · Çöl Kapısı Avlusu",
+  "difficulty": "Başkomiser",
+  "difficultyLevel": 4,
+  "specialMechanic": "sunstone_reflection_array_sifreli_mesaj",
+  "story": "Heliopolis’te Ra’nın baş rahibi, güneş doğmadan hemen önce kutsal iç odada dizlerinin üzerine çökmüş halde bulundu. Yüzü doğuya dönüktü; ciğerlerinden çıkan kum ise tapınağın içinden değil, çöle açılan taş avludan gelmiş gibiydi.\n\nThoth papirüs arşivinde kehanetleri kopyalıyordu. Sekhmet, şifa ritüelinin yanlış anlaşılmasından öfkeliydi. Set ise Ra’ya sunulacak bir raporun kendi varlığını tapınaktan silebileceğini öğrenmişti.\n\nİç odadan dış avluya uzanan koridorda dört güneş taşı oynatılmıştı. Sabah ışığı her taşa vurduğunda, farklı duvarlarda birer işaret beliriyor; sanki tapınağın kendisi hangi gölgenin gerçek olduğunu söylemeye çalışıyordu.",
+  "atmosphere": "Yağ lambaları henüz sönmemiş; Nil kokusu taş sütunlarda ağırlaşmış. İlk güneş ışığı, kumun içindeki sırları bir anlığına görünür kılıyor.",
+  "suspects": [
+    {
+      "id": "s1",
+      "name": "Thoth",
+      "icon": "🪶",
+      "description": "Bilgelik ve yazı tanrısı.",
+      "detail": "Mürekkep şişelerinin mühürlerini gün gün saklar; papirüs liflerindeki farkı uzaktan tanır."
+    },
+    {
+      "id": "s2",
+      "name": "Set",
+      "icon": "🌪️",
+      "description": "Kaos ve çöl tanrısı.",
+      "detail": "Siyah reçineli gölge tacı, kum girdabı ritüellerinde havaya ince bir koku bırakır."
+    },
+    {
+      "id": "s3",
+      "name": "Sekhmet",
+      "icon": "🦁",
+      "description": "Savaş ve şifa tanrıçası.",
+      "detail": "Pençe kancasını törenlerde taşır; asla avlu kumuna yalın ayak basmaz."
+    }
+  ],
+  "weapons": [
+    {
+      "id": "w1",
+      "name": "Zehirli Papirüs Mürekkebi",
+      "icon": "🖋️",
+      "description": "Kobra özlü, iç odadaki yazı masasından alınan yoğun mürekkep.",
+      "detail": ""
+    },
+    {
+      "id": "w2",
+      "name": "Çöl Kumu Fırtınası Tuzağı",
+      "icon": "🌪️",
+      "description": "Avlu rüzgârını dar bir hatta toplayan ölümcül kum düzeneği.",
+      "detail": ""
+    },
+    {
+      "id": "w3",
+      "name": "Sekhmet’in Pençe Kancası",
+      "icon": "🗡️",
+      "description": "Aslan başlı tanrıçanın ritüel demir kancası.",
+      "detail": ""
+    }
+  ],
+  "locations": [
+    {
+      "id": "l1",
+      "name": "Kutsal İç Oda",
+      "icon": "☀️",
+      "description": "Ra heykelinin ve altın yazı masasının bulunduğu en iç bölüm.",
+      "detail": ""
+    },
+    {
+      "id": "l2",
+      "name": "Papirüs Arşivi",
+      "icon": "📚",
+      "description": "Thoth’un mühürlü kehanetlerinin saklandığı sessiz oda.",
+      "detail": ""
+    },
+    {
+      "id": "l3",
+      "name": "Çöl Kapısı Avlusu",
+      "icon": "🏜️",
+      "description": "Tapınağın çöle açılan, kum halkalarıyla dolu taş avlusu.",
+      "detail": ""
+    }
+  ],
+  "clues": [
+    {
+      "id": "c1",
+      "title": "Girdabın İlk Kaydı",
+      "type": "tanik",
+      "mechanicType": "text",
+      "text": "Heliopolis tabibi, baş rahibin son nefesinde ciğerlerine dolan ince taş tozunun tek bir girdap bileşimiyle uyumlu olduğunu yazdı. Ölüm, nefes kesen çöl düzeneğiyle gelmişti; ancak rüzgârın hangi eşiği geçtiği henüz belli değildi.",
+      "deductionHint": "Bu toz, hangi ölümcül aracın iç odada kullanılamayacağını düşündürür?",
+      "isBonus": false,
+      "revealOrder": 1,
+      "isRevealed": true,
+      "pointCost": 0
+    },
+    {
+      "id": "c2",
+      "title": "Arşiv Şişesinin Mührü",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Papirüs arşivindeki koyu renkli yazı şişesi, geceden sonra da aynı kurşun mühürle kapalıydı. Şişenin altındaki kod, yalnız arşiv rafındaki kayıt numarasıyla örtüşüyordu.",
+      "deductionHint": "Mühür ve kayıt numarası, hangi araç–mekân bağını doğrular?",
+      "isBonus": false,
+      "revealOrder": 2,
+      "isRevealed": false,
+      "pointCost": 60
+    },
+    {
+      "id": "c3",
+      "title": "Ra’nın Güneş Taşı Dizisi",
+      "type": "sifreli",
+      "mechanicType": "sifreli_mesaj",
+      "text": "Koridordaki dört güneş taşı, geceden sonra farklı yüzlere çevrilmişti. Taşlardaki ışık lekeleri, bir savaş tanrıçasının pençe ritmiyle değil; kum akımını yönlendiren sabit bir yansımayla uyumluydu.",
+      "deductionHint": "Taşları doğru hizalayınca, hangi kişi–araç eşleşmesinin imkânsız olduğu görünür?",
+      "isBonus": false,
+      "revealOrder": 3,
+      "isRevealed": false,
+      "pointCost": 60,
+      "sifre": {
+        "sifrelenmis": "RA / IBİS / ÇÖL / PENÇE — DÖRT IŞIN",
+        "sifreleTuru": "güneş taşı yansıma düzeni",
+        "cozumIpucu": "İşaretlerin yerini, anlatının verdiği fiziksel sıraya göre dene.",
+        "cozulmus": "RA-HELIOPOLIS",
+        "aciklama": "Bulmacanın taşıdığı düzen çözüldüğünde geceye ait tek bir bağlantı belirginleşir.",
+        "presentation": {
+          "style": "sunstone_reflection_array",
+          "title": "Ra’nın Güneş Taşı Dizisi",
+          "subtitle": "Dört güneş taşının ışığını, yalnız mümkün olan duvar işaretine yansıt.",
+          "purposeHint": "Doğru düzen, ızgarada tek bir bağlantıyı elemek ya da doğrulamak için kullanılır.",
+          "mirrors": [
+            {
+              "id": "m1",
+              "label": "Doğu Taşı",
+              "beam": "İlk ışın"
+            },
+            {
+              "id": "m2",
+              "label": "Kum Taşı",
+              "beam": "Dönen gölge"
+            },
+            {
+              "id": "m3",
+              "label": "İbis Taşı",
+              "beam": "Kısa parıltı"
+            },
+            {
+              "id": "m4",
+              "label": "Gece Taşı",
+              "beam": "Kesik çizgi"
+            }
+          ],
+          "targets": [
+            {
+              "id": "t1",
+              "label": "Lotus Duvarı"
+            },
+            {
+              "id": "t2",
+              "label": "Çöl Girdabı"
+            },
+            {
+              "id": "t3",
+              "label": "Pençe Sütunu"
+            },
+            {
+              "id": "t4",
+              "label": "Yazı Masası"
+            }
+          ],
+          "correctAssignments": [
+            {
+              "itemId": "m1",
+              "answerId": "t4"
+            },
+            {
+              "itemId": "m2",
+              "answerId": "t2"
+            },
+            {
+              "itemId": "m3",
+              "answerId": "t1"
+            },
+            {
+              "itemId": "m4",
+              "answerId": "t3"
+            }
+          ],
+          "resultText": "Yansıma dizisi, pençe kancasının Sekhmet’in avlu zincirine ait olamayacağını gösterir: Sekhmet × Sekhmet’in Pençe Kancası.",
+          "interaction": {
+            "mode": "reflect_sunbeams",
+            "submitLabel": "Işınları Doğrula",
+            "successMessage": "Güneş taşları tek bir gölge düzeni verdi.",
+            "failureMessage": "Bu yansıma, aynı anda hem lotus hem kum gölgesini taşıyamaz."
+          }
+        }
+      }
+    },
+    {
+      "id": "c4",
+      "title": "İç Odanın Yazı Nöbeti",
+      "type": "tanik",
+      "mechanicType": "text",
+      "text": "Altın heykelin önündeki yazı masasının nöbetçisi, ibis başlı yazıcının gece boyunca iç odadan ayrılmadığını; taşıdığı kendi mühür tabletini şafakta da masada bıraktığını söyledi.",
+      "deductionHint": "Nöbetçi kaydı, hangi kişi–mekân bağını doğrular?",
+      "isBonus": false,
+      "revealOrder": 4,
+      "isRevealed": false,
+      "pointCost": 60
+    },
+    {
+      "id": "c5",
+      "title": "Set’in Kum Halkası",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Çöl kapısı avlusunda, gölge tacındaki siyah reçineyle karışmış ince bir kum halkası bulundu. Halka, taşların dış çevresinde yalnızca bir kez kapanıyordu.",
+      "deductionHint": "Bu halka, hangi kişiyi hangi avluya yaklaştırır?",
+      "isBonus": true,
+      "revealOrder": 5,
+      "isRevealed": false,
+      "pointCost": 60
+    },
+    {
+      "id": "b1",
+      "title": "Sekhmet’in Kayıtlı Mürekkebi",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Aslan başlı tanrıçanın şifa defterindeki son satır, koyu yazı şişesinin kendisine teslim edildiğini gösteren bir kabul mührü taşıyordu.",
+      "deductionHint": "Kabul mührü, hangi kişi–araç bağını doğrular?",
+      "isBonus": true,
+      "revealOrder": 6,
+      "isRevealed": false,
+      "pointCost": 60
+    },
+    {
+      "id": "b2",
+      "title": "Thoth’un Kanca Mührü",
+      "type": "tanik",
+      "mechanicType": "text",
+      "text": "İbis başlı yazıcının iç oda sandığındaki metal mühür, ritüel pençe kancasının gece boyunca onun gözetiminde kaldığını belirtiyordu.",
+      "deductionHint": "Sandık mührü, hangi kişi–araç bağını doğrular?",
+      "isBonus": true,
+      "revealOrder": 7,
+      "isRevealed": false,
+      "pointCost": 60
+    }
+  ],
+  "assetManifest": [],
+  "solution": {
+    "suspectId": "s2",
+    "weaponId": "w2",
+    "locationId": "l3"
+  },
+  "solutionNarrative": "Set, baş rahibin Ra’ya ileteceği raporu engellemek için çöl avlusundaki kum düzeneğini çalıştırdı. Güneş taşlarını yerinden oynatması, rüzgârın dış avludan iç odaya doğru görünmesini sağladı. Thoth’un mürekkebi mühürlü, Sekhmet’in kancası ise ışık dizisinde başka bir hatla bağlıydı. Kum halkası, Set’in tacındaki reçineyle birleşince gerçek kaynak ortaya çıktı.",
+  "replitIntegration": {
+    "schema": "fm_replit_runtime_contract_v1",
+    "copyTarget": "Replit Agent prompt",
+    "canonicalCaseFile": "src/data/cases/mit_004.json",
+    "policy": "Var olan renderer varsa onu bozma; yoksa bu paketteki component ve dispatcher dalını ekle.",
+    "mechanics": [
+      {
+        "clueId": "c3",
+        "mechanicType": "sifreli_mesaj",
+        "renderer": "sunstone_reflection_array",
+        "completionEvent": "onSolved({ clueId, mechanic: \"sifreli_mesaj\" })"
+      },
+      {
+        "clueId": "c3",
+        "mechanicType": "sifreli_mesaj",
+        "renderer": "sunstone_reflection_array",
+        "componentFile": "src/components/caseMechanics/MythologyMechanicRenderer.jsx",
+        "dispatcherBranch": "clue.mechanicType === \"sifreli_mesaj\" && [\"olympian_offering_scale\",\"forge_bellows_cycle\",\"laurel_knot_decoder\",\"sunstone_reflection_array\",\"raven_feather_lattice\"] .includes(clue.sifre?.presentation?.style)",
+        "completionEvent": "onSolved({ clueId, mechanic: \"sunstone_reflection_array\" })",
+        "hintEvent": "onRequestHint({ clueId, penaltySeconds: 60 })",
+        "requiredData": [
+          "title",
+          "subtitle",
+          "purposeHint",
+          "resultText",
+          "interaction",
+          "style-specific data"
+        ],
+        "nonNegotiable": [
+          "JSON dışı çözüm anahtarı kullanma.",
+          "Başarı öncesinde resultText görünmez kalmalı.",
+          "Yanlış deneme doğru eşlemeyi açmamalı.",
+          "Mobilde kartlar tek sütuna akmalı."
+        ]
+      }
+    ]
+  }
+}
+===== VAKA VERİSİ SONU =====
+===== MİTOLOJİ v28 ÖZEL MİNİ OYUN RENDERER’I — DOSYA OLUŞTUR / EKSİKSE EKLE =====
+// src/components/caseMechanics/MythologyMechanicRenderer.jsx
+import { useState } from "react";
+const styles=new Set(["olympian_offering_scale","forge_bellows_cycle","laurel_knot_decoder","sunstone_reflection_array","raven_feather_lattice"]);
+export const isMythologyMechanic=(clue)=>styles.has(String(clue?.sifre?.presentation?.style??"").toLowerCase());
+export default function MythologyMechanicRenderer({clue,onSolved,onRequestHint}){
+  const p=clue?.sifre?.presentation??{}; const style=String(p.style??"").toLowerCase();
+  const [choices,setChoices]=useState({}); const [order,setOrder]=useState([]); const [result,setResult]=useState(null); const [hint,setHint]=useState(false);
+  if(!styles.has(style)) return null;
+  const source=style==="olympian_offering_scale"?p.offerings:style==="laurel_knot_decoder"?p.cords:style==="sunstone_reflection_array"?p.mirrors:style==="raven_feather_lattice"?p.feathers:[];
+  const options=style==="olympian_offering_scale"?p.altars:style==="laurel_knot_decoder"?p.knots:style==="sunstone_reflection_array"?p.targets:style==="raven_feather_lattice"?p.seals:[];
+  const submit=()=>{const ok=style==="forge_bellows_cycle"?(p.correctOrder??[]).every((id,index)=>order[index]===id)&&order.length===(p.correctOrder??[]).length:(p.correctAssignments??[]).every(x=>choices[x.itemId]===x.answerId);setResult(ok);if(ok)onSolved?.({clueId:clue.id,mechanic:style});};
+  return <section className="mythology-mechanic"><h4>{p.title}</h4><p>{p.subtitle}</p><p><b>ÇÖZÜMÜN İŞLEVİ</b><br/>{p.purposeHint}</p>{style==="forge_bellows_cycle"?<div className="mythology-stack">{(p.bellows??[]).map(b=><button key={b.id} onClick={()=>setOrder(prev=>prev.includes(b.id)?prev.filter(x=>x!==b.id):[...prev,b.id])}><b>{b.label}</b><br/><small>{b.text}</small>{order.includes(b.id)?" · seçildi":""}</button>)}</div>:<div className="mythology-grid">{source.map(item=><label key={item.id}><b>{item.label}</b><small>{item.mark??item.text??item.beam}</small><select value={choices[item.id]??""} onChange={e=>setChoices({...choices,[item.id]:e.target.value})}><option value="">Eşleşme seç…</option>{options.map(option=><option key={option.id} value={option.id}>{option.label}</option>)}</select></label>)}</div>}<button onClick={submit}>{p.interaction?.submitLabel??"Doğrula"}</button><button disabled={hint} onClick={()=>{setHint(true);onRequestHint?.({clueId:clue.id,penaltySeconds:60});}}>İpucu iste (-60 sn)</button>{hint?<p>{clue?.sifre?.cozumIpucu}</p>:null}{result===false?<p>✕ {p.interaction?.failureMessage}</p>:null}{result===true?<p>✓ {p.interaction?.successMessage}<br/>{p.resultText}</p>:null}</section>;
+}
+===== DOSYA SONU =====
+===== MEVCUT MİNİ OYUN DISPATCHERINA EKLENECEK DAL =====
+// Mevcut genel sifreli_mesaj renderer'INDEN ÖNCE ekle.
+import MythologyMechanicRenderer,{isMythologyMechanic} from "@/components/caseMechanics/MythologyMechanicRenderer";
+if(isMythologyMechanic(clue))return <MythologyMechanicRenderer clue={clue} onSolved={({clueId})=>markMiniGameSolved?.(clueId)} onRequestHint={({clueId,penaltySeconds})=>applyHintPenalty?.({clueId,penaltySeconds})}/>;
+===== YAMA SONU =====
+===== MİTOLOJİ v28 KABUL TESTLERİ =====
+- c3: sunstone_reflection_array doğru sonuç öncesi resultText görünmez; yanlış deneme çözümü sızdırmaz; mobilde kartlar tek kolona iner.
+===== TESTLER SONU =====

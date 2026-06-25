@@ -1,0 +1,317 @@
+/* ============================================================
+ *  FAİLİ MEÇHUL — REPLIT TEK SEFERLİK ENTEGRASYON PAKETİ
+ *  Bu metni Replit Agent sohbetine TEK PARÇA olarak yapıştır.
+ *  Görev: sadece JSON kaydetme. Vaka verisini mevcut kaynakta
+ *  yükle, aşağıdaki eksik renderer altyapısını ekle ve çalıştır.
+ * ------------------------------------------------------------
+ *  Vaka: Ergenekon’da Gizem · puzzleId=mit_002
+ *  1) Önce mevcut vaka veri kaydını ve mini-oyun dispatcherını bul.
+ *  2) Var olan rendererları bozma; yalnız eksik olan dalı ekle.
+ *  3) Aşağıdaki vaka JSON’unu uygulamanın KANONİK case kaynağına ekle.
+ *  4) Kod değişikliklerinden sonra aşağıdaki kabul testlerini tarayıcıda yap.
+ *  5) Sadece açıklama yazma: dosyaları gerçekten güncelle ve test sonucunu bildir.
+ * ============================================================ */
+
+===== ZORUNLU KABUL TESTLERİ =====
+1. Eski klasik sifreli_mesaj, parmak_izi, profil_sentezi ve genel ses_kaydi rendererları regresyona uğramaz.
+===== TEST LİSTESİ SONU =====
+
+===== KANONİK VAKA VERİSİ — mevcut case registry’de mit_002 olarak ekle/değiştir =====
+{
+  "puzzleId": "mit_002",
+  "stars": "★★☆☆☆",
+  "gridSize": "3x3",
+  "timeLimit": 570,
+  "qaNarrativeContract": {
+    "premiumStoryGate": "pass",
+    "storyLengthWords": 150,
+    "storyClue": {
+      "visibleEvidence": "Çadırın arkasında yarım kalmış dört körük işareti vardır.",
+      "mechanicBridge": "Bu ayrıntı c5’teki Demir Ocağı Körük Döngüsü mini oyununun fiziksel kaynağıdır.",
+      "matrixBoundary": "Anlatı tek başına fail, araç veya mekânı kesinleştirmez."
+    },
+    "narrativeFunctions": [
+      "Türk mitolojisi atmosferini kurar.",
+      "Üç şüphelinin tören gecesindeki konumunu ayrıştırır.",
+      "Körük ritmini oyun içi delile dönüştürür."
+    ]
+  },
+  "title": "Ergenekon’da Gizem",
+  "subtitle": "Ergenekon Vadisi · Demir Eritme Gecesi",
+  "difficulty": "Polis Memuru",
+  "difficultyLevel": 2,
+  "specialMechanic": "forge_bellows_cycle_sifreli_mesaj",
+  "story": "Ergenekon’un demir dağlarla çevrili vadisinde, çıkış yolunu açacak büyük eritme töreninden bir gece önce boy beyi çadırında ölü bulundu. Çayın yüzeyinde zayıf bir mor halka, ocağın başında ise yarım kalmış dört körük işareti vardı.\n\nBaşdemirci Temür, dağın damarını yaracak demiri denetliyordu. Şaman Albastı, boy beyini “ruhun geçişi” için çadıra çağırmıştı. Rum elçi Konstantinos ise vadinin girişindeki muhafızlardan ayrılmasına izin verilmeden bekletiliyordu.\n\nGecenin sonunda çadırın eşiğinde Kara Ot yaprakları bulundu. Kimse önce bunun kutsal bir hazırlık mı, yoksa bir vedanın zehri mi olduğunu söyleyemedi. Körüklerin arkasındaki ritim, ateş kadar eski bir sırrı saklıyordu.",
+  "atmosphere": "Kor ateşi, ıslak yün, demir tozu ve uzakta kişneyen atlar. Vadide rüzgâr bile dövülmüş metal gibi yankılanıyor.",
+  "suspects": [
+    {
+      "id": "s1",
+      "name": "Başdemirci Temür Usta",
+      "icon": "🔥",
+      "description": "Ergenekon’un demir eritme törenini yöneten usta.",
+      "detail": "Körüklerin sesinden hangi damarın çatlayacağını bilir; her aleti sayıyla mühürler."
+    },
+    {
+      "id": "s2",
+      "name": "Şaman Albastı",
+      "icon": "🪶",
+      "description": "Ruh geçiş ritüellerini yöneten şaman.",
+      "detail": "Kara Ot’u nasıl kurutacağını, hangi kabın önce ısınacağını yalnız o bilir."
+    },
+    {
+      "id": "s3",
+      "name": "Rum Elçi Konstantinos",
+      "icon": "🧭",
+      "description": "Vadinin sırrını öğrenmek isteyen yabancı temsilci.",
+      "detail": "Eyerinin tozunu silmez; nöbet kayıtlarını Türkçe okuyacak kadar dil bilir."
+    }
+  ],
+  "weapons": [
+    {
+      "id": "w1",
+      "name": "Şaman Oku",
+      "icon": "🏹",
+      "description": "Ritüel anlatılarında kullanılan, demir uçlu kutsal ok.",
+      "detail": ""
+    },
+    {
+      "id": "w2",
+      "name": "Fildişi Kılıç",
+      "icon": "🗡️",
+      "description": "Tören ustasının kontrolünde duran kısa savaş kılıcı.",
+      "detail": ""
+    },
+    {
+      "id": "w3",
+      "name": "Dağ Bitkisi Zehri",
+      "icon": "🌿",
+      "description": "Kara Ot’tan hazırlanan, yavaş etkili bitkisel karışım.",
+      "detail": ""
+    }
+  ],
+  "locations": [
+    {
+      "id": "l1",
+      "name": "Demir Ocağı",
+      "icon": "🔥",
+      "description": "Dört körüğün kutsal demiri beyazlattığı taş ocak.",
+      "detail": ""
+    },
+    {
+      "id": "l2",
+      "name": "Şaman Çadırı",
+      "icon": "⛺",
+      "description": "Dua ipleri ve bitki demetleriyle çevrili ritüel çadırı.",
+      "detail": ""
+    },
+    {
+      "id": "l3",
+      "name": "Vadinin Girişi",
+      "icon": "⛰️",
+      "description": "Muhafızların gece boyunca gözlediği dar geçit.",
+      "detail": ""
+    }
+  ],
+  "clues": [
+    {
+      "id": "c1",
+      "title": "Gece Tanığının İlk Kaydı",
+      "type": "tanik",
+      "mechanicType": "text",
+      "text": "Boy tabibi, beyinin çadırında ölümcül hâle gelen çayın yüzeyindeki mor reçineyi ve aynı reçinenin ocak taşındaki izini birlikte kayda geçti.",
+      "deductionHint": "Çay yüzeyindeki reçine, listedeki hangi aracı düşündürür?",
+      "isBonus": false,
+      "revealOrder": 1,
+      "isRevealed": true,
+      "pointCost": 0
+    },
+    {
+      "id": "c2",
+      "title": "Giriş Nöbeti",
+      "type": "tanik",
+      "mechanicType": "text",
+      "text": "Vadinin girişindeki muhafız defteri, şamanın tören sırasında dış geçide inmediğini; çizmesinde geçit çamuru bulunmadığını doğruladı.",
+      "deductionHint": "Geçit çamuru taşımayan biri, hangi girişte olamaz?",
+      "isBonus": false,
+      "revealOrder": 2,
+      "isRevealed": false,
+      "pointCost": 60
+    },
+    {
+      "id": "c3",
+      "title": "Demir Ocağı Zimmeti",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Başdemircinin çekmecesinde, kutsal tören oku sabahın ilk ışığına dek demir ocağındaki askıda mühürlü kalmıştı.",
+      "deductionHint": "Mühürlü askı hangi araç–mekân bağını doğrular?",
+      "isBonus": false,
+      "revealOrder": 3,
+      "isRevealed": false,
+      "pointCost": 60
+    },
+    {
+      "id": "c4",
+      "title": "Elçinin Atı",
+      "type": "tanik",
+      "mechanicType": "text",
+      "text": "Elçinin eyer karında, yalnız dış yolun taşlarından gelen beyaz toz kaldı; iç kısımdaki dokulara ait hiçbir lif bulunmadı.",
+      "deductionHint": "Eyerin taşıdığı dış yol tozu, hangi iç mekân olasılığını kapatır?",
+      "isBonus": false,
+      "revealOrder": 4,
+      "isRevealed": false,
+      "pointCost": 60
+    },
+    {
+      "id": "c5",
+      "title": "Dört Körüğün Ritmi",
+      "type": "kanit",
+      "mechanicType": "sifreli_mesaj",
+      "text": "Tören ocağının arkasında, dört körüğün deri bağları farklı sırayla gevşemiş halde bulundu.",
+      "deductionHint": "Körüklerin fiziksel sırası, hangi araç bağının mümkün olmadığını düşündürür?",
+      "isBonus": false,
+      "revealOrder": 5,
+      "isRevealed": false,
+      "pointCost": 60,
+      "sifre": {
+        "sifrelenmis": "KÖRÜK I / II / III / IV — KOR ATEŞİ",
+        "sifreleTuru": "demir eritme körük döngüsü",
+        "cozumIpucu": "İşaretlerin yerini, anlatının verdiği fiziksel sıraya göre dene.",
+        "cozulmus": "ERGENEKON-04",
+        "aciklama": "Körüklerin ritmi okununca geceye ait tek bir bağlantı belirginleşir.",
+        "presentation": {
+          "style": "forge_bellows_cycle",
+          "title": "Demir Ocağı Körük Döngüsü",
+          "subtitle": "Dört körüğü, korun soluk alışına göre doğru sırada çalıştır.",
+          "purposeHint": "Doğru düzen, ızgarada tek bir bağlantıyı elemek ya da doğrulamak için kullanılır.",
+          "bellows": [
+            {
+              "id": "b1",
+              "label": "Kül Körüğü",
+              "text": "İlk nefes, külü yoldan kaldırır."
+            },
+            {
+              "id": "b2",
+              "label": "Kor Körüğü",
+              "text": "İkinci nefes, közü beyaza çevirir."
+            },
+            {
+              "id": "b3",
+              "label": "Demir Körüğü",
+              "text": "Üçüncü nefes, metali inceltir."
+            },
+            {
+              "id": "b4",
+              "label": "Sessiz Körük",
+              "text": "Son nefes, ritüel sesini keser."
+            }
+          ],
+          "correctOrder": [
+            "b1",
+            "b2",
+            "b3",
+            "b4"
+          ],
+          "resultText": "Körük döngüsü, şaman okunun elçiyle değil demir ocağıyla bağlı kaldığını gösterir: Konstantinos × Şaman Oku.",
+          "interaction": {
+            "mode": "order_bellows",
+            "submitLabel": "Körük Ritmini Doğrula",
+            "successMessage": "Kor yalnız bir nefes sırasıyla canlı kaldı.",
+            "failureMessage": "Bu sıra koru söndürür; tören ritmi böyle çalışmaz."
+          }
+        }
+      }
+    },
+    {
+      "id": "b1",
+      "title": "Kara Ot Demeti",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Çadır girişindeki kurutulmuş Kara Ot demeti, Albastı’nın dua ipiyle aynı düğüm biçiminde bağlanmıştı.",
+      "deductionHint": "Bu düğüm hangi kişi–mekân bağını doğrular?",
+      "isBonus": true,
+      "revealOrder": 6,
+      "isRevealed": false,
+      "pointCost": 60
+    },
+    {
+      "id": "b2",
+      "title": "Temür’ün Kılıç Sayımı",
+      "type": "tanik",
+      "mechanicType": "text",
+      "text": "Tören ustası, gece boyunca fildişi kılıcı demir ocağının yakınındaki nöbet levhasına asılı tuttuğunu teyit etti.",
+      "deductionHint": "Bu sayım hangi kişi–araç bağını doğrular?",
+      "isBonus": true,
+      "revealOrder": 7,
+      "isRevealed": false,
+      "pointCost": 60
+    }
+  ],
+  "assetManifest": [],
+  "solution": {
+    "suspectId": "s2",
+    "weaponId": "w3",
+    "locationId": "l2"
+  },
+  "solutionNarrative": "Albastı, boy beyinin töreni bozacağını ve vadinin çıkışını erken açacağını düşündü. Kara Ot’u kendi çadırında çaya kattı; ölüm, ruh geçişi ritüeli gibi görünsün diye ocağın ritmini de değiştirdi. Elçi geçitte, Temür ise demir ocağında kayıtlıydı. Çadır kapısındaki düğüm ve körük sırası, zehrin Albastı’nın hazırladığı düzenekten geldiğini gösterdi.",
+  "replitIntegration": {
+    "schema": "fm_replit_runtime_contract_v1",
+    "copyTarget": "Replit Agent prompt",
+    "canonicalCaseFile": "src/data/cases/mit_002.json",
+    "policy": "Var olan renderer varsa onu bozma; yoksa bu paketteki component ve dispatcher dalını ekle.",
+    "mechanics": [
+      {
+        "clueId": "c5",
+        "mechanicType": "sifreli_mesaj",
+        "renderer": "forge_bellows_cycle",
+        "completionEvent": "onSolved({ clueId, mechanic: \"sifreli_mesaj\" })"
+      },
+      {
+        "clueId": "c5",
+        "mechanicType": "sifreli_mesaj",
+        "renderer": "forge_bellows_cycle",
+        "componentFile": "src/components/caseMechanics/MythologyMechanicRenderer.jsx",
+        "dispatcherBranch": "clue.mechanicType === \"sifreli_mesaj\" && [\"olympian_offering_scale\",\"forge_bellows_cycle\",\"laurel_knot_decoder\",\"sunstone_reflection_array\",\"raven_feather_lattice\"] .includes(clue.sifre?.presentation?.style)",
+        "completionEvent": "onSolved({ clueId, mechanic: \"forge_bellows_cycle\" })",
+        "hintEvent": "onRequestHint({ clueId, penaltySeconds: 60 })",
+        "requiredData": [
+          "title",
+          "subtitle",
+          "purposeHint",
+          "resultText",
+          "interaction",
+          "style-specific data"
+        ],
+        "nonNegotiable": [
+          "JSON dışı çözüm anahtarı kullanma.",
+          "Başarı öncesinde resultText görünmez kalmalı.",
+          "Yanlış deneme doğru eşlemeyi açmamalı.",
+          "Mobilde kartlar tek sütuna akmalı."
+        ]
+      }
+    ]
+  }
+}
+===== VAKA VERİSİ SONU =====
+===== MİTOLOJİ v28 ÖZEL MİNİ OYUN RENDERER’I — DOSYA OLUŞTUR / EKSİKSE EKLE =====
+// src/components/caseMechanics/MythologyMechanicRenderer.jsx
+import { useState } from "react";
+const styles=new Set(["olympian_offering_scale","forge_bellows_cycle","laurel_knot_decoder","sunstone_reflection_array","raven_feather_lattice"]);
+export const isMythologyMechanic=(clue)=>styles.has(String(clue?.sifre?.presentation?.style??"").toLowerCase());
+export default function MythologyMechanicRenderer({clue,onSolved,onRequestHint}){
+  const p=clue?.sifre?.presentation??{}; const style=String(p.style??"").toLowerCase();
+  const [choices,setChoices]=useState({}); const [order,setOrder]=useState([]); const [result,setResult]=useState(null); const [hint,setHint]=useState(false);
+  if(!styles.has(style)) return null;
+  const source=style==="olympian_offering_scale"?p.offerings:style==="laurel_knot_decoder"?p.cords:style==="sunstone_reflection_array"?p.mirrors:style==="raven_feather_lattice"?p.feathers:[];
+  const options=style==="olympian_offering_scale"?p.altars:style==="laurel_knot_decoder"?p.knots:style==="sunstone_reflection_array"?p.targets:style==="raven_feather_lattice"?p.seals:[];
+  const submit=()=>{const ok=style==="forge_bellows_cycle"?(p.correctOrder??[]).every((id,index)=>order[index]===id)&&order.length===(p.correctOrder??[]).length:(p.correctAssignments??[]).every(x=>choices[x.itemId]===x.answerId);setResult(ok);if(ok)onSolved?.({clueId:clue.id,mechanic:style});};
+  return <section className="mythology-mechanic"><h4>{p.title}</h4><p>{p.subtitle}</p><p><b>ÇÖZÜMÜN İŞLEVİ</b><br/>{p.purposeHint}</p>{style==="forge_bellows_cycle"?<div className="mythology-stack">{(p.bellows??[]).map(b=><button key={b.id} onClick={()=>setOrder(prev=>prev.includes(b.id)?prev.filter(x=>x!==b.id):[...prev,b.id])}><b>{b.label}</b><br/><small>{b.text}</small>{order.includes(b.id)?" · seçildi":""}</button>)}</div>:<div className="mythology-grid">{source.map(item=><label key={item.id}><b>{item.label}</b><small>{item.mark??item.text??item.beam}</small><select value={choices[item.id]??""} onChange={e=>setChoices({...choices,[item.id]:e.target.value})}><option value="">Eşleşme seç…</option>{options.map(option=><option key={option.id} value={option.id}>{option.label}</option>)}</select></label>)}</div>}<button onClick={submit}>{p.interaction?.submitLabel??"Doğrula"}</button><button disabled={hint} onClick={()=>{setHint(true);onRequestHint?.({clueId:clue.id,penaltySeconds:60});}}>İpucu iste (-60 sn)</button>{hint?<p>{clue?.sifre?.cozumIpucu}</p>:null}{result===false?<p>✕ {p.interaction?.failureMessage}</p>:null}{result===true?<p>✓ {p.interaction?.successMessage}<br/>{p.resultText}</p>:null}</section>;
+}
+===== DOSYA SONU =====
+===== MEVCUT MİNİ OYUN DISPATCHERINA EKLENECEK DAL =====
+// Mevcut genel sifreli_mesaj renderer'INDEN ÖNCE ekle.
+import MythologyMechanicRenderer,{isMythologyMechanic} from "@/components/caseMechanics/MythologyMechanicRenderer";
+if(isMythologyMechanic(clue))return <MythologyMechanicRenderer clue={clue} onSolved={({clueId})=>markMiniGameSolved?.(clueId)} onRequestHint={({clueId,penaltySeconds})=>applyHintPenalty?.({clueId,penaltySeconds})}/>;
+===== YAMA SONU =====
+===== MİTOLOJİ v28 KABUL TESTLERİ =====
+- c5: forge_bellows_cycle doğru sonuç öncesi resultText görünmez; yanlış deneme çözümü sızdırmaz; mobilde kartlar tek kolona iner.
+===== TESTLER SONU =====

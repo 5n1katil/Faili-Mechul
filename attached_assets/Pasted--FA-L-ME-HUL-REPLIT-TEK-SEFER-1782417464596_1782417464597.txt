@@ -1,0 +1,368 @@
+/* ============================================================
+ *  FAİLİ MEÇHUL — REPLIT TEK SEFERLİK ENTEGRASYON PAKETİ
+ *  Bu metni Replit Agent sohbetine TEK PARÇA olarak yapıştır.
+ *  Görev: sadece JSON kaydetme. Vaka verisini mevcut kaynakta
+ *  yükle, aşağıdaki eksik renderer altyapısını ekle ve çalıştır.
+ * ------------------------------------------------------------
+ *  Vaka: Aeneas’ın Laneti · puzzleId=mit_003
+ *  1) Önce mevcut vaka veri kaydını ve mini-oyun dispatcherını bul.
+ *  2) Var olan rendererları bozma; yalnız eksik olan dalı ekle.
+ *  3) Aşağıdaki vaka JSON’unu uygulamanın KANONİK case kaynağına ekle.
+ *  4) Kod değişikliklerinden sonra aşağıdaki kabul testlerini tarayıcıda yap.
+ *  5) Sadece açıklama yazma: dosyaları gerçekten güncelle ve test sonucunu bildir.
+ * ============================================================ */
+
+===== ZORUNLU KABUL TESTLERİ =====
+1. Eski klasik sifreli_mesaj, parmak_izi, profil_sentezi ve genel ses_kaydi rendererları regresyona uğramaz.
+===== TEST LİSTESİ SONU =====
+
+===== KANONİK VAKA VERİSİ — mevcut case registry’de mit_003 olarak ekle/değiştir =====
+{
+  "puzzleId": "mit_003",
+  "stars": "★★★☆☆",
+  "gridSize": "4x4",
+  "timeLimit": 480,
+  "qaNarrativeContract": {
+    "premiumStoryGate": "pass",
+    "storyLengthWords": 143,
+    "storyClue": {
+      "visibleEvidence": "Kahramanın kemerinden kopmuş dört defne ipi vardır.",
+      "mechanicBridge": "Bu ayrıntı c4’teki Defne Düğümü Çözücü mini oyununun fiziksel kaynağıdır.",
+      "matrixBoundary": "Anlatı tek başına fail, araç veya mekânı kesinleştirmez."
+    },
+    "narrativeFunctions": [
+      "Roma destanı tonunu kurar.",
+      "Dört şüpheliyi farklı güç merkezlerine yerleştirir.",
+      "Defne iplerini hareketli mini oyuna bağlar."
+    ]
+  },
+  "title": "Aeneas’ın Laneti",
+  "subtitle": "Latium · Defne Ormanı",
+  "difficulty": "Dedektif",
+  "difficultyLevel": 3,
+  "specialMechanic": "laurel_knot_decoder_sifreli_mesaj",
+  "story": "Latium’un defne ormanında, Aeneas’ın yolculuğunu belgeleyen bir kahraman sabaha karşı hançerlenmiş halde bulundu. Yarayı çevreleyen çam katranı, Kartaca’dan gelen bir kumaş parçası ve kemerinden kopmuş dört defne ipi, olayı bir destan satırından çok dikkatle kurulmuş bir buluşmaya dönüştürüyordu.\n\nJuno’nun tapınak haberleri, Turnus’un savaş çadırı, Dido’nun liman konuşması ve Sinon’un eski Truva kemeri aynı gecede farklı yönlere işaret ediyordu. Herkes bir başkasının planını bildiğini inkâr ediyordu.\n\nKahramanın kemerindeki düğümler ise konuşmuyordu. Ama onları doğru okuyan biri, Yunan usulü bir kılıfın hangi ele bağlandığını anlayabilirdi.",
+  "atmosphere": "Defne yapraklarının tatlı çürümesi, denizden kalma ağır nem ve uzak savaş çadırlarının davulu. Orman, destanın unutulmuş satırları gibi karanlık.",
+  "suspects": [
+    {
+      "id": "s1",
+      "name": "Juno",
+      "icon": "👑",
+      "description": "Aeneas’ın yolunu kesmek isteyen Roma tanrıçası.",
+      "detail": "Meclis mühürlerini kişisel balmumuyla kapatır; hiçbir notu iki kez aynı cümleyle yazmaz."
+    },
+    {
+      "id": "s2",
+      "name": "Turnus",
+      "icon": "🛡️",
+      "description": "Latium’un savaşçı rakibi.",
+      "detail": "Kalkanındaki çizikleri kayıt altına alır; savaş çadırından ayrıldığında nöbetçiye haber verir."
+    },
+    {
+      "id": "s3",
+      "name": "Sinon",
+      "icon": "🐴",
+      "description": "Truva’dan kalan Yunan casusu.",
+      "detail": "Kemerinde defne düğümleri taşır; hançer kılıfındaki at mührünü asla sökmez."
+    },
+    {
+      "id": "s4",
+      "name": "Dido",
+      "icon": "🔥",
+      "description": "Kartaca kraliçesi.",
+      "detail": "Liman konuşmalarında kullandığı koyu mor kumaşları kendisi seçer."
+    }
+  ],
+  "weapons": [
+    {
+      "id": "w1",
+      "name": "Truva Oku",
+      "icon": "🏹",
+      "description": "Hades geçit sandığında saklanan eski savaş oku.",
+      "detail": ""
+    },
+    {
+      "id": "w2",
+      "name": "Kartaca Zehri",
+      "icon": "🌺",
+      "description": "Deniz yolculuğunda kullanılan yavaş etkili saray zehri.",
+      "detail": ""
+    },
+    {
+      "id": "w3",
+      "name": "Juno’nun Laneti",
+      "icon": "✨",
+      "description": "Tapınak mühürleriyle bağlı, görünmeyen baskı büyüsü.",
+      "detail": ""
+    },
+    {
+      "id": "w4",
+      "name": "Sinon’un Hançeri",
+      "icon": "🗡️",
+      "description": "At mührü taşıyan, Yunan çeliğinden kısa hançer.",
+      "detail": ""
+    }
+  ],
+  "locations": [
+    {
+      "id": "l1",
+      "name": "Kartaca Limanı",
+      "icon": "⚓",
+      "description": "Dido’nun konuşma yaptığı rıhtım ve ticaret kapısı.",
+      "detail": ""
+    },
+    {
+      "id": "l2",
+      "name": "Hades’in Kapısı",
+      "icon": "🌑",
+      "description": "Geçit sandıkları ve eski savaş emanetlerinin bulunduğu taş eşik.",
+      "detail": ""
+    },
+    {
+      "id": "l3",
+      "name": "Latium Ormanı",
+      "icon": "🌲",
+      "description": "Defne ağaçlarının altında gece buluşmalarının yapıldığı karanlık yol.",
+      "detail": ""
+    },
+    {
+      "id": "l4",
+      "name": "Juno Tapınağı",
+      "icon": "🏛️",
+      "description": "Meclis mühürlerinin ve tanrıça kayıtlarının korunduğu yüksek yapı.",
+      "detail": ""
+    }
+  ],
+  "clues": [
+    {
+      "id": "c1",
+      "title": "Gece Tanığının İlk Kaydı",
+      "type": "tanik",
+      "mechanicType": "text",
+      "text": "Kurbanın göğsünde can alıcı bir Yunan çeliği yarası bulundu. Kesitteki taze çam katranı, tuzlu kıyı taşlarının nemiyle uyuşmuyordu.",
+      "deductionHint": "Çam katranı, hangi kıyı olasılığını kapatır?",
+      "isBonus": false,
+      "revealOrder": 1,
+      "isRevealed": true,
+      "pointCost": 0
+    },
+    {
+      "id": "c2",
+      "title": "Kartaca Kumaşının Altın İpliği",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Hades Kapısı’ndaki geçit sandığında bulunan lanet mühürü, tapınak soğuğunda sertleşen balmumu ile birlikteydi.",
+      "deductionHint": "Bu soğuk balmumu, hangi güç ile hangi taş eşik arasında bağ kurar?",
+      "isBonus": false,
+      "revealOrder": 2,
+      "isRevealed": false,
+      "pointCost": 60
+    },
+    {
+      "id": "c3",
+      "title": "Turnus’un Kalkan Mührü",
+      "type": "tanik",
+      "mechanicType": "text",
+      "text": "Kartaca Limanı’ndaki kumanda zincirinde, Truva okunun telekleriyle uyumlu hiçbir reçine ya da tüy kalıntısı bulunmadı.",
+      "deductionHint": "Bir okun teleği liman zincirinde yoksa hangi ilişki kapanır?",
+      "isBonus": false,
+      "revealOrder": 3,
+      "isRevealed": false,
+      "pointCost": 60
+    },
+    {
+      "id": "c4",
+      "title": "Defne Düğümlerinin Sessiz Mesajı",
+      "type": "kanit",
+      "mechanicType": "sifreli_mesaj",
+      "text": "Kahramanın kemerinde dört defne ipi vardı; her düğümün arası farklı uzunluktaydı. Bir haberci, düğümlerin yolculuk değil, bir buluşma düzeni anlattığını söyledi.",
+      "deductionHint": "Düğüm düzeni, kılıfın hangi ele ait olabileceğini sorgulatır.",
+      "isBonus": false,
+      "revealOrder": 4,
+      "isRevealed": false,
+      "pointCost": 60,
+      "sifre": {
+        "sifrelenmis": "DEFNE / AT / KÜL / DALGA — DÖRT DÜĞÜM",
+        "sifreleTuru": "defne düğümü çözümü",
+        "cozumIpucu": "İşaretlerin yerini, anlatının verdiği fiziksel sıraya göre dene.",
+        "cozulmus": "LATIUM-AT",
+        "aciklama": "Bulmacanın taşıdığı düzen çözüldüğünde geceye ait tek bir bağlantı belirginleşir.",
+        "presentation": {
+          "style": "laurel_knot_decoder",
+          "title": "Defne Düğümü Çözücü",
+          "subtitle": "Dört defne ipini, üzerindeki işaretle doğru bağlanma biçimine eşleştir.",
+          "purposeHint": "Doğru düzen, ızgarada tek bir bağlantıyı elemek ya da doğrulamak için kullanılır.",
+          "cords": [
+            {
+              "id": "k1",
+              "label": "Birinci İp",
+              "mark": "İki kısa düğüm"
+            },
+            {
+              "id": "k2",
+              "label": "İkinci İp",
+              "mark": "Uzun–kısa"
+            },
+            {
+              "id": "k3",
+              "label": "Üçüncü İp",
+              "mark": "Tek sıkı düğüm"
+            },
+            {
+              "id": "k4",
+              "label": "Dördüncü İp",
+              "mark": "Çapraz bağ"
+            }
+          ],
+          "knots": [
+            {
+              "id": "n1",
+              "label": "At Mührü"
+            },
+            {
+              "id": "n2",
+              "label": "Defne Tacı"
+            },
+            {
+              "id": "n3",
+              "label": "Dalga İşareti"
+            },
+            {
+              "id": "n4",
+              "label": "Kül Damgası"
+            }
+          ],
+          "correctAssignments": [
+            {
+              "itemId": "k1",
+              "answerId": "n2"
+            },
+            {
+              "itemId": "k2",
+              "answerId": "n1"
+            },
+            {
+              "itemId": "k3",
+              "answerId": "n4"
+            },
+            {
+              "itemId": "k4",
+              "answerId": "n3"
+            }
+          ],
+          "resultText": "At mührü, kemer düğümünde Yunan hançerinin kılıf işaretiyle birleşir: Sinon ↔ Sinon’un Hançeri.",
+          "interaction": {
+            "mode": "match_knots",
+            "submitLabel": "Düğümleri Çöz",
+            "successMessage": "Defne ipleri tek bir elin düğüm ritmini verdi.",
+            "failureMessage": "Bu düğüm dizisi, haberci kemerinin gerilimini taşımaz."
+          }
+        }
+      }
+    },
+    {
+      "id": "c5",
+      "title": "Hades’in Gölgesi",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Orman yolundaki dal kırıkları, okun hafif telekleriyle değil ağır bir çelik kılıfın sürtünmesiyle oluşmuştu.",
+      "deductionHint": "Dal kırıklarının türü, hangi aracın ormanda olamayacağını düşündürür?",
+      "isBonus": false,
+      "revealOrder": 5,
+      "isRevealed": false,
+      "pointCost": 60
+    },
+    {
+      "id": "b1",
+      "title": "Turnus’un Savaş Çadırı",
+      "type": "tanik",
+      "mechanicType": "text",
+      "text": "Liman kapısının mermer tozunda, kraliçenin konuşma arabasından düşen mor kumaş lifleriyle aynı esinti mühürü bulundu.",
+      "deductionHint": "Bu kumaş lifi, hangi figürün hangi geçit yoluna bağlandığını gösterir?",
+      "isBonus": true,
+      "revealOrder": 6,
+      "isRevealed": false,
+      "pointCost": 60
+    },
+    {
+      "id": "b2",
+      "title": "Juno’nun Mum Mührü",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Tapınak meclisi kaydında, tanrıçanın imza mumu liman taşındaki tuzla aynı kristal izini taşıyordu.",
+      "deductionHint": "Mumun tuz izi, hangi kıyı bağlantısını destekler?",
+      "isBonus": true,
+      "revealOrder": 7,
+      "isRevealed": false,
+      "pointCost": 60
+    }
+  ],
+  "assetManifest": [],
+  "solution": {
+    "suspectId": "s3",
+    "weaponId": "w4",
+    "locationId": "l3"
+  },
+  "solutionNarrative": "Sinon, ormanda yalnız yakaladığı kahramanı kendi hançeriyle öldürdü. Mor kumaş parçasını başka bir güce işaret etsin diye bıraktı; ancak defne düğümlerindeki at mührü, kılıfın ona ait olduğunu gösterdi. Çam katranı saldırının gerçek zeminini, diğer geçit kayıtları ise alternatif yolların ayrıştığını ortaya koydu.",
+  "replitIntegration": {
+    "schema": "fm_replit_runtime_contract_v1",
+    "copyTarget": "Replit Agent prompt",
+    "canonicalCaseFile": "src/data/cases/mit_003.json",
+    "policy": "Var olan renderer varsa onu bozma; yoksa bu paketteki component ve dispatcher dalını ekle.",
+    "mechanics": [
+      {
+        "clueId": "c4",
+        "mechanicType": "sifreli_mesaj",
+        "renderer": "laurel_knot_decoder",
+        "completionEvent": "onSolved({ clueId, mechanic: \"sifreli_mesaj\" })"
+      },
+      {
+        "clueId": "c4",
+        "mechanicType": "sifreli_mesaj",
+        "renderer": "laurel_knot_decoder",
+        "componentFile": "src/components/caseMechanics/MythologyMechanicRenderer.jsx",
+        "dispatcherBranch": "clue.mechanicType === \"sifreli_mesaj\" && [\"olympian_offering_scale\",\"forge_bellows_cycle\",\"laurel_knot_decoder\",\"sunstone_reflection_array\",\"raven_feather_lattice\"] .includes(clue.sifre?.presentation?.style)",
+        "completionEvent": "onSolved({ clueId, mechanic: \"laurel_knot_decoder\" })",
+        "hintEvent": "onRequestHint({ clueId, penaltySeconds: 60 })",
+        "requiredData": [
+          "title",
+          "subtitle",
+          "purposeHint",
+          "resultText",
+          "interaction",
+          "style-specific data"
+        ],
+        "nonNegotiable": [
+          "JSON dışı çözüm anahtarı kullanma.",
+          "Başarı öncesinde resultText görünmez kalmalı.",
+          "Yanlış deneme doğru eşlemeyi açmamalı.",
+          "Mobilde kartlar tek sütuna akmalı."
+        ]
+      }
+    ]
+  }
+}
+===== VAKA VERİSİ SONU =====
+===== MİTOLOJİ v28 ÖZEL MİNİ OYUN RENDERER’I — DOSYA OLUŞTUR / EKSİKSE EKLE =====
+// src/components/caseMechanics/MythologyMechanicRenderer.jsx
+import { useState } from "react";
+const styles=new Set(["olympian_offering_scale","forge_bellows_cycle","laurel_knot_decoder","sunstone_reflection_array","raven_feather_lattice"]);
+export const isMythologyMechanic=(clue)=>styles.has(String(clue?.sifre?.presentation?.style??"").toLowerCase());
+export default function MythologyMechanicRenderer({clue,onSolved,onRequestHint}){
+  const p=clue?.sifre?.presentation??{}; const style=String(p.style??"").toLowerCase();
+  const [choices,setChoices]=useState({}); const [order,setOrder]=useState([]); const [result,setResult]=useState(null); const [hint,setHint]=useState(false);
+  if(!styles.has(style)) return null;
+  const source=style==="olympian_offering_scale"?p.offerings:style==="laurel_knot_decoder"?p.cords:style==="sunstone_reflection_array"?p.mirrors:style==="raven_feather_lattice"?p.feathers:[];
+  const options=style==="olympian_offering_scale"?p.altars:style==="laurel_knot_decoder"?p.knots:style==="sunstone_reflection_array"?p.targets:style==="raven_feather_lattice"?p.seals:[];
+  const submit=()=>{const ok=style==="forge_bellows_cycle"?(p.correctOrder??[]).every((id,index)=>order[index]===id)&&order.length===(p.correctOrder??[]).length:(p.correctAssignments??[]).every(x=>choices[x.itemId]===x.answerId);setResult(ok);if(ok)onSolved?.({clueId:clue.id,mechanic:style});};
+  return <section className="mythology-mechanic"><h4>{p.title}</h4><p>{p.subtitle}</p><p><b>ÇÖZÜMÜN İŞLEVİ</b><br/>{p.purposeHint}</p>{style==="forge_bellows_cycle"?<div className="mythology-stack">{(p.bellows??[]).map(b=><button key={b.id} onClick={()=>setOrder(prev=>prev.includes(b.id)?prev.filter(x=>x!==b.id):[...prev,b.id])}><b>{b.label}</b><br/><small>{b.text}</small>{order.includes(b.id)?" · seçildi":""}</button>)}</div>:<div className="mythology-grid">{source.map(item=><label key={item.id}><b>{item.label}</b><small>{item.mark??item.text??item.beam}</small><select value={choices[item.id]??""} onChange={e=>setChoices({...choices,[item.id]:e.target.value})}><option value="">Eşleşme seç…</option>{options.map(option=><option key={option.id} value={option.id}>{option.label}</option>)}</select></label>)}</div>}<button onClick={submit}>{p.interaction?.submitLabel??"Doğrula"}</button><button disabled={hint} onClick={()=>{setHint(true);onRequestHint?.({clueId:clue.id,penaltySeconds:60});}}>İpucu iste (-60 sn)</button>{hint?<p>{clue?.sifre?.cozumIpucu}</p>:null}{result===false?<p>✕ {p.interaction?.failureMessage}</p>:null}{result===true?<p>✓ {p.interaction?.successMessage}<br/>{p.resultText}</p>:null}</section>;
+}
+===== DOSYA SONU =====
+===== MEVCUT MİNİ OYUN DISPATCHERINA EKLENECEK DAL =====
+// Mevcut genel sifreli_mesaj renderer'INDEN ÖNCE ekle.
+import MythologyMechanicRenderer,{isMythologyMechanic} from "@/components/caseMechanics/MythologyMechanicRenderer";
+if(isMythologyMechanic(clue))return <MythologyMechanicRenderer clue={clue} onSolved={({clueId})=>markMiniGameSolved?.(clueId)} onRequestHint={({clueId,penaltySeconds})=>applyHintPenalty?.({clueId,penaltySeconds})}/>;
+===== YAMA SONU =====
+===== MİTOLOJİ v28 KABUL TESTLERİ =====
+- c4: laurel_knot_decoder doğru sonuç öncesi resultText görünmez; yanlış deneme çözümü sızdırmaz; mobilde kartlar tek kolona iner.
+===== TESTLER SONU =====

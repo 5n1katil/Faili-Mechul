@@ -1979,6 +1979,333 @@ function MechanicalLockSequenceBlock({
   );
 }
 
+function CipherDiscAlignmentBlock({ sifre, isSolved, onSolve }: { sifre: ClueSifre; isSolved: boolean; onSolve: () => void }) {
+  const pres = sifre.presentation!;
+  const discs = (pres as Record<string, unknown>).discs as Array<{ id: string; label: string; symbols: string[]; initial: string }>;
+  const correctCode = (pres as Record<string, unknown>).correctCode as Array<{ discId: string; symbol: string }>;
+  const { addTimePenalty } = useGame();
+  const [positions, setPositions] = useState<Record<string, number>>(() => {
+    const init: Record<string, number> = {};
+    discs.forEach(d => { init[d.id] = Math.max(0, d.symbols.indexOf(d.initial)); });
+    return init;
+  });
+  const [wrong, setWrong] = useState(false);
+  const [hintRevealed, setHintRevealed] = useState(false);
+
+  const rotate = (discId: string, dir: number) => {
+    const disc = discs.find(d => d.id === discId)!;
+    setPositions(prev => ({ ...prev, [discId]: (prev[discId] + dir + disc.symbols.length) % disc.symbols.length }));
+  };
+  const handleSubmit = () => {
+    const ok = correctCode.every(c => {
+      const disc = discs.find(d => d.id === c.discId)!;
+      return disc.symbols[positions[c.discId]] === c.symbol;
+    });
+    if (ok) { onSolve(); } else { setWrong(true); setTimeout(() => setWrong(false), 2000); }
+  };
+  const handleHint = () => { if (hintRevealed) return; setHintRevealed(true); addTimePenalty(60); };
+
+  if (isSolved) return (
+    <View style={styles.miniGameSolvedBlock}>
+      <MaterialIcons name="check-circle" size={20} color="#22c55e" />
+      <Text style={styles.miniGameSolvedText}>{(pres.interaction as Record<string,string>)?.successMessage ?? "Çözüldü!"}</Text>
+      <Text style={styles.miniGameAciklama}>{sifre.aciklama}</Text>
+    </View>
+  );
+
+  return (
+    <View style={styles.discContainer}>
+      <Text style={styles.discTitle}>{pres.title}</Text>
+      <Text style={styles.discSubtitle}>{pres.subtitle}</Text>
+      <Text style={styles.discPurposeHint}>{(pres as Record<string,string>).purposeHint}</Text>
+      {discs.map(disc => (
+        <View key={disc.id} style={styles.discRow}>
+          <Text style={styles.discLabel}>{disc.label}</Text>
+          <View style={styles.discControl}>
+            <Pressable style={styles.discArrow} onPress={() => rotate(disc.id, -1)}>
+              <MaterialIcons name="chevron-left" size={24} color="#D4A843" />
+            </Pressable>
+            <View style={styles.discSymbolBox}>
+              <Text style={styles.discSymbol}>{disc.symbols[positions[disc.id]]}</Text>
+            </View>
+            <Pressable style={styles.discArrow} onPress={() => rotate(disc.id, 1)}>
+              <MaterialIcons name="chevron-right" size={24} color="#D4A843" />
+            </Pressable>
+          </View>
+        </View>
+      ))}
+      <Pressable style={styles.fenSubmitBtn} onPress={handleSubmit}>
+        <Text style={styles.fenSubmitText}>{(pres.interaction as Record<string,string>)?.submitLabel ?? "Hizala"}</Text>
+      </Pressable>
+      {wrong && <View style={[styles.lockResult, styles.lockResultFail]}><Text style={[styles.lockResultText, styles.lockResultTextFail]}>{(pres.interaction as Record<string,string>)?.failureMessage ?? "Yanlış."}</Text></View>}
+      <Pressable style={[styles.lockHintBtn, hintRevealed && styles.lockHintBtnUsed]} onPress={handleHint} disabled={hintRevealed}>
+        <Text style={styles.lockHintText}>{hintRevealed ? "İpucu Kullanıldı (−60 sn)" : "İpucu Al (−60 sn)"}</Text>
+      </Pressable>
+      {hintRevealed && <View style={styles.lockHintReveal}><Text style={styles.lockHintRevealText}>{sifre.cozumIpucu}</Text></View>}
+    </View>
+  );
+}
+
+function TimelineBoardBlock({ sifre, isSolved, onSolve }: { sifre: ClueSifre; isSolved: boolean; onSolve: () => void }) {
+  const pres = sifre.presentation!;
+  const events = (pres as Record<string, unknown>).events as Array<{ id: string; label: string; text: string }>;
+  const correctOrder = (pres as Record<string, unknown>).correctOrder as string[];
+  const { addTimePenalty } = useGame();
+  const [order, setOrder] = useState<string[]>(() => events.map(e => e.id));
+  const [wrong, setWrong] = useState(false);
+  const [hintRevealed, setHintRevealed] = useState(false);
+
+  const move = (idx: number, dir: number) => {
+    const target = idx + dir;
+    if (target < 0 || target >= order.length) return;
+    const next = [...order];
+    [next[idx], next[target]] = [next[target], next[idx]];
+    setOrder(next);
+  };
+  const handleSubmit = () => {
+    if (correctOrder.every((id, i) => order[i] === id)) { onSolve(); }
+    else { setWrong(true); setTimeout(() => setWrong(false), 2000); }
+  };
+  const handleHint = () => { if (hintRevealed) return; setHintRevealed(true); addTimePenalty(60); };
+
+  if (isSolved) return (
+    <View style={styles.miniGameSolvedBlock}>
+      <MaterialIcons name="check-circle" size={20} color="#22c55e" />
+      <Text style={styles.miniGameSolvedText}>{(pres.interaction as Record<string,string>)?.successMessage ?? "Çözüldü!"}</Text>
+      <Text style={styles.miniGameAciklama}>{sifre.aciklama}</Text>
+    </View>
+  );
+
+  return (
+    <View style={styles.tlContainer}>
+      <Text style={styles.tlTitle}>{pres.title}</Text>
+      <Text style={styles.tlSubtitle}>{pres.subtitle}</Text>
+      <Text style={styles.tlPurposeHint}>{(pres as Record<string,string>).purposeHint}</Text>
+      {order.map((id, idx) => {
+        const ev = events.find(e => e.id === id)!;
+        return (
+          <View key={id} style={styles.tlCard}>
+            <View style={styles.tlCardBadge}><Text style={styles.tlCardBadgeText}>{idx + 1}</Text></View>
+            <View style={styles.tlCardBody}>
+              <Text style={styles.tlCardLabel}>{ev.label}</Text>
+              <Text style={styles.tlCardText}>{ev.text}</Text>
+            </View>
+            <View style={styles.tlCardArrows}>
+              <Pressable style={styles.tlArrow} onPress={() => move(idx, -1)} disabled={idx === 0}>
+                <MaterialIcons name="arrow-upward" size={18} color={idx === 0 ? "#3a3f55" : "#D4A843"} />
+              </Pressable>
+              <Pressable style={styles.tlArrow} onPress={() => move(idx, 1)} disabled={idx === order.length - 1}>
+                <MaterialIcons name="arrow-downward" size={18} color={idx === order.length - 1 ? "#3a3f55" : "#D4A843"} />
+              </Pressable>
+            </View>
+          </View>
+        );
+      })}
+      <Pressable style={styles.fenSubmitBtn} onPress={handleSubmit}>
+        <Text style={styles.fenSubmitText}>{(pres.interaction as Record<string,string>)?.submitLabel ?? "Sırala"}</Text>
+      </Pressable>
+      {wrong && <View style={[styles.lockResult, styles.lockResultFail]}><Text style={[styles.lockResultText, styles.lockResultTextFail]}>{(pres.interaction as Record<string,string>)?.failureMessage ?? "Yanlış sıra."}</Text></View>}
+      <Pressable style={[styles.lockHintBtn, hintRevealed && styles.lockHintBtnUsed]} onPress={handleHint} disabled={hintRevealed}>
+        <Text style={styles.lockHintText}>{hintRevealed ? "İpucu Kullanıldı (−60 sn)" : "İpucu Al (−60 sn)"}</Text>
+      </Pressable>
+      {hintRevealed && <View style={styles.lockHintReveal}><Text style={styles.lockHintRevealText}>{sifre.cozumIpucu}</Text></View>}
+    </View>
+  );
+}
+
+function ParcelXrayLayersBlock({ sifre, isSolved, onSolve }: { sifre: ClueSifre; isSolved: boolean; onSolve: () => void }) {
+  const pres = sifre.presentation!;
+  const layers = (pres as Record<string, unknown>).layers as Array<{ id: string; label: string; scan: string }>;
+  const findings = (pres as Record<string, unknown>).findings as Array<{ id: string; label: string }>;
+  const correctAssignments = (pres as Record<string, unknown>).correctAssignments as Array<{ itemId: string; answerId: string }>;
+  const { addTimePenalty } = useGame();
+  const [assignments, setAssignments] = useState<Record<string, string>>({});
+  const [wrong, setWrong] = useState(false);
+  const [hintRevealed, setHintRevealed] = useState(false);
+
+  const handleSubmit = () => {
+    if (correctAssignments.every(ca => assignments[ca.itemId] === ca.answerId)) { onSolve(); }
+    else { setWrong(true); setTimeout(() => setWrong(false), 2000); }
+  };
+  const handleHint = () => { if (hintRevealed) return; setHintRevealed(true); addTimePenalty(60); };
+  const allAssigned = Object.keys(assignments).length >= layers.length;
+
+  if (isSolved) return (
+    <View style={styles.miniGameSolvedBlock}>
+      <MaterialIcons name="check-circle" size={20} color="#22c55e" />
+      <Text style={styles.miniGameSolvedText}>{(pres.interaction as Record<string,string>)?.successMessage ?? "Çözüldü!"}</Text>
+      <Text style={styles.miniGameAciklama}>{sifre.aciklama}</Text>
+    </View>
+  );
+
+  return (
+    <View style={styles.xrayContainer}>
+      <Text style={styles.xrayTitle}>{pres.title}</Text>
+      <Text style={styles.xraySubtitle}>{pres.subtitle}</Text>
+      <Text style={styles.xrayPurposeHint}>{(pres as Record<string,string>).purposeHint}</Text>
+      {layers.map(layer => {
+        const sel = assignments[layer.id];
+        return (
+          <View key={layer.id} style={styles.xrayLayer}>
+            <View style={styles.xrayLayerHeader}>
+              <MaterialIcons name="layers" size={13} color="#60a5fa" />
+              <Text style={styles.xrayLayerLabel}>{layer.label}</Text>
+            </View>
+            <Text style={styles.xrayLayerScan}>{layer.scan}</Text>
+            <View style={styles.xrayOptions}>
+              {findings.map(f => {
+                const isSelected = sel === f.id;
+                return (
+                  <Pressable key={f.id} style={[styles.xrayOption, isSelected && styles.xrayOptionSelected]}
+                    onPress={() => setAssignments(prev => ({ ...prev, [layer.id]: f.id }))}>
+                    <Text style={[styles.xrayOptionText, isSelected && styles.xrayOptionTextSelected]}>{f.label}</Text>
+                  </Pressable>
+                );
+              })}
+            </View>
+          </View>
+        );
+      })}
+      <Pressable style={[styles.fenSubmitBtn, !allAssigned && { opacity: 0.5 }]} onPress={handleSubmit} disabled={!allAssigned}>
+        <Text style={styles.fenSubmitText}>{(pres.interaction as Record<string,string>)?.submitLabel ?? "Eşleştir"}</Text>
+      </Pressable>
+      {wrong && <View style={[styles.lockResult, styles.lockResultFail]}><Text style={[styles.lockResultText, styles.lockResultTextFail]}>{(pres.interaction as Record<string,string>)?.failureMessage ?? "Hatalı eşleşme."}</Text></View>}
+      <Pressable style={[styles.lockHintBtn, hintRevealed && styles.lockHintBtnUsed]} onPress={handleHint} disabled={hintRevealed}>
+        <Text style={styles.lockHintText}>{hintRevealed ? "İpucu Kullanıldı (−60 sn)" : "İpucu Al (−60 sn)"}</Text>
+      </Pressable>
+      {hintRevealed && <View style={styles.lockHintReveal}><Text style={styles.lockHintRevealText}>{sifre.cozumIpucu}</Text></View>}
+    </View>
+  );
+}
+
+function WaltzScoreStitchBlock({ sifre, isSolved, onSolve }: { sifre: ClueSifre; isSolved: boolean; onSolve: () => void }) {
+  const pres = sifre.presentation!;
+  const measures = (pres as Record<string, unknown>).measures as Array<{ id: string; label: string; note: string; options: Array<{ id: string; label: string }> }>;
+  const correctAssignments = (pres as Record<string, unknown>).correctAssignments as Array<{ itemId: string; answerId: string }>;
+  const { addTimePenalty } = useGame();
+  const [selections, setSelections] = useState<Record<string, string>>({});
+  const [wrong, setWrong] = useState(false);
+  const [hintRevealed, setHintRevealed] = useState(false);
+
+  const handleSubmit = () => {
+    if (correctAssignments.every(ca => selections[ca.itemId] === ca.answerId)) { onSolve(); }
+    else { setWrong(true); setTimeout(() => setWrong(false), 2000); }
+  };
+  const handleHint = () => { if (hintRevealed) return; setHintRevealed(true); addTimePenalty(60); };
+  const allSelected = Object.keys(selections).length >= measures.length;
+
+  if (isSolved) return (
+    <View style={styles.miniGameSolvedBlock}>
+      <MaterialIcons name="check-circle" size={20} color="#22c55e" />
+      <Text style={styles.miniGameSolvedText}>{(pres.interaction as Record<string,string>)?.successMessage ?? "Çözüldü!"}</Text>
+      <Text style={styles.miniGameAciklama}>{sifre.aciklama}</Text>
+    </View>
+  );
+
+  return (
+    <View style={styles.waltzContainer}>
+      <Text style={styles.waltzTitle}>{pres.title}</Text>
+      <Text style={styles.waltzSubtitle}>{pres.subtitle}</Text>
+      <Text style={styles.waltzPurposeHint}>{(pres as Record<string,string>).purposeHint}</Text>
+      {measures.map((m, idx) => {
+        const sel = selections[m.id];
+        return (
+          <View key={m.id} style={styles.waltzMeasure}>
+            <View style={styles.waltzMeasureHeader}>
+              <View style={styles.waltzMeasureNum}><Text style={styles.waltzMeasureNumText}>{idx + 1}</Text></View>
+              <View style={{ flex: 1 }}>
+                <Text style={styles.waltzMeasureLabel}>{m.label}</Text>
+                <Text style={styles.waltzMeasureNote}>{m.note}</Text>
+              </View>
+            </View>
+            <View style={styles.waltzOptions}>
+              {m.options.map(opt => {
+                const isSel = sel === opt.id;
+                return (
+                  <Pressable key={opt.id} style={[styles.waltzOption, isSel && styles.waltzOptionSelected]}
+                    onPress={() => setSelections(prev => ({ ...prev, [m.id]: opt.id }))}>
+                    <View style={[styles.waltzRadio, isSel && styles.waltzRadioSelected]} />
+                    <Text style={[styles.waltzOptionText, isSel && styles.waltzOptionTextSelected]}>{opt.label}</Text>
+                  </Pressable>
+                );
+              })}
+            </View>
+          </View>
+        );
+      })}
+      <Pressable style={[styles.fenSubmitBtn, !allSelected && { opacity: 0.5 }]} onPress={handleSubmit} disabled={!allSelected}>
+        <Text style={styles.fenSubmitText}>{(pres.interaction as Record<string,string>)?.submitLabel ?? "Tamamla"}</Text>
+      </Pressable>
+      {wrong && <View style={[styles.lockResult, styles.lockResultFail]}><Text style={[styles.lockResultText, styles.lockResultTextFail]}>{(pres.interaction as Record<string,string>)?.failureMessage ?? "Yanlış seçim."}</Text></View>}
+      <Pressable style={[styles.lockHintBtn, hintRevealed && styles.lockHintBtnUsed]} onPress={handleHint} disabled={hintRevealed}>
+        <Text style={styles.lockHintText}>{hintRevealed ? "İpucu Kullanıldı (−60 sn)" : "İpucu Al (−60 sn)"}</Text>
+      </Pressable>
+      {hintRevealed && <View style={styles.lockHintReveal}><Text style={styles.lockHintRevealText}>{sifre.cozumIpucu}</Text></View>}
+    </View>
+  );
+}
+
+function VentilationValveNetworkBlock({ sifre, isSolved, onSolve }: { sifre: ClueSifre; isSolved: boolean; onSolve: () => void }) {
+  const pres = sifre.presentation!;
+  const valves = (pres as Record<string, unknown>).valves as Array<{ id: string; label: string; initial: string }>;
+  const correctStates = (pres as Record<string, unknown>).correctStates as Array<{ valveId: string; state: string }>;
+  const { addTimePenalty } = useGame();
+  const [states, setStates] = useState<Record<string, string>>(() => {
+    const init: Record<string, string> = {};
+    valves.forEach(v => { init[v.id] = v.initial; });
+    return init;
+  });
+  const [wrong, setWrong] = useState(false);
+  const [hintRevealed, setHintRevealed] = useState(false);
+
+  const toggle = (id: string) => setStates(prev => ({ ...prev, [id]: prev[id] === "acik" ? "kapali" : "acik" }));
+  const handleSubmit = () => {
+    if (correctStates.every(cs => states[cs.valveId] === cs.state)) { onSolve(); }
+    else { setWrong(true); setTimeout(() => setWrong(false), 2000); }
+  };
+  const handleHint = () => { if (hintRevealed) return; setHintRevealed(true); addTimePenalty(60); };
+
+  if (isSolved) return (
+    <View style={styles.miniGameSolvedBlock}>
+      <MaterialIcons name="check-circle" size={20} color="#22c55e" />
+      <Text style={styles.miniGameSolvedText}>{(pres.interaction as Record<string,string>)?.successMessage ?? "Çözüldü!"}</Text>
+      <Text style={styles.miniGameAciklama}>{sifre.aciklama}</Text>
+    </View>
+  );
+
+  return (
+    <View style={styles.valveContainer}>
+      <Text style={styles.valveTitle}>{pres.title}</Text>
+      <Text style={styles.valveSubtitle}>{pres.subtitle}</Text>
+      <Text style={styles.valvePurposeHint}>{(pres as Record<string,string>).purposeHint}</Text>
+      <View style={styles.valveGrid}>
+        {valves.map(valve => {
+          const isOpen = states[valve.id] === "acik";
+          return (
+            <Pressable key={valve.id} style={styles.valveItem} onPress={() => toggle(valve.id)}>
+              <View style={[styles.valveIconBox, isOpen ? styles.valveIconOpen : styles.valveIconClosed]}>
+                <MaterialIcons name={isOpen ? "lock-open" : "lock"} size={26} color={isOpen ? "#22c55e" : "#ef4444"} />
+              </View>
+              <Text style={styles.valveLabel}>{valve.label}</Text>
+              <Text style={[styles.valveState, isOpen ? styles.valveStateOpen : styles.valveStateClosed]}>
+                {isOpen ? "AÇIK" : "KAPALI"}
+              </Text>
+            </Pressable>
+          );
+        })}
+      </View>
+      <Pressable style={styles.fenSubmitBtn} onPress={handleSubmit}>
+        <Text style={styles.fenSubmitText}>{(pres.interaction as Record<string,string>)?.submitLabel ?? "Hattı Doğrula"}</Text>
+      </Pressable>
+      {wrong && <View style={[styles.lockResult, styles.lockResultFail]}><Text style={[styles.lockResultText, styles.lockResultTextFail]}>{(pres.interaction as Record<string,string>)?.failureMessage ?? "Hatalı vana konumu."}</Text></View>}
+      <Pressable style={[styles.lockHintBtn, hintRevealed && styles.lockHintBtnUsed]} onPress={handleHint} disabled={hintRevealed}>
+        <Text style={styles.lockHintText}>{hintRevealed ? "İpucu Kullanıldı (−60 sn)" : "İpucu Al (−60 sn)"}</Text>
+      </Pressable>
+      {hintRevealed && <View style={styles.lockHintReveal}><Text style={styles.lockHintRevealText}>{sifre.cozumIpucu}</Text></View>}
+    </View>
+  );
+}
+
 function SifreliMesajBlock({
   sifre,
   isSolved,
@@ -2053,6 +2380,26 @@ function SifreliMesajBlock({
 
   if (sifre.presentation?.style === "mechanical_lock_sequence") {
     return <MechanicalLockSequenceBlock sifre={sifre} isSolved={isSolved} onSolve={onSolve} />;
+  }
+
+  if (sifre.presentation?.style === "cipher_disc_alignment") {
+    return <CipherDiscAlignmentBlock sifre={sifre} isSolved={isSolved} onSolve={onSolve} />;
+  }
+
+  if (sifre.presentation?.style === "timeline_board") {
+    return <TimelineBoardBlock sifre={sifre} isSolved={isSolved} onSolve={onSolve} />;
+  }
+
+  if (sifre.presentation?.style === "parcel_xray_layers") {
+    return <ParcelXrayLayersBlock sifre={sifre} isSolved={isSolved} onSolve={onSolve} />;
+  }
+
+  if (sifre.presentation?.style === "waltz_score_stitch") {
+    return <WaltzScoreStitchBlock sifre={sifre} isSolved={isSolved} onSolve={onSolve} />;
+  }
+
+  if (sifre.presentation?.style === "ventilation_valve_network") {
+    return <VentilationValveNetworkBlock sifre={sifre} isSolved={isSolved} onSolve={onSolve} />;
   }
 
   if (sifre.presentation?.style === "symbol_crossgrid") {
@@ -6731,5 +7078,382 @@ const styles = StyleSheet.create({
     color: "#8b91ad",
     fontStyle: "italic",
     lineHeight: 17,
+  },
+  // ── shared Fenomen submit button ──
+  fenSubmitBtn: {
+    padding: 11,
+    borderRadius: 8,
+    backgroundColor: "#D4A843",
+    alignItems: "center",
+    marginBottom: 8,
+    marginTop: 4,
+  },
+  fenSubmitText: {
+    fontSize: 13,
+    fontWeight: "700",
+    color: "#1a1205",
+  },
+  // ── CipherDiscAlignmentBlock ──
+  discContainer: {
+    gap: 8,
+  },
+  discTitle: {
+    fontSize: 14,
+    fontWeight: "700",
+    color: "#D4A843",
+    marginBottom: 2,
+  },
+  discSubtitle: {
+    fontSize: 12,
+    color: "#8b91ad",
+    marginBottom: 4,
+  },
+  discPurposeHint: {
+    fontSize: 11,
+    color: "#6b7280",
+    fontStyle: "italic",
+    marginBottom: 8,
+    lineHeight: 15,
+  },
+  discRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    backgroundColor: "rgba(255,255,255,0.04)",
+    borderRadius: 8,
+    padding: 8,
+    marginBottom: 4,
+  },
+  discLabel: {
+    fontSize: 12,
+    color: "#9ca3af",
+    flex: 1,
+  },
+  discControl: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+  },
+  discArrow: {
+    padding: 4,
+  },
+  discSymbolBox: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    backgroundColor: "rgba(212,168,67,0.12)",
+    borderWidth: 1,
+    borderColor: "rgba(212,168,67,0.3)",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  discSymbol: {
+    fontSize: 22,
+    color: "#D4A843",
+  },
+  // ── TimelineBoardBlock ──
+  tlContainer: {
+    gap: 6,
+  },
+  tlTitle: {
+    fontSize: 14,
+    fontWeight: "700",
+    color: "#D4A843",
+    marginBottom: 2,
+  },
+  tlSubtitle: {
+    fontSize: 12,
+    color: "#8b91ad",
+    marginBottom: 4,
+  },
+  tlPurposeHint: {
+    fontSize: 11,
+    color: "#6b7280",
+    fontStyle: "italic",
+    marginBottom: 8,
+    lineHeight: 15,
+  },
+  tlCard: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "rgba(255,255,255,0.04)",
+    borderRadius: 8,
+    padding: 8,
+    marginBottom: 4,
+    gap: 8,
+  },
+  tlCardBadge: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    backgroundColor: "rgba(212,168,67,0.15)",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  tlCardBadgeText: {
+    fontSize: 12,
+    fontWeight: "700",
+    color: "#D4A843",
+  },
+  tlCardBody: {
+    flex: 1,
+  },
+  tlCardLabel: {
+    fontSize: 12,
+    fontWeight: "700",
+    color: "#e2e8f0",
+    marginBottom: 2,
+  },
+  tlCardText: {
+    fontSize: 11,
+    color: "#8b91ad",
+    lineHeight: 15,
+  },
+  tlCardArrows: {
+    gap: 4,
+  },
+  tlArrow: {
+    padding: 2,
+  },
+  // ── ParcelXrayLayersBlock ──
+  xrayContainer: {
+    gap: 6,
+  },
+  xrayTitle: {
+    fontSize: 14,
+    fontWeight: "700",
+    color: "#60a5fa",
+    marginBottom: 2,
+  },
+  xraySubtitle: {
+    fontSize: 12,
+    color: "#8b91ad",
+    marginBottom: 4,
+  },
+  xrayPurposeHint: {
+    fontSize: 11,
+    color: "#6b7280",
+    fontStyle: "italic",
+    marginBottom: 8,
+    lineHeight: 15,
+  },
+  xrayLayer: {
+    backgroundColor: "rgba(96,165,250,0.05)",
+    borderWidth: 1,
+    borderColor: "rgba(96,165,250,0.15)",
+    borderRadius: 8,
+    padding: 8,
+    marginBottom: 6,
+  },
+  xrayLayerHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
+    marginBottom: 4,
+  },
+  xrayLayerLabel: {
+    fontSize: 12,
+    fontWeight: "700",
+    color: "#93c5fd",
+  },
+  xrayLayerScan: {
+    fontSize: 11,
+    color: "#6b7280",
+    fontStyle: "italic",
+    marginBottom: 6,
+    lineHeight: 14,
+  },
+  xrayOptions: {
+    gap: 4,
+  },
+  xrayOption: {
+    padding: 7,
+    borderRadius: 6,
+    backgroundColor: "rgba(255,255,255,0.04)",
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.08)",
+  },
+  xrayOptionSelected: {
+    backgroundColor: "rgba(96,165,250,0.15)",
+    borderColor: "#60a5fa",
+  },
+  xrayOptionText: {
+    fontSize: 11,
+    color: "#9ca3af",
+    lineHeight: 15,
+  },
+  xrayOptionTextSelected: {
+    color: "#93c5fd",
+    fontWeight: "600",
+  },
+  // ── WaltzScoreStitchBlock ──
+  waltzContainer: {
+    gap: 6,
+  },
+  waltzTitle: {
+    fontSize: 14,
+    fontWeight: "700",
+    color: "#e879f9",
+    marginBottom: 2,
+  },
+  waltzSubtitle: {
+    fontSize: 12,
+    color: "#8b91ad",
+    marginBottom: 4,
+  },
+  waltzPurposeHint: {
+    fontSize: 11,
+    color: "#6b7280",
+    fontStyle: "italic",
+    marginBottom: 8,
+    lineHeight: 15,
+  },
+  waltzMeasure: {
+    backgroundColor: "rgba(232,121,249,0.05)",
+    borderWidth: 1,
+    borderColor: "rgba(232,121,249,0.15)",
+    borderRadius: 8,
+    padding: 8,
+    marginBottom: 6,
+  },
+  waltzMeasureHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+    marginBottom: 8,
+  },
+  waltzMeasureNum: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    backgroundColor: "rgba(232,121,249,0.15)",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  waltzMeasureNumText: {
+    fontSize: 12,
+    fontWeight: "700",
+    color: "#e879f9",
+  },
+  waltzMeasureLabel: {
+    fontSize: 12,
+    fontWeight: "700",
+    color: "#e2e8f0",
+  },
+  waltzMeasureNote: {
+    fontSize: 10,
+    color: "#8b91ad",
+    fontStyle: "italic",
+  },
+  waltzOptions: {
+    gap: 4,
+  },
+  waltzOption: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+    padding: 7,
+    borderRadius: 6,
+    backgroundColor: "rgba(255,255,255,0.04)",
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.08)",
+  },
+  waltzOptionSelected: {
+    backgroundColor: "rgba(232,121,249,0.12)",
+    borderColor: "#e879f9",
+  },
+  waltzRadio: {
+    width: 14,
+    height: 14,
+    borderRadius: 7,
+    borderWidth: 1.5,
+    borderColor: "#4b5563",
+  },
+  waltzRadioSelected: {
+    borderColor: "#e879f9",
+    backgroundColor: "#e879f9",
+  },
+  waltzOptionText: {
+    fontSize: 11,
+    color: "#9ca3af",
+    flex: 1,
+    lineHeight: 15,
+  },
+  waltzOptionTextSelected: {
+    color: "#f5d0fe",
+    fontWeight: "600",
+  },
+  // ── VentilationValveNetworkBlock ──
+  valveContainer: {
+    gap: 6,
+  },
+  valveTitle: {
+    fontSize: 14,
+    fontWeight: "700",
+    color: "#34d399",
+    marginBottom: 2,
+  },
+  valveSubtitle: {
+    fontSize: 12,
+    color: "#8b91ad",
+    marginBottom: 4,
+  },
+  valvePurposeHint: {
+    fontSize: 11,
+    color: "#6b7280",
+    fontStyle: "italic",
+    marginBottom: 8,
+    lineHeight: 15,
+  },
+  valveGrid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 8,
+    marginBottom: 8,
+  },
+  valveItem: {
+    flex: 1,
+    minWidth: "45%",
+    alignItems: "center",
+    padding: 10,
+    borderRadius: 8,
+    backgroundColor: "rgba(255,255,255,0.04)",
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.08)",
+  },
+  valveIconBox: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 6,
+  },
+  valveIconOpen: {
+    backgroundColor: "rgba(34,197,94,0.12)",
+    borderWidth: 1,
+    borderColor: "rgba(34,197,94,0.3)",
+  },
+  valveIconClosed: {
+    backgroundColor: "rgba(239,68,68,0.12)",
+    borderWidth: 1,
+    borderColor: "rgba(239,68,68,0.3)",
+  },
+  valveLabel: {
+    fontSize: 11,
+    color: "#9ca3af",
+    textAlign: "center",
+    marginBottom: 4,
+  },
+  valveState: {
+    fontSize: 10,
+    fontWeight: "700",
+    letterSpacing: 0.8,
+  },
+  valveStateOpen: {
+    color: "#22c55e",
+  },
+  valveStateClosed: {
+    color: "#ef4444",
   },
 });

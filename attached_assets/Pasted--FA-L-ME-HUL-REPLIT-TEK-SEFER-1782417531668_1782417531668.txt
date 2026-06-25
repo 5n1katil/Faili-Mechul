@@ -1,0 +1,347 @@
+/* ============================================================
+ *  FAİLİ MEÇHUL — REPLIT TEK SEFERLİK ENTEGRASYON PAKETİ
+ *  Bu metni Replit Agent sohbetine TEK PARÇA olarak yapıştır.
+ *  Görev: sadece JSON kaydetme. Vaka verisini mevcut kaynakta
+ *  yükle, aşağıdaki eksik renderer altyapısını ekle ve çalıştır.
+ * ------------------------------------------------------------
+ *  Vaka: Odin’in Bedeli · puzzleId=mit_005
+ *  1) Önce mevcut vaka veri kaydını ve mini-oyun dispatcherını bul.
+ *  2) Var olan rendererları bozma; yalnız eksik olan dalı ekle.
+ *  3) Aşağıdaki vaka JSON’unu uygulamanın KANONİK case kaynağına ekle.
+ *  4) Kod değişikliklerinden sonra aşağıdaki kabul testlerini tarayıcıda yap.
+ *  5) Sadece açıklama yazma: dosyaları gerçekten güncelle ve test sonucunu bildir.
+ * ============================================================ */
+
+===== ZORUNLU KABUL TESTLERİ =====
+1. Eski klasik sifreli_mesaj, parmak_izi, profil_sentezi ve genel ses_kaydi rendererları regresyona uğramaz.
+===== TEST LİSTESİ SONU =====
+
+===== KANONİK VAKA VERİSİ — mevcut case registry’de mit_005 olarak ekle/değiştir =====
+{
+  "puzzleId": "mit_005",
+  "stars": "★★★★★",
+  "gridSize": "3x3",
+  "timeLimit": 420,
+  "qaNarrativeContract": {
+    "premiumStoryGate": "pass",
+    "storyLengthWords": 137,
+    "storyClue": {
+      "visibleEvidence": "Kuzgun yuvalarında dört renk tüy, bahçe taşlarında mühür izleri bulunur.",
+      "mechanicBridge": "Bu ayrıntı c3’teki Kuzgun Tüyü Mühür Ağı mini oyununun fiziksel kaynağıdır.",
+      "matrixBoundary": "Anlatı tek başına fail, araç veya mekânı kesinleştirmez."
+    },
+    "narrativeFunctions": [
+      "Asgard’ın soğuk, yüksek gerilimini kurar.",
+      "Üç tanrısal figürün gerekçelerini ayrıştırır.",
+      "Kuzgun uçuşlarını mekanik delile bağlar."
+    ]
+  },
+  "title": "Odin’in Bedeli",
+  "subtitle": "Asgard · Valkyrie Bahçesi",
+  "difficulty": "Efsane Komiser",
+  "difficultyLevel": 5,
+  "specialMechanic": "raven_feather_lattice_sifreli_mesaj",
+  "story": "Valhalla kapısının nöbetçisi Bjorn Ironfist, sabah nöbet değişiminde zırhının içinde çökmüş halde bulundu. Üzerinde kılıç yarası yoktu; dudaklarında ise kuzey ışığı gibi parlayan ince bir altın toz kalmıştı.\n\nLoki rün odasının derinliklerinde kendi tılsımlarını onardığını söylüyordu. Tyr kapı kayıtlarını denetliyordu. Freya ise Valkyrie listesindeki bir değişikliğin Bjorn tarafından Odin’e bildirileceğini geceden öğrenmişti.\n\nHuginn ve Muninn’in yuvalarında dört renk tüy bulundu. Bahçe taşlarındaki küçük mühürler, kuzgunların kapıdan değil bir süre bahçedeki altın ışığın çevresinden uçtuğunu anlatıyordu. Bjorn’un ölümü sessizdi; ama kuzgunlar hiçbir zaman sessiz ayrıntıları unutmazdı.",
+  "atmosphere": "Kuzey ışıkları çatılarda yeşil bir bıçak gibi titreşiyor. Bifröst rüzgârı, demir zırh ve gece çiçeğinin tatlı kokusunu birlikte taşıyor.",
+  "suspects": [
+    {
+      "id": "s1",
+      "name": "Loki",
+      "icon": "🧩",
+      "description": "Hile ve rün tanrısı.",
+      "detail": "Mavi kıvılcım bırakan rün külünü taşıdığı kesede saklar; kapıları konuşmadan açmayı sever."
+    },
+    {
+      "id": "s2",
+      "name": "Freya",
+      "icon": "🌺",
+      "description": "Aşk, savaş ve Valkyrie seçiminin tanrıçası.",
+      "detail": "Gece çiçeklerinden uyku tozu hazırlar; seçki defterindeki isimleri yalnız kendi eliyle değiştirir."
+    },
+    {
+      "id": "s3",
+      "name": "Tyr",
+      "icon": "⚔️",
+      "description": "Adalet ve savaş tanrısı.",
+      "detail": "Kapı kayıtlarını yalnız başparmağıyla mühürler; yargı kılıcını her nöbetten sonra sayar."
+    }
+  ],
+  "weapons": [
+    {
+      "id": "w1",
+      "name": "Loki’nin Zehirli Rünleri",
+      "icon": "🔮",
+      "description": "Taşa kazındığında içten çürüten, mavi kıvılcım bırakan lanet rünleri.",
+      "detail": ""
+    },
+    {
+      "id": "w2",
+      "name": "Freya’nın Uyku Büyüsü Tozları",
+      "icon": "✨",
+      "description": "Gece çiçeği poleninden üretilen, yarasız ve sessiz ölüm getiren altın toz.",
+      "detail": ""
+    },
+    {
+      "id": "w3",
+      "name": "Tyr’ın Yargı Kılıcı",
+      "icon": "🗡️",
+      "description": "Adalet törenlerinde kullanılan, ağır ve keskin savaş kılıcı.",
+      "detail": ""
+    }
+  ],
+  "locations": [
+    {
+      "id": "l1",
+      "name": "Valhalla Kapısı",
+      "icon": "🚪",
+      "description": "Bjorn’un nöbet tuttuğu dev meşe kapı ve kayıt taşı.",
+      "detail": ""
+    },
+    {
+      "id": "l2",
+      "name": "Rün Odası",
+      "icon": "🪨",
+      "description": "Loki’nin mavi kıvılcımlı tılsımlarını sakladığı taş oda.",
+      "detail": ""
+    },
+    {
+      "id": "l3",
+      "name": "Valkyrie Bahçesi",
+      "icon": "🌿",
+      "description": "Freya’nın seçki listelerini ve gece çiçeklerini tuttuğu kutsal bahçe.",
+      "detail": ""
+    }
+  ],
+  "clues": [
+    {
+      "id": "c1",
+      "title": "Valhalla Tabibinin Kaydı",
+      "type": "tanik",
+      "mechanicType": "text",
+      "text": "Valhalla tabibi, Bjorn’un dudaklarında yarasız ölümle uyumlu altın uyku tozu bulduğunu söyledi. Toz, gece çiçeği poleniyle karışmıştı; fakat polen kapı eşiğinde değil, başka bir taş hatta tutunmuştu.",
+      "deductionHint": "Bu ilk kayıt, altın toz için hangi mekânı kapatır?",
+      "isBonus": false,
+      "revealOrder": 1,
+      "isRevealed": true,
+      "pointCost": 0
+    },
+    {
+      "id": "c2",
+      "title": "Rün Odasının Soğuk Mührü",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Rün odasının taş masasındaki mavi kıvılcım izleri, geceden sonra da aynı mum mühürle kapalı kaldı. Mührün içindeki toz, yalnız bu odanın yağ lambasında oluşan soğuk kurumla örtüşüyordu.",
+      "deductionHint": "Mühür ve kurum, hangi araç–mekân bağını doğrular?",
+      "isBonus": false,
+      "revealOrder": 2,
+      "isRevealed": false,
+      "pointCost": 60
+    },
+    {
+      "id": "c3",
+      "title": "Kuzgun Tüylerinin Uçuş Haritası",
+      "type": "sifreli",
+      "mechanicType": "sifreli_mesaj",
+      "text": "Huginn ile Muninn’in yuvalarında dört farklı renkte tüy ve taş mühür izleri bulundu. Her tüyün bir gecelik uçuşta hangi mühre değdiğini anlamak için, şafak öncesi sıralarının yeniden kurulması gerekiyordu.",
+      "deductionHint": "Tüy mühürlerini doğru eşleştir; hangi kişi–araç bağının mümkün olmadığını gör.",
+      "isBonus": false,
+      "revealOrder": 3,
+      "isRevealed": false,
+      "pointCost": 60,
+      "sifre": {
+        "sifrelenmis": "KUZGUN / ALTIN / RÜN / KILIÇ — DÖRT TÜY",
+        "sifreleTuru": "kuzgun tüyü mühür ağı",
+        "cozumIpucu": "Her tüy bir mühürde kalır; aynı renkte iki iz aynı dala konmaz.",
+        "cozulmus": "ASGARD-09",
+        "aciklama": "Uçuş örgüsü çözüldüğünde, geceye ait tek bir bağlantı belirginleşir.",
+        "presentation": {
+          "style": "raven_feather_lattice",
+          "title": "Kuzgun Tüyü Mühür Ağı",
+          "subtitle": "Dört tüyü, gece uçuşunda dokunduğu doğru mühürle eşleştir.",
+          "purposeHint": "Doğru uçuş ağı, ızgarada tek bir bağlantıyı elemek ya da doğrulamak için kullanılır.",
+          "feathers": [
+            {
+              "id": "f1",
+              "label": "Altın Tüy",
+              "mark": "Bahçe ışığı"
+            },
+            {
+              "id": "f2",
+              "label": "Koyu Mavi Tüy",
+              "mark": "Rün kıvılcımı"
+            },
+            {
+              "id": "f3",
+              "label": "Gri Tüy",
+              "mark": "Kapı sisi"
+            },
+            {
+              "id": "f4",
+              "label": "Kızıl Tüy",
+              "mark": "Savaş yankısı"
+            }
+          ],
+          "seals": [
+            {
+              "id": "sA",
+              "label": "Valkyrie Bahçesi Mührü"
+            },
+            {
+              "id": "sB",
+              "label": "Rün Odası Mührü"
+            },
+            {
+              "id": "sC",
+              "label": "Valhalla Kapısı Mührü"
+            },
+            {
+              "id": "sD",
+              "label": "Tyr’ın Savaş Mührü"
+            }
+          ],
+          "correctAssignments": [
+            {
+              "itemId": "f1",
+              "answerId": "sA"
+            },
+            {
+              "itemId": "f2",
+              "answerId": "sB"
+            },
+            {
+              "itemId": "f3",
+              "answerId": "sC"
+            },
+            {
+              "itemId": "f4",
+              "answerId": "sD"
+            }
+          ],
+          "resultText": "Uçuş ağı, rün tanrısının kılıç hattında olmadığını gösterir.",
+          "interaction": {
+            "mode": "match_feather_seals",
+            "submitLabel": "Uçuş Ağını Doğrula",
+            "successMessage": "Kuzgunlar tek bir uçuş düzeni verdi.",
+            "failureMessage": "Bu tüyler aynı gece aynı mühürlere konamaz."
+          }
+        }
+      }
+    },
+    {
+      "id": "c4",
+      "title": "Tyr’ın Rün Nöbeti",
+      "type": "tanik",
+      "mechanicType": "text",
+      "text": "Rün odasının ikinci muhafızı, tek elli savaş tanrısının gece yarısı bozulan koruma halkasını denetlemek için taş odaya girdiğini ve kendi başparmak mührünü kapıya bastığını kayda geçirdi.",
+      "deductionHint": "Muhafız kaydı, hangi kişi–mekân bağını doğrular?",
+      "isBonus": false,
+      "revealOrder": 4,
+      "isRevealed": false,
+      "pointCost": 60
+    },
+    {
+      "id": "c5",
+      "title": "Bahçe Çiçeği Suyu",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Valkyrie Bahçesi’ndeki pınarda, altın uyku tozunun çözündüğü gece çiçeği poleni ve seçki mührü birlikte bulundu.",
+      "deductionHint": "Polen ve mühür, hangi kişi–mekân bağını doğrular?",
+      "isBonus": true,
+      "revealOrder": 5,
+      "isRevealed": false,
+      "pointCost": 60
+    },
+    {
+      "id": "b1",
+      "title": "Loki’nin Kül Kesesi",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Rün odasındaki mavi kül kesesi, hile tanrısının kişisel işaretiyle kapalıydı.",
+      "deductionHint": "Kül kesesi hangi kişi–araç bağını doğrular?",
+      "isBonus": true,
+      "revealOrder": 6,
+      "isRevealed": false,
+      "pointCost": 60
+    },
+    {
+      "id": "b2",
+      "title": "Tyr’ın Rün Defteri",
+      "type": "tanik",
+      "mechanicType": "text",
+      "text": "Tyr’ın rün odasında tuttuğu denetim defterinde, aynı gece altın toz şişesinin kendisine hiç teslim edilmediği yazıyordu.",
+      "deductionHint": "Bu defter hangi ilişkiyi doğrular?",
+      "isBonus": true,
+      "revealOrder": 7,
+      "isRevealed": false,
+      "pointCost": 60
+    }
+  ],
+  "assetManifest": [],
+  "solution": {
+    "suspectId": "s2",
+    "weaponId": "w2",
+    "locationId": "l3"
+  },
+  "solutionNarrative": "Freya, Bjorn’un seçki listesindeki değişikliği Odin’e bildirmesini engellemek için uyku tozunu Valkyrie Bahçesi’nde hazırladı. Kuzgun tüyleri, altın ışığın kapıda değil bahçede yükseldiğini gösterdi. Loki rün odasında, Tyr ise kapı kaydında kaldı; bahçe poleni ve Freya’nın kendi işaretleri, tozu hazırlayan eli belirledi.",
+  "replitIntegration": {
+    "schema": "fm_replit_runtime_contract_v1",
+    "copyTarget": "Replit Agent prompt",
+    "canonicalCaseFile": "src/data/cases/mit_005.json",
+    "policy": "Var olan renderer varsa onu bozma; yoksa bu paketteki component ve dispatcher dalını ekle.",
+    "mechanics": [
+      {
+        "clueId": "c3",
+        "mechanicType": "sifreli_mesaj",
+        "renderer": "raven_feather_lattice",
+        "completionEvent": "onSolved({ clueId, mechanic: \"sifreli_mesaj\" })"
+      },
+      {
+        "clueId": "c3",
+        "mechanicType": "sifreli_mesaj",
+        "renderer": "raven_feather_lattice",
+        "componentFile": "src/components/caseMechanics/MythologyMechanicRenderer.jsx",
+        "dispatcherBranch": "clue.mechanicType === \"sifreli_mesaj\" && [\"olympian_offering_scale\",\"forge_bellows_cycle\",\"laurel_knot_decoder\",\"sunstone_reflection_array\",\"raven_feather_lattice\"] .includes(clue.sifre?.presentation?.style)",
+        "completionEvent": "onSolved({ clueId, mechanic: \"raven_feather_lattice\" })",
+        "hintEvent": "onRequestHint({ clueId, penaltySeconds: 60 })",
+        "requiredData": [
+          "title",
+          "subtitle",
+          "purposeHint",
+          "resultText",
+          "interaction",
+          "style-specific data"
+        ],
+        "nonNegotiable": [
+          "JSON dışı çözüm anahtarı kullanma.",
+          "Başarı öncesinde resultText görünmez kalmalı.",
+          "Yanlış deneme doğru eşlemeyi açmamalı.",
+          "Mobilde kartlar tek sütuna akmalı."
+        ]
+      }
+    ]
+  }
+}
+===== VAKA VERİSİ SONU =====
+===== MİTOLOJİ v28 ÖZEL MİNİ OYUN RENDERER’I — DOSYA OLUŞTUR / EKSİKSE EKLE =====
+// src/components/caseMechanics/MythologyMechanicRenderer.jsx
+import { useState } from "react";
+const styles=new Set(["olympian_offering_scale","forge_bellows_cycle","laurel_knot_decoder","sunstone_reflection_array","raven_feather_lattice"]);
+export const isMythologyMechanic=(clue)=>styles.has(String(clue?.sifre?.presentation?.style??"").toLowerCase());
+export default function MythologyMechanicRenderer({clue,onSolved,onRequestHint}){
+  const p=clue?.sifre?.presentation??{}; const style=String(p.style??"").toLowerCase();
+  const [choices,setChoices]=useState({}); const [order,setOrder]=useState([]); const [result,setResult]=useState(null); const [hint,setHint]=useState(false);
+  if(!styles.has(style)) return null;
+  const source=style==="olympian_offering_scale"?p.offerings:style==="laurel_knot_decoder"?p.cords:style==="sunstone_reflection_array"?p.mirrors:style==="raven_feather_lattice"?p.feathers:[];
+  const options=style==="olympian_offering_scale"?p.altars:style==="laurel_knot_decoder"?p.knots:style==="sunstone_reflection_array"?p.targets:style==="raven_feather_lattice"?p.seals:[];
+  const submit=()=>{const ok=style==="forge_bellows_cycle"?(p.correctOrder??[]).every((id,index)=>order[index]===id)&&order.length===(p.correctOrder??[]).length:(p.correctAssignments??[]).every(x=>choices[x.itemId]===x.answerId);setResult(ok);if(ok)onSolved?.({clueId:clue.id,mechanic:style});};
+  return <section className="mythology-mechanic"><h4>{p.title}</h4><p>{p.subtitle}</p><p><b>ÇÖZÜMÜN İŞLEVİ</b><br/>{p.purposeHint}</p>{style==="forge_bellows_cycle"?<div className="mythology-stack">{(p.bellows??[]).map(b=><button key={b.id} onClick={()=>setOrder(prev=>prev.includes(b.id)?prev.filter(x=>x!==b.id):[...prev,b.id])}><b>{b.label}</b><br/><small>{b.text}</small>{order.includes(b.id)?" · seçildi":""}</button>)}</div>:<div className="mythology-grid">{source.map(item=><label key={item.id}><b>{item.label}</b><small>{item.mark??item.text??item.beam}</small><select value={choices[item.id]??""} onChange={e=>setChoices({...choices,[item.id]:e.target.value})}><option value="">Eşleşme seç…</option>{options.map(option=><option key={option.id} value={option.id}>{option.label}</option>)}</select></label>)}</div>}<button onClick={submit}>{p.interaction?.submitLabel??"Doğrula"}</button><button disabled={hint} onClick={()=>{setHint(true);onRequestHint?.({clueId:clue.id,penaltySeconds:60});}}>İpucu iste (-60 sn)</button>{hint?<p>{clue?.sifre?.cozumIpucu}</p>:null}{result===false?<p>✕ {p.interaction?.failureMessage}</p>:null}{result===true?<p>✓ {p.interaction?.successMessage}<br/>{p.resultText}</p>:null}</section>;
+}
+===== DOSYA SONU =====
+===== MEVCUT MİNİ OYUN DISPATCHERINA EKLENECEK DAL =====
+// Mevcut genel sifreli_mesaj renderer'INDEN ÖNCE ekle.
+import MythologyMechanicRenderer,{isMythologyMechanic} from "@/components/caseMechanics/MythologyMechanicRenderer";
+if(isMythologyMechanic(clue))return <MythologyMechanicRenderer clue={clue} onSolved={({clueId})=>markMiniGameSolved?.(clueId)} onRequestHint={({clueId,penaltySeconds})=>applyHintPenalty?.({clueId,penaltySeconds})}/>;
+===== YAMA SONU =====
+===== MİTOLOJİ v28 KABUL TESTLERİ =====
+- c3: raven_feather_lattice doğru sonuç öncesi resultText görünmez; yanlış deneme çözümü sızdırmaz; mobilde kartlar tek kolona iner.
+===== TESTLER SONU =====

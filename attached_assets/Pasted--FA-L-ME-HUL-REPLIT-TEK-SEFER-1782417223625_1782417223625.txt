@@ -1,0 +1,362 @@
+/* ============================================================
+ *  FAİLİ MEÇHUL — REPLIT TEK SEFERLİK ENTEGRASYON PAKETİ
+ *  Bu metni Replit Agent sohbetine TEK PARÇA olarak yapıştır.
+ *  Görev: sadece JSON kaydetme. Vaka verisini mevcut kaynakta
+ *  yükle, aşağıdaki eksik renderer altyapısını ekle ve çalıştır.
+ * ------------------------------------------------------------
+ *  Vaka: On Dördüncü Katın Sessizliği · puzzleId=fen_premium_005
+ *  1) Önce mevcut vaka veri kaydını ve mini-oyun dispatcherını bul.
+ *  2) Var olan rendererları bozma; yalnız eksik olan dalı ekle.
+ *  3) Aşağıdaki vaka JSON’unu uygulamanın KANONİK case kaynağına ekle.
+ *  4) Kod değişikliklerinden sonra aşağıdaki kabul testlerini tarayıcıda yap.
+ *  5) Sadece açıklama yazma: dosyaları gerçekten güncelle ve test sonucunu bildir.
+ * ============================================================ */
+
+===== ZORUNLU KABUL TESTLERİ =====
+1. Eski klasik sifreli_mesaj, parmak_izi, profil_sentezi ve genel ses_kaydi rendererları regresyona uğramaz.
+===== TEST LİSTESİ SONU =====
+
+===== KANONİK VAKA VERİSİ — mevcut case registry’de fen_premium_005 olarak ekle/değiştir =====
+{
+  "puzzleId": "fen_premium_005",
+  "stars": "★★★★★",
+  "gridSize": "4x4",
+  "timeLimit": 390,
+  "qaNarrativeContract": {
+    "premiumStoryGate": "pass",
+    "storyLengthWords": 163,
+    "storyClue": {
+      "visibleEvidence": "Oda duvarında kapatılmış dört vana işaretinin şeması bulunur.",
+      "mechanicBridge": "Bu şema, c4’teki Havalandırma Vana Ağı mini oyununun fiziksel kaynağıdır.",
+      "matrixBoundary": "Anlatı tek başına fail, araç veya mekânı kesinleştirmez."
+    },
+    "narrativeFunctions": [
+      "Kilitli oda gerilimini kurar.",
+      "Şüphelilerin aynı katta bulunma gerekçelerini verir.",
+      "Çatı hattı ve vana şemasını oyunun mantık çekirdeğine bağlar."
+    ]
+  },
+  "title": "On Dördüncü Katın Sessizliği",
+  "subtitle": "1987 · Aoba Şehri · Meridian Oteli",
+  "difficulty": "Efsane Komiser",
+  "difficultyLevel": 5,
+  "specialMechanic": "ventilation_valve_network",
+  "story": "1987’de Aoba Şehri’nin Meridian Oteli, gece yarısından sonra bile neon reklamların yansıdığı ıslak bir kule gibiydi. On dördüncü kattaki 1402 numaralı odada teknoloji yöneticisi Riku Mavari, kapı içeriden kilitliyken ölü bulundu. Anahtar masadaydı; televizyon açıktı; koridor kamerası ise kapıya yaklaşan kimseyi göstermiyordu.\n\nOdanın duvarında tek bir iz vardı: havalandırma ızgarasının altında, kapatılmış dört vana işaretinin şeması. Aynı şema, çatı teknik odasındaki eski bakım panosunda da bulunuyordu. Ölümün odada başlamadığı, binanın kendi soluk alışında saklandığı hissi bu yüzden güçlendi.\n\nPatent görüşmesi için gelen hukukçu Haru, konferans katında dosya kapatıyordu. Gazeteci Nao, 1402’nin karşısındaki odada şirket skandalı için not topluyordu. Otel mühendisi Ken, ara sahanlıktaki bakım defterini taşıyordu. Yabancı danışman Emil ise otelin hangi katında olduğunu hiç söylemiyordu. Kapı kilitliydi; fakat binanın havası değildi.",
+  "atmosphere": "Yağmur çizgileri neonları parçalıyor, havalandırma ızgarasından gelen uğultu odayı kesintisiz dolduruyor. Asansör kabini her durakta kısa bir titreşim bırakıyor.",
+  "suspects": [
+    {
+      "id": "s1",
+      "name": "Hukukçu Haru Kamei",
+      "icon": "📑",
+      "description": "Patent görüşmesinin hukuki çerçevesini yöneten şirket danışmanı.",
+      "detail": "Toplantı notlarını renkli sekmelerle ayırır; konferans katındaki sözleşme odalarını ayrıntılı bilir."
+    },
+    {
+      "id": "s2",
+      "name": "Yabancı Danışman Emil Voren",
+      "icon": "👔",
+      "description": "Teknoloji anlaşması için kente gelen, geçmişi belirsiz danışman.",
+      "detail": "Mekanik tesisat şemalarını hızlı okur; pasaportunda ardışık olmayan giriş damgaları vardır."
+    },
+    {
+      "id": "s3",
+      "name": "Gazeteci Nao Kirin",
+      "icon": "🗞️",
+      "description": "Şirketin çevre raporlarını inceleyen araştırmacı gazeteci.",
+      "detail": "Oda servis fişlerini ve gizli röportaj notlarını toplar; otel kat planını tek başına çizmiştir."
+    },
+    {
+      "id": "s4",
+      "name": "Otel Mühendisi Ken Arai",
+      "icon": "⚙️",
+      "description": "Gece bakım panellerinden ve asansör ara sahanlığından sorumlu mühendis.",
+      "detail": "Tesisat anahtarlarını seri numarasıyla taşır; parazit kesicilerini bakım defterine not eder."
+    }
+  ],
+  "weapons": [
+    {
+      "id": "w1",
+      "name": "Bakır Hat Kesicisi",
+      "icon": "✂️",
+      "description": "İnce sinyal kablolarını kesmek için kullanılan izole saplı alet.",
+      "detail": ""
+    },
+    {
+      "id": "w2",
+      "name": "Servis Halatı",
+      "icon": "🪢",
+      "description": "Ara sahanlıktaki bakım kapaklarını sabitlemekte kullanılan kısa halat.",
+      "detail": ""
+    },
+    {
+      "id": "w3",
+      "name": "Parazit Kesici",
+      "icon": "📡",
+      "description": "Telsiz ve kamera parazitini ayarlayan küçük güç modülü.",
+      "detail": ""
+    },
+    {
+      "id": "w4",
+      "name": "Karbonmonoksit Bypass Kartuşu",
+      "icon": "💨",
+      "description": "Havalandırma hattına bağlandığında gazı odaya yönlendiren mühürlü kartuş.",
+      "detail": ""
+    }
+  ],
+  "locations": [
+    {
+      "id": "l1",
+      "name": "Oda 1402",
+      "icon": "🛏️",
+      "description": "Kilitli kapısı ve açık televizyonuyla kurbanın odası.",
+      "detail": ""
+    },
+    {
+      "id": "l2",
+      "name": "Konferans Katı",
+      "icon": "🏢",
+      "description": "Hukuk ekibinin patent metinlerini incelediği kapalı toplantı katı.",
+      "detail": ""
+    },
+    {
+      "id": "l3",
+      "name": "Asansör Ara Sahanlığı",
+      "icon": "🔲",
+      "description": "13 ile 14. kat arasında, bakım kapağı bulunan dar platform.",
+      "detail": ""
+    },
+    {
+      "id": "l4",
+      "name": "Çatı Teknik Odası",
+      "icon": "⚙️",
+      "description": "Havalandırma ana hattının ve vana panosunun bulunduğu üst bölüm.",
+      "detail": ""
+    }
+  ],
+  "clues": [
+    {
+      "id": "c1",
+      "title": "Dönüş Hattı",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Mavari’yi öldüren gazı taşıyan kartuşun, oda içindeki menfeze değil çatı hattındaki bypass yuvasına bağlanmış olması gerektiğini uzman raporu belirtti.",
+      "deductionHint": "Gazı odaya yönlendirebilen parça hangi noktada kullanılamaz?",
+      "isBonus": false,
+      "revealOrder": 1,
+      "isRevealed": true,
+      "pointCost": 0
+    },
+    {
+      "id": "c2",
+      "title": "Sözleşme Zımbası",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Sözleşme kutusunda, ince sinyal kablolarını kesen yalıtımlı sapla uyumlu bakır kıymıkları bulundu.",
+      "deductionHint": "Kıymık izi hangi kişi–araç bağını doğrular?",
+      "isBonus": false,
+      "revealOrder": 2,
+      "isRevealed": false,
+      "pointCost": 60
+    },
+    {
+      "id": "c3",
+      "title": "Çatı Kartı",
+      "type": "tanik",
+      "mechanicType": "text",
+      "text": "Üst bölüm kapı kartı, yabancı danışmanın ziyaretçi kartının olaydan önce bakım panosunun bulunduğu seviyede okutulduğunu kaydediyor.",
+      "deductionHint": "Kartlı giriş hangi kişi–mekân bağını doğrular?",
+      "isBonus": false,
+      "revealOrder": 3,
+      "isRevealed": false,
+      "pointCost": 60
+    },
+    {
+      "id": "c4",
+      "title": "Dört Vananın Sessiz Şeması",
+      "type": "sifreli",
+      "mechanicType": "sifreli_mesaj",
+      "text": "Oda duvarındaki vana işaretleri, bakım panosundaki dört hattın hangi sırayla açılıp kapandığını anlatıyordu.",
+      "deductionHint": "Vanaları, basıncın önce çekildiği sonra geri verildiği tek sıraya göre aç veya kapat.",
+      "isBonus": false,
+      "revealOrder": 4,
+      "isRevealed": false,
+      "pointCost": 60,
+      "sifre": {
+        "sifrelenmis": "V1 / V2 / V3 / V4 — BASINÇ 14",
+        "sifreleTuru": "havalandırma vana ağı",
+        "cozumIpucu": "Basıncı tamamen kapatan vana, gazı taşıyan hatla aynı anda açık kalamaz.",
+        "cozulmus": "A0BA 87",
+        "aciklama": "Doğru vana durumu, gazın hangi bakım zincirinden yönlendirilemeyeceğini ortaya çıkarır.",
+        "presentation": {
+          "style": "ventilation_valve_network",
+          "title": "Havalandırma Vana Ağı",
+          "subtitle": "Dört vanayı, basınç oklarının mümkün olduğu tek açık/kapalı düzenine getir.",
+          "purposeHint": "Doğru vana konumu, ızgarada bir kişi–araç eşleşmesinin mümkün olmadığını gösterecek.",
+          "valves": [
+            {
+              "id": "v1",
+              "label": "Giriş Vanası",
+              "initial": "kapali"
+            },
+            {
+              "id": "v2",
+              "label": "Bypass Vanası",
+              "initial": "acik"
+            },
+            {
+              "id": "v3",
+              "label": "Dönüş Vanası",
+              "initial": "kapali"
+            },
+            {
+              "id": "v4",
+              "label": "Tahliye Vanası",
+              "initial": "acik"
+            }
+          ],
+          "correctStates": [
+            {
+              "valveId": "v1",
+              "state": "acik"
+            },
+            {
+              "valveId": "v2",
+              "state": "acik"
+            },
+            {
+              "valveId": "v3",
+              "state": "kapali"
+            },
+            {
+              "valveId": "v4",
+              "state": "kapali"
+            }
+          ],
+          "resultText": "Vana ağı, bypass kartuşunun otel mühendisi Ken’in kayıtlı parazit devresinden çalışmadığını gösterir: Otel Mühendisi Ken Arai × Karbonmonoksit Bypass Kartuşu.",
+          "interaction": {
+            "mode": "toggle_valves",
+            "submitLabel": "Hattı Doğrula",
+            "successMessage": "Basınç okları tek bir hattı mümkün kıldı.",
+            "failureMessage": "Bu vana konumu, aynı anda hem basıncı hem tahliyeyi taşıyamaz."
+          }
+        }
+      }
+    },
+    {
+      "id": "c5",
+      "title": "Oda Servisi Fişi",
+      "type": "tanik",
+      "mechanicType": "text",
+      "text": "Gazetecinin oda servisi fişi, olay aralığında 1402’nin karşısındaki masada açık notlar ve soğuyan kahveyle kaldığını gösteriyor.",
+      "deductionHint": "Bu fiş hangi kişi–mekân bağını doğrular?",
+      "isBonus": false,
+      "revealOrder": 5,
+      "isRevealed": false,
+      "pointCost": 60
+    },
+    {
+      "id": "b1",
+      "title": "Konferans Planı",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Haru’nun renkli sekmeli toplantı planı, gece boyunca konferans katındaki iki sözleşme oturumuna bağlı kaldığını gösteriyor.",
+      "deductionHint": "Bu plan hangi kişi–mekân bağını doğrular?",
+      "isBonus": true,
+      "revealOrder": 6,
+      "isRevealed": false,
+      "pointCost": 60
+    },
+    {
+      "id": "b2",
+      "title": "Bakım Defteri",
+      "type": "tanik",
+      "mechanicType": "text",
+      "text": "Ara sahanlık defterinde, parazit kesicinin seri numarası gece bakım mühendisine zimmetli görünüyor.",
+      "deductionHint": "Bu defter hangi kişi–araç bağını doğrular?",
+      "isBonus": true,
+      "revealOrder": 7,
+      "isRevealed": false,
+      "pointCost": 60
+    }
+  ],
+  "assetManifest": [],
+  "solution": {
+    "suspectId": "s2",
+    "weaponId": "w4",
+    "locationId": "l4"
+  },
+  "solutionNarrative": "Emil Voren, mikrofilm değil patent teslimi yüzünden açığa çıkacağını anlayınca karbonmonoksit kartuşunu çatı teknik odasındaki bypass hattına bağladı. Kilitli oda yalnızca sonucu sakladı; planın gerçek yüzü vanaların basınç düzenindeydi. Bakım şeması Ken’in parazit devresini kartuş zincirinden çıkardı, kapı kartı ise Emil’i çatıya yerleştirdi.",
+  "replitIntegration": {
+    "schema": "fm_replit_runtime_contract_v1",
+    "copyTarget": "Replit Agent prompt",
+    "canonicalCaseFile": "src/data/cases/fen_premium_005.json",
+    "policy": "Var olan renderer varsa onu bozma; yoksa bu paketteki component ve dispatcher dalını ekle.",
+    "mechanics": [
+      {
+        "clueId": "c4",
+        "mechanicType": "sifreli_mesaj",
+        "renderer": "ventilation_valve_network",
+        "completionEvent": "onSolved({ clueId, mechanic: \"sifreli_mesaj\" })"
+      },
+      {
+        "clueId": "c4",
+        "mechanicType": "sifreli_mesaj",
+        "renderer": "ventilation_valve_network",
+        "componentFile": "src/components/caseMechanics/FenomenMechanicRenderer.jsx",
+        "dispatcherBranch": "clue.mechanicType === \"sifreli_mesaj\" && [\"cipher_disc_alignment\",\"timeline_board\",\"parcel_xray_layers\",\"waltz_score_stitch\",\"ventilation_valve_network\"] .includes(clue.sifre?.presentation?.style)",
+        "completionEvent": "onSolved({ clueId, mechanic: \"ventilation_valve_network\" })",
+        "hintEvent": "onRequestHint({ clueId, penaltySeconds: 60 })",
+        "requiredData": [
+          "title",
+          "subtitle",
+          "purposeHint",
+          "resultText",
+          "interaction",
+          "style-specific data"
+        ],
+        "nonNegotiable": [
+          "JSON dışı çözüm anahtarı kullanma.",
+          "Başarı öncesinde resultText görünmez kalmalı.",
+          "Yanlış deneme doğru rotayı/cevabı göstermemeli.",
+          "Mobilde kartlar tek sütuna akmalı."
+        ]
+      }
+    ]
+  }
+}
+===== VAKA VERİSİ SONU =====
+
+===== FENOMEN v27 ÖZEL MİNİ OYUN RENDERER’I — DOSYA OLUŞTUR / EKSİKSE EKLE =====
+// src/components/caseMechanics/FenomenMechanicRenderer.jsx
+import { useMemo, useState } from "react";
+const styles = new Set(["cipher_disc_alignment","timeline_board","parcel_xray_layers","waltz_score_stitch","ventilation_valve_network"]);
+export const isFenomenMechanic = (clue) => styles.has(String(clue?.sifre?.presentation?.style ?? "").toLowerCase());
+export default function FenomenMechanicRenderer({ clue, onSolved, onRequestHint }) {
+  const p = clue?.sifre?.presentation ?? {}; const style=String(p.style ?? "").toLowerCase();
+  const [choices,setChoices]=useState({}); const [order,setOrder]=useState([]);
+  const [discs,setDiscs]=useState(()=>Object.fromEntries((p.discs??[]).map(d=>[d.id,d.initial??d.symbols?.[0]??""])));
+  const [valves,setValves]=useState(()=>Object.fromEntries((p.valves??[]).map(v=>[v.id,v.initial??"kapali"])));
+  const [result,setResult]=useState(null); const [hint,setHint]=useState(false);
+  const rotate=(d,delta)=>setDiscs(prev=>{const a=d.symbols??[];const n=Math.max(0,a.indexOf(prev[d.id]));return {...prev,[d.id]:a[(n+delta+a.length)%a.length]};});
+  const toggleOrder=(id)=>setOrder(prev=>prev.includes(id)?prev.filter(x=>x!==id):[...prev,id]);
+  const submit=()=>{let ok=false;if(style==="cipher_disc_alignment")ok=(p.correctCode??[]).every(x=>discs[x.discId]===x.symbol);else if(style==="timeline_board")ok=(p.correctOrder??[]).every((id,i)=>order[i]===id)&&order.length===(p.correctOrder??[]).length;else if(style==="ventilation_valve_network")ok=(p.correctStates??[]).every(x=>valves[x.valveId]===x.state);else ok=(p.correctAssignments??[]).every(x=>choices[x.itemId]===x.answerId);setResult(ok);if(ok)onSolved?.({clueId:clue.id,mechanic:style});};
+  const requestHint=()=>{setHint(true);onRequestHint?.({clueId:clue.id,penaltySeconds:60});};
+  if(!styles.has(style))return null;
+  return <section style={{padding:14,border:"1px solid #303a55",borderRadius:12}}><h4>{p.title}</h4><p>{p.subtitle}</p><p><b>ÇÖZÜMÜN İŞLEVİ</b><br/>{p.purposeHint}</p>
+    {style==="cipher_disc_alignment"&&<div style={grid}>{(p.discs??[]).map(d=><div key={d.id} style={card}><b>{d.label}</b><div style={disc}>{discs[d.id]}</div><button onClick={()=>rotate(d,-1)}>↶</button><button onClick={()=>rotate(d,1)}>↷</button></div>)}</div>}
+    {style==="timeline_board"&&<div style={{display:"grid",gap:8}}>{(p.events??[]).map(e=><button key={e.id} onClick={()=>toggleOrder(e.id)} style={card}><b>{e.label}</b><br/><small>{e.text}</small>{order.includes(e.id)?<em> · {order.indexOf(e.id)+1}. sıra</em>:null}</button>)}</div>}
+    {style==="parcel_xray_layers"&&<div style={grid}>{(p.layers??[]).map(x=><label key={x.id} style={card}><b>{x.label}</b><small>{x.scan}</small><select onChange={e=>setChoices({...choices,[x.id]:e.target.value})}><option value="">Bulgu seç…</option>{(p.findings??[]).map(f=><option key={f.id} value={f.id}>{f.label}</option>)}</select></label>)}</div>}
+    {style==="waltz_score_stitch"&&<div style={grid}>{(p.measures??[]).map(x=><label key={x.id} style={card}><b>{x.label}</b><small>{x.note}</small><select onChange={e=>setChoices({...choices,[x.id]:e.target.value})}><option value="">Mühür seç…</option>{(x.options??[]).map(o=><option key={o.id} value={o.id}>{o.label}</option>)}</select></label>)}</div>}
+    {style==="ventilation_valve_network"&&<div style={grid}>{(p.valves??[]).map(v=><button key={v.id} onClick={()=>setValves({...valves,[v.id]:valves[v.id]==="acik"?"kapali":"acik"})} style={card}><b>{v.label}</b><br/>{valves[v.id]==="acik"?"AÇIK":"KAPALI"}</button>)}</div>}
+    <button onClick={submit}>{p.interaction?.submitLabel??"Doğrula"}</button><button onClick={requestHint} disabled={hint}>İpucu iste (-60 sn)</button>{hint?<p>{clue?.sifre?.cozumIpucu}</p>:null}{result===false?<p>✕ {p.interaction?.failureMessage}</p>:null}{result===true?<p>✓ {p.interaction?.successMessage}<br/>{p.resultText}</p>:null}</section>;
+}
+const grid={display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(145px,1fr))",gap:8};const card={border:"1px solid #303a55",padding:10,borderRadius:10,display:"grid",gap:7};const disc={fontSize:24,textAlign:"center",padding:8};
+===== DOSYA SONU =====
+===== MEVCUT MİNİ-OYUN DISPATCHERINA EKLENECEK DAL =====
+// Mevcut genel sifreli_mesaj renderer'INDEN ÖNCE ekle.
+import FenomenMechanicRenderer, { isFenomenMechanic } from "@/components/caseMechanics/FenomenMechanicRenderer";
+if (isFenomenMechanic(clue)) return <FenomenMechanicRenderer clue={clue} onSolved={({ clueId }) => markMiniGameSolved?.(clueId)} onRequestHint={({ clueId, penaltySeconds }) => applyHintPenalty?.({ clueId, penaltySeconds })} />;
+===== YAMA SONU =====
+===== FENOMEN v27 KABUL TESTLERİ =====
+- c4: ventilation_valve_network JSON verisinden çalışır; doğru sonuç öncesi resultText görünmez, yanlış deneme çözümü sızdırmaz, mobilde kartlar tek kolon akışına iner.
+===== TESTLER SONU =====

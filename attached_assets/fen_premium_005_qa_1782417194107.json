@@ -1,0 +1,566 @@
+{
+  "puzzleId": "fen_premium_005",
+  "title": "On Dördüncü Katın Sessizliği",
+  "subtitle": "1987 · Aoba Şehri · Meridian Oteli",
+  "difficulty": 5,
+  "difficultyLevel": 5,
+  "difficultyLabel": "Efsane Komiser",
+  "stars": "★★★★★",
+  "gridSize": "4x4",
+  "timeLimit": 390,
+  "story": "1987’de Aoba Şehri’nin Meridian Oteli, gece yarısından sonra bile neon reklamların yansıdığı ıslak bir kule gibiydi. On dördüncü kattaki 1402 numaralı odada teknoloji yöneticisi Riku Mavari, kapı içeriden kilitliyken ölü bulundu. Anahtar masadaydı; televizyon açıktı; koridor kamerası ise kapıya yaklaşan kimseyi göstermiyordu.\n\nOdanın duvarında tek bir iz vardı: havalandırma ızgarasının altında, kapatılmış dört vana işaretinin şeması. Aynı şema, çatı teknik odasındaki eski bakım panosunda da bulunuyordu. Ölümün odada başlamadığı, binanın kendi soluk alışında saklandığı hissi bu yüzden güçlendi.\n\nPatent görüşmesi için gelen hukukçu Haru, konferans katında dosya kapatıyordu. Gazeteci Nao, 1402’nin karşısındaki odada şirket skandalı için not topluyordu. Otel mühendisi Ken, ara sahanlıktaki bakım defterini taşıyordu. Yabancı danışman Emil ise otelin hangi katında olduğunu hiç söylemiyordu. Kapı kilitliydi; fakat binanın havası değildi.",
+  "atmosphere": "Yağmur çizgileri neonları parçalıyor, havalandırma ızgarasından gelen uğultu odayı kesintisiz dolduruyor. Asansör kabini her durakta kısa bir titreşim bırakıyor.",
+  "specialMechanic": "ventilation_valve_network",
+  "qaPolicy": {
+    "strictCoreNecessity": true,
+    "requireTraceability": true,
+    "requireSemanticContract": true,
+    "requireMechanicEvidenceBoundary": true,
+    "requirePatternGovernance": true,
+    "requirePortfolioRegistry": true,
+    "requireVisibleEvidenceScope": true,
+    "blockOnPendingMedia": false,
+    "suppressOptionalNameAdvice": true,
+    "perfectReport": true
+  },
+  "suspects": [
+    {
+      "id": "s1",
+      "name": "Hukukçu Haru Kamei",
+      "icon": "📑",
+      "description": "Patent görüşmesinin hukuki çerçevesini yöneten şirket danışmanı.",
+      "detail": "Toplantı notlarını renkli sekmelerle ayırır; konferans katındaki sözleşme odalarını ayrıntılı bilir."
+    },
+    {
+      "id": "s2",
+      "name": "Yabancı Danışman Emil Voren",
+      "icon": "👔",
+      "description": "Teknoloji anlaşması için kente gelen, geçmişi belirsiz danışman.",
+      "detail": "Mekanik tesisat şemalarını hızlı okur; pasaportunda ardışık olmayan giriş damgaları vardır."
+    },
+    {
+      "id": "s3",
+      "name": "Gazeteci Nao Kirin",
+      "icon": "🗞️",
+      "description": "Şirketin çevre raporlarını inceleyen araştırmacı gazeteci.",
+      "detail": "Oda servis fişlerini ve gizli röportaj notlarını toplar; otel kat planını tek başına çizmiştir."
+    },
+    {
+      "id": "s4",
+      "name": "Otel Mühendisi Ken Arai",
+      "icon": "⚙️",
+      "description": "Gece bakım panellerinden ve asansör ara sahanlığından sorumlu mühendis.",
+      "detail": "Tesisat anahtarlarını seri numarasıyla taşır; parazit kesicilerini bakım defterine not eder."
+    }
+  ],
+  "weapons": [
+    {
+      "id": "w1",
+      "name": "Bakır Hat Kesicisi",
+      "icon": "✂️",
+      "description": "İnce sinyal kablolarını kesmek için kullanılan izole saplı alet."
+    },
+    {
+      "id": "w2",
+      "name": "Servis Halatı",
+      "icon": "🪢",
+      "description": "Ara sahanlıktaki bakım kapaklarını sabitlemekte kullanılan kısa halat."
+    },
+    {
+      "id": "w3",
+      "name": "Parazit Kesici",
+      "icon": "📡",
+      "description": "Telsiz ve kamera parazitini ayarlayan küçük güç modülü."
+    },
+    {
+      "id": "w4",
+      "name": "Karbonmonoksit Bypass Kartuşu",
+      "icon": "💨",
+      "description": "Havalandırma hattına bağlandığında gazı odaya yönlendiren mühürlü kartuş."
+    }
+  ],
+  "locations": [
+    {
+      "id": "l1",
+      "name": "Oda 1402",
+      "icon": "🛏️",
+      "description": "Kilitli kapısı ve açık televizyonuyla kurbanın odası."
+    },
+    {
+      "id": "l2",
+      "name": "Konferans Katı",
+      "icon": "🏢",
+      "description": "Hukuk ekibinin patent metinlerini incelediği kapalı toplantı katı."
+    },
+    {
+      "id": "l3",
+      "name": "Asansör Ara Sahanlığı",
+      "icon": "🔲",
+      "description": "13 ile 14. kat arasında, bakım kapağı bulunan dar platform."
+    },
+    {
+      "id": "l4",
+      "name": "Çatı Teknik Odası",
+      "icon": "⚙️",
+      "description": "Havalandırma ana hattının ve vana panosunun bulunduğu üst bölüm."
+    }
+  ],
+  "clues": [
+    {
+      "id": "c1",
+      "type": "kanit",
+      "title": "Dönüş Hattı",
+      "text": "Mavari’yi öldüren gazı taşıyan kartuşun, oda içindeki menfeze değil çatı hattındaki bypass yuvasına bağlanmış olması gerektiğini uzman raporu belirtti.",
+      "deductionHint": "Gazı odaya yönlendirebilen parça hangi noktada kullanılamaz?",
+      "isBonus": false,
+      "isRevealed": true,
+      "pointCost": 0,
+      "revealOrder": 1,
+      "logicRules": [
+        {
+          "action": "eliminate",
+          "pair": [
+            "w4",
+            "l1"
+          ]
+        }
+      ],
+      "qaRationale": {
+        "matrixEffect": "Karbonmonoksit Bypass Kartuşu ≠ Oda 1402 elenir.",
+        "evidenceLink": "Uzman raporu kartuşun oda içindeki menfeze sığmadığını, yalnız çatı hattındaki bypass yuvasına bağlanabildiğini gösteriyor.",
+        "evidenceKind": "forensic"
+      },
+      "mechanicType": "text",
+      "isCrimeAnchor": true,
+      "qaSemanticFacts": [
+        {
+          "kind": "crime_component",
+          "component": "weapon",
+          "entityId": "w4",
+          "evidence": "Havalandırma raporu ölümcül aracın Karbonmonoksit Bypass Kartuşu olduğunu belirliyor."
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "type": "kanit",
+      "title": "Sözleşme Zımbası",
+      "text": "Sözleşme kutusunda, ince sinyal kablolarını kesen yalıtımlı sapla uyumlu bakır kıymıkları bulundu.",
+      "deductionHint": "Kıymık izi hangi kişi–araç bağını doğrular?",
+      "isBonus": false,
+      "isRevealed": false,
+      "pointCost": 60,
+      "revealOrder": 2,
+      "logicRules": [
+        {
+          "action": "confirm",
+          "pair": [
+            "s1",
+            "w1"
+          ]
+        }
+      ],
+      "qaRationale": {
+        "matrixEffect": "Hukukçu Haru Kamei ↔ Bakır Hat Kesicisi doğrulanır.",
+        "evidenceLink": "Evrak kutusundaki kıymıklar, Haru’nun kullandığı yalıtımlı kesici sapıyla aynı alaşımı taşıyor.",
+        "evidenceKind": "physical"
+      },
+      "mechanicType": "text"
+    },
+    {
+      "id": "c3",
+      "type": "tanik",
+      "title": "Çatı Kartı",
+      "text": "Üst bölüm kapı kartı, yabancı danışmanın ziyaretçi kartının olaydan önce bakım panosunun bulunduğu seviyede okutulduğunu kaydediyor.",
+      "deductionHint": "Kartlı giriş hangi kişi–mekân bağını doğrular?",
+      "isBonus": false,
+      "isRevealed": false,
+      "pointCost": 60,
+      "revealOrder": 3,
+      "logicRules": [
+        {
+          "action": "confirm",
+          "pair": [
+            "s2",
+            "l4"
+          ]
+        }
+      ],
+      "qaRationale": {
+        "matrixEffect": "Yabancı Danışman Emil Voren ↔ Çatı Teknik Odası doğrulanır.",
+        "evidenceLink": "Kapı kartı kaydı, Emil’in ziyaretçi kartını olaydan önce çatı teknik odasında gösteriyor.",
+        "evidenceKind": "record"
+      },
+      "mechanicType": "text"
+    },
+    {
+      "id": "c4",
+      "type": "sifreli",
+      "title": "Dört Vananın Sessiz Şeması",
+      "text": "Oda duvarındaki vana işaretleri, bakım panosundaki dört hattın hangi sırayla açılıp kapandığını anlatıyordu.",
+      "deductionHint": "Vanaları, basıncın önce çekildiği sonra geri verildiği tek sıraya göre aç veya kapat.",
+      "isBonus": false,
+      "isRevealed": false,
+      "pointCost": 60,
+      "revealOrder": 4,
+      "logicRules": [
+        {
+          "action": "eliminate",
+          "pair": [
+            "s4",
+            "w4"
+          ]
+        }
+      ],
+      "qaRationale": {
+        "matrixEffect": "Otel Mühendisi Ken Arai ≠ Karbonmonoksit Bypass Kartuşu elenir.",
+        "evidenceLink": "Vana şeması, kartuş hattının bakım mühendisinin kayıtlı parazit devresinden değil dış ziyaretçi bypass zincirinden çalıştığını gösteriyor.",
+        "evidenceKind": "documentary"
+      },
+      "mechanicType": "sifreli_mesaj",
+      "sifre": {
+        "sifrelenmis": "V1 / V2 / V3 / V4 — BASINÇ 14",
+        "sifreleTuru": "havalandırma vana ağı",
+        "cozumIpucu": "Basıncı tamamen kapatan vana, gazı taşıyan hatla aynı anda açık kalamaz.",
+        "cozulmus": "A0BA 87",
+        "aciklama": "Doğru vana durumu, gazın hangi bakım zincirinden yönlendirilemeyeceğini ortaya çıkarır.",
+        "presentation": {
+          "style": "ventilation_valve_network",
+          "title": "Havalandırma Vana Ağı",
+          "subtitle": "Dört vanayı, basınç oklarının mümkün olduğu tek açık/kapalı düzenine getir.",
+          "purposeHint": "Doğru vana konumu, ızgarada bir kişi–araç eşleşmesinin mümkün olmadığını gösterecek.",
+          "valves": [
+            {
+              "id": "v1",
+              "label": "Giriş Vanası",
+              "initial": "kapali"
+            },
+            {
+              "id": "v2",
+              "label": "Bypass Vanası",
+              "initial": "acik"
+            },
+            {
+              "id": "v3",
+              "label": "Dönüş Vanası",
+              "initial": "kapali"
+            },
+            {
+              "id": "v4",
+              "label": "Tahliye Vanası",
+              "initial": "acik"
+            }
+          ],
+          "correctStates": [
+            {
+              "valveId": "v1",
+              "state": "acik"
+            },
+            {
+              "valveId": "v2",
+              "state": "acik"
+            },
+            {
+              "valveId": "v3",
+              "state": "kapali"
+            },
+            {
+              "valveId": "v4",
+              "state": "kapali"
+            }
+          ],
+          "resultText": "Vana ağı, bypass kartuşunun otel mühendisi Ken’in kayıtlı parazit devresinden çalışmadığını gösterir: Otel Mühendisi Ken Arai × Karbonmonoksit Bypass Kartuşu.",
+          "interaction": {
+            "mode": "toggle_valves",
+            "submitLabel": "Hattı Doğrula",
+            "successMessage": "Basınç okları tek bir hattı mümkün kıldı.",
+            "failureMessage": "Bu vana konumu, aynı anda hem basıncı hem tahliyeyi taşıyamaz."
+          }
+        }
+      },
+      "qaMechanicBoundary": {
+        "primaryEvidence": "sifre",
+        "wrapperTextRole": "context_only"
+      }
+    },
+    {
+      "id": "c5",
+      "type": "tanik",
+      "title": "Oda Servisi Fişi",
+      "text": "Gazetecinin oda servisi fişi, olay aralığında 1402’nin karşısındaki masada açık notlar ve soğuyan kahveyle kaldığını gösteriyor.",
+      "deductionHint": "Bu fiş hangi kişi–mekân bağını doğrular?",
+      "isBonus": false,
+      "isRevealed": false,
+      "pointCost": 60,
+      "revealOrder": 5,
+      "logicRules": [
+        {
+          "action": "confirm",
+          "pair": [
+            "s3",
+            "l1"
+          ]
+        }
+      ],
+      "qaRationale": {
+        "matrixEffect": "Gazeteci Nao Kirin ↔ Oda 1402 doğrulanır.",
+        "evidenceLink": "Oda servisi fişi, Nao’nun olay aralığında 1402 karşısındaki oda hattında kaldığını kayda geçiriyor.",
+        "evidenceKind": "record"
+      },
+      "mechanicType": "text"
+    },
+    {
+      "id": "b1",
+      "type": "kanit",
+      "title": "Konferans Planı",
+      "text": "Haru’nun renkli sekmeli toplantı planı, gece boyunca konferans katındaki iki sözleşme oturumuna bağlı kaldığını gösteriyor.",
+      "deductionHint": "Bu plan hangi kişi–mekân bağını doğrular?",
+      "isBonus": true,
+      "isRevealed": false,
+      "pointCost": 60,
+      "revealOrder": 6,
+      "logicRules": [
+        {
+          "action": "confirm",
+          "pair": [
+            "s1",
+            "l2"
+          ]
+        }
+      ],
+      "qaRationale": {
+        "matrixEffect": "Hukukçu Haru Kamei ↔ Konferans Katı doğrulanır.",
+        "evidenceLink": "Sekmeli toplantı planı, Haru’nun olay saatinde konferans katı oturumlarında olduğunu destekliyor.",
+        "evidenceKind": "documentary"
+      },
+      "mechanicType": "text"
+    },
+    {
+      "id": "b2",
+      "type": "tanik",
+      "title": "Bakım Defteri",
+      "text": "Ara sahanlık defterinde, parazit kesicinin seri numarası gece bakım mühendisine zimmetli görünüyor.",
+      "deductionHint": "Bu defter hangi kişi–araç bağını doğrular?",
+      "isBonus": true,
+      "isRevealed": false,
+      "pointCost": 60,
+      "revealOrder": 7,
+      "logicRules": [
+        {
+          "action": "confirm",
+          "pair": [
+            "s4",
+            "w3"
+          ]
+        }
+      ],
+      "qaRationale": {
+        "matrixEffect": "Otel Mühendisi Ken Arai ↔ Parazit Kesici doğrulanır.",
+        "evidenceLink": "Bakım defteri, parazit kesicinin seri numarasını Ken’in zimmet kaydına bağlıyor.",
+        "evidenceKind": "inventory"
+      },
+      "mechanicType": "text"
+    }
+  ],
+  "solution": {
+    "suspectId": "s2",
+    "weaponId": "w4",
+    "locationId": "l4"
+  },
+  "solutionNarrative": "Emil Voren, mikrofilm değil patent teslimi yüzünden açığa çıkacağını anlayınca karbonmonoksit kartuşunu çatı teknik odasındaki bypass hattına bağladı. Kilitli oda yalnızca sonucu sakladı; planın gerçek yüzü vanaların basınç düzenindeydi. Bakım şeması Ken’in parazit devresini kartuş zincirinden çıkardı, kapı kartı ise Emil’i çatıya yerleştirdi.",
+  "qaAssetBrief": {
+    "mediaRequired": false,
+    "note": "Bu vaka özel görsel ya da ses dosyası istemez; mini oyun tümüyle veri-güdümlü renderer ile çizilir."
+  },
+  "qaNarrativeContract": {
+    "premiumStoryGate": "pass",
+    "storyLengthWords": 163,
+    "storyClue": {
+      "visibleEvidence": "Oda duvarında kapatılmış dört vana işaretinin şeması bulunur.",
+      "mechanicBridge": "Bu şema, c4’teki Havalandırma Vana Ağı mini oyununun fiziksel kaynağıdır.",
+      "matrixBoundary": "Anlatı tek başına fail, araç veya mekânı kesinleştirmez."
+    },
+    "narrativeFunctions": [
+      "Kilitli oda gerilimini kurar.",
+      "Şüphelilerin aynı katta bulunma gerekçelerini verir.",
+      "Çatı hattı ve vana şemasını oyunun mantık çekirdeğine bağlar."
+    ]
+  },
+  "qaPattern": {
+    "anchorSource": "clue:c1",
+    "anchorComponent": "weapon",
+    "miniGameClueId": "c4",
+    "miniGameRole": "climax",
+    "designIntent": "Kilitli oda vakası, faili doğrudan odada aramak yerine havalandırma basınç ağını çözdürür; dört vanalı sistem mekanik kilit ya da rota bulmacası değildir."
+  },
+  "qaPortfolioRegistry": {
+    "schema": "fm_portfolio_registry_v1",
+    "entries": [
+      {
+        "puzzleId": "RC_001",
+        "title": "Kayıt Defterindeki İşaret",
+        "signature": {
+          "anchorSig": "clue:location",
+          "firstSig": "kanit:E:L-S",
+          "actions": "ECEC",
+          "axes": "L-S|S-W|L-W|S-W",
+          "miniSig": "symbol_crossgrid@3"
+        }
+      },
+      {
+        "puzzleId": "RC_002",
+        "title": "Son Dahili Hat",
+        "signature": {
+          "anchorSig": "story:weapon",
+          "firstSig": "tanik:C:S-L",
+          "actions": "CEEC",
+          "axes": "L-S|S-W|L-W|S-L",
+          "miniSig": "telephone_switchboard@4"
+        }
+      },
+      {
+        "puzzleId": "RC_003",
+        "title": "Yırtık Sefer Notu",
+        "signature": {
+          "anchorSig": "clue:weapon",
+          "firstSig": "adli:C:L-W",
+          "actions": "CECE",
+          "axes": "L-W|S-L|S-W|L-S",
+          "miniSig": "torn_route_reconstruction@4"
+        }
+      },
+      {
+        "puzzleId": "RC_004",
+        "title": "Boş Çerçevenin Gölgesi",
+        "signature": {
+          "anchorSig": "clue:location",
+          "firstSig": "kanit:C:L-S",
+          "actions": "ECCE",
+          "axes": "S-W|L-S|S-W|L-W",
+          "miniSig": "frame_shadow_profile@3"
+        }
+      },
+      {
+        "puzzleId": "RC_005",
+        "title": "Kırık Pusula",
+        "signature": {
+          "anchorSig": "clue:weapon",
+          "firstSig": "kanit:E:L-W",
+          "actions": "ECECE",
+          "axes": "L-W|L-S|S-W|L-S|S-W",
+          "miniSig": "broken_compass_calibration@5"
+        }
+      },
+      {
+        "puzzleId": "pp_001",
+        "title": "Mavi Etiketin Son Durağı",
+        "signature": {
+          "anchorSig": "clue:weapon",
+          "firstSig": "adli:C:L-W",
+          "actions": "CECEE",
+          "axes": "L-W|L-S|L-W|L-S|S-W",
+          "miniSig": "luggage_label_match@5"
+        }
+      },
+      {
+        "puzzleId": "pp_002",
+        "title": "Negatifte Kalan Saat",
+        "signature": {
+          "anchorSig": "clue:weapon",
+          "firstSig": "adli:C:L-W",
+          "actions": "CECE",
+          "axes": "L-W|L-W|S-W|L-S",
+          "miniSig": "negative_contact_sheet@2"
+        }
+      },
+      {
+        "puzzleId": "pp_003",
+        "title": "Son Yayının Mors Kıyısı",
+        "signature": {
+          "anchorSig": "clue:weapon",
+          "firstSig": "adli:E:L-W",
+          "actions": "ECEC",
+          "axes": "L-W|L-W|S-W|L-S",
+          "miniSig": "morse_transceiver@3"
+        }
+      },
+      {
+        "puzzleId": "pp_004",
+        "title": "Küllerin Altındaki Envanter",
+        "signature": {
+          "anchorSig": "clue:weapon",
+          "firstSig": "adli:E:L-W",
+          "actions": "ECECE",
+          "axes": "L-W|L-W|L-W|S-W|L-W",
+          "miniSig": "archive_index_reconstruction@4"
+        }
+      },
+      {
+        "puzzleId": "pp_005",
+        "title": "Sıfırın Altındaki Dördüncü Kilit",
+        "signature": {
+          "anchorSig": "clue:weapon",
+          "firstSig": "adli:E:L-W",
+          "actions": "ECECE",
+          "axes": "L-W|S-W|L-S|S-W|L-S",
+          "miniSig": "mechanical_lock_sequence@4"
+        }
+      },
+      {
+        "puzzleId": "fen_premium_001",
+        "title": "Kül Takımyıldızı",
+        "signature": {
+          "anchorSig": "clue:weapon",
+          "firstSig": "kanit:C:L-W",
+          "actions": "CECEE",
+          "axes": "L-W|L-S|L-W|L-S|S-W",
+          "miniSig": "cipher_disc_alignment@5"
+        }
+      },
+      {
+        "puzzleId": "fen_premium_002",
+        "title": "Gaz Lambasının Altındaki Kesik",
+        "signature": {
+          "anchorSig": "clue:weapon",
+          "firstSig": "kanit:C:L-W",
+          "actions": "CECE",
+          "axes": "L-W|L-W|S-W|L-S",
+          "miniSig": "timeline_board@2"
+        }
+      },
+      {
+        "puzzleId": "fen_premium_003",
+        "title": "Kızıl Şeritli Sandık",
+        "signature": {
+          "anchorSig": "clue:weapon",
+          "firstSig": "kanit:E:L-W",
+          "actions": "ECEC",
+          "axes": "L-W|L-W|S-W|L-S",
+          "miniSig": "parcel_xray_layers@3"
+        }
+      },
+      {
+        "puzzleId": "fen_premium_004",
+        "title": "Son Valsin Dördüncü Ölçüsü",
+        "signature": {
+          "anchorSig": "clue:weapon",
+          "firstSig": "kanit:E:L-W",
+          "actions": "ECECE",
+          "axes": "L-W|L-W|L-W|S-W|L-W",
+          "miniSig": "waltz_score_stitch@4"
+        }
+      },
+      {
+        "puzzleId": "fen_premium_005",
+        "title": "On Dördüncü Katın Sessizliği",
+        "signature": {
+          "anchorSig": "clue:weapon",
+          "firstSig": "kanit:E:L-W",
+          "actions": "ECCEC",
+          "axes": "L-W|S-W|L-S|S-W|L-S",
+          "miniSig": "ventilation_valve_network@4"
+        }
+      }
+    ]
+  }
+}
