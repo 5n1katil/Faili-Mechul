@@ -29,6 +29,7 @@ const AUDIO_ASSETS: Record<string, ReturnType<typeof require>> = {
   audio_hw_001_c3_kulaklik_fisilti: require("../assets/audio/cases/hw_001/hw_001_c3_kulaklik_fisilti.mp3"),
   audio_hw_004_c5_acil_interkom: require("../assets/audio/cases/hw_004/hw_004_c5_acil_interkom.mp3"),
   audio_sf_003_c2_a3_tarama_kaydi: require("../assets/audio/cases/sf_003/sf_003_c2_a3_tarama_kaydi.mp3"),
+  rc_002_c3_dahili_hat: require("../assets/audio/cases/rc_002/rc_002_c3_dahili_hat.mp3"),
 };
 
 const FINGERPRINT_IMAGES: Record<string, ReturnType<typeof require>> = {
@@ -125,6 +126,191 @@ function GorselIpucuBlock({ aciklama }: { aciklama: string }) {
         <Text style={styles.gorselLabel}>KANIT DELİLİ</Text>
       </View>
       <Text style={styles.gorselText}>{aciklama}</Text>
+    </View>
+  );
+}
+
+function TelephoneSwitchboardBlock({
+  clue,
+  isSolved,
+  onSolve,
+}: {
+  clue: Clue;
+  isSolved: boolean;
+  onSolve: () => void;
+}) {
+  const { addTimePenalty } = useGame();
+  const puzzle = clue.audioPuzzle!;
+  const segments = puzzle.segments ?? [];
+  const options = puzzle.options ?? [];
+
+  const [sound, setSound] = useState<Audio.Sound | null>(null);
+  const [activeSegId, setActiveSegId] = useState<string | null>(null);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [wrong, setWrong] = useState(false);
+  const [hintRevealed, setHintRevealed] = useState(false);
+  const [transcriptOpen, setTranscriptOpen] = useState(false);
+  const stopAtMsRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    return () => { sound?.unloadAsync(); };
+  }, [sound]);
+
+  const playSegment = async (seg: { id: string; startSec: number; endSec: number }) => {
+    try {
+      if (sound) { await sound.unloadAsync(); setSound(null); }
+      setActiveSegId(seg.id);
+      stopAtMsRef.current = seg.endSec * 1000;
+      const assetSource = clue.audioAssetId ? AUDIO_ASSETS[clue.audioAssetId] as import("expo-av").AVPlaybackSource : null;
+      if (!assetSource) return;
+      await Audio.setAudioModeAsync({ playsInSilentModeIOS: true });
+      const { sound: newSound } = await Audio.Sound.createAsync(
+        assetSource,
+        { shouldPlay: false, positionMillis: seg.startSec * 1000 },
+        (status) => {
+          if (status.isLoaded) {
+            const stopAt = stopAtMsRef.current;
+            if (stopAt !== null && status.positionMillis >= stopAt) {
+              newSound.pauseAsync();
+              stopAtMsRef.current = null;
+              setActiveSegId(null);
+            }
+            if (status.didJustFinish) { setActiveSegId(null); }
+          }
+        }
+      );
+      setSound(newSound);
+      await newSound.playAsync();
+    } catch { setActiveSegId(null); }
+  };
+
+  const stopPlayback = async () => {
+    if (sound) { await sound.pauseAsync(); }
+    setActiveSegId(null);
+    stopAtMsRef.current = null;
+  };
+
+  const chooseOption = (optionId: string) => {
+    if (isSolved) return;
+    setSelectedId(optionId);
+    if (optionId === puzzle.correctOptionId) {
+      onSolve();
+    } else {
+      setWrong(true);
+      setTimeout(() => setWrong(false), 2500);
+    }
+  };
+
+  const handleHint = () => {
+    if (hintRevealed) return;
+    setHintRevealed(true);
+    addTimePenalty(puzzle.hintPenaltySeconds ?? 60);
+  };
+
+  if (isSolved) {
+    return (
+      <View style={styles.miniGameSolvedBlock}>
+        <MaterialIcons name="check-circle" size={20} color="#22c55e" />
+        <Text style={styles.miniGameSolvedText}>{puzzle.successMessage ?? "Hat tespit edildi."}</Text>
+      </View>
+    );
+  }
+
+  return (
+    <View style={styles.switchboardBlock}>
+      <View style={styles.switchboardTitleBar}>
+        <MaterialIcons name="phone" size={13} color="#e0b54e" />
+        <Text style={styles.switchboardTitleText}>{(puzzle.title ?? "DAHİLİ HAT DÜZENİ").toLocaleUpperCase("tr-TR")}</Text>
+      </View>
+      {puzzle.subtitle ? <Text style={styles.switchboardSubtitle}>{puzzle.subtitle}</Text> : null}
+      {puzzle.purposeHint ? (
+        <View style={styles.switchboardPurpose}>
+          <Text style={styles.switchboardPurposeLabel}>ÇÖZÜMÜN İŞLEVİ</Text>
+          <Text style={styles.switchboardPurposeText}>{puzzle.purposeHint}</Text>
+        </View>
+      ) : null}
+
+      <Text style={styles.switchboardSectionLabel}>MAKARADAN KESİT DİNLE</Text>
+      <View style={styles.switchboardSegments}>
+        {segments.map((seg) => {
+          const isActive = activeSegId === seg.id;
+          return (
+            <Pressable
+              key={seg.id}
+              style={[styles.switchboardSegBtn, isActive && styles.switchboardSegBtnActive]}
+              onPress={() => isActive ? stopPlayback() : playSegment(seg)}
+            >
+              <MaterialIcons
+                name={isActive ? "pause" : "play-arrow"}
+                size={16}
+                color={isActive ? "#e0b54e" : "#8b91ad"}
+              />
+              <Text style={[styles.switchboardSegBtnText, isActive && { color: "#e0b54e" }]}>
+                {seg.label ?? seg.id}
+              </Text>
+            </Pressable>
+          );
+        })}
+      </View>
+
+      <Text style={styles.switchboardQuestion}>{puzzle.question ?? "Doğru hattı seç."}</Text>
+      <View style={styles.switchboardOptions}>
+        {options.map((opt) => {
+          const isSel = selectedId === opt.id;
+          const isCorrect = isSel && opt.id === puzzle.correctOptionId;
+          const isWrong = isSel && !isCorrect;
+          return (
+            <Pressable
+              key={opt.id}
+              style={[styles.switchboardOptionBtn, isCorrect && styles.switchboardOptionCorrect, isWrong && styles.switchboardOptionWrong]}
+              onPress={() => chooseOption(opt.id)}
+            >
+              <Text style={[styles.switchboardOptionText, isCorrect && { color: "#86efac" }, isWrong && { color: "#fca5a5" }]}>
+                {opt.label ?? opt.id}
+              </Text>
+            </Pressable>
+          );
+        })}
+      </View>
+
+      {wrong && (
+        <Text style={styles.switchboardWrong}>{puzzle.failureMessage ?? "Cızırtının altındaki ayrıntıları yeniden dinle."}</Text>
+      )}
+
+      {puzzle.hint ? (
+        hintRevealed ? (
+          <>
+            <View style={styles.sifreHintRevealed}>
+              <MaterialIcons name="warning" size={12} color="#f59e0b" />
+              <Text style={[styles.sifreHintRevealedLabel, { color: "#f59e0b" }]}>İpucu açıldı (ceza uygulandı)</Text>
+            </View>
+            <View style={[styles.sifreIpucu, { marginHorizontal: 12 }]}>
+              <Text style={styles.sifreIpucuText}>{puzzle.hint}</Text>
+            </View>
+          </>
+        ) : (
+          <Pressable style={[styles.sifreHintBtn, { marginHorizontal: 12 }]} onPress={handleHint}>
+            <MaterialIcons name="lightbulb-outline" size={14} color="#e0b54e" />
+            <Text style={[styles.sifreHintBtnText, { color: "#e0b54e" }]}>İpucu İste (−{puzzle.hintPenaltySeconds ?? 60} sn / ceza puanı)</Text>
+          </Pressable>
+        )
+      ) : null}
+
+      {clue.sesMetni ? (
+        <>
+          <Pressable style={styles.switchboardTranscriptBtn} onPress={() => setTranscriptOpen(v => !v)}>
+            <MaterialIcons name={transcriptOpen ? "expand-less" : "expand-more"} size={14} color="#8b91ad" />
+            <Text style={styles.switchboardTranscriptBtnText}>
+              {transcriptOpen ? "Kayıt çözümlemesini gizle" : "Kayıt çözümlemesini göster"}
+            </Text>
+          </Pressable>
+          {transcriptOpen ? (
+            <View style={styles.switchboardTranscript}>
+              <Text style={styles.switchboardTranscriptText}>{clue.sesMetni}</Text>
+            </View>
+          ) : null}
+        </>
+      ) : null}
     </View>
   );
 }
@@ -1597,6 +1783,15 @@ export default function ClueCard({
         ) : null;
 
       case "ses_kaydi":
+        if (clue.audioPuzzle?.style === "telephone_switchboard") {
+          return (
+            <TelephoneSwitchboardBlock
+              clue={clue}
+              isSolved={isSolved ?? false}
+              onSolve={() => onSolveMechanic?.()}
+            />
+          );
+        }
         return (
           <SesKaydiBlock audioAssetId={clue.audioAssetId} />
         );
@@ -2624,6 +2819,165 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     fontSize: 13,
     letterSpacing: 0.3,
+  },
+  switchboardBlock: {
+    backgroundColor: "#0e1119",
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: "#262c44",
+    overflow: "hidden",
+    marginTop: 4,
+  },
+  switchboardTitleBar: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    backgroundColor: "#18140a",
+    borderBottomWidth: 1,
+    borderBottomColor: "#2e2410",
+  },
+  switchboardTitleText: {
+    color: "#e0b54e",
+    fontSize: 10,
+    fontWeight: "700",
+    letterSpacing: 1.4,
+  },
+  switchboardSubtitle: {
+    color: "#8b91ad",
+    fontSize: 12,
+    paddingHorizontal: 12,
+    paddingTop: 8,
+    paddingBottom: 4,
+    lineHeight: 17,
+  },
+  switchboardPurpose: {
+    marginHorizontal: 12,
+    marginBottom: 8,
+    padding: 9,
+    borderLeftWidth: 2,
+    borderLeftColor: "#e0b54e",
+    backgroundColor: "#1c1708",
+    borderRadius: 4,
+  },
+  switchboardPurposeLabel: {
+    color: "#e0b54e",
+    fontSize: 9,
+    fontWeight: "700",
+    letterSpacing: 1,
+    marginBottom: 3,
+  },
+  switchboardPurposeText: {
+    color: "#ecd99a",
+    fontSize: 11,
+    lineHeight: 16,
+  },
+  switchboardSectionLabel: {
+    color: "#e0b54e",
+    fontSize: 9,
+    fontWeight: "700",
+    letterSpacing: 1.2,
+    marginHorizontal: 12,
+    marginTop: 10,
+    marginBottom: 6,
+  },
+  switchboardSegments: {
+    gap: 6,
+    marginHorizontal: 12,
+    marginBottom: 10,
+  },
+  switchboardSegBtn: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: "#262c44",
+    backgroundColor: "#161a2b",
+  },
+  switchboardSegBtnActive: {
+    borderColor: "#e0b54e",
+    backgroundColor: "#1c1708",
+  },
+  switchboardSegBtnText: {
+    color: "#8b91ad",
+    fontSize: 13,
+    fontWeight: "500",
+  },
+  switchboardQuestion: {
+    color: "#d6dae8",
+    fontSize: 13,
+    lineHeight: 18,
+    marginHorizontal: 12,
+    marginBottom: 8,
+  },
+  switchboardOptions: {
+    flexDirection: "row",
+    gap: 8,
+    marginHorizontal: 12,
+    marginBottom: 10,
+  },
+  switchboardOptionBtn: {
+    flex: 1,
+    alignItems: "center",
+    paddingVertical: 11,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: "#262c44",
+    backgroundColor: "#161a2b",
+  },
+  switchboardOptionCorrect: {
+    borderColor: "#22c55e",
+    backgroundColor: "rgba(34,197,94,0.12)",
+  },
+  switchboardOptionWrong: {
+    borderColor: "#dc2626",
+    backgroundColor: "rgba(220,38,38,0.12)",
+  },
+  switchboardOptionText: {
+    color: "#e8eaf2",
+    fontSize: 13,
+    fontWeight: "600",
+  },
+  switchboardWrong: {
+    color: "#fca5a5",
+    fontSize: 12,
+    marginHorizontal: 12,
+    marginBottom: 8,
+    lineHeight: 17,
+  },
+  switchboardTranscriptBtn: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
+    marginHorizontal: 12,
+    marginTop: 4,
+    marginBottom: 4,
+    paddingVertical: 8,
+    borderTopWidth: 1,
+    borderTopColor: "#1e2236",
+  },
+  switchboardTranscriptBtnText: {
+    color: "#8b91ad",
+    fontSize: 12,
+  },
+  switchboardTranscript: {
+    marginHorizontal: 12,
+    marginBottom: 12,
+    padding: 10,
+    borderRadius: 8,
+    backgroundColor: "#161a2b",
+    borderLeftWidth: 2,
+    borderLeftColor: "#3b4268",
+  },
+  switchboardTranscriptText: {
+    color: "#b0b8d6",
+    fontSize: 12,
+    lineHeight: 18,
+    fontStyle: "italic",
   },
   phoneBlock: {
     marginTop: 6,

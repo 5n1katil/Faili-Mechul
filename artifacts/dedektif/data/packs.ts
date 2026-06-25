@@ -400,6 +400,7 @@ export function adaptPackPuzzle(raw: RawPuzzle, packId: string): Puzzle {
       audioAssetId: r.audioAssetId as string | undefined,
       audioPlanned: r.audioPlanned as boolean | undefined,
       audioFileName: r.audioFileName as string | undefined,
+      audioPuzzle: r.audioPuzzle as import("./puzzles").Clue["audioPuzzle"],
       yuzlesmeDialogu: r.yuzlesmeDialogu as import("./puzzles").ClueYuzlesmeDialog[] | undefined,
       sifre: r.sifre as import("./puzzles").ClueSifre | undefined,
       phoneVerisi: r.phoneVerisi as import("./puzzles").CluePhoneVerisi | undefined,

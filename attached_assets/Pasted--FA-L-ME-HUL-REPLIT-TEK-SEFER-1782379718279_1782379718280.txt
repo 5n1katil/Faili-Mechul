@@ -1,0 +1,421 @@
+/* ============================================================
+ *  FAİLİ MEÇHUL — REPLIT TEK SEFERLİK ENTEGRASYON PAKETİ
+ *  Bu metni Replit Agent sohbetine TEK PARÇA olarak yapıştır.
+ *  Görev: sadece JSON kaydetme. Vaka verisini mevcut kaynakta
+ *  yükle, aşağıdaki eksik renderer altyapısını ekle ve çalıştır.
+ * ------------------------------------------------------------
+ *  Vaka: Karlı Çiftlikte Son Işık · puzzleId=rc_002
+ *  1) Önce mevcut vaka veri kaydını ve mini-oyun dispatcherını bul.
+ *  2) Var olan rendererları bozma; yalnız eksik olan dalı ekle.
+ *  3) Aşağıdaki vaka JSON’unu uygulamanın KANONİK case kaynağına ekle.
+ *  4) Kod değişikliklerinden sonra aşağıdaki kabul testlerini tarayıcıda yap.
+ *  5) Sadece açıklama yazma: dosyaları gerçekten güncelle ve test sonucunu bildir.
+ * ============================================================ */
+
+===== DOSYA OLUŞTUR / EKSİKSE EKLE: src/components/caseMechanics/TelephoneSwitchboardMiniGame.jsx =====
+// src/components/caseMechanics/TelephoneSwitchboardMiniGame.jsx
+import { useRef, useState } from "react";
+
+export default function TelephoneSwitchboardMiniGame({ clue, onSolved, onRequestHint }) {
+  const puzzle = clue?.audioPuzzle ?? {};
+  const audioRef = useRef(null);
+  const stopAtRef = useRef(null);
+  const [selectedId, setSelectedId] = useState(null);
+  const [result, setResult] = useState(null);
+  const [hintOpen, setHintOpen] = useState(false);
+  const [transcriptOpen, setTranscriptOpen] = useState(false);
+  const [activeSegmentId, setActiveSegmentId] = useState(null);
+
+  const segments = Array.isArray(puzzle.segments) ? puzzle.segments : [];
+  const options = Array.isArray(puzzle.options) ? puzzle.options : [];
+  const interaction = puzzle.interaction ?? {};
+  const hintPenaltySeconds = Number(puzzle.hintPenaltySeconds ?? 60);
+
+  const playSegment = (segment) => {
+    const audio = audioRef.current;
+    if (!audio || !segment) return;
+    stopAtRef.current = Number(segment.endSec);
+    audio.currentTime = Math.max(0, Number(segment.startSec ?? 0));
+    setActiveSegmentId(segment.id);
+    audio.play().catch(() => {});
+  };
+
+  const stopAtBoundary = () => {
+    const audio = audioRef.current;
+    if (audio && Number.isFinite(stopAtRef.current) && audio.currentTime >= stopAtRef.current) {
+      audio.pause();
+      stopAtRef.current = null;
+      setActiveSegmentId(null);
+    }
+  };
+
+  const chooseLine = (optionId) => {
+    setSelectedId(optionId);
+    const ok = optionId === puzzle.correctOptionId;
+    setResult({ ok, message: ok ? (puzzle.successMessage ?? "Hat, ızgaradaki bağlantıyı kesinleştirdi.") : (puzzle.failureMessage ?? "Kesitleri yeniden dinle.") });
+    if (ok) onSolved?.({ clueId: clue.id, mechanic: "telephone_switchboard" });
+  };
+
+  const askHint = () => {
+    if (!hintOpen) onRequestHint?.({ clueId: clue.id, penaltySeconds: hintPenaltySeconds });
+    setHintOpen(true);
+  };
+
+  return (
+    <section aria-label={puzzle.title ?? "Dahili Hat Düzeni"} style={{ marginTop: 12, padding: 14, border: "1px solid #262c44", borderRadius: 12, background: "#0e1119" }}>
+      <h4 style={{ margin: "0 0 8px", color: "#f0a830", fontSize: 13 }}>{puzzle.title ?? "Dahili Hat Düzeni"}</h4>
+      {puzzle.subtitle ? <p style={{ margin: "0 0 10px", color: "#8b91ad", fontSize: 13 }}>{puzzle.subtitle}</p> : null}
+      {puzzle.purposeHint ? <p style={{ margin: "0 0 10px", padding: 10, borderLeft: "2px solid #e0b54e", background: "rgba(224,181,78,.06)", color: "#ecd99a", fontSize: 13 }}><b>ÇÖZÜMÜN İŞLEVİ</b><br />{puzzle.purposeHint}</p> : null}
+      {clue.audioUrl ? <audio ref={audioRef} controls preload="metadata" src={clue.audioUrl} onTimeUpdate={stopAtBoundary} onEnded={() => { stopAtRef.current = null; setActiveSegmentId(null); }} style={{ width: "100%" }}>Tarayıcınız ses oynatmayı desteklemiyor.</audio> : <p style={{ color: "#fbbf24" }}>Ses dosyası yolu tanımlı değil; transcript erişilebilir olmalı.</p>}
+      <p style={{ color: "#f0a830", fontSize: 11, letterSpacing: 1, margin: "12px 0 6px" }}>MAKARADAN KESİT DİNLE</p>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(120px,1fr))", gap: 8 }}>
+        {segments.map((segment) => <button key={segment.id} type="button" onClick={() => playSegment(segment)} style={{ padding: 10, borderRadius: 8, border: activeSegmentId === segment.id ? "1px solid #f0a830" : "1px solid #262c44", background: "#161a2b", color: "#e8eaf2" }}>▶ {segment.label ?? segment.id}</button>)}
+      </div>
+      <p style={{ margin: "14px 0 8px", color: "#d6dae8", fontSize: 13 }}>{puzzle.question ?? "Doğru hattı seç."}</p>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(100px,1fr))", gap: 8 }}>
+        {options.map((option) => {
+          const isSelected = selectedId === option.id;
+          const correct = isSelected && option.id === puzzle.correctOptionId;
+          return <button key={option.id} type="button" onClick={() => chooseLine(option.id)} style={{ padding: 10, borderRadius: 8, border: correct ? "1px solid #22c55e" : isSelected ? "1px solid #dc2626" : "1px solid #262c44", background: correct ? "rgba(34,197,94,.12)" : isSelected ? "rgba(220,38,38,.12)" : "#161a2b", color: "#e8eaf2" }}>{option.label ?? option.id}</button>;
+        })}
+      </div>
+      {puzzle.hint ? <><button type="button" disabled={hintOpen} onClick={askHint} style={{ width: "100%", marginTop: 10, padding: 10, borderRadius: 8, border: "1px dashed #b45309", background: "transparent", color: "#fbbf24" }}>{hintOpen ? "İpucu açıldı" : "İpucu iste (-" + hintPenaltySeconds + " sn)"}</button>{hintOpen ? <p style={{ margin: "8px 0 0", padding: 9, borderLeft: "2px solid #b45309", color: "#fbbf24", background: "rgba(180,83,9,.08)", fontSize: 13 }}>{puzzle.hint}</p> : null}</> : null}
+      {clue.sesMetni && interaction.showTranscriptOnDemand !== false ? <><button type="button" onClick={() => setTranscriptOpen((value) => !value)} style={{ width: "100%", marginTop: 8, padding: 10, borderRadius: 8, border: "1px solid #262c44", background: "#161a2b", color: "#e8eaf2" }}>{transcriptOpen ? "Kayıt çözümlemesini gizle" : "Kayıt çözümlemesini göster"}</button>{transcriptOpen ? <p style={{ margin: "8px 0 0", padding: 10, borderRadius: 8, background: "rgba(224,181,78,.06)", color: "#ecd99a", fontSize: 13 }}>{clue.sesMetni}</p> : null}</> : null}
+      {result ? <p role="status" style={{ margin: "10px 0 0", padding: 10, borderRadius: 8, background: result.ok ? "rgba(34,197,94,.12)" : "rgba(220,38,38,.12)", color: result.ok ? "#86efac" : "#fca5a5" }}>{result.ok ? "✓ " : "✕ "}{result.message}</p> : null}
+    </section>
+  );
+}
+===== DOSYA SONU =====
+
+===== MEVCUT MİNİ-OYUN DISPATCHERINA EKLENECEK DAL =====
+// Mevcut mini-oyun / clue renderer'ında, genel ses kaydı fallback'inden ÖNCE ekle.
+import TelephoneSwitchboardMiniGame from "./caseMechanics/TelephoneSwitchboardMiniGame";
+
+// ... mevcut renderMiniGame({ clue, markMiniGameSolved, requestHint }) fonksiyonunda:
+const audioPuzzleStyle = String(clue?.audioPuzzle?.style ?? "").toLowerCase();
+if (clue?.mechanicType === "ses_kaydi" && audioPuzzleStyle === "telephone_switchboard") {
+  return (
+    <TelephoneSwitchboardMiniGame
+      clue={clue}
+      onSolved={({ clueId }) => markMiniGameSolved?.(clueId)}
+      onRequestHint={({ clueId, penaltySeconds }) => requestHint?.({ clueId, penaltySeconds })}
+    />
+  );
+}
+// Buradan sonra mevcut genel audio/transcript renderer'ı aynen çalışmaya devam etmeli.
+===== YAMA SONU =====
+
+===== ZORUNLU OYUN VARLIĞI — DOSYAYI YENİDEN ADLANDIRMA =====
+- c3: rc_002_c3_dahili_hat.mp3 → public/assets/cases/rc_002/audio/rc_002_c3_dahili_hat.mp3
+  Runtime’da yalnız clue.audioUrl = "/assets/cases/rc_002/audio/rc_002_c3_dahili_hat.mp3" kullan. Harici veya ikinci bir sabit yol ekleme.
+===== VARLIK LİSTESİ SONU =====
+
+===== ZORUNLU KABUL TESTLERİ =====
+1. rc_002 vakasında İpucu c3 açıldığında "Dahili Hat Düzeni" görünür; JSON’daki 3 kesit butonu render edilir.
+- c3 audio player tam olarak clue.audioUrl yolundan çalışır; hat_a:2-8s, hat_b:10-16s, hat_c:18-31s dışında çalmaz.
+- Kullanıcı bir hat seçmeden doğru seçenek/success görünmez. Yanlış seçim yalnız yeniden dinleme mesajı verir; doğru hat_c seçimi başarı + onSolved üretir.
+- Transcript isteğe bağlı açılır; ipucu ilk kez açıldığında onRequestHint 60 sn ile çağrılır.
+2. Eski klasik sifreli_mesaj, parmak_izi, profil_sentezi ve genel ses_kaydi rendererları regresyona uğramaz.
+===== TEST LİSTESİ SONU =====
+
+===== KANONİK VAKA VERİSİ — mevcut case registry’de rc_002 olarak ekle/değiştir =====
+{
+  "puzzleId": "rc_002",
+  "packId": "pack_004",
+  "packSlug": "realcrime",
+  "stars": "★★☆☆☆",
+  "gridSize": "3x3",
+  "timeLimit": 540,
+  "legalNote": "Tüm karakterler, mekânlar, belgeler ve ölüm kurgusaldır. Bu dosya yalnızca 1920’lerdeki izole kırsal faili meçhul vakaların kapalı çevre, kar, kayıp anahtar ve ev içinden gelen sesler anlatı yapısından esinlenir; gerçek kişi veya mağdurları temsil etmez.",
+  "historicalInspiration": "1922’de Bavyera’daki izole bir çiftlikte yaşanan ve faili belirlenemeyen Hinterkaifeck dosyasının, kar altında kesilen dünya ile içeriden gelen açıklanamayan işaretler atmosferinden serbestçe esinlenilmiştir.",
+  "uiContracts": {
+    "ses_kaydi": {
+      "telephone_switchboard": {
+        "requiredRenderer": "telephone_switchboard",
+        "requiredFields": [
+          "audioUrl",
+          "sesMetni",
+          "audioPuzzle.style",
+          "audioPuzzle.segments",
+          "audioPuzzle.options",
+          "audioPuzzle.correctOptionId",
+          "audioPuzzle.interaction"
+        ],
+        "fallback": "Render the audio player plus a selectable list of three labeled line segments. Do not reveal the correct segment or conclusion before selection.",
+        "audioPolicy": "Use the canonical clue.audioUrl only; do not hard-code a second path."
+      }
+    }
+  },
+  "title": "Karlı Çiftlikte Son Işık",
+  "subtitle": "1922 Dağ Çiftliği Dosyası · Kurgusal",
+  "difficulty": "Polis Memuru",
+  "difficultyLevel": 2,
+  "specialMechanic": "ses_kaydi",
+  "story": "1922 Şubat’ında, sınır köyünün dışındaki Kestane Ovası Çiftliği günlerdir kar altında kalmıştı. Çiftliğin sahibi Rauf Erkin, gece yarısından sonra evle ahır arasındaki taş koridorda hareketsiz bulundu. Dış kapının sürgüsü içeriden kapalıydı; buna rağmen avludaki izlerin tek yönlü oluşu, herkesin gözünü önce dışarıya çevirdi.\n\nFakat sabah araması, daha rahatsız edici bir şeyi ortaya çıkardı: eski dahili telefonun makarası son kez o gece çalışmış, üç hatta ait kısa kesitler birbirine karışmıştı. Evdeki son ışığın sönmesinden önce kimin hangi rotada olduğunu ayırmak, karın üstündeki izlerden daha güvenilir olabilir.",
+  "atmosphere": "Soba demiri yavaşça soğurken çam reçinesi ve ıslak saman kokusu birbirine karışır. Kar, çiftliğin çevresindeki bütün sesleri yutar; içeride ise paslı telefon zili, duvarın içinden biri hâlâ dinliyormuş gibi ince ince çalar.",
+  "suspects": [
+    {
+      "id": "s1",
+      "name": "Aşçı Yardımcısı Nevin Yalçın",
+      "icon": "🥣",
+      "description": "Çiftliğin kışlık mutfağında çalışan, gece vardiyasında hamuru ve ocağı tek başına yöneten genç yardımcı.",
+      "detail": "Çatlak kenarlı bakır yüzüğünü hiç çıkarmaz; fırın saatini kendi eliyle kurar. Çam reçinesi buharına karşı kayıtlı solunum hassasiyeti olduğu için ince bir bez maske taşır."
+    },
+    {
+      "id": "s2",
+      "name": "Kâhya Halit Sarp",
+      "icon": "🗝️",
+      "description": "Erkin ailesinin erzak ve dış kapı düzeninden sorumlu, eski ambar memuru; sakinliğiyle güven veren kıdemli kâhya.",
+      "detail": "Çuvalları her zaman iki kez sayar; dış sürgünün anahtar halkasını kemerinde taşır ve gece lambalarını kendisi kontrol eder."
+    },
+    {
+      "id": "s3",
+      "name": "Gezici Veteriner Selim Erten",
+      "icon": "🩺",
+      "description": "Hasta buzağı için çiftliğe çağrılmış, kar fırtınası yüzünden geceyi geçirmek zorunda kalan gezici veteriner.",
+      "detail": "Yukarıdaki yataklığı kontrol etmek için kuru samanla çalışır; hayvan koşumlarını onarırken koyu örgülü yular lifleri kullanır."
+    }
+  ],
+  "weapons": [
+    {
+      "id": "w1",
+      "name": "Dökme Demir Maşa",
+      "icon": "🔥",
+      "description": "Soba yanında duran, sapına beyaz yün sarılmış eski dökme demir maşa.",
+      "detail": "Sıcaklıkla kararır; sapındaki gevşek sarım zaman zaman kül ve un tutar."
+    },
+    {
+      "id": "w2",
+      "name": "Sakinleştirici Tentür",
+      "icon": "🧪",
+      "description": "Kış gecelerinde sütle karıştırılan, yoğun uçucu reçine bileşiği içeren koyu renkli yatıştırıcı tentür.",
+      "detail": "Kapağı açıldığında keskin buhar bırakır; duyarlı kişilerde ani öksürük ve nefes darlığını tetikleyebilir."
+    },
+    {
+      "id": "w3",
+      "name": "Örme Yular Halatı",
+      "icon": "🪢",
+      "description": "Ahırda kullanılan, koyu hayvan derisi lifleri ve kuru saman parçacıkları bırakabilen kalın örgülü yular.",
+      "detail": "Sürtünme olduğunda kireçli taşta kıvrımlı lif ve düğüm aşınması izleri bırakır."
+    }
+  ],
+  "locations": [
+    {
+      "id": "l1",
+      "name": "Ev Mutfağı",
+      "icon": "🍞",
+      "description": "Fırın aynası, unlu saat ve soba yanında çalışan sıcak mutfak bölümü.",
+      "detail": "Eşiğinde kül, un ve fırın saati diş izleri kolayca kalır."
+    },
+    {
+      "id": "l2",
+      "name": "Ahır Geçidi",
+      "icon": "🏮",
+      "description": "Evi ahıra bağlayan taş geçit; yağ lambası, iki yem çuvalı ve dış sürgü burada bulunur.",
+      "detail": "Kireçli sürgü oluğu, nal tozu ve nemli taş yüzeyleri küçük lifleri bile koruyabilir."
+    },
+    {
+      "id": "l3",
+      "name": "Yukarı Samanlık",
+      "icon": "🌾",
+      "description": "Balyaların üstünde, hasta buzağının yataklığının ayrıldığı kapalı saman katı.",
+      "detail": "Kuru saman ve hayvan koşumlarından kalan koyu örgülü lifler ahşap basamaklarda kolayca takılır."
+    }
+  ],
+  "clues": [
+    {
+      "id": "c1",
+      "title": "Reçineli Buhar",
+      "type": "adli",
+      "mechanicType": "text",
+      "text": "Rauf Erkin’in ölümüne yol açan sıvının serum örneğinde, yoğun çam reçinesi içeren kış damlasına özgü uçucu bileşik saptandı. Bu buhar hassas bünyelerde ani solunum nöbeti bırakır; gece defterinde böyle bir müdahale kaydı yoktu.",
+      "deductionHint": "Hangi kişi, bu kadar keskin bir buharla çalışsaydı bedensel bir iz ya da müdahale kaydı bırakırdı?",
+      "isBonus": false,
+      "revealOrder": 1,
+      "isRevealed": true,
+      "pointCost": 0
+    },
+    {
+      "id": "c2",
+      "title": "Unlu Yarım Halka",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Fırın aynasının önündeki un katmanında, kenarı çatlak bir bakır yüzüğün yarım halkası ve gece yarısında kurulmuş küçük saat diş izi çıktı.",
+      "deductionHint": "Yüzük ile gece yarısı kurulan saat, hangi kişinin alışkanlığını ve hangi çalışma köşesini birlikte anlatıyor?",
+      "isBonus": false,
+      "revealOrder": 2,
+      "isRevealed": false,
+      "pointCost": 60
+    },
+    {
+      "id": "c3",
+      "title": "Dahili Hattın Son Kesiti",
+      "type": "ses_kaydi",
+      "mechanicType": "ses_kaydi",
+      "text": "Karın ağırlığıyla kopan dahili telefon makarasından, üç hatta ait birkaç saniyelik kesit kurtarıldı. Kayıt, kandiller sönmeden hemen önce durmuş.",
+      "deductionHint": "Hangi kayıtta geçen sayma ve anahtar alışkanlığı, taş geçitteki lambayla aynı kişiyi buluşturuyor?",
+      "isBonus": false,
+      "revealOrder": 3,
+      "isRevealed": false,
+      "pointCost": 60,
+      "sesMetni": "[Hat A] Rüzgâr, tencere kapakları ve anlaşılmayan birkaç hece duyuluyor. [Hat B] Ahşapta tek bir darbe, ardından uzun bir parazit var. [Hat C — ağır erkek sesi] “İki çuvalı yeniden saydım. Geçidin lambası açık kalsın; dış sürgünün anahtarı halkamda.”",
+      "audioUrl": "/assets/cases/rc_002/audio/rc_002_c3_dahili_hat.mp3",
+      "audioAssetId": "rc_002_c3_dahili_hat",
+      "audioFileName": "rc_002_c3_dahili_hat.mp3",
+      "audioPuzzle": {
+        "style": "telephone_switchboard",
+        "title": "Dahili Hat Düzeni",
+        "subtitle": "Makarada üç kısa kesit var. Hangi hattın, taş geçitteki gece nöbetini anlattığını bul.",
+        "purposeHint": "Doğru hattı belirlediğinde, çıkarım ızgarasında bir şüpheli–mekân bağlantısı kesinleşecek.",
+        "segments": [
+          {
+            "id": "hat_a",
+            "label": "Hat A · 00:02–00:08",
+            "startSec": 2,
+            "endSec": 8
+          },
+          {
+            "id": "hat_b",
+            "label": "Hat B · 00:10–00:16",
+            "startSec": 10,
+            "endSec": 16
+          },
+          {
+            "id": "hat_c",
+            "label": "Hat C · 00:18–00:31",
+            "startSec": 18,
+            "endSec": 31
+          }
+        ],
+        "question": "Geçitte yağ lambasını açık bırakıp dış sürgünün anahtarını taşıdığını söyleyen kesit hangisi?",
+        "options": [
+          {
+            "id": "hat_a",
+            "label": "Hat A"
+          },
+          {
+            "id": "hat_b",
+            "label": "Hat B"
+          },
+          {
+            "id": "hat_c",
+            "label": "Hat C"
+          }
+        ],
+        "correctOptionId": "hat_c",
+        "successMessage": "Dahili hat, geceki geçit nöbetini aynı kişinin sayma ve anahtar alışkanlığıyla birleştirdi.",
+        "failureMessage": "Cızırtının altındaki ayrıntıları yeniden dinle: çuvallar, lamba ve dış sürgü aynı rotayı tarif ediyor.",
+        "hint": "Konuşmacının sözcüklerinden çok, günlük alışkanlıklarını dinle; bu alışkanlıklar şüpheli kartlarında saklı.",
+        "hintPenaltySeconds": 60,
+        "interaction": {
+          "mode": "listen_and_select",
+          "submitLabel": "Hattı Sabitle",
+          "showTranscriptOnDemand": true
+        },
+        "accessibility": {
+          "description": "Üç telefon kesitini dinleyip taş geçit nöbetini anlatan hattı seçme mini oyunu.",
+          "requiresAudioControls": true
+        }
+      }
+    },
+    {
+      "id": "c4",
+      "title": "Külün Altındaki Eksik Lif",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Sıcak çalışma alanının eşiğinden alınan süpürüntüde un ve kömür külü vardı; koyu, kıvrımlı hayvan derisi lifine rastlanmadı.",
+      "deductionHint": "Un ve külle dolu bu eşikte, hangi örgülü araç kullanılmış olsaydı geride ayırt edici lifler bırakırdı?",
+      "isBonus": false,
+      "revealOrder": 4,
+      "isRevealed": false,
+      "pointCost": 60
+    },
+    {
+      "id": "c5",
+      "title": "Sürgü Oluğu",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Taş geçidin sürgü oluğunda kireç ve nal tozu duruyordu. Örgülü hayvan derisi lifi, sürtünme izi ya da düğüm aşınması yoktu.",
+      "deductionHint": "Kireçli taşta izler korunmuşken, hangi örgülü aracın geçitte kullanılmadığı anlaşılır?",
+      "isBonus": false,
+      "revealOrder": 5,
+      "isRevealed": false,
+      "pointCost": 60
+    },
+    {
+      "id": "c6",
+      "title": "Yemlik Defterindeki Düğüm",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Yukarı kattaki yemlik defterinin köşesine çizilmiş çift düğüm, veteriner çantasındaki aynı onarım alışkanlığıyla örtüşüyordu.",
+      "deductionHint": "Bu düğüm tekniği, hangi kişinin hayvan koşumuyla olan alışkanlığını destekler?",
+      "isBonus": true,
+      "revealOrder": 6,
+      "isRevealed": false,
+      "pointCost": 40
+    },
+    {
+      "id": "c7",
+      "title": "Beyaz Sarım",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Soba yanında duran eski demir aletin gevşek beyaz sarımında, çatlak bakır yüzüğe sürtünmüş ince bir iz kaldı.",
+      "deductionHint": "Bakır yüzük izi ile beyaz sarım, hangi mutfak alışkanlığının yanında duruyor?",
+      "isBonus": true,
+      "revealOrder": 7,
+      "isRevealed": false,
+      "pointCost": 40
+    }
+  ],
+  "assetManifest": [
+    {
+      "assetId": "rc_002_c3_dahili_hat",
+      "kind": "audio",
+      "clueId": "c3",
+      "status": "ready",
+      "fileName": "rc_002_c3_dahili_hat.mp3",
+      "publicPath": "/assets/cases/rc_002/audio/rc_002_c3_dahili_hat.mp3",
+      "mimeType": "audio/mpeg",
+      "durationTargetSec": 34
+    }
+  ],
+  "solution": {
+    "suspectId": "s2",
+    "weaponId": "w2",
+    "locationId": "l2"
+  },
+  "solutionNarrative": "Kâhya Halit Sarp, gece nöbetini Ahır Geçidi üzerinden kurdu ve Rauf Erkin’i çam reçineli uyku şurubuyla öldürdü. Dahili hattın son kesiti, onun sayıma ve anahtar halkasına dayalı rutinini geçide bağladı. Karın dışarıdaki sessizliği, içerideki düzeni saklayamadı.",
+  "replitIntegration": {
+    "schema": "fm_replit_runtime_contract_v1",
+    "copyTarget": "Replit Agent prompt",
+    "canonicalCaseFile": "src/data/cases/rc_002.json",
+    "policy": "Var olan renderer varsa onu bozma; yoksa bu paketteki component ve dispatcher dalını ekle.",
+    "mechanics": [
+      {
+        "clueId": "c3",
+        "mechanicType": "ses_kaydi",
+        "renderer": "telephone_switchboard",
+        "componentFile": "src/components/caseMechanics/TelephoneSwitchboardMiniGame.jsx",
+        "dispatcherBranch": "clue.mechanicType === \"ses_kaydi\" && clue.audioPuzzle?.style === \"telephone_switchboard\"",
+        "completionEvent": "onSolved({ clueId, mechanic: \"telephone_switchboard\" })",
+        "hintEvent": "onRequestHint({ clueId, penaltySeconds: clue.audioPuzzle?.hintPenaltySeconds ?? 60 })",
+        "requiredData": [
+          "audioUrl",
+          "sesMetni",
+          "audioPuzzle.segments",
+          "audioPuzzle.options",
+          "audioPuzzle.correctOptionId",
+          "audioPuzzle.interaction"
+        ],
+        "nonNegotiable": [
+          "Audio player sadece clue.audioUrl yolunu kullanmalı; ikinci hard-coded asset yolu yazma.",
+          "Segment düğmeleri JSON startSec/endSec aralığını çalmalı ve o aralığın sonunda sesi durdurmalı.",
+          "Doğru hat, kullanıcı seçmeden görünür olmamalı; yanlış seçim yalnız yeniden dinlemeye yönlendirmeli.",
+          "purposeHint görünür olmalı; transcript kullanıcı isteğiyle açılabilmeli.",
+          "Doğru seçim onSolved, ilk ipucu isteği onRequestHint callbackini çağırmalı."
+        ]
+      }
+    ]
+  }
+}
+===== VAKA VERİSİ SONU =====

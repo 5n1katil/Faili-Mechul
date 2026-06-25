@@ -215,6 +215,22 @@ export interface Clue {
   audioAssetId?: string;
   audioPlanned?: boolean;
   audioFileName?: string;
+  audioPuzzle?: {
+    style?: string;
+    title?: string;
+    subtitle?: string;
+    purposeHint?: string;
+    segments?: { id: string; label?: string; startSec: number; endSec: number }[];
+    question?: string;
+    options?: { id: string; label?: string }[];
+    correctOptionId?: string;
+    successMessage?: string;
+    failureMessage?: string;
+    hint?: string;
+    hintPenaltySeconds?: number;
+    interaction?: { mode?: string; submitLabel?: string; showTranscriptOnDemand?: boolean };
+    [key: string]: unknown;
+  };
   yuzlesmeDialogu?: ClueYuzlesmeDialog[];
   sifre?: ClueSifre;
   phoneVerisi?: CluePhoneVerisi;
