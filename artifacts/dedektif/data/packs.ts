@@ -25,6 +25,7 @@ export const PACK_PRODUCT_IDS: Record<string, string> = {
   pack_dijital:  "com.failimechul.dedektif.pack_dijital",
   pack_edebi:    "com.failimechul.dedektif.pack_edebi",
   pack_vaka_arsivi: "com.failimechul.dedektif.pack_vaka_arsivi",
+  pack_pp: "com.failimechul.dedektif.pack_pp",
 };
 
 const EMOJI_TO_MATERIAL: Record<string, string> = {
