@@ -2306,6 +2306,334 @@ function VentilationValveNetworkBlock({ sifre, isSolved, onSolve }: { sifre: Clu
   );
 }
 
+function OlympianOfferingScaleBlock({ sifre, isSolved, onSolve }: { sifre: ClueSifre; isSolved: boolean; onSolve: () => void }) {
+  const pres = sifre.presentation!;
+  const offerings = (pres as Record<string, unknown>).offerings as Array<{ id: string; label: string; mark: string }>;
+  const altars = (pres as Record<string, unknown>).altars as Array<{ id: string; label: string; mark: string }>;
+  const correctAssignments = (pres as Record<string, unknown>).correctAssignments as Array<{ itemId: string; answerId: string }>;
+  const { addTimePenalty } = useGame();
+  const [assignments, setAssignments] = useState<Record<string, string>>({});
+  const [wrong, setWrong] = useState(false);
+  const [hintRevealed, setHintRevealed] = useState(false);
+
+  const allAssigned = Object.keys(assignments).length >= offerings.length;
+  const handleSubmit = () => {
+    if (correctAssignments.every(ca => assignments[ca.itemId] === ca.answerId)) { onSolve(); }
+    else { setWrong(true); setTimeout(() => setWrong(false), 2000); }
+  };
+  const handleHint = () => { if (hintRevealed) return; setHintRevealed(true); addTimePenalty(60); };
+
+  if (isSolved) return (
+    <View style={styles.miniGameSolvedBlock}>
+      <MaterialIcons name="check-circle" size={20} color="#22c55e" />
+      <Text style={styles.miniGameSolvedText}>{(pres.interaction as Record<string,string>)?.successMessage ?? "Çözüldü!"}</Text>
+      <Text style={styles.miniGameAciklama}>{sifre.aciklama}</Text>
+    </View>
+  );
+
+  return (
+    <View style={styles.scaleContainer}>
+      <Text style={styles.scaleTitle}>{pres.title}</Text>
+      <Text style={styles.scaleSubtitle}>{pres.subtitle}</Text>
+      <Text style={styles.scalePurposeHint}>{(pres as Record<string,string>).purposeHint}</Text>
+      {offerings.map(offering => {
+        const sel = assignments[offering.id];
+        return (
+          <View key={offering.id} style={styles.scaleOffering}>
+            <View style={styles.scaleOfferingHeader}>
+              <MaterialIcons name="balance" size={13} color="#D4A843" />
+              <Text style={styles.scaleOfferingLabel}>{offering.label}</Text>
+              <Text style={styles.scaleOfferingMark}>{offering.mark}</Text>
+            </View>
+            <View style={styles.scaleAltars}>
+              {altars.map(altar => {
+                const isSel = sel === altar.id;
+                return (
+                  <Pressable key={altar.id} style={[styles.scaleAltarBtn, isSel && styles.scaleAltarBtnSelected]}
+                    onPress={() => setAssignments(prev => ({ ...prev, [offering.id]: altar.id }))}>
+                    <Text style={[styles.scaleAltarText, isSel && styles.scaleAltarTextSelected]}>{altar.label}</Text>
+                    <Text style={styles.scaleAltarMark}>{altar.mark}</Text>
+                  </Pressable>
+                );
+              })}
+            </View>
+          </View>
+        );
+      })}
+      <Pressable style={[styles.fenSubmitBtn, !allAssigned && { opacity: 0.5 }]} onPress={handleSubmit} disabled={!allAssigned}>
+        <Text style={styles.fenSubmitText}>{(pres.interaction as Record<string,string>)?.submitLabel ?? "Dengeyi Doğrula"}</Text>
+      </Pressable>
+      {wrong && <View style={[styles.lockResult, styles.lockResultFail]}><Text style={[styles.lockResultText, styles.lockResultTextFail]}>{(pres.interaction as Record<string,string>)?.failureMessage ?? "Bu yerleşim dengeyi bozmaktadır."}</Text></View>}
+      <Pressable style={[styles.lockHintBtn, hintRevealed && styles.lockHintBtnUsed]} onPress={handleHint} disabled={hintRevealed}>
+        <Text style={styles.lockHintText}>{hintRevealed ? "İpucu Kullanıldı (−60 sn)" : "İpucu Al (−60 sn)"}</Text>
+      </Pressable>
+      {hintRevealed && <View style={styles.lockHintReveal}><Text style={styles.lockHintRevealText}>{sifre.cozumIpucu}</Text></View>}
+    </View>
+  );
+}
+
+function ForgeBellowsCycleBlock({ sifre, isSolved, onSolve }: { sifre: ClueSifre; isSolved: boolean; onSolve: () => void }) {
+  const pres = sifre.presentation!;
+  const bellows = (pres as Record<string, unknown>).bellows as Array<{ id: string; label: string; text: string }>;
+  const correctOrder = (pres as Record<string, unknown>).correctOrder as string[];
+  const { addTimePenalty } = useGame();
+  const [order, setOrder] = useState<string[]>(() => bellows.map(b => b.id));
+  const [wrong, setWrong] = useState(false);
+  const [hintRevealed, setHintRevealed] = useState(false);
+
+  const move = (idx: number, dir: number) => {
+    const target = idx + dir;
+    if (target < 0 || target >= order.length) return;
+    const next = [...order];
+    [next[idx], next[target]] = [next[target], next[idx]];
+    setOrder(next);
+  };
+  const handleSubmit = () => {
+    if (correctOrder.every((id, i) => order[i] === id)) { onSolve(); }
+    else { setWrong(true); setTimeout(() => setWrong(false), 2000); }
+  };
+  const handleHint = () => { if (hintRevealed) return; setHintRevealed(true); addTimePenalty(60); };
+
+  if (isSolved) return (
+    <View style={styles.miniGameSolvedBlock}>
+      <MaterialIcons name="check-circle" size={20} color="#22c55e" />
+      <Text style={styles.miniGameSolvedText}>{(pres.interaction as Record<string,string>)?.successMessage ?? "Çözüldü!"}</Text>
+      <Text style={styles.miniGameAciklama}>{sifre.aciklama}</Text>
+    </View>
+  );
+
+  return (
+    <View style={styles.bellowsContainer}>
+      <Text style={styles.bellowsTitle}>{pres.title}</Text>
+      <Text style={styles.bellowsSubtitle}>{pres.subtitle}</Text>
+      <Text style={styles.bellowsPurposeHint}>{(pres as Record<string,string>).purposeHint}</Text>
+      {order.map((id, idx) => {
+        const bellow = bellows.find(b => b.id === id)!;
+        return (
+          <View key={id} style={styles.bellowsCard}>
+            <View style={styles.bellowsCardBadge}><Text style={styles.bellowsCardBadgeText}>{idx + 1}</Text></View>
+            <View style={styles.bellowsCardBody}>
+              <Text style={styles.bellowsCardLabel}>{bellow.label}</Text>
+              <Text style={styles.bellowsCardText}>{bellow.text}</Text>
+            </View>
+            <View style={styles.tlCardArrows}>
+              <Pressable style={styles.tlArrow} onPress={() => move(idx, -1)} disabled={idx === 0}>
+                <MaterialIcons name="arrow-upward" size={18} color={idx === 0 ? "#3a3f55" : "#f97316"} />
+              </Pressable>
+              <Pressable style={styles.tlArrow} onPress={() => move(idx, 1)} disabled={idx === order.length - 1}>
+                <MaterialIcons name="arrow-downward" size={18} color={idx === order.length - 1 ? "#3a3f55" : "#f97316"} />
+              </Pressable>
+            </View>
+          </View>
+        );
+      })}
+      <Pressable style={[styles.fenSubmitBtn, { backgroundColor: "#f97316" }]} onPress={handleSubmit}>
+        <Text style={styles.fenSubmitText}>{(pres.interaction as Record<string,string>)?.submitLabel ?? "Ritmi Doğrula"}</Text>
+      </Pressable>
+      {wrong && <View style={[styles.lockResult, styles.lockResultFail]}><Text style={[styles.lockResultText, styles.lockResultTextFail]}>{(pres.interaction as Record<string,string>)?.failureMessage ?? "Yanlış sıra."}</Text></View>}
+      <Pressable style={[styles.lockHintBtn, hintRevealed && styles.lockHintBtnUsed]} onPress={handleHint} disabled={hintRevealed}>
+        <Text style={styles.lockHintText}>{hintRevealed ? "İpucu Kullanıldı (−60 sn)" : "İpucu Al (−60 sn)"}</Text>
+      </Pressable>
+      {hintRevealed && <View style={styles.lockHintReveal}><Text style={styles.lockHintRevealText}>{sifre.cozumIpucu}</Text></View>}
+    </View>
+  );
+}
+
+function LaurelKnotDecoderBlock({ sifre, isSolved, onSolve }: { sifre: ClueSifre; isSolved: boolean; onSolve: () => void }) {
+  const pres = sifre.presentation!;
+  const cords = (pres as Record<string, unknown>).cords as Array<{ id: string; label: string; mark: string }>;
+  const knots = (pres as Record<string, unknown>).knots as Array<{ id: string; label: string }>;
+  const correctAssignments = (pres as Record<string, unknown>).correctAssignments as Array<{ itemId: string; answerId: string }>;
+  const { addTimePenalty } = useGame();
+  const [assignments, setAssignments] = useState<Record<string, string>>({});
+  const [wrong, setWrong] = useState(false);
+  const [hintRevealed, setHintRevealed] = useState(false);
+
+  const allAssigned = Object.keys(assignments).length >= cords.length;
+  const handleSubmit = () => {
+    if (correctAssignments.every(ca => assignments[ca.itemId] === ca.answerId)) { onSolve(); }
+    else { setWrong(true); setTimeout(() => setWrong(false), 2000); }
+  };
+  const handleHint = () => { if (hintRevealed) return; setHintRevealed(true); addTimePenalty(60); };
+
+  if (isSolved) return (
+    <View style={styles.miniGameSolvedBlock}>
+      <MaterialIcons name="check-circle" size={20} color="#22c55e" />
+      <Text style={styles.miniGameSolvedText}>{(pres.interaction as Record<string,string>)?.successMessage ?? "Çözüldü!"}</Text>
+      <Text style={styles.miniGameAciklama}>{sifre.aciklama}</Text>
+    </View>
+  );
+
+  return (
+    <View style={styles.knotContainer}>
+      <Text style={styles.knotTitle}>{pres.title}</Text>
+      <Text style={styles.knotSubtitle}>{pres.subtitle}</Text>
+      <Text style={styles.knotPurposeHint}>{(pres as Record<string,string>).purposeHint}</Text>
+      {cords.map(cord => {
+        const sel = assignments[cord.id];
+        return (
+          <View key={cord.id} style={styles.knotCord}>
+            <View style={styles.knotCordHeader}>
+              <MaterialIcons name="linear-scale" size={13} color="#86efac" />
+              <Text style={styles.knotCordLabel}>{cord.label}</Text>
+              <Text style={styles.knotCordMark}>{cord.mark}</Text>
+            </View>
+            <View style={styles.knotOptions}>
+              {knots.map(knot => {
+                const isSel = sel === knot.id;
+                return (
+                  <Pressable key={knot.id} style={[styles.knotOption, isSel && styles.knotOptionSelected]}
+                    onPress={() => setAssignments(prev => ({ ...prev, [cord.id]: knot.id }))}>
+                    <Text style={[styles.knotOptionText, isSel && styles.knotOptionTextSelected]}>{knot.label}</Text>
+                  </Pressable>
+                );
+              })}
+            </View>
+          </View>
+        );
+      })}
+      <Pressable style={[styles.fenSubmitBtn, !allAssigned && { opacity: 0.5 }, { backgroundColor: "#4ade80" }]} onPress={handleSubmit} disabled={!allAssigned}>
+        <Text style={[styles.fenSubmitText, { color: "#052e16" }]}>{(pres.interaction as Record<string,string>)?.submitLabel ?? "Düğümleri Çöz"}</Text>
+      </Pressable>
+      {wrong && <View style={[styles.lockResult, styles.lockResultFail]}><Text style={[styles.lockResultText, styles.lockResultTextFail]}>{(pres.interaction as Record<string,string>)?.failureMessage ?? "Bu eşleşme ip gerilimini taşımaz."}</Text></View>}
+      <Pressable style={[styles.lockHintBtn, hintRevealed && styles.lockHintBtnUsed]} onPress={handleHint} disabled={hintRevealed}>
+        <Text style={styles.lockHintText}>{hintRevealed ? "İpucu Kullanıldı (−60 sn)" : "İpucu Al (−60 sn)"}</Text>
+      </Pressable>
+      {hintRevealed && <View style={styles.lockHintReveal}><Text style={styles.lockHintRevealText}>{sifre.cozumIpucu}</Text></View>}
+    </View>
+  );
+}
+
+function SunstoneReflectionArrayBlock({ sifre, isSolved, onSolve }: { sifre: ClueSifre; isSolved: boolean; onSolve: () => void }) {
+  const pres = sifre.presentation!;
+  const mirrors = (pres as Record<string, unknown>).mirrors as Array<{ id: string; label: string; beam: string }>;
+  const targets = (pres as Record<string, unknown>).targets as Array<{ id: string; label: string }>;
+  const correctAssignments = (pres as Record<string, unknown>).correctAssignments as Array<{ itemId: string; answerId: string }>;
+  const { addTimePenalty } = useGame();
+  const [assignments, setAssignments] = useState<Record<string, string>>({});
+  const [wrong, setWrong] = useState(false);
+  const [hintRevealed, setHintRevealed] = useState(false);
+
+  const allAssigned = Object.keys(assignments).length >= mirrors.length;
+  const handleSubmit = () => {
+    if (correctAssignments.every(ca => assignments[ca.itemId] === ca.answerId)) { onSolve(); }
+    else { setWrong(true); setTimeout(() => setWrong(false), 2000); }
+  };
+  const handleHint = () => { if (hintRevealed) return; setHintRevealed(true); addTimePenalty(60); };
+
+  if (isSolved) return (
+    <View style={styles.miniGameSolvedBlock}>
+      <MaterialIcons name="check-circle" size={20} color="#22c55e" />
+      <Text style={styles.miniGameSolvedText}>{(pres.interaction as Record<string,string>)?.successMessage ?? "Çözüldü!"}</Text>
+      <Text style={styles.miniGameAciklama}>{sifre.aciklama}</Text>
+    </View>
+  );
+
+  return (
+    <View style={styles.sunstoneContainer}>
+      <Text style={styles.sunstoneTitle}>{pres.title}</Text>
+      <Text style={styles.sunstoneSubtitle}>{pres.subtitle}</Text>
+      <Text style={styles.sunstonePurposeHint}>{(pres as Record<string,string>).purposeHint}</Text>
+      {mirrors.map(mirror => {
+        const sel = assignments[mirror.id];
+        return (
+          <View key={mirror.id} style={styles.sunstoneMirror}>
+            <View style={styles.sunstoneMirrorHeader}>
+              <MaterialIcons name="wb-sunny" size={13} color="#fbbf24" />
+              <Text style={styles.sunstoneMirrorLabel}>{mirror.label}</Text>
+              <Text style={styles.sunstoneMirrorBeam}>{mirror.beam}</Text>
+            </View>
+            <View style={styles.sunstoneOptions}>
+              {targets.map(target => {
+                const isSel = sel === target.id;
+                return (
+                  <Pressable key={target.id} style={[styles.sunstoneOption, isSel && styles.sunstoneOptionSelected]}
+                    onPress={() => setAssignments(prev => ({ ...prev, [mirror.id]: target.id }))}>
+                    <Text style={[styles.sunstoneOptionText, isSel && styles.sunstoneOptionTextSelected]}>{target.label}</Text>
+                  </Pressable>
+                );
+              })}
+            </View>
+          </View>
+        );
+      })}
+      <Pressable style={[styles.fenSubmitBtn, !allAssigned && { opacity: 0.5 }, { backgroundColor: "#fbbf24" }]} onPress={handleSubmit} disabled={!allAssigned}>
+        <Text style={[styles.fenSubmitText, { color: "#1c1007" }]}>{(pres.interaction as Record<string,string>)?.submitLabel ?? "Işınları Doğrula"}</Text>
+      </Pressable>
+      {wrong && <View style={[styles.lockResult, styles.lockResultFail]}><Text style={[styles.lockResultText, styles.lockResultTextFail]}>{(pres.interaction as Record<string,string>)?.failureMessage ?? "Bu yansıma düzeni tutarsız."}</Text></View>}
+      <Pressable style={[styles.lockHintBtn, hintRevealed && styles.lockHintBtnUsed]} onPress={handleHint} disabled={hintRevealed}>
+        <Text style={styles.lockHintText}>{hintRevealed ? "İpucu Kullanıldı (−60 sn)" : "İpucu Al (−60 sn)"}</Text>
+      </Pressable>
+      {hintRevealed && <View style={styles.lockHintReveal}><Text style={styles.lockHintRevealText}>{sifre.cozumIpucu}</Text></View>}
+    </View>
+  );
+}
+
+function RavenFeatherLatticeBlock({ sifre, isSolved, onSolve }: { sifre: ClueSifre; isSolved: boolean; onSolve: () => void }) {
+  const pres = sifre.presentation!;
+  const feathers = (pres as Record<string, unknown>).feathers as Array<{ id: string; label: string; mark: string }>;
+  const seals = (pres as Record<string, unknown>).seals as Array<{ id: string; label: string }>;
+  const correctAssignments = (pres as Record<string, unknown>).correctAssignments as Array<{ itemId: string; answerId: string }>;
+  const { addTimePenalty } = useGame();
+  const [assignments, setAssignments] = useState<Record<string, string>>({});
+  const [wrong, setWrong] = useState(false);
+  const [hintRevealed, setHintRevealed] = useState(false);
+
+  const allAssigned = Object.keys(assignments).length >= feathers.length;
+  const handleSubmit = () => {
+    if (correctAssignments.every(ca => assignments[ca.itemId] === ca.answerId)) { onSolve(); }
+    else { setWrong(true); setTimeout(() => setWrong(false), 2000); }
+  };
+  const handleHint = () => { if (hintRevealed) return; setHintRevealed(true); addTimePenalty(60); };
+
+  if (isSolved) return (
+    <View style={styles.miniGameSolvedBlock}>
+      <MaterialIcons name="check-circle" size={20} color="#22c55e" />
+      <Text style={styles.miniGameSolvedText}>{(pres.interaction as Record<string,string>)?.successMessage ?? "Çözüldü!"}</Text>
+      <Text style={styles.miniGameAciklama}>{sifre.aciklama}</Text>
+    </View>
+  );
+
+  return (
+    <View style={styles.ravenContainer}>
+      <Text style={styles.ravenTitle}>{pres.title}</Text>
+      <Text style={styles.ravenSubtitle}>{pres.subtitle}</Text>
+      <Text style={styles.ravenPurposeHint}>{(pres as Record<string,string>).purposeHint}</Text>
+      {feathers.map(feather => {
+        const sel = assignments[feather.id];
+        return (
+          <View key={feather.id} style={styles.ravenFeather}>
+            <View style={styles.ravenFeatherHeader}>
+              <MaterialIcons name="air" size={13} color="#818cf8" />
+              <Text style={styles.ravenFeatherLabel}>{feather.label}</Text>
+              <Text style={styles.ravenFeatherMark}>{feather.mark}</Text>
+            </View>
+            <View style={styles.ravenOptions}>
+              {seals.map(seal => {
+                const isSel = sel === seal.id;
+                return (
+                  <Pressable key={seal.id} style={[styles.ravenOption, isSel && styles.ravenOptionSelected]}
+                    onPress={() => setAssignments(prev => ({ ...prev, [feather.id]: seal.id }))}>
+                    <Text style={[styles.ravenOptionText, isSel && styles.ravenOptionTextSelected]}>{seal.label}</Text>
+                  </Pressable>
+                );
+              })}
+            </View>
+          </View>
+        );
+      })}
+      <Pressable style={[styles.fenSubmitBtn, !allAssigned && { opacity: 0.5 }, { backgroundColor: "#6366f1" }]} onPress={handleSubmit} disabled={!allAssigned}>
+        <Text style={[styles.fenSubmitText, { color: "#eef2ff" }]}>{(pres.interaction as Record<string,string>)?.submitLabel ?? "Uçuş Ağını Doğrula"}</Text>
+      </Pressable>
+      {wrong && <View style={[styles.lockResult, styles.lockResultFail]}><Text style={[styles.lockResultText, styles.lockResultTextFail]}>{(pres.interaction as Record<string,string>)?.failureMessage ?? "Bu tüyler aynı mühürlere konamaz."}</Text></View>}
+      <Pressable style={[styles.lockHintBtn, hintRevealed && styles.lockHintBtnUsed]} onPress={handleHint} disabled={hintRevealed}>
+        <Text style={styles.lockHintText}>{hintRevealed ? "İpucu Kullanıldı (−60 sn)" : "İpucu Al (−60 sn)"}</Text>
+      </Pressable>
+      {hintRevealed && <View style={styles.lockHintReveal}><Text style={styles.lockHintRevealText}>{sifre.cozumIpucu}</Text></View>}
+    </View>
+  );
+}
+
 function SifreliMesajBlock({
   sifre,
   isSolved,
@@ -2400,6 +2728,26 @@ function SifreliMesajBlock({
 
   if (sifre.presentation?.style === "ventilation_valve_network") {
     return <VentilationValveNetworkBlock sifre={sifre} isSolved={isSolved} onSolve={onSolve} />;
+  }
+
+  if (sifre.presentation?.style === "olympian_offering_scale") {
+    return <OlympianOfferingScaleBlock sifre={sifre} isSolved={isSolved} onSolve={onSolve} />;
+  }
+
+  if (sifre.presentation?.style === "forge_bellows_cycle") {
+    return <ForgeBellowsCycleBlock sifre={sifre} isSolved={isSolved} onSolve={onSolve} />;
+  }
+
+  if (sifre.presentation?.style === "laurel_knot_decoder") {
+    return <LaurelKnotDecoderBlock sifre={sifre} isSolved={isSolved} onSolve={onSolve} />;
+  }
+
+  if (sifre.presentation?.style === "sunstone_reflection_array") {
+    return <SunstoneReflectionArrayBlock sifre={sifre} isSolved={isSolved} onSolve={onSolve} />;
+  }
+
+  if (sifre.presentation?.style === "raven_feather_lattice") {
+    return <RavenFeatherLatticeBlock sifre={sifre} isSolved={isSolved} onSolve={onSolve} />;
   }
 
   if (sifre.presentation?.style === "symbol_crossgrid") {
@@ -7456,4 +7804,147 @@ const styles = StyleSheet.create({
   valveStateClosed: {
     color: "#ef4444",
   },
+  // ── OlympianOfferingScaleBlock ──
+  scaleContainer: { gap: 6 },
+  scaleTitle: { fontSize: 14, fontWeight: "700", color: "#D4A843", marginBottom: 2 },
+  scaleSubtitle: { fontSize: 12, color: "#8b91ad", marginBottom: 4 },
+  scalePurposeHint: { fontSize: 11, color: "#6b7280", fontStyle: "italic", marginBottom: 8, lineHeight: 15 },
+  scaleOffering: {
+    backgroundColor: "rgba(212,168,67,0.05)",
+    borderWidth: 1,
+    borderColor: "rgba(212,168,67,0.18)",
+    borderRadius: 8,
+    padding: 8,
+    marginBottom: 6,
+  },
+  scaleOfferingHeader: { flexDirection: "row", alignItems: "center", gap: 5, marginBottom: 6 },
+  scaleOfferingLabel: { fontSize: 12, fontWeight: "700", color: "#e2c97e", flex: 1 },
+  scaleOfferingMark: { fontSize: 10, color: "#8b91ad", fontStyle: "italic" },
+  scaleAltars: { gap: 4 },
+  scaleAltarBtn: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    padding: 7,
+    borderRadius: 6,
+    backgroundColor: "rgba(255,255,255,0.04)",
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.08)",
+  },
+  scaleAltarBtnSelected: {
+    backgroundColor: "rgba(212,168,67,0.15)",
+    borderColor: "#D4A843",
+  },
+  scaleAltarText: { fontSize: 11, color: "#9ca3af" },
+  scaleAltarTextSelected: { color: "#D4A843", fontWeight: "600" },
+  scaleAltarMark: { fontSize: 10, color: "#6b7280", fontStyle: "italic" },
+  // ── ForgeBellowsCycleBlock ──
+  bellowsContainer: { gap: 6 },
+  bellowsTitle: { fontSize: 14, fontWeight: "700", color: "#f97316", marginBottom: 2 },
+  bellowsSubtitle: { fontSize: 12, color: "#8b91ad", marginBottom: 4 },
+  bellowsPurposeHint: { fontSize: 11, color: "#6b7280", fontStyle: "italic", marginBottom: 8, lineHeight: 15 },
+  bellowsCard: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "rgba(249,115,22,0.05)",
+    borderWidth: 1,
+    borderColor: "rgba(249,115,22,0.18)",
+    borderRadius: 8,
+    padding: 8,
+    marginBottom: 4,
+    gap: 8,
+  },
+  bellowsCardBadge: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    backgroundColor: "rgba(249,115,22,0.2)",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  bellowsCardBadgeText: { fontSize: 12, fontWeight: "700", color: "#f97316" },
+  bellowsCardBody: { flex: 1 },
+  bellowsCardLabel: { fontSize: 12, fontWeight: "700", color: "#e2e8f0", marginBottom: 2 },
+  bellowsCardText: { fontSize: 11, color: "#8b91ad", lineHeight: 15 },
+  // ── LaurelKnotDecoderBlock ──
+  knotContainer: { gap: 6 },
+  knotTitle: { fontSize: 14, fontWeight: "700", color: "#4ade80", marginBottom: 2 },
+  knotSubtitle: { fontSize: 12, color: "#8b91ad", marginBottom: 4 },
+  knotPurposeHint: { fontSize: 11, color: "#6b7280", fontStyle: "italic", marginBottom: 8, lineHeight: 15 },
+  knotCord: {
+    backgroundColor: "rgba(74,222,128,0.04)",
+    borderWidth: 1,
+    borderColor: "rgba(74,222,128,0.15)",
+    borderRadius: 8,
+    padding: 8,
+    marginBottom: 6,
+  },
+  knotCordHeader: { flexDirection: "row", alignItems: "center", gap: 5, marginBottom: 6 },
+  knotCordLabel: { fontSize: 12, fontWeight: "700", color: "#86efac", flex: 1 },
+  knotCordMark: { fontSize: 10, color: "#8b91ad", fontStyle: "italic" },
+  knotOptions: { gap: 4 },
+  knotOption: {
+    padding: 7,
+    borderRadius: 6,
+    backgroundColor: "rgba(255,255,255,0.04)",
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.08)",
+  },
+  knotOptionSelected: { backgroundColor: "rgba(74,222,128,0.14)", borderColor: "#4ade80" },
+  knotOptionText: { fontSize: 11, color: "#9ca3af", lineHeight: 15 },
+  knotOptionTextSelected: { color: "#86efac", fontWeight: "600" },
+  // ── SunstoneReflectionArrayBlock ──
+  sunstoneContainer: { gap: 6 },
+  sunstoneTitle: { fontSize: 14, fontWeight: "700", color: "#fbbf24", marginBottom: 2 },
+  sunstoneSubtitle: { fontSize: 12, color: "#8b91ad", marginBottom: 4 },
+  sunstonePurposeHint: { fontSize: 11, color: "#6b7280", fontStyle: "italic", marginBottom: 8, lineHeight: 15 },
+  sunstoneMirror: {
+    backgroundColor: "rgba(251,191,36,0.04)",
+    borderWidth: 1,
+    borderColor: "rgba(251,191,36,0.18)",
+    borderRadius: 8,
+    padding: 8,
+    marginBottom: 6,
+  },
+  sunstoneMirrorHeader: { flexDirection: "row", alignItems: "center", gap: 5, marginBottom: 6 },
+  sunstoneMirrorLabel: { fontSize: 12, fontWeight: "700", color: "#fde68a", flex: 1 },
+  sunstoneMirrorBeam: { fontSize: 10, color: "#8b91ad", fontStyle: "italic" },
+  sunstoneOptions: { gap: 4 },
+  sunstoneOption: {
+    padding: 7,
+    borderRadius: 6,
+    backgroundColor: "rgba(255,255,255,0.04)",
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.08)",
+  },
+  sunstoneOptionSelected: { backgroundColor: "rgba(251,191,36,0.14)", borderColor: "#fbbf24" },
+  sunstoneOptionText: { fontSize: 11, color: "#9ca3af", lineHeight: 15 },
+  sunstoneOptionTextSelected: { color: "#fde68a", fontWeight: "600" },
+  // ── RavenFeatherLatticeBlock ──
+  ravenContainer: { gap: 6 },
+  ravenTitle: { fontSize: 14, fontWeight: "700", color: "#818cf8", marginBottom: 2 },
+  ravenSubtitle: { fontSize: 12, color: "#8b91ad", marginBottom: 4 },
+  ravenPurposeHint: { fontSize: 11, color: "#6b7280", fontStyle: "italic", marginBottom: 8, lineHeight: 15 },
+  ravenFeather: {
+    backgroundColor: "rgba(129,140,248,0.05)",
+    borderWidth: 1,
+    borderColor: "rgba(129,140,248,0.18)",
+    borderRadius: 8,
+    padding: 8,
+    marginBottom: 6,
+  },
+  ravenFeatherHeader: { flexDirection: "row", alignItems: "center", gap: 5, marginBottom: 6 },
+  ravenFeatherLabel: { fontSize: 12, fontWeight: "700", color: "#c7d2fe", flex: 1 },
+  ravenFeatherMark: { fontSize: 10, color: "#8b91ad", fontStyle: "italic" },
+  ravenOptions: { gap: 4 },
+  ravenOption: {
+    padding: 7,
+    borderRadius: 6,
+    backgroundColor: "rgba(255,255,255,0.04)",
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.08)",
+  },
+  ravenOptionSelected: { backgroundColor: "rgba(99,102,241,0.18)", borderColor: "#818cf8" },
+  ravenOptionText: { fontSize: 11, color: "#9ca3af", lineHeight: 15 },
+  ravenOptionTextSelected: { color: "#c7d2fe", fontWeight: "600" },
 });

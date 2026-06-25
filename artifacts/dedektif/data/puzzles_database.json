@@ -7269,281 +7269,303 @@
       "puzzles": [
         {
           "puzzleId": "mit_001",
-          "title": "Olimpos'ta İhanet",
-          "subtitle": "Antik Yunan Mitolojisi Evreni",
-          "difficulty": 2,
-          "difficultyLabel": "Çaylak",
-          "stars": "★★☆☆☆",
+          "stars": "★☆☆☆☆",
           "gridSize": "3x3",
-          "timeLimit": 540,
-          "story": "Olimpos Dağı'nda bir tanrı ölü bulundu. Ölümlü bir silahla, tanrısal bir mekânda. Üç şüpheli tanrı mahkemesinde yargılanıyor. Sen dedektifsin.",
-          "atmosphere": "Bulutların üstü. Ambrosia kokusu. Yıldırım sesleri. Ve tanrıların fısıltısı.",
+          "timeLimit": 600,
+          "title": "Olimpos’ta İhanet",
+          "subtitle": "Olimpos · Ambrosia Bahçesi",
+          "difficulty": 1,
+          "difficultyLevel": 1,
+          "specialMechanic": "olympian_offering_scale_sifreli_mesaj",
+          "story": "Olimpos’un yağmur taşımayan gecelerinden birinde, Ambrosia Bahçesi’nin beyaz mermer yollarında bir tanrı habercisi taşlaşmış halde bulundu. Gövdesi, sanki bir heykeltıraş son darbeyi yarıda bırakmış gibi soğuktu; yalnız bileğinde ezilmiş bir altın yaprak kaldı.\n\nBahçenin çeşmesi yanında üç adak kâsesi devrilmiş, göğe bakan terazilerin biri boş kalmıştı. Zeus’un taht salonundan gelen yıldırımın yankısı hâlâ duyuluyor, Hermes’in geçit odasında ise kapılar aralıksız açılıp kapanıyordu.\n\nAres savaş kulübesinde silah sayımı yapıyordu. Hermes, tanrılar arası haberleri taşımak için geçitlerdeydi. Hera ise bahçeye giden koridorlarda hiç görünmediğini söylüyordu. Fakat gözetmenlerin hatırladığı tek ses, taş zeminde sürüklenen tavus tüyleriydi.",
+          "atmosphere": "Ambrosia’nın şekerli kokusu, soğuyan mermer ve uzaktan çarpan yıldırım. Bahçedeki her gölge, bir tanrının sır gibi sakladığı kıskançlık kadar keskin.",
           "suspects": [
             {
               "id": "s1",
-              "name": "Ares (Savaş Tanrısı)",
-              "icon": "💂",
-              "description": "Öfkeli ve dürtüsel. Maktul onun alanına girdi.",
-              "detail": "Kırmızı zırhı, savaş enerjisi. Kontrolsüz."
+              "name": "Ares",
+              "icon": "🛡️",
+              "description": "Savaş tanrısı; öfkesini saklamayı hiç öğrenememiştir.",
+              "detail": "Silah sayımı sırasında bile zırhındaki çatlakları tek tek kontrol eder."
             },
             {
               "id": "s2",
-              "name": "Hermes (Haber Tanrısı)",
-              "icon": "👨‍✈️",
-              "description": "Her yere ulaşabilir, her şeyi bilir. Çok biliyor.",
-              "detail": "Kanatlı sandalet. Hızlı, aldatıcı, akıllı."
+              "name": "Hermes",
+              "icon": "🪽",
+              "description": "Haberci tanrı; geçitlerin ve yolcuların efendisi.",
+              "detail": "Kanatlı sandaletlerindeki yıldız tozunu her seferden sonra temizler."
             },
             {
               "id": "s3",
-              "name": "Hera (Tanrıçaların Kraliçesi)",
-              "icon": "👩",
-              "description": "Zeus'un eşi. Kıskançlığıyla bilinen. Maktul Zeus'a yakındı.",
-              "detail": "Tavus kuşu tüyü, soğuk bakış, hesaplı."
+              "name": "Hera",
+              "icon": "🦚",
+              "description": "Olimpos kraliçesi; hafızası uzun, sessizliği ağırdır.",
+              "detail": "Tavus tüyü pelerininde altın bağlayıcı kullanır; koleksiyon odasındaki şişeleri yalnız kendisi açar."
             }
           ],
           "weapons": [
             {
               "id": "w1",
-              "name": "Zehirli Ambrosia",
-              "icon": "🍯",
-              "description": "Tanrı içeceğine karıştırılan ölüm özü."
+              "name": "Yıldırım Mızrağı",
+              "icon": "⚡",
+              "description": "Taht salonundan alınmadıkça gücünü kaybetmeyen küçük mızrak.",
+              "detail": ""
             },
             {
               "id": "w2",
-              "name": "Yıldırım Mızrağı",
-              "icon": "⚡",
-              "description": "Zeus'tan çalınan küçük yıldırım."
+              "name": "Fildişi Kılıç",
+              "icon": "🗡️",
+              "description": "Ares’in törensel silah dolabında saklanan kısa savaş kılıcı.",
+              "detail": ""
             },
             {
               "id": "w3",
               "name": "Medusa Tozu",
               "icon": "🐍",
-              "description": "Medusa kanından yapılan taşlaştırıcı toz."
+              "description": "Temas ettiği tanrısal dokuyu kristalleştiren taşlaştırıcı toz.",
+              "detail": ""
             }
           ],
           "locations": [
             {
               "id": "l1",
-              "name": "Zeus'un Taht Salonu",
+              "name": "Zeus’un Taht Salonu",
               "icon": "🏛️",
-              "description": "Olimpos'un en yüce mekânı."
+              "description": "Yıldırımın bronz askılarda dinlendiği yüksek salon.",
+              "detail": ""
             },
             {
               "id": "l2",
               "name": "Ambrosia Bahçesi",
-              "icon": "🌸",
-              "description": "Tanrıların beslendiği gizli bahçe."
+              "icon": "🌿",
+              "description": "Gece çiçeklerinin yalnız tanrısal özleri tuttuğu avlu.",
+              "detail": ""
             },
             {
               "id": "l3",
-              "name": "Hermes'in Geçit Odası",
+              "name": "Hermes’in Geçit Odası",
               "icon": "🌀",
-              "description": "Boyutlar arası geçiş noktası."
+              "description": "Dünya ile Olimpos arasındaki rüzgârlı kapı dizisi.",
+              "detail": ""
             }
           ],
           "clues": [
             {
               "id": "c1",
-              "type": "kanit",
+              "title": "Gece Tanığının İlk Kaydı",
+              "type": "tanik",
+              "mechanicType": "text",
+              "text": "Tanrı tabibi, kurbanın taşlaşarak can verdiği yerdeki kristal tortunun, ölümcül bir taşlaştırıcı bileşimle aynı olduğunu kayda geçti.",
+              "deductionHint": "Bu kristal tortu, listedeki hangi araçla birlikte düşünülmeli?",
+              "isBonus": false,
               "revealOrder": 1,
               "isRevealed": true,
-              "pointCost": 0,
-              "title": "Tanrı Tabibi Raporu",
-              "text": "Maktul Ambrosia Bahçesi'nde taş gibi donmuş halde bulundu. Medusa tozu — deri üzerinde kristalleşme. Ambrosia içmemiş, dışarıdan temas.",
-              "mechanicType": "text",
-              "deductionHint": "Silah Medusa tozu, mekan Ambrosia Bahçesi."
+              "pointCost": 0
             },
             {
               "id": "c2",
+              "title": "Kutsal Geçit Kayıtları",
               "type": "tanik",
+              "mechanicType": "text",
+              "text": "Yüksek geçidin yıldız tozu kaydı, kraliçe tacının olay saatinde boyut kapısından hiç geçmediğini; bahçeye giden merdivenin tozunu taşımadığını gösteriyor.",
+              "deductionHint": "Bu kayıt, hangi kapı olasılığını kapatır?",
+              "isBonus": false,
               "revealOrder": 2,
               "isRevealed": false,
-              "pointCost": 60,
-              "title": "Apollon'un Kehaneti",
-              "text": "\"Kehanet ağına göre o geceyi gördüm. Taht salonunda değildi — ama taht salonundaki biri bahçeye gitmişti. Kanatlı biri değildi — çünkü kanatlı biri izi bırakmaz.\"",
-              "mechanicType": "text",
-              "deductionHint": "Kanatlı Hermes eleniyor mu? Yoksa iz bırakmadığı için mi şüpheli?"
+              "pointCost": 60
             },
             {
               "id": "c3",
-              "type": "adli",
+              "title": "Yıldırım Mızrağının Askısı",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Zeus’un küçük yıldırım mızrağı, taht salonundaki bronz askısında mühürlü halde bulundu. Askı zinciri, son konumunun yalnız taht salonu olduğunu gösteriyor.",
+              "deductionHint": "Mühürlü askı hangi araç–mekân bağını kesinleştirir?",
+              "isBonus": false,
               "revealOrder": 3,
               "isRevealed": false,
-              "pointCost": 60,
-              "title": "Medusa Tozu Kaynağı",
-              "text": "Medusa tozu yalnızca Perseus'un zırhında bulunur — ya da Hera'nın özel koleksiyonunda. Ares bu toza erişemez. Hermes onu taşıyabilir ama başkasından alması gerekir.",
-              "mechanicType": "gorsel_ipucu",
-              "gorselAciklama": "Hera'nın koleksiyon envanteri: 'Medusa Tozu — 1 şişe. SON KONTROL: Dün gece.' Şişe eksik.",
-              "deductionHint": "Toza kim erişebildi?"
+              "pointCost": 60
             },
             {
               "id": "c4",
-              "type": "anagram",
+              "title": "Sandalet Rüzgârı",
+              "type": "tanik",
+              "mechanicType": "text",
+              "text": "Bahçe bekçisi, olay saatinde kapının önünde kanat sesi duymadığını; yalnız tavus tüylerinin taş zemine sürtündüğünü söyledi.",
+              "deductionHint": "Bu tanıklık, kim için hangi bahçe ihtimalini kapatır?",
+              "isBonus": false,
               "revealOrder": 4,
               "isRevealed": false,
-              "pointCost": 60,
-              "title": "Kehanetin Gizli Mesajı",
-              "text": "Apollon'un kehanet mabedinde taşa kazınmış anagram.",
-              "mechanicType": "anagram",
-              "anagramVerisi": {
-                "karisik": "ARHE LTKI",
-                "dogru": "HERA KATIL",
-                "aciklama": "Taşa kazınan anagram çözülünce: 'HERA KATİL' — Apollon kehanetini gizlice bırakmış.",
-                "ipucu": "8 harf, 2 kelime. Bir isim ve bir yüklem."
-              },
-              "deductionHint": "Kehanet kimi gösteriyor?"
+              "pointCost": 60
             },
             {
               "id": "c5",
-              "type": "eleme",
+              "title": "Üç Sununun Dengesi",
+              "type": "kanit",
+              "mechanicType": "sifreli_mesaj",
+              "text": "Ambrosia çeşmesinin yanında üç küçük adak kabı, üç ayrı terazinin altına yerleştirilmişti. Kapların üzerindeki işaretler tek bir denge düzeni anlatıyor.",
+              "deductionHint": "Terazilerin bıraktığı boşluk, hangi bağlantının mümkün olmadığını düşündürür?",
+              "isBonus": false,
               "revealOrder": 5,
               "isRevealed": false,
               "pointCost": 60,
-              "title": "Ares'in Tanıklığı",
-              "text": "\"Ben o gece savaş alanındaydım — Troya'nın kuzeyinde. Bin asker gördü. Olimpos'ta değildim.\" Tanrı mahkemesi bunu doğruladı.",
-              "mechanicType": "tanik_yuzlesme",
-              "yuzlesmeDialogu": [
-                {
-                  "soru": "O gece neredeydiniz?",
-                  "cevap": "Troya savaşında. Bin tanığım var.",
-                  "yalan": false
-                },
-                {
-                  "soru": "Medusa tozuna erişiminiz var mıydı?",
-                  "cevap": "Hayır, o Hera'nın koleksiyonu.",
-                  "yalan": false
+              "sifre": {
+                "sifrelenmis": "TAVUS / KANAT / KILIÇ — ÜÇ TERAZİ",
+                "sifreleTuru": "olimpik sunu terazisi",
+                "cozumIpucu": "İşaretlerin yerini, anlatının verdiği fiziksel sıraya göre dene.",
+                "cozulmus": "DENGE-OLYMPOS",
+                "aciklama": "Bulmacanın taşıdığı düzen çözüldüğünde geceye ait tek bir bağlantı belirginleşir.",
+                "presentation": {
+                  "style": "olympian_offering_scale",
+                  "title": "Olimpos Sunu Terazisi",
+                  "subtitle": "Üç adak kabını, taşıdığı sembolün ağırlığıyla doğru terasa yerleştir.",
+                  "purposeHint": "Doğru düzen, ızgarada tek bir bağlantıyı elemek ya da doğrulamak için kullanılır.",
+                  "offerings": [
+                    {
+                      "id": "o1",
+                      "label": "Tavus Kâsesi",
+                      "mark": "Tavus tüyü · 3 drahmi"
+                    },
+                    {
+                      "id": "o2",
+                      "label": "Kanatlı Kâse",
+                      "mark": "Kanat · 1 drahmi"
+                    },
+                    {
+                      "id": "o3",
+                      "label": "Savaş Kâsesi",
+                      "mark": "Kalkan · 4 drahmi"
+                    }
+                  ],
+                  "altars": [
+                    {
+                      "id": "a1",
+                      "label": "Taht Terazisi",
+                      "mark": "Yıldırım"
+                    },
+                    {
+                      "id": "a2",
+                      "label": "Bahçe Terazisi",
+                      "mark": "Taş"
+                    },
+                    {
+                      "id": "a3",
+                      "label": "Geçit Terazisi",
+                      "mark": "Rüzgâr"
+                    }
+                  ],
+                  "correctAssignments": [
+                    {
+                      "itemId": "o1",
+                      "answerId": "a2"
+                    },
+                    {
+                      "itemId": "o2",
+                      "answerId": "a3"
+                    },
+                    {
+                      "itemId": "o3",
+                      "answerId": "a1"
+                    }
+                  ],
+                  "resultText": "Yıldırım işareti geçit kâsesine değil taht terazisine aittir: Hermes × Yıldırım Mızrağı.",
+                  "interaction": {
+                    "mode": "assign_offerings",
+                    "submitLabel": "Sunu Dengesini Doğrula",
+                    "successMessage": "Teraziler yalnız bir kutsal düzen verdi.",
+                    "failureMessage": "Bu ağırlıklar aynı ilahi hiyerarşiye oturmuyor."
+                  }
                 }
-              ],
-              "deductionHint": "Ares'in alibisi sağlam."
+              }
             },
             {
-              "id": "c6",
-              "type": "dna_match",
+              "id": "b1",
+              "title": "Tavus Kılıfı",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Bahçe kapısındaki tavus tozu, kraliçe pelerinindeki altın bağlayıcıyla aynı çıktı.",
+              "deductionHint": "Bu iz hangi kişi–mekân bağını güçlendirir?",
+              "isBonus": true,
               "revealOrder": 6,
               "isRevealed": false,
-              "pointCost": 60,
-              "title": "Tanrısal Enerji İzi",
-              "text": "Maktulün üzerinde bırakılan tanrısal enerji izi — her tanrının kendine özgü enerjisi var.",
-              "mechanicType": "dna_match",
-              "dnaVerisi": {
-                "aciklama": "Tanrısal enerji profillerini olay yeri iziyle eşleştir.",
-                "ornekProfil": {
-                  "lokus1": "ALTIN",
-                  "lokus2": "SOĞUK",
-                  "lokus3": "TAVUSKUŞU"
-                },
-                "supheliProfiller": [
-                  {
-                    "suspectId": "s1",
-                    "lokus1": "KIZIL",
-                    "lokus2": "SICAK",
-                    "lokus3": "ATEŞ",
-                    "eslesme": false
-                  },
-                  {
-                    "suspectId": "s2",
-                    "lokus1": "GÜMÜŞ",
-                    "lokus2": "NÖTR",
-                    "lokus3": "KANAT",
-                    "eslesme": false
-                  },
-                  {
-                    "suspectId": "s3",
-                    "lokus1": "ALTIN",
-                    "lokus2": "SOĞUK",
-                    "lokus3": "TAVUSKUŞU",
-                    "eslesme": true
-                  }
-                ],
-                "sonuc": "Tanrısal enerji eşleşmesi: Hera."
-              },
-              "deductionHint": "Enerji izi kimi gösteriyor?"
+              "pointCost": 60
             },
             {
-              "id": "c7",
-              "type": "ses_kaydi",
+              "id": "b2",
+              "title": "Savaş Tanrısının Mızrak Yemini",
+              "type": "tanik",
+              "mechanicType": "text",
+              "text": "Ares’in muhafızı, savaş tanrısının gece boyunca küçük yıldırım mızrağını kapalı silah dolabında saydığını anlattı.",
+              "deductionHint": "Bu ifade hangi kişi–araç bağını doğrular?",
+              "isBonus": true,
               "revealOrder": 7,
               "isRevealed": false,
-              "pointCost": 60,
-              "title": "Olympos Yankı Kaydı",
-              "text": "[Olimpos'ta her söz yankılanır — yankı kaydı] Hera fısıltıyla: '...bahçede kimse olmayacak. Sadece bir an. Ve o taş olacak.' Duraklamadan sonra: 'Zeus benim. Yalnızca benim.'",
-              "mechanicType": "ses_kaydi",
-              "sesMetni": "Ses soğuk ve kararlı. Kıskançlık her hecede hissediliyor.",
-              "deductionHint": "Motif: kıskançlık ve sahiplenme."
-            },
-            {
-              "id": "c8",
-              "type": "dogrudan",
-              "revealOrder": 8,
-              "isRevealed": false,
-              "pointCost": 60,
-              "title": "Hera'nın Eksik Şişesi",
-              "text": "Hera'nın koleksiyon odasında Medusa tozu şişesi boş. Hera: 'Kayboldu.' Ama şişenin dibinde hâlâ kendi parmak izi var.",
-              "mechanicType": "gorsel_ipucu",
-              "gorselAciklama": "Kristal şişe, altın kapaklı. Boş. İçinde kalan toz izleri maktulün vücudundakiyle özdeş.",
-              "deductionHint": "Şişe Hera'nın, toz maktulde."
+              "pointCost": 60
             }
           ],
+          "assetManifest": [],
           "solution": {
             "suspectId": "s3",
             "weaponId": "w3",
             "locationId": "l2"
           },
-          "solutionNarrative": "Hera, Zeus'a yaklaşan ölümlüyü kıskançlıkla öldürdü. Medusa tozunu koleksiyonundan aldı, Ambrosia Bahçesi'nde bekledi ve tozu bıraktı. Tanrısal enerji izi, anagram ve şişe onu ele verdi.",
-          "specialMechanic": "anagram_dna_ses"
+          "solutionNarrative": "Hera, haberciyi Ambrosia Bahçesi’ne çağırdıktan sonra Medusa Tozu’nu adak yapraklarına sürerek temas anını ölümcül hâle getirdi. Yıldırım mızrağı taht salonundan hiç ayrılmamış, Ares’in kılıcı da sayımda kalmıştı. Tavus bağlayıcısı ve sunu terazileri, Hera’nın hem bahçeye hem de tozun hazırlandığı düzene ait olduğunu gösterdi."
         },
         {
           "puzzleId": "mit_002",
-          "title": "Ergenekon'da Gizem",
-          "subtitle": "Türk Mitolojisi Evreni",
-          "difficulty": 3,
-          "difficultyLabel": "Dedektif",
-          "stars": "★★★☆☆",
+          "stars": "★★☆☆☆",
           "gridSize": "3x3",
-          "timeLimit": 480,
-          "story": "Ergenekon'da — Türk mitolojisinin demir dağlarla çevrili kutsal vadisinde — boy beyi ölü bulundu. Demirci, şaman ve yabancı elçi şüpheli. Demir eritilmeden önce biri harekete geçti.",
-          "atmosphere": "Demir kokusu. Kor ateşi. Dağın içindeki yankı. Ve atların kişnemesi.",
+          "timeLimit": 570,
+          "title": "Ergenekon’da Gizem",
+          "subtitle": "Ergenekon Vadisi · Demir Eritme Gecesi",
+          "difficulty": 2,
+          "difficultyLevel": 2,
+          "specialMechanic": "forge_bellows_cycle_sifreli_mesaj",
+          "story": "Ergenekon’un demir dağlarla çevrili vadisinde, çıkış yolunu açacak büyük eritme töreninden bir gece önce boy beyi çadırında ölü bulundu. Çayın yüzeyinde zayıf bir mor halka, ocağın başında ise yarım kalmış dört körük işareti vardı.\n\nBaşdemirci Temür, dağın damarını yaracak demiri denetliyordu. Şaman Albastı, boy beyini “ruhun geçişi” için çadıra çağırmıştı. Rum elçi Konstantinos ise vadinin girişindeki muhafızlardan ayrılmasına izin verilmeden bekletiliyordu.\n\nGecenin sonunda çadırın eşiğinde Kara Ot yaprakları bulundu. Kimse önce bunun kutsal bir hazırlık mı, yoksa bir vedanın zehri mi olduğunu söyleyemedi. Körüklerin arkasındaki ritim, ateş kadar eski bir sırrı saklıyordu.",
+          "atmosphere": "Kor ateşi, ıslak yün, demir tozu ve uzakta kişneyen atlar. Vadide rüzgâr bile dövülmüş metal gibi yankılanıyor.",
           "suspects": [
             {
               "id": "s1",
               "name": "Başdemirci Temür Usta",
-              "icon": "👷",
-              "description": "Demir eritme töreninin ustası. Maktul törenin gününü değiştirmişti.",
-              "detail": "Güçlü, yaşlı, Ergenekon'un bekçisi."
+              "icon": "🔥",
+              "description": "Ergenekon’un demir eritme törenini yöneten usta.",
+              "detail": "Körüklerin sesinden hangi damarın çatlayacağını bilir; her aleti sayıyla mühürler."
             },
             {
               "id": "s2",
               "name": "Şaman Albastı",
-              "icon": "noun-gezgin-dervis-salih-avatar.png",
-              "description": "Ruhlarla konuşan, geleceği gören. Maktulün kararına karşıydı.",
-              "detail": "Gizemli, yaşlı kadın, ruh dünyasıyla bağlantılı."
+              "icon": "🪶",
+              "description": "Ruh geçiş ritüellerini yöneten şaman.",
+              "detail": "Kara Ot’u nasıl kurutacağını, hangi kabın önce ısınacağını yalnız o bilir."
             },
             {
               "id": "s3",
               "name": "Rum Elçi Konstantinos",
-              "icon": "👨‍💼",
-              "description": "Dışarıdan gelen yabancı. Ergenekon'un sırrını öğrenmek istiyor.",
-              "detail": "Diplomatik, zeki, Türkçe biliyor."
+              "icon": "🧭",
+              "description": "Vadinin sırrını öğrenmek isteyen yabancı temsilci.",
+              "detail": "Eyerinin tozunu silmez; nöbet kayıtlarını Türkçe okuyacak kadar dil bilir."
             }
           ],
           "weapons": [
             {
               "id": "w1",
-              "name": "Zehirli Demir Tozu",
-              "icon": "⚙️",
-              "description": "Yüksek ısılı demirin çevresinde biriken toksik toz."
+              "name": "Şaman Oku",
+              "icon": "🏹",
+              "description": "Ritüel anlatılarında kullanılan, demir uçlu kutsal ok.",
+              "detail": ""
             },
             {
               "id": "w2",
-              "name": "Şaman Oku",
-              "icon": "🏹",
-              "description": "Ruh okuyuşu sırasında kullanılan demir uçlu ok."
+              "name": "Fildişi Kılıç",
+              "icon": "🗡️",
+              "description": "Tören ustasının kontrolünde duran kısa savaş kılıcı.",
+              "detail": ""
             },
             {
               "id": "w3",
               "name": "Dağ Bitkisi Zehri",
               "icon": "🌿",
-              "description": "Ergenekon'a özgü, sadece şamanın bildiği zehirli bitki."
+              "description": "Kara Ot’tan hazırlanan, yavaş etkili bitkisel karışım.",
+              "detail": ""
             }
           ],
           "locations": [
@@ -7551,241 +7573,206 @@
               "id": "l1",
               "name": "Demir Ocağı",
               "icon": "🔥",
-              "description": "Ergenekon'un merkezi demir eritme ocağı."
+              "description": "Dört körüğün kutsal demiri beyazlattığı taş ocak.",
+              "detail": ""
             },
             {
               "id": "l2",
               "name": "Şaman Çadırı",
               "icon": "⛺",
-              "description": "Ruhlarla iletişim kurulan kutsal çadır."
+              "description": "Dua ipleri ve bitki demetleriyle çevrili ritüel çadırı.",
+              "detail": ""
             },
             {
               "id": "l3",
               "name": "Vadinin Girişi",
               "icon": "⛰️",
-              "description": "Ergenekon'a açılan tek geçit."
+              "description": "Muhafızların gece boyunca gözlediği dar geçit.",
+              "detail": ""
             }
           ],
           "clues": [
             {
               "id": "c1",
-              "type": "kanit",
+              "title": "Gece Tanığının İlk Kaydı",
+              "type": "tanik",
+              "mechanicType": "text",
+              "text": "Boy tabibi, beyinin çadırında ölümcül hâle gelen çayın yüzeyindeki mor reçineyi ve aynı reçinenin ocak taşındaki izini birlikte kayda geçti.",
+              "deductionHint": "Çay yüzeyindeki reçine, listedeki hangi aracı düşündürür?",
+              "isBonus": false,
               "revealOrder": 1,
               "isRevealed": true,
-              "pointCost": 0,
-              "title": "Boy Tabibi Tespiti",
-              "text": "Maktul şaman çadırında bulundu. İç organ hasarı — yavaş etkili bitkisel zehir. Dışarıdan baskı izi yok. Çadırda yabancı bitki kalıntısı.",
-              "mechanicType": "text",
-              "deductionHint": "Silah bitkisel zehir, mekan şaman çadırı."
+              "pointCost": 0
             },
             {
               "id": "c2",
-              "type": "timeline",
+              "title": "Giriş Nöbeti",
+              "type": "tanik",
+              "mechanicType": "text",
+              "text": "Vadinin girişindeki muhafız defteri, şamanın tören sırasında dış geçide inmediğini; çizmesinde geçit çamuru bulunmadığını doğruladı.",
+              "deductionHint": "Geçit çamuru taşımayan biri, hangi girişte olamaz?",
+              "isBonus": false,
               "revealOrder": 2,
               "isRevealed": false,
-              "pointCost": 70,
-              "title": "Törenin Zaman Çizelgesi",
-              "text": "O gün yaşanan olayları sıraya diz.",
-              "mechanicType": "timeline_sort",
-              "timelineVerisi": {
-                "aciklama": "Ergenekon törenindeki olayları doğru sırayla diz.",
-                "olaylar": [
-                  {
-                    "id": "t1",
-                    "metin": "Sabah: Maktul tören gününü erteledi (Temür Usta ile kavga)",
-                    "dogruSira": 1
-                  },
-                  {
-                    "id": "t2",
-                    "metin": "Öğle: Konstantinos çadırı ziyaret etti",
-                    "dogruSira": 2
-                  },
-                  {
-                    "id": "t3",
-                    "metin": "İkindi: Şaman Albastı maktulü çadıra davet etti",
-                    "dogruSira": 3
-                  },
-                  {
-                    "id": "t4",
-                    "metin": "Akşam: Maktul çadırda tek başına bulundu",
-                    "dogruSira": 4
-                  },
-                  {
-                    "id": "t5",
-                    "metin": "Gece: Zehir etkisi — maktul uyurken hayatını kaybetti",
-                    "dogruSira": 5
-                  }
-                ],
-                "sonuc": "Albastı maktulü çadıra davet etti — içeride sadece onlar birlikteydi."
-              },
-              "deductionHint": "Kim davet etti ve neden?"
+              "pointCost": 60
             },
             {
               "id": "c3",
-              "type": "adli",
+              "title": "Demir Ocağı Zimmeti",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Başdemircinin çekmecesinde, kutsal tören oku sabahın ilk ışığına dek demir ocağındaki askıda mühürlü kalmıştı.",
+              "deductionHint": "Mühürlü askı hangi araç–mekân bağını doğrular?",
+              "isBonus": false,
               "revealOrder": 3,
               "isRevealed": false,
-              "pointCost": 70,
-              "title": "Bitki Analizi",
-              "text": "Kullanılan zehir Ergenekon'a özgü 'Kara Ot' bitkisinden yapılmış. Bu bitkiyi sadece şamanlar tanır ve kullanır. Temür Usta demir işi yapar, Konstantinos yabancı — bilmez.",
-              "mechanicType": "gorsel_ipucu",
-              "gorselAciklama": "Kara Ot'un kurutulmuş yaprağı. Ergenekon şaman el yazmalarında 'ruh geçiş bitkisi' olarak geçiyor.",
-              "deductionHint": "Bu bitkiyi kim bilir?"
+              "pointCost": 60
             },
             {
               "id": "c4",
-              "type": "anagram",
+              "title": "Elçinin Atı",
+              "type": "tanik",
+              "mechanicType": "text",
+              "text": "Elçinin eyer karında, yalnız dış yolun taşlarından gelen beyaz toz kaldı; iç kısımdaki dokulara ait hiçbir lif bulunmadı.",
+              "deductionHint": "Eyerin taşıdığı dış yol tozu, hangi iç mekân olasılığını kapatır?",
+              "isBonus": false,
               "revealOrder": 4,
               "isRevealed": false,
-              "pointCost": 70,
-              "title": "Şaman Çadırındaki Runik Yazı",
-              "text": "Çadırın iç duvarına kazınmış eski Türk runik yazısı.",
-              "mechanicType": "anagram",
-              "anagramVerisi": {
-                "karisik": "BIALTSA KLAÖT",
-                "dogru": "ALBASTI KATÖLÜ",
-                "aciklama": "Runik yazı çevrilip anagram çözülünce: 'ALBASTI KATÖLÜ' — eski Türkçede 'Albastı öldürdü' anlamına geliyor.",
-                "ipucu": "12 harf, 2 kelime. İsim ve fiil."
-              },
-              "deductionHint": "Runik yazı kimi suçluyor?"
+              "pointCost": 60
             },
             {
               "id": "c5",
-              "type": "tanik",
+              "title": "Dört Körüğün Ritmi",
+              "type": "kanit",
+              "mechanicType": "sifreli_mesaj",
+              "text": "Tören ocağının arkasında, dört körüğün deri bağları farklı sırayla gevşemiş halde bulundu.",
+              "deductionHint": "Körüklerin fiziksel sırası, hangi araç bağının mümkün olmadığını düşündürür?",
+              "isBonus": false,
               "revealOrder": 5,
               "isRevealed": false,
-              "pointCost": 70,
-              "title": "Genç Savaşçının İfadesi",
-              "text": "\"Akşam Albastı'nın çadırından garip ses duydum — ritim sesi değil, fısıltı. Ve sonra ağlama. Şaman hiç ağlamaz.\"",
-              "mechanicType": "tanik_yuzlesme",
-              "yuzlesmeDialogu": [
-                {
-                  "soru": "Kesinlikle Albastı'nın çadırı mıydı?",
-                  "cevap": "Evet, tamgası kapıda asılıydı.",
-                  "yalan": false
-                },
-                {
-                  "soru": "Konstantinos orada mıydı?",
-                  "cevap": "Hayır, vadinin girişinde gördüm onu.",
-                  "yalan": false
+              "pointCost": 60,
+              "sifre": {
+                "sifrelenmis": "KÖRÜK I / II / III / IV — KOR ATEŞİ",
+                "sifreleTuru": "demir eritme körük döngüsü",
+                "cozumIpucu": "İşaretlerin yerini, anlatının verdiği fiziksel sıraya göre dene.",
+                "cozulmus": "ERGENEKON-04",
+                "aciklama": "Körüklerin ritmi okununca geceye ait tek bir bağlantı belirginleşir.",
+                "presentation": {
+                  "style": "forge_bellows_cycle",
+                  "title": "Demir Ocağı Körük Döngüsü",
+                  "subtitle": "Dört körüğü, korun soluk alışına göre doğru sırada çalıştır.",
+                  "purposeHint": "Doğru düzen, ızgarada tek bir bağlantıyı elemek ya da doğrulamak için kullanılır.",
+                  "bellows": [
+                    {
+                      "id": "b1",
+                      "label": "Kül Körüğü",
+                      "text": "İlk nefes, külü yoldan kaldırır."
+                    },
+                    {
+                      "id": "b2",
+                      "label": "Kor Körüğü",
+                      "text": "İkinci nefes, közü beyaza çevirir."
+                    },
+                    {
+                      "id": "b3",
+                      "label": "Demir Körüğü",
+                      "text": "Üçüncü nefes, metali inceltir."
+                    },
+                    {
+                      "id": "b4",
+                      "label": "Sessiz Körük",
+                      "text": "Son nefes, ritüel sesini keser."
+                    }
+                  ],
+                  "correctOrder": [
+                    "b1",
+                    "b2",
+                    "b3",
+                    "b4"
+                  ],
+                  "resultText": "Körük döngüsü, şaman okunun elçiyle değil demir ocağıyla bağlı kaldığını gösterir: Konstantinos × Şaman Oku.",
+                  "interaction": {
+                    "mode": "order_bellows",
+                    "submitLabel": "Körük Ritmini Doğrula",
+                    "successMessage": "Kor yalnız bir nefes sırasıyla canlı kaldı.",
+                    "failureMessage": "Bu sıra koru söndürür; tören ritmi böyle çalışmaz."
+                  }
                 }
-              ],
-              "deductionHint": "Konstantinos vadinin girişindeydi."
+              }
             },
             {
-              "id": "c6",
-              "type": "eleme",
+              "id": "b1",
+              "title": "Kara Ot Demeti",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Çadır girişindeki kurutulmuş Kara Ot demeti, Albastı’nın dua ipiyle aynı düğüm biçiminde bağlanmıştı.",
+              "deductionHint": "Bu düğüm hangi kişi–mekân bağını doğrular?",
+              "isBonus": true,
               "revealOrder": 6,
               "isRevealed": false,
-              "pointCost": 70,
-              "title": "Konstantinos'un Konumu",
-              "text": "Konstantinos vadinin girişinde 3 muhafız tarafından gözetleniyordu. Yabancı olduğu için serbest bırakılmamıştı. Şaman çadırına giremezdi.",
-              "mechanicType": "text",
-              "deductionHint": "Konstantinos eleniyor."
+              "pointCost": 60
             },
             {
-              "id": "c7",
-              "type": "dna_match",
+              "id": "b2",
+              "title": "Temür’ün Kılıç Sayımı",
+              "type": "tanik",
+              "mechanicType": "text",
+              "text": "Tören ustası, gece boyunca fildişi kılıcı demir ocağının yakınındaki nöbet levhasına asılı tuttuğunu teyit etti.",
+              "deductionHint": "Bu sayım hangi kişi–araç bağını doğrular?",
+              "isBonus": true,
               "revealOrder": 7,
               "isRevealed": false,
-              "pointCost": 70,
-              "title": "Çay Kabındaki İz",
-              "text": "Maktulün içtiği çay kabında dudak izi ve temas DNA'sı — ama hazırlayan kişinin izi.",
-              "mechanicType": "dna_match",
-              "dnaVerisi": {
-                "aciklama": "Çay kabındaki izi üç şüpheliyle eşleştir.",
-                "ornekProfil": {
-                  "lokus1": "KK",
-                  "lokus2": "BB",
-                  "lokus3": "GG"
-                },
-                "supheliProfiller": [
-                  {
-                    "suspectId": "s1",
-                    "lokus1": "TT",
-                    "lokus2": "BB",
-                    "lokus3": "AA",
-                    "eslesme": false
-                  },
-                  {
-                    "suspectId": "s2",
-                    "lokus1": "KK",
-                    "lokus2": "BB",
-                    "lokus3": "GG",
-                    "eslesme": true
-                  },
-                  {
-                    "suspectId": "s3",
-                    "lokus1": "CC",
-                    "lokus2": "GG",
-                    "lokus3": "TT",
-                    "eslesme": false
-                  }
-                ],
-                "sonuc": "Çay kabındaki iz: Albastı."
-              },
-              "deductionHint": "Çayı kim hazırladı?"
-            },
-            {
-              "id": "c8",
-              "type": "ses_kaydi",
-              "revealOrder": 8,
-              "isRevealed": false,
-              "pointCost": 70,
-              "title": "Şaman Duası Kaydı",
-              "text": "[Geleneksel dua kaydı — sonradan deşifre edildi] Albastı ritüel sırasında: '...geçişin zamanı geldi. Ergenekon seni seçmedi — ben seçtim. Ruhun özgür olacak.' Maktule dua eder gibi.",
-              "mechanicType": "ses_kaydi",
-              "sesMetni": "Ses yumuşak ama altında demir gibi bir kararlılık var.",
-              "deductionHint": "Albastı maktulü 'seçti' — bu ne anlama geliyor?"
+              "pointCost": 60
             }
           ],
+          "assetManifest": [],
           "solution": {
             "suspectId": "s2",
             "weaponId": "w3",
             "locationId": "l2"
           },
-          "solutionNarrative": "Şaman Albastı, maktulün Ergenekon'un kutsal dengesini bozacağına inanıyordu. Onu 'ruhların isteğiyle' geçişe hazırladı — Kara Ot'lu çayı kendi eliyle hazırlayıp sundu. Runik yazı, DNA ve ses kaydı onu ele verdi.",
-          "specialMechanic": "anagram_dna_timeline"
+          "solutionNarrative": "Albastı, boy beyinin töreni bozacağını ve vadinin çıkışını erken açacağını düşündü. Kara Ot’u kendi çadırında çaya kattı; ölüm, ruh geçişi ritüeli gibi görünsün diye ocağın ritmini de değiştirdi. Elçi geçitte, Temür ise demir ocağında kayıtlıydı. Çadır kapısındaki düğüm ve körük sırası, zehrin Albastı’nın hazırladığı düzenekten geldiğini gösterdi."
         },
         {
           "puzzleId": "mit_003",
-          "title": "Aeneas'ın Laneti",
-          "subtitle": "Roma Mitolojisi Evreni",
-          "difficulty": 5,
-          "difficultyLabel": "Baş Komiser",
-          "stars": "★★★★★",
+          "stars": "★★★☆☆",
           "gridSize": "4x4",
-          "timeLimit": 360,
-          "story": "Roma'nın kuruluş destanında gizlenen bir cinayet. Aeneas'ın yolculuğu sırasında bir kahraman ölü bulundu. Dört tanrı ya da kahramanın biri sorumlu.",
-          "atmosphere": "Akdeniz. Latin şiiri. Tanrıların sesleri rüzgarda. Ve bir kahraman yerde yatıyor.",
+          "timeLimit": 480,
+          "title": "Aeneas’ın Laneti",
+          "subtitle": "Latium · Defne Ormanı",
+          "difficulty": 3,
+          "difficultyLevel": 3,
+          "specialMechanic": "laurel_knot_decoder_sifreli_mesaj",
+          "story": "Latium’un defne ormanında, Aeneas’ın yolculuğunu belgeleyen bir kahraman sabaha karşı hançerlenmiş halde bulundu. Yarayı çevreleyen çam katranı, Kartaca’dan gelen bir kumaş parçası ve kemerinden kopmuş dört defne ipi, olayı bir destan satırından çok dikkatle kurulmuş bir buluşmaya dönüştürüyordu.\n\nJuno’nun tapınak haberleri, Turnus’un savaş çadırı, Dido’nun liman konuşması ve Sinon’un eski Truva kemeri aynı gecede farklı yönlere işaret ediyordu. Herkes bir başkasının planını bildiğini inkâr ediyordu.\n\nKahramanın kemerindeki düğümler ise konuşmuyordu. Ama onları doğru okuyan biri, Yunan usulü bir kılıfın hangi ele bağlandığını anlayabilirdi.",
+          "atmosphere": "Defne yapraklarının tatlı çürümesi, denizden kalma ağır nem ve uzak savaş çadırlarının davulu. Orman, destanın unutulmuş satırları gibi karanlık.",
           "suspects": [
             {
               "id": "s1",
-              "name": "Juno (Hera'nın Roma Karşılığı)",
-              "icon": "👩",
-              "description": "Aeneas'a kin besleyen tanrıça. Her fırsatta engel çıkarıyor.",
-              "detail": "Güçlü, kıskanç, hesaplı."
+              "name": "Juno",
+              "icon": "👑",
+              "description": "Aeneas’ın yolunu kesmek isteyen Roma tanrıçası.",
+              "detail": "Meclis mühürlerini kişisel balmumuyla kapatır; hiçbir notu iki kez aynı cümleyle yazmaz."
             },
             {
               "id": "s2",
-              "name": "Turnus (Rakip Kral)",
-              "icon": "💂",
-              "description": "Aeneas'ın rakibi. Maktul Turnus'un sırını biliyordu.",
-              "detail": "Genç, ateşli, savaşçı ruhlu."
+              "name": "Turnus",
+              "icon": "🛡️",
+              "description": "Latium’un savaşçı rakibi.",
+              "detail": "Kalkanındaki çizikleri kayıt altına alır; savaş çadırından ayrıldığında nöbetçiye haber verir."
             },
             {
               "id": "s3",
-              "name": "Sinon (Truva Atı'nın Yalanı)",
-              "icon": "🦹",
-              "description": "Tarihin en büyük yalanını söyleyen Yunan casusu.",
-              "detail": "Soğukkanlı, ikiyüzlü, her ortama uyar."
+              "name": "Sinon",
+              "icon": "🐴",
+              "description": "Truva’dan kalan Yunan casusu.",
+              "detail": "Kemerinde defne düğümleri taşır; hançer kılıfındaki at mührünü asla sökmez."
             },
             {
               "id": "s4",
-              "name": "Dido (Kartaca Kraliçesi)",
-              "icon": "noun-semiha-hanim-avatar.png",
-              "description": "Aeneas'a aşık olan ama terk edilen kraliçe.",
-              "detail": "Tutkulu, acımasız, intikam dolu."
+              "name": "Dido",
+              "icon": "🔥",
+              "description": "Kartaca kraliçesi.",
+              "detail": "Liman konuşmalarında kullandığı koyu mor kumaşları kendisi seçer."
             }
           ],
           "weapons": [
@@ -7793,25 +7780,29 @@
               "id": "w1",
               "name": "Truva Oku",
               "icon": "🏹",
-              "description": "Troya'dan kaçırılmış zehirli ok."
+              "description": "Hades geçit sandığında saklanan eski savaş oku.",
+              "detail": ""
             },
             {
               "id": "w2",
               "name": "Kartaca Zehri",
               "icon": "🌺",
-              "description": "Dido'nun sarayından gelen egzotik zehir."
+              "description": "Deniz yolculuğunda kullanılan yavaş etkili saray zehri.",
+              "detail": ""
             },
             {
               "id": "w3",
-              "name": "Juno'nun Laneti (Büyü)",
+              "name": "Juno’nun Laneti",
               "icon": "✨",
-              "description": "Tanrısal lanet — görünmez ölüm."
+              "description": "Tapınak mühürleriyle bağlı, görünmeyen baskı büyüsü.",
+              "detail": ""
             },
             {
               "id": "w4",
-              "name": "Sinon'un Hançeri",
+              "name": "Sinon’un Hançeri",
               "icon": "🗡️",
-              "description": "Gizlice taşınan Yunan hançeri."
+              "description": "At mührü taşıyan, Yunan çeliğinden kısa hançer.",
+              "detail": ""
             }
           ],
           "locations": [
@@ -7819,585 +7810,708 @@
               "id": "l1",
               "name": "Kartaca Limanı",
               "icon": "⚓",
-              "description": "Dido'nun şehrine ait liman."
+              "description": "Dido’nun konuşma yaptığı rıhtım ve ticaret kapısı.",
+              "detail": ""
             },
             {
               "id": "l2",
-              "name": "Hades'in Kapısı",
+              "name": "Hades’in Kapısı",
               "icon": "🌑",
-              "description": "Ölüler ülkesine açılan geçit."
+              "description": "Geçit sandıkları ve eski savaş emanetlerinin bulunduğu taş eşik.",
+              "detail": ""
             },
             {
               "id": "l3",
               "name": "Latium Ormanı",
               "icon": "🌲",
-              "description": "Roma'nın kurulacağı topraklardaki orman."
+              "description": "Defne ağaçlarının altında gece buluşmalarının yapıldığı karanlık yol.",
+              "detail": ""
             },
             {
               "id": "l4",
               "name": "Juno Tapınağı",
-              "icon": "🕌",
-              "description": "Juno'nun kutsandığı tapınak."
+              "icon": "🏛️",
+              "description": "Meclis mühürlerinin ve tanrıça kayıtlarının korunduğu yüksek yapı.",
+              "detail": ""
             }
           ],
           "clues": [
             {
               "id": "c1",
-              "type": "kanit",
+              "title": "Gece Tanığının İlk Kaydı",
+              "type": "tanik",
+              "mechanicType": "text",
+              "text": "Kurbanın göğsünde can alıcı bir Yunan çeliği yarası bulundu. Kesitteki taze çam katranı, tuzlu kıyı taşlarının nemiyle uyuşmuyordu.",
+              "deductionHint": "Çam katranı, hangi kıyı olasılığını kapatır?",
+              "isBonus": false,
               "revealOrder": 1,
               "isRevealed": true,
-              "pointCost": 0,
-              "title": "Aeneas'ın Keşfi",
-              "text": "Kahraman Latium ormanında bulundu. Göğsünde hançer yarası — ince, keskin, Yunan işçiliği. Kartaca'ya ait kumaş parçacığı üzerinde.",
-              "mechanicType": "text",
-              "deductionHint": "Hançer Yunan işçiliği. Kartaca kumaşı neden orada?"
+              "pointCost": 0
             },
             {
               "id": "c2",
-              "type": "phone_chain",
+              "title": "Kartaca Kumaşının Altın İpliği",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Hades Kapısı’ndaki geçit sandığında bulunan lanet mühürü, tapınak soğuğunda sertleşen balmumu ile birlikteydi.",
+              "deductionHint": "Bu soğuk balmumu, hangi güç ile hangi taş eşik arasında bağ kurar?",
+              "isBonus": false,
               "revealOrder": 2,
               "isRevealed": false,
-              "pointCost": 110,
-              "title": "Tanrıların Mesaj Zinciri",
-              "text": "Olimpos'taki ilahi mesaj zincirini takip et.",
-              "mechanicType": "phone_chain",
-              "phoneVerisi": {
-                "aciklama": "Hangi tanrı/kahraman kime mesaj gönderdi, sırayı bul.",
-                "mesajlar": [
-                  {
-                    "id": "m1",
-                    "gonderen": "Juno",
-                    "alici": "Sinon",
-                    "icerik": "Aeneas'ı yavaşlat. Her yol açık.",
-                    "saat": "Gün 1 — Sabah"
-                  },
-                  {
-                    "id": "m2",
-                    "gonderen": "Dido",
-                    "alici": "Sinon",
-                    "icerik": "Orman geçidinde bekle. Ben ödeme yaparım.",
-                    "saat": "Gün 1 — Öğle"
-                  },
-                  {
-                    "id": "m3",
-                    "gonderen": "Sinon",
-                    "alici": "Turnus",
-                    "icerik": "Kahraman ormanda yalnız. Fırsat bu.",
-                    "saat": "Gün 1 — Akşam"
-                  },
-                  {
-                    "id": "m4",
-                    "gonderen": "Turnus",
-                    "alici": "Sinon",
-                    "icerik": "Ben değil. Kendisi halletsin.",
-                    "saat": "Gün 1 — Gece"
-                  }
-                ],
-                "sonuc": "Juno planladı, Dido finanse etti, Sinon koordine etti — Turnus reddetti. Ama sonunda hançer Latium ormanında bulundu. Kim itti tetikleyiciyi?"
-              },
-              "deductionHint": "Zincirde kim aktif olarak sahada?"
+              "pointCost": 60
             },
             {
               "id": "c3",
-              "type": "adli",
+              "title": "Turnus’un Kalkan Mührü",
+              "type": "tanik",
+              "mechanicType": "text",
+              "text": "Kartaca Limanı’ndaki kumanda zincirinde, Truva okunun telekleriyle uyumlu hiçbir reçine ya da tüy kalıntısı bulunmadı.",
+              "deductionHint": "Bir okun teleği liman zincirinde yoksa hangi ilişki kapanır?",
+              "isBonus": false,
               "revealOrder": 3,
               "isRevealed": false,
-              "pointCost": 110,
-              "title": "Hançer Analizi",
-              "text": "Hançerdeki işleme Sinon'un kişisel silahıyla birebir eşleşiyor — Truva savaşından kalma, benzersiz gravür. Sinon bunu inkâr ediyor.",
-              "mechanicType": "gorsel_ipucu",
-              "gorselAciklama": "Hançer üzerindeki at figürlü gravür. Sinon'un envanterinden çıkan hançer fotoğrafıyla karşılaştırılıyor — özdeş.",
-              "deductionHint": "Sinon'un hançeri — ama Sinon mü kullandı?"
+              "pointCost": 60
             },
             {
               "id": "c4",
-              "type": "timeline",
+              "title": "Defne Düğümlerinin Sessiz Mesajı",
+              "type": "kanit",
+              "mechanicType": "sifreli_mesaj",
+              "text": "Kahramanın kemerinde dört defne ipi vardı; her düğümün arası farklı uzunluktaydı. Bir haberci, düğümlerin yolculuk değil, bir buluşma düzeni anlattığını söyledi.",
+              "deductionHint": "Düğüm düzeni, kılıfın hangi ele ait olabileceğini sorgulatır.",
+              "isBonus": false,
               "revealOrder": 4,
               "isRevealed": false,
-              "pointCost": 110,
-              "title": "Destanın Zaman Çizelgesi",
-              "text": "Aeneid destanında geçen olayları kronolojik sıraya diz.",
-              "mechanicType": "timeline_sort",
-              "timelineVerisi": {
-                "aciklama": "Bu olayları doğru sıraya diz.",
-                "olaylar": [
-                  {
-                    "id": "t1",
-                    "metin": "Juno Sinon'a mesaj gönderdi",
-                    "dogruSira": 1
-                  },
-                  {
-                    "id": "t2",
-                    "metin": "Dido Sinon'a ödeme teklif etti",
-                    "dogruSira": 2
-                  },
-                  {
-                    "id": "t3",
-                    "metin": "Sinon ormana gitti",
-                    "dogruSira": 3
-                  },
-                  {
-                    "id": "t4",
-                    "metin": "Kahraman ormanda tek başına kaldı",
-                    "dogruSira": 4
-                  },
-                  {
-                    "id": "t5",
-                    "metin": "Hançer darbesi",
-                    "dogruSira": 5
-                  },
-                  {
-                    "id": "t6",
-                    "metin": "Sinon Kartaca limanında göründü",
-                    "dogruSira": 6
+              "pointCost": 60,
+              "sifre": {
+                "sifrelenmis": "DEFNE / AT / KÜL / DALGA — DÖRT DÜĞÜM",
+                "sifreleTuru": "defne düğümü çözümü",
+                "cozumIpucu": "İşaretlerin yerini, anlatının verdiği fiziksel sıraya göre dene.",
+                "cozulmus": "LATIUM-AT",
+                "aciklama": "Bulmacanın taşıdığı düzen çözüldüğünde geceye ait tek bir bağlantı belirginleşir.",
+                "presentation": {
+                  "style": "laurel_knot_decoder",
+                  "title": "Defne Düğümü Çözücü",
+                  "subtitle": "Dört defne ipini, üzerindeki işaretle doğru bağlanma biçimine eşleştir.",
+                  "purposeHint": "Doğru düzen, ızgarada tek bir bağlantıyı elemek ya da doğrulamak için kullanılır.",
+                  "cords": [
+                    {
+                      "id": "k1",
+                      "label": "Birinci İp",
+                      "mark": "İki kısa düğüm"
+                    },
+                    {
+                      "id": "k2",
+                      "label": "İkinci İp",
+                      "mark": "Uzun–kısa"
+                    },
+                    {
+                      "id": "k3",
+                      "label": "Üçüncü İp",
+                      "mark": "Tek sıkı düğüm"
+                    },
+                    {
+                      "id": "k4",
+                      "label": "Dördüncü İp",
+                      "mark": "Çapraz bağ"
+                    }
+                  ],
+                  "knots": [
+                    {
+                      "id": "n1",
+                      "label": "At Mührü"
+                    },
+                    {
+                      "id": "n2",
+                      "label": "Defne Tacı"
+                    },
+                    {
+                      "id": "n3",
+                      "label": "Dalga İşareti"
+                    },
+                    {
+                      "id": "n4",
+                      "label": "Kül Damgası"
+                    }
+                  ],
+                  "correctAssignments": [
+                    {
+                      "itemId": "k1",
+                      "answerId": "n2"
+                    },
+                    {
+                      "itemId": "k2",
+                      "answerId": "n1"
+                    },
+                    {
+                      "itemId": "k3",
+                      "answerId": "n4"
+                    },
+                    {
+                      "itemId": "k4",
+                      "answerId": "n3"
+                    }
+                  ],
+                  "resultText": "At mührü, kemer düğümünde Yunan hançerinin kılıf işaretiyle birleşir: Sinon ↔ Sinon’un Hançeri.",
+                  "interaction": {
+                    "mode": "match_knots",
+                    "submitLabel": "Düğümleri Çöz",
+                    "successMessage": "Defne ipleri tek bir elin düğüm ritmini verdi.",
+                    "failureMessage": "Bu düğüm dizisi, haberci kemerinin gerilimini taşımaz."
                   }
-                ],
-                "sonuc": "Sinon ormana gitti ve sonra Kartaca'da göründü. Arada yeterli zaman var."
-              },
-              "deductionHint": "Sinon'un hareketi şüpheli."
+                }
+              }
             },
             {
               "id": "c5",
-              "type": "dna_match",
+              "title": "Hades’in Gölgesi",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Orman yolundaki dal kırıkları, okun hafif telekleriyle değil ağır bir çelik kılıfın sürtünmesiyle oluşmuştu.",
+              "deductionHint": "Dal kırıklarının türü, hangi aracın ormanda olamayacağını düşündürür?",
+              "isBonus": false,
               "revealOrder": 5,
               "isRevealed": false,
-              "pointCost": 110,
-              "title": "Kartaca Kumaşı Analizi",
-              "text": "Üzerindeki Kartaca kumaşında enerji izi — her kahramanın aura'sı farklı.",
-              "mechanicType": "dna_match",
-              "dnaVerisi": {
-                "aciklama": "Kumaştaki aura izini dört şüpheliyle eşleştir.",
-                "ornekProfil": {
-                  "lokus1": "HİLE",
-                  "lokus2": "SOĞUK",
-                  "lokus3": "AT"
-                },
-                "supheliProfiller": [
-                  {
-                    "suspectId": "s1",
-                    "lokus1": "TAHT",
-                    "lokus2": "SOĞUK",
-                    "lokus3": "TAVUS",
-                    "eslesme": false
-                  },
-                  {
-                    "suspectId": "s2",
-                    "lokus1": "ATEŞ",
-                    "lokus2": "SICAK",
-                    "lokus3": "KILIÇ",
-                    "eslesme": false
-                  },
-                  {
-                    "suspectId": "s3",
-                    "lokus1": "HİLE",
-                    "lokus2": "SOĞUK",
-                    "lokus3": "AT",
-                    "eslesme": true
-                  },
-                  {
-                    "suspectId": "s4",
-                    "lokus1": "TUTKU",
-                    "lokus2": "SICAK",
-                    "lokus3": "ATEŞ",
-                    "eslesme": false
-                  }
-                ],
-                "sonuc": "Aura eşleşmesi: Sinon."
-              },
-              "deductionHint": "Kumaştaki aura kimi gösteriyor?"
+              "pointCost": 60
             },
             {
-              "id": "c6",
-              "type": "eleme",
+              "id": "b1",
+              "title": "Turnus’un Savaş Çadırı",
+              "type": "tanik",
+              "mechanicType": "text",
+              "text": "Liman kapısının mermer tozunda, kraliçenin konuşma arabasından düşen mor kumaş lifleriyle aynı esinti mühürü bulundu.",
+              "deductionHint": "Bu kumaş lifi, hangi figürün hangi geçit yoluna bağlandığını gösterir?",
+              "isBonus": true,
               "revealOrder": 6,
               "isRevealed": false,
-              "pointCost": 110,
-              "title": "Juno ve Dido'nun Alibisi",
-              "text": "Juno Olimpos'taydı — tanrı meclisi kayıtları. Dido Kartaca limanında 200 kişi önünde konuşma yapıyordu. İkisi de ormanda değildi.",
-              "mechanicType": "text",
-              "deductionHint": "Juno ve Dido eleniyor."
+              "pointCost": 60
             },
             {
-              "id": "c7",
-              "type": "tanik",
+              "id": "b2",
+              "title": "Juno’nun Mum Mührü",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Tapınak meclisi kaydında, tanrıçanın imza mumu liman taşındaki tuzla aynı kristal izini taşıyordu.",
+              "deductionHint": "Mumun tuz izi, hangi kıyı bağlantısını destekler?",
+              "isBonus": true,
               "revealOrder": 7,
               "isRevealed": false,
-              "pointCost": 110,
-              "title": "Orman Perisi Tanıklığı",
-              "text": "\"Ormanda Yunan giysili biri gördüm — hançeri beline takmıştı. Kahramanla kısa konuştu, sonra hızla uzaklaştı. Arkasına bakmadı.\"",
-              "mechanicType": "tanik_yuzlesme",
-              "yuzlesmeDialogu": [
-                {
-                  "soru": "Turnus muydu?",
-                  "cevap": "Hayır, Turnus'u tanırım. Bu başkasıydı.",
-                  "yalan": false
-                },
-                {
-                  "soru": "Yunan giysisi mi?",
-                  "cevap": "Evet, Truva savaşçılarının giydiği türden.",
-                  "yalan": false
-                }
-              ],
-              "deductionHint": "Yunan giysili, hançerli — Sinon."
-            },
-            {
-              "id": "c8",
-              "type": "anagram",
-              "revealOrder": 8,
-              "isRevealed": false,
-              "pointCost": 110,
-              "title": "Destanın Gizli Satırı",
-              "text": "Vergilius'un Aeneid destanının gizli bir satırında anagram bulundu.",
-              "mechanicType": "anagram",
-              "anagramVerisi": {
-                "karisik": "NONIS LIKAT",
-                "dogru": "SİNON KATİL",
-                "aciklama": "Latince harfler çevrilip anagram çözülünce: 'SİNON KATİL' — Vergilius kasıtlı bırakmış.",
-                "ipucu": "10 harf, 2 kelime."
-              },
-              "deductionHint": "Destan kendi katilini ele veriyor."
-            },
-            {
-              "id": "c9",
-              "type": "ses_kaydi",
-              "revealOrder": 9,
-              "isRevealed": false,
-              "pointCost": 110,
-              "title": "Sinon'un İtirafı",
-              "text": "[Tanrı meclisi dinleme kaydı] Sinon Turnus'a: '...Juno istedi, Dido ödedi. Ben sadece yaptım. Truva'dan bu yana başkası için yaşıyorum. Artık kendi hesabımı kapattım.'",
-              "mechanicType": "ses_kaydi",
-              "sesMetni": "Ses yorgun ve boş. İçinde vicdan kıpırtısı var ama az.",
-              "deductionHint": "Sinon üç tarafın aracısı — ama tetikleyici kendisi."
+              "pointCost": 60
             }
           ],
+          "assetManifest": [],
           "solution": {
             "suspectId": "s3",
             "weaponId": "w4",
             "locationId": "l3"
           },
-          "solutionNarrative": "Sinon, Juno'nun planını ve Dido'nun parasını kullanarak kendi hesabını kapattı. Hançerini Latium ormanında kullandı. Truva Atı'nı tasarlayan adam, bu sefer de bir ihanetle tarihe geçti.",
-          "specialMechanic": "phone_chain_dna_anagram_timeline"
+          "solutionNarrative": "Sinon, ormanda yalnız yakaladığı kahramanı kendi hançeriyle öldürdü. Mor kumaş parçasını başka bir güce işaret etsin diye bıraktı; ancak defne düğümlerindeki at mührü, kılıfın ona ait olduğunu gösterdi. Çam katranı saldırının gerçek zeminini, diğer geçit kayıtları ise alternatif yolların ayrıştığını ortaya koydu."
         },
         {
           "puzzleId": "mit_004",
-          "title": "Ra'nın Gözü",
-          "subtitle": "Mısır Mitolojisi — Heliopolis Tapınağı",
-          "difficulty": 4,
-          "difficultyLabel": "Başkomiser",
           "stars": "★★★★☆",
           "gridSize": "3x3",
-          "timeLimit": 600,
-          "story": "Güneş Tanrısı Ra'nın baş rahibi Neferhor, Heliopolis'in kutsal iç tapınağında ölü bulundu — vücudu sfenks pozisyonunda, yüzü güneşe dönük bırakılmış. Kutsal anka kuşunun tüyü cesedinin üstünde. Üç tanrısal figür o gece tapınakta bulunuyordu.",
-          "atmosphere": "Sütunlar arasında yağ lambası ışığı titriyor; Nil'in kokusu taş duvarlara işlemiş, kutsal ibis sesi uzaktan duyuluyor.",
+          "timeLimit": 480,
+          "title": "Ra’nın Gözü",
+          "subtitle": "Heliopolis · Çöl Kapısı Avlusu",
+          "difficulty": 4,
+          "difficultyLevel": 4,
+          "specialMechanic": "sunstone_reflection_array_sifreli_mesaj",
+          "story": "Heliopolis’te Ra’nın baş rahibi, güneş doğmadan hemen önce kutsal iç odada dizlerinin üzerine çökmüş halde bulundu. Yüzü doğuya dönüktü; ciğerlerinden çıkan kum ise tapınağın içinden değil, çöle açılan taş avludan gelmiş gibiydi.\n\nThoth papirüs arşivinde kehanetleri kopyalıyordu. Sekhmet, şifa ritüelinin yanlış anlaşılmasından öfkeliydi. Set ise Ra’ya sunulacak bir raporun kendi varlığını tapınaktan silebileceğini öğrenmişti.\n\nİç odadan dış avluya uzanan koridorda dört güneş taşı oynatılmıştı. Sabah ışığı her taşa vurduğunda, farklı duvarlarda birer işaret beliriyor; sanki tapınağın kendisi hangi gölgenin gerçek olduğunu söylemeye çalışıyordu.",
+          "atmosphere": "Yağ lambaları henüz sönmemiş; Nil kokusu taş sütunlarda ağırlaşmış. İlk güneş ışığı, kumun içindeki sırları bir anlığına görünür kılıyor.",
           "suspects": [
             {
               "id": "s1",
               "name": "Thoth",
-              "icon": "🧎",
-              "description": "Bilgelik ve yazı tanrısı, ibis başlı",
-              "detail": "Hesaplar tanrısı; Neferhor'un kendisine ait kehanetleri çarpıttığını öğrenmişti."
+              "icon": "🪶",
+              "description": "Bilgelik ve yazı tanrısı.",
+              "detail": "Mürekkep şişelerinin mühürlerini gün gün saklar; papirüs liflerindeki farkı uzaktan tanır."
             },
             {
               "id": "s2",
               "name": "Set",
-              "icon": "⛏️",
-              "description": "Kaos ve çöl tanrısı, hayvan başlı",
-              "detail": "Karanlık güçlerin temsilcisi; kurbanın Ra'ya sunduğu rapor Set'i tapınaktan kovacaktı."
+              "icon": "🌪️",
+              "description": "Kaos ve çöl tanrısı.",
+              "detail": "Siyah reçineli gölge tacı, kum girdabı ritüellerinde havaya ince bir koku bırakır."
             },
             {
               "id": "s3",
               "name": "Sekhmet",
-              "icon": "👩",
-              "description": "Savaş ve şifa tanrıçası, aslan başlı",
-              "detail": "Kurban, Sekhmet'in şifa ritüellerini sahte ilan etmişti — itibarı yerle bir olmuştu."
+              "icon": "🦁",
+              "description": "Savaş ve şifa tanrıçası.",
+              "detail": "Pençe kancasını törenlerde taşır; asla avlu kumuna yalın ayak basmaz."
             }
           ],
           "weapons": [
             {
               "id": "w1",
-              "name": "Zehirli papirüs mürekkebi",
+              "name": "Zehirli Papirüs Mürekkebi",
               "icon": "🖋️",
-              "description": "Thoth'un kullandığı, kobra zehriyle hazırlanmış kutsal mürekkep."
+              "description": "Kobra özlü, iç odadaki yazı masasından alınan yoğun mürekkep.",
+              "detail": ""
             },
             {
               "id": "w2",
-              "name": "Çöl kumu fırtınası tuzağı",
+              "name": "Çöl Kumu Fırtınası Tuzağı",
               "icon": "🌪️",
-              "description": "Set'in çağırdığı kum dalgası; akciğerleri doldurmuş."
+              "description": "Avlu rüzgârını dar bir hatta toplayan ölümcül kum düzeneği.",
+              "detail": ""
             },
             {
               "id": "w3",
-              "name": "Sekhmet'in pençe kancası",
+              "name": "Sekhmet’in Pençe Kancası",
               "icon": "🗡️",
-              "description": "Ritüel demir kanca — savaş aracı."
+              "description": "Aslan başlı tanrıçanın ritüel demir kancası.",
+              "detail": ""
             }
           ],
           "locations": [
             {
               "id": "l1",
-              "name": "Kutsal iç oda",
+              "name": "Kutsal İç Oda",
               "icon": "☀️",
-              "description": "Ra'nın altın heykelinin durduğu en kutsal alan."
+              "description": "Ra heykelinin ve altın yazı masasının bulunduğu en iç bölüm.",
+              "detail": ""
             },
             {
               "id": "l2",
-              "name": "Papirüs arşivi",
+              "name": "Papirüs Arşivi",
               "icon": "📚",
-              "description": "Thoth'un yazdığı tüm kehanetlerin saklandığı oda."
+              "description": "Thoth’un mühürlü kehanetlerinin saklandığı sessiz oda.",
+              "detail": ""
             },
             {
               "id": "l3",
-              "name": "Çöl kapısı avlusu",
+              "name": "Çöl Kapısı Avlusu",
               "icon": "🏜️",
-              "description": "Tapınağın çöle açılan dış avlusu."
+              "description": "Tapınağın çöle açılan, kum halkalarıyla dolu taş avlusu.",
+              "detail": ""
             }
           ],
           "clues": [
             {
               "id": "c1",
-              "type": "adli",
+              "title": "Girdabın İlk Kaydı",
+              "type": "tanik",
+              "mechanicType": "text",
+              "text": "Heliopolis tabibi, baş rahibin son nefesinde ciğerlerine dolan ince taş tozunun tek bir girdap bileşimiyle uyumlu olduğunu yazdı. Ölüm, nefes kesen çöl düzeneğiyle gelmişti; ancak rüzgârın hangi eşiği geçtiği henüz belli değildi.",
+              "deductionHint": "Bu toz, hangi ölümcül aracın iç odada kullanılamayacağını düşündürür?",
+              "isBonus": false,
               "revealOrder": 1,
               "isRevealed": true,
-              "pointCost": 0,
-              "title": "Tanrısal Otopsi",
-              "text": "Kurbanın ciğerleri kum ve ince taş tozu dolmuş; boğaza veya vücuda dışarıdan müdahale yok. Ölüm, iç organların kumla tıkanmasından. Pençe ya da mürekkep izi bulunmuyor.",
-              "mechanicType": "text",
-              "deductionHint": "Kum dolu ciğerler — w2 (kum fırtınası) tek uyumlu silah."
+              "pointCost": 0
             },
             {
               "id": "c2",
-              "type": "tanik",
+              "title": "Arşiv Şişesinin Mührü",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Papirüs arşivindeki koyu renkli yazı şişesi, geceden sonra da aynı kurşun mühürle kapalıydı. Şişenin altındaki kod, yalnız arşiv rafındaki kayıt numarasıyla örtüşüyordu.",
+              "deductionHint": "Mühür ve kayıt numarası, hangi araç–mekân bağını doğrular?",
+              "isBonus": false,
               "revealOrder": 2,
               "isRevealed": false,
-              "pointCost": 55,
-              "title": "İbis Kuşunun Tanıklığı",
-              "text": "Tapınağın kutsal ibis kuşu, olay gecesi çöl kapısı avlusundan gelen güçlü rüzgâr sesine ürküp kafesten çıkmış ve kutsal iç odaya uçmuş. İbis yalnızca doğaüstü kum gücüne tepki verir.",
-              "mechanicType": "text",
-              "deductionHint": "Kum gücü çöl kapısı avlusundan geldi — Set oradadır."
+              "pointCost": 60
             },
             {
               "id": "c3",
-              "type": "kanit",
+              "title": "Ra’nın Güneş Taşı Dizisi",
+              "type": "sifreli",
+              "mechanicType": "sifreli_mesaj",
+              "text": "Koridordaki dört güneş taşı, geceden sonra farklı yüzlere çevrilmişti. Taşlardaki ışık lekeleri, bir savaş tanrıçasının pençe ritmiyle değil; kum akımını yönlendiren sabit bir yansımayla uyumluydu.",
+              "deductionHint": "Taşları doğru hizalayınca, hangi kişi–araç eşleşmesinin imkânsız olduğu görünür?",
+              "isBonus": false,
               "revealOrder": 3,
               "isRevealed": false,
-              "pointCost": 55,
-              "title": "Set'in Kum İzi",
-              "text": "Çöl kapısı avlusundaki kum desenleri incelendi: girdap şeklinde bir iz — Set'in kum fırtınası çağırma ritüelinin özgün izi bu şekli bırakır, diğer tanrıların gücüyle oluşamaz.",
-              "mechanicType": "gorsel_ipucu",
-              "gorselAciklama": "Kum deseninin papirüse çizilmiş kopyası: merkezden dışa doğru genişleyen çift sarmal girdap. Tapınak yazıtlarına göre bu desen yalnızca Set'in 'Sahara Fırtınası' büyüsüyle oluşabilir. Sekhmet'in pençesi düz paralel çizgiler bırakır; Thoth'un büyüsü ise lotus noktaları şeklinde görünür. Girdap yalnızca Set'e özgü.",
-              "deductionHint": "Girdap izi yalnızca Set'e ait güç — onu avluya ve olaya bağlıyor."
+              "pointCost": 60,
+              "sifre": {
+                "sifrelenmis": "RA / IBİS / ÇÖL / PENÇE — DÖRT IŞIN",
+                "sifreleTuru": "güneş taşı yansıma düzeni",
+                "cozumIpucu": "İşaretlerin yerini, anlatının verdiği fiziksel sıraya göre dene.",
+                "cozulmus": "RA-HELIOPOLIS",
+                "aciklama": "Bulmacanın taşıdığı düzen çözüldüğünde geceye ait tek bir bağlantı belirginleşir.",
+                "presentation": {
+                  "style": "sunstone_reflection_array",
+                  "title": "Ra’nın Güneş Taşı Dizisi",
+                  "subtitle": "Dört güneş taşının ışığını, yalnız mümkün olan duvar işaretine yansıt.",
+                  "purposeHint": "Doğru düzen, ızgarada tek bir bağlantıyı elemek ya da doğrulamak için kullanılır.",
+                  "mirrors": [
+                    {
+                      "id": "m1",
+                      "label": "Doğu Taşı",
+                      "beam": "İlk ışın"
+                    },
+                    {
+                      "id": "m2",
+                      "label": "Kum Taşı",
+                      "beam": "Dönen gölge"
+                    },
+                    {
+                      "id": "m3",
+                      "label": "İbis Taşı",
+                      "beam": "Kısa parıltı"
+                    },
+                    {
+                      "id": "m4",
+                      "label": "Gece Taşı",
+                      "beam": "Kesik çizgi"
+                    }
+                  ],
+                  "targets": [
+                    {
+                      "id": "t1",
+                      "label": "Lotus Duvarı"
+                    },
+                    {
+                      "id": "t2",
+                      "label": "Çöl Girdabı"
+                    },
+                    {
+                      "id": "t3",
+                      "label": "Pençe Sütunu"
+                    },
+                    {
+                      "id": "t4",
+                      "label": "Yazı Masası"
+                    }
+                  ],
+                  "correctAssignments": [
+                    {
+                      "itemId": "m1",
+                      "answerId": "t4"
+                    },
+                    {
+                      "itemId": "m2",
+                      "answerId": "t2"
+                    },
+                    {
+                      "itemId": "m3",
+                      "answerId": "t1"
+                    },
+                    {
+                      "itemId": "m4",
+                      "answerId": "t3"
+                    }
+                  ],
+                  "resultText": "Yansıma dizisi, pençe kancasının Sekhmet’in avlu zincirine ait olamayacağını gösterir: Sekhmet × Sekhmet’in Pençe Kancası.",
+                  "interaction": {
+                    "mode": "reflect_sunbeams",
+                    "submitLabel": "Işınları Doğrula",
+                    "successMessage": "Güneş taşları tek bir gölge düzeni verdi.",
+                    "failureMessage": "Bu yansıma, aynı anda hem lotus hem kum gölgesini taşıyamaz."
+                  }
+                }
+              }
             },
             {
               "id": "c4",
-              "type": "dogrudan",
+              "title": "İç Odanın Yazı Nöbeti",
+              "type": "tanik",
+              "mechanicType": "text",
+              "text": "Altın heykelin önündeki yazı masasının nöbetçisi, ibis başlı yazıcının gece boyunca iç odadan ayrılmadığını; taşıdığı kendi mühür tabletini şafakta da masada bıraktığını söyledi.",
+              "deductionHint": "Nöbetçi kaydı, hangi kişi–mekân bağını doğrular?",
+              "isBonus": false,
               "revealOrder": 4,
               "isRevealed": false,
-              "pointCost": 55,
-              "title": "Ra'ya Sunulan Rapor",
-              "text": "Kurbanın elinde kısmen yanmış bir papirüs: 'Set'in varlığı tapınağın dengesini bozuyor; Ra'ya iletilmeli…' yazıyor. Set'i kovacak bu raporun teslimi o gece planlanmıştı.",
-              "mechanicType": "text",
-              "deductionHint": "Rapor Set'i hedef alıyor — güçlü motif."
+              "pointCost": 60
             },
             {
               "id": "c5",
-              "type": "eleme",
+              "title": "Set’in Kum Halkası",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Çöl kapısı avlusunda, gölge tacındaki siyah reçineyle karışmış ince bir kum halkası bulundu. Halka, taşların dış çevresinde yalnızca bir kez kapanıyordu.",
+              "deductionHint": "Bu halka, hangi kişiyi hangi avluya yaklaştırır?",
+              "isBonus": true,
               "revealOrder": 5,
               "isRevealed": false,
-              "pointCost": 55,
-              "title": "Thoth'un Gece Yazısı",
-              "text": "Papirüs arşivinde Thoth'un gece boyunca yazdığı kehanet metni bulundu: 47 papirüs sayfası, mürekkep taze ama kurumaya başlamış — bu kadar yazı en az 5 saat alır ve olay saatiyle örtüşüyor.",
-              "mechanicType": "text",
-              "deductionHint": "Thoth arşivden çıkmamış — kurbanın yanında olamaz."
+              "pointCost": 60
             },
             {
-              "id": "c6",
-              "type": "sifreli",
+              "id": "b1",
+              "title": "Sekhmet’in Kayıtlı Mürekkebi",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Aslan başlı tanrıçanın şifa defterindeki son satır, koyu yazı şişesinin kendisine teslim edildiğini gösteren bir kabul mührü taşıyordu.",
+              "deductionHint": "Kabul mührü, hangi kişi–araç bağını doğrular?",
+              "isBonus": true,
               "revealOrder": 6,
               "isRevealed": false,
-              "pointCost": 55,
-              "title": "Hiyeroglif Mesajı",
-              "text": "Kurbanun ayağının yanındaki taşa kazılı hiyeroglif: Mısır uzmanlarınca latin harflerine çevirilen harf dizisi, doğru sıralanınca bir mesaj ortaya çıkıyor.",
-              "mechanicType": "anagram",
-              "anagramVerisi": {
-                "karisik": "TUKASOYUT",
-                "dogru": "KAOS YUTTU",
-                "aciklama": "Taşa kazılı hiyerogliflerin çözümü 9 harfli bir ifade veriyor. Mısır dilinde 'kaos' sözcüğü Set'in logosuyla özdeştir — bu mesaj katilinin imzasıdır.",
-                "ipucu": "9 harf, 2 kelime. İlk kelime 4 harf (S ile biter), ikinci kelime 5 harf."
-              },
-              "deductionHint": "'KAOS YUTTU' = Set'in kum fırtınası kurbanı yuttu. Katil imzasını bırakmış."
+              "pointCost": 60
+            },
+            {
+              "id": "b2",
+              "title": "Thoth’un Kanca Mührü",
+              "type": "tanik",
+              "mechanicType": "text",
+              "text": "İbis başlı yazıcının iç oda sandığındaki metal mühür, ritüel pençe kancasının gece boyunca onun gözetiminde kaldığını belirtiyordu.",
+              "deductionHint": "Sandık mührü, hangi kişi–araç bağını doğrular?",
+              "isBonus": true,
+              "revealOrder": 7,
+              "isRevealed": false,
+              "pointCost": 60
             }
           ],
+          "assetManifest": [],
           "solution": {
             "suspectId": "s2",
             "weaponId": "w2",
             "locationId": "l3"
-          }
+          },
+          "solutionNarrative": "Set, baş rahibin Ra’ya ileteceği raporu engellemek için çöl avlusundaki kum düzeneğini çalıştırdı. Güneş taşlarını yerinden oynatması, rüzgârın dış avludan iç odaya doğru görünmesini sağladı. Thoth’un mürekkebi mühürlü, Sekhmet’in kancası ise ışık dizisinde başka bir hatla bağlıydı. Kum halkası, Set’in tacındaki reçineyle birleşince gerçek kaynak ortaya çıktı."
         },
         {
           "puzzleId": "mit_005",
-          "title": "Odin'in Bedeli",
-          "subtitle": "İskandinav Mitolojisi — Asgard, Valhalla Kapısı",
-          "difficulty": 4,
-          "difficultyLabel": "Başkomiser",
-          "stars": "★★★★☆",
+          "stars": "★★★★★",
           "gridSize": "3x3",
-          "timeLimit": 600,
-          "story": "Valhalla'nın büyük kapısını koruyan yıldırım kahramanı Bjorn Ironfist, kapı önünde zırhıyla birlikte çökmüş halde bulundu — ama üzerinde bir yara bile yok. Odin'in kutsal kuzgunları yankı vermeden sessizleşti. Üç tanrısal figür o gece Valhalla'ya girdi.",
-          "atmosphere": "Kuzey ışıkları gökyüzünde titrerken, demir ve kan kokusu yüklü rüzgâr Bifröst'ten esiyor.",
+          "timeLimit": 420,
+          "title": "Odin’in Bedeli",
+          "subtitle": "Asgard · Valkyrie Bahçesi",
+          "difficulty": 5,
+          "difficultyLevel": 5,
+          "specialMechanic": "raven_feather_lattice_sifreli_mesaj",
+          "story": "Valhalla kapısının nöbetçisi Bjorn Ironfist, sabah nöbet değişiminde zırhının içinde çökmüş halde bulundu. Üzerinde kılıç yarası yoktu; dudaklarında ise kuzey ışığı gibi parlayan ince bir altın toz kalmıştı.\n\nLoki rün odasının derinliklerinde kendi tılsımlarını onardığını söylüyordu. Tyr kapı kayıtlarını denetliyordu. Freya ise Valkyrie listesindeki bir değişikliğin Bjorn tarafından Odin’e bildirileceğini geceden öğrenmişti.\n\nHuginn ve Muninn’in yuvalarında dört renk tüy bulundu. Bahçe taşlarındaki küçük mühürler, kuzgunların kapıdan değil bir süre bahçedeki altın ışığın çevresinden uçtuğunu anlatıyordu. Bjorn’un ölümü sessizdi; ama kuzgunlar hiçbir zaman sessiz ayrıntıları unutmazdı.",
+          "atmosphere": "Kuzey ışıkları çatılarda yeşil bir bıçak gibi titreşiyor. Bifröst rüzgârı, demir zırh ve gece çiçeğinin tatlı kokusunu birlikte taşıyor.",
           "suspects": [
             {
               "id": "s1",
               "name": "Loki",
-              "icon": "🦹",
-              "description": "Hile ve dönüşüm tanrısı",
-              "detail": "Sonsuz kurnazlığıyla tanınır; kurban Loki'nin Odin'e karşı kurduğu son komplosunu fark etmişti."
+              "icon": "🧩",
+              "description": "Hile ve rün tanrısı.",
+              "detail": "Mavi kıvılcım bırakan rün külünü taşıdığı kesede saklar; kapıları konuşmadan açmayı sever."
             },
             {
               "id": "s2",
               "name": "Freya",
-              "icon": "👧",
-              "description": "Aşk ve savaş tanrıçası",
-              "detail": "Valkyrie'lerin lideri; kurban Freya'nın seçtiği savaşçıların listesini değiştirmişti — bu ona ihanet sayılırdı."
+              "icon": "🌺",
+              "description": "Aşk, savaş ve Valkyrie seçiminin tanrıçası.",
+              "detail": "Gece çiçeklerinden uyku tozu hazırlar; seçki defterindeki isimleri yalnız kendi eliyle değiştirir."
             },
             {
               "id": "s3",
               "name": "Tyr",
-              "icon": "💂",
-              "description": "Adalet ve savaş tanrısı, tek elli",
-              "detail": "Kurban, Tyr'ın onuruna yaraşır bir ölümle ölmediğini Valhalla kayıtlarına geçirmişti."
+              "icon": "⚔️",
+              "description": "Adalet ve savaş tanrısı.",
+              "detail": "Kapı kayıtlarını yalnız başparmağıyla mühürler; yargı kılıcını her nöbetten sonra sayar."
             }
           ],
           "weapons": [
             {
               "id": "w1",
-              "name": "Loki'nin zehirli rünleri",
+              "name": "Loki’nin Zehirli Rünleri",
               "icon": "🔮",
-              "description": "Taşa kazılı lanet rünleri — içten çürütür."
+              "description": "Taşa kazındığında içten çürüten, mavi kıvılcım bırakan lanet rünleri.",
+              "detail": ""
             },
             {
               "id": "w2",
-              "name": "Freya'nın uyku büyüsü tozları",
+              "name": "Freya’nın Uyku Büyüsü Tozları",
               "icon": "✨",
-              "description": "Sonsuz uyku veren altın tozlar — dışarıdan iz bırakmaz."
+              "description": "Gece çiçeği poleninden üretilen, yarasız ve sessiz ölüm getiren altın toz.",
+              "detail": ""
             },
             {
               "id": "w3",
-              "name": "Tyr'ın yargı kılıcı",
+              "name": "Tyr’ın Yargı Kılıcı",
               "icon": "🗡️",
-              "description": "Adalet kılıcı — yalnızca haksızı keser."
+              "description": "Adalet törenlerinde kullanılan, ağır ve keskin savaş kılıcı.",
+              "detail": ""
             }
           ],
           "locations": [
             {
               "id": "l1",
-              "name": "Valhalla kapısı",
+              "name": "Valhalla Kapısı",
               "icon": "🚪",
-              "description": "Devasa meşe kapı — kurbanın nöbet yeri."
+              "description": "Bjorn’un nöbet tuttuğu dev meşe kapı ve kayıt taşı.",
+              "detail": ""
             },
             {
               "id": "l2",
-              "name": "Rün odası",
+              "name": "Rün Odası",
               "icon": "🪨",
-              "description": "Loki'nin lanet rünlerini sakladığı gizli oda."
+              "description": "Loki’nin mavi kıvılcımlı tılsımlarını sakladığı taş oda.",
+              "detail": ""
             },
             {
               "id": "l3",
-              "name": "Valkyrie bahçesi",
-              "icon": "🌺",
-              "description": "Freya'nın savaşçı listelerini tuttuğu kutsal bahçe."
+              "name": "Valkyrie Bahçesi",
+              "icon": "🌿",
+              "description": "Freya’nın seçki listelerini ve gece çiçeklerini tuttuğu kutsal bahçe.",
+              "detail": ""
             }
           ],
           "clues": [
             {
               "id": "c1",
-              "type": "adli",
+              "title": "Valhalla Tabibinin Kaydı",
+              "type": "tanik",
+              "mechanicType": "text",
+              "text": "Valhalla tabibi, Bjorn’un dudaklarında yarasız ölümle uyumlu altın uyku tozu bulduğunu söyledi. Toz, gece çiçeği poleniyle karışmıştı; fakat polen kapı eşiğinde değil, başka bir taş hatta tutunmuştu.",
+              "deductionHint": "Bu ilk kayıt, altın toz için hangi mekânı kapatır?",
+              "isBonus": false,
               "revealOrder": 1,
               "isRevealed": true,
-              "pointCost": 0,
-              "title": "Tanrısal Muayene",
-              "text": "Kurbanın bedeninde hiçbir kesik ya da leke yok. Gözleri kapalı, yüzü huzurlu — savaş yarasına değil, derin bir uykuya çekilmişe benziyor. Ağzında altın rengi iz: peri tozuna özgü kalıntı.",
-              "mechanicType": "text",
-              "deductionHint": "Altın iz ve yarasız ölüm — w2 (uyku büyüsü tozları) tek uyumlu silah."
+              "pointCost": 0
             },
             {
               "id": "c2",
-              "type": "tanik",
+              "title": "Rün Odasının Soğuk Mührü",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Rün odasının taş masasındaki mavi kıvılcım izleri, geceden sonra da aynı mum mühürle kapalı kaldı. Mührün içindeki toz, yalnız bu odanın yağ lambasında oluşan soğuk kurumla örtüşüyordu.",
+              "deductionHint": "Mühür ve kurum, hangi araç–mekân bağını doğrular?",
+              "isBonus": false,
               "revealOrder": 2,
               "isRevealed": false,
-              "pointCost": 55,
-              "title": "Kuzgunların Sesi",
-              "text": "Odin'in iki kuzgunu Huginn ve Muninn, sabah raporlarında Valkyrie bahçesinde gece geç saatte altın ışık gördüklerini Odin'e iletti — bu ışık yalnızca Freya'nın büyüsüyle açığa çıkar.",
-              "mechanicType": "text",
-              "deductionHint": "Kuzgunlar altın ışığı bahçede gördü — Freya orada büyü kullanmış."
+              "pointCost": 60
             },
             {
               "id": "c3",
-              "type": "kanit",
+              "title": "Kuzgun Tüylerinin Uçuş Haritası",
+              "type": "sifreli",
+              "mechanicType": "sifreli_mesaj",
+              "text": "Huginn ile Muninn’in yuvalarında dört farklı renkte tüy ve taş mühür izleri bulundu. Her tüyün bir gecelik uçuşta hangi mühre değdiğini anlamak için, şafak öncesi sıralarının yeniden kurulması gerekiyordu.",
+              "deductionHint": "Tüy mühürlerini doğru eşleştir; hangi kişi–araç bağının mümkün olmadığını gör.",
+              "isBonus": false,
               "revealOrder": 3,
               "isRevealed": false,
-              "pointCost": 55,
-              "title": "Bahçedeki Toz İzi",
-              "text": "Valkyrie bahçesinin taş zeminine altın toz serpilmiş — analiz: Freya'nın kendi büyü kitabında tarif edilen 'Sonsuz Uyku Tozu' bileşimiyle birebir eşleşiyor. Başka tanrı bu tozu üretemez.",
-              "mechanicType": "gorsel_ipucu",
-              "gorselAciklama": "Altın toz numunesi büyütme taşıyla inceleniyor. Freya'nın büyü kitabındaki 'Sonsuz Uyku Tozu' tarifi: Asgard gece çiçeği (3 yaprak), Freya'nın saçından alınan ipek tel (kırpılmış), Valhalla pınarından gece suyu. Bu bileşim Freya'nın dışındaki hiçbir tanrı tarafından üretilemez — bileşim analizi birebir eşleşiyor. Bahçede yalnızca Freya'nın geçtiği anlaşılıyor.",
-              "deductionHint": "Toz yalnızca Freya'ya ait — onu bahçeye ve silaha kesin olarak bağlıyor."
+              "pointCost": 60,
+              "sifre": {
+                "sifrelenmis": "KUZGUN / ALTIN / RÜN / KILIÇ — DÖRT TÜY",
+                "sifreleTuru": "kuzgun tüyü mühür ağı",
+                "cozumIpucu": "Her tüy bir mühürde kalır; aynı renkte iki iz aynı dala konmaz.",
+                "cozulmus": "ASGARD-09",
+                "aciklama": "Uçuş örgüsü çözüldüğünde, geceye ait tek bir bağlantı belirginleşir.",
+                "presentation": {
+                  "style": "raven_feather_lattice",
+                  "title": "Kuzgun Tüyü Mühür Ağı",
+                  "subtitle": "Dört tüyü, gece uçuşunda dokunduğu doğru mühürle eşleştir.",
+                  "purposeHint": "Doğru uçuş ağı, ızgarada tek bir bağlantıyı elemek ya da doğrulamak için kullanılır.",
+                  "feathers": [
+                    {
+                      "id": "f1",
+                      "label": "Altın Tüy",
+                      "mark": "Bahçe ışığı"
+                    },
+                    {
+                      "id": "f2",
+                      "label": "Koyu Mavi Tüy",
+                      "mark": "Rün kıvılcımı"
+                    },
+                    {
+                      "id": "f3",
+                      "label": "Gri Tüy",
+                      "mark": "Kapı sisi"
+                    },
+                    {
+                      "id": "f4",
+                      "label": "Kızıl Tüy",
+                      "mark": "Savaş yankısı"
+                    }
+                  ],
+                  "seals": [
+                    {
+                      "id": "sA",
+                      "label": "Valkyrie Bahçesi Mührü"
+                    },
+                    {
+                      "id": "sB",
+                      "label": "Rün Odası Mührü"
+                    },
+                    {
+                      "id": "sC",
+                      "label": "Valhalla Kapısı Mührü"
+                    },
+                    {
+                      "id": "sD",
+                      "label": "Tyr’ın Savaş Mührü"
+                    }
+                  ],
+                  "correctAssignments": [
+                    {
+                      "itemId": "f1",
+                      "answerId": "sA"
+                    },
+                    {
+                      "itemId": "f2",
+                      "answerId": "sB"
+                    },
+                    {
+                      "itemId": "f3",
+                      "answerId": "sC"
+                    },
+                    {
+                      "itemId": "f4",
+                      "answerId": "sD"
+                    }
+                  ],
+                  "resultText": "Uçuş ağı, rün tanrısının kılıç hattında olmadığını gösterir.",
+                  "interaction": {
+                    "mode": "match_feather_seals",
+                    "submitLabel": "Uçuş Ağını Doğrula",
+                    "successMessage": "Kuzgunlar tek bir uçuş düzeni verdi.",
+                    "failureMessage": "Bu tüyler aynı gece aynı mühürlere konamaz."
+                  }
+                }
+              }
             },
             {
               "id": "c4",
-              "type": "dogrudan",
+              "title": "Tyr’ın Rün Nöbeti",
+              "type": "tanik",
+              "mechanicType": "text",
+              "text": "Rün odasının ikinci muhafızı, tek elli savaş tanrısının gece yarısı bozulan koruma halkasını denetlemek için taş odaya girdiğini ve kendi başparmak mührünü kapıya bastığını kayda geçirdi.",
+              "deductionHint": "Muhafız kaydı, hangi kişi–mekân bağını doğrular?",
+              "isBonus": false,
               "revealOrder": 4,
               "isRevealed": false,
-              "pointCost": 55,
-              "title": "Değiştirilen Liste",
-              "text": "Freya'nın savaşçı seçim listesinde kurban Bjorn'un ismi el yazısıyla üstü çizilmiş ve yerine başkası yazılmış. Bjorn bu değişikliği Odin'e bildirmek üzereydi.",
-              "mechanicType": "text",
-              "deductionHint": "Bjorn Freya'yı ifşa edecekti — en güçlü motif."
+              "pointCost": 60
             },
             {
               "id": "c5",
-              "type": "eleme",
+              "title": "Bahçe Çiçeği Suyu",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Valkyrie Bahçesi’ndeki pınarda, altın uyku tozunun çözündüğü gece çiçeği poleni ve seçki mührü birlikte bulundu.",
+              "deductionHint": "Polen ve mühür, hangi kişi–mekân bağını doğrular?",
+              "isBonus": true,
               "revealOrder": 5,
               "isRevealed": false,
-              "pointCost": 55,
-              "title": "Loki'nin Rün Odası Kaydı",
-              "text": "Rün odasının kapısına kazılı koruyucu büyü her girişi kaydeder: o gece yalnızca Loki girmiş ve çıkmış. Rün odası, Valhalla kapısından çok uzak — aynı anda iki yerde olamaz.",
-              "mechanicType": "text",
-              "deductionHint": "Loki rün odasında kayıtlı — Valhalla kapısına gidemezdi."
+              "pointCost": 60
             },
             {
-              "id": "c6",
-              "type": "tanik_yuzlesme",
+              "id": "b1",
+              "title": "Loki’nin Kül Kesesi",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Rün odasındaki mavi kül kesesi, hile tanrısının kişisel işaretiyle kapalıydı.",
+              "deductionHint": "Kül kesesi hangi kişi–araç bağını doğrular?",
+              "isBonus": true,
               "revealOrder": 6,
               "isRevealed": false,
-              "pointCost": 55,
-              "title": "Freya ile Yüzleşme",
-              "text": "Toz analizi ve kuzgunların tanıklığı Freya'ya gösterildi. Uzun sessizliğin ardından itiraf geldi.",
-              "mechanicType": "tanik_yuzlesme",
-              "yuzlesmeDialogu": [
-                {
-                  "soru": "O gece Valkyrie bahçesindeydınız mı?",
-                  "cevap": "Bahçem benim korumamdadır. Her gece orada olmak hakkım.",
-                  "yalan": false
-                },
-                {
-                  "soru": "Bjorn'un listeden silinmesini siz mi yaptınız?",
-                  "cevap": "Liste benim. Değiştirme hakkım var.",
-                  "yalan": false
-                },
-                {
-                  "soru": "Uyku tozunu Bjorn'a siz mi verdiniz?",
-                  "cevap": "Bjorn ertesi gün Odin'e gidecekti. Bir Valkyrie'nin sırrı ölümden değerlidir.",
-                  "yalan": false
-                }
-              ],
-              "deductionHint": "Freya'nın kendi itirafı — cinayet ve motif doğrulandı."
+              "pointCost": 60
+            },
+            {
+              "id": "b2",
+              "title": "Tyr’ın Rün Defteri",
+              "type": "tanik",
+              "mechanicType": "text",
+              "text": "Tyr’ın rün odasında tuttuğu denetim defterinde, aynı gece altın toz şişesinin kendisine hiç teslim edilmediği yazıyordu.",
+              "deductionHint": "Bu defter hangi ilişkiyi doğrular?",
+              "isBonus": true,
+              "revealOrder": 7,
+              "isRevealed": false,
+              "pointCost": 60
             }
           ],
+          "assetManifest": [],
           "solution": {
             "suspectId": "s2",
             "weaponId": "w2",
             "locationId": "l3"
-          }
+          },
+          "solutionNarrative": "Freya, Bjorn’un seçki listesindeki değişikliği Odin’e bildirmesini engellemek için uyku tozunu Valkyrie Bahçesi’nde hazırladı. Kuzgun tüyleri, altın ışığın kapıda değil bahçede yükseldiğini gösterdi. Loki rün odasında, Tyr ise kapı kaydında kaldı; bahçe poleni ve Freya’nın kendi işaretleri, tozu hazırlayan eli belirledi."
         }
       ]
     },

@@ -335,6 +335,7 @@ const EMOJI_TO_MATERIAL: Record<string, string> = {
   "🎪": "festival",
   "📕": "menu-book",
   "🖋️": "create",
+  "🪽": "flutter-dash",
   "🕊️": "flutter-dash",
   "🇪🇺": "public",
   "☎️": "call",
