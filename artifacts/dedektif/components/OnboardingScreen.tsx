@@ -243,17 +243,17 @@ function SlideStartOptions({ contentWidth }: { contentWidth: number }) {
       icon: "today" as MaterialIconName,
       iconColor: GOLD,
       accent: GOLD,
-      label: "Günlük Bulmaca",
-      desc: "Ana sayfada her gün yeni bir bulmaca seni bekler. Oyna butonuna bas, hemen başla.",
-      badge: "Her gün yenilenir",
+      label: "Günlük Vaka",
+      desc: "Ana sayfada her gün yeni bir vaka seni bekler. Tamamen ücretsiz — oyna butonuna bas, hemen başla.",
+      badge: "Her gün yenilenir · Ücretsiz",
     },
     {
-      icon: "folder-open" as MaterialIconName,
+      icon: "folder-special" as MaterialIconName,
       iconColor: "#A855F7",
       accent: "#A855F7",
       label: "Vaka Arşivi",
-      desc: "Vakalar sekmesinde zorluk derecesine göre istediğin vakayı seçerek oynayabilirsin.",
-      badge: "Çaylak · Dedektif · Baş Komiser",
+      desc: "9 tematik pakette 60'tan fazla vaka! Olimpos'tan Ergenekon'a, Asgard'dan modern şehirlere uzanan bir arşiv.",
+      badge: "9 Paket · 60+ Vaka · Çaylak → Efsane Komiser",
     },
   ];
 
@@ -313,7 +313,7 @@ function SlideStartOptions({ contentWidth }: { contentWidth: number }) {
       }}>
         <MaterialIcons name="local-fire-department" size={16} color={GOLD} />
         <Text style={{ flex: 1, fontSize: 12, color: GOLD + "DD", lineHeight: 17, fontWeight: "500" }}>
-          Her gün yeni bir bulmaca — üst üste oyna, serini kır!
+          Her gün yeni bir vaka — üst üste çöz, serini kır ve liderlik tablosunda yüksel!
         </Text>
       </View>
     </View>
@@ -354,7 +354,7 @@ const SLIDES: Slide[] = [
     title: "Oyuna Nasıl Başlarsın?",
     subtitle: "İki Yol, Sonsuz Vaka",
     subtitleNoUppercase: true,
-    body: "Günlük bir bulmacayla hemen oynamaya başlayabilir veya Vakalar ekranında zorluk derecesine göre bir oyun seçebilirsin.",
+    body: "Günlük Vaka ile ücretsiz başla ya da Vaka Arşivi'nden 9 tematik paket arasından istediğini seç.",
     showStartOptions: true,
   },
   {
