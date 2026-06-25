@@ -312,7 +312,7 @@ export default function LiderlikScreen() {
           </Text>
         </View>
         {myRank > 0 && (
-          <View style={[styles.myRankBadge, { backgroundColor: `${colors.primary}20`, borderColor: `${colors.primary}50` }]}>
+          <View style={[styles.myRankBadge, { backgroundColor: `${colors.primary}20`, borderColor: `${colors.primary}60` }]}>
             <MaterialIcons name="person" size={14} color={colors.primary} />
             <Text style={[styles.myRankText, { color: colors.primary }]}>#{myRank}</Text>
           </View>
@@ -328,21 +328,13 @@ export default function LiderlikScreen() {
               onPress={() => handleSortChange(tab.key)}
               style={[
                 styles.filterTab,
-                {
-                  backgroundColor: active ? colors.primary : "transparent",
-                  borderColor: active ? colors.primary : colors.border,
-                },
+                active ? styles.filterTabActive : styles.filterTabInactive,
               ]}
             >
-              <MaterialIcons
-                name={tab.icon}
-                size={14}
-                color={active ? colors.primaryForeground : colors.mutedForeground}
-              />
               <Text
                 style={[
                   styles.filterTabText,
-                  { color: active ? colors.primaryForeground : colors.mutedForeground },
+                  { color: active ? "#1a1205" : "#ffffff" },
                 ]}
               >
                 {tab.label}
@@ -424,25 +416,52 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     borderWidth: 1,
   },
-  myRankText: { fontSize: 14, fontWeight: "700" },
+  myRankText: {
+    fontSize: 14,
+    fontWeight: "700",
+    fontFamily: "PlayfairDisplay",
+    letterSpacing: 0.3,
+  },
   filterBar: {
     flexDirection: "row",
-    gap: 8,
+    gap: 7,
     paddingHorizontal: 16,
     paddingVertical: 12,
     borderBottomWidth: 1,
   },
   filterTab: {
     flex: 1,
-    flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    gap: 5,
-    paddingVertical: 7,
-    borderRadius: 20,
+    paddingVertical: 9,
+    paddingHorizontal: 4,
+    borderRadius: 22,
     borderWidth: 1.5,
   },
-  filterTabText: { fontSize: 12, fontFamily: "PlayfairDisplay", fontWeight: "600" },
+  filterTabActive: {
+    backgroundColor: "#D4A843",
+    borderColor: "#D4A843",
+    shadowColor: "#D4A843",
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.45,
+    shadowRadius: 6,
+    elevation: 6,
+  },
+  filterTabInactive: {
+    backgroundColor: "rgba(255,255,255,0.06)",
+    borderColor: "rgba(255,255,255,0.22)",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  filterTabText: {
+    fontSize: 12,
+    fontFamily: "PlayfairDisplay",
+    fontWeight: "600",
+    letterSpacing: 0.2,
+  },
   list: { padding: 12, gap: 0 },
   loadingContainer: {
     flex: 1,
