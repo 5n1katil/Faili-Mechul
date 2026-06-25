@@ -269,10 +269,11 @@ function PremiumTabButton({ active, onPress }: { active: boolean; onPress: () =>
   }, []);
 
   const glowAnim = useAnimatedStyle(() => ({
-    shadowOpacity: 0.25 + pulse.value * 0.7,
-    shadowRadius: 6 + pulse.value * 18,
-    borderColor: `rgba(255, 140, 0, ${0.4 + pulse.value * 0.6})`,
-    borderWidth: 1.5 + pulse.value * 0.5,
+    shadowOpacity: 0.35 + pulse.value * 0.65,
+    shadowRadius: 10 + pulse.value * 28,
+    borderColor: `rgba(255, 145, 0, ${0.5 + pulse.value * 0.5})`,
+    borderWidth: 2 + pulse.value * 1.5,
+    elevation: 10 + pulse.value * 18,
   }));
 
   const scaleAnim = useAnimatedStyle(() => ({ transform: [{ scale: scale.value }] }));
@@ -285,12 +286,16 @@ function PremiumTabButton({ active, onPress }: { active: boolean; onPress: () =>
           {
             flex: 1,
             shadowColor: NEON_ORANGE,
-            shadowOffset: { width: 0, height: 0 },
-            elevation: 12,
+            shadowOffset: { width: 0, height: 2 },
           },
           active
-            ? { backgroundColor: `${NEON_ORANGE}22`, borderBottomColor: `${NEON_ORANGE}EE`, borderBottomWidth: 4 }
-            : { backgroundColor: `${NEON_ORANGE}0E` },
+            ? {
+                backgroundColor: `${NEON_ORANGE}28`,
+                borderBottomColor: `${NEON_ORANGE}FF`,
+                borderBottomWidth: 5,
+                shadowOffset: { width: 0, height: 5 },
+              }
+            : { backgroundColor: `${NEON_ORANGE}12` },
           glowAnim,
         ]}
       >
@@ -300,8 +305,8 @@ function PremiumTabButton({ active, onPress }: { active: boolean; onPress: () =>
           onPress={onPress}
           style={{ flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 7, flex: 1, paddingVertical: 13 }}
         >
-          <MaterialIcons name="workspace-premium" size={18} color={PREMIUM_GOLD} />
-          <Text style={[listStyles.tabBtnText3d, { color: PREMIUM_GOLD, fontWeight: "700", fontSize: 15 }]}>
+          <MaterialIcons name="workspace-premium" size={19} color={PREMIUM_GOLD} />
+          <Text style={[listStyles.tabBtnText3d, { color: PREMIUM_GOLD, fontWeight: "700", fontSize: 15, letterSpacing: 0.3 }]}>
             Premium
           </Text>
         </Pressable>
@@ -396,18 +401,19 @@ function FilterPill3D({
                 elevation: 10,
               }
             : {
-                backgroundColor: "#12151E",
-                borderColor: `${color}30`,
-                borderBottomWidth: StyleSheet.hairlineWidth,
-                shadowColor: "#000",
-                shadowOpacity: 0.4,
-                shadowRadius: 4,
-                shadowOffset: { width: 0, height: 2 },
-                elevation: 3,
+                backgroundColor: `${color}10`,
+                borderColor: `${color}44`,
+                borderBottomColor: `${color}22`,
+                borderBottomWidth: 1,
+                shadowColor: color,
+                shadowOpacity: 0.18,
+                shadowRadius: 6,
+                shadowOffset: { width: 0, height: 3 },
+                elevation: 4,
               },
         ]}
       >
-        <MaterialIcons name={icon} size={20} color={isSelected ? color : `${color}66`} />
+        <MaterialIcons name={icon} size={20} color={isSelected ? color : `${color}99`} />
         {count !== undefined && count > 0 && (
           <View style={[listStyles.filterPillCount3d, {
             backgroundColor: isSelected ? color : `${color}28`,
@@ -1012,6 +1018,7 @@ export default function VakalarScreen() {
             <View style={{ flex: 1 }}>
               {/* Premium icon tile selector */}
               <View style={[listStyles.premIconTabRow, { backgroundColor: colors.background, borderBottomColor: colors.border }]}>
+                {/* Vakalar tile */}
                 <Pressable
                   onPress={() => setPremiumSubTab("vakalar")}
                   style={[
@@ -1028,21 +1035,27 @@ export default function VakalarScreen() {
                           shadowOffset: { width: 0, height: 3 },
                           elevation: 10,
                         }
-                      : { backgroundColor: "#12151E", borderColor: "#FFFFFF12", borderBottomWidth: StyleSheet.hairlineWidth },
+                      : { backgroundColor: "#D4A8430A", borderColor: "#D4A84325", borderBottomWidth: StyleSheet.hairlineWidth },
                   ]}
                 >
-                  <View style={[listStyles.premIconTabBadge, {
-                    backgroundColor: premiumSubTab === "vakalar" ? "#D4A84330" : "#FFFFFF0E",
-                    borderColor: premiumSubTab === "vakalar" ? "#D4A84366" : "#FFFFFF14",
-                  }]}>
-                    <MaterialIcons name="auto-stories" size={30} color={premiumSubTab === "vakalar" ? "#D4A843" : "#444666"} />
-                  </View>
-                  <View style={[listStyles.premIconTabCount, { backgroundColor: premiumSubTab === "vakalar" ? "#D4A843" : "#FFFFFF14" }]}>
-                    <Text style={[listStyles.premIconTabCountText, { color: premiumSubTab === "vakalar" ? "#0F1117" : "#666888" }]}>
-                      {premiumPuzzles.length}
-                    </Text>
+                  <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
+                    <View style={[listStyles.premIconTabBadge, {
+                      backgroundColor: premiumSubTab === "vakalar" ? "#D4A84330" : "#FFFFFF0C",
+                      borderColor: premiumSubTab === "vakalar" ? "#D4A84360" : "#FFFFFF18",
+                    }]}>
+                      <MaterialIcons name="auto-stories" size={20} color={premiumSubTab === "vakalar" ? "#D4A843" : "#666880"} />
+                    </View>
+                    <View style={{ gap: 2 }}>
+                      <Text style={{ color: premiumSubTab === "vakalar" ? "#D4A843" : "#888AAA", fontSize: 13, fontWeight: "700", fontFamily: "PlayfairDisplay" }}>
+                        Vakalar
+                      </Text>
+                      <Text style={{ color: premiumSubTab === "vakalar" ? "#D4A843CC" : "#55576A", fontSize: 11, fontWeight: "600" }}>
+                        {premiumPuzzles.length} vaka
+                      </Text>
+                    </View>
                   </View>
                 </Pressable>
+                {/* Paketler tile */}
                 <Pressable
                   onPress={() => setPremiumSubTab("paketler")}
                   style={[
@@ -1059,14 +1072,24 @@ export default function VakalarScreen() {
                           shadowOffset: { width: 0, height: 3 },
                           elevation: 10,
                         }
-                      : { backgroundColor: "#12151E", borderColor: "#FFFFFF12", borderBottomWidth: StyleSheet.hairlineWidth },
+                      : { backgroundColor: "#D4A8430A", borderColor: "#D4A84325", borderBottomWidth: StyleSheet.hairlineWidth },
                   ]}
                 >
-                  <View style={[listStyles.premIconTabBadge, {
-                    backgroundColor: premiumSubTab === "paketler" ? "#D4A84330" : "#FFFFFF0E",
-                    borderColor: premiumSubTab === "paketler" ? "#D4A84366" : "#FFFFFF14",
-                  }]}>
-                    <MaterialIcons name="inventory-2" size={30} color={premiumSubTab === "paketler" ? "#D4A843" : "#444666"} />
+                  <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
+                    <View style={[listStyles.premIconTabBadge, {
+                      backgroundColor: premiumSubTab === "paketler" ? "#D4A84330" : "#FFFFFF0C",
+                      borderColor: premiumSubTab === "paketler" ? "#D4A84360" : "#FFFFFF18",
+                    }]}>
+                      <MaterialIcons name="inventory-2" size={20} color={premiumSubTab === "paketler" ? "#D4A843" : "#666880"} />
+                    </View>
+                    <View style={{ gap: 2 }}>
+                      <Text style={{ color: premiumSubTab === "paketler" ? "#D4A843" : "#888AAA", fontSize: 13, fontWeight: "700", fontFamily: "PlayfairDisplay" }}>
+                        Paketler
+                      </Text>
+                      <Text style={{ color: premiumSubTab === "paketler" ? "#D4A843CC" : "#55576A", fontSize: 11, fontWeight: "600" }}>
+                        {PACKS.length} paket · {premiumPuzzles.length} vaka
+                      </Text>
+                    </View>
                   </View>
                 </Pressable>
               </View>
@@ -2030,23 +2053,25 @@ const listStyles = StyleSheet.create({
   premIconTabRow: {
     flexDirection: "row",
     paddingHorizontal: 16,
-    paddingBottom: 14,
-    gap: 12,
+    paddingTop: 12,
+    paddingBottom: 12,
+    gap: 10,
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
   premIconTab: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    paddingVertical: 16,
-    borderRadius: 16,
+    paddingVertical: 12,
+    paddingHorizontal: 10,
+    borderRadius: 14,
     borderWidth: 1.5,
-    gap: 8,
+    gap: 6,
   },
   premIconTabBadge: {
-    width: 64,
-    height: 64,
-    borderRadius: 18,
+    width: 40,
+    height: 40,
+    borderRadius: 12,
     borderWidth: 1.5,
     alignItems: "center",
     justifyContent: "center",
