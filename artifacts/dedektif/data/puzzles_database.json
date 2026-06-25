@@ -4619,942 +4619,1343 @@
       "contentWarning": "Bu pakette gerilim ve korku öğeleri bulunmaktadır. 15+ yaş için uygundur.",
       "puzzles": [
         {
-          "puzzleId": "hr_001",
-          "title": "Psikiyatrinin Son Hastası",
-          "subtitle": "Terk Edilmiş Hastane, Karadeniz Sahili",
-          "difficulty": 1,
-          "difficultyLabel": "Çaylak",
+          "puzzleId": "pp_001",
+          "packId": "pack_pp",
+          "packSlug": "period",
           "stars": "★☆☆☆☆",
           "gridSize": "3x3",
           "timeLimit": 600,
-          "story": "1980'lerde kapatılan psikiyatri hastanesini araştırmak için gelen bir tarih doktoru, binada ölü bulundu. Üç kişi o gece oradaydı.",
-          "atmosphere": "Kırık camlar. Islak beton. Gece yarısı. Şimşek ışığında gölgeler.",
+          "title": "Mavi Etiketin Son Durağı",
+          "subtitle": "1938 · Meridyen Garı · Emanet holü",
+          "difficulty": 1,
+          "difficultyLevel": 1,
+          "specialMechanic": "sifreli_mesaj",
+          "story": "1938’in son haftasında Meridyen Garı, kış yağmurunun altında kapanış seferine yetişen yolcularla doluydu. Saat 22.10 treni perondan ayrılırken emanet holünün camlarını buhar kapladı; iki dakika sonra ana salonun bütün saatleri aynı dakikada durdu.\n\nTicaret kuryesi Cemil Erkan, kayıp bir kumaş sevkiyatının teslim kaydını araştırmak için emanet holüne girmişti. Kısa süre sonra kilitli bavul sıralarının önünde ölü bulundu. Yanında yalnızca mavi mürekkepli, kırık köşeli 17 numaralı bir etiket parçası vardı.",
+          "atmosphere": "Islak kömür, sıcak metal ve eski kâğıt kokusu. Yıldızlı cam tavanın altında emanet holünü yalnız yeşil banko lambası aydınlatıyor; bütün saatler 22.10’u gösterse de gar artık o dakikadan sonra hiçbir şeye güvenmiyor.",
           "suspects": [
             {
               "id": "s1",
-              "name": "Eski Hemşire Ayşe",
-              "icon": "noun-hizmetci-hacer-avatar.png",
-              "description": "Hastanenin kapanmasını hiç kabullenemedi. Hâlâ bakıyor.",
-              "detail": "70 yaşında, yorgun gözlü, sırrı var.",
-              "parmakIziDeseni": "fp_whorl"
+              "name": "Posta Kâtibi Arda",
+              "icon": "✉️",
+              "description": "Gece vardiyasında mühürlü torbaları teslim alan kâtip.",
+              "detail": "Eski hat tarifelerini ezbere bilir; kaybolan paketlerin numarasını küçük bir deftere işaretler."
             },
             {
               "id": "s2",
-              "name": "Mülk Sahibi Fuat Bey",
-              "icon": "noun-vahap-amca-avatar.png",
-              "description": "Binayı yıkıp otelyapmak istiyor. Doktor buna engel olabilirdi.",
-              "detail": "55 yaşında, sabırsız, paranoyak.",
-              "parmakIziDeseni": "fp_loop_right"
+              "name": "Biletçi Nihat",
+              "icon": "🎟️",
+              "description": "İstasyonun bilet penceresinde çalışan, düzen takıntılı görevli.",
+              "detail": "Boş zamanında yıpranmış bagaj etiketlerini biriktirir; rengi solmuş damgaları ve bilet penceresinin düzenini ayırt edebilir."
             },
             {
               "id": "s3",
-              "name": "Yerel Gazeteci Canan",
-              "icon": "noun-nazik-hanim-avatar.png",
-              "description": "Doktorla birlikte araştırma yapıyordu. Şimdi yalnız.",
-              "detail": "30 yaşında, korkmuş ama meraklı.",
-              "parmakIziDeseni": "fp_loop_left"
+              "name": "Otel Tercümanı Feride",
+              "icon": "🧳",
+              "description": "Gecikmiş yolcular için otel ve gümrük işlerini yöneten serbest tercüman.",
+              "detail": "Yanında her zaman ince deri bir valiz taşır; yabancı yolcuların yazışmalarını ve otel santralindeki çağrıları çevirir."
             }
           ],
           "weapons": [
             {
               "id": "w1",
-              "name": "Eski Demir Boru",
-              "icon": "🔧",
-              "description": "Hastanenin çökmüş koridorlarından."
+              "name": "Siyanürlü Etiket Tutkalı",
+              "icon": "🧪",
+              "description": "Eski bagaj etiketlerinin arkasına sürülen, keskin badem kokulu yapıştırıcı.",
+              "detail": ""
             },
             {
               "id": "w2",
-              "name": "Psikiyatrik İlaç",
-              "icon": "💉",
-              "description": "Hastanenin eski ilaç deposundan."
+              "name": "Kargo Makası",
+              "icon": "✂️",
+              "description": "Posta vagonundaki sicim ve mühür iplerini kesmek için kullanılan ağır makas.",
+              "detail": ""
             },
             {
               "id": "w3",
-              "name": "Yüksekten Düşürme",
-              "icon": "🪜",
-              "description": "Çürük merdivenden."
+              "name": "Fren Kolu Anahtarı",
+              "icon": "🔧",
+              "description": "Vagon fren kolunu açmak için kullanılan kısa, dökme demir anahtar.",
+              "detail": ""
             }
           ],
           "locations": [
             {
               "id": "l1",
-              "name": "Eski Koğuş",
-              "icon": "🛏️",
-              "description": "Boş hasta yatakları olan büyük koğuş."
+              "name": "Posta Vagonu",
+              "icon": "🚃",
+              "description": "Mühürlü torbaların taşındığı dar servis vagonu.",
+              "detail": ""
             },
             {
               "id": "l2",
-              "name": "İlaç Deposu",
-              "icon": "💊",
-              "description": "Yarı açık depo."
+              "name": "Emanet Dolapları",
+              "icon": "🗄️",
+              "description": "Garın kilitli bavul sıraları ve teslim penceresi; kapalı kutu serisi burada tutulur.",
+              "detail": ""
             },
             {
               "id": "l3",
-              "name": "Çatı Merdiveni",
-              "icon": "🪜",
-              "description": "Çürük tahta merdiven."
+              "name": "Peron Alt Geçidi",
+              "icon": "🚇",
+              "description": "Rayların altından geçen, sesin boğuklaştığı taş koridor.",
+              "detail": ""
             }
           ],
           "clues": [
             {
               "id": "c1",
-              "type": "kanit",
+              "title": "Yapıştırıcı Kalıntısı",
+              "type": "adli",
+              "mechanicType": "text",
+              "text": "Adli laboratuvar, keskin badem kokulu yapıştırıcıyı ölümcül madde olarak saptadı. Kalıntıdaki mavi reçine, kilitli bavul sıralarındaki kapalı kutu serisinin koduyla uyuşuyor.",
+              "deductionHint": "Ölümcül maddeyi belirledin; bu madde hangi iş akışına bağlanıyor?",
+              "isBonus": false,
               "revealOrder": 1,
               "isRevealed": true,
-              "pointCost": 0,
-              "title": "Ölüm Yeri",
-              "text": "Doktor eski koğuşta yerde. Baş yaralanması — demir boru darbesi. Gözlüğü kırık, kâğıtları dağılmış.",
-              "mechanicType": "text"
+              "pointCost": 0
             },
             {
               "id": "c2",
+              "title": "Geçit Nöbeti",
               "type": "tanik",
+              "mechanicType": "text",
+              "text": "Nöbetçinin vardiya kaydı, bilet penceresindeki görevlinin son tren kalkana kadar yerinden ayrılmadığını gösteriyor.",
+              "deductionHint": "Kayıtlı bir vardiya, hangi taş koridor olasılığını kapatır?",
+              "isBonus": false,
               "revealOrder": 2,
               "isRevealed": false,
-              "pointCost": 50,
-              "title": "Canan'ın Beyanı",
-              "text": "\"Ses duyduk ve ayrıldık. Ben ilaç deposuna gittim, doktor koğuşa. 10 dakika sonra sesi kesildi. Gittiğimde onu yerde buldum.\"",
-              "mechanicType": "ses_kaydi",
-              "sesMetni": "[Ses kaydı] Canan'ın sesi kırık: 'Kapıyı açtığımda... demir boru yerdeydi. Taze kan. Ve koridorda adımlar.'",
-              "deductionHint": "Canan ilaç deposundaydı — alibi mi?"
+              "pointCost": 60
             },
             {
               "id": "c3",
-              "type": "parmak_izi",
+              "title": "Vagon Zimmeti",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Mühürlü torbaların taşındığı dar servis aracının zimmet fişinde, sicim kesmeye yarayan ağır makasın kalkıştan önce yalnız servis rafında asılı olduğu yazıyor.",
+              "deductionHint": "Zimmette tek bir raf görünüyorsa hangi eşleşme işaretlenir?",
+              "isBonus": false,
               "revealOrder": 3,
               "isRevealed": false,
-              "pointCost": 50,
-              "title": "Demir Boru İzi",
-              "text": "Boruda kısmi iz.",
-              "mechanicType": "parmak_izi",
-              "parmakIziVerisi": {
-                "aciklama": "Üç şüphelinin izini boru iziyle eşleştir.",
-                "izler": [
-                  {
-                    "izId": "iz1",
-                    "konum": "Boru orta",
-                    "eslesme": "s2",
-                    "ipucu": "Orta yaş, güçlü kavrayış. İnşaat işi yapan biri."
-                  }
-                ],
-                "sonuc": "Boruyu tutan: Fuat Bey. (s2)",
-                "sahneGorseli": "fp_loop_right"
-              }
+              "pointCost": 60
             },
             {
               "id": "c4",
-              "type": "eleme",
+              "title": "Otel Telefonu",
+              "type": "tanik",
+              "mechanicType": "text",
+              "text": "Otel santralinin pulsa kaydı, yabancı yolcu yazışmalarıyla ilgilenen kadının kilitli bavul sıralarına uğramadan önce uzun bir dış hat görüşmesi yaptığını doğruluyor.",
+              "deductionHint": "Bir telefon kaydı, hangi teslim noktasını onun için kapatır?",
+              "isBonus": false,
               "revealOrder": 4,
               "isRevealed": false,
-              "pointCost": 50,
-              "title": "Hemşire Ayşe'nin Yürüyüş Durumu",
-              "text": "Ayşe kalça ameliyatından yeni çıkmış — yürüme güçlüğü var. Merdivenleri çıkamaz, koğuşa gidip dönemez.",
-              "mechanicType": "text"
+              "pointCost": 60
             },
             {
               "id": "c5",
-              "type": "dogrudan",
+              "title": "Etiketlerin Sessiz Rotası",
+              "type": "sifreli",
+              "mechanicType": "sifreli_mesaj",
+              "text": "Mühür odasının çekmecesinde üç, birbirini tutmayan bavul etiketi bulundu.",
+              "deductionHint": "Damga rengi değil; aynı yolun üç ayrı aşamada bıraktığı izler karar verdirir.",
+              "isBonus": false,
               "revealOrder": 5,
               "isRevealed": false,
-              "pointCost": 50,
-              "title": "Doktorun Araştırma Notu",
-              "text": "Doktorun çantasında: 'Fuat Bey binanın resmi olmayan kaydını değiştirmiş. 1982'de burada kimler öldü? Bu soruyu engellemek için ne yapabilir?'",
-              "mechanicType": "gorsel_ipucu",
-              "gorselAciklama": "El yazısı aceleyle yazılmış. 'Ne yapabilir?' altı çizilmiş."
+              "pointCost": 60,
+              "sifre": {
+                "sifrelenmis": "MAVİ-17 / KIRMIZI-04 / SİYAH-29",
+                "sifreleTuru": "valiz etiketi eşleme",
+                "cozumIpucu": "Damgaların sırası, her bagajın geçtiği tek hattı birlikte anlatır; yalnız bir rota üç kayda da uyuyor.",
+                "cozulmus": "DOĞRULAMA KODU 714",
+                "aciklama": "Eşleşme tamamlandığında, ızgarada bir olanaksız bağı kapatacak kadar somut bir halka oluşur.",
+                "presentation": {
+                  "style": "luggage_label_match",
+                  "title": "Valiz Etiketi Eşleme",
+                  "subtitle": "Her etiket aynı yolculuğun farklı bir durağını anlatır. Üç bagajı doğru rotayla eşleştir.",
+                  "purposeHint": "Damgaları doğru rotaya bağlamak, ızgarada hangi kişi–araç bağının mümkün olmadığını gösterecek.",
+                  "cases": [
+                    {
+                      "id": "b1",
+                      "label": "Etiket M-17",
+                      "stamp": "Meridyen · gece 22.10",
+                      "note": "Mavi mürekkep, kırık köşe"
+                    },
+                    {
+                      "id": "b2",
+                      "label": "Etiket K-04",
+                      "stamp": "Kıyı Hattı · sabah",
+                      "note": "Kırmızı gümrük halkası"
+                    },
+                    {
+                      "id": "b3",
+                      "label": "Etiket S-29",
+                      "stamp": "Sarnıç Garı · akşam",
+                      "note": "Siyah fren deposu damgası"
+                    }
+                  ],
+                  "routes": [
+                    {
+                      "id": "r1",
+                      "label": "Posta torbası: Meridyen → Kıyı Hattı → Sarnıç"
+                    },
+                    {
+                      "id": "r2",
+                      "label": "Otel bagajı: Kıyı Hattı → Sarnıç → Meridyen"
+                    },
+                    {
+                      "id": "r3",
+                      "label": "Servis sandığı: Sarnıç → Meridyen → Kıyı Hattı"
+                    }
+                  ],
+                  "correctAssignments": [
+                    {
+                      "itemId": "b1",
+                      "answerId": "r1"
+                    },
+                    {
+                      "itemId": "b2",
+                      "answerId": "r2"
+                    },
+                    {
+                      "itemId": "b3",
+                      "answerId": "r3"
+                    }
+                  ],
+                  "resultText": "Fren kolu anahtarının kaydı, otel bagajına değil posta torbasına aittir: Feride × Fren Kolu Anahtarı.",
+                  "interaction": {
+                    "mode": "select_match",
+                    "submitLabel": "Etiketleri Doğrula",
+                    "successMessage": "Etiket zinciri tek bir bagaj düzeninde birleşti.",
+                    "failureMessage": "Damga sırası aynı yolculuğu anlatmıyor."
+                  }
+                }
+              }
             },
             {
-              "id": "c6",
-              "type": "sifreli",
+              "id": "b1",
+              "title": "Mühür Tozu",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Teslim penceresinin iç yüzünde Nihat’ın kullandığı kırmızı mumdan ince bir iz bulundu.",
+              "deductionHint": "Bu iz hangi görevliyi hangi teslim noktasına yaklaştırır?",
+              "isBonus": true,
               "revealOrder": 6,
               "isRevealed": false,
-              "pointCost": 50,
-              "title": "Duvardaki Şifreli Yazı",
-              "text": "Eski bir koğuş duvarında solmuş yazı — 1982'den kalma.",
-              "mechanicType": "sifreli_mesaj",
-              "sifre": {
-                "sifrelenmis": "FT BLRD — HPS KAPTI",
-                "sifreleTuru": "sesli_harf_kisalt",
-                "cozumIpucu": "Sesli harfleri ekle.",
-                "cozulmus": "FUAT BURDA — HEPSI KAPTI",
-                "aciklama": "1982'de bir hasta duvara yazmış. Fuat o zaman da buradaydı."
-              }
+              "pointCost": 60
+            },
+            {
+              "id": "b2",
+              "title": "Gece Memuru",
+              "type": "tanik",
+              "mechanicType": "text",
+              "text": "Posta görevlisi Arda’nın, fren anahtarını servis vagonundan aldığını iki hamal da hatırladı.",
+              "deductionHint": "Bu hatırlama hangi kişi–araç bağını doğrular?",
+              "isBonus": true,
+              "revealOrder": 7,
+              "isRevealed": false,
+              "pointCost": 60
             }
           ],
+          "assetManifest": [],
           "solution": {
             "suspectId": "s2",
             "weaponId": "w1",
-            "locationId": "l1"
+            "locationId": "l2"
           },
-          "solutionNarrative": "Fuat Bey, 1982'de hastanedeki bir ölümle ilgiliydi ve doktor bunu keşfedecekti. Doktoru koğuşta köşeye sıkıştırdı ve boru ile vurdu. Duvar yazısı onu 40 yıl sonra ele geçirdi.",
-          "specialMechanic": "sifreli_parmak_izi"
+          "solutionNarrative": "Biletçi Nihat, son seferin ardından emanet holüne geçtiğinde Cemil’in aradığı kaydın onu eski etiket serisine götüreceğini biliyordu. Mavi etiketin arkasına sürülmüş siyanürlü tutkalla teması, olayı bir kavga gibi değil, yanlış teslimatın ortasında gelişen sessiz bir çöküş gibi gösterdi. Arda’nın posta vagonu zimmeti ve Feride’nin telefon kaydı, iki alternatif rotayı ayrı ayrı kapattı; Cemil’in avucunda kalan kırık M-17 parçası ise Nihat’ın kurduğu etiket zincirini görünür kılan son iz oldu."
         },
         {
-          "puzzleId": "hr_002",
-          "title": "Lanetli Köyün Sırrı",
-          "subtitle": "Doğu Anadolu, Terk Edilmiş Köy",
-          "difficulty": 2,
-          "difficultyLabel": "Polis Memuru",
+          "puzzleId": "pp_002",
+          "packId": "pack_pp",
+          "packSlug": "period",
           "stars": "★★☆☆☆",
           "gridSize": "3x3",
           "timeLimit": 540,
-          "story": "1960'larda terk edilen ve 'lanetli' denilen bir köye dönen genç bir miras sahibi, üç gün sonra ölü bulundu. Yöre halkı 'köy yaptı' diyor — ama biri yardım etti.",
-          "atmosphere": "Dağ. Sis. Terk edilmiş evler. Sessizlik ve rüzgar.",
+          "title": "Negatifte Kalan Saat",
+          "subtitle": "1956 · Şehir Fotoğrafhanesi · Çatı ışıkları",
+          "difficulty": 2,
+          "difficultyLevel": 2,
+          "specialMechanic": "sifreli_mesaj",
+          "story": "1956 yazının boğucu bir gecesinde, kentin arka sokaklarındaki sırları belgeleyen usta bir belgesel fotoğrafçısı, çoktan kapanmış, tozlu bir şehir fotoğrafhanesinde ölü bulundu. İlk bakışta sıradan bir iş kazası veya basit bir zehirlenme gibi görünen bu olay, karanlık odanın zayıf kırmızı ışığında kuruması için askıya asılmış son kareler incelendiğinde bambaşka bir boyuta taşındı. Fotoğrafçının ölmeden hemen önce çektiği kareler; baskı kimyasalının şişesinden dökülen damlaları ve yakalanmak istemeyen birinin gölgesini kayıt altına almıştı. Bu fragmanlar birleştirildiğinde, tek bir gerçeği işaret eden sessiz bir tanıklık doğuyordu.",
+          "atmosphere": "Kimyasal banyoların keskin kokusu, çatıdaki projektörlerden sonra bile odada kalmıştı. Negatifler ışığa tutulunca her şey ters görünüyordu.",
           "suspects": [
             {
               "id": "s1",
-              "name": "Yaşlı Muhtar Hasan Dede",
-              "icon": "noun-komsu-nevzat-avatar.png",
-              "description": "Köyün sırrını biliyor. Miras meselesine karşı.",
-              "detail": "80 yaşında, otoriter, ölene kadar konuşmayacak gibi."
+              "name": "Kamera Tamircisi Belgin",
+              "icon": "📷",
+              "description": "Eski körüklü makineleri söküp yeniden çalıştıran titiz tamirci.",
+              "detail": "Vidalara numara verir, parmaklarının ucunda gümüş nitrat lekeleri taşır."
             },
             {
               "id": "s2",
-              "name": "Avukat Serkan",
-              "icon": "noun-cem-bey-avatar.png",
-              "description": "Miras meselesini çözmek için gelen kentli avukat.",
-              "detail": "38 yaşında, sinirli, köy hayatından uzak."
+              "name": "Galeri Bekçisi Orhan",
+              "icon": "🛡️",
+              "description": "Bina kapandığında anahtarları devralan gece bekçisi.",
+              "detail": "Cam çerçeveleri kendi onarır; kırık parçaları küçük kutularda saklar ve gece anahtarlarını devralır."
             },
             {
               "id": "s3",
-              "name": "Komşu Köylü Fatma Ana",
-              "icon": "noun-pazar-musteri-hanim.png",
-              "description": "60 yıldır köyün kenarında yaşıyor, her şeyi görmüş.",
-              "detail": "75 yaşında, gözlemci, susmayı biliyor."
+              "name": "Arşiv Fotoğrafçısı Leyla",
+              "icon": "🎞️",
+              "description": "Eski baskıları kataloglayan, kaybolan kareleri yeniden basan arşivci.",
+              "detail": "Her çekimin saatini ve banyosunu ayrı kurşun kalemle not eder; negatif dolaplarının düzenini ezbere bilir."
             }
           ],
           "weapons": [
             {
               "id": "w1",
-              "name": "Zehirli Ot Çayı",
-              "icon": "🌿",
-              "description": "Köy bitkilerinden yapılan geleneksel çay."
+              "name": "Çerçeve Kesici",
+              "icon": "🔪",
+              "description": "Sert karton ve cam kenarlarını kesmekte kullanılan ince uçlu bıçak.",
+              "detail": ""
             },
             {
               "id": "w2",
-              "name": "Kaya Düşmesi",
-              "icon": "🪨",
-              "description": "Dağ yolunda düşürülen kaya."
+              "name": "Siyanürlü Sabitleyici Banyo",
+              "icon": "🧫",
+              "description": "Eski baskı banyolarında kullanılan, yanlış oranlandığında ölümcül sıvı; gümüş tuzu bırakır.",
+              "detail": ""
             },
             {
               "id": "w3",
-              "name": "Boğma",
-              "icon": "🪢",
-              "description": "El ile."
-            }
-          ],
-          "locations": [
-            {
-              "id": "l1",
-              "name": "Terk Edilmiş Ev",
-              "icon": "🏚️",
-              "description": "Miras kalan eski aile evi."
-            },
-            {
-              "id": "l2",
-              "name": "Köy Pınarı",
-              "icon": "💧",
-              "description": "Köyün tek su kaynağı."
-            },
-            {
-              "id": "l3",
-              "name": "Dağ Yolu",
-              "icon": "🏔️",
-              "description": "Köye ulaşan tek yol."
-            }
-          ],
-          "clues": [
-            {
-              "id": "c1",
-              "type": "kanit",
-              "revealOrder": 1,
-              "isRevealed": true,
-              "pointCost": 0,
-              "title": "Jandarma Raporu",
-              "text": "Miras sahibi evin içinde yerde. Zehirlenme belirtileri. Yanında bitkisel çay bardağı. İç organlar hasar görmüş.",
-              "mechanicType": "text"
-            },
-            {
-              "id": "c2",
-              "type": "tanik",
-              "revealOrder": 2,
-              "isRevealed": false,
-              "pointCost": 60,
-              "title": "Fatma Ana'nın Tanıklığı",
-              "text": "\"Avukat o sabah erkenden çaya gitmişti. Benden ot istedi — 'baş ağrısı' dedi. Ben verdim ama ne verdiğimi biliyordum. Ama vermemek elimden gelmedi.\"",
-              "mechanicType": "ses_kaydi",
-              "sesMetni": "[Ses kaydı] Fatma Ana ağlıyor: 'Yanlış yaptım. Ama Serkan beni korkuttu. Hasan Dede de biliyordu.'",
-              "deductionHint": "Fatma ot verdi — ama kimin talebiyle?"
-            },
-            {
-              "id": "c3",
-              "type": "parmak_izi",
-              "revealOrder": 3,
-              "isRevealed": false,
-              "pointCost": 60,
-              "title": "Çay Bardağı",
-              "text": "Bardakta iz.",
-              "mechanicType": "parmak_izi",
-              "parmakIziVerisi": {
-                "aciklama": "Üç şüphelinin izini bardakla eşleştir.",
-                "izler": [
-                  {
-                    "izId": "iz1",
-                    "konum": "Bardak gövdesi",
-                    "eslesme": "s2",
-                    "ipucu": "Genç, kentli el. Dolma kalem izi var."
-                  }
-                ],
-                "sonuc": "Çayı hazırlayan: Serkan. (s2)"
-              }
-            },
-            {
-              "id": "c4",
-              "type": "sifreli",
-              "revealOrder": 4,
-              "isRevealed": false,
-              "pointCost": 60,
-              "title": "Avukatın Gizli Belgesi",
-              "text": "Serkan'ın çantasında şifreli not.",
-              "mechanicType": "sifreli_mesaj",
-              "sifre": {
-                "sifrelenmis": "MRS BTTL — SRFBNT — TRPLMT HAZR",
-                "sifreleTuru": "sesli_harf_kisalt",
-                "cozumIpucu": "Sesli harfleri ekle.",
-                "cozulmus": "MİRAS BİTTİ — SADECE BEN — TRANSFER HAZIR",
-                "aciklama": "Serkan mirasın tek sahibi olmak için plan yapmıştı."
-              }
-            },
-            {
-              "id": "c5",
-              "type": "eleme",
-              "revealOrder": 5,
-              "isRevealed": false,
-              "pointCost": 60,
-              "title": "Hasan Dede'nin Durumu",
-              "text": "Hasan Dede köy meydanından çıkmıyor — bacakları tutmuyor. Ev ziyareti yapamaz, avukat zaten teyit ediyor.",
-              "mechanicType": "text"
-            },
-            {
-              "id": "c6",
-              "type": "dogrudan",
-              "revealOrder": 6,
-              "isRevealed": false,
-              "pointCost": 60,
-              "title": "Miras Belgesi",
-              "text": "Serkan'ın noterlere göndereceği miras devir belgesi zaten hazır — miras sahibinin ölümünden önce hazırlanmış. Tek imzacı: Serkan.",
-              "mechanicType": "gorsel_ipucu",
-              "gorselAciklama": "Resmi damgalı belge. Tarih: 3 gün önce. Miras sahibi hâlâ hayattaydı."
-            }
-          ],
-          "solution": {
-            "suspectId": "s2",
-            "weaponId": "w1",
-            "locationId": "l1"
-          },
-          "solutionNarrative": "Avukat Serkan, mirasın tamamını ele geçirmek için miras sahibini zehirli ot çayıyla öldürdü. Fatma Ana'yı baskıyla ot temin etmeye zorladı. Belge zaten hazırdı.",
-          "specialMechanic": "sifreli_parmak_ses"
-        },
-        {
-          "puzzleId": "hr_003",
-          "title": "Aynada Gördüğüm",
-          "subtitle": "Antika Yalı, Boğaz Sahili",
-          "difficulty": 3,
-          "difficultyLabel": "Dedektif",
-          "stars": "★★★☆☆",
-          "gridSize": "3x3",
-          "timeLimit": 480,
-          "story": "Boğaz'daki antika yalıda bir parapsikoloji araştırmacısı, 'yalının ruhu'nu araştırırken ölü bulundu. Üç kişi o gece içerideydi. Ve büyük antika ayna kırılmış.",
-          "atmosphere": "Boğaz. Gece. Eski ahşap. Antika aynanın kırık parçaları.",
-          "suspects": [
-            {
-              "id": "s1",
-              "name": "Yalı Sahibi Mme. Dolores",
-              "icon": "noun-semiha-hanim-avatar.png",
-              "description": "Araştırmacının 'ruhları rahatsız ettiğini' söylüyordu.",
-              "detail": "65 yaşında, Rum asıllı, gizemli."
-            },
-            {
-              "id": "s2",
-              "name": "Asistan Tarık",
-              "icon": "noun-usak-mehmet-avatar.png",
-              "description": "Araştırmacının 10 yıllık asistanı. Ama son ay garip.",
-              "detail": "35 yaşında, yorgun, bir şey gizliyor."
-            },
-            {
-              "id": "s3",
-              "name": "Yalı Bekçisi Yaşar",
-              "icon": "noun-komsu-nevzat-avatar.png",
-              "description": "40 yıldır yalıda. Her köşeyi biliyor.",
-              "detail": "65 yaşında, sakin ama sırları olan biri."
-            }
-          ],
-          "weapons": [
-            {
-              "id": "w1",
-              "name": "Ayna Kırığı",
-              "icon": "🗡️",
-              "description": "Antika ayanın sivri kırık parçası."
-            },
-            {
-              "id": "w2",
-              "name": "Zehirli Aromatik Yağ",
-              "icon": "🕯️",
-              "description": "Rituelde kullanılan yağa katılan madde."
-            },
-            {
-              "id": "w3",
-              "name": "Elektrik Arızası Tuzağı",
+              "name": "Açıkta Kalan Işık Kablosu",
               "icon": "⚡",
-              "description": "Islak zeminde elektrik."
+              "description": "Çatı projektörlerine enerji veren yalıtımı aşınmış kablo.",
+              "detail": ""
             }
           ],
           "locations": [
             {
               "id": "l1",
-              "name": "Ayna Odası",
-              "icon": "🪞",
-              "description": "Büyük antika ayanın bulunduğu oda."
+              "name": "Karanlık Oda",
+              "icon": "🚪",
+              "description": "Kırmızı lambalı, muslukları kimyasal tepsilere açılan ve ışık geçirmeyen yıkama hattı bulunan çalışma odası.",
+              "detail": ""
             },
             {
               "id": "l2",
-              "name": "Bodrum Kat",
-              "icon": "🔒",
-              "description": "Yalının eski bodrum katı."
+              "name": "Çatı Terası",
+              "icon": "🏙️",
+              "description": "Dönemin büyük projektörlerinin yer aldığı rüzgârlı çatı.",
+              "detail": ""
             },
             {
               "id": "l3",
-              "name": "Sahil Terası",
-              "icon": "🌊",
-              "description": "Boğaz'a bakan veranda."
+              "name": "Arşiv Koridoru",
+              "icon": "🗂️",
+              "description": "Negatif dolaplarının sıralandığı, dar ve penceresiz geçit.",
+              "detail": ""
             }
           ],
           "clues": [
             {
               "id": "c1",
-              "type": "kanit",
+              "title": "Banyo Kimyası",
+              "type": "adli",
+              "mechanicType": "text",
+              "text": "Adli kimya raporu, eski baskı banyolarında kullanılan ölümcül sıvıyı tespit etti. Gümüş tuzu oranı, kırmızı lambalı ve ışık geçirmeyen yıkama hattına özgü.",
+              "deductionHint": "Ölümcül sıvının çalışma düzeni, hangi kapalı işleyişe bağlanır?",
+              "isBonus": false,
               "revealOrder": 1,
               "isRevealed": true,
-              "pointCost": 0,
-              "title": "Ölüm Yeri",
-              "text": "Araştırmacı ayna odasında. Ayna kırılmış. Kesik izleri — cam parçası. Ayrıca kanda aromatik yağ kalıntısı.",
-              "mechanicType": "text"
+              "pointCost": 0
             },
             {
               "id": "c2",
+              "title": "Ters Baskı Karşılaştırması",
               "type": "sifreli",
+              "mechanicType": "sifreli_mesaj",
+              "text": "Büyüteç kutusunda aynı saatin iki zıt baskısı bulundu.",
+              "deductionHint": "Yansımayı değil, iki baskıda aynı kalması gereken fiziksel ayrıntıyı izle.",
+              "isBonus": false,
               "revealOrder": 2,
               "isRevealed": false,
-              "pointCost": 70,
-              "title": "Araştırma Defteri Son Sayfası",
-              "text": "Araştırmacının şifreli son notu.",
-              "mechanicType": "sifreli_mesaj",
+              "pointCost": 60,
               "sifre": {
-                "sifrelenmis": "TRK YĞ KTTI — MR ODSI — DLRS GRD",
-                "sifreleTuru": "sesli_harf_kisalt",
-                "cozumIpucu": "Sesli harfleri ekle.",
-                "cozulmus": "TARIK YAĞ KATTI — AYNA ODASI — DOLORES GÖRDÜ",
-                "aciklama": "Son notta Tarık'ı suçluyor, Dolores'in gözetlediğini söylüyor."
+                "sifrelenmis": "KARE-12 / KARE-16 / KARE-21",
+                "sifreleTuru": "negatif karşılaştırması",
+                "cozumIpucu": "Işıkta görünen ayrıntıların ters baskıda da fiziksel olarak mümkün kalıp kalmadığını karşılaştır.",
+                "cozulmus": "TEMAS LEVHASI 956",
+                "aciklama": "Karşılaştırma tamamlandığında, ızgarada bir olanaksız bağlantıyı eleyebilecek netlik elde edilir.",
+                "presentation": {
+                  "style": "negative_contact_sheet",
+                  "title": "Fotoğraf Negatifi Karşılaştırması",
+                  "subtitle": "Pozitif ve negatif baskıdaki fiziksel ayrıntıları karşılaştır; yalnız tutarlı farkları seç.",
+                  "purposeHint": "Üç farkı doğru okuduğunda, ızgarada bir araç–mekân eşleşmesinin olamayacağını anlayacaksın.",
+                  "checks": [
+                    {
+                      "id": "n1",
+                      "label": "Kare 12",
+                      "positive": "Projektör ayağı sağda",
+                      "negative": "Ayağın gölgesi solda",
+                      "options": [
+                        {
+                          "id": "a",
+                          "label": "Gölge yönü güneşle uyumlu"
+                        },
+                        {
+                          "id": "b",
+                          "label": "Kablo bağlantısı görünmüyor"
+                        },
+                        {
+                          "id": "c",
+                          "label": "Saat ibresi ters"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "n2",
+                      "label": "Kare 16",
+                      "positive": "Islak saçak çizgisi",
+                      "negative": "Kuru iz",
+                      "options": [
+                        {
+                          "id": "a",
+                          "label": "Kablo bağlantısı görünmüyor"
+                        },
+                        {
+                          "id": "b",
+                          "label": "Rozet yansıması var"
+                        },
+                        {
+                          "id": "c",
+                          "label": "Saat ibresi ters"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "n3",
+                      "label": "Kare 21",
+                      "positive": "Projektör lambası açık",
+                      "negative": "Yalıtım gövdesi kapalı",
+                      "options": [
+                        {
+                          "id": "a",
+                          "label": "Saat ibresi ters"
+                        },
+                        {
+                          "id": "b",
+                          "label": "Kablo bağlantısı görünmüyor"
+                        },
+                        {
+                          "id": "c",
+                          "label": "Rozet yansıması var"
+                        }
+                      ]
+                    }
+                  ],
+                  "correctAssignments": [
+                    {
+                      "itemId": "n1",
+                      "answerId": "a"
+                    },
+                    {
+                      "itemId": "n2",
+                      "answerId": "a"
+                    },
+                    {
+                      "itemId": "n3",
+                      "answerId": "b"
+                    }
+                  ],
+                  "resultText": "Çatıdaki kablo hattı o saatlerde kapalıdır: Açıkta Kalan Işık Kablosu × Çatı Terası.",
+                  "interaction": {
+                    "mode": "multi_compare",
+                    "submitLabel": "Baskıları Karşılaştır",
+                    "successMessage": "Negatifler aynı fiziksel hikâyeyi anlattı.",
+                    "failureMessage": "Seçtiğin farklar tek bir sahnede birlikte mümkün görünmüyor."
+                  }
+                }
               }
             },
             {
               "id": "c3",
-              "type": "tanik",
+              "title": "Çerçeve Kutusu",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Gece anahtarlarını devralan görevlinin dolabındaki zimmet kartı, sert karton ve cam kenarı kesmeye yarayan ince ucun o gece aynı kişiye teslim edildiğini gösteriyor.",
+              "deductionHint": "Tek teslim kartı, hangi kişi–araç bağını doğrular?",
+              "isBonus": false,
               "revealOrder": 3,
               "isRevealed": false,
-              "pointCost": 70,
-              "title": "Dolores'in Beyanı",
-              "text": "\"Tarık o gece yağ şişelerine dokundu. Ben gördüm ama ne yaptığını anlayamadım. Araştırma ritüeli sandım.\"",
-              "mechanicType": "text"
+              "pointCost": 60
             },
             {
               "id": "c4",
-              "type": "parmak_izi",
+              "title": "Koridor Turnikesi",
+              "type": "tanik",
+              "mechanicType": "text",
+              "text": "Negatif dolaplarının sıralandığı dar geçidin turnike şeridi, her çekimin saatini ayrı notlayan kişinin kartının olay saatinde okutulmadığını kayda geçirmiş.",
+              "deductionHint": "Bir geçiş kaydı, hangi koridor olasılığını kapatır?",
+              "isBonus": false,
               "revealOrder": 4,
               "isRevealed": false,
-              "pointCost": 70,
-              "title": "Yağ Şişesi",
-              "text": "Ritüel yağ şişelerinde iz.",
-              "mechanicType": "parmak_izi",
-              "parmakIziVerisi": {
-                "aciklama": "Üç şüphelinin izini şişeyle eşleştir.",
-                "izler": [
-                  {
-                    "izId": "iz1",
-                    "konum": "Şişe kapağı",
-                    "eslesme": "s2",
-                    "ipucu": "Genç, labaratuvar izi. Kimyasal temas alışkanlığı."
-                  }
-                ],
-                "sonuc": "Şişeyi açan: Tarık. (s2)"
-              }
+              "pointCost": 60
             },
             {
-              "id": "c5",
-              "type": "eleme",
+              "id": "b1",
+              "title": "Kırmızı Lamba",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Karanlık odanın kırmızı lambasında Leyla’nın ince eldiven lifleri tespit edildi.",
+              "deductionHint": "Bu bulgu hangi kişi–mekân bağını destekler?",
+              "isBonus": true,
               "revealOrder": 5,
               "isRevealed": false,
-              "pointCost": 70,
-              "title": "Yaşar'ın Durumu",
-              "text": "Bekçi Yaşar o gece dışarıdaydı — kapı kayıtları sabah 05.00'e kadar çıkış gösteriyor.",
-              "mechanicType": "text"
+              "pointCost": 60
             },
             {
-              "id": "c6",
-              "type": "dogrudan",
+              "id": "b2",
+              "title": "Çatı Anahtarı",
+              "type": "tanik",
+              "mechanicType": "text",
+              "text": "Belgin’in, proje lambalarının anahtarını öğleden sonra bakım için aldığını bina görevlisi doğruladı.",
+              "deductionHint": "Bu ifade hangi kişi–araç bağını destekler?",
+              "isBonus": true,
               "revealOrder": 6,
               "isRevealed": false,
-              "pointCost": 70,
-              "title": "Tarık'ın Gerçek Kimliği",
-              "text": "Tarık'ın geçmişi araştırıldı: asistan değil, rival bir kurumun ajanı. Araştırmacının bulgularını çalmak üzere yerleştirilmişti. Bulgu kamuoyuyla paylaşılacaktı.",
-              "mechanicType": "gorsel_ipucu",
-              "gorselAciklama": "Sahte kimlik belgesi. Fotoğraf Tarık, ama isim ve kurum farklı.",
-              "deductionHint": "Tarık undercover bir ajan."
+              "pointCost": 60
             }
           ],
+          "assetManifest": [],
           "solution": {
-            "suspectId": "s2",
+            "suspectId": "s3",
             "weaponId": "w2",
             "locationId": "l1"
           },
-          "solutionNarrative": "Tarık, rakip kurum adına yerleştirilmiş bir ajandı. Araştırmacının bulgularını çalmak yetmedi — yayımlanmasını engellemek için yağa zehir kattı. Ayna kırığı boğuşma sırasında oluştu.",
-          "specialMechanic": "sifreli_parmak_izi"
+          "solutionNarrative": "Arşiv Fotoğrafçısı Leyla, eski baskı banyosuna ölümcül oranı ekledi. Negatiflerdeki fiziksel tutarsızlık, çatıdaki kablo ihtimalini kapattı; turnike ve zimmet kayıtları kalan düzeni Leyla’nın karanlık odasına taşıdı."
         },
         {
-          "puzzleId": "hr_004",
-          "title": "Ses Gelmez Oradan",
-          "subtitle": "İzole Dağ Kulübesi, Doğu Türkiye",
-          "difficulty": 4,
-          "difficultyLabel": "Başkomiser",
+          "puzzleId": "pp_003",
+          "packId": "pack_pp",
+          "packSlug": "period",
+          "stars": "★★★☆☆",
+          "gridSize": "3x3",
+          "timeLimit": 480,
+          "title": "Son Yayının Mors Kıyısı",
+          "subtitle": "1967 · Kuzey Feneri · Kısa dalga istasyonu",
+          "difficulty": 3,
+          "difficultyLevel": 3,
+          "specialMechanic": "sifreli_mesaj",
+          "story": "1967 sonbaharının dondurucu ve fırtınalı bir gecesinde, ıssız Kuzey Feneri’ne sığınan kıyı ölçüm seferinin baş mühendisi, rüzgârın acımasızca dövdüğü kulede ölü bulundu. Başlangıçta trajik bir kaza sanılan bu olay, kısa dalga istasyonundaki telsiz cihazlarının incelenmesiyle ürkütücü bir cinayet soruşturmasına dönüştü. Maktulün ölmeden hemen önce merkeze geçmeye çalıştığı acil durum yayını kabloların koparılması yüzünden yarıda kesilmişti. Vericinin makarasında dört kesik mors kümesi kayıt altına alınmıştı; bu sinyaller, fenerci evinin gizlice tutulan bakım defterindeki notlarla örtüştüğünde, fırtınanın maskesi ardındaki sıra dışı niyeti gün yüzüne çıkardı.",
+          "atmosphere": "Dalgalar kayalara değil, verici kulesine çarpıyor gibiydi. Anten telleri rüzgârda tıpkı yarım kalmış bir cümle gibi titriyordu.",
+          "suspects": [
+            {
+              "id": "s1",
+              "name": "Deniz Haritacısı Haldun",
+              "icon": "🧭",
+              "description": "Seferin rotalarını ve gizli kıyı ölçümlerini hazırlayan haritacı.",
+              "detail": "Dalgaların yönünü ezbere bilir; notlarını deniz feneri kodlarıyla işaretler."
+            },
+            {
+              "id": "s2",
+              "name": "Fener Görevlisi Duru",
+              "icon": "🕯️",
+              "description": "Yalnız yaşayan, geceleri fenerin ateşini ve nöbet defterini tutan görevli.",
+              "detail": "Lambanın yağını kendi hazırlar; her vardiyada saati iki kez kurar."
+            },
+            {
+              "id": "s3",
+              "name": "Telsiz Teknikeri Rauf",
+              "icon": "📡",
+              "description": "Aküleri, bobinleri ve mors anahtarını onaran teknik görevli.",
+              "detail": "Arızaları renkli kablo bağlarıyla kodlar; her onarımdan sonra kısa bir test yayını yapar."
+            }
+          ],
+          "weapons": [
+            {
+              "id": "w1",
+              "name": "Fener Halatı Kancası",
+              "icon": "🪝",
+              "description": "Ağır cam hazneleri kaldırmak için kullanılan, bilemesi bakım defterine işlenen çelik uçlu kanca.",
+              "detail": ""
+            },
+            {
+              "id": "w2",
+              "name": "Yüksek Gerilim Bobini",
+              "icon": "🔋",
+              "description": "Verici odasındaki ses aralığını düzenleyen açık metal bobin.",
+              "detail": ""
+            },
+            {
+              "id": "w3",
+              "name": "Klorlu Sis Kartuşu",
+              "icon": "🌫️",
+              "description": "Fener camını temizlemekte kullanılan, kapalı yerde boğucu hâle gelen ve klorlu tuz tortusu bırakan kartuş.",
+              "detail": ""
+            }
+          ],
+          "locations": [
+            {
+              "id": "l1",
+              "name": "Fenerci Evi",
+              "icon": "🏠",
+              "description": "Kuleye bitişik, saat ve vardiya defterinin tutulduğu küçük taş ev; ocak filtresi bulunur.",
+              "detail": ""
+            },
+            {
+              "id": "l2",
+              "name": "Akü Odası",
+              "icon": "🔌",
+              "description": "Akülerin ve devre kesicilerin sıralandığı, merdiven yanında askı bulunan alçak tavanlı oda.",
+              "detail": ""
+            },
+            {
+              "id": "l3",
+              "name": "Yayın Kulesi",
+              "icon": "📻",
+              "description": "Kısa dalga cihazı ve anten makaralarının bulunduğu dar metal galeri.",
+              "detail": ""
+            }
+          ],
+          "clues": [
+            {
+              "id": "c1",
+              "title": "Kartuş Tortusu",
+              "type": "adli",
+              "mechanicType": "text",
+              "text": "Adli inceleme, ölümcül solunum hasarının klorlu tuz tortusu bırakan bir bakım kartuşundan geldiğini saptadı. Tortudaki kristal, ocak filtresinin tuttuğu tozla uyuşmuyor.",
+              "deductionHint": "Ölümcül kalıntı bir odanın filtresine uymuyorsa hangi bağlantı kapanır?",
+              "isBonus": false,
+              "revealOrder": 1,
+              "isRevealed": true,
+              "pointCost": 0
+            },
+            {
+              "id": "c2",
+              "title": "Akü Defteri",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Bakım defteri, cam hazneleri kaldıran çelik uçlu kancanın o gece merdiven yanındaki askıda olduğunu gösteriyor.",
+              "deductionHint": "Bakım defteri aynı aracı tek bir odaya yerleştiriyorsa hangi ilişki kesinleşir?",
+              "isBonus": false,
+              "revealOrder": 2,
+              "isRevealed": false,
+              "pointCost": 60
+            },
+            {
+              "id": "c3",
+              "title": "Kısa Dalga Kesiti",
+              "type": "sifreli",
+              "mechanicType": "sifreli_mesaj",
+              "text": "Vericinin makarasında dört kesik mors kümesi kaydedildi.",
+              "deductionHint": "Sinyali, gözün alıştığı kelimeye göre değil; tabloda sabit kalan kısa ve uzun vuruşlara göre çöz.",
+              "isBonus": false,
+              "revealOrder": 3,
+              "isRevealed": false,
+              "pointCost": 60,
+              "sifre": {
+                "sifrelenmis": "·−· / ·− / ··− / ···−",
+                "sifreleTuru": "mors kesiti",
+                "cozumIpucu": "Kısa vuruşların sayısı değil, her işaretin sırası aynı anahtarda tekrar eder.",
+                "cozulmus": "TEYİT KODU 1967",
+                "aciklama": "Çözülen kesit, ızgarada bir araç bağlantısının dışarıda kalmasını sağlayacak işlevsel bir halka verir.",
+                "presentation": {
+                  "style": "morse_transceiver",
+                  "title": "Mors / Telsiz Kesiti",
+                  "subtitle": "Mors tablosunu kullanarak dört kesitin harflerini çöz; kayıt anahtarını doğrula.",
+                  "purposeHint": "Kesiti doğru çözmek, ızgarada hangi kişi–araç eşleşmesinin geçersiz olduğunu belirleyecek.",
+                  "chart": [
+                    {
+                      "char": "R",
+                      "code": "·−·"
+                    },
+                    {
+                      "char": "A",
+                      "code": "·−"
+                    },
+                    {
+                      "char": "U",
+                      "code": "··−"
+                    },
+                    {
+                      "char": "F",
+                      "code": "···−"
+                    },
+                    {
+                      "char": "D",
+                      "code": "−··"
+                    },
+                    {
+                      "char": "K",
+                      "code": "−·−"
+                    }
+                  ],
+                  "signals": [
+                    {
+                      "id": "m1",
+                      "label": "Kesit I",
+                      "code": "·−·",
+                      "options": [
+                        "R",
+                        "A",
+                        "D"
+                      ]
+                    },
+                    {
+                      "id": "m2",
+                      "label": "Kesit II",
+                      "code": "·−",
+                      "options": [
+                        "A",
+                        "U",
+                        "K"
+                      ]
+                    },
+                    {
+                      "id": "m3",
+                      "label": "Kesit III",
+                      "code": "··−",
+                      "options": [
+                        "U",
+                        "F",
+                        "D"
+                      ]
+                    },
+                    {
+                      "id": "m4",
+                      "label": "Kesit IV",
+                      "code": "···−",
+                      "options": [
+                        "F",
+                        "R",
+                        "K"
+                      ]
+                    }
+                  ],
+                  "correctAssignments": [
+                    {
+                      "itemId": "m1",
+                      "answerId": "R"
+                    },
+                    {
+                      "itemId": "m2",
+                      "answerId": "A"
+                    },
+                    {
+                      "itemId": "m3",
+                      "answerId": "U"
+                    },
+                    {
+                      "itemId": "m4",
+                      "answerId": "F"
+                    }
+                  ],
+                  "resultText": "Test yayını, sis kartuşunun teknikerin bakım zincirinde olmadığını gösterir: Telsiz Teknikeri Rauf × Klorlu Sis Kartuşu.",
+                  "interaction": {
+                    "mode": "morse_decode",
+                    "submitLabel": "Kesiti Doğrula",
+                    "successMessage": "Kesit, bakım anahtarıyla aynı kelimeyi verdi.",
+                    "failureMessage": "Harfler sabit vuruş dizisine uymuyor."
+                  }
+                }
+              }
+            },
+            {
+              "id": "c4",
+              "title": "Kurulu Saat",
+              "type": "tanik",
+              "mechanicType": "text",
+              "text": "Kuleye bitişik taş evdeki saat, lambanın yağını kendi hazırlayan görevlinin her vardiyada yaptığı iki kurma işlemini gösteren mekanik kaydı hâlâ taşıyor.",
+              "deductionHint": "Kendi kendine çalışan bir kayıt, hangi kişi–mekân bağını doğrular?",
+              "isBonus": false,
+              "revealOrder": 4,
+              "isRevealed": false,
+              "pointCost": 60
+            },
+            {
+              "id": "b1",
+              "title": "Islak Çizim",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Haldun’un deniz çiziminde kule platformunun kenarından alınmış tuzlu metal tozu bulundu.",
+              "deductionHint": "Bu toz hangi kişi–mekân bağını destekler?",
+              "isBonus": true,
+              "revealOrder": 5,
+              "isRevealed": false,
+              "pointCost": 60
+            },
+            {
+              "id": "b2",
+              "title": "Kablo Bağları",
+              "type": "tanik",
+              "mechanicType": "text",
+              "text": "Teknik görevlinin bakım kartında, yedek kancanın çelik ucunu kendi vardiyasında bilediğine dair imza vardı.",
+              "deductionHint": "Bu ayrıntı hangi kişi–araç bağını destekler?",
+              "isBonus": true,
+              "revealOrder": 6,
+              "isRevealed": false,
+              "pointCost": 60
+            }
+          ],
+          "assetManifest": [],
+          "solution": {
+            "suspectId": "s1",
+            "weaponId": "w3",
+            "locationId": "l3"
+          },
+          "solutionNarrative": "Deniz Haritacısı Haldun, kısa dalga yayın kulesinde klorlu sis kartuşunu kapalı alanda kullandı. Mors kesiti teknikerin kartuşla bağını dışladı; saat ve bakım kayıtları diğer eşleşmeleri sabitledi."
+        },
+        {
+          "puzzleId": "pp_004",
+          "packId": "pack_pp",
+          "packSlug": "period",
           "stars": "★★★★☆",
           "gridSize": "4x4",
           "timeLimit": 420,
-          "story": "Dört arkadaş kış kampı için dağ kulübesine gitti. Üç gün sonra kurtarma ekibi geldiğinde bir kişi ölü, diğerleri şokta. 'Kar fırtınası yaptı' diyorlar.",
-          "atmosphere": "Kar. Kesilmiş elektrik. Şömine ışığı. Ve içlerinde birinin katil olduğu kapalı bir kulübe.",
+          "title": "Küllerin Altındaki Envanter",
+          "subtitle": "1929 · Çöl kazısı · Kayıp yazıt defteri",
+          "difficulty": 4,
+          "difficultyLevel": 4,
+          "specialMechanic": "sifreli_mesaj",
+          "story": "1929 yılının kavurucu sıcaklarında, antik dünyanın sırlarını gün yüzesine çıkarmak için kurulan izole bir çöl kazısında, kampın en saygın yazıt uzmanı ölü bulundu. Başlangıçta yorgunluk ve susuzluğun getirdiği acı bir son gibi görünen bu ölüm, çadırındaki paha biçilmez tabletlerin ve kampın envanter kayıtlarının kasten değiştirildiğinin fark edilmesiyle karanlık bir cinayet soruşturmasına dönüştü. Fırtınanın ortasında gerçekleşen bu suç; yangından kurtarılan dört dosya, sarnıç zimmet kayıtları ve sediman testleriyle yavaş yavaş gün yüzesine çıktı.",
+          "atmosphere": "Rüzgar kuma değil, sayfalara doluyordu. Akşam olduğunda kazı çadırlarının ışığı, boş mezar ağızları kadar soğuktu.",
           "suspects": [
             {
               "id": "s1",
-              "name": "Mühendis Emre",
-              "icon": "🔧",
-              "description": "En güçlü ve pratik kişi. İlk paniği o bastırdı.",
-              "detail": "32 yaşında, lider ruhlu, stres altında değişiyor."
+              "name": "Kazı Başkanı Mert",
+              "icon": "⛏️",
+              "description": "Kazının izinlerini ve günlük rota çizelgelerini yöneten baş arkeolog.",
+              "detail": "Her sabah hendek ölçülerini kendi eliyle kontrol eder; raporlarda tek bir çizgiye bile toleransı yoktur."
             },
             {
               "id": "s2",
-              "name": "Doktor Sibel",
-              "icon": "👩‍⚕️",
-              "description": "Tıbbi otopsiyi yapabilecek tek kişi. İlk müdahaleyi o yaptı.",
-              "detail": "30 yaşında, sakin, çok sakin."
+              "name": "Kervan Rehberi Harun",
+              "icon": "🐪",
+              "description": "Kampın su ve yol düzenini sağlayan yerel rehber.",
+              "detail": "Eski sarnıç yollarını ezbere bilir; kurak havada bile yük hayvanlarının ritmini dinler."
             },
             {
               "id": "s3",
-              "name": "Öğretmen Kemal",
-              "icon": "noun-makinist-kerem-avatar.png",
-              "description": "Grupta en sessiz. Maktulla son konuşan.",
-              "detail": "35 yaşında, içe kapanık, büyük gözlü."
+              "name": "Restoratör Sema",
+              "icon": "🏺",
+              "description": "Kırık tabletleri temizleyip kataloglayan uzman restoratör.",
+              "detail": "Obsidyen uçları yalnız mineral örnekleri üzerinde kullanır; her parçayı kendi numarasıyla sarar."
             },
             {
               "id": "s4",
-              "name": "Fotoğrafçı Deniz",
-              "icon": "🎨",
-              "description": "Her şeyi fotoğrafladı — ama bir fotoğraf eksik.",
-              "detail": "28 yaşında, meraklı, dikkatli gözü var."
+              "name": "Envanter Yazmanı Dicle",
+              "icon": "📜",
+              "description": "Kazı buluntularının giriş-çıkışını ve sandık kodlarını tutan yazman.",
+              "detail": "Raf kodlarını yanlış yazmamak için renkli ayraçlar kullanır; eski belgelerin kenar notlarını asla atmaz."
             }
           ],
           "weapons": [
             {
               "id": "w1",
-              "name": "Uyku İlacı Aşırı Dozu",
-              "icon": "💊",
-              "description": "Doktor çantasından."
+              "name": "Obsidyen Uç",
+              "icon": "🪨",
+              "description": "Sert yazı yüzeyindeki kabuğu kaldırmak için kullanılan, çalışırken siyah yonga bırakan koyu taş uç.",
+              "detail": ""
             },
             {
               "id": "w2",
-              "name": "Soğuğa Maruz Bırakma",
-              "icon": "❄️",
-              "description": "Kulübe dışında bırakılma."
+              "name": "Arsenikli Koruma Tozu",
+              "icon": "⚱️",
+              "description": "Eski yüzeyleri sabitlemek için kullanılan, solunduğunda öldürücü olabilen açık renkli ince koruma tozu.",
+              "detail": ""
             },
             {
               "id": "w3",
-              "name": "Boğma",
+              "name": "Kuyu Vinç Halatı",
               "icon": "🪢",
-              "description": "Uyurken."
+              "description": "Derin sarnıçtan sandık çekmekte kullanılan yağlı, ağır halat.",
+              "detail": ""
             },
             {
               "id": "w4",
-              "name": "Karbonmonoksit",
-              "icon": "💨",
-              "description": "Baca tıkanıklığından."
+              "name": "Taş Levha Tokmağı",
+              "icon": "🔨",
+              "description": "Kırık blokları yerinden oynatmak için kullanılan kısa saplı tokmak.",
+              "detail": ""
             }
           ],
           "locations": [
             {
               "id": "l1",
-              "name": "Yatak Odası",
-              "icon": "🛏️",
-              "description": "Tek yatak odası."
+              "name": "Kuzey Hendek",
+              "icon": "🏜️",
+              "description": "Ana kazı çizgisinin sert taş tabakasına açılan, gölgeli çalışma yarığı.",
+              "detail": ""
             },
             {
               "id": "l2",
-              "name": "Ortak Alan",
-              "icon": "🛋️",
-              "description": "Şömineli oturma."
+              "name": "Su Sarnıcı",
+              "icon": "💧",
+              "description": "Taş duvarlı, ip ve makara düzeneği bulunan derin su kuyusu.",
+              "detail": ""
             },
             {
               "id": "l3",
-              "name": "Mutfak",
-              "icon": "🍳",
-              "description": "Küçük kulübe mutfağı."
+              "name": "Kırık Yazıt Atölyesi",
+              "icon": "🧱",
+              "description": "Tablet parçalarının numaralandırıldığı, kumaş perdeli kapalı çalışma alanı.",
+              "detail": ""
             },
             {
               "id": "l4",
-              "name": "Dış Kapı Önü",
-              "icon": "🚪",
-              "description": "Kulübe girişi."
+              "name": "Yazıt Galerisi",
+              "icon": "🏛️",
+              "description": "Kazıdan çıkan büyük levhaların geçici olarak sergilendiği uzun tente.",
+              "detail": ""
             }
           ],
           "clues": [
             {
               "id": "c1",
-              "type": "kanit",
+              "title": "Tozun Taşıdığı Tuz",
+              "type": "adli",
+              "mechanicType": "text",
+              "text": "Adli numune, öldürücü parçacığın solunduğunda tehlikeli olan açık renkli bir koruma tozundan geldiğini saptadı. Tane yapısı, ana kazı çizgisinin açık taş yüzeyindeki kumla karışmış değil.",
+              "deductionHint": "Öldürücü tozun tane yapısı bir açık alana uymuyorsa hangi bağ kapanır?",
+              "isBonus": false,
               "revealOrder": 1,
               "isRevealed": true,
-              "pointCost": 0,
-              "title": "Kurtarma Ekibi Raporu",
-              "text": "Maktul yatak odasında uyurken ölmüş görünümünde. Ama iç organlarda uyuşturucu bileşiği — karda ölüm değil, ilaç.",
-              "mechanicType": "text"
+              "pointCost": 0
             },
             {
               "id": "c2",
-              "type": "sifreli",
+              "title": "Sarnıç Zimmeti",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Kamp ambarının günlük sayımında kısa saplı tokmak, taş duvarlı kuyunun makarası yanındaki aletler arasında kayıtlı.",
+              "deductionHint": "Ağır alet aynı sayım satırında tek bir yerdeyse hangi ilişki doğrulanır?",
+              "isBonus": false,
               "revealOrder": 2,
               "isRevealed": false,
-              "pointCost": 80,
-              "title": "Maktulün Son Mesajı",
-              "text": "Çantasında kağıt parçası.",
-              "mechanicType": "sifreli_mesaj",
-              "sifre": {
-                "sifrelenmis": "SBL ÇNTSNDA — 2 HB — KML BLD",
-                "sifreleTuru": "sesli_harf_kisalt",
-                "cozumIpucu": "Sesli harfleri ekle.",
-                "cozulmus": "SİBEL ÇANTASINDA — 2 HAPI — KEMAL BİLDİ",
-                "aciklama": "Maktul Sibel'in çantasında ilaç gördü ve Kemal'e söyledi."
-              }
+              "pointCost": 60
             },
             {
               "id": "c3",
-              "type": "tanik",
+              "title": "Hendek Kenarı",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Ana kazı çizgisinin sediman örneğinde, sert yazı yüzeyinde siyah yonga bırakan koyu taş uca ait kırıntı bulunmadı; örnekler mikroskop altında üç kez karşılaştırıldı.",
+              "deductionHint": "Mikroskopik yonga yoksa hangi araç–alan bağını eleyebilirsin?",
+              "isBonus": false,
               "revealOrder": 3,
               "isRevealed": false,
-              "pointCost": 80,
-              "title": "Deniz'in Fotoğraf Analizi",
-              "text": "Deniz tüm akşamı fotoğrafladı. 23.15'te Sibel mutfakta bir şeyler hazırlıyor — sıcak içecek. 23.30'da maktul içiyor. Sabah ölmüş.",
-              "mechanicType": "gorsel_ipucu",
-              "gorselAciklama": "Dijital fotoğraf zaman damgası: 23.15. Sibel'in elinde iki kap."
+              "pointCost": 60
             },
             {
               "id": "c4",
-              "type": "parmak_izi",
+              "title": "Eksik Dosya Dizini",
+              "type": "sifreli",
+              "mechanicType": "sifreli_mesaj",
+              "text": "Yangından kurtarılan dört dosya, aynı rafta olmaması gereken kodlarla birbirine karışmıştı.",
+              "deductionHint": "Tarih ile klasör kodunu aynı anda izlediğinde, her belgenin gidebileceği tek raf gözü kalır.",
+              "isBonus": false,
               "revealOrder": 4,
               "isRevealed": false,
-              "pointCost": 80,
-              "title": "Kupa İzi",
-              "text": "Maktulün kupasında iz.",
-              "mechanicType": "parmak_izi",
-              "parmakIziVerisi": {
-                "aciklama": "Dört şüphelinin izini kupa iziyle eşleştir.",
-                "izler": [
-                  {
-                    "izId": "iz1",
-                    "konum": "Kupa sapı",
-                    "eslesme": "s2",
-                    "ipucu": "İnce, kadın eli. Tıbbi aletlere alışmış bilek hareketi."
+              "pointCost": 60,
+              "sifre": {
+                "sifrelenmis": "A-12 / C-07 / B-19 / D-03",
+                "sifreleTuru": "arşiv dizini kurma",
+                "cozumIpucu": "Klasörlerdeki tarih ile kod, ayrı ayrı değil birlikte okununca hangi satırın kime ait olduğunu daraltıyor.",
+                "cozulmus": "ARŞİV EŞLEŞMESİ 412",
+                "aciklama": "Dizin tamamlandığında, ızgarada bir doğrudan bağlantıyı işaretlemeye yetecek belge zinciri oluşur.",
+                "presentation": {
+                  "style": "archive_index_reconstruction",
+                  "title": "Eksik Arşiv Dosyası",
+                  "subtitle": "Dosyaları tarih damgası ve raf koduna göre doğru gözlere yerleştir.",
+                  "purposeHint": "Doğru dizin, ızgarada hangi kişi–araç bağlantısının doğrulanacağını belgeyle gösterecek.",
+                  "files": [
+                    {
+                      "id": "f1",
+                      "code": "A-12",
+                      "date": "03 Mayıs",
+                      "note": "Kırmızı ayraç · mühr tozu siparişi"
+                    },
+                    {
+                      "id": "f2",
+                      "code": "B-19",
+                      "date": "06 Mayıs",
+                      "note": "Mavi ayraç · kırık taş sayımı"
+                    },
+                    {
+                      "id": "f3",
+                      "code": "C-07",
+                      "date": "02 Mayıs",
+                      "note": "Sarı ayraç · raf giriş fişi"
+                    },
+                    {
+                      "id": "f4",
+                      "code": "D-03",
+                      "date": "07 Mayıs",
+                      "note": "Siyah ayraç · sarnıç alet listesi"
+                    }
+                  ],
+                  "slots": [
+                    {
+                      "id": "r1",
+                      "label": "Raf I · eski girişler"
+                    },
+                    {
+                      "id": "r2",
+                      "label": "Raf II · bakım malzemesi"
+                    },
+                    {
+                      "id": "r3",
+                      "label": "Raf III · taş kayıtları"
+                    },
+                    {
+                      "id": "r4",
+                      "label": "Raf IV · su düzeni"
+                    }
+                  ],
+                  "correctAssignments": [
+                    {
+                      "itemId": "f1",
+                      "answerId": "r2"
+                    },
+                    {
+                      "itemId": "f2",
+                      "answerId": "r3"
+                    },
+                    {
+                      "itemId": "f3",
+                      "answerId": "r1"
+                    },
+                    {
+                      "itemId": "f4",
+                      "answerId": "r4"
+                    }
+                  ],
+                  "resultText": "Bakım malzemesi fişindeki renkli ayraç, arsenikli toz kaydını envanter yazmanının satırına bağlar: Envanter Yazmanı Dicle ↔ Arsenikli Koruma Tozu.",
+                  "interaction": {
+                    "mode": "file_slot_assign",
+                    "submitLabel": "Dizini Kur",
+                    "successMessage": "Dosyalar kendi raflarına döndü.",
+                    "failureMessage": "Tarih ve kod aynı raf düzenini vermiyor."
                   }
-                ],
-                "sonuc": "Kupayı son tutan: Sibel. (s2)"
+                }
               }
             },
             {
               "id": "c5",
-              "type": "tanik",
+              "title": "Atölye Sedimanı",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Kumaş perdeli çalışma alanından alınan örnekte, siyah yonga bırakan koyu taş uca ait kırıntı bulunmadı; laboratuvar karşılaştırması bu kez kapalı alandaki tozu dışladı.",
+              "deductionHint": "İkinci laboratuvar karşılaştırması hangi araç–alan bağını kapatır?",
+              "isBonus": false,
               "revealOrder": 5,
               "isRevealed": false,
-              "pointCost": 80,
-              "title": "Kemal'in Beyanı",
-              "text": "\"Maktul bana 'Sibel'in çantasında fazladan hap gördüm, tuhaf' dedi. Ben 'dikkat et' dedim. Ama o gece içkisini içti.\"",
-              "mechanicType": "tanik_yuzlesme",
-              "yuzlesmeDialogu": [
-                {
-                  "soru": "Sibel'i uyardınız mı?",
-                  "cevap": "Hayır, düşünmedim bile.",
-                  "yalan": true
-                },
-                {
-                  "soru": "Maktulü uyardınız mı?",
-                  "cevap": "Evet, dedim dikkat et.",
-                  "yalan": false
-                }
-              ]
+              "pointCost": 60
             },
             {
-              "id": "c6",
-              "type": "adli",
+              "id": "b1",
+              "title": "Kervan Defteri",
+              "type": "tanik",
+              "mechanicType": "text",
+              "text": "Harun'un su dönüşünü imzalayan sefer defteri, onu sarnıç çizelgesine bağlıyor.",
+              "deductionHint": "Bu defter hangi kişi–mekân bağını doğrular?",
+              "isBonus": true,
               "revealOrder": 6,
               "isRevealed": false,
-              "pointCost": 80,
-              "title": "İlaç Analizi",
-              "text": "Kullanılan bileşim yüksek dozda — bir doktor kasıtlı doz hesaplayabilir. Sıradan bir kişi bu dozu oluşturamazdı.",
-              "mechanicType": "text"
+              "pointCost": 60
             },
             {
-              "id": "c7",
-              "type": "eleme",
+              "id": "b2",
+              "title": "Kenar Notu",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Mert'in sabah raporunda, kuzey hendekteki ölçüm çizgileri kendi kalemiyle işaretlenmiş.",
+              "deductionHint": "Bu işaret hangi kişi–mekân bağını doğrular?",
+              "isBonus": true,
               "revealOrder": 7,
               "isRevealed": false,
-              "pointCost": 80,
-              "title": "Emre'nin Durumu",
-              "text": "Emre gece boyunca elektrik jeneratörüyle uğraştı — Deniz'in fotoğrafları bunu doğruluyor, her saatte bir kayıt.",
-              "mechanicType": "text"
-            },
-            {
-              "id": "c8",
-              "type": "dogrudan",
-              "revealOrder": 8,
-              "isRevealed": false,
-              "pointCost": 80,
-              "title": "Sibel'in Gizlediği Geçmiş",
-              "text": "Araştırıldı: Sibel ve maktul aynı akademik pozisyon için başvurmuştu. Maktul kazandı. Sibel o zamandan beri 'içindeydi.' Bu kamp onun son fırsatıydı.",
-              "mechanicType": "gorsel_ipucu",
-              "gorselAciklama": "Üniversite kayıtları. İki başvuru, bir kabul. Reddedilenin adı: Sibel."
+              "pointCost": 60
             }
           ],
+          "assetManifest": [],
           "solution": {
-            "suspectId": "s2",
-            "weaponId": "w1",
-            "locationId": "l1"
+            "suspectId": "s4",
+            "weaponId": "w2",
+            "locationId": "l3"
           },
-          "solutionNarrative": "Doktor Sibel, akademik rekabetten kaynaklanan öfkesini 3 yıl içinde tuttu. Dağ kulübesi izole ortam — mükemmel fırsat. Gece sıcak içeceğe yüksek doz uyku ilacı kattı. Kemal bildim ama geç olmuştu.",
-          "specialMechanic": "tam_mekanik_seti"
+          "solutionNarrative": "Envanter Yazmanı Dicle, buluntu kaydını değiştirdikten sonra yazıt uzmanını arsenikli koruma tozuna maruz bıraktı. Arşiv dizini, tozun girişini Dicle'nin satırına bağladı; sediman testleri obsidyen ucun olası alanlarını kapattı."
         },
         {
-          "puzzleId": "hr_005",
-          "title": "Son Sefer",
-          "subtitle": "Boğaz'da Sisli Gece — Gemi",
-          "difficulty": 5,
-          "difficultyLabel": "Efsane Komiser",
+          "puzzleId": "pp_005",
+          "packId": "pack_pp",
+          "packSlug": "period",
           "stars": "★★★★★",
           "gridSize": "4x4",
           "timeLimit": 360,
-          "story": "Sis içindeki Boğaz'da yük gemisinde kaptan ölü bulundu. Gemi sahipsiz ilerliyor, dört kişi gemide. Kıyıya çarpmadan önce katili bulun.",
-          "atmosphere": "Gece. Sis. Düdük sesi. Gemi sürükleniyor. Saatiniz var.",
+          "title": "Sıfırın Altındaki Dördüncü Kilit",
+          "subtitle": "1912 · Kutup gözlem istasyonu · Kapanmış ikmal sandığı",
+          "difficulty": 5,
+          "difficultyLevel": 5,
+          "specialMechanic": "sifreli_mesaj",
+          "story": "1912 yılının dondurucu ve merhametsiz kışında, dünyanın ucundaki izole bir kuzey buz hattı gözlem istasyonundan medeniyete yalnızca üç gün arayla iki kırık dökük yardım çağrısı ulaştı. Ardından gelen sağır edici sessizlik haftalarca sürdü. Kurtarma ekibi, devasa buz kütlelerini aşıp istasyonun donmuş kapılarını kırarak içeri girdiğinde kan donduran bir manzarayla karşılaştı. Ekibin lideri, yalıtım kabininde ölü bulunmuştu ve üzerindeki izler bir kazadan çok hesaplanmış bir müdahaleye işaret ediyordu. İkmal sandığının kilidi çözüldüğünde her şey netlesti.",
+          "atmosphere": "Kar, duvarlardaki çatlakları\nç içeri toz gibi giriyordu. Her metal parça soğuk değil, unutulmuş bir karar taşıyordu.",
           "suspects": [
             {
               "id": "s1",
-              "name": "Baş Güverte Subayı Murat",
-              "icon": "👨‍✈️",
-              "description": "Kaptanın en yakın çalışanı. Terfi bekliyor.",
-              "detail": "40 yaşında, deneyimli, gözleri yorgun."
+              "name": "Meteorit Uzmanı Nazan",
+              "icon": "☄️",
+              "description": "Göktaşı örneklerini sınıflandırmak için istasyona katılan mineral uzmanı.",
+              "detail": "Örnek tüplerini renk sırasına göre dizer; gece gökyüzünü kayıt defterine ince çizgilerle işler."
             },
             {
               "id": "s2",
-              "name": "Gemi Mühendisi Olga",
-              "icon": "⚡",
-              "description": "Ukraynalı mühendis. Kaptanla para meselesi.",
-              "detail": "35 yaşında, pratik, sessiz öfkeli."
+              "name": "Sefer Doktoru Cem",
+              "icon": "⚕️",
+              "description": "Yüksek irtifa hastalıkları için sefer ekibine eşlik eden hekim.",
+              "detail": "İlaç karasını kendi kilitler; her dozun saatini beyaz ciltli deftere not eder."
             },
             {
               "id": "s3",
-              "name": "Kaçak Yolcu Samir",
-              "icon": "noun-yolcu-tarik-avatar.png",
-              "description": "Gemide gizlenen biri. Kim, neden?",
-              "detail": "Yaşı belirsiz, kimliği yok, anlaşılmaz bir bağlantı."
+              "name": "Telsizci Arif",
+              "icon": "📻",
+              "description": "İstasyonun zaman sinyalini ve yardım çağrılarını yöneten telsiz operatörü.",
+              "detail": "Kadranlı saatleri söküp takabilir; her akşam anten gerilimini ölçer."
             },
             {
               "id": "s4",
-              "name": "Armatör Vekili Hüseyin Paşa",
-              "icon": "noun-ortak-sabri-bey-avatar.png",
-              "description": "Geminin sahibi adına yönetiyor. Kargo meselesinde kaptanla çatışma.",
-              "detail": "60 yaşında, pahalı giyimli, sinirli."
+              "name": "Kutup Kılavuzu Bora",
+              "icon": "🧊",
+              "description": "Buz yarıklarında ekibe yol açan, kızak ve ikmal düzenini bilen kılavuz.",
+              "detail": "Yük sandıklarını ağırlığa göre dizer; açık havada ip düğümlerini eldivensiz atabilir."
             }
           ],
           "weapons": [
             {
               "id": "w1",
-              "name": "Deniz Halatı",
-              "icon": "🪢",
-              "description": "Gemi halatı."
+              "name": "Buz Baltası",
+              "icon": "🪓",
+              "description": "Kızak yolunu açmak ve buz örneklerini kırmak için kullanılan kısa balta.",
+              "detail": ""
             },
             {
               "id": "w2",
-              "name": "Zehirli İçki",
-              "icon": "🥃",
-              "description": "Kaptan köşkünde viski."
+              "name": "Yakıt Vanası",
+              "icon": "🛢️",
+              "description": "ısıtıcı hattındaki basıncı ayarlayan pirinç vana.",
+              "detail": ""
             },
             {
               "id": "w3",
-              "name": "Taşıma Kancası",
-              "icon": "🔨",
-              "description": "Yük taşıma kancası."
+              "name": "İşaret Fişeği",
+              "icon": "🧨",
+              "description": "Uzakta görünür sinyal vermek için kullanılan kısa menzilli fişek.",
+              "detail": ""
             },
             {
               "id": "w4",
-              "name": "Ateşli Silah",
-              "icon": "🔫",
-              "description": "Gemi güvenlik tabancası."
+              "name": "Kükürtlü Isıtıcı Kartüuşu",
+              "icon": "♨️",
+              "description": "Kapalı kabinde yanlış kullanıldığında zehirli gaz çıkaran bakım kartüuşu; yanıkta ince yağ filmi bırakır.",
+              "detail": ""
             }
           ],
           "locations": [
             {
               "id": "l1",
-              "name": "Kaptan Köşkü",
-              "icon": "🧭",
-              "description": "Geminin en üst kontrol odası."
+              "name": "Gözlem Kubbesi",
+              "icon": "🔭",
+              "description": "Gökyüzü ölçümlerinin yapıldığı, kuru hava filtreli metal çerçeveli üst bölüm.",
+              "detail": ""
             },
             {
               "id": "l2",
-              "name": "Makine Dairesi",
-              "icon": "⚙️",
-              "description": "Gemi makineleri."
+              "name": "Yakıt Bölmesi",
+              "icon": "🛢️",
+              "description": "Tüplerin ve vana anahtarlarının saklandığı kapalı servis odası.",
+              "detail": ""
             },
             {
               "id": "l3",
-              "name": "Yük Ambarı",
-              "icon": "📦",
-              "description": "Ana yük deposu."
+              "name": "Telsiz Odası",
+              "icon": "📡",
+              "description": "Zaman sinyali alıcısı, kablo makaraları ve yardım çağrısı masası.",
+              "detail": ""
             },
             {
               "id": "l4",
-              "name": "Güverte",
-              "icon": "🌊",
-              "description": "Açık hava güverte."
+              "name": "Yalıtım Kabini",
+              "icon": "🛏️",
+              "description": "Hasta ekibin dinlendiği, çift kapılı küçük uyku ve bakım bölmesi.",
+              "detail": ""
             }
           ],
           "clues": [
             {
               "id": "c1",
-              "type": "kanit",
+              "title": "Soot ve Gaz Örneği",
+              "type": "adli",
+              "mechanicType": "text",
+              "text": "Adli analiz, öldürücü gazın bakım kartüuşu yanığıyla uyumlu olduğunu saptadı. Karışımdaki ince yağ filmi, kuru hava filtreli üst bölümde hiç görülmedi.",
+              "deductionHint": "Gaz örneği bir filtrenin izini taşımıyorsa hangi araç–mekân bağı kapanır?",
+              "isBonus": false,
               "revealOrder": 1,
               "isRevealed": true,
-              "pointCost": 0,
-              "title": "Ölüm Tespiti",
-              "text": "Kaptan köşkünde yerde. Boynunda halat izi. Viski bardağı yanında. Gemi rötarsız ilerliyor — ama yön kontrolsüz.",
-              "mechanicType": "text"
+              "pointCost": 0
             },
             {
               "id": "c2",
-              "type": "sifreli",
+              "title": "Mineral Kutusu",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "İkmal listesinde buz örneklerini kırmaya yarayan kısa balta, mineral uzmanının örnek kasasıyla birlikte teslim edilmiş görünüyor.",
+              "deductionHint": "Teslim listesi hangi kişi–araç bağını doğrudan işaretler?",
+              "isBonus": false,
               "revealOrder": 2,
               "isRevealed": false,
-              "pointCost": 100,
-              "title": "Kaptanın Son Kaydı",
-              "text": "Kaptan son sesli kaydını yapmış.",
-              "mechanicType": "sifreli_mesaj",
-              "sifre": {
-                "sifrelenmis": "HÜS KRGO — SMRN KM — MURT BLRD",
-                "sifreleTuru": "sesli_harf_kisalt",
-                "cozumIpucu": "Sesli harfleri ekle.",
-                "cozulmus": "HÜSEYİN KARGO — SAMİR KİM — MURAT BURDA",
-                "aciklama": "Kaptan kargo meselesinde Hüseyin'i, Samir'in kimliğini ve Murat'ın orada olduğunu not etmiş."
-              }
+              "pointCost": 60
             },
             {
               "id": "c3",
-              "type": "parmak_izi",
+              "title": "Çift Kapı Kaydı",
+              "type": "tanik",
+              "mechanicType": "text",
+              "text": "Çift kapılı dinlenme bölümünün iç kapı sayacı, beyaz ciltli ilaç defteri taşıyan kişinin vardiya öncesi içeri girip kapıyı iki kez kurduğunu mekanik olarak kayda geçirmiş.",
+              "deductionHint": "Mekanik sayac hangi kişi–mekân bağını doğrular?",
+              "isBonus": false,
               "revealOrder": 3,
               "isRevealed": false,
-              "pointCost": 100,
-              "title": "Halat Üzerindeki İz",
-              "text": "Boynunda iz bırakan halatın izleri.",
-              "mechanicType": "parmak_izi",
-              "parmakIziVerisi": {
-                "aciklama": "Dört şüphelinin izini halatle eşleştir.",
-                "izler": [
-                  {
-                    "izId": "iz1",
-                    "konum": "Halat ucu",
-                    "eslesme": "s1",
-                    "ipucu": "Denizci eli, halatla uzun yıllar çalışmış. Nasır izleri özgün."
-                  }
-                ],
-                "sonuc": "Halatı tutan: Murat. (s1)"
-              }
+              "pointCost": 60
             },
             {
               "id": "c4",
-              "type": "tanik",
+              "title": "İkmal Sandığının Kilidi",
+              "type": "sifreli",
+              "mechanicType": "sifreli_mesaj",
+              "text": "İkmal sandığının dört kadranı, buz üssünden kalan yön ve sıcaklık işaretleriyle çizilmişti.",
+              "deductionHint": "Kadranları, işaretlerin hangi sırada tekrar ettiğini bozmadan döndür; tek bir dizilim kasanın geçmişini açar.",
+              "isBonus": false,
               "revealOrder": 4,
               "isRevealed": false,
-              "pointCost": 100,
-              "title": "Olga'nın Beyanı",
-              "text": "\"Makine dairesindeyim. Bir gürültü duydum — kaptan köşkünden. Çıktım, Murat aşağı iniyor, yüzü solgun. Beni görünce hızlandı.\"",
-              "mechanicType": "ses_kaydi",
-              "sesMetni": "[Ses kaydı] Olga'nın Rusçası arasında: 'Murat... aşağı... yüzü beyaz...' Titriyor."
+              "pointCost": 60,
+              "sifre": {
+                "sifrelenmis": "◈ / △ / ≋ / ✣ — 04:12",
+                "sifreleTuru": "mekanik kilit dizisi",
+                "cozumIpucu": "Yüzlerdeki yön işaretlerini, karşılarındaki sıcaklık değerinin değişim sırasıyla birlikte düşün.",
+                "cozulmus": "KİLİT KAYDI 1912",
+                "aciklama": "Kilit, çözüldüğünde bir kişi–araç bağlantısını eleyecek mekanik halka verir.",
+                "presentation": {
+                  "style": "mechanical_lock_sequence",
+                  "title": "Mekanik Kilit Dizisi",
+                  "subtitle": "Dört kadranı, sefer işaretlerinin tekrar etmeyen sırasına göre çevir.",
+                  "purposeHint": "Kilit açıldığında görünen ikmal kaydı, ızgarada bir kişi–araç bağını güvenle elemeni sağlayacak.",
+                  "dials": [
+                    {
+                      "id": "d1",
+                      "label": "Kuzey İşareti",
+                      "symbols": [
+                        "△",
+                        "◈",
+                        "≋",
+                        "✣"
+                      ],
+                      "initial": "△"
+                    },
+                    {
+                      "id": "d2",
+                      "label": "Rüzgâr İşareti",
+                      "symbols": [
+                        "≋",
+                        "✣",
+                        "△",
+                        "◈"
+                      ],
+                      "initial": "≋"
+                    },
+                    {
+                      "id": "d3",
+                      "label": "Sıcaklık İşareti",
+                      "symbols": [
+                        "✣",
+                        "△",
+                        "◈",
+                        "≋"
+                      ],
+                      "initial": "✣"
+                    },
+                    {
+                      "id": "d4",
+                      "label": "Yük İşareti",
+                      "symbols": [
+                        "◈",
+                        "≋",
+                        "✣",
+                        "△"
+                      ],
+                      "initial": "◈"
+                    }
+                  ],
+                  "correctCode": [
+                    {
+                      "dialId": "d1",
+                      "symbol": "◈"
+                    },
+                    {
+                      "dialId": "d2",
+                      "symbol": "△"
+                    },
+                    {
+                      "dialId": "d3",
+                      "symbol": "≋"
+                    },
+                    {
+                      "dialId": "d4",
+                      "symbol": "✣"
+                    }
+                  ],
+                  "resultText": "Açılan ikmal fişi, ısıtıcı kartüuşunun kılavuzun yük zincirinde olmadığını gösterir: Kutup Kılavuzu Bora × Kükürtlü Isıtıcı Kartüuşu.",
+                  "interaction": {
+                    "mode": "dial_rotate",
+                    "submitLabel": "Kilidi Aç",
+                    "successMessage": "Dört kadran aynı sefer kaydına oturdu.",
+                    "failureMessage": "Kadranlar aynı tekrar dizisini vermiyor."
+                  }
+                }
+              }
             },
             {
               "id": "c5",
+              "title": "Zaman Sinyali",
               "type": "tanik",
+              "mechanicType": "text",
+              "text": "Zaman sinyal masasında kalan kâğıt şerit, kadranlı saatleri söküp takan görevlinin vardiya işaretini üst bölüm saatinden önce aldığını gösteriyor.",
+              "deductionHint": "Zaman sinyali hangi kişi–mekân bağını doğrular?",
+              "isBonus": false,
               "revealOrder": 5,
               "isRevealed": false,
-              "pointCost": 100,
-              "title": "Samir'in Gizemi",
-              "text": "Samir sonunda konuştu: 'Ben Hüseyin Paşa'nın gönderdiği adamım. Kargoda ne olduğunu izlemekle görevliydim. Kaptanın şüphelendiğini bildirdim. Murat bunu duymuş olabilir.'",
-              "mechanicType": "tanik_yuzlesme",
-              "yuzlesmeDialogu": [
-                {
-                  "soru": "Hüseyin sizi gönderdi mi?",
-                  "cevap": "Evet.",
-                  "yalan": false
-                },
-                {
-                  "soru": "Murat'ı bildirdiniz mi?",
-                  "cevap": "Bildirdim ama öldürülmesini istemedim.",
-                  "yalan": false
-                },
-                {
-                  "soru": "Kargo ne içeriyor?",
-                  "cevap": "Bilmiyorum.",
-                  "yalan": true
-                }
-              ]
+              "pointCost": 60
             },
             {
-              "id": "c6",
-              "type": "eleme",
+              "id": "b1",
+              "title": "Vana Anahtarı",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Yakıt tüplerinin yanındaki anahtarın üzerinde mineral uzmanının örnek tozuyla aynı gri lekeler bulundu.",
+              "deductionHint": "Bu iz hangi kişi–araç bağını destekler?",
+              "isBonus": true,
               "revealOrder": 6,
               "isRevealed": false,
-              "pointCost": 100,
-              "title": "Hüseyin ve Olga Durumu",
-              "text": "Hüseyin gemi kaydına göre o saatte ambar koridorundaydı. Olga makine dairesinde sabit — gemi sistemi saatlik pozisyon kaydı yapıyor.",
-              "mechanicType": "text"
+              "pointCost": 60
             },
             {
-              "id": "c7",
-              "type": "adli",
+              "id": "b2",
+              "title": "Kızak Fişi",
+              "type": "tanik",
+              "mechanicType": "text",
+              "text": "Bora'nın kızak çizelgesinde işaret fişekleri ayrı bir kutuda listelenmemişti.",
+              "deductionHint": "Bu çizelge hangi kişi–araç bağını doğrular?",
+              "isBonus": true,
               "revealOrder": 7,
               "isRevealed": false,
-              "pointCost": 100,
-              "title": "Kargo Analizi",
-              "text": "Kargoda yasadışı mal. Kaptan fark etmiş, raporlayacaktı. Murat bunu engellemekle görevlendirilmiş — Hüseyin'in talebiyle.",
-              "mechanicType": "gorsel_ipucu",
-              "gorselAciklama": "Gizli yazışma: Hüseyin → Murat. 'Kaptan sustursun.' İki kelime. Ama 'nasıl' yazmıyor."
-            },
-            {
-              "id": "c8",
-              "type": "dogrudan",
-              "revealOrder": 8,
-              "isRevealed": false,
-              "pointCost": 100,
-              "title": "Murat'ın Banka Kaydı",
-              "text": "Murat'ın hesabına 3 gün önce 50.000 dolar yatırıldı. Gönderen: Hüseyin Paşa'nın şirketiyle bağlantılı anonim hesap.",
-              "mechanicType": "text"
+              "pointCost": 60
             }
           ],
+          "assetManifest": [],
           "solution": {
-            "suspectId": "s1",
-            "weaponId": "w1",
-            "locationId": "l1"
+            "suspectId": "s2",
+            "weaponId": "w4",
+            "locationId": "l4"
           },
-          "solutionNarrative": "Baş Güverte Subayı Murat, Hüseyin Paşa'dan para alarak kaptanı susturmakla görevlendirildi. Kaptan köşkünde halat kullandı. Samir'in ihbarı Murat'ı köşeye sıkıştırırdı — o yüzden hızlı davrandı.",
-          "specialMechanic": "tam_mekanik_seti"
+          "solutionNarrative": "Sefer Doktoru Cem, yalıtım kabininde kükürtlü ısıtıcı kartüuşunu yanlış kullanılmış gibi göstererek zehirli gazı bıraktı. Kilitten çıkan ikmal kaydı Bora'yı kartüuş zincirinden çıkardı; zaman ve kapı kayıtları Cem'i tek üçlüe taşıdı."
         }
       ]
     },
@@ -15337,1360 +15738,6 @@
             "locationId": "l1"
           },
           "solutionNarrative": "Gıda Şirketi CEO'su Tarhan, sahte sağlık sertifikasının açılış gecesi ifşa edilip imparatorluğunun yıkılacağını öğrenince, toplantı salonundaki çelik projeksiyon kolunu önceden söküp VIP odaya daldı. Maktulün kafatasını o demirle parçaladıktan sonra konferansa katılmaya devam edecek kadar soğukkanlıydı, ancak ses kaydı ve kamera logları bu sahte maskeyi darmadağın etti."
-        }
-      ]
-    },
-    {
-      "packId": "pack_pp",
-      "packTitle": "Dönem Vakaları",
-      "packSubtitle": "1930’lar–1970’ler · Tarihi Kesitler",
-      "packIcon": "🚃",
-      "packTheme": "period",
-      "packColor": "#3D2B1F",
-      "accentColor": "#B8860B",
-      "isPremium": true,
-      "price": 29.99,
-      "currency": "TRY",
-      "description": "1930’lardan 1970’lere uzanan tarihi kesitlerden özgün cinayet vakaları.",
-      "puzzles": [
-        {
-          "puzzleId": "pp_001",
-          "packId": "pack_pp",
-          "packSlug": "period",
-          "stars": "★☆☆☆☆",
-          "gridSize": "3x3",
-          "timeLimit": 600,
-          "title": "Mavi Etiketin Son Durağı",
-          "subtitle": "1938 · Meridyen Garı · Emanet holü",
-          "difficulty": 1,
-          "difficultyLevel": 1,
-          "specialMechanic": "sifreli_mesaj",
-          "story": "1938’in son haftasında Meridyen Garı, kış yağmurunun altında kapanış seferine yetişen yolcularla doluydu. Saat 22.10 treni perondan ayrılırken emanet holünün camlarını buhar kapladı; iki dakika sonra ana salonun bütün saatleri aynı dakikada durdu.\n\nTicaret kuryesi Cemil Erkan, kayıp bir kumaş sevkiyatının teslim kaydını araştırmak için emanet holüne girmişti. Kısa süre sonra kilitli bavul sıralarının önünde ölü bulundu. Yanında yalnızca mavi mürekkepli, kırık köşeli 17 numaralı bir etiket parçası vardı.",
-          "atmosphere": "Islak kömür, sıcak metal ve eski kâğıt kokusu. Yıldızlı cam tavanın altında emanet holünü yalnız yeşil banko lambası aydınlatıyor; bütün saatler 22.10’u gösterse de gar artık o dakikadan sonra hiçbir şeye güvenmiyor.",
-          "suspects": [
-            {
-              "id": "s1",
-              "name": "Posta Kâtibi Arda",
-              "icon": "✉️",
-              "description": "Gece vardiyasında mühürlü torbaları teslim alan kâtip.",
-              "detail": "Eski hat tarifelerini ezbere bilir; kaybolan paketlerin numarasını küçük bir deftere işaretler."
-            },
-            {
-              "id": "s2",
-              "name": "Biletçi Nihat",
-              "icon": "🎟️",
-              "description": "İstasyonun bilet penceresinde çalışan, düzen takıntılı görevli.",
-              "detail": "Boş zamanında yıpranmış bagaj etiketlerini biriktirir; rengi solmuş damgaları ve bilet penceresinin düzenini ayırt edebilir."
-            },
-            {
-              "id": "s3",
-              "name": "Otel Tercümanı Feride",
-              "icon": "🧳",
-              "description": "Gecikmiş yolcular için otel ve gümrük işlerini yöneten serbest tercüman.",
-              "detail": "Yanında her zaman ince deri bir valiz taşır; yabancı yolcuların yazışmalarını ve otel santralindeki çağrıları çevirir."
-            }
-          ],
-          "weapons": [
-            {
-              "id": "w1",
-              "name": "Siyanürlü Etiket Tutkalı",
-              "icon": "🧪",
-              "description": "Eski bagaj etiketlerinin arkasına sürülen, keskin badem kokulu yapıştırıcı.",
-              "detail": ""
-            },
-            {
-              "id": "w2",
-              "name": "Kargo Makası",
-              "icon": "✂️",
-              "description": "Posta vagonundaki sicim ve mühür iplerini kesmek için kullanılan ağır makas.",
-              "detail": ""
-            },
-            {
-              "id": "w3",
-              "name": "Fren Kolu Anahtarı",
-              "icon": "🔧",
-              "description": "Vagon fren kolunu açmak için kullanılan kısa, dökme demir anahtar.",
-              "detail": ""
-            }
-          ],
-          "locations": [
-            {
-              "id": "l1",
-              "name": "Posta Vagonu",
-              "icon": "🚃",
-              "description": "Mühürlü torbaların taşındığı dar servis vagonu.",
-              "detail": ""
-            },
-            {
-              "id": "l2",
-              "name": "Emanet Dolapları",
-              "icon": "🗄️",
-              "description": "Garın kilitli bavul sıraları ve teslim penceresi; kapalı kutu serisi burada tutulur.",
-              "detail": ""
-            },
-            {
-              "id": "l3",
-              "name": "Peron Alt Geçidi",
-              "icon": "🚇",
-              "description": "Rayların altından geçen, sesin boğuklaştığı taş koridor.",
-              "detail": ""
-            }
-          ],
-          "clues": [
-            {
-              "id": "c1",
-              "title": "Yapıştırıcı Kalıntısı",
-              "type": "adli",
-              "mechanicType": "text",
-              "text": "Adli laboratuvar, keskin badem kokulu yapıştırıcıyı ölümcül madde olarak saptadı. Kalıntıdaki mavi reçine, kilitli bavul sıralarındaki kapalı kutu serisinin koduyla uyuşuyor.",
-              "deductionHint": "Ölümcül maddeyi belirledin; bu madde hangi iş akışına bağlanıyor?",
-              "isBonus": false,
-              "revealOrder": 1,
-              "isRevealed": true,
-              "pointCost": 0
-            },
-            {
-              "id": "c2",
-              "title": "Geçit Nöbeti",
-              "type": "tanik",
-              "mechanicType": "text",
-              "text": "Nöbetçinin vardiya kaydı, bilet penceresindeki görevlinin son tren kalkana kadar yerinden ayrılmadığını gösteriyor.",
-              "deductionHint": "Kayıtlı bir vardiya, hangi taş koridor olasılığını kapatır?",
-              "isBonus": false,
-              "revealOrder": 2,
-              "isRevealed": false,
-              "pointCost": 60
-            },
-            {
-              "id": "c3",
-              "title": "Vagon Zimmeti",
-              "type": "kanit",
-              "mechanicType": "text",
-              "text": "Mühürlü torbaların taşındığı dar servis aracının zimmet fişinde, sicim kesmeye yarayan ağır makasın kalkıştan önce yalnız servis rafında asılı olduğu yazıyor.",
-              "deductionHint": "Zimmette tek bir raf görünüyorsa hangi eşleşme işaretlenir?",
-              "isBonus": false,
-              "revealOrder": 3,
-              "isRevealed": false,
-              "pointCost": 60
-            },
-            {
-              "id": "c4",
-              "title": "Otel Telefonu",
-              "type": "tanik",
-              "mechanicType": "text",
-              "text": "Otel santralinin pulsa kaydı, yabancı yolcu yazışmalarıyla ilgilenen kadının kilitli bavul sıralarına uğramadan önce uzun bir dış hat görüşmesi yaptığını doğruluyor.",
-              "deductionHint": "Bir telefon kaydı, hangi teslim noktasını onun için kapatır?",
-              "isBonus": false,
-              "revealOrder": 4,
-              "isRevealed": false,
-              "pointCost": 60
-            },
-            {
-              "id": "c5",
-              "title": "Etiketlerin Sessiz Rotası",
-              "type": "sifreli",
-              "mechanicType": "sifreli_mesaj",
-              "text": "Mühür odasının çekmecesinde üç, birbirini tutmayan bavul etiketi bulundu.",
-              "deductionHint": "Damga rengi değil; aynı yolun üç ayrı aşamada bıraktığı izler karar verdirir.",
-              "isBonus": false,
-              "revealOrder": 5,
-              "isRevealed": false,
-              "pointCost": 60,
-              "sifre": {
-                "sifrelenmis": "MAVİ-17 / KIRMIZI-04 / SİYAH-29",
-                "sifreleTuru": "valiz etiketi eşleme",
-                "cozumIpucu": "Damgaların sırası, her bagajın geçtiği tek hattı birlikte anlatır; yalnız bir rota üç kayda da uyuyor.",
-                "cozulmus": "DOĞRULAMA KODU 714",
-                "aciklama": "Eşleşme tamamlandığında, ızgarada bir olanaksız bağı kapatacak kadar somut bir halka oluşur.",
-                "presentation": {
-                  "style": "luggage_label_match",
-                  "title": "Valiz Etiketi Eşleme",
-                  "subtitle": "Her etiket aynı yolculuğun farklı bir durağını anlatır. Üç bagajı doğru rotayla eşleştir.",
-                  "purposeHint": "Damgaları doğru rotaya bağlamak, ızgarada hangi kişi–araç bağının mümkün olmadığını gösterecek.",
-                  "cases": [
-                    {
-                      "id": "b1",
-                      "label": "Etiket M-17",
-                      "stamp": "Meridyen · gece 22.10",
-                      "note": "Mavi mürekkep, kırık köşe"
-                    },
-                    {
-                      "id": "b2",
-                      "label": "Etiket K-04",
-                      "stamp": "Kıyı Hattı · sabah",
-                      "note": "Kırmızı gümrük halkası"
-                    },
-                    {
-                      "id": "b3",
-                      "label": "Etiket S-29",
-                      "stamp": "Sarnıç Garı · akşam",
-                      "note": "Siyah fren deposu damgası"
-                    }
-                  ],
-                  "routes": [
-                    {
-                      "id": "r1",
-                      "label": "Posta torbası: Meridyen → Kıyı Hattı → Sarnıç"
-                    },
-                    {
-                      "id": "r2",
-                      "label": "Otel bagajı: Kıyı Hattı → Sarnıç → Meridyen"
-                    },
-                    {
-                      "id": "r3",
-                      "label": "Servis sandığı: Sarnıç → Meridyen → Kıyı Hattı"
-                    }
-                  ],
-                  "correctAssignments": [
-                    {
-                      "itemId": "b1",
-                      "answerId": "r1"
-                    },
-                    {
-                      "itemId": "b2",
-                      "answerId": "r2"
-                    },
-                    {
-                      "itemId": "b3",
-                      "answerId": "r3"
-                    }
-                  ],
-                  "resultText": "Fren kolu anahtarının kaydı, otel bagajına değil posta torbasına aittir: Feride × Fren Kolu Anahtarı.",
-                  "interaction": {
-                    "mode": "select_match",
-                    "submitLabel": "Etiketleri Doğrula",
-                    "successMessage": "Etiket zinciri tek bir bagaj düzeninde birleşti.",
-                    "failureMessage": "Damga sırası aynı yolculuğu anlatmıyor."
-                  }
-                }
-              }
-            },
-            {
-              "id": "b1",
-              "title": "Mühür Tozu",
-              "type": "kanit",
-              "mechanicType": "text",
-              "text": "Teslim penceresinin iç yüzünde Nihat’ın kullandığı kırmızı mumdan ince bir iz bulundu.",
-              "deductionHint": "Bu iz hangi görevliyi hangi teslim noktasına yaklaştırır?",
-              "isBonus": true,
-              "revealOrder": 6,
-              "isRevealed": false,
-              "pointCost": 60
-            },
-            {
-              "id": "b2",
-              "title": "Gece Memuru",
-              "type": "tanik",
-              "mechanicType": "text",
-              "text": "Posta görevlisi Arda’nın, fren anahtarını servis vagonundan aldığını iki hamal da hatırladı.",
-              "deductionHint": "Bu hatırlama hangi kişi–araç bağını doğrular?",
-              "isBonus": true,
-              "revealOrder": 7,
-              "isRevealed": false,
-              "pointCost": 60
-            }
-          ],
-          "assetManifest": [],
-          "solution": {
-            "suspectId": "s2",
-            "weaponId": "w1",
-            "locationId": "l2"
-          },
-          "solutionNarrative": "Biletçi Nihat, son seferin ardından emanet holüne geçtiğinde Cemil’in aradığı kaydın onu eski etiket serisine götüreceğini biliyordu. Mavi etiketin arkasına sürülmüş siyanürlü tutkalla teması, olayı bir kavga gibi değil, yanlış teslimatın ortasında gelişen sessiz bir çöküş gibi gösterdi. Arda’nın posta vagonu zimmeti ve Feride’nin telefon kaydı, iki alternatif rotayı ayrı ayrı kapattı; Cemil’in avucunda kalan kırık M-17 parçası ise Nihat’ın kurduğu etiket zincirini görünür kılan son iz oldu."
-        },
-        {
-          "puzzleId": "pp_002",
-          "packId": "pack_pp",
-          "packSlug": "period",
-          "stars": "★★☆☆☆",
-          "gridSize": "3x3",
-          "timeLimit": 540,
-          "title": "Negatifte Kalan Saat",
-          "subtitle": "1956 · Şehir Fotoğrafhanesi · Çatı ışıkları",
-          "difficulty": 2,
-          "difficultyLevel": 2,
-          "specialMechanic": "sifreli_mesaj",
-          "story": "1956 yazının boğucu bir gecesinde, kentin arka sokaklarındaki sırları belgeleyen usta bir belgesel fotoğrafçısı, çoktan kapanmış, tozlu bir şehir fotoğrafhanesinde ölü bulundu. İlk bakışta sıradan bir iş kazası veya basit bir zehirlenme gibi görünen bu olay, karanlık odanın zayıf kırmızı ışığında kuruması için askıya asılmış son kareler incelendiğinde bambaşka bir boyuta taşındı. Fotoğrafçının ölmeden hemen önce çektiği kareler; baskı kimyasalının şişesinden dökülen damlaları ve yakalanmak istemeyen birinin gölgesini kayıt altına almıştı. Bu fragmanlar birleştirildiğinde, tek bir gerçeği işaret eden sessiz bir tanıklık doğuyordu.",
-          "atmosphere": "Kimyasal banyoların keskin kokusu, çatıdaki projektörlerden sonra bile odada kalmıştı. Negatifler ışığa tutulunca her şey ters görünüyordu.",
-          "suspects": [
-            {
-              "id": "s1",
-              "name": "Kamera Tamircisi Belgin",
-              "icon": "📷",
-              "description": "Eski körüklü makineleri söküp yeniden çalıştıran titiz tamirci.",
-              "detail": "Vidalara numara verir, parmaklarının ucunda gümüş nitrat lekeleri taşır."
-            },
-            {
-              "id": "s2",
-              "name": "Galeri Bekçisi Orhan",
-              "icon": "🛡️",
-              "description": "Bina kapandığında anahtarları devralan gece bekçisi.",
-              "detail": "Cam çerçeveleri kendi onarır; kırık parçaları küçük kutularda saklar ve gece anahtarlarını devralır."
-            },
-            {
-              "id": "s3",
-              "name": "Arşiv Fotoğrafçısı Leyla",
-              "icon": "🎞️",
-              "description": "Eski baskıları kataloglayan, kaybolan kareleri yeniden basan arşivci.",
-              "detail": "Her çekimin saatini ve banyosunu ayrı kurşun kalemle not eder; negatif dolaplarının düzenini ezbere bilir."
-            }
-          ],
-          "weapons": [
-            {
-              "id": "w1",
-              "name": "Çerçeve Kesici",
-              "icon": "🔪",
-              "description": "Sert karton ve cam kenarlarını kesmekte kullanılan ince uçlu bıçak.",
-              "detail": ""
-            },
-            {
-              "id": "w2",
-              "name": "Siyanürlü Sabitleyici Banyo",
-              "icon": "🧫",
-              "description": "Eski baskı banyolarında kullanılan, yanlış oranlandığında ölümcül sıvı; gümüş tuzu bırakır.",
-              "detail": ""
-            },
-            {
-              "id": "w3",
-              "name": "Açıkta Kalan Işık Kablosu",
-              "icon": "⚡",
-              "description": "Çatı projektörlerine enerji veren yalıtımı aşınmış kablo.",
-              "detail": ""
-            }
-          ],
-          "locations": [
-            {
-              "id": "l1",
-              "name": "Karanlık Oda",
-              "icon": "🚪",
-              "description": "Kırmızı lambalı, muslukları kimyasal tepsilere açılan ve ışık geçirmeyen yıkama hattı bulunan çalışma odası.",
-              "detail": ""
-            },
-            {
-              "id": "l2",
-              "name": "Çatı Terası",
-              "icon": "🏙️",
-              "description": "Dönemin büyük projektörlerinin yer aldığı rüzgârlı çatı.",
-              "detail": ""
-            },
-            {
-              "id": "l3",
-              "name": "Arşiv Koridoru",
-              "icon": "🗂️",
-              "description": "Negatif dolaplarının sıralandığı, dar ve penceresiz geçit.",
-              "detail": ""
-            }
-          ],
-          "clues": [
-            {
-              "id": "c1",
-              "title": "Banyo Kimyası",
-              "type": "adli",
-              "mechanicType": "text",
-              "text": "Adli kimya raporu, eski baskı banyolarında kullanılan ölümcül sıvıyı tespit etti. Gümüş tuzu oranı, kırmızı lambalı ve ışık geçirmeyen yıkama hattına özgü.",
-              "deductionHint": "Ölümcül sıvının çalışma düzeni, hangi kapalı işleyişe bağlanır?",
-              "isBonus": false,
-              "revealOrder": 1,
-              "isRevealed": true,
-              "pointCost": 0
-            },
-            {
-              "id": "c2",
-              "title": "Ters Baskı Karşılaştırması",
-              "type": "sifreli",
-              "mechanicType": "sifreli_mesaj",
-              "text": "Büyüteç kutusunda aynı saatin iki zıt baskısı bulundu.",
-              "deductionHint": "Yansımayı değil, iki baskıda aynı kalması gereken fiziksel ayrıntıyı izle.",
-              "isBonus": false,
-              "revealOrder": 2,
-              "isRevealed": false,
-              "pointCost": 60,
-              "sifre": {
-                "sifrelenmis": "KARE-12 / KARE-16 / KARE-21",
-                "sifreleTuru": "negatif karşılaştırması",
-                "cozumIpucu": "Işıkta görünen ayrıntıların ters baskıda da fiziksel olarak mümkün kalıp kalmadığını karşılaştır.",
-                "cozulmus": "TEMAS LEVHASI 956",
-                "aciklama": "Karşılaştırma tamamlandığında, ızgarada bir olanaksız bağlantıyı eleyebilecek netlik elde edilir.",
-                "presentation": {
-                  "style": "negative_contact_sheet",
-                  "title": "Fotoğraf Negatifi Karşılaştırması",
-                  "subtitle": "Pozitif ve negatif baskıdaki fiziksel ayrıntıları karşılaştır; yalnız tutarlı farkları seç.",
-                  "purposeHint": "Üç farkı doğru okuduğunda, ızgarada bir araç–mekân eşleşmesinin olamayacağını anlayacaksın.",
-                  "checks": [
-                    {
-                      "id": "n1",
-                      "label": "Kare 12",
-                      "positive": "Projektör ayağı sağda",
-                      "negative": "Ayağın gölgesi solda",
-                      "options": [
-                        {
-                          "id": "a",
-                          "label": "Gölge yönü güneşle uyumlu"
-                        },
-                        {
-                          "id": "b",
-                          "label": "Kablo bağlantısı görünmüyor"
-                        },
-                        {
-                          "id": "c",
-                          "label": "Saat ibresi ters"
-                        }
-                      ]
-                    },
-                    {
-                      "id": "n2",
-                      "label": "Kare 16",
-                      "positive": "Islak saçak çizgisi",
-                      "negative": "Kuru iz",
-                      "options": [
-                        {
-                          "id": "a",
-                          "label": "Kablo bağlantısı görünmüyor"
-                        },
-                        {
-                          "id": "b",
-                          "label": "Rozet yansıması var"
-                        },
-                        {
-                          "id": "c",
-                          "label": "Saat ibresi ters"
-                        }
-                      ]
-                    },
-                    {
-                      "id": "n3",
-                      "label": "Kare 21",
-                      "positive": "Projektör lambası açık",
-                      "negative": "Yalıtım gövdesi kapalı",
-                      "options": [
-                        {
-                          "id": "a",
-                          "label": "Saat ibresi ters"
-                        },
-                        {
-                          "id": "b",
-                          "label": "Kablo bağlantısı görünmüyor"
-                        },
-                        {
-                          "id": "c",
-                          "label": "Rozet yansıması var"
-                        }
-                      ]
-                    }
-                  ],
-                  "correctAssignments": [
-                    {
-                      "itemId": "n1",
-                      "answerId": "a"
-                    },
-                    {
-                      "itemId": "n2",
-                      "answerId": "a"
-                    },
-                    {
-                      "itemId": "n3",
-                      "answerId": "b"
-                    }
-                  ],
-                  "resultText": "Çatıdaki kablo hattı o saatlerde kapalıdır: Açıkta Kalan Işık Kablosu × Çatı Terası.",
-                  "interaction": {
-                    "mode": "multi_compare",
-                    "submitLabel": "Baskıları Karşılaştır",
-                    "successMessage": "Negatifler aynı fiziksel hikâyeyi anlattı.",
-                    "failureMessage": "Seçtiğin farklar tek bir sahnede birlikte mümkün görünmüyor."
-                  }
-                }
-              }
-            },
-            {
-              "id": "c3",
-              "title": "Çerçeve Kutusu",
-              "type": "kanit",
-              "mechanicType": "text",
-              "text": "Gece anahtarlarını devralan görevlinin dolabındaki zimmet kartı, sert karton ve cam kenarı kesmeye yarayan ince ucun o gece aynı kişiye teslim edildiğini gösteriyor.",
-              "deductionHint": "Tek teslim kartı, hangi kişi–araç bağını doğrular?",
-              "isBonus": false,
-              "revealOrder": 3,
-              "isRevealed": false,
-              "pointCost": 60
-            },
-            {
-              "id": "c4",
-              "title": "Koridor Turnikesi",
-              "type": "tanik",
-              "mechanicType": "text",
-              "text": "Negatif dolaplarının sıralandığı dar geçidin turnike şeridi, her çekimin saatini ayrı notlayan kişinin kartının olay saatinde okutulmadığını kayda geçirmiş.",
-              "deductionHint": "Bir geçiş kaydı, hangi koridor olasılığını kapatır?",
-              "isBonus": false,
-              "revealOrder": 4,
-              "isRevealed": false,
-              "pointCost": 60
-            },
-            {
-              "id": "b1",
-              "title": "Kırmızı Lamba",
-              "type": "kanit",
-              "mechanicType": "text",
-              "text": "Karanlık odanın kırmızı lambasında Leyla’nın ince eldiven lifleri tespit edildi.",
-              "deductionHint": "Bu bulgu hangi kişi–mekân bağını destekler?",
-              "isBonus": true,
-              "revealOrder": 5,
-              "isRevealed": false,
-              "pointCost": 60
-            },
-            {
-              "id": "b2",
-              "title": "Çatı Anahtarı",
-              "type": "tanik",
-              "mechanicType": "text",
-              "text": "Belgin’in, proje lambalarının anahtarını öğleden sonra bakım için aldığını bina görevlisi doğruladı.",
-              "deductionHint": "Bu ifade hangi kişi–araç bağını destekler?",
-              "isBonus": true,
-              "revealOrder": 6,
-              "isRevealed": false,
-              "pointCost": 60
-            }
-          ],
-          "assetManifest": [],
-          "solution": {
-            "suspectId": "s3",
-            "weaponId": "w2",
-            "locationId": "l1"
-          },
-          "solutionNarrative": "Arşiv Fotoğrafçısı Leyla, eski baskı banyosuna ölümcül oranı ekledi. Negatiflerdeki fiziksel tutarsızlık, çatıdaki kablo ihtimalini kapattı; turnike ve zimmet kayıtları kalan düzeni Leyla’nın karanlık odasına taşıdı."
-        },
-        {
-          "puzzleId": "pp_003",
-          "packId": "pack_pp",
-          "packSlug": "period",
-          "stars": "★★★☆☆",
-          "gridSize": "3x3",
-          "timeLimit": 480,
-          "title": "Son Yayının Mors Kıyısı",
-          "subtitle": "1967 · Kuzey Feneri · Kısa dalga istasyonu",
-          "difficulty": 3,
-          "difficultyLevel": 3,
-          "specialMechanic": "sifreli_mesaj",
-          "story": "1967 sonbaharının dondurucu ve fırtınalı bir gecesinde, ıssız Kuzey Feneri’ne sığınan kıyı ölçüm seferinin baş mühendisi, rüzgârın acımasızca dövdüğü kulede ölü bulundu. Başlangıçta trajik bir kaza sanılan bu olay, kısa dalga istasyonundaki telsiz cihazlarının incelenmesiyle ürkütücü bir cinayet soruşturmasına dönüştü. Maktulün ölmeden hemen önce merkeze geçmeye çalıştığı acil durum yayını kabloların koparılması yüzünden yarıda kesilmişti. Vericinin makarasında dört kesik mors kümesi kayıt altına alınmıştı; bu sinyaller, fenerci evinin gizlice tutulan bakım defterindeki notlarla örtüştüğünde, fırtınanın maskesi ardındaki sıra dışı niyeti gün yüzüne çıkardı.",
-          "atmosphere": "Dalgalar kayalara değil, verici kulesine çarpıyor gibiydi. Anten telleri rüzgârda tıpkı yarım kalmış bir cümle gibi titriyordu.",
-          "suspects": [
-            {
-              "id": "s1",
-              "name": "Deniz Haritacısı Haldun",
-              "icon": "🧭",
-              "description": "Seferin rotalarını ve gizli kıyı ölçümlerini hazırlayan haritacı.",
-              "detail": "Dalgaların yönünü ezbere bilir; notlarını deniz feneri kodlarıyla işaretler."
-            },
-            {
-              "id": "s2",
-              "name": "Fener Görevlisi Duru",
-              "icon": "🕯️",
-              "description": "Yalnız yaşayan, geceleri fenerin ateşini ve nöbet defterini tutan görevli.",
-              "detail": "Lambanın yağını kendi hazırlar; her vardiyada saati iki kez kurar."
-            },
-            {
-              "id": "s3",
-              "name": "Telsiz Teknikeri Rauf",
-              "icon": "📡",
-              "description": "Aküleri, bobinleri ve mors anahtarını onaran teknik görevli.",
-              "detail": "Arızaları renkli kablo bağlarıyla kodlar; her onarımdan sonra kısa bir test yayını yapar."
-            }
-          ],
-          "weapons": [
-            {
-              "id": "w1",
-              "name": "Fener Halatı Kancası",
-              "icon": "🪝",
-              "description": "Ağır cam hazneleri kaldırmak için kullanılan, bilemesi bakım defterine işlenen çelik uçlu kanca.",
-              "detail": ""
-            },
-            {
-              "id": "w2",
-              "name": "Yüksek Gerilim Bobini",
-              "icon": "🔋",
-              "description": "Verici odasındaki ses aralığını düzenleyen açık metal bobin.",
-              "detail": ""
-            },
-            {
-              "id": "w3",
-              "name": "Klorlu Sis Kartuşu",
-              "icon": "🌫️",
-              "description": "Fener camını temizlemekte kullanılan, kapalı yerde boğucu hâle gelen ve klorlu tuz tortusu bırakan kartuş.",
-              "detail": ""
-            }
-          ],
-          "locations": [
-            {
-              "id": "l1",
-              "name": "Fenerci Evi",
-              "icon": "🏠",
-              "description": "Kuleye bitişik, saat ve vardiya defterinin tutulduğu küçük taş ev; ocak filtresi bulunur.",
-              "detail": ""
-            },
-            {
-              "id": "l2",
-              "name": "Akü Odası",
-              "icon": "🔌",
-              "description": "Akülerin ve devre kesicilerin sıralandığı, merdiven yanında askı bulunan alçak tavanlı oda.",
-              "detail": ""
-            },
-            {
-              "id": "l3",
-              "name": "Yayın Kulesi",
-              "icon": "📻",
-              "description": "Kısa dalga cihazı ve anten makaralarının bulunduğu dar metal galeri.",
-              "detail": ""
-            }
-          ],
-          "clues": [
-            {
-              "id": "c1",
-              "title": "Kartuş Tortusu",
-              "type": "adli",
-              "mechanicType": "text",
-              "text": "Adli inceleme, ölümcül solunum hasarının klorlu tuz tortusu bırakan bir bakım kartuşundan geldiğini saptadı. Tortudaki kristal, ocak filtresinin tuttuğu tozla uyuşmuyor.",
-              "deductionHint": "Ölümcül kalıntı bir odanın filtresine uymuyorsa hangi bağlantı kapanır?",
-              "isBonus": false,
-              "revealOrder": 1,
-              "isRevealed": true,
-              "pointCost": 0
-            },
-            {
-              "id": "c2",
-              "title": "Akü Defteri",
-              "type": "kanit",
-              "mechanicType": "text",
-              "text": "Bakım defteri, cam hazneleri kaldıran çelik uçlu kancanın o gece merdiven yanındaki askıda olduğunu gösteriyor.",
-              "deductionHint": "Bakım defteri aynı aracı tek bir odaya yerleştiriyorsa hangi ilişki kesinleşir?",
-              "isBonus": false,
-              "revealOrder": 2,
-              "isRevealed": false,
-              "pointCost": 60
-            },
-            {
-              "id": "c3",
-              "title": "Kısa Dalga Kesiti",
-              "type": "sifreli",
-              "mechanicType": "sifreli_mesaj",
-              "text": "Vericinin makarasında dört kesik mors kümesi kaydedildi.",
-              "deductionHint": "Sinyali, gözün alıştığı kelimeye göre değil; tabloda sabit kalan kısa ve uzun vuruşlara göre çöz.",
-              "isBonus": false,
-              "revealOrder": 3,
-              "isRevealed": false,
-              "pointCost": 60,
-              "sifre": {
-                "sifrelenmis": "·−· / ·− / ··− / ···−",
-                "sifreleTuru": "mors kesiti",
-                "cozumIpucu": "Kısa vuruşların sayısı değil, her işaretin sırası aynı anahtarda tekrar eder.",
-                "cozulmus": "TEYİT KODU 1967",
-                "aciklama": "Çözülen kesit, ızgarada bir araç bağlantısının dışarıda kalmasını sağlayacak işlevsel bir halka verir.",
-                "presentation": {
-                  "style": "morse_transceiver",
-                  "title": "Mors / Telsiz Kesiti",
-                  "subtitle": "Mors tablosunu kullanarak dört kesitin harflerini çöz; kayıt anahtarını doğrula.",
-                  "purposeHint": "Kesiti doğru çözmek, ızgarada hangi kişi–araç eşleşmesinin geçersiz olduğunu belirleyecek.",
-                  "chart": [
-                    {
-                      "char": "R",
-                      "code": "·−·"
-                    },
-                    {
-                      "char": "A",
-                      "code": "·−"
-                    },
-                    {
-                      "char": "U",
-                      "code": "··−"
-                    },
-                    {
-                      "char": "F",
-                      "code": "···−"
-                    },
-                    {
-                      "char": "D",
-                      "code": "−··"
-                    },
-                    {
-                      "char": "K",
-                      "code": "−·−"
-                    }
-                  ],
-                  "signals": [
-                    {
-                      "id": "m1",
-                      "label": "Kesit I",
-                      "code": "·−·",
-                      "options": [
-                        "R",
-                        "A",
-                        "D"
-                      ]
-                    },
-                    {
-                      "id": "m2",
-                      "label": "Kesit II",
-                      "code": "·−",
-                      "options": [
-                        "A",
-                        "U",
-                        "K"
-                      ]
-                    },
-                    {
-                      "id": "m3",
-                      "label": "Kesit III",
-                      "code": "··−",
-                      "options": [
-                        "U",
-                        "F",
-                        "D"
-                      ]
-                    },
-                    {
-                      "id": "m4",
-                      "label": "Kesit IV",
-                      "code": "···−",
-                      "options": [
-                        "F",
-                        "R",
-                        "K"
-                      ]
-                    }
-                  ],
-                  "correctAssignments": [
-                    {
-                      "itemId": "m1",
-                      "answerId": "R"
-                    },
-                    {
-                      "itemId": "m2",
-                      "answerId": "A"
-                    },
-                    {
-                      "itemId": "m3",
-                      "answerId": "U"
-                    },
-                    {
-                      "itemId": "m4",
-                      "answerId": "F"
-                    }
-                  ],
-                  "resultText": "Test yayını, sis kartuşunun teknikerin bakım zincirinde olmadığını gösterir: Telsiz Teknikeri Rauf × Klorlu Sis Kartuşu.",
-                  "interaction": {
-                    "mode": "morse_decode",
-                    "submitLabel": "Kesiti Doğrula",
-                    "successMessage": "Kesit, bakım anahtarıyla aynı kelimeyi verdi.",
-                    "failureMessage": "Harfler sabit vuruş dizisine uymuyor."
-                  }
-                }
-              }
-            },
-            {
-              "id": "c4",
-              "title": "Kurulu Saat",
-              "type": "tanik",
-              "mechanicType": "text",
-              "text": "Kuleye bitişik taş evdeki saat, lambanın yağını kendi hazırlayan görevlinin her vardiyada yaptığı iki kurma işlemini gösteren mekanik kaydı hâlâ taşıyor.",
-              "deductionHint": "Kendi kendine çalışan bir kayıt, hangi kişi–mekân bağını doğrular?",
-              "isBonus": false,
-              "revealOrder": 4,
-              "isRevealed": false,
-              "pointCost": 60
-            },
-            {
-              "id": "b1",
-              "title": "Islak Çizim",
-              "type": "kanit",
-              "mechanicType": "text",
-              "text": "Haldun’un deniz çiziminde kule platformunun kenarından alınmış tuzlu metal tozu bulundu.",
-              "deductionHint": "Bu toz hangi kişi–mekân bağını destekler?",
-              "isBonus": true,
-              "revealOrder": 5,
-              "isRevealed": false,
-              "pointCost": 60
-            },
-            {
-              "id": "b2",
-              "title": "Kablo Bağları",
-              "type": "tanik",
-              "mechanicType": "text",
-              "text": "Teknik görevlinin bakım kartında, yedek kancanın çelik ucunu kendi vardiyasında bilediğine dair imza vardı.",
-              "deductionHint": "Bu ayrıntı hangi kişi–araç bağını destekler?",
-              "isBonus": true,
-              "revealOrder": 6,
-              "isRevealed": false,
-              "pointCost": 60
-            }
-          ],
-          "assetManifest": [],
-          "solution": {
-            "suspectId": "s1",
-            "weaponId": "w3",
-            "locationId": "l3"
-          },
-          "solutionNarrative": "Deniz Haritacısı Haldun, kısa dalga yayın kulesinde klorlu sis kartuşunu kapalı alanda kullandı. Mors kesiti teknikerin kartuşla bağını dışladı; saat ve bakım kayıtları diğer eşleşmeleri sabitledi."
-        },
-        {
-          "puzzleId": "pp_004",
-          "packId": "pack_pp",
-          "packSlug": "period",
-          "stars": "★★★★☆",
-          "gridSize": "4x4",
-          "timeLimit": 420,
-          "title": "Küllerin Altındaki Envanter",
-          "subtitle": "1929 · Çöl kazısı · Kayıp yazıt defteri",
-          "difficulty": 4,
-          "difficultyLevel": 4,
-          "specialMechanic": "sifreli_mesaj",
-          "story": "1929 yılının kavurucu sıcaklarında, antik dünyanın sırlarını gün yüzesine çıkarmak için kurulan izole bir çöl kazısında, kampın en saygın yazıt uzmanı ölü bulundu. Başlangıçta yorgunluk ve susuzluğun getirdiği acı bir son gibi görünen bu ölüm, çadırındaki paha biçilmez tabletlerin ve kampın envanter kayıtlarının kasten değiştirildiğinin fark edilmesiyle karanlık bir cinayet soruşturmasına dönüştü. Fırtınanın ortasında gerçekleşen bu suç; yangından kurtarılan dört dosya, sarnıç zimmet kayıtları ve sediman testleriyle yavaş yavaş gün yüzesine çıktı.",
-          "atmosphere": "Rüzgar kuma değil, sayfalara doluyordu. Akşam olduğunda kazı çadırlarının ışığı, boş mezar ağızları kadar soğuktu.",
-          "suspects": [
-            {
-              "id": "s1",
-              "name": "Kazı Başkanı Mert",
-              "icon": "⛏️",
-              "description": "Kazının izinlerini ve günlük rota çizelgelerini yöneten baş arkeolog.",
-              "detail": "Her sabah hendek ölçülerini kendi eliyle kontrol eder; raporlarda tek bir çizgiye bile toleransı yoktur."
-            },
-            {
-              "id": "s2",
-              "name": "Kervan Rehberi Harun",
-              "icon": "🐪",
-              "description": "Kampın su ve yol düzenini sağlayan yerel rehber.",
-              "detail": "Eski sarnıç yollarını ezbere bilir; kurak havada bile yük hayvanlarının ritmini dinler."
-            },
-            {
-              "id": "s3",
-              "name": "Restoratör Sema",
-              "icon": "🏺",
-              "description": "Kırık tabletleri temizleyip kataloglayan uzman restoratör.",
-              "detail": "Obsidyen uçları yalnız mineral örnekleri üzerinde kullanır; her parçayı kendi numarasıyla sarar."
-            },
-            {
-              "id": "s4",
-              "name": "Envanter Yazmanı Dicle",
-              "icon": "📜",
-              "description": "Kazı buluntularının giriş-çıkışını ve sandık kodlarını tutan yazman.",
-              "detail": "Raf kodlarını yanlış yazmamak için renkli ayraçlar kullanır; eski belgelerin kenar notlarını asla atmaz."
-            }
-          ],
-          "weapons": [
-            {
-              "id": "w1",
-              "name": "Obsidyen Uç",
-              "icon": "🪨",
-              "description": "Sert yazı yüzeyindeki kabuğu kaldırmak için kullanılan, çalışırken siyah yonga bırakan koyu taş uç.",
-              "detail": ""
-            },
-            {
-              "id": "w2",
-              "name": "Arsenikli Koruma Tozu",
-              "icon": "⚱️",
-              "description": "Eski yüzeyleri sabitlemek için kullanılan, solunduğunda öldürücü olabilen açık renkli ince koruma tozu.",
-              "detail": ""
-            },
-            {
-              "id": "w3",
-              "name": "Kuyu Vinç Halatı",
-              "icon": "🪢",
-              "description": "Derin sarnıçtan sandık çekmekte kullanılan yağlı, ağır halat.",
-              "detail": ""
-            },
-            {
-              "id": "w4",
-              "name": "Taş Levha Tokmağı",
-              "icon": "🔨",
-              "description": "Kırık blokları yerinden oynatmak için kullanılan kısa saplı tokmak.",
-              "detail": ""
-            }
-          ],
-          "locations": [
-            {
-              "id": "l1",
-              "name": "Kuzey Hendek",
-              "icon": "🏜️",
-              "description": "Ana kazı çizgisinin sert taş tabakasına açılan, gölgeli çalışma yarığı.",
-              "detail": ""
-            },
-            {
-              "id": "l2",
-              "name": "Su Sarnıcı",
-              "icon": "💧",
-              "description": "Taş duvarlı, ip ve makara düzeneği bulunan derin su kuyusu.",
-              "detail": ""
-            },
-            {
-              "id": "l3",
-              "name": "Kırık Yazıt Atölyesi",
-              "icon": "🧱",
-              "description": "Tablet parçalarının numaralandırıldığı, kumaş perdeli kapalı çalışma alanı.",
-              "detail": ""
-            },
-            {
-              "id": "l4",
-              "name": "Yazıt Galerisi",
-              "icon": "🏛️",
-              "description": "Kazıdan çıkan büyük levhaların geçici olarak sergilendiği uzun tente.",
-              "detail": ""
-            }
-          ],
-          "clues": [
-            {
-              "id": "c1",
-              "title": "Tozun Taşıdığı Tuz",
-              "type": "adli",
-              "mechanicType": "text",
-              "text": "Adli numune, öldürücü parçacığın solunduğunda tehlikeli olan açık renkli bir koruma tozundan geldiğini saptadı. Tane yapısı, ana kazı çizgisinin açık taş yüzeyindeki kumla karışmış değil.",
-              "deductionHint": "Öldürücü tozun tane yapısı bir açık alana uymuyorsa hangi bağ kapanır?",
-              "isBonus": false,
-              "revealOrder": 1,
-              "isRevealed": true,
-              "pointCost": 0
-            },
-            {
-              "id": "c2",
-              "title": "Sarnıç Zimmeti",
-              "type": "kanit",
-              "mechanicType": "text",
-              "text": "Kamp ambarının günlük sayımında kısa saplı tokmak, taş duvarlı kuyunun makarası yanındaki aletler arasında kayıtlı.",
-              "deductionHint": "Ağır alet aynı sayım satırında tek bir yerdeyse hangi ilişki doğrulanır?",
-              "isBonus": false,
-              "revealOrder": 2,
-              "isRevealed": false,
-              "pointCost": 60
-            },
-            {
-              "id": "c3",
-              "title": "Hendek Kenarı",
-              "type": "kanit",
-              "mechanicType": "text",
-              "text": "Ana kazı çizgisinin sediman örneğinde, sert yazı yüzeyinde siyah yonga bırakan koyu taş uca ait kırıntı bulunmadı; örnekler mikroskop altında üç kez karşılaştırıldı.",
-              "deductionHint": "Mikroskopik yonga yoksa hangi araç–alan bağını eleyebilirsin?",
-              "isBonus": false,
-              "revealOrder": 3,
-              "isRevealed": false,
-              "pointCost": 60
-            },
-            {
-              "id": "c4",
-              "title": "Eksik Dosya Dizini",
-              "type": "sifreli",
-              "mechanicType": "sifreli_mesaj",
-              "text": "Yangından kurtarılan dört dosya, aynı rafta olmaması gereken kodlarla birbirine karışmıştı.",
-              "deductionHint": "Tarih ile klasör kodunu aynı anda izlediğinde, her belgenin gidebileceği tek raf gözü kalır.",
-              "isBonus": false,
-              "revealOrder": 4,
-              "isRevealed": false,
-              "pointCost": 60,
-              "sifre": {
-                "sifrelenmis": "A-12 / C-07 / B-19 / D-03",
-                "sifreleTuru": "arşiv dizini kurma",
-                "cozumIpucu": "Klasörlerdeki tarih ile kod, ayrı ayrı değil birlikte okununca hangi satırın kime ait olduğunu daraltıyor.",
-                "cozulmus": "ARŞİV EŞLEŞMESİ 412",
-                "aciklama": "Dizin tamamlandığında, ızgarada bir doğrudan bağlantıyı işaretlemeye yetecek belge zinciri oluşur.",
-                "presentation": {
-                  "style": "archive_index_reconstruction",
-                  "title": "Eksik Arşiv Dosyası",
-                  "subtitle": "Dosyaları tarih damgası ve raf koduna göre doğru gözlere yerleştir.",
-                  "purposeHint": "Doğru dizin, ızgarada hangi kişi–araç bağlantısının doğrulanacağını belgeyle gösterecek.",
-                  "files": [
-                    {
-                      "id": "f1",
-                      "code": "A-12",
-                      "date": "03 Mayıs",
-                      "note": "Kırmızı ayraç · mühr tozu siparişi"
-                    },
-                    {
-                      "id": "f2",
-                      "code": "B-19",
-                      "date": "06 Mayıs",
-                      "note": "Mavi ayraç · kırık taş sayımı"
-                    },
-                    {
-                      "id": "f3",
-                      "code": "C-07",
-                      "date": "02 Mayıs",
-                      "note": "Sarı ayraç · raf giriş fişi"
-                    },
-                    {
-                      "id": "f4",
-                      "code": "D-03",
-                      "date": "07 Mayıs",
-                      "note": "Siyah ayraç · sarnıç alet listesi"
-                    }
-                  ],
-                  "slots": [
-                    {
-                      "id": "r1",
-                      "label": "Raf I · eski girişler"
-                    },
-                    {
-                      "id": "r2",
-                      "label": "Raf II · bakım malzemesi"
-                    },
-                    {
-                      "id": "r3",
-                      "label": "Raf III · taş kayıtları"
-                    },
-                    {
-                      "id": "r4",
-                      "label": "Raf IV · su düzeni"
-                    }
-                  ],
-                  "correctAssignments": [
-                    {
-                      "itemId": "f1",
-                      "answerId": "r2"
-                    },
-                    {
-                      "itemId": "f2",
-                      "answerId": "r3"
-                    },
-                    {
-                      "itemId": "f3",
-                      "answerId": "r1"
-                    },
-                    {
-                      "itemId": "f4",
-                      "answerId": "r4"
-                    }
-                  ],
-                  "resultText": "Bakım malzemesi fişindeki renkli ayraç, arsenikli toz kaydını envanter yazmanının satırına bağlar: Envanter Yazmanı Dicle ↔ Arsenikli Koruma Tozu.",
-                  "interaction": {
-                    "mode": "file_slot_assign",
-                    "submitLabel": "Dizini Kur",
-                    "successMessage": "Dosyalar kendi raflarına döndü.",
-                    "failureMessage": "Tarih ve kod aynı raf düzenini vermiyor."
-                  }
-                }
-              }
-            },
-            {
-              "id": "c5",
-              "title": "Atölye Sedimanı",
-              "type": "kanit",
-              "mechanicType": "text",
-              "text": "Kumaş perdeli çalışma alanından alınan örnekte, siyah yonga bırakan koyu taş uca ait kırıntı bulunmadı; laboratuvar karşılaştırması bu kez kapalı alandaki tozu dışladı.",
-              "deductionHint": "İkinci laboratuvar karşılaştırması hangi araç–alan bağını kapatır?",
-              "isBonus": false,
-              "revealOrder": 5,
-              "isRevealed": false,
-              "pointCost": 60
-            },
-            {
-              "id": "b1",
-              "title": "Kervan Defteri",
-              "type": "tanik",
-              "mechanicType": "text",
-              "text": "Harun'un su dönüşünü imzalayan sefer defteri, onu sarnıç çizelgesine bağlıyor.",
-              "deductionHint": "Bu defter hangi kişi–mekân bağını doğrular?",
-              "isBonus": true,
-              "revealOrder": 6,
-              "isRevealed": false,
-              "pointCost": 60
-            },
-            {
-              "id": "b2",
-              "title": "Kenar Notu",
-              "type": "kanit",
-              "mechanicType": "text",
-              "text": "Mert'in sabah raporunda, kuzey hendekteki ölçüm çizgileri kendi kalemiyle işaretlenmiş.",
-              "deductionHint": "Bu işaret hangi kişi–mekân bağını doğrular?",
-              "isBonus": true,
-              "revealOrder": 7,
-              "isRevealed": false,
-              "pointCost": 60
-            }
-          ],
-          "assetManifest": [],
-          "solution": {
-            "suspectId": "s4",
-            "weaponId": "w2",
-            "locationId": "l3"
-          },
-          "solutionNarrative": "Envanter Yazmanı Dicle, buluntu kaydını değiştirdikten sonra yazıt uzmanını arsenikli koruma tozuna maruz bıraktı. Arşiv dizini, tozun girişini Dicle'nin satırına bağladı; sediman testleri obsidyen ucun olası alanlarını kapattı."
-        },
-        {
-          "puzzleId": "pp_005",
-          "packId": "pack_pp",
-          "packSlug": "period",
-          "stars": "★★★★★",
-          "gridSize": "4x4",
-          "timeLimit": 360,
-          "title": "Sıfırın Altındaki Dördüncü Kilit",
-          "subtitle": "1912 · Kutup gözlem istasyonu · Kapanmış ikmal sandığı",
-          "difficulty": 5,
-          "difficultyLevel": 5,
-          "specialMechanic": "sifreli_mesaj",
-          "story": "1912 yılının dondurucu ve merhametsiz kışında, dünyanın ucundaki izole bir kuzey buz hattı gözlem istasyonundan medeniyete yalnızca üç gün arayla iki kırık dökük yardım çağrısı ulaştı. Ardından gelen sağır edici sessizlik haftalarca sürdü. Kurtarma ekibi, devasa buz kütlelerini aşıp istasyonun donmuş kapılarını kırarak içeri girdiğinde kan donduran bir manzarayla karşılaştı. Ekibin lideri, yalıtım kabininde ölü bulunmuştu ve üzerindeki izler bir kazadan çok hesaplanmış bir müdahaleye işaret ediyordu. İkmal sandığının kilidi çözüldüğünde her şey netlesti.",
-          "atmosphere": "Kar, duvarlardaki çatlakları\nç içeri toz gibi giriyordu. Her metal parça soğuk değil, unutulmuş bir karar taşıyordu.",
-          "suspects": [
-            {
-              "id": "s1",
-              "name": "Meteorit Uzmanı Nazan",
-              "icon": "☄️",
-              "description": "Göktaşı örneklerini sınıflandırmak için istasyona katılan mineral uzmanı.",
-              "detail": "Örnek tüplerini renk sırasına göre dizer; gece gökyüzünü kayıt defterine ince çizgilerle işler."
-            },
-            {
-              "id": "s2",
-              "name": "Sefer Doktoru Cem",
-              "icon": "⚕️",
-              "description": "Yüksek irtifa hastalıkları için sefer ekibine eşlik eden hekim.",
-              "detail": "İlaç karasını kendi kilitler; her dozun saatini beyaz ciltli deftere not eder."
-            },
-            {
-              "id": "s3",
-              "name": "Telsizci Arif",
-              "icon": "📻",
-              "description": "İstasyonun zaman sinyalini ve yardım çağrılarını yöneten telsiz operatörü.",
-              "detail": "Kadranlı saatleri söküp takabilir; her akşam anten gerilimini ölçer."
-            },
-            {
-              "id": "s4",
-              "name": "Kutup Kılavuzu Bora",
-              "icon": "🧊",
-              "description": "Buz yarıklarında ekibe yol açan, kızak ve ikmal düzenini bilen kılavuz.",
-              "detail": "Yük sandıklarını ağırlığa göre dizer; açık havada ip düğümlerini eldivensiz atabilir."
-            }
-          ],
-          "weapons": [
-            {
-              "id": "w1",
-              "name": "Buz Baltası",
-              "icon": "🪓",
-              "description": "Kızak yolunu açmak ve buz örneklerini kırmak için kullanılan kısa balta.",
-              "detail": ""
-            },
-            {
-              "id": "w2",
-              "name": "Yakıt Vanası",
-              "icon": "🛢️",
-              "description": "ısıtıcı hattındaki basıncı ayarlayan pirinç vana.",
-              "detail": ""
-            },
-            {
-              "id": "w3",
-              "name": "İşaret Fişeği",
-              "icon": "🧨",
-              "description": "Uzakta görünür sinyal vermek için kullanılan kısa menzilli fişek.",
-              "detail": ""
-            },
-            {
-              "id": "w4",
-              "name": "Kükürtlü Isıtıcı Kartüuşu",
-              "icon": "♨️",
-              "description": "Kapalı kabinde yanlış kullanıldığında zehirli gaz çıkaran bakım kartüuşu; yanıkta ince yağ filmi bırakır.",
-              "detail": ""
-            }
-          ],
-          "locations": [
-            {
-              "id": "l1",
-              "name": "Gözlem Kubbesi",
-              "icon": "🔭",
-              "description": "Gökyüzü ölçümlerinin yapıldığı, kuru hava filtreli metal çerçeveli üst bölüm.",
-              "detail": ""
-            },
-            {
-              "id": "l2",
-              "name": "Yakıt Bölmesi",
-              "icon": "🛢️",
-              "description": "Tüplerin ve vana anahtarlarının saklandığı kapalı servis odası.",
-              "detail": ""
-            },
-            {
-              "id": "l3",
-              "name": "Telsiz Odası",
-              "icon": "📡",
-              "description": "Zaman sinyali alıcısı, kablo makaraları ve yardım çağrısı masası.",
-              "detail": ""
-            },
-            {
-              "id": "l4",
-              "name": "Yalıtım Kabini",
-              "icon": "🛏️",
-              "description": "Hasta ekibin dinlendiği, çift kapılı küçük uyku ve bakım bölmesi.",
-              "detail": ""
-            }
-          ],
-          "clues": [
-            {
-              "id": "c1",
-              "title": "Soot ve Gaz Örneği",
-              "type": "adli",
-              "mechanicType": "text",
-              "text": "Adli analiz, öldürücü gazın bakım kartüuşu yanığıyla uyumlu olduğunu saptadı. Karışımdaki ince yağ filmi, kuru hava filtreli üst bölümde hiç görülmedi.",
-              "deductionHint": "Gaz örneği bir filtrenin izini taşımıyorsa hangi araç–mekân bağı kapanır?",
-              "isBonus": false,
-              "revealOrder": 1,
-              "isRevealed": true,
-              "pointCost": 0
-            },
-            {
-              "id": "c2",
-              "title": "Mineral Kutusu",
-              "type": "kanit",
-              "mechanicType": "text",
-              "text": "İkmal listesinde buz örneklerini kırmaya yarayan kısa balta, mineral uzmanının örnek kasasıyla birlikte teslim edilmiş görünüyor.",
-              "deductionHint": "Teslim listesi hangi kişi–araç bağını doğrudan işaretler?",
-              "isBonus": false,
-              "revealOrder": 2,
-              "isRevealed": false,
-              "pointCost": 60
-            },
-            {
-              "id": "c3",
-              "title": "Çift Kapı Kaydı",
-              "type": "tanik",
-              "mechanicType": "text",
-              "text": "Çift kapılı dinlenme bölümünün iç kapı sayacı, beyaz ciltli ilaç defteri taşıyan kişinin vardiya öncesi içeri girip kapıyı iki kez kurduğunu mekanik olarak kayda geçirmiş.",
-              "deductionHint": "Mekanik sayac hangi kişi–mekân bağını doğrular?",
-              "isBonus": false,
-              "revealOrder": 3,
-              "isRevealed": false,
-              "pointCost": 60
-            },
-            {
-              "id": "c4",
-              "title": "İkmal Sandığının Kilidi",
-              "type": "sifreli",
-              "mechanicType": "sifreli_mesaj",
-              "text": "İkmal sandığının dört kadranı, buz üssünden kalan yön ve sıcaklık işaretleriyle çizilmişti.",
-              "deductionHint": "Kadranları, işaretlerin hangi sırada tekrar ettiğini bozmadan döndür; tek bir dizilim kasanın geçmişini açar.",
-              "isBonus": false,
-              "revealOrder": 4,
-              "isRevealed": false,
-              "pointCost": 60,
-              "sifre": {
-                "sifrelenmis": "◈ / △ / ≋ / ✣ — 04:12",
-                "sifreleTuru": "mekanik kilit dizisi",
-                "cozumIpucu": "Yüzlerdeki yön işaretlerini, karşılarındaki sıcaklık değerinin değişim sırasıyla birlikte düşün.",
-                "cozulmus": "KİLİT KAYDI 1912",
-                "aciklama": "Kilit, çözüldüğünde bir kişi–araç bağlantısını eleyecek mekanik halka verir.",
-                "presentation": {
-                  "style": "mechanical_lock_sequence",
-                  "title": "Mekanik Kilit Dizisi",
-                  "subtitle": "Dört kadranı, sefer işaretlerinin tekrar etmeyen sırasına göre çevir.",
-                  "purposeHint": "Kilit açıldığında görünen ikmal kaydı, ızgarada bir kişi–araç bağını güvenle elemeni sağlayacak.",
-                  "dials": [
-                    {
-                      "id": "d1",
-                      "label": "Kuzey İşareti",
-                      "symbols": [
-                        "△",
-                        "◈",
-                        "≋",
-                        "✣"
-                      ],
-                      "initial": "△"
-                    },
-                    {
-                      "id": "d2",
-                      "label": "Rüzgâr İşareti",
-                      "symbols": [
-                        "≋",
-                        "✣",
-                        "△",
-                        "◈"
-                      ],
-                      "initial": "≋"
-                    },
-                    {
-                      "id": "d3",
-                      "label": "Sıcaklık İşareti",
-                      "symbols": [
-                        "✣",
-                        "△",
-                        "◈",
-                        "≋"
-                      ],
-                      "initial": "✣"
-                    },
-                    {
-                      "id": "d4",
-                      "label": "Yük İşareti",
-                      "symbols": [
-                        "◈",
-                        "≋",
-                        "✣",
-                        "△"
-                      ],
-                      "initial": "◈"
-                    }
-                  ],
-                  "correctCode": [
-                    {
-                      "dialId": "d1",
-                      "symbol": "◈"
-                    },
-                    {
-                      "dialId": "d2",
-                      "symbol": "△"
-                    },
-                    {
-                      "dialId": "d3",
-                      "symbol": "≋"
-                    },
-                    {
-                      "dialId": "d4",
-                      "symbol": "✣"
-                    }
-                  ],
-                  "resultText": "Açılan ikmal fişi, ısıtıcı kartüuşunun kılavuzun yük zincirinde olmadığını gösterir: Kutup Kılavuzu Bora × Kükürtlü Isıtıcı Kartüuşu.",
-                  "interaction": {
-                    "mode": "dial_rotate",
-                    "submitLabel": "Kilidi Aç",
-                    "successMessage": "Dört kadran aynı sefer kaydına oturdu.",
-                    "failureMessage": "Kadranlar aynı tekrar dizisini vermiyor."
-                  }
-                }
-              }
-            },
-            {
-              "id": "c5",
-              "title": "Zaman Sinyali",
-              "type": "tanik",
-              "mechanicType": "text",
-              "text": "Zaman sinyal masasında kalan kâğıt şerit, kadranlı saatleri söküp takan görevlinin vardiya işaretini üst bölüm saatinden önce aldığını gösteriyor.",
-              "deductionHint": "Zaman sinyali hangi kişi–mekân bağını doğrular?",
-              "isBonus": false,
-              "revealOrder": 5,
-              "isRevealed": false,
-              "pointCost": 60
-            },
-            {
-              "id": "b1",
-              "title": "Vana Anahtarı",
-              "type": "kanit",
-              "mechanicType": "text",
-              "text": "Yakıt tüplerinin yanındaki anahtarın üzerinde mineral uzmanının örnek tozuyla aynı gri lekeler bulundu.",
-              "deductionHint": "Bu iz hangi kişi–araç bağını destekler?",
-              "isBonus": true,
-              "revealOrder": 6,
-              "isRevealed": false,
-              "pointCost": 60
-            },
-            {
-              "id": "b2",
-              "title": "Kızak Fişi",
-              "type": "tanik",
-              "mechanicType": "text",
-              "text": "Bora'nın kızak çizelgesinde işaret fişekleri ayrı bir kutuda listelenmemişti.",
-              "deductionHint": "Bu çizelge hangi kişi–araç bağını doğrular?",
-              "isBonus": true,
-              "revealOrder": 7,
-              "isRevealed": false,
-              "pointCost": 60
-            }
-          ],
-          "assetManifest": [],
-          "solution": {
-            "suspectId": "s2",
-            "weaponId": "w4",
-            "locationId": "l4"
-          },
-          "solutionNarrative": "Sefer Doktoru Cem, yalıtım kabininde kükürtlü ısıtıcı kartüuşunu yanlış kullanılmış gibi göstererek zehirli gazı bıraktı. Kilitten çıkan ikmal kaydı Bora'yı kartüuş zincirinden çıkardı; zaman ve kapı kayıtları Cem'i tek üçlüe taşıdı."
         }
       ]
     }
