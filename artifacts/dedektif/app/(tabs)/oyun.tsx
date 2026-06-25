@@ -1043,9 +1043,7 @@ export default function VakalarScreen() {
                       },
                     ]}
                   >
-                    <Text style={[listStyles.premPillBtnText, { color: premiumSubTab === "vakalar" ? "#D4A843" : "#888AAA" }]}>
-                      Vakalar
-                    </Text>
+                    <MaterialIcons name="auto-stories" size={18} color={premiumSubTab === "vakalar" ? "#D4A843" : "#888AAA"} />
                   </Pressable>
                   {/* Center divider */}
                   <View style={[listStyles.premPillSep, { backgroundColor: "#D4A84330" }]} />
@@ -1064,9 +1062,7 @@ export default function VakalarScreen() {
                       },
                     ]}
                   >
-                    <Text style={[listStyles.premPillBtnText, { color: premiumSubTab === "paketler" ? "#D4A843" : "#888AAA" }]}>
-                      Paketler
-                    </Text>
+                    <MaterialIcons name="inventory-2" size={18} color={premiumSubTab === "paketler" ? "#D4A843" : "#888AAA"} />
                   </Pressable>
                 </View>
               </View>
@@ -1084,7 +1080,7 @@ export default function VakalarScreen() {
                     <MaterialIcons name="workspace-premium" size={22} color="#D4A843" />
                     <Text style={[listStyles.premVakalarTitle, { color: "#D4A843" }]}>Premium Vakalar</Text>
                     <View style={[listStyles.premVakalarCount, { backgroundColor: "#D4A84330", borderColor: "#D4A84360" }]}>
-                      <Text style={[listStyles.premVakalarCountText, { color: "#D4A843" }]}>{premiumPuzzles.length}</Text>
+                      <Text style={[listStyles.premVakalarCountText, { color: "#D4A843" }]}>{premiumPuzzles.length} vaka</Text>
                     </View>
                   </Animated.View>
 
