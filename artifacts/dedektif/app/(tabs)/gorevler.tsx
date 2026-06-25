@@ -216,7 +216,6 @@ function MissionCard({
                 </Text>
                 <Text
                   style={[styles.missionDesc, { color: colors.secondaryForeground }]}
-                  numberOfLines={2}
                 >
                   {mission.description}
                 </Text>
@@ -904,6 +903,7 @@ const styles = StyleSheet.create({
   },
   rewardText: {
     fontSize: 13,
+    fontFamily: "PlayfairDisplay",
     fontWeight: "700",
   },
   progressRow: {
@@ -948,6 +948,7 @@ const styles = StyleSheet.create({
   claimBtnPoints: {
     color: "#000",
     fontSize: 12,
+    fontFamily: "PlayfairDisplay",
     fontWeight: "700",
   },
   emptyState: {
