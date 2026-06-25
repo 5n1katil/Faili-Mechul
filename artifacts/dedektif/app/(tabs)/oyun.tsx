@@ -47,7 +47,7 @@ import {
   type Difficulty,
   type GridMark,
 } from "@/data/puzzles";
-import { PACKS, getPuzzlesForPack, PACK_PRODUCT_IDS } from "@/data/packs";
+import { PACKS, PURCHASABLE_PACKS, getPuzzlesForPack, PACK_PRODUCT_IDS } from "@/data/packs";
 import { fetchLeaderboard } from "@/utils/apiClient";
 import {
   computeCaseRank,
@@ -68,6 +68,9 @@ import Animated, {
 } from "react-native-reanimated";
 
 const FREE_PUZZLE_COUNT = 10;
+const TOTAL_PURCHASABLE_PUZZLES = PURCHASABLE_PACKS.reduce(
+  (sum, p) => sum + getPuzzlesForPack(p.packId).length, 0
+);
 const EXTRA_FREE_PUZZLE_IDS: ReadonlySet<string> = new Set([
   "karakoyde-neon-gece",
   "konakta-gece-vakti",
@@ -1093,7 +1096,7 @@ export default function VakalarScreen() {
                         Paketler
                       </Text>
                       <Text style={{ color: premiumSubTab === "paketler" ? "#D4A843CC" : "#55576A", fontSize: 11, fontWeight: "600" }}>
-                        {PACKS.length} paket · {premiumPuzzles.length} vaka
+                        {PURCHASABLE_PACKS.length} paket · {TOTAL_PURCHASABLE_PUZZLES} vaka
                       </Text>
                     </View>
                   </View>
@@ -2098,9 +2101,9 @@ const listStyles = StyleSheet.create({
   premVakalarHeader: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "flex-start",
     gap: 10,
-    paddingVertical: 16,
+    paddingVertical: 14,
     paddingHorizontal: 16,
   },
   premVakalarTitle: {
@@ -2108,6 +2111,7 @@ const listStyles = StyleSheet.create({
     fontFamily: "PlayfairDisplay",
     fontWeight: "700",
     letterSpacing: 0.4,
+    flexShrink: 1,
   },
   premVakalarCount: {
     borderRadius: 10,
@@ -2117,7 +2121,7 @@ const listStyles = StyleSheet.create({
     alignItems: "center",
   },
   premVakalarCountText: {
-    fontSize: 14,
+    fontSize: 13,
     fontWeight: "800",
   },
 });
