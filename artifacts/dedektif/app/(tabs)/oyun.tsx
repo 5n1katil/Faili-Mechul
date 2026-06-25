@@ -389,8 +389,8 @@ function FilterPill3D({
   return (
     <Animated.View style={[{ flex: 1 }, animStyle]}>
       <Pressable
-        onPressIn={() => { scale.value = withSpring(0.88, { damping: 10, stiffness: 320 }); }}
-        onPressOut={() => { scale.value = withSpring(1, { damping: 10, stiffness: 280 }); }}
+        onPressIn={() => { scale.value = withTiming(0.91, { duration: 70, easing: Easing.out(Easing.quad) }); }}
+        onPressOut={() => { scale.value = withTiming(1, { duration: 90, easing: Easing.out(Easing.quad) }); }}
         onPress={onPress}
         style={[
           listStyles.filterPill3d,
@@ -1707,6 +1707,7 @@ const listStyles = StyleSheet.create({
     flexDirection: "row",
     gap: 8,
     marginBottom: 4,
+    overflow: "hidden",
   },
   diffFilterBtn: {
     flex: 1,
