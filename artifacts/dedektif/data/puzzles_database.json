@@ -4215,219 +4215,392 @@
         },
         {
           "puzzleId": "rc_005",
-          "title": "Yazarın Lanetli Romanı",
-          "subtitle": "İsviçre Dağ Evi — 1950'ler İlhamlı Kurgusal",
-          "difficulty": 5,
-          "difficultyLabel": "Efsane Komiser",
+          "packId": "pack_004",
+          "packSlug": "realcrime",
           "stars": "★★★★★",
           "gridSize": "4x4",
           "timeLimit": 360,
-          "story": "Ünlü bir polisiye yazarı, yayımlanmak üzere olan romanında gerçek bir cinayeti deşifre ettiğini fark etti. Roman çıkmadan önce yazar ölü bulundu.",
-          "atmosphere": "Alpler. Kar. Daktilo sesi. Ve romanın son sayfasında bir isim.",
+          "legalNote": "Tüm karakterler, mekânlar, sefer kayıtları ve ölüm kurgusaldır. Vaka yalnızca tarihî dağ seferi gizemlerinin izolasyon, çelişkili rota kaydı ve kayıp navigasyon ekipmanı atmosferinden esinlenir; gerçek kişi veya mağdurlar temsil edilmez.",
+          "historicalInspiration": "1950’lerdeki kuzey dağ seferleri çevresinde oluşan terk edilmiş kamp, sert hava, çelişkili rota kaydı ve kırılmış seyrüsefer ekipmanı motiflerinin anlatı atmosferinden esinlenilmiştir.",
+          "title": "Kuzey Geçidindeki Kırık Pusula",
+          "subtitle": "1959 Dağ Seferi Dosyası · Kırılmış Seyrüsefer Kaydı · Kurgusal",
+          "difficulty": "Efsane Komiser",
+          "difficultyLevel": 5,
+          "specialMechanic": "sifreli_mesaj_kirik_pusula",
+          "story": "1959’un Şubatında Kuzey Geçidi Araştırma Seferi, planlı dönüşünden bir gece önce beyaz bir fırtınaya yakalandı. Seferin başjeoloğu Arda Koral, kaybolan rota işaretlerini yeniden kontrol etmek için ekibin önünden ayrıldı. Telsiz bağlantısı kesildiğinde yamaçtaki tek işaret lambası hâlâ yanıyordu.\n\nErtesi sabah Arda, geçidin alt kıvrımındaki kapalı barınağın iç bölümünde ölü bulundu; çevrede sürüklenme, çığ ya da dış müdahale izi yoktu. Ekipmanlar düzenliydi; yalnız iç cebindeki pusula başlığı parçalara ayrılmış, bir kadranı diğer metalden görünüyordu.\n\nAdli inceleme, ölümün donma değil keskin bir metal aletle olduğunu ortaya koydu. Sefer günlüğü, fırtınanın en yoğun saatinde iki ekip üyesinin ayrı konumlarda kayıtlı olduğunu gösteriyordu — ama ikisi de nerede olduklarını değiştirmişti.",
+          "atmosphere": "Rüzgâr, geçidin yüzeyine ince buz tozu savurur. Kapalı barınakta ıslak yün, yakıt ve soğuk metal kokusu kalmıştır. Pusula parçaları masada yan yana geldiğinde, fırtınanın içinde unutulmuş bir yön yeniden belirir.",
           "suspects": [
             {
               "id": "s1",
-              "name": "Editör Heloise Vance",
-              "icon": "👩",
-              "description": "Romanı okuyup anlayan ilk kişi. Yayımlanmasını engelledi.",
-              "detail": "50 yaşında, keskin zekâlı, yayınevini koruma içgüdüsü."
+              "name": "Meteorolog Nermin Akça",
+              "icon": "🌬️",
+              "description": "Seferin rüzgâr ölçümlerini ve kar yoğunluğu çizelgelerini tutan deneyimli meteorolog.",
+              "detail": "Mavi bantlı alüminyum kar sondasını Rüzgâr Direği dışında kullanmaz; ölçüm defterine yeşil kurşunla yön oku çizer, kırmızı saplı dağ aletlerini çantasına koymaz."
             },
             {
               "id": "s2",
-              "name": "Yazarın Kız Kardeşi Renata",
-              "icon": "noun-zeynep-hanim-avatar.png",
-              "description": "Roman, ailenin eski sırrını açıklıyor.",
-              "detail": "45 yaşında, sinirli, gizli bir travması var."
+              "name": "Malzeme Sorumlusu Bora Sarp",
+              "icon": "🧰",
+              "description": "Yakıt, sığınak malzemesi ve telsiz yedeklerinin zimmetini tutan sefer görevlisi.",
+              "detail": "İki pirinç perçinli ocak baca manşonunu bez torbasında taşır; yakıt mühürlerini tarih sırasıyla saklar, sayım bitmeden taş sığınağa uğramaz."
             },
             {
               "id": "s3",
-              "name": "İsviçre Savcısı Klein",
-              "icon": "⚖️",
-              "description": "30 yıl önce kapatılan bir davayı roman yeniden açacak.",
-              "detail": "62 yaşında, emeklilik öncesi, panikleyebilir."
+              "name": "Sefer Fotoğrafçısı Elif Deren",
+              "icon": "📷",
+              "description": "Beyaz fırtınada rota fotoğraflarını ve buz çizgilerini kayda alan bağımsız fotoğrafçı.",
+              "detail": "Kehribar film kutularını siyah kamera çantasında tutar; üç ayaklı tripodunu Buzul Eşiği’nde kurar, kırmızı saplı buz kazması yerine magnezyum işaret fişeği taşır."
             },
             {
               "id": "s4",
-              "name": "Genç Gazeteci Marco",
-              "icon": "🚗",
-              "description": "Romanı sızdırıp büyük haber yapmak istiyor.",
-              "detail": "28 yaşında, hırslı, sınır tanımaz."
+              "name": "Dağ Rehberi Cem Onat",
+              "icon": "🧭",
+              "description": "Geçidin güvenli rotasını belirleyen, sığınak anahtarına ve geçit işaretlerine erişimi olan kıdemli rehber.",
+              "detail": "Kırmızı saplı buz kazmasını kemerine bağlar; Taş Sığınak’ın iç kapısının anahtarını siyah kordonla boynunda taşır, fırtınada ekibi kısa yol diye kuzey yarığına yönlendirmeyi savunur."
             }
           ],
           "weapons": [
             {
               "id": "w1",
-              "name": "Zehirli Brendi",
-              "icon": "🥃",
-              "description": "Çalışma odasındaki brendi şişesine karışan zehir."
+              "name": "Mavi Bantlı Kar Sondası",
+              "icon": "📏",
+              "description": "Rüzgârla taşınan karın sertliğini ölçmek için kullanılan, ince alüminyum uçlu arazi sondası.",
+              "detail": "Uç kısmında mavi izolasyon bandı ve dereceli kar işaretleri bulunur."
             },
             {
               "id": "w2",
-              "name": "Ateşten Düşme",
+              "name": "Pirinç Perçinli Ocak Manşonu",
               "icon": "🔥",
-              "description": "Şömine kenarından itilme."
+              "description": "Sefer ocağının baca bağlantısını sabitlemek için kullanılan, iki pirinç perçinli sıcaklık manşonu.",
+              "detail": "Is ve yakıt mühürü izi tutar; bez torbada taşınır."
             },
             {
               "id": "w3",
-              "name": "El Silahı",
-              "icon": "🔫",
-              "description": "Eski model tabanca."
+              "name": "Kırmızı Saplı Buz Kazması",
+              "icon": "⛏️",
+              "description": "Dik buz yüzeylerinde denge almak ve sabitlenmek için kullanılan, dar kama uçlu dağ aleti.",
+              "detail": "Sapındaki kırmızı emaye, taş yüzeyde ve kumaşta ince döküntü bırakabilir."
             },
             {
               "id": "w4",
-              "name": "Soğukta Bırakma",
-              "icon": "❄️",
-              "description": "Alp soğuğunda dışarıda bırakılma."
+              "name": "Magnezyum İşaret Fişeği",
+              "icon": "🚩",
+              "description": "Düşük görüşte rota noktasını işaretlemek için kullanılan parlak magnezyum işaret düzeneği.",
+              "detail": "Siyah bir taşıma kılıfı ve kısa süreli beyaz yanık tortusu bırakır."
             }
           ],
           "locations": [
             {
               "id": "l1",
-              "name": "Çalışma Odası",
-              "icon": "💻",
-              "description": "Yazarın daktilo başındaki odası."
+              "name": "Rüzgâr Direği",
+              "icon": "🌫️",
+              "description": "Geçidin açık yamacında, rüzgâr ölçer ve kar derinliği çizelgesinin sabitlendiği metal direk.",
+              "detail": "Mavi bantlı kar sondasının ölçüm ucu ve yön okları burada görülür."
             },
             {
               "id": "l2",
-              "name": "Kütüphane",
-              "icon": "📖",
-              "description": "Evin geniş kütüphanesi."
+              "name": "Telsiz Kulübesi",
+              "icon": "📻",
+              "description": "Yedek batarya, yakıt fişi ve sefer saatinin tutulduğu küçük ahşap iletişim kulübesi.",
+              "detail": "Yakıt fişleri ile bez torbalı bakım malzemeleri burada sayılır."
             },
             {
               "id": "l3",
-              "name": "Dış Veranda",
-              "icon": "🏔️",
-              "description": "Alp manzaralı kış verandası."
+              "name": "Taş Sığınak",
+              "icon": "🪨",
+              "description": "Geçidin alt kıvrımında, iç kapısı siyah kordonlu tek anahtarla açılan dar taş barınak.",
+              "detail": "Kapalı bölümünde rüzgâr kesilir; kırmızı emaye döküntüsü taş zeminde kolay fark edilir."
             },
             {
               "id": "l4",
-              "name": "Bodrum Kat",
-              "icon": "🔒",
-              "description": "El yazması arşivinin bulunduğu bodrum."
+              "name": "Buzul Eşiği",
+              "icon": "🧊",
+              "description": "Fotoğraf için geniş görüş veren, buz yarığının üstündeki açık ve tehlikeli geçiş hattı.",
+              "detail": "Tripod ayakları ve işaret fişeği tortusu kar kabuğunda belirgin iz bırakır."
             }
           ],
           "clues": [
             {
               "id": "c1",
-              "type": "kanit",
+              "title": "Emaye Pul ve Kesit",
+              "type": "adli",
+              "mechanicType": "text",
+              "text": "Adli muayene, Hakan’ın ölümüne ince kama kesitli bir metal aletin yol açtığını; parkasındaki iki paralel çizgide koyu emaye pul kaldığını saptadı. Dereceli ölçüm çubuğunda bu kesit ya da kaplama bulunmaz.",
+              "deductionHint": "İzlerin biçimi, hangi iki kartın aynı rotada buluşamayacağını düşündürüyor?",
+              "isBonus": false,
               "revealOrder": 1,
               "isRevealed": true,
-              "pointCost": 0,
-              "title": "Ölüm Yeri",
-              "text": "Yazar çalışma odasında daktilo başında ölü. Zehirlenme. Son yazdığı cümle: 'Ve sonunda anlıyorum ki katil...' — bitmemiş.",
-              "mechanicType": "text"
+              "pointCost": 0
             },
             {
               "id": "c2",
-              "type": "sifreli",
+              "title": "Mühürlü Bez Torba",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Fırtınada ıslanmış bez torbanın içinden iki küçük metal yuvalı bir ısı bağlantı halkası ile aynı akşamın numaralı sarf mühürleri çıktı. Torbanın düğümü, zimmet defterinde tarif edilen bakım düzeniyle birebir örtüşüyordu.",
+              "deductionHint": "Metal yuvalı halka, sarf mühürleri ve bez torba hangi görevlinin günlük bakım aracını birlikte tarif ediyor?",
+              "isBonus": false,
               "revealOrder": 2,
               "isRevealed": false,
-              "pointCost": 100,
-              "title": "Roman Son Sayfasındaki Kod",
-              "text": "Romanın son sayfasında steganografik kod.",
-              "mechanicType": "sifreli_mesaj",
-              "sifre": {
-                "sifrelenmis": "Her paragrafın ilk harfi: R-E-N-A-T-A",
-                "sifreleTuru": "akrostis",
-                "cozumIpucu": "Her paragrafın ilk harfini alt alta okuyun.",
-                "cozulmus": "RENATA",
-                "aciklama": "Yazar, gerçek katili romanın yapısına gömmüştü. Renata."
-              }
+              "pointCost": 80
             },
             {
               "id": "c3",
-              "type": "adli",
+              "title": "Kırık Pusulanın İç Halkası",
+              "type": "sifreli",
+              "mechanicType": "sifreli_mesaj",
+              "text": "Hakan’ın iç cebinden çıkan pusula başlığı dört bakır kadrana ayrılmıştı. Beşinci parça aynı alaşımdan görünse de ışığı farklı yansıtıyordu; gerçek parçalardaki yarım oklar ve dış çentikler hâlâ seçilebiliyordu.",
+              "deductionHint": "Bakır parçaların sağ–sol çentiklerini kapalı bir halka yapacak sıraya koy; ardından üstteki dış işaretleri yön yuvalarındaki simgelerle eşleştir.",
+              "isBonus": false,
               "revealOrder": 3,
               "isRevealed": false,
-              "pointCost": 100,
-              "title": "Zehir Kaynağı",
-              "text": "Brendi şişesindeki zehir: bitkisel kaynaklı, Alp bitkileriyle yapılmış, yerel üretim. Renata botanik tutkunu olarak bilinir.",
-              "mechanicType": "text"
-            },
-            {
-              "id": "c4",
-              "type": "parmak_izi",
-              "revealOrder": 4,
-              "isRevealed": false,
-              "pointCost": 100,
-              "title": "Brendi Şişesi",
-              "text": "Şişe üzerinde iz.",
-              "mechanicType": "parmak_izi",
-              "parmakIziVerisi": {
-                "aciklama": "Dört şüphelinin izini şişeyle eşleştir.",
-                "izler": [
-                  {
-                    "izId": "iz1",
-                    "konum": "Şişe boynu",
-                    "eslesme": "s2",
-                    "ipucu": "Kadın eli, orta yaş. Bahçecilik nasırı belirgin."
-                  }
-                ],
-                "sonuc": "Şişeyi hazırlayan: Renata. (s2)"
+              "pointCost": 80,
+              "sifre": {
+                "sifrelenmis": "KIRIK PUSULA / DÖRT GERÇEK KADRANI YÖNLENDİR",
+                "sifreleTuru": "kirik_pusula_kalibrasyonu",
+                "cozumIpucu": "Parlak krom kenarlı parçayı dışarıda bırak. Dört bakır parçanın sağ–sol çentikleri kapalı bir halka oluşturur; doğru sırayı bulduktan sonra her kadranı döndürerek üstteki dış işareti yön yuvasındaki simgeyle eşleştir.",
+                "cozulmus": "ELİF / BUZUL EŞİĞİ",
+                "aciklama": "Pusula halkası doğru kurulduğunda, dedektif ızgarasında bir şüpheli–mekân bağlantısı kesinleşir; nihai üçlüyü tek başına söylemez.",
+                "presentation": {
+                  "style": "broken_compass_calibration",
+                  "title": "Kırık Pusula Kalibrasyonu",
+                  "subtitle": "Dört bakır parçayı seç; kenar çentiklerini halka boyunca eşleştir, dış işareti yön yuvasına çevir.",
+                  "sceneLabel": "KUZEY GEÇİDİ / KIRILMIŞ SEYRÜSEFER PUSULASI",
+                  "purposeHint": "Kadranları doğru yönlendirdiğinde, ızgarada bir şüpheli–mekân bağlantısını kesinleştirecek rota notu açılır.",
+                  "northKey": "KULÜBE DEFTERİ: ❄ kuzey · △ doğu · □ güney · ○ batı",
+                  "slots": [
+                    {
+                      "id": "north",
+                      "label": "KUZEY",
+                      "requiredMark": "❄"
+                    },
+                    {
+                      "id": "east",
+                      "label": "DOĞU",
+                      "requiredMark": "△"
+                    },
+                    {
+                      "id": "south",
+                      "label": "GÜNEY",
+                      "requiredMark": "□"
+                    },
+                    {
+                      "id": "west",
+                      "label": "BATI",
+                      "requiredMark": "○"
+                    }
+                  ],
+                  "segments": [
+                    {
+                      "id": "p1",
+                      "label": "Kadran I",
+                      "metal": "bakır",
+                      "slotHint": "❄",
+                      "marks": [
+                        "△",
+                        "○",
+                        "❄",
+                        "□"
+                      ],
+                      "initialRotation": 0,
+                      "correctSlot": "north",
+                      "correctRotation": 180,
+                      "innerRune": "ᚱ",
+                      "leftNotch": "⋔",
+                      "rightNotch": "⌒"
+                    },
+                    {
+                      "id": "p2",
+                      "label": "Kadran II",
+                      "metal": "bakır",
+                      "slotHint": "△",
+                      "marks": [
+                        "○",
+                        "△",
+                        "□",
+                        "❄"
+                      ],
+                      "initialRotation": 90,
+                      "correctSlot": "east",
+                      "correctRotation": 270,
+                      "innerRune": "ᚬ",
+                      "leftNotch": "⌒",
+                      "rightNotch": "⊔"
+                    },
+                    {
+                      "id": "p3",
+                      "label": "Kadran III",
+                      "metal": "bakır",
+                      "slotHint": "□",
+                      "marks": [
+                        "△",
+                        "❄",
+                        "○",
+                        "□"
+                      ],
+                      "initialRotation": 270,
+                      "correctSlot": "south",
+                      "correctRotation": 90,
+                      "innerRune": "ᚦ",
+                      "leftNotch": "⊔",
+                      "rightNotch": "⌟"
+                    },
+                    {
+                      "id": "p4",
+                      "label": "Kadran IV",
+                      "metal": "bakır",
+                      "slotHint": "○",
+                      "marks": [
+                        "○",
+                        "□",
+                        "❄",
+                        "△"
+                      ],
+                      "initialRotation": 180,
+                      "correctSlot": "west",
+                      "correctRotation": 0,
+                      "innerRune": "ᚾ",
+                      "leftNotch": "⌟",
+                      "rightNotch": "⋔"
+                    },
+                    {
+                      "id": "p5",
+                      "label": "Kadran V",
+                      "metal": "krom",
+                      "slotHint": "✕",
+                      "marks": [
+                        "✕",
+                        "✕",
+                        "✕",
+                        "✕"
+                      ],
+                      "initialRotation": 0,
+                      "isDecoy": true,
+                      "innerRune": "—",
+                      "leftNotch": "⊠",
+                      "rightNotch": "⊠"
+                    }
+                  ],
+                  "correctPlacement": [
+                    {
+                      "segmentId": "p1",
+                      "slotId": "north",
+                      "rotation": 180
+                    },
+                    {
+                      "segmentId": "p2",
+                      "slotId": "east",
+                      "rotation": 270
+                    },
+                    {
+                      "segmentId": "p3",
+                      "slotId": "south",
+                      "rotation": 90
+                    },
+                    {
+                      "segmentId": "p4",
+                      "slotId": "west",
+                      "rotation": 0
+                    }
+                  ],
+                  "routeResult": "ELİF · BUZUL EŞİĞİ",
+                  "interaction": {
+                    "mode": "select_place_rotate_submit",
+                    "selectLabel": "Kadranı Halkaya Yerleştir",
+                    "rotateLeftLabel": "↶ 90°",
+                    "rotateRightLabel": "↷ 90°",
+                    "resetLabel": "Kalibrasyonu Temizle",
+                    "submitLabel": "Pusulayı Kalibre Et",
+                    "successMessage": "İç halka kapandı. Rota notu okunuyor: ELİF · BUZUL EŞİĞİ.",
+                    "failureMessage": "Halka henüz kapanmadı. Krom kenarlı sahte parçayı çıkar; yön işaretlerini kulübe defterindeki sıraya göre döndür."
+                  },
+                  "accessibility": {
+                    "description": "Beş kadrandan yalnız dördü bakırdır. Bakır parçaları kuzey, doğu, güney ve batı yuvalarına seçip 90 derece adımlarla döndürün. Her yuvadaki dış işaret kulübe defterindeki yön işaretiyle aynı olmalıdır.",
+                    "keyboardFriendly": true
+                  },
+                  "mobile": {
+                    "singleColumnSegments": true,
+                    "minCardWidthPx": 138,
+                    "stickySelection": true
+                  },
+                  "challenge": "Parlak krom kenarlı beşinci kadran pusulanın parçası değildir. Bakır parçaların sağ ve sol çentikleri kapalı bir halka kurar; ardından her parçanın üstteki dış işareti, yerleştiği yön yuvasının işaretiyle aynı olmalıdır."
+                },
+                "answerAliases": [
+                  "ELİF / BUZUL EŞİĞİ",
+                  "ELİF BUZUL EŞİĞİ",
+                  "ELIF / BUZUL ESIĞI",
+                  "ELIF BUZUL ESIGI"
+                ]
               }
             },
             {
-              "id": "c5",
+              "id": "c4",
+              "title": "İç Kapıdaki Boş Satır",
               "type": "tanik",
+              "mechanicType": "text",
+              "text": "Gece nöbetçisi, sayım görevlisinin numaralı fişleri bitirdikten sonra kendi çalışma çevresinden ayrılmadığını söyledi. Kapalı bölümün iç kapısındaki imza satırı o saat için boş kaldı; zeminde yalnız tek bir dönüş izi vardı.",
+              "deductionHint": "Sayım işi bitince yerinden ayrılmayan görevli, iç kapıdaki boş imzayla birlikte hangi noktadan dışlanır?",
+              "isBonus": false,
+              "revealOrder": 4,
+              "isRevealed": false,
+              "pointCost": 80
+            },
+            {
+              "id": "c5",
+              "title": "Kamera Çantasındaki Eksik İz",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Siyah çekim çantasından kehribar film kutuları ve üç ayaklı sehpa kilitleri çıktı. İç astarda ince metal uca ait taşıma kayışı sürtünmesi ya da koyu emaye pul yoktu; buna karşılık kısa süreli beyaz yanık tortusu vardı.",
+              "deductionHint": "Çantada bulunmayan taşıma izi ile görünen beyaz tortu, hangi araçla kurulabilecek bağlantıyı dışarıda bırakır?",
+              "isBonus": false,
               "revealOrder": 5,
               "isRevealed": false,
-              "pointCost": 100,
-              "title": "Heloise'nin İfadesi",
-              "text": "\"Romanı okuyunca şok oldum. 30 yıl önce gerçek bir cinayet — Renata'nın anlattığı. Yazara 'bunu yayımlayamazsın' dedim. 'Eğer yayımlanırsa Renata biter' dedim. Yazar 'aile gerçeği öğrenmeli' dedi.\"",
-              "mechanicType": "tanik_yuzlesme",
-              "yuzlesmeDialogu": [
-                {
-                  "soru": "Renata'yı suçluyorsunuz?",
-                  "cevap": "Evet. Roman onun itirafı gibi.",
-                  "yalan": false
-                },
-                {
-                  "soru": "Yazarın ölümünden haberdar mıydınız?",
-                  "cevap": "Hayır, sabah öğrendim.",
-                  "yalan": false
-                }
-              ]
+              "pointCost": 80
             },
             {
               "id": "c6",
-              "type": "eleme",
+              "title": "Ölçüm İşaretindeki Bant",
+              "type": "adli",
+              "mechanicType": "text",
+              "text": "Açık yamaca sabitlenmiş metal düzeneğin tabanında, dereceli bir ölçüm ucuna karışmış alüminyum çubuk bulundu. Yüzeyde kurum, beyaz yanık tortusu ya da koyu emaye pul yoktu.",
+              "deductionHint": "Ölçüm ucunun bulunduğu sabit düzenek, hangi araç–nokta bağını sabitler?",
+              "isBonus": false,
               "revealOrder": 6,
               "isRevealed": false,
-              "pointCost": 100,
-              "title": "Klein ve Marco Alibisi",
-              "text": "Klein Cenevre'de konferanstayı — otel ve kayıt. Marco Zürih'te — sosyal medya paylaşımları ve otel onayı.",
-              "mechanicType": "text"
+              "pointCost": 80
             },
             {
               "id": "c7",
-              "type": "tanik",
+              "title": "Yeşil Kurşunlu Ölçüm Sayfası",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Ölçüm çizelgesinin arkasındaki yeşil kurşun okları, dereceli çubuğun üç ayrı kayıtta aynı açık işarete yerleştirildiğini gösteriyordu. Kenarda üç ayaklı sehpa ya da sarf mühürü izi yoktu.",
+              "deductionHint": "Yeşil yön okları, hangi ölçüm rutinini hangi ince araçla birleştirir?",
+              "isBonus": true,
               "revealOrder": 7,
               "isRevealed": false,
-              "pointCost": 100,
-              "title": "Ev Hizmetçisinin Beyanı",
-              "text": "\"Renata o gece geç saatte geldi. Kimseyle konuşmadı. Yazarın odasına brendi götürdü — 'soğuk için iyi gelir' dedi. Sabah yazar ölmüştü.\"",
-              "mechanicType": "ses_kaydi",
-              "sesMetni": "[Ses kaydı] Hizmetçinin sesi titreyerek: 'Brandinin tadı farklıydı. Ama söylemekten korktum.'"
+              "pointCost": 55
             },
             {
               "id": "c8",
-              "type": "dogrudan",
+              "title": "Siyah Kordondaki Pul",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Kapalı bölümün anahtar kordonunda, karla karışmış iki koyu emaye pul ve bilek kayışına uyan siyah lif bulundu. Kordon, fırtınada dış kapıyı açan kişinin boynunda taşınmıştı.",
+              "deductionHint": "Koyu emaye ve siyah kordon, hangi rehber rutinini hangi dağ aletiyle birleştirir?",
+              "isBonus": true,
               "revealOrder": 8,
               "isRevealed": false,
-              "pointCost": 100,
-              "title": "Renata'nın Mektubu",
-              "text": "Bodrumda bulunan mühürlü zarf: 'Eğer bu mektubu okuyorsanız, roman çıktı demektir. Ben her şeyi anlatabilirim. Ama önce siz beni dinleyin — 30 yıl önce de bir katil vardı ve ben onu durdurmak zorundaydım.'",
-              "mechanicType": "gorsel_ipucu",
-              "gorselAciklama": "Kalın kağıt, özenle yazılmış. Otuz yıllık ağırlık hissettiriyor."
+              "pointCost": 55
             }
           ],
+          "assetManifest": [],
           "solution": {
-            "suspectId": "s2",
-            "weaponId": "w1",
-            "locationId": "l1"
+            "suspectId": "s4",
+            "weaponId": "w3",
+            "locationId": "l3"
           },
-          "solutionNarrative": "Renata, romanın 30 yıl önce gerçekte kendisinin öldürdüğü birisini açığa çıkaracağını biliyordu. O zamanki cinayeti de başka bir kötülüğü durdurmak içindi. Ama yeni bir itiraf edemezdi. Kardeşini zehirli brendi ile susturdu. Mektup onun itirafı — ya da savunması.",
-          "specialMechanic": "tam_mekanik_seti"
+          "solutionNarrative": "Dağ Rehberi Cem Onat, Hakan’ın manyetik sapma defterindeki oynama izlerini sefer dönüşünde açıklayacağını öğrenince onu Taş Sığınak’ın kapalı bölümüne çağırdı. Hakan’ın ölümüne Cem’in kırmızı saplı buz kazması yol açtı. Kırık pusula, Cem’in saklamak istediği yönü değil, Elif’in fırtına sırasında Buzul Eşiği’nde olduğunu gösteriyordu; geriye kalan ızgara eşleşmeleri gerçek üçlüyü bıraktı."
         }
       ]
     },

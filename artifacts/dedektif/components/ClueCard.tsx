@@ -987,6 +987,236 @@ function TornRouteReconstructionBlock({
   );
 }
 
+function BrokenCompassCalibrationBlock({
+  sifre,
+  isSolved,
+  onSolve,
+}: {
+  sifre: ClueSifre;
+  isSolved: boolean;
+  onSolve: () => void;
+}) {
+  const { addTimePenalty } = useGame();
+  const p = sifre.presentation ?? {};
+  const pr = p as Record<string, unknown>;
+  const segments = Array.isArray(pr.segments)
+    ? (pr.segments as Array<{ id: string; label: string; metal: string; marks: string[]; initialRotation: number; innerRune?: string; leftNotch?: string; rightNotch?: string }>)
+    : [];
+  const slots = Array.isArray(pr.slots)
+    ? (pr.slots as Array<{ id: string; label: string; requiredMark: string }>)
+    : [];
+  const correctPlacement = Array.isArray(pr.correctPlacement)
+    ? (pr.correctPlacement as Array<{ segmentId: string; slotId: string; rotation: number }>)
+    : [];
+  const interaction: Record<string, string> = (pr.interaction as Record<string, string>) ?? {};
+
+  const initialRotations = React.useMemo(
+    () => Object.fromEntries(segments.map(s => [s.id, ((Number(s.initialRotation ?? 0) % 360) + 360) % 360])),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
+
+  const [order, setOrder] = React.useState<string[]>([]);
+  const [rotations, setRotations] = React.useState<Record<string, number>>(initialRotations);
+  const [result, setResult] = React.useState<{ ok: boolean; message: string } | null>(null);
+  const [hintRevealed, setHintRevealed] = React.useState(false);
+
+  const normRot = (v: number) => ((v % 360) + 360) % 360;
+
+  if (isSolved) {
+    return (
+      <View style={styles.miniGameSolvedBlock}>
+        <MaterialIcons name="explore" size={20} color="#22c55e" />
+        <Text style={styles.miniGameSolvedText}>Pusula Kalibre Edildi!</Text>
+        <View style={styles.miniGameAnswer}>
+          <Text style={styles.miniGameAnswerText}>{String(pr.routeResult ?? "")}</Text>
+        </View>
+        <Text style={styles.miniGameAciklama}>{sifre.aciklama}</Text>
+      </View>
+    );
+  }
+
+  const toggle = (id: string) => {
+    setResult(null);
+    setOrder(prev =>
+      prev.includes(id)
+        ? prev.filter(v => v !== id)
+        : prev.length < slots.length ? [...prev, id] : prev
+    );
+  };
+
+  const rotate = (id: string, delta: number) => {
+    setResult(null);
+    setRotations(prev => ({ ...prev, [id]: normRot((prev[id] ?? 0) + delta) }));
+  };
+
+  const reset = () => {
+    setOrder([]);
+    setRotations(initialRotations);
+    setResult(null);
+  };
+
+  const submit = () => {
+    const ok =
+      order.length === slots.length &&
+      correctPlacement.every((need, i) =>
+        need.slotId === slots[i]?.id &&
+        need.segmentId === order[i] &&
+        normRot(rotations[need.segmentId] ?? 0) === normRot(need.rotation)
+      );
+    const message = ok
+      ? (interaction.successMessage ?? "İç halka kapandı.")
+      : (interaction.failureMessage ?? "Halka henüz kapanmadı.");
+    setResult({ ok, message });
+    if (ok) onSolve();
+  };
+
+  const handleHint = () => {
+    if (hintRevealed) return;
+    addTimePenalty(60);
+    setHintRevealed(true);
+  };
+
+  return (
+    <View style={styles.compassBlock}>
+      <View style={styles.compassHeader}>
+        <MaterialIcons name="explore" size={14} color="#D4A843" />
+        <Text style={styles.compassHeaderText}>
+          {String(pr.title ?? "KIRIK PUSULA KALİBRASYONU")}
+        </Text>
+      </View>
+      {pr.purposeHint ? (
+        <View style={styles.compassPurposeHint}>
+          <Text style={styles.compassPurposeLabel}>ÇÖZÜMÜN İŞLEVİ</Text>
+          <Text style={styles.compassPurposeText}>{String(pr.purposeHint)}</Text>
+        </View>
+      ) : null}
+      <View style={styles.compassNorthKey}>
+        <Text style={styles.compassNorthKeyLabel}>{String(pr.sceneLabel ?? "SEYRÜSEFER KAYDI")}</Text>
+        <Text style={styles.compassNorthKeyText}>{String(pr.northKey ?? "")}</Text>
+      </View>
+      {pr.subtitle ? (
+        <Text style={styles.compassSubtitle}>{String(pr.subtitle)}</Text>
+      ) : null}
+      <Text style={styles.compassSectionLabel}>KADRAN PALETİ</Text>
+      <View style={styles.compassSegmentsGrid}>
+        {segments.map(seg => {
+          const pos = order.indexOf(seg.id);
+          const isSelected = pos >= 0;
+          const rot = normRot(rotations[seg.id] ?? 0);
+          const isKrom = seg.metal === "krom";
+          return (
+            <Pressable
+              key={seg.id}
+              style={[
+                styles.compassSegment,
+                isKrom ? styles.compassSegmentKrom : styles.compassSegmentBakir,
+                isSelected && styles.compassSegmentSelected,
+              ]}
+              onPress={() => toggle(seg.id)}
+            >
+              <View style={styles.compassSegTopRow}>
+                <Text style={styles.compassSegNotch}>{seg.leftNotch ?? ""}</Text>
+                <Text style={styles.compassSegLabel}>{seg.label}</Text>
+                <Text style={styles.compassSegNotch}>{seg.rightNotch ?? ""}</Text>
+              </View>
+              <View style={styles.compassFaceWrap}>
+                <View style={[styles.compassFace, isKrom ? styles.compassFaceKrom : styles.compassFaceBakir]}>
+                  <Text style={styles.compassFaceTop}>{seg.marks?.[0] ?? "·"}</Text>
+                  <View style={styles.compassFaceMid}>
+                    <Text style={styles.compassFaceSide}>{seg.marks?.[3] ?? "·"}</Text>
+                    <Text style={styles.compassFaceCenter}>{seg.innerRune ?? "·"}</Text>
+                    <Text style={styles.compassFaceSide}>{seg.marks?.[1] ?? "·"}</Text>
+                  </View>
+                  <Text style={styles.compassFaceBottom}>{seg.marks?.[2] ?? "·"}</Text>
+                  <Text style={styles.compassFaceRot}>{rot}°</Text>
+                </View>
+              </View>
+              {isSelected && (
+                <View style={styles.compassPosBadge}>
+                  <Text style={styles.compassPosBadgeText}>{pos + 1}</Text>
+                </View>
+              )}
+              {isSelected && (
+                <View style={styles.compassRotRow}>
+                  <Pressable style={styles.compassRotBtn} onPress={() => rotate(seg.id, -90)}>
+                    <Text style={styles.compassRotBtnText}>↶ 90°</Text>
+                  </Pressable>
+                  <Pressable style={styles.compassRotBtn} onPress={() => rotate(seg.id, 90)}>
+                    <Text style={styles.compassRotBtnText}>↷ 90°</Text>
+                  </Pressable>
+                </View>
+              )}
+            </Pressable>
+          );
+        })}
+      </View>
+      <Text style={styles.compassSectionLabel}>YÖN YUVALARI</Text>
+      <View style={styles.compassSlotsGrid}>
+        {slots.map((slot, i) => {
+          const seg = segments.find(s => s.id === order[i]);
+          return (
+            <View
+              key={slot.id}
+              style={[styles.compassSlot, seg ? styles.compassSlotFilled : styles.compassSlotEmpty]}
+            >
+              <Text style={styles.compassSlotLabel}>{slot.label}</Text>
+              <Text style={styles.compassSlotMark}>{slot.requiredMark}</Text>
+              {seg ? (
+                <Text style={styles.compassSlotSegLabel}>{seg.label}</Text>
+              ) : (
+                <Text style={styles.compassSlotPlaceholder}>Kadran seç</Text>
+              )}
+            </View>
+          );
+        })}
+      </View>
+      <View style={styles.compassBtnRow}>
+        <Pressable style={styles.compassResetBtn} onPress={reset}>
+          <Text style={styles.compassResetText}>{interaction.resetLabel ?? "Kalibrasyonu Temizle"}</Text>
+        </Pressable>
+        <Pressable
+          style={[styles.compassSubmitBtn, order.length !== slots.length && styles.compassSubmitBtnDisabled]}
+          onPress={submit}
+          disabled={order.length !== slots.length}
+        >
+          <Text style={styles.compassSubmitText}>{interaction.submitLabel ?? "Pusulayı Kalibre Et"}</Text>
+        </Pressable>
+      </View>
+      <Pressable
+        style={[styles.compassHintBtn, hintRevealed && styles.compassHintBtnUsed]}
+        onPress={handleHint}
+        disabled={hintRevealed}
+      >
+        <Text style={styles.compassHintText}>
+          {hintRevealed ? "İpucu açıldı" : "İpucu iste (-60 sn)"}
+        </Text>
+      </Pressable>
+      {hintRevealed && (
+        <View style={styles.compassHintReveal}>
+          <Text style={styles.compassHintRevealText}>{sifre.cozumIpucu}</Text>
+        </View>
+      )}
+      {result && (
+        <View style={[styles.compassResult, result.ok ? styles.compassResultOk : styles.compassResultFail]}>
+          <Text style={[styles.compassResultText, result.ok ? styles.compassResultTextOk : styles.compassResultTextFail]}>
+            {result.ok ? "✓ " : "✕ "}{result.message}
+          </Text>
+        </View>
+      )}
+      {result?.ok && (
+        <View style={styles.compassRouteResult}>
+          <Text style={styles.compassRouteResultLabel}>OKUNAN ROTA NOTU</Text>
+          <Text style={styles.compassRouteResultText}>{String(pr.routeResult ?? "")}</Text>
+        </View>
+      )}
+      {result?.ok && sifre.aciklama ? (
+        <Text style={styles.compassAciklama}>{sifre.aciklama}</Text>
+      ) : null}
+    </View>
+  );
+}
+
 function SifreliMesajBlock({
   sifre,
   isSolved,
@@ -1037,6 +1267,10 @@ function SifreliMesajBlock({
 
   if (sifre.presentation?.style === "torn_route_reconstruction") {
     return <TornRouteReconstructionBlock sifre={sifre} isSolved={isSolved} onSolve={onSolve} />;
+  }
+
+  if (sifre.presentation?.style === "broken_compass_calibration") {
+    return <BrokenCompassCalibrationBlock sifre={sifre} isSolved={isSolved} onSolve={onSolve} />;
   }
 
   if (sifre.presentation?.style === "symbol_crossgrid") {
@@ -4258,5 +4492,369 @@ const styles = StyleSheet.create({
   frameShadowOptionWrong: {
     borderColor: "#dc2626",
     backgroundColor: "rgba(220,38,38,0.08)",
+  },
+
+  compassBlock: {
+    marginTop: 10,
+    padding: 12,
+    borderWidth: 1,
+    borderColor: "#3d3520",
+    borderRadius: 12,
+    backgroundColor: "#0e1208",
+  },
+  compassHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+    marginBottom: 10,
+  },
+  compassHeaderText: {
+    fontSize: 11,
+    fontWeight: "800",
+    letterSpacing: 1.4,
+    color: "#D4A843",
+  },
+  compassPurposeHint: {
+    marginBottom: 10,
+    padding: 9,
+    borderLeftWidth: 2,
+    borderLeftColor: "#D4A843",
+    backgroundColor: "rgba(212,168,67,0.06)",
+    borderRadius: 6,
+  },
+  compassPurposeLabel: {
+    fontSize: 9,
+    fontWeight: "800",
+    letterSpacing: 1.2,
+    color: "#D4A843",
+    marginBottom: 3,
+  },
+  compassPurposeText: {
+    fontSize: 12,
+    color: "#ecd99a",
+    lineHeight: 17,
+  },
+  compassNorthKey: {
+    marginBottom: 10,
+    padding: 9,
+    borderWidth: 1,
+    borderColor: "#4e563f",
+    borderRadius: 8,
+    backgroundColor: "rgba(78,86,63,0.12)",
+  },
+  compassNorthKeyLabel: {
+    fontSize: 9,
+    fontWeight: "800",
+    letterSpacing: 1.2,
+    color: "#8b9a6b",
+    marginBottom: 3,
+  },
+  compassNorthKeyText: {
+    fontSize: 12,
+    color: "#d9e7c5",
+    lineHeight: 17,
+  },
+  compassSubtitle: {
+    fontSize: 12,
+    color: "#8b91ad",
+    marginBottom: 10,
+    lineHeight: 17,
+  },
+  compassSectionLabel: {
+    fontSize: 9,
+    fontWeight: "800",
+    letterSpacing: 1.4,
+    color: "#6b7280",
+    marginBottom: 8,
+    marginTop: 4,
+  },
+  compassSegmentsGrid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 8,
+    marginBottom: 12,
+  },
+  compassSegment: {
+    width: "47%",
+    padding: 8,
+    borderWidth: 1,
+    borderRadius: 10,
+    position: "relative",
+  },
+  compassSegmentBakir: {
+    borderColor: "#655d45",
+    backgroundColor: "#30291d",
+  },
+  compassSegmentKrom: {
+    borderColor: "#6e7c92",
+    backgroundColor: "#1b2230",
+  },
+  compassSegmentSelected: {
+    borderColor: "#22c55e",
+    backgroundColor: "#1a2d1a",
+  },
+  compassSegTopRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 6,
+  },
+  compassSegNotch: {
+    fontSize: 9,
+    color: "#8b91ad",
+  },
+  compassSegLabel: {
+    fontSize: 9,
+    fontWeight: "700",
+    color: "#D4A843",
+    letterSpacing: 0.6,
+  },
+  compassFaceWrap: {
+    alignItems: "center",
+    marginVertical: 4,
+  },
+  compassFace: {
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    borderWidth: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    position: "relative",
+  },
+  compassFaceBakir: {
+    borderColor: "#b99b57",
+    backgroundColor: "#2a1f0d",
+  },
+  compassFaceKrom: {
+    borderColor: "#aebfd8",
+    backgroundColor: "#181f2a",
+  },
+  compassFaceTop: {
+    position: "absolute",
+    top: 4,
+    alignSelf: "center",
+    fontSize: 9,
+    fontWeight: "800",
+    color: "#f6e9bf",
+  },
+  compassFaceMid: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
+  },
+  compassFaceSide: {
+    fontSize: 9,
+    fontWeight: "800",
+    color: "#f6e9bf",
+  },
+  compassFaceCenter: {
+    fontSize: 13,
+    fontWeight: "800",
+    color: "#D4A843",
+  },
+  compassFaceBottom: {
+    position: "absolute",
+    bottom: 4,
+    alignSelf: "center",
+    fontSize: 9,
+    fontWeight: "800",
+    color: "#f6e9bf",
+  },
+  compassFaceRot: {
+    position: "absolute",
+    bottom: -14,
+    alignSelf: "center",
+    fontSize: 9,
+    color: "#8b91ad",
+  },
+  compassPosBadge: {
+    position: "absolute",
+    top: 6,
+    right: 6,
+    width: 18,
+    height: 18,
+    borderRadius: 9,
+    backgroundColor: "#22c55e",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  compassPosBadgeText: {
+    fontSize: 10,
+    fontWeight: "800",
+    color: "#0f1117",
+  },
+  compassRotRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 18,
+    gap: 4,
+  },
+  compassRotBtn: {
+    flex: 1,
+    padding: 5,
+    borderRadius: 6,
+    borderWidth: 1,
+    borderColor: "#3d4050",
+    backgroundColor: "#1c2138",
+    alignItems: "center",
+  },
+  compassRotBtnText: {
+    fontSize: 11,
+    color: "#e8eaf2",
+  },
+  compassSlotsGrid: {
+    flexDirection: "row",
+    gap: 6,
+    marginBottom: 12,
+    flexWrap: "wrap",
+  },
+  compassSlot: {
+    flex: 1,
+    minWidth: "22%",
+    padding: 8,
+    borderWidth: 1,
+    borderRadius: 8,
+    alignItems: "center",
+  },
+  compassSlotEmpty: {
+    borderStyle: "dashed",
+    borderColor: "#3d3520",
+    backgroundColor: "#0e1208",
+  },
+  compassSlotFilled: {
+    borderColor: "#22c55e",
+    backgroundColor: "rgba(34,197,94,0.08)",
+  },
+  compassSlotLabel: {
+    fontSize: 9,
+    fontWeight: "800",
+    letterSpacing: 1,
+    color: "#D4A843",
+    marginBottom: 3,
+  },
+  compassSlotMark: {
+    fontSize: 14,
+    marginBottom: 3,
+  },
+  compassSlotSegLabel: {
+    fontSize: 9,
+    color: "#86efac",
+    fontWeight: "700",
+  },
+  compassSlotPlaceholder: {
+    fontSize: 9,
+    color: "#4b5563",
+  },
+  compassBtnRow: {
+    flexDirection: "row",
+    gap: 8,
+    marginBottom: 8,
+  },
+  compassResetBtn: {
+    flex: 1,
+    padding: 10,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: "#262c44",
+    backgroundColor: "#1c2138",
+    alignItems: "center",
+  },
+  compassResetText: {
+    fontSize: 12,
+    color: "#e8eaf2",
+  },
+  compassSubmitBtn: {
+    flex: 1,
+    padding: 10,
+    borderRadius: 8,
+    backgroundColor: "#D4A843",
+    alignItems: "center",
+  },
+  compassSubmitBtnDisabled: {
+    opacity: 0.4,
+  },
+  compassSubmitText: {
+    fontSize: 12,
+    fontWeight: "700",
+    color: "#1a1205",
+  },
+  compassHintBtn: {
+    padding: 10,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderStyle: "dashed",
+    borderColor: "#b45309",
+    alignItems: "center",
+    marginBottom: 8,
+  },
+  compassHintBtnUsed: {
+    opacity: 0.5,
+  },
+  compassHintText: {
+    fontSize: 13,
+    color: "#fbbf24",
+  },
+  compassHintReveal: {
+    marginBottom: 8,
+    padding: 9,
+    borderLeftWidth: 2,
+    borderLeftColor: "#b45309",
+    backgroundColor: "rgba(180,83,9,0.08)",
+    borderRadius: 6,
+  },
+  compassHintRevealText: {
+    fontSize: 12,
+    color: "#fbbf24",
+    lineHeight: 17,
+  },
+  compassResult: {
+    marginTop: 8,
+    padding: 10,
+    borderRadius: 8,
+  },
+  compassResultOk: {
+    backgroundColor: "rgba(34,197,94,0.12)",
+  },
+  compassResultFail: {
+    backgroundColor: "rgba(220,38,38,0.12)",
+  },
+  compassResultText: {
+    fontSize: 13,
+    lineHeight: 18,
+  },
+  compassResultTextOk: {
+    color: "#86efac",
+  },
+  compassResultTextFail: {
+    color: "#fca5a5",
+  },
+  compassRouteResult: {
+    marginTop: 8,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: "#22c55e",
+    borderRadius: 8,
+    backgroundColor: "rgba(34,197,94,0.08)",
+  },
+  compassRouteResultLabel: {
+    fontSize: 9,
+    fontWeight: "800",
+    letterSpacing: 1.2,
+    color: "#4ade80",
+    marginBottom: 4,
+  },
+  compassRouteResultText: {
+    fontSize: 13,
+    fontWeight: "700",
+    color: "#b7f7c8",
+    lineHeight: 18,
+  },
+  compassAciklama: {
+    marginTop: 8,
+    fontSize: 12,
+    color: "#8b91ad",
+    fontStyle: "italic",
+    lineHeight: 17,
   },
 });
