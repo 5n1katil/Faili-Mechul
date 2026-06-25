@@ -258,50 +258,76 @@ function PremiumTabButton({ active, onPress }: { active: boolean; onPress: () =>
 
   React.useEffect(() => {
     angle.value = withRepeat(
-      withTiming(360, { duration: 2600, easing: Easing.linear }),
+      withTiming(360, { duration: 2400, easing: Easing.linear }),
       -1,
       false,
     );
   }, []);
 
-  const orbitGlow = useAnimatedStyle(() => {
+  // Elliptical orbit around button border: rx≈58, ry≈20
+  const cometStyle = useAnimatedStyle(() => {
     const rad = (angle.value * Math.PI) / 180;
-    const r = active ? 9 : 7;
     return {
-      shadowColor: NEON_ORANGE,
-      shadowOffset: { width: Math.cos(rad) * r, height: Math.sin(rad) * r },
-      shadowOpacity: active ? 0.95 : 0.8,
-      shadowRadius: active ? 14 : 10,
-      elevation: 14,
+      transform: [
+        { translateX: Math.cos(rad) * 58 },
+        { translateY: Math.sin(rad) * 20 },
+      ],
     };
   });
 
   const scaleAnim = useAnimatedStyle(() => ({ transform: [{ scale: scale.value }] }));
 
   return (
-    <Animated.View style={[{ flex: 1 }, scaleAnim]}>
+    <Animated.View style={[{ flex: 1, position: "relative" }, scaleAnim]}>
+      {/* Orbiting comet dot */}
+      <Animated.View
+        pointerEvents="none"
+        style={[
+          {
+            position: "absolute",
+            width: 22,
+            height: 7,
+            borderRadius: 4,
+            backgroundColor: NEON_ORANGE,
+            top: "50%",
+            left: "50%",
+            marginTop: -3.5,
+            marginLeft: -11,
+            zIndex: 10,
+            shadowColor: NEON_ORANGE,
+            shadowRadius: 10,
+            shadowOpacity: 1,
+            shadowOffset: { width: 0, height: 0 },
+            elevation: 20,
+          },
+          cometStyle,
+        ]}
+      />
       <Animated.View
         style={[
           listStyles.tabBtn3d,
           {
             flex: 1,
-            borderColor: `${NEON_ORANGE}99`,
-            borderBottomColor: `${NEON_ORANGE}CC`,
+            borderColor: `${NEON_ORANGE}66`,
+            shadowColor: NEON_ORANGE,
+            shadowOpacity: active ? 0.6 : 0.35,
+            shadowRadius: active ? 14 : 8,
+            shadowOffset: { width: 0, height: 3 },
+            elevation: 10,
           },
           active
-            ? { backgroundColor: `${NEON_ORANGE}18`, borderBottomWidth: 3 }
-            : { backgroundColor: `${NEON_ORANGE}0A`, borderBottomWidth: 1 },
-          orbitGlow,
+            ? { backgroundColor: `${NEON_ORANGE}20`, borderBottomColor: `${NEON_ORANGE}DD`, borderBottomWidth: 4 }
+            : { backgroundColor: `${NEON_ORANGE}0C`, borderBottomWidth: 1 },
         ]}
       >
         <Pressable
           onPressIn={() => { scale.value = withSpring(0.93, { damping: 12, stiffness: 320 }); }}
           onPressOut={() => { scale.value = withSpring(1, { damping: 10, stiffness: 280 }); }}
           onPress={onPress}
-          style={{ flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 6, flex: 1, paddingVertical: 11 }}
+          style={{ flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 7, flex: 1, paddingVertical: 13 }}
         >
-          <MaterialIcons name="workspace-premium" size={16} color={PREMIUM_GOLD} />
-          <Text style={[listStyles.tabBtnText3d, { color: PREMIUM_GOLD, fontWeight: "700" }]}>
+          <MaterialIcons name="workspace-premium" size={18} color={PREMIUM_GOLD} />
+          <Text style={[listStyles.tabBtnText3d, { color: PREMIUM_GOLD, fontWeight: "700", fontSize: 15 }]}>
             Premium
           </Text>
         </Pressable>
@@ -329,17 +355,36 @@ function TabButton3D({
           listStyles.tabBtn3d,
           { flex: 1 },
           active
-            ? { backgroundColor: `${activeColor}1E`, borderColor: activeColor, borderBottomColor: `${activeColor}CC`, borderBottomWidth: 3, shadowColor: activeColor, shadowOpacity: 0.5, shadowRadius: 10, shadowOffset: { width: 0, height: 4 }, elevation: 8 }
-            : { backgroundColor: colors.card, borderColor: `${colors.border}CC` },
+            ? {
+                backgroundColor: `${activeColor}22`,
+                borderColor: activeColor,
+                borderBottomColor: activeColor,
+                borderBottomWidth: 4,
+                shadowColor: activeColor,
+                shadowOpacity: 0.65,
+                shadowRadius: 14,
+                shadowOffset: { width: 0, height: 4 },
+                elevation: 12,
+              }
+            : {
+                backgroundColor: "#12151E",
+                borderColor: "#FFFFFF12",
+                borderBottomWidth: StyleSheet.hairlineWidth,
+                shadowColor: "#000",
+                shadowOpacity: 0.4,
+                shadowRadius: 4,
+                shadowOffset: { width: 0, height: 2 },
+                elevation: 3,
+              },
         ]}
       >
-        <MaterialIcons name={icon} size={15} color={active ? activeColor : INACTIVE_COLOR} />
-        <Text style={[listStyles.tabBtnText3d, { color: active ? activeColor : INACTIVE_COLOR }]}>
+        <MaterialIcons name={icon} size={17} color={active ? activeColor : "#666888"} />
+        <Text style={[listStyles.tabBtnText3d, { color: active ? activeColor : "#888AAA", fontSize: 15, fontWeight: active ? "700" : "600" }]}>
           {label}
         </Text>
         {count !== undefined && count > 0 && (
-          <View style={[listStyles.tabCount3d, { backgroundColor: active ? `${activeColor}33` : "#FFFFFF18" }]}>
-            <Text style={[listStyles.tabCountText3d, { color: active ? activeColor : INACTIVE_COLOR }]}>{count}</Text>
+          <View style={[listStyles.tabCount3d, { backgroundColor: active ? `${activeColor}30` : "#FFFFFF0E" }]}>
+            <Text style={[listStyles.tabCountText3d, { color: active ? activeColor : "#666888" }]}>{count}</Text>
           </View>
         )}
       </Pressable>
@@ -365,17 +410,48 @@ function FilterPill3D({
         style={[
           listStyles.filterPill3d,
           isSelected
-            ? { backgroundColor: `${color}22`, borderColor: color, borderBottomColor: `${color}BB`, borderBottomWidth: 3, shadowColor: color, shadowOpacity: 0.4, shadowRadius: 8, shadowOffset: { width: 0, height: 3 }, elevation: 6 }
-            : { backgroundColor: colors.card, borderColor: `${colors.border}CC`, borderBottomWidth: 1 },
+            ? {
+                backgroundColor: `${color}25`,
+                borderColor: color,
+                borderBottomColor: color,
+                borderBottomWidth: 4,
+                shadowColor: color,
+                shadowOpacity: 0.55,
+                shadowRadius: 12,
+                shadowOffset: { width: 0, height: 4 },
+                elevation: 10,
+              }
+            : {
+                backgroundColor: "#12151E",
+                borderColor: `${color}30`,
+                borderBottomWidth: StyleSheet.hairlineWidth,
+                shadowColor: "#000",
+                shadowOpacity: 0.4,
+                shadowRadius: 4,
+                shadowOffset: { width: 0, height: 2 },
+                elevation: 3,
+              },
         ]}
       >
-        <MaterialIcons name={icon} size={13} color={isSelected ? color : `${color}88`} />
+        <MaterialIcons name={icon} size={20} color={isSelected ? color : `${color}66`} />
         {count !== undefined && count > 0 && (
-          <View style={[listStyles.filterPillCount3d, { backgroundColor: isSelected ? `${color}33` : `${color}18` }]}>
-            <Text style={[listStyles.filterPillCountText3d, { color: isSelected ? color : `${color}BB` }]}>{count}</Text>
+          <View style={[listStyles.filterPillCount3d, {
+            backgroundColor: isSelected ? color : `${color}28`,
+            paddingHorizontal: 9,
+            paddingVertical: 3,
+            minWidth: 30,
+          }]}>
+            <Text style={[listStyles.filterPillCountText3d, {
+              color: isSelected ? "#0F1117" : color,
+              fontSize: 15,
+              fontWeight: "800",
+            }]}>{count}</Text>
           </View>
         )}
-        <Text style={[listStyles.filterPillText3d, { color: isSelected ? color : INACTIVE_COLOR, textAlign: "center", flex: 1 }]}>
+        <Text style={[listStyles.filterPillText3d, {
+          color: isSelected ? color : `${color}88`,
+          textAlign: "center",
+        }]}>
           {label}
         </Text>
       </Pressable>
@@ -960,40 +1036,65 @@ export default function VakalarScreen() {
           {listTab === "premium" ? (
             /* ══════════ PREMIUM TAB ══════════ */
             <View style={{ flex: 1 }}>
-              {/* Premium segment control — clearly subordinate to main tab bar */}
-              <View style={[listStyles.premSegmentWrap, { backgroundColor: colors.background, borderBottomColor: colors.border }]}>
-                <View style={[listStyles.premSegmentTrack, { backgroundColor: "#FFFFFF0A", borderColor: "#FFFFFF14" }]}>
-                  <Pressable
-                    onPress={() => setPremiumSubTab("vakalar")}
-                    style={[
-                      listStyles.premSegmentBtn,
-                      premiumSubTab === "vakalar" && { backgroundColor: "#D4A84322", borderBottomColor: "#D4A843", borderBottomWidth: 2 },
-                    ]}
-                  >
-                    <MaterialIcons name="lock" size={13} color={premiumSubTab === "vakalar" ? "#D4A843" : INACTIVE_COLOR} />
-                    <Text style={[listStyles.premSegmentText, { color: premiumSubTab === "vakalar" ? "#D4A843" : INACTIVE_COLOR }]}>
-                      Premium Vakalar
+              {/* Premium icon tile selector */}
+              <View style={[listStyles.premIconTabRow, { backgroundColor: colors.background, borderBottomColor: colors.border }]}>
+                <Pressable
+                  onPress={() => setPremiumSubTab("vakalar")}
+                  style={[
+                    listStyles.premIconTab,
+                    premiumSubTab === "vakalar"
+                      ? {
+                          backgroundColor: "#D4A84322",
+                          borderColor: "#D4A843",
+                          borderBottomColor: "#D4A843",
+                          borderBottomWidth: 4,
+                          shadowColor: "#D4A843",
+                          shadowOpacity: 0.5,
+                          shadowRadius: 12,
+                          shadowOffset: { width: 0, height: 3 },
+                          elevation: 10,
+                        }
+                      : { backgroundColor: "#12151E", borderColor: "#FFFFFF12", borderBottomWidth: StyleSheet.hairlineWidth },
+                  ]}
+                >
+                  <View style={[listStyles.premIconTabBadge, {
+                    backgroundColor: premiumSubTab === "vakalar" ? "#D4A84330" : "#FFFFFF0E",
+                    borderColor: premiumSubTab === "vakalar" ? "#D4A84366" : "#FFFFFF14",
+                  }]}>
+                    <MaterialIcons name="auto-stories" size={30} color={premiumSubTab === "vakalar" ? "#D4A843" : "#444666"} />
+                  </View>
+                  <View style={[listStyles.premIconTabCount, { backgroundColor: premiumSubTab === "vakalar" ? "#D4A843" : "#FFFFFF14" }]}>
+                    <Text style={[listStyles.premIconTabCountText, { color: premiumSubTab === "vakalar" ? "#0F1117" : "#666888" }]}>
+                      {premiumPuzzles.length}
                     </Text>
-                    <View style={[listStyles.premSegmentCount, { backgroundColor: premiumSubTab === "vakalar" ? "#D4A84333" : "#FFFFFF14" }]}>
-                      <Text style={[listStyles.premSegmentCountText, { color: premiumSubTab === "vakalar" ? "#D4A843" : INACTIVE_COLOR }]}>
-                        {premiumPuzzles.length}
-                      </Text>
-                    </View>
-                  </Pressable>
-                  <View style={[listStyles.premSegmentDivider, { backgroundColor: "#FFFFFF14" }]} />
-                  <Pressable
-                    onPress={() => setPremiumSubTab("paketler")}
-                    style={[
-                      listStyles.premSegmentBtn,
-                      premiumSubTab === "paketler" && { backgroundColor: "#D4A84322", borderBottomColor: "#D4A843", borderBottomWidth: 2 },
-                    ]}
-                  >
-                    <MaterialIcons name="inventory-2" size={13} color={premiumSubTab === "paketler" ? "#D4A843" : INACTIVE_COLOR} />
-                    <Text style={[listStyles.premSegmentText, { color: premiumSubTab === "paketler" ? "#D4A843" : INACTIVE_COLOR }]}>
-                      Premium Paketler
-                    </Text>
-                  </Pressable>
-                </View>
+                  </View>
+                </Pressable>
+                <Pressable
+                  onPress={() => setPremiumSubTab("paketler")}
+                  style={[
+                    listStyles.premIconTab,
+                    premiumSubTab === "paketler"
+                      ? {
+                          backgroundColor: "#D4A84322",
+                          borderColor: "#D4A843",
+                          borderBottomColor: "#D4A843",
+                          borderBottomWidth: 4,
+                          shadowColor: "#D4A843",
+                          shadowOpacity: 0.5,
+                          shadowRadius: 12,
+                          shadowOffset: { width: 0, height: 3 },
+                          elevation: 10,
+                        }
+                      : { backgroundColor: "#12151E", borderColor: "#FFFFFF12", borderBottomWidth: StyleSheet.hairlineWidth },
+                  ]}
+                >
+                  <View style={[listStyles.premIconTabBadge, {
+                    backgroundColor: premiumSubTab === "paketler" ? "#D4A84330" : "#FFFFFF0E",
+                    borderColor: premiumSubTab === "paketler" ? "#D4A84366" : "#FFFFFF14",
+                  }]}>
+                    <MaterialIcons name="inventory-2" size={30} color={premiumSubTab === "paketler" ? "#D4A843" : "#444666"} />
+                  </View>
+                </Pressable>
               </View>
 
               {premiumSubTab === "paketler" ? (
@@ -1004,26 +1105,32 @@ export default function VakalarScreen() {
                   contentContainerStyle={[listStyles.listContent, { paddingTop: 12, paddingBottom: Platform.OS === "web" ? 34 + 80 : insets.bottom + 80 }]}
                   showsVerticalScrollIndicator={false}
                 >
+                  {/* Premium Vakalar header */}
+                  <Animated.View entering={FadeInDown.delay(0).springify()} style={listStyles.premVakalarHeader}>
+                    <MaterialIcons name="workspace-premium" size={22} color="#D4A843" />
+                    <Text style={[listStyles.premVakalarTitle, { color: "#D4A843" }]}>Premium Vakalar</Text>
+                    <View style={[listStyles.premVakalarCount, { backgroundColor: "#D4A84330", borderColor: "#D4A84360" }]}>
+                      <Text style={[listStyles.premVakalarCountText, { color: "#D4A843" }]}>{premiumPuzzles.length}</Text>
+                    </View>
+                  </Animated.View>
+
                   {/* Buy CTA banner for non-premium users */}
                   {!isPremium && (
-                    <Animated.View entering={FadeInDown.delay(0).springify()}>
+                    <Animated.View entering={FadeInDown.delay(60).springify()}>
                       <Pressable
                         onPress={() => setShowPaywall(true)}
-                        style={[listStyles.premUnlockBanner, { backgroundColor: "#D4A84314", borderColor: "#D4A84355", shadowColor: "#D4A843", shadowOpacity: 0.18, shadowRadius: 10, shadowOffset: { width: 0, height: 3 }, elevation: 5 }]}
+                        style={[listStyles.premUnlockBanner, { backgroundColor: "#D4A84314", borderColor: "#D4A84355", shadowColor: "#D4A843", shadowOpacity: 0.22, shadowRadius: 12, shadowOffset: { width: 0, height: 4 }, elevation: 6 }]}
                       >
-                        <View style={[listStyles.premAccordionIcon, { backgroundColor: "#D4A84322", width: 46, height: 46 }]}>
-                          <MaterialIcons name="workspace-premium" size={24} color="#D4A843" />
-                        </View>
                         <View style={{ flex: 1 }}>
-                          <Text style={[listStyles.premAccordionTitle, { color: "#D4A843", fontSize: 15 }]}>
-                            Vaka Arşivi · {premiumPuzzles.length} Vaka
+                          <Text style={[listStyles.premAccordionTitle, { color: "#F0F0F8", fontSize: 14 }]}>
+                            Vaka Arşivi — Tek Seferlik
                           </Text>
-                          <Text style={[listStyles.premAccordionSub, { color: "#D4A84388", marginTop: 2 }]}>
-                            Tüm premium vakaları tek seferlik açmak için dokun
+                          <Text style={[listStyles.premAccordionSub, { color: "#D4A84399", marginTop: 3, fontSize: 13 }]}>
+                            Tüm {premiumPuzzles.length} vakayı hemen aç · ₺79,99
                           </Text>
                         </View>
-                        <View style={[listStyles.premUnlockBtn, { backgroundColor: "#D4A843" }]}>
-                          <MaterialIcons name="lock-open" size={16} color="#0F1117" />
+                        <View style={[listStyles.premUnlockBtn, { backgroundColor: "#D4A843", width: 44, height: 44, borderRadius: 12 }]}>
+                          <MaterialIcons name="lock-open" size={20} color="#0F1117" />
                         </View>
                       </Pressable>
                     </Animated.View>
@@ -1934,9 +2041,9 @@ const listStyles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 14,
     borderWidth: 1,
-    paddingHorizontal: 14,
-    paddingVertical: 14,
-    gap: 12,
+    paddingHorizontal: 16,
+    paddingVertical: 15,
+    gap: 14,
   },
   premUnlockBtn: {
     width: 38,
@@ -1945,6 +2052,67 @@ const listStyles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     flexShrink: 0,
+  },
+  premIconTabRow: {
+    flexDirection: "row",
+    paddingHorizontal: 16,
+    paddingBottom: 14,
+    gap: 12,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+  },
+  premIconTab: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 16,
+    borderRadius: 16,
+    borderWidth: 1.5,
+    gap: 8,
+  },
+  premIconTabBadge: {
+    width: 64,
+    height: 64,
+    borderRadius: 18,
+    borderWidth: 1.5,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  premIconTabCount: {
+    borderRadius: 10,
+    paddingHorizontal: 10,
+    paddingVertical: 3,
+    minWidth: 28,
+    alignItems: "center",
+  },
+  premIconTabCountText: {
+    fontSize: 14,
+    fontWeight: "800",
+    fontFamily: "PlayfairDisplay",
+  },
+  premVakalarHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 10,
+    paddingVertical: 16,
+    paddingHorizontal: 16,
+  },
+  premVakalarTitle: {
+    fontSize: 20,
+    fontFamily: "PlayfairDisplay",
+    fontWeight: "700",
+    letterSpacing: 0.4,
+  },
+  premVakalarCount: {
+    borderRadius: 10,
+    paddingHorizontal: 10,
+    paddingVertical: 3,
+    borderWidth: 1,
+    alignItems: "center",
+  },
+  premVakalarCountText: {
+    fontSize: 14,
+    fontWeight: "800",
   },
 });
 
