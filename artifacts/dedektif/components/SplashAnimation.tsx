@@ -330,9 +330,9 @@ const styles = StyleSheet.create({
   },
   titleWord: {
     color: "#E8D5B7",
-    fontSize: 23,
-    fontWeight: "800",
-    letterSpacing: 5,
+    fontSize: 26,
+    fontFamily: "PlayfairDisplay",
+    letterSpacing: 6,
     textAlign: "center",
   },
   titleGap: {
