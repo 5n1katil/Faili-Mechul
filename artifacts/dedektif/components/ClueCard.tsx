@@ -1368,6 +1368,320 @@ function LuggageLabelMatchBlock({
   );
 }
 
+function NegativeContactSheetBlock({
+  sifre,
+  isSolved,
+  onSolve,
+}: {
+  sifre: ClueSifre;
+  isSolved: boolean;
+  onSolve: () => void;
+}) {
+  const { addTimePenalty } = useGame();
+  const p = sifre.presentation ?? {};
+  const pr = p as Record<string, unknown>;
+  const checks = Array.isArray(pr.checks)
+    ? (pr.checks as Array<{ id: string; label: string; positive: string; negative: string; options: Array<{ id: string; label: string }> }>)
+    : [];
+  const correctAssignments = Array.isArray(pr.correctAssignments)
+    ? (pr.correctAssignments as Array<{ itemId: string; answerId: string }>)
+    : [];
+  const interaction: Record<string, string> = (pr.interaction as Record<string, string>) ?? {};
+
+  const [choices, setChoices] = React.useState<Record<string, string>>({});
+  const [result, setResult] = React.useState<{ ok: boolean; message: string } | null>(null);
+  const [hintRevealed, setHintRevealed] = React.useState(false);
+
+  if (isSolved) {
+    return (
+      <View style={styles.miniGameSolvedBlock}>
+        <MaterialIcons name="photo-camera" size={20} color="#22c55e" />
+        <Text style={styles.miniGameSolvedText}>Negatifler Karşılaştırıldı!</Text>
+        <View style={styles.miniGameAnswer}>
+          <Text style={styles.miniGameAnswerText}>{String(pr.resultText ?? "")}</Text>
+        </View>
+        <Text style={styles.miniGameAciklama}>{sifre.aciklama}</Text>
+      </View>
+    );
+  }
+
+  const setChoice = (itemId: string, answerId: string) => {
+    setResult(null);
+    setChoices(prev => ({ ...prev, [itemId]: answerId }));
+  };
+
+  const allAssigned = checks.length > 0 && checks.every(c => !!choices[c.id]);
+
+  const submit = () => {
+    const ok = correctAssignments.every(a => choices[a.itemId] === a.answerId);
+    const message = ok
+      ? (interaction.successMessage ?? "Negatifler aynı fiziksel hikâyeyi anlattı.")
+      : (interaction.failureMessage ?? "Seçtiğin farklar tek bir sahnede birlikte mümkün görünmüyor.");
+    setResult({ ok, message });
+    if (ok) onSolve();
+  };
+
+  const handleHint = () => {
+    if (hintRevealed) return;
+    addTimePenalty(60);
+    setHintRevealed(true);
+  };
+
+  return (
+    <View style={styles.negativeBlock}>
+      <View style={styles.negativeHeader}>
+        <MaterialIcons name="photo-camera" size={14} color="#D4A843" />
+        <Text style={styles.negativeHeaderText}>
+          {String(pr.title ?? "NEGATİF KARŞILAŞTIRMA")}
+        </Text>
+      </View>
+      {pr.purposeHint ? (
+        <View style={styles.negativePurposeHint}>
+          <Text style={styles.negativePurposeLabel}>ÇÖZÜMÜN İŞLEVİ</Text>
+          <Text style={styles.negativePurposeText}>{String(pr.purposeHint)}</Text>
+        </View>
+      ) : null}
+      {pr.subtitle ? (
+        <Text style={styles.negativeSubtitle}>{String(pr.subtitle)}</Text>
+      ) : null}
+      <View style={styles.negativeChecksGrid}>
+        {checks.map(item => {
+          const selected = choices[item.id];
+          return (
+            <View key={item.id} style={styles.negativeCheckCard}>
+              <Text style={styles.negativeCheckLabel}>{item.label}</Text>
+              <View style={styles.negativePhotoPair}>
+                <View style={styles.negativePositiveCell}>
+                  <Text style={styles.negativePhotoCellLabel}>POZİTİF</Text>
+                  <Text style={styles.negativePositiveText}>{item.positive}</Text>
+                </View>
+                <View style={styles.negativeNegativeCell}>
+                  <Text style={styles.negativePhotoCellLabel}>NEGATİF</Text>
+                  <Text style={styles.negativeNegativeText}>{item.negative}</Text>
+                </View>
+              </View>
+              <View style={styles.negativeOptionList}>
+                {item.options.map(opt => {
+                  const isChosen = selected === opt.id;
+                  return (
+                    <Pressable
+                      key={opt.id}
+                      style={[styles.negativeOption, isChosen && styles.negativeOptionSelected]}
+                      onPress={() => setChoice(item.id, opt.id)}
+                    >
+                      <View style={[styles.negativeRadio, isChosen && styles.negativeRadioSelected]}>
+                        {isChosen && <View style={styles.negativeRadioDot} />}
+                      </View>
+                      <Text style={[styles.negativeOptionLabel, isChosen && styles.negativeOptionLabelSelected]}>
+                        {opt.label}
+                      </Text>
+                    </Pressable>
+                  );
+                })}
+              </View>
+            </View>
+          );
+        })}
+      </View>
+      <Pressable
+        style={[styles.negativeSubmitBtn, !allAssigned && styles.negativeSubmitBtnDisabled]}
+        onPress={submit}
+        disabled={!allAssigned}
+      >
+        <Text style={styles.negativeSubmitText}>{interaction.submitLabel ?? "Baskıları Karşılaştır"}</Text>
+      </Pressable>
+      <Pressable
+        style={[styles.negativeHintBtn, hintRevealed && styles.negativeHintBtnUsed]}
+        onPress={handleHint}
+        disabled={hintRevealed}
+      >
+        <Text style={styles.negativeHintText}>
+          {hintRevealed ? "İpucu açıldı" : "İpucu iste (-60 sn)"}
+        </Text>
+      </Pressable>
+      {hintRevealed && (
+        <View style={styles.negativeHintReveal}>
+          <Text style={styles.negativeHintRevealText}>{sifre.cozumIpucu}</Text>
+        </View>
+      )}
+      {result && (
+        <View style={[styles.negativeResult, result.ok ? styles.negativeResultOk : styles.negativeResultFail]}>
+          <Text style={[styles.negativeResultText, result.ok ? styles.negativeResultTextOk : styles.negativeResultTextFail]}>
+            {result.ok ? "✓ " : "✕ "}{result.message}
+          </Text>
+        </View>
+      )}
+      {result?.ok && (
+        <View style={styles.negativeGridEffect}>
+          <Text style={styles.negativeGridEffectLabel}>IZGARA ETKİSİ</Text>
+          <Text style={styles.negativeGridEffectText}>{String(pr.resultText ?? "")}</Text>
+        </View>
+      )}
+      {result?.ok && sifre.aciklama ? (
+        <Text style={styles.negativeAciklama}>{sifre.aciklama}</Text>
+      ) : null}
+    </View>
+  );
+}
+
+function MorseTransceiverBlock({
+  sifre,
+  isSolved,
+  onSolve,
+}: {
+  sifre: ClueSifre;
+  isSolved: boolean;
+  onSolve: () => void;
+}) {
+  const { addTimePenalty } = useGame();
+  const p = sifre.presentation ?? {};
+  const pr = p as Record<string, unknown>;
+  const chart = Array.isArray(pr.chart)
+    ? (pr.chart as Array<{ char: string; code: string }>)
+    : [];
+  const signals = Array.isArray(pr.signals)
+    ? (pr.signals as Array<{ id: string; label: string; code: string; options: string[] }>)
+    : [];
+  const correctAssignments = Array.isArray(pr.correctAssignments)
+    ? (pr.correctAssignments as Array<{ itemId: string; answerId: string }>)
+    : [];
+  const interaction: Record<string, string> = (pr.interaction as Record<string, string>) ?? {};
+
+  const [choices, setChoices] = React.useState<Record<string, string>>({});
+  const [result, setResult] = React.useState<{ ok: boolean; message: string } | null>(null);
+  const [hintRevealed, setHintRevealed] = React.useState(false);
+
+  if (isSolved) {
+    return (
+      <View style={styles.miniGameSolvedBlock}>
+        <MaterialIcons name="radio" size={20} color="#22c55e" />
+        <Text style={styles.miniGameSolvedText}>Mors Kesiti Çözüldü!</Text>
+        <View style={styles.miniGameAnswer}>
+          <Text style={styles.miniGameAnswerText}>{String(pr.resultText ?? "")}</Text>
+        </View>
+        <Text style={styles.miniGameAciklama}>{sifre.aciklama}</Text>
+      </View>
+    );
+  }
+
+  const setChoice = (itemId: string, answerId: string) => {
+    setResult(null);
+    setChoices(prev => ({ ...prev, [itemId]: answerId }));
+  };
+
+  const allAssigned = signals.length > 0 && signals.every(s => !!choices[s.id]);
+
+  const submit = () => {
+    const ok = correctAssignments.every(a => choices[a.itemId] === a.answerId);
+    const message = ok
+      ? (interaction.successMessage ?? "Kesit, bakım anahtarıyla aynı kelimeyi verdi.")
+      : (interaction.failureMessage ?? "Harfler sabit vuruş dizisine uymuyor.");
+    setResult({ ok, message });
+    if (ok) onSolve();
+  };
+
+  const handleHint = () => {
+    if (hintRevealed) return;
+    addTimePenalty(60);
+    setHintRevealed(true);
+  };
+
+  return (
+    <View style={styles.morseBlock}>
+      <View style={styles.morseHeader}>
+        <MaterialIcons name="radio" size={14} color="#D4A843" />
+        <Text style={styles.morseHeaderText}>
+          {String(pr.title ?? "MORS / TELSİZ KESİTİ")}
+        </Text>
+      </View>
+      {pr.purposeHint ? (
+        <View style={styles.morsePurposeHint}>
+          <Text style={styles.morsePurposeLabel}>ÇÖZÜMÜN İŞLEVİ</Text>
+          <Text style={styles.morsePurposeText}>{String(pr.purposeHint)}</Text>
+        </View>
+      ) : null}
+      {pr.subtitle ? (
+        <Text style={styles.morseSubtitle}>{String(pr.subtitle)}</Text>
+      ) : null}
+      <View style={styles.morseChartWrap}>
+        <Text style={styles.morseChartLabel}>MORS TABLOSU</Text>
+        <View style={styles.morseChartRow}>
+          {chart.map(entry => (
+            <View key={entry.char} style={styles.morseChartEntry}>
+              <Text style={styles.morseChartChar}>{entry.char}</Text>
+              <Text style={styles.morseChartCode}>{entry.code}</Text>
+            </View>
+          ))}
+        </View>
+      </View>
+      <View style={styles.morseSignalsList}>
+        {signals.map(signal => {
+          const selected = choices[signal.id];
+          return (
+            <View key={signal.id} style={styles.morseSignalCard}>
+              <Text style={styles.morseSignalLabel}>{signal.label}</Text>
+              <Text style={styles.morseSignalCode}>{signal.code}</Text>
+              <View style={styles.morseOptionRow}>
+                {signal.options.map(opt => {
+                  const isChosen = selected === opt;
+                  return (
+                    <Pressable
+                      key={opt}
+                      style={[styles.morseOptionBtn, isChosen && styles.morseOptionBtnSelected]}
+                      onPress={() => setChoice(signal.id, opt)}
+                    >
+                      <Text style={[styles.morseOptionChar, isChosen && styles.morseOptionCharSelected]}>
+                        {opt}
+                      </Text>
+                    </Pressable>
+                  );
+                })}
+              </View>
+            </View>
+          );
+        })}
+      </View>
+      <Pressable
+        style={[styles.morseSubmitBtn, !allAssigned && styles.morseSubmitBtnDisabled]}
+        onPress={submit}
+        disabled={!allAssigned}
+      >
+        <Text style={styles.morseSubmitText}>{interaction.submitLabel ?? "Kesiti Doğrula"}</Text>
+      </Pressable>
+      <Pressable
+        style={[styles.morseHintBtn, hintRevealed && styles.morseHintBtnUsed]}
+        onPress={handleHint}
+        disabled={hintRevealed}
+      >
+        <Text style={styles.morseHintText}>
+          {hintRevealed ? "İpucu açıldı" : "İpucu iste (-60 sn)"}
+        </Text>
+      </Pressable>
+      {hintRevealed && (
+        <View style={styles.morseHintReveal}>
+          <Text style={styles.morseHintRevealText}>{sifre.cozumIpucu}</Text>
+        </View>
+      )}
+      {result && (
+        <View style={[styles.morseResult, result.ok ? styles.morseResultOk : styles.morseResultFail]}>
+          <Text style={[styles.morseResultText, result.ok ? styles.morseResultTextOk : styles.morseResultTextFail]}>
+            {result.ok ? "✓ " : "✕ "}{result.message}
+          </Text>
+        </View>
+      )}
+      {result?.ok && (
+        <View style={styles.morseGridEffect}>
+          <Text style={styles.morseGridEffectLabel}>IZGARA ETKİSİ</Text>
+          <Text style={styles.morseGridEffectText}>{String(pr.resultText ?? "")}</Text>
+        </View>
+      )}
+      {result?.ok && sifre.aciklama ? (
+        <Text style={styles.morseAciklama}>{sifre.aciklama}</Text>
+      ) : null}
+    </View>
+  );
+}
+
 function SifreliMesajBlock({
   sifre,
   isSolved,
@@ -1426,6 +1740,14 @@ function SifreliMesajBlock({
 
   if (sifre.presentation?.style === "luggage_label_match") {
     return <LuggageLabelMatchBlock sifre={sifre} isSolved={isSolved} onSolve={onSolve} />;
+  }
+
+  if (sifre.presentation?.style === "negative_contact_sheet") {
+    return <NegativeContactSheetBlock sifre={sifre} isSolved={isSolved} onSolve={onSolve} />;
+  }
+
+  if (sifre.presentation?.style === "morse_transceiver") {
+    return <MorseTransceiverBlock sifre={sifre} isSolved={isSolved} onSolve={onSolve} />;
   }
 
   if (sifre.presentation?.style === "symbol_crossgrid") {
@@ -5221,6 +5543,472 @@ const styles = StyleSheet.create({
     lineHeight: 18,
   },
   luggageAciklama: {
+    marginTop: 8,
+    fontSize: 12,
+    color: "#8b91ad",
+    fontStyle: "italic",
+    lineHeight: 17,
+  },
+
+  negativeBlock: {
+    marginTop: 10,
+    padding: 12,
+    borderWidth: 1,
+    borderColor: "#1e2a3a",
+    borderRadius: 12,
+    backgroundColor: "#090d14",
+  },
+  negativeHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+    marginBottom: 10,
+  },
+  negativeHeaderText: {
+    fontSize: 11,
+    fontWeight: "800",
+    letterSpacing: 1.4,
+    color: "#D4A843",
+  },
+  negativePurposeHint: {
+    marginBottom: 10,
+    padding: 9,
+    borderLeftWidth: 2,
+    borderLeftColor: "#D4A843",
+    backgroundColor: "rgba(212,168,67,0.06)",
+    borderRadius: 6,
+  },
+  negativePurposeLabel: {
+    fontSize: 9,
+    fontWeight: "800",
+    letterSpacing: 1.2,
+    color: "#D4A843",
+    marginBottom: 3,
+  },
+  negativePurposeText: {
+    fontSize: 12,
+    color: "#ecd99a",
+    lineHeight: 17,
+  },
+  negativeSubtitle: {
+    fontSize: 12,
+    color: "#8b91ad",
+    marginBottom: 10,
+    lineHeight: 17,
+  },
+  negativeChecksGrid: {
+    gap: 10,
+    marginBottom: 12,
+  },
+  negativeCheckCard: {
+    padding: 10,
+    borderWidth: 1,
+    borderColor: "#1e2a3a",
+    borderRadius: 10,
+    backgroundColor: "#0d1520",
+  },
+  negativeCheckLabel: {
+    fontSize: 11,
+    fontWeight: "800",
+    letterSpacing: 0.8,
+    color: "#D4A843",
+    marginBottom: 8,
+  },
+  negativePhotoPair: {
+    flexDirection: "row",
+    gap: 6,
+    marginBottom: 8,
+  },
+  negativePositiveCell: {
+    flex: 1,
+    padding: 7,
+    backgroundColor: "#eef2fb",
+    borderRadius: 6,
+    minHeight: 54,
+    justifyContent: "flex-end",
+  },
+  negativeNegativeCell: {
+    flex: 1,
+    padding: 7,
+    backgroundColor: "#20283d",
+    borderRadius: 6,
+    minHeight: 54,
+    justifyContent: "flex-end",
+  },
+  negativePhotoCellLabel: {
+    fontSize: 8,
+    fontWeight: "800",
+    letterSpacing: 1,
+    marginBottom: 3,
+    color: "#6b7280",
+  },
+  negativePositiveText: {
+    fontSize: 11,
+    fontWeight: "700",
+    color: "#151a25",
+  },
+  negativeNegativeText: {
+    fontSize: 11,
+    fontWeight: "700",
+    color: "#eef2fb",
+  },
+  negativeOptionList: {
+    gap: 5,
+  },
+  negativeOption: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+    gap: 8,
+    padding: 8,
+    borderWidth: 1,
+    borderColor: "#1e2d40",
+    borderRadius: 8,
+    backgroundColor: "#0f1a28",
+  },
+  negativeOptionSelected: {
+    borderColor: "#22c55e",
+    backgroundColor: "rgba(34,197,94,0.08)",
+  },
+  negativeRadio: {
+    width: 16,
+    height: 16,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: "#4b5563",
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 1,
+    flexShrink: 0,
+  },
+  negativeRadioSelected: {
+    borderColor: "#22c55e",
+  },
+  negativeRadioDot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: "#22c55e",
+  },
+  negativeOptionLabel: {
+    fontSize: 12,
+    color: "#9ca3af",
+    flex: 1,
+    lineHeight: 17,
+  },
+  negativeOptionLabelSelected: {
+    color: "#86efac",
+  },
+  negativeSubmitBtn: {
+    padding: 11,
+    borderRadius: 8,
+    backgroundColor: "#D4A843",
+    alignItems: "center",
+    marginBottom: 8,
+  },
+  negativeSubmitBtnDisabled: {
+    opacity: 0.4,
+  },
+  negativeSubmitText: {
+    fontSize: 13,
+    fontWeight: "700",
+    color: "#1a1205",
+  },
+  negativeHintBtn: {
+    padding: 10,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderStyle: "dashed",
+    borderColor: "#b45309",
+    alignItems: "center",
+    marginBottom: 8,
+  },
+  negativeHintBtnUsed: {
+    opacity: 0.5,
+  },
+  negativeHintText: {
+    fontSize: 13,
+    color: "#fbbf24",
+  },
+  negativeHintReveal: {
+    marginBottom: 8,
+    padding: 9,
+    borderLeftWidth: 2,
+    borderLeftColor: "#b45309",
+    backgroundColor: "rgba(180,83,9,0.08)",
+    borderRadius: 6,
+  },
+  negativeHintRevealText: {
+    fontSize: 12,
+    color: "#fbbf24",
+    lineHeight: 17,
+  },
+  negativeResult: {
+    marginTop: 8,
+    padding: 10,
+    borderRadius: 8,
+  },
+  negativeResultOk: {
+    backgroundColor: "rgba(34,197,94,0.12)",
+  },
+  negativeResultFail: {
+    backgroundColor: "rgba(220,38,38,0.12)",
+  },
+  negativeResultText: {
+    fontSize: 13,
+    lineHeight: 18,
+  },
+  negativeResultTextOk: {
+    color: "#86efac",
+  },
+  negativeResultTextFail: {
+    color: "#fca5a5",
+  },
+  negativeGridEffect: {
+    marginTop: 8,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: "#22c55e",
+    borderRadius: 8,
+    backgroundColor: "rgba(34,197,94,0.08)",
+  },
+  negativeGridEffectLabel: {
+    fontSize: 9,
+    fontWeight: "800",
+    letterSpacing: 1.2,
+    color: "#4ade80",
+    marginBottom: 4,
+  },
+  negativeGridEffectText: {
+    fontSize: 13,
+    fontWeight: "700",
+    color: "#b7f7c8",
+    lineHeight: 18,
+  },
+  negativeAciklama: {
+    marginTop: 8,
+    fontSize: 12,
+    color: "#8b91ad",
+    fontStyle: "italic",
+    lineHeight: 17,
+  },
+
+  morseBlock: {
+    marginTop: 10,
+    padding: 12,
+    borderWidth: 1,
+    borderColor: "#1a2a1a",
+    borderRadius: 12,
+    backgroundColor: "#080e08",
+  },
+  morseHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+    marginBottom: 10,
+  },
+  morseHeaderText: {
+    fontSize: 11,
+    fontWeight: "800",
+    letterSpacing: 1.4,
+    color: "#D4A843",
+  },
+  morsePurposeHint: {
+    marginBottom: 10,
+    padding: 9,
+    borderLeftWidth: 2,
+    borderLeftColor: "#D4A843",
+    backgroundColor: "rgba(212,168,67,0.06)",
+    borderRadius: 6,
+  },
+  morsePurposeLabel: {
+    fontSize: 9,
+    fontWeight: "800",
+    letterSpacing: 1.2,
+    color: "#D4A843",
+    marginBottom: 3,
+  },
+  morsePurposeText: {
+    fontSize: 12,
+    color: "#ecd99a",
+    lineHeight: 17,
+  },
+  morseSubtitle: {
+    fontSize: 12,
+    color: "#8b91ad",
+    marginBottom: 10,
+    lineHeight: 17,
+  },
+  morseChartWrap: {
+    marginBottom: 12,
+    padding: 9,
+    borderWidth: 1,
+    borderColor: "#2a3a2a",
+    borderRadius: 8,
+    backgroundColor: "#0d180d",
+  },
+  morseChartLabel: {
+    fontSize: 9,
+    fontWeight: "800",
+    letterSpacing: 1.2,
+    color: "#6b7280",
+    marginBottom: 6,
+  },
+  morseChartRow: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 8,
+  },
+  morseChartEntry: {
+    alignItems: "center",
+    gap: 2,
+  },
+  morseChartChar: {
+    fontSize: 13,
+    fontWeight: "800",
+    color: "#D4A843",
+  },
+  morseChartCode: {
+    fontSize: 11,
+    color: "#f3d77d",
+    letterSpacing: 2,
+  },
+  morseSignalsList: {
+    gap: 8,
+    marginBottom: 12,
+  },
+  morseSignalCard: {
+    padding: 10,
+    borderWidth: 1,
+    borderColor: "#2a3a2a",
+    borderRadius: 10,
+    backgroundColor: "#0d180d",
+  },
+  morseSignalLabel: {
+    fontSize: 11,
+    fontWeight: "800",
+    letterSpacing: 0.8,
+    color: "#D4A843",
+    marginBottom: 4,
+  },
+  morseSignalCode: {
+    fontSize: 20,
+    letterSpacing: 4,
+    color: "#f3d77d",
+    marginBottom: 8,
+    fontFamily: "monospace",
+  },
+  morseOptionRow: {
+    flexDirection: "row",
+    gap: 8,
+  },
+  morseOptionBtn: {
+    flex: 1,
+    paddingVertical: 9,
+    borderWidth: 1,
+    borderColor: "#2a3a2a",
+    borderRadius: 8,
+    alignItems: "center",
+    backgroundColor: "#111a11",
+  },
+  morseOptionBtnSelected: {
+    borderColor: "#22c55e",
+    backgroundColor: "rgba(34,197,94,0.12)",
+  },
+  morseOptionChar: {
+    fontSize: 16,
+    fontWeight: "800",
+    color: "#6b7280",
+  },
+  morseOptionCharSelected: {
+    color: "#4ade80",
+  },
+  morseSubmitBtn: {
+    padding: 11,
+    borderRadius: 8,
+    backgroundColor: "#D4A843",
+    alignItems: "center",
+    marginBottom: 8,
+  },
+  morseSubmitBtnDisabled: {
+    opacity: 0.4,
+  },
+  morseSubmitText: {
+    fontSize: 13,
+    fontWeight: "700",
+    color: "#1a1205",
+  },
+  morseHintBtn: {
+    padding: 10,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderStyle: "dashed",
+    borderColor: "#b45309",
+    alignItems: "center",
+    marginBottom: 8,
+  },
+  morseHintBtnUsed: {
+    opacity: 0.5,
+  },
+  morseHintText: {
+    fontSize: 13,
+    color: "#fbbf24",
+  },
+  morseHintReveal: {
+    marginBottom: 8,
+    padding: 9,
+    borderLeftWidth: 2,
+    borderLeftColor: "#b45309",
+    backgroundColor: "rgba(180,83,9,0.08)",
+    borderRadius: 6,
+  },
+  morseHintRevealText: {
+    fontSize: 12,
+    color: "#fbbf24",
+    lineHeight: 17,
+  },
+  morseResult: {
+    marginTop: 8,
+    padding: 10,
+    borderRadius: 8,
+  },
+  morseResultOk: {
+    backgroundColor: "rgba(34,197,94,0.12)",
+  },
+  morseResultFail: {
+    backgroundColor: "rgba(220,38,38,0.12)",
+  },
+  morseResultText: {
+    fontSize: 13,
+    lineHeight: 18,
+  },
+  morseResultTextOk: {
+    color: "#86efac",
+  },
+  morseResultTextFail: {
+    color: "#fca5a5",
+  },
+  morseGridEffect: {
+    marginTop: 8,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: "#22c55e",
+    borderRadius: 8,
+    backgroundColor: "rgba(34,197,94,0.08)",
+  },
+  morseGridEffectLabel: {
+    fontSize: 9,
+    fontWeight: "800",
+    letterSpacing: 1.2,
+    color: "#4ade80",
+    marginBottom: 4,
+  },
+  morseGridEffectText: {
+    fontSize: 13,
+    fontWeight: "700",
+    color: "#b7f7c8",
+    lineHeight: 18,
+  },
+  morseAciklama: {
     marginTop: 8,
     fontSize: 12,
     color: "#8b91ad",

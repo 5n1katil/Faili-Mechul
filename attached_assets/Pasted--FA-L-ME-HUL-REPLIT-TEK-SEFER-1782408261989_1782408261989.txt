@@ -1,0 +1,448 @@
+/* ============================================================
+ *  FAİLİ MEÇHUL — REPLIT TEK SEFERLİK ENTEGRASYON PAKETİ
+ *  Bu metni Replit Agent sohbetine TEK PARÇA olarak yapıştır.
+ *  Görev: sadece JSON kaydetme. Vaka verisini mevcut kaynakta
+ *  yükle, aşağıdaki eksik renderer altyapısını ekle ve çalıştır.
+ * ------------------------------------------------------------
+ *  Vaka: Negatifte Kalan Saat · puzzleId=pp_002
+ *  1) Önce mevcut vaka veri kaydını ve mini-oyun dispatcherını bul.
+ *  2) Var olan rendererları bozma; yalnız eksik olan dalı ekle.
+ *  3) Aşağıdaki vaka JSON’unu uygulamanın KANONİK case kaynağına ekle.
+ *  4) Kod değişikliklerinden sonra aşağıdaki kabul testlerini tarayıcıda yap.
+ *  5) Sadece açıklama yazma: dosyaları gerçekten güncelle ve test sonucunu bildir.
+ * ============================================================ */
+
+
+===== PREMIUM v26 ÖZEL MİNİ OYUN RENDERER'I — DOSYA OLUŞTUR / EKSİKSE EKLE =====
+// src/components/caseMechanics/PremiumMechanicRenderer.jsx
+import { useMemo, useState } from "react";
+
+const premiumStyles = new Set([
+  "luggage_label_match",
+  "negative_contact_sheet",
+  "morse_transceiver",
+  "archive_index_reconstruction",
+  "mechanical_lock_sequence",
+]);
+
+export const isPremiumMechanic = (clue) =>
+  clue?.mechanicType === "sifreli_mesaj" &&
+  premiumStyles.has(clue?.sifre?.presentation?.style);
+
+export default function PremiumMechanicRenderer({ clue, onSolved, onRequestHint }) {
+  const p = clue?.sifre?.presentation ?? {};
+  const style = p.style;
+  const [choices, setChoices] = useState({});
+  const [dials, setDials] = useState(() =>
+    Object.fromEntries((p.dials ?? []).map((d) => [d.id, d.initial ?? d.symbols?.[0] ?? ""]))
+  );
+  const [result, setResult] = useState(null);
+  const [hintOpen, setHintOpen] = useState(false);
+  const [hintUsed, setHintUsed] = useState(false);
+
+  const setChoice = (itemId, answerId) =>
+    setChoices((old) => ({ ...old, [itemId]: answerId }));
+
+  const rotate = (dial, delta) => {
+    const symbols = dial.symbols ?? [];
+    const current = dials[dial.id] ?? symbols[0];
+    const index = Math.max(0, symbols.indexOf(current));
+    const next = symbols[(index + delta + symbols.length) % symbols.length];
+    setDials((old) => ({ ...old, [dial.id]: next }));
+    setResult(null);
+  };
+
+  const valid = useMemo(() => {
+    if (!premiumStyles.has(style)) return false;
+    if (style === "mechanical_lock_sequence") {
+      return (p.correctCode ?? []).length === (p.dials ?? []).length &&
+        (p.correctCode ?? []).every((entry) => dials[entry.dialId] === entry.symbol);
+    }
+    return (p.correctAssignments ?? []).length > 0 &&
+      (p.correctAssignments ?? []).every((entry) => choices[entry.itemId] === entry.answerId);
+  }, [choices, dials, p, style]);
+
+  const submit = () => {
+    if (valid) {
+      setResult("ok");
+      onSolved?.({ clueId: clue.id, mechanic: style });
+    } else setResult("no");
+  };
+
+  const useHint = () => {
+    setHintOpen(true);
+    if (!hintUsed) {
+      setHintUsed(true);
+      onRequestHint?.({ clueId: clue.id, penaltySeconds: 60 });
+    }
+  };
+
+  const select = (itemId, options, placeholder) => (
+    <select value={choices[itemId] ?? ""} onChange={(e) => { setChoice(itemId, e.target.value); setResult(null); }}>
+      <option value="">{placeholder}</option>
+      {options.map((option) => <option key={option.id ?? option} value={option.id ?? option}>{option.label ?? option}</option>)}
+    </select>
+  );
+
+  const card = (title, body) => <article style={styles.card}><b>{title}</b>{body}</article>;
+  let board = null;
+
+  if (style === "luggage_label_match") {
+    board = <div style={styles.grid}>{(p.cases ?? []).map((item) => card(item.label, <><small>{item.stamp} · {item.note}</small>{select(item.id, p.routes ?? [], "Rotayı seç…")}</>))}</div>;
+  } else if (style === "negative_contact_sheet") {
+    board = <div style={styles.grid}>{(p.checks ?? []).map((item) => card(item.label, <><div style={styles.pair}><div style={styles.positive}>{item.positive}</div><div style={styles.negative}>{item.negative}</div></div>{select(item.id, item.options ?? [], "Farkı seç…")}</>))}</div>;
+  } else if (style === "morse_transceiver") {
+    board = <><div style={styles.chart}>{(p.chart ?? []).map((item) => <span key={item.char}><b>{item.char}</b> {item.code}</span>)}</div><div style={styles.grid}>{(p.signals ?? []).map((item) => card(item.label, <><div style={styles.morse}>{item.code}</div>{select(item.id, item.options ?? [], "Harfi seç…")}</>))}</div></>;
+  } else if (style === "archive_index_reconstruction") {
+    board = <div style={styles.archive}>{(p.files ?? []).map((item) => card(item.code ?? item.label, <><small>{item.date}<br />{item.note}</small>{select(item.id, p.slots ?? [], "Raf gözü…")}</>))}</div>;
+  } else if (style === "mechanical_lock_sequence") {
+    board = <div style={styles.dials}>{(p.dials ?? []).map((dial) => <article key={dial.id} style={styles.dial}><b>{dial.label}</b><div style={styles.symbol}>{dials[dial.id]}</div><div style={styles.controls}><button onClick={() => rotate(dial, -1)}>↶</button><button onClick={() => rotate(dial, 1)}>↷</button></div></article>)}</div>;
+  }
+
+  return <section style={styles.wrap}>
+    <h4 style={styles.title}>{p.title}</h4>
+    <p style={styles.sub}>{p.subtitle}</p>
+    <p style={styles.purpose}><b>ÇÖZÜMÜN İŞLEVİ</b><br />{p.purposeHint}</p>
+    {board}
+    {p.hint && <><button style={styles.ghost} onClick={useHint}>💡 İpucu iste</button>{hintOpen && <p style={styles.hint}>{p.hint}</p>}</>}
+    <button style={styles.submit} onClick={submit}>{p.interaction?.submitLabel ?? "Kaydı doğrula"}</button>
+    {result === "ok" && <p style={styles.ok}><b>IZGARA ETKİSİ</b><br />{p.resultText}</p>}
+    {result === "no" && <p style={styles.no}>{p.interaction?.failureMessage ?? "Kayıtlar aynı düzeni vermiyor. Ayrıntıları yeniden karşılaştır."}</p>}
+  </section>;
+}
+
+const styles = {
+  wrap:{marginTop:10,padding:12,border:"1px solid #2d3650",borderRadius:12,background:"#101522",color:"#e8eaf2"},
+  title:{margin:"0 0 4px",color:"#e0b54e",fontSize:14},sub:{margin:"0 0 8px",fontSize:12,color:"#a9b0ca"},
+  purpose:{margin:"0 0 10px",padding:9,borderLeft:"2px solid #e0b54e",background:"rgba(224,181,78,.06)",fontSize:12,lineHeight:1.45},
+  grid:{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(160px,1fr))",gap:8},archive:{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(145px,1fr))",gap:8},
+  card:{border:"1px solid #303a55",borderRadius:10,padding:10,display:"grid",gap:8,fontSize:12},pair:{display:"grid",gridTemplateColumns:"1fr 1fr",gap:6},
+  positive:{minHeight:54,padding:7,display:"grid",alignItems:"end",background:"#eef2fb",color:"#151a25",fontSize:10,fontWeight:700},negative:{minHeight:54,padding:7,display:"grid",alignItems:"end",background:"#20283d",color:"#eef2fb",fontSize:10,fontWeight:700},
+  chart:{display:"flex",gap:8,flexWrap:"wrap",padding:8,marginBottom:8,border:"1px solid #303a55",borderRadius:8,fontSize:11},morse:{fontSize:18,letterSpacing:3,color:"#f3d77d"},
+  dials:{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(100px,1fr))",gap:8},dial:{border:"1px solid #6e5a34",borderRadius:10,padding:9,textAlign:"center",display:"grid",gap:8},symbol:{height:48,border:"1px solid #b99b57",borderRadius:"50%",display:"grid",placeItems:"center",fontSize:22,color:"#f4e6ae"},
+  controls:{display:"grid",gridTemplateColumns:"1fr 1fr",gap:5},submit:{width:"100%",marginTop:10,padding:10,border:0,borderRadius:8,background:"#e0b54e",color:"#1a1205",fontWeight:700},ghost:{width:"100%",marginTop:8,padding:8,border:"1px dashed #caa544",borderRadius:8,background:"transparent",color:"#e0b54e"},
+  hint:{padding:8,borderRadius:8,background:"rgba(224,181,78,.08)",fontSize:12},ok:{padding:10,border:"1px solid #22c55e",borderRadius:8,background:"rgba(34,197,94,.1)",color:"#bbf7d0",fontSize:12},no:{padding:10,border:"1px solid #dc2626",borderRadius:8,background:"rgba(220,38,38,.1)",color:"#fecaca",fontSize:12}
+};
+===== DOSYA SONU =====
+
+===== MEVCUT MİNİ-OYUN DISPATCHERINA EKLENECEK DAL =====
+// Mevcut genel sifreli_mesaj renderer'INDEN ÖNCE ekle.
+import PremiumMechanicRenderer, { isPremiumMechanic } from "@/components/caseMechanics/PremiumMechanicRenderer";
+
+if (isPremiumMechanic(clue)) {
+  return (
+    <PremiumMechanicRenderer
+      clue={clue}
+      onSolved={({ clueId }) => markMiniGameSolved?.(clueId)}
+      onRequestHint={({ clueId, penaltySeconds }) => applyHintPenalty?.({ clueId, penaltySeconds })}
+    />
+  );
+}
+// Buradan sonra mevcut genel şifre renderer'ı aynen çalışmalı.
+===== YAMA SONU =====
+
+===== PREMIUM v26 KABUL TESTLERİ =====
+- c2: negative_contact_sheet renderer'ı JSON verisinden çalışır; doğru sonuç öncesinde resultText görünmez, yanlış deneme doğru eşlemeyi açmaz, mobilde kartlar tek kolon akışına iner.
+===== TESTLER SONU =====
+===== ZORUNLU KABUL TESTLERİ =====
+1. Eski klasik sifreli_mesaj, parmak_izi, profil_sentezi ve genel ses_kaydi rendererları regresyona uğramaz.
+===== TEST LİSTESİ SONU =====
+
+===== KANONİK VAKA VERİSİ — mevcut case registry’de pp_002 olarak ekle/değiştir =====
+{
+  "puzzleId": "pp_002",
+  "stars": "★★☆☆☆",
+  "gridSize": "3x3",
+  "timeLimit": 540,
+  "title": "Negatifte Kalan Saat",
+  "subtitle": "1956 · Şehir Fotoğrafhanesi · Çatı ışıkları",
+  "difficulty": "Polis Memuru",
+  "difficultyLevel": 2,
+  "specialMechanic": "sifreli_mesaj",
+  "story": "1956 yazının boğucu bir gecesinde, kentin arka sokaklarındaki sırları belgeleyen usta bir belgesel fotoğrafçısı, çoktan kapanmış, tozlu bir şehir fotoğrafhanesinde ölü bulundu[cite: 1]. İlk bakışta sıradan bir iş kazası veya basit bir zehirlenme gibi görünen bu olay, karanlık odanın zayıf kırmızı ışığında kuruması için askıya asılmış son kareler incelendiğinde bambaşka bir boyuta taşındı. Fotoğrafçının ölmeden hemen önce çektiği ve banyosunu yaptığı üç farklı negatif, baskılardaki saatlerin birbiriyle tutmadığını, kasten zamanın akışıyla oynandığını kanıtlıyordu[cite: 1]. Biri zamanı ileri sarmış, diğeri ise karanlıkta kusursuz bir alibi inşa etmişti. Kimyasal banyoların genzi yakan keskin kokusu, çatıdaki eski projektörlerin cızırtısı ve negatiflerin ters yansımaları arasına gizlenmiş bu ölümcül kurguyu bozmak zorundasın. Işığın ve gölgelerin dilini çözerek, o gece vizörün arkasına saklanan asıl katili deşifre etmek artık senin elinde, Dedektif.",
+  "atmosphere": "Kimyasal banyoların keskin kokusu, çatıdaki projektörlerden sonra bile odada kalmıştı. Negatifler ışığa tutulunca her şey ters görünüyordu.",
+  "suspects": [
+    {
+      "id": "s1",
+      "name": "Kamera Tamircisi Belgin",
+      "icon": "📷",
+      "description": "Eski körüklü makineleri söküp yeniden çalıştıran titiz tamirci.",
+      "detail": "Vidalara numara verir, parmaklarının ucunda gümüş nitrat lekeleri taşır."
+    },
+    {
+      "id": "s2",
+      "name": "Galeri Bekçisi Orhan",
+      "icon": "🛡️",
+      "description": "Bina kapandığında anahtarları devralan gece bekçisi.",
+      "detail": "Cam çerçeveleri kendi onarır; kırık parçaları küçük kutularda saklar ve gece anahtarlarını devralır."
+    },
+    {
+      "id": "s3",
+      "name": "Arşiv Fotoğrafçısı Leyla",
+      "icon": "🎞️",
+      "description": "Eski baskıları kataloglayan, kaybolan kareleri yeniden basan arşivci.",
+      "detail": "Her çekimin saatini ve banyosunu ayrı kurşun kalemle not eder; negatif dolaplarının düzenini ezbere bilir."
+    }
+  ],
+  "weapons": [
+    {
+      "id": "w1",
+      "name": "Çerçeve Kesici",
+      "icon": "🔪",
+      "description": "Sert karton ve cam kenarlarını kesmekte kullanılan ince uçlu bıçak.",
+      "detail": ""
+    },
+    {
+      "id": "w2",
+      "name": "Siyanürlü Sabitleyici Banyo",
+      "icon": "🧫",
+      "description": "Eski baskı banyolarında kullanılan, yanlış oranlandığında ölümcül sıvı; gümüş tuzu bırakır.",
+      "detail": ""
+    },
+    {
+      "id": "w3",
+      "name": "Açıkta Kalan Işık Kablosu",
+      "icon": "⚡",
+      "description": "Çatı projektörlerine enerji veren yalıtımı aşınmış kablo.",
+      "detail": ""
+    }
+  ],
+  "locations": [
+    {
+      "id": "l1",
+      "name": "Karanlık Oda",
+      "icon": "🚪",
+      "description": "Kırmızı lambalı, muslukları kimyasal tepsilere açılan ve ışık geçirmeyen yıkama hattı bulunan çalışma odası.",
+      "detail": ""
+    },
+    {
+      "id": "l2",
+      "name": "Çatı Terası",
+      "icon": "🏙️",
+      "description": "Dönemin büyük projektörlerinin yer aldığı rüzgârlı çatı.",
+      "detail": ""
+    },
+    {
+      "id": "l3",
+      "name": "Arşiv Koridoru",
+      "icon": "🗂️",
+      "description": "Negatif dolaplarının sıralandığı, dar ve penceresiz geçit.",
+      "detail": ""
+    }
+  ],
+  "clues": [
+    {
+      "id": "c1",
+      "title": "Banyo Kimyası",
+      "type": "adli",
+      "mechanicType": "text",
+      "text": "Adli kimya raporu, eski baskı banyolarında kullanılan ölümcül sıvıyı tespit etti. Gümüş tuzu oranı, kırmızı lambalı ve ışık geçirmeyen yıkama hattına özgü.",
+      "deductionHint": "Ölümcül sıvının çalışma düzeni, hangi kapalı işleyişe bağlanır?",
+      "isBonus": false,
+      "revealOrder": 1,
+      "isRevealed": true,
+      "pointCost": 0
+    },
+    {
+      "id": "c2",
+      "title": "Ters Baskı Karşılaştırması",
+      "type": "sifreli",
+      "mechanicType": "sifreli_mesaj",
+      "text": "Büyüteç kutusunda aynı saatin iki zıt baskısı bulundu.",
+      "deductionHint": "Yansımayı değil, iki baskıda aynı kalması gereken fiziksel ayrıntıyı izle.",
+      "isBonus": false,
+      "revealOrder": 2,
+      "isRevealed": false,
+      "pointCost": 60,
+      "sifre": {
+        "sifrelenmis": "KARE-12 / KARE-16 / KARE-21",
+        "sifreleTuru": "negatif karşılaştırması",
+        "cozumIpucu": "Işıkta görünen ayrıntıların ters baskıda da fiziksel olarak mümkün kalıp kalmadığını karşılaştır.",
+        "cozulmus": "TEMAS LEVHASI 956",
+        "aciklama": "Karşılaştırma tamamlandığında, ızgarada bir olanaksız bağlantıyı eleyebilecek netlik elde edilir.",
+        "presentation": {
+          "style": "negative_contact_sheet",
+          "title": "Fotoğraf Negatifi Karşılaştırması",
+          "subtitle": "Pozitif ve negatif baskıdaki fiziksel ayrıntıları karşılaştır; yalnız tutarlı farkları seç.",
+          "purposeHint": "Üç farkı doğru okuduğunda, ızgarada bir araç–mekân eşleşmesinin olamayacağını anlayacaksın.",
+          "checks": [
+            {
+              "id": "n1",
+              "label": "Kare 12",
+              "positive": "Projektör ayağı sağda",
+              "negative": "Ayağın gölgesi solda",
+              "options": [
+                {
+                  "id": "a",
+                  "label": "Gölge yönü güneşle uyumlu"
+                },
+                {
+                  "id": "b",
+                  "label": "Kablo bağlantısı görünmüyor"
+                },
+                {
+                  "id": "c",
+                  "label": "Saat ibresi ters"
+                }
+              ]
+            },
+            {
+              "id": "n2",
+              "label": "Kare 16",
+              "positive": "Islak saçak çizgisi",
+              "negative": "Kuru iz",
+              "options": [
+                {
+                  "id": "a",
+                  "label": "Kablo bağlantısı görünmüyor"
+                },
+                {
+                  "id": "b",
+                  "label": "Rozet yansıması var"
+                },
+                {
+                  "id": "c",
+                  "label": "Saat ibresi ters"
+                }
+              ]
+            },
+            {
+              "id": "n3",
+              "label": "Kare 21",
+              "positive": "Projektör lambası açık",
+              "negative": "Yalıtım gövdesi kapalı",
+              "options": [
+                {
+                  "id": "a",
+                  "label": "Saat ibresi ters"
+                },
+                {
+                  "id": "b",
+                  "label": "Kablo bağlantısı görünmüyor"
+                },
+                {
+                  "id": "c",
+                  "label": "Rozet yansıması var"
+                }
+              ]
+            }
+          ],
+          "correctAssignments": [
+            {
+              "itemId": "n1",
+              "answerId": "a"
+            },
+            {
+              "itemId": "n2",
+              "answerId": "a"
+            },
+            {
+              "itemId": "n3",
+              "answerId": "b"
+            }
+          ],
+          "resultText": "Çatıdaki kablo hattı o saatlerde kapalıdır: Açıkta Kalan Işık Kablosu × Çatı Terası.",
+          "interaction": {
+            "mode": "multi_compare",
+            "submitLabel": "Baskıları Karşılaştır",
+            "successMessage": "Negatifler aynı fiziksel hikâyeyi anlattı.",
+            "failureMessage": "Seçtiğin farklar tek bir sahnede birlikte mümkün görünmüyor."
+          }
+        }
+      }
+    },
+    {
+      "id": "c3",
+      "title": "Çerçeve Kutusu",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Gece anahtarlarını devralan görevlinin dolabındaki zimmet kartı, sert karton ve cam kenarı kesmeye yarayan ince ucun o gece aynı kişiye teslim edildiğini gösteriyor.",
+      "deductionHint": "Tek teslim kartı, hangi kişi–araç bağını doğrular?",
+      "isBonus": false,
+      "revealOrder": 3,
+      "isRevealed": false,
+      "pointCost": 60
+    },
+    {
+      "id": "c4",
+      "title": "Koridor Turnikesi",
+      "type": "tanik",
+      "mechanicType": "text",
+      "text": "Negatif dolaplarının sıralandığı dar geçidin turnike şeridi, her çekimin saatini ayrı notlayan kişinin kartının olay saatinde okutulmadığını kayda geçirmiş.",
+      "deductionHint": "Bir geçiş kaydı, hangi koridor olasılığını kapatır?",
+      "isBonus": false,
+      "revealOrder": 4,
+      "isRevealed": false,
+      "pointCost": 60
+    },
+    {
+      "id": "b1",
+      "title": "Kırmızı Lamba",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Karanlık odanın kırmızı lambasında Leyla'nın ince eldiven lifleri tespit edildi.",
+      "deductionHint": "Bu bulgu hangi kişi–mekân bağını destekler?",
+      "isBonus": true,
+      "revealOrder": 5,
+      "isRevealed": false,
+      "pointCost": 60
+    },
+    {
+      "id": "b2",
+      "title": "Çatı Anahtarı",
+      "type": "tanik",
+      "mechanicType": "text",
+      "text": "Belgin'in, proje lambalarının anahtarını öğleden sonra bakım için aldığını bina görevlisi doğruladı.",
+      "deductionHint": "Bu ifade hangi kişi–araç bağını destekler?",
+      "isBonus": true,
+      "revealOrder": 6,
+      "isRevealed": false,
+      "pointCost": 60
+    }
+  ],
+  "assetManifest": [],
+  "solution": {
+    "suspectId": "s3",
+    "weaponId": "w2",
+    "locationId": "l1"
+  },
+  "solutionNarrative": "Arşiv Fotoğrafçısı Leyla, eski baskı banyosuna ölümcül oranı ekledi. Negatiflerdeki fiziksel tutarsızlık, çatıdaki kablo ihtimalini kapattı; turnike ve zimmet kayıtları kalan düzeni Leyla'nın karanlık odasına taşıdı.",
+  "replitIntegration": {
+    "schema": "fm_replit_runtime_contract_v1",
+    "copyTarget": "Replit Agent prompt",
+    "canonicalCaseFile": "src/data/cases/pp_002.json",
+    "policy": "Var olan renderer varsa onu bozma; yoksa bu paketteki component ve dispatcher dalını ekle.",
+    "mechanics": [
+      {
+        "clueId": "c2",
+        "mechanicType": "sifreli_mesaj",
+        "renderer": "negative_contact_sheet",
+        "completionEvent": "onSolved({ clueId, mechanic: \"sifreli_mesaj\" })"
+      },
+      {
+        "clueId": "c2",
+        "mechanicType": "sifreli_mesaj",
+        "renderer": "negative_contact_sheet",
+        "componentFile": "src/components/caseMechanics/PremiumMechanicRenderer.jsx",
+        "dispatcherBranch": "clue.mechanicType === \"sifreli_mesaj\" && [\"luggage_label_match\",\"negative_contact_sheet\",\"morse_transceiver\",\"archive_index_reconstruction\",\"mechanical_lock_sequence\"].includes(clue.sifre?.presentation?.style)",
+        "completionEvent": "onSolved({ clueId, mechanic: \"negative_contact_sheet\" })",
+        "hintEvent": "onRequestHint({ clueId, penaltySeconds: 60 })",
+        "requiredData": [
+          "title",
+          "subtitle",
+          "purposeHint",
+          "resultText",
+          "interaction",
+          "style-specific data"
+        ],
+        "nonNegotiable": [
+          "Veriyi component içine hard-code etme.",
+          "Başarı öncesinde resultText veya çözüm eşleşmesini gösterme.",
+          "Yanlış deneme doğru eşlemeyi otomatik kurmamalı.",
+          "Mobilde kartlar/diallar tek sütuna akmalı."
+        ]
+      }
+    ]
+  }
+}
+===== VAKA VERİSİ SONU =====

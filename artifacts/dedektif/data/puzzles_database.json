@@ -1116,7 +1116,7 @@
               "isRevealed": false,
               "pointCost": 50,
               "sesMetni": "MINA (fısıltıyla): Bayan Reyes, suyunuz. Doktorun bıraktığı iki kapsül de sağlık çantanızda.\n\nSOFIA (gergin ama kontrollü): Birini şimdi alacağım. Diğeri mühürlü kalsın; servis masasına gitmeyecek.\n\nMINA: Vale biraz önce sizinle konuşmak istediğini söyledi.\n\nSOFIA: Bu gece benim çantamdan ona hiçbir şey verilmeyecek. Konuşma kartlarını getir.\n\nSUNUCU (uzaktan, alkışların içinden): ...En İyi Film ödülünün sahibi...",
-              "audioUrl": "/assets/cases/hw_001/audio/hw_001_c3_kulaklik_fisilti.mp3",
+              "audioUrl": "/assets/audio/cases/hw_001/hw_001_c3_kulaklik_fisilti.mp3",
               "audioAssetId": "audio_hw_001_c3_kulaklik_fisilti",
               "audioPlanned": true,
               "audioFileName": "hw_001_c3_kulaklik_fisilti.mp3"
@@ -1177,7 +1177,7 @@
               "clueId": "c3",
               "status": "delivered",
               "fileName": "hw_001_c3_kulaklik_fisilti.mp3",
-              "publicPath": "/assets/cases/hw_001/audio/hw_001_c3_kulaklik_fisilti.mp3",
+              "publicPath": "/assets/audio/cases/hw_001/hw_001_c3_kulaklik_fisilti.mp3",
               "mimeType": "audio/mpeg",
               "durationTargetSec": 28
             }
@@ -1715,7 +1715,7 @@
               "isRevealed": false,
               "pointCost": 80,
               "sesMetni": "GÜVENLİK OPERATÖRÜ: Kabin dört, güvenlik. Bay Vega, beni duyuyor musunuz?\n\nCARLOS VEGA: Duyuyorum. Kartımı 23.38'de okuttum; o andan beri kapılar açılmadı. Ward benden son taslak notlarını istemişti.\n\nGÜVENLİK OPERATÖRÜ: Saat 23.49. Kabin arıza kilidinde. Teknik ekip gelene kadar kapılar ne içeriden ne dışarıdan açılacak.\n\nCARLOS VEGA: Lütfen Ward'a haber verin. Görüşmeye yetişemedim; evraklarım da bende kaldı.\n\nGÜVENLİK OPERATÖRÜ: Not aldım. Kabinden ayrılmaya çalışmayın; teknik ekip sizi çıkaracak.",
-              "audioUrl": "/assets/cases/hw_004/audio/hw_004_c5_acil_interkom.mp3",
+              "audioUrl": "/assets/audio/cases/hw_004/hw_004_c5_acil_interkom.mp3",
               "audioAssetId": "audio_hw_004_c5_acil_interkom",
               "audioPlanned": true,
               "audioFileName": "hw_004_c5_acil_interkom.mp3"
@@ -1752,7 +1752,7 @@
               "clueId": "c5",
               "status": "delivered",
               "fileName": "hw_004_c5_acil_interkom.mp3",
-              "publicPath": "/assets/cases/hw_004/audio/hw_004_c5_acil_interkom.mp3",
+              "publicPath": "/assets/audio/cases/hw_004/hw_004_c5_acil_interkom.mp3",
               "mimeType": "audio/mpeg",
               "durationTargetSec": 26
             }
@@ -2524,7 +2524,7 @@
               "isRevealed": false,
               "pointCost": 50,
               "sesMetni": "GENETİK LAB — A-3 GENOM TARAMA İSTASYONU\nCİNAYET PENCERESİNİN BAŞLANGICI\n\n[Numune kasetlerini taşıyan robot kolun sesi duyulur. Arka planda derin, düzenli bir tarama uğultusu vardır.]\n\nGECE TEKNİSYENİ: Bay Sato, A-3'ü açtım. Gece yarısından sonra özerklik dosyasındaki erişim etiketi değiştirilmiş.\n\nHARUTO SATO: Benim onayım olmadan mı?\n\nGECE TEKNİSYENİ: Sistem kullanıcıyı gizlemiş. Ama ham dizideki son iki revizyonu görüyorum — imza tutarsızlığı var.\n\nHARUTO SATO: Kapatın sistemi. Hiçbir şeyi taşımadan önce ben kontrol ederim.\n\n[Tarama ünitesinin kapak kilidi etkinleşiyor. Kabin mühürleniyor.]\n\nSISTEM SESİ: A-3 tarama süreci aktif. Kabin kilitli — prosedür tamamlanana dek giriş-çıkış devre dışı.\n\n[Kayıt burada kesiliyor.]",
-              "audioUrl": "/assets/cases/sf_003/audio/sf_003_c2_a3_tarama_kaydi.mp3",
+              "audioUrl": "/assets/audio/cases/sf_003/sf_003_c2_a3_tarama_kaydi.mp3",
               "audioAssetId": "audio_sf_003_c2_a3_tarama_kaydi",
               "audioPlanned": false,
               "audioFileName": "sf_003_c2_a3_tarama_kaydi.mp3"
@@ -2597,7 +2597,7 @@
               "clueId": "c2",
               "status": "delivered",
               "fileName": "sf_003_c2_a3_tarama_kaydi.mp3",
-              "publicPath": "/assets/cases/sf_003/audio/sf_003_c2_a3_tarama_kaydi.mp3",
+              "publicPath": "/assets/audio/cases/sf_003/sf_003_c2_a3_tarama_kaydi.mp3",
               "mimeType": "audio/mpeg",
               "durationTargetSec": 58
             }
@@ -3602,7 +3602,7 @@
               "isRevealed": false,
               "pointCost": 60,
               "sesMetni": "[Hat A] Rüzgâr, tencere kapakları ve anlaşılmayan birkaç hece duyuluyor. [Hat B] Ahşapta tek bir darbe, ardından uzun bir parazit var. [Hat C — ağır erkek sesi] \"İki çuvalı yeniden saydım. Geçidin lambası açık kalsın; dış sürgünün anahtarı halkamda.\"",
-              "audioUrl": "/assets/cases/rc_002/audio/rc_002_c3_dahili_hat.mp3",
+              "audioUrl": "/assets/audio/cases/rc_002/rc_002_c3_dahili_hat.mp3",
               "audioAssetId": "rc_002_c3_dahili_hat",
               "audioFileName": "rc_002_c3_dahili_hat.mp3",
               "audioPuzzle": {
@@ -3710,7 +3710,7 @@
               "clueId": "c3",
               "status": "ready",
               "fileName": "rc_002_c3_dahili_hat.mp3",
-              "publicPath": "/assets/cases/rc_002/audio/rc_002_c3_dahili_hat.mp3",
+              "publicPath": "/assets/audio/cases/rc_002/rc_002_c3_dahili_hat.mp3",
               "mimeType": "audio/mpeg",
               "durationTargetSec": 34
             }
@@ -15597,6 +15597,538 @@
             "locationId": "l2"
           },
           "solutionNarrative": "Biletçi Nihat, son seferin ardından emanet holüne geçtiğinde Cemil’in aradığı kaydın onu eski etiket serisine götüreceğini biliyordu. Mavi etiketin arkasına sürülmüş siyanürlü tutkalla teması, olayı bir kavga gibi değil, yanlış teslimatın ortasında gelişen sessiz bir çöküş gibi gösterdi. Arda’nın posta vagonu zimmeti ve Feride’nin telefon kaydı, iki alternatif rotayı ayrı ayrı kapattı; Cemil’in avucunda kalan kırık M-17 parçası ise Nihat’ın kurduğu etiket zincirini görünür kılan son iz oldu."
+        },
+        {
+          "puzzleId": "pp_002",
+          "packId": "pack_pp",
+          "packSlug": "period",
+          "stars": "★★☆☆☆",
+          "gridSize": "3x3",
+          "timeLimit": 540,
+          "title": "Negatifte Kalan Saat",
+          "subtitle": "1956 · Şehir Fotoğrafhanesi · Çatı ışıkları",
+          "difficulty": "Polis Memuru",
+          "difficultyLevel": 2,
+          "specialMechanic": "sifreli_mesaj",
+          "story": "1956 yazının boğucu bir gecesinde, kentin arka sokaklarındaki sırları belgeleyen usta bir belgesel fotoğrafçısı, çoktan kapanmış, tozlu bir şehir fotoğrafhanesinde ölü bulundu. İlk bakışta sıradan bir iş kazası veya basit bir zehirlenme gibi görünen bu olay, karanlık odanın zayıf kırmızı ışığında kuruması için askıya asılmış son kareler incelendiğinde bambaşka bir boyuta taşındı. Fotoğrafçının ölmeden hemen önce çektiği kareler; baskı kimyasalının şişesinden dökülen damlaları ve yakalanmak istemeyen birinin gölgesini kayıt altına almıştı. Bu fragmanlar birleştirildiğinde, tek bir gerçeği işaret eden sessiz bir tanıklık doğuyordu.",
+          "atmosphere": "Kimyasal banyoların keskin kokusu, çatıdaki projektörlerden sonra bile odada kalmıştı. Negatifler ışığa tutulunca her şey ters görünüyordu.",
+          "suspects": [
+            {
+              "id": "s1",
+              "name": "Kamera Tamircisi Belgin",
+              "icon": "📷",
+              "description": "Eski körüklü makineleri söküp yeniden çalıştıran titiz tamirci.",
+              "detail": "Vidalara numara verir, parmaklarının ucunda gümüş nitrat lekeleri taşır."
+            },
+            {
+              "id": "s2",
+              "name": "Galeri Bekçisi Orhan",
+              "icon": "🛡️",
+              "description": "Bina kapandığında anahtarları devralan gece bekçisi.",
+              "detail": "Cam çerçeveleri kendi onarır; kırık parçaları küçük kutularda saklar ve gece anahtarlarını devralır."
+            },
+            {
+              "id": "s3",
+              "name": "Arşiv Fotoğrafçısı Leyla",
+              "icon": "🎞️",
+              "description": "Eski baskıları kataloglayan, kaybolan kareleri yeniden basan arşivci.",
+              "detail": "Her çekimin saatini ve banyosunu ayrı kurşun kalemle not eder; negatif dolaplarının düzenini ezbere bilir."
+            }
+          ],
+          "weapons": [
+            {
+              "id": "w1",
+              "name": "Çerçeve Kesici",
+              "icon": "🔪",
+              "description": "Sert karton ve cam kenarlarını kesmekte kullanılan ince uçlu bıçak.",
+              "detail": ""
+            },
+            {
+              "id": "w2",
+              "name": "Siyanürlü Sabitleyici Banyo",
+              "icon": "🧫",
+              "description": "Eski baskı banyolarında kullanılan, yanlış oranlandığında ölümcül sıvı; gümüş tuzu bırakır.",
+              "detail": ""
+            },
+            {
+              "id": "w3",
+              "name": "Açıkta Kalan Işık Kablosu",
+              "icon": "⚡",
+              "description": "Çatı projektörlerine enerji veren yalıtımı aşınmış kablo.",
+              "detail": ""
+            }
+          ],
+          "locations": [
+            {
+              "id": "l1",
+              "name": "Karanlık Oda",
+              "icon": "🚪",
+              "description": "Kırmızı lambalı, muslukları kimyasal tepsilere açılan ve ışık geçirmeyen yıkama hattı bulunan çalışma odası.",
+              "detail": ""
+            },
+            {
+              "id": "l2",
+              "name": "Çatı Terası",
+              "icon": "🏙️",
+              "description": "Dönemin büyük projektörlerinin yer aldığı rüzgârlı çatı.",
+              "detail": ""
+            },
+            {
+              "id": "l3",
+              "name": "Arşiv Koridoru",
+              "icon": "🗂️",
+              "description": "Negatif dolaplarının sıralandığı, dar ve penceresiz geçit.",
+              "detail": ""
+            }
+          ],
+          "clues": [
+            {
+              "id": "c1",
+              "title": "Banyo Kimyası",
+              "type": "adli",
+              "mechanicType": "text",
+              "text": "Adli kimya raporu, eski baskı banyolarında kullanılan ölümcül sıvıyı tespit etti. Gümüş tuzu oranı, kırmızı lambalı ve ışık geçirmeyen yıkama hattına özgü.",
+              "deductionHint": "Ölümcül sıvının çalışma düzeni, hangi kapalı işleyişe bağlanır?",
+              "isBonus": false,
+              "revealOrder": 1,
+              "isRevealed": true,
+              "pointCost": 0
+            },
+            {
+              "id": "c2",
+              "title": "Ters Baskı Karşılaştırması",
+              "type": "sifreli",
+              "mechanicType": "sifreli_mesaj",
+              "text": "Büyüteç kutusunda aynı saatin iki zıt baskısı bulundu.",
+              "deductionHint": "Yansımayı değil, iki baskıda aynı kalması gereken fiziksel ayrıntıyı izle.",
+              "isBonus": false,
+              "revealOrder": 2,
+              "isRevealed": false,
+              "pointCost": 60,
+              "sifre": {
+                "sifrelenmis": "KARE-12 / KARE-16 / KARE-21",
+                "sifreleTuru": "negatif karşılaştırması",
+                "cozumIpucu": "Işıkta görünen ayrıntıların ters baskıda da fiziksel olarak mümkün kalıp kalmadığını karşılaştır.",
+                "cozulmus": "TEMAS LEVHASI 956",
+                "aciklama": "Karşılaştırma tamamlandığında, ızgarada bir olanaksız bağlantıyı eleyebilecek netlik elde edilir.",
+                "presentation": {
+                  "style": "negative_contact_sheet",
+                  "title": "Fotoğraf Negatifi Karşılaştırması",
+                  "subtitle": "Pozitif ve negatif baskıdaki fiziksel ayrıntıları karşılaştır; yalnız tutarlı farkları seç.",
+                  "purposeHint": "Üç farkı doğru okuduğunda, ızgarada bir araç–mekân eşleşmesinin olamayacağını anlayacaksın.",
+                  "checks": [
+                    {
+                      "id": "n1",
+                      "label": "Kare 12",
+                      "positive": "Projektör ayağı sağda",
+                      "negative": "Ayağın gölgesi solda",
+                      "options": [
+                        {
+                          "id": "a",
+                          "label": "Gölge yönü güneşle uyumlu"
+                        },
+                        {
+                          "id": "b",
+                          "label": "Kablo bağlantısı görünmüyor"
+                        },
+                        {
+                          "id": "c",
+                          "label": "Saat ibresi ters"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "n2",
+                      "label": "Kare 16",
+                      "positive": "Islak saçak çizgisi",
+                      "negative": "Kuru iz",
+                      "options": [
+                        {
+                          "id": "a",
+                          "label": "Kablo bağlantısı görünmüyor"
+                        },
+                        {
+                          "id": "b",
+                          "label": "Rozet yansıması var"
+                        },
+                        {
+                          "id": "c",
+                          "label": "Saat ibresi ters"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "n3",
+                      "label": "Kare 21",
+                      "positive": "Projektör lambası açık",
+                      "negative": "Yalıtım gövdesi kapalı",
+                      "options": [
+                        {
+                          "id": "a",
+                          "label": "Saat ibresi ters"
+                        },
+                        {
+                          "id": "b",
+                          "label": "Kablo bağlantısı görünmüyor"
+                        },
+                        {
+                          "id": "c",
+                          "label": "Rozet yansıması var"
+                        }
+                      ]
+                    }
+                  ],
+                  "correctAssignments": [
+                    {
+                      "itemId": "n1",
+                      "answerId": "a"
+                    },
+                    {
+                      "itemId": "n2",
+                      "answerId": "a"
+                    },
+                    {
+                      "itemId": "n3",
+                      "answerId": "b"
+                    }
+                  ],
+                  "resultText": "Çatıdaki kablo hattı o saatlerde kapalıdır: Açıkta Kalan Işık Kablosu × Çatı Terası.",
+                  "interaction": {
+                    "mode": "multi_compare",
+                    "submitLabel": "Baskıları Karşılaştır",
+                    "successMessage": "Negatifler aynı fiziksel hikâyeyi anlattı.",
+                    "failureMessage": "Seçtiğin farklar tek bir sahnede birlikte mümkün görünmüyor."
+                  }
+                }
+              }
+            },
+            {
+              "id": "c3",
+              "title": "Çerçeve Kutusu",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Gece anahtarlarını devralan görevlinin dolabındaki zimmet kartı, sert karton ve cam kenarı kesmeye yarayan ince ucun o gece aynı kişiye teslim edildiğini gösteriyor.",
+              "deductionHint": "Tek teslim kartı, hangi kişi–araç bağını doğrular?",
+              "isBonus": false,
+              "revealOrder": 3,
+              "isRevealed": false,
+              "pointCost": 60
+            },
+            {
+              "id": "c4",
+              "title": "Koridor Turnikesi",
+              "type": "tanik",
+              "mechanicType": "text",
+              "text": "Negatif dolaplarının sıralandığı dar geçidin turnike şeridi, her çekimin saatini ayrı notlayan kişinin kartının olay saatinde okutulmadığını kayda geçirmiş.",
+              "deductionHint": "Bir geçiş kaydı, hangi koridor olasılığını kapatır?",
+              "isBonus": false,
+              "revealOrder": 4,
+              "isRevealed": false,
+              "pointCost": 60
+            },
+            {
+              "id": "b1",
+              "title": "Kırmızı Lamba",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Karanlık odanın kırmızı lambasında Leyla’nın ince eldiven lifleri tespit edildi.",
+              "deductionHint": "Bu bulgu hangi kişi–mekân bağını destekler?",
+              "isBonus": true,
+              "revealOrder": 5,
+              "isRevealed": false,
+              "pointCost": 60
+            },
+            {
+              "id": "b2",
+              "title": "Çatı Anahtarı",
+              "type": "tanik",
+              "mechanicType": "text",
+              "text": "Belgin’in, proje lambalarının anahtarını öğleden sonra bakım için aldığını bina görevlisi doğruladı.",
+              "deductionHint": "Bu ifade hangi kişi–araç bağını destekler?",
+              "isBonus": true,
+              "revealOrder": 6,
+              "isRevealed": false,
+              "pointCost": 60
+            }
+          ],
+          "assetManifest": [],
+          "solution": {
+            "suspectId": "s3",
+            "weaponId": "w2",
+            "locationId": "l1"
+          },
+          "solutionNarrative": "Arşiv Fotoğrafçısı Leyla, eski baskı banyosuna ölümcül oranı ekledi. Negatiflerdeki fiziksel tutarsızlık, çatıdaki kablo ihtimalini kapattı; turnike ve zimmet kayıtları kalan düzeni Leyla’nın karanlık odasına taşıdı."
+        },
+        {
+          "puzzleId": "pp_003",
+          "packId": "pack_pp",
+          "packSlug": "period",
+          "stars": "★★★☆☆",
+          "gridSize": "3x3",
+          "timeLimit": 480,
+          "title": "Son Yayının Mors Kıyısı",
+          "subtitle": "1967 · Kuzey Feneri · Kısa dalga istasyonu",
+          "difficulty": "Dedektif",
+          "difficultyLevel": 3,
+          "specialMechanic": "sifreli_mesaj",
+          "story": "1967 sonbaharının dondurucu ve fırtınalı bir gecesinde, ıssız Kuzey Feneri’ne sığınan kıyı ölçüm seferinin baş mühendisi, rüzgârın acımasızca dövdüğü kulede ölü bulundu. Başlangıçta trajik bir kaza sanılan bu olay, kısa dalga istasyonundaki telsiz cihazlarının incelenmesiyle ürkütücü bir cinayet soruşturmasına dönüştü. Maktulün ölmeden hemen önce merkeze geçmeye çalıştığı acil durum yayını kabloların koparılması yüzünden yarıda kesilmişti. Vericinin makarasında dört kesik mors kümesi kayıt altına alınmıştı; bu sinyaller, fenerci evinin gizlice tutulan bakım defterindeki notlarla örtüştüğünde, fırtınanın maskesi ardındaki sıra dışı niyeti gün yüzüne çıkardı.",
+          "atmosphere": "Dalgalar kayalara değil, verici kulesine çarpıyor gibiydi. Anten telleri rüzgârda tıpkı yarım kalmış bir cümle gibi titriyordu.",
+          "suspects": [
+            {
+              "id": "s1",
+              "name": "Deniz Haritacısı Haldun",
+              "icon": "🧭",
+              "description": "Seferin rotalarını ve gizli kıyı ölçümlerini hazırlayan haritacı.",
+              "detail": "Dalgaların yönünü ezbere bilir; notlarını deniz feneri kodlarıyla işaretler."
+            },
+            {
+              "id": "s2",
+              "name": "Fener Görevlisi Duru",
+              "icon": "🕯️",
+              "description": "Yalnız yaşayan, geceleri fenerin ateşini ve nöbet defterini tutan görevli.",
+              "detail": "Lambanın yağını kendi hazırlar; her vardiyada saati iki kez kurar."
+            },
+            {
+              "id": "s3",
+              "name": "Telsiz Teknikeri Rauf",
+              "icon": "📡",
+              "description": "Aküleri, bobinleri ve mors anahtarını onaran teknik görevli.",
+              "detail": "Arızaları renkli kablo bağlarıyla kodlar; her onarımdan sonra kısa bir test yayını yapar."
+            }
+          ],
+          "weapons": [
+            {
+              "id": "w1",
+              "name": "Fener Halatı Kancası",
+              "icon": "🪝",
+              "description": "Ağır cam hazneleri kaldırmak için kullanılan, bilemesi bakım defterine işlenen çelik uçlu kanca.",
+              "detail": ""
+            },
+            {
+              "id": "w2",
+              "name": "Yüksek Gerilim Bobini",
+              "icon": "🔋",
+              "description": "Verici odasındaki ses aralığını düzenleyen açık metal bobin.",
+              "detail": ""
+            },
+            {
+              "id": "w3",
+              "name": "Klorlu Sis Kartuşu",
+              "icon": "🌫️",
+              "description": "Fener camını temizlemekte kullanılan, kapalı yerde boğucu hâle gelen ve klorlu tuz tortusu bırakan kartuş.",
+              "detail": ""
+            }
+          ],
+          "locations": [
+            {
+              "id": "l1",
+              "name": "Fenerci Evi",
+              "icon": "🏠",
+              "description": "Kuleye bitişik, saat ve vardiya defterinin tutulduğu küçük taş ev; ocak filtresi bulunur.",
+              "detail": ""
+            },
+            {
+              "id": "l2",
+              "name": "Akü Odası",
+              "icon": "🔌",
+              "description": "Akülerin ve devre kesicilerin sıralandığı, merdiven yanında askı bulunan alçak tavanlı oda.",
+              "detail": ""
+            },
+            {
+              "id": "l3",
+              "name": "Yayın Kulesi",
+              "icon": "📻",
+              "description": "Kısa dalga cihazı ve anten makaralarının bulunduğu dar metal galeri.",
+              "detail": ""
+            }
+          ],
+          "clues": [
+            {
+              "id": "c1",
+              "title": "Kartuş Tortusu",
+              "type": "adli",
+              "mechanicType": "text",
+              "text": "Adli inceleme, ölümcül solunum hasarının klorlu tuz tortusu bırakan bir bakım kartuşundan geldiğini saptadı. Tortudaki kristal, ocak filtresinin tuttuğu tozla uyuşmuyor.",
+              "deductionHint": "Ölümcül kalıntı bir odanın filtresine uymuyorsa hangi bağlantı kapanır?",
+              "isBonus": false,
+              "revealOrder": 1,
+              "isRevealed": true,
+              "pointCost": 0
+            },
+            {
+              "id": "c2",
+              "title": "Akü Defteri",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Bakım defteri, cam hazneleri kaldıran çelik uçlu kancanın o gece merdiven yanındaki askıda olduğunu gösteriyor.",
+              "deductionHint": "Bakım defteri aynı aracı tek bir odaya yerleştiriyorsa hangi ilişki kesinleşir?",
+              "isBonus": false,
+              "revealOrder": 2,
+              "isRevealed": false,
+              "pointCost": 60
+            },
+            {
+              "id": "c3",
+              "title": "Kısa Dalga Kesiti",
+              "type": "sifreli",
+              "mechanicType": "sifreli_mesaj",
+              "text": "Vericinin makarasında dört kesik mors kümesi kaydedildi.",
+              "deductionHint": "Sinyali, gözün alıştığı kelimeye göre değil; tabloda sabit kalan kısa ve uzun vuruşlara göre çöz.",
+              "isBonus": false,
+              "revealOrder": 3,
+              "isRevealed": false,
+              "pointCost": 60,
+              "sifre": {
+                "sifrelenmis": "·−· / ·− / ··− / ···−",
+                "sifreleTuru": "mors kesiti",
+                "cozumIpucu": "Kısa vuruşların sayısı değil, her işaretin sırası aynı anahtarda tekrar eder.",
+                "cozulmus": "TEYİT KODU 1967",
+                "aciklama": "Çözülen kesit, ızgarada bir araç bağlantısının dışarıda kalmasını sağlayacak işlevsel bir halka verir.",
+                "presentation": {
+                  "style": "morse_transceiver",
+                  "title": "Mors / Telsiz Kesiti",
+                  "subtitle": "Mors tablosunu kullanarak dört kesitin harflerini çöz; kayıt anahtarını doğrula.",
+                  "purposeHint": "Kesiti doğru çözmek, ızgarada hangi kişi–araç eşleşmesinin geçersiz olduğunu belirleyecek.",
+                  "chart": [
+                    {
+                      "char": "R",
+                      "code": "·−·"
+                    },
+                    {
+                      "char": "A",
+                      "code": "·−"
+                    },
+                    {
+                      "char": "U",
+                      "code": "··−"
+                    },
+                    {
+                      "char": "F",
+                      "code": "···−"
+                    },
+                    {
+                      "char": "D",
+                      "code": "−··"
+                    },
+                    {
+                      "char": "K",
+                      "code": "−·−"
+                    }
+                  ],
+                  "signals": [
+                    {
+                      "id": "m1",
+                      "label": "Kesit I",
+                      "code": "·−·",
+                      "options": [
+                        "R",
+                        "A",
+                        "D"
+                      ]
+                    },
+                    {
+                      "id": "m2",
+                      "label": "Kesit II",
+                      "code": "·−",
+                      "options": [
+                        "A",
+                        "U",
+                        "K"
+                      ]
+                    },
+                    {
+                      "id": "m3",
+                      "label": "Kesit III",
+                      "code": "··−",
+                      "options": [
+                        "U",
+                        "F",
+                        "D"
+                      ]
+                    },
+                    {
+                      "id": "m4",
+                      "label": "Kesit IV",
+                      "code": "···−",
+                      "options": [
+                        "F",
+                        "R",
+                        "K"
+                      ]
+                    }
+                  ],
+                  "correctAssignments": [
+                    {
+                      "itemId": "m1",
+                      "answerId": "R"
+                    },
+                    {
+                      "itemId": "m2",
+                      "answerId": "A"
+                    },
+                    {
+                      "itemId": "m3",
+                      "answerId": "U"
+                    },
+                    {
+                      "itemId": "m4",
+                      "answerId": "F"
+                    }
+                  ],
+                  "resultText": "Test yayını, sis kartuşunun teknikerin bakım zincirinde olmadığını gösterir: Telsiz Teknikeri Rauf × Klorlu Sis Kartuşu.",
+                  "interaction": {
+                    "mode": "morse_decode",
+                    "submitLabel": "Kesiti Doğrula",
+                    "successMessage": "Kesit, bakım anahtarıyla aynı kelimeyi verdi.",
+                    "failureMessage": "Harfler sabit vuruş dizisine uymuyor."
+                  }
+                }
+              }
+            },
+            {
+              "id": "c4",
+              "title": "Kurulu Saat",
+              "type": "tanik",
+              "mechanicType": "text",
+              "text": "Kuleye bitişik taş evdeki saat, lambanın yağını kendi hazırlayan görevlinin her vardiyada yaptığı iki kurma işlemini gösteren mekanik kaydı hâlâ taşıyor.",
+              "deductionHint": "Kendi kendine çalışan bir kayıt, hangi kişi–mekân bağını doğrular?",
+              "isBonus": false,
+              "revealOrder": 4,
+              "isRevealed": false,
+              "pointCost": 60
+            },
+            {
+              "id": "b1",
+              "title": "Islak Çizim",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Haldun’un deniz çiziminde kule platformunun kenarından alınmış tuzlu metal tozu bulundu.",
+              "deductionHint": "Bu toz hangi kişi–mekân bağını destekler?",
+              "isBonus": true,
+              "revealOrder": 5,
+              "isRevealed": false,
+              "pointCost": 60
+            },
+            {
+              "id": "b2",
+              "title": "Kablo Bağları",
+              "type": "tanik",
+              "mechanicType": "text",
+              "text": "Teknik görevlinin bakım kartında, yedek kancanın çelik ucunu kendi vardiyasında bilediğine dair imza vardı.",
+              "deductionHint": "Bu ayrıntı hangi kişi–araç bağını destekler?",
+              "isBonus": true,
+              "revealOrder": 6,
+              "isRevealed": false,
+              "pointCost": 60
+            }
+          ],
+          "assetManifest": [],
+          "solution": {
+            "suspectId": "s1",
+            "weaponId": "w3",
+            "locationId": "l3"
+          },
+          "solutionNarrative": "Deniz Haritacısı Haldun, kısa dalga yayın kulesinde klorlu sis kartuşunu kapalı alanda kullandı. Mors kesiti teknikerin kartuşla bağını dışladı; saat ve bakım kayıtları diğer eşleşmeleri sabitledi."
         }
       ]
     }
