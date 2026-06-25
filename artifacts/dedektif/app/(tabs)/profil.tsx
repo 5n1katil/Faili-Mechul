@@ -665,7 +665,7 @@ const styles = StyleSheet.create({
     flexShrink: 0,
   },
   settingsInfo: { flex: 1 },
-  settingsTitle: { fontSize: 15, fontWeight: "700" },
+  settingsTitle: { fontSize: 15, fontFamily: "PlayfairDisplay", fontWeight: "600" },
   settingsSubtitle: { fontSize: 12, marginTop: 2, lineHeight: 17 },
 
   /* ── Premium kart ── */

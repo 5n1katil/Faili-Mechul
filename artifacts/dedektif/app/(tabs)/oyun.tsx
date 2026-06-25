@@ -1518,8 +1518,9 @@ const accordionStyles = StyleSheet.create({
   },
   title: {
     fontSize: 16,
-    fontWeight: "800",
-    letterSpacing: 0.3,
+    fontFamily: "PlayfairDisplay",
+    fontWeight: "600",
+    letterSpacing: 0.2,
   },
   headerCompact: {
     paddingHorizontal: 14,
@@ -1529,8 +1530,9 @@ const accordionStyles = StyleSheet.create({
   },
   titleCompact: {
     fontSize: 14,
-    fontWeight: "700",
-    letterSpacing: 0.2,
+    fontFamily: "PlayfairDisplay",
+    fontWeight: "400",
+    letterSpacing: 0.1,
   },
   countBadge: {
     borderRadius: 10,

@@ -778,8 +778,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   sectionTitle: {
-    fontSize: 17,
-    fontWeight: "800",
+    fontSize: 16,
+    fontFamily: "PlayfairDisplay",
+    fontWeight: "600",
     letterSpacing: 0.2,
   },
   sectionSubtitle: {
