@@ -583,8 +583,9 @@ const styles = StyleSheet.create({
   },
   sectionTitleText: {
     fontSize: 13,
-    fontWeight: "800",
-    letterSpacing: 1,
+    fontFamily: "PlayfairDisplay",
+    fontWeight: "600",
+    letterSpacing: 0.5,
   },
   sectionTitleLine: {
     flex: 1,
@@ -602,8 +603,9 @@ const styles = StyleSheet.create({
   },
   statGroupLabel: {
     fontSize: 10,
-    fontWeight: "800",
-    letterSpacing: 1,
+    fontFamily: "PlayfairDisplay",
+    fontWeight: "600",
+    letterSpacing: 0.8,
     textTransform: "uppercase",
   },
   statGroupRow: {
@@ -619,7 +621,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 3,
   },
-  statGroupValue: { fontSize: 24, fontWeight: "900", letterSpacing: 0.2 },
+  statGroupValue: { fontSize: 24, fontFamily: "PlayfairDisplay", fontWeight: "600", letterSpacing: 0.2 },
   statGroupItemLabel: { fontSize: 11, fontWeight: "600", textAlign: "center" },
 
   /* ── Badges ── */
@@ -690,7 +692,7 @@ const styles = StyleSheet.create({
   },
   premiumStat: { flex: 1, alignItems: "center", gap: 2 },
   premiumStatDivider: { width: 1, marginVertical: 2 },
-  premiumStatValue: { fontSize: 18, fontWeight: "800" },
+  premiumStatValue: { fontSize: 18, fontFamily: "PlayfairDisplay", fontWeight: "600" },
   premiumStatLabel: { fontSize: 10, fontWeight: "600", textAlign: "center" },
 
   /* ── Son oyunlar ── */

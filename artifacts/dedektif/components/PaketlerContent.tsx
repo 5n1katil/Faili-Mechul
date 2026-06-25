@@ -329,8 +329,9 @@ const styles = StyleSheet.create({
   },
   screenTitle: {
     fontSize: 26,
-    fontWeight: "800",
-    letterSpacing: 0.5,
+    fontFamily: "PlayfairDisplay",
+    fontWeight: "600",
+    letterSpacing: 0.3,
     marginBottom: 2,
   },
   screenSubtitle: {
@@ -373,8 +374,9 @@ const styles = StyleSheet.create({
   },
   packTitle: {
     fontSize: 17,
-    fontWeight: "700",
-    letterSpacing: 0.3,
+    fontFamily: "PlayfairDisplay",
+    fontWeight: "600",
+    letterSpacing: 0.2,
   },
   packSubtitle: {
     fontSize: 12,
