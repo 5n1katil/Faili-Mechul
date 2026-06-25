@@ -114,11 +114,16 @@ export default function PaketlerContent({ embedded = false }: { embedded?: boole
       scrollEventThrottle={16}
       onScroll={embedded ? (e) => { _embeddedScrollY = e.nativeEvent.contentOffset.y; } : undefined}
     >
-      <Text style={[styles.screenTitle, { color: colors.primary }]}>
-        Premium Paketler
-      </Text>
+      {/* Premium Paketler header — matches Premium Vakalar style */}
+      <View style={styles.premHeader}>
+        <MaterialIcons name="workspace-premium" size={22} color="#D4A843" />
+        <Text style={styles.premHeaderTitle}>Premium Paketler</Text>
+        <View style={styles.premHeaderBadge}>
+          <Text style={styles.premHeaderBadgeText}>{PURCHASABLE_PACKS.length}</Text>
+        </View>
+      </View>
       <Text style={[styles.screenSubtitle, { color: colors.mutedForeground }]}>
-        {PURCHASABLE_PACKS.length} farklı tema, {totalPuzzles} özgün vaka
+        {PURCHASABLE_PACKS.length} farklı tema · {totalPuzzles} özgün vaka
       </Text>
 
       <Pressable
@@ -326,6 +331,34 @@ const styles = StyleSheet.create({
   content: {
     paddingHorizontal: 16,
     gap: 12,
+  },
+  premHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+    marginBottom: 4,
+  },
+  premHeaderTitle: {
+    fontSize: 20,
+    fontFamily: "PlayfairDisplay",
+    fontWeight: "700",
+    letterSpacing: 0.4,
+    color: "#D4A843",
+    flexShrink: 1,
+  },
+  premHeaderBadge: {
+    backgroundColor: "#D4A84330",
+    borderRadius: 10,
+    paddingHorizontal: 10,
+    paddingVertical: 3,
+    borderWidth: 1,
+    borderColor: "#D4A84360",
+    alignItems: "center",
+  },
+  premHeaderBadgeText: {
+    fontSize: 13,
+    fontWeight: "800",
+    color: "#D4A843",
   },
   screenTitle: {
     fontSize: 26,
