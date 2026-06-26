@@ -659,6 +659,8 @@ function PuzzleCard({
         <Text
           style={[listStyles.puzzleTitle, { color: "#D4A843" }]}
           numberOfLines={2}
+          adjustsFontSizeToFit
+          minimumFontScale={0.65}
         >
           {puzzle.title}
         </Text>
@@ -1615,7 +1617,8 @@ export default function VakalarScreen() {
                 <Text
                   style={[gameStyles.puzzleTitle, { color: colors.foreground }]}
                   numberOfLines={2}
-                  ellipsizeMode="tail"
+                  adjustsFontSizeToFit
+                  minimumFontScale={0.6}
                 >
                   {puzzle.title}
                 </Text>

@@ -254,7 +254,7 @@ export default function HomeScreen() {
                         <Text style={[styles.solveRankText, { color: colors.primary }]}>{i + 1}</Text>
                       </View>
                       <View style={{ flex: 1, gap: 1 }}>
-                        <Text style={[styles.solveTitle, { color: colors.foreground }]} numberOfLines={1}>
+                        <Text style={[styles.solveTitle, { color: colors.foreground }]} numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.7}>
                           {title}
                         </Text>
                         <Text style={[styles.solveMeta, { color: colors.mutedForeground }]}>
@@ -496,7 +496,12 @@ export default function HomeScreen() {
                 </View>
 
                 {/* Puzzle title */}
-                <Text style={styles.dailyTitle} numberOfLines={2}>
+                <Text
+                  style={styles.dailyTitle}
+                  numberOfLines={2}
+                  adjustsFontSizeToFit
+                  minimumFontScale={0.65}
+                >
                   {dailyPuzzle.title}
                 </Text>
 
