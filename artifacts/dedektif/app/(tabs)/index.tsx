@@ -418,21 +418,23 @@ export default function HomeScreen() {
       </Modal>
 
       <View style={[styles.container, { backgroundColor: colors.background, paddingTop: Platform.OS === "web" ? 67 : insets.top }]}>
-        {/* Header — unchanged */}
-        <View style={[styles.headerRow, { paddingHorizontal: 16, paddingBottom: 8 }]}>
+        {/* Header */}
+        <View style={[styles.headerRow, { paddingHorizontal: 16, paddingBottom: 10 }]}>
           <View style={styles.headerBrand}>
-            <Image
-              source={require("@/assets/images/logo.png")}
-              style={styles.headerLogo}
-              resizeMode="contain"
-            />
+            <View style={styles.headerLogoWrap}>
+              <Image
+                source={require("@/assets/images/logo.png")}
+                style={styles.headerLogo}
+                resizeMode="cover"
+              />
+              <View style={styles.headerLogoGlow} />
+            </View>
             <View>
-              <Text style={[styles.greetingSmall, { color: "#FFFFFF" }]}>
+              <Text style={[styles.greetingSmall, { color: "rgba(255,255,255,0.55)" }]}>
                 Merhaba, {profile.name}
               </Text>
               <Text style={[styles.appTitle, { color: colors.primary }]}>FAİLİ MEÇHUL</Text>
-              <View style={[styles.titleUnderline, { backgroundColor: colors.primary }]} />
-              <Text style={[styles.appSubtitle, { color: "rgba(255,255,255,0.75)" }]}>
+              <Text style={[styles.appSubtitle, { color: "rgba(212,168,67,0.6)" }]}>
                 Dedektif Bulmaca Oyunu
               </Text>
             </View>
@@ -440,19 +442,19 @@ export default function HomeScreen() {
           <View style={styles.headerRight}>
             <Pressable
               onPress={() => { unlockMusicFromGesture(); setShowHowToPlay(true); }}
-              style={[styles.iconBtn, { backgroundColor: `${colors.primary}15`, borderColor: `${colors.primary}35` }]}
+              style={[styles.iconBtn, { backgroundColor: `${colors.primary}12`, borderColor: `${colors.primary}30` }]}
               hitSlop={8}
               accessibilityLabel="Nasıl Oynanır"
             >
-              <MaterialIcons name="help-outline" size={22} color={colors.primary} />
+              <MaterialIcons name="help-outline" size={20} color={colors.primary} />
             </Pressable>
             <Pressable
               onPress={handleSettingsPress}
-              style={[styles.iconBtn, { backgroundColor: colors.card, borderColor: colors.border }]}
+              style={[styles.iconBtn, { backgroundColor: "#FFFFFF08", borderColor: "#FFFFFF14" }]}
               hitSlop={8}
               accessibilityLabel="Ayarlar"
             >
-              <MaterialIcons name="settings" size={22} color={colors.mutedForeground} />
+              <MaterialIcons name="settings" size={20} color="rgba(255,255,255,0.45)" />
             </Pressable>
           </View>
         </View>
@@ -472,69 +474,58 @@ export default function HomeScreen() {
               onPress={handleDailyPlay}
               style={[
                 styles.dailyCard,
-                {
-                  backgroundColor: colors.card,
-                  borderColor: wonToday ? `${colors.primary}70` : colors.primary,
-                },
-                wonToday && { backgroundColor: `${colors.primary}06` },
+                { backgroundColor: wonToday ? "#16200E" : "#111520", borderColor: wonToday ? "#D4A84355" : "#D4A84380" },
               ]}
             >
-              {/* Gold side bar */}
-              <View style={[styles.dailyGoldBar, { backgroundColor: colors.primary }]} />
+              {/* Subtle top gradient line */}
+              <View style={[styles.dailyTopLine, { backgroundColor: wonToday ? "#D4A84340" : "#D4A843" }]} />
 
               <View style={styles.dailyCardInner}>
                 {/* Top row: badge + done */}
                 <View style={styles.dailyTop}>
-                  <View style={[styles.dailyBadge, { backgroundColor: colors.primary }]}>
-                    <MaterialIcons name="today" size={11} color={colors.primaryForeground} />
-                    <Text style={[styles.dailyBadgeText, { color: colors.primaryForeground }]}>
-                      GÜNÜN BULMACASI
-                    </Text>
+                  <View style={styles.dailyBadge}>
+                    <MaterialIcons name="brightness-5" size={10} color="#0F1117" />
+                    <Text style={styles.dailyBadgeText}>GÜNÜN BULMACASI</Text>
                   </View>
                   {wonToday && (
-                    <View style={[styles.doneBadge, { backgroundColor: `${colors.primary}20`, borderColor: `${colors.primary}55`, borderWidth: 1 }]}>
-                      <MaterialIcons name="check-circle" size={13} color={colors.primary} />
-                      <Text style={[styles.doneText, { color: colors.primary }]}>Tamamlandı</Text>
+                    <View style={styles.doneBadge}>
+                      <MaterialIcons name="check-circle" size={12} color="#4ADE80" />
+                      <Text style={styles.doneText}>Çözüldü</Text>
                     </View>
                   )}
                 </View>
 
-                {/* Puzzle title — larger, no story text */}
-                <Text style={[styles.dailyTitle, { color: colors.foreground }]}>
+                {/* Puzzle title */}
+                <Text style={styles.dailyTitle} numberOfLines={2}>
                   {dailyPuzzle.title}
                 </Text>
 
                 {/* Countdown + difficulty */}
-                <View style={[styles.countdownRow, { borderTopColor: colors.border }]}>
+                <View style={[styles.countdownRow, { borderTopColor: "#D4A84322" }]}>
                   <View style={styles.countdownLeft}>
-                    <MaterialIcons name="schedule" size={13} color={colors.mutedForeground} />
-                    <Text style={[styles.countdownLabel, { color: colors.mutedForeground }]}>
-                      Yeni bulmacaya:
-                    </Text>
-                    <Text style={[styles.countdownValue, { color: colors.primary }]}>
-                      {countdown}
-                    </Text>
+                    <MaterialIcons name="schedule" size={12} color="rgba(212,168,67,0.5)" />
+                    <Text style={styles.countdownLabel}>Yeni bulmacaya:</Text>
+                    <Text style={styles.countdownValue}>{countdown}</Text>
                   </View>
-                  <View style={[styles.diffBadge, { backgroundColor: `${diffColor}20`, borderColor: `${diffColor}55` }]}>
+                  <View style={[styles.diffBadge, { backgroundColor: `${diffColor}18`, borderColor: `${diffColor}50` }]}>
                     <Text style={[styles.diffText, { color: diffColor }]}>
                       {getDifficultyLabel(dailyPuzzle.difficulty as Difficulty)}
                     </Text>
                   </View>
                 </View>
 
-                {/* Prominent CTA button */}
-                <View style={[styles.playCta, { backgroundColor: wonToday ? `${colors.primary}22` : colors.primary }]}>
+                {/* CTA button */}
+                <View style={[styles.playCta, wonToday ? styles.playCtaSolved : styles.playCtaActive]}>
                   <MaterialIcons
                     name={wonToday ? "replay" : "play-arrow"}
-                    size={22}
-                    color={wonToday ? colors.primary : colors.primaryForeground}
+                    size={20}
+                    color={wonToday ? "#D4A843" : "#0F1117"}
                   />
-                  <Text style={[styles.playCtaText, { color: wonToday ? colors.primary : colors.primaryForeground }]}>
+                  <Text style={[styles.playCtaText, { color: wonToday ? "#D4A843" : "#0F1117" }]}>
                     {wonToday ? "Tekrar Oyna" : "Oyna"}
                   </Text>
                 </View>
               </View>
-
             </Pressable>
           </Animated.View>
 
@@ -546,46 +537,35 @@ export default function HomeScreen() {
               const totalPoints = DAILY_MISSIONS
                 .filter((m) => !isAwarded(m.id))
                 .reduce((sum, m) => sum + m.reward.points, 0);
+              const allDone = incompleteDailyCount === 0;
 
               return (
                 <Pressable
                   onPress={() => router.push("/(tabs)/gorevler")}
-                  style={[styles.missionsCard, { backgroundColor: colors.card, borderColor: colors.border }]}
+                  style={[styles.missionsCard, { borderColor: allDone ? "#4ADE8030" : "#60A5FA22" }]}
                 >
-                  <View style={[styles.missionsAccent, { backgroundColor: "#60A5FA" }]} />
                   <View style={styles.missionsInner}>
-                    <View style={styles.missionsLeft}>
-                      <View style={[styles.missionsIconWrap, { backgroundColor: "#60A5FA1A" }]}>
-                        <MaterialIcons name="assignment" size={22} color="#60A5FA" />
-                      </View>
-                      <View>
-                        <Text style={[styles.missionsTitle, { color: colors.foreground }]}>
-                          Günlük Görevler
-                        </Text>
-                        <Text style={[styles.missionsSubtitle, { color: colors.mutedForeground }]}>
-                          {incompleteDailyCount > 0
-                            ? `${incompleteDailyCount} görev bekliyor · +${totalPoints} puan`
-                            : "Tüm görevler tamamlandı!"}
-                        </Text>
-                      </View>
+                    <View style={[styles.missionsIconWrap, { backgroundColor: allDone ? "#4ADE8015" : "#60A5FA12" }]}>
+                      <MaterialIcons name="assignment" size={20} color={allDone ? "#4ADE80" : "#60A5FA"} />
+                    </View>
+                    <View style={{ flex: 1 }}>
+                      <Text style={styles.missionsTitle}>Günlük Görevler</Text>
+                      <Text style={[styles.missionsSubtitle, { color: allDone ? "#4ADE8099" : "rgba(255,255,255,0.35)" }]}>
+                        {allDone ? "Tüm görevler tamamlandı!" : `${incompleteDailyCount} görev · +${totalPoints} puan`}
+                      </Text>
                     </View>
                     <View style={styles.missionsRight}>
                       <View style={styles.missionsDots}>
-                        {DAILY_MISSIONS.map((m, i) => {
+                        {DAILY_MISSIONS.map((m) => {
                           const prog = getMissionProgress(m.id);
                           const done = isAwarded(m.id) || prog.completed;
                           return (
-                            <View
-                              key={m.id}
-                              style={[styles.missionDot, { backgroundColor: done ? "#4CAF50" : colors.border }]}
-                            />
+                            <View key={m.id} style={[styles.missionDot, { backgroundColor: done ? "#4ADE80" : "#FFFFFF18" }]} />
                           );
                         })}
                       </View>
-                      <Text style={[styles.missionsDotLabel, { color: colors.mutedForeground }]}>
-                        {completedToday}/{DAILY_MISSIONS.length}
-                      </Text>
-                      <MaterialIcons name="chevron-right" size={18} color={colors.mutedForeground} />
+                      <Text style={styles.missionsDotLabel}>{completedToday}/{DAILY_MISSIONS.length}</Text>
+                      <MaterialIcons name="chevron-right" size={16} color="rgba(255,255,255,0.25)" />
                     </View>
                   </View>
                 </Pressable>
@@ -633,16 +613,16 @@ export default function HomeScreen() {
           <Animated.View entering={FadeInDown.delay(270).springify()}>
             <Pressable
               onPress={() => router.push("/liderlik")}
-              style={[styles.rankCard, { backgroundColor: colors.card, borderColor: colors.border }]}
+              style={styles.rankCard}
             >
-              <View style={[styles.rankCardAccent, { backgroundColor: "#D4A843" }]} />
+              <View style={styles.rankCardAccent} />
               <View style={styles.rankCardInner}>
                 <View style={styles.rankTopRow}>
-                  <View style={[styles.rankBadge, { backgroundColor: "#D4A84320", borderColor: "#D4A84355" }]}>
-                    <MaterialIcons name="emoji-events" size={14} color="#D4A843" />
-                    <Text style={[styles.rankBadgeText, { color: "#D4A843" }]}>Liderlik Sıralaması</Text>
+                  <View style={styles.rankBadge}>
+                    <MaterialIcons name="emoji-events" size={13} color="#D4A843" />
+                    <Text style={styles.rankBadgeText}>Liderlik Sıralaması</Text>
                   </View>
-                  <Text style={[styles.rankPosition, { color: "#D4A843" }]}>#{myRank}</Text>
+                  <Text style={styles.rankPosition}>#{myRank}</Text>
                 </View>
 
                 <View style={styles.rankUserRow}>
@@ -894,19 +874,23 @@ const styles = StyleSheet.create({
   headerRow: {
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "flex-end",
+    alignItems: "center",
   },
-  headerBrand: { flexDirection: "row", alignItems: "center", gap: 10 },
-  headerLogo: { width: 52, height: 52, borderRadius: 26 },
-  greetingSmall: { fontSize: 13, marginBottom: 2 },
-  appTitle: { fontSize: 23, fontFamily: "PlayfairDisplay", fontWeight: "600", letterSpacing: 0.5 },
-  titleUnderline: { height: 2, width: 40, borderRadius: 1, marginTop: 3, marginBottom: 3 },
-  appSubtitle: { fontSize: 12 },
+  headerBrand: { flexDirection: "row", alignItems: "center", gap: 11 },
+  headerLogoWrap: { position: "relative" },
+  headerLogo: { width: 50, height: 50, borderRadius: 25 },
+  headerLogoGlow: {
+    position: "absolute", inset: -2, borderRadius: 27,
+    borderWidth: 1.5, borderColor: "#D4A84355",
+  },
+  greetingSmall: { fontSize: 11, letterSpacing: 0.3, marginBottom: 1 },
+  appTitle: { fontSize: 22, fontFamily: "PlayfairDisplay", fontWeight: "700", letterSpacing: 0.6, color: "#D4A843" },
+  appSubtitle: { fontSize: 11, letterSpacing: 0.5, marginTop: 1 },
   headerRight: { flexDirection: "row", alignItems: "center", gap: 8 },
   iconBtn: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+    width: 38,
+    height: 38,
+    borderRadius: 19,
     borderWidth: 1,
     alignItems: "center",
     justifyContent: "center",
@@ -914,147 +898,168 @@ const styles = StyleSheet.create({
 
   /* ─── Daily Card ─── */
   dailyCard: {
-    borderRadius: 18,
-    borderWidth: 2,
+    borderRadius: 20,
+    borderWidth: 1.5,
     overflow: "hidden",
-    flexDirection: "row",
   },
-  dailyGoldBar: { width: 5 },
-  dailyCardInner: { flex: 1, padding: 16, gap: 12 },
-  dailyTop: { flexDirection: "row", alignItems: "center", gap: 10 },
+  dailyTopLine: { height: 2 },
+  dailyCardInner: { padding: 16, gap: 13 },
+  dailyTop: { flexDirection: "row", alignItems: "center", gap: 8 },
   dailyBadge: {
     flexDirection: "row",
     alignItems: "center",
-    borderRadius: 6,
+    borderRadius: 5,
     paddingHorizontal: 8,
-    paddingVertical: 4,
+    paddingVertical: 3,
     gap: 4,
+    backgroundColor: "#D4A843",
   },
-  dailyBadgeText: { fontSize: 11, fontWeight: "700", letterSpacing: 1 },
+  dailyBadgeText: { fontSize: 10, fontWeight: "800", letterSpacing: 1.2, color: "#0F1117" },
   doneBadge: {
     flexDirection: "row",
     alignItems: "center",
-    borderRadius: 6,
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    gap: 4,
+    borderRadius: 5,
+    paddingHorizontal: 7,
+    paddingVertical: 3,
+    gap: 3,
+    backgroundColor: "#4ADE8015",
+    borderWidth: 1,
+    borderColor: "#4ADE8035",
   },
-  doneText: { fontSize: 12, fontWeight: "600" },
-  dailyTitle: { fontSize: 18, fontFamily: "PlayfairDisplay", fontWeight: "600", lineHeight: 24, letterSpacing: 0.2 },
+  doneText: { fontSize: 11, fontWeight: "600", color: "#4ADE80" },
+  dailyTitle: {
+    fontSize: 20,
+    fontFamily: "PlayfairDisplay",
+    fontWeight: "700",
+    lineHeight: 26,
+    letterSpacing: 0.1,
+    color: "#FFFFFF",
+  },
   countdownRow: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     borderTopWidth: 1,
-    paddingTop: 10,
+    paddingTop: 11,
   },
   countdownLeft: { flexDirection: "row", alignItems: "center", gap: 5 },
-  countdownLabel: { fontSize: 12, fontWeight: "500" },
-  countdownValue: { fontSize: 14, fontWeight: "700", fontVariant: ["tabular-nums"] },
-  diffBadge: { borderRadius: 6, paddingHorizontal: 8, paddingVertical: 3, borderWidth: 1 },
-  diffText: { fontSize: 12, fontWeight: "700" },
+  countdownLabel: { fontSize: 11, color: "rgba(212,168,67,0.5)" },
+  countdownValue: { fontSize: 13, fontWeight: "700", color: "#D4A843", fontVariant: ["tabular-nums"] },
+  diffBadge: { borderRadius: 5, paddingHorizontal: 8, paddingVertical: 3, borderWidth: 1 },
+  diffText: { fontSize: 11, fontWeight: "700" },
   playCta: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    gap: 8,
+    gap: 7,
     paddingVertical: 13,
-    borderRadius: 12,
+    borderRadius: 13,
   },
-  playCtaText: { fontSize: 16, fontWeight: "800", letterSpacing: 0.4 },
+  playCtaActive: { backgroundColor: "#D4A843" },
+  playCtaSolved: { backgroundColor: "#D4A84318", borderWidth: 1, borderColor: "#D4A84340" },
+  playCtaText: { fontSize: 15, fontWeight: "800", letterSpacing: 0.5 },
+
   /* ─── Missions ─── */
   missionsCard: {
     borderRadius: 14,
     borderWidth: 1,
-    overflow: "hidden",
-    flexDirection: "row",
+    backgroundColor: "#1A1F2E",
   },
-  missionsAccent: { width: 4, alignSelf: "stretch" },
   missionsInner: {
-    flex: 1,
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between",
     padding: 13,
-    gap: 10,
+    gap: 12,
   },
-  missionsLeft: { flexDirection: "row", alignItems: "center", gap: 10, flex: 1 },
   missionsIconWrap: {
-    width: 40,
-    height: 40,
+    width: 38,
+    height: 38,
     borderRadius: 10,
     alignItems: "center",
     justifyContent: "center",
     flexShrink: 0,
   },
-  missionsTitle: { fontSize: 14, fontFamily: "PlayfairDisplay", fontWeight: "600", letterSpacing: 0.2 },
-  missionsSubtitle: { fontSize: 12, marginTop: 2 },
+  missionsTitle: { fontSize: 14, fontFamily: "PlayfairDisplay", fontWeight: "600", color: "#FFFFFF", letterSpacing: 0.1 },
+  missionsSubtitle: { fontSize: 11, marginTop: 2 },
   missionsRight: { flexDirection: "row", alignItems: "center", gap: 6, flexShrink: 0 },
   missionsDots: { flexDirection: "row", gap: 4, alignItems: "center" },
-  missionDot: { width: 8, height: 8, borderRadius: 4 },
-  missionsDotLabel: { fontSize: 12, fontVariant: ["tabular-nums"] },
+  missionDot: { width: 7, height: 7, borderRadius: 3.5 },
+  missionsDotLabel: { fontSize: 11, color: "rgba(255,255,255,0.35)", fontVariant: ["tabular-nums"] },
 
   /* ─── Stats ─── */
   statsRow: { flexDirection: "row", gap: 10 },
   statCard: {
     flex: 1,
-    borderRadius: 14,
+    borderRadius: 16,
     borderWidth: 1,
     paddingVertical: 14,
     paddingHorizontal: 8,
     alignItems: "center",
-    gap: 3,
+    gap: 4,
     overflow: "hidden",
+    backgroundColor: "#1A1F2E",
   },
-  statAccent: { position: "absolute", top: 0, left: 0, right: 0, height: 3 },
-  statValue: { fontSize: 24, fontFamily: "PlayfairDisplay", fontWeight: "800", letterSpacing: -0.5 },
-  statLabel: { fontSize: 12, fontFamily: "PlayfairDisplay", fontWeight: "500" },
+  statAccent: { position: "absolute", top: 0, left: 0, right: 0, height: 2 },
+  statValue: { fontSize: 22, fontFamily: "PlayfairDisplay", fontWeight: "800", letterSpacing: -0.5 },
+  statLabel: { fontSize: 11, fontFamily: "PlayfairDisplay", fontWeight: "500", color: "rgba(255,255,255,0.6)" },
 
   /* ─── Rank Card ─── */
-  rankCard: { borderRadius: 16, borderWidth: 1, overflow: "hidden" },
-  rankCardAccent: { height: 3 },
-  rankCardInner: { flexDirection: "column", padding: 15, gap: 11 },
+  rankCard: {
+    borderRadius: 18,
+    borderWidth: 1,
+    borderColor: "#D4A84330",
+    backgroundColor: "#1A1F2E",
+    overflow: "hidden",
+  },
+  rankCardAccent: { height: 2, backgroundColor: "#D4A843" },
+  rankCardInner: { flexDirection: "column", padding: 15, gap: 12 },
   rankTopRow: { flexDirection: "row", alignItems: "center", justifyContent: "space-between" },
   rankBadge: {
     flexDirection: "row",
     alignItems: "center",
     gap: 5,
-    paddingHorizontal: 8,
+    paddingHorizontal: 9,
     paddingVertical: 4,
     borderRadius: 8,
     borderWidth: 1,
+    backgroundColor: "#D4A84312",
+    borderColor: "#D4A84340",
   },
-  rankBadgeText: { fontSize: 13, fontFamily: "PlayfairDisplay", fontWeight: "600", letterSpacing: 0.3 },
-  rankPosition: { fontSize: 32, fontFamily: "PlayfairDisplay", fontWeight: "700", letterSpacing: -0.5 },
+  rankBadgeText: { fontSize: 12, fontFamily: "PlayfairDisplay", fontWeight: "600", color: "#D4A843", letterSpacing: 0.2 },
+  rankPosition: { fontSize: 30, fontFamily: "PlayfairDisplay", fontWeight: "700", color: "#D4A843", letterSpacing: -0.5 },
   rankUserRow: { flexDirection: "row", alignItems: "center", gap: 10 },
   rankUserAvatar: {
     width: 40,
     height: 40,
     borderRadius: 20,
     borderWidth: 1.5,
+    borderColor: "#D4A84355",
+    backgroundColor: "#D4A84310",
     alignItems: "center",
     justifyContent: "center",
   },
   rankUserInfo: { flex: 1, gap: 2 },
-  rankUserName: { fontSize: 16, fontFamily: "PlayfairDisplay", fontWeight: "600" },
-  rankUserMeta: { fontSize: 13, fontWeight: "500" },
-  rankTotalBadge: { paddingHorizontal: 8, paddingVertical: 4, borderRadius: 8, borderWidth: 1 },
-  rankTotalText: { fontSize: 12, fontWeight: "600" },
-  rankDivider: { borderTopWidth: 1 },
+  rankUserName: { fontSize: 15, fontFamily: "PlayfairDisplay", fontWeight: "600", color: "#FFFFFF" },
+  rankUserMeta: { fontSize: 12, color: "rgba(255,255,255,0.4)" },
+  rankTotalBadge: { paddingHorizontal: 8, paddingVertical: 4, borderRadius: 8, borderWidth: 1, borderColor: "#D4A84325", backgroundColor: "#D4A84310" },
+  rankTotalText: { fontSize: 11, fontWeight: "600", color: "rgba(255,255,255,0.4)" },
+  rankDivider: { borderTopWidth: 1, borderTopColor: "#FFFFFF0F" },
   rankAheadRow: { flexDirection: "row", alignItems: "center", gap: 7 },
-  rankAheadLabel: { fontSize: 12, fontWeight: "600" },
+  rankAheadLabel: { fontSize: 11, fontWeight: "600", color: "rgba(255,255,255,0.35)" },
   rankAheadAvatar: {
-    width: 30,
-    height: 30,
-    borderRadius: 15,
+    width: 28,
+    height: 28,
+    borderRadius: 14,
     borderWidth: 1,
+    borderColor: "#D4A84325",
+    backgroundColor: "#D4A84310",
     alignItems: "center",
     justifyContent: "center",
   },
-  rankAheadName: { fontSize: 13, fontFamily: "PlayfairDisplay", fontWeight: "400", flexShrink: 1 },
-  rankAheadScore: { fontSize: 13, fontWeight: "700" },
+  rankAheadName: { fontSize: 12, fontFamily: "PlayfairDisplay", fontWeight: "400", color: "#FFFFFF", flexShrink: 1 },
+  rankAheadScore: { fontSize: 12, fontWeight: "700", color: "#D4A843" },
   rankLeaderRow: { flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 6 },
-  rankLeaderText: { fontSize: 15, fontFamily: "PlayfairDisplay", fontWeight: "600" },
+  rankLeaderText: { fontSize: 14, fontFamily: "PlayfairDisplay", fontWeight: "600", color: "#D4A843" },
   rankCardFooter: {
     flexDirection: "row",
     alignItems: "center",
@@ -1063,9 +1068,10 @@ const styles = StyleSheet.create({
     paddingBottom: 12,
     paddingTop: 10,
     borderTopWidth: 1,
+    borderTopColor: "#FFFFFF0F",
     gap: 4,
   },
-  rankCardFooterText: { fontSize: 13, fontWeight: "500" },
+  rankCardFooterText: { fontSize: 12, color: "rgba(255,255,255,0.3)" },
 
   /* ─── Tips Button ─── */
   tipsBtn: {
@@ -1074,15 +1080,18 @@ const styles = StyleSheet.create({
     gap: 10,
     borderRadius: 14,
     borderWidth: 1,
-    paddingVertical: 13,
+    borderColor: "#D4A84320",
+    backgroundColor: "#1A1F2E",
+    paddingVertical: 12,
     paddingHorizontal: 14,
   },
   tipsBtnIcon: {
-    width: 34,
-    height: 34,
+    width: 32,
+    height: 32,
     borderRadius: 9,
+    backgroundColor: "#D4A84315",
     alignItems: "center",
     justifyContent: "center",
   },
-  tipsBtnText: { flex: 1, fontSize: 13, fontFamily: "PlayfairDisplay", fontWeight: "400" },
+  tipsBtnText: { flex: 1, fontSize: 13, fontFamily: "PlayfairDisplay", fontWeight: "400", color: "rgba(255,255,255,0.7)" },
 });
