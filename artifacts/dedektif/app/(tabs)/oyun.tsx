@@ -438,29 +438,34 @@ function PulsingGlowCard({
   React.useEffect(() => {
     glow.value = withRepeat(
       withSequence(
-        withTiming(1, { duration: 2000, easing: Easing.inOut(Easing.sine) }),
-        withTiming(0, { duration: 2000, easing: Easing.inOut(Easing.sine) }),
+        withTiming(1, { duration: 2000, easing: Easing.inOut(Easing.sin) }),
+        withTiming(0, { duration: 2000, easing: Easing.inOut(Easing.sin) }),
       ),
       -1,
       false,
     );
   }, []);
-  const glowStyle = useAnimatedStyle(() => ({
-    shadowOpacity: 0.12 + glow.value * 0.38,
+  const glowLayerStyle = useAnimatedStyle(() => ({
+    opacity: 0.18 + glow.value * 0.42,
   }));
   return (
-    <Animated.View
-      entering={entering}
-      style={[
-        {
-          shadowColor: color,
-          shadowRadius: 22,
-          shadowOffset: { width: 0, height: 0 },
-          borderRadius: 14,
-        },
-        glowStyle,
-      ]}
-    >
+    <Animated.View entering={entering} style={{ borderRadius: 14 }}>
+      {/* Glow halo — static shadow, only opacity pulses (web-safe) */}
+      <Animated.View
+        pointerEvents="none"
+        style={[
+          StyleSheet.absoluteFillObject,
+          {
+            borderRadius: 14,
+            shadowColor: color,
+            shadowRadius: 22,
+            shadowOffset: { width: 0, height: 0 },
+            shadowOpacity: 1,
+            elevation: 10,
+          },
+          glowLayerStyle,
+        ]}
+      />
       {children}
     </Animated.View>
   );
