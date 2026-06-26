@@ -972,14 +972,15 @@ export default function VakalarScreen() {
 
     const premiumPuzzleIdSet = new Set(premiumPuzzles.map((p) => p.id));
     const completedPremiumPuzzles = completedPuzzles.filter((p) => premiumPuzzleIdSet.has(p.id));
+    const completedFreePuzzles = freePuzzles.filter((p) => completedPuzzleIds.has(p.id));
     const premFilteredActive = (premDiffFilter === "all" || premDiffFilter === "tamamlananlar")
       ? activePremium
       : activePremium.filter((p) => p.difficulty === (premDiffFilter as Difficulty));
     const availableActive = [...activeFree, ...(isPremium ? activePremium : [])];
     const filteredActive = (diffFilter === "all" || diffFilter === "tamamlananlar")
-      ? availableActive
-      : availableActive.filter((p) => p.difficulty === (diffFilter as Difficulty));
-    const totalActiveCount = availableActive.length;
+      ? activeFree
+      : activeFree.filter((p) => p.difficulty === (diffFilter as Difficulty));
+    const totalActiveCount = activeFree.length;
 
     return (
       <>
@@ -1202,15 +1203,8 @@ export default function VakalarScreen() {
                             <MaterialIcons name="check-circle" size={16} color={premDiffFilter === "tamamlananlar" ? colors.success : "#C8CAE0"} />
                           </View>
                           <Text style={[listStyles.tamamlananlarPillText, { color: premDiffFilter === "tamamlananlar" ? colors.success : "#E2E4F0" }]}>
-                            Tamamlananlar
+                            Tamamlananlar{completedPremiumPuzzles.length > 0 ? ` (${completedPremiumPuzzles.length})` : ""}
                           </Text>
-                          {completedPremiumPuzzles.length > 0 && (
-                            <View style={[listStyles.tamamlananlarPillCount, { backgroundColor: premDiffFilter === "tamamlananlar" ? `${colors.success}33` : "#FFFFFF20" }]}>
-                              <Text style={[listStyles.tamamlananlarPillCountText, { color: premDiffFilter === "tamamlananlar" ? colors.success : "#F0F2FF" }]}>
-                                {completedPremiumPuzzles.length}
-                              </Text>
-                            </View>
-                          )}
                           <View style={{ flex: 1 }} />
                           <MaterialIcons
                             name={premDiffFilter === "tamamlananlar" ? "keyboard-arrow-up" : "keyboard-arrow-down"}
@@ -1325,7 +1319,7 @@ export default function VakalarScreen() {
                   const isSelected = diffFilter === diff;
                   const color = getDifficultyColor(diff);
                   const icon: MaterialIconName = diff === "caylak" ? "sentiment-satisfied" : diff === "dedektif" ? "search" : "local-police";
-                  const count = availableActive.filter((p) => p.difficulty === diff).length;
+                  const count = activeFree.filter((p) => p.difficulty === diff).length;
                   return (
                     <FilterPill3D
                       key={diff}
@@ -1355,15 +1349,8 @@ export default function VakalarScreen() {
                     <MaterialIcons name="check-circle" size={16} color={diffFilter === "tamamlananlar" ? colors.success : "#C8CAE0"} />
                   </View>
                   <Text style={[listStyles.tamamlananlarPillText, { color: diffFilter === "tamamlananlar" ? colors.success : "#E2E4F0" }]}>
-                    Tamamlananlar
+                    Tamamlananlar{completedFreePuzzles.length > 0 ? ` (${completedFreePuzzles.length})` : ""}
                   </Text>
-                  {completedPuzzles.length > 0 && (
-                    <View style={[listStyles.tamamlananlarPillCount, { backgroundColor: diffFilter === "tamamlananlar" ? `${colors.success}33` : "#FFFFFF20" }]}>
-                      <Text style={[listStyles.tamamlananlarPillCountText, { color: diffFilter === "tamamlananlar" ? colors.success : "#F0F2FF" }]}>
-                        {completedPuzzles.length}
-                      </Text>
-                    </View>
-                  )}
                   <View style={{ flex: 1 }} />
                   <MaterialIcons
                     name={diffFilter === "tamamlananlar" ? "keyboard-arrow-up" : "keyboard-arrow-down"}
@@ -1374,8 +1361,8 @@ export default function VakalarScreen() {
               </Animated.View>
 
               {diffFilter === "tamamlananlar" ? (
-                /* ── Tamamlananlar list ── */
-                completedPuzzles.length === 0 ? (
+                /* ── Tamamlananlar list (free only) ── */
+                completedFreePuzzles.length === 0 ? (
                   <View style={[listStyles.emptyBox, { borderColor: colors.border }]}>
                     <MaterialIcons name="folder-open" size={40} color={colors.mutedForeground} />
                     <Text style={[listStyles.emptyTitle, { color: colors.foreground }]}>Henüz Çözülen Vaka Yok</Text>
@@ -1384,7 +1371,7 @@ export default function VakalarScreen() {
                     </Text>
                   </View>
                 ) : (
-                  completedPuzzles.map((puzzle, i) => {
+                  completedFreePuzzles.map((puzzle, i) => {
                     const stats = playStatsForPuzzle(puzzle.id);
                     return (
                       <PuzzleCard
@@ -2010,6 +1997,7 @@ const listStyles = StyleSheet.create({
   },
   tamamlananlarPillCountText: {
     fontSize: 12,
+    fontFamily: "PlayfairDisplay",
     fontWeight: "700",
   },
   premSubFilterRow: {
@@ -2244,6 +2232,7 @@ const listStyles = StyleSheet.create({
   },
   premVakalarCountText: {
     fontSize: 13,
+    fontFamily: "PlayfairDisplay",
     fontWeight: "800",
   },
 });

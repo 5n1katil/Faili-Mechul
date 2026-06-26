@@ -357,6 +357,7 @@ const styles = StyleSheet.create({
   },
   premHeaderBadgeText: {
     fontSize: 13,
+    fontFamily: "PlayfairDisplay",
     fontWeight: "800",
     color: "#D4A843",
   },
