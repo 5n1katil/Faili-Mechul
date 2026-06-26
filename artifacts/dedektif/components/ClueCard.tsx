@@ -2763,6 +2763,422 @@ function LedgerChecksumConsoleBlock({
   );
 }
 
+// ── BlockchainTransactionForkBlock ──
+function BlockchainTransactionForkBlock({
+  sifre,
+  isSolved,
+  onSolve,
+}: {
+  sifre: ClueSifre;
+  isSolved: boolean;
+  onSolve: () => void;
+}) {
+  const { addTimePenalty } = useGame();
+  const pr = (sifre.presentation ?? {}) as Record<string, unknown>;
+  const branches = (pr.branches as { id: string; label: string; nonce: string; signature: string; receipt: string; note: string }[]) ?? [];
+  const correctBranchId = String(pr.correctBranchId ?? "");
+  const interaction = (pr.interaction as Record<string, string>) ?? {};
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [wrong, setWrong] = useState(false);
+  const [hintRevealed, setHintRevealed] = useState(false);
+
+  const handleHint = () => { if (hintRevealed) return; setHintRevealed(true); addTimePenalty(60); };
+  const submit = () => {
+    if (!selectedId) return;
+    if (selectedId === correctBranchId) onSolve();
+    else { setWrong(true); setTimeout(() => setWrong(false), 2500); }
+  };
+
+  if (isSolved) return (
+    <View style={styles.miniGameSolvedBlock}>
+      <MaterialIcons name="check-circle" size={20} color="#22c55e" />
+      <Text style={styles.miniGameSolvedText}>{interaction.successMessage ?? "Zincir doğrulandı."}</Text>
+      <Text style={styles.miniGameAciklama}>{sifre.aciklama}</Text>
+    </View>
+  );
+  return (
+    <View style={styles.btfBlock}>
+      <View style={styles.btfTitleBar}>
+        <MaterialIcons name="account-tree" size={13} color="#00FF41" />
+        <Text style={styles.btfTitle}>{String(pr.title ?? "İŞLEM ÇATALI DOĞRULAMA").toLocaleUpperCase("tr-TR")}</Text>
+      </View>
+      {pr.subtitle ? <Text style={styles.btfSubtitle}>{String(pr.subtitle)}</Text> : null}
+      {pr.purposeHint ? <View style={styles.btfPurpose}><Text style={styles.btfPurposeText}>{String(pr.purposeHint)}</Text></View> : null}
+      <Text style={styles.btfInstruction}>Hangi dal geçerli? Nonce ve alındı sırasını kontrol et:</Text>
+      {branches.map((branch) => {
+        const isSelected = selectedId === branch.id;
+        return (
+          <Pressable key={branch.id} onPress={() => { setSelectedId(branch.id); setWrong(false); }}
+            style={[styles.btfBranch, isSelected && styles.btfBranchSel, wrong && isSelected && styles.btfBranchWrong]}>
+            <View style={styles.btfBranchHeader}>
+              <Text style={[styles.btfBranchLabel, isSelected && styles.btfBranchLabelSel]}>{branch.label}</Text>
+              {isSelected && <MaterialIcons name="radio-button-checked" size={14} color="#00FF41" />}
+            </View>
+            <View style={styles.btfBranchMeta}>
+              <Text style={styles.btfMetaKey}>Nonce</Text><Text style={styles.btfMetaVal}>{branch.nonce}</Text>
+              <Text style={[styles.btfMetaKey, { marginLeft: 10 }]}>İmza</Text><Text style={styles.btfMetaVal}>{branch.signature}</Text>
+              <Text style={[styles.btfMetaKey, { marginLeft: 10 }]}>Alındı</Text><Text style={styles.btfMetaVal}>{branch.receipt}</Text>
+            </View>
+            <Text style={styles.btfBranchNote}>{branch.note}</Text>
+          </Pressable>
+        );
+      })}
+      {wrong ? <Text style={styles.btfWrong}>{interaction.failureMessage ?? "Bu dalda nonce veya alındı sırası zinciri bozuyor."}</Text> : null}
+      {sifre.cozumIpucu ? <Pressable style={styles.ledgerHintBtn} onPress={handleHint}><MaterialIcons name="lightbulb-outline" size={13} color={hintRevealed ? "#6b7280" : "#e0b54e"} /><Text style={[styles.ledgerHintText, hintRevealed && { color: "#6b7280" }]}>{hintRevealed ? "İpucu Kullanıldı (−60 sn)" : "İpucu Al (−60 sn)"}</Text></Pressable> : null}
+      {hintRevealed ? <View style={styles.ledgerHintReveal}><Text style={styles.ledgerHintRevealText}>{sifre.cozumIpucu}</Text></View> : null}
+      <Pressable style={[styles.ledgerSubmitBtn, !selectedId && styles.ledgerSubmitBtnDisabled]} onPress={submit} disabled={!selectedId}>
+        <Text style={styles.ledgerSubmitText}>{interaction.submitLabel ?? "Dalın Geçerliliğini Sına"}</Text>
+      </Pressable>
+    </View>
+  );
+}
+
+// ── DeepfakeFrameArtifactAnalysisBlock ──
+function DeepfakeFrameArtifactAnalysisBlock({
+  sifre,
+  isSolved,
+  onSolve,
+}: {
+  sifre: ClueSifre;
+  isSolved: boolean;
+  onSolve: () => void;
+}) {
+  const { addTimePenalty } = useGame();
+  const pr = (sifre.presentation ?? {}) as Record<string, unknown>;
+  const frames = (pr.frames as { id: string; label: string; visual: string; correctArtifactId: string }[]) ?? [];
+  const artifacts = (pr.artifacts as { id: string; label: string; note: string }[]) ?? [];
+  const interaction = (pr.interaction as Record<string, string>) ?? {};
+  const [assignments, setAssignments] = useState<Record<string, string>>({});
+  const [focusedFrameId, setFocusedFrameId] = useState<string | null>(null);
+  const [wrong, setWrong] = useState(false);
+  const [hintRevealed, setHintRevealed] = useState(false);
+
+  const allAssigned = frames.every((f) => assignments[f.id]);
+  const handleHint = () => { if (hintRevealed) return; setHintRevealed(true); addTimePenalty(60); };
+  const tapFrame = (frameId: string) => { setFocusedFrameId((prev) => prev === frameId ? null : frameId); setWrong(false); };
+  const tapArtifact = (artifactId: string) => {
+    const fid = focusedFrameId;
+    if (!fid) return;
+    const next = { ...assignments, [fid]: artifactId };
+    setAssignments(next);
+    const nextFrame = frames.find((f) => !next[f.id]);
+    setFocusedFrameId(nextFrame?.id ?? null);
+  };
+  const submit = () => {
+    const ok = frames.every((f) => assignments[f.id] === f.correctArtifactId);
+    if (ok) onSolve();
+    else { setWrong(true); setTimeout(() => setWrong(false), 2500); }
+  };
+
+  if (isSolved) return (
+    <View style={styles.miniGameSolvedBlock}>
+      <MaterialIcons name="check-circle" size={20} color="#22c55e" />
+      <Text style={styles.miniGameSolvedText}>{interaction.successMessage ?? "Kusurlar doğrulandı."}</Text>
+      <Text style={styles.miniGameAciklama}>{sifre.aciklama}</Text>
+    </View>
+  );
+  return (
+    <View style={styles.dfBlock}>
+      <View style={styles.dfTitleBar}>
+        <MaterialIcons name="movie" size={13} color="#f472b6" />
+        <Text style={styles.dfTitle}>{String(pr.title ?? "KARE ARTEFAKT ANALİZİ").toLocaleUpperCase("tr-TR")}</Text>
+      </View>
+      {pr.subtitle ? <Text style={styles.dfSubtitle}>{String(pr.subtitle)}</Text> : null}
+      {pr.purposeHint ? <View style={styles.dfPurpose}><Text style={styles.dfPurposeText}>{String(pr.purposeHint)}</Text></View> : null}
+      <Text style={styles.dfInstruction}>{focusedFrameId ? "Artefakt seç ↓" : "Bir kare seç:"}</Text>
+      <View style={styles.dfFrames}>
+        {frames.map((frame) => {
+          const assigned = assignments[frame.id];
+          const art = assigned ? artifacts.find((a) => a.id === assigned) : null;
+          const isFocused = focusedFrameId === frame.id;
+          const isWrong = wrong && !!assigned && assigned !== frame.correctArtifactId;
+          return (
+            <Pressable key={frame.id} onPress={() => tapFrame(frame.id)}
+              style={[styles.dfFrame, isFocused && styles.dfFrameFocused, !!assigned && !isFocused && styles.dfFrameAssigned, isWrong && styles.dfFrameWrong]}>
+              <Text style={styles.dfFrameLabel}>{frame.label}</Text>
+              <Text style={styles.dfFrameVisual}>{frame.visual}</Text>
+              {art ? <Text style={styles.dfFrameArtifact}>→ {art.label}</Text> : <Text style={styles.dfFrameEmpty}>— seçilmedi</Text>}
+            </Pressable>
+          );
+        })}
+      </View>
+      {focusedFrameId ? (
+        <View style={styles.dfArtifacts}>
+          <Text style={styles.dfArtifactsLabel}>Artefakt seç:</Text>
+          {artifacts.map((art) => {
+            const chosen = assignments[focusedFrameId] === art.id;
+            return (
+              <Pressable key={art.id} onPress={() => tapArtifact(art.id)} style={[styles.dfArtifact, chosen && styles.dfArtifactChosen]}>
+                <Text style={[styles.dfArtifactLabel, chosen && styles.dfArtifactChosenText]}>{art.label}</Text>
+                <Text style={[styles.dfArtifactNote, chosen && styles.dfArtifactChosenText]}>{art.note}</Text>
+              </Pressable>
+            );
+          })}
+        </View>
+      ) : null}
+      {wrong ? <Text style={styles.dfWrong}>{interaction.failureMessage ?? "Karelerdeki ışık davranışı bu eşlemeyle tutarlı değil."}</Text> : null}
+      {sifre.cozumIpucu ? <Pressable style={styles.ledgerHintBtn} onPress={handleHint}><MaterialIcons name="lightbulb-outline" size={13} color={hintRevealed ? "#6b7280" : "#e0b54e"} /><Text style={[styles.ledgerHintText, hintRevealed && { color: "#6b7280" }]}>{hintRevealed ? "İpucu Kullanıldı (−60 sn)" : "İpucu Al (−60 sn)"}</Text></Pressable> : null}
+      {hintRevealed ? <View style={styles.ledgerHintReveal}><Text style={styles.ledgerHintRevealText}>{sifre.cozumIpucu}</Text></View> : null}
+      <Pressable style={[styles.ledgerSubmitBtn, { backgroundColor: "#f472b6" }, !allAssigned && styles.ledgerSubmitBtnDisabled]} onPress={submit} disabled={!allAssigned}>
+        <Text style={[styles.ledgerSubmitText, { color: "#1a0015" }]}>{interaction.submitLabel ?? "Kareleri İncele"}</Text>
+      </Pressable>
+    </View>
+  );
+}
+
+// ── TorNodeRouteBlock ──
+function TorNodeRouteBlock({
+  sifre,
+  isSolved,
+  onSolve,
+}: {
+  sifre: ClueSifre;
+  isSolved: boolean;
+  onSolve: () => void;
+}) {
+  const { addTimePenalty } = useGame();
+  const pr = (sifre.presentation ?? {}) as Record<string, unknown>;
+  const nodes = (pr.nodes as { id: string; label: string; x: number; y: number }[]) ?? [];
+  const edges = (pr.edges as string[][]) ?? [];
+  const correctPath = (pr.correctPath as string[]) ?? [];
+  const targetLatency = pr.targetLatency as number | undefined;
+  const interaction = (pr.interaction as Record<string, string>) ?? {};
+  const edgeSet = new Set(edges.map(([a, b]: string[]) => `${a}>${b}`));
+  const canReach = (from: string, to: string) => edgeSet.has(`${from}>${to}`);
+  const startNode = nodes[0]?.id ?? "n0";
+  const [path, setPath] = useState<string[]>([]);
+  const [wrong, setWrong] = useState(false);
+  const [hintRevealed, setHintRevealed] = useState(false);
+
+  const handleHint = () => { if (hintRevealed) return; setHintRevealed(true); addTimePenalty(60); };
+  const tapNode = (nodeId: string) => {
+    setWrong(false);
+    if (path.length === 0) { if (nodeId === startNode) setPath([nodeId]); return; }
+    const idx = path.indexOf(nodeId);
+    if (idx >= 0) { setPath(path.slice(0, idx + 1)); return; }
+    if (canReach(path[path.length - 1], nodeId)) setPath((prev) => [...prev, nodeId]);
+  };
+  const submit = () => {
+    const ok = path.length === correctPath.length && path.every((id, i) => id === correctPath[i]);
+    if (ok) onSolve();
+    else { setWrong(true); setTimeout(() => setWrong(false), 2500); }
+  };
+
+  if (isSolved) return (
+    <View style={styles.miniGameSolvedBlock}>
+      <MaterialIcons name="check-circle" size={20} color="#22c55e" />
+      <Text style={styles.miniGameSolvedText}>{interaction.successMessage ?? "Rota doğrulandı."}</Text>
+      <Text style={styles.miniGameAciklama}>{sifre.aciklama}</Text>
+    </View>
+  );
+  return (
+    <View style={styles.torBlock}>
+      <View style={styles.torTitleBar}>
+        <MaterialIcons name="share" size={13} color="#22d3ee" />
+        <Text style={styles.torTitle}>{String(pr.title ?? "TOR DÜĞÜM GÜZERGAHI").toLocaleUpperCase("tr-TR")}</Text>
+      </View>
+      {pr.subtitle ? <Text style={styles.torSubtitle}>{String(pr.subtitle)}</Text> : null}
+      {pr.purposeHint ? <View style={styles.torPurpose}><Text style={styles.torPurposeText}>{String(pr.purposeHint)}</Text></View> : null}
+      {targetLatency ? <Text style={styles.torTarget}>Hedef gecikme: <Text style={styles.torTargetVal}>{targetLatency} ms</Text></Text> : null}
+      <Text style={styles.torInstruction}>
+        {path.length === 0 ? `"${nodes[0]?.label ?? "GİRİŞ"}" ile başla, sıradaki düğümleri seç:` : "Sıradaki geçerli düğümü seç:"}
+      </Text>
+      <View style={styles.torNodes}>
+        {nodes.map((node) => {
+          const pathIdx = path.indexOf(node.id);
+          const inPath = pathIdx >= 0;
+          const isReachable = path.length === 0 ? node.id === startNode : !inPath && canReach(path[path.length - 1], node.id);
+          return (
+            <Pressable key={node.id} onPress={() => tapNode(node.id)}
+              style={[styles.torNode, inPath && styles.torNodeInPath, isReachable && !inPath && styles.torNodeReachable, wrong && inPath && styles.torNodeWrong]}>
+              {inPath && <Text style={styles.torNodeStep}>{pathIdx + 1}</Text>}
+              <Text style={[styles.torNodeLabel, inPath && styles.torNodeLabelInPath]}>{node.label}</Text>
+            </Pressable>
+          );
+        })}
+      </View>
+      {path.length > 0 ? (
+        <View style={styles.torPathBar}>
+          <Text style={styles.torPathText} numberOfLines={1}>
+            {path.map((id) => nodes.find((n) => n.id === id)?.label.split(" ")[0]).join(" → ")}
+          </Text>
+          <Pressable onPress={() => setPath([])}><Text style={styles.torClearText}>Sıfırla</Text></Pressable>
+        </View>
+      ) : null}
+      {wrong ? <Text style={styles.torWrong}>{interaction.failureMessage ?? "Bu yol gecikme bütçesini veya kuralları bozuyor."}</Text> : null}
+      {sifre.cozumIpucu ? <Pressable style={styles.ledgerHintBtn} onPress={handleHint}><MaterialIcons name="lightbulb-outline" size={13} color={hintRevealed ? "#6b7280" : "#e0b54e"} /><Text style={[styles.ledgerHintText, hintRevealed && { color: "#6b7280" }]}>{hintRevealed ? "İpucu Kullanıldı (−60 sn)" : "İpucu Al (−60 sn)"}</Text></Pressable> : null}
+      {hintRevealed ? <View style={styles.ledgerHintReveal}><Text style={styles.ledgerHintRevealText}>{sifre.cozumIpucu}</Text></View> : null}
+      <Pressable style={[styles.ledgerSubmitBtn, { backgroundColor: "#22d3ee" }, path.length < 2 && styles.ledgerSubmitBtnDisabled]} onPress={submit} disabled={path.length < 2}>
+        <Text style={[styles.ledgerSubmitText, { color: "#001a1f" }]}>{interaction.submitLabel ?? "Rotayı Doğrula"}</Text>
+      </Pressable>
+    </View>
+  );
+}
+
+// ── BadgeUpsCorrelationBlock ──
+function BadgeUpsCorrelationBlock({
+  sifre,
+  isSolved,
+  onSolve,
+}: {
+  sifre: ClueSifre;
+  isSolved: boolean;
+  onSolve: () => void;
+}) {
+  const { addTimePenalty } = useGame();
+  const pr = (sifre.presentation ?? {}) as Record<string, unknown>;
+  const windows = (pr.windows as { id: string; label: string; badgeDeltaSec: number; doorDeltaSec: number; upsKg: number; trend: string; note: string }[]) ?? [];
+  const correctWindowId = String(pr.correctWindowId ?? "");
+  const interaction = (pr.interaction as Record<string, string>) ?? {};
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [wrong, setWrong] = useState(false);
+  const [hintRevealed, setHintRevealed] = useState(false);
+
+  const handleHint = () => { if (hintRevealed) return; setHintRevealed(true); addTimePenalty(60); };
+  const submit = () => {
+    if (!selectedId) return;
+    if (selectedId === correctWindowId) onSolve();
+    else { setWrong(true); setTimeout(() => setWrong(false), 2500); }
+  };
+
+  if (isSolved) return (
+    <View style={styles.miniGameSolvedBlock}>
+      <MaterialIcons name="check-circle" size={20} color="#22c55e" />
+      <Text style={styles.miniGameSolvedText}>{interaction.successMessage ?? "Korelasyon doğrulandı."}</Text>
+      <Text style={styles.miniGameAciklama}>{sifre.aciklama}</Text>
+    </View>
+  );
+  return (
+    <View style={styles.upsBlock}>
+      <View style={styles.upsTitleBar}>
+        <MaterialIcons name="electrical-services" size={13} color="#60a5fa" />
+        <Text style={styles.upsTitle}>{String(pr.title ?? "KART–UPS KORELASYON").toLocaleUpperCase("tr-TR")}</Text>
+      </View>
+      {pr.subtitle ? <Text style={styles.upsSubtitle}>{String(pr.subtitle)}</Text> : null}
+      {pr.purposeHint ? <View style={styles.upsPurpose}><Text style={styles.upsPurposeText}>{String(pr.purposeHint)}</Text></View> : null}
+      <Text style={styles.upsInstruction}>Fiziksel olayı açıklayan pencereyi seç:</Text>
+      {windows.map((win) => {
+        const isSelected = selectedId === win.id;
+        return (
+          <Pressable key={win.id} onPress={() => { setSelectedId(win.id); setWrong(false); }}
+            style={[styles.upsWindow, isSelected && styles.upsWindowSel, wrong && isSelected && styles.upsWindowWrong]}>
+            <View style={styles.upsWindowHeader}>
+              <Text style={[styles.upsWindowLabel, isSelected && styles.upsWindowLabelSel]}>{win.label}</Text>
+              {isSelected && <MaterialIcons name="radio-button-checked" size={14} color="#60a5fa" />}
+            </View>
+            <View style={styles.upsWindowData}>
+              <View style={styles.upsDataCell}><Text style={styles.upsDataKey}>Kart Δ</Text><Text style={styles.upsDataVal}>{win.badgeDeltaSec}s</Text></View>
+              <View style={styles.upsDataCell}><Text style={styles.upsDataKey}>Kapı Δ</Text><Text style={styles.upsDataVal}>{win.doorDeltaSec}s</Text></View>
+              <View style={styles.upsDataCell}><Text style={styles.upsDataKey}>UPS Yük</Text><Text style={styles.upsDataVal}>{win.upsKg} kg</Text></View>
+              <View style={styles.upsDataCell}><Text style={styles.upsDataKey}>Eğilim</Text><Text style={[styles.upsDataVal, win.trend === "aşağı" ? styles.upsTrendDown : styles.upsTrendUp]}>{win.trend === "aşağı" ? "↓" : "↑"} {win.trend}</Text></View>
+            </View>
+            <Text style={styles.upsWindowNote}>{win.note}</Text>
+          </Pressable>
+        );
+      })}
+      {wrong ? <Text style={styles.upsWrong}>{interaction.failureMessage ?? "Bu pencerede en az bir ölçüm fiziksel senaryoyla çelişiyor."}</Text> : null}
+      {sifre.cozumIpucu ? <Pressable style={styles.ledgerHintBtn} onPress={handleHint}><MaterialIcons name="lightbulb-outline" size={13} color={hintRevealed ? "#6b7280" : "#e0b54e"} /><Text style={[styles.ledgerHintText, hintRevealed && { color: "#6b7280" }]}>{hintRevealed ? "İpucu Kullanıldı (−60 sn)" : "İpucu Al (−60 sn)"}</Text></Pressable> : null}
+      {hintRevealed ? <View style={styles.ledgerHintReveal}><Text style={styles.ledgerHintRevealText}>{sifre.cozumIpucu}</Text></View> : null}
+      <Pressable style={[styles.ledgerSubmitBtn, { backgroundColor: "#60a5fa" }, !selectedId && styles.ledgerSubmitBtnDisabled]} onPress={submit} disabled={!selectedId}>
+        <Text style={[styles.ledgerSubmitText, { color: "#001020" }]}>{interaction.submitLabel ?? "Korelasyonu Sına"}</Text>
+      </Pressable>
+    </View>
+  );
+}
+
+// ── IoTCommandChainBlock ──
+function IoTCommandChainBlock({
+  sifre,
+  isSolved,
+  onSolve,
+}: {
+  sifre: ClueSifre;
+  isSolved: boolean;
+  onSolve: () => void;
+}) {
+  const { addTimePenalty } = useGame();
+  const pr = (sifre.presentation ?? {}) as Record<string, unknown>;
+  const nodes = (pr.nodes as { id: string; label: string; input: string; output: string }[]) ?? [];
+  const allowedEdges = (pr.allowedEdges as string[][]) ?? [];
+  const correctEdges = (pr.correctEdges as string[][]) ?? [];
+  const interaction = (pr.interaction as Record<string, string>) ?? {};
+  const [selectedEdges, setSelectedEdges] = useState<[string, string][]>([]);
+  const [sourceId, setSourceId] = useState<string | null>(null);
+  const [wrong, setWrong] = useState(false);
+  const [hintRevealed, setHintRevealed] = useState(false);
+
+  const handleHint = () => { if (hintRevealed) return; setHintRevealed(true); addTimePenalty(60); };
+  const isAllowed = (from: string, to: string) => allowedEdges.some(([a, b]: string[]) => a === from && b === to);
+  const isSelected = (from: string, to: string) => selectedEdges.some(([a, b]) => a === from && b === to);
+  const tapNode = (nodeId: string) => {
+    setWrong(false);
+    if (!sourceId) { setSourceId(nodeId); return; }
+    if (sourceId === nodeId) { setSourceId(null); return; }
+    if (isAllowed(sourceId, nodeId)) {
+      if (isSelected(sourceId, nodeId)) setSelectedEdges((prev) => prev.filter(([a, b]) => !(a === sourceId && b === nodeId)));
+      else setSelectedEdges((prev) => [...prev, [sourceId, nodeId]]);
+    }
+    setSourceId(null);
+  };
+  const submit = () => {
+    const ok = selectedEdges.length === correctEdges.length && correctEdges.every(([ca, cb]: string[]) => isSelected(ca, cb));
+    if (ok) onSolve();
+    else { setWrong(true); setTimeout(() => setWrong(false), 2500); }
+  };
+
+  if (isSolved) return (
+    <View style={styles.miniGameSolvedBlock}>
+      <MaterialIcons name="check-circle" size={20} color="#22c55e" />
+      <Text style={styles.miniGameSolvedText}>{interaction.successMessage ?? "Komut bağları doğrulandı."}</Text>
+      <Text style={styles.miniGameAciklama}>{sifre.aciklama}</Text>
+    </View>
+  );
+  return (
+    <View style={styles.iotBlock}>
+      <View style={styles.iotTitleBar}>
+        <MaterialIcons name="device-hub" size={13} color="#a78bfa" />
+        <Text style={styles.iotTitle}>{String(pr.title ?? "IOT KOMUT ZİNCİRİ").toLocaleUpperCase("tr-TR")}</Text>
+      </View>
+      {pr.subtitle ? <Text style={styles.iotSubtitle}>{String(pr.subtitle)}</Text> : null}
+      {pr.purposeHint ? <View style={styles.iotPurpose}><Text style={styles.iotPurposeText}>{String(pr.purposeHint)}</Text></View> : null}
+      <Text style={styles.iotInstruction}>
+        {sourceId ? `"${nodes.find((n) => n.id === sourceId)?.label ?? sourceId}" seçildi → hedef düğümü seç` : "Kaynak düğüm seç, ardından hedefi seç:"}
+      </Text>
+      {nodes.map((node) => {
+        const isSrc = sourceId === node.id;
+        const outEdges = selectedEdges.filter(([a]) => a === node.id);
+        const canTarget = sourceId !== null && sourceId !== node.id && isAllowed(sourceId, node.id);
+        return (
+          <Pressable key={node.id} onPress={() => tapNode(node.id)}
+            style={[styles.iotNode, isSrc && styles.iotNodeSource, canTarget && styles.iotNodeTarget, wrong && outEdges.length > 0 && styles.iotNodeWrong]}>
+            <View style={styles.iotNodeHeader}>
+              <MaterialIcons name="memory" size={12} color={isSrc ? "#a78bfa" : "#6b7280"} />
+              <Text style={[styles.iotNodeLabel, isSrc && styles.iotNodeLabelSource]}>{node.label}</Text>
+            </View>
+            <Text style={styles.iotNodePort}>⬅ {node.input}</Text>
+            <Text style={styles.iotNodePort}>➡ {node.output}</Text>
+            {outEdges.map(([, to]) => {
+              const target = nodes.find((n) => n.id === to);
+              return target ? <Text key={to} style={styles.iotEdgeTag}>⟶ {target.label}</Text> : null;
+            })}
+          </Pressable>
+        );
+      })}
+      {selectedEdges.length > 0 ? (
+        <Pressable onPress={() => { setSelectedEdges([]); setSourceId(null); }} style={styles.iotClearBtn}>
+          <Text style={styles.iotClearText}>Tüm bağlantıları temizle</Text>
+        </Pressable>
+      ) : null}
+      {wrong ? <Text style={styles.iotWrong}>{interaction.failureMessage ?? "En az bir port, sonraki düğümün ön koşulunu karşılamıyor."}</Text> : null}
+      {sifre.cozumIpucu ? <Pressable style={styles.ledgerHintBtn} onPress={handleHint}><MaterialIcons name="lightbulb-outline" size={13} color={hintRevealed ? "#6b7280" : "#e0b54e"} /><Text style={[styles.ledgerHintText, hintRevealed && { color: "#6b7280" }]}>{hintRevealed ? "İpucu Kullanıldı (−60 sn)" : "İpucu Al (−60 sn)"}</Text></Pressable> : null}
+      {hintRevealed ? <View style={styles.ledgerHintReveal}><Text style={styles.ledgerHintRevealText}>{sifre.cozumIpucu}</Text></View> : null}
+      <Pressable style={[styles.ledgerSubmitBtn, { backgroundColor: "#a78bfa" }, selectedEdges.length < correctEdges.length && styles.ledgerSubmitBtnDisabled]} onPress={submit} disabled={selectedEdges.length < correctEdges.length}>
+        <Text style={[styles.ledgerSubmitText, { color: "#0f0020" }]}>{interaction.submitLabel ?? "Komut Bağlarını Doğrula"}</Text>
+      </Pressable>
+    </View>
+  );
+}
+
 function SifreliMesajBlock({
   sifre,
   isSolved,
@@ -2841,6 +3257,26 @@ function SifreliMesajBlock({
 
   if (sifre.presentation?.style === "ledger_checksum_console") {
     return <LedgerChecksumConsoleBlock sifre={sifre} isSolved={isSolved} onSolve={onSolve} />;
+  }
+
+  if (sifre.presentation?.style === "blockchain_transaction_fork") {
+    return <BlockchainTransactionForkBlock sifre={sifre} isSolved={isSolved} onSolve={onSolve} />;
+  }
+
+  if (sifre.presentation?.style === "deepfake_frame_artifact_analysis") {
+    return <DeepfakeFrameArtifactAnalysisBlock sifre={sifre} isSolved={isSolved} onSolve={onSolve} />;
+  }
+
+  if (sifre.presentation?.style === "tor_node_route") {
+    return <TorNodeRouteBlock sifre={sifre} isSolved={isSolved} onSolve={onSolve} />;
+  }
+
+  if (sifre.presentation?.style === "badge_ups_correlation") {
+    return <BadgeUpsCorrelationBlock sifre={sifre} isSolved={isSolved} onSolve={onSolve} />;
+  }
+
+  if (sifre.presentation?.style === "iot_command_chain") {
+    return <IoTCommandChainBlock sifre={sifre} isSolved={isSolved} onSolve={onSolve} />;
   }
 
   if (sifre.presentation?.style === "cipher_disc_alignment") {
@@ -8142,4 +8578,112 @@ const styles = StyleSheet.create({
   },
   ledgerSubmitBtnDisabled: { opacity: 0.45 },
   ledgerSubmitText: { fontSize: 13, fontWeight: "700", color: "#0a1a0a" },
+  // ── BlockchainTransactionForkBlock ──
+  btfBlock: { gap: 8 },
+  btfTitleBar: { flexDirection: "row", alignItems: "center", gap: 6, paddingVertical: 6, paddingHorizontal: 10, backgroundColor: "rgba(0,255,65,0.06)", borderRadius: 6, borderWidth: 1, borderColor: "rgba(0,255,65,0.18)" },
+  btfTitle: { fontSize: 11, fontWeight: "700", color: "#00FF41", letterSpacing: 0.8, flex: 1 },
+  btfSubtitle: { fontSize: 12, color: "#8b91ad", lineHeight: 17 },
+  btfPurpose: { padding: 9, borderLeftWidth: 2, borderLeftColor: "#00FF41", backgroundColor: "rgba(0,255,65,0.04)", borderRadius: 4 },
+  btfPurposeText: { fontSize: 12, color: "#c8d0e0", lineHeight: 17 },
+  btfInstruction: { fontSize: 11, color: "#6b7280", fontStyle: "italic", marginTop: 2 },
+  btfBranch: { padding: 10, borderRadius: 8, borderWidth: 1, borderColor: "rgba(255,255,255,0.08)", backgroundColor: "rgba(255,255,255,0.02)", gap: 5 },
+  btfBranchSel: { borderColor: "#00FF41", backgroundColor: "rgba(0,255,65,0.07)" },
+  btfBranchWrong: { borderColor: "#dc2626", backgroundColor: "rgba(220,38,38,0.08)" },
+  btfBranchHeader: { flexDirection: "row", justifyContent: "space-between", alignItems: "center" },
+  btfBranchLabel: { fontSize: 12, fontWeight: "700", color: "#9ca3af" },
+  btfBranchLabelSel: { color: "#00FF41" },
+  btfBranchMeta: { flexDirection: "row", flexWrap: "wrap", gap: 2, alignItems: "center" },
+  btfMetaKey: { fontSize: 10, color: "#6b7280", fontWeight: "600" },
+  btfMetaVal: { fontSize: 10, color: "#fbbf24", marginLeft: 3, fontFamily: Platform.OS === "ios" ? "Courier" : "monospace" },
+  btfBranchNote: { fontSize: 11, color: "#8b91ad", fontStyle: "italic", lineHeight: 15 },
+  btfWrong: { fontSize: 12, color: "#fca5a5", textAlign: "center" },
+  // ── DeepfakeFrameArtifactAnalysisBlock ──
+  dfBlock: { gap: 8 },
+  dfTitleBar: { flexDirection: "row", alignItems: "center", gap: 6, paddingVertical: 6, paddingHorizontal: 10, backgroundColor: "rgba(244,114,182,0.06)", borderRadius: 6, borderWidth: 1, borderColor: "rgba(244,114,182,0.2)" },
+  dfTitle: { fontSize: 11, fontWeight: "700", color: "#f472b6", letterSpacing: 0.8, flex: 1 },
+  dfSubtitle: { fontSize: 12, color: "#8b91ad", lineHeight: 17 },
+  dfPurpose: { padding: 9, borderLeftWidth: 2, borderLeftColor: "#f472b6", backgroundColor: "rgba(244,114,182,0.05)", borderRadius: 4 },
+  dfPurposeText: { fontSize: 12, color: "#c8d0e0", lineHeight: 17 },
+  dfInstruction: { fontSize: 11, color: "#f9a8d4", fontWeight: "600", marginTop: 2 },
+  dfFrames: { flexDirection: "row", flexWrap: "wrap", gap: 6 },
+  dfFrame: { flex: 1, minWidth: "44%", padding: 8, borderRadius: 8, borderWidth: 1, borderColor: "rgba(255,255,255,0.08)", backgroundColor: "rgba(255,255,255,0.02)", gap: 3 },
+  dfFrameFocused: { borderColor: "#f472b6", backgroundColor: "rgba(244,114,182,0.1)" },
+  dfFrameAssigned: { borderColor: "rgba(34,197,94,0.4)", backgroundColor: "rgba(34,197,94,0.05)" },
+  dfFrameWrong: { borderColor: "#dc2626", backgroundColor: "rgba(220,38,38,0.08)" },
+  dfFrameLabel: { fontSize: 10, fontWeight: "700", color: "#9ca3af" },
+  dfFrameVisual: { fontSize: 10, color: "#6b7280", fontStyle: "italic", lineHeight: 14 },
+  dfFrameArtifact: { fontSize: 11, color: "#86efac", fontWeight: "600" },
+  dfFrameEmpty: { fontSize: 11, color: "#4a5070", fontStyle: "italic" },
+  dfArtifacts: { gap: 5, marginTop: 4 },
+  dfArtifactsLabel: { fontSize: 11, color: "#f9a8d4", fontWeight: "600" },
+  dfArtifact: { padding: 8, borderRadius: 7, borderWidth: 1, borderColor: "rgba(244,114,182,0.2)", backgroundColor: "rgba(244,114,182,0.04)" },
+  dfArtifactChosen: { borderColor: "#f472b6", backgroundColor: "rgba(244,114,182,0.14)" },
+  dfArtifactLabel: { fontSize: 12, fontWeight: "700", color: "#e8eaf2" },
+  dfArtifactChosenText: { color: "#f472b6" },
+  dfArtifactNote: { fontSize: 11, color: "#8b91ad", lineHeight: 15 },
+  dfWrong: { fontSize: 12, color: "#fca5a5", textAlign: "center" },
+  // ── TorNodeRouteBlock ──
+  torBlock: { gap: 8 },
+  torTitleBar: { flexDirection: "row", alignItems: "center", gap: 6, paddingVertical: 6, paddingHorizontal: 10, backgroundColor: "rgba(34,211,238,0.06)", borderRadius: 6, borderWidth: 1, borderColor: "rgba(34,211,238,0.18)" },
+  torTitle: { fontSize: 11, fontWeight: "700", color: "#22d3ee", letterSpacing: 0.8, flex: 1 },
+  torSubtitle: { fontSize: 12, color: "#8b91ad", lineHeight: 17 },
+  torPurpose: { padding: 9, borderLeftWidth: 2, borderLeftColor: "#22d3ee", backgroundColor: "rgba(34,211,238,0.04)", borderRadius: 4 },
+  torPurposeText: { fontSize: 12, color: "#c8d0e0", lineHeight: 17 },
+  torTarget: { fontSize: 11, color: "#8b91ad" },
+  torTargetVal: { color: "#22d3ee", fontWeight: "700", fontFamily: Platform.OS === "ios" ? "Courier" : "monospace" },
+  torInstruction: { fontSize: 11, color: "#67e8f9", fontStyle: "italic", marginTop: 2 },
+  torNodes: { flexDirection: "row", flexWrap: "wrap", gap: 6 },
+  torNode: { paddingVertical: 8, paddingHorizontal: 10, borderRadius: 8, borderWidth: 1, borderColor: "rgba(255,255,255,0.08)", backgroundColor: "rgba(255,255,255,0.02)", alignItems: "center", gap: 2, minWidth: "30%" },
+  torNodeInPath: { borderColor: "#22d3ee", backgroundColor: "rgba(34,211,238,0.12)" },
+  torNodeReachable: { borderColor: "rgba(34,211,238,0.4)", backgroundColor: "rgba(34,211,238,0.05)" },
+  torNodeWrong: { borderColor: "#dc2626", backgroundColor: "rgba(220,38,38,0.08)" },
+  torNodeStep: { fontSize: 10, fontWeight: "700", color: "#22d3ee", fontFamily: Platform.OS === "ios" ? "Courier" : "monospace" },
+  torNodeLabel: { fontSize: 10, color: "#9ca3af", textAlign: "center", lineHeight: 14 },
+  torNodeLabelInPath: { color: "#67e8f9", fontWeight: "600" },
+  torPathBar: { flexDirection: "row", alignItems: "center", gap: 8, padding: 8, borderRadius: 6, backgroundColor: "rgba(34,211,238,0.05)", borderWidth: 1, borderColor: "rgba(34,211,238,0.15)" },
+  torPathText: { flex: 1, fontSize: 11, color: "#22d3ee", fontFamily: Platform.OS === "ios" ? "Courier" : "monospace" },
+  torClearText: { fontSize: 11, color: "#dc2626", fontWeight: "600" },
+  torWrong: { fontSize: 12, color: "#fca5a5", textAlign: "center" },
+  // ── BadgeUpsCorrelationBlock ──
+  upsBlock: { gap: 8 },
+  upsTitleBar: { flexDirection: "row", alignItems: "center", gap: 6, paddingVertical: 6, paddingHorizontal: 10, backgroundColor: "rgba(96,165,250,0.06)", borderRadius: 6, borderWidth: 1, borderColor: "rgba(96,165,250,0.18)" },
+  upsTitle: { fontSize: 11, fontWeight: "700", color: "#60a5fa", letterSpacing: 0.8, flex: 1 },
+  upsSubtitle: { fontSize: 12, color: "#8b91ad", lineHeight: 17 },
+  upsPurpose: { padding: 9, borderLeftWidth: 2, borderLeftColor: "#60a5fa", backgroundColor: "rgba(96,165,250,0.04)", borderRadius: 4 },
+  upsPurposeText: { fontSize: 12, color: "#c8d0e0", lineHeight: 17 },
+  upsInstruction: { fontSize: 11, color: "#6b7280", fontStyle: "italic", marginTop: 2 },
+  upsWindow: { padding: 10, borderRadius: 8, borderWidth: 1, borderColor: "rgba(255,255,255,0.08)", backgroundColor: "rgba(255,255,255,0.02)", gap: 6 },
+  upsWindowSel: { borderColor: "#60a5fa", backgroundColor: "rgba(96,165,250,0.07)" },
+  upsWindowWrong: { borderColor: "#dc2626", backgroundColor: "rgba(220,38,38,0.08)" },
+  upsWindowHeader: { flexDirection: "row", justifyContent: "space-between", alignItems: "center" },
+  upsWindowLabel: { fontSize: 12, fontWeight: "700", color: "#9ca3af" },
+  upsWindowLabelSel: { color: "#93c5fd" },
+  upsWindowData: { flexDirection: "row", flexWrap: "wrap", gap: 8 },
+  upsDataCell: { alignItems: "center", minWidth: "22%" },
+  upsDataKey: { fontSize: 9, color: "#6b7280", fontWeight: "600", letterSpacing: 0.3 },
+  upsDataVal: { fontSize: 13, fontWeight: "700", color: "#e8eaf2", fontFamily: Platform.OS === "ios" ? "Courier" : "monospace" },
+  upsTrendDown: { color: "#60a5fa" },
+  upsTrendUp: { color: "#f87171" },
+  upsWindowNote: { fontSize: 11, color: "#8b91ad", fontStyle: "italic", lineHeight: 15 },
+  upsWrong: { fontSize: 12, color: "#fca5a5", textAlign: "center" },
+  // ── IoTCommandChainBlock ──
+  iotBlock: { gap: 8 },
+  iotTitleBar: { flexDirection: "row", alignItems: "center", gap: 6, paddingVertical: 6, paddingHorizontal: 10, backgroundColor: "rgba(167,139,250,0.06)", borderRadius: 6, borderWidth: 1, borderColor: "rgba(167,139,250,0.18)" },
+  iotTitle: { fontSize: 11, fontWeight: "700", color: "#a78bfa", letterSpacing: 0.8, flex: 1 },
+  iotSubtitle: { fontSize: 12, color: "#8b91ad", lineHeight: 17 },
+  iotPurpose: { padding: 9, borderLeftWidth: 2, borderLeftColor: "#a78bfa", backgroundColor: "rgba(167,139,250,0.04)", borderRadius: 4 },
+  iotPurposeText: { fontSize: 12, color: "#c8d0e0", lineHeight: 17 },
+  iotInstruction: { fontSize: 11, color: "#c4b5fd", fontStyle: "italic", marginTop: 2 },
+  iotNode: { padding: 10, borderRadius: 8, borderWidth: 1, borderColor: "rgba(255,255,255,0.08)", backgroundColor: "rgba(255,255,255,0.02)", gap: 3 },
+  iotNodeSource: { borderColor: "#a78bfa", backgroundColor: "rgba(167,139,250,0.1)" },
+  iotNodeTarget: { borderColor: "rgba(167,139,250,0.5)", backgroundColor: "rgba(167,139,250,0.05)" },
+  iotNodeWrong: { borderColor: "#dc2626", backgroundColor: "rgba(220,38,38,0.08)" },
+  iotNodeHeader: { flexDirection: "row", alignItems: "center", gap: 6 },
+  iotNodeLabel: { fontSize: 12, fontWeight: "700", color: "#9ca3af", flex: 1 },
+  iotNodeLabelSource: { color: "#a78bfa" },
+  iotNodePort: { fontSize: 10, color: "#6b7280", lineHeight: 14 },
+  iotEdgeTag: { fontSize: 11, color: "#86efac", fontWeight: "600", marginTop: 2 },
+  iotClearBtn: { paddingVertical: 6, alignItems: "center" },
+  iotClearText: { fontSize: 12, color: "#dc2626", fontWeight: "600" },
+  iotWrong: { fontSize: 12, color: "#fca5a5", textAlign: "center" },
 });

@@ -8537,19 +8537,19 @@
             "c1": "Ölüm mahalli oyuncuya açıkça l1 olarak verilir; V-11 kamera mührü s1–l2 eşleşmesini doğrular.",
             "c2": "G-17, GhostKey kimlik kartının bağlam işaretidir; yalnız w1 sözleşme yetkisiyle eşleşir.",
             "c3": "Viyal çapı, s1’in ekipmanını w3 ile fiziksel olarak bağdaşmaz kılar.",
-            "c4": "Oyuncu imza–alındı farkı ile nonce tekrar kuralını birlikte uygular; 4–0–0–4 kodu yalnız DAL C’nin tutarlı olduğunu gösterir ve G-17’nin l1 fiziksel okuyucusuna bağlanmasını eler.",
+            "c4": "Oyuncu nonce/receipt incelemesini yapar; G-17’nin l1 fiziksel okuyucusunu kullanmadığını görür.",
             "leaveOneOut": "c1 veya c4 çıkarılırsa l1’de s3 yerine başka kişi kalabilir; c2 veya c3 çıkarılırsa w3 s3 yerine başka kişiye kalabilir."
           },
           "qaNarrativeContract": {
-            "narrativeClue": "Arman’ın notundaki “gerçek imza, zaman damgasından değil zincirin kırıldığı yerden anlaşılır” cümlesi, oyuncuya yalnız saat farkına değil nonce tekrarına da bakması gerektiğini adil biçimde söyler.",
+            "narrativeClue": "Arman’ın notundaki imza–zaman damgası ayrımı, işlem çatalı oyununda nonce ve receipt sırasına bakılması gerektiğini adil biçimde söyler.",
             "linkedClueId": "c4",
-            "playerVisibleBridge": "“Süre farkı doğru olsa bile, ikinci kez kullanılan nonce zinciri geçersiz kılar.”"
+            "playerVisibleBridge": "‘Gerçek imza, zaman damgasından değil zincirin kırıldığı yerden anlaşılır.’"
           },
           "title": "Son Blok",
           "subtitle": "Karanlık Ağ · Axiom Exchange Çöküş Dosyası",
           "difficulty": "Çaylak",
           "difficultyLevel": 1,
-          "specialMechanic": "sayısal_analitik · ledger_checksum_console",
+          "specialMechanic": "şifreli_mesaj · blockchain_transaction_fork",
           "story": "Axiom Exchange’in gece vardiyası, iki milyar dolarlık açığın ekrana düştüğü anda sessizliğe gömüldü. Baş geliştirici Arman Kaya, sabaha karşı altyapı katında ölü bulundu; monitöründe yalnızca tek satır kalmıştı: “TRANSFER_HALT / imza reddedildi.” O gece binada üç isim vardı: parasını kurtarmaya çalışan CEO Marcus Vault, kimliği bilinmeyen GhostKey ve haftalardır risk raporlarıyla yönetimi uyaran Priya Sen.\n\nİlk bakışta herkes dijital hırsızlığa odaklandı. Fakat soğuk koridordaki ışıklar, masanın altındaki halka ve kapı okuyucusuna düşen kısa bir sertifika izi, cinayetin para transferinden ayrı bir fiziksel planı olduğunu söylüyordu.\n\nArman’ın son notunda “gerçek imza, zaman damgasından değil zincirin kırıldığı yerden anlaşılır” cümlesi vardı. Bu, ekranda görünen her şeyin gerçek olduğu anlamına gelmiyordu. Kayıtların dili temizdi; fakat temiz görünen bir zincir bazen en iyi hazırlanmış yalandır.",
           "atmosphere": "Fanların uğultusu, soğuk metal raflar ve kırmızı uyarı ışığı. Bazı geceler bloklar yalnızca para değil, insan da yutar.",
           "suspects": [
@@ -8660,74 +8660,69 @@
             },
             {
               "id": "c4",
-              "title": "Zincir Bütünlük Kadranı",
+              "title": "İşlem Çatalı Doğrulaması",
               "type": "sifreli",
               "mechanicType": "sifreli_mesaj",
-              "text": "Arman’ın masaüstünde, kök kayıt ve üç dal için dört haneli bir bütünlük alanı açık kalmıştı. Yan notta yalnızca şu yazıyordu: “Süre farkı doğru olsa bile, ikinci kez kullanılan nonce zinciri geçersiz kılar.”",
-              "deductionHint": "Hangi kayıt süre sırasını ve nonce tekilliğini aynı anda koruyor?",
+              "text": "Arman’ın masaüstünde üç rakip işlem dalı bulundu. Üst not yalnızca “imza sırası, fiziksel okuyucuyu taklit edemez” diyordu.",
+              "deductionHint": "İşlem dallarından hangisi giriş kaydıyla çelişiyor; sonuç hangi kişi–yer hücresini siler?",
               "isBonus": false,
               "revealOrder": 4,
               "isRevealed": false,
               "pointCost": 0,
               "sifre": {
-                "sifreleTuru": "sayısal bütünlük kodu",
-                "sifrelenmis": "KÖK · DAL A · DAL B · DAL C → [ _ ][ _ ][ _ ][ _ ]",
-                "cozulmus": "4004",
+                "sifreleTuru": "işlem çatalı doğrulama",
+                "sifrelenmis": "Aynı kök · üç dal · tek geçerli imza sırası",
+                "cozulmus": "DAL-C",
                 "answerAliases": [
-                  "4-0-0-4",
-                  "4 0 0 4"
+                  "Dalc",
+                  "C",
+                  "Fork C",
+                  "Fork-C"
                 ],
-                "cozumIpucu": "Kural iki aşamalı: alındı, imzadan önceyse rakam 0’dır. Zaman sırası doğru olsa bile nonce daha önce kullanılmışsa yine 0 yazılır.",
-                "aciklama": "Kadran kilidi, G-17 oturumunun fiziksel giriş iddiasını geçersiz kıldı. Izgarada ilgili kişi–mekân bağını ele.",
+                "cozumIpucu": "Zaman damgasını değil; aynı nonce’un hangi dalda bir kez kullanıldığını ve alındı kaydının imzadan sonra gelip gelmediğini karşılaştır.",
+                "aciklama": "Doğru dalı seçmek, uzaktan yaratılmış kaydın fiziksel okuyucu izi yerine geçemeyeceğini kanıtlar; bu eşleştirme ızgarada bir kişi–mekân elemesini açar.",
                 "presentation": {
-                  "style": "ledger_checksum_console",
-                  "title": "Zincir Bütünlük Kadranı",
-                  "subtitle": "Kök ve üç dal için bütünlük kodunu üret. Her kayıt tek bir rakam verir; dört rakamı sırayla kadrana gir.",
-                  "purposeHint": "Kod, hangi dalın hem imza–alındı sırasını hem de nonce tekilliğini koruduğunu gösterir. Doğrulama, G-17 oturumunun fiziksel Sunucu Odası okuyucusunu kullanmadığını ızgarada eleme olarak uygular.",
-                  "resultText": "Kod 4–0–0–4: yalnız DAL C iki bütünlük kontrolünü birlikte geçiyor. G-17 oturumunun fiziksel giriş iddiası geçersiz.",
+                  "style": "blockchain_transaction_fork",
+                  "title": "İşlem Çatalı Doğrulaması",
+                  "subtitle": "Üç dal aynı kökten türemiş görünüyor. Nonce tekrarını ve imza–alındı sırasını izleyerek geçerli zinciri seç.",
+                  "purposeHint": "Doğru dal, bir oturumun fiziksel erişim kaydıyla uyumsuz olduğunu gösterir; seçimi ızgarada bir şüpheli–mekân elemesi olarak kullan.",
+                  "resultText": "Doğrulanan dal, ilgili oturumun fiziksel okuyucu üzerinden geçmediğini gösterir.",
                   "interaction": {
-                    "mode": "numeric_checksum_dials",
-                    "submitLabel": "Bütünlük Kodunu Doğrula",
-                    "successMessage": "Kadran kabul edildi. Yalnız DAL C zinciri bozulmadan kalıyor.",
-                    "failureMessage": "Kod tutmuyor. Süre farkı doğru olsa bile yinelenen nonce’un ikinci kullanımını 0 saymayı unutma."
+                    "mode": "single_branch",
+                    "submitLabel": "Dalın Geçerliliğini Sına",
+                    "successMessage": "Zincir tutarlı. Fiziksel okuyucu iddiası bu oturumla bağdaşmıyor.",
+                    "failureMessage": "Bu dalda nonce veya alındı sırası zinciri bozuyor."
                   },
-                  "digitRule": "Sıra KÖK–A–B–C. Alındı imzadan sonra geliyorsa saniye farkını yaz. Alındı imzadan önceyse 0 yaz. Nonce daha önce kullanılmışsa, zaman farkı doğru olsa bile 0 yaz.",
-                  "codeLength": 4,
-                  "correctCode": "4004",
-                  "ledgerEntries": [
+                  "branches": [
                     {
-                      "id": "root",
-                      "label": "KÖK MÜHÜR",
-                      "nonce": "7A-1",
-                      "signature": "02:10:56",
-                      "receipt": "02:11:00",
-                      "auditNote": "Nonce ilk kez görülüyor."
-                    },
-                    {
-                      "id": "a",
-                      "label": "DAL A",
+                      "id": "dal_a",
+                      "label": "DAL A · 841920",
                       "nonce": "9F-44",
                       "signature": "02:11:08",
                       "receipt": "02:11:03",
-                      "auditNote": "Alındı zamanının imzadan önce oluşup oluşmadığını kontrol et."
+                      "parentHash": "…7A1",
+                      "note": "Alındı, imzadan önce yazılmış."
                     },
                     {
-                      "id": "b",
-                      "label": "DAL B",
+                      "id": "dal_b",
+                      "label": "DAL B · 841921",
                       "nonce": "9F-44",
                       "signature": "02:11:10",
                       "receipt": "02:11:13",
-                      "auditNote": "Süre sırası tek başına yeterli mi? Önceki nonce kayıtlarını karşılaştır."
+                      "parentHash": "…7A1",
+                      "note": "Aynı nonce iki işlemde kullanılmış."
                     },
                     {
-                      "id": "c",
-                      "label": "DAL C",
+                      "id": "dal_c",
+                      "label": "DAL C · 841922",
                       "nonce": "C2-91",
                       "signature": "02:11:12",
                       "receipt": "02:11:16",
-                      "auditNote": "Nonce tekil mi; alındı imzadan sonra mı?"
+                      "parentHash": "…7A1",
+                      "note": "Nonce tekil; alındı imzayı takip ediyor."
                     }
-                  ]
+                  ],
+                  "correctBranchId": "dal_c"
                 }
               }
             },
@@ -8772,7 +8767,7 @@
               {
                 "clueId": "c4",
                 "mechanicType": "sifreli_mesaj",
-                "renderer": "ledger_checksum_console",
+                "renderer": "blockchain_transaction_fork",
                 "completionEvent": "onSolved({ clueId, mechanic: \"sifreli_mesaj\" })"
               }
             ]
@@ -8780,888 +8775,861 @@
         },
         {
           "puzzleId": "dij_002",
-          "title": "Deepfake Tanık",
-          "subtitle": "Yapay Zeka Manipülasyonu Vakası",
-          "difficulty": 3,
-          "difficultyLabel": "Dedektif",
-          "stars": "★★★☆☆",
+          "stars": "★★☆☆☆",
           "gridSize": "3x3",
-          "timeLimit": 480,
-          "story": "Bir yapay zeka şirketinin kurucusu ofisinde ölü bulundu. Güvenlik kamerası 'suçluyu' kaydetti — ama görüntü deepfake. Gerçek katil kim?",
-          "atmosphere": "Silikon Vadi. Cam ofis. LED ışıklar. Ve bir yapay zekanın yalanı.",
+          "timeLimit": 570,
+          "qaRationale": {
+            "c1": "L3 cinayet mahalli semantik olarak açık, s1–l1 optik kilit kaydıyla kuruludur.",
+            "c2": "H-19 Felix’in ayrıntı kodu; w1 demo probu ile somut biçimde bağlanır.",
+            "c3": "Steril kartuşlarda toksik baz yoktur; s1–w3 elenir.",
+            "c4": "Artefakt oyunu H-19 temsilinin CEO Ofisi kamerasına fiziksel kaynak olamayacağını gösterir; s2–l3 elenir.",
+            "leaveOneOut": "c1/c4 kaldırılırsa s3'ün l3 eşleşmesi kaybolur; c2/c3 kaldırılırsa w3 s3 yerine başka şüpheliye kalabilir."
+          },
+          "qaNarrativeContract": {
+            "narrativeClue": "Ajandadaki yansıma cümlesi, oyuncuyu kare oyununda ışık ve cam yönünü değerlendirmeye yöneltir.",
+            "linkedClueId": "c4",
+            "playerVisibleBridge": "‘Kamera, gözü kandırır; yansıma ise kimin gerçekten orada olmadığını.’"
+          },
+          "title": "Deepfake Tanık",
+          "subtitle": "Karanlık Ağ · Helix Vision Ofis Cinayeti",
+          "difficulty": "Polis Memuru",
+          "difficultyLevel": 2,
+          "specialMechanic": "şifreli_mesaj · deepfake_frame_artifact_analysis",
+          "story": "Helix Vision’ın kurucu CEO’su, sabah toplantısından önce özel çalışma alanında ölü bulundu. Masasında yarım kalmış bir fincan, güvenlik ekranında ise Dr. Zhao’nun koridora girdiğini gösteren kusursuz görünen bir kayıt vardı. Fakat görüntünün sesi yoktu; koridorun camında yansıması gereken acil çıkış lambası da yalnızca iki karede sönüyordu.\n\nŞirket, yüz manipülasyon yazılımını dünyaya satan bir yapay zekâ laboratuvarıydı. Dr. Zhao patent davasının merkezindeydi, yatırımcı Felix Hartmann şirketi satmak istiyordu, eski ortak Sofia Neves ise yıllar önce kendi teknolojisinin çalındığını söyleyerek ayrılmıştı.\n\nMaktulün ajandasında tek bir satır vardı: “Kamera, gözü kandırır; yansıma ise kimin gerçekten orada olmadığını.” O satır, kaydın her karesinin aynı gerçeği anlatmadığını işaret ediyordu. Bu yüzden tanığın yüzünü değil, ışığın tutarlı davranıp davranmadığını sorgulamak gerekiyordu. Sessizlik, kusurun en net işaretiydi.",
+          "atmosphere": "Kahve kokusu, sessiz koridor ve ekranda kusursuz görünen ama bir türlü güven vermeyen bir yüz.",
           "suspects": [
             {
               "id": "s1",
               "name": "YZ Araştırmacısı Dr. Zhao",
-              "icon": "👨",
-              "description": "Şirketi farklı bir yöne çekmek istiyordu. Etik tartışması.",
-              "detail": "42 yaşında, Çin asıllı, akademik, idealist."
+              "icon": "🧪",
+              "description": "Helix’in yüz sentezi ekibinin baş araştırmacısı. Araştırma kimliği Z-22.",
+              "detail": "Z-22 kimliği, optik sensör kalibrasyonunu yürütür. Patent dosyası nedeniyle CEO ile açık çatışma yaşamıştı."
             },
             {
               "id": "s2",
               "name": "Yatırımcı Felix Hartmann",
-              "icon": "👷",
-              "description": "50 milyon eurosu batma noktasında. Çözüm istiyordu.",
-              "detail": "55 yaşında, Alman, soğuk ve kâr odaklı."
+              "icon": "💼",
+              "description": "Şirketin acil satışını isteyen uluslararası yatırımcı.",
+              "detail": "H-19 otel yayın anahtarıyla uzaktan toplantı yapar. Donanım denemelerini sunmayı sever; şirket içi fiziksel erişimi sınırlıdır."
             },
             {
               "id": "s3",
               "name": "Eski Ortak Sofia Neves",
-              "icon": "👩",
-              "description": "Fikri çalındı ve şirketten atıldı. Dava açmak üzereydi.",
-              "detail": "38 yaşında, Portekizli, öfkeli ve haklı."
+              "icon": "👩‍💻",
+              "description": "Deepfake altyapısının ilk tasarımcısı olduğunu iddia eden eski ortak.",
+              "detail": "Yüz sentezi modellerinin erken sürümlerini ve hangi artefaktların sahte üretimde kaldığını çok iyi bilir."
             }
           ],
           "weapons": [
             {
               "id": "w1",
               "name": "Elektrikli Nesne (Modifiye)",
-              "icon": "🔌",
-              "description": "Ofis ekipmanı sabote edilmiş."
+              "icon": "⚡",
+              "description": "Kısa devre görünümlü, kontrollü elektriksel müdahale aracı.",
+              "detail": "Taşınabilir test cihazı gibi görünür; biyolojik toksin izleri bırakmaz."
             },
             {
               "id": "w2",
               "name": "Nörotoksik Sprey",
-              "icon": "🫧",
-              "description": "Klima sistemine karıştırılan madde."
+              "icon": "🧴",
+              "description": "Havaya yayılan, kısa mesafede etkili nörolojik ajan.",
+              "detail": "Kahve fincanına bırakılan çözeltiyle aynı kimyasal imzayı taşımaz."
             },
             {
               "id": "w3",
               "name": "Zehirli Kahve",
               "icon": "☕",
-              "description": "Akıllı kahve makinesine uzaktan zehir enjekte."
+              "description": "Kahve makinesinden son anda bardağa taşınmış yavaş etkili toksik karışım.",
+              "detail": "Fincanın iç çeperinde ikinci demleme sonrası oluşan ince kahverengi halka bulunur."
             }
           ],
           "locations": [
             {
               "id": "l1",
               "name": "Ar-Ge Laboratuvarı",
-              "icon": "🔭",
-              "description": "Ana araştırma ve geliştirme odası."
+              "icon": "🔬",
+              "description": "Optik kamera, lens testleri ve model eğitiminin yapıldığı kapalı laboratuvar.",
+              "detail": "Cam panellerindeki ışık yansıması, görüntü analizinde referans olarak kullanılır."
             },
             {
               "id": "l2",
               "name": "Yönetim Kurulu Odası",
-              "icon": "📋",
-              "description": "Üst kat toplantı salonu."
+              "icon": "🪑",
+              "description": "Yatırımcı görüşmelerinin yapıldığı ekranlı toplantı odası.",
+              "detail": "Dış bağlantı kioskları ve sunum cihazları burada tutulur."
             },
             {
               "id": "l3",
               "name": "CEO'nun Özel Ofisi",
-              "icon": "🖥️",
-              "description": "Maktulün çalışma odası."
+              "icon": "🏢",
+              "description": "Kurucu CEO’nun kilitli çalışma alanı.",
+              "detail": "Koridor kamerası ofis kapısını çapraz açıyla görür; cam yansımaları içerideki ışığı taşır."
             }
           ],
           "clues": [
             {
               "id": "c1",
-              "type": "kanit",
+              "title": "Ölüm Mahalli ve Laboratuvar Kilidi",
+              "type": "tanik",
+              "mechanicType": "text",
+              "text": "Toksik etki kahvenin son yudumundan sonra başlamış; cinayetin yönetici erişimi kısıtlı Y-03 çalışma hücresinde işlendiği kesinleşti. Aynı zaman aralığında Z-22 optik kilidi, içeriden yapılan iki ayrı kalibrasyonla kapalı kaldı.",
+              "deductionHint": "Ölümün gerçekleştiği alanı belirle; aynı kayıtta hangi kart başka bir odaya bağlanır?",
+              "isBonus": false,
               "revealOrder": 1,
               "isRevealed": true,
-              "pointCost": 0,
-              "title": "Ölüm Tespiti",
-              "text": "Maktul CEO ofisinde kahve fincanı yanında bulundu. Nörolojik hasar — yavaş etkili toksik madde. Güvenlik kamerası 'Dr. Zhao'yu' kaydetti — ama pixel analizi deepfake olduğunu gösteriyor.",
-              "mechanicType": "text",
-              "deductionHint": "Kamera görüntüsü sahte. Gerçek kim?"
+              "pointCost": 0
             },
             {
               "id": "c2",
-              "type": "face_match",
+              "title": "Yatırımcı Demo Çantası",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "H-19 yayın anahtarıyla ilişkilendirilen demo çantasında, yalnızca iletken test probu vardı. Cihaz seri numarası, aynı anahtarla açılan sunum paketinin içine kaydedilmişti.",
+              "deductionHint": "Bu mühür, hangi kişinin hangi araçla eşleştiğini doğrular?",
+              "isBonus": false,
               "revealOrder": 2,
               "isRevealed": false,
-              "pointCost": 70,
-              "title": "Yüz Tanıma Analizi",
-              "text": "Deepfake kamera görüntüsündeki yüzü gerçek şüphelilerle karşılaştır.",
-              "mechanicType": "face_match",
-              "fotoVerisi": {
-                "aciklama": "Deepfake görüntüdeki yüz geometrisi ile şüphelilerin yüz ölçümleri karşılaştırılıyor.",
-                "olayYeriIzi": {
-                  "gozArasi": "68mm",
-                  "burunUzunluk": "52mm",
-                  "elmacikKemigi": "140mm"
-                },
-                "supheliAyakkabilari": [
-                  {
-                    "suspectId": "s1",
-                    "gozArasi": "61mm",
-                    "burunUzunluk": "48mm",
-                    "elmacikKemigi": "135mm",
-                    "eslesme": false
-                  },
-                  {
-                    "suspectId": "s2",
-                    "gozArasi": "72mm",
-                    "burunUzunluk": "55mm",
-                    "elmacikKemigi": "145mm",
-                    "eslesme": false
-                  },
-                  {
-                    "suspectId": "s3",
-                    "gozArasi": "68mm",
-                    "burunUzunluk": "52mm",
-                    "elmacikKemigi": "140mm",
-                    "eslesme": true
-                  }
-                ],
-                "sonuc": "Deepfake Dr. Zhao yüzüyle yapılmış ama altındaki yüz geometrisi: Sofia Neves."
-              },
-              "deductionHint": "Deepfake kimin yüzü üzerine kurulu?"
+              "pointCost": 0
             },
             {
               "id": "c3",
-              "type": "phone_chain",
+              "title": "Kahve Halkasındaki Enzim Ayrımı",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Fincandaki kahverengi halka, steril protein çözücüsünü değil ikinci demlemeye eklenen toksik bazın enzim izini taşıyor. Z-22 araştırma hattı kartuşlarında bu bazın üretildiği hiçbir kanal yok.",
+              "deductionHint": "Isı ve kalıntı karşılaştırması, ilk kişiyi hangi içecek seçeneğinden dışarıda bırakır?",
+              "isBonus": false,
               "revealOrder": 3,
               "isRevealed": false,
-              "pointCost": 70,
-              "title": "Akıllı Kahve Makinesi Log Kaydı",
-              "text": "Kahve makinesine uzaktan erişim logları.",
-              "mechanicType": "phone_chain",
-              "phoneVerisi": {
-                "aciklama": "Makineye erişim zincirini takip et.",
-                "mesajlar": [
-                  {
-                    "id": "m1",
-                    "gonderen": "Bilinmeyen IP",
-                    "alici": "Kahve Makinesi API",
-                    "icerik": "remote_inject(substance_X, port_3)",
-                    "saat": "08:45"
-                  },
-                  {
-                    "id": "m2",
-                    "gonderen": "Kahve Makinesi",
-                    "alici": "Sunucu",
-                    "icerik": "inject_confirmed — brewing_start",
-                    "saat": "08:46"
-                  },
-                  {
-                    "id": "m3",
-                    "gonderen": "Bilinmeyen IP",
-                    "alici": "Güvenlik_Kamera_API",
-                    "icerik": "overlay_face(zhao_model, timeline:09:00-09:15)",
-                    "saat": "08:50"
-                  }
-                ],
-                "sonuc": "Aynı IP hem kahveye hem kameraya erişti. IP: Sofia Neves'in eski şirketi sunucusu."
-              },
-              "deductionHint": "Eski şirket sunucusu Sofia'ya ait."
+              "pointCost": 0
             },
             {
               "id": "c4",
-              "type": "anagram",
+              "title": "Kare Artefakt Analizi",
+              "type": "sifreli",
+              "mechanicType": "sifreli_mesaj",
+              "text": "Koridor kaydından seçilen dört ham kare, sıkıştırma maskesiyle birlikte izole edildi. Üstte yalnızca kare numaraları ve üç teknik işaret kalmıştı.",
+              "deductionHint": "Dört karedeki işaretleri karşılaştır; sonuç hangi kişi–oda hücresini siler?",
+              "isBonus": false,
               "revealOrder": 4,
               "isRevealed": false,
-              "pointCost": 70,
-              "title": "Sofia'nın İlk Patent Başvurusu",
-              "text": "Sofia'nın çalındığını iddia ettiği patentin orijinal başlığında anagram.",
-              "mechanicType": "anagram",
-              "anagramVerisi": {
-                "karisik": "AIDE NET FAKES",
-                "dogru": "FAKE IDEA NETS",
-                "aciklama": "'FAKE IDEA NETS' — deepfake tabanlı güvenlik sistemi. Sofia bu teknolojiyi 3 yıl önce geliştirdi. Şirkete bu teknolojiyle sızdı.",
-                "ipucu": "12 harf, 3 kelime."
-              },
-              "deductionHint": "Deepfake teknolojiyi kim geliştirdi?"
+              "pointCost": 0,
+              "sifre": {
+                "sifreleTuru": "kare artefaktı sınıflandırma",
+                "sifrelenmis": "K-14 / K-18 / K-21 / K-26",
+                "cozulmus": "YANSI-3",
+                "answerAliases": [
+                  "Yansi3",
+                  "Artifact 3",
+                  "Artefakt 3"
+                ],
+                "cozumIpucu": "Gerçek görüntüde göz kırpma aralığı süreklidir; sahte katmanda yansıma yönü değişmez ve chroma saçakları yüz kenarında kalır.",
+                "aciklama": "Kare–artefakt eşleştirmesi, sahte görüntünün hangi erişim anlatısını taşıyamadığını açığa çıkarır; bu eşleştirme ızgarada kişi–mekân elemesini destekler.",
+                "presentation": {
+                  "style": "deepfake_frame_artifact_analysis",
+                  "title": "Kare Artefakt Analizi",
+                  "subtitle": "Her karede tek baskın kusur var. Göz kırpma, yansıma yönü ve chroma saçağını doğru kareyle eşleştir.",
+                  "purposeHint": "Doğru artefakt dizisi, görüntüde temsil edilen kimliğin ofis kamerasına fiziksel kaynak olamayacağını gösterir; sonucu ızgarada eleme olarak kullan.",
+                  "resultText": "Artefakt dizisi, temsil edilen kimliğin ofis kamerasına fiziksel kaynak olamayacağını gösterir.",
+                  "interaction": {
+                    "mode": "frame_artifact_assignment",
+                    "submitLabel": "Kareleri İncele",
+                    "successMessage": "Kusurlar aynı sahte katmanı işaret ediyor.",
+                    "failureMessage": "Karelerdeki ışık davranışı bu eşlemeyle tutarlı değil."
+                  },
+                  "frames": [
+                    {
+                      "id": "k14",
+                      "label": "KARE 14 · 09:02:11",
+                      "visual": "sol göz / pencere yansıması",
+                      "correctArtifactId": "blink"
+                    },
+                    {
+                      "id": "k18",
+                      "label": "KARE 18 · 09:02:13",
+                      "visual": "çene çizgisi / cam izi",
+                      "correctArtifactId": "chroma"
+                    },
+                    {
+                      "id": "k21",
+                      "label": "KARE 21 · 09:02:17",
+                      "visual": "koridor lambası / gölge",
+                      "correctArtifactId": "reflection"
+                    },
+                    {
+                      "id": "k26",
+                      "label": "KARE 26 · 09:02:20",
+                      "visual": "saç çizgisi / yeniden örnekleme",
+                      "correctArtifactId": "resample"
+                    }
+                  ],
+                  "artifacts": [
+                    {
+                      "id": "blink",
+                      "label": "Göz kırpma ritmi",
+                      "note": "Ardışık karelerde kas hareketi doğal değil."
+                    },
+                    {
+                      "id": "chroma",
+                      "label": "Chroma saçağı",
+                      "note": "Yüz kenarında renk taşması var."
+                    },
+                    {
+                      "id": "reflection",
+                      "label": "Yansıma yönü",
+                      "note": "Cam ışığı baş dönüşüyle birlikte değişmeli."
+                    },
+                    {
+                      "id": "resample",
+                      "label": "Yeniden örnekleme",
+                      "note": "Saç çizgisinde eşit aralıklı keskinlik kaybı var."
+                    }
+                  ]
+                }
+              }
             },
             {
               "id": "c5",
-              "type": "eleme",
+              "title": "Kurul Odası Soket Kaydı",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Yönetim Kurulu Odası’ndaki sunum prizinde Felix’in demo probuna ait iletken toz bulundu. Aynı oturumda Dr. Zhao’nun laboratuvar kartı görünmedi.",
+              "deductionHint": "Bu ek kayıt, hangi kartı ikinci çalışma alanına bağlar?",
+              "isBonus": true,
               "revealOrder": 5,
               "isRevealed": false,
-              "pointCost": 70,
-              "title": "Zhao ve Hartmann Alibisi",
-              "text": "Dr. Zhao sabah 08:30-10:00 arası konferansta — 500 kişi ve canlı yayın kaydı. Hartmann Münih'te toplantıdaydı — uçuş ve otel kaydı.",
-              "mechanicType": "text",
-              "deductionHint": "Zhao ve Hartmann fiziksel olarak orada değildi."
+              "pointCost": 60
             },
             {
               "id": "c6",
-              "type": "dna_match",
+              "title": "Model Sürüm Notu",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Ofis kahve makinesinin çıkış tepsisinde, yalnız ikinci sıcak içecek hattında kullanılan mineral karışımına ait mikro tortu bulundu. Tortu, laboratuvardan taşınan ekipmanda değil, başka bir çalışma setinde yoğunlaşıyordu.",
+              "deductionHint": "Bu ek tortu, hangi kişinin ikinci sıcak içecek seçeneğiyle eşleştiğini doğrular?",
+              "isBonus": true,
               "revealOrder": 6,
               "isRevealed": false,
-              "pointCost": 70,
-              "title": "Klavye Temas İzi",
-              "text": "Uzaktan erişim komutlarının girildiği laptop klavyesinde biyometrik iz.",
-              "mechanicType": "dna_match",
-              "dnaVerisi": {
-                "aciklama": "Klavye izini üç şüpheliyle eşleştir.",
-                "ornekProfil": {
-                  "lokus1": "GC",
-                  "lokus2": "TA",
-                  "lokus3": "AT"
-                },
-                "supheliProfiller": [
-                  {
-                    "suspectId": "s1",
-                    "lokus1": "AT",
-                    "lokus2": "GC",
-                    "lokus3": "TT",
-                    "eslesme": false
-                  },
-                  {
-                    "suspectId": "s2",
-                    "lokus1": "CC",
-                    "lokus2": "GG",
-                    "lokus3": "AA",
-                    "eslesme": false
-                  },
-                  {
-                    "suspectId": "s3",
-                    "lokus1": "GC",
-                    "lokus2": "TA",
-                    "lokus3": "AT",
-                    "eslesme": true
-                  }
-                ],
-                "sonuc": "Klavye izi: Sofia Neves."
-              },
-              "deductionHint": "Komutları giren Sofia."
-            },
-            {
-              "id": "c7",
-              "type": "timeline",
-              "revealOrder": 7,
-              "isRevealed": false,
-              "pointCost": 70,
-              "title": "Saldırı Zaman Çizelgesi",
-              "text": "Dijital saldırının adımlarını kronolojik sıraya diz.",
-              "mechanicType": "timeline_sort",
-              "timelineVerisi": {
-                "aciklama": "Saldırı adımlarını doğru sıraya diz.",
-                "olaylar": [
-                  {
-                    "id": "t1",
-                    "metin": "08:30 — Sofia eski şirket sunucusuna bağlandı",
-                    "dogruSira": 1
-                  },
-                  {
-                    "id": "t2",
-                    "metin": "08:45 — Kahve makinesine zehir enjekte edildi",
-                    "dogruSira": 2
-                  },
-                  {
-                    "id": "t3",
-                    "metin": "08:50 — Güvenlik kamerasına Dr. Zhao deepfake'i yüklendi",
-                    "dogruSira": 3
-                  },
-                  {
-                    "id": "t4",
-                    "metin": "09:05 — Maktul kahvesini içti",
-                    "dogruSira": 4
-                  },
-                  {
-                    "id": "t5",
-                    "metin": "09:47 — Maktul hayatını kaybetti",
-                    "dogruSira": 5
-                  },
-                  {
-                    "id": "t6",
-                    "metin": "10:15 — Sofia polise 'Dr. Zhao'yu gördüm' diye ihbarda bulundu",
-                    "dogruSira": 6
-                  }
-                ],
-                "sonuc": "Sofia hem suçu işledi hem sahte tanık oldu."
-              },
-              "deductionHint": "Sofia ihbar eden aynı zamanda katil."
-            },
-            {
-              "id": "c8",
-              "type": "ses_kaydi",
-              "revealOrder": 8,
-              "isRevealed": false,
-              "pointCost": 70,
-              "title": "Sofia'nın Avukatıyla Görüşmesi",
-              "text": "[Mahkeme öncesi avukat-müvekkil görüşmesi sızdı] Sofia: 'Deepfake teknolojiyi ben yaptım. O çaldı. Mahkeme çok uzun sürer. Ben daha hızlı bir yol buldum.' Avukat: 'Sofia, bu itiraf—' Sofia: 'Kaydetme.'",
-              "mechanicType": "ses_kaydi",
-              "sesMetni": "Sofia'nın sesi sakin ve hesaplı. Pişman değil.",
-              "deductionHint": "Sofia'nın kendi itirafı."
+              "pointCost": 70
             }
           ],
+          "assetManifest": [],
           "solution": {
             "suspectId": "s3",
             "weaponId": "w3",
             "locationId": "l3"
           },
-          "solutionNarrative": "Sofia Neves, geliştirdiği deepfake teknolojisini hem silah hem kamuflaj olarak kullandı. Kahve makinesini uzaktan hackleyip zehirledi, Dr. Zhao'nun görüntüsünü kameraya yükledi ve sahte tanık olarak ihbarda bulundu.",
-          "specialMechanic": "face_match_phone_dna_timeline"
+          "solutionNarrative": "Sofia, yıllar önce geliştirdiği sistemin şirket tarafından kendisinden koparıldığına inanıyordu. CEO’yu ofisinde zehirli kahveyle öldürdü; ardından Dr. Zhao’nun yüzünü kullanarak koridor kamerasına kusursuz görünen bir örtü yerleştirdi. Zhao laboratuvarında, Felix ise kendi demo düzeniyle başka eşleşmelerde kalınca, kahvenin ve ofisin yalnız Sofia’da kesiştiği görüldü. Deepfake, tanık yaratmadı; yalnızca gerçeğin ışığını yanlış yüzün üstüne taşıdı.",
+          "replitIntegration": {
+            "schema": "fm_replit_runtime_contract_v1",
+            "copyTarget": "Replit Agent prompt",
+            "canonicalCaseFile": "src/data/cases/dij_002.json",
+            "policy": "Var olan renderer varsa onu bozma; yoksa bu paketteki component ve dispatcher dalını ekle.",
+            "mechanics": [
+              {
+                "clueId": "c4",
+                "mechanicType": "sifreli_mesaj",
+                "renderer": "deepfake_frame_artifact_analysis",
+                "completionEvent": "onSolved({ clueId, mechanic: \"sifreli_mesaj\" })"
+              }
+            ]
+          }
         },
         {
           "puzzleId": "dij_003",
-          "title": "Karanlık Ağın Son Adresi",
-          "subtitle": "Dark Web & Siber Suç",
-          "difficulty": 5,
-          "difficultyLabel": "Baş Komiser",
-          "stars": "★★★★★",
+          "stars": "★★★☆☆",
           "gridSize": "4x4",
-          "timeLimit": 360,
-          "story": "Dark web'in en büyük illegal pazar yeri kapatıldı. Piyasanın kurucusu aynı gece ölü bulundu. Dört şüpheli, hepsi dark web dünyasından.",
-          "atmosphere": "Tor ağı. Şifreli mesajlar. Anonim kimlikler. Ve fiziksel bir ceset.",
+          "timeLimit": 660,
+          "qaRationale": {
+            "c1": "L1 ölüm mahalli semantik çapa; C-04 logu s1–l4 eşleşmesi.",
+            "c2": "V-12 kodu Void kartıyla, soğuk zincir etiketi w2 ile görünür biçimde bağlanır.",
+            "c3": "Kablo lifleri s1 ve s4'ü w4'ten eler.",
+            "c4": "Node grafiği s2/s4'ün l1 fiziksel rotasını dışlar.",
+            "leaveOneOut": "c1 yoksa s1 l1 olabilir; c2 yoksa s2 w4 olabilir; c3 yoksa s1/s4 w4 olabilir; c4 yoksa s2/s4 l1 olabilir."
+          },
+          "qaNarrativeContract": {
+            "narrativeClue": "Murat’ın ‘en kısa yol gerçek yol değildir’ notu, oyuncuya grafik oyununda mesafe yerine gecikme toplamını izlemesi gerektiğini adil biçimde söyler.",
+            "linkedClueId": "c4",
+            "playerVisibleBridge": "‘Düğümün gecikmesi, nereden geçtiğini söyler.’"
+          },
+          "title": "Karanlık Ağın Son Adresi",
+          "subtitle": "Karanlık Ağ · Dördüncü Düğüm Operasyonu",
+          "difficulty": "Dedektif",
+          "difficultyLevel": 3,
+          "specialMechanic": "şifreli_mesaj · tor_node_route",
+          "story": "Kapalı bir altyapı tesisinde, karanlık ağ pazarının muhasebe sorumlusu Murat Kadir ölü bulundu. Boynunda ince bir ağ hattı, açık bırakılmış bir operasyon dosyası ve soğuk odanın kapısında üç farklı yönlendirme izi vardı. Baskın resmî olarak 23.00’te planlanmıştı; ölüm ise bundan çok önce gerçekleşmişti.\n\nŞüpheliler birbirinden farklı türde güç taşıyordu: FBI ajanı Cipher operasyonu başlatmış, rakip pazar sahibi Void müşterileri kaçırmak istemiş, eski ortak Nexus payının sıfırlanmasına öfkelenmiş, İnterpol dedektifi Marlowe ise baskını dışarıdan koordine etmişti.\n\nMurat’ın dizüstü bilgisayarındaki son taslak, “En kısa yol gerçek yol değildir; düğümün gecikmesi, nereden geçtiğini söyler” cümlesiyle bitiyordu. Bu kez adresi bulmak için isimlere değil, paketlerin yoluna bakmak gerekiyordu. Dört rota aynı terminalde başlıyor gibi görünse de, gecikme izleri her birinin farklı bir geçmiş taşıdığını söylüyordu.",
+          "atmosphere": "Kabloların içinden geçen veri akışı kesilmişti. Fakat odadaki en sessiz kablo, bir insanın son nefesini hâlâ taşıyordu.",
           "suspects": [
             {
               "id": "s1",
               "name": "FBI Ajanı 'Cipher'",
               "icon": "🕵️",
-              "description": "Undercover ajan. 2 yıldır içeride. Ne kadar ileri gitti?",
-              "detail": "Kimliği gizli, sadece dijital iz var."
+              "description": "Gizli operasyonun saha ajanı; Murat’ı koruma vaadiyle çiftliğe çağırdı.",
+              "detail": "C-04 saha anahtarı Undercover Ev’in iç terminaline bağlıdır. Operasyon yetkisi var, fakat hareketleri komuta kayıtlarına bağlı."
             },
             {
               "id": "s2",
               "name": "Rakip Market Sahibi 'Void'",
-              "icon": "🧑‍💻",
-              "description": "Rakip dark web marketi. Rakibinin düşmesi işine yarar.",
-              "detail": "Anonim, acımasız, dijital ayak izi bırakmaz."
+              "icon": "🕶️",
+              "description": "Rakip dark web pazarının sahibi; müşteri kaybı ve veri savaşı içinde.",
+              "detail": "V-12 yönlendirme etiketi kripto kafe erişiminden kullanılır. Fiziksel iz bırakmamak için aracı düğümler kullanır."
             },
             {
               "id": "s3",
               "name": "Eski Ortak 'Nexus'",
-              "icon": "⚡",
-              "description": "Maktul tarafından dışlanan kurucu ortak. Payını istiyor.",
-              "detail": "Kızgın, intikamcı, teknik bilgisi yüksek."
+              "icon": "🔗",
+              "description": "Pazarın erken dönem ortağı; imza değişikliğiyle payı sıfıra düşürüldü.",
+              "detail": "N-31 kimlik etiketi yıllar önce çiftlik bakım sözleşmelerinde görünür. Kablo altyapısını en iyi bilen eski ortaktır."
             },
             {
               "id": "s4",
               "name": "İnterpol Dedektifi Marlowe",
-              "icon": "noun-detective-1574359-avatar.png",
-              "description": "Uluslararası operasyonu yürüten ajan. 'Temiz' mi?",
-              "detail": "50 yaşında, deneyimli, amaç araçları mı meşrulaştırır?"
+              "icon": "🌐",
+              "description": "Operasyonu uluslararası ekiplerle koordine eden dedektif.",
+              "detail": "M-08 komuta anahtarı liman deposundaki mobil merkezle eşleşir. Baskın saatinden önce saha değişikliği yapamaz."
             }
           ],
           "weapons": [
             {
               "id": "w1",
               "name": "Donanım Trojan",
-              "icon": "💾",
-              "description": "Fiziksel bilgisayara eklenen gizli chip."
+              "icon": "🧷",
+              "description": "Cihaza fiziksel takılan, veri sızdırmak için kullanılan mikro donanım.",
+              "detail": "Ölümcül kuvvet üretmez; yalnız ağ paketlerini yönlendirir."
             },
             {
               "id": "w2",
               "name": "Zehirli Enjeksiyon",
               "icon": "💉",
-              "description": "Hızlı etkili nörotoksin."
+              "description": "Hızlı etkili kimyasal uygulama aracı.",
+              "detail": "Kablo lifleri veya boyun basınç izleriyle uyuşmayan bir yöntemdir."
             },
             {
               "id": "w3",
               "name": "Uzaktan Tetikleyici",
               "icon": "📡",
-              "description": "RF sinyaliyle aktive olan patlayıcı."
+              "description": "Önceden yerleştirilmiş cihazı uzaktan çalıştıran kontrol aparatı.",
+              "detail": "Aynı anda fiziksel kablo basıncı oluşturamaz."
             },
             {
               "id": "w4",
               "name": "Boğma (Kablo)",
-              "icon": "🪢",
-              "description": "Ethernet kablosu."
+              "icon": "🔌",
+              "description": "Ethernet kablosunu doğrudan basınç aracına çeviren fiziksel yöntem.",
+              "detail": "Boyun çevresindeki paralel izler, kablonun iki kez dolandığını gösterir."
             }
           ],
           "locations": [
             {
               "id": "l1",
               "name": "Sunucu Çiftliği (Gizli)",
-              "icon": "🏭",
-              "description": "Dark web'in fiziksel altyapısı."
+              "icon": "🗄️",
+              "description": "Kapalı devre soğutma ve bakım koridorlarıyla saklanan fiziksel veri tesisi.",
+              "detail": "Dört yönlendirme düğümünün yalnız biri bu tesise düşük gecikmeyle bağlanır."
             },
             {
               "id": "l2",
               "name": "Kripto Kafe",
               "icon": "☕",
-              "description": "Anonim buluşma noktası."
+              "description": "Kimliksiz ödeme terminalleri ve geçici cüzdanlar için kullanılan kalabalık mekân.",
+              "detail": "V-12 etiketi burada herkese açık relay terminaliyle görünür."
             },
             {
               "id": "l3",
               "name": "Liman Deposu",
               "icon": "⚓",
-              "description": "Fiziksel teslimat deposu."
+              "description": "Saha ekiplerinin geçici lojistik alanı.",
+              "detail": "M-08 komuta anahtarının mobil ekipmanları bu alanda bulunur."
             },
             {
               "id": "l4",
               "name": "Undercover Ev",
               "icon": "🏠",
-              "description": "FBI'ın gizli operasyon üssü."
+              "description": "FBI’ın operasyon öncesi gözlem ve görüşme evi.",
+              "detail": "C-04 saha anahtarı bina içindeki şifreli ağla eşleşir."
             }
           ],
           "clues": [
             {
               "id": "c1",
-              "type": "kanit",
+              "title": "Ölüm Mahalli ve Saha Anahtarı",
+              "type": "evidence",
+              "mechanicType": "text",
+              "text": "Adli basınç izi, Murat’ın kapalı devre soğutma ve bakım koridorlarıyla saklanan tesiste öldürüldüğünü; cesedin taşınmadığını gösterdi. Aynı sırada C-04 saha anahtarı, operasyon öncesi gözlem evinin iç terminalinde kesintisiz doğrulandı.",
+              "deductionHint": "Ölüm alanını belirle; C-04 saha anahtarı hangi alternatif adreste doğrulanıyor?",
+              "isBonus": false,
               "revealOrder": 1,
               "isRevealed": true,
-              "pointCost": 0,
-              "title": "Ölüm Yeri",
-              "text": "Maktul gizli sunucu çiftliğinde ethernet kablosuyla boğulmuş halde bulundu. Yanında laptop açık — son açık sekme: FBI operasyon dosyası.",
-              "mechanicType": "text",
-              "deductionHint": "Boğma, sunucu çiftliği. FBI dosyası açık — neden?"
+              "pointCost": 0
             },
             {
               "id": "c2",
-              "type": "phone_chain",
+              "title": "Kafe Teslim Tutanağı",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Void adına imzalanan teslim tutanağında, hızlı etkili kimyasal uygulama kitlerinde bulunan soğuk zincir etiketi V-12 oturumuyla eşleşti. Etiketin seri numarası, kapalı terminalden yüklenmişti.",
+              "deductionHint": "Teslim numarası, V-12 oturumunu hangi uygulama aracıyla aynı hücreye getirir?",
+              "isBonus": false,
               "revealOrder": 2,
               "isRevealed": false,
-              "pointCost": 110,
-              "title": "Son 24 Saatin Mesaj Zinciri",
-              "text": "Dark web anonim mesajlaşma platformundaki son mesajlar.",
-              "mechanicType": "phone_chain",
-              "phoneVerisi": {
-                "aciklama": "Anonim kimliklerin mesaj zincirini takip et.",
-                "mesajlar": [
-                  {
-                    "id": "m1",
-                    "gonderen": "Cipher (FBI)",
-                    "alici": "Maktul",
-                    "icerik": "Operasyon yarın. Seni koruyabilirim — sunucu çiftliğine gel.",
-                    "saat": "20:00"
-                  },
-                  {
-                    "id": "m2",
-                    "gonderen": "Nexus",
-                    "alici": "Void",
-                    "icerik": "Cipher tuzak kuruyor. Önce biz hareket edelim.",
-                    "saat": "20:30"
-                  },
-                  {
-                    "id": "m3",
-                    "gonderen": "Void",
-                    "alici": "Nexus",
-                    "icerik": "Hayır. Senin işin.",
-                    "saat": "20:45"
-                  },
-                  {
-                    "id": "m4",
-                    "gonderen": "Marlowe (İnterpol)",
-                    "alici": "Cipher",
-                    "icerik": "Maktulü orada tut. Operasyon saat 23:00.",
-                    "saat": "21:00"
-                  }
-                ],
-                "sonuc": "Cipher maktulü tuzağa çekti ama öldürmesi emirde yoktu. Nexus 'önce hareket edelim' dedi. Void reddetti. Aradaki boşlukta Nexus mı harekete geçti?"
-              },
-              "deductionHint": "Nexus 'önce hareket edelim' dedi. Sonra ne oldu?"
+              "pointCost": 0
             },
             {
               "id": "c3",
-              "type": "dna_match",
+              "title": "Kablo Basıncı ve Eldiven Lifleri",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Ethernet kablosundaki iki farklı eldiven lifinden C-04 ve M-08 ekipmanlarında kullanılan polimer bulunmadı. Boyun basıncını oluşturan kişinin, bu iki görev anahtarından biriyle kabloyu kullanmadığı anlaşıldı.",
+              "deductionHint": "Liflerin yokluğu, hangi iki kimliği listedeki son araçtan dışarıda bırakır?",
+              "isBonus": false,
               "revealOrder": 3,
               "isRevealed": false,
-              "pointCost": 110,
-              "title": "Ethernet Kablosu DNA",
-              "text": "Kablo üzerinde temas DNA'sı.",
-              "mechanicType": "dna_match",
-              "dnaVerisi": {
-                "aciklama": "Kablo üzerindeki DNA'yı dört şüpheliyle eşleştir.",
-                "ornekProfil": {
-                  "lokus1": "CC",
-                  "lokus2": "TT",
-                  "lokus3": "AG"
-                },
-                "supheliProfiller": [
-                  {
-                    "suspectId": "s1",
-                    "lokus1": "AT",
-                    "lokus2": "GC",
-                    "lokus3": "TA",
-                    "eslesme": false
-                  },
-                  {
-                    "suspectId": "s2",
-                    "lokus1": "GG",
-                    "lokus2": "CC",
-                    "lokus3": "TT",
-                    "eslesme": false
-                  },
-                  {
-                    "suspectId": "s3",
-                    "lokus1": "CC",
-                    "lokus2": "TT",
-                    "lokus3": "AG",
-                    "eslesme": true
-                  },
-                  {
-                    "suspectId": "s4",
-                    "lokus1": "AA",
-                    "lokus2": "TG",
-                    "lokus3": "CC",
-                    "eslesme": false
-                  }
-                ],
-                "sonuc": "DNA eşleşmesi: Nexus."
-              },
-              "deductionHint": "Kabloyu tutan Nexus."
+              "pointCost": 0
             },
             {
               "id": "c4",
-              "type": "anagram",
+              "title": "Tor Düğüm Güzergâhı",
+              "type": "sifreli",
+              "mechanicType": "sifreli_mesaj",
+              "text": "Cihazda dört giriş düğümü ve iki sahte geçiş kaydı bulundu. Murat’ın taslağı, doğru hattın en kısa değil gecikmesi tutarlı olan rota olduğunu söylüyordu.",
+              "deductionHint": "Gecikme eşiğini kur; rota sonucu hangi iki kişi–yer eşleşmesini siler?",
+              "isBonus": false,
               "revealOrder": 4,
               "isRevealed": false,
-              "pointCost": 110,
-              "title": "Nexus'un Gerçek Kimliği",
-              "text": "Nexus rumuzunun altındaki gerçek isim şifreli bir mesajda gizlenmiş.",
-              "mechanicType": "anagram",
-              "anagramVerisi": {
-                "karisik": "SNUXE LAER",
-                "dogru": "NEXUS LARE",
-                "aciklama": "'NEXUS LARE' → 'LARE NEXUS' → Lare takma adı. İnterpol kayıtlarında: Lare = Marcus Elarne, kovuşturmadan kaçan eski banka siber suç uzmanı.",
-                "ipucu": "10 harf. Bir takma ad ve bir gerçek ismin parçası."
-              },
-              "deductionHint": "Nexus'un gerçek kimliği bir suç uzmanı."
+              "pointCost": 0,
+              "sifre": {
+                "sifreleTuru": "Tor düğüm rotası",
+                "sifrelenmis": "Giriş → relay → çıkış → tesis",
+                "cozulmus": "ROTA-N",
+                "answerAliases": [
+                  "RotaN",
+                  "N route",
+                  "Nexus path"
+                ],
+                "cozumIpucu": "Her geçiş yalnız tanımlı kenarlardan ilerler. Toplam gecikme 132 ms olmalı; aynı ülkedeki iki ardışık düğüm sahte aktarma olarak elenir.",
+                "aciklama": "Düğüm rotasını eşleştirmek, iki saha anahtarının tesis geçişiyle bağdaşmadığını açığa çıkarır; bu rota ızgarada kişi–mekân elemesini tamamlar.",
+                "presentation": {
+                  "style": "tor_node_route",
+                  "title": "Tor Düğüm Güzergâhı",
+                  "subtitle": "Düğümlere yalnız izinli bağlantılarla ilerle. Gerçek rota 132 ms gecikme verir; kısa görünen yollar sahte aktarım içerir.",
+                  "purposeHint": "Doğru rota, iki yönlendirme etiketinin gizli tesisle fiziksel erişim bağlantısı kuramadığını gösterir; sonucu ızgarada iki eleme olarak işle.",
+                  "resultText": "Geçerli paket rotası, iki dış yönlendirme etiketinin tesis düğümüne girmediğini gösterir.",
+                  "interaction": {
+                    "mode": "graph_path",
+                    "submitLabel": "Rotayı Doğrula",
+                    "successMessage": "Gecikme bütçesi tutarlı; sahte geçişler dışarıda kaldı.",
+                    "failureMessage": "Bu yol ya yasak bir bağlantı kullanıyor ya da gecikme bütçesini bozuyor."
+                  },
+                  "nodes": [
+                    {
+                      "id": "n0",
+                      "label": "GİRİŞ · 17 ms",
+                      "x": 0,
+                      "y": 1
+                    },
+                    {
+                      "id": "n1",
+                      "label": "RELAY A · 29 ms",
+                      "x": 1,
+                      "y": 0
+                    },
+                    {
+                      "id": "n2",
+                      "label": "RELAY B · 38 ms",
+                      "x": 1,
+                      "y": 2
+                    },
+                    {
+                      "id": "n3",
+                      "label": "ÇIKIŞ N · 48 ms",
+                      "x": 2,
+                      "y": 1
+                    },
+                    {
+                      "id": "n4",
+                      "label": "SAHTE X · 11 ms",
+                      "x": 2,
+                      "y": 0
+                    },
+                    {
+                      "id": "n5",
+                      "label": "TESİS · 0 ms",
+                      "x": 3,
+                      "y": 1
+                    }
+                  ],
+                  "edges": [
+                    [
+                      "n0",
+                      "n1"
+                    ],
+                    [
+                      "n0",
+                      "n2"
+                    ],
+                    [
+                      "n1",
+                      "n4"
+                    ],
+                    [
+                      "n2",
+                      "n3"
+                    ],
+                    [
+                      "n4",
+                      "n5"
+                    ],
+                    [
+                      "n3",
+                      "n5"
+                    ]
+                  ],
+                  "correctPath": [
+                    "n0",
+                    "n2",
+                    "n3",
+                    "n5"
+                  ],
+                  "targetLatency": 103
+                }
+              }
             },
             {
               "id": "c5",
-              "type": "timeline",
+              "title": "Bakım Sözleşmesi Kopyası",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Eski bakım kartında C-04 etiketli iş istasyonunun yalnız ağ paketlerini saklayan örnek dosyayı çalıştırdığı görüldü. Dosya başlığındaki imza, kablo basıncıyla ilişkili olmayan dijital yükleyiciye aitti.",
+              "deductionHint": "Bu ek kayıt, ilk etiketi hangi dijital yönteme bağlar?",
+              "isBonus": true,
               "revealOrder": 5,
               "isRevealed": false,
-              "pointCost": 110,
-              "title": "Operasyon Gecesi Zaman Çizelgesi",
-              "text": "O geceye ait olayları doğru sıraya diz.",
-              "mechanicType": "timeline_sort",
-              "timelineVerisi": {
-                "aciklama": "Operasyon gecesindeki olayları sırala.",
-                "olaylar": [
-                  {
-                    "id": "t1",
-                    "metin": "21:30 — Maktul sunucu çiftliğine vardı",
-                    "dogruSira": 1
-                  },
-                  {
-                    "id": "t2",
-                    "metin": "21:45 — Nexus aynı binaya girdi (CCTV)",
-                    "dogruSira": 2
-                  },
-                  {
-                    "id": "t3",
-                    "metin": "22:15 — Maktul son mesajını gönderdi: 'Birisi var—'",
-                    "dogruSira": 3
-                  },
-                  {
-                    "id": "t4",
-                    "metin": "22:20 — Ölüm gerçekleşti",
-                    "dogruSira": 4
-                  },
-                  {
-                    "id": "t5",
-                    "metin": "23:00 — FBI/İnterpol baskın yaptı, maktul ölü bulundu",
-                    "dogruSira": 5
-                  }
-                ],
-                "sonuc": "Nexus 21:45'te binaya girdi. Ölüm 22:20'de. Yeterli zaman var."
-              },
-              "deductionHint": "Nexus zamanlaması uyuyor."
+              "pointCost": 75
             },
             {
               "id": "c6",
-              "type": "eleme",
+              "title": "Komuta Merkezi Telsiz Döngüsü",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "M-08 anahtarının baskın öncesi liman deposundaki telsiz döngüsüne bağlandığı görüldü. Kayıt, Marlowe’un resmî operasyon rolünü teyit ediyor.",
+              "deductionHint": "Bu ek tutanak, son etiketi hangi alternatif adrese bağlar?",
+              "isBonus": true,
               "revealOrder": 6,
               "isRevealed": false,
-              "pointCost": 110,
-              "title": "Void ve Cipher Alibisi",
-              "text": "Void operasyon anında Tor ağında aktif — log kaydı. Cipher (FBI ajanı) baskın hazırlığındaydı — İnterpol teyit etti. Marlowe komuta merkezindeydi.",
-              "mechanicType": "text",
-              "deductionHint": "Diğer üçü fiziksel olarak başka yerde."
-            },
-            {
-              "id": "c7",
-              "type": "face_match",
-              "revealOrder": 7,
-              "isRevealed": false,
-              "pointCost": 110,
-              "title": "Bina Girişi Kamera Analizi",
-              "text": "Sunucu çiftliği CCTV görüntüsündeki kişiyi şüphelilerle karşılaştır.",
-              "mechanicType": "face_match",
-              "fotoVerisi": {
-                "aciklama": "Kamera görüntüsündeki yüz geometrisini eşleştir.",
-                "olayYeriIzi": {
-                  "gozArasi": "65mm",
-                  "burunUzunluk": "50mm",
-                  "elmacikKemigi": "138mm"
-                },
-                "supheliAyakkabilari": [
-                  {
-                    "suspectId": "s1",
-                    "gozArasi": "70mm",
-                    "burunUzunluk": "54mm",
-                    "elmacikKemigi": "142mm",
-                    "eslesme": false
-                  },
-                  {
-                    "suspectId": "s2",
-                    "gozArasi": "58mm",
-                    "burunUzunluk": "44mm",
-                    "elmacikKemigi": "130mm",
-                    "eslesme": false
-                  },
-                  {
-                    "suspectId": "s3",
-                    "gozArasi": "65mm",
-                    "burunUzunluk": "50mm",
-                    "elmacikKemigi": "138mm",
-                    "eslesme": true
-                  },
-                  {
-                    "suspectId": "s4",
-                    "gozArasi": "72mm",
-                    "burunUzunluk": "56mm",
-                    "elmacikKemigi": "148mm",
-                    "eslesme": false
-                  }
-                ],
-                "sonuc": "Kamera eşleşmesi: Nexus."
-              },
-              "deductionHint": "Binaya giren Nexus."
-            },
-            {
-              "id": "c8",
-              "type": "ses_kaydi",
-              "revealOrder": 8,
-              "isRevealed": false,
-              "pointCost": 110,
-              "title": "Maktulün Son Ses Kaydı",
-              "text": "[Maktulün telefon mikrofonu otomatik kayıt başlattı] Maktul: 'Nexus? Sen burada—' Kısa sessizlik. Ayak sesi. 'Bunu yaparsan—' Ses kesiliyor.",
-              "mechanicType": "ses_kaydi",
-              "sesMetni": "Maktulün sesi şaşkınlık ve korku karışımı. Son kelimeler: isim Nexus.",
-              "deductionHint": "Son kelime Nexus."
-            },
-            {
-              "id": "c9",
-              "type": "dogrudan",
-              "revealOrder": 9,
-              "isRevealed": false,
-              "pointCost": 110,
-              "title": "Nexus'un Motivasyonu",
-              "text": "Sunucu çiftliğinde Nexus'a ait flash bellek: market kurulurken yapılan ortaklık anlaşması. Maktulün imzasıyla: 'Nexus'un payı %0 olarak güncellendi.' Yanında: '4 yıl. Hiçbir şey.'",
-              "mechanicType": "gorsel_ipucu",
-              "gorselAciklama": "Dijital imzalı sözleşme. %40 pay → %0. Nexus'un el yazısıyla not: 'Bu bitecek.'",
-              "deductionHint": "Motif: dışlanma ve sıfırlanan pay."
+              "pointCost": 75
             }
           ],
+          "assetManifest": [],
           "solution": {
             "suspectId": "s3",
             "weaponId": "w4",
             "locationId": "l1"
           },
-          "solutionNarrative": "Nexus (Marcus Elarne), 4 yıllık emeği ve %40 payının sıfırlanması için intikam aldı. FBI tuzağını fırsat bilerek maktulü sunucu çiftliğinde köşeye sıkıştırdı. Maktulün son sözü 'Nexus' oldu.",
-          "specialMechanic": "phone_dna_anagram_timeline_face"
+          "solutionNarrative": "Nexus, sıfırlanan ortaklık payını yıllarca taşımıştı. FBI operasyonunun Murat’ı çiftliğe çağıracağını öğrendiğinde, baskından önce bakım koridorlarını kullanarak tesise girdi. Kabloyu silah yaptı; ardından düğüm kayıtlarının kısa ve temiz görünen rotalarına sahte geçişler ekledi. Cipher ve Marlowe’un saha anahtarları, Void’in soğuk zincir kiti ve Tor grafiğinin iki dış rotayı dışlamasıyla; kablo, tesis ve eski altyapı bilgisi yalnız Nexus’ta birleşti.",
+          "replitIntegration": {
+            "schema": "fm_replit_runtime_contract_v1",
+            "copyTarget": "Replit Agent prompt",
+            "canonicalCaseFile": "src/data/cases/dij_003.json",
+            "policy": "Var olan renderer varsa onu bozma; yoksa bu paketteki component ve dispatcher dalını ekle.",
+            "mechanics": [
+              {
+                "clueId": "c4",
+                "mechanicType": "sifreli_mesaj",
+                "renderer": "tor_node_route",
+                "completionEvent": "onSolved({ clueId, mechanic: \"sifreli_mesaj\" })"
+              }
+            ]
+          }
         },
         {
           "puzzleId": "dij_004",
-          "title": "Beğeni Tuzağı",
-          "subtitle": "İstanbul, Influencer Ajansı — Günümüz",
-          "difficulty": 4,
-          "difficultyLabel": "Başkomiser",
           "stars": "★★★★☆",
           "gridSize": "3x3",
-          "timeLimit": 600,
-          "story": "Türkiye'nin en büyük influencer ajansı TrendHub'ın CEO'su Kerem Aydoğan, ofis binasının sunucu odasında ölü bulundu. Ekranlar hâlâ açık, içeride binlerce kullanıcının kişisel verisini gösteren gösterge paneli parlıyor. Üç kişi o gece binada kalıyordu.",
-          "atmosphere": "Sunucu raflarının soğutucu fanları uğulduyor; mavi LED'ler steril bir ışık veriyor — kan orada çok yanlış görünüyor.",
+          "timeLimit": 630,
+          "qaRationale": {
+            "c1": "L1 ölüm mahalli semantik çapa; S-44 yayını s1–l2 bağını verir.",
+            "c2": "D-09 Dilek ayrıntı kodu ve metal tozu w1’i somut biçimde bağlar.",
+            "c3": "Ergonomi kaydı s1–w3'ü eler.",
+            "c4": "Sayısal korelasyon D-09 hareketinin l1 olayına ait olmadığını s3–l1 elemesiyle verir.",
+            "leaveOneOut": "c1/c4 olmadan s2'nin l1’e tek kalması bozulur; c2/c3 olmadan w3 s2’ye tek kalmaz."
+          },
+          "qaNarrativeContract": {
+            "narrativeClue": "Kerem’in monitör notu, oyuncuyu kart kaydını UPS eğrisiyle tek ölçek üzerinde değerlendirmeye yönlendirir.",
+            "linkedClueId": "c4",
+            "playerVisibleBridge": "‘Yük eğrisiyle üst üste koymadan kimseyi içeri sokma.’"
+          },
+          "title": "Beğeni Tuzağı",
+          "subtitle": "Karanlık Ağ · TrendHub Veri Sızıntısı",
+          "difficulty": "Başkomiser",
+          "difficultyLevel": 4,
+          "specialMechanic": "şifreli_mesaj · badge_ups_correlation",
+          "story": "TrendHub’ın altyapı katı, gündüzleri içerik üreticilerinin milyonluk kampanyalarını taşıyan mavi ışıklı bir depo gibiydi. Gece ise yalnız fan sesleri ve güç ekranındaki küçük dalgalar kalıyordu. Veri denetçisi Kerem Aydoğan, ajansın kullanıcı verilerinin satıldığını savcıya bildirmeye hazırlanırken kapalı teknik bölümde ölü bulundu.\n\nŞüpheliler üç farklı riske dayanıyordu: canlı yayınıyla bot skandalını örtmeye çalışan Seda Mirkan, veri tabanı erişimini yöneten Tarık Demirbaş ve komisyon dosyaları nedeniyle baskı altında olan Dilek Aras. Birinin itibarı, birinin parası, birinin de şirket içindeki konumu aynı gece kırılma noktasına gelmişti.\n\nKerem’in monitöründe açık kalan enerji izleme panelinin yanında şu not vardı: “Kart kaydı tek başına yalan söyleyebilir. Yük eğrisiyle üst üste koymadan kimseyi içeri sokma.” Üç ayrı veri kaynağı aynı dakika için konuşuyor, fakat yalnız biri fiziksel hareketle uyumlu görünüyordu.",
+          "atmosphere": "Mavi LED’ler yerde kırılan camı değil, sessizce yükselen güç tüketimini yansıtıyordu.",
           "suspects": [
             {
               "id": "s1",
               "name": "Seda Mirkan",
-              "icon": "noun-ressam-leyla-avatar.png",
-              "description": "Ajansın en büyük influencer müşterisi, 3M takipçili",
-              "detail": "27 yaşında, karizmatik; kurban Seda'nın takipçi verilerinin sahte bot'larla şişirildiğini reklam verenlerden gizlediğini öğrenmişti."
+              "icon": "📱",
+              "description": "TrendHub’ın yüzü; bot takipçi soruşturmasının odağındaki influencer. Canlı yayın profili kodu LIVE-44; stüdyo bilek bandı tek elle sabit çalışma kaydı üretir.",
+              "detail": "S-44 yayın rozeti Açık Ofis Katı stüdyosuna bağlıdır. Canlı yayın analitiği dakikaları doğrular, fakat geceki itibarı risk altındadır."
             },
             {
               "id": "s2",
               "name": "Tarık Demirbaş",
-              "icon": "noun-yolcu-tarik-avatar.png",
-              "description": "Ajans veri mühendisi, back-end sorumlusu",
-              "detail": "34 yaşında, içe dönük; kurban Tarık'ın veri tabanından kullanıcı bilgilerini rakip firmaya sattığını keşfetmişti — yarın kovulacak ve savcıya bildirilecekti."
+              "icon": "💾",
+              "description": "Veri mühendisi; kullanıcı dışa aktarımlarına ve UPS bakım anahtarlarına erişir. Veri mühendisi erişim kodu T-7; bakım anahtarı ve servis geçidi günlüklerine bağlıdır.",
+              "detail": "T-17 bakım kartı ve T-7 akü anahtarı ona tahsisli. Veri sızıntısı dosyasını ilk gören çalışanlardan biridir."
             },
             {
               "id": "s3",
               "name": "Dilek Aras",
-              "icon": "noun-nazik-hanim-avatar.png",
-              "description": "Marka ortaklık direktörü",
-              "detail": "41 yaşında, hırslı; kurban Dilek'in imzaladığı gizli komisyon sözleşmelerini denetim kuruluna açıklamak üzereydi."
+              "icon": "📁",
+              "description": "Kampanya sözleşmelerinden sorumlu yönetici. Sözleşme yetki kodu D-09; üst kat arşiv anahtarının sahibidir.",
+              "detail": "D-09 muhasebe rozeti CEO Ofisi koridorunda kullanılır. Komisyon defterinin yayımlanması kariyerini bitirebilir."
             }
           ],
           "weapons": [
             {
               "id": "w1",
               "name": "Sunucu raf rayı",
-              "icon": "🖥️",
-              "description": "Metal sunucu kasası rayı — sökülmüş, keskin kenarlı."
+              "icon": "🧱",
+              "description": "Raf taşıma sisteminden sökülmüş metal ray. Parça kodu V-09; nikel oranı yüksek, uzun yapısal metal bileşen.",
+              "detail": "Dar alanda kaldırıldığında keskin ama hafif izler bırakır."
             },
             {
               "id": "w2",
               "name": "Fiber optik kablo demeti",
-              "icon": "🔌",
-              "description": "Boğmak için kullanılmış yoğun kablo buketi."
+              "icon": "🧵",
+              "description": "Bağlantı hattından ayrılmış kalın kablo demeti. Parça kodu F-21; veri hattından ayrılmış lifli bağlantı demeti.",
+              "detail": "Boyuna baskı veya boğma izine uygun esneklik taşır."
             },
             {
               "id": "w3",
               "name": "UPS akü bloğu",
               "icon": "🔋",
-              "description": "Kesintisiz güç kaynağı akü — 12 kg, küt darbe."
+              "description": "Sunucuları koruyan ağır, çıkarılabilir güç modülü. Parça kodu B-7; ağır, çıkarılabilir yedek güç modülü.",
+              "detail": "Yerinden söküldüğünde UPS yük eğrisinde ani ve yüksek bir boşalma bırakır."
             }
           ],
           "locations": [
             {
               "id": "l1",
               "name": "Sunucu odası",
-              "icon": "💻",
-              "description": "Veri merkezinin soğuk ve gürültülü kalbi."
+              "icon": "🖥️",
+              "description": "UPS raflarının ve yedekleme ünitelerinin bulunduğu kilitli kat. Alan kodu SVR-1; yedekleme üniteleri ve korumalı bakım panelinin bulunduğu kilitli teknik kat.",
+              "detail": "Kart okuyucusu ile güç telemetrisi farklı sistemlerde tutulur; aynı dakika tek başına yeterli değildir."
             },
             {
               "id": "l2",
               "name": "Açık ofis katı",
-              "icon": "🏢",
-              "description": "İçerik üretim masaları ve stüdyo."
+              "icon": "🎥",
+              "description": "Canlı yayın stüdyosu ve içerik ekibinin çalıştığı geniş kat. Alan kodu LIV-2; canlı yayın stüdyosu ile içerik ekibinin bulunduğu geniş kat.",
+              "detail": "Yayın ekranları ile S-44 rozetinin yakınlık sinyali burada görünür."
             },
             {
               "id": "l3",
               "name": "CEO ofisi",
-              "icon": "🪟",
-              "description": "Cam duvarlar, panoramik Boğaz manzarası."
+              "icon": "🏢",
+              "description": "Sözleşme ve komisyon kararlarının verildiği üst kat ofisi. Alan kodu ARC-3; sözleşme arşivi ve komisyon kararlarının bulunduğu üst kat.",
+              "detail": "D-09 rozeti koridor sensöründe düzenli şekilde görünür."
             }
           ],
           "clues": [
             {
               "id": "c1",
-              "type": "adli",
+              "title": "Alt Teknik Bölüm ve LIVE-44 Kaydı",
+              "type": "eleme",
+              "mechanicType": "text",
+              "text": "Adli ekip, Kerem’in alt teknik bölümde öldürüldüğünü ve bedenin başka yerden taşınmadığını belirledi. Aynı dakikada LIVE-44 bilek bandı, LIV-2 vericisine kesintisiz hareket ve nabız paketi gönderiyordu.",
+              "deductionHint": "Ölüm alanını not et; LIVE-44 bilek bandı hangi verici alanına bağlı görünüyor?",
+              "isBonus": false,
               "revealOrder": 1,
               "isRevealed": true,
-              "pointCost": 0,
-              "title": "Adli BT Raporu",
-              "text": "Sunucu odasının giriş-çıkış logu: gece 02:14'te yalnızca bir çalışan kimliğiyle giriş yapılmış — Tarık Demirbaş'ın kartı. Kurban bu odaya bu kişiyle beraber girmiş olabilir ya da peşinden gelmiş.",
-              "mechanicType": "text",
-              "deductionHint": "Sunucu odasına giriş kartı Tarık'a ait — onu o mekânla doğrudan bağlıyor."
+              "pointCost": 0
             },
             {
               "id": "c2",
-              "type": "tanik",
+              "title": "B-7 Kaldırma İzi Negatifi",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "LIVE-44 profiline ait bileklik ve yayın masası üzerinde yapılan mikroskobik incelemede, B-7 parçasının kaldırma yüzeyinde kalan mineral yağ izine rastlanmadı. Aynı vardiyanın kontrol örnekleri üç kez karşılaştırıldı.",
+              "deductionHint": "Negatif iz karşılaştırması, LIVE-44 profilini hangi ağır parçadan dışarıda bırakır?",
+              "isBonus": false,
               "revealOrder": 2,
               "isRevealed": false,
-              "pointCost": 55,
-              "title": "Güvenlik Görevlisi",
-              "text": "Bina güvenlik görevlisi Murat: 'Gece 02:00'de Tarık Bey sunucu odasına indi, elinde alet çantası vardı. 02:40'ta çıktı, terli ve soluklu görünüyordu. Başka kimse o kata inmedi.'",
-              "mechanicType": "tanik_yuzlesme",
-              "yuzlesmeDialogu": [
-                {
-                  "soru": "O gece sunucu katına kim indi?",
-                  "cevap": "Tarık Bey indi. Gece 02:00 civarında, elinde siyah deri çanta.",
-                  "yalan": false
-                },
-                {
-                  "soru": "Dilek Hanım sunucu katına indi mi?",
-                  "cevap": "Hayır, Dilek Hanım akşam 23:30'da binadan çıktı.",
-                  "yalan": false
-                },
-                {
-                  "soru": "Tarık kaç dakika kattaydı?",
-                  "cevap": "40 dakika kadar. Çıkınca terli ve soluk soluğaydı.",
-                  "yalan": false
-                }
-              ],
-              "deductionHint": "Tarık sunucu katında 40 dakika — zaman olay için yeterli."
+              "pointCost": 0
             },
             {
               "id": "c3",
+              "title": "D-09 Emanet Numarası",
               "type": "kanit",
+              "mechanicType": "text",
+              "text": "D-09 kodlu arşiv anahtarının emanet fişinde V-09 parçasının nikel sayımıyla aynı teslim numarası yer alıyor. Numara, kapalı arşiv dolabındaki iki bağımsız imzayla doğrulandı.",
+              "deductionHint": "Emanet numarasını karşılaştır; D-09 etiketi hangi yapısal parçayla eşleşiyor?",
+              "isBonus": false,
               "revealOrder": 3,
               "isRevealed": false,
-              "pointCost": 55,
-              "title": "Akü Bloğu Adli Analizi",
-              "text": "UPS akü bloğunun üstünde taze kan ve saç teli. Tarık'ın çantasında aynı model akü bloğu anahtarı — sadece veri mühendisleri bu anahtarı taşır.",
-              "mechanicType": "gorsel_ipucu",
-              "gorselAciklama": "Adli ışık altında UPS akü bloğu yüzeyi raporu:\n• Taze kan izi: DNA analizi kurbanla (%99.7) eşleşiyor\n• Saç teli (kök hücreli): Tarık Demirbaş'ın TrendHub İK dosyasındaki biyometriyle eşleşiyor\n• T-7 model anahtar izi: Bu anahtar yalnızca veri mühendisi kadrosuna tahsis edilir — Tarık Demirbaş aktif kullanıcı\n• Akünün raftan yerinden oynatıldığı toz dağılımından anlaşılıyor",
-              "deductionHint": "Kan + saç teli + anahtar izi: üç delil Tarık'ı akü bloğuna ve silaha bağlıyor."
+              "pointCost": 0
             },
             {
               "id": "c4",
-              "type": "dogrudan",
+              "title": "Kart–Güç Korelasyon Penceresi",
+              "type": "sifreli",
+              "mechanicType": "sifreli_mesaj",
+              "text": "Kerem’in masasındaki üç kart taraması, üç güç dalgası ve üç kapı sensörü aynı ölçekle yeniden işlendi. Aday pencereler, D-09 hareketi ile SVR-1 geçiş kaydını karşılaştırmak için boş bırakılmış üç ham zaman diliminden oluşuyor.",
+              "deductionHint": "Sayıları aynı pencerede üst üste getir; D-09 hareketi hangi teknik alandan dışarıda kalmalı?",
+              "isBonus": false,
               "revealOrder": 4,
               "isRevealed": false,
-              "pointCost": 55,
-              "title": "Veri Satışı Kanıtı",
-              "text": "Kurbanın masaüstündeki son açık belge: Tarık Demirbaş imzalı rakip firmadan gelen 85.000 Euro'luk kripto ödeme makbuzu, ajansın kullanıcı veri tabanı dışa aktarım loguyla eşleştirilmiş. Sabah savcıya gönderilecekti.",
-              "mechanicType": "text",
-              "deductionHint": "Sabah savcı bildirimi — Tarık'ın bu geceyi bekleme nedeni açık."
+              "pointCost": 0,
+              "sifre": {
+                "sifreleTuru": "erişim–yük korelasyonu",
+                "sifrelenmis": "Kart × yük × kapı sensörü",
+                "cozulmus": "PENCERE-2",
+                "answerAliases": [
+                  "Pencere2",
+                  "Window2",
+                  "2"
+                ],
+                "cozumIpucu": "Doğru pencerede kart ve kapı farkı 12 saniyeden az, güçteki yük kaybı ise en az 48 kg eşdeğerinde olmalı. Diğer ikisinde bir ölçüm ters yönde kalır.",
+                "aciklama": "Üç zaman penceresini eşleştirmek, D-09 hareketinin SVR-1 geçişiyle aynı fiziksel olaya ait olmadığını kanıtlar; bu korelasyon ızgarada kişi–mekân elemesini açar.",
+                "presentation": {
+                  "style": "badge_ups_correlation",
+                  "title": "Kart–UPS Korelasyon Penceresi",
+                  "subtitle": "Her pencerede kart, kapı ve UPS verisi var. Fiziksel olarak aynı olayı açıklayan tek pencereyi seç.",
+                  "purposeHint": "Doğru pencere, D-09 hareketinin SVR-1 geçişiyle aynı fiziksel olaya ait olmadığını gösterir; sonucu ızgarada kişi–mekân elemesi olarak kullan.",
+                  "resultText": "Korelasyon, D-09 hareketinin SVR-1 geçişiyle aynı fiziksel olaya ait olmadığını gösterir.",
+                  "interaction": {
+                    "mode": "correlation_window",
+                    "submitLabel": "Korelasyonu Sına",
+                    "successMessage": "Zaman farkı ve yük kaybı aynı olayı destekliyor.",
+                    "failureMessage": "Bu pencerede en az bir ölçüm fiziksel senaryoyla çelişiyor."
+                  },
+                  "windows": [
+                    {
+                      "id": "p1",
+                      "label": "PENCERE 1 · 02:11–02:14",
+                      "badgeDeltaSec": 7,
+                      "doorDeltaSec": 41,
+                      "upsKg": 52,
+                      "trend": "yukarı",
+                      "note": "Kapı gecikmesi limit dışı."
+                    },
+                    {
+                      "id": "p2",
+                      "label": "PENCERE 2 · 02:16–02:18",
+                      "badgeDeltaSec": 9,
+                      "doorDeltaSec": 11,
+                      "upsKg": 51,
+                      "trend": "aşağı",
+                      "note": "Üç veri aynı yönde."
+                    },
+                    {
+                      "id": "p3",
+                      "label": "PENCERE 3 · 02:22–02:25",
+                      "badgeDeltaSec": 4,
+                      "doorDeltaSec": 8,
+                      "upsKg": 19,
+                      "trend": "aşağı",
+                      "note": "Yük kaybı ağır modül için yetersiz."
+                    }
+                  ],
+                  "correctWindowId": "p2"
+                }
+              }
             },
             {
               "id": "c5",
-              "type": "eleme",
+              "title": "Stüdyo Yakınlık Haritası",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "LIVE-44 çalışma masasında F-21 kodlu lifli bağlantı demetinden gelen mavi polimer parçası bulundu. Parçanın seri kodu, stüdyo bakım deposundaki kayıtla eşleşti.",
+              "deductionHint": "Bu ek parça, LIVE-44 profilini hangi bağlantı ekipmanıyla doğrular?",
+              "isBonus": true,
               "revealOrder": 5,
               "isRevealed": false,
-              "pointCost": 55,
-              "title": "Seda'nın Canlı Yayını",
-              "text": "Seda Mirkan, gece 01:30-03:00 arası ajansın stüdyosundan Instagram canlı yayını yaptı — 47.000 anlık izleyici, yayın kaydı sunucuda. Bu sürede sunucu katına inmesi imkânsız.",
-              "mechanicType": "text",
-              "deductionHint": "Seda 1.5 saat boyunca canlı yayında — sunucu odasında olamaz."
+              "pointCost": 70
             },
             {
               "id": "c6",
-              "type": "sifreli",
+              "title": "Bakım Anahtarı Envanteri",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "ARC-3 arşiv giriş çizelgesinde V-09 kodlu yapısal metal parçanın sayımı, üst kat emanet numarasıyla birlikte kapanmış görünüyor.",
+              "deductionHint": "Bu ek çizelge, V-09 parçasını hangi arşiv alanıyla doğrular?",
+              "isBonus": true,
               "revealOrder": 6,
               "isRevealed": false,
-              "pointCost": 55,
-              "title": "Şifreli Slack Mesajı",
-              "text": "Tarık'ın kişisel Slack kanalında cinayetten 19 dakika önce gönderilen mesajlar.",
-              "mechanicType": "phone_chain",
-              "phoneVerisi": {
-                "aciklama": "Tarık Demirbaş'ın şifreli 'burner' Slack kanalı — adli ekip tarafından kurtarıldı. Gönderim saati: 01:55.",
-                "mesajlar": [
-                  {
-                    "id": "m1",
-                    "gonderen": "TarikD_7749",
-                    "alici": "anon_drop",
-                    "icerik": "Dosya 02:30'da temizlenir.",
-                    "saat": "01:55"
-                  },
-                  {
-                    "id": "m2",
-                    "gonderen": "TarikD_7749",
-                    "alici": "anon_drop",
-                    "icerik": "K.A. artık sorun olmaz.",
-                    "saat": "01:55"
-                  },
-                  {
-                    "id": "m3",
-                    "gonderen": "anon_drop",
-                    "alici": "TarikD_7749",
-                    "icerik": "Onaylandı. Ödeme yarın.",
-                    "saat": "01:57"
-                  }
-                ],
-                "sonuc": "TarikD_7749 = Tarık Demirbaş (IP eşleşmesiyle doğrulandı). 'K.A.' = Kerem Aydoğan. Cinayet 19 dakika önceden planlanmış ve onaylanmış."
-              },
-              "deductionHint": "'K.A. artık sorun olmaz' — Tarık cinayeti önceden organize etmiş."
+              "pointCost": 80
             }
           ],
+          "assetManifest": [],
           "solution": {
             "suspectId": "s2",
             "weaponId": "w3",
             "locationId": "l1"
+          },
+          "solutionNarrative": "Tarık, veri satışının sabah savcılığa gönderileceğini biliyordu. T-7 anahtarıyla UPS akü bloğunu yerinden çıkarıp Kerem’i Sunucu Odası’nda susturdu; ardından kart kayıtlarının tek başına onu ele vermeyeceğine güvendi. Seda stüdyoda, Dilek ise CEO koridoruna bağlı kalırken; ağırlık kaybı ve kapı verisinin aynı pencerede birleşmesi, Dilek’in değil Tarık’ın erişim hattını gerçeğe bağladı. Beğeniler büyümüş olabilir; fakat güç grafiği yalan söylemedi.",
+          "replitIntegration": {
+            "schema": "fm_replit_runtime_contract_v1",
+            "copyTarget": "Replit Agent prompt",
+            "canonicalCaseFile": "src/data/cases/dij_004.json",
+            "policy": "Var olan renderer varsa onu bozma; yoksa bu paketteki component ve dispatcher dalını ekle.",
+            "mechanics": [
+              {
+                "clueId": "c4",
+                "mechanicType": "sifreli_mesaj",
+                "renderer": "badge_ups_correlation",
+                "completionEvent": "onSolved({ clueId, mechanic: \"sifreli_mesaj\" })"
+              }
+            ]
           }
         },
         {
           "puzzleId": "dij_005",
-          "title": "Son Token",
-          "subtitle": "Metaverse — VoxelCity NFT Platformu",
-          "difficulty": 4,
-          "difficultyLabel": "Başkomiser",
-          "stars": "★★★★☆",
+          "stars": "★★★★★",
           "gridSize": "3x3",
-          "timeLimit": 600,
-          "story": "VoxelCity'nin kurucusu ve baş geliştiricisi kullanıcı adı Zeta_Zero, gerçek kimliğiyle İzmir'deki evinde ölü bulundu — tam o anda platformun ana sunucusu çöktü ve 12 milyon dolarlık NFT koleksiyonu transferi başladı. Üç kişi o gece platformun yönetici kanalında aktifti.",
-          "atmosphere": "Üç monitör açık, kodlar akmaya devam ediyor; gerçek dünyada ölü, dijital dünyada ise varlıkları milisaniyelerle el değiştiriyor.",
+          "timeLimit": 720,
+          "qaRationale": {
+            "c1": "L3 cinayet mahalli semantik çapa; C-X s1–l1 ilişkisidir.",
+            "c2": "M-Q etiketi s3’ü w2 ile somut olarak eşler.",
+            "c3": "Yerel donanım anahtarı kısıtı s1–w1'i eler.",
+            "c4": "Port graph, yönetici ön koşulu olmayan s3’ün l3 ile uyumsuz olduğunu verir.",
+            "leaveOneOut": "c1/c4 kaldırılırsa s2 l3’te tek kalmaz; c2/c3 kaldırılırsa w1 s2’ye tek kalmaz."
+          },
+          "qaNarrativeContract": {
+            "narrativeClue": "Zeta’nın yorumundaki ‘hangi ön koşulu zorunlu kıldığı’ ifadesi, oyuncuya sıra dizmek yerine port bağımlılıklarını bağlama talimatı verir.",
+            "linkedClueId": "c4",
+            "playerVisibleBridge": "‘Komutun sahibi, hangi ön koşulu zorunlu kıldığında görünür.’"
+          },
+          "title": "Son Token",
+          "subtitle": "Karanlık Ağ · VoxelCity Killswitch Dosyası",
+          "difficulty": "Efsane Komiser",
+          "difficultyLevel": 5,
+          "specialMechanic": "şifreli_mesaj · iot_command_chain",
+          "story": "VoxelCity’nin kurucusu Zeta Zero, gece 02.47’de ev otomasyon çekirdeğindeki tıbbi bağlantı sustuğunda öldü. Aynı saniyede, şirketin ana cüzdanından milyonlarca dolar değerindeki nadir tokenlar başka bir adrese hareket etti. Olay, fiziksel bir baskın gibi görünmüyordu; evde kırık kapı, mücadele izi ya da açık pencere yoktu.\n\nÜç dijital kimlik soruşturmanın merkezindeydi: panik transferleriyle iz bırakan CipherX, platformun güvenlik katmanını yöneten NullPtr ve kopya koleksiyonlarıyla bilinen MetaQueen. Her biri tokenlara ulaşabiliyordu; fakat yalnız biri cihaz komutu ile transferi aynı gizli sistem üzerinden birleştirebilirdi.\n\nZeta’nın güvenlik günlüklerinde yarım kalmış bir yorum bulundu: “Komutun sahibi, hangi düğümden çıktığında değil; hangi ön koşulu zorunlu kıldığında görünür.” Bu dosyada sırayı değil, birbirini mümkün kılan bağlantıları çözmek gerekiyordu. Her log satırı tek başına masumdu; fakat doğru ön koşullarla bağlandığında birinin yetkisini görünür kılıyordu.",
+          "atmosphere": "Evin ışıkları yanıyordu. Yalnız kalp ritim grafiğinde, bir kişinin hayatını başka bir cüzdana çeviren tek bir boşluk vardı.",
           "suspects": [
             {
               "id": "s1",
               "name": "CipherX",
-              "icon": "🧑‍💻",
-              "description": "En büyük NFT koleksiyoncusu, gerçek adı Barış Eren",
-              "detail": "28 yaşında; kurban CipherX'in sahte 'NFT mint' belgesiyle 3 milyon dolar değerinde token bastığını keşfetmişti."
+              "icon": "🪙",
+              "description": "Panik halinde tokenlarını farklı cüzdanlara dağıtan yüksek riskli koleksiyoncu. Profil kodu CX-1; çoklu cüzdan imzalarıyla çalışan yüksek riskli koleksiyoncu.",
+              "detail": "C-X cüzdanı kurbanın ev ofisinden işlem yapar. Para hareketleri çok sayıda, güvenlik düğümü erişimi sınırlı."
             },
             {
               "id": "s2",
               "name": "NullPtr",
-              "icon": "⚡",
-              "description": "Platform güvenlik yöneticisi, gerçek adı Cansen Yılmaz",
-              "detail": "35 yaşında; akıllı sözleşme kodlarına arka kapı yerleştirmiş, kurban bunu fark etmişti."
+              "icon": "🛡️",
+              "description": "Platform güvenlik yöneticisi; erişim kontrollerini ve VPN düğümlerini yönetir. Profil kodu NP-7; erişim kontrolleri ve güvenli ağ düğümlerini yönetir.",
+              "detail": "SEC-07 yönetici doğrulama rolü yalnız ona atanmış. Kod yorumlarında zaman zaman NP_dev imzası kullanır."
             },
             {
               "id": "s3",
               "name": "MetaQueen",
-              "icon": "👩",
-              "description": "VoxelCity sanal galeri direktörü, gerçek adı Pınar Koru",
-              "detail": "31 yaşında; kurban MetaQueen'in kullanıcılara sahte 'eşsiz eser' satarken kopyaları farklı hesaplara da sattığını belgelemiş."
+              "icon": "👑",
+              "description": "Kopya koleksiyonlarıyla anılan, yaratıcı zincir manipülasyonlarına yatkın girişimci. Profil kodu MQ-3; kopya koleksiyonlarıyla ilişkili zincir manipülasyonlarına yatkın.",
+              "detail": "M-Q soğutma paketiyle cihaz donanımı taşıdığı görülür; akıllı ev erişimi için doğrudan yönetici rolü yoktur."
             }
           ],
           "weapons": [
@@ -9669,19 +9637,22 @@
               "id": "w1",
               "name": "Programlı elektrik kesintisi",
               "icon": "⚡",
-              "description": "Akıllı ev sistemine enjekte edilen kod — kalp ritim cihazını devre dışı bıraktı."
+              "description": "Cihazın enerji/bellek zincirini yazılımsal komutla kesen uzaktan yöntem. Yöntem kodu PWR-0; cihazın enerji/bellek zincirini uzaktan yazılımla keser.",
+              "detail": "Fiziksel sigorta atması değil; doğru ön koşullarla çalışan kontrollü bir kesintidir."
             },
             {
               "id": "w2",
               "name": "Zehirli soğutma sıvısı",
               "icon": "🧪",
-              "description": "Bilgisayar soğutma sistemine karıştırılan toksik sıvı — buharlaşarak içildi."
+              "description": "Cihaz kasasına sızdırılabilecek toksik/iletken sıvı. Yöntem kodu CLT-2; kasaya sızdırılabilecek iletken bakım sıvısı.",
+              "detail": "Biyolojik iz bırakır; ağ komutuyla aynı imzayı üretmez."
             },
             {
               "id": "w3",
               "name": "Fiziksel baskın",
-              "icon": "👊",
-              "description": "Kurbanın evine girilip darp edildi."
+              "icon": "🥊",
+              "description": "Eve girip doğrudan müdahale etmeye dayanan yöntem. Yöntem kodu RUSH-3; kapalı alana fiziksel giriş gerektiren müdahale.",
+              "detail": "Kapı, pencere ve iç sensörlerde bu yöntemi destekleyen zorlanma izi yoktur."
             }
           ],
           "locations": [
@@ -9689,121 +9660,209 @@
               "id": "l1",
               "name": "Kurbanın ev ofisi",
               "icon": "🏠",
-              "description": "İzmir'deki çalışma odası, sunucu dolabı burada."
+              "description": "Zeta’nın çalışma masası, fiziksel cüzdanları ve yerel ağ terminalinin bulunduğu oda. Alan kodu DESK-1; yerel anahtarların ve çalışma terminalinin bulunduğu oda.",
+              "detail": "C-X cüzdan oturumları bu odadaki yerel anahtardan imzalanır."
             },
             {
               "id": "l2",
               "name": "VoxelCity sunucu çiftliği",
-              "icon": "🌐",
-              "description": "İstanbul'daki fiziksel sunucu binası."
+              "icon": "🗄️",
+              "description": "Token altyapısının ve yedek cüzdanların saklandığı veri merkezi. Alan kodu FARM-2; token altyapısı ve yedek cüzdanların tutulduğu veri tesisi.",
+              "detail": "Soğutma paketleri ve uygulama testleri burada izlenir."
             },
             {
               "id": "l3",
               "name": "Akıllı ev kontrol merkezi",
               "icon": "📡",
-              "description": "Evin IoT sistemlerini yöneten hub cihazı."
+              "description": "Evin IoT yönlendiricisi ile tıbbi cihaz köprüsünün aynı panelde birleştiği kapalı merkez. Alan kodu HUB-3; IoT yönlendiricisi ile tıbbi cihaz köprüsünün aynı panelde birleştiği kapalı çekirdek.",
+              "detail": "Komut, doğrulama ve Bluetooth geçişi burada aynı sistem günlüğüne düşer."
             }
           ],
           "clues": [
             {
               "id": "c1",
-              "type": "adli",
+              "title": "Yerel Anahtar ve Kapalı Çekirdek",
+              "type": "dogrudan",
+              "mechanicType": "text",
+              "text": "Adli mühendisler, Zeta’nın ölüm sürecinin ev otomasyonuna bağlı kapalı bir çekirdekte başladığını belirledi. Aynı dakikada CX-1 yerel anahtarı DESK-1 terminalinde aralıksız imza veriyordu.",
+              "deductionHint": "Ölümün başlatıldığı alanı not et; CX-1 yerel anahtarı hangi terminal alanına bağlı görünüyor?",
+              "isBonus": false,
               "revealOrder": 1,
               "isRevealed": true,
-              "pointCost": 0,
-              "title": "Dijital Otopsi",
-              "text": "Kurbanın göğsünde kalp ritim cihazı var. Adli mühendis raporu: cihaz tam gece 02:47'de dışarıdan gönderilen bir Bluetooth komutuyla devre dışı bırakılmış. Elektrik fiziksel değil, yazılım kaynaklı.",
-              "mechanicType": "text",
-              "deductionHint": "Ölüm yazılım komutuyla — w1 (programlı elektrik kesintisi) tek uyumlu silah."
+              "pointCost": 0
             },
             {
               "id": "c2",
-              "type": "tanik",
+              "title": "Yerel Anahtarın Çakışan İmzası",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "CX-1 yerel donanım anahtarı, olay dakikasında ardışık token imzalarıyla kilitli kaldı. Aynı anahtar PWR-0 yönteminin gerektirdiği yönetici paketi paralel olarak üretemez.",
+              "deductionHint": "Kesintisiz yerel kullanım, CX-1 profilini hangi uzaktan yöntemden dışarıda bırakır?",
+              "isBonus": false,
               "revealOrder": 2,
               "isRevealed": false,
-              "pointCost": 55,
-              "title": "Blockchain Logu",
-              "text": "Kurbanın ölüm anıyla aynı saniyede (02:47:03) NullPtr'ın cüzdanına 8.4 milyon dolar değerinde NFT transferi başlatılmış — bu transferin tetikleyici kodu kurbanın cihazındaki arka kapıyı kullandı.",
-              "mechanicType": "text",
-              "deductionHint": "Arka kapıyı kullanan transfer NullPtr'a gitti — arka kapıyı kim yerleştirmişti?"
+              "pointCost": 0
             },
             {
               "id": "c3",
+              "title": "MQ-3 Bakım Onayı",
               "type": "kanit",
+              "mechanicType": "text",
+              "text": "MQ-3 etiketi, CLT-2 kasasının ikinci bakım onay imzasında görünüyor. İmza zincirindeki sertifika numarası, kartuş kilidinin açıldığı vardiya tutanağıyla eşleşiyor.",
+              "deductionHint": "Bakım onayını karşılaştır; MQ-3 etiketi hangi kartuş yöntemiyle eşleşiyor?",
+              "isBonus": false,
               "revealOrder": 3,
               "isRevealed": false,
-              "pointCost": 55,
-              "title": "Akıllı Ev Bağlantı Logu",
-              "text": "Ev IoT merkezi logu: gece 02:30'da kurbanın cihaz ağına uzaktan bağlantı. IP adresi NullPtr'ın daha önce kullandığı VPN düğümüyle eşleşiyor — bu düğüm yalnızca platform güvenlik yöneticilerine açık.",
-              "mechanicType": "gorsel_ipucu",
-              "gorselAciklama": "IoT merkezi ekran çıktısı — 3 kritik log satırı:\n[02:30:14] UZAK BAĞLANTI: IP 185.220.xxx.xxx — Tor çıkış düğümü\n[02:30:17] KİMLİK DOĞRULAMA: VPN_NODE_SEC_07 — yalnızca platform güvenlik yöneticilerine tahsisli\n[02:47:01] KOMUT GÖNDERİLDİ: /device/pacemaker BT_DISABLE_SIGNAL\nNot: VPN_NODE_SEC_07 → aktif kullanıcı: NullPtr (Cansen Yılmaz). Başka hiçbir çalışanın bu düğüme erişimi yok.",
-              "deductionHint": "VPN_NODE_SEC_07 yalnızca NullPtr'a ait — onu IoT saldırısına kesin olarak bağlıyor."
+              "pointCost": 0
             },
             {
               "id": "c4",
-              "type": "dogrudan",
+              "title": "IoT Komut Zinciri",
+              "type": "sifreli",
+              "mechanicType": "sifreli_mesaj",
+              "text": "Kurtarılan günlükte dört sistem düğümü, giriş ve çıkış portlarıyla çizilmişti. Zeta’nın yorumu, çizimin saat sırası için değil, hangi ön koşulun hangi geçişi açtığını görmek için bırakıldığını söylüyordu.",
+              "deductionHint": "Portları bağla; çözüm NP-7 etiketini hangi veri alanından dışarıda bırakır?",
+              "isBonus": false,
               "revealOrder": 4,
               "isRevealed": false,
-              "pointCost": 55,
-              "title": "Arka Kapı Kodu",
-              "text": "Platform kaynak kodunda gizlenmiş fonksiyon bulundu: 'killswitch_v2'. Kod yorumunda 'NP_dev' kısaltması — NullPtr'ın geliştirici takma adı. Kurban bu kodu bulmuş ve silmek üzereydi.",
-              "mechanicType": "text",
-              "deductionHint": "'NP_dev' NullPtr'ın imzası — arka kapıyı o yerleştirmiş."
+              "pointCost": 0,
+              "sifre": {
+                "sifreleTuru": "IoT komut bağı",
+                "sifrelenmis": "AUTH → BLE → DEVICE → WALLET",
+                "cozulmus": "BAG-07",
+                "answerAliases": [
+                  "Bag07",
+                  "Chain07",
+                  "SEC07"
+                ],
+                "cozumIpucu": "Bir düğüm yalnız kendi ‘çıktı’ etiketini sonraki düğümün ‘girdi’ etiketiyle eşleştirirse bağlanabilir. Her düğüm bir kez kullanılmalı; doğrudan cüzdana atlamak geçersizdir.",
+                "aciklama": "Kurulan bağlar, NP-7 yolunun FARM-2 geçişini açan ön koşulu taşımadığını gösteriyor.",
+                "presentation": {
+                  "style": "iot_command_chain",
+                  "title": "IoT Komut Zinciri",
+                  "subtitle": "Düğümlerin çıkış portlarını, sonraki düğümün gerekli girişine bağla. Her bağlantı bir ön koşul yaratır.",
+                  "purposeHint": "Doğru komut bağı, NP-7 yolunun FARM-2 geçişiyle uyumsuz kaldığını gösterir; sonucu ızgarada kişi–mekân elemesi olarak kullan.",
+                  "resultText": "Komut bağı, NP-7 yolunun FARM-2 geçişiyle uyumsuz kaldığını gösterir.",
+                  "interaction": {
+                    "mode": "port_graph",
+                    "submitLabel": "Komut Bağlarını Doğrula",
+                    "successMessage": "Ön koşullar kesintisiz bağlandı.",
+                    "failureMessage": "En az bir port, kendisinden sonra gelen düğümün ön koşulunu karşılamıyor."
+                  },
+                  "nodes": [
+                    {
+                      "id": "auth",
+                      "label": "VPN AUTH",
+                      "input": "SEC-07 token",
+                      "output": "yetkili oturum"
+                    },
+                    {
+                      "id": "ble",
+                      "label": "BLE HANDSHAKE",
+                      "input": "yetkili oturum",
+                      "output": "cihaz kanalı"
+                    },
+                    {
+                      "id": "device",
+                      "label": "DEVICE CUT",
+                      "input": "cihaz kanalı",
+                      "output": "olay imzası"
+                    },
+                    {
+                      "id": "wallet",
+                      "label": "WALLET TRIGGER",
+                      "input": "olay imzası",
+                      "output": "token transferi"
+                    }
+                  ],
+                  "allowedEdges": [
+                    [
+                      "auth",
+                      "ble"
+                    ],
+                    [
+                      "ble",
+                      "device"
+                    ],
+                    [
+                      "device",
+                      "wallet"
+                    ],
+                    [
+                      "auth",
+                      "wallet"
+                    ],
+                    [
+                      "ble",
+                      "wallet"
+                    ],
+                    [
+                      "device",
+                      "ble"
+                    ]
+                  ],
+                  "correctEdges": [
+                    [
+                      "auth",
+                      "ble"
+                    ],
+                    [
+                      "ble",
+                      "device"
+                    ],
+                    [
+                      "device",
+                      "wallet"
+                    ]
+                  ]
+                }
+              }
             },
             {
               "id": "c5",
-              "type": "eleme",
+              "title": "Çiftlik Test Dolabı",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "MQ-3 etiketi, FARM-2 giriş kaydında ikinci çalışma alanındaki dolaba giriş yapan tek bireysel sertifika olarak görünüyor.",
+              "deductionHint": "Bu ek giriş kaydı, MQ-3 etiketini hangi çalışma alanına bağlar?",
+              "isBonus": true,
               "revealOrder": 5,
               "isRevealed": false,
-              "pointCost": 55,
-              "title": "CipherX'in Token Panik Logu",
-              "text": "CipherX, tam olay anında kendi NFT'lerini aceleyle başka cüzdanlara dağıtıyordu — panik transferleri. Bu işlem Bluetooth komut göndermeyle eşzamanlı yapılamaz.",
-              "mechanicType": "text",
-              "deductionHint": "CipherX kendi panikindeydi — aynı anda IoT saldırısı yapamaz."
+              "pointCost": 75
             },
             {
               "id": "c6",
-              "type": "sifreli",
+              "title": "CX-1 Kapı Sensörü Notu",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "DESK-1 koridorundaki kapı sensörü, CX-1 anahtarına ait tokmağın RUSH-3 tipi giriş senaryosuyla aynı vardiyada işlendiğini kaydetti. Kayıt, fiziksel erişim işaretini tek başına cinayetle eşleştirmez; yalnız ızgara için ek bir doğrulama sunar.",
+              "deductionHint": "Bu ek sensör kaydı, CX-1 anahtarını hangi giriş biçimiyle doğrular?",
+              "isBonus": true,
               "revealOrder": 6,
               "isRevealed": false,
-              "pointCost": 55,
-              "title": "NullPtr'ın Gizli Discord Mesajı",
-              "text": "NullPtr'ın özel Discord sunucusunda olay gecesi 01:10'da gönderilen mesajlar adli ekipçe kurtarıldı.",
-              "mechanicType": "phone_chain",
-              "phoneVerisi": {
-                "aciklama": "NullPtr'ın şifreli Discord sunucusu '#özel-ops' kanalı. Mesajlar cinayetten 97 dakika önce.",
-                "mesajlar": [
-                  {
-                    "id": "m1",
-                    "gonderen": "NullPtr",
-                    "alici": "#özel-ops",
-                    "icerik": "Zeta_Zero yarın kodu siliyor.",
-                    "saat": "01:10"
-                  },
-                  {
-                    "id": "m2",
-                    "gonderen": "NullPtr",
-                    "alici": "#özel-ops",
-                    "icerik": "Benim için killswitch çalışacak mı çalışmayacak mı belli olacak.",
-                    "saat": "01:10"
-                  },
-                  {
-                    "id": "m3",
-                    "gonderen": "NullPtr",
-                    "alici": "#özel-ops",
-                    "icerik": "Transfer hazır. 02:47 aktivasyon.",
-                    "saat": "01:12"
-                  }
-                ],
-                "sonuc": "NullPtr 'killswitch'i hem arka kapı kodu hem de cinayet planı olarak kullanmış. 02:47 aktivasyon saati ölüm saatiyle birebir örtüşüyor."
-              },
-              "deductionHint": "'02:47 aktivasyon' — NullPtr cinayetin saatini dakika dakika planlamış."
+              "pointCost": 80
             }
           ],
+          "assetManifest": [],
           "solution": {
             "suspectId": "s2",
             "weaponId": "w1",
             "locationId": "l3"
+          },
+          "solutionNarrative": "NullPtr, Zeta’nın NP_dev imzalı arka kapıyı silmek üzere olduğunu biliyordu. SEC-07 doğrulamasıyla akıllı ev köprüsüne girdi, Bluetooth cihaz kanalını açtı ve kesinti komutunu token transferinin tetikleyicisine bağladı. CipherX yerel ofiste kendi panik transferlerine kilitlenmiş, MetaQueen ise soğutma ekipmanıyla başka bir eksende kalmıştı. Portlar doğru sırayla değil, doğru ön koşulla birleştiğinde; programlı kesinti, kontrol merkezi ve NullPtr aynı cinayet hattında birleşti.",
+          "replitIntegration": {
+            "schema": "fm_replit_runtime_contract_v1",
+            "copyTarget": "Replit Agent prompt",
+            "canonicalCaseFile": "src/data/cases/dij_005.json",
+            "policy": "Var olan renderer varsa onu bozma; yoksa bu paketteki component ve dispatcher dalını ekle.",
+            "mechanics": [
+              {
+                "clueId": "c4",
+                "mechanicType": "sifreli_mesaj",
+                "renderer": "iot_command_chain",
+                "completionEvent": "onSolved({ clueId, mechanic: \"sifreli_mesaj\" })"
+              }
+            ]
           }
         }
       ]
