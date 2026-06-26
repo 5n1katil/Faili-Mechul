@@ -1,0 +1,282 @@
+/* ============================================================
+ *  FAİLİ MEÇHUL — REPLIT TEK SEFERLİK ENTEGRASYON PAKETİ
+ *  Bu metni Replit Agent sohbetine TEK PARÇA olarak yapıştır.
+ *  Görev: sadece JSON kaydetme. Vaka verisini mevcut kaynakta
+ *  yükle, aşağıdaki eksik renderer altyapısını ekle ve çalıştır.
+ * ------------------------------------------------------------
+ *  Vaka: Deepfake Tanık · puzzleId=dij_002
+ *  1) Önce mevcut vaka veri kaydını ve mini-oyun dispatcherını bul.
+ *  2) Var olan rendererları bozma; yalnız eksik olan dalı ekle.
+ *  3) Aşağıdaki vaka JSON’unu uygulamanın KANONİK case kaynağına ekle.
+ *  4) Kod değişikliklerinden sonra aşağıdaki kabul testlerini tarayıcıda yap.
+ *  5) Sadece açıklama yazma: dosyaları gerçekten güncelle ve test sonucunu bildir.
+ * ============================================================ */
+
+===== ZORUNLU KABUL TESTLERİ =====
+1. Eski klasik sifreli_mesaj, parmak_izi, profil_sentezi ve genel ses_kaydi rendererları regresyona uğramaz.
+===== TEST LİSTESİ SONU =====
+
+===== KANONİK VAKA VERİSİ — mevcut case registry’de dij_002 olarak ekle/değiştir =====
+{
+  "puzzleId": "dij_002",
+  "stars": "★★☆☆☆",
+  "gridSize": "3x3",
+  "timeLimit": 570,
+  "qaRationale": {
+    "c1": "L3 cinayet mahalli semantik olarak açık, s1–l1 optik kilit kaydıyla kuruludur.",
+    "c2": "H-19 Felix’in ayrıntı kodu; w1 demo probu ile somut biçimde bağlanır.",
+    "c3": "Steril kartuşlarda toksik baz yoktur; s1–w3 elenir.",
+    "c4": "Artefakt oyunu H-19 temsilinin CEO Ofisi kamerasına fiziksel kaynak olamayacağını gösterir; s2–l3 elenir.",
+    "leaveOneOut": "c1/c4 kaldırılırsa s3'ün l3 eşleşmesi kaybolur; c2/c3 kaldırılırsa w3 s3 yerine başka şüpheliye kalabilir."
+  },
+  "qaNarrativeContract": {
+    "narrativeClue": "Ajandadaki yansıma cümlesi, oyuncuyu kare oyununda ışık ve cam yönünü değerlendirmeye yöneltir.",
+    "linkedClueId": "c4",
+    "playerVisibleBridge": "‘Kamera, gözü kandırır; yansıma ise kimin gerçekten orada olmadığını.’"
+  },
+  "title": "Deepfake Tanık",
+  "subtitle": "Karanlık Ağ · Helix Vision Ofis Cinayeti",
+  "difficulty": "Polis Memuru",
+  "difficultyLevel": 2,
+  "specialMechanic": "şifreli_mesaj · deepfake_frame_artifact_analysis",
+  "story": "Helix Vision’ın kurucu CEO’su, sabah toplantısından önce özel çalışma alanında ölü bulundu. Masasında yarım kalmış bir fincan, güvenlik ekranında ise Dr. Zhao’nun koridora girdiğini gösteren kusursuz görünen bir kayıt vardı. Fakat görüntünün sesi yoktu; koridorun camında yansıması gereken acil çıkış lambası da yalnızca iki karede sönüyordu.\n\nŞirket, yüz manipülasyon yazılımını dünyaya satan bir yapay zekâ laboratuvarıydı. Dr. Zhao patent davasının merkezindeydi, yatırımcı Felix Hartmann şirketi satmak istiyordu, eski ortak Sofia Neves ise yıllar önce kendi teknolojisinin çalındığını söyleyerek ayrılmıştı.\n\nMaktulün ajandasında tek bir satır vardı: “Kamera, gözü kandırır; yansıma ise kimin gerçekten orada olmadığını.” O satır, kaydın her karesinin aynı gerçeği anlatmadığını işaret ediyordu. Bu yüzden tanığın yüzünü değil, ışığın tutarlı davranıp davranmadığını sorgulamak gerekiyordu. Sessizlik, kusurun en net işaretiydi.",
+  "atmosphere": "Kahve kokusu, sessiz koridor ve ekranda kusursuz görünen ama bir türlü güven vermeyen bir yüz.",
+  "suspects": [
+    {
+      "id": "s1",
+      "name": "YZ Araştırmacısı Dr. Zhao",
+      "icon": "🧪",
+      "description": "Helix’in yüz sentezi ekibinin baş araştırmacısı. Araştırma kimliği Z-22.",
+      "detail": "Z-22 kimliği, optik sensör kalibrasyonunu yürütür. Patent dosyası nedeniyle CEO ile açık çatışma yaşamıştı."
+    },
+    {
+      "id": "s2",
+      "name": "Yatırımcı Felix Hartmann",
+      "icon": "💼",
+      "description": "Şirketin acil satışını isteyen uluslararası yatırımcı.",
+      "detail": "H-19 otel yayın anahtarıyla uzaktan toplantı yapar. Donanım denemelerini sunmayı sever; şirket içi fiziksel erişimi sınırlıdır."
+    },
+    {
+      "id": "s3",
+      "name": "Eski Ortak Sofia Neves",
+      "icon": "👩‍💻",
+      "description": "Deepfake altyapısının ilk tasarımcısı olduğunu iddia eden eski ortak.",
+      "detail": "Yüz sentezi modellerinin erken sürümlerini ve hangi artefaktların sahte üretimde kaldığını çok iyi bilir."
+    }
+  ],
+  "weapons": [
+    {
+      "id": "w1",
+      "name": "Elektrikli Nesne (Modifiye)",
+      "icon": "⚡",
+      "description": "Kısa devre görünümlü, kontrollü elektriksel müdahale aracı.",
+      "detail": "Taşınabilir test cihazı gibi görünür; biyolojik toksin izleri bırakmaz."
+    },
+    {
+      "id": "w2",
+      "name": "Nörotoksik Sprey",
+      "icon": "🧴",
+      "description": "Havaya yayılan, kısa mesafede etkili nörolojik ajan.",
+      "detail": "Kahve fincanına bırakılan çözeltiyle aynı kimyasal imzayı taşımaz."
+    },
+    {
+      "id": "w3",
+      "name": "Zehirli Kahve",
+      "icon": "☕",
+      "description": "Kahve makinesinden son anda bardağa taşınmış yavaş etkili toksik karışım.",
+      "detail": "Fincanın iç çeperinde ikinci demleme sonrası oluşan ince kahverengi halka bulunur."
+    }
+  ],
+  "locations": [
+    {
+      "id": "l1",
+      "name": "Ar-Ge Laboratuvarı",
+      "icon": "🔬",
+      "description": "Optik kamera, lens testleri ve model eğitiminin yapıldığı kapalı laboratuvar.",
+      "detail": "Cam panellerindeki ışık yansıması, görüntü analizinde referans olarak kullanılır."
+    },
+    {
+      "id": "l2",
+      "name": "Yönetim Kurulu Odası",
+      "icon": "🪑",
+      "description": "Yatırımcı görüşmelerinin yapıldığı ekranlı toplantı odası.",
+      "detail": "Dış bağlantı kioskları ve sunum cihazları burada tutulur."
+    },
+    {
+      "id": "l3",
+      "name": "CEO'nun Özel Ofisi",
+      "icon": "🏢",
+      "description": "Kurucu CEO’nun kilitli çalışma alanı.",
+      "detail": "Koridor kamerası ofis kapısını çapraz açıyla görür; cam yansımaları içerideki ışığı taşır."
+    }
+  ],
+  "clues": [
+    {
+      "id": "c1",
+      "title": "Ölüm Mahalli ve Laboratuvar Kilidi",
+      "type": "tanik",
+      "mechanicType": "text",
+      "text": "Toksik etki kahvenin son yudumundan sonra başlamış; cinayetin yönetici erişimi kısıtlı Y-03 çalışma hücresinde işlendiği kesinleşti. Aynı zaman aralığında Z-22 optik kilidi, içeriden yapılan iki ayrı kalibrasyonla kapalı kaldı.",
+      "deductionHint": "Ölümün gerçekleştiği alanı belirle; aynı kayıtta hangi kart başka bir odaya bağlanır?",
+      "isBonus": false,
+      "revealOrder": 1,
+      "isRevealed": true,
+      "pointCost": 0
+    },
+    {
+      "id": "c2",
+      "title": "Yatırımcı Demo Çantası",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "H-19 yayın anahtarıyla ilişkilendirilen demo çantasında, yalnızca iletken test probu vardı. Cihaz seri numarası, aynı anahtarla açılan sunum paketinin içine kaydedilmişti.",
+      "deductionHint": "Bu mühür, hangi kişinin hangi araçla eşleştiğini doğrular?",
+      "isBonus": false,
+      "revealOrder": 2,
+      "isRevealed": false,
+      "pointCost": 0
+    },
+    {
+      "id": "c3",
+      "title": "Kahve Halkasındaki Enzim Ayrımı",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Fincandaki kahverengi halka, steril protein çözücüsünü değil ikinci demlemeye eklenen toksik bazın enzim izini taşıyor. Z-22 araştırma hattı kartuşlarında bu bazın üretildiği hiçbir kanal yok.",
+      "deductionHint": "Isı ve kalıntı karşılaştırması, ilk kişiyi hangi içecek seçeneğinden dışarıda bırakır?",
+      "isBonus": false,
+      "revealOrder": 3,
+      "isRevealed": false,
+      "pointCost": 0
+    },
+    {
+      "id": "c4",
+      "title": "Kare Artefakt Analizi",
+      "type": "sifreli",
+      "mechanicType": "sifreli_mesaj",
+      "text": "Koridor kaydından seçilen dört ham kare, sıkıştırma maskesiyle birlikte izole edildi. Üstte yalnızca kare numaraları ve üç teknik işaret kalmıştı.",
+      "deductionHint": "Dört karedeki işaretleri karşılaştır; sonuç hangi kişi–oda hücresini siler?",
+      "isBonus": false,
+      "revealOrder": 4,
+      "isRevealed": false,
+      "pointCost": 0,
+      "sifre": {
+        "sifreleTuru": "kare artefaktı sınıflandırma",
+        "sifrelenmis": "K-14 / K-18 / K-21 / K-26",
+        "cozulmus": "YANSI-3",
+        "answerAliases": [
+          "Yansi3",
+          "Artifact 3",
+          "Artefakt 3"
+        ],
+        "cozumIpucu": "Gerçek görüntüde göz kırpma aralığı süreklidir; sahte katmanda yansıma yönü değişmez ve chroma saçakları yüz kenarında kalır.",
+        "aciklama": "Kare–artefakt eşleştirmesi, sahte görüntünün hangi erişim anlatısını taşıyamadığını açığa çıkarır; bu eşleştirme ızgarada kişi–mekân elemesini destekler.",
+        "presentation": {
+          "style": "deepfake_frame_artifact_analysis",
+          "title": "Kare Artefakt Analizi",
+          "subtitle": "Her karede tek baskın kusur var. Göz kırpma, yansıma yönü ve chroma saçağını doğru kareyle eşleştir.",
+          "purposeHint": "Doğru artefakt dizisi, görüntüde temsil edilen kimliğin ofis kamerasına fiziksel kaynak olamayacağını gösterir; sonucu ızgarada eleme olarak kullan.",
+          "resultText": "Artefakt dizisi, temsil edilen kimliğin ofis kamerasına fiziksel kaynak olamayacağını gösterir.",
+          "interaction": {
+            "mode": "frame_artifact_assignment",
+            "submitLabel": "Kareleri İncele",
+            "successMessage": "Kusurlar aynı sahte katmanı işaret ediyor.",
+            "failureMessage": "Karelerdeki ışık davranışı bu eşlemeyle tutarlı değil."
+          },
+          "frames": [
+            {
+              "id": "k14",
+              "label": "KARE 14 · 09:02:11",
+              "visual": "sol göz / pencere yansıması",
+              "correctArtifactId": "blink"
+            },
+            {
+              "id": "k18",
+              "label": "KARE 18 · 09:02:13",
+              "visual": "çene çizgisi / cam izi",
+              "correctArtifactId": "chroma"
+            },
+            {
+              "id": "k21",
+              "label": "KARE 21 · 09:02:17",
+              "visual": "koridor lambası / gölge",
+              "correctArtifactId": "reflection"
+            },
+            {
+              "id": "k26",
+              "label": "KARE 26 · 09:02:20",
+              "visual": "saç çizgisi / yeniden örnekleme",
+              "correctArtifactId": "resample"
+            }
+          ],
+          "artifacts": [
+            {
+              "id": "blink",
+              "label": "Göz kırpma ritmi",
+              "note": "Ardışık karelerde kas hareketi doğal değil."
+            },
+            {
+              "id": "chroma",
+              "label": "Chroma saçağı",
+              "note": "Yüz kenarında renk taşması var."
+            },
+            {
+              "id": "reflection",
+              "label": "Yansıma yönü",
+              "note": "Cam ışığı baş dönüşüyle birlikte değişmeli."
+            },
+            {
+              "id": "resample",
+              "label": "Yeniden örnekleme",
+              "note": "Saç çizgisinde eşit aralıklı keskinlik kaybı var."
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "c5",
+      "title": "Kurul Odası Soket Kaydı",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Yönetim Kurulu Odası’ndaki sunum prizinde Felix’in demo probuna ait iletken toz bulundu. Aynı oturumda Dr. Zhao’nun laboratuvar kartı görünmedi.",
+      "deductionHint": "Bu ek kayıt, hangi kartı ikinci çalışma alanına bağlar?",
+      "isBonus": true,
+      "revealOrder": 5,
+      "isRevealed": false,
+      "pointCost": 60
+    },
+    {
+      "id": "c6",
+      "title": "Model Sürüm Notu",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Ofis kahve makinesinin çıkış tepsisinde, yalnız ikinci sıcak içecek hattında kullanılan mineral karışımına ait mikro tortu bulundu. Tortu, laboratuvardan taşınan ekipmanda değil, başka bir çalışma setinde yoğunlaşıyordu.",
+      "deductionHint": "Bu ek tortu, hangi kişinin ikinci sıcak içecek seçeneğiyle eşleştiğini doğrular?",
+      "isBonus": true,
+      "revealOrder": 6,
+      "isRevealed": false,
+      "pointCost": 70
+    }
+  ],
+  "assetManifest": [],
+  "solution": {
+    "suspectId": "s3",
+    "weaponId": "w3",
+    "locationId": "l3"
+  },
+  "solutionNarrative": "Sofia, yıllar önce geliştirdiği sistemin şirket tarafından kendisinden koparıldığına inanıyordu. CEO’yu ofisinde zehirli kahveyle öldürdü; ardından Dr. Zhao’nun yüzünü kullanarak koridor kamerasına kusursuz görünen bir örtü yerleştirdi. Zhao laboratuvarında, Felix ise kendi demo düzeniyle başka eşleşmelerde kalınca, kahvenin ve ofisin yalnız Sofia’da kesiştiği görüldü. Deepfake, tanık yaratmadı; yalnızca gerçeğin ışığını yanlış yüzün üstüne taşıdı.",
+  "replitIntegration": {
+    "schema": "fm_replit_runtime_contract_v1",
+    "copyTarget": "Replit Agent prompt",
+    "canonicalCaseFile": "src/data/cases/dij_002.json",
+    "policy": "Var olan renderer varsa onu bozma; yoksa bu paketteki component ve dispatcher dalını ekle.",
+    "mechanics": [
+      {
+        "clueId": "c4",
+        "mechanicType": "sifreli_mesaj",
+        "renderer": "deepfake_frame_artifact_analysis",
+        "completionEvent": "onSolved({ clueId, mechanic: \"sifreli_mesaj\" })"
+      }
+    ]
+  }
+}
+===== VAKA VERİSİ SONU =====

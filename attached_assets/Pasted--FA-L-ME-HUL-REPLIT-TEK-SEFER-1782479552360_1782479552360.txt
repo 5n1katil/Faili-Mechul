@@ -1,0 +1,494 @@
+/* ============================================================
+ *  FAİLİ MEÇHUL — REPLIT TEK SEFERLİK ENTEGRASYON PAKETİ
+ *  Bu metni Replit Agent sohbetine TEK PARÇA olarak yapıştır.
+ *  Görev: sadece JSON kaydetme. Vaka verisini mevcut kaynakta
+ *  yükle, aşağıdaki eksik renderer altyapısını ekle ve çalıştır.
+ * ------------------------------------------------------------
+ *  Vaka: Kütüphanenin Kilitli Sırrı · puzzleId=ede_003
+ *  1) Önce mevcut vaka veri kaydını ve mini-oyun dispatcherını bul.
+ *  2) Var olan rendererları bozma; yalnız eksik olan dalı ekle.
+ *  3) Aşağıdaki vaka JSON’unu uygulamanın KANONİK case kaynağına ekle.
+ *  4) Kod değişikliklerinden sonra aşağıdaki kabul testlerini tarayıcıda yap.
+ *  5) Sadece açıklama yazma: dosyaları gerçekten güncelle ve test sonucunu bildir.
+ * ============================================================ */
+
+
+===== PREMIUM v26 ÖZEL MİNİ OYUN RENDERER'I — DOSYA OLUŞTUR / EKSİKSE EKLE =====
+// src/components/caseMechanics/PremiumMechanicRenderer.jsx
+import { useMemo, useState } from "react";
+
+const premiumStyles = new Set([
+  "luggage_label_match",
+  "negative_contact_sheet",
+  "morse_transceiver",
+  "archive_index_reconstruction",
+  "mechanical_lock_sequence",
+]);
+
+export const isPremiumMechanic = (clue) =>
+  clue?.mechanicType === "sifreli_mesaj" &&
+  premiumStyles.has(clue?.sifre?.presentation?.style);
+
+export default function PremiumMechanicRenderer({ clue, onSolved, onRequestHint }) {
+  const p = clue?.sifre?.presentation ?? {};
+  const style = p.style;
+  const [choices, setChoices] = useState({});
+  const [dials, setDials] = useState(() =>
+    Object.fromEntries((p.dials ?? []).map((d) => [d.id, d.initial ?? d.symbols?.[0] ?? ""]))
+  );
+  const [result, setResult] = useState(null);
+  const [hintOpen, setHintOpen] = useState(false);
+  const [hintUsed, setHintUsed] = useState(false);
+
+  const setChoice = (itemId, answerId) =>
+    setChoices((old) => ({ ...old, [itemId]: answerId }));
+
+  const rotate = (dial, delta) => {
+    const symbols = dial.symbols ?? [];
+    const current = dials[dial.id] ?? symbols[0];
+    const index = Math.max(0, symbols.indexOf(current));
+    const next = symbols[(index + delta + symbols.length) % symbols.length];
+    setDials((old) => ({ ...old, [dial.id]: next }));
+    setResult(null);
+  };
+
+  const valid = useMemo(() => {
+    if (!premiumStyles.has(style)) return false;
+    if (style === "mechanical_lock_sequence") {
+      return (p.correctCode ?? []).length === (p.dials ?? []).length &&
+        (p.correctCode ?? []).every((entry) => dials[entry.dialId] === entry.symbol);
+    }
+    return (p.correctAssignments ?? []).length > 0 &&
+      (p.correctAssignments ?? []).every((entry) => choices[entry.itemId] === entry.answerId);
+  }, [choices, dials, p, style]);
+
+  const submit = () => {
+    if (valid) {
+      setResult("ok");
+      onSolved?.({ clueId: clue.id, mechanic: style });
+    } else setResult("no");
+  };
+
+  const useHint = () => {
+    setHintOpen(true);
+    if (!hintUsed) {
+      setHintUsed(true);
+      onRequestHint?.({ clueId: clue.id, penaltySeconds: 60 });
+    }
+  };
+
+  const select = (itemId, options, placeholder) => (
+    <select value={choices[itemId] ?? ""} onChange={(e) => { setChoice(itemId, e.target.value); setResult(null); }}>
+      <option value="">{placeholder}</option>
+      {options.map((option) => <option key={option.id ?? option} value={option.id ?? option}>{option.label ?? option}</option>)}
+    </select>
+  );
+
+  const card = (title, body) => <article style={styles.card}><b>{title}</b>{body}</article>;
+  let board = null;
+
+  if (style === "luggage_label_match") {
+    board = <div style={styles.grid}>{(p.cases ?? []).map((item) => card(item.label, <><small>{item.stamp} · {item.note}</small>{select(item.id, p.routes ?? [], "Rotayı seç…")}</>))}</div>;
+  } else if (style === "negative_contact_sheet") {
+    board = <div style={styles.grid}>{(p.checks ?? []).map((item) => card(item.label, <><div style={styles.pair}><div style={styles.positive}>{item.positive}</div><div style={styles.negative}>{item.negative}</div></div>{select(item.id, item.options ?? [], "Farkı seç…")}</>))}</div>;
+  } else if (style === "morse_transceiver") {
+    board = <><div style={styles.chart}>{(p.chart ?? []).map((item) => <span key={item.char}><b>{item.char}</b> {item.code}</span>)}</div><div style={styles.grid}>{(p.signals ?? []).map((item) => card(item.label, <><div style={styles.morse}>{item.code}</div>{select(item.id, item.options ?? [], "Harfi seç…")}</>))}</div></>;
+  } else if (style === "archive_index_reconstruction") {
+    board = <div style={styles.archive}>{(p.files ?? []).map((item) => card(item.code ?? item.label, <><small>{item.date}<br />{item.note}</small>{select(item.id, p.slots ?? [], "Raf gözü…")}</>))}</div>;
+  } else if (style === "mechanical_lock_sequence") {
+    board = <div style={styles.dials}>{(p.dials ?? []).map((dial) => <article key={dial.id} style={styles.dial}><b>{dial.label}</b><div style={styles.symbol}>{dials[dial.id]}</div><div style={styles.controls}><button onClick={() => rotate(dial, -1)}>↶</button><button onClick={() => rotate(dial, 1)}>↷</button></div></article>)}</div>;
+  }
+
+  return <section style={styles.wrap}>
+    <h4 style={styles.title}>{p.title}</h4>
+    <p style={styles.sub}>{p.subtitle}</p>
+    <p style={styles.purpose}><b>ÇÖZÜMÜN İŞLEVİ</b><br />{p.purposeHint}</p>
+    {board}
+    {p.hint && <><button style={styles.ghost} onClick={useHint}>💡 İpucu iste</button>{hintOpen && <p style={styles.hint}>{p.hint}</p>}</>}
+    <button style={styles.submit} onClick={submit}>{p.interaction?.submitLabel ?? "Kaydı doğrula"}</button>
+    {result === "ok" && <p style={styles.ok}><b>IZGARA ETKİSİ</b><br />{p.resultText}</p>}
+    {result === "no" && <p style={styles.no}>{p.interaction?.failureMessage ?? "Kayıtlar aynı düzeni vermiyor. Ayrıntıları yeniden karşılaştır."}</p>}
+  </section>;
+}
+
+const styles = {
+  wrap:{marginTop:10,padding:12,border:"1px solid #2d3650",borderRadius:12,background:"#101522",color:"#e8eaf2"},
+  title:{margin:"0 0 4px",color:"#e0b54e",fontSize:14},sub:{margin:"0 0 8px",fontSize:12,color:"#a9b0ca"},
+  purpose:{margin:"0 0 10px",padding:9,borderLeft:"2px solid #e0b54e",background:"rgba(224,181,78,.06)",fontSize:12,lineHeight:1.45},
+  grid:{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(160px,1fr))",gap:8},archive:{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(145px,1fr))",gap:8},
+  card:{border:"1px solid #303a55",borderRadius:10,padding:10,display:"grid",gap:8,fontSize:12},pair:{display:"grid",gridTemplateColumns:"1fr 1fr",gap:6},
+  positive:{minHeight:54,padding:7,display:"grid",alignItems:"end",background:"#eef2fb",color:"#151a25",fontSize:10,fontWeight:700},negative:{minHeight:54,padding:7,display:"grid",alignItems:"end",background:"#20283d",color:"#eef2fb",fontSize:10,fontWeight:700},
+  chart:{display:"flex",gap:8,flexWrap:"wrap",padding:8,marginBottom:8,border:"1px solid #303a55",borderRadius:8,fontSize:11},morse:{fontSize:18,letterSpacing:3,color:"#f3d77d"},
+  dials:{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(100px,1fr))",gap:8},dial:{border:"1px solid #6e5a34",borderRadius:10,padding:9,textAlign:"center",display:"grid",gap:8},symbol:{height:48,border:"1px solid #b99b57",borderRadius:"50%",display:"grid",placeItems:"center",fontSize:22,color:"#f4e6ae"},
+  controls:{display:"grid",gridTemplateColumns:"1fr 1fr",gap:5},submit:{width:"100%",marginTop:10,padding:10,border:0,borderRadius:8,background:"#e0b54e",color:"#1a1205",fontWeight:700},ghost:{width:"100%",marginTop:8,padding:8,border:"1px dashed #caa544",borderRadius:8,background:"transparent",color:"#e0b54e"},
+  hint:{padding:8,borderRadius:8,background:"rgba(224,181,78,.08)",fontSize:12},ok:{padding:10,border:"1px solid #22c55e",borderRadius:8,background:"rgba(34,197,94,.1)",color:"#bbf7d0",fontSize:12},no:{padding:10,border:"1px solid #dc2626",borderRadius:8,background:"rgba(220,38,38,.1)",color:"#fecaca",fontSize:12}
+};
+===== DOSYA SONU =====
+
+===== MEVCUT MİNİ-OYUN DISPATCHERINA EKLENECEK DAL =====
+// Mevcut genel sifreli_mesaj renderer'INDEN ÖNCE ekle.
+import PremiumMechanicRenderer, { isPremiumMechanic } from "@/components/caseMechanics/PremiumMechanicRenderer";
+
+if (isPremiumMechanic(clue)) {
+  return (
+    <PremiumMechanicRenderer
+      clue={clue}
+      onSolved={({ clueId }) => markMiniGameSolved?.(clueId)}
+      onRequestHint={({ clueId, penaltySeconds }) => applyHintPenalty?.({ clueId, penaltySeconds })}
+    />
+  );
+}
+// Buradan sonra mevcut genel şifre renderer'ı aynen çalışmalı.
+===== YAMA SONU =====
+
+===== PREMIUM v26 KABUL TESTLERİ =====
+- c6: mechanical_lock_sequence renderer'ı JSON verisinden çalışır; doğru sonuç öncesinde resultText görünmez, yanlış deneme doğru eşlemeyi açmaz, mobilde kartlar tek kolon akışına iner.
+===== TESTLER SONU =====
+===== ZORUNLU KABUL TESTLERİ =====
+1. Eski klasik sifreli_mesaj, parmak_izi, profil_sentezi ve genel ses_kaydi rendererları regresyona uğramaz.
+===== TEST LİSTESİ SONU =====
+
+===== KANONİK VAKA VERİSİ — mevcut case registry’de ede_003 olarak ekle/değiştir =====
+{
+  "puzzleId": "ede_003",
+  "stars": "★★★☆☆",
+  "gridSize": "4x4",
+  "timeLimit": 660,
+  "storyParagraphs": [
+    "Yağmur, Ravenscroft Malikânesi’nin kütüphane camlarına çarpıyor; koridordaki kitap sırtları karanlıkta tek bir duvar gibi yükseliyordu. Vasiyet dosyalarını inceleyen Samuel Vane, içeriden sürgülenmiş küçük odada bulundu. Anahtar cebindeydi; pencerelerin mandalları da içeriden kapalıydı.",
+    "Kapı açıldığında ilk hissedilen şey keskin bir koku değil, alışılmadık bir kuruluktu. Kuzey rafının alt tablası bir parmak genişliğinde eğilmişti; katalogdaki ağır ciltlerin sayısı ise eksiksiz görünüyordu. Bir şey, yerini almış ama ağırlığını bırakmamıştı.",
+    "Yirmi yıl önce kaybolan arşiv dosyaları için yalnız dört kişi erişim istemişti. Her biri başka bir sırra, başka bir borca tutunuyordu. Malikânede bazen kilitler değil; rafın taşıdığı yük konuşurdu."
+  ],
+  "qaRationale": "Altı temel ipucu; ölüm aracını, silahın yanlış mekânlarını ve üç masum silah eşleşmesini birbirinden bağımsız biçimde daraltır. c6 mekanik kadran bulmacası son mekân alternatifini kapatır.",
+  "qaNarrativeContract": {
+    "narrativeSignal": "Hikâyedeki eğilmiş kuzey rafı ve eksiksiz görünen ağır ciltler, oyuncuya kadranlardaki aşınma ile ağırlık farkının aynı düzenekle ilişkili olduğunu sezdirir.",
+    "linkedClueId": "c6",
+    "playerAction": "Dört kadrandaki raf ve tabla aşınmalarını tek yön dizisine çevirmek.",
+    "fairReason": "Anlatı kadran kodunu veya sonucu vermez; yalnız hangi fiziksel ayrıntının okunacağını adil biçimde işaret eder."
+  },
+  "qaSourceHandling": "Kaynak kimlikler, şüpheliler, araçlar, mekânlar ve çözüm üçlüsü korunmuştur. Mantık kuralları v29.2'nin kanonik confirm/eliminate+pair sözleşmesine dönüştürülmüştür.",
+  "title": "Kütüphanenin Kilitli Sırrı",
+  "subtitle": "Gotik Kapalı Oda — Rafların Taşıdığı Sır",
+  "difficulty": "Dedektif",
+  "difficultyLevel": 3,
+  "specialMechanic": "sifreli_mesaj",
+  "story": "Yağmur, Ravenscroft Malikânesi’nin kütüphane camlarına çarpıyor; koridordaki kitap sırtları karanlıkta tek bir duvar gibi yükseliyordu. Vasiyet dosyalarını inceleyen Samuel Vane, içeriden sürgülenmiş küçük odada bulundu. Anahtar cebindeydi; pencerelerin mandalları da içeriden kapalıydı.\n\nKapı açıldığında ilk hissedilen şey keskin bir koku değil, alışılmadık bir kuruluktu. Kuzey rafının alt tablası bir parmak genişliğinde eğilmişti; katalogdaki ağır ciltlerin sayısı ise eksiksiz görünüyordu. Bir şey, yerini almış ama ağırlığını bırakmamıştı.\n\nYirmi yıl önce kaybolan arşiv dosyaları için yalnız dört kişi erişim istemişti. Her biri başka bir sırra, başka bir borca tutunuyordu. Malikânede bazen kilitler değil; rafın taşıdığı yük konuşurdu.",
+  "atmosphere": "Gotik malikâne · Yağmur · Kuruyan kâğıt · Pirinç kadranlar",
+  "suspects": [
+    {
+      "id": "s1",
+      "name": "Arşivci Magda Stern",
+      "icon": "📚",
+      "description": "Malikânenin kapalı koleksiyonlarından sorumlu arşivci.",
+      "detail": "Katalog anahtarına ve eski hava geçitleri krokisine erişimi var."
+    },
+    {
+      "id": "s2",
+      "name": "Dr. Adrian Vale",
+      "icon": "🩺",
+      "description": "Vane’in araştırdığı miras davasının danışmanı.",
+      "detail": "Olay saati köy revirindeki ameliyat kaydıyla sabit; cerrahi eldiven taşır."
+    },
+    {
+      "id": "s3",
+      "name": "Restoratör Lydia March",
+      "icon": "🧵",
+      "description": "Eski ciltleri onaran kitap restoratörü.",
+      "detail": "Hafta sonu iş emrinde yalnız atölye masası için kayıtlı; raf anahtarı yok."
+    },
+    {
+      "id": "s4",
+      "name": "Koleksiyoncu Theo Grimm",
+      "icon": "🗝️",
+      "description": "Nadir eserlerin alıcısı ve Vane’in borçlusu.",
+      "detail": "Kasaba istasyonunda imzalı yük senedi var; ağır bagajı yanında."
+    }
+  ],
+  "weapons": [
+    {
+      "id": "w1",
+      "name": "Gizli Hava Kanalı Gazı",
+      "icon": "🌫️",
+      "description": "Dar kanaldan odaya verilen boğucu gaz.",
+      "detail": "İğne, kesik ya da darbe bırakmadan çalışır."
+    },
+    {
+      "id": "w2",
+      "name": "Fildişi Kâğıt Bıçağı",
+      "icon": "🗡️",
+      "description": "Masa üstü kesici araç.",
+      "detail": "Yakın mesafede deride kesik oluşturur."
+    },
+    {
+      "id": "w3",
+      "name": "Kurşun Şamdan",
+      "icon": "🕯️",
+      "description": "Ağır, küt darbe aracı.",
+      "detail": "Kafatasında ezilme izi bırakır."
+    },
+    {
+      "id": "w4",
+      "name": "Uyku İğnesi",
+      "icon": "💉",
+      "description": "Hızlı etkili enjeksiyon.",
+      "detail": "Delik izi ve ampul kırığı beklenir."
+    }
+  ],
+  "locations": [
+    {
+      "id": "l1",
+      "name": "Kilitli Okuma Odası",
+      "icon": "🔐",
+      "description": "Maktulün bulunduğu oda.",
+      "detail": "Beden burada bulundu; ancak mekanizma buradan kurulmamış olabilir."
+    },
+    {
+      "id": "l2",
+      "name": "Havalandırma Tüneli",
+      "icon": "🌀",
+      "description": "Kuzey rafının arkasından geçen dar bakım hattı.",
+      "detail": "Eski planda “yalnız yangın bacası” diye kayıtlı."
+    },
+    {
+      "id": "l3",
+      "name": "Harita Arşivi",
+      "icon": "🗺️",
+      "description": "Rulo planların saklandığı soğuk bölüm.",
+      "detail": "Kireçli toz ve gömlek manşetinde mavi pigment bırakır."
+    },
+    {
+      "id": "l4",
+      "name": "Bekçi Kulübesi",
+      "icon": "🏚️",
+      "description": "Malikâne kapısındaki küçük oda.",
+      "detail": "Kömür sobası ve dış kapı kaydıyla ayrılır."
+    }
+  ],
+  "clues": [
+    {
+      "id": "c1",
+      "title": "Kuru Solunum Yolu",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Otopsi raporunda, soluk borusunun derininde kesik ya da iğne izi olmadan görülen kurutucu tahriş kaydı var. Ölümcül madde, dışarıdan solunmuş bir akışla temas etmiş.",
+      "deductionHint": "Bulgu, doğrudan temas eden kesici veya iğneye değil; hangi tür akışa işaret ediyor?",
+      "isBonus": false,
+      "revealOrder": 1,
+      "isRevealed": true,
+      "pointCost": 0
+    },
+    {
+      "id": "c2",
+      "title": "Fildişi Sapın Sicili",
+      "type": "tanik",
+      "mechanicType": "text",
+      "text": "Revir dolabındaki bakım defteri, sarımsı saplı masa kesicisinin aynı gece mühürlü çantadan çıkarıldığını; dönüşte de aynı numarayla teslim edildiğini gösteriyor.",
+      "deductionHint": "Sicil, hangi kişi ile hangi alet arasında cinayet dışı ama kesin bir eşleşme kuruyor?",
+      "isBonus": false,
+      "revealOrder": 2,
+      "isRevealed": false,
+      "pointCost": 0
+    },
+    {
+      "id": "c3",
+      "title": "Filtresiz Önlük",
+      "type": "adli",
+      "mechanicType": "text",
+      "text": "Atölye önlüğünün liflerinde cilt tutkalı ve keten tozu var; ancak kapalı bir akış düzeneğinin filtresinde beklenen koyu grafit birikimi yok.",
+      "deductionHint": "Katalog işi yapan kişinin üstünde bulunmayan kalıntı, hangi araçla aynı zincirde olamayacağını düşündürür?",
+      "isBonus": false,
+      "revealOrder": 3,
+      "isRevealed": false,
+      "pointCost": 0
+    },
+    {
+      "id": "c4",
+      "title": "İstasyon Sandığının İç Gözü",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Kasaba istasyonunda mühürlenen ağır sandığın iç kapağında, küçük bir ampul kutusunun oturduğu dikdörtgen boşluk ve aynı mühür numarası kayıtlı.",
+      "deductionHint": "Yük kaydı, hangi yolcunun hangi seçeneğe zaten bağlı olduğunu gösterir?",
+      "isBonus": false,
+      "revealOrder": 4,
+      "isRevealed": false,
+      "pointCost": 0
+    },
+    {
+      "id": "c5",
+      "title": "Kapının İç Basıncı",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Bedenin bulunduğu odanın kapısındaki ince toz çizgisi, basıncın eşikten değil duvar boşluğundan içeri geldiğini gösteriyor. Düzeneğin başlangıcı bu odada değil.",
+      "deductionHint": "Akışın yönü, hangi yer seçeneğini dışarıda bırakır?",
+      "isBonus": false,
+      "revealOrder": 5,
+      "isRevealed": false,
+      "pointCost": 0
+    },
+    {
+      "id": "c6",
+      "title": "Katalog Kadran Kilidi",
+      "type": "sifreli",
+      "mechanicType": "sifreli_mesaj",
+      "text": "Kuzey rafının arkasında, katalog fişleriyle aynı aşınma izlerini taşıyan dört pirinç kadran bulundu. Üstteki işaretler tek başına değil, sırayla anlam kazanıyor.",
+      "deductionHint": "Bir kadranın işareti değil, dört işaretin izlediği yön önemlidir.",
+      "isBonus": false,
+      "revealOrder": 6,
+      "isRevealed": false,
+      "pointCost": 0,
+      "sifre": {
+        "sifrelenmis": "KATALOG YÖN İŞARETLERİ",
+        "sifreleTuru": "mekanik_kilit_dizisi",
+        "cozumIpucu": "Her kadranda, üstteki raf izi ile alttaki aşınmanın ortak yönünü ara; dört işaret aynı yürüyüşü tamamlar.",
+        "cozulmus": "KADRAN-14",
+        "aciklama": "Kilit açıldı; yön dizisi, soruşturmadaki eksik eşleşme halkasını tamamlayacak son işareti verdi.",
+        "presentation": {
+          "style": "mechanical_lock_sequence",
+          "title": "Katalog Kadran Kilidi",
+          "subtitle": "Raf payandalarındaki yön aşınmalarını dört pirinç kadranda yeniden kur.",
+          "purposeHint": "Doğru diziliş, soruşturma panosunda tek bir bağlantının elenmesini sağlar.",
+          "resultText": "Kadranların verdiği yön, çalışma hattının bekçi geçidinden kurulmadığını gösterir.",
+          "dials": [
+            {
+              "id": "d1",
+              "label": "Kuzey Rafı",
+              "symbols": [
+                "↑",
+                "→",
+                "↓",
+                "←"
+              ],
+              "initial": "↑"
+            },
+            {
+              "id": "d2",
+              "label": "Alt Tabla",
+              "symbols": [
+                "↗",
+                "↘",
+                "↙",
+                "↖"
+              ],
+              "initial": "↗"
+            },
+            {
+              "id": "d3",
+              "label": "Katalog Ucu",
+              "symbols": [
+                "Ⅰ",
+                "Ⅱ",
+                "Ⅲ",
+                "Ⅳ"
+              ],
+              "initial": "Ⅰ"
+            },
+            {
+              "id": "d4",
+              "label": "Kilitleme Çentiği",
+              "symbols": [
+                "○",
+                "△",
+                "□",
+                "◇"
+              ],
+              "initial": "○"
+            }
+          ],
+          "correctCode": [
+            {
+              "dialId": "d1",
+              "symbol": "→"
+            },
+            {
+              "dialId": "d2",
+              "symbol": "↙"
+            },
+            {
+              "dialId": "d3",
+              "symbol": "Ⅲ"
+            },
+            {
+              "dialId": "d4",
+              "symbol": "□"
+            }
+          ],
+          "interaction": {
+            "mode": "dial_sequence",
+            "submitLabel": "Kadranları Doğrula",
+            "successMessage": "Diziliş açıldı; panoda tek bir eleme işlendi.",
+            "failureMessage": "Aşınma yönleri aynı halkayı tamamlamıyor. Raf ve tabla izlerini birlikte oku."
+          }
+        }
+      }
+    },
+    {
+      "id": "c7",
+      "title": "Katalog Anahtarının Kenarı — Bonus",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Kuzey rafın altındaki pirinç anahtarın dişlerinde, arşivci masasındaki aynı koyu vernik ve rulo plan tozu bulundu.",
+      "deductionHint": "Anahtarın kullandığı çalışma hattı hangi kişi ile hangi yeri birlikte güçlendirir?",
+      "isBonus": true,
+      "revealOrder": 7,
+      "isRevealed": false,
+      "pointCost": 55
+    },
+    {
+      "id": "c8",
+      "title": "Yarım Kalan Mühür — Bonus",
+      "type": "tanik",
+      "mechanicType": "text",
+      "text": "Eski dosya zarfında, yalnız duvar içindeki bakım kapağında kullanılan gri macunun kurumuş izi var.",
+      "deductionHint": "Bu macun, hangi araç ile hangi hattın kesişimini doğrular?",
+      "isBonus": true,
+      "revealOrder": 8,
+      "isRevealed": false,
+      "pointCost": 55
+    }
+  ],
+  "assetManifest": [],
+  "solution": {
+    "suspectId": "s1",
+    "weaponId": "w1",
+    "locationId": "l2"
+  },
+  "solutionNarrative": "Samuel Vane’in ölümü kilitli odada görünür hâle geldi; fakat düzenek orada kurulmadı. Magda, eski katalog anahtarını kullanarak duvar içindeki bakım hattına erişti ve kuru akışı raf arkasından verdi. Kadran kilidi, bekçi geçidi ihtimalini kapatınca, geriye yalnız bu erişim zinciri kaldı.",
+  "replitIntegration": {
+    "schema": "fm_replit_runtime_contract_v1",
+    "copyTarget": "Replit Agent prompt",
+    "canonicalCaseFile": "src/data/cases/ede_003.json",
+    "policy": "Var olan renderer varsa onu bozma; yoksa bu paketteki component ve dispatcher dalını ekle.",
+    "mechanics": [
+      {
+        "clueId": "c6",
+        "mechanicType": "sifreli_mesaj",
+        "renderer": "mechanical_lock_sequence",
+        "completionEvent": "onSolved({ clueId, mechanic: \"sifreli_mesaj\" })"
+      },
+      {
+        "clueId": "c6",
+        "mechanicType": "sifreli_mesaj",
+        "renderer": "mechanical_lock_sequence",
+        "componentFile": "src/components/caseMechanics/PremiumMechanicRenderer.jsx",
+        "dispatcherBranch": "clue.mechanicType === \"sifreli_mesaj\" && [\"luggage_label_match\",\"negative_contact_sheet\",\"morse_transceiver\",\"archive_index_reconstruction\",\"mechanical_lock_sequence\"].includes(clue.sifre?.presentation?.style)",
+        "completionEvent": "onSolved({ clueId, mechanic: \"mechanical_lock_sequence\" })",
+        "hintEvent": "onRequestHint({ clueId, penaltySeconds: 60 })",
+        "requiredData": [
+          "title",
+          "subtitle",
+          "purposeHint",
+          "resultText",
+          "interaction",
+          "style-specific data"
+        ],
+        "nonNegotiable": [
+          "Veriyi component içine hard-code etme.",
+          "Başarı öncesinde resultText veya çözüm eşleşmesini gösterme.",
+          "Yanlış deneme doğru eşlemeyi otomatik kurmamalı.",
+          "Mobilde kartlar/diallar tek sütuna akmalı."
+        ]
+      }
+    ]
+  }
+}
+===== VAKA VERİSİ SONU =====

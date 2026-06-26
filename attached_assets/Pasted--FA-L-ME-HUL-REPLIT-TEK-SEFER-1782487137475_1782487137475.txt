@@ -1,0 +1,265 @@
+/* ============================================================
+ *  FAİLİ MEÇHUL — REPLIT TEK SEFERLİK ENTEGRASYON PAKETİ
+ *  Bu metni Replit Agent sohbetine TEK PARÇA olarak yapıştır.
+ *  Görev: sadece JSON kaydetme. Vaka verisini mevcut kaynakta
+ *  yükle, aşağıdaki eksik renderer altyapısını ekle ve çalıştır.
+ * ------------------------------------------------------------
+ *  Vaka: Son Blok · puzzleId=dij_001
+ *  1) Önce mevcut vaka veri kaydını ve mini-oyun dispatcherını bul.
+ *  2) Var olan rendererları bozma; yalnız eksik olan dalı ekle.
+ *  3) Aşağıdaki vaka JSON’unu uygulamanın KANONİK case kaynağına ekle.
+ *  4) Kod değişikliklerinden sonra aşağıdaki kabul testlerini tarayıcıda yap.
+ *  5) Sadece açıklama yazma: dosyaları gerçekten güncelle ve test sonucunu bildir.
+ * ============================================================ */
+
+===== ZORUNLU KABUL TESTLERİ =====
+1. Eski klasik sifreli_mesaj, parmak_izi, profil_sentezi ve genel ses_kaydi rendererları regresyona uğramaz.
+===== TEST LİSTESİ SONU =====
+
+===== KANONİK VAKA VERİSİ — mevcut case registry’de dij_001 olarak ekle/değiştir =====
+{
+  "puzzleId": "dij_001",
+  "stars": "★☆☆☆☆",
+  "gridSize": "3x3",
+  "timeLimit": 600,
+  "qaRationale": {
+    "c1": "Ölüm mahalli oyuncuya açıkça l1 olarak verilir; V-11 kamera mührü s1–l2 eşleşmesini doğrular.",
+    "c2": "G-17, GhostKey kimlik kartının bağlam işaretidir; yalnız w1 sözleşme yetkisiyle eşleşir.",
+    "c3": "Viyal çapı, s1’in ekipmanını w3 ile fiziksel olarak bağdaşmaz kılar.",
+    "c4": "Oyuncu nonce/receipt incelemesini yapar; G-17’nin l1 fiziksel okuyucusunu kullanmadığını görür.",
+    "leaveOneOut": "c1 veya c4 çıkarılırsa l1’de s3 yerine başka kişi kalabilir; c2 veya c3 çıkarılırsa w3 s3 yerine başka kişiye kalabilir."
+  },
+  "qaNarrativeContract": {
+    "narrativeClue": "Arman’ın notundaki imza–zaman damgası ayrımı, işlem çatalı oyununda nonce ve receipt sırasına bakılması gerektiğini adil biçimde söyler.",
+    "linkedClueId": "c4",
+    "playerVisibleBridge": "‘Gerçek imza, zaman damgasından değil zincirin kırıldığı yerden anlaşılır.’"
+  },
+  "title": "Son Blok",
+  "subtitle": "Karanlık Ağ · Axiom Exchange Çöküş Dosyası",
+  "difficulty": "Çaylak",
+  "difficultyLevel": 1,
+  "specialMechanic": "şifreli_mesaj · blockchain_transaction_fork",
+  "story": "Axiom Exchange’in gece vardiyası, iki milyar dolarlık açığın ekrana düştüğü anda sessizliğe gömüldü. Baş geliştirici Arman Kaya, sabaha karşı altyapı katında ölü bulundu; monitöründe yalnızca tek satır kalmıştı: “TRANSFER_HALT / imza reddedildi.” O gece binada üç isim vardı: parasını kurtarmaya çalışan CEO Marcus Vault, kimliği bilinmeyen GhostKey ve haftalardır risk raporlarıyla yönetimi uyaran Priya Sen.\n\nİlk bakışta herkes dijital hırsızlığa odaklandı. Fakat soğuk koridordaki ışıklar, masanın altındaki halka ve kapı okuyucusuna düşen kısa bir sertifika izi, cinayetin para transferinden ayrı bir fiziksel planı olduğunu söylüyordu.\n\nArman’ın son notunda “gerçek imza, zaman damgasından değil zincirin kırıldığı yerden anlaşılır” cümlesi vardı. Bu, ekranda görünen her şeyin gerçek olduğu anlamına gelmiyordu. Kayıtların dili temizdi; fakat temiz görünen bir zincir bazen en iyi hazırlanmış yalandır.",
+  "atmosphere": "Fanların uğultusu, soğuk metal raflar ve kırmızı uyarı ışığı. Bazı geceler bloklar yalnızca para değil, insan da yutar.",
+  "suspects": [
+    {
+      "id": "s1",
+      "name": "CEO Marcus Vault",
+      "icon": "👨‍💼",
+      "description": "Axiom’un kurucusu; çöküşten önce nakit çıkışı hazırladığı görülüyor.",
+      "detail": "V-11 kartı yalnız CEO Ofisi iç kamera sistemiyle eşleşir. Finansal kaçış planı kurmuş olabilir; teknik erişimi sınırlıdır."
+    },
+    {
+      "id": "s2",
+      "name": "Baş Hacker 'GhostKey'",
+      "icon": "🧑‍💻",
+      "description": "Kimliği bilinmeyen, borsanın imza doğrulama katmanına sızan anonim aktör.",
+      "detail": "G-17 oturum etiketiyle iz bırakır. Zincir içi sözleşmeleri manipüle edebilecek kadar yetkin, fiziksel kimliği belirsiz."
+    },
+    {
+      "id": "s3",
+      "name": "Risk Direktörü Priya Sen",
+      "icon": "📊",
+      "description": "Yönetimin görmezden geldiği risk raporlarını hazırlayan matematikçi.",
+      "detail": "On dört uyarı raporu hazırladı. Sistem açığını herkesten önce gördü; işini ve itibarını aynı gecede kaybetti."
+    }
+  ],
+  "weapons": [
+    {
+      "id": "w1",
+      "name": "Smart Contract Tuzağı",
+      "icon": "📜",
+      "description": "Transferi donduran, dijital kayba yol açan kötü amaçlı koşul dizisi.",
+      "detail": "Biyolojik bir ölüm mekanizması değildir; parayı kilitler, insanı değil."
+    },
+    {
+      "id": "w2",
+      "name": "Fiziksel Saldırı",
+      "icon": "👊",
+      "description": "Yakın temas, darbe veya zor kullanmaya dayanan klasik yöntem.",
+      "detail": "Olay yerindeki sessizlik ve düzen bu yöntemi tartışmalı bırakır."
+    },
+    {
+      "id": "w3",
+      "name": "Zehirli Enerji İçeceği",
+      "icon": "🥤",
+      "description": "Soğuk odadaki içeceğe karıştırılan hızlı etkili madde.",
+      "detail": "Kutunun iç yüzeyinde görünmeyen doz çizgisi ve kapak contasında farklı bir basınç izi var."
+    }
+  ],
+  "locations": [
+    {
+      "id": "l1",
+      "name": "Sunucu Odası",
+      "icon": "💽",
+      "description": "Borsanın fiziksel çekirdeği; erişim kartıyla açılan, kameraları sınırlı soğuk bölüm.",
+      "detail": "Kapı okuyucusu fiziksel sertifika ister; salt uzaktan oturum burada yetmez."
+    },
+    {
+      "id": "l2",
+      "name": "CEO Ofisi",
+      "icon": "🏢",
+      "description": "Kırk beşinci kattaki camla çevrili karar odası.",
+      "detail": "İç kamera mührü, çalışan kartlarını saniye hassasiyetinde doğrular."
+    },
+    {
+      "id": "l3",
+      "name": "Dark Web Buluşma Noktası",
+      "icon": "🕸️",
+      "description": "Şifreli kimliklerin yalnızca rumuzla konuştuğu kapalı kanal.",
+      "detail": "Fiziksel oda değil, gizli anlaşmaların dijital buluşma alanı."
+    }
+  ],
+  "clues": [
+    {
+      "id": "c1",
+      "title": "Adli Saat ve Kamera Mührü",
+      "type": "adli",
+      "mechanicType": "text",
+      "text": "Mikroskobik saat farkı, Arman’ın ölümünün soğutma rafları ile erişim kabinleri arasındaki L-01 kapalı bölümünde gerçekleştiğini; cesedin sonradan taşınmadığını gösterdi. Aynı dört dakikada V-11 kartının canlı kamera mührü, cam cepheli üst yönetim masasından hiç ayrılmadı.",
+      "deductionHint": "Ölümün gerçekleştiği yeri belirledikten sonra, hangi rozet aynı anda başka bir odaya bağlanıyor?",
+      "isBonus": false,
+      "revealOrder": 1,
+      "isRevealed": true,
+      "pointCost": 0
+    },
+    {
+      "id": "c2",
+      "title": "Dondurma Koşulunun Kaynağı",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Transferi durduran koşul dizisinin başlangıç anahtarı, G-17 oturumunun yalnız imzalayabildiği sözleşme yetkisiyle yazılmış. Kayıt, bu yetkinin beden üzerinde iz bırakan yöntemden değil dijital kesintiden sorumlu olduğunu ayırıyor.",
+      "deductionHint": "Bu kayıt, hangi kişinin ilk dijital seçenekle eşleşmesini engeller?",
+      "isBonus": false,
+      "revealOrder": 2,
+      "isRevealed": false,
+      "pointCost": 0
+    },
+    {
+      "id": "c3",
+      "title": "Doz Viyali Baskı Analizi",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Kutudaki kapak contası, 2,5 mm’lik laboratuvar viyaliyle açılmış. V-11 kaydındaki acil durum setinin tek adaptörü 6 mm; contadaki kıvrımı ve kutudaki doz çizgisini üretemez.",
+      "deductionHint": "İlk rozet sahibini listedeki hangi ölüm aracından dışarıda bırakmalısın?",
+      "isBonus": false,
+      "revealOrder": 3,
+      "isRevealed": false,
+      "pointCost": 0
+    },
+    {
+      "id": "c4",
+      "title": "İşlem Çatalı Doğrulaması",
+      "type": "sifreli",
+      "mechanicType": "sifreli_mesaj",
+      "text": "Arman’ın masaüstünde üç rakip işlem dalı bulundu. Üst not yalnızca “imza sırası, fiziksel okuyucuyu taklit edemez” diyordu.",
+      "deductionHint": "İşlem dallarından hangisi giriş kaydıyla çelişiyor; sonuç hangi kişi–yer hücresini siler?",
+      "isBonus": false,
+      "revealOrder": 4,
+      "isRevealed": false,
+      "pointCost": 0,
+      "sifre": {
+        "sifreleTuru": "işlem çatalı doğrulama",
+        "sifrelenmis": "Aynı kök · üç dal · tek geçerli imza sırası",
+        "cozulmus": "DAL-C",
+        "answerAliases": [
+          "Dalc",
+          "C",
+          "Fork C",
+          "Fork-C"
+        ],
+        "cozumIpucu": "Zaman damgasını değil; aynı nonce’un hangi dalda bir kez kullanıldığını ve alındı kaydının imzadan sonra gelip gelmediğini karşılaştır.",
+        "aciklama": "Doğru dalı seçmek, uzaktan yaratılmış kaydın fiziksel okuyucu izi yerine geçemeyeceğini kanıtlar; bu eşleştirme ızgarada bir kişi–mekân elemesini açar.",
+        "presentation": {
+          "style": "blockchain_transaction_fork",
+          "title": "İşlem Çatalı Doğrulaması",
+          "subtitle": "Üç dal aynı kökten türemiş görünüyor. Nonce tekrarını ve imza–alındı sırasını izleyerek geçerli zinciri seç.",
+          "purposeHint": "Doğru dal, bir oturumun fiziksel erişim kaydıyla uyumsuz olduğunu gösterir; seçimi ızgarada bir şüpheli–mekân elemesi olarak kullan.",
+          "resultText": "Doğrulanan dal, ilgili oturumun fiziksel okuyucu üzerinden geçmediğini gösterir.",
+          "interaction": {
+            "mode": "single_branch",
+            "submitLabel": "Dalın Geçerliliğini Sına",
+            "successMessage": "Zincir tutarlı. Fiziksel okuyucu iddiası bu oturumla bağdaşmıyor.",
+            "failureMessage": "Bu dalda nonce veya alındı sırası zinciri bozuyor."
+          },
+          "branches": [
+            {
+              "id": "dal_a",
+              "label": "DAL A · 841920",
+              "nonce": "9F-44",
+              "signature": "02:11:08",
+              "receipt": "02:11:03",
+              "parentHash": "…7A1",
+              "note": "Alındı, imzadan önce yazılmış."
+            },
+            {
+              "id": "dal_b",
+              "label": "DAL B · 841921",
+              "nonce": "9F-44",
+              "signature": "02:11:10",
+              "receipt": "02:11:13",
+              "parentHash": "…7A1",
+              "note": "Aynı nonce iki işlemde kullanılmış."
+            },
+            {
+              "id": "dal_c",
+              "label": "DAL C · 841922",
+              "nonce": "C2-91",
+              "signature": "02:11:12",
+              "receipt": "02:11:16",
+              "parentHash": "…7A1",
+              "note": "Nonce tekil; alındı imzayı takip ediyor."
+            }
+          ],
+          "correctBranchId": "dal_c"
+        }
+      }
+    },
+    {
+      "id": "c5",
+      "title": "Mühürlü Kişisel Dolap",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Marcus’un kişisel dolabındaki temas izi, o gece yalnız kırılmış bir metal kutu ve kanlı bir panel kenarıyla eşleşti. İçecek soğutucusuna ait hiçbir lif veya doz kalıntısı bulunmadı.",
+      "deductionHint": "Bu ek bulgu, hangi kişi ile fiziksel aracı aynı hücreye yerleştirir?",
+      "isBonus": true,
+      "revealOrder": 5,
+      "isRevealed": false,
+      "pointCost": 60
+    },
+    {
+      "id": "c6",
+      "title": "Karanlık Kanalın Toplantı Kuralı",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Kurtarılan kanal yönergesinde G-17 oturumunun yalnız çevrim içi görüşme odasında açılabildiği, zincir anahtarının ise her görüşme sonunda otomatik yok edildiği yazıyor.",
+      "deductionHint": "Bu ek kayıt, hangi kişi ile görüşme alanını birlikte doğrular?",
+      "isBonus": true,
+      "revealOrder": 6,
+      "isRevealed": false,
+      "pointCost": 70
+    }
+  ],
+  "assetManifest": [],
+  "solution": {
+    "suspectId": "s3",
+    "weaponId": "w3",
+    "locationId": "l1"
+  },
+  "solutionNarrative": "Priya, Marcus’un para kaçış planını görmüştü; GhostKey’in anonimliği ise ona iki ayrı suçun aynı gecede mümkün olduğu sis perdesini sağladı. Marcus dijital tuzağı kurarken Priya, Arman’ın Sunucu Odası’ndaki içeceğine doz ekledi. Marcus’un ofiste sabit kalması ve GhostKey oturumunun fiziksel okuyucuyla uyuşmaması, ikisini de ölüm anından dışarıda bıraktı. Geriye, zehirli kutu ile soğuk odada tek başına kesişen Priya kaldı.",
+  "replitIntegration": {
+    "schema": "fm_replit_runtime_contract_v1",
+    "copyTarget": "Replit Agent prompt",
+    "canonicalCaseFile": "src/data/cases/dij_001.json",
+    "policy": "Var olan renderer varsa onu bozma; yoksa bu paketteki component ve dispatcher dalını ekle.",
+    "mechanics": [
+      {
+        "clueId": "c4",
+        "mechanicType": "sifreli_mesaj",
+        "renderer": "blockchain_transaction_fork",
+        "completionEvent": "onSolved({ clueId, mechanic: \"sifreli_mesaj\" })"
+      }
+    ]
+  }
+}
+===== VAKA VERİSİ SONU =====

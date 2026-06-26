@@ -1,0 +1,264 @@
+/* ============================================================
+ *  FAİLİ MEÇHUL — REPLIT TEK SEFERLİK ENTEGRASYON PAKETİ
+ *  Bu metni Replit Agent sohbetine TEK PARÇA olarak yapıştır.
+ *  Görev: sadece JSON kaydetme. Vaka verisini mevcut kaynakta
+ *  yükle, aşağıdaki eksik renderer altyapısını ekle ve çalıştır.
+ * ------------------------------------------------------------
+ *  Vaka: Beğeni Tuzağı · puzzleId=dij_004
+ *  1) Önce mevcut vaka veri kaydını ve mini-oyun dispatcherını bul.
+ *  2) Var olan rendererları bozma; yalnız eksik olan dalı ekle.
+ *  3) Aşağıdaki vaka JSON’unu uygulamanın KANONİK case kaynağına ekle.
+ *  4) Kod değişikliklerinden sonra aşağıdaki kabul testlerini tarayıcıda yap.
+ *  5) Sadece açıklama yazma: dosyaları gerçekten güncelle ve test sonucunu bildir.
+ * ============================================================ */
+
+===== ZORUNLU KABUL TESTLERİ =====
+1. Eski klasik sifreli_mesaj, parmak_izi, profil_sentezi ve genel ses_kaydi rendererları regresyona uğramaz.
+===== TEST LİSTESİ SONU =====
+
+===== KANONİK VAKA VERİSİ — mevcut case registry’de dij_004 olarak ekle/değiştir =====
+{
+  "puzzleId": "dij_004",
+  "stars": "★★★★☆",
+  "gridSize": "3x3",
+  "timeLimit": 630,
+  "qaRationale": {
+    "c1": "L1 ölüm mahalli semantik çapa; S-44 yayını s1–l2 bağını verir.",
+    "c2": "D-09 Dilek ayrıntı kodu ve metal tozu w1’i somut biçimde bağlar.",
+    "c3": "Ergonomi kaydı s1–w3'ü eler.",
+    "c4": "Sayısal korelasyon D-09 hareketinin l1 olayına ait olmadığını s3–l1 elemesiyle verir.",
+    "leaveOneOut": "c1/c4 olmadan s2'nin l1’e tek kalması bozulur; c2/c3 olmadan w3 s2’ye tek kalmaz."
+  },
+  "qaNarrativeContract": {
+    "narrativeClue": "Kerem’in monitör notu, oyuncuyu kart kaydını UPS eğrisiyle tek ölçek üzerinde değerlendirmeye yönlendirir.",
+    "linkedClueId": "c4",
+    "playerVisibleBridge": "‘Yük eğrisiyle üst üste koymadan kimseyi içeri sokma.’"
+  },
+  "title": "Beğeni Tuzağı",
+  "subtitle": "Karanlık Ağ · TrendHub Veri Sızıntısı",
+  "difficulty": "Başkomiser",
+  "difficultyLevel": 4,
+  "specialMechanic": "şifreli_mesaj · badge_ups_correlation",
+  "story": "TrendHub’ın altyapı katı, gündüzleri içerik üreticilerinin milyonluk kampanyalarını taşıyan mavi ışıklı bir depo gibiydi. Gece ise yalnız fan sesleri ve güç ekranındaki küçük dalgalar kalıyordu. Veri denetçisi Kerem Aydoğan, ajansın kullanıcı verilerinin satıldığını savcıya bildirmeye hazırlanırken kapalı teknik bölümde ölü bulundu.\n\nŞüpheliler üç farklı riske dayanıyordu: canlı yayınıyla bot skandalını örtmeye çalışan Seda Mirkan, veri tabanı erişimini yöneten Tarık Demirbaş ve komisyon dosyaları nedeniyle baskı altında olan Dilek Aras. Birinin itibarı, birinin parası, birinin de şirket içindeki konumu aynı gece kırılma noktasına gelmişti.\n\nKerem’in monitöründe açık kalan enerji izleme panelinin yanında şu not vardı: “Kart kaydı tek başına yalan söyleyebilir. Yük eğrisiyle üst üste koymadan kimseyi içeri sokma.” Üç ayrı veri kaynağı aynı dakika için konuşuyor, fakat yalnız biri fiziksel hareketle uyumlu görünüyordu.",
+  "atmosphere": "Mavi LED’ler yerde kırılan camı değil, sessizce yükselen güç tüketimini yansıtıyordu.",
+  "suspects": [
+    {
+      "id": "s1",
+      "name": "Seda Mirkan",
+      "icon": "📱",
+      "description": "TrendHub’ın yüzü; bot takipçi soruşturmasının odağındaki influencer. Canlı yayın profili kodu LIVE-44; stüdyo bilek bandı tek elle sabit çalışma kaydı üretir.",
+      "detail": "S-44 yayın rozeti Açık Ofis Katı stüdyosuna bağlıdır. Canlı yayın analitiği dakikaları doğrular, fakat geceki itibarı risk altındadır."
+    },
+    {
+      "id": "s2",
+      "name": "Tarık Demirbaş",
+      "icon": "💾",
+      "description": "Veri mühendisi; kullanıcı dışa aktarımlarına ve UPS bakım anahtarlarına erişir. Veri mühendisi erişim kodu T-7; bakım anahtarı ve servis geçidi günlüklerine bağlıdır.",
+      "detail": "T-17 bakım kartı ve T-7 akü anahtarı ona tahsisli. Veri sızıntısı dosyasını ilk gören çalışanlardan biridir."
+    },
+    {
+      "id": "s3",
+      "name": "Dilek Aras",
+      "icon": "📁",
+      "description": "Kampanya sözleşmelerinden sorumlu yönetici. Sözleşme yetki kodu D-09; üst kat arşiv anahtarının sahibidir.",
+      "detail": "D-09 muhasebe rozeti CEO Ofisi koridorunda kullanılır. Komisyon defterinin yayımlanması kariyerini bitirebilir."
+    }
+  ],
+  "weapons": [
+    {
+      "id": "w1",
+      "name": "Sunucu raf rayı",
+      "icon": "🧱",
+      "description": "Raf taşıma sisteminden sökülmüş metal ray. Parça kodu V-09; nikel oranı yüksek, uzun yapısal metal bileşen.",
+      "detail": "Dar alanda kaldırıldığında keskin ama hafif izler bırakır."
+    },
+    {
+      "id": "w2",
+      "name": "Fiber optik kablo demeti",
+      "icon": "🧵",
+      "description": "Bağlantı hattından ayrılmış kalın kablo demeti. Parça kodu F-21; veri hattından ayrılmış lifli bağlantı demeti.",
+      "detail": "Boyuna baskı veya boğma izine uygun esneklik taşır."
+    },
+    {
+      "id": "w3",
+      "name": "UPS akü bloğu",
+      "icon": "🔋",
+      "description": "Sunucuları koruyan ağır, çıkarılabilir güç modülü. Parça kodu B-7; ağır, çıkarılabilir yedek güç modülü.",
+      "detail": "Yerinden söküldüğünde UPS yük eğrisinde ani ve yüksek bir boşalma bırakır."
+    }
+  ],
+  "locations": [
+    {
+      "id": "l1",
+      "name": "Sunucu odası",
+      "icon": "🖥️",
+      "description": "UPS raflarının ve yedekleme ünitelerinin bulunduğu kilitli kat. Alan kodu SVR-1; yedekleme üniteleri ve korumalı bakım panelinin bulunduğu kilitli teknik kat.",
+      "detail": "Kart okuyucusu ile güç telemetrisi farklı sistemlerde tutulur; aynı dakika tek başına yeterli değildir."
+    },
+    {
+      "id": "l2",
+      "name": "Açık ofis katı",
+      "icon": "🎥",
+      "description": "Canlı yayın stüdyosu ve içerik ekibinin çalıştığı geniş kat. Alan kodu LIV-2; canlı yayın stüdyosu ile içerik ekibinin bulunduğu geniş kat.",
+      "detail": "Yayın ekranları ile S-44 rozetinin yakınlık sinyali burada görünür."
+    },
+    {
+      "id": "l3",
+      "name": "CEO ofisi",
+      "icon": "🏢",
+      "description": "Sözleşme ve komisyon kararlarının verildiği üst kat ofisi. Alan kodu ARC-3; sözleşme arşivi ve komisyon kararlarının bulunduğu üst kat.",
+      "detail": "D-09 rozeti koridor sensöründe düzenli şekilde görünür."
+    }
+  ],
+  "clues": [
+    {
+      "id": "c1",
+      "title": "Alt Teknik Bölüm ve LIVE-44 Kaydı",
+      "type": "eleme",
+      "mechanicType": "text",
+      "text": "Adli ekip, Kerem’in alt teknik bölümde öldürüldüğünü ve bedenin başka yerden taşınmadığını belirledi. Aynı dakikada LIVE-44 bilek bandı, LIV-2 vericisine kesintisiz hareket ve nabız paketi gönderiyordu.",
+      "deductionHint": "Ölüm alanını not et; LIVE-44 bilek bandı hangi verici alanına bağlı görünüyor?",
+      "isBonus": false,
+      "revealOrder": 1,
+      "isRevealed": true,
+      "pointCost": 0
+    },
+    {
+      "id": "c2",
+      "title": "B-7 Kaldırma İzi Negatifi",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "LIVE-44 profiline ait bileklik ve yayın masası üzerinde yapılan mikroskobik incelemede, B-7 parçasının kaldırma yüzeyinde kalan mineral yağ izine rastlanmadı. Aynı vardiyanın kontrol örnekleri üç kez karşılaştırıldı.",
+      "deductionHint": "Negatif iz karşılaştırması, LIVE-44 profilini hangi ağır parçadan dışarıda bırakır?",
+      "isBonus": false,
+      "revealOrder": 2,
+      "isRevealed": false,
+      "pointCost": 0
+    },
+    {
+      "id": "c3",
+      "title": "D-09 Emanet Numarası",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "D-09 kodlu arşiv anahtarının emanet fişinde V-09 parçasının nikel sayımıyla aynı teslim numarası yer alıyor. Numara, kapalı arşiv dolabındaki iki bağımsız imzayla doğrulandı.",
+      "deductionHint": "Emanet numarasını karşılaştır; D-09 etiketi hangi yapısal parçayla eşleşiyor?",
+      "isBonus": false,
+      "revealOrder": 3,
+      "isRevealed": false,
+      "pointCost": 0
+    },
+    {
+      "id": "c4",
+      "title": "Kart–Güç Korelasyon Penceresi",
+      "type": "sifreli",
+      "mechanicType": "sifreli_mesaj",
+      "text": "Kerem’in masasındaki üç kart taraması, üç güç dalgası ve üç kapı sensörü aynı ölçekle yeniden işlendi. Aday pencereler, D-09 hareketi ile SVR-1 geçiş kaydını karşılaştırmak için boş bırakılmış üç ham zaman diliminden oluşuyor.",
+      "deductionHint": "Sayıları aynı pencerede üst üste getir; D-09 hareketi hangi teknik alandan dışarıda kalmalı?",
+      "isBonus": false,
+      "revealOrder": 4,
+      "isRevealed": false,
+      "pointCost": 0,
+      "sifre": {
+        "sifreleTuru": "erişim–yük korelasyonu",
+        "sifrelenmis": "Kart × yük × kapı sensörü",
+        "cozulmus": "PENCERE-2",
+        "answerAliases": [
+          "Pencere2",
+          "Window2",
+          "2"
+        ],
+        "cozumIpucu": "Doğru pencerede kart ve kapı farkı 12 saniyeden az, güçteki yük kaybı ise en az 48 kg eşdeğerinde olmalı. Diğer ikisinde bir ölçüm ters yönde kalır.",
+        "aciklama": "Üç zaman penceresini eşleştirmek, D-09 hareketinin SVR-1 geçişiyle aynı fiziksel olaya ait olmadığını kanıtlar; bu korelasyon ızgarada kişi–mekân elemesini açar.",
+        "presentation": {
+          "style": "badge_ups_correlation",
+          "title": "Kart–UPS Korelasyon Penceresi",
+          "subtitle": "Her pencerede kart, kapı ve UPS verisi var. Fiziksel olarak aynı olayı açıklayan tek pencereyi seç.",
+          "purposeHint": "Doğru pencere, D-09 hareketinin SVR-1 geçişiyle aynı fiziksel olaya ait olmadığını gösterir; sonucu ızgarada kişi–mekân elemesi olarak kullan.",
+          "resultText": "Korelasyon, D-09 hareketinin SVR-1 geçişiyle aynı fiziksel olaya ait olmadığını gösterir.",
+          "interaction": {
+            "mode": "correlation_window",
+            "submitLabel": "Korelasyonu Sına",
+            "successMessage": "Zaman farkı ve yük kaybı aynı olayı destekliyor.",
+            "failureMessage": "Bu pencerede en az bir ölçüm fiziksel senaryoyla çelişiyor."
+          },
+          "windows": [
+            {
+              "id": "p1",
+              "label": "PENCERE 1 · 02:11–02:14",
+              "badgeDeltaSec": 7,
+              "doorDeltaSec": 41,
+              "upsKg": 52,
+              "trend": "yukarı",
+              "note": "Kapı gecikmesi limit dışı."
+            },
+            {
+              "id": "p2",
+              "label": "PENCERE 2 · 02:16–02:18",
+              "badgeDeltaSec": 9,
+              "doorDeltaSec": 11,
+              "upsKg": 51,
+              "trend": "aşağı",
+              "note": "Üç veri aynı yönde."
+            },
+            {
+              "id": "p3",
+              "label": "PENCERE 3 · 02:22–02:25",
+              "badgeDeltaSec": 4,
+              "doorDeltaSec": 8,
+              "upsKg": 19,
+              "trend": "aşağı",
+              "note": "Yük kaybı ağır modül için yetersiz."
+            }
+          ],
+          "correctWindowId": "p2"
+        }
+      }
+    },
+    {
+      "id": "c5",
+      "title": "Stüdyo Yakınlık Haritası",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "LIVE-44 çalışma masasında F-21 kodlu lifli bağlantı demetinden gelen mavi polimer parçası bulundu. Parçanın seri kodu, stüdyo bakım deposundaki kayıtla eşleşti.",
+      "deductionHint": "Bu ek parça, LIVE-44 profilini hangi bağlantı ekipmanıyla doğrular?",
+      "isBonus": true,
+      "revealOrder": 5,
+      "isRevealed": false,
+      "pointCost": 70
+    },
+    {
+      "id": "c6",
+      "title": "Bakım Anahtarı Envanteri",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "ARC-3 arşiv giriş çizelgesinde V-09 kodlu yapısal metal parçanın sayımı, üst kat emanet numarasıyla birlikte kapanmış görünüyor.",
+      "deductionHint": "Bu ek çizelge, V-09 parçasını hangi arşiv alanıyla doğrular?",
+      "isBonus": true,
+      "revealOrder": 6,
+      "isRevealed": false,
+      "pointCost": 80
+    }
+  ],
+  "assetManifest": [],
+  "solution": {
+    "suspectId": "s2",
+    "weaponId": "w3",
+    "locationId": "l1"
+  },
+  "solutionNarrative": "Tarık, veri satışının sabah savcılığa gönderileceğini biliyordu. T-7 anahtarıyla UPS akü bloğunu yerinden çıkarıp Kerem’i Sunucu Odası’nda susturdu; ardından kart kayıtlarının tek başına onu ele vermeyeceğine güvendi. Seda stüdyoda, Dilek ise CEO koridoruna bağlı kalırken; ağırlık kaybı ve kapı verisinin aynı pencerede birleşmesi, Dilek’in değil Tarık’ın erişim hattını gerçeğe bağladı. Beğeniler büyümüş olabilir; fakat güç grafiği yalan söylemedi.",
+  "replitIntegration": {
+    "schema": "fm_replit_runtime_contract_v1",
+    "copyTarget": "Replit Agent prompt",
+    "canonicalCaseFile": "src/data/cases/dij_004.json",
+    "policy": "Var olan renderer varsa onu bozma; yoksa bu paketteki component ve dispatcher dalını ekle.",
+    "mechanics": [
+      {
+        "clueId": "c4",
+        "mechanicType": "sifreli_mesaj",
+        "renderer": "badge_ups_correlation",
+        "completionEvent": "onSolved({ clueId, mechanic: \"sifreli_mesaj\" })"
+      }
+    ]
+  }
+}
+===== VAKA VERİSİ SONU =====

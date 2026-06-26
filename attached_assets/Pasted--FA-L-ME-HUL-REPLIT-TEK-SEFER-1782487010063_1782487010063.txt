@@ -1,0 +1,396 @@
+/* ============================================================
+ *  FAİLİ MEÇHUL — REPLIT TEK SEFERLİK ENTEGRASYON PAKETİ
+ *  Bu metni Replit Agent sohbetine TEK PARÇA olarak yapıştır.
+ *  Görev: sadece JSON kaydetme. Vaka verisini mevcut kaynakta
+ *  yükle, aşağıdaki eksik renderer altyapısını ekle ve çalıştır.
+ * ------------------------------------------------------------
+ *  Vaka: Boğaz'ın Şahidi · puzzleId=ede_005
+ *  1) Önce mevcut vaka veri kaydını ve mini-oyun dispatcherını bul.
+ *  2) Var olan rendererları bozma; yalnız eksik olan dalı ekle.
+ *  3) Aşağıdaki vaka JSON’unu uygulamanın KANONİK case kaynağına ekle.
+ *  4) Kod değişikliklerinden sonra aşağıdaki kabul testlerini tarayıcıda yap.
+ *  5) Sadece açıklama yazma: dosyaları gerçekten güncelle ve test sonucunu bildir.
+ * ============================================================ */
+
+===== DOSYA OLUŞTUR / EKSİKSE EKLE: src/components/caseMechanics/TelephoneSwitchboardMiniGame.jsx =====
+// src/components/caseMechanics/TelephoneSwitchboardMiniGame.jsx
+import { useRef, useState } from "react";
+
+export default function TelephoneSwitchboardMiniGame({ clue, onSolved, onRequestHint }) {
+  const puzzle = clue?.audioPuzzle ?? {};
+  const audioRef = useRef(null);
+  const stopAtRef = useRef(null);
+  const [selectedId, setSelectedId] = useState(null);
+  const [result, setResult] = useState(null);
+  const [hintOpen, setHintOpen] = useState(false);
+  const [transcriptOpen, setTranscriptOpen] = useState(false);
+  const [activeSegmentId, setActiveSegmentId] = useState(null);
+
+  const segments = Array.isArray(puzzle.segments) ? puzzle.segments : [];
+  const options = Array.isArray(puzzle.options) ? puzzle.options : [];
+  const interaction = puzzle.interaction ?? {};
+  const hintPenaltySeconds = Number(puzzle.hintPenaltySeconds ?? 60);
+
+  const playSegment = (segment) => {
+    const audio = audioRef.current;
+    if (!audio || !segment) return;
+    stopAtRef.current = Number(segment.endSec);
+    audio.currentTime = Math.max(0, Number(segment.startSec ?? 0));
+    setActiveSegmentId(segment.id);
+    audio.play().catch(() => {});
+  };
+
+  const stopAtBoundary = () => {
+    const audio = audioRef.current;
+    if (audio && Number.isFinite(stopAtRef.current) && audio.currentTime >= stopAtRef.current) {
+      audio.pause();
+      stopAtRef.current = null;
+      setActiveSegmentId(null);
+    }
+  };
+
+  const chooseLine = (optionId) => {
+    setSelectedId(optionId);
+    const ok = optionId === puzzle.correctOptionId;
+    setResult({ ok, message: ok ? (puzzle.successMessage ?? "Hat, ızgaradaki bağlantıyı kesinleştirdi.") : (puzzle.failureMessage ?? "Kesitleri yeniden dinle.") });
+    if (ok) onSolved?.({ clueId: clue.id, mechanic: "telephone_switchboard" });
+  };
+
+  const askHint = () => {
+    if (!hintOpen) onRequestHint?.({ clueId: clue.id, penaltySeconds: hintPenaltySeconds });
+    setHintOpen(true);
+  };
+
+  return (
+    <section aria-label={puzzle.title ?? "Dahili Hat Düzeni"} style={{ marginTop: 12, padding: 14, border: "1px solid #262c44", borderRadius: 12, background: "#0e1119" }}>
+      <h4 style={{ margin: "0 0 8px", color: "#f0a830", fontSize: 13 }}>{puzzle.title ?? "Dahili Hat Düzeni"}</h4>
+      {puzzle.subtitle ? <p style={{ margin: "0 0 10px", color: "#8b91ad", fontSize: 13 }}>{puzzle.subtitle}</p> : null}
+      {puzzle.purposeHint ? <p style={{ margin: "0 0 10px", padding: 10, borderLeft: "2px solid #e0b54e", background: "rgba(224,181,78,.06)", color: "#ecd99a", fontSize: 13 }}><b>ÇÖZÜMÜN İŞLEVİ</b><br />{puzzle.purposeHint}</p> : null}
+      {clue.audioUrl ? <audio ref={audioRef} controls preload="metadata" src={clue.audioUrl} onTimeUpdate={stopAtBoundary} onEnded={() => { stopAtRef.current = null; setActiveSegmentId(null); }} style={{ width: "100%" }}>Tarayıcınız ses oynatmayı desteklemiyor.</audio> : <p style={{ color: "#fbbf24" }}>Ses dosyası yolu tanımlı değil; transcript erişilebilir olmalı.</p>}
+      <p style={{ color: "#f0a830", fontSize: 11, letterSpacing: 1, margin: "12px 0 6px" }}>MAKARADAN KESİT DİNLE</p>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(120px,1fr))", gap: 8 }}>
+        {segments.map((segment) => <button key={segment.id} type="button" onClick={() => playSegment(segment)} style={{ padding: 10, borderRadius: 8, border: activeSegmentId === segment.id ? "1px solid #f0a830" : "1px solid #262c44", background: "#161a2b", color: "#e8eaf2" }}>▶ {segment.label ?? segment.id}</button>)}
+      </div>
+      <p style={{ margin: "14px 0 8px", color: "#d6dae8", fontSize: 13 }}>{puzzle.question ?? "Doğru hattı seç."}</p>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(100px,1fr))", gap: 8 }}>
+        {options.map((option) => {
+          const isSelected = selectedId === option.id;
+          const correct = isSelected && option.id === puzzle.correctOptionId;
+          return <button key={option.id} type="button" onClick={() => chooseLine(option.id)} style={{ padding: 10, borderRadius: 8, border: correct ? "1px solid #22c55e" : isSelected ? "1px solid #dc2626" : "1px solid #262c44", background: correct ? "rgba(34,197,94,.12)" : isSelected ? "rgba(220,38,38,.12)" : "#161a2b", color: "#e8eaf2" }}>{option.label ?? option.id}</button>;
+        })}
+      </div>
+      {puzzle.hint ? <><button type="button" disabled={hintOpen} onClick={askHint} style={{ width: "100%", marginTop: 10, padding: 10, borderRadius: 8, border: "1px dashed #b45309", background: "transparent", color: "#fbbf24" }}>{hintOpen ? "İpucu açıldı" : "İpucu iste (-" + hintPenaltySeconds + " sn)"}</button>{hintOpen ? <p style={{ margin: "8px 0 0", padding: 9, borderLeft: "2px solid #b45309", color: "#fbbf24", background: "rgba(180,83,9,.08)", fontSize: 13 }}>{puzzle.hint}</p> : null}</> : null}
+      {clue.sesMetni && interaction.showTranscriptOnDemand !== false ? <><button type="button" onClick={() => setTranscriptOpen((value) => !value)} style={{ width: "100%", marginTop: 8, padding: 10, borderRadius: 8, border: "1px solid #262c44", background: "#161a2b", color: "#e8eaf2" }}>{transcriptOpen ? "Kayıt çözümlemesini gizle" : "Kayıt çözümlemesini göster"}</button>{transcriptOpen ? <p style={{ margin: "8px 0 0", padding: 10, borderRadius: 8, background: "rgba(224,181,78,.06)", color: "#ecd99a", fontSize: 13 }}>{clue.sesMetni}</p> : null}</> : null}
+      {result ? <p role="status" style={{ margin: "10px 0 0", padding: 10, borderRadius: 8, background: result.ok ? "rgba(34,197,94,.12)" : "rgba(220,38,38,.12)", color: result.ok ? "#86efac" : "#fca5a5" }}>{result.ok ? "✓ " : "✕ "}{result.message}</p> : null}
+    </section>
+  );
+}
+===== DOSYA SONU =====
+
+===== MEVCUT MİNİ-OYUN DISPATCHERINA EKLENECEK DAL =====
+// Mevcut mini-oyun / clue renderer'ında, genel ses kaydı fallback'inden ÖNCE ekle.
+import TelephoneSwitchboardMiniGame from "./caseMechanics/TelephoneSwitchboardMiniGame";
+
+// ... mevcut renderMiniGame({ clue, markMiniGameSolved, requestHint }) fonksiyonunda:
+const audioPuzzleStyle = String(clue?.audioPuzzle?.style ?? "").toLowerCase();
+if (clue?.mechanicType === "ses_kaydi" && audioPuzzleStyle === "telephone_switchboard") {
+  return (
+    <TelephoneSwitchboardMiniGame
+      clue={clue}
+      onSolved={({ clueId }) => markMiniGameSolved?.(clueId)}
+      onRequestHint={({ clueId, penaltySeconds }) => requestHint?.({ clueId, penaltySeconds })}
+    />
+  );
+}
+// Buradan sonra mevcut genel audio/transcript renderer'ı aynen çalışmaya devam etmeli.
+===== YAMA SONU =====
+
+===== ZORUNLU OYUN VARLIĞI — DOSYAYI YENİDEN ADLANDIRMA =====
+- c4: ede_005_c4_son_telefon_kaseti.mp3 → public/assets/cases/ede_005/ede_005_c4_son_telefon_kaseti.mp3
+  Runtime’da yalnız clue.audioUrl = "/assets/cases/ede_005/ede_005_c4_son_telefon_kaseti.mp3" kullan. Harici veya ikinci bir sabit yol ekleme.
+===== VARLIK LİSTESİ SONU =====
+
+===== ZORUNLU KABUL TESTLERİ =====
+1. ede_005 vakasında İpucu c4 açıldığında "02.08 — Son Telefon Kaseti" görünür; JSON’daki 3 kesit butonu render edilir.
+- c4 audio player tam olarak clue.audioUrl yolundan çalışır; seg_a:0-18s, seg_b:18-40s, seg_c:40-60s dışında çalmaz.
+- Kullanıcı bir hat seçmeden doğru seçenek/success görünmez. Yanlış seçim yalnız yeniden dinleme mesajı verir; doğru rifat_wire seçimi başarı + onSolved üretir.
+- Transcript isteğe bağlı açılır; ipucu ilk kez açıldığında onRequestHint 60 sn ile çağrılır.
+2. Eski klasik sifreli_mesaj, parmak_izi, profil_sentezi ve genel ses_kaydi rendererları regresyona uğramaz.
+===== TEST LİSTESİ SONU =====
+
+===== KANONİK VAKA VERİSİ — mevcut case registry’de ede_005 olarak ekle/değiştir =====
+{
+  "puzzleId": "ede_005",
+  "stars": "★★★★★",
+  "gridSize": "3x3",
+  "timeLimit": 720,
+  "storyParagraphs": [
+    "Beyoğlu’nun tramvayı gece yarısından sonra da aynı rayda şarkı söylerdi; yalnız sokaklar aynı kalmazdı. Muhalif gazeteci Nafi Karaçay sabaha karşı dar ofisinin masası yanında bulundu. Masada, kırık çakmağın ve yarım kalmış röportaj notlarının yanında, kurşun kalemle ‘Münevver Hanım · 02.08 · Sevda Aras’ yazılmış küçük bir telefon kaseti vardı. Adli tabip, ölümün 02.12 ile 02.25 arasında gerçekleştiğini belirledi.",
+    "Karaçay, 1958’de ‘kaza’ diye kapatılan Sevda Aras dosyasını yeniden açmıştı. Dosyada hep aynı üç ayrıntı dönüp duruyordu: kasanın altındaki teneke kutu, anahtarı taşıyan kişi ve eski perdenin pamuk çekirdekli teli. Kaset, Nafi’nin ölmeden birkaç dakika önce bu ayrıntıların erişim zincirini son kez doğruladığını gösteriyordu.",
+    "Meyhanenin arka tarafında perde ipi kopmuştu; fakat odadaki toz, orada bir boğuşma yaşanmadığını söylüyordu. Ofisin döşemesi de yağmur taşımamıştı. Radyocu, karaborsacı ve meyhane sahibi aynı geçmişi farklı biçimlerde saklıyordu. Nafi’nin son kaydı, katili söylemiyordu; ama hangi ismin ince telin peşinden haksız yere sürüklendiğini anlatıyordu."
+  ],
+  "qaRationale": "Dört standart ipucu, üçlü eşleşme ızgarasını aşamalı biçimde daraltır. c1 tel aracını oyuncu-görünür suç çapası olarak sabitler; c4 ses kaydı son masum kişi–tel eşleşmesini kapatır.",
+  "qaNarrativeContract": {
+    "narrativeSignal": "Kaset kapağındaki “02.08” notu ile hikâyedeki 02.12–02.25 ölüm aralığı, oyuncuya konuşmanın Nafi’nin ölümünden yalnız dakikalar önce alındığını bildirir.",
+    "linkedClueId": "c4",
+    "playerAction": "Telefon konuşmasını dinleyip, yalnız ön kapıda çalışan şüphelinin tel kutusuna ve anahtarına erişemediğini ayırt etmek; ardından kişi–tel eşleşmesini elemek.",
+    "fairReason": "Konuşma erişim zincirini açıklar fakat anahtarı taşıyan kişinin teli cinayette kullandığını söylemez. Nihai fail–araç–mekân üçlüsü için diğer standart ipuçları zorunludur."
+  },
+  "qaSourceHandling": "Kaynak kimlikler, şüpheliler, araçlar, mekânlar ve çözüm üçlüsü korunmuştur. Mantık kuralları v29.2'nin kanonik confirm/eliminate+pair sözleşmesine dönüştürülmüştür.",
+  "title": "Boğaz'ın Şahidi",
+  "subtitle": "İstanbul, 1960'lar — Kaset Ritminin Tanığı",
+  "difficulty": "Efsane Komiser",
+  "difficultyLevel": 5,
+  "specialMechanic": "ses_kaydi",
+  "story": "Beyoğlu’nun tramvayı gece yarısından sonra da aynı rayda şarkı söylerdi; yalnız sokaklar aynı kalmazdı. Muhalif gazeteci Nafi Karaçay sabaha karşı dar ofisinin masası yanında bulundu. Masada, kırık çakmağın ve yarım kalmış röportaj notlarının yanında, kurşun kalemle ‘Münevver Hanım · 02.08 · Sevda Aras’ yazılmış küçük bir telefon kaseti vardı. Adli tabip, ölümün 02.12 ile 02.25 arasında gerçekleştiğini belirledi.\n\nKaraçay, 1958’de ‘kaza’ diye kapatılan Sevda Aras dosyasını yeniden açmıştı. Dosyada hep aynı üç ayrıntı dönüp duruyordu: kasanın altındaki teneke kutu, anahtarı taşıyan kişi ve eski perdenin pamuk çekirdekli teli. Kaset, Nafi’nin ölmeden birkaç dakika önce bu ayrıntıların erişim zincirini son kez doğruladığını gösteriyordu.\n\nMeyhanenin arka tarafında perde ipi kopmuştu; fakat odadaki toz, orada bir boğuşma yaşanmadığını söylüyordu. Ofisin döşemesi de yağmur taşımamıştı. Radyocu, karaborsacı ve meyhane sahibi aynı geçmişi farklı biçimlerde saklıyordu. Nafi’nin son kaydı, katili söylemiyordu; ama hangi ismin ince telin peşinden haksız yere sürüklendiğini anlatıyordu.",
+  "atmosphere": "Beyoğlu · Islak taş kaldırım · Uzak tramvay · Telefon kaseti · 1958 dosyası · Meyhane arka odası",
+  "suspects": [
+    {
+      "id": "s1",
+      "name": "Süreyya Celal",
+      "icon": "🎙️",
+      "description": "Devlet radyosu spikeri, eski muhalefet gazetecisi.",
+      "detail": "Canlı gece yayınına özgü üçlü zil ve imzalı yayın çizelgesi onun yanında."
+    },
+    {
+      "id": "s2",
+      "name": "Belkıs Hanım",
+      "icon": "🍷",
+      "description": "Beyoğlu’nun tanınan meyhane sahibesi.",
+      "detail": "Arka odadaki perdeyi kendi elleriyle diktiğini herkes bilir; geçmişteki bir ölüm olayını Karaçay araştırıyordu."
+    },
+    {
+      "id": "s3",
+      "name": "Rıfat Boran",
+      "icon": "🧳",
+      "description": "Karaborsacı ve arka sokak tüccarı.",
+      "detail": "Kalın çivili botları, her adımda üçlü metal tıkırtısı çıkarır; o gece ağır sandık taşıdığını iddia ediyor."
+    }
+  ],
+  "weapons": [
+    {
+      "id": "w1",
+      "name": "Demir Yumruk",
+      "icon": "🥊",
+      "description": "Döküm metal yumruk.",
+      "detail": "Yüzde küt ezilme ve keskin metal kenarı bırakır."
+    },
+    {
+      "id": "w2",
+      "name": "Sustalı Çakı",
+      "icon": "🔪",
+      "description": "Dar saplı, ince bıçak.",
+      "detail": "Deride kesik ve kumaşta bıçak izi beklenir."
+    },
+    {
+      "id": "w3",
+      "name": "İplik Bobin Teli",
+      "icon": "🧵",
+      "description": "Meyhane perdesinden sökülen ince ama sağlam tel.",
+      "detail": "Boyunda sürekli basınçla oluşan dar, düzensiz iz bırakır."
+    }
+  ],
+  "locations": [
+    {
+      "id": "l1",
+      "name": "Gazeteci Ofisi",
+      "icon": "🗞️",
+      "description": "Küçük matbaa odası.",
+      "detail": "Beden burada bulundu; döşemesi kuru ve dar."
+    },
+    {
+      "id": "l2",
+      "name": "Meyhane Arka Odası",
+      "icon": "🍷",
+      "description": "Belkıs’ın muhbir toplantılarını yaptığı loş oda.",
+      "detail": "Perde teli buradan sökülebilir; yerdeki toz ince ve bozulmamış."
+    },
+    {
+      "id": "l3",
+      "name": "Arka Sokak Boşluğu",
+      "icon": "🌑",
+      "description": "İki bina arasındaki karanlık geçit.",
+      "detail": "Islak taş, metal sürtünmesi ve tramvay yankısı burada aynı anda duyulur."
+    }
+  ],
+  "clues": [
+    {
+      "id": "c1",
+      "title": "Dar Basınç İzi",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Boyundaki iz, lifleri içeri doğru itmiş dar ve düzensiz bir basınç hattı. Kesik ya da küt ezilme yok; ölümcül temas sürekli çekilmiş ince bir yüzeyden kalmış.",
+      "deductionHint": "Bulgular, hangi tür ölüm aracını tek başına sabitler?",
+      "isBonus": false,
+      "revealOrder": 1,
+      "isRevealed": true,
+      "pointCost": 0
+    },
+    {
+      "id": "c2",
+      "title": "Toz İçindeki Ağır İz",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Loş arka odanın tozunda, tek parça döküm bir cismin altıgen kenarı ve duvara paralel kısa bir sürüklenme izi kaldı. Perde çizgisi dışındaki zemin bozulmamıştı.",
+      "deductionHint": "Ağır cismin izi, hangi araç ile hangi odayı cinayet dışı bir eşleşmede birleştirir?",
+      "isBonus": false,
+      "revealOrder": 2,
+      "isRevealed": false,
+      "pointCost": 0
+    },
+    {
+      "id": "c3",
+      "title": "Yayın Çekmecesindeki Kılıf",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Gece yayını bittikten sonra mühürlenen küçük çekmecede, ince bıçak kılıfının nişasta izi ile aynı karton lifleri bulundu. Çekmece mührü iki görevli tarafından tutanakla açıldı.",
+      "deductionHint": "Kayıtlı çekmece, hangi kişi ile hangi kesici seçeneğin cinayet dışı eşleşmesini kurar?",
+      "isBonus": false,
+      "revealOrder": 3,
+      "isRevealed": false,
+      "pointCost": 0
+    },
+    {
+      "id": "c4",
+      "title": "02.08 — Son Telefon Kaseti",
+      "type": "ses_kaydi",
+      "mechanicType": "ses_kaydi",
+      "text": "Nafi’nin masasındaki küçük telefon kasetinin kapağında “Münevver Hanım · 02.08 · Sevda Aras” notu var. Kayıt, gece yazdığı röportaj notlarının arasından çıktı.",
+      "deductionHint": "Konuşmada, hangi şüphelinin telin saklandığı kutuya erişimi olmadığı söyleniyor?",
+      "isBonus": false,
+      "revealOrder": 4,
+      "isRevealed": false,
+      "pointCost": 0,
+      "sesMetni": "Nafi Karaçay: “Münevver Hanım, kaset dönüyor. Saat iki sekiz. Sevda Aras dosyasındaki tel kutusunu son kez soracağım: anahtarı kim taşırdı?”\n\nMünevver Hanım: “Kutuyu yıllardır aynı kişi kilitlerdi. Anahtarı boynunda taşır, teneke kutuyu da kasanın altına kendi koyardı.”\n\nNafi Karaçay: “Bu gece kapağın içinde taze pamuk lifleri gördüm. Telin ucu yeni kesilmiş; kilitte de zorlama yok.”\n\nMünevver Hanım: “O zaman kutu anahtarla açılmış.”\n\nNafi Karaçay: “Rıfat Boran’ın o kutuya eriştiğini hiç gördünüz mü?”\n\nMünevver Hanım: “Hayır. Rıfat yalnız ön kapıdaki yükleri taşırdı. Kasanın bulunduğu kapalı bölüme sokulmazdı; anahtarı da eline hiç vermediler.”\n\nNafi Karaçay: “Demek tel bu gece kutudan alındıysa, Rıfat’ın onu alması mümkün değil.”\n\nMünevver Hanım: “Bu tel için değil. Ama anahtarı taşıyanı tek başına katil diye yazma. Kutuyu açmak başka, teli cinayette kullanmak başka.”\n\nNafi Karaçay: “Biliyorum. Rıfat’ın adını nottan çıkarıyorum. Sabah ilk iş kesik ucu ve kutunun kapağını fotoğraflayacağım.”\n\nMünevver Hanım: “Sabahı bekleme, Nafi Bey. Sevda’nın dosyasını açınca önce yanlış isimleri silmek gerekir.”",
+      "audioUrl": "/assets/cases/ede_005/ede_005_c4_son_telefon_kaseti.mp3",
+      "audioAssetId": "asset_ede_005_c4_son_telefon_kaseti",
+      "audioPlanned": true,
+      "audioFileName": "ede_005_c4_son_telefon_kaseti.mp3",
+      "audioPuzzle": {
+        "style": "telephone_switchboard",
+        "title": "02.08 — Son Telefon Kaseti",
+        "subtitle": "Nafi’nin son telefon teyidini üç kesitte dinle; hangi kişi–araç bağının imkânsız olduğunu bul.",
+        "purposeHint": "Kayıt katili söylemez. Yalnız tel kutusuna erişemeyen kişinin tel ile eşleşemeyeceğini gösterir.",
+        "segments": [
+          {
+            "id": "seg_a",
+            "label": "00:00–00:18 · Eski dosya ve anahtar",
+            "startSec": 0,
+            "endSec": 18
+          },
+          {
+            "id": "seg_b",
+            "label": "00:18–00:40 · Yeni kesik ve erişim",
+            "startSec": 18,
+            "endSec": 40
+          },
+          {
+            "id": "seg_c",
+            "label": "00:40–01:00 · Yanlış ismi silmek",
+            "startSec": 40,
+            "endSec": 60
+          }
+        ],
+        "question": "Konuşmanın kesin olarak imkânsızlaştırdığı kişi–araç eşleşmesi hangisidir?",
+        "options": [
+          {
+            "id": "rifat_wire",
+            "label": "Rıfat Boran — İplik Bobin Teli"
+          },
+          {
+            "id": "sureyya_knife",
+            "label": "Süreyya Celal — Sustalı Çakı"
+          },
+          {
+            "id": "belkis_punch",
+            "label": "Belkıs Hanım — Demir Yumruk"
+          }
+        ],
+        "correctOptionId": "rifat_wire",
+        "hint": "Konuşmada, yalnız ön kapıda çalışan şüphelinin kapalı bölüme ve kutunun anahtarına erişemediği söyleniyor.",
+        "hintPenaltySeconds": 60,
+        "successMessage": "Kayıt doğrulandı: Rıfat’ın tel kutusuna erişimi yok. Panoda yalnız Rıfat Boran — İplik Bobin Teli eşleşmesi elendi.",
+        "failureMessage": "Konuşmayı yeniden dinle. Soru, kutuyu kimin açabildiğini değil; kutuya kimin erişemediğini soruyor.",
+        "interaction": {
+          "showTranscriptOnDemand": true,
+          "mode": "single_choice"
+        }
+      }
+    },
+    {
+      "id": "c5",
+      "title": "Kırık Çakmakta Yağ Lekesi — Bonus",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Pirinç çakmağın çevresindeki yağ, meyhane mutfağında kullanılan zeytinyağıyla aynı hafif anason tortusunu taşıyor.",
+      "deductionHint": "Kişisel eşya üzerindeki tortu, kim ile hazırlama alanı arasındaki bağı güçlendirir?",
+      "isBonus": true,
+      "revealOrder": 5,
+      "isRevealed": false,
+      "pointCost": 55
+    },
+    {
+      "id": "c6",
+      "title": "Perde Telinin Burgusu — Bonus",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Kopmuş telin pamuk çekirdeği, perdedeki eski burguyla aynı yönde açılıyor; dışarıdaki yağmurla sertleşmiş uçta ince lifler hâlâ duruyor.",
+      "deductionHint": "Lif dokusu, hangi araç ile hangi açık alanın kesişimini doğrular?",
+      "isBonus": true,
+      "revealOrder": 6,
+      "isRevealed": false,
+      "pointCost": 55
+    }
+  ],
+  "assetManifest": [
+    {
+      "assetId": "asset_ede_005_c4_son_telefon_kaseti",
+      "kind": "audio",
+      "clueId": "c4",
+      "status": "planned",
+      "fileName": "ede_005_c4_son_telefon_kaseti.mp3",
+      "publicPath": "/assets/cases/ede_005/ede_005_c4_son_telefon_kaseti.mp3",
+      "mimeType": "audio/mpeg",
+      "durationTargetSec": 60
+    }
+  ],
+  "solution": {
+    "suspectId": "s2",
+    "weaponId": "w3",
+    "locationId": "l3"
+  },
+  "solutionNarrative": "Nafi’nin cesedi ofise bırakılmıştı; cinayet ise yağmurlu arka sokakta işlendi. 02.08’deki telefon kaydı, Nafi’nin Rıfat’ı 1958 dosyasındaki pamuk çekirdekli telden bilinçli olarak ayırdığını gösterdi: Rıfat, kilitli arka odaya ve telin saklandığı kutuya hiç erişmemişti. Nafi sabah fotoğraf çekeceğini söyleyince, geçmişte Sevda Aras’ı susturan sır yeniden açıldı. Belkıs, meyhaneden sökülen ince teli kullanarak Nafi’yi arka sokakta susturdu; ofis ise yalnız hikâyenin bitirildiği yerdi.",
+  "replitIntegration": {
+    "schema": "fm_replit_runtime_contract_v1",
+    "copyTarget": "Replit Agent prompt",
+    "canonicalCaseFile": "src/data/cases/ede_005.json",
+    "policy": "Var olan renderer varsa onu bozma; yoksa bu paketteki component ve dispatcher dalını ekle.",
+    "mechanics": [
+      {
+        "clueId": "c4",
+        "mechanicType": "ses_kaydi",
+        "renderer": "telephone_switchboard",
+        "componentFile": "src/components/caseMechanics/TelephoneSwitchboardMiniGame.jsx",
+        "dispatcherBranch": "clue.mechanicType === \"ses_kaydi\" && clue.audioPuzzle?.style === \"telephone_switchboard\"",
+        "completionEvent": "onSolved({ clueId, mechanic: \"telephone_switchboard\" })",
+        "hintEvent": "onRequestHint({ clueId, penaltySeconds: clue.audioPuzzle?.hintPenaltySeconds ?? 60 })",
+        "requiredData": [
+          "audioUrl",
+          "sesMetni",
+          "audioPuzzle.segments",
+          "audioPuzzle.options",
+          "audioPuzzle.correctOptionId",
+          "audioPuzzle.interaction"
+        ],
+        "nonNegotiable": [
+          "Audio player sadece clue.audioUrl yolunu kullanmalı; ikinci hard-coded asset yolu yazma.",
+          "Segment düğmeleri JSON startSec/endSec aralığını çalmalı ve o aralığın sonunda sesi durdurmalı.",
+          "Doğru hat, kullanıcı seçmeden görünür olmamalı; yanlış seçim yalnız yeniden dinlemeye yönlendirmeli.",
+          "purposeHint görünür olmalı; transcript kullanıcı isteğiyle açılabilmeli.",
+          "Doğru seçim onSolved, ilk ipucu isteği onRequestHint callbackini çağırmalı."
+        ]
+      }
+    ]
+  }
+}
+===== VAKA VERİSİ SONU =====

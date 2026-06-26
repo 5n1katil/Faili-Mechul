@@ -1,0 +1,326 @@
+/* ============================================================
+ *  FAİLİ MEÇHUL — REPLIT TEK SEFERLİK ENTEGRASYON PAKETİ
+ *  Bu metni Replit Agent sohbetine TEK PARÇA olarak yapıştır.
+ *  Görev: sadece JSON kaydetme. Vaka verisini mevcut kaynakta
+ *  yükle, aşağıdaki eksik renderer altyapısını ekle ve çalıştır.
+ * ------------------------------------------------------------
+ *  Vaka: Karanlık Ağın Son Adresi · puzzleId=dij_003
+ *  1) Önce mevcut vaka veri kaydını ve mini-oyun dispatcherını bul.
+ *  2) Var olan rendererları bozma; yalnız eksik olan dalı ekle.
+ *  3) Aşağıdaki vaka JSON’unu uygulamanın KANONİK case kaynağına ekle.
+ *  4) Kod değişikliklerinden sonra aşağıdaki kabul testlerini tarayıcıda yap.
+ *  5) Sadece açıklama yazma: dosyaları gerçekten güncelle ve test sonucunu bildir.
+ * ============================================================ */
+
+===== ZORUNLU KABUL TESTLERİ =====
+1. Eski klasik sifreli_mesaj, parmak_izi, profil_sentezi ve genel ses_kaydi rendererları regresyona uğramaz.
+===== TEST LİSTESİ SONU =====
+
+===== KANONİK VAKA VERİSİ — mevcut case registry’de dij_003 olarak ekle/değiştir =====
+{
+  "puzzleId": "dij_003",
+  "stars": "★★★☆☆",
+  "gridSize": "4x4",
+  "timeLimit": 660,
+  "qaRationale": {
+    "c1": "L1 ölüm mahalli semantik çapa; C-04 logu s1–l4 eşleşmesi.",
+    "c2": "V-12 kodu Void kartıyla, soğuk zincir etiketi w2 ile görünür biçimde bağlanır.",
+    "c3": "Kablo lifleri s1 ve s4'ü w4'ten eler.",
+    "c4": "Node grafiği s2/s4'ün l1 fiziksel rotasını dışlar.",
+    "leaveOneOut": "c1 yoksa s1 l1 olabilir; c2 yoksa s2 w4 olabilir; c3 yoksa s1/s4 w4 olabilir; c4 yoksa s2/s4 l1 olabilir."
+  },
+  "qaNarrativeContract": {
+    "narrativeClue": "Murat’ın ‘en kısa yol gerçek yol değildir’ notu, oyuncuya grafik oyununda mesafe yerine gecikme toplamını izlemesi gerektiğini adil biçimde söyler.",
+    "linkedClueId": "c4",
+    "playerVisibleBridge": "‘Düğümün gecikmesi, nereden geçtiğini söyler.’"
+  },
+  "title": "Karanlık Ağın Son Adresi",
+  "subtitle": "Karanlık Ağ · Dördüncü Düğüm Operasyonu",
+  "difficulty": "Dedektif",
+  "difficultyLevel": 3,
+  "specialMechanic": "şifreli_mesaj · tor_node_route",
+  "story": "Kapalı bir altyapı tesisinde, karanlık ağ pazarının muhasebe sorumlusu Murat Kadir ölü bulundu. Boynunda ince bir ağ hattı, açık bırakılmış bir operasyon dosyası ve soğuk odanın kapısında üç farklı yönlendirme izi vardı. Baskın resmî olarak 23.00’te planlanmıştı; ölüm ise bundan çok önce gerçekleşmişti.\n\nŞüpheliler birbirinden farklı türde güç taşıyordu: FBI ajanı Cipher operasyonu başlatmış, rakip pazar sahibi Void müşterileri kaçırmak istemiş, eski ortak Nexus payının sıfırlanmasına öfkelenmiş, İnterpol dedektifi Marlowe ise baskını dışarıdan koordine etmişti.\n\nMurat’ın dizüstü bilgisayarındaki son taslak, “En kısa yol gerçek yol değildir; düğümün gecikmesi, nereden geçtiğini söyler” cümlesiyle bitiyordu. Bu kez adresi bulmak için isimlere değil, paketlerin yoluna bakmak gerekiyordu. Dört rota aynı terminalde başlıyor gibi görünse de, gecikme izleri her birinin farklı bir geçmiş taşıdığını söylüyordu.",
+  "atmosphere": "Kabloların içinden geçen veri akışı kesilmişti. Fakat odadaki en sessiz kablo, bir insanın son nefesini hâlâ taşıyordu.",
+  "suspects": [
+    {
+      "id": "s1",
+      "name": "FBI Ajanı 'Cipher'",
+      "icon": "🕵️",
+      "description": "Gizli operasyonun saha ajanı; Murat’ı koruma vaadiyle çiftliğe çağırdı.",
+      "detail": "C-04 saha anahtarı Undercover Ev’in iç terminaline bağlıdır. Operasyon yetkisi var, fakat hareketleri komuta kayıtlarına bağlı."
+    },
+    {
+      "id": "s2",
+      "name": "Rakip Market Sahibi 'Void'",
+      "icon": "🕶️",
+      "description": "Rakip dark web pazarının sahibi; müşteri kaybı ve veri savaşı içinde.",
+      "detail": "V-12 yönlendirme etiketi kripto kafe erişiminden kullanılır. Fiziksel iz bırakmamak için aracı düğümler kullanır."
+    },
+    {
+      "id": "s3",
+      "name": "Eski Ortak 'Nexus'",
+      "icon": "🔗",
+      "description": "Pazarın erken dönem ortağı; imza değişikliğiyle payı sıfıra düşürüldü.",
+      "detail": "N-31 kimlik etiketi yıllar önce çiftlik bakım sözleşmelerinde görünür. Kablo altyapısını en iyi bilen eski ortaktır."
+    },
+    {
+      "id": "s4",
+      "name": "İnterpol Dedektifi Marlowe",
+      "icon": "🌐",
+      "description": "Operasyonu uluslararası ekiplerle koordine eden dedektif.",
+      "detail": "M-08 komuta anahtarı liman deposundaki mobil merkezle eşleşir. Baskın saatinden önce saha değişikliği yapamaz."
+    }
+  ],
+  "weapons": [
+    {
+      "id": "w1",
+      "name": "Donanım Trojan",
+      "icon": "🧷",
+      "description": "Cihaza fiziksel takılan, veri sızdırmak için kullanılan mikro donanım.",
+      "detail": "Ölümcül kuvvet üretmez; yalnız ağ paketlerini yönlendirir."
+    },
+    {
+      "id": "w2",
+      "name": "Zehirli Enjeksiyon",
+      "icon": "💉",
+      "description": "Hızlı etkili kimyasal uygulama aracı.",
+      "detail": "Kablo lifleri veya boyun basınç izleriyle uyuşmayan bir yöntemdir."
+    },
+    {
+      "id": "w3",
+      "name": "Uzaktan Tetikleyici",
+      "icon": "📡",
+      "description": "Önceden yerleştirilmiş cihazı uzaktan çalıştıran kontrol aparatı.",
+      "detail": "Aynı anda fiziksel kablo basıncı oluşturamaz."
+    },
+    {
+      "id": "w4",
+      "name": "Boğma (Kablo)",
+      "icon": "🔌",
+      "description": "Ethernet kablosunu doğrudan basınç aracına çeviren fiziksel yöntem.",
+      "detail": "Boyun çevresindeki paralel izler, kablonun iki kez dolandığını gösterir."
+    }
+  ],
+  "locations": [
+    {
+      "id": "l1",
+      "name": "Sunucu Çiftliği (Gizli)",
+      "icon": "🗄️",
+      "description": "Kapalı devre soğutma ve bakım koridorlarıyla saklanan fiziksel veri tesisi.",
+      "detail": "Dört yönlendirme düğümünün yalnız biri bu tesise düşük gecikmeyle bağlanır."
+    },
+    {
+      "id": "l2",
+      "name": "Kripto Kafe",
+      "icon": "☕",
+      "description": "Kimliksiz ödeme terminalleri ve geçici cüzdanlar için kullanılan kalabalık mekân.",
+      "detail": "V-12 etiketi burada herkese açık relay terminaliyle görünür."
+    },
+    {
+      "id": "l3",
+      "name": "Liman Deposu",
+      "icon": "⚓",
+      "description": "Saha ekiplerinin geçici lojistik alanı.",
+      "detail": "M-08 komuta anahtarının mobil ekipmanları bu alanda bulunur."
+    },
+    {
+      "id": "l4",
+      "name": "Undercover Ev",
+      "icon": "🏠",
+      "description": "FBI’ın operasyon öncesi gözlem ve görüşme evi.",
+      "detail": "C-04 saha anahtarı bina içindeki şifreli ağla eşleşir."
+    }
+  ],
+  "clues": [
+    {
+      "id": "c1",
+      "title": "Ölüm Mahalli ve Saha Anahtarı",
+      "type": "evidence",
+      "mechanicType": "text",
+      "text": "Adli basınç izi, Murat’ın kapalı devre soğutma ve bakım koridorlarıyla saklanan tesiste öldürüldüğünü; cesedin taşınmadığını gösterdi. Aynı sırada C-04 saha anahtarı, operasyon öncesi gözlem evinin iç terminalinde kesintisiz doğrulandı.",
+      "deductionHint": "Ölüm alanını belirle; C-04 saha anahtarı hangi alternatif adreste doğrulanıyor?",
+      "isBonus": false,
+      "revealOrder": 1,
+      "isRevealed": true,
+      "pointCost": 0
+    },
+    {
+      "id": "c2",
+      "title": "Kafe Teslim Tutanağı",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Void adına imzalanan teslim tutanağında, hızlı etkili kimyasal uygulama kitlerinde bulunan soğuk zincir etiketi V-12 oturumuyla eşleşti. Etiketin seri numarası, kapalı terminalden yüklenmişti.",
+      "deductionHint": "Teslim numarası, V-12 oturumunu hangi uygulama aracıyla aynı hücreye getirir?",
+      "isBonus": false,
+      "revealOrder": 2,
+      "isRevealed": false,
+      "pointCost": 0
+    },
+    {
+      "id": "c3",
+      "title": "Kablo Basıncı ve Eldiven Lifleri",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Ethernet kablosundaki iki farklı eldiven lifinden C-04 ve M-08 ekipmanlarında kullanılan polimer bulunmadı. Boyun basıncını oluşturan kişinin, bu iki görev anahtarından biriyle kabloyu kullanmadığı anlaşıldı.",
+      "deductionHint": "Liflerin yokluğu, hangi iki kimliği listedeki son araçtan dışarıda bırakır?",
+      "isBonus": false,
+      "revealOrder": 3,
+      "isRevealed": false,
+      "pointCost": 0
+    },
+    {
+      "id": "c4",
+      "title": "Tor Düğüm Güzergâhı",
+      "type": "sifreli",
+      "mechanicType": "sifreli_mesaj",
+      "text": "Cihazda dört giriş düğümü ve iki sahte geçiş kaydı bulundu. Murat’ın taslağı, doğru hattın en kısa değil gecikmesi tutarlı olan rota olduğunu söylüyordu.",
+      "deductionHint": "Gecikme eşiğini kur; rota sonucu hangi iki kişi–yer eşleşmesini siler?",
+      "isBonus": false,
+      "revealOrder": 4,
+      "isRevealed": false,
+      "pointCost": 0,
+      "sifre": {
+        "sifreleTuru": "Tor düğüm rotası",
+        "sifrelenmis": "Giriş → relay → çıkış → tesis",
+        "cozulmus": "ROTA-N",
+        "answerAliases": [
+          "RotaN",
+          "N route",
+          "Nexus path"
+        ],
+        "cozumIpucu": "Her geçiş yalnız tanımlı kenarlardan ilerler. Toplam gecikme 132 ms olmalı; aynı ülkedeki iki ardışık düğüm sahte aktarma olarak elenir.",
+        "aciklama": "Düğüm rotasını eşleştirmek, iki saha anahtarının tesis geçişiyle bağdaşmadığını açığa çıkarır; bu rota ızgarada kişi–mekân elemesini tamamlar.",
+        "presentation": {
+          "style": "tor_node_route",
+          "title": "Tor Düğüm Güzergâhı",
+          "subtitle": "Düğümlere yalnız izinli bağlantılarla ilerle. Gerçek rota 132 ms gecikme verir; kısa görünen yollar sahte aktarım içerir.",
+          "purposeHint": "Doğru rota, iki yönlendirme etiketinin gizli tesisle fiziksel erişim bağlantısı kuramadığını gösterir; sonucu ızgarada iki eleme olarak işle.",
+          "resultText": "Geçerli paket rotası, iki dış yönlendirme etiketinin tesis düğümüne girmediğini gösterir.",
+          "interaction": {
+            "mode": "graph_path",
+            "submitLabel": "Rotayı Doğrula",
+            "successMessage": "Gecikme bütçesi tutarlı; sahte geçişler dışarıda kaldı.",
+            "failureMessage": "Bu yol ya yasak bir bağlantı kullanıyor ya da gecikme bütçesini bozuyor."
+          },
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "GİRİŞ · 17 ms",
+              "x": 0,
+              "y": 1
+            },
+            {
+              "id": "n1",
+              "label": "RELAY A · 29 ms",
+              "x": 1,
+              "y": 0
+            },
+            {
+              "id": "n2",
+              "label": "RELAY B · 38 ms",
+              "x": 1,
+              "y": 2
+            },
+            {
+              "id": "n3",
+              "label": "ÇIKIŞ N · 48 ms",
+              "x": 2,
+              "y": 1
+            },
+            {
+              "id": "n4",
+              "label": "SAHTE X · 11 ms",
+              "x": 2,
+              "y": 0
+            },
+            {
+              "id": "n5",
+              "label": "TESİS · 0 ms",
+              "x": 3,
+              "y": 1
+            }
+          ],
+          "edges": [
+            [
+              "n0",
+              "n1"
+            ],
+            [
+              "n0",
+              "n2"
+            ],
+            [
+              "n1",
+              "n4"
+            ],
+            [
+              "n2",
+              "n3"
+            ],
+            [
+              "n4",
+              "n5"
+            ],
+            [
+              "n3",
+              "n5"
+            ]
+          ],
+          "correctPath": [
+            "n0",
+            "n2",
+            "n3",
+            "n5"
+          ],
+          "targetLatency": 103
+        }
+      }
+    },
+    {
+      "id": "c5",
+      "title": "Bakım Sözleşmesi Kopyası",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Eski bakım kartında C-04 etiketli iş istasyonunun yalnız ağ paketlerini saklayan örnek dosyayı çalıştırdığı görüldü. Dosya başlığındaki imza, kablo basıncıyla ilişkili olmayan dijital yükleyiciye aitti.",
+      "deductionHint": "Bu ek kayıt, ilk etiketi hangi dijital yönteme bağlar?",
+      "isBonus": true,
+      "revealOrder": 5,
+      "isRevealed": false,
+      "pointCost": 75
+    },
+    {
+      "id": "c6",
+      "title": "Komuta Merkezi Telsiz Döngüsü",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "M-08 anahtarının baskın öncesi liman deposundaki telsiz döngüsüne bağlandığı görüldü. Kayıt, Marlowe’un resmî operasyon rolünü teyit ediyor.",
+      "deductionHint": "Bu ek tutanak, son etiketi hangi alternatif adrese bağlar?",
+      "isBonus": true,
+      "revealOrder": 6,
+      "isRevealed": false,
+      "pointCost": 75
+    }
+  ],
+  "assetManifest": [],
+  "solution": {
+    "suspectId": "s3",
+    "weaponId": "w4",
+    "locationId": "l1"
+  },
+  "solutionNarrative": "Nexus, sıfırlanan ortaklık payını yıllarca taşımıştı. FBI operasyonunun Murat’ı çiftliğe çağıracağını öğrendiğinde, baskından önce bakım koridorlarını kullanarak tesise girdi. Kabloyu silah yaptı; ardından düğüm kayıtlarının kısa ve temiz görünen rotalarına sahte geçişler ekledi. Cipher ve Marlowe’un saha anahtarları, Void’in soğuk zincir kiti ve Tor grafiğinin iki dış rotayı dışlamasıyla; kablo, tesis ve eski altyapı bilgisi yalnız Nexus’ta birleşti.",
+  "replitIntegration": {
+    "schema": "fm_replit_runtime_contract_v1",
+    "copyTarget": "Replit Agent prompt",
+    "canonicalCaseFile": "src/data/cases/dij_003.json",
+    "policy": "Var olan renderer varsa onu bozma; yoksa bu paketteki component ve dispatcher dalını ekle.",
+    "mechanics": [
+      {
+        "clueId": "c4",
+        "mechanicType": "sifreli_mesaj",
+        "renderer": "tor_node_route",
+        "completionEvent": "onSolved({ clueId, mechanic: \"sifreli_mesaj\" })"
+      }
+    ]
+  }
+}
+===== VAKA VERİSİ SONU =====

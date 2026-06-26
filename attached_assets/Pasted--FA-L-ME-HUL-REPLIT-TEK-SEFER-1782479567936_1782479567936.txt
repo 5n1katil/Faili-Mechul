@@ -1,0 +1,461 @@
+/* ============================================================
+ *  FAİLİ MEÇHUL — REPLIT TEK SEFERLİK ENTEGRASYON PAKETİ
+ *  Bu metni Replit Agent sohbetine TEK PARÇA olarak yapıştır.
+ *  Görev: sadece JSON kaydetme. Vaka verisini mevcut kaynakta
+ *  yükle, aşağıdaki eksik renderer altyapısını ekle ve çalıştır.
+ * ------------------------------------------------------------
+ *  Vaka: St. Mary Mead'in Gizli Defteri · puzzleId=ede_004
+ *  1) Önce mevcut vaka veri kaydını ve mini-oyun dispatcherını bul.
+ *  2) Var olan rendererları bozma; yalnız eksik olan dalı ekle.
+ *  3) Aşağıdaki vaka JSON’unu uygulamanın KANONİK case kaynağına ekle.
+ *  4) Kod değişikliklerinden sonra aşağıdaki kabul testlerini tarayıcıda yap.
+ *  5) Sadece açıklama yazma: dosyaları gerçekten güncelle ve test sonucunu bildir.
+ * ============================================================ */
+
+
+===== PREMIUM v26 ÖZEL MİNİ OYUN RENDERER'I — DOSYA OLUŞTUR / EKSİKSE EKLE =====
+// src/components/caseMechanics/PremiumMechanicRenderer.jsx
+import { useMemo, useState } from "react";
+
+const premiumStyles = new Set([
+  "luggage_label_match",
+  "negative_contact_sheet",
+  "morse_transceiver",
+  "archive_index_reconstruction",
+  "mechanical_lock_sequence",
+]);
+
+export const isPremiumMechanic = (clue) =>
+  clue?.mechanicType === "sifreli_mesaj" &&
+  premiumStyles.has(clue?.sifre?.presentation?.style);
+
+export default function PremiumMechanicRenderer({ clue, onSolved, onRequestHint }) {
+  const p = clue?.sifre?.presentation ?? {};
+  const style = p.style;
+  const [choices, setChoices] = useState({});
+  const [dials, setDials] = useState(() =>
+    Object.fromEntries((p.dials ?? []).map((d) => [d.id, d.initial ?? d.symbols?.[0] ?? ""]))
+  );
+  const [result, setResult] = useState(null);
+  const [hintOpen, setHintOpen] = useState(false);
+  const [hintUsed, setHintUsed] = useState(false);
+
+  const setChoice = (itemId, answerId) =>
+    setChoices((old) => ({ ...old, [itemId]: answerId }));
+
+  const rotate = (dial, delta) => {
+    const symbols = dial.symbols ?? [];
+    const current = dials[dial.id] ?? symbols[0];
+    const index = Math.max(0, symbols.indexOf(current));
+    const next = symbols[(index + delta + symbols.length) % symbols.length];
+    setDials((old) => ({ ...old, [dial.id]: next }));
+    setResult(null);
+  };
+
+  const valid = useMemo(() => {
+    if (!premiumStyles.has(style)) return false;
+    if (style === "mechanical_lock_sequence") {
+      return (p.correctCode ?? []).length === (p.dials ?? []).length &&
+        (p.correctCode ?? []).every((entry) => dials[entry.dialId] === entry.symbol);
+    }
+    return (p.correctAssignments ?? []).length > 0 &&
+      (p.correctAssignments ?? []).every((entry) => choices[entry.itemId] === entry.answerId);
+  }, [choices, dials, p, style]);
+
+  const submit = () => {
+    if (valid) {
+      setResult("ok");
+      onSolved?.({ clueId: clue.id, mechanic: style });
+    } else setResult("no");
+  };
+
+  const useHint = () => {
+    setHintOpen(true);
+    if (!hintUsed) {
+      setHintUsed(true);
+      onRequestHint?.({ clueId: clue.id, penaltySeconds: 60 });
+    }
+  };
+
+  const select = (itemId, options, placeholder) => (
+    <select value={choices[itemId] ?? ""} onChange={(e) => { setChoice(itemId, e.target.value); setResult(null); }}>
+      <option value="">{placeholder}</option>
+      {options.map((option) => <option key={option.id ?? option} value={option.id ?? option}>{option.label ?? option}</option>)}
+    </select>
+  );
+
+  const card = (title, body) => <article style={styles.card}><b>{title}</b>{body}</article>;
+  let board = null;
+
+  if (style === "luggage_label_match") {
+    board = <div style={styles.grid}>{(p.cases ?? []).map((item) => card(item.label, <><small>{item.stamp} · {item.note}</small>{select(item.id, p.routes ?? [], "Rotayı seç…")}</>))}</div>;
+  } else if (style === "negative_contact_sheet") {
+    board = <div style={styles.grid}>{(p.checks ?? []).map((item) => card(item.label, <><div style={styles.pair}><div style={styles.positive}>{item.positive}</div><div style={styles.negative}>{item.negative}</div></div>{select(item.id, item.options ?? [], "Farkı seç…")}</>))}</div>;
+  } else if (style === "morse_transceiver") {
+    board = <><div style={styles.chart}>{(p.chart ?? []).map((item) => <span key={item.char}><b>{item.char}</b> {item.code}</span>)}</div><div style={styles.grid}>{(p.signals ?? []).map((item) => card(item.label, <><div style={styles.morse}>{item.code}</div>{select(item.id, item.options ?? [], "Harfi seç…")}</>))}</div></>;
+  } else if (style === "archive_index_reconstruction") {
+    board = <div style={styles.archive}>{(p.files ?? []).map((item) => card(item.code ?? item.label, <><small>{item.date}<br />{item.note}</small>{select(item.id, p.slots ?? [], "Raf gözü…")}</>))}</div>;
+  } else if (style === "mechanical_lock_sequence") {
+    board = <div style={styles.dials}>{(p.dials ?? []).map((dial) => <article key={dial.id} style={styles.dial}><b>{dial.label}</b><div style={styles.symbol}>{dials[dial.id]}</div><div style={styles.controls}><button onClick={() => rotate(dial, -1)}>↶</button><button onClick={() => rotate(dial, 1)}>↷</button></div></article>)}</div>;
+  }
+
+  return <section style={styles.wrap}>
+    <h4 style={styles.title}>{p.title}</h4>
+    <p style={styles.sub}>{p.subtitle}</p>
+    <p style={styles.purpose}><b>ÇÖZÜMÜN İŞLEVİ</b><br />{p.purposeHint}</p>
+    {board}
+    {p.hint && <><button style={styles.ghost} onClick={useHint}>💡 İpucu iste</button>{hintOpen && <p style={styles.hint}>{p.hint}</p>}</>}
+    <button style={styles.submit} onClick={submit}>{p.interaction?.submitLabel ?? "Kaydı doğrula"}</button>
+    {result === "ok" && <p style={styles.ok}><b>IZGARA ETKİSİ</b><br />{p.resultText}</p>}
+    {result === "no" && <p style={styles.no}>{p.interaction?.failureMessage ?? "Kayıtlar aynı düzeni vermiyor. Ayrıntıları yeniden karşılaştır."}</p>}
+  </section>;
+}
+
+const styles = {
+  wrap:{marginTop:10,padding:12,border:"1px solid #2d3650",borderRadius:12,background:"#101522",color:"#e8eaf2"},
+  title:{margin:"0 0 4px",color:"#e0b54e",fontSize:14},sub:{margin:"0 0 8px",fontSize:12,color:"#a9b0ca"},
+  purpose:{margin:"0 0 10px",padding:9,borderLeft:"2px solid #e0b54e",background:"rgba(224,181,78,.06)",fontSize:12,lineHeight:1.45},
+  grid:{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(160px,1fr))",gap:8},archive:{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(145px,1fr))",gap:8},
+  card:{border:"1px solid #303a55",borderRadius:10,padding:10,display:"grid",gap:8,fontSize:12},pair:{display:"grid",gridTemplateColumns:"1fr 1fr",gap:6},
+  positive:{minHeight:54,padding:7,display:"grid",alignItems:"end",background:"#eef2fb",color:"#151a25",fontSize:10,fontWeight:700},negative:{minHeight:54,padding:7,display:"grid",alignItems:"end",background:"#20283d",color:"#eef2fb",fontSize:10,fontWeight:700},
+  chart:{display:"flex",gap:8,flexWrap:"wrap",padding:8,marginBottom:8,border:"1px solid #303a55",borderRadius:8,fontSize:11},morse:{fontSize:18,letterSpacing:3,color:"#f3d77d"},
+  dials:{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(100px,1fr))",gap:8},dial:{border:"1px solid #6e5a34",borderRadius:10,padding:9,textAlign:"center",display:"grid",gap:8},symbol:{height:48,border:"1px solid #b99b57",borderRadius:"50%",display:"grid",placeItems:"center",fontSize:22,color:"#f4e6ae"},
+  controls:{display:"grid",gridTemplateColumns:"1fr 1fr",gap:5},submit:{width:"100%",marginTop:10,padding:10,border:0,borderRadius:8,background:"#e0b54e",color:"#1a1205",fontWeight:700},ghost:{width:"100%",marginTop:8,padding:8,border:"1px dashed #caa544",borderRadius:8,background:"transparent",color:"#e0b54e"},
+  hint:{padding:8,borderRadius:8,background:"rgba(224,181,78,.08)",fontSize:12},ok:{padding:10,border:"1px solid #22c55e",borderRadius:8,background:"rgba(34,197,94,.1)",color:"#bbf7d0",fontSize:12},no:{padding:10,border:"1px solid #dc2626",borderRadius:8,background:"rgba(220,38,38,.1)",color:"#fecaca",fontSize:12}
+};
+===== DOSYA SONU =====
+
+===== MEVCUT MİNİ-OYUN DISPATCHERINA EKLENECEK DAL =====
+// Mevcut genel sifreli_mesaj renderer'INDEN ÖNCE ekle.
+import PremiumMechanicRenderer, { isPremiumMechanic } from "@/components/caseMechanics/PremiumMechanicRenderer";
+
+if (isPremiumMechanic(clue)) {
+  return (
+    <PremiumMechanicRenderer
+      clue={clue}
+      onSolved={({ clueId }) => markMiniGameSolved?.(clueId)}
+      onRequestHint={({ clueId, penaltySeconds }) => applyHintPenalty?.({ clueId, penaltySeconds })}
+    />
+  );
+}
+// Buradan sonra mevcut genel şifre renderer'ı aynen çalışmalı.
+===== YAMA SONU =====
+
+===== PREMIUM v26 KABUL TESTLERİ =====
+- c4: negative_contact_sheet renderer'ı JSON verisinden çalışır; doğru sonuç öncesinde resultText görünmez, yanlış deneme doğru eşlemeyi açmaz, mobilde kartlar tek kolon akışına iner.
+===== TESTLER SONU =====
+===== ZORUNLU KABUL TESTLERİ =====
+1. Eski klasik sifreli_mesaj, parmak_izi, profil_sentezi ve genel ses_kaydi rendererları regresyona uğramaz.
+===== TEST LİSTESİ SONU =====
+
+===== KANONİK VAKA VERİSİ — mevcut case registry’de ede_004 olarak ekle/değiştir =====
+{
+  "puzzleId": "ede_004",
+  "stars": "★★★★☆",
+  "gridSize": "3x3",
+  "timeLimit": 660,
+  "storyParagraphs": [
+    "St. Mary Mead’de haberler kilise çanından daha hızlı yayılırdı. Papaz Aubrey Helm, akşam vaazına yetişmeyince çalışma masasının başında bulundu; yarım kalmış metnin yanında soğuk bir fincan ve kalemin ucunda kurumuş tek bir damla vardı.",
+    "Miss Marple penceresinden bahçe duvarını görüyordu ama asıl dikkatini mutfak eşiğine sıkışmış üç yaprak sapı çekti. Boyları birbirinden farklıydı; birinin kesik kenarında porselen süzgece özgü ince bir yay izlenimi vardı.",
+    "Köy hekimi eski bir dosyanın gölgesindeydi, noter ise teslim edeceği mühürlü kopyalara yetişmeye çalışıyordu. Org eğitmeni yıllardır sakladığı öfkeyi inkâr ediyordu. Miss Marple, çayın kimin tarafından sevildiğinden çok, hangi kapta süzüldüğünü düşündü."
+  ],
+  "qaRationale": "Dört temel ipucu; ölüm aracını, iki masum silah eşleşmesini ve iki yanlış hazırlama alanını ayrı eksenlerde daraltır. c4 görsel temas sayfası son mekân alternatifini kapatır.",
+  "qaNarrativeContract": {
+    "narrativeSignal": "Hikâyedeki üç farklı boydaki yaprak sapı ve porselen süzgeç eğrisi, oyuncuya c4'te pozitif/negatif baskı karşılaştırmasının neden kritik olduğunu adil biçimde kurar.",
+    "linkedClueId": "c4",
+    "playerAction": "Üç baskıda aynı kesik eğrisini seçmek.",
+    "fairReason": "Anlatı hangi seçeneğin doğru olduğunu veya failin kimliğini söylemez; yalnız görsel karşılaştırmanın fiziksel kökenini bildirir."
+  },
+  "qaSourceHandling": "Kaynak kimlikler, şüpheliler, araçlar, mekânlar ve çözüm üçlüsü korunmuştur. Mantık kuralları v29.2'nin kanonik confirm/eliminate+pair sözleşmesine dönüştürülmüştür.",
+  "title": "St. Mary Mead'in Gizli Defteri",
+  "subtitle": "İngiliz Köy Gizemi — Kesik Eğrinin Tanığı",
+  "difficulty": "Başkomiser",
+  "difficultyLevel": 4,
+  "specialMechanic": "sifreli_mesaj",
+  "story": "St. Mary Mead’de haberler kilise çanından daha hızlı yayılırdı. Papaz Aubrey Helm, akşam vaazına yetişmeyince çalışma masasının başında bulundu; yarım kalmış metnin yanında soğuk bir fincan ve kalemin ucunda kurumuş tek bir damla vardı.\n\nMiss Marple penceresinden bahçe duvarını görüyordu ama asıl dikkatini mutfak eşiğine sıkışmış üç yaprak sapı çekti. Boyları birbirinden farklıydı; birinin kesik kenarında porselen süzgece özgü ince bir yay izlenimi vardı.\n\nKöy hekimi eski bir dosyanın gölgesindeydi, noter ise teslim edeceği mühürlü kopyalara yetişmeye çalışıyordu. Org eğitmeni yıllardır sakladığı öfkeyi inkâr ediyordu. Miss Marple, çayın kimin tarafından sevildiğinden çok, hangi kapta süzüldüğünü düşündü.",
+  "atmosphere": "İngiliz köy sisi · Kilise çanı · Soğumuş çay · Tuzlu baskı",
+  "suspects": [
+    {
+      "id": "s1",
+      "name": "Bayan Dorothy Pryce",
+      "icon": "🎼",
+      "description": "Kilise org eğitmeni, papazın eski öğrencisi.",
+      "detail": "Olay saatinde kasaba provasının başındaydı; org pedallarındaki toz bile doğrulanmış."
+    },
+    {
+      "id": "s2",
+      "name": "Dr. Felix Garnett",
+      "icon": "🩺",
+      "description": "Köy hekimi ve papazın yakın dostu.",
+      "detail": "Papazın eski bir yanlış teşhis dosyasını vaftiz defterine yazdığını biliyordu."
+    },
+    {
+      "id": "s3",
+      "name": "Gerald Whitmore",
+      "icon": "📜",
+      "description": "Köy noteri ve vasi sorumlusu.",
+      "detail": "Olay saatinde belediye kasasında imzalı vasiyet kopyalarını teslim ediyordu."
+    }
+  ],
+  "weapons": [
+    {
+      "id": "w1",
+      "name": "Keman Teli",
+      "icon": "🎻",
+      "description": "İnce tel ile boğma aracı.",
+      "detail": "Boyunda sürtünme ve lif bırakır."
+    },
+    {
+      "id": "w2",
+      "name": "Baldıran Özü",
+      "icon": "🌿",
+      "description": "Acı bitki özünün çaya karıştırılmış hali.",
+      "detail": "Porselen yüzeyde soluk sarı tortu bırakabilir."
+    },
+    {
+      "id": "w3",
+      "name": "Demir Mektup Açacağı",
+      "icon": "✉️",
+      "description": "Ağır metal kesici.",
+      "detail": "Masa veya beden üzerinde delici iz beklenir."
+    }
+  ],
+  "locations": [
+    {
+      "id": "l1",
+      "name": "Çalışma Odası",
+      "icon": "📖",
+      "description": "Vaftiz defterlerinin bulunduğu oda.",
+      "detail": "Beden burada bulundu; çay burada hazırlanmış olmayabilir."
+    },
+    {
+      "id": "l2",
+      "name": "Kilise Bahçesi",
+      "icon": "⛪",
+      "description": "Sarmaşıklı taş duvarlar ve bitki yatakları.",
+      "detail": "Yaprak toplanabilir, fakat çay demlenmez."
+    },
+    {
+      "id": "l3",
+      "name": "Vikarinin Mutfağı",
+      "icon": "🍵",
+      "description": "Yüksek tavanlı küçük mutfak.",
+      "detail": "Porselen süzgeç, çay kutusu ve sıcak su ocağı burada."
+    }
+  ],
+  "clues": [
+    {
+      "id": "c1",
+      "title": "Acı Bileşenin Yolu",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Toksikoloji, dil kökünde damar iletimini yavaşlatan bir bitki alkaloidi saptadı. Ölümcül madde, deri ya da hava yoluyla değil içecek yoluyla alınmış.",
+      "deductionHint": "Bulgu, ölüm aracının hangi tür taşıyıcı olduğunu tek başına sabitler?",
+      "isBonus": false,
+      "revealOrder": 1,
+      "isRevealed": true,
+      "pointCost": 0
+    },
+    {
+      "id": "c2",
+      "title": "Prova Arasındaki Lif",
+      "type": "tanik",
+      "mechanicType": "text",
+      "text": "Koro prova defterinin cildine yapışmış açık renkli lif, org bankının altındaki ince tel bobininden alınan reçineyle aynı seri numarayı taşıyor.",
+      "deductionHint": "Müzik odasındaki rutin eşya, hangi kişi ile hangi seçeneğin cinayet dışı eşleşmesini kurar?",
+      "isBonus": false,
+      "revealOrder": 2,
+      "isRevealed": false,
+      "pointCost": 0
+    },
+    {
+      "id": "c3",
+      "title": "İki Mühürlü Teslim",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Belediye kasasının teslim defterinde aynı dakikaya ait iki farklı mühür izi var; nöbetçi memur ikinci imzayı da kapı önünde gördüğünü yazmış.",
+      "deductionHint": "Birbirini doğrulayan iki resmî kayıt, hangi kişiyi zehirli karışım zincirinin dışında bırakır?",
+      "isBonus": false,
+      "revealOrder": 3,
+      "isRevealed": false,
+      "pointCost": 0
+    },
+    {
+      "id": "c4",
+      "title": "Yaprak Sapı Negatifleri",
+      "type": "sifreli",
+      "mechanicType": "sifreli_mesaj",
+      "text": "Eşikteki üç sapın tuzlu baskıları, ışıkta farklı görünse de negatifte aynı kesik eğrisini saklıyor. Kartlar tek tek değil, karşılıklı okunmalı.",
+      "deductionHint": "Açık kenar ile koyu boşluk aynı eğriyi veriyorsa, kesik hangi yüzeyden geçmiş olabilir?",
+      "isBonus": false,
+      "revealOrder": 4,
+      "isRevealed": false,
+      "pointCost": 0,
+      "sifre": {
+        "sifrelenmis": "IŞIK ALTINDA ÜÇ SAP",
+        "sifreleTuru": "negatif_kontakt_sayfasi",
+        "cozumIpucu": "Pozitif baskıdaki açık kenar ile negatifteki koyu boşluğun aynı yüzeyden geldiğini birlikte düşün; tek bir eğri bütün kareleri bağlar.",
+        "cozulmus": "BASKI-03",
+        "aciklama": "Tuzlu baskılardaki küçük ayrım, soruşturmadaki eksik mekan halkasını tamamlayacak son işareti verdi.",
+        "presentation": {
+          "style": "negative_contact_sheet",
+          "title": "Yaprak Sapı Negatifleri",
+          "subtitle": "Pozitif ve negatif baskılarda aynı kesik eğrisini üç ayrı ayrıntıda eşleştir.",
+          "purposeHint": "Doğru üç eşleştirme, soruşturma panosunda tek bir mekan bağlantısını eler.",
+          "resultText": "Üç baskıdaki kesik eğrisi, hazırlığın açık havada yapılmadığını gösterir.",
+          "checks": [
+            {
+              "id": "k1",
+              "label": "Kare A · Kesik ucu",
+              "positive": "İki yarım yay, uçta aynı genişlikte açılıyor.",
+              "negative": "Koyu boşluk, tek porselen kavisini koruyor.",
+              "options": [
+                {
+                  "id": "strainer",
+                  "label": "Porselen süzgeç yayı"
+                },
+                {
+                  "id": "shears",
+                  "label": "Bahçe makası ağzı"
+                },
+                {
+                  "id": "press",
+                  "label": "Kâğıt presi köşesi"
+                }
+              ]
+            },
+            {
+              "id": "k2",
+              "label": "Kare B · Lif izi",
+              "positive": "Sap lifleri aynı yönde ezilmiş.",
+              "negative": "Gölgede yuvarlak tel deliği beliriyor.",
+              "options": [
+                {
+                  "id": "strainer",
+                  "label": "Porselen süzgeç yayı"
+                },
+                {
+                  "id": "shears",
+                  "label": "Bahçe makası ağzı"
+                },
+                {
+                  "id": "press",
+                  "label": "Kâğıt presi köşesi"
+                }
+              ]
+            },
+            {
+              "id": "k3",
+              "label": "Kare C · Nem halkası",
+              "positive": "Yüzeyde iki ince su halkası var.",
+              "negative": "Aynı halka tek bir kavis etrafında kapanıyor.",
+              "options": [
+                {
+                  "id": "strainer",
+                  "label": "Porselen süzgeç yayı"
+                },
+                {
+                  "id": "shears",
+                  "label": "Bahçe makası ağzı"
+                },
+                {
+                  "id": "press",
+                  "label": "Kâğıt presi köşesi"
+                }
+              ]
+            }
+          ],
+          "correctAssignments": [
+            {
+              "itemId": "k1",
+              "answerId": "strainer"
+            },
+            {
+              "itemId": "k2",
+              "answerId": "strainer"
+            },
+            {
+              "itemId": "k3",
+              "answerId": "strainer"
+            }
+          ],
+          "interaction": {
+            "mode": "multi_match",
+            "submitLabel": "Baskıları Karşılaştır",
+            "successMessage": "Eşleştirme tamamlandı; panoda tek bir eleme işlendi.",
+            "failureMessage": "Üç kare aynı kesik eğrisini vermiyor. Pozitif ile negatifteki boşluğu yeniden karşılaştır."
+          }
+        }
+      }
+    },
+    {
+      "id": "c5",
+      "title": "Vaftiz Defterinin Kıvrımı — Bonus",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Eski defterin sayfa kenarında, hekimin yıllar önce kapattığı tanıya ait kısa tarih notu ve mutfak anahtarının aynı fosforlu tozu var.",
+      "deductionHint": "İki ayrı iz, kim ile hazırlama alanı arasındaki erişim bağını güçlendirir?",
+      "isBonus": true,
+      "revealOrder": 5,
+      "isRevealed": false,
+      "pointCost": 55
+    },
+    {
+      "id": "c6",
+      "title": "Süzgeçte Kalan Halka — Bonus",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Yıkanmış süzgecin tel yuvasında soluk sarı bir halka, çay kutusunun kapağında ise aynı bitkisel tortu bulundu.",
+      "deductionHint": "Aynı tortu, hangi araç ile hangi hazırlama alanının kesişimini doğrular?",
+      "isBonus": true,
+      "revealOrder": 6,
+      "isRevealed": false,
+      "pointCost": 55
+    }
+  ],
+  "assetManifest": [],
+  "solution": {
+    "suspectId": "s2",
+    "weaponId": "w2",
+    "locationId": "l3"
+  },
+  "solutionNarrative": "Papazın öldüğü yer ile çayın hazırlandığı yer aynı değildi. Hekim, eski dosyanın açığa çıkmasından önce bitki özünü çay ritüeline yerleştirdi; saplardaki porselen eğri, hazırlığın bahçede değil mutfak hattında yapıldığını kapattı. Eski dostluk, sırra dönüşünce en sakin fincan en tehlikeli delil oldu.",
+  "replitIntegration": {
+    "schema": "fm_replit_runtime_contract_v1",
+    "copyTarget": "Replit Agent prompt",
+    "canonicalCaseFile": "src/data/cases/ede_004.json",
+    "policy": "Var olan renderer varsa onu bozma; yoksa bu paketteki component ve dispatcher dalını ekle.",
+    "mechanics": [
+      {
+        "clueId": "c4",
+        "mechanicType": "sifreli_mesaj",
+        "renderer": "negative_contact_sheet",
+        "completionEvent": "onSolved({ clueId, mechanic: \"sifreli_mesaj\" })"
+      },
+      {
+        "clueId": "c4",
+        "mechanicType": "sifreli_mesaj",
+        "renderer": "negative_contact_sheet",
+        "componentFile": "src/components/caseMechanics/PremiumMechanicRenderer.jsx",
+        "dispatcherBranch": "clue.mechanicType === \"sifreli_mesaj\" && [\"luggage_label_match\",\"negative_contact_sheet\",\"morse_transceiver\",\"archive_index_reconstruction\",\"mechanical_lock_sequence\"].includes(clue.sifre?.presentation?.style)",
+        "completionEvent": "onSolved({ clueId, mechanic: \"negative_contact_sheet\" })",
+        "hintEvent": "onRequestHint({ clueId, penaltySeconds: 60 })",
+        "requiredData": [
+          "title",
+          "subtitle",
+          "purposeHint",
+          "resultText",
+          "interaction",
+          "style-specific data"
+        ],
+        "nonNegotiable": [
+          "Veriyi component içine hard-code etme.",
+          "Başarı öncesinde resultText veya çözüm eşleşmesini gösterme.",
+          "Yanlış deneme doğru eşlemeyi otomatik kurmamalı.",
+          "Mobilde kartlar/diallar tek sütuna akmalı."
+        ]
+      }
+    ]
+  }
+}
+===== VAKA VERİSİ SONU =====

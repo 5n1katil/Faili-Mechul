@@ -1,0 +1,526 @@
+{
+  "puzzleId": "ede_003",
+  "title": "Kütüphanenin Kilitli Sırrı",
+  "subtitle": "Gotik Kapalı Oda — Rafların Taşıdığı Sır",
+  "difficulty": 3,
+  "difficultyLabel": "Dedektif",
+  "stars": "★★★☆☆",
+  "gridSize": "4x4",
+  "timeLimit": 660,
+  "storyParagraphs": [
+    "Yağmur, Ravenscroft Malikânesi’nin kütüphane camlarına çarpıyor; koridordaki kitap sırtları karanlıkta tek bir duvar gibi yükseliyordu. Vasiyet dosyalarını inceleyen Samuel Vane, içeriden sürgülenmiş küçük odada bulundu. Anahtar cebindeydi; pencerelerin mandalları da içeriden kapalıydı.",
+    "Kapı açıldığında ilk hissedilen şey keskin bir koku değil, alışılmadık bir kuruluktu. Kuzey rafının alt tablası bir parmak genişliğinde eğilmişti; katalogdaki ağır ciltlerin sayısı ise eksiksiz görünüyordu. Bir şey, yerini almış ama ağırlığını bırakmamıştı.",
+    "Yirmi yıl önce kaybolan arşiv dosyaları için yalnız dört kişi erişim istemişti. Her biri başka bir sırra, başka bir borca tutunuyordu. Malikânede bazen kilitler değil; rafın taşıdığı yük konuşurdu."
+  ],
+  "story": "Yağmur, Ravenscroft Malikânesi’nin kütüphane camlarına çarpıyor; koridordaki kitap sırtları karanlıkta tek bir duvar gibi yükseliyordu. Vasiyet dosyalarını inceleyen Samuel Vane, içeriden sürgülenmiş küçük odada bulundu. Anahtar cebindeydi; pencerelerin mandalları da içeriden kapalıydı.\n\nKapı açıldığında ilk hissedilen şey keskin bir koku değil, alışılmadık bir kuruluktu. Kuzey rafının alt tablası bir parmak genişliğinde eğilmişti; katalogdaki ağır ciltlerin sayısı ise eksiksiz görünüyordu. Bir şey, yerini almış ama ağırlığını bırakmamıştı.\n\nYirmi yıl önce kaybolan arşiv dosyaları için yalnız dört kişi erişim istemişti. Her biri başka bir sırra, başka bir borca tutunuyordu. Malikânede bazen kilitler değil; rafın taşıdığı yük konuşurdu.",
+  "atmosphere": "Gotik malikâne · Yağmur · Kuruyan kâğıt · Pirinç kadranlar",
+  "suspects": [
+    {
+      "id": "s1",
+      "name": "Arşivci Magda Stern",
+      "icon": "📚",
+      "description": "Malikânenin kapalı koleksiyonlarından sorumlu arşivci.",
+      "detail": "Katalog anahtarına ve eski hava geçitleri krokisine erişimi var."
+    },
+    {
+      "id": "s2",
+      "name": "Dr. Adrian Vale",
+      "icon": "🩺",
+      "description": "Vane’in araştırdığı miras davasının danışmanı.",
+      "detail": "Olay saati köy revirindeki ameliyat kaydıyla sabit; cerrahi eldiven taşır."
+    },
+    {
+      "id": "s3",
+      "name": "Restoratör Lydia March",
+      "icon": "🧵",
+      "description": "Eski ciltleri onaran kitap restoratörü.",
+      "detail": "Hafta sonu iş emrinde yalnız atölye masası için kayıtlı; raf anahtarı yok."
+    },
+    {
+      "id": "s4",
+      "name": "Koleksiyoncu Theo Grimm",
+      "icon": "🗝️",
+      "description": "Nadir eserlerin alıcısı ve Vane’in borçlusu.",
+      "detail": "Kasaba istasyonunda imzalı yük senedi var; ağır bagajı yanında."
+    }
+  ],
+  "weapons": [
+    {
+      "id": "w1",
+      "name": "Gizli Hava Kanalı Gazı",
+      "icon": "🌫️",
+      "description": "Dar kanaldan odaya verilen boğucu gaz.",
+      "detail": "İğne, kesik ya da darbe bırakmadan çalışır."
+    },
+    {
+      "id": "w2",
+      "name": "Fildişi Kâğıt Bıçağı",
+      "icon": "🗡️",
+      "description": "Masa üstü kesici araç.",
+      "detail": "Yakın mesafede deride kesik oluşturur."
+    },
+    {
+      "id": "w3",
+      "name": "Kurşun Şamdan",
+      "icon": "🕯️",
+      "description": "Ağır, küt darbe aracı.",
+      "detail": "Kafatasında ezilme izi bırakır."
+    },
+    {
+      "id": "w4",
+      "name": "Uyku İğnesi",
+      "icon": "💉",
+      "description": "Hızlı etkili enjeksiyon.",
+      "detail": "Delik izi ve ampul kırığı beklenir."
+    }
+  ],
+  "locations": [
+    {
+      "id": "l1",
+      "name": "Kilitli Okuma Odası",
+      "icon": "🔐",
+      "description": "Maktulün bulunduğu oda.",
+      "detail": "Beden burada bulundu; ancak mekanizma buradan kurulmamış olabilir."
+    },
+    {
+      "id": "l2",
+      "name": "Havalandırma Tüneli",
+      "icon": "🌀",
+      "description": "Kuzey rafının arkasından geçen dar bakım hattı.",
+      "detail": "Eski planda “yalnız yangın bacası” diye kayıtlı."
+    },
+    {
+      "id": "l3",
+      "name": "Harita Arşivi",
+      "icon": "🗺️",
+      "description": "Rulo planların saklandığı soğuk bölüm.",
+      "detail": "Kireçli toz ve gömlek manşetinde mavi pigment bırakır."
+    },
+    {
+      "id": "l4",
+      "name": "Bekçi Kulübesi",
+      "icon": "🏚️",
+      "description": "Malikâne kapısındaki küçük oda.",
+      "detail": "Kömür sobası ve dış kapı kaydıyla ayrılır."
+    }
+  ],
+  "clues": [
+    {
+      "id": "c1",
+      "type": "kanit",
+      "revealOrder": 1,
+      "isRevealed": true,
+      "pointCost": 0,
+      "title": "Kuru Solunum Yolu",
+      "text": "Otopsi raporunda, soluk borusunun derininde kesik ya da iğne izi olmadan görülen kurutucu tahriş kaydı var. Ölümcül madde, dışarıdan solunmuş bir akışla temas etmiş.",
+      "deductionHint": "Bulgu, doğrudan temas eden kesici veya iğneye değil; hangi tür akışa işaret ediyor?",
+      "isBonus": false,
+      "isCrimeAnchor": true,
+      "mechanicType": "text",
+      "logicRules": [
+        {
+          "action": "eliminate",
+          "pair": [
+            "w1",
+            "l3"
+          ]
+        }
+      ],
+      "qaRationale": {
+        "matrixEffect": "Gizli Hava Kanalı Gazı ≠ Harita Arşivi elenir.",
+        "evidenceLink": "Solunum yolundaki kurutucu tahriş, dışarıdan verilen gaz akışına işaret eder; harita arşivindeki yüzeysel pigment hattı bu mekanizmanın kurulduğu yer olamaz.",
+        "evidenceKind": "medical"
+      },
+      "qaSemanticFacts": [
+        {
+          "kind": "crime_component",
+          "component": "weapon",
+          "entityId": "w1",
+          "evidence": "Otopsi bulgusu ölümcül aracın dışarıdan verilen solunum akışı olduğunu kesinleştirir."
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "type": "tanik",
+      "revealOrder": 2,
+      "isRevealed": false,
+      "pointCost": 0,
+      "title": "Fildişi Sapın Sicili",
+      "text": "Revir dolabındaki bakım defteri, sarımsı saplı masa kesicisinin aynı gece mühürlü çantadan çıkarıldığını; dönüşte de aynı numarayla teslim edildiğini gösteriyor.",
+      "deductionHint": "Sicil, hangi kişi ile hangi alet arasında cinayet dışı ama kesin bir eşleşme kuruyor?",
+      "isBonus": false,
+      "isCrimeAnchor": false,
+      "mechanicType": "text",
+      "logicRules": [
+        {
+          "action": "confirm",
+          "pair": [
+            "s2",
+            "w2"
+          ]
+        }
+      ],
+      "qaRationale": {
+        "matrixEffect": "Dr. Adrian Vale ↔ Fildişi Kâğıt Bıçağı doğrulanır.",
+        "evidenceLink": "Bakım defterindeki seri numarası, revir sorumlusunun teslim aldığı fildişi saplı kesiciyle bire bir eşleşir.",
+        "evidenceKind": "record"
+      }
+    },
+    {
+      "id": "c3",
+      "type": "adli",
+      "revealOrder": 3,
+      "isRevealed": false,
+      "pointCost": 0,
+      "title": "Filtresiz Önlük",
+      "text": "Atölye önlüğünün liflerinde cilt tutkalı ve keten tozu var; ancak kapalı bir akış düzeneğinin filtresinde beklenen koyu grafit birikimi yok.",
+      "deductionHint": "Katalog işi yapan kişinin üstünde bulunmayan kalıntı, hangi araçla aynı zincirde olamayacağını düşündürür?",
+      "isBonus": false,
+      "isCrimeAnchor": false,
+      "mechanicType": "text",
+      "logicRules": [
+        {
+          "action": "eliminate",
+          "pair": [
+            "s3",
+            "w1"
+          ]
+        }
+      ],
+      "qaRationale": {
+        "matrixEffect": "Restoratör Lydia March ≠ Gizli Hava Kanalı Gazı elenir.",
+        "evidenceLink": "Restorasyon önlüğünde gaz düzeneği filtresine özgü grafit kalıntısı saptanmamıştır; fiziksel temas zinciri desteklenmez.",
+        "evidenceKind": "forensic"
+      }
+    },
+    {
+      "id": "c4",
+      "type": "belge",
+      "revealOrder": 4,
+      "isRevealed": false,
+      "pointCost": 0,
+      "title": "İstasyon Sandığının İç Gözü",
+      "text": "Kasaba istasyonunda mühürlenen ağır sandığın iç kapağında, küçük bir ampul kutusunun oturduğu dikdörtgen boşluk ve aynı mühür numarası kayıtlı.",
+      "deductionHint": "Yük kaydı, hangi yolcunun hangi seçeneğe zaten bağlı olduğunu gösterir?",
+      "isBonus": false,
+      "isCrimeAnchor": false,
+      "mechanicType": "text",
+      "logicRules": [
+        {
+          "action": "confirm",
+          "pair": [
+            "s4",
+            "w4"
+          ]
+        }
+      ],
+      "qaRationale": {
+        "matrixEffect": "Koleksiyoncu Theo Grimm ↔ Uyku İğnesi doğrulanır.",
+        "evidenceLink": "Mühürlü sandıktaki ampul kutusu yatağı ve yük senedindeki numara, koleksiyoncunun taşıdığı uyku iğnesi setiyle eşleşir.",
+        "evidenceKind": "chain_of_custody"
+      }
+    },
+    {
+      "id": "c5",
+      "type": "kanit",
+      "revealOrder": 5,
+      "isRevealed": false,
+      "pointCost": 0,
+      "title": "Kapının İç Basıncı",
+      "text": "Bedenin bulunduğu odanın kapısındaki ince toz çizgisi, basıncın eşikten değil duvar boşluğundan içeri geldiğini gösteriyor. Düzeneğin başlangıcı bu odada değil.",
+      "deductionHint": "Akışın yönü, hangi yer seçeneğini dışarıda bırakır?",
+      "isBonus": false,
+      "isCrimeAnchor": false,
+      "mechanicType": "text",
+      "logicRules": [
+        {
+          "action": "eliminate",
+          "pair": [
+            "w1",
+            "l1"
+          ]
+        }
+      ],
+      "qaRationale": {
+        "matrixEffect": "Gizli Hava Kanalı Gazı ≠ Kilitli Okuma Odası elenir.",
+        "evidenceLink": "Kapının iç yüzündeki toz çizgisi, akışın duvar boşluğundan geldiğini gösterir; gaz düzeneği bedenin bulunduğu odada başlatılmamıştır.",
+        "evidenceKind": "physical"
+      }
+    },
+    {
+      "id": "c6",
+      "type": "sifreli",
+      "revealOrder": 6,
+      "isRevealed": false,
+      "pointCost": 0,
+      "title": "Katalog Kadran Kilidi",
+      "text": "Kuzey rafının arkasında, katalog fişleriyle aynı aşınma izlerini taşıyan dört pirinç kadran bulundu. Üstteki işaretler tek başına değil, sırayla anlam kazanıyor.",
+      "deductionHint": "Bir kadranın işareti değil, dört işaretin izlediği yön önemlidir.",
+      "isBonus": false,
+      "isCrimeAnchor": false,
+      "mechanicType": "sifreli_mesaj",
+      "logicRules": [
+        {
+          "action": "eliminate",
+          "pair": [
+            "w1",
+            "l4"
+          ]
+        }
+      ],
+      "qaRationale": {
+        "matrixEffect": "Gizli Hava Kanalı Gazı ≠ Bekçi Kulübesi elenir.",
+        "evidenceLink": "Kadran dizilişi, duvar içi hattın bekçi geçidindeki anahtar rotasından çalıştırılamayacağını gösterir.",
+        "evidenceKind": "mechanical"
+      },
+      "sifre": {
+        "sifrelenmis": "KATALOG YÖN İŞARETLERİ",
+        "sifreleTuru": "mekanik_kilit_dizisi",
+        "cozumIpucu": "Her kadranda, üstteki raf izi ile alttaki aşınmanın ortak yönünü ara; dört işaret aynı yürüyüşü tamamlar.",
+        "cozulmus": "KADRAN-14",
+        "aciklama": "Kilit açıldı; yön dizisi, soruşturmadaki eksik eşleşme halkasını tamamlayacak son işareti verdi.",
+        "presentation": {
+          "style": "mechanical_lock_sequence",
+          "title": "Katalog Kadran Kilidi",
+          "subtitle": "Raf payandalarındaki yön aşınmalarını dört pirinç kadranda yeniden kur.",
+          "purposeHint": "Doğru diziliş, soruşturma panosunda tek bir bağlantının elenmesini sağlar.",
+          "resultText": "Kadranların verdiği yön, çalışma hattının bekçi geçidinden kurulmadığını gösterir.",
+          "dials": [
+            {
+              "id": "d1",
+              "label": "Kuzey Rafı",
+              "symbols": [
+                "↑",
+                "→",
+                "↓",
+                "←"
+              ],
+              "initial": "↑"
+            },
+            {
+              "id": "d2",
+              "label": "Alt Tabla",
+              "symbols": [
+                "↗",
+                "↘",
+                "↙",
+                "↖"
+              ],
+              "initial": "↗"
+            },
+            {
+              "id": "d3",
+              "label": "Katalog Ucu",
+              "symbols": [
+                "Ⅰ",
+                "Ⅱ",
+                "Ⅲ",
+                "Ⅳ"
+              ],
+              "initial": "Ⅰ"
+            },
+            {
+              "id": "d4",
+              "label": "Kilitleme Çentiği",
+              "symbols": [
+                "○",
+                "△",
+                "□",
+                "◇"
+              ],
+              "initial": "○"
+            }
+          ],
+          "correctCode": [
+            {
+              "dialId": "d1",
+              "symbol": "→"
+            },
+            {
+              "dialId": "d2",
+              "symbol": "↙"
+            },
+            {
+              "dialId": "d3",
+              "symbol": "Ⅲ"
+            },
+            {
+              "dialId": "d4",
+              "symbol": "□"
+            }
+          ],
+          "interaction": {
+            "mode": "dial_sequence",
+            "submitLabel": "Kadranları Doğrula",
+            "successMessage": "Diziliş açıldı; panoda tek bir eleme işlendi.",
+            "failureMessage": "Aşınma yönleri aynı halkayı tamamlamıyor. Raf ve tabla izlerini birlikte oku."
+          }
+        }
+      },
+      "qaMechanicBoundary": {
+        "primaryEvidence": "sifre",
+        "wrapperTextRole": "context_only"
+      }
+    },
+    {
+      "id": "c7",
+      "type": "kanit",
+      "revealOrder": 7,
+      "isRevealed": false,
+      "pointCost": 55,
+      "title": "Katalog Anahtarının Kenarı — Bonus",
+      "text": "Kuzey rafın altındaki pirinç anahtarın dişlerinde, arşivci masasındaki aynı koyu vernik ve rulo plan tozu bulundu.",
+      "deductionHint": "Anahtarın kullandığı çalışma hattı hangi kişi ile hangi yeri birlikte güçlendirir?",
+      "isBonus": true,
+      "isCrimeAnchor": false,
+      "mechanicType": "text",
+      "logicRules": [
+        {
+          "action": "confirm",
+          "pair": [
+            "s1",
+            "l2"
+          ]
+        }
+      ],
+      "qaRationale": {
+        "matrixEffect": "Arşivci Magda Stern ↔ Havalandırma Tüneli doğrulanır.",
+        "evidenceLink": "Anahtar dişlerindeki plan tozu ve vernik, arşiv sorumlusunun bakım hattına doğrudan erişimini destekler.",
+        "evidenceKind": "physical"
+      }
+    },
+    {
+      "id": "c8",
+      "type": "tanik",
+      "revealOrder": 8,
+      "isRevealed": false,
+      "pointCost": 55,
+      "title": "Yarım Kalan Mühür — Bonus",
+      "text": "Eski dosya zarfında, yalnız duvar içindeki bakım kapağında kullanılan gri macunun kurumuş izi var.",
+      "deductionHint": "Bu macun, hangi araç ile hangi hattın kesişimini doğrular?",
+      "isBonus": true,
+      "isCrimeAnchor": false,
+      "mechanicType": "text",
+      "logicRules": [
+        {
+          "action": "confirm",
+          "pair": [
+            "w1",
+            "l2"
+          ]
+        }
+      ],
+      "qaRationale": {
+        "matrixEffect": "Gizli Hava Kanalı Gazı ↔ Havalandırma Tüneli doğrulanır.",
+        "evidenceLink": "Gri bakım macunu, gaz düzeneğinin yalnız duvar içi bakım hattında kurulabildiğini gösterir.",
+        "evidenceKind": "physical"
+      }
+    }
+  ],
+  "solution": {
+    "suspectId": "s1",
+    "weaponId": "w1",
+    "locationId": "l2"
+  },
+  "solutionNarrative": "Samuel Vane’in ölümü kilitli odada görünür hâle geldi; fakat düzenek orada kurulmadı. Magda, eski katalog anahtarını kullanarak duvar içindeki bakım hattına erişti ve kuru akışı raf arkasından verdi. Kadran kilidi, bekçi geçidi ihtimalini kapatınca, geriye yalnız bu erişim zinciri kaldı.",
+  "specialMechanic": "sifreli_mesaj",
+  "qaPolicy": {
+    "requiredScore": 100,
+    "solverMode": "candidate_triad",
+    "requireSingleTriad": true,
+    "requireEachCoreNecessary": true,
+    "requireMiniGameClimax": true,
+    "requireSemanticContract": true,
+    "requireVisibleEvidenceScope": true,
+    "strictCoreNecessity": true,
+    "requireTraceability": true,
+    "requireMechanicEvidenceBoundary": true,
+    "requirePatternGovernance": true,
+    "requirePortfolioRegistry": true,
+    "productionExcludeFields": [
+      "qaNarrativeContract",
+      "qaNotes",
+      "qaPattern",
+      "qaPolicy",
+      "qaPortfolioRegistry",
+      "qaRationale",
+      "qaScore",
+      "qaSemanticFacts",
+      "qaSourceHandling",
+      "qaTests",
+      "qaTrace",
+      "storyParagraphs"
+    ]
+  },
+  "qaRationale": "Altı temel ipucu; ölüm aracını, silahın yanlış mekânlarını ve üç masum silah eşleşmesini birbirinden bağımsız biçimde daraltır. c6 mekanik kadran bulmacası son mekân alternatifini kapatır.",
+  "qaNarrativeContract": {
+    "narrativeSignal": "Hikâyedeki eğilmiş kuzey rafı ve eksiksiz görünen ağır ciltler, oyuncuya kadranlardaki aşınma ile ağırlık farkının aynı düzenekle ilişkili olduğunu sezdirir.",
+    "linkedClueId": "c6",
+    "playerAction": "Dört kadrandaki raf ve tabla aşınmalarını tek yön dizisine çevirmek.",
+    "fairReason": "Anlatı kadran kodunu veya sonucu vermez; yalnız hangi fiziksel ayrıntının okunacağını adil biçimde işaret eder."
+  },
+  "qaPattern": {
+    "anchorSource": "clue:c1",
+    "anchorComponent": "weapon",
+    "miniGameClueId": "c6",
+    "miniGameRole": "climax",
+    "miniGameFamily": "mechanical_lock_sequence",
+    "designIntent": "Gotik kapalı oda yapısı, cinayet silahını tıbbi bulguyla sabitler; masumlara ait eşya zinciri ve iki mekânsal eleme, finalde fiziksel kadran dizisiyle birleşir."
+  },
+  "qaPortfolioRegistry": {
+    "entries": [
+      {
+        "puzzleId": "pp_registry_v26",
+        "title": "Premium v26 temel kayıt",
+        "miniGameFamily": "symbol_crossgrid",
+        "anchorSig": "story:location",
+        "firstSig": "E:S-L",
+        "actions": "E,C,E,C",
+        "axes": "L-S,S-W",
+        "miniSig": "symbol_crossgrid@3"
+      },
+      {
+        "puzzleId": "myth_registry_v28",
+        "title": "Mitoloji v28 temel kayıt",
+        "miniGameFamily": "olympian_offering_scale",
+        "anchorSig": "clue:weapon",
+        "firstSig": "C:W-L",
+        "actions": "C,E,C,E",
+        "axes": "L-W,S-L",
+        "miniSig": "olympian_offering_scale@4"
+      },
+      {
+        "puzzleId": "digital_registry_v29",
+        "title": "Dijital v29 temel kayıt",
+        "miniGameFamily": "blockchain_transaction_fork",
+        "anchorSig": "clue:location",
+        "firstSig": "E:L-S",
+        "actions": "E,C,E,C",
+        "axes": "L-S,S-W",
+        "miniSig": "blockchain_transaction_fork@4"
+      },
+      {
+        "puzzleId": "ede_004",
+        "title": "St. Mary Mead'in Gizli Defteri",
+        "miniGameFamily": "negative_contact_sheet",
+        "anchorSig": "clue:weapon",
+        "firstSig": "kanit:E:L-W",
+        "actions": "ECEE",
+        "axes": "L-W|S-W|S-W|L-W",
+        "miniSig": "negative_contact_sheet@4"
+      },
+      {
+        "puzzleId": "ede_005",
+        "title": "Boğaz'ın Şahidi",
+        "miniGameFamily": "telephone_switchboard",
+        "anchorSig": "clue:weapon",
+        "firstSig": "kanit:E:L-W",
+        "actions": "ECCE",
+        "axes": "L-W|L-W|S-W|S-W",
+        "miniSig": "ses_kaydi@4"
+      }
+    ]
+  },
+  "qaSourceHandling": "Kaynak kimlikler, şüpheliler, araçlar, mekânlar ve çözüm üçlüsü korunmuştur. Mantık kuralları v29.2'nin kanonik confirm/eliminate+pair sözleşmesine dönüştürülmüştür."
+}

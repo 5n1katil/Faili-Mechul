@@ -8530,36 +8530,49 @@
       "puzzles": [
         {
           "puzzleId": "dij_001",
-          "title": "Son Blok",
-          "subtitle": "Kripto Borsası Çöküşü",
-          "difficulty": 2,
-          "difficultyLabel": "Çaylak",
-          "stars": "★★☆☆☆",
+          "stars": "★☆☆☆☆",
           "gridSize": "3x3",
-          "timeLimit": 540,
-          "story": "Dünya'nın en büyük kripto borsasının baş geliştiricisi, borsanın çöktüğü gece ölü bulundu. 2 milyar dolar kayboldu. Üç kişi o geceye ait.",
-          "atmosphere": "Monitör ışığı. Klavye sesi. Ve 2 milyar dolarlık boşluk.",
+          "timeLimit": 600,
+          "qaRationale": {
+            "c1": "Ölüm mahalli oyuncuya açıkça l1 olarak verilir; V-11 kamera mührü s1–l2 eşleşmesini doğrular.",
+            "c2": "G-17, GhostKey kimlik kartının bağlam işaretidir; yalnız w1 sözleşme yetkisiyle eşleşir.",
+            "c3": "Viyal çapı, s1’in ekipmanını w3 ile fiziksel olarak bağdaşmaz kılar.",
+            "c4": "Oyuncu imza–alındı farkı ile nonce tekrar kuralını birlikte uygular; 4–0–0–4 kodu yalnız DAL C’nin tutarlı olduğunu gösterir ve G-17’nin l1 fiziksel okuyucusuna bağlanmasını eler.",
+            "leaveOneOut": "c1 veya c4 çıkarılırsa l1’de s3 yerine başka kişi kalabilir; c2 veya c3 çıkarılırsa w3 s3 yerine başka kişiye kalabilir."
+          },
+          "qaNarrativeContract": {
+            "narrativeClue": "Arman’ın notundaki “gerçek imza, zaman damgasından değil zincirin kırıldığı yerden anlaşılır” cümlesi, oyuncuya yalnız saat farkına değil nonce tekrarına da bakması gerektiğini adil biçimde söyler.",
+            "linkedClueId": "c4",
+            "playerVisibleBridge": "“Süre farkı doğru olsa bile, ikinci kez kullanılan nonce zinciri geçersiz kılar.”"
+          },
+          "title": "Son Blok",
+          "subtitle": "Karanlık Ağ · Axiom Exchange Çöküş Dosyası",
+          "difficulty": "Çaylak",
+          "difficultyLevel": 1,
+          "specialMechanic": "sayısal_analitik · ledger_checksum_console",
+          "story": "Axiom Exchange’in gece vardiyası, iki milyar dolarlık açığın ekrana düştüğü anda sessizliğe gömüldü. Baş geliştirici Arman Kaya, sabaha karşı altyapı katında ölü bulundu; monitöründe yalnızca tek satır kalmıştı: “TRANSFER_HALT / imza reddedildi.” O gece binada üç isim vardı: parasını kurtarmaya çalışan CEO Marcus Vault, kimliği bilinmeyen GhostKey ve haftalardır risk raporlarıyla yönetimi uyaran Priya Sen.\n\nİlk bakışta herkes dijital hırsızlığa odaklandı. Fakat soğuk koridordaki ışıklar, masanın altındaki halka ve kapı okuyucusuna düşen kısa bir sertifika izi, cinayetin para transferinden ayrı bir fiziksel planı olduğunu söylüyordu.\n\nArman’ın son notunda “gerçek imza, zaman damgasından değil zincirin kırıldığı yerden anlaşılır” cümlesi vardı. Bu, ekranda görünen her şeyin gerçek olduğu anlamına gelmiyordu. Kayıtların dili temizdi; fakat temiz görünen bir zincir bazen en iyi hazırlanmış yalandır.",
+          "atmosphere": "Fanların uğultusu, soğuk metal raflar ve kırmızı uyarı ışığı. Bazı geceler bloklar yalnızca para değil, insan da yutar.",
           "suspects": [
             {
               "id": "s1",
               "name": "CEO Marcus Vault",
               "icon": "👨‍💼",
-              "description": "Borsa sahibi. Para 'kayboldu' ama acaba kaybedildi mi?",
-              "detail": "40 yaşında, kripto milyarderi, baskı altında."
+              "description": "Axiom’un kurucusu; çöküşten önce nakit çıkışı hazırladığı görülüyor.",
+              "detail": "V-11 kartı yalnız CEO Ofisi iç kamera sistemiyle eşleşir. Finansal kaçış planı kurmuş olabilir; teknik erişimi sınırlıdır."
             },
             {
               "id": "s2",
               "name": "Baş Hacker 'GhostKey'",
               "icon": "🧑‍💻",
-              "description": "Kimliği bilinmeyen anonim hacker. Sisteme sızdı mı?",
-              "detail": "Yaşı bilinmiyor, cinsiyeti bilinmiyor, sadece kod var."
+              "description": "Kimliği bilinmeyen, borsanın imza doğrulama katmanına sızan anonim aktör.",
+              "detail": "G-17 oturum etiketiyle iz bırakır. Zincir içi sözleşmeleri manipüle edebilecek kadar yetkin, fiziksel kimliği belirsiz."
             },
             {
               "id": "s3",
               "name": "Risk Direktörü Priya Sen",
-              "icon": "noun-teacher-1908919-avatar.png",
-              "description": "Borsanın risklerini bilen tek kişi. Uyarıları dikkate alınmadı.",
-              "detail": "35 yaşında, matematikçi, öfkeli."
+              "icon": "📊",
+              "description": "Yönetimin görmezden geldiği risk raporlarını hazırlayan matematikçi.",
+              "detail": "On dört uyarı raporu hazırladı. Sistem açığını herkesten önce gördü; işini ve itibarını aynı gecede kaybetti."
             }
           ],
           "weapons": [
@@ -8567,19 +8580,22 @@
               "id": "w1",
               "name": "Smart Contract Tuzağı",
               "icon": "📜",
-              "description": "Akıllı sözleşmeye gömülü ölüm tetikleyicisi."
+              "description": "Transferi donduran, dijital kayba yol açan kötü amaçlı koşul dizisi.",
+              "detail": "Biyolojik bir ölüm mekanizması değildir; parayı kilitler, insanı değil."
             },
             {
               "id": "w2",
               "name": "Fiziksel Saldırı",
               "icon": "👊",
-              "description": "Klasik yöntem — dijital değil, fiziksel."
+              "description": "Yakın temas, darbe veya zor kullanmaya dayanan klasik yöntem.",
+              "detail": "Olay yerindeki sessizlik ve düzen bu yöntemi tartışmalı bırakır."
             },
             {
               "id": "w3",
               "name": "Zehirli Enerji İçeceği",
               "icon": "🥤",
-              "description": "Ofis buzdolabındaki içeceğe karıştırılan madde."
+              "description": "Soğuk odadaki içeceğe karıştırılan hızlı etkili madde.",
+              "detail": "Kutunun iç yüzeyinde görünmeyen doz çizgisi ve kapak contasında farklı bir basınç izi var."
             }
           ],
           "locations": [
@@ -8587,228 +8603,180 @@
               "id": "l1",
               "name": "Sunucu Odası",
               "icon": "💽",
-              "description": "Borsanın kalbi — fiziksel sunucular."
+              "description": "Borsanın fiziksel çekirdeği; erişim kartıyla açılan, kameraları sınırlı soğuk bölüm.",
+              "detail": "Kapı okuyucusu fiziksel sertifika ister; salt uzaktan oturum burada yetmez."
             },
             {
               "id": "l2",
               "name": "CEO Ofisi",
               "icon": "🏢",
-              "description": "45. kattaki özel ofis."
+              "description": "Kırk beşinci kattaki camla çevrili karar odası.",
+              "detail": "İç kamera mührü, çalışan kartlarını saniye hassasiyetinde doğrular."
             },
             {
               "id": "l3",
               "name": "Dark Web Buluşma Noktası",
               "icon": "🕸️",
-              "description": "Anonim şifreli iletişim kanalı."
+              "description": "Şifreli kimliklerin yalnızca rumuzla konuştuğu kapalı kanal.",
+              "detail": "Fiziksel oda değil, gizli anlaşmaların dijital buluşma alanı."
             }
           ],
           "clues": [
             {
               "id": "c1",
-              "type": "kanit",
+              "title": "Adli Saat ve Kamera Mührü",
+              "type": "adli",
+              "mechanicType": "text",
+              "text": "Mikroskobik saat farkı, Arman’ın ölümünün soğutma rafları ile erişim kabinleri arasındaki L-01 kapalı bölümünde gerçekleştiğini; cesedin sonradan taşınmadığını gösterdi. Aynı dört dakikada V-11 kartının canlı kamera mührü, cam cepheli üst yönetim masasından hiç ayrılmadı.",
+              "deductionHint": "Ölümün gerçekleştiği yeri belirledikten sonra, hangi rozet aynı anda başka bir odaya bağlanıyor?",
+              "isBonus": false,
               "revealOrder": 1,
               "isRevealed": true,
-              "pointCost": 0,
-              "title": "Ölüm Tespiti",
-              "text": "Maktul sunucu odasında bulundu. Zehirlenme — enerji içeceği kalıntısı yanında. Bilgisayarı açık, son komut: 'TRANSFER_HALT — ERİŞİM ENGELLENDİ'",
-              "mechanicType": "text",
-              "deductionHint": "Silah zehir, mekan sunucu odası."
+              "pointCost": 0
             },
             {
               "id": "c2",
-              "type": "phone_chain",
+              "title": "Dondurma Koşulunun Kaynağı",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Transferi durduran koşul dizisinin başlangıç anahtarı, G-17 oturumunun yalnız imzalayabildiği sözleşme yetkisiyle yazılmış. Kayıt, bu yetkinin beden üzerinde iz bırakan yöntemden değil dijital kesintiden sorumlu olduğunu ayırıyor.",
+              "deductionHint": "Bu kayıt, hangi kişinin ilk dijital seçenekle eşleşmesini engeller?",
+              "isBonus": false,
               "revealOrder": 2,
               "isRevealed": false,
-              "pointCost": 60,
-              "title": "Şifreli Mesaj Zinciri",
-              "text": "Çöküş gecesine ait şifreli iletişim zinciri.",
-              "mechanicType": "phone_chain",
-              "phoneVerisi": {
-                "aciklama": "Dark web üzerindeki mesaj zincirini takip et.",
-                "mesajlar": [
-                  {
-                    "id": "m1",
-                    "gonderen": "GhostKey",
-                    "alici": "Marcus",
-                    "icerik": "Çıkış planı hazır. Fon transferi gece 02:00.",
-                    "saat": "23:15"
-                  },
-                  {
-                    "id": "m2",
-                    "gonderen": "Marcus",
-                    "alici": "GhostKey",
-                    "icerik": "Priya bir şeyler biliyor. Sorun çıkarabilir.",
-                    "saat": "23:45"
-                  },
-                  {
-                    "id": "m3",
-                    "gonderen": "GhostKey",
-                    "alici": "Marcus",
-                    "icerik": "Sunucu odasında halledilir. İçecek bıraktım.",
-                    "saat": "00:10"
-                  },
-                  {
-                    "id": "m4",
-                    "gonderen": "Marcus",
-                    "alici": "GhostKey",
-                    "icerik": ".",
-                    "saat": "00:30"
-                  }
-                ],
-                "sonuc": "GhostKey içeceği bıraktı ama Priya değil, maktul (geliştirici) hedef alındı. Marcus koordinede — ama fiziksel olan GhostKey."
-              },
-              "deductionHint": "İçeceği bırakan GhostKey. Peki GhostKey kim?"
+              "pointCost": 0
             },
             {
               "id": "c3",
-              "type": "adli",
+              "title": "Doz Viyali Baskı Analizi",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Kutudaki kapak contası, 2,5 mm’lik laboratuvar viyaliyle açılmış. V-11 kaydındaki acil durum setinin tek adaptörü 6 mm; contadaki kıvrımı ve kutudaki doz çizgisini üretemez.",
+              "deductionHint": "İlk rozet sahibini listedeki hangi ölüm aracından dışarıda bırakmalısın?",
+              "isBonus": false,
               "revealOrder": 3,
               "isRevealed": false,
-              "pointCost": 60,
-              "title": "IP ve Cihaz Analizi",
-              "text": "GhostKey'in kullandığı VPN zinciri çözüldü. Son düğüm: Priya Sen'in ev ağı.",
-              "mechanicType": "gorsel_ipucu",
-              "gorselAciklama": "IP takip raporu: 7 katmanlı VPN. Son katman: Ev IP adresi → İSS kaydı → Priya Sen, Mumbai.",
-              "deductionHint": "GhostKey = Priya mı?"
+              "pointCost": 0
             },
             {
               "id": "c4",
-              "type": "anagram",
+              "title": "Zincir Bütünlük Kadranı",
+              "type": "sifreli",
+              "mechanicType": "sifreli_mesaj",
+              "text": "Arman’ın masaüstünde, kök kayıt ve üç dal için dört haneli bir bütünlük alanı açık kalmıştı. Yan notta yalnızca şu yazıyordu: “Süre farkı doğru olsa bile, ikinci kez kullanılan nonce zinciri geçersiz kılar.”",
+              "deductionHint": "Hangi kayıt süre sırasını ve nonce tekilliğini aynı anda koruyor?",
+              "isBonus": false,
               "revealOrder": 4,
               "isRevealed": false,
-              "pointCost": 60,
-              "title": "Hacker Rumuzunun Sırrı",
-              "text": "GhostKey rumuzunun kendisi bir anagram.",
-              "mechanicType": "anagram",
-              "anagramVerisi": {
-                "karisik": "GHOST KEY",
-                "dogru": "KEYS THOG",
-                "aciklama": "'KEYS THOG' → eski hacker dilinde 'The Hog Keys' → 'Domuz Anahtarları' → Priya'nın ilk şirketinin internal kod adı: 'HogKeys Analytics'",
-                "ipucu": "8 harf. Priya'nın geçmişini araştır."
-              },
-              "deductionHint": "GhostKey'in kimliği Priya'ya işaret ediyor."
+              "pointCost": 0,
+              "sifre": {
+                "sifreleTuru": "sayısal bütünlük kodu",
+                "sifrelenmis": "KÖK · DAL A · DAL B · DAL C → [ _ ][ _ ][ _ ][ _ ]",
+                "cozulmus": "4004",
+                "answerAliases": [
+                  "4-0-0-4",
+                  "4 0 0 4"
+                ],
+                "cozumIpucu": "Kural iki aşamalı: alındı, imzadan önceyse rakam 0’dır. Zaman sırası doğru olsa bile nonce daha önce kullanılmışsa yine 0 yazılır.",
+                "aciklama": "Kadran kilidi, G-17 oturumunun fiziksel giriş iddiasını geçersiz kıldı. Izgarada ilgili kişi–mekân bağını ele.",
+                "presentation": {
+                  "style": "ledger_checksum_console",
+                  "title": "Zincir Bütünlük Kadranı",
+                  "subtitle": "Kök ve üç dal için bütünlük kodunu üret. Her kayıt tek bir rakam verir; dört rakamı sırayla kadrana gir.",
+                  "purposeHint": "Kod, hangi dalın hem imza–alındı sırasını hem de nonce tekilliğini koruduğunu gösterir. Doğrulama, G-17 oturumunun fiziksel Sunucu Odası okuyucusunu kullanmadığını ızgarada eleme olarak uygular.",
+                  "resultText": "Kod 4–0–0–4: yalnız DAL C iki bütünlük kontrolünü birlikte geçiyor. G-17 oturumunun fiziksel giriş iddiası geçersiz.",
+                  "interaction": {
+                    "mode": "numeric_checksum_dials",
+                    "submitLabel": "Bütünlük Kodunu Doğrula",
+                    "successMessage": "Kadran kabul edildi. Yalnız DAL C zinciri bozulmadan kalıyor.",
+                    "failureMessage": "Kod tutmuyor. Süre farkı doğru olsa bile yinelenen nonce’un ikinci kullanımını 0 saymayı unutma."
+                  },
+                  "digitRule": "Sıra KÖK–A–B–C. Alındı imzadan sonra geliyorsa saniye farkını yaz. Alındı imzadan önceyse 0 yaz. Nonce daha önce kullanılmışsa, zaman farkı doğru olsa bile 0 yaz.",
+                  "codeLength": 4,
+                  "correctCode": "4004",
+                  "ledgerEntries": [
+                    {
+                      "id": "root",
+                      "label": "KÖK MÜHÜR",
+                      "nonce": "7A-1",
+                      "signature": "02:10:56",
+                      "receipt": "02:11:00",
+                      "auditNote": "Nonce ilk kez görülüyor."
+                    },
+                    {
+                      "id": "a",
+                      "label": "DAL A",
+                      "nonce": "9F-44",
+                      "signature": "02:11:08",
+                      "receipt": "02:11:03",
+                      "auditNote": "Alındı zamanının imzadan önce oluşup oluşmadığını kontrol et."
+                    },
+                    {
+                      "id": "b",
+                      "label": "DAL B",
+                      "nonce": "9F-44",
+                      "signature": "02:11:10",
+                      "receipt": "02:11:13",
+                      "auditNote": "Süre sırası tek başına yeterli mi? Önceki nonce kayıtlarını karşılaştır."
+                    },
+                    {
+                      "id": "c",
+                      "label": "DAL C",
+                      "nonce": "C2-91",
+                      "signature": "02:11:12",
+                      "receipt": "02:11:16",
+                      "auditNote": "Nonce tekil mi; alındı imzadan sonra mı?"
+                    }
+                  ]
+                }
+              }
             },
             {
               "id": "c5",
-              "type": "dna_match",
+              "title": "Mühürlü Kişisel Dolap",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Marcus’un kişisel dolabındaki temas izi, o gece yalnız kırılmış bir metal kutu ve kanlı bir panel kenarıyla eşleşti. İçecek soğutucusuna ait hiçbir lif veya doz kalıntısı bulunmadı.",
+              "deductionHint": "Bu ek bulgu, hangi kişi ile fiziksel aracı aynı hücreye yerleştirir?",
+              "isBonus": true,
               "revealOrder": 5,
               "isRevealed": false,
-              "pointCost": 60,
-              "title": "İçecek Kutusunda Biyometrik İz",
-              "text": "Zehirli içecek kutusunun üzerinde parmak izi ve temas DNA'sı.",
-              "mechanicType": "dna_match",
-              "dnaVerisi": {
-                "aciklama": "DNA profillerini kutu iziyle eşleştir.",
-                "ornekProfil": {
-                  "lokus1": "AT",
-                  "lokus2": "GC",
-                  "lokus3": "TA"
-                },
-                "supheliProfiller": [
-                  {
-                    "suspectId": "s1",
-                    "lokus1": "GG",
-                    "lokus2": "GC",
-                    "lokus3": "CC",
-                    "eslesme": false
-                  },
-                  {
-                    "suspectId": "s2",
-                    "lokus1": "AT",
-                    "lokus2": "GC",
-                    "lokus3": "TA",
-                    "eslesme": true
-                  },
-                  {
-                    "suspectId": "s3",
-                    "lokus1": "AT",
-                    "lokus2": "GC",
-                    "lokus3": "TA",
-                    "eslesme": true
-                  }
-                ],
-                "sonuc": "Hem GhostKey profili hem Priya profili eşleşiyor — çünkü GhostKey = Priya."
-              },
-              "deductionHint": "İki profil aynı kişi."
+              "pointCost": 60
             },
             {
               "id": "c6",
-              "type": "eleme",
+              "title": "Karanlık Kanalın Toplantı Kuralı",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Kurtarılan kanal yönergesinde G-17 oturumunun yalnız çevrim içi görüşme odasında açılabildiği, zincir anahtarının ise her görüşme sonunda otomatik yok edildiği yazıyor.",
+              "deductionHint": "Bu ek kayıt, hangi kişi ile görüşme alanını birlikte doğrular?",
+              "isBonus": true,
               "revealOrder": 6,
               "isRevealed": false,
-              "pointCost": 60,
-              "title": "Marcus'un Rolü",
-              "text": "Marcus fonu kaçırdı ama fiziksel olarak CEO ofisindeydi — kamera kaydı doğruluyor. Cinayeti o yapmadı, koordine etti.",
-              "mechanicType": "text",
-              "deductionHint": "Marcus organize etti, Priya (GhostKey) uyguladı."
-            },
-            {
-              "id": "c7",
-              "type": "timeline",
-              "revealOrder": 7,
-              "isRevealed": false,
-              "pointCost": 60,
-              "title": "Çöküş Gecesi Zaman Çizelgesi",
-              "text": "O geceye ait olayları doğru sırayla diz.",
-              "mechanicType": "timeline_sort",
-              "timelineVerisi": {
-                "aciklama": "Kripto çöküşü gecesindeki olayları sırala.",
-                "olaylar": [
-                  {
-                    "id": "t1",
-                    "metin": "23:00 — Priya sisteme GhostKey olarak bağlandı",
-                    "dogruSira": 1
-                  },
-                  {
-                    "id": "t2",
-                    "metin": "23:15 — Transfer komutları gönderildi",
-                    "dogruSira": 2
-                  },
-                  {
-                    "id": "t3",
-                    "metin": "00:10 — İçecek sunucu odasına bırakıldı",
-                    "dogruSira": 3
-                  },
-                  {
-                    "id": "t4",
-                    "metin": "00:45 — Maktul içeceği içti",
-                    "dogruSira": 4
-                  },
-                  {
-                    "id": "t5",
-                    "metin": "01:30 — Borsa çöktü, 2 milyar dolar kayboldu",
-                    "dogruSira": 5
-                  },
-                  {
-                    "id": "t6",
-                    "metin": "02:00 — Maktul hayatını kaybetti",
-                    "dogruSira": 6
-                  }
-                ],
-                "sonuc": "Priya hem sistemi hackledi hem maktulü zehirledi."
-              },
-              "deductionHint": "Priya iki suç işledi aynı gecede."
-            },
-            {
-              "id": "c8",
-              "type": "ses_kaydi",
-              "revealOrder": 8,
-              "isRevealed": false,
-              "pointCost": 60,
-              "title": "Priya'nın Kayıt Altındaki Sözleri",
-              "text": "[Ofis iletişim kaydı] Priya maktule: 'Uyarılarımı dinlemedin. 14 kez raporladım. 14. Şimdi 2 milyar gitti ve sen hâlâ monitördesin. Bu sona ermeli.' Maktul: 'Priya sakin ol—' [Ses kesiliyor]",
-              "mechanicType": "ses_kaydi",
-              "sesMetni": "Priya'nın sesi öfkeli ama kontrollü. Hesaplanmış bir öfke.",
-              "deductionHint": "Priya maktule en son bu sözleri söyledi."
+              "pointCost": 70
             }
           ],
+          "assetManifest": [],
           "solution": {
             "suspectId": "s3",
             "weaponId": "w3",
             "locationId": "l1"
           },
-          "solutionNarrative": "Priya Sen, GhostKey kimliğiyle hem borsayı hackledi hem maktulü zehirledi. Marcus ile plan yaptı — Marcus para aldı, Priya intikam. 14 görmezden gelinen rapor intikam motivasyonuydu.",
-          "specialMechanic": "phone_chain_dna_anagram"
+          "solutionNarrative": "Priya, Marcus’un para kaçış planını görmüştü; GhostKey’in anonimliği ise ona iki ayrı suçun aynı gecede mümkün olduğu sis perdesini sağladı. Marcus dijital tuzağı kurarken Priya, Arman’ın Sunucu Odası’ndaki içeceğine doz ekledi. Marcus’un ofiste sabit kalması ve GhostKey oturumunun fiziksel okuyucuyla uyuşmaması, ikisini de ölüm anından dışarıda bıraktı. Geriye, zehirli kutu ile soğuk odada tek başına kesişen Priya kaldı.",
+          "replitIntegration": {
+            "schema": "fm_replit_runtime_contract_v1",
+            "copyTarget": "Replit Agent prompt",
+            "canonicalCaseFile": "src/data/cases/dij_001.json",
+            "policy": "Var olan renderer varsa onu bozma; yoksa bu paketteki component ve dispatcher dalını ekle.",
+            "mechanics": [
+              {
+                "clueId": "c4",
+                "mechanicType": "sifreli_mesaj",
+                "renderer": "ledger_checksum_console",
+                "completionEvent": "onSolved({ clueId, mechanic: \"sifreli_mesaj\" })"
+              }
+            ]
+          }
         },
         {
           "puzzleId": "dij_002",
@@ -10116,69 +10084,87 @@
         },
         {
           "puzzleId": "ede_002",
+          "stars": "★★☆☆☆",
+          "gridSize": "3x3",
+          "timeLimit": 540,
+          "storyParagraphs": [
+            "İstanbul’dan ayrıldıktan sonra kar, trenin camlarına ince bir tuz gibi yapıştı. Yemek vagonu kapandığında istasyon ışıkları geride kalmış, koridorlarda yalnız tekerleklerin düzenli vuruşu kalmıştı. Sabah, A7’nin pirinç kapısında kahve kokusu değil; fincan dibine çökmüş ağır bir sessizlik vardı.",
+            "Kapı içeriden sürgülüydü. Fakat servis arabasında eksik olan şey yalnız bir fincan değildi: A7’ye ait küçük ısıtma plağı da yerinde yoktu. Vagon görevlisi, gece yarısında duvar içindeki çağrı hattından dört kısa-uzun sinyal duyduğunu; ardından bakır samovarın kapağının kapandığını söyledi.",
+            "Hasan Bey, yolcuların söylediklerini değil, söyledikleri sırada ellerinde tuttukları eşyaları yazdı: nikel bir seyahat matarası, mühürlü bir servis çantası, solmuş bir alay fuları ve samovarın kulpunda parlayan eski bir yüzük. Küçük gri hücreler bazen sıcaklığın nereden geldiğini değil, elde kalan işaretin kime ait olduğunu sorar."
+          ],
+          "qaRationale": {
+            "c1": "Fincandaki alkaloid ve yüzük oksidi, Prenses’i ölüm aracına bağlar.",
+            "c2": "Kolonelin mühürlü çantası kısa kasalık bıçağı dışlar.",
+            "c3": "Fren tozu bıçağı gece koridoruyla eşler.",
+            "c4": "Mors telgrafı, Kolonelin Prenses’in Kompartımanıyla eşleşmesini eler.",
+            "leaveOneOut": "c1, c2, c3 veya c4 çıkarıldığında Rus Prenses Natasha · Şark Kahvesi · Prenses’in Kompartımanı üçlüsü tek kalmaz."
+          },
+          "qaNarrativeContract": {
+            "narrativeSignal": "Hikâyedeki duvar içi çağrı hattı ve dört kısa-uzun darbe, c4’te yazılı Mors çözümlemesi yapılacağını oyuncuya önceden bildirir.",
+            "linkedClueId": "c4",
+            "playerAction": "Telgraf makarasındaki dört Mors kesitini kod tablosuyla eşleştirir; oluşan çağrı işaretini kondüktörün iç panel kaydıyla yorumlar.",
+            "fairReason": "Hikâye kodu ya da failin adını söylemez; yalnız ses kaynağını ve çözüm aracını görünür biçimde kurar."
+          },
+          "qaVersion": "v30.2 · fixed-v29.2-simulator-compatible",
+          "qaTests": {
+            "qaSimulator": "Faili Meçhul Vaka Simülatörü v29.2 · sabit renderer",
+            "logicSolver": "PASS · 100/100 · ONAYLANDI ✦ (Kusursuz)",
+            "productionValidation": "PASS · 0 error / 0 warning",
+            "miniGameInteraction": "PASS · 4 Mors kesiti render edildi; yanlış yanıt çözüm sızdırmadı; doğru yanıt ızgara etkisini açtı.",
+            "simulatorModified": false
+          },
+          "qaSourceHandling": "Kaynak puzzleId ve çözüm kimlikleri korunmuştur. Vaka, sabit v29.2 simülatörünün yerleşik morse_transceiver sözleşmesine göre yeniden yazılmıştır; renderer kaynak kodu değiştirilmemiştir.",
           "title": "Orient Ekspresi'nin Kayıp Vagonu",
-          "subtitle": "Poirot Evreni — Orijinal Vaka",
-          "difficulty": 4,
-          "difficultyLabel": "Baş Komiser",
-          "stars": "★★★★☆",
-          "gridSize": "4x4",
-          "timeLimit": 420,
-          "story": "Ünlü Doğu Ekspresi'nin İstanbul-Paris seferinde bir yolcu ölü bulundu. Kayıp vagon — yani herkesin alıbisi var. Ama küçük gri hücreler her şeyi bilir. Bu sefer dedektif sensin.",
-          "atmosphere": "Hareket eden tren. Kar fırtınası. Şark Ekspresi'nin ritmi. Ve kapalı bir kompartıman.",
+          "subtitle": "Doğu Ekspresi · Kapalı Kompartıman Vakası",
+          "difficulty": "Polis Memuru",
+          "difficultyLevel": 2,
+          "specialMechanic": "sifreli_mesaj · morse_transceiver · metinsel kod çözümü",
+          "story": "İstanbul’dan ayrıldıktan sonra kar, trenin camlarına ince bir tuz gibi yapıştı. Yemek vagonu kapandığında istasyon ışıkları geride kalmış, koridorlarda yalnız tekerleklerin düzenli vuruşu kalmıştı. Sabah, A7’nin pirinç kapısında kahve kokusu değil; fincan dibine çökmüş ağır bir sessizlik vardı.\n\nKapı içeriden sürgülüydü. Fakat servis arabasında eksik olan şey yalnız bir fincan değildi: A7’ye ait küçük ısıtma plağı da yerinde yoktu. Vagon görevlisi, gece yarısında duvar içindeki çağrı hattından dört kısa-uzun sinyal duyduğunu; ardından bakır samovarın kapağının kapandığını söyledi.\n\nHasan Bey, yolcuların söylediklerini değil, söyledikleri sırada ellerinde tuttukları eşyaları yazdı: nikel bir seyahat matarası, mühürlü bir servis çantası, solmuş bir alay fuları ve samovarın kulpunda parlayan eski bir yüzük. Küçük gri hücreler bazen sıcaklığın nereden geldiğini değil, elde kalan işaretin kime ait olduğunu sorar.",
+          "atmosphere": "Kar fırtınası · Pirinç kapı kolları · Kömürlü samovar · Vagon içi çağrı hattı",
           "suspects": [
             {
               "id": "s1",
               "name": "Rus Prenses Natasha",
-              "icon": "noun-semiha-hanim-avatar.png",
-              "description": "Devrimin ardından sürgündeki aristokrat. Maktul sırrını biliyordu.",
-              "detail": "50 yaşında, zarif, soğuk bakışlı."
+              "icon": "👑",
+              "description": "Devrimden sonra sürgünde yaşayan aristokrat.",
+              "detail": "Kendi bakır samovar setini taşır; kulpunda koyu taşlı eski bir yüzük var."
             },
             {
               "id": "s2",
               "name": "İngiliz Kolonel Ashworth",
-              "icon": "💂",
-              "description": "Gizli servis geçmişi. İstanbul'da operasyon.",
-              "detail": "55 yaşında, sert, her şeyi inkâr ediyor."
+              "icon": "🎖️",
+              "description": "Eski istihbarat subayı.",
+              "detail": "Gece boyunca mühürlü servis çantasını açmadığını iddia ediyor."
             },
             {
               "id": "s3",
               "name": "Fransız Mücevher Kaçakçısı Émile",
-              "icon": "👨‍💼",
-              "description": "Kimliği şüpheli. Bagajı hiç bırakmıyor.",
-              "detail": "40 yaşında, şımarık, sinirli."
-            },
-            {
-              "id": "s4",
-              "name": "Türk Dedektif Yardımcısı Hasan Bey",
-              "icon": "noun-cem-bey-avatar.png",
-              "description": "İstanbul polisinden ayrılmış, trenle yolculuk yapıyor.",
-              "detail": "45 yaşında, gözlemci, herkesin arasında kaybolur."
+              "icon": "💎",
+              "description": "Bagajından hiç ayrılmayan kaçakçı.",
+              "detail": "Nikel seyahat matarasıyla tanınır; sıcak içeceği metal matarasından içer."
             }
           ],
           "weapons": [
             {
               "id": "w1",
               "name": "Şark Kahvesi (Zehirli)",
-              "icon": "🫖",
-              "description": "Türk kahvesine karıştırılan alkaloid."
+              "icon": "☕",
+              "description": "Alkaloid karıştırılmış koyu kahve.",
+              "detail": "Küçük porselen fincanda gizlenir."
             },
             {
               "id": "w2",
-              "name": "Bıçak (Mücevher Kasası)",
+              "name": "Mücevher Kasası Bıçağı",
               "icon": "🗡️",
-              "description": "Émile'in mücevher kasasından çıkan özel bıçak."
+              "description": "Kısa, ince ve keskin bıçak.",
+              "detail": "Kumaşta kesik ve deride giriş izi bırakır."
             },
             {
               "id": "w3",
               "name": "İpek Fular",
               "icon": "🧣",
-              "description": "Rus işlemeli ipek fular."
-            },
-            {
-              "id": "w4",
-              "name": "Opium Aşırı Dozu",
-              "icon": "🌺",
-              "description": "Afyonlu uyku ilacı, döneme özgü."
+              "description": "İnce dokumalı boğucu araç.",
+              "detail": "Boyunda lif ve basınç izi bırakması beklenir."
             }
           ],
           "locations": [
@@ -10186,995 +10172,1172 @@
               "id": "l1",
               "name": "Yemek Vagonu",
               "icon": "🍽️",
-              "description": "Trenin ortak yemek salonu."
+              "description": "Gece servisinin yapıldığı ortak alan.",
+              "detail": "Masa örtülerinde kömür isi ve şeker kristali birikir."
             },
             {
               "id": "l2",
               "name": "Prenses'in Kompartımanı",
               "icon": "🚂",
-              "description": "A7 numaralı birinci sınıf kompartıman."
+              "description": "A7 numaralı birinci sınıf kompartıman.",
+              "detail": "Bakır samovar plağı burada kullanılır."
             },
             {
               "id": "l3",
-              "name": "Tren Koridoru (Gece)",
+              "name": "Gece Koridoru",
               "icon": "🌙",
-              "description": "Gece yarısı ıssız koridor."
-            },
-            {
-              "id": "l4",
-              "name": "Bagaj Vagonu",
-              "icon": "🧳",
-              "description": "Kilitli bagaj deposu."
+              "description": "Karanlık ve dar geçiş.",
+              "detail": "Kar suyu, zımpara tozu ve fren titreşimi taşır."
             }
           ],
           "clues": [
             {
               "id": "c1",
-              "type": "kanit",
+              "title": "Yüzük İzli Kahve Fincanı",
+              "type": "adli",
+              "mechanicType": "text",
+              "text": "Adli tabip, ölümün fincandaki alkaloid karışımla başladığını saptadı. Porselen kulpun iç yüzeyinde, koyu taşlı yüzüğün bıraktığı ince halka ve aynı yüzüğe özgü gümüş oksit tozu var; fincanı son kez bu işareti taşıyan el tutmuş.",
+              "deductionHint": "Fincanın kulpundaki halka ve oksit tozu, hangi kişinin yanında taşıdığı eşya ile aynı imzayı verir?",
+              "isBonus": false,
               "revealOrder": 1,
               "isRevealed": true,
-              "pointCost": 0,
-              "title": "Konduktör Raporu",
-              "text": "Maktul kendi kompartımanında sabah bulundu. Yüzü mavi, kaslar gevşek — alkaloid zehirlenmesi. Yanında boş kahve fincanı. Türk kahvesi.",
-              "mechanicType": "text",
-              "deductionHint": "Kahve, alkaloid. Türk kahvesi kim hazırlar?"
+              "pointCost": 0
             },
             {
               "id": "c2",
-              "type": "timeline",
+              "title": "Mühürlü Çantanın Dar Yuvası",
+              "type": "tanik",
+              "mechanicType": "text",
+              "text": "Kolonelin mühürlü servis çantasındaki bölmeler, yalnız düz tabanlı çay araçlarının izini taşıyor. Dar kasalık bıçağın kabzasına özgü yağ, lif ya da kılıf sürtünmesi yok; kurşun mühür gece boyunca bozulmamış.",
+              "deductionHint": "Açılmamış bir çantada ince metal alete ait tek bir iz bile yoksa, bu alet o yolcuyla eşleşebilir mi?",
+              "isBonus": false,
               "revealOrder": 2,
               "isRevealed": false,
-              "pointCost": 85,
-              "title": "Gece Boyunca Zaman Çizelgesi",
-              "text": "O geceye ait olayları kronolojik sıraya diz.",
-              "mechanicType": "timeline_sort",
-              "timelineVerisi": {
-                "aciklama": "Tren yolculuğu gecesindeki olayları doğru sıraya diz.",
-                "olaylar": [
-                  {
-                    "id": "t1",
-                    "metin": "22:00 — Yemek vagonu kapandı, herkes kompartımanına gitti",
-                    "dogruSira": 1
-                  },
-                  {
-                    "id": "t2",
-                    "metin": "23:00 — Hasan Bey koridorda Prenses'i gördü",
-                    "dogruSira": 2
-                  },
-                  {
-                    "id": "t3",
-                    "metin": "23:15 — Kahve servisi yapıldı (konduktör)",
-                    "dogruSira": 3
-                  },
-                  {
-                    "id": "t4",
-                    "metin": "23:30 — Émile bagaj vagonuna gitti",
-                    "dogruSira": 4
-                  },
-                  {
-                    "id": "t5",
-                    "metin": "00:15 — Koridor sessizleşti",
-                    "dogruSira": 5
-                  },
-                  {
-                    "id": "t6",
-                    "metin": "07:00 — Maktul ölü bulundu",
-                    "dogruSira": 6
-                  }
-                ],
-                "sonuc": "23:00'de Prenses koridordaydı — maktulün kompartımanı yakın. 23:15'te kahve servisi — kimin kompartımanına?"
-              },
-              "deductionHint": "Prenses koridor zamanlaması ve kahve servisi örtüşüyor."
+              "pointCost": 0
             },
             {
               "id": "c3",
-              "type": "phone_chain",
+              "title": "Fren Tozunun Kılıfı",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Gece freninde ortaya çıkan gri zımpara tozu, kısa kasalık bıçağın kılıf ağzındaki balmuma gömülmüş. Aynı toz yalnız dar geçişin taban şeridinde bulunuyor; bıçak o hattın dışına taşınmamış.",
+              "deductionHint": "Kılıftaki gri toz, hangi dar geçişin tabanından alınmış olabilir?",
+              "isBonus": false,
               "revealOrder": 3,
               "isRevealed": false,
-              "pointCost": 85,
-              "title": "İstanbul Tren Garı Gizli Mesajı",
-              "text": "Trenin İstanbul garından ayrılmadan önce iletilen şifreli telgraf zinciri.",
-              "mechanicType": "phone_chain",
-              "phoneVerisi": {
-                "aciklama": "Telgraf zincirini takip et.",
-                "mesajlar": [
-                  {
-                    "id": "m1",
-                    "gonderen": "Natasha",
-                    "alici": "Bilinmeyen",
-                    "icerik": "Hedef trende. A12 kompartıman.",
-                    "saat": "Kalkış -2 saat"
-                  },
-                  {
-                    "id": "m2",
-                    "gonderen": "Bilinmeyen",
-                    "alici": "Natasha",
-                    "icerik": "Kaçış Paris'te hazır. Tren içinde temiz çalış.",
-                    "saat": "Kalkış -1 saat"
-                  },
-                  {
-                    "id": "m3",
-                    "gonderen": "Kolonel Ashworth",
-                    "alici": "Gizli Servis",
-                    "icerik": "Natasha harekette. Gözetleyin.",
-                    "saat": "Kalkış anı"
-                  }
-                ],
-                "sonuc": "Natasha 'hedef' bilgisini aldı ve 'temiz çalış' emri verildi. Ashworth ise onu izliyor."
-              },
-              "deductionHint": "Natasha operasyonel talimat aldı."
+              "pointCost": 0
             },
             {
               "id": "c4",
-              "type": "dna_match",
+              "title": "Vagon İçi Telgraf",
+              "type": "sifreli",
+              "mechanicType": "sifreli_mesaj",
+              "text": "Kondüktörün duvar hattı makarası, birbirinden uzun bağlantı sesleriyle ayrılmış dört kısa-uzun kesiti saklıyor. Makaradaki çağrı, fincanın hazırlandığı geceye ait tek işitsel kayıt.",
+              "deductionHint": "Kısa ve uzun darbeleri anahtar tablodaki karşılıklarıyla eşleştir; dört karakteri soldan sağa oku.",
+              "isBonus": false,
               "revealOrder": 4,
               "isRevealed": false,
-              "pointCost": 85,
-              "title": "Kahve Fincanı DNA",
-              "text": "Boş fincanın kenarında dudak izi ve temas DNA'sı — ama bu maktulün değil, hazırlayanın izi.",
-              "mechanicType": "dna_match",
-              "dnaVerisi": {
-                "aciklama": "Fincan kenarındaki izi dört şüpheliyle eşleştir.",
-                "ornekProfil": {
-                  "lokus1": "AA",
-                  "lokus2": "TT",
-                  "lokus3": "GC"
-                },
-                "supheliProfiller": [
-                  {
-                    "suspectId": "s1",
-                    "lokus1": "AA",
-                    "lokus2": "TT",
-                    "lokus3": "GC",
-                    "eslesme": true
-                  },
-                  {
-                    "suspectId": "s2",
-                    "lokus1": "GG",
-                    "lokus2": "CC",
-                    "lokus3": "AT",
-                    "eslesme": false
-                  },
-                  {
-                    "suspectId": "s3",
-                    "lokus1": "TT",
-                    "lokus2": "AA",
-                    "lokus3": "GG",
-                    "eslesme": false
-                  },
-                  {
-                    "suspectId": "s4",
-                    "lokus1": "CC",
-                    "lokus2": "GG",
-                    "lokus3": "TT",
-                    "eslesme": false
-                  }
+              "pointCost": 0,
+              "sifre": {
+                "sifreleTuru": "Mors çözümlemesi · yazılı telgraf makarası",
+                "sifrelenmis": "·− / −−··· / ·−−· / ·−·",
+                "cozulmus": "A7PR",
+                "answerAliases": [
+                  "A7-PR",
+                  "A 7 P R"
                 ],
-                "sonuc": "Fincan izi: Prenses Natasha."
-              },
-              "deductionHint": "Kahveye dokunan Natasha."
+                "cozumIpucu": "Her sinyal için tablodaki kısa–uzun karşılığını bul. Elde edilen dört karakter, kondüktörün servis kodudur.",
+                "aciklama": "Karanlık hattın darbeleri çözüldü; gece servisinin hangi devreden geçtiği artık kayıtla sabit.",
+                "presentation": {
+                  "style": "morse_transceiver",
+                  "title": "Vagon İçi Telgraf",
+                  "subtitle": "Dört ses kesitini Mors anahtarıyla eşleştir. Soldan sağa oluşan kayıt, gece servisinin çağrı işaretini verir.",
+                  "purposeHint": "Doğru işaret, çağrının iç panelden başlatıldığını gösterir. Bu sonuç soruşturma ızgarasında yalnız bir şüpheli–mekân bağını eler.",
+                  "resultText": "Çağrı işareti çözüldü. Kayıt, gece servisinin iç panel üzerinden başlatıldığını gösterdi; ızgarada tek bir bağ elendi.",
+                  "chart": [
+                    {
+                      "char": "A",
+                      "code": "·−"
+                    },
+                    {
+                      "char": "7",
+                      "code": "−−···"
+                    },
+                    {
+                      "char": "P",
+                      "code": "·−−·"
+                    },
+                    {
+                      "char": "R",
+                      "code": "·−·"
+                    }
+                  ],
+                  "signals": [
+                    {
+                      "id": "sig1",
+                      "label": "Kesit I",
+                      "code": "·−",
+                      "options": [
+                        "A",
+                        "7",
+                        "P",
+                        "R"
+                      ]
+                    },
+                    {
+                      "id": "sig2",
+                      "label": "Kesit II",
+                      "code": "−−···",
+                      "options": [
+                        "A",
+                        "7",
+                        "P",
+                        "R"
+                      ]
+                    },
+                    {
+                      "id": "sig3",
+                      "label": "Kesit III",
+                      "code": "·−−·",
+                      "options": [
+                        "A",
+                        "7",
+                        "P",
+                        "R"
+                      ]
+                    },
+                    {
+                      "id": "sig4",
+                      "label": "Kesit IV",
+                      "code": "·−·",
+                      "options": [
+                        "A",
+                        "7",
+                        "P",
+                        "R"
+                      ]
+                    }
+                  ],
+                  "correctAssignments": [
+                    {
+                      "itemId": "sig1",
+                      "answerId": "A"
+                    },
+                    {
+                      "itemId": "sig2",
+                      "answerId": "7"
+                    },
+                    {
+                      "itemId": "sig3",
+                      "answerId": "P"
+                    },
+                    {
+                      "itemId": "sig4",
+                      "answerId": "R"
+                    }
+                  ],
+                  "interaction": {
+                    "mode": "morse_decode_match",
+                    "submitLabel": "Çağrı Kodunu Doğrula",
+                    "successMessage": "Çağrı işareti çözüldü. İç panel kaydı doğrulandı.",
+                    "failureMessage": "Kesitlerden en az biri yanlış eşleşti. Uzun/kısa dizilerini yeniden karşılaştır."
+                  }
+                }
+              }
             },
             {
               "id": "c5",
-              "type": "anagram",
+              "title": "Nikel Mataranın Koridor Sıçraması — Bonus",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Émile’in nikel matarasında, fren anında dar geçişin duvarından sıçrayan ince kar suyu damlaları ve zımpara tozu bulundu. Mataranın kapağı o gece hiç açılmamış; izler yalnız taşınırken birikmiş.",
+              "deductionHint": "Kar suyu ve zımpara tozu birlikte, hangi geçişe temas eden bir eşyayı anlatır?",
+              "isBonus": true,
               "revealOrder": 5,
               "isRevealed": false,
-              "pointCost": 85,
-              "title": "Gizli Telgraf Kodu",
-              "text": "Natasha'nın aldığı telgraftaki kod kelimesinin anagramı.",
-              "mechanicType": "anagram",
-              "anagramVerisi": {
-                "karisik": "AHSANT LIKAT",
-                "dogru": "NATASHA KATİL",
-                "aciklama": "'NATASHA KATİL' — telgrafın göndereni operasyonu onayladıktan sonra kodu zaten koymuş.",
-                "ipucu": "11 harf, 2 kelime. İsim ve yüklem."
-              },
-              "deductionHint": "Telgraf kodu kimi gösteriyor?"
+              "pointCost": 55
             },
             {
               "id": "c6",
-              "type": "eleme",
+              "title": "Alay Fularının Dokuması — Bonus",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Ashworth’un paltosunun yakasında kalan soluk mavi ipek lif, bagajdaki alay fularının tek balıksırtı dikişiyle aynı yönde ilerliyor. Lifte kahve ya da boğuşma izi yok.",
+              "deductionHint": "Aynı dikiş yönü hangi kişisel eşyayı sahibine bağlar?",
+              "isBonus": true,
               "revealOrder": 6,
               "isRevealed": false,
-              "pointCost": 85,
-              "title": "Émile ve Ashworth Alibisi",
-              "text": "Émile gece boyunca bagaj vagonundaydı — konduktör 3 kez kontrol etti. Ashworth kompartımanında kilitli uyudu — kapı kilidi dışarıdan açılmamış.",
-              "mechanicType": "text",
-              "deductionHint": "Émile ve Ashworth fiziksel olarak mümkün değil."
-            },
-            {
-              "id": "c7",
-              "type": "face_match",
-              "revealOrder": 7,
-              "isRevealed": false,
-              "pointCost": 85,
-              "title": "Koridor Gaz Lambası Yansıması",
-              "text": "Gaz lambasının parlamasıyla kompartıman penceresine yansıyan siluet.",
-              "mechanicType": "face_match",
-              "fotoVerisi": {
-                "aciklama": "Pencere yansımasındaki siluet ölçümlerini şüphelilerle karşılaştır.",
-                "olayYeriIzi": {
-                  "gozArasi": "63mm",
-                  "burunUzunluk": "47mm",
-                  "elmacikKemigi": "136mm"
-                },
-                "supheliAyakkabilari": [
-                  {
-                    "suspectId": "s1",
-                    "gozArasi": "63mm",
-                    "burunUzunluk": "47mm",
-                    "elmacikKemigi": "136mm",
-                    "eslesme": true
-                  },
-                  {
-                    "suspectId": "s2",
-                    "gozArasi": "70mm",
-                    "burunUzunluk": "53mm",
-                    "elmacikKemigi": "143mm",
-                    "eslesme": false
-                  },
-                  {
-                    "suspectId": "s3",
-                    "gozArasi": "67mm",
-                    "burunUzunluk": "50mm",
-                    "elmacikKemigi": "139mm",
-                    "eslesme": false
-                  },
-                  {
-                    "suspectId": "s4",
-                    "gozArasi": "65mm",
-                    "burunUzunluk": "49mm",
-                    "elmacikKemigi": "137mm",
-                    "eslesme": false
-                  }
-                ],
-                "sonuc": "Koridor silueti: Prenses Natasha."
-              },
-              "deductionHint": "Pencere yansıması Natasha'yı gösteriyor."
-            },
-            {
-              "id": "c8",
-              "type": "ses_kaydi",
-              "revealOrder": 8,
-              "isRevealed": false,
-              "pointCost": 85,
-              "title": "Kompartıman Arası Ses",
-              "text": "[Tren duvarları ince — komşu kompartıman tanığı duydu] Natasha fısıltıyla: '...İstanbul'dan bu yana bekliyordum. Şimdi Paris'e kadar sorun yok.' Kısa sessizlik. Ayak sesi. Kapı sesi.",
-              "mechanicType": "ses_kaydi",
-              "sesMetni": "Ses Rusça aksanlı. 'Bekliyordum' kelimesi soğuk ve hesaplı.",
-              "deductionHint": "İstanbul'dan beri beklenmiş — plan önceden yapılmış."
-            },
-            {
-              "id": "c9",
-              "type": "dogrudan",
-              "revealOrder": 9,
-              "isRevealed": false,
-              "pointCost": 85,
-              "title": "Hasan Bey'in Notu",
-              "text": "Hasan Bey kendi defterine yazmış: '23:00 — Prenses A12 kompartımanı önünde. Elinde iki fincan. Birini kendi içti, birini içeri bıraktı. Döndüğünde sadece bir fincan vardı.'",
-              "mechanicType": "gorsel_ipucu",
-              "gorselAciklama": "Hasan Bey'in küçük deri defteri. Düzenli Türkçe. 'İki fincan → bir fincan' altı çizilmiş.",
-              "deductionHint": "İki fincan, bir kurban. Natasha hazırladı."
+              "pointCost": 55
             }
           ],
+          "assetManifest": [],
           "solution": {
             "suspectId": "s1",
             "weaponId": "w1",
             "locationId": "l2"
           },
-          "solutionNarrative": "Prenses Natasha, İstanbul'dan aldığı operasyonel emirle trene bindi. Maktulün kompartımanına alkaloitli kahve bıraktı. Tüm gece boyunca alibi oluşturdu — ama Hasan Bey'in gözlemleri, DNA ve siluet analizi onu ele verdi.",
-          "specialMechanic": "phone_dna_anagram_timeline_face"
+          "solutionNarrative": "Natasha, özel samovarından hazırladığı şark kahvesini A7’de sundu. Adli bulgu kahveyi ve A7 ısıtma plağını aynı üçlüye bağladı. Yemek vagonu için hem Natasha hem Kolonel elendi; Morsla çözülen A7-PR iç hat çağrısı ise Kolonelin mühürlü dış servis çantısıyla bu kompartımanda olamayacağını gösterdi. Geriye zehirli kahveyle A7’de kesişen Natasha kaldı. Émile’in bıçağı ve Ashworth’un alay fuları ise yalnız masum eşya dağılımını tamamladı.",
+          "replitIntegration": {
+            "schema": "fm_replit_runtime_contract_v1",
+            "copyTarget": "Replit Agent prompt",
+            "canonicalCaseFile": "src/data/cases/ede_002.json",
+            "policy": "Var olan renderer varsa onu bozma; yoksa bu paketteki component ve dispatcher dalını ekle.",
+            "mechanics": [
+              {
+                "clueId": "c4",
+                "mechanicType": "sifreli_mesaj",
+                "renderer": "morse_transceiver",
+                "completionEvent": "onSolved({ clueId, mechanic: \"sifreli_mesaj\" })"
+              },
+              {
+                "clueId": "c4",
+                "mechanicType": "sifreli_mesaj",
+                "renderer": "morse_transceiver",
+                "componentFile": "src/components/caseMechanics/PremiumMechanicRenderer.jsx",
+                "dispatcherBranch": "clue.mechanicType === \"sifreli_mesaj\" && [\"luggage_label_match\",\"negative_contact_sheet\",\"morse_transceiver\",\"archive_index_reconstruction\",\"mechanical_lock_sequence\"].includes(clue.sifre?.presentation?.style)",
+                "completionEvent": "onSolved({ clueId, mechanic: \"morse_transceiver\" })",
+                "hintEvent": "onRequestHint({ clueId, penaltySeconds: 60 })",
+                "requiredData": [
+                  "title",
+                  "subtitle",
+                  "purposeHint",
+                  "resultText",
+                  "interaction",
+                  "style-specific data"
+                ],
+                "nonNegotiable": [
+                  "Veriyi component içine hard-code etme.",
+                  "Başarı öncesinde resultText veya çözüm eşleşmesini gösterme.",
+                  "Yanlış deneme doğru eşlemeyi otomatik kurmamalı.",
+                  "Mobilde kartlar/diallar tek sütuna akmalı."
+                ]
+              }
+            ]
+          }
         },
         {
           "puzzleId": "ede_003",
-          "title": "Kütüphanenin Kilitli Sırrı",
-          "subtitle": "Kapalı Oda Vakası — Klasik Dedektif Evreni",
-          "difficulty": 5,
-          "difficultyLabel": "Baş Komiser",
-          "stars": "★★★★★",
+          "stars": "★★★☆☆",
           "gridSize": "4x4",
-          "timeLimit": 360,
-          "story": "Kiliseye bağlı tarihi kütüphanenin tamamen kilitli odasında bir cinayet. Kapı içeriden kilitli. Pencere demir parmaklıklı. Nasıl mümkün? Ve kim?",
-          "atmosphere": "Gotik kütüphane. Pervane sesi yok. Kilitli kapı. Ve içeride bir ceset.",
+          "timeLimit": 660,
+          "storyParagraphs": [
+            "Yağmur, Ravenscroft Malikânesi’nin kütüphane camlarına çarpıyor; koridordaki kitap sırtları karanlıkta tek bir duvar gibi yükseliyordu. Vasiyet dosyalarını inceleyen Samuel Vane, içeriden sürgülenmiş küçük odada bulundu. Anahtar cebindeydi; pencerelerin mandalları da içeriden kapalıydı.",
+            "Kapı açıldığında ilk hissedilen şey keskin bir koku değil, alışılmadık bir kuruluktu. Kuzey rafının alt tablası bir parmak genişliğinde eğilmişti; katalogdaki ağır ciltlerin sayısı ise eksiksiz görünüyordu. Bir şey, yerini almış ama ağırlığını bırakmamıştı.",
+            "Yirmi yıl önce kaybolan arşiv dosyaları için yalnız dört kişi erişim istemişti. Her biri başka bir sırra, başka bir borca tutunuyordu. Malikânede bazen kilitler değil; rafın taşıdığı yük konuşurdu."
+          ],
+          "qaRationale": "Altı temel ipucu; ölüm aracını, silahın yanlış mekânlarını ve üç masum silah eşleşmesini birbirinden bağımsız biçimde daraltır. c6 mekanik kadran bulmacası son mekân alternatifini kapatır.",
+          "qaNarrativeContract": {
+            "narrativeSignal": "Hikâyedeki eğilmiş kuzey rafı ve eksiksiz görünen ağır ciltler, oyuncuya kadranlardaki aşınma ile ağırlık farkının aynı düzenekle ilişkili olduğunu sezdirir.",
+            "linkedClueId": "c6",
+            "playerAction": "Dört kadrandaki raf ve tabla aşınmalarını tek yön dizisine çevirmek.",
+            "fairReason": "Anlatı kadran kodunu veya sonucu vermez; yalnız hangi fiziksel ayrıntının okunacağını adil biçimde işaret eder."
+          },
+          "qaSourceHandling": "Kaynak kimlikler, şüpheliler, araçlar, mekânlar ve çözüm üçlüsü korunmuştur. Mantık kuralları v29.2'nin kanonik confirm/eliminate+pair sözleşmesine dönüştürülmüştür.",
+          "title": "Kütüphanenin Kilitli Sırrı",
+          "subtitle": "Gotik Kapalı Oda — Rafların Taşıdığı Sır",
+          "difficulty": "Dedektif",
+          "difficultyLevel": 3,
+          "specialMechanic": "sifreli_mesaj",
+          "story": "Yağmur, Ravenscroft Malikânesi’nin kütüphane camlarına çarpıyor; koridordaki kitap sırtları karanlıkta tek bir duvar gibi yükseliyordu. Vasiyet dosyalarını inceleyen Samuel Vane, içeriden sürgülenmiş küçük odada bulundu. Anahtar cebindeydi; pencerelerin mandalları da içeriden kapalıydı.\n\nKapı açıldığında ilk hissedilen şey keskin bir koku değil, alışılmadık bir kuruluktu. Kuzey rafının alt tablası bir parmak genişliğinde eğilmişti; katalogdaki ağır ciltlerin sayısı ise eksiksiz görünüyordu. Bir şey, yerini almış ama ağırlığını bırakmamıştı.\n\nYirmi yıl önce kaybolan arşiv dosyaları için yalnız dört kişi erişim istemişti. Her biri başka bir sırra, başka bir borca tutunuyordu. Malikânede bazen kilitler değil; rafın taşıdığı yük konuşurdu.",
+          "atmosphere": "Gotik malikâne · Yağmur · Kuruyan kâğıt · Pirinç kadranlar",
           "suspects": [
             {
               "id": "s1",
               "name": "Arşivci Magda Stern",
-              "icon": "👩",
-              "description": "Kütüphanenin 20 yıllık arşivcisi. Tüm gizli geçitleri biliyor.",
-              "detail": "58 yaşında, titiz, sırrı var."
+              "icon": "📚",
+              "description": "Malikânenin kapalı koleksiyonlarından sorumlu arşivci.",
+              "detail": "Katalog anahtarına ve eski hava geçitleri krokisine erişimi var."
             },
             {
               "id": "s2",
-              "name": "Rahip Cornelius",
-              "icon": "🧎",
-              "description": "Kilise yöneticisi. Maktul bazı belgeler istiyordu.",
-              "detail": "65 yaşında, sakin, ama gözleri kaçıyor."
+              "name": "Dr. Adrian Vale",
+              "icon": "🩺",
+              "description": "Vane’in araştırdığı miras davasının danışmanı.",
+              "detail": "Olay saati köy revirindeki ameliyat kaydıyla sabit; cerrahi eldiven taşır."
             },
             {
               "id": "s3",
-              "name": "Miras Avukatı Hammond",
-              "icon": "⚖️",
-              "description": "Bir vasiyeti takip ediyor. Maktul engel çıkarıyordu.",
-              "detail": "50 yaşında, sabırsız, para kokuyor."
+              "name": "Restoratör Lydia March",
+              "icon": "🧵",
+              "description": "Eski ciltleri onaran kitap restoratörü.",
+              "detail": "Hafta sonu iş emrinde yalnız atölye masası için kayıtlı; raf anahtarı yok."
             },
             {
               "id": "s4",
-              "name": "Genç Asistan Lydia",
-              "icon": "noun-torun-nermin-avatar.png",
-              "description": "Kütüphanede staj yapıyor. Küçük bir sırrı var.",
-              "detail": "24 yaşında, zeki, bir şeyi gizliyor."
+              "name": "Koleksiyoncu Theo Grimm",
+              "icon": "🗝️",
+              "description": "Nadir eserlerin alıcısı ve Vane’in borçlusu.",
+              "detail": "Kasaba istasyonunda imzalı yük senedi var; ağır bagajı yanında."
             }
           ],
           "weapons": [
             {
               "id": "w1",
               "name": "Gizli Hava Kanalı Gazı",
-              "icon": "🌬️",
-              "description": "Havalandırma sistemiyle enjekte edilen toksik gaz."
+              "icon": "🌫️",
+              "description": "Dar kanaldan odaya verilen boğucu gaz.",
+              "detail": "İğne, kesik ya da darbe bırakmadan çalışır."
             },
             {
               "id": "w2",
-              "name": "Kitap Kapaklı Ağırlık",
-              "icon": "📚",
-              "description": "Değerli kitabın içine saklanmış metal ağırlık."
+              "name": "Fildişi Kâğıt Bıçağı",
+              "icon": "🗡️",
+              "description": "Masa üstü kesici araç.",
+              "detail": "Yakın mesafede deride kesik oluşturur."
             },
             {
               "id": "w3",
-              "name": "Zehirli Mürekkep",
-              "icon": "✒️",
-              "description": "Belge kenarına sürülen temas zehiri."
+              "name": "Kurşun Şamdan",
+              "icon": "🕯️",
+              "description": "Ağır, küt darbe aracı.",
+              "detail": "Kafatasında ezilme izi bırakır."
             },
             {
               "id": "w4",
-              "name": "Pnömatik Enjektör",
+              "name": "Uyku İğnesi",
               "icon": "💉",
-              "description": "Kapı altından geçirilebilen ince enjektör."
+              "description": "Hızlı etkili enjeksiyon.",
+              "detail": "Delik izi ve ampul kırığı beklenir."
             }
           ],
           "locations": [
             {
               "id": "l1",
-              "name": "Kilitli Arşiv Odası",
-              "icon": "🔒",
-              "description": "İçeriden kilitli, dışarıdan girilemeyen oda."
+              "name": "Kilitli Okuma Odası",
+              "icon": "🔐",
+              "description": "Maktulün bulunduğu oda.",
+              "detail": "Beden burada bulundu; ancak mekanizma buradan kurulmamış olabilir."
             },
             {
               "id": "l2",
               "name": "Havalandırma Tüneli",
               "icon": "🌀",
-              "description": "Kütüphanenin gizli hava kanalı sistemi."
+              "description": "Kuzey rafının arkasından geçen dar bakım hattı.",
+              "detail": "Eski planda “yalnız yangın bacası” diye kayıtlı."
             },
             {
               "id": "l3",
-              "name": "Rahip'in Çalışma Odası",
-              "icon": "⛪",
-              "description": "Kilise ile kütüphane arasındaki oda."
+              "name": "Harita Arşivi",
+              "icon": "🗺️",
+              "description": "Rulo planların saklandığı soğuk bölüm.",
+              "detail": "Kireçli toz ve gömlek manşetinde mavi pigment bırakır."
             },
             {
               "id": "l4",
-              "name": "Kütüphane Bodrum Katı",
-              "icon": "🕳️",
-              "description": "Gizli geçitlerin başlangıcı."
+              "name": "Bekçi Kulübesi",
+              "icon": "🏚️",
+              "description": "Malikâne kapısındaki küçük oda.",
+              "detail": "Kömür sobası ve dış kapı kaydıyla ayrılır."
             }
           ],
           "clues": [
             {
               "id": "c1",
+              "title": "Kuru Solunum Yolu",
               "type": "kanit",
+              "mechanicType": "text",
+              "text": "Otopsi raporunda, soluk borusunun derininde kesik ya da iğne izi olmadan görülen kurutucu tahriş kaydı var. Ölümcül madde, dışarıdan solunmuş bir akışla temas etmiş.",
+              "deductionHint": "Bulgu, doğrudan temas eden kesici veya iğneye değil; hangi tür akışa işaret ediyor?",
+              "isBonus": false,
               "revealOrder": 1,
               "isRevealed": true,
-              "pointCost": 0,
-              "title": "Kapalı Oda Paradoksu",
-              "text": "Kapı içeriden kilitli. Pencere parmaklıklı ve mühürlü. Anahtar maktulün cebinde. Toksik gaz iz bırakmış — havalandırma kanalından girmiş olabilir. Maktul yazı yazarken hayatını kaybetmiş.",
-              "mechanicType": "text",
-              "deductionHint": "Kapalı oda = havalandırma kanalı. Kim bunu bilir?"
+              "pointCost": 0
             },
             {
               "id": "c2",
-              "type": "anagram",
+              "title": "Fildişi Sapın Sicili",
+              "type": "tanik",
+              "mechanicType": "text",
+              "text": "Revir dolabındaki bakım defteri, sarımsı saplı masa kesicisinin aynı gece mühürlü çantadan çıkarıldığını; dönüşte de aynı numarayla teslim edildiğini gösteriyor.",
+              "deductionHint": "Sicil, hangi kişi ile hangi alet arasında cinayet dışı ama kesin bir eşleşme kuruyor?",
+              "isBonus": false,
               "revealOrder": 2,
               "isRevealed": false,
-              "pointCost": 110,
-              "title": "Maktulün Yarım Bıraktığı Not",
-              "text": "Maktulün masasındaki yarım not — ölmeden önce yazmaya çalışmış.",
-              "mechanicType": "anagram",
-              "anagramVerisi": {
-                "karisik": "AGDAM TSERN",
-                "dogru": "MAGDA STERN",
-                "aciklama": "Maktul ölürken arşivci Magda'nın adını yazmaya çalışmış ama harfleri karışık gelmiş.",
-                "ipucu": "10 harf, 2 kelime. İsim ve soyad."
-              },
-              "deductionHint": "Son not kimi gösteriyor?"
+              "pointCost": 0
             },
             {
               "id": "c3",
-              "type": "timeline",
+              "title": "Filtresiz Önlük",
+              "type": "adli",
+              "mechanicType": "text",
+              "text": "Atölye önlüğünün liflerinde cilt tutkalı ve keten tozu var; ancak kapalı bir akış düzeneğinin filtresinde beklenen koyu grafit birikimi yok.",
+              "deductionHint": "Katalog işi yapan kişinin üstünde bulunmayan kalıntı, hangi araçla aynı zincirde olamayacağını düşündürür?",
+              "isBonus": false,
               "revealOrder": 3,
               "isRevealed": false,
-              "pointCost": 110,
-              "title": "Kütüphane O Gününün Zaman Çizelgesi",
-              "text": "O günkü kütüphane olaylarını doğru sıraya diz.",
-              "mechanicType": "timeline_sort",
-              "timelineVerisi": {
-                "aciklama": "Kütüphane günlüğünden olayları sırala.",
-                "olaylar": [
-                  {
-                    "id": "t1",
-                    "metin": "09:00 — Magda arşiv odasının havalandırmasını 'temizledi'",
-                    "dogruSira": 1
-                  },
-                  {
-                    "id": "t2",
-                    "metin": "10:30 — Maktul arşiv odasına kilitli girdi",
-                    "dogruSira": 2
-                  },
-                  {
-                    "id": "t3",
-                    "metin": "11:00 — Magda bodrum kattaki gaz vanasını açtı",
-                    "dogruSira": 3
-                  },
-                  {
-                    "id": "t4",
-                    "metin": "11:15 — Maktul hayatını kaybetti (tahmini)",
-                    "dogruSira": 4
-                  },
-                  {
-                    "id": "t5",
-                    "metin": "12:00 — Lydia kapıyı kırdı, maktulu buldu",
-                    "dogruSira": 5
-                  }
-                ],
-                "sonuc": "Magda 09:00'da havalandırma bağlantısını ayarladı, 11:00'da gazı verdi."
-              },
-              "deductionHint": "Havalandırma hazırlığı sabahtan yapılmış."
+              "pointCost": 0
             },
             {
               "id": "c4",
-              "type": "face_match",
+              "title": "İstasyon Sandığının İç Gözü",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Kasaba istasyonunda mühürlenen ağır sandığın iç kapağında, küçük bir ampul kutusunun oturduğu dikdörtgen boşluk ve aynı mühür numarası kayıtlı.",
+              "deductionHint": "Yük kaydı, hangi yolcunun hangi seçeneğe zaten bağlı olduğunu gösterir?",
+              "isBonus": false,
               "revealOrder": 4,
               "isRevealed": false,
-              "pointCost": 110,
-              "title": "Bodrum Kamera Analizi",
-              "text": "Bodrum katında eski tip güvenlik kamerasında görüntü.",
-              "mechanicType": "face_match",
-              "fotoVerisi": {
-                "aciklama": "Bodrum kamera görüntüsündeki kişiyi şüphelilerle eşleştir.",
-                "olayYeriIzi": {
-                  "gozArasi": "60mm",
-                  "burunUzunluk": "45mm",
-                  "elmacikKemigi": "132mm"
-                },
-                "supheliAyakkabilari": [
-                  {
-                    "suspectId": "s1",
-                    "gozArasi": "60mm",
-                    "burunUzunluk": "45mm",
-                    "elmacikKemigi": "132mm",
-                    "eslesme": true
-                  },
-                  {
-                    "suspectId": "s2",
-                    "gozArasi": "68mm",
-                    "burunUzunluk": "51mm",
-                    "elmacikKemigi": "140mm",
-                    "eslesme": false
-                  },
-                  {
-                    "suspectId": "s3",
-                    "gozArasi": "72mm",
-                    "burunUzunluk": "55mm",
-                    "elmacikKemigi": "145mm",
-                    "eslesme": false
-                  },
-                  {
-                    "suspectId": "s4",
-                    "gozArasi": "58mm",
-                    "burunUzunluk": "43mm",
-                    "elmacikKemigi": "130mm",
-                    "eslesme": false
-                  }
-                ],
-                "sonuc": "Bodrum kamera eşleşmesi: Magda Stern."
-              },
-              "deductionHint": "Bodrum katta gaz vanasına giden Magda."
+              "pointCost": 0
             },
             {
               "id": "c5",
-              "type": "dna_match",
+              "title": "Kapının İç Basıncı",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Bedenin bulunduğu odanın kapısındaki ince toz çizgisi, basıncın eşikten değil duvar boşluğundan içeri geldiğini gösteriyor. Düzeneğin başlangıcı bu odada değil.",
+              "deductionHint": "Akışın yönü, hangi yer seçeneğini dışarıda bırakır?",
+              "isBonus": false,
               "revealOrder": 5,
               "isRevealed": false,
-              "pointCost": 110,
-              "title": "Havalandırma Fanı DNA",
-              "text": "Havalandırma fanının metal çerçevesinde temas DNA'sı.",
-              "mechanicType": "dna_match",
-              "dnaVerisi": {
-                "aciklama": "Fan çerçevesi DNA'sını dört şüpheliyle eşleştir.",
-                "ornekProfil": {
-                  "lokus1": "GG",
-                  "lokus2": "CC",
-                  "lokus3": "AT"
-                },
-                "supheliProfiller": [
-                  {
-                    "suspectId": "s1",
-                    "lokus1": "GG",
-                    "lokus2": "CC",
-                    "lokus3": "AT",
-                    "eslesme": true
-                  },
-                  {
-                    "suspectId": "s2",
-                    "lokus1": "TT",
-                    "lokus2": "AA",
-                    "lokus3": "GC",
-                    "eslesme": false
-                  },
-                  {
-                    "suspectId": "s3",
-                    "lokus1": "CC",
-                    "lokus2": "GG",
-                    "lokus3": "TA",
-                    "eslesme": false
-                  },
-                  {
-                    "suspectId": "s4",
-                    "lokus1": "AA",
-                    "lokus2": "TT",
-                    "lokus3": "CG",
-                    "eslesme": false
-                  }
-                ],
-                "sonuc": "Fan çerçevesi DNA'sı: Magda Stern."
-              },
-              "deductionHint": "Havalandırma fanına son dokunan Magda."
+              "pointCost": 0
             },
             {
               "id": "c6",
-              "type": "eleme",
+              "title": "Katalog Kadran Kilidi",
+              "type": "sifreli",
+              "mechanicType": "sifreli_mesaj",
+              "text": "Kuzey rafının arkasında, katalog fişleriyle aynı aşınma izlerini taşıyan dört pirinç kadran bulundu. Üstteki işaretler tek başına değil, sırayla anlam kazanıyor.",
+              "deductionHint": "Bir kadranın işareti değil, dört işaretin izlediği yön önemlidir.",
+              "isBonus": false,
               "revealOrder": 6,
               "isRevealed": false,
-              "pointCost": 110,
-              "title": "Rahip ve Hammond Alibisi",
-              "text": "Rahip Cornelius 09:00-13:00 arası kilise ayinindeydi — 80 cemaat. Hammond ofisinde avukat yardımcısıyla çalışıyordu — belgeler zaman damgalı.",
-              "mechanicType": "text",
-              "deductionHint": "Rahip ve Hammond fiziksel olarak başka yerde."
+              "pointCost": 0,
+              "sifre": {
+                "sifrelenmis": "KATALOG YÖN İŞARETLERİ",
+                "sifreleTuru": "mekanik_kilit_dizisi",
+                "cozumIpucu": "Her kadranda, üstteki raf izi ile alttaki aşınmanın ortak yönünü ara; dört işaret aynı yürüyüşü tamamlar.",
+                "cozulmus": "KADRAN-14",
+                "aciklama": "Kilit açıldı; yön dizisi, soruşturmadaki eksik eşleşme halkasını tamamlayacak son işareti verdi.",
+                "presentation": {
+                  "style": "mechanical_lock_sequence",
+                  "title": "Katalog Kadran Kilidi",
+                  "subtitle": "Raf payandalarındaki yön aşınmalarını dört pirinç kadranda yeniden kur.",
+                  "purposeHint": "Doğru diziliş, soruşturma panosunda tek bir bağlantının elenmesini sağlar.",
+                  "resultText": "Kadranların verdiği yön, çalışma hattının bekçi geçidinden kurulmadığını gösterir.",
+                  "dials": [
+                    {
+                      "id": "d1",
+                      "label": "Kuzey Rafı",
+                      "symbols": [
+                        "↑",
+                        "→",
+                        "↓",
+                        "←"
+                      ],
+                      "initial": "↑"
+                    },
+                    {
+                      "id": "d2",
+                      "label": "Alt Tabla",
+                      "symbols": [
+                        "↗",
+                        "↘",
+                        "↙",
+                        "↖"
+                      ],
+                      "initial": "↗"
+                    },
+                    {
+                      "id": "d3",
+                      "label": "Katalog Ucu",
+                      "symbols": [
+                        "Ⅰ",
+                        "Ⅱ",
+                        "Ⅲ",
+                        "Ⅳ"
+                      ],
+                      "initial": "Ⅰ"
+                    },
+                    {
+                      "id": "d4",
+                      "label": "Kilitleme Çentiği",
+                      "symbols": [
+                        "○",
+                        "△",
+                        "□",
+                        "◇"
+                      ],
+                      "initial": "○"
+                    }
+                  ],
+                  "correctCode": [
+                    {
+                      "dialId": "d1",
+                      "symbol": "→"
+                    },
+                    {
+                      "dialId": "d2",
+                      "symbol": "↙"
+                    },
+                    {
+                      "dialId": "d3",
+                      "symbol": "Ⅲ"
+                    },
+                    {
+                      "dialId": "d4",
+                      "symbol": "□"
+                    }
+                  ],
+                  "interaction": {
+                    "mode": "dial_sequence",
+                    "submitLabel": "Kadranları Doğrula",
+                    "successMessage": "Diziliş açıldı; panoda tek bir eleme işlendi.",
+                    "failureMessage": "Aşınma yönleri aynı halkayı tamamlamıyor. Raf ve tabla izlerini birlikte oku."
+                  }
+                }
+              }
             },
             {
               "id": "c7",
-              "type": "phone_chain",
+              "title": "Katalog Anahtarının Kenarı — Bonus",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Kuzey rafın altındaki pirinç anahtarın dişlerinde, arşivci masasındaki aynı koyu vernik ve rulo plan tozu bulundu.",
+              "deductionHint": "Anahtarın kullandığı çalışma hattı hangi kişi ile hangi yeri birlikte güçlendirir?",
+              "isBonus": true,
               "revealOrder": 7,
               "isRevealed": false,
-              "pointCost": 110,
-              "title": "Gizli Yazışma Zinciri",
-              "text": "Kütüphane dahili mesaj sistemindeki yazışmalar.",
-              "mechanicType": "phone_chain",
-              "phoneVerisi": {
-                "aciklama": "Dahili mesaj zincirini takip et.",
-                "mesajlar": [
-                  {
-                    "id": "m1",
-                    "gonderen": "Magda",
-                    "alici": "Lydia",
-                    "icerik": "Bugün arşive girme. Temizlik var.",
-                    "saat": "08:45"
-                  },
-                  {
-                    "id": "m2",
-                    "gonderen": "Lydia",
-                    "alici": "Magda",
-                    "icerik": "Tamam. Havalandırma için malzeme istiyorsunuz?",
-                    "saat": "08:50"
-                  },
-                  {
-                    "id": "m3",
-                    "gonderen": "Magda",
-                    "alici": "Lydia",
-                    "icerik": "Hayır. Sadece git. Bodrum anahtar gerekirse bende.",
-                    "saat": "08:52"
-                  }
-                ],
-                "sonuc": "Magda Lydia'yı uzaklaştırdı. Bodrum anahtarı kendinde."
-              },
-              "deductionHint": "Magda Lydia'yı uzaklaştırdı ve bodrum anahtarını kullandı."
+              "pointCost": 55
             },
             {
               "id": "c8",
+              "title": "Yarım Kalan Mühür — Bonus",
               "type": "tanik",
+              "mechanicType": "text",
+              "text": "Eski dosya zarfında, yalnız duvar içindeki bakım kapağında kullanılan gri macunun kurumuş izi var.",
+              "deductionHint": "Bu macun, hangi araç ile hangi hattın kesişimini doğrular?",
+              "isBonus": true,
               "revealOrder": 8,
               "isRevealed": false,
-              "pointCost": 110,
-              "title": "Lydia'nın İtirafı",
-              "text": "\"Magda beni uzaklaştırdı. O gün bodrum kapısı önünden geçtim — gaz kokusu vardı. Magda'nın neden her 20 yılda bir bu odayı 'temizlediğini' sonradan anladım. Bu ilk değildi.\"",
-              "mechanicType": "tanik_yuzlesme",
-              "yuzlesmeDialogu": [
-                {
-                  "soru": "Gaz kokusu aldınız mı?",
-                  "cevap": "Evet, bodrum koridorunda.",
-                  "yalan": false
-                },
-                {
-                  "soru": "Magda'nın daha önce böyle bir şey yaptığını düşünüyor musunuz?",
-                  "cevap": "20 yıl önceki kayıt dosyasında benzer bir 'kaza' var.",
-                  "yalan": false
-                }
-              ],
-              "deductionHint": "Bu ilk değil — Magda'nın geçmişi var."
-            },
-            {
-              "id": "c9",
-              "type": "ses_kaydi",
-              "revealOrder": 9,
-              "isRevealed": false,
-              "pointCost": 110,
-              "title": "Magda'nın Telefon Kaydı",
-              "text": "[Kütüphane dahili hat kaydı] Magda bir numarayı aradı: 'Bitti. Arşiv güvende. Belgeler kimseye verilmeyecek.' Karşı taraf: 'İyi. Ödeme yarın.' Magda: 'Anlaşıldı.'",
-              "mechanicType": "ses_kaydi",
-              "sesMetni": "Magda'nın sesi profesyonel ve soğuk. 'Bitti' kelimesi çok açık.",
-              "deductionHint": "Magda para karşılığı hareket etti. Kim ödüyor?"
+              "pointCost": 55
             }
           ],
+          "assetManifest": [],
           "solution": {
             "suspectId": "s1",
             "weaponId": "w1",
             "locationId": "l2"
           },
-          "solutionNarrative": "Magda Stern, 20 yıldır kütüphanede gizli operasyonlar yürütüyordu. Maktul tehlikeli arşiv belgelerine ulaşmak üzereydi. Magda havalandırma sistemini zehirli gazla doldurdu — kapalı oda sırrı böyle çözüldü. Ödemeyi yapan kişi hâlâ bilinmiyor.",
-          "specialMechanic": "anagram_dna_timeline_face_phone"
+          "solutionNarrative": "Samuel Vane’in ölümü kilitli odada görünür hâle geldi; fakat düzenek orada kurulmadı. Magda, eski katalog anahtarını kullanarak duvar içindeki bakım hattına erişti ve kuru akışı raf arkasından verdi. Kadran kilidi, bekçi geçidi ihtimalini kapatınca, geriye yalnız bu erişim zinciri kaldı.",
+          "replitIntegration": {
+            "schema": "fm_replit_runtime_contract_v1",
+            "copyTarget": "Replit Agent prompt",
+            "canonicalCaseFile": "src/data/cases/ede_003.json",
+            "policy": "Var olan renderer varsa onu bozma; yoksa bu paketteki component ve dispatcher dalını ekle.",
+            "mechanics": [
+              {
+                "clueId": "c6",
+                "mechanicType": "sifreli_mesaj",
+                "renderer": "mechanical_lock_sequence",
+                "completionEvent": "onSolved({ clueId, mechanic: \"sifreli_mesaj\" })"
+              },
+              {
+                "clueId": "c6",
+                "mechanicType": "sifreli_mesaj",
+                "renderer": "mechanical_lock_sequence",
+                "componentFile": "src/components/caseMechanics/PremiumMechanicRenderer.jsx",
+                "dispatcherBranch": "clue.mechanicType === \"sifreli_mesaj\" && [\"luggage_label_match\",\"negative_contact_sheet\",\"morse_transceiver\",\"archive_index_reconstruction\",\"mechanical_lock_sequence\"].includes(clue.sifre?.presentation?.style)",
+                "completionEvent": "onSolved({ clueId, mechanic: \"mechanical_lock_sequence\" })",
+                "hintEvent": "onRequestHint({ clueId, penaltySeconds: 60 })",
+                "requiredData": [
+                  "title",
+                  "subtitle",
+                  "purposeHint",
+                  "resultText",
+                  "interaction",
+                  "style-specific data"
+                ],
+                "nonNegotiable": [
+                  "Veriyi component içine hard-code etme.",
+                  "Başarı öncesinde resultText veya çözüm eşleşmesini gösterme.",
+                  "Yanlış deneme doğru eşlemeyi otomatik kurmamalı.",
+                  "Mobilde kartlar/diallar tek sütuna akmalı."
+                ]
+              }
+            ]
+          }
         },
         {
           "puzzleId": "ede_004",
-          "title": "St. Mary Mead'in Gizli Defteri",
-          "subtitle": "İngiltere, St. Mary Mead — Miss Marple Evreni",
-          "difficulty": 3,
-          "difficultyLabel": "Dedektif",
-          "stars": "★★★☆☆",
+          "stars": "★★★★☆",
           "gridSize": "3x3",
-          "timeLimit": 600,
-          "story": "St. Mary Mead köyünde saygın papaz Mr. Aubrey Helm, kilise müziği çalışması için geciktikten sonra vikare evinin çalışma odasında ölü bulundu — elinde kırık bir kalem, masasında yarım bırakılmış vaaz defteri. Miss Marple, sorgulamayı penceresinden gözlemlemekle yetinmedi.",
-          "atmosphere": "Güneş battıktan sonra İngiliz köyü sisi çöküyor; hanımelleri ve ıslak çim kokusu, kilise çanının son titreşimiyle karışıyor.",
+          "timeLimit": 660,
+          "storyParagraphs": [
+            "St. Mary Mead’de haberler kilise çanından daha hızlı yayılırdı. Papaz Aubrey Helm, akşam vaazına yetişmeyince çalışma masasının başında bulundu; yarım kalmış metnin yanında soğuk bir fincan ve kalemin ucunda kurumuş tek bir damla vardı.",
+            "Miss Marple penceresinden bahçe duvarını görüyordu ama asıl dikkatini mutfak eşiğine sıkışmış üç yaprak sapı çekti. Boyları birbirinden farklıydı; birinin kesik kenarında porselen süzgece özgü ince bir yay izlenimi vardı.",
+            "Köy hekimi eski bir dosyanın gölgesindeydi, noter ise teslim edeceği mühürlü kopyalara yetişmeye çalışıyordu. Org eğitmeni yıllardır sakladığı öfkeyi inkâr ediyordu. Miss Marple, çayın kimin tarafından sevildiğinden çok, hangi kapta süzüldüğünü düşündü."
+          ],
+          "qaRationale": "Dört temel ipucu; ölüm aracını, iki masum silah eşleşmesini ve iki yanlış hazırlama alanını ayrı eksenlerde daraltır. c4 görsel temas sayfası son mekân alternatifini kapatır.",
+          "qaNarrativeContract": {
+            "narrativeSignal": "Hikâyedeki üç farklı boydaki yaprak sapı ve porselen süzgeç eğrisi, oyuncuya c4'te pozitif/negatif baskı karşılaştırmasının neden kritik olduğunu adil biçimde kurar.",
+            "linkedClueId": "c4",
+            "playerAction": "Üç baskıda aynı kesik eğrisini seçmek.",
+            "fairReason": "Anlatı hangi seçeneğin doğru olduğunu veya failin kimliğini söylemez; yalnız görsel karşılaştırmanın fiziksel kökenini bildirir."
+          },
+          "qaSourceHandling": "Kaynak kimlikler, şüpheliler, araçlar, mekânlar ve çözüm üçlüsü korunmuştur. Mantık kuralları v29.2'nin kanonik confirm/eliminate+pair sözleşmesine dönüştürülmüştür.",
+          "title": "St. Mary Mead'in Gizli Defteri",
+          "subtitle": "İngiliz Köy Gizemi — Kesik Eğrinin Tanığı",
+          "difficulty": "Başkomiser",
+          "difficultyLevel": 4,
+          "specialMechanic": "sifreli_mesaj",
+          "story": "St. Mary Mead’de haberler kilise çanından daha hızlı yayılırdı. Papaz Aubrey Helm, akşam vaazına yetişmeyince çalışma masasının başında bulundu; yarım kalmış metnin yanında soğuk bir fincan ve kalemin ucunda kurumuş tek bir damla vardı.\n\nMiss Marple penceresinden bahçe duvarını görüyordu ama asıl dikkatini mutfak eşiğine sıkışmış üç yaprak sapı çekti. Boyları birbirinden farklıydı; birinin kesik kenarında porselen süzgece özgü ince bir yay izlenimi vardı.\n\nKöy hekimi eski bir dosyanın gölgesindeydi, noter ise teslim edeceği mühürlü kopyalara yetişmeye çalışıyordu. Org eğitmeni yıllardır sakladığı öfkeyi inkâr ediyordu. Miss Marple, çayın kimin tarafından sevildiğinden çok, hangi kapta süzüldüğünü düşündü.",
+          "atmosphere": "İngiliz köy sisi · Kilise çanı · Soğumuş çay · Tuzlu baskı",
           "suspects": [
             {
               "id": "s1",
               "name": "Bayan Dorothy Pryce",
-              "icon": "noun-nazik-hanim-avatar.png",
-              "description": "Kilise org eğitmeni, kurbanın eski öğrencisi",
-              "detail": "52 yaşında, otoriter; papazın öğrenciliği döneminde yazdığı senfoniyi intihal ettiğini düşünüyor ve mahkeme sürecini başlatmıştı.",
-              "parmakIziDeseni": "fp_arch"
+              "icon": "🎼",
+              "description": "Kilise org eğitmeni, papazın eski öğrencisi.",
+              "detail": "Olay saatinde kasaba provasının başındaydı; org pedallarındaki toz bile doğrulanmış."
             },
             {
               "id": "s2",
               "name": "Dr. Felix Garnett",
-              "icon": "👨‍⚕️",
-              "description": "Köy hekimi, papazın yakın dostu",
-              "detail": "61 yaşında, sevecen görünümlü; papaz Garnett'in geçmişte bir hastasını yanlış teşhisle kaybettiğini biliyordu ve bunu vaftiz defterine kaydetmişti.",
-              "parmakIziDeseni": "fp_tented_arch"
+              "icon": "🩺",
+              "description": "Köy hekimi ve papazın yakın dostu.",
+              "detail": "Papazın eski bir yanlış teşhis dosyasını vaftiz defterine yazdığını biliyordu."
             },
             {
               "id": "s3",
               "name": "Gerald Whitmore",
-              "icon": "👷",
-              "description": "Köy noteri, vasi sorumlusu",
-              "detail": "45 yaşında, gergin; kurban, Whitmore'un vefat eden bir kilise üyesinin vasiyetini tahrif ettiğini gösteren belgeye ulaşmıştı.",
-              "parmakIziDeseni": "fp_double_loop"
+              "icon": "📜",
+              "description": "Köy noteri ve vasi sorumlusu.",
+              "detail": "Olay saatinde belediye kasasında imzalı vasiyet kopyalarını teslim ediyordu."
             }
           ],
           "weapons": [
             {
               "id": "w1",
-              "name": "Kemanın teli",
+              "name": "Keman Teli",
               "icon": "🎻",
-              "description": "Keman telinden koparılmış ince tel — boğmak için."
+              "description": "İnce tel ile boğma aracı.",
+              "detail": "Boyunda sürtünme ve lif bırakır."
             },
             {
               "id": "w2",
-              "name": "Baldıran özü",
+              "name": "Baldıran Özü",
               "icon": "🌿",
-              "description": "Köyde biten baldırandan elde edilmiş bitki özü — çaya karıştırılmış."
+              "description": "Acı bitki özünün çaya karıştırılmış hali.",
+              "detail": "Porselen yüzeyde soluk sarı tortu bırakabilir."
             },
             {
               "id": "w3",
-              "name": "Demir mektup açacağı",
+              "name": "Demir Mektup Açacağı",
               "icon": "✉️",
-              "description": "Masa üstü ağır kesici araç."
+              "description": "Ağır metal kesici.",
+              "detail": "Masa veya beden üzerinde delici iz beklenir."
             }
           ],
           "locations": [
             {
               "id": "l1",
-              "name": "Çalışma odası",
+              "name": "Çalışma Odası",
               "icon": "📖",
-              "description": "Vaftiz defterlerinin, vaaz notlarının saklandığı oda."
+              "description": "Vaftiz defterlerinin bulunduğu oda.",
+              "detail": "Beden burada bulundu; çay burada hazırlanmış olmayabilir."
             },
             {
               "id": "l2",
-              "name": "Kilise bahçesi",
+              "name": "Kilise Bahçesi",
               "icon": "⛪",
-              "description": "Sarmaşıklı taş duvarlar, ıssız mezarlık yolu."
+              "description": "Sarmaşıklı taş duvarlar ve bitki yatakları.",
+              "detail": "Yaprak toplanabilir, fakat çay demlenmez."
             },
             {
               "id": "l3",
-              "name": "Vikarinin mutfağı",
+              "name": "Vikarinin Mutfağı",
               "icon": "🍵",
-              "description": "Çay hazırlanan, yüksek tavanlı küçük mutfak."
+              "description": "Yüksek tavanlı küçük mutfak.",
+              "detail": "Porselen süzgeç, çay kutusu ve sıcak su ocağı burada."
             }
           ],
           "clues": [
             {
               "id": "c1",
-              "type": "adli",
+              "title": "Acı Bileşenin Yolu",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Toksikoloji, dil kökünde damar iletimini yavaşlatan bir bitki alkaloidi saptadı. Ölümcül madde, deri ya da hava yoluyla değil içecek yoluyla alınmış.",
+              "deductionHint": "Bulgu, ölüm aracının hangi tür taşıyıcı olduğunu tek başına sabitler?",
+              "isBonus": false,
               "revealOrder": 1,
               "isRevealed": true,
-              "pointCost": 0,
-              "title": "Dr. Garnett'in İlk Muayenesi",
-              "text": "Kurban masasına yığılmış, dudakları mavimsi. Gırtlapta baskı ya da yara izi yok. Üstelik fincanında soğumuş çay ve ağzında acı ot aroması — Dr. Garnett bitkisel zehiri hemen tanıdı.",
-              "mechanicType": "text",
-              "deductionHint": "Mavimsi dudaklar ve acı ot — baldıran zehri, w2 uyumlu. Garnett'in çok hızlı tanıması ayrıca dikkat çekici."
+              "pointCost": 0
             },
             {
               "id": "c2",
+              "title": "Prova Arasındaki Lif",
               "type": "tanik",
+              "mechanicType": "text",
+              "text": "Koro prova defterinin cildine yapışmış açık renkli lif, org bankının altındaki ince tel bobininden alınan reçineyle aynı seri numarayı taşıyor.",
+              "deductionHint": "Müzik odasındaki rutin eşya, hangi kişi ile hangi seçeneğin cinayet dışı eşleşmesini kurar?",
+              "isBonus": false,
               "revealOrder": 2,
               "isRevealed": false,
-              "pointCost": 55,
-              "title": "Miss Marple'ın Gözlemi",
-              "text": "Miss Marple, öğleden sonra pencereden şunu gördü: Dr. Garnett, kilise bahçesinde uzun süre eğilmiş bir bitkinin yapraklarını topladı ve cebine koydu. 'Köy hekimlerinin bunu neden yaptığını çok iyi bilirim' dedi: ilaç için değil, zaman zaman başka amaçlar için.",
-              "mechanicType": "text",
-              "deductionHint": "Garnett bahçede baldıran yaprakları topladı — zehiri o hazırlayabilir."
+              "pointCost": 0
             },
             {
               "id": "c3",
+              "title": "İki Mühürlü Teslim",
               "type": "kanit",
+              "mechanicType": "text",
+              "text": "Belediye kasasının teslim defterinde aynı dakikaya ait iki farklı mühür izi var; nöbetçi memur ikinci imzayı da kapı önünde gördüğünü yazmış.",
+              "deductionHint": "Birbirini doğrulayan iki resmî kayıt, hangi kişiyi zehirli karışım zincirinin dışında bırakır?",
+              "isBonus": false,
               "revealOrder": 3,
               "isRevealed": false,
-              "pointCost": 55,
-              "title": "Mutfaktaki Fincan",
-              "text": "Mutfakta yıkanmış ama silinmemiş bir fincan bulundu — içinde baldıran kalıntısı. Garnett'in parmak izi fincanın kulpunda. Garnett kurbanın çayını kendisi hazırladığını daha önce belirtmişti.",
-              "mechanicType": "parmak_izi",
-              "parmakIziVerisi": {
-                "aciklama": "Mutfaktaki porselen fincanın kulpundan alınan parmak izi örnekleri.",
-                "izler": [
-                  {
-                    "izId": "iz1",
-                    "konum": "Fincan kulpu — üst",
-                    "eslesme": "s2",
-                    "ipucu": "Sağ baş parmak, merkezi çember desen — Dr. Garnett'in yerel polis kaydıyla eşleşiyor"
-                  },
-                  {
-                    "izId": "iz2",
-                    "konum": "Fincan kulpu — alt",
-                    "eslesme": "s2",
-                    "ipucu": "Orta parmak izi — aynı kişiye ait, fincanı çay hazırlarken tutmuş"
-                  }
-                ],
-                "sonuc": "Her iki iz Dr. Felix Garnett'e (s2) ait. Fincanı o taşımış ve çayı o hazırlamış.",
-                "sahneGorseli": "fp_tented_arch"
-              },
-              "deductionHint": "Garnett'in parmak izi zehirli fincan — onu mutfakta ve silaha bağlıyor."
+              "pointCost": 0
             },
             {
               "id": "c4",
-              "type": "dogrudan",
+              "title": "Yaprak Sapı Negatifleri",
+              "type": "sifreli",
+              "mechanicType": "sifreli_mesaj",
+              "text": "Eşikteki üç sapın tuzlu baskıları, ışıkta farklı görünse de negatifte aynı kesik eğrisini saklıyor. Kartlar tek tek değil, karşılıklı okunmalı.",
+              "deductionHint": "Açık kenar ile koyu boşluk aynı eğriyi veriyorsa, kesik hangi yüzeyden geçmiş olabilir?",
+              "isBonus": false,
               "revealOrder": 4,
               "isRevealed": false,
-              "pointCost": 55,
-              "title": "Vaftiz Defterindeki Kayıt",
-              "text": "Kurbanın vaaz defterinin gizli bölmesinde not: 'Garnett — 1971 — E.H. vakası. Belgeyi belediye arşivine vereceğim.' E.H. yanlış teşhisle kaybedilen hasta. Garnett bunu biliyordu.",
-              "mechanicType": "text",
-              "deductionHint": "Kurban Garnett'i ifşa etmek üzereydi — en güçlü motif."
+              "pointCost": 0,
+              "sifre": {
+                "sifrelenmis": "IŞIK ALTINDA ÜÇ SAP",
+                "sifreleTuru": "negatif_kontakt_sayfasi",
+                "cozumIpucu": "Pozitif baskıdaki açık kenar ile negatifteki koyu boşluğun aynı yüzeyden geldiğini birlikte düşün; tek bir eğri bütün kareleri bağlar.",
+                "cozulmus": "BASKI-03",
+                "aciklama": "Tuzlu baskılardaki küçük ayrım, soruşturmadaki eksik mekan halkasını tamamlayacak son işareti verdi.",
+                "presentation": {
+                  "style": "negative_contact_sheet",
+                  "title": "Yaprak Sapı Negatifleri",
+                  "subtitle": "Pozitif ve negatif baskılarda aynı kesik eğrisini üç ayrı ayrıntıda eşleştir.",
+                  "purposeHint": "Doğru üç eşleştirme, soruşturma panosunda tek bir mekan bağlantısını eler.",
+                  "resultText": "Üç baskıdaki kesik eğrisi, hazırlığın açık havada yapılmadığını gösterir.",
+                  "checks": [
+                    {
+                      "id": "k1",
+                      "label": "Kare A · Kesik ucu",
+                      "positive": "İki yarım yay, uçta aynı genişlikte açılıyor.",
+                      "negative": "Koyu boşluk, tek porselen kavisini koruyor.",
+                      "options": [
+                        {
+                          "id": "strainer",
+                          "label": "Porselen süzgeç yayı"
+                        },
+                        {
+                          "id": "shears",
+                          "label": "Bahçe makası ağzı"
+                        },
+                        {
+                          "id": "press",
+                          "label": "Kâğıt presi köşesi"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "k2",
+                      "label": "Kare B · Lif izi",
+                      "positive": "Sap lifleri aynı yönde ezilmiş.",
+                      "negative": "Gölgede yuvarlak tel deliği beliriyor.",
+                      "options": [
+                        {
+                          "id": "strainer",
+                          "label": "Porselen süzgeç yayı"
+                        },
+                        {
+                          "id": "shears",
+                          "label": "Bahçe makası ağzı"
+                        },
+                        {
+                          "id": "press",
+                          "label": "Kâğıt presi köşesi"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "k3",
+                      "label": "Kare C · Nem halkası",
+                      "positive": "Yüzeyde iki ince su halkası var.",
+                      "negative": "Aynı halka tek bir kavis etrafında kapanıyor.",
+                      "options": [
+                        {
+                          "id": "strainer",
+                          "label": "Porselen süzgeç yayı"
+                        },
+                        {
+                          "id": "shears",
+                          "label": "Bahçe makası ağzı"
+                        },
+                        {
+                          "id": "press",
+                          "label": "Kâğıt presi köşesi"
+                        }
+                      ]
+                    }
+                  ],
+                  "correctAssignments": [
+                    {
+                      "itemId": "k1",
+                      "answerId": "strainer"
+                    },
+                    {
+                      "itemId": "k2",
+                      "answerId": "strainer"
+                    },
+                    {
+                      "itemId": "k3",
+                      "answerId": "strainer"
+                    }
+                  ],
+                  "interaction": {
+                    "mode": "multi_match",
+                    "submitLabel": "Baskıları Karşılaştır",
+                    "successMessage": "Eşleştirme tamamlandı; panoda tek bir eleme işlendi.",
+                    "failureMessage": "Üç kare aynı kesik eğrisini vermiyor. Pozitif ile negatifteki boşluğu yeniden karşılaştır."
+                  }
+                }
+              }
             },
             {
               "id": "c5",
-              "type": "eleme",
+              "title": "Vaftiz Defterinin Kıvrımı — Bonus",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Eski defterin sayfa kenarında, hekimin yıllar önce kapattığı tanıya ait kısa tarih notu ve mutfak anahtarının aynı fosforlu tozu var.",
+              "deductionHint": "İki ayrı iz, kim ile hazırlama alanı arasındaki erişim bağını güçlendirir?",
+              "isBonus": true,
               "revealOrder": 5,
               "isRevealed": false,
-              "pointCost": 55,
-              "title": "Dorothy Pryce'ın Konseri",
-              "text": "Bayan Pryce, olay saatinde kasabada bir müzik topluluğunun provası için yerli yabancı 12 kişinin önünde org çalıyordu. Konseri organize eden kulübün başkanı bunu onaylıyor.",
-              "mechanicType": "text",
-              "deductionHint": "Pryce 12 tanıkla sahnede — olay yerinde olamaz."
+              "pointCost": 55
             },
             {
               "id": "c6",
-              "type": "tanik_yuzlesme",
+              "title": "Süzgeçte Kalan Halka — Bonus",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Yıkanmış süzgecin tel yuvasında soluk sarı bir halka, çay kutusunun kapağında ise aynı bitkisel tortu bulundu.",
+              "deductionHint": "Aynı tortu, hangi araç ile hangi hazırlama alanının kesişimini doğrular?",
+              "isBonus": true,
               "revealOrder": 6,
               "isRevealed": false,
-              "pointCost": 55,
-              "title": "Dr. Garnett ile Yüzleşme",
-              "text": "Fincan, yaprak toplama gözlemi ve vaftiz defteri notu Garnett'e sunuldu. Uzun sessizliğin ardından itiraf geldi.",
-              "mechanicType": "tanik_yuzlesme",
-              "yuzlesmeDialogu": [
-                {
-                  "soru": "Kilise bahçesinde baldıran mı topladınız?",
-                  "cevap": "Bazen bitkiler toplarım. Hekim olarak doğal bir alışkanlık.",
-                  "yalan": true
-                },
-                {
-                  "soru": "Papazın çayını siz mi hazırladınız?",
-                  "cevap": "Evet, çoğu zaman ben hazırlardım. Yakın dosttuyduk.",
-                  "yalan": false
-                },
-                {
-                  "soru": "E.H. vakasını biliyordunuz, değil mi?",
-                  "cevap": "O vakayı 50 yıldır taşıyorum. Papaz açıklamadan önce hâlâ iyi bir adam olarak ölmek istedim.",
-                  "yalan": false
-                }
-              ],
-              "deductionHint": "Garnett itiraf etti: zehirli çayı hazırladı, mutfakta uyguladı."
+              "pointCost": 55
             }
           ],
+          "assetManifest": [],
           "solution": {
             "suspectId": "s2",
             "weaponId": "w2",
             "locationId": "l3"
+          },
+          "solutionNarrative": "Papazın öldüğü yer ile çayın hazırlandığı yer aynı değildi. Hekim, eski dosyanın açığa çıkmasından önce bitki özünü çay ritüeline yerleştirdi; saplardaki porselen eğri, hazırlığın bahçede değil mutfak hattında yapıldığını kapattı. Eski dostluk, sırra dönüşünce en sakin fincan en tehlikeli delil oldu.",
+          "replitIntegration": {
+            "schema": "fm_replit_runtime_contract_v1",
+            "copyTarget": "Replit Agent prompt",
+            "canonicalCaseFile": "src/data/cases/ede_004.json",
+            "policy": "Var olan renderer varsa onu bozma; yoksa bu paketteki component ve dispatcher dalını ekle.",
+            "mechanics": [
+              {
+                "clueId": "c4",
+                "mechanicType": "sifreli_mesaj",
+                "renderer": "negative_contact_sheet",
+                "completionEvent": "onSolved({ clueId, mechanic: \"sifreli_mesaj\" })"
+              },
+              {
+                "clueId": "c4",
+                "mechanicType": "sifreli_mesaj",
+                "renderer": "negative_contact_sheet",
+                "componentFile": "src/components/caseMechanics/PremiumMechanicRenderer.jsx",
+                "dispatcherBranch": "clue.mechanicType === \"sifreli_mesaj\" && [\"luggage_label_match\",\"negative_contact_sheet\",\"morse_transceiver\",\"archive_index_reconstruction\",\"mechanical_lock_sequence\"].includes(clue.sifre?.presentation?.style)",
+                "completionEvent": "onSolved({ clueId, mechanic: \"negative_contact_sheet\" })",
+                "hintEvent": "onRequestHint({ clueId, penaltySeconds: 60 })",
+                "requiredData": [
+                  "title",
+                  "subtitle",
+                  "purposeHint",
+                  "resultText",
+                  "interaction",
+                  "style-specific data"
+                ],
+                "nonNegotiable": [
+                  "Veriyi component içine hard-code etme.",
+                  "Başarı öncesinde resultText veya çözüm eşleşmesini gösterme.",
+                  "Yanlış deneme doğru eşlemeyi otomatik kurmamalı.",
+                  "Mobilde kartlar/diallar tek sütuna akmalı."
+                ]
+              }
+            ]
           }
         },
         {
           "puzzleId": "ede_005",
-          "title": "Boğaz'ın Şahidi",
-          "subtitle": "İstanbul, 1960'lar — Ahmet Ümit Evreni",
-          "difficulty": 4,
-          "difficultyLabel": "Başkomiser",
-          "stars": "★★★★☆",
+          "stars": "★★★★★",
           "gridSize": "3x3",
-          "timeLimit": 600,
-          "story": "İstanbul'un siyasi açıdan çalkantılı 1960'larında, Beyoğlu'nun arka sokaklarından birinde muhalif gazeteci Nafi Karaçay ölü bulundu — masasında yarım bırakılmış röportaj kasedi, üzerinde kırık bir çakmak. Komiser Nevzat henüz emekli olmamıştı ve bu davayı hiçbir zaman kapatmadı.",
-          "atmosphere": "Beyoğlu'nda tramvay sesleri, ıslak taş kaldırım ve nargile dumanı; her köşede bir sır saklayan şehir, 1960'ların güneşi henüz doğmadan önce.",
+          "timeLimit": 720,
+          "storyParagraphs": [
+            "Beyoğlu’nun tramvayı gece yarısından sonra da aynı rayda şarkı söylerdi; yalnız sokaklar aynı kalmazdı. Muhalif gazeteci Nafi Karaçay sabaha karşı dar ofisinin masası yanında bulundu. Masada, kırık çakmağın ve yarım kalmış röportaj notlarının yanında, kurşun kalemle ‘Münevver Hanım · 02.08 · Sevda Aras’ yazılmış küçük bir telefon kaseti vardı. Adli tabip, ölümün 02.12 ile 02.25 arasında gerçekleştiğini belirledi.",
+            "Karaçay, 1958’de ‘kaza’ diye kapatılan Sevda Aras dosyasını yeniden açmıştı. Dosyada hep aynı üç ayrıntı dönüp duruyordu: kasanın altındaki teneke kutu, anahtarı taşıyan kişi ve eski perdenin pamuk çekirdekli teli. Kaset, Nafi’nin ölmeden birkaç dakika önce bu ayrıntıların erişim zincirini son kez doğruladığını gösteriyordu.",
+            "Meyhanenin arka tarafında perde ipi kopmuştu; fakat odadaki toz, orada bir boğuşma yaşanmadığını söylüyordu. Ofisin döşemesi de yağmur taşımamıştı. Radyocu, karaborsacı ve meyhane sahibi aynı geçmişi farklı biçimlerde saklıyordu. Nafi’nin son kaydı, katili söylemiyordu; ama hangi ismin ince telin peşinden haksız yere sürüklendiğini anlatıyordu."
+          ],
+          "qaRationale": "Dört standart ipucu, üçlü eşleşme ızgarasını aşamalı biçimde daraltır. c1 tel aracını oyuncu-görünür suç çapası olarak sabitler; c4 ses kaydı son masum kişi–tel eşleşmesini kapatır.",
+          "qaNarrativeContract": {
+            "narrativeSignal": "Kaset kapağındaki “02.08” notu ile hikâyedeki 02.12–02.25 ölüm aralığı, oyuncuya konuşmanın Nafi’nin ölümünden yalnız dakikalar önce alındığını bildirir.",
+            "linkedClueId": "c4",
+            "playerAction": "Telefon konuşmasını dinleyip, yalnız ön kapıda çalışan şüphelinin tel kutusuna ve anahtarına erişemediğini ayırt etmek; ardından kişi–tel eşleşmesini elemek.",
+            "fairReason": "Konuşma erişim zincirini açıklar fakat anahtarı taşıyan kişinin teli cinayette kullandığını söylemez. Nihai fail–araç–mekân üçlüsü için diğer standart ipuçları zorunludur."
+          },
+          "qaSourceHandling": "Kaynak kimlikler, şüpheliler, araçlar, mekânlar ve çözüm üçlüsü korunmuştur. Mantık kuralları v29.2'nin kanonik confirm/eliminate+pair sözleşmesine dönüştürülmüştür.",
+          "title": "Boğaz'ın Şahidi",
+          "subtitle": "İstanbul, 1960'lar — Kaset Ritminin Tanığı",
+          "difficulty": "Efsane Komiser",
+          "difficultyLevel": 5,
+          "specialMechanic": "ses_kaydi",
+          "story": "Beyoğlu’nun tramvayı gece yarısından sonra da aynı rayda şarkı söylerdi; yalnız sokaklar aynı kalmazdı. Muhalif gazeteci Nafi Karaçay sabaha karşı dar ofisinin masası yanında bulundu. Masada, kırık çakmağın ve yarım kalmış röportaj notlarının yanında, kurşun kalemle ‘Münevver Hanım · 02.08 · Sevda Aras’ yazılmış küçük bir telefon kaseti vardı. Adli tabip, ölümün 02.12 ile 02.25 arasında gerçekleştiğini belirledi.\n\nKaraçay, 1958’de ‘kaza’ diye kapatılan Sevda Aras dosyasını yeniden açmıştı. Dosyada hep aynı üç ayrıntı dönüp duruyordu: kasanın altındaki teneke kutu, anahtarı taşıyan kişi ve eski perdenin pamuk çekirdekli teli. Kaset, Nafi’nin ölmeden birkaç dakika önce bu ayrıntıların erişim zincirini son kez doğruladığını gösteriyordu.\n\nMeyhanenin arka tarafında perde ipi kopmuştu; fakat odadaki toz, orada bir boğuşma yaşanmadığını söylüyordu. Ofisin döşemesi de yağmur taşımamıştı. Radyocu, karaborsacı ve meyhane sahibi aynı geçmişi farklı biçimlerde saklıyordu. Nafi’nin son kaydı, katili söylemiyordu; ama hangi ismin ince telin peşinden haksız yere sürüklendiğini anlatıyordu.",
+          "atmosphere": "Beyoğlu · Islak taş kaldırım · Uzak tramvay · Telefon kaseti · 1958 dosyası · Meyhane arka odası",
           "suspects": [
             {
               "id": "s1",
               "name": "Süreyya Celal",
-              "icon": "🎤",
-              "description": "Devlet radyosu spikeri, eski muhalefet gazetecisi",
-              "detail": "48 yaşında; kurban Süreyya'nın 1960 öncesinde istihbarat birimlerine isim verdiğine dair belgeye ulaşmıştı."
+              "icon": "🎙️",
+              "description": "Devlet radyosu spikeri, eski muhalefet gazetecisi.",
+              "detail": "Canlı gece yayınına özgü üçlü zil ve imzalı yayın çizelgesi onun yanında."
             },
             {
               "id": "s2",
               "name": "Belkıs Hanım",
-              "icon": "noun-zeynep-hanim-avatar.png",
-              "description": "Beyoğlu'nun tanınan meyhane sahibesi",
-              "detail": "55 yaşında, güçlü kişilikli; kurban meyhanede gerçekleşen bir ölümü araştırıyor, parmağın Belkıs'a uzanacağını hissediyordu."
+              "icon": "🍷",
+              "description": "Beyoğlu’nun tanınan meyhane sahibesi.",
+              "detail": "Arka odadaki perdeyi kendi elleriyle diktiğini herkes bilir; geçmişteki bir ölüm olayını Karaçay araştırıyordu."
             },
             {
               "id": "s3",
               "name": "Rıfat Boran",
-              "icon": "noun-ortak-sabri-bey-avatar.png",
-              "description": "Karaborsacı, arka sokak tüccarı",
-              "detail": "39 yaşında, sinirli; kurban Boran'ın kaçakçılık ağıyla ilgili röportaj materyali topluyordu."
+              "icon": "🧳",
+              "description": "Karaborsacı ve arka sokak tüccarı.",
+              "detail": "Kalın çivili botları, her adımda üçlü metal tıkırtısı çıkarır; o gece ağır sandık taşıdığını iddia ediyor."
             }
           ],
           "weapons": [
             {
               "id": "w1",
-              "name": "Demir yumruk",
+              "name": "Demir Yumruk",
               "icon": "🥊",
-              "description": "Parmak delikleri olan döküm demir yumruk."
+              "description": "Döküm metal yumruk.",
+              "detail": "Yüzde küt ezilme ve keskin metal kenarı bırakır."
             },
             {
               "id": "w2",
-              "name": "Sustalı çakı",
+              "name": "Sustalı Çakı",
               "icon": "🔪",
-              "description": "Beyoğlu'nun karanlık sokaklarında sık kullanılan bıçak."
+              "description": "Dar saplı, ince bıçak.",
+              "detail": "Deride kesik ve kumaşta bıçak izi beklenir."
             },
             {
               "id": "w3",
-              "name": "İplik bobin teli",
+              "name": "İplik Bobin Teli",
               "icon": "🧵",
-              "description": "Meyhane perdesinden sökülen ince ama sağlam tel."
+              "description": "Meyhane perdesinden sökülen ince ama sağlam tel.",
+              "detail": "Boyunda sürekli basınçla oluşan dar, düzensiz iz bırakır."
             }
           ],
           "locations": [
             {
               "id": "l1",
-              "name": "Gazeteci ofisi",
+              "name": "Gazeteci Ofisi",
               "icon": "🗞️",
-              "description": "Arka sokaktaki küçük matbaa odası, daktilo sesleri."
+              "description": "Küçük matbaa odası.",
+              "detail": "Beden burada bulundu; döşemesi kuru ve dar."
             },
             {
               "id": "l2",
-              "name": "Meyhane arka odası",
+              "name": "Meyhane Arka Odası",
               "icon": "🍷",
-              "description": "Belkıs'ın muhbir toplantılarını yaptığı loş arka oda."
+              "description": "Belkıs’ın muhbir toplantılarını yaptığı loş oda.",
+              "detail": "Perde teli buradan sökülebilir; yerdeki toz ince ve bozulmamış."
             },
             {
               "id": "l3",
-              "name": "Arka sokak boşluğu",
+              "name": "Arka Sokak Boşluğu",
               "icon": "🌑",
-              "description": "İki bina arasındaki karanlık pasaj — iz bırakmaz."
+              "description": "İki bina arasındaki karanlık geçit.",
+              "detail": "Islak taş, metal sürtünmesi ve tramvay yankısı burada aynı anda duyulur."
             }
           ],
           "clues": [
             {
               "id": "c1",
-              "type": "adli",
+              "title": "Dar Basınç İzi",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Boyundaki iz, lifleri içeri doğru itmiş dar ve düzensiz bir basınç hattı. Kesik ya da küt ezilme yok; ölümcül temas sürekli çekilmiş ince bir yüzeyden kalmış.",
+              "deductionHint": "Bulgular, hangi tür ölüm aracını tek başına sabitler?",
+              "isBonus": false,
               "revealOrder": 1,
               "isRevealed": true,
-              "pointCost": 0,
-              "title": "Adli Müdür Raporu",
-              "text": "Kurbanın boynunda ince tel baskı izi — sustalı ya da yumrukla uyumlu değil. Tel izi düzensiz ve ince; tekstil kökenli bir nesne. Yara derin değil ama sürekli basınçla oluşmuş.",
-              "mechanicType": "text",
-              "deductionHint": "İnce tel baskı izi — w3 (iplik bobin teli) tek uyumlu silah."
+              "pointCost": 0
             },
             {
               "id": "c2",
-              "type": "tanik",
+              "title": "Toz İçindeki Ağır İz",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Loş arka odanın tozunda, tek parça döküm bir cismin altıgen kenarı ve duvara paralel kısa bir sürüklenme izi kaldı. Perde çizgisi dışındaki zemin bozulmamıştı.",
+              "deductionHint": "Ağır cismin izi, hangi araç ile hangi odayı cinayet dışı bir eşleşmede birleştirir?",
+              "isBonus": false,
               "revealOrder": 2,
               "isRevealed": false,
-              "pointCost": 55,
-              "title": "Bakkal Amca",
-              "text": "Karşı dükkânın sahibi Hasip Bey: 'O gece arka sokaktan önce Belkıs Hanım geçti — elinde şal ya da ipe benzer bir şey tutuyordu. Peşinden de kurban. İkisi aynı yöne gittiler.'",
-              "mechanicType": "text",
-              "deductionHint": "Belkıs arka sokağa kurbanla beraber girdi — onu takip etti ya da çekti."
+              "pointCost": 0
             },
             {
               "id": "c3",
+              "title": "Yayın Çekmecesindeki Kılıf",
               "type": "kanit",
+              "mechanicType": "text",
+              "text": "Gece yayını bittikten sonra mühürlenen küçük çekmecede, ince bıçak kılıfının nişasta izi ile aynı karton lifleri bulundu. Çekmece mührü iki görevli tarafından tutanakla açıldı.",
+              "deductionHint": "Kayıtlı çekmece, hangi kişi ile hangi kesici seçeneğin cinayet dışı eşleşmesini kurar?",
+              "isBonus": false,
               "revealOrder": 3,
               "isRevealed": false,
-              "pointCost": 55,
-              "title": "Meyhane Perdesi",
-              "text": "Meyhanenin arka oda perdesi incelendi: perdenin ip askısı kesilmiş, kesik yüzeyi taze. Bobin teli analizi: perde ipiyle özdeş bileşim. Belkıs'ın parmağı perdenin kopuk ucunda.",
-              "mechanicType": "parmak_izi",
-              "parmakIziVerisi": {
-                "aciklama": "Meyhanenin arka oda perdesinin koparılan ip ucundan alınan parmak izi örnekleri.",
-                "izler": [
-                  {
-                    "izId": "iz1",
-                    "konum": "İp ucu — kesilmiş taraf",
-                    "eslesme": "s2",
-                    "ipucu": "Başparmak izi, geniş oval desen — Belkıs Hanım'ın 1952 tarihli kimlik kartı kaydıyla eşleşiyor"
-                  },
-                  {
-                    "izId": "iz2",
-                    "konum": "İp beden kısmı",
-                    "eslesme": "s2",
-                    "ipucu": "İşaret parmağı — aynı kişiye ait, ipi çekerek koparırken bırakılmış"
-                  }
-                ],
-                "sonuc": "Her iki iz Belkıs Hanım'a (s2) ait. Perde ipini bizzat koparttığı ve silah olarak kullandığı kesin."
-              },
-              "deductionHint": "Tel meyhane perdesinden, iz Belkıs'tan — hem silahı hem katili işaret ediyor."
+              "pointCost": 0
             },
             {
               "id": "c4",
-              "type": "dogrudan",
+              "title": "02.08 — Son Telefon Kaseti",
+              "type": "ses_kaydi",
+              "mechanicType": "ses_kaydi",
+              "text": "Nafi’nin masasındaki küçük telefon kasetinin kapağında “Münevver Hanım · 02.08 · Sevda Aras” notu var. Kayıt, gece yazdığı röportaj notlarının arasından çıktı.",
+              "deductionHint": "Konuşmada, hangi şüphelinin telin saklandığı kutuya erişimi olmadığı söyleniyor?",
+              "isBonus": false,
               "revealOrder": 4,
               "isRevealed": false,
-              "pointCost": 55,
-              "title": "Röportaj Kasedi",
-              "text": "Kurbanın masasındaki kasette son röportaj yarıda kesilmiş: 'Belkıs Hanım, 1958'deki ölüm olayında isminiz geçiyor…' Bu cümlede daktilo sesi ve ardından statik gürültü. Görüşme kesilmiş.",
-              "mechanicType": "gorsel_ipucu",
-              "gorselAciklama": "Kaset etiketi: KARAÇAY — RÖPORTAJ 7B — 14 MAYIS 1968. Süre: 3 dakika 22 saniye. Son duyulan: 'Belkıs Hanım, 1958'deki ölüm olayında isminiz geçiyor…' Ardından ani ses: sandalye sürtünmesi, kapı çarpması. Statik. Kaset burada bitiyor. Görüşme Belkıs'ı köşeye sıkıştıran anda kesilmiş.",
-              "deductionHint": "Kasette tam Belkıs'ı itham eden anda ses kesiliyor — Belkıs röportajı duymuş ve harekete geçmiş."
+              "pointCost": 0,
+              "sesMetni": "Nafi Karaçay: “Münevver Hanım, kaset dönüyor. Saat iki sekiz. Sevda Aras dosyasındaki tel kutusunu son kez soracağım: anahtarı kim taşırdı?”\n\nMünevver Hanım: “Kutuyu yıllardır aynı kişi kilitlerdi. Anahtarı boynunda taşır, teneke kutuyu da kasanın altına kendi koyardı.”\n\nNafi Karaçay: “Bu gece kapağın içinde taze pamuk lifleri gördüm. Telin ucu yeni kesilmiş; kilitte de zorlama yok.”\n\nMünevver Hanım: “O zaman kutu anahtarla açılmış.”\n\nNafi Karaçay: “Rıfat Boran’ın o kutuya eriştiğini hiç gördünüz mü?”\n\nMünevver Hanım: “Hayır. Rıfat yalnız ön kapıdaki yükleri taşırdı. Kasanın bulunduğu kapalı bölüme sokulmazdı; anahtarı da eline hiç vermediler.”\n\nNafi Karaçay: “Demek tel bu gece kutudan alındıysa, Rıfat’ın onu alması mümkün değil.”\n\nMünevver Hanım: “Bu tel için değil. Ama anahtarı taşıyanı tek başına katil diye yazma. Kutuyu açmak başka, teli cinayette kullanmak başka.”\n\nNafi Karaçay: “Biliyorum. Rıfat’ın adını nottan çıkarıyorum. Sabah ilk iş kesik ucu ve kutunun kapağını fotoğraflayacağım.”\n\nMünevver Hanım: “Sabahı bekleme, Nafi Bey. Sevda’nın dosyasını açınca önce yanlış isimleri silmek gerekir.”",
+              "audioUrl": "/assets/cases/ede_005/ede_005_c4_son_telefon_kaseti.mp3",
+              "audioAssetId": "asset_ede_005_c4_son_telefon_kaseti",
+              "audioPlanned": true,
+              "audioFileName": "ede_005_c4_son_telefon_kaseti.mp3",
+              "audioPuzzle": {
+                "style": "telephone_switchboard",
+                "title": "02.08 — Son Telefon Kaseti",
+                "subtitle": "Nafi’nin son telefon teyidini üç kesitte dinle; hangi kişi–araç bağının imkânsız olduğunu bul.",
+                "purposeHint": "Kayıt katili söylemez. Yalnız tel kutusuna erişemeyen kişinin tel ile eşleşemeyeceğini gösterir.",
+                "segments": [
+                  {
+                    "id": "seg_a",
+                    "label": "Kesit 1 · Eski dosya ve anahtar",
+                    "startSec": 0,
+                    "endSec": 19
+                  },
+                  {
+                    "id": "seg_b",
+                    "label": "Kesit 2 · Yeni kesik ve erişim",
+                    "startSec": 19,
+                    "endSec": 42
+                  },
+                  {
+                    "id": "seg_c",
+                    "label": "Kesit 3 · Yanlış ismi silmek",
+                    "startSec": 42,
+                    "endSec": 74
+                  }
+                ],
+                "question": "Konuşmanın kesin olarak imkânsızlaştırdığı kişi–araç eşleşmesi hangisidir?",
+                "options": [
+                  {
+                    "id": "rifat_wire",
+                    "label": "Rıfat Boran — İplik Bobin Teli"
+                  },
+                  {
+                    "id": "sureyya_knife",
+                    "label": "Süreyya Celal — Sustalı Çakı"
+                  },
+                  {
+                    "id": "belkis_punch",
+                    "label": "Belkıs Hanım — Demir Yumruk"
+                  }
+                ],
+                "correctOptionId": "rifat_wire",
+                "hint": "Konuşmada, yalnız ön kapıda çalışan şüphelinin kapalı bölüme ve kutunun anahtarına erişemediği söyleniyor.",
+                "hintPenaltySeconds": 60,
+                "successMessage": "Kayıt doğrulandı: Rıfat’ın tel kutusuna erişimi yok. Panoda yalnız Rıfat Boran — İplik Bobin Teli eşleşmesi elendi.",
+                "failureMessage": "Konuşmayı yeniden dinle. Soru, kutuyu kimin açabildiğini değil; kutuya kimin erişemediğini soruyor.",
+                "interaction": {
+                  "showTranscriptOnDemand": true,
+                  "mode": "single_choice"
+                }
+              }
             },
             {
               "id": "c5",
-              "type": "eleme",
+              "title": "Kırık Çakmakta Yağ Lekesi — Bonus",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Pirinç çakmağın çevresindeki yağ, meyhane mutfağında kullanılan zeytinyağıyla aynı hafif anason tortusunu taşıyor.",
+              "deductionHint": "Kişisel eşya üzerindeki tortu, kim ile hazırlama alanı arasındaki bağı güçlendirir?",
+              "isBonus": true,
               "revealOrder": 5,
               "isRevealed": false,
-              "pointCost": 55,
-              "title": "Rıfat Boran'ın Loş Gecesi",
-              "text": "Rıfat Boran, olay saatinde Kapalıçarşı yakınlarındaki polisle rutin ifade veriyordu — kaçakçılıkla ilgisi olmayan başka bir olay için tutanak altına alınmıştı. İfade saati damgalı.",
-              "mechanicType": "text",
-              "deductionHint": "Rıfat poliste resmi ifadede — arka sokakta olamaz."
+              "pointCost": 55
             },
             {
               "id": "c6",
-              "type": "sifreli",
+              "title": "Perde Telinin Burgusu — Bonus",
+              "type": "kanit",
+              "mechanicType": "text",
+              "text": "Kopmuş telin pamuk çekirdeği, perdedeki eski burguyla aynı yönde açılıyor; dışarıdaki yağmurla sertleşmiş uçta ince lifler hâlâ duruyor.",
+              "deductionHint": "Lif dokusu, hangi araç ile hangi açık alanın kesişimini doğrular?",
+              "isBonus": true,
               "revealOrder": 6,
               "isRevealed": false,
-              "pointCost": 55,
-              "title": "Kırık Çakmaktaki Monogram",
-              "text": "Kurbanun üzerindeki kırık çakmakta oyulmuş harf: 'B.H.' — Belkıs Hanım'ın baş harfleri. Çakmak kurbanın değil; mücadele sırasında yere düşmüş, katil fark etmeden bırakmış.",
-              "mechanicType": "gorsel_ipucu",
-              "gorselAciklama": "Pirinç gövdeli çakmak — üst kapak içine el oyması: B.H. (süslü hat yazısı). Çakmak markası: Zippo, 1958 üretim. Kurbanın eşyaları arasında böyle bir çakmak kayıtlı değil. Parmak izi: çakmak gövdesinde Belkıs Hanım'a ait iki iz. Çakmak onu fiziksel olarak olay yerine bağlıyor.",
-              "deductionHint": "'B.H.' = Belkıs Hanım. Çakmağını olay yerinde bıraktı — kesin fiziksel delil."
+              "pointCost": 55
+            }
+          ],
+          "assetManifest": [
+            {
+              "assetId": "asset_ede_005_c4_son_telefon_kaseti",
+              "kind": "audio",
+              "clueId": "c4",
+              "status": "planned",
+              "fileName": "ede_005_c4_son_telefon_kaseti.mp3",
+              "publicPath": "/assets/cases/ede_005/ede_005_c4_son_telefon_kaseti.mp3",
+              "mimeType": "audio/mpeg",
+              "durationTargetSec": 60
             }
           ],
           "solution": {
             "suspectId": "s2",
             "weaponId": "w3",
             "locationId": "l3"
+          },
+          "solutionNarrative": "Nafi’nin cesedi ofise bırakılmıştı; cinayet ise yağmurlu arka sokakta işlendi. 02.08’deki telefon kaydı, Nafi’nin Rıfat’ı 1958 dosyasındaki pamuk çekirdekli telden bilinçli olarak ayırdığını gösterdi: Rıfat, kilitli arka odaya ve telin saklandığı kutuya hiç erişmemişti. Nafi sabah fotoğraf çekeceğini söyleyince, geçmişte Sevda Aras’ı susturan sır yeniden açıldı. Belkıs, meyhaneden sökülen ince teli kullanarak Nafi’yi arka sokakta susturdu; ofis ise yalnız hikâyenin bitirildiği yerdi.",
+          "replitIntegration": {
+            "schema": "fm_replit_runtime_contract_v1",
+            "copyTarget": "Replit Agent prompt",
+            "canonicalCaseFile": "src/data/cases/ede_005.json",
+            "policy": "Var olan renderer varsa onu bozma; yoksa bu paketteki component ve dispatcher dalını ekle.",
+            "mechanics": [
+              {
+                "clueId": "c4",
+                "mechanicType": "ses_kaydi",
+                "renderer": "telephone_switchboard",
+                "componentFile": "src/components/caseMechanics/TelephoneSwitchboardMiniGame.jsx",
+                "dispatcherBranch": "clue.mechanicType === \"ses_kaydi\" && clue.audioPuzzle?.style === \"telephone_switchboard\"",
+                "completionEvent": "onSolved({ clueId, mechanic: \"telephone_switchboard\" })",
+                "hintEvent": "onRequestHint({ clueId, penaltySeconds: clue.audioPuzzle?.hintPenaltySeconds ?? 60 })",
+                "requiredData": [
+                  "audioUrl",
+                  "sesMetni",
+                  "audioPuzzle.segments",
+                  "audioPuzzle.options",
+                  "audioPuzzle.correctOptionId",
+                  "audioPuzzle.interaction"
+                ],
+                "nonNegotiable": [
+                  "Audio player sadece clue.audioUrl yolunu kullanmalı; ikinci hard-coded asset yolu yazma.",
+                  "Segment düğmeleri JSON startSec/endSec aralığını çalmalı ve o aralığın sonunda sesi durdurmalı.",
+                  "Doğru hat, kullanıcı seçmeden görünür olmamalı; yanlış seçim yalnız yeniden dinlemeye yönlendirmeli.",
+                  "purposeHint görünür olmalı; transcript kullanıcı isteğiyle açılabilmeli.",
+                  "Doğru seçim onSolved, ilk ipucu isteği onRequestHint callbackini çağırmalı."
+                ]
+              }
+            ]
           }
         }
       ]

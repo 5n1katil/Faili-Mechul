@@ -1,0 +1,300 @@
+/* ============================================================
+ *  FAİLİ MEÇHUL — REPLIT TEK SEFERLİK ENTEGRASYON PAKETİ
+ *  Bu metni Replit Agent sohbetine TEK PARÇA olarak yapıştır.
+ *  Görev: sadece JSON kaydetme. Vaka verisini mevcut kaynakta
+ *  yükle, aşağıdaki eksik renderer altyapısını ekle ve çalıştır.
+ * ------------------------------------------------------------
+ *  Vaka: Son Token · puzzleId=dij_005
+ *  1) Önce mevcut vaka veri kaydını ve mini-oyun dispatcherını bul.
+ *  2) Var olan rendererları bozma; yalnız eksik olan dalı ekle.
+ *  3) Aşağıdaki vaka JSON’unu uygulamanın KANONİK case kaynağına ekle.
+ *  4) Kod değişikliklerinden sonra aşağıdaki kabul testlerini tarayıcıda yap.
+ *  5) Sadece açıklama yazma: dosyaları gerçekten güncelle ve test sonucunu bildir.
+ * ============================================================ */
+
+===== ZORUNLU KABUL TESTLERİ =====
+1. Eski klasik sifreli_mesaj, parmak_izi, profil_sentezi ve genel ses_kaydi rendererları regresyona uğramaz.
+===== TEST LİSTESİ SONU =====
+
+===== KANONİK VAKA VERİSİ — mevcut case registry’de dij_005 olarak ekle/değiştir =====
+{
+  "puzzleId": "dij_005",
+  "stars": "★★★★★",
+  "gridSize": "3x3",
+  "timeLimit": 720,
+  "qaRationale": {
+    "c1": "L3 cinayet mahalli semantik çapa; C-X s1–l1 ilişkisidir.",
+    "c2": "M-Q etiketi s3’ü w2 ile somut olarak eşler.",
+    "c3": "Yerel donanım anahtarı kısıtı s1–w1'i eler.",
+    "c4": "Port graph, yönetici ön koşulu olmayan s3’ün l3 ile uyumsuz olduğunu verir.",
+    "leaveOneOut": "c1/c4 kaldırılırsa s2 l3’te tek kalmaz; c2/c3 kaldırılırsa w1 s2’ye tek kalmaz."
+  },
+  "qaNarrativeContract": {
+    "narrativeClue": "Zeta’nın yorumundaki ‘hangi ön koşulu zorunlu kıldığı’ ifadesi, oyuncuya sıra dizmek yerine port bağımlılıklarını bağlama talimatı verir.",
+    "linkedClueId": "c4",
+    "playerVisibleBridge": "‘Komutun sahibi, hangi ön koşulu zorunlu kıldığında görünür.’"
+  },
+  "title": "Son Token",
+  "subtitle": "Karanlık Ağ · VoxelCity Killswitch Dosyası",
+  "difficulty": "Efsane Komiser",
+  "difficultyLevel": 5,
+  "specialMechanic": "şifreli_mesaj · iot_command_chain",
+  "story": "VoxelCity’nin kurucusu Zeta Zero, gece 02.47’de ev otomasyon çekirdeğindeki tıbbi bağlantı sustuğunda öldü. Aynı saniyede, şirketin ana cüzdanından milyonlarca dolar değerindeki nadir tokenlar başka bir adrese hareket etti. Olay, fiziksel bir baskın gibi görünmüyordu; evde kırık kapı, mücadele izi ya da açık pencere yoktu.\n\nÜç dijital kimlik soruşturmanın merkezindeydi: panik transferleriyle iz bırakan CipherX, platformun güvenlik katmanını yöneten NullPtr ve kopya koleksiyonlarıyla bilinen MetaQueen. Her biri tokenlara ulaşabiliyordu; fakat yalnız biri cihaz komutu ile transferi aynı gizli sistem üzerinden birleştirebilirdi.\n\nZeta’nın güvenlik günlüklerinde yarım kalmış bir yorum bulundu: “Komutun sahibi, hangi düğümden çıktığında değil; hangi ön koşulu zorunlu kıldığında görünür.” Bu dosyada sırayı değil, birbirini mümkün kılan bağlantıları çözmek gerekiyordu. Her log satırı tek başına masumdu; fakat doğru ön koşullarla bağlandığında birinin yetkisini görünür kılıyordu.",
+  "atmosphere": "Evin ışıkları yanıyordu. Yalnız kalp ritim grafiğinde, bir kişinin hayatını başka bir cüzdana çeviren tek bir boşluk vardı.",
+  "suspects": [
+    {
+      "id": "s1",
+      "name": "CipherX",
+      "icon": "🪙",
+      "description": "Panik halinde tokenlarını farklı cüzdanlara dağıtan yüksek riskli koleksiyoncu. Profil kodu CX-1; çoklu cüzdan imzalarıyla çalışan yüksek riskli koleksiyoncu.",
+      "detail": "C-X cüzdanı kurbanın ev ofisinden işlem yapar. Para hareketleri çok sayıda, güvenlik düğümü erişimi sınırlı."
+    },
+    {
+      "id": "s2",
+      "name": "NullPtr",
+      "icon": "🛡️",
+      "description": "Platform güvenlik yöneticisi; erişim kontrollerini ve VPN düğümlerini yönetir. Profil kodu NP-7; erişim kontrolleri ve güvenli ağ düğümlerini yönetir.",
+      "detail": "SEC-07 yönetici doğrulama rolü yalnız ona atanmış. Kod yorumlarında zaman zaman NP_dev imzası kullanır."
+    },
+    {
+      "id": "s3",
+      "name": "MetaQueen",
+      "icon": "👑",
+      "description": "Kopya koleksiyonlarıyla anılan, yaratıcı zincir manipülasyonlarına yatkın girişimci. Profil kodu MQ-3; kopya koleksiyonlarıyla ilişkili zincir manipülasyonlarına yatkın.",
+      "detail": "M-Q soğutma paketiyle cihaz donanımı taşıdığı görülür; akıllı ev erişimi için doğrudan yönetici rolü yoktur."
+    }
+  ],
+  "weapons": [
+    {
+      "id": "w1",
+      "name": "Programlı elektrik kesintisi",
+      "icon": "⚡",
+      "description": "Cihazın enerji/bellek zincirini yazılımsal komutla kesen uzaktan yöntem. Yöntem kodu PWR-0; cihazın enerji/bellek zincirini uzaktan yazılımla keser.",
+      "detail": "Fiziksel sigorta atması değil; doğru ön koşullarla çalışan kontrollü bir kesintidir."
+    },
+    {
+      "id": "w2",
+      "name": "Zehirli soğutma sıvısı",
+      "icon": "🧪",
+      "description": "Cihaz kasasına sızdırılabilecek toksik/iletken sıvı. Yöntem kodu CLT-2; kasaya sızdırılabilecek iletken bakım sıvısı.",
+      "detail": "Biyolojik iz bırakır; ağ komutuyla aynı imzayı üretmez."
+    },
+    {
+      "id": "w3",
+      "name": "Fiziksel baskın",
+      "icon": "🥊",
+      "description": "Eve girip doğrudan müdahale etmeye dayanan yöntem. Yöntem kodu RUSH-3; kapalı alana fiziksel giriş gerektiren müdahale.",
+      "detail": "Kapı, pencere ve iç sensörlerde bu yöntemi destekleyen zorlanma izi yoktur."
+    }
+  ],
+  "locations": [
+    {
+      "id": "l1",
+      "name": "Kurbanın ev ofisi",
+      "icon": "🏠",
+      "description": "Zeta’nın çalışma masası, fiziksel cüzdanları ve yerel ağ terminalinin bulunduğu oda. Alan kodu DESK-1; yerel anahtarların ve çalışma terminalinin bulunduğu oda.",
+      "detail": "C-X cüzdan oturumları bu odadaki yerel anahtardan imzalanır."
+    },
+    {
+      "id": "l2",
+      "name": "VoxelCity sunucu çiftliği",
+      "icon": "🗄️",
+      "description": "Token altyapısının ve yedek cüzdanların saklandığı veri merkezi. Alan kodu FARM-2; token altyapısı ve yedek cüzdanların tutulduğu veri tesisi.",
+      "detail": "Soğutma paketleri ve uygulama testleri burada izlenir."
+    },
+    {
+      "id": "l3",
+      "name": "Akıllı ev kontrol merkezi",
+      "icon": "📡",
+      "description": "Evin IoT yönlendiricisi ile tıbbi cihaz köprüsünün aynı panelde birleştiği kapalı merkez. Alan kodu HUB-3; IoT yönlendiricisi ile tıbbi cihaz köprüsünün aynı panelde birleştiği kapalı çekirdek.",
+      "detail": "Komut, doğrulama ve Bluetooth geçişi burada aynı sistem günlüğüne düşer."
+    }
+  ],
+  "clues": [
+    {
+      "id": "c1",
+      "title": "Yerel Anahtar ve Kapalı Çekirdek",
+      "type": "dogrudan",
+      "mechanicType": "text",
+      "text": "Adli mühendisler, Zeta’nın ölüm sürecinin ev otomasyonuna bağlı kapalı bir çekirdekte başladığını belirledi. Aynı dakikada CX-1 yerel anahtarı DESK-1 terminalinde aralıksız imza veriyordu.",
+      "deductionHint": "Ölümün başlatıldığı alanı not et; CX-1 yerel anahtarı hangi terminal alanına bağlı görünüyor?",
+      "isBonus": false,
+      "revealOrder": 1,
+      "isRevealed": true,
+      "pointCost": 0
+    },
+    {
+      "id": "c2",
+      "title": "Yerel Anahtarın Çakışan İmzası",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "CX-1 yerel donanım anahtarı, olay dakikasında ardışık token imzalarıyla kilitli kaldı. Aynı anahtar PWR-0 yönteminin gerektirdiği yönetici paketi paralel olarak üretemez.",
+      "deductionHint": "Kesintisiz yerel kullanım, CX-1 profilini hangi uzaktan yöntemden dışarıda bırakır?",
+      "isBonus": false,
+      "revealOrder": 2,
+      "isRevealed": false,
+      "pointCost": 0
+    },
+    {
+      "id": "c3",
+      "title": "MQ-3 Bakım Onayı",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "MQ-3 etiketi, CLT-2 kasasının ikinci bakım onay imzasında görünüyor. İmza zincirindeki sertifika numarası, kartuş kilidinin açıldığı vardiya tutanağıyla eşleşiyor.",
+      "deductionHint": "Bakım onayını karşılaştır; MQ-3 etiketi hangi kartuş yöntemiyle eşleşiyor?",
+      "isBonus": false,
+      "revealOrder": 3,
+      "isRevealed": false,
+      "pointCost": 0
+    },
+    {
+      "id": "c4",
+      "title": "IoT Komut Zinciri",
+      "type": "sifreli",
+      "mechanicType": "sifreli_mesaj",
+      "text": "Kurtarılan günlükte dört sistem düğümü, giriş ve çıkış portlarıyla çizilmişti. Zeta’nın yorumu, çizimin saat sırası için değil, hangi ön koşulun hangi geçişi açtığını görmek için bırakıldığını söylüyordu.",
+      "deductionHint": "Portları bağla; çözüm NP-7 etiketini hangi veri alanından dışarıda bırakır?",
+      "isBonus": false,
+      "revealOrder": 4,
+      "isRevealed": false,
+      "pointCost": 0,
+      "sifre": {
+        "sifreleTuru": "IoT komut bağı",
+        "sifrelenmis": "AUTH → BLE → DEVICE → WALLET",
+        "cozulmus": "BAG-07",
+        "answerAliases": [
+          "Bag07",
+          "Chain07",
+          "SEC07"
+        ],
+        "cozumIpucu": "Bir düğüm yalnız kendi ‘çıktı’ etiketini sonraki düğümün ‘girdi’ etiketiyle eşleştirirse bağlanabilir. Her düğüm bir kez kullanılmalı; doğrudan cüzdana atlamak geçersizdir.",
+        "aciklama": "Kurulan bağlar, NP-7 yolunun FARM-2 geçişini açan ön koşulu taşımadığını gösteriyor.",
+        "presentation": {
+          "style": "iot_command_chain",
+          "title": "IoT Komut Zinciri",
+          "subtitle": "Düğümlerin çıkış portlarını, sonraki düğümün gerekli girişine bağla. Her bağlantı bir ön koşul yaratır.",
+          "purposeHint": "Doğru komut bağı, NP-7 yolunun FARM-2 geçişiyle uyumsuz kaldığını gösterir; sonucu ızgarada kişi–mekân elemesi olarak kullan.",
+          "resultText": "Komut bağı, NP-7 yolunun FARM-2 geçişiyle uyumsuz kaldığını gösterir.",
+          "interaction": {
+            "mode": "port_graph",
+            "submitLabel": "Komut Bağlarını Doğrula",
+            "successMessage": "Ön koşullar kesintisiz bağlandı.",
+            "failureMessage": "En az bir port, kendisinden sonra gelen düğümün ön koşulunu karşılamıyor."
+          },
+          "nodes": [
+            {
+              "id": "auth",
+              "label": "VPN AUTH",
+              "input": "SEC-07 token",
+              "output": "yetkili oturum"
+            },
+            {
+              "id": "ble",
+              "label": "BLE HANDSHAKE",
+              "input": "yetkili oturum",
+              "output": "cihaz kanalı"
+            },
+            {
+              "id": "device",
+              "label": "DEVICE CUT",
+              "input": "cihaz kanalı",
+              "output": "olay imzası"
+            },
+            {
+              "id": "wallet",
+              "label": "WALLET TRIGGER",
+              "input": "olay imzası",
+              "output": "token transferi"
+            }
+          ],
+          "allowedEdges": [
+            [
+              "auth",
+              "ble"
+            ],
+            [
+              "ble",
+              "device"
+            ],
+            [
+              "device",
+              "wallet"
+            ],
+            [
+              "auth",
+              "wallet"
+            ],
+            [
+              "ble",
+              "wallet"
+            ],
+            [
+              "device",
+              "ble"
+            ]
+          ],
+          "correctEdges": [
+            [
+              "auth",
+              "ble"
+            ],
+            [
+              "ble",
+              "device"
+            ],
+            [
+              "device",
+              "wallet"
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "id": "c5",
+      "title": "Çiftlik Test Dolabı",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "MQ-3 etiketi, FARM-2 giriş kaydında ikinci çalışma alanındaki dolaba giriş yapan tek bireysel sertifika olarak görünüyor.",
+      "deductionHint": "Bu ek giriş kaydı, MQ-3 etiketini hangi çalışma alanına bağlar?",
+      "isBonus": true,
+      "revealOrder": 5,
+      "isRevealed": false,
+      "pointCost": 75
+    },
+    {
+      "id": "c6",
+      "title": "CX-1 Kapı Sensörü Notu",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "DESK-1 koridorundaki kapı sensörü, CX-1 anahtarına ait tokmağın RUSH-3 tipi giriş senaryosuyla aynı vardiyada işlendiğini kaydetti. Kayıt, fiziksel erişim işaretini tek başına cinayetle eşleştirmez; yalnız ızgara için ek bir doğrulama sunar.",
+      "deductionHint": "Bu ek sensör kaydı, CX-1 anahtarını hangi giriş biçimiyle doğrular?",
+      "isBonus": true,
+      "revealOrder": 6,
+      "isRevealed": false,
+      "pointCost": 80
+    }
+  ],
+  "assetManifest": [],
+  "solution": {
+    "suspectId": "s2",
+    "weaponId": "w1",
+    "locationId": "l3"
+  },
+  "solutionNarrative": "NullPtr, Zeta’nın NP_dev imzalı arka kapıyı silmek üzere olduğunu biliyordu. SEC-07 doğrulamasıyla akıllı ev köprüsüne girdi, Bluetooth cihaz kanalını açtı ve kesinti komutunu token transferinin tetikleyicisine bağladı. CipherX yerel ofiste kendi panik transferlerine kilitlenmiş, MetaQueen ise soğutma ekipmanıyla başka bir eksende kalmıştı. Portlar doğru sırayla değil, doğru ön koşulla birleştiğinde; programlı kesinti, kontrol merkezi ve NullPtr aynı cinayet hattında birleşti.",
+  "replitIntegration": {
+    "schema": "fm_replit_runtime_contract_v1",
+    "copyTarget": "Replit Agent prompt",
+    "canonicalCaseFile": "src/data/cases/dij_005.json",
+    "policy": "Var olan renderer varsa onu bozma; yoksa bu paketteki component ve dispatcher dalını ekle.",
+    "mechanics": [
+      {
+        "clueId": "c4",
+        "mechanicType": "sifreli_mesaj",
+        "renderer": "iot_command_chain",
+        "completionEvent": "onSolved({ clueId, mechanic: \"sifreli_mesaj\" })"
+      }
+    ]
+  }
+}
+===== VAKA VERİSİ SONU =====

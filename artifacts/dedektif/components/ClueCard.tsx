@@ -33,6 +33,7 @@ const AUDIO_ASSETS: Record<string, ReturnType<typeof require>> = {
   rc_002_c3_hat_a: require("../assets/audio/cases/rc_002/rc_002_c3_hat_a.mp3"),
   rc_002_c3_hat_b: require("../assets/audio/cases/rc_002/rc_002_c3_hat_b.mp3"),
   rc_002_c3_hat_c: require("../assets/audio/cases/rc_002/rc_002_c3_hat_c.mp3"),
+  asset_ede_005_c4_son_telefon_kaseti: require("../assets/audio/cases/ede_005/ede_005_c4_son_telefon_kaseti.mp3"),
 };
 
 const FINGERPRINT_IMAGES: Record<string, ReturnType<typeof require>> = {
@@ -153,24 +154,34 @@ function TelephoneSwitchboardBlock({
   const [wrong, setWrong] = useState(false);
   const [hintRevealed, setHintRevealed] = useState(false);
   const [transcriptOpen, setTranscriptOpen] = useState(false);
+  const stopAtEndMsRef = useRef<number | null>(null);
 
   useEffect(() => {
     return () => { sound?.unloadAsync(); };
   }, [sound]);
 
-  const playSegment = async (seg: { id: string; label?: string; audioAssetId?: string }) => {
+  const playSegment = async (seg: { id: string; label?: string; audioAssetId?: string; startSec?: number; endSec?: number }) => {
     try {
-      if (sound) { await sound.unloadAsync(); setSound(null); }
+      if (sound) { await sound.stopAsync().catch(() => {}); await sound.unloadAsync(); setSound(null); }
       setActiveSegId(seg.id);
-      const assetSource = seg.audioAssetId ? AUDIO_ASSETS[seg.audioAssetId] as import("expo-av").AVPlaybackSource : null;
-      if (!assetSource) return;
+      const usesMainAsset = !seg.audioAssetId && !!clue.audioAssetId && typeof seg.startSec === "number";
+      const assetKey = seg.audioAssetId ?? (usesMainAsset ? clue.audioAssetId! : undefined);
+      const assetSource = assetKey ? AUDIO_ASSETS[assetKey] as import("expo-av").AVPlaybackSource : null;
+      if (!assetSource) { setActiveSegId(null); return; }
+      stopAtEndMsRef.current = (usesMainAsset && typeof seg.endSec === "number") ? seg.endSec * 1000 : null;
+      const startMs = usesMainAsset ? (seg.startSec! * 1000) : 0;
       await Audio.setAudioModeAsync({ playsInSilentModeIOS: true });
       const { sound: newSound } = await Audio.Sound.createAsync(
         assetSource,
-        { shouldPlay: false },
+        { shouldPlay: false, positionMillis: startMs },
         (status) => {
-          if (status.isLoaded && status.didJustFinish) {
+          if (!status.isLoaded) return;
+          if (status.didJustFinish) { setActiveSegId(null); stopAtEndMsRef.current = null; return; }
+          const stopAt = stopAtEndMsRef.current;
+          if (stopAt !== null && status.positionMillis >= stopAt) {
+            newSound.pauseAsync().catch(() => {});
             setActiveSegId(null);
+            stopAtEndMsRef.current = null;
           }
         }
       );
@@ -2634,6 +2645,124 @@ function RavenFeatherLatticeBlock({ sifre, isSolved, onSolve }: { sifre: ClueSif
   );
 }
 
+function LedgerChecksumConsoleBlock({
+  sifre,
+  isSolved,
+  onSolve,
+}: {
+  sifre: ClueSifre;
+  isSolved: boolean;
+  onSolve: () => void;
+}) {
+  const { addTimePenalty } = useGame();
+  const pr = (sifre.presentation ?? {}) as Record<string, unknown>;
+  const entries = (pr.ledgerEntries as Record<string, string>[] | undefined) ?? [];
+  const codeLength = Number(pr.codeLength ?? 4);
+  const correctCode = String(pr.correctCode ?? "");
+  const interaction = (pr.interaction as Record<string, string> | undefined) ?? {};
+
+  const [digits, setDigits] = useState<string[]>(() => Array(codeLength).fill(""));
+  const [wrong, setWrong] = useState(false);
+  const [hintRevealed, setHintRevealed] = useState(false);
+
+  const handleDigit = (index: number, value: string) => {
+    const clean = value.replace(/\D/g, "").slice(-1);
+    setDigits((prev) => { const next = [...prev]; next[index] = clean; return next; });
+    setWrong(false);
+  };
+
+  const submit = () => {
+    const code = digits.join("");
+    const aliases = ((sifre as unknown as Record<string, unknown>).answerAliases as string[] | undefined) ?? [];
+    const correct = code === correctCode || aliases.some((a) => a.replace(/\D/g, "") === code);
+    if (correct) { onSolve(); }
+    else { setWrong(true); setTimeout(() => setWrong(false), 2500); }
+  };
+
+  const handleHint = () => {
+    if (hintRevealed) return;
+    setHintRevealed(true);
+    addTimePenalty(60);
+  };
+
+  if (isSolved) {
+    return (
+      <View style={styles.miniGameSolvedBlock}>
+        <MaterialIcons name="check-circle" size={20} color="#22c55e" />
+        <Text style={styles.miniGameSolvedText}>{interaction.successMessage ?? "Kadran kabul edildi."}</Text>
+        <Text style={styles.miniGameAciklama}>{sifre.aciklama}</Text>
+      </View>
+    );
+  }
+
+  return (
+    <View style={styles.ledgerBlock}>
+      <View style={styles.ledgerTitleBar}>
+        <MaterialIcons name="storage" size={13} color="#00FF41" />
+        <Text style={styles.ledgerTitleText}>{String(pr.title ?? "ZİNCİR BÜTÜNLÜK KADRANI").toLocaleUpperCase("tr-TR")}</Text>
+      </View>
+      {pr.subtitle ? <Text style={styles.ledgerSubtitle}>{String(pr.subtitle)}</Text> : null}
+      {pr.purposeHint ? (
+        <View style={styles.ledgerPurpose}>
+          <Text style={styles.ledgerPurposeLabel}>ÇÖZÜMÜN İŞLEVİ</Text>
+          <Text style={styles.ledgerPurposeText}>{String(pr.purposeHint)}</Text>
+        </View>
+      ) : null}
+      {pr.digitRule ? (
+        <View style={styles.ledgerRule}>
+          <Text style={styles.ledgerRuleLabel}>KURAL</Text>
+          <Text style={styles.ledgerRuleText}>{String(pr.digitRule)}</Text>
+        </View>
+      ) : null}
+      {entries.map((entry, i) => (
+        <View key={entry.id ?? String(i)} style={styles.ledgerEntry}>
+          <View style={styles.ledgerEntryHeader}>
+            <Text style={styles.ledgerEntryLabel}>{entry.label}</Text>
+            <Text style={styles.ledgerEntryNonce}>Nonce: {entry.nonce}</Text>
+          </View>
+          <View style={styles.ledgerEntryTimes}>
+            <Text style={styles.ledgerEntryTime}>İmza: <Text style={styles.ledgerEntryTimeVal}>{entry.signature}</Text></Text>
+            <Text style={[styles.ledgerEntryTime, { marginLeft: 12 }]}>Alındı: <Text style={styles.ledgerEntryTimeVal}>{entry.receipt}</Text></Text>
+          </View>
+          {entry.auditNote ? <Text style={styles.ledgerAuditNote}>{entry.auditNote}</Text> : null}
+        </View>
+      ))}
+      <Text style={styles.ledgerCodeLabel}>BÜTÜNLÜK KODU</Text>
+      <View style={styles.ledgerDigits}>
+        {digits.map((d, i) => (
+          <TextInput
+            key={i}
+            style={[styles.ledgerDigitInput, wrong && styles.ledgerDigitInputWrong]}
+            value={d}
+            onChangeText={(v) => handleDigit(i, v)}
+            keyboardType="numeric"
+            maxLength={1}
+            placeholder="—"
+            placeholderTextColor="#4a5070"
+          />
+        ))}
+      </View>
+      {wrong ? <Text style={styles.ledgerWrongMsg}>{interaction.failureMessage ?? "Kod tutmuyor. Kuralı yeniden uygula."}</Text> : null}
+      {sifre.cozumIpucu ? (
+        <Pressable style={styles.ledgerHintBtn} onPress={handleHint}>
+          <MaterialIcons name="lightbulb-outline" size={13} color={hintRevealed ? "#6b7280" : "#e0b54e"} />
+          <Text style={[styles.ledgerHintText, hintRevealed && { color: "#6b7280" }]}>
+            {hintRevealed ? "İpucu Kullanıldı (−60 sn)" : "İpucu Al (−60 sn)"}
+          </Text>
+        </Pressable>
+      ) : null}
+      {hintRevealed ? <View style={styles.ledgerHintReveal}><Text style={styles.ledgerHintRevealText}>{sifre.cozumIpucu}</Text></View> : null}
+      <Pressable
+        style={[styles.ledgerSubmitBtn, digits.some((d) => !d) && styles.ledgerSubmitBtnDisabled]}
+        onPress={submit}
+        disabled={digits.some((d) => !d)}
+      >
+        <Text style={styles.ledgerSubmitText}>{interaction.submitLabel ?? "Bütünlük Kodunu Doğrula"}</Text>
+      </Pressable>
+    </View>
+  );
+}
+
 function SifreliMesajBlock({
   sifre,
   isSolved,
@@ -2708,6 +2837,10 @@ function SifreliMesajBlock({
 
   if (sifre.presentation?.style === "mechanical_lock_sequence") {
     return <MechanicalLockSequenceBlock sifre={sifre} isSolved={isSolved} onSolve={onSolve} />;
+  }
+
+  if (sifre.presentation?.style === "ledger_checksum_console") {
+    return <LedgerChecksumConsoleBlock sifre={sifre} isSolved={isSolved} onSolve={onSolve} />;
   }
 
   if (sifre.presentation?.style === "cipher_disc_alignment") {
@@ -7947,4 +8080,66 @@ const styles = StyleSheet.create({
   ravenOptionSelected: { backgroundColor: "rgba(99,102,241,0.18)", borderColor: "#818cf8" },
   ravenOptionText: { fontSize: 11, color: "#9ca3af", lineHeight: 15 },
   ravenOptionTextSelected: { color: "#c7d2fe", fontWeight: "600" },
+  // ── LedgerChecksumConsoleBlock ──
+  ledgerBlock: { gap: 8 },
+  ledgerTitleBar: {
+    flexDirection: "row", alignItems: "center", gap: 6,
+    paddingVertical: 6, paddingHorizontal: 10,
+    backgroundColor: "rgba(0,255,65,0.06)", borderRadius: 6,
+    borderWidth: 1, borderColor: "rgba(0,255,65,0.18)",
+  },
+  ledgerTitleText: { fontSize: 11, fontWeight: "700", color: "#00FF41", letterSpacing: 0.8, flex: 1 },
+  ledgerSubtitle: { fontSize: 12, color: "#8b91ad", lineHeight: 17 },
+  ledgerPurpose: {
+    padding: 9, borderLeftWidth: 2, borderLeftColor: "#00FF41",
+    backgroundColor: "rgba(0,255,65,0.05)", borderRadius: 4,
+  },
+  ledgerPurposeLabel: { fontSize: 10, fontWeight: "700", color: "#00FF41", letterSpacing: 0.6, marginBottom: 3 },
+  ledgerPurposeText: { fontSize: 12, color: "#c8d0e0", lineHeight: 17 },
+  ledgerRule: {
+    padding: 8, borderRadius: 6,
+    backgroundColor: "rgba(255,255,255,0.03)", borderWidth: 1, borderColor: "rgba(255,255,255,0.08)",
+  },
+  ledgerRuleLabel: { fontSize: 10, fontWeight: "700", color: "#6b7280", letterSpacing: 0.5, marginBottom: 3 },
+  ledgerRuleText: { fontSize: 11, color: "#a0a8bc", lineHeight: 16 },
+  ledgerEntry: {
+    padding: 9, borderRadius: 8,
+    backgroundColor: "rgba(255,255,255,0.03)", borderWidth: 1, borderColor: "rgba(255,255,255,0.07)",
+    gap: 4,
+  },
+  ledgerEntryHeader: { flexDirection: "row", justifyContent: "space-between", alignItems: "center" },
+  ledgerEntryLabel: { fontSize: 12, fontWeight: "700", color: "#e8eaf2" },
+  ledgerEntryNonce: { fontSize: 10, color: "#6b7280", fontFamily: Platform.OS === "ios" ? "Courier" : "monospace" },
+  ledgerEntryTimes: { flexDirection: "row", flexWrap: "wrap" },
+  ledgerEntryTime: { fontSize: 11, color: "#8b91ad" },
+  ledgerEntryTimeVal: { color: "#fbbf24", fontFamily: Platform.OS === "ios" ? "Courier" : "monospace" },
+  ledgerAuditNote: { fontSize: 10, color: "#6b7280", fontStyle: "italic", lineHeight: 14 },
+  ledgerCodeLabel: { fontSize: 10, fontWeight: "700", color: "#6b7280", letterSpacing: 0.5, marginTop: 4 },
+  ledgerDigits: { flexDirection: "row", gap: 8, justifyContent: "center", marginVertical: 4 },
+  ledgerDigitInput: {
+    width: 48, height: 52, textAlign: "center", fontSize: 22, fontWeight: "700",
+    color: "#00FF41", borderRadius: 8, borderWidth: 1.5, borderColor: "rgba(0,255,65,0.35)",
+    backgroundColor: "rgba(0,255,65,0.05)",
+    fontFamily: Platform.OS === "ios" ? "Courier" : "monospace",
+  },
+  ledgerDigitInputWrong: { borderColor: "#dc2626", color: "#fca5a5" },
+  ledgerWrongMsg: { fontSize: 12, color: "#fca5a5", textAlign: "center" },
+  ledgerHintBtn: {
+    flexDirection: "row", alignItems: "center", gap: 5,
+    paddingVertical: 8, paddingHorizontal: 12,
+    borderRadius: 8, borderWidth: 1, borderStyle: "dashed", borderColor: "#b45309",
+    backgroundColor: "transparent", alignSelf: "stretch",
+  },
+  ledgerHintText: { fontSize: 12, color: "#e0b54e" },
+  ledgerHintReveal: {
+    padding: 9, borderRadius: 8, borderWidth: 1, borderColor: "#b45309",
+    backgroundColor: "rgba(180,83,9,0.08)",
+  },
+  ledgerHintRevealText: { fontSize: 12, color: "#fbbf24", lineHeight: 17 },
+  ledgerSubmitBtn: {
+    paddingVertical: 11, borderRadius: 8, alignItems: "center",
+    backgroundColor: "#00FF41",
+  },
+  ledgerSubmitBtnDisabled: { opacity: 0.45 },
+  ledgerSubmitText: { fontSize: 13, fontWeight: "700", color: "#0a1a0a" },
 });
