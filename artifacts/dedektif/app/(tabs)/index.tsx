@@ -916,8 +916,8 @@ const styles = StyleSheet.create({
   doneText: { fontSize: 11, fontWeight: "600", color: "#4ADE80" },
   dailyTitle: {
     fontSize: 20,
-    fontFamily: "PlayfairDisplay",
-    fontWeight: "700",
+    fontFamily: "UnnaRegular",
+    fontWeight: "400",
     lineHeight: 26,
     letterSpacing: 0.1,
     color: "#FFFFFF",
@@ -944,7 +944,7 @@ const styles = StyleSheet.create({
   },
   playCtaActive: { backgroundColor: "#D4A843" },
   playCtaSolved: { backgroundColor: "#D4A84318", borderWidth: 1, borderColor: "#D4A84340" },
-  playCtaText: { fontSize: 15, fontWeight: "800", letterSpacing: 0.5 },
+  playCtaText: { fontSize: 15, fontFamily: "UnnaRegular", fontWeight: "400", letterSpacing: 0.5 },
 
   /* ─── Missions ─── */
   missionsCard: {

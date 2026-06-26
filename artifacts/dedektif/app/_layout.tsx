@@ -550,6 +550,7 @@ export default function RootLayout() {
     DMSans_500Medium,
     MightySouly: require("../assets/fonts/MightySouly.ttf"),
     PlayfairDisplay: require("../assets/fonts/PlayfairDisplay.ttf"),
+    UnnaRegular: require("../assets/fonts/Unna-Regular.ttf"),
   });
 
   useEffect(() => {
