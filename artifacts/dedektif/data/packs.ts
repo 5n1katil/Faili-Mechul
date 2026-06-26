@@ -267,6 +267,7 @@ const EMOJI_TO_MATERIAL: Record<string, string> = {
   "💹": "trending-up",
   "🕶️": "wb-sunny",
   "📜": "history-edu",
+  "🗺️": "map",
   "👊": "front-hand",
   "🥤": "emoji-food-beverage",
   "💽": "album",
