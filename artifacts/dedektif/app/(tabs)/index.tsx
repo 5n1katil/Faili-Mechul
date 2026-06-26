@@ -482,7 +482,7 @@ export default function HomeScreen() {
 
                 {/* Puzzle title */}
                 <Text
-                  style={[styles.dailyTitle, { fontFamily: "Courier New", fontWeight: "400" }]}
+                  style={styles.dailyTitle}
                   numberOfLines={2}
                   adjustsFontSizeToFit
                   minimumFontScale={0.65}

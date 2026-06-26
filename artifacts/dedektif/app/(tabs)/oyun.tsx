@@ -1606,44 +1606,39 @@ export default function VakalarScreen() {
       >
         <Animated.View entering={FadeInDown.delay(0).springify()}>
           <View style={gameStyles.puzzleHeader}>
-            <View style={gameStyles.puzzleHeaderLeft}>
-              <Pressable onPress={handleBackPress} style={gameStyles.backBtn} hitSlop={8}>
-                <MaterialIcons name="arrow-back" size={20} color={colors.mutedForeground} />
-              </Pressable>
-              <View style={{ flex: 1 }}>
+            <View style={gameStyles.puzzleHeaderTop}>
+              <View style={gameStyles.puzzleHeaderLeft}>
+                <Pressable onPress={handleBackPress} style={gameStyles.backBtn} hitSlop={8}>
+                  <MaterialIcons name="arrow-back" size={20} color={colors.mutedForeground} />
+                </Pressable>
                 <Text style={[gameStyles.caseNumber, { color: colors.mutedForeground }]}>
                   {getDifficultyLabel(puzzle.difficulty as Difficulty).toLocaleUpperCase("tr-TR")}
                 </Text>
-                <Text
-                  style={[gameStyles.puzzleTitle, { color: colors.foreground }]}
-                  numberOfLines={2}
-                  adjustsFontSizeToFit
-                  minimumFontScale={0.6}
+              </View>
+              <View style={gameStyles.timerRow}>
+                {!isRanked && (
+                  <View style={[gameStyles.practiceBadge, { backgroundColor: "#6B728020", borderColor: "#6B728044" }]}>
+                    <MaterialIcons name="fitness-center" size={11} color={colors.mutedForeground} />
+                    <Text style={[gameStyles.practiceBadgeText, { color: colors.mutedForeground }]}>Antrenman</Text>
+                  </View>
+                )}
+                <TimerDisplay
+                  seconds={timeElapsed}
+                  wrongGuesses={wrongGuesses}
+                  penaltyCount={penaltyCount}
+                />
+                <Pressable
+                  onPress={() => setShowScoreInfo(true)}
+                  hitSlop={10}
+                  style={[gameStyles.scoreInfoBtn, { backgroundColor: `${colors.primary}15`, borderColor: `${colors.primary}40` }]}
                 >
-                  {puzzle.title}
-                </Text>
+                  <MaterialIcons name="help-outline" size={16} color={colors.primary} />
+                </Pressable>
               </View>
             </View>
-            <View style={gameStyles.timerRow}>
-              {!isRanked && (
-                <View style={[gameStyles.practiceBadge, { backgroundColor: "#6B728020", borderColor: "#6B728044" }]}>
-                  <MaterialIcons name="fitness-center" size={11} color={colors.mutedForeground} />
-                  <Text style={[gameStyles.practiceBadgeText, { color: colors.mutedForeground }]}>Antrenman</Text>
-                </View>
-              )}
-              <TimerDisplay
-                seconds={timeElapsed}
-                wrongGuesses={wrongGuesses}
-                penaltyCount={penaltyCount}
-              />
-              <Pressable
-                onPress={() => setShowScoreInfo(true)}
-                hitSlop={10}
-                style={[gameStyles.scoreInfoBtn, { backgroundColor: `${colors.primary}15`, borderColor: `${colors.primary}40` }]}
-              >
-                <MaterialIcons name="help-outline" size={16} color={colors.primary} />
-              </Pressable>
-            </View>
+            <Text style={[gameStyles.puzzleTitle, { color: colors.foreground }]}>
+              {puzzle.title}
+            </Text>
           </View>
         </Animated.View>
 
@@ -2392,16 +2387,19 @@ const gameStyles = StyleSheet.create({
     borderTopWidth: StyleSheet.hairlineWidth,
   },
   puzzleHeader: {
+    flexDirection: "column",
+    gap: 6,
+  },
+  puzzleHeaderTop: {
     flexDirection: "row",
-    alignItems: "flex-start",
+    alignItems: "center",
     justifyContent: "space-between",
     gap: 8,
   },
   puzzleHeaderLeft: {
-    flex: 1,
     flexDirection: "row",
-    alignItems: "flex-start",
-    gap: 8,
+    alignItems: "center",
+    gap: 6,
   },
   backBtn: {
     width: 32,
