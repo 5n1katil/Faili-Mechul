@@ -1018,11 +1018,11 @@ const styles = StyleSheet.create({
   rankCardAccent: { height: 2, backgroundColor: "#D4A843" },
   rankDecorIcon: {
     position: "absolute",
-    bottom: 2,
-    left: 6,
-    width: 72,
-    height: 72,
-    opacity: 0.22,
+    bottom: -18,
+    left: -4,
+    width: 88,
+    height: 88,
+    opacity: 0.25,
   },
   rankCardInner: { flexDirection: "column", paddingHorizontal: 18, paddingVertical: 16, gap: 14 },
   rankTopRow: { flexDirection: "row", alignItems: "center", justifyContent: "space-between" },
@@ -1083,7 +1083,7 @@ const styles = StyleSheet.create({
     borderTopColor: "#FFFFFF0F",
     gap: 4,
   },
-  rankCardFooterText: { fontFamily: "DroidSerifRegular", fontSize: 12, color: "rgba(255,255,255,0.3)" },
+  rankCardFooterText: { fontFamily: "DroidSerifRegular", fontSize: 13, color: "rgba(255,255,255,0.6)" },
 
   /* ─── Tips Button ─── */
   tipsBtn: {
