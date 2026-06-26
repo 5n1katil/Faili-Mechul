@@ -1296,16 +1296,16 @@ export default function VakalarScreen() {
                               <View style={{ flex: 1 }}>
                                 <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
                                   <Text style={[listStyles.standartCardTitle, { color: "#E87A3A" }]}>Premium Vakalar</Text>
-                                  {completedPremiumPuzzles.length > 0 && (
-                                    <Pressable
-                                      onPress={() => setShowCozulenlerPrem(true)}
-                                      style={[listStyles.cozulenlerBtn, { backgroundColor: `${colors.success}18`, borderColor: `${colors.success}44` }]}
-                                      hitSlop={6}
-                                    >
-                                      <MaterialIcons name="check-circle" size={11} color={colors.success} />
-                                      <Text style={[listStyles.cozulenlerBtnText, { color: colors.success }]}>Çözülenler {completedPremiumPuzzles.length}</Text>
-                                    </Pressable>
-                                  )}
+                                  <Pressable
+                                    onPress={() => setShowCozulenlerPrem(true)}
+                                    style={[listStyles.cozulenlerBtn, { backgroundColor: `${colors.success}18`, borderColor: `${colors.success}44` }]}
+                                    hitSlop={6}
+                                  >
+                                    <MaterialIcons name="check-circle" size={11} color={colors.success} />
+                                    <Text style={[listStyles.cozulenlerBtnText, { color: colors.success }]}>
+                                      Çözülenler{completedPremiumPuzzles.length > 0 ? ` ${completedPremiumPuzzles.length}` : ""}
+                                    </Text>
+                                  </Pressable>
                                 </View>
                                 <Text style={[listStyles.heroCardSub, { color: INACTIVE_COLOR }]}>Arşiv · erişilebilir</Text>
                               </View>
@@ -1398,16 +1398,16 @@ export default function VakalarScreen() {
                       <View style={{ flex: 1 }}>
                         <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
                           <Text style={[listStyles.standartCardTitle, { color: "#D4A843" }]}>Standart Vakalar</Text>
-                          {completedFreePuzzles.length > 0 && (
-                            <Pressable
-                              onPress={() => setShowCozulenlerFree(true)}
-                              style={[listStyles.cozulenlerBtn, { backgroundColor: `${colors.success}18`, borderColor: `${colors.success}44` }]}
-                              hitSlop={6}
-                            >
-                              <MaterialIcons name="check-circle" size={11} color={colors.success} />
-                              <Text style={[listStyles.cozulenlerBtnText, { color: colors.success }]}>Çözülenler {completedFreePuzzles.length}</Text>
-                            </Pressable>
-                          )}
+                          <Pressable
+                            onPress={() => setShowCozulenlerFree(true)}
+                            style={[listStyles.cozulenlerBtn, { backgroundColor: `${colors.success}18`, borderColor: `${colors.success}44` }]}
+                            hitSlop={6}
+                          >
+                            <MaterialIcons name="check-circle" size={11} color={colors.success} />
+                            <Text style={[listStyles.cozulenlerBtnText, { color: colors.success }]}>
+                              Çözülenler{completedFreePuzzles.length > 0 ? ` ${completedFreePuzzles.length}` : ""}
+                            </Text>
+                          </Pressable>
                         </View>
                         <Text style={[listStyles.heroCardSub, { color: INACTIVE_COLOR }]}>Ücretsiz · erişilebilir</Text>
                       </View>
@@ -2097,8 +2097,9 @@ const listStyles = StyleSheet.create({
   },
   cozulenlerModalTitle: {
     fontSize: 18,
-    fontFamily: "MightySouly",
-    letterSpacing: 0.3,
+    fontFamily: "PlayfairDisplay",
+    fontWeight: "600",
+    letterSpacing: 0.2,
   },
   premSubFilterRow: {
     flexDirection: "row",
@@ -2351,9 +2352,10 @@ const gameStyles = StyleSheet.create({
   },
   packNavTitle: {
     flex: 1,
-    fontSize: 13,
-    fontFamily: "MightySouly",
-    letterSpacing: 0.3,
+    fontSize: 12,
+    fontFamily: "PlayfairDisplay",
+    fontWeight: "600",
+    letterSpacing: 0.2,
   },
   packNavCounter: {
     fontSize: 11,
