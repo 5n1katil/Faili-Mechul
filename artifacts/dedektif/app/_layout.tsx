@@ -41,10 +41,6 @@ import BackgroundMusicController from "@/components/BackgroundMusicController";
 
 SplashScreen.preventAutoHideAsync();
 
-// Global default font — DroidSerif for all body/label text; UnnaBold overrides where explicitly set
-if (!Text.defaultProps) (Text as any).defaultProps = {};
-(Text as any).defaultProps.style = { fontFamily: "DroidSerifRegular" };
-
 const queryClient = new QueryClient();
 
 function RootLayoutNav() {

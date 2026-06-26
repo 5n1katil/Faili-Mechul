@@ -340,7 +340,7 @@ export default function ProfilScreen() {
                     <MaterialIcons name="local-police" size={24} color="#D4A843" />
                   </View>
                   <View style={{ flex: 1 }}>
-                    <Text style={[styles.settingsTitle, { color: "#D4A843", fontSize: 16 }]}>
+                    <Text style={[styles.settingsTitle, { color: "#D4A843", fontFamily: "DroidSerifRegular", fontSize: 16 }]}>
                       🔱 Baş Dedektif
                     </Text>
                     <Text style={[styles.settingsSubtitle, { color: "#D4A84399" }]}>
@@ -563,7 +563,7 @@ const styles = StyleSheet.create({
     textAlignVertical: "top",
     minHeight: 60,
   },
-  bioCounter: { fontSize: 11, textAlign: "right", marginRight: 4 },
+  bioCounter: { fontFamily: "DroidSerifRegular", fontSize: 11, textAlign: "right", marginRight: 4 },
   streakPill: {
     flexDirection: "row",
     alignItems: "center",
@@ -573,7 +573,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     borderWidth: 1,
   },
-  streakPillText: { color: "#FF6B35", fontSize: 13, fontWeight: "700" },
+  streakPillText: { color: "#FF6B35", fontFamily: "DroidSerifRegular", fontSize: 13, fontWeight: "700" },
 
   /* ── Section title ── */
   sectionTitleRow: {
@@ -622,7 +622,7 @@ const styles = StyleSheet.create({
     gap: 3,
   },
   statGroupValue: { fontSize: 24, fontFamily: "UnnaBold", fontWeight: "600", letterSpacing: 0.2 },
-  statGroupItemLabel: { fontSize: 11, fontWeight: "600", textAlign: "center" },
+  statGroupItemLabel: { fontFamily: "DroidSerifRegular", fontSize: 11, fontWeight: "600", textAlign: "center" },
 
   /* ── Badges ── */
   badgesGrid: { flexDirection: "row", flexWrap: "wrap", gap: 10 },
@@ -642,8 +642,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  badgeLabel: { fontSize: 13, fontWeight: "700", textAlign: "center" },
-  badgeDesc: { fontSize: 11, textAlign: "center", lineHeight: 16 },
+  badgeLabel: { fontFamily: "DroidSerifRegular", fontSize: 13, fontWeight: "700", textAlign: "center" },
+  badgeDesc: { fontFamily: "DroidSerifRegular", fontSize: 11, textAlign: "center", lineHeight: 16 },
 
   /* ── Settings card ── */
   settingsCard: {
@@ -668,7 +668,7 @@ const styles = StyleSheet.create({
   },
   settingsInfo: { flex: 1 },
   settingsTitle: { fontSize: 15, fontFamily: "UnnaBold", fontWeight: "600" },
-  settingsSubtitle: { fontSize: 12, marginTop: 2, lineHeight: 17 },
+  settingsSubtitle: { fontFamily: "DroidSerifRegular", fontSize: 12, marginTop: 2, lineHeight: 17 },
 
   /* ── Premium kart ── */
   premiumActiveCard: {
@@ -693,7 +693,7 @@ const styles = StyleSheet.create({
   premiumStat: { flex: 1, alignItems: "center", gap: 2 },
   premiumStatDivider: { width: 1, marginVertical: 2 },
   premiumStatValue: { fontSize: 18, fontFamily: "UnnaBold", fontWeight: "600" },
-  premiumStatLabel: { fontSize: 10, fontWeight: "600", textAlign: "center" },
+  premiumStatLabel: { fontFamily: "DroidSerifRegular", fontSize: 10, fontWeight: "600", textAlign: "center" },
 
   /* ── Son oyunlar ── */
   historyCard: {
@@ -717,9 +717,9 @@ const styles = StyleSheet.create({
     flexShrink: 0,
   },
   historyInfo: { flex: 1 },
-  historyDate: { fontSize: 11 },
-  historyResult: { fontSize: 14, fontWeight: "600", marginTop: 2 },
+  historyDate: { fontFamily: "DroidSerifRegular", fontSize: 11 },
+  historyResult: { fontFamily: "DroidSerifRegular", fontSize: 14, fontWeight: "600", marginTop: 2 },
   historyStats: { alignItems: "flex-end", gap: 2 },
-  historyScore: { fontSize: 18, fontWeight: "700" },
-  historyMistakes: { fontSize: 11 },
+  historyScore: { fontFamily: "DroidSerifRegular", fontSize: 18, fontWeight: "700" },
+  historyMistakes: { fontFamily: "DroidSerifRegular", fontSize: 11 },
 });

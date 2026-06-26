@@ -324,7 +324,7 @@ function PremiumTabButton({
           style={{ flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 6, paddingTop: 7, paddingBottom: 5, paddingHorizontal: 8 }}
         >
           <MaterialIcons name="workspace-premium" size={17} color={PREMIUM_GOLD} />
-          <Text style={[listStyles.tabBtnText3d, { color: PREMIUM_GOLD, fontWeight: "700", fontSize: 14, letterSpacing: 0.3 }]}>
+          <Text style={[listStyles.tabBtnText3d, { color: PREMIUM_GOLD, fontWeight: "700", fontFamily: "DroidSerifRegular", fontSize: 14, letterSpacing: 0.3 }]}>
             Premium
           </Text>
         </Pressable>
@@ -346,7 +346,7 @@ function PremiumTabButton({
             }}
           >
             <MaterialIcons name="auto-stories" size={13} color={subTab === "vakalar" && active ? PREMIUM_GOLD : "#888AAA"} />
-            <Text style={{ fontSize: 11, fontWeight: "700", color: subTab === "vakalar" && active ? PREMIUM_GOLD : "#888AAA" }}>Vakalar</Text>
+            <Text style={{ fontFamily: "DroidSerifRegular", fontSize: 11, fontWeight: "700", color: subTab === "vakalar" && active ? PREMIUM_GOLD : "#888AAA" }}>Vakalar</Text>
           </Pressable>
           <View style={{ width: StyleSheet.hairlineWidth, backgroundColor: `${PREMIUM_GOLD}33`, alignSelf: "stretch", marginVertical: 2 }} />
           <Pressable
@@ -363,7 +363,7 @@ function PremiumTabButton({
             }}
           >
             <MaterialIcons name="inventory-2" size={13} color={subTab === "paketler" && active ? PREMIUM_GOLD : "#888AAA"} />
-            <Text style={{ fontSize: 11, fontWeight: "700", color: subTab === "paketler" && active ? PREMIUM_GOLD : "#888AAA" }}>Paketler</Text>
+            <Text style={{ fontFamily: "DroidSerifRegular", fontSize: 11, fontWeight: "700", color: subTab === "paketler" && active ? PREMIUM_GOLD : "#888AAA" }}>Paketler</Text>
           </Pressable>
         </View>
       </View>
@@ -414,7 +414,7 @@ function TabButton3D({
         ]}
       >
         <MaterialIcons name={icon} size={17} color={active ? activeColor : "#666888"} />
-        <Text style={[listStyles.tabBtnText3d, { color: active ? activeColor : "#888AAA", fontSize: 15, fontWeight: active ? "700" : "600" }]}>
+        <Text style={[listStyles.tabBtnText3d, { color: active ? activeColor : "#888AAA", fontFamily: "DroidSerifRegular", fontSize: 15, fontWeight: active ? "700" : "600" }]}>
           {label}
         </Text>
         {count !== undefined && count > 0 && (
@@ -1252,10 +1252,10 @@ export default function VakalarScreen() {
                         style={[listStyles.premUnlockBanner, { backgroundColor: "#D4A84314", borderColor: "#D4A84355", shadowColor: "#D4A843", shadowOpacity: 0.22, shadowRadius: 12, shadowOffset: { width: 0, height: 4 }, elevation: 6 }]}
                       >
                         <View style={{ flex: 1 }}>
-                          <Text style={[listStyles.premAccordionTitle, { color: "#F0F0F8", fontSize: 14 }]}>
+                          <Text style={[listStyles.premAccordionTitle, { color: "#F0F0F8", fontFamily: "DroidSerifRegular", fontSize: 14 }]}>
                             Vaka Arşivi — Tek Seferlik Satın Alma
                           </Text>
-                          <Text style={[listStyles.premAccordionSub, { color: "#D4A84399", marginTop: 3, fontSize: 13 }]}>
+                          <Text style={[listStyles.premAccordionSub, { color: "#D4A84399", marginTop: 3, fontFamily: "DroidSerifRegular", fontSize: 13 }]}>
                             Tüm {premiumPuzzles.length} vakayı hemen aç · ₺79,99
                           </Text>
                         </View>
@@ -1856,16 +1856,16 @@ const listStyles = StyleSheet.create({
   },
   puzzleCardRight: { flexDirection: "row", alignItems: "center" },
   puzzleCardMeta: { flexDirection: "row", alignItems: "center", gap: 4 },
-  metaText: { fontSize: 12 },
+  metaText: { fontFamily: "DroidSerifRegular", fontSize: 12 },
   diffBadge: {
     borderRadius: 6,
     paddingHorizontal: 8,
     paddingVertical: 3,
     borderWidth: 1,
   },
-  diffText: { fontSize: 11, fontWeight: "700" },
+  diffText: { fontFamily: "DroidSerifRegular", fontSize: 11, fontWeight: "700" },
   puzzleTitle: { fontSize: 17, fontFamily: "UnnaBold", fontWeight: "600", lineHeight: 24 },
-  puzzleStory: { fontSize: 12, lineHeight: 18 },
+  puzzleStory: { fontFamily: "DroidSerifRegular", fontSize: 12, lineHeight: 18 },
   solvedBadge: {
     flexDirection: "row",
     alignItems: "center",
@@ -1875,7 +1875,7 @@ const listStyles = StyleSheet.create({
     borderWidth: 1,
     gap: 4,
   },
-  solvedText: { fontSize: 11, fontWeight: "700" },
+  solvedText: { fontFamily: "DroidSerifRegular", fontSize: 11, fontWeight: "700" },
   lockBadge: {
     flexDirection: "row",
     alignItems: "center",
@@ -1885,7 +1885,7 @@ const listStyles = StyleSheet.create({
     borderWidth: 1,
     gap: 4,
   },
-  lockText: { fontSize: 11, fontWeight: "700" },
+  lockText: { fontFamily: "DroidSerifRegular", fontSize: 11, fontWeight: "700" },
   playRow: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -1897,7 +1897,7 @@ const listStyles = StyleSheet.create({
     paddingTop: 10,
     paddingBottom: 12,
   },
-  playText: { fontSize: 13, fontWeight: "600" },
+  playText: { fontFamily: "DroidSerifRegular", fontSize: 13, fontWeight: "600" },
   bestResultRow: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -1921,8 +1921,8 @@ const listStyles = StyleSheet.create({
     alignItems: "center",
     gap: 4,
   },
-  bestResultLabel: { fontSize: 12 },
-  bestResultValue: { fontSize: 12, fontWeight: "600" },
+  bestResultLabel: { fontFamily: "DroidSerifRegular", fontSize: 12 },
+  bestResultValue: { fontFamily: "DroidSerifRegular", fontSize: 12, fontWeight: "600" },
   diffFilterRow: {
     flexDirection: "row",
     gap: 8,
@@ -1984,7 +1984,7 @@ const listStyles = StyleSheet.create({
     fontWeight: "600",
     letterSpacing: 0.2,
   },
-  heroCardSub: { fontSize: 12, marginTop: 1 },
+  heroCardSub: { fontFamily: "DroidSerifRegular", fontSize: 12, marginTop: 1 },
   heroCardCta: {
     flexDirection: "row",
     alignItems: "center",
@@ -2419,12 +2419,12 @@ const gameStyles = StyleSheet.create({
     paddingHorizontal: 9,
     paddingVertical: 4,
   },
-  caseNumber: { fontSize: 10, fontWeight: "700", letterSpacing: 2 },
+  caseNumber: { fontFamily: "DroidSerifRegular", fontSize: 10, fontWeight: "700", letterSpacing: 2 },
   puzzleTitle: { fontSize: 19, fontFamily: "UnnaBold", fontWeight: "400", lineHeight: 28 },
   storyBox: { borderRadius: 12, borderWidth: 1, padding: 14, gap: 8 },
   storyHeader: { flexDirection: "row", alignItems: "center", gap: 8 },
-  storyLabel: { fontSize: 11, fontWeight: "700", letterSpacing: 1 },
-  storyText: { fontSize: 14, lineHeight: 22 },
+  storyLabel: { fontFamily: "DroidSerifRegular", fontSize: 11, fontWeight: "700", letterSpacing: 1 },
+  storyText: { fontFamily: "DroidSerifRegular", fontSize: 14, lineHeight: 22 },
   sectionTitle: { fontSize: 16, fontFamily: "UnnaBold", fontWeight: "400", marginBottom: 8 },
   gridContainer: { borderRadius: 14, borderWidth: 1, padding: 10, overflow: "hidden" },
   gridContainerWeb: {

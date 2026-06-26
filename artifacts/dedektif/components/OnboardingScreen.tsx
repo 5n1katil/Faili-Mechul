@@ -123,15 +123,15 @@ function ClueExampleBox({ contentWidth }: { contentWidth: number }) {
       <View style={{ flexDirection: "row", gap: 12, paddingHorizontal: 2, paddingBottom: 2 }}>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 6 }}>
           <View style={{ backgroundColor: GOLD, borderRadius: 5, paddingHorizontal: 7, paddingVertical: 3 }}>
-            <Text style={{ fontSize: 10, fontWeight: "700", color: "#0F1117" }}>AÇIK</Text>
+            <Text style={{ fontFamily: "DroidSerifRegular", fontSize: 10, fontWeight: "700", color: "#0F1117" }}>AÇIK</Text>
           </View>
-          <Text style={{ fontSize: 12, color: "#6B7280" }}>Baştan görünür ipucu</Text>
+          <Text style={{ fontFamily: "DroidSerifRegular", fontSize: 12, color: "#6B7280" }}>Baştan görünür ipucu</Text>
         </View>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 6 }}>
           <View style={{ backgroundColor: RED, borderRadius: 5, paddingHorizontal: 7, paddingVertical: 3 }}>
-            <Text style={{ fontSize: 10, fontWeight: "700", color: "#FFF" }}>+30 sn ⏱</Text>
+            <Text style={{ fontFamily: "DroidSerifRegular", fontSize: 10, fontWeight: "700", color: "#FFF" }}>+30 sn ⏱</Text>
           </View>
-          <Text style={{ fontSize: 12, color: "#6B7280" }}>Bonus ipucu</Text>
+          <Text style={{ fontFamily: "DroidSerifRegular", fontSize: 12, color: "#6B7280" }}>Bonus ipucu</Text>
         </View>
       </View>
 
@@ -154,10 +154,10 @@ function ClueExampleBox({ contentWidth }: { contentWidth: number }) {
             color={clue.locked ? RED : GOLD}
           />
           <View style={{ flex: 1 }}>
-            <Text style={{ fontSize: 12, color: "#D1D5DB", lineHeight: 18 }}>
+            <Text style={{ fontFamily: "DroidSerifRegular", fontSize: 12, color: "#D1D5DB", lineHeight: 18 }}>
               "{clue.text}"
             </Text>
-            <Text style={{ fontSize: 11, color: clue.locked ? RED + "BB" : GOLD + "BB", marginTop: 3, fontWeight: "600" }}>
+            <Text style={{ fontFamily: "DroidSerifRegular", fontSize: 11, color: clue.locked ? RED + "BB" : GOLD + "BB", marginTop: 3, fontWeight: "600" }}>
               {clue.hint}
             </Text>
           </View>
@@ -167,7 +167,7 @@ function ClueExampleBox({ contentWidth }: { contentWidth: number }) {
             paddingHorizontal: 7,
             paddingVertical: 3,
           }}>
-            <Text style={{ fontSize: 9, fontWeight: "700", color: clue.locked ? "#FFF" : "#0F1117", letterSpacing: 0.5 }}>
+            <Text style={{ fontFamily: "DroidSerifRegular", fontSize: 9, fontWeight: "700", color: clue.locked ? "#FFF" : "#0F1117", letterSpacing: 0.5 }}>
               {clue.locked ? "+30 sn ⏱" : "AÇIK"}
             </Text>
           </View>
@@ -198,7 +198,7 @@ function MockAccusationCard({ contentWidth }: { contentWidth: number }) {
     }}>
       <View style={{ flexDirection: "row", alignItems: "center", gap: 8, paddingHorizontal: 16, paddingTop: 12, paddingBottom: 10, borderBottomWidth: 1, borderBottomColor: SEP }}>
         <MaterialIcons name="gavel" size={16} color={RED} />
-        <Text style={{ fontSize: 12, fontWeight: "800", color: GOLD, letterSpacing: 1.5 }}>SON ÇIKARIM</Text>
+        <Text style={{ fontFamily: "DroidSerifRegular", fontSize: 12, fontWeight: "800", color: GOLD, letterSpacing: 1.5 }}>SON ÇIKARIM</Text>
       </View>
 
       {rows.map((row, i) => (
@@ -210,9 +210,9 @@ function MockAccusationCard({ contentWidth }: { contentWidth: number }) {
           borderBottomWidth: i < rows.length - 1 ? 1 : 0,
           borderBottomColor: SEP,
         }}>
-          <Text style={{ width: 72, fontSize: 12, fontWeight: "700", color: "#6B7280", letterSpacing: 0.5 }}>{row.label}</Text>
+          <Text style={{ width: 72, fontFamily: "DroidSerifRegular", fontSize: 12, fontWeight: "700", color: "#6B7280", letterSpacing: 0.5 }}>{row.label}</Text>
           <View style={{ flex: 1, flexDirection: "row", alignItems: "center", justifyContent: "space-between", backgroundColor: "#0F1117", borderRadius: 8, paddingHorizontal: 14, paddingVertical: 8 }}>
-            <Text style={{ fontSize: 14, fontWeight: "600", color: "#F9FAFB" }}>{row.value}</Text>
+            <Text style={{ fontFamily: "DroidSerifRegular", fontSize: 14, fontWeight: "600", color: "#F9FAFB" }}>{row.value}</Text>
             <MaterialIcons name="expand-more" size={20} color="#6B7280" />
           </View>
         </View>
@@ -221,13 +221,13 @@ function MockAccusationCard({ contentWidth }: { contentWidth: number }) {
       <View style={{ paddingHorizontal: 16, paddingTop: 10, paddingBottom: 8 }}>
         <View style={{ backgroundColor: GOLD, borderRadius: 10, paddingVertical: 11, alignItems: "center", justifyContent: "center", flexDirection: "row", gap: 8 }}>
           <MaterialIcons name="send" size={18} color="#0F1117" />
-          <Text style={{ fontSize: 15, fontWeight: "800", color: "#0F1117" }}>Raporu Gönder</Text>
+          <Text style={{ fontFamily: "DroidSerifRegular", fontSize: 15, fontWeight: "800", color: "#0F1117" }}>Raporu Gönder</Text>
         </View>
       </View>
 
       <View style={{ flexDirection: "row", alignItems: "center", gap: 6, paddingHorizontal: 16, paddingBottom: 10 }}>
         <MaterialIcons name="warning-amber" size={13} color={RED} />
-        <Text style={{ flex: 1, fontSize: 12, color: RED + "CC", fontWeight: "500" }}>Yanlış tahmin → +30 sn ceza eklenir, oyun devam eder</Text>
+        <Text style={{ flex: 1, fontFamily: "DroidSerifRegular", fontSize: 12, color: RED + "CC", fontWeight: "500" }}>Yanlış tahmin → +30 sn ceza eklenir, oyun devam eder</Text>
       </View>
     </View>
   );
@@ -283,8 +283,8 @@ function SlideStartOptions({ contentWidth }: { contentWidth: number }) {
               <MaterialIcons name={opt.icon} size={24} color={opt.accent} />
             </View>
             <View style={{ flex: 1, gap: 4 }}>
-              <Text style={{ fontSize: 15, fontWeight: "800", color: "#F9FAFB" }}>{opt.label}</Text>
-              <Text style={{ fontSize: 12, color: "#9CA3AF", lineHeight: 18 }}>{opt.desc}</Text>
+              <Text style={{ fontFamily: "DroidSerifRegular", fontSize: 15, fontWeight: "800", color: "#F9FAFB" }}>{opt.label}</Text>
+              <Text style={{ fontFamily: "DroidSerifRegular", fontSize: 12, color: "#9CA3AF", lineHeight: 18 }}>{opt.desc}</Text>
               <View style={{
                 alignSelf: "flex-start",
                 marginTop: 4,
@@ -293,7 +293,7 @@ function SlideStartOptions({ contentWidth }: { contentWidth: number }) {
                 paddingHorizontal: 8,
                 paddingVertical: 3,
               }}>
-                <Text style={{ fontSize: 10, fontWeight: "700", color: opt.accent, letterSpacing: 0.3 }}>{opt.badge}</Text>
+                <Text style={{ fontFamily: "DroidSerifRegular", fontSize: 10, fontWeight: "700", color: opt.accent, letterSpacing: 0.3 }}>{opt.badge}</Text>
               </View>
             </View>
           </View>
@@ -312,7 +312,7 @@ function SlideStartOptions({ contentWidth }: { contentWidth: number }) {
         paddingVertical: 9,
       }}>
         <MaterialIcons name="local-fire-department" size={16} color={GOLD} />
-        <Text style={{ flex: 1, fontSize: 12, color: GOLD + "DD", lineHeight: 17, fontWeight: "500" }}>
+        <Text style={{ flex: 1, fontFamily: "DroidSerifRegular", fontSize: 12, color: GOLD + "DD", lineHeight: 17, fontWeight: "500" }}>
           Her gün yeni bir vaka — üst üste çöz, serini kır ve liderlik tablosunda yüksel!
         </Text>
       </View>
@@ -453,7 +453,7 @@ function SlidePage({ slide, slideIndex, screenWidth, screenHeight }: SlidePagePr
       <Text style={[
         styles.slideBody,
         { width: contentWidth },
-        slide.showGrid && { fontSize: 13, lineHeight: 21 },
+        slide.showGrid && { fontFamily: "DroidSerifRegular", fontSize: 13, lineHeight: 21 },
       ]}>
         {slide.body}
       </Text>
@@ -465,7 +465,7 @@ function SlidePage({ slide, slideIndex, screenWidth, screenHeight }: SlidePagePr
           slide.showGrid && { paddingVertical: 8, marginTop: 0 },
         ]}>
           <MaterialIcons name="info-outline" size={15} color="#D4A843" />
-          <Text style={[styles.tipText, slide.showGrid && { fontSize: 12, lineHeight: 18 }]}>
+          <Text style={[styles.tipText, slide.showGrid && { fontFamily: "DroidSerifRegular", fontSize: 12, lineHeight: 18 }]}>
             {slide.tip}
           </Text>
         </View>

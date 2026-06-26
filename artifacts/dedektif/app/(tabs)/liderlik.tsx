@@ -406,7 +406,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   headerTitle: { fontSize: 22, fontFamily: "UnnaBold", fontWeight: "700", letterSpacing: 0 },
-  headerSub: { fontSize: 12, fontWeight: "500", marginTop: 2 },
+  headerSub: { fontFamily: "DroidSerifRegular", fontSize: 12, fontWeight: "500", marginTop: 2 },
   myRankBadge: {
     flexDirection: "row",
     alignItems: "center",
@@ -483,7 +483,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  rankNum: { fontSize: 13, fontWeight: "700" },
+  rankNum: { fontFamily: "DroidSerifRegular", fontSize: 13, fontWeight: "700" },
   avatarWrapper: {
     width: 42,
     height: 42,
@@ -501,7 +501,7 @@ const styles = StyleSheet.create({
     paddingVertical: 1,
     borderRadius: 8,
   },
-  youText: { fontSize: 10, fontWeight: "700" },
+  youText: { fontFamily: "DroidSerifRegular", fontSize: 10, fontWeight: "700" },
   premiumChip: {
     flexDirection: "row",
     alignItems: "center",
@@ -517,10 +517,10 @@ const styles = StyleSheet.create({
     letterSpacing: 0.2,
   },
   metaRow: { flexDirection: "row", alignItems: "center", gap: 4 },
-  metaText: { fontSize: 11 },
+  metaText: { fontFamily: "DroidSerifRegular", fontSize: 11 },
   avgTimeRow: { flexDirection: "row", alignItems: "center", gap: 3, marginTop: 2 },
-  avgTimeText: { fontSize: 10 },
+  avgTimeText: { fontFamily: "DroidSerifRegular", fontSize: 10 },
   rankScore: { alignItems: "flex-end", minWidth: 52 },
   scoreValue: { fontSize: 18, fontFamily: "UnnaBold", fontWeight: "600" },
-  scoreLabel: { fontSize: 10, fontWeight: "500" },
+  scoreLabel: { fontFamily: "DroidSerifRegular", fontSize: 10, fontWeight: "500" },
 });

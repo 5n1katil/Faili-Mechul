@@ -719,11 +719,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 8,
   },
-  modalTitle: { fontSize: 20, fontWeight: "800", letterSpacing: 0.3, marginTop: 4 },
-  streakCount: { fontSize: 64, fontWeight: "900", lineHeight: 72 },
-  streakLabel: { fontSize: 13, fontWeight: "500", marginTop: -4 },
+  modalTitle: { fontFamily: "DroidSerifRegular", fontSize: 20, fontWeight: "800", letterSpacing: 0.3, marginTop: 4 },
+  streakCount: { fontFamily: "DroidSerifRegular", fontSize: 64, fontWeight: "900", lineHeight: 72 },
+  streakLabel: { fontFamily: "DroidSerifRegular", fontSize: 13, fontWeight: "500", marginTop: -4 },
   modalDivider: { height: 1, width: "100%", marginVertical: 8 },
-  modalDesc: { fontSize: 13, lineHeight: 20, textAlign: "center" },
+  modalDesc: { fontFamily: "DroidSerifRegular", fontSize: 13, lineHeight: 20, textAlign: "center" },
   modalBtn: {
     marginTop: 8,
     width: "100%",
@@ -731,7 +731,7 @@ const styles = StyleSheet.create({
     borderRadius: 14,
     alignItems: "center",
   },
-  modalBtnText: { fontSize: 15, fontWeight: "700" },
+  modalBtnText: { fontFamily: "DroidSerifRegular", fontSize: 15, fontWeight: "700" },
 
   /* Çözülen / List Modal */
   listModalCard: {
@@ -763,9 +763,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flexShrink: 0,
   },
-  listModalTitle: { fontSize: 16, fontWeight: "800", letterSpacing: 0.3 },
-  listModalSub: { fontSize: 12, fontWeight: "500", marginTop: 2 },
-  listSectionLabel: { fontSize: 11, fontWeight: "600", letterSpacing: 0.5, textTransform: "uppercase", marginBottom: 6 },
+  listModalTitle: { fontFamily: "DroidSerifRegular", fontSize: 16, fontWeight: "800", letterSpacing: 0.3 },
+  listModalSub: { fontFamily: "DroidSerifRegular", fontSize: 12, fontWeight: "500", marginTop: 2 },
+  listSectionLabel: { fontFamily: "DroidSerifRegular", fontSize: 11, fontWeight: "600", letterSpacing: 0.5, textTransform: "uppercase", marginBottom: 6 },
   solveRow: {
     flexDirection: "row",
     alignItems: "center",
@@ -781,12 +781,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flexShrink: 0,
   },
-  solveRankText: { fontSize: 11, fontWeight: "700" },
-  solveTitle: { fontSize: 13, fontWeight: "700" },
-  solveMeta: { fontSize: 11, fontWeight: "400" },
-  solveScore: { fontSize: 13, fontWeight: "800", flexShrink: 0 },
+  solveRankText: { fontFamily: "DroidSerifRegular", fontSize: 11, fontWeight: "700" },
+  solveTitle: { fontFamily: "DroidSerifRegular", fontSize: 13, fontWeight: "700" },
+  solveMeta: { fontFamily: "DroidSerifRegular", fontSize: 11, fontWeight: "400" },
+  solveScore: { fontFamily: "DroidSerifRegular", fontSize: 13, fontWeight: "800", flexShrink: 0 },
   emptyState: { alignItems: "center", paddingVertical: 20, gap: 8 },
-  emptyStateText: { fontSize: 13, fontWeight: "500" },
+  emptyStateText: { fontFamily: "DroidSerifRegular", fontSize: 13, fontWeight: "500" },
   badgeGrid: { flexDirection: "row", flexWrap: "wrap", gap: 6, marginTop: 4 },
   badgeChip: {
     flexDirection: "row",
@@ -797,14 +797,14 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderWidth: 1,
   },
-  badgeChipText: { fontSize: 11, fontWeight: "600" },
+  badgeChipText: { fontFamily: "DroidSerifRegular", fontSize: 11, fontWeight: "600" },
 
   /* Toplam Puan Modal */
-  scoreCount: { fontSize: 42, fontWeight: "900", letterSpacing: -1, lineHeight: 50 },
+  scoreCount: { fontFamily: "DroidSerifRegular", fontSize: 42, fontWeight: "900", letterSpacing: -1, lineHeight: 50 },
   scoreStatGrid: { flexDirection: "row", width: "100%", alignItems: "center" },
   scoreStatItem: { flex: 1, alignItems: "center", gap: 2, paddingVertical: 4 },
-  scoreStatValue: { fontSize: 18, fontWeight: "800" },
-  scoreStatLabel: { fontSize: 11, fontWeight: "500" },
+  scoreStatValue: { fontFamily: "DroidSerifRegular", fontSize: 18, fontWeight: "800" },
+  scoreStatLabel: { fontFamily: "DroidSerifRegular", fontSize: 11, fontWeight: "500" },
   scoreStatDivider: { width: 1, height: 32, opacity: 0.5 },
   scoreTipBox: {
     flexDirection: "row",
@@ -815,7 +815,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginTop: 4,
   },
-  scoreTipText: { flex: 1, fontSize: 11, lineHeight: 16 },
+  scoreTipText: { flex: 1, fontFamily: "DroidSerifRegular", fontSize: 11, lineHeight: 16 },
 
   /* Tips Modal */
   tipsModalCard: {
@@ -862,7 +862,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flexShrink: 0,
   },
-  tipText: { flex: 1, fontSize: 13, lineHeight: 19 },
+  tipText: { flex: 1, fontFamily: "DroidSerifRegular", fontSize: 13, lineHeight: 19 },
 
   /* ─── Header ─── */
   headerRow: {
@@ -877,9 +877,9 @@ const styles = StyleSheet.create({
     position: "absolute", inset: -2, borderRadius: 27,
     borderWidth: 1.5, borderColor: "#D4A84355",
   },
-  greetingSmall: { fontSize: 11, letterSpacing: 0.3, marginBottom: 1 },
+  greetingSmall: { fontFamily: "DroidSerifRegular", fontSize: 11, letterSpacing: 0.3, marginBottom: 1 },
   appTitle: { fontSize: 22, fontFamily: "UnnaBold", fontWeight: "700", letterSpacing: 0.6, color: "#D4A843" },
-  appSubtitle: { fontSize: 11, letterSpacing: 0.5, marginTop: 1 },
+  appSubtitle: { fontFamily: "DroidSerifRegular", fontSize: 11, letterSpacing: 0.5, marginTop: 1 },
   headerRight: { flexDirection: "row", alignItems: "center", gap: 8 },
   iconBtn: {
     width: 38,
@@ -920,7 +920,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#4ADE8035",
   },
-  doneText: { fontSize: 11, fontWeight: "600", color: "#4ADE80" },
+  doneText: { fontFamily: "DroidSerifRegular", fontSize: 11, fontWeight: "600", color: "#4ADE80" },
   dailyTitle: {
     fontSize: 20,
     fontFamily: "UnnaBold",
@@ -937,10 +937,10 @@ const styles = StyleSheet.create({
     paddingTop: 11,
   },
   countdownLeft: { flexDirection: "row", alignItems: "center", gap: 5 },
-  countdownLabel: { fontSize: 11, color: "rgba(212,168,67,0.5)" },
-  countdownValue: { fontSize: 13, fontWeight: "700", color: "#D4A843", fontVariant: ["tabular-nums"] },
+  countdownLabel: { fontFamily: "DroidSerifRegular", fontSize: 11, color: "rgba(212,168,67,0.5)" },
+  countdownValue: { fontFamily: "DroidSerifRegular", fontSize: 13, fontWeight: "700", color: "#D4A843", fontVariant: ["tabular-nums"] },
   diffBadge: { borderRadius: 5, paddingHorizontal: 8, paddingVertical: 3, borderWidth: 1 },
-  diffText: { fontSize: 11, fontWeight: "700" },
+  diffText: { fontFamily: "DroidSerifRegular", fontSize: 11, fontWeight: "700" },
   playCta: {
     flexDirection: "row",
     alignItems: "center",
@@ -978,7 +978,7 @@ const styles = StyleSheet.create({
   missionsRight: { flexDirection: "row", alignItems: "center", gap: 6, flexShrink: 0 },
   missionsDots: { flexDirection: "row", gap: 4, alignItems: "center" },
   missionDot: { width: 7, height: 7, borderRadius: 3.5 },
-  missionsDotLabel: { fontSize: 11, color: "rgba(255,255,255,0.35)", fontVariant: ["tabular-nums"] },
+  missionsDotLabel: { fontFamily: "DroidSerifRegular", fontSize: 11, color: "rgba(255,255,255,0.35)", fontVariant: ["tabular-nums"] },
 
   /* ─── Stats ─── */
   statsRow: { flexDirection: "row", gap: 10 },
@@ -1035,12 +1035,12 @@ const styles = StyleSheet.create({
   },
   rankUserInfo: { flex: 1, gap: 2 },
   rankUserName: { fontSize: 15, fontFamily: "UnnaBold", fontWeight: "600", color: "#FFFFFF" },
-  rankUserMeta: { fontSize: 12, color: "rgba(255,255,255,0.4)" },
+  rankUserMeta: { fontFamily: "DroidSerifRegular", fontSize: 12, color: "rgba(255,255,255,0.4)" },
   rankTotalBadge: { paddingHorizontal: 8, paddingVertical: 4, borderRadius: 8, borderWidth: 1, borderColor: "#D4A84325", backgroundColor: "#D4A84310" },
-  rankTotalText: { fontSize: 11, fontWeight: "600", color: "rgba(255,255,255,0.4)" },
+  rankTotalText: { fontFamily: "DroidSerifRegular", fontSize: 11, fontWeight: "600", color: "rgba(255,255,255,0.4)" },
   rankDivider: { borderTopWidth: 1, borderTopColor: "#FFFFFF0F" },
   rankAheadRow: { flexDirection: "row", alignItems: "center", gap: 7 },
-  rankAheadLabel: { fontSize: 11, fontWeight: "600", color: "rgba(255,255,255,0.35)" },
+  rankAheadLabel: { fontFamily: "DroidSerifRegular", fontSize: 11, fontWeight: "600", color: "rgba(255,255,255,0.35)" },
   rankAheadAvatar: {
     width: 28,
     height: 28,
@@ -1052,7 +1052,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   rankAheadName: { fontSize: 12, fontFamily: "UnnaBold", fontWeight: "400", color: "#FFFFFF", flexShrink: 1 },
-  rankAheadScore: { fontSize: 12, fontWeight: "700", color: "#D4A843" },
+  rankAheadScore: { fontFamily: "DroidSerifRegular", fontSize: 12, fontWeight: "700", color: "#D4A843" },
   rankLeaderRow: { flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 6 },
   rankLeaderText: { fontSize: 14, fontFamily: "UnnaBold", fontWeight: "600", color: "#D4A843" },
   rankCardFooter: {
@@ -1066,7 +1066,7 @@ const styles = StyleSheet.create({
     borderTopColor: "#FFFFFF0F",
     gap: 4,
   },
-  rankCardFooterText: { fontSize: 12, color: "rgba(255,255,255,0.3)" },
+  rankCardFooterText: { fontFamily: "DroidSerifRegular", fontSize: 12, color: "rgba(255,255,255,0.3)" },
 
   /* ─── Tips Button ─── */
   tipsBtn: {

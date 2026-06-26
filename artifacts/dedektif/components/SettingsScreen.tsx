@@ -420,7 +420,7 @@ const styles = StyleSheet.create({
   },
   settingsInfo: { flex: 1 },
   settingsTitle: { fontSize: 15, fontFamily: "UnnaBold", fontWeight: "600" },
-  settingsSubtitle: { fontSize: 12, marginTop: 2, lineHeight: 17 },
+  settingsSubtitle: { fontFamily: "DroidSerifRegular", fontSize: 12, marginTop: 2, lineHeight: 17 },
   premiumActive: {
     flexDirection: "row",
     alignItems: "center",
