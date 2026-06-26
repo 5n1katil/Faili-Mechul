@@ -551,6 +551,7 @@ export default function RootLayout() {
     MightySouly: require("../assets/fonts/MightySouly.ttf"),
     PlayfairDisplay: require("../assets/fonts/PlayfairDisplay.ttf"),
     UnnaRegular: require("../assets/fonts/Unna-Regular.ttf"),
+    UnnaBold: require("../assets/fonts/Unna-Bold.ttf"),
   });
 
   useEffect(() => {
