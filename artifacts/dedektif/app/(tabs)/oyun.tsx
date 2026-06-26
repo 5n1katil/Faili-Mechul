@@ -1083,14 +1083,16 @@ export default function VakalarScreen() {
                   contentContainerStyle={[listStyles.listContent, { paddingTop: 12, paddingBottom: Platform.OS === "web" ? 34 + 80 : insets.bottom + 80 }]}
                   showsVerticalScrollIndicator={false}
                 >
-                  {/* Premium Vakalar header */}
-                  <Animated.View entering={FadeInDown.delay(0).springify()} style={listStyles.premVakalarHeader}>
-                    <MaterialIcons name="workspace-premium" size={22} color="#D4A843" />
-                    <Text style={[listStyles.premVakalarTitle, { color: "#D4A843" }]}>Premium Vakalar</Text>
-                    <View style={[listStyles.premVakalarCount, { backgroundColor: "#D4A84330", borderColor: "#D4A84360" }]}>
-                      <Text style={[listStyles.premVakalarCountText, { color: "#D4A843" }]}>{premiumPuzzles.length} vaka</Text>
-                    </View>
-                  </Animated.View>
+                  {/* Premium Vakalar header — yalnızca satın alınmamışsa göster */}
+                  {!isPremium && (
+                    <Animated.View entering={FadeInDown.delay(0).springify()} style={listStyles.premVakalarHeader}>
+                      <MaterialIcons name="workspace-premium" size={22} color="#D4A843" />
+                      <Text style={[listStyles.premVakalarTitle, { color: "#D4A843" }]}>Premium Vakalar</Text>
+                      <View style={[listStyles.premVakalarCount, { backgroundColor: "#D4A84330", borderColor: "#D4A84360" }]}>
+                        <Text style={[listStyles.premVakalarCountText, { color: "#D4A843" }]}>{premiumPuzzles.length} vaka</Text>
+                      </View>
+                    </Animated.View>
+                  )}
 
                   {/* Buy CTA banner — only for non-premium users */}
                   {!isPremium && (
@@ -1132,14 +1134,13 @@ export default function VakalarScreen() {
                     );
                   })}
 
-                  {/* Premium purchased: stats card + filters + tamamlananlar + list */}
+                  {/* Premium purchased: tek birleşik kart (başlık + stats + filtreler) */}
                   {isPremium && (
                     <>
-                      {/* Stats card */}
-                      <Animated.View entering={FadeInDown.delay(30).springify()}>
+                      <Animated.View entering={FadeInDown.delay(0).springify()}>
                         <View style={[listStyles.standartCard, { backgroundColor: colors.card, borderColor: "#D4A84344", shadowColor: "#D4A843", shadowOpacity: 0.2, shadowRadius: 10, shadowOffset: { width: 0, height: 4 }, elevation: 6 }]}>
                           <View style={[listStyles.standartCardAccent, { backgroundColor: "#D4A843" }]} />
-                          <View style={{ flex: 1, paddingVertical: 13, paddingHorizontal: 14, gap: 8 }}>
+                          <View style={{ flex: 1, paddingVertical: 13, paddingHorizontal: 14, gap: 10 }}>
                             <View style={listStyles.standartCardTop}>
                               <View style={[listStyles.heroCardIcon, { backgroundColor: "#D4A84318", width: 40, height: 40 }]}>
                                 <MaterialIcons name="workspace-premium" size={22} color="#D4A843" />
@@ -1163,30 +1164,29 @@ export default function VakalarScreen() {
                                 <Text style={[listStyles.standartStatLabel, { color: INACTIVE_COLOR }]}>Çözüldü</Text>
                               </View>
                             </View>
+                            <View style={{ height: 1, backgroundColor: "#FFFFFF0D", marginHorizontal: -14 }} />
+                            <View style={{ flexDirection: "row", gap: 8 }}>
+                              {(["caylak", "dedektif", "baskomiser"] as Difficulty[]).map((diff) => {
+                                const isSelected = premDiffFilter === diff;
+                                const color = getDifficultyColor(diff);
+                                const icon: MaterialIconName = diff === "caylak" ? "sentiment-satisfied" : diff === "dedektif" ? "search" : "local-police";
+                                const count = activePremium.filter((p) => p.difficulty === diff).length;
+                                return (
+                                  <FilterPill3D
+                                    key={diff}
+                                    label={getDifficultyLabel(diff)}
+                                    icon={icon}
+                                    isSelected={isSelected}
+                                    onPress={() => setPremDiffFilter(isSelected ? "all" : diff)}
+                                    color={color}
+                                    count={count}
+                                  />
+                                );
+                              })}
+                            </View>
                           </View>
                         </View>
                       </Animated.View>
-
-                      {/* Difficulty filter pills */}
-                      <View style={listStyles.diffFilterRow}>
-                        {(["caylak", "dedektif", "baskomiser"] as Difficulty[]).map((diff) => {
-                          const isSelected = premDiffFilter === diff;
-                          const color = getDifficultyColor(diff);
-                          const icon: MaterialIconName = diff === "caylak" ? "sentiment-satisfied" : diff === "dedektif" ? "search" : "local-police";
-                          const count = activePremium.filter((p) => p.difficulty === diff).length;
-                          return (
-                            <FilterPill3D
-                              key={diff}
-                              label={getDifficultyLabel(diff)}
-                              icon={icon}
-                              isSelected={isSelected}
-                              onPress={() => setPremDiffFilter(isSelected ? "all" : diff)}
-                              color={color}
-                              count={count}
-                            />
-                          );
-                        })}
-                      </View>
 
                       {/* Tamamlananlar wide pill */}
                       <Animated.View entering={FadeInDown.delay(30).springify()}>
@@ -1281,11 +1281,11 @@ export default function VakalarScreen() {
               scrollEventThrottle={16}
               onScroll={(e) => { listScrollY.current = e.nativeEvent.contentOffset.y; }}
             >
-              {/* ── Standart Vakalar header card (always at top) ── */}
+              {/* ── Standart Vakalar: tek birleşik kart ── */}
               <Animated.View entering={FadeInDown.delay(0).springify()}>
                 <View style={[listStyles.standartCard, { backgroundColor: colors.card, borderColor: "#C8581A44", shadowColor: "#C8581A", shadowOpacity: 0.2, shadowRadius: 10, shadowOffset: { width: 0, height: 4 }, elevation: 6 }]}>
                   <View style={[listStyles.standartCardAccent, { backgroundColor: "#C8581A" }]} />
-                  <View style={{ flex: 1, paddingVertical: 13, paddingHorizontal: 14, gap: 8 }}>
+                  <View style={{ flex: 1, paddingVertical: 13, paddingHorizontal: 14, gap: 10 }}>
                     <View style={listStyles.standartCardTop}>
                       <View style={[listStyles.heroCardIcon, { backgroundColor: "#C8581A18", width: 40, height: 40 }]}>
                         <MaterialIcons name="folder-open" size={22} color="#C8581A" />
@@ -1309,30 +1309,29 @@ export default function VakalarScreen() {
                         <Text style={[listStyles.standartStatLabel, { color: INACTIVE_COLOR }]}>Çözüldü</Text>
                       </View>
                     </View>
+                    <View style={{ height: 1, backgroundColor: "#FFFFFF0D", marginHorizontal: -14 }} />
+                    <View style={{ flexDirection: "row", gap: 8 }}>
+                      {(["caylak", "dedektif", "baskomiser"] as Difficulty[]).map((diff) => {
+                        const isSelected = diffFilter === diff;
+                        const color = getDifficultyColor(diff);
+                        const icon: MaterialIconName = diff === "caylak" ? "sentiment-satisfied" : diff === "dedektif" ? "search" : "local-police";
+                        const count = activeFree.filter((p) => p.difficulty === diff).length;
+                        return (
+                          <FilterPill3D
+                            key={diff}
+                            label={getDifficultyLabel(diff)}
+                            icon={icon}
+                            isSelected={isSelected}
+                            onPress={() => setDiffFilter(isSelected ? "all" : diff)}
+                            color={color}
+                            count={count}
+                          />
+                        );
+                      })}
+                    </View>
                   </View>
                 </View>
               </Animated.View>
-
-              {/* ── 3D Difficulty pills ── */}
-              <View style={listStyles.diffFilterRow}>
-                {(["caylak", "dedektif", "baskomiser"] as Difficulty[]).map((diff) => {
-                  const isSelected = diffFilter === diff;
-                  const color = getDifficultyColor(diff);
-                  const icon: MaterialIconName = diff === "caylak" ? "sentiment-satisfied" : diff === "dedektif" ? "search" : "local-police";
-                  const count = activeFree.filter((p) => p.difficulty === diff).length;
-                  return (
-                    <FilterPill3D
-                      key={diff}
-                      label={getDifficultyLabel(diff)}
-                      icon={icon}
-                      isSelected={isSelected}
-                      onPress={() => setDiffFilter(isSelected ? "all" : diff)}
-                      color={color}
-                      count={count}
-                    />
-                  );
-                })}
-              </View>
 
               {/* ── Tamamlananlar wide pill ── */}
               <Animated.View entering={FadeInDown.delay(30).springify()}>
