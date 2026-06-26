@@ -469,8 +469,8 @@ export default function HomeScreen() {
                 {/* Top row: badge + done */}
                 <View style={styles.dailyTop}>
                   <View style={styles.dailyBadge}>
-                    <MaterialIcons name="brightness-5" size={10} color="#0F1117" />
-                    <Text style={styles.dailyBadgeText}>GÜNÜN BULMACASI</Text>
+                    <Image source={require("../../assets/images/icon_gunun_vakasi.png")} style={{ width: 14, height: 14 }} resizeMode="contain" />
+                    <Text style={styles.dailyBadgeText}>GÜNÜN VAKASI</Text>
                   </View>
                   {wonToday && (
                     <View style={styles.doneBadge}>
@@ -901,7 +901,7 @@ const styles = StyleSheet.create({
     gap: 4,
     backgroundColor: "#D4A843",
   },
-  dailyBadgeText: { fontSize: 10, fontFamily: "UnnaBold", fontWeight: "700", letterSpacing: 1.2, color: "#0F1117" },
+  dailyBadgeText: { fontSize: 12, fontFamily: "UnnaBold", fontWeight: "700", letterSpacing: 1.0, color: "#0F1117" },
   doneBadge: {
     flexDirection: "row",
     alignItems: "center",
@@ -944,7 +944,7 @@ const styles = StyleSheet.create({
   },
   playCtaActive: { backgroundColor: "#D4A843" },
   playCtaSolved: { backgroundColor: "#D4A84318", borderWidth: 1, borderColor: "#D4A84340" },
-  playCtaText: { fontSize: 18, fontFamily: "UnnaBold", fontWeight: "700", letterSpacing: 0.5 },
+  playCtaText: { fontSize: 20, fontFamily: "UnnaBold", fontWeight: "700", letterSpacing: 0.5 },
 
   /* ─── Missions ─── */
   missionsCard: {
