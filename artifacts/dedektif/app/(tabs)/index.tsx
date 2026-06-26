@@ -1007,8 +1007,8 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   statAccent: { position: "absolute", top: 0, left: 0, right: 0, height: 3 },
-  statValue: { fontSize: 24, fontWeight: "800", letterSpacing: -0.5 },
-  statLabel: { fontSize: 12, fontWeight: "500" },
+  statValue: { fontSize: 24, fontFamily: "PlayfairDisplay", fontWeight: "800", letterSpacing: -0.5 },
+  statLabel: { fontSize: 12, fontFamily: "PlayfairDisplay", fontWeight: "500" },
 
   /* ─── Rank Card ─── */
   rankCard: { borderRadius: 16, borderWidth: 1, overflow: "hidden" },

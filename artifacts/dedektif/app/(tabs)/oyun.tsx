@@ -1792,6 +1792,7 @@ const listStyles = StyleSheet.create({
   },
   tabCountText3d: {
     fontSize: 12,
+    fontFamily: "PlayfairDisplay",
     fontWeight: "700",
   },
   filterPill3d: {
@@ -1826,6 +1827,7 @@ const listStyles = StyleSheet.create({
   },
   filterPillCountText3d: {
     fontSize: 11,
+    fontFamily: "PlayfairDisplay",
     fontWeight: "700",
   },
   tamamlananlarPill: {
@@ -2235,6 +2237,7 @@ const accordionStyles = StyleSheet.create({
   },
   countText: {
     fontSize: 12,
+    fontFamily: "PlayfairDisplay",
     fontWeight: "700",
   },
   body: {
