@@ -901,7 +901,7 @@ const styles = StyleSheet.create({
     gap: 4,
     backgroundColor: "#D4A843",
   },
-  dailyBadgeText: { fontSize: 10, fontWeight: "800", letterSpacing: 1.2, color: "#0F1117" },
+  dailyBadgeText: { fontSize: 10, fontFamily: "UnnaBold", fontWeight: "700", letterSpacing: 1.2, color: "#0F1117" },
   doneBadge: {
     flexDirection: "row",
     alignItems: "center",
