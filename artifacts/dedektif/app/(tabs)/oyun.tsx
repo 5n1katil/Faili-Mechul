@@ -353,14 +353,17 @@ function PremiumTabButton({
             onPress={() => onSubTabChange("paketler")}
             style={{
               flex: 1,
+              flexDirection: "row",
               alignItems: "center",
               justifyContent: "center",
+              gap: 3,
               paddingVertical: 4,
               borderRadius: 7,
               backgroundColor: subTab === "paketler" && active ? `${PREMIUM_GOLD}22` : "transparent",
             }}
           >
             <MaterialIcons name="inventory-2" size={13} color={subTab === "paketler" && active ? PREMIUM_GOLD : "#888AAA"} />
+            <Text style={{ fontSize: 11, fontWeight: "700", color: subTab === "paketler" && active ? PREMIUM_GOLD : "#888AAA" }}>Paketler</Text>
           </Pressable>
         </View>
       </View>
@@ -420,6 +423,45 @@ function TabButton3D({
           </View>
         )}
       </Pressable>
+    </Animated.View>
+  );
+}
+
+function PulsingGlowCard({
+  color, children, entering,
+}: {
+  color: string;
+  children: React.ReactNode;
+  entering?: any;
+}) {
+  const glow = useSharedValue(0);
+  React.useEffect(() => {
+    glow.value = withRepeat(
+      withSequence(
+        withTiming(1, { duration: 2000, easing: Easing.inOut(Easing.sine) }),
+        withTiming(0, { duration: 2000, easing: Easing.inOut(Easing.sine) }),
+      ),
+      -1,
+      false,
+    );
+  }, []);
+  const glowStyle = useAnimatedStyle(() => ({
+    shadowOpacity: 0.12 + glow.value * 0.38,
+  }));
+  return (
+    <Animated.View
+      entering={entering}
+      style={[
+        {
+          shadowColor: color,
+          shadowRadius: 22,
+          shadowOffset: { width: 0, height: 0 },
+          borderRadius: 14,
+        },
+        glowStyle,
+      ]}
+    >
+      {children}
     </Animated.View>
   );
 }
@@ -1138,25 +1180,25 @@ export default function VakalarScreen() {
                     );
                   })}
 
-                  {/* Premium purchased: tek birleşik kart (başlık + stats + filtreler) */}
+                  {/* Premium purchased: tek birleşik kart (turuncu tema + soft glow) */}
                   {isPremium && (
                     <>
-                      <Animated.View entering={FadeInDown.delay(0).springify()}>
-                        <View style={[listStyles.standartCard, { backgroundColor: colors.card, borderColor: "#D4A84344", shadowColor: "#D4A843", shadowOpacity: 0.2, shadowRadius: 10, shadowOffset: { width: 0, height: 4 }, elevation: 6 }]}>
-                          <View style={[listStyles.standartCardAccent, { backgroundColor: "#D4A843" }]} />
+                      <PulsingGlowCard color="#C8581A" entering={FadeInDown.delay(0).springify()}>
+                        <View style={[listStyles.standartCard, { backgroundColor: colors.card, borderColor: "#C8581A44", elevation: 6 }]}>
+                          <View style={[listStyles.standartCardAccent, { backgroundColor: "#C8581A" }]} />
                           <View style={{ flex: 1, paddingVertical: 13, paddingHorizontal: 14, gap: 10 }}>
                             <View style={listStyles.standartCardTop}>
-                              <View style={[listStyles.heroCardIcon, { backgroundColor: "#D4A84318", width: 40, height: 40 }]}>
-                                <MaterialIcons name="workspace-premium" size={22} color="#D4A843" />
+                              <View style={[listStyles.heroCardIcon, { backgroundColor: "#C8581A18", width: 40, height: 40 }]}>
+                                <MaterialIcons name="workspace-premium" size={22} color="#C8581A" />
                               </View>
                               <View style={{ flex: 1 }}>
-                                <Text style={[listStyles.standartCardTitle, { color: "#D4A843" }]}>Premium Vakalar</Text>
+                                <Text style={[listStyles.standartCardTitle, { color: "#E87A3A" }]}>Premium Vakalar</Text>
                                 <Text style={[listStyles.heroCardSub, { color: INACTIVE_COLOR }]}>Arşiv · erişilebilir</Text>
                               </View>
                             </View>
                             <View style={listStyles.standartStatsRow}>
-                              <View style={[listStyles.standartStat, { backgroundColor: "#D4A84314", borderColor: "#D4A84330" }]}>
-                                <Text style={[listStyles.standartStatNum, { color: "#D4A843" }]}>{premiumPuzzles.length}</Text>
+                              <View style={[listStyles.standartStat, { backgroundColor: "#C8581A14", borderColor: "#C8581A30" }]}>
+                                <Text style={[listStyles.standartStatNum, { color: "#E87A3A" }]}>{premiumPuzzles.length}</Text>
                                 <Text style={[listStyles.standartStatLabel, { color: INACTIVE_COLOR }]}>Toplam</Text>
                               </View>
                               <View style={[listStyles.standartStat, { backgroundColor: "#FFFFFF08", borderColor: "#FFFFFF18" }]}>
@@ -1190,7 +1232,7 @@ export default function VakalarScreen() {
                             </View>
                           </View>
                         </View>
-                      </Animated.View>
+                      </PulsingGlowCard>
 
                       {/* Tamamlananlar wide pill */}
                       <Animated.View entering={FadeInDown.delay(30).springify()}>
@@ -1285,14 +1327,14 @@ export default function VakalarScreen() {
               scrollEventThrottle={16}
               onScroll={(e) => { listScrollY.current = e.nativeEvent.contentOffset.y; }}
             >
-              {/* ── Standart Vakalar: tek birleşik kart ── */}
+              {/* ── Standart Vakalar: tek birleşik kart (altın tema) ── */}
               <Animated.View entering={FadeInDown.delay(0).springify()}>
-                <View style={[listStyles.standartCard, { backgroundColor: colors.card, borderColor: "#C8581A44", shadowColor: "#C8581A", shadowOpacity: 0.2, shadowRadius: 10, shadowOffset: { width: 0, height: 4 }, elevation: 6 }]}>
-                  <View style={[listStyles.standartCardAccent, { backgroundColor: "#C8581A" }]} />
+                <View style={[listStyles.standartCard, { backgroundColor: colors.card, borderColor: "#D4A84344", shadowColor: "#D4A843", shadowOpacity: 0.2, shadowRadius: 10, shadowOffset: { width: 0, height: 4 }, elevation: 6 }]}>
+                  <View style={[listStyles.standartCardAccent, { backgroundColor: "#D4A843" }]} />
                   <View style={{ flex: 1, paddingVertical: 13, paddingHorizontal: 14, gap: 10 }}>
                     <View style={listStyles.standartCardTop}>
-                      <View style={[listStyles.heroCardIcon, { backgroundColor: "#C8581A18", width: 40, height: 40 }]}>
-                        <MaterialIcons name="folder-open" size={22} color="#C8581A" />
+                      <View style={[listStyles.heroCardIcon, { backgroundColor: "#D4A84318", width: 40, height: 40 }]}>
+                        <MaterialIcons name="folder-open" size={22} color="#D4A843" />
                       </View>
                       <View style={{ flex: 1 }}>
                         <Text style={[listStyles.standartCardTitle, { color: "#D4A843" }]}>Standart Vakalar</Text>
@@ -1300,8 +1342,8 @@ export default function VakalarScreen() {
                       </View>
                     </View>
                     <View style={listStyles.standartStatsRow}>
-                      <View style={[listStyles.standartStat, { backgroundColor: "#C8581A14", borderColor: "#C8581A30" }]}>
-                        <Text style={[listStyles.standartStatNum, { color: "#E87A3A" }]}>{freePuzzles.length}</Text>
+                      <View style={[listStyles.standartStat, { backgroundColor: "#D4A84314", borderColor: "#D4A84330" }]}>
+                        <Text style={[listStyles.standartStatNum, { color: "#D4A843" }]}>{freePuzzles.length}</Text>
                         <Text style={[listStyles.standartStatLabel, { color: INACTIVE_COLOR }]}>Toplam</Text>
                       </View>
                       <View style={[listStyles.standartStat, { backgroundColor: "#FFFFFF08", borderColor: "#FFFFFF18" }]}>
