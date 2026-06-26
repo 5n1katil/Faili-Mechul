@@ -35,6 +35,7 @@ const styles = StyleSheet.create({
     gap: 16,
   },
   title: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 20,
     fontWeight: "bold",
     textAlign: "center",
@@ -44,6 +45,7 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
   },
   linkText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 15,
     fontWeight: "600",
   },

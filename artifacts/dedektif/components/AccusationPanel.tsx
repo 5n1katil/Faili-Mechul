@@ -279,6 +279,7 @@ const styles = StyleSheet.create({
   },
   wrongToastText: {
     color: "#fff",
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     fontWeight: "700",
     flex: 1,
@@ -296,12 +297,14 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   headerTitle: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     fontWeight: "800",
     letterSpacing: 1.5,
     flex: 1,
   },
   headerSub: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
     fontWeight: "600",
   },
@@ -314,11 +317,13 @@ const styles = StyleSheet.create({
     gap: 5,
   },
   sectionLabel: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 10,
     fontWeight: "700",
     letterSpacing: 1.5,
   },
   selectedName: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
     fontWeight: "600",
     flex: 1,
@@ -337,6 +342,7 @@ const styles = StyleSheet.create({
     gap: 5,
   },
   chipText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     fontWeight: "600",
   },
@@ -350,6 +356,7 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   submitText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 15,
     fontWeight: "700",
     letterSpacing: 0.5,

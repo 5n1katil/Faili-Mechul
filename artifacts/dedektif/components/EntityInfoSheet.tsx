@@ -153,7 +153,7 @@ export default function EntityInfoSheet({ visible, entity, onClose }: Props) {
                 />
               )
             ) : renderEmoji ? (
-              <Text style={{ fontSize: 34, lineHeight: 38, includeFontPadding: false }}>{entity.icon}</Text>
+              <Text style={{ fontFamily: "DroidSerifRegular", fontSize: 34, lineHeight: 38, includeFontPadding: false }}>{entity.icon}</Text>
             ) : (
               <MaterialIcons
                 name={normalizedIcon as ComponentProps<typeof MaterialIcons>["name"]}
@@ -274,6 +274,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   typeLabel: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 10,
     fontWeight: "700",
     letterSpacing: 2,
@@ -288,11 +289,13 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   entityName: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 22,
     fontWeight: "700",
     textAlign: "center",
   },
   entityDesc: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 14,
     lineHeight: 22,
     textAlign: "center",
@@ -311,11 +314,13 @@ const styles = StyleSheet.create({
     gap: 6,
   },
   hintLabel: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 9,
     fontWeight: "800",
     letterSpacing: 1.5,
   },
   hintText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     lineHeight: 19,
   },
@@ -329,6 +334,7 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   detailLabel: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 9,
     fontWeight: "700",
     letterSpacing: 1.5,
@@ -336,6 +342,7 @@ const styles = StyleSheet.create({
     opacity: 0.6,
   },
   detailText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     lineHeight: 19,
     textAlign: "center",
@@ -356,6 +363,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   closeBtnText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     fontWeight: "600",
   },
@@ -372,6 +380,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   fpBtnText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     fontWeight: "700",
     color: "#f97316",
@@ -400,12 +409,14 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   fpModalTitle: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 10,
     fontWeight: "800",
     color: "#f97316",
     letterSpacing: 2,
   },
   fpModalName: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 15,
     fontWeight: "700",
     color: "#e2e8f0",
@@ -439,6 +450,7 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   fpModalCloseText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     fontWeight: "600",
     color: "#64748b",

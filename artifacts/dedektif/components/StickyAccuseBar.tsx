@@ -122,6 +122,7 @@ const styles = StyleSheet.create({
     gap: 5,
   },
   title: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 10,
     fontWeight: "800",
     letterSpacing: 1.5,
@@ -142,6 +143,7 @@ const styles = StyleSheet.create({
     flexShrink: 1,
   },
   chipText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 10,
     fontWeight: "600",
     flexShrink: 1,

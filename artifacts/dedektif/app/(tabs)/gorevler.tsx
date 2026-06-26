@@ -664,6 +664,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.3,
   },
   pageSubtitle: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     marginTop: 2,
   },
@@ -678,6 +679,7 @@ const styles = StyleSheet.create({
   },
   newBadgeText: {
     color: "#000",
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     fontWeight: "700",
   },
@@ -721,6 +723,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.2,
   },
   statLabel: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
     fontWeight: "600",
     letterSpacing: 0.5,
@@ -742,6 +745,7 @@ const styles = StyleSheet.create({
   },
   collectAllText: {
     flex: 1,
+    fontFamily: "DroidSerifRegular",
     fontSize: 15,
     fontWeight: "800",
     letterSpacing: 0.2,
@@ -757,6 +761,7 @@ const styles = StyleSheet.create({
   },
   collectAllBadgeText: {
     color: "#000",
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     fontWeight: "800",
   },
@@ -796,6 +801,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.2,
   },
   sectionSubtitle: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     marginTop: 1,
   },
@@ -810,6 +816,7 @@ const styles = StyleSheet.create({
     flexShrink: 0,
   },
   countdownText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     fontVariant: ["tabular-nums"],
     fontWeight: "700",
@@ -829,6 +836,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
   },
   tierLabel: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
     fontWeight: "800",
     letterSpacing: 1,
@@ -880,6 +888,7 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
   missionDesc: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     lineHeight: 19,
   },
@@ -915,6 +924,7 @@ const styles = StyleSheet.create({
     borderRadius: 3,
   },
   progressLabel: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     minWidth: 36,
     textAlign: "right",
@@ -934,6 +944,7 @@ const styles = StyleSheet.create({
   },
   claimBtnText: {
     color: "#000",
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     fontWeight: "800",
     letterSpacing: 0.5,
@@ -945,6 +956,7 @@ const styles = StyleSheet.create({
     fontWeight: "700",
   },
   emptyState: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 14,
     textAlign: "center",
     paddingVertical: 12,
@@ -972,6 +984,7 @@ const styles = StyleSheet.create({
     borderWidth: 1.5,
   },
   playChipText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     fontWeight: "600",
   },
@@ -987,6 +1000,7 @@ const styles = StyleSheet.create({
     marginTop: 2,
   },
   completedBannerText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     fontWeight: "800",
     letterSpacing: 1.4,

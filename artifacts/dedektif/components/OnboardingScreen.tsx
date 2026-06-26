@@ -642,6 +642,7 @@ const styles = StyleSheet.create({
   },
   skipText: {
     color: "#6B7280",
+    fontFamily: "DroidSerifRegular",
     fontSize: 14,
     fontWeight: "500",
   },
@@ -679,6 +680,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   slideSubtitle: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
     fontWeight: "700",
     color: "#D4A843",
@@ -712,6 +714,7 @@ const styles = StyleSheet.create({
   },
   tipText: {
     flex: 1,
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     color: "#D4A843",
     lineHeight: 20,
@@ -727,6 +730,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   stepText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     color: "#4B5563",
     fontWeight: "500",
@@ -740,6 +744,7 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   nextBtnText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 17,
     fontWeight: "800",
     color: "#0F1117",
@@ -759,6 +764,7 @@ const styles = StyleSheet.create({
   },
   clueText: {
     flex: 1,
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     color: "#D4A843CC",
     lineHeight: 18,

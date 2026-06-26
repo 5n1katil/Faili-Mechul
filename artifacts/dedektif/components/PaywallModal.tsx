@@ -301,12 +301,14 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   title: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 26,
     fontWeight: "800",
     textAlign: "center",
     letterSpacing: -0.5,
   },
   subtitle: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 14,
     textAlign: "center",
     lineHeight: 21,
@@ -320,11 +322,13 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   price: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 34,
     fontWeight: "800",
     letterSpacing: -1,
   },
   priceNote: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     marginTop: 4,
     fontWeight: "500",
@@ -337,6 +341,7 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
   },
   sectionTitle: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     fontWeight: "700",
     letterSpacing: 0.5,
@@ -367,10 +372,12 @@ const styles = StyleSheet.create({
     gap: 2,
   },
   featureLabel: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     fontWeight: "700",
   },
   featureText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     lineHeight: 17,
   },
@@ -385,6 +392,7 @@ const styles = StyleSheet.create({
   },
   messageText: {
     flex: 1,
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     fontWeight: "600",
   },
@@ -398,6 +406,7 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   buyBtnText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 16,
     fontWeight: "800",
     letterSpacing: -0.2,
@@ -410,6 +419,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   restoreBtnText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     fontWeight: "600",
   },
@@ -419,13 +429,16 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   legalLink: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     textDecorationLine: "underline",
   },
   legalSep: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
   },
   legalNote: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
     textAlign: "center",
     lineHeight: 17,

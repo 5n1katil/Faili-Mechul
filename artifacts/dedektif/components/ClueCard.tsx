@@ -4432,6 +4432,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   clueLabel: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
     fontWeight: "700",
     letterSpacing: 0.5,
@@ -4446,17 +4447,20 @@ const styles = StyleSheet.create({
     gap: 3,
   },
   bonusBadgeText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 9,
     fontWeight: "700",
     color: "#D4A843",
     letterSpacing: 0.3,
   },
   clueNumber: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     fontWeight: "500",
     flex: 1,
   },
   clueText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 14,
     lineHeight: 21,
     fontWeight: "400",
@@ -4483,6 +4487,7 @@ const styles = StyleSheet.create({
     gap: 6,
   },
   unlockBtnText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     fontWeight: "600",
   },
@@ -4497,6 +4502,7 @@ const styles = StyleSheet.create({
     marginLeft: 4,
   },
   penaltyTagText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 10,
     fontWeight: "700",
   },
@@ -4512,6 +4518,7 @@ const styles = StyleSheet.create({
     borderLeftColor: "#D4A84366",
   },
   deductionHintText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     color: "#D4A843aa",
     flex: 1,
@@ -4533,12 +4540,14 @@ const styles = StyleSheet.create({
     marginBottom: 7,
   },
   gorselLabel: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 10,
     fontWeight: "700",
     color: "#D4A843",
     letterSpacing: 0.8,
   },
   gorselText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     color: "#D4A843cc",
     lineHeight: 19,
@@ -4559,6 +4568,7 @@ const styles = StyleSheet.create({
     marginBottom: 7,
   },
   sesLabel: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 10,
     fontWeight: "700",
     color: "#3b82f6",
@@ -4577,12 +4587,14 @@ const styles = StyleSheet.create({
     backgroundColor: "#C8372D",
   },
   sesRec: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 9,
     fontWeight: "700",
     color: "#C8372D",
     letterSpacing: 0.5,
   },
   sesText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     color: "#8cb4ff",
     lineHeight: 19,
@@ -4639,11 +4651,13 @@ const styles = StyleSheet.create({
     maxWidth: "90%",
   },
   soruLabel: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
     fontWeight: "700",
     color: "#666",
   },
   soruText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     color: "#aaa",
     lineHeight: 18,
@@ -4666,11 +4680,13 @@ const styles = StyleSheet.create({
     borderColor: "#C8372D44",
   },
   cevapLabel: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
     fontWeight: "700",
     color: "#22c55e",
   },
   cevapText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     color: "#aaa",
     lineHeight: 18,
@@ -4691,6 +4707,7 @@ const styles = StyleSheet.create({
     marginTop: 2,
   },
   yalanText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 9,
     fontWeight: "700",
     color: "#C8372D",
@@ -4749,6 +4766,7 @@ const styles = StyleSheet.create({
   },
   terminalFieldLabel: {
     fontFamily: "monospace",
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
     fontWeight: "700",
     color: "#22c55e",
@@ -4773,6 +4791,7 @@ const styles = StyleSheet.create({
   },
   terminalOptionText: {
     fontFamily: "monospace",
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
     color: "#4a7c59",
     fontWeight: "600",
@@ -4798,6 +4817,7 @@ const styles = StyleSheet.create({
   },
   terminalSubmitText: {
     fontFamily: "monospace",
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     fontWeight: "800",
     color: "#0F1117",
@@ -4814,6 +4834,7 @@ const styles = StyleSheet.create({
   },
   sifreText: {
     fontFamily: "monospace",
+    fontFamily: "DroidSerifRegular",
     fontSize: 14,
     color: "#9333ea",
     letterSpacing: 1.5,
@@ -4830,11 +4851,13 @@ const styles = StyleSheet.create({
     gap: 5,
   },
   sifreIpucuText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
     color: "#9333ea88",
     fontStyle: "italic",
   },
   sifreAciklama: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     color: "#c084fc",
     lineHeight: 18,
@@ -4850,6 +4873,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14,
   },
   sifreHintBtnText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     fontWeight: "700",
     color: "#fff",
@@ -4860,6 +4884,7 @@ const styles = StyleSheet.create({
     gap: 5,
   },
   sifreHintRevealedLabel: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
     fontStyle: "italic",
   },
@@ -4886,6 +4911,7 @@ const styles = StyleSheet.create({
   sifreCozBtnText: {
     color: "#0F1117",
     fontWeight: "700",
+    fontFamily: "DroidSerifRegular",
     fontSize: 14,
   },
   thermalBlock: {
@@ -4960,6 +4986,7 @@ const styles = StyleSheet.create({
   },
   thermalCardPosText: {
     color: "#64748b",
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
     fontWeight: "700",
   },
@@ -4986,6 +5013,7 @@ const styles = StyleSheet.create({
   },
   thermalCardId: {
     color: "#475569",
+    fontFamily: "DroidSerifRegular",
     fontSize: 10,
     fontWeight: "700",
     letterSpacing: 1,
@@ -5006,6 +5034,7 @@ const styles = StyleSheet.create({
   },
   thermalGlyphLockText: {
     color: "#475569",
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     fontWeight: "700",
   },
@@ -5027,6 +5056,7 @@ const styles = StyleSheet.create({
   },
   thermalErrorText: {
     color: "#ef4444",
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
   },
   thermalSubmitBtn: {
@@ -5043,6 +5073,7 @@ const styles = StyleSheet.create({
   thermalSubmitText: {
     color: "#0F1117",
     fontWeight: "700",
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     letterSpacing: 0.3,
   },
@@ -5063,6 +5094,7 @@ const styles = StyleSheet.create({
   thermalSolvedTitle: {
     color: "#22c55e",
     fontWeight: "700",
+    fontFamily: "DroidSerifRegular",
     fontSize: 14,
   },
   thermalSolvedGlyphs: {
@@ -5077,6 +5109,7 @@ const styles = StyleSheet.create({
   },
   thermalGlyphSep: {
     color: "#38bdf8",
+    fontFamily: "DroidSerifRegular",
     fontSize: 16,
   },
   thermalGlyphChip: {
@@ -5091,6 +5124,7 @@ const styles = StyleSheet.create({
   },
   thermalGlyphChipText: {
     color: "#38bdf8",
+    fontFamily: "DroidSerifRegular",
     fontSize: 14,
     fontWeight: "800",
     letterSpacing: 0.5,
@@ -5139,6 +5173,7 @@ const styles = StyleSheet.create({
   },
   crossgridPurposeLabel: {
     color: "#e0b54e",
+    fontFamily: "DroidSerifRegular",
     fontSize: 9,
     fontWeight: "700",
     letterSpacing: 1,
@@ -5146,6 +5181,7 @@ const styles = StyleSheet.create({
   },
   crossgridPurposeText: {
     color: "#ecd99a",
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
     lineHeight: 16,
   },
@@ -5191,11 +5227,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#1c1708",
   },
   crossgridChipSymbol: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 15,
     color: "#6b7399",
     lineHeight: 18,
   },
   crossgridChipLetter: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 17,
     fontWeight: "700",
     color: "#3d4566",
@@ -5211,6 +5249,7 @@ const styles = StyleSheet.create({
   },
   crossgridChipSepText: {
     color: "#6b7399",
+    fontFamily: "DroidSerifRegular",
     fontSize: 18,
     fontWeight: "300",
     lineHeight: 40,
@@ -5243,6 +5282,7 @@ const styles = StyleSheet.create({
   },
   crossgridCornerText: {
     color: "#e0b54e",
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     fontWeight: "700",
   },
@@ -5254,6 +5294,7 @@ const styles = StyleSheet.create({
   },
   crossgridHeaderText: {
     color: "#e0b54e",
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     fontWeight: "700",
   },
@@ -5262,6 +5303,7 @@ const styles = StyleSheet.create({
   },
   crossgridCellText: {
     color: "#dbe2f7",
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     fontWeight: "600",
   },
@@ -5277,6 +5319,7 @@ const styles = StyleSheet.create({
   },
   crossgridCipherLabel: {
     color: "#8b91ad",
+    fontFamily: "DroidSerifRegular",
     fontSize: 9,
     fontWeight: "700",
     letterSpacing: 1,
@@ -5304,6 +5347,7 @@ const styles = StyleSheet.create({
   crossgridSubmitText: {
     color: "#1a1205",
     fontWeight: "700",
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     letterSpacing: 0.3,
   },
@@ -5327,12 +5371,14 @@ const styles = StyleSheet.create({
   },
   switchboardTitleText: {
     color: "#e0b54e",
+    fontFamily: "DroidSerifRegular",
     fontSize: 10,
     fontWeight: "700",
     letterSpacing: 1.4,
   },
   switchboardSubtitle: {
     color: "#8b91ad",
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     paddingHorizontal: 12,
     paddingTop: 8,
@@ -5350,6 +5396,7 @@ const styles = StyleSheet.create({
   },
   switchboardPurposeLabel: {
     color: "#e0b54e",
+    fontFamily: "DroidSerifRegular",
     fontSize: 9,
     fontWeight: "700",
     letterSpacing: 1,
@@ -5357,11 +5404,13 @@ const styles = StyleSheet.create({
   },
   switchboardPurposeText: {
     color: "#ecd99a",
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
     lineHeight: 16,
   },
   switchboardSectionLabel: {
     color: "#e0b54e",
+    fontFamily: "DroidSerifRegular",
     fontSize: 9,
     fontWeight: "700",
     letterSpacing: 1.2,
@@ -5391,11 +5440,13 @@ const styles = StyleSheet.create({
   },
   switchboardSegBtnText: {
     color: "#8b91ad",
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     fontWeight: "500",
   },
   switchboardQuestion: {
     color: "#d6dae8",
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     lineHeight: 18,
     marginHorizontal: 12,
@@ -5426,11 +5477,13 @@ const styles = StyleSheet.create({
   },
   switchboardOptionText: {
     color: "#e8eaf2",
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     fontWeight: "600",
   },
   switchboardWrong: {
     color: "#fca5a5",
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     marginHorizontal: 12,
     marginBottom: 8,
@@ -5449,6 +5502,7 @@ const styles = StyleSheet.create({
   },
   switchboardTranscriptBtnText: {
     color: "#8b91ad",
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
   },
   switchboardTranscript: {
@@ -5462,6 +5516,7 @@ const styles = StyleSheet.create({
   },
   switchboardTranscriptText: {
     color: "#b0b8d6",
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     lineHeight: 18,
     fontStyle: "italic",
@@ -5471,6 +5526,7 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   phoneAciklama: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     color: "#6ee7e7",
     lineHeight: 17,
@@ -5497,22 +5553,26 @@ const styles = StyleSheet.create({
     gap: 3,
   },
   phoneFromText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
     fontWeight: "600",
     color: "#14b8a6",
   },
   phoneTo: {},
   phoneToText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
     color: "#6ee7e7",
     fontWeight: "500",
   },
   phoneSaat: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 10,
     color: "#444",
     marginLeft: "auto",
   },
   phoneIcerik: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     color: "#8ee8e8",
     lineHeight: 17,
@@ -5536,6 +5596,7 @@ const styles = StyleSheet.create({
     padding: 7,
   },
   phoneSonucText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     color: "#6ee7e7aa",
     flex: 1,
@@ -5552,6 +5613,7 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   anagramKarisik: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 20,
     fontWeight: "800",
     color: "#f59e0b",
@@ -5559,6 +5621,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   anagramIpucu: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
     color: "#f59e0b88",
     fontStyle: "italic",
@@ -5575,6 +5638,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#f59e0b44",
     color: "#f59e0b",
+    fontFamily: "DroidSerifRegular",
     fontSize: 15,
     paddingHorizontal: 12,
     paddingVertical: 8,
@@ -5591,6 +5655,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   anagramWrong: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
     color: "#C8372D",
     textAlign: "center",
@@ -5605,6 +5670,7 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   dnaAciklama: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     color: "#6ee7e7aa",
     fontStyle: "italic",
@@ -5618,6 +5684,7 @@ const styles = StyleSheet.create({
     borderColor: "#14b8a6",
   },
   dnaOrnekLabel: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 9,
     fontWeight: "700",
     color: "#14b8a6",
@@ -5633,6 +5700,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   dnaLokusKey: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 9,
     color: "#555",
     fontWeight: "600",
@@ -5672,6 +5740,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#0a1a0a",
   },
   dnaSuspectId: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 10,
     fontWeight: "700",
     color: "#555",
@@ -5688,11 +5757,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#1a2a2a",
   },
   dnaConfirmText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     fontWeight: "700",
     color: "#0F1117",
   },
   dnaWrong: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
     color: "#C8372D",
     textAlign: "center",
@@ -5706,12 +5777,14 @@ const styles = StyleSheet.create({
     borderColor: "#f9731630",
   },
   parmakIziAciklama: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
     color: "#94a3b8",
     lineHeight: 16,
     marginBottom: 8,
   },
   parmakIziSelectLabel: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
     fontWeight: "700",
     color: "#f97316",
@@ -5737,18 +5810,21 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   parmakIziKonum: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     fontWeight: "700",
     color: "#94a3b8",
     flex: 1,
   },
   parmakIziIpucu: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
     color: "#64748b",
     lineHeight: 15,
     paddingLeft: 22,
   },
   parmakIziWrong: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
     color: "#C8372D",
     textAlign: "center",
@@ -5769,6 +5845,7 @@ const styles = StyleSheet.create({
     borderColor: "#f9731640",
   },
   parmakIziConfirmText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 14,
     fontWeight: "700",
     color: "#fff",
@@ -5780,6 +5857,7 @@ const styles = StyleSheet.create({
     gap: 6,
   },
   fpSceneLabel: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 10,
     fontWeight: "700",
     color: "#f97316",
@@ -5806,6 +5884,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#0F111780",
   },
   fpSceneSubLabel: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 10,
     color: "#64748b",
     fontStyle: "italic",
@@ -5834,6 +5913,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#f9731615",
   },
   fpSuspectName: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
     fontWeight: "600",
     color: "#94a3b8",
@@ -5849,6 +5929,7 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   timelineAciklama: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     color: "#ff8080aa",
     fontStyle: "italic",
@@ -5873,12 +5954,14 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   timelineIndexText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
     fontWeight: "700",
     color: "#C8372D",
   },
   timelineMetin: {
     flex: 1,
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     color: "#ccc",
     lineHeight: 17,
@@ -5902,11 +5985,13 @@ const styles = StyleSheet.create({
     gap: 6,
   },
   timelineVerifyText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     fontWeight: "700",
     color: "#fff",
   },
   timelineWrong: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
     color: "#C8372D",
     textAlign: "center",
@@ -5926,12 +6011,14 @@ const styles = StyleSheet.create({
     gap: 6,
   },
   profilHeaderText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 10,
     fontWeight: "800",
     color: "#A855F7",
     letterSpacing: 1.5,
   },
   profilAciklama: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     color: "#aaa",
     lineHeight: 17,
@@ -5948,17 +6035,20 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   profilDelilBaslik: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
     fontWeight: "700",
     color: "#A855F7",
     letterSpacing: 0.5,
   },
   profilDelilMetin: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     color: "#ccc",
     lineHeight: 16,
   },
   profilSelectLabel: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     color: "#aaa",
     fontStyle: "italic",
@@ -5982,6 +6072,7 @@ const styles = StyleSheet.create({
     borderColor: "#A855F7",
   },
   profilOptionText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     fontWeight: "600",
     color: "#ccc",
@@ -6022,11 +6113,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#A855F744",
   },
   profilVerifyText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     fontWeight: "700",
     color: "#fff",
   },
   profilWrong: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
     color: "#C8372D",
     textAlign: "center",
@@ -6037,6 +6130,7 @@ const styles = StyleSheet.create({
     gap: 6,
   },
   profilSolvedText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     fontWeight: "700",
     color: "#22c55e",
@@ -6052,6 +6146,7 @@ const styles = StyleSheet.create({
     gap: 6,
   },
   miniGameSolvedText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 14,
     fontWeight: "700",
     color: "#22c55e",
@@ -6065,18 +6160,21 @@ const styles = StyleSheet.create({
     borderColor: "#22c55e44",
   },
   miniGameAnswerText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 16,
     fontWeight: "800",
     color: "#22c55e",
     letterSpacing: 2,
   },
   miniGameAciklama: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     color: "#22c55eaa",
     lineHeight: 17,
     textAlign: "center",
   },
   fpMiniStory: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     color: "#cbd5e1",
     lineHeight: 18,
@@ -6099,6 +6197,7 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   faceMatchAciklama: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     color: "#c4b5fdaa",
     fontStyle: "italic",
@@ -6112,6 +6211,7 @@ const styles = StyleSheet.create({
     borderColor: "#9333ea",
   },
   faceMatchRefLabel: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 9,
     fontWeight: "700",
     color: "#9333ea",
@@ -6127,6 +6227,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   faceMatchMeasKey: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 10,
     color: "#777",
     fontWeight: "600",
@@ -6159,6 +6260,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#110a1a",
   },
   faceMatchSuspectId: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 10,
     fontWeight: "700",
     color: "#555",
@@ -6181,6 +6283,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   tornRouteHeaderText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
     fontWeight: "700",
     letterSpacing: 1.2,
@@ -6195,6 +6298,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
   },
   tornRoutePurposeLabel: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 9,
     fontWeight: "800",
     letterSpacing: 1.2,
@@ -6202,11 +6306,13 @@ const styles = StyleSheet.create({
     marginBottom: 3,
   },
   tornRoutePurposeText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     color: "#ecd99a",
     lineHeight: 17,
   },
   tornRouteSubtitle: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     color: "#8b91ad",
     marginBottom: 10,
@@ -6238,15 +6344,18 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   tornRouteTear: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 9,
     color: "#cdbb79",
   },
   tornRoutePieceLabel: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 9,
     fontWeight: "700",
     color: "#cdbb79",
   },
   tornRoutePieceText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     fontWeight: "700",
     color: "#f4eccb",
@@ -6264,6 +6373,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   tornRouteBadgeText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
     fontWeight: "900",
     color: "#07110a",
@@ -6278,20 +6388,24 @@ const styles = StyleSheet.create({
     backgroundColor: "#10120e",
   },
   tornRouteOrderLabel: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 9,
     fontWeight: "800",
     letterSpacing: 1.2,
     color: "#D4A843",
   },
   tornRouteOrderEmpty: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     color: "#8b91ad",
   },
   tornRouteOrderItem: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     color: "#d6dae8",
   },
   tornRouteArrow: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     color: "#8b91ad",
   },
@@ -6310,6 +6424,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   tornRouteResetText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     color: "#e8eaf2",
   },
@@ -6324,6 +6439,7 @@ const styles = StyleSheet.create({
     opacity: 0.4,
   },
   tornRouteSubmitText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     fontWeight: "700",
     color: "#1a1205",
@@ -6341,6 +6457,7 @@ const styles = StyleSheet.create({
     opacity: 0.5,
   },
   tornRouteHintText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     color: "#fbbf24",
   },
@@ -6353,6 +6470,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
   },
   tornRouteHintRevealText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     color: "#fbbf24",
     lineHeight: 17,
@@ -6369,6 +6487,7 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(220,38,38,0.12)",
   },
   tornRouteResultText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     lineHeight: 18,
   },
@@ -6387,6 +6506,7 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(34,197,94,0.08)",
   },
   tornRouteRouteResultLabel: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 9,
     fontWeight: "800",
     letterSpacing: 1.2,
@@ -6394,6 +6514,7 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   tornRouteRouteResultText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     fontWeight: "700",
     color: "#b7f7c8",
@@ -6430,11 +6551,13 @@ const styles = StyleSheet.create({
   },
   frameShadowReflectionNote: {
     flex: 1,
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     color: "#d7d0b6",
     lineHeight: 17,
   },
   frameShadowEvidenceLabel: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 9,
     fontWeight: "800",
     letterSpacing: 1.4,
@@ -6443,6 +6566,7 @@ const styles = StyleSheet.create({
     marginTop: 2,
   },
   frameShadowSelectLabel: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 9,
     fontWeight: "800",
     letterSpacing: 1.2,
@@ -6474,6 +6598,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   compassHeaderText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
     fontWeight: "800",
     letterSpacing: 1.4,
@@ -6488,6 +6613,7 @@ const styles = StyleSheet.create({
     borderRadius: 6,
   },
   compassPurposeLabel: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 9,
     fontWeight: "800",
     letterSpacing: 1.2,
@@ -6495,6 +6621,7 @@ const styles = StyleSheet.create({
     marginBottom: 3,
   },
   compassPurposeText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     color: "#ecd99a",
     lineHeight: 17,
@@ -6508,6 +6635,7 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(78,86,63,0.12)",
   },
   compassNorthKeyLabel: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 9,
     fontWeight: "800",
     letterSpacing: 1.2,
@@ -6515,17 +6643,20 @@ const styles = StyleSheet.create({
     marginBottom: 3,
   },
   compassNorthKeyText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     color: "#d9e7c5",
     lineHeight: 17,
   },
   compassSubtitle: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     color: "#8b91ad",
     marginBottom: 10,
     lineHeight: 17,
   },
   compassSectionLabel: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 9,
     fontWeight: "800",
     letterSpacing: 1.4,
@@ -6565,10 +6696,12 @@ const styles = StyleSheet.create({
     marginBottom: 6,
   },
   compassSegNotch: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 9,
     color: "#8b91ad",
   },
   compassSegLabel: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 9,
     fontWeight: "700",
     color: "#D4A843",
@@ -6599,6 +6732,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 4,
     alignSelf: "center",
+    fontFamily: "DroidSerifRegular",
     fontSize: 9,
     fontWeight: "800",
     color: "#f6e9bf",
@@ -6609,11 +6743,13 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   compassFaceSide: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 9,
     fontWeight: "800",
     color: "#f6e9bf",
   },
   compassFaceCenter: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     fontWeight: "800",
     color: "#D4A843",
@@ -6622,6 +6758,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 4,
     alignSelf: "center",
+    fontFamily: "DroidSerifRegular",
     fontSize: 9,
     fontWeight: "800",
     color: "#f6e9bf",
@@ -6630,6 +6767,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: -14,
     alignSelf: "center",
+    fontFamily: "DroidSerifRegular",
     fontSize: 9,
     color: "#8b91ad",
   },
@@ -6645,6 +6783,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   compassPosBadgeText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 10,
     fontWeight: "800",
     color: "#0f1117",
@@ -6665,6 +6804,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   compassRotBtnText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
     color: "#e8eaf2",
   },
@@ -6692,6 +6832,7 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(34,197,94,0.08)",
   },
   compassSlotLabel: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 9,
     fontWeight: "800",
     letterSpacing: 1,
@@ -6699,15 +6840,18 @@ const styles = StyleSheet.create({
     marginBottom: 3,
   },
   compassSlotMark: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 14,
     marginBottom: 3,
   },
   compassSlotSegLabel: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 9,
     color: "#86efac",
     fontWeight: "700",
   },
   compassSlotPlaceholder: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 9,
     color: "#4b5563",
   },
@@ -6726,6 +6870,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   compassResetText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     color: "#e8eaf2",
   },
@@ -6740,6 +6885,7 @@ const styles = StyleSheet.create({
     opacity: 0.4,
   },
   compassSubmitText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     fontWeight: "700",
     color: "#1a1205",
@@ -6757,6 +6903,7 @@ const styles = StyleSheet.create({
     opacity: 0.5,
   },
   compassHintText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     color: "#fbbf24",
   },
@@ -6769,6 +6916,7 @@ const styles = StyleSheet.create({
     borderRadius: 6,
   },
   compassHintRevealText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     color: "#fbbf24",
     lineHeight: 17,
@@ -6785,6 +6933,7 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(220,38,38,0.12)",
   },
   compassResultText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     lineHeight: 18,
   },
@@ -6803,6 +6952,7 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(34,197,94,0.08)",
   },
   compassRouteResultLabel: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 9,
     fontWeight: "800",
     letterSpacing: 1.2,
@@ -6810,6 +6960,7 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   compassRouteResultText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     fontWeight: "700",
     color: "#b7f7c8",
@@ -6817,6 +6968,7 @@ const styles = StyleSheet.create({
   },
   compassAciklama: {
     marginTop: 8,
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     color: "#8b91ad",
     fontStyle: "italic",
@@ -6838,6 +6990,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   luggageHeaderText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
     fontWeight: "800",
     letterSpacing: 1.4,
@@ -6852,6 +7005,7 @@ const styles = StyleSheet.create({
     borderRadius: 6,
   },
   luggagePurposeLabel: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 9,
     fontWeight: "800",
     letterSpacing: 1.2,
@@ -6859,11 +7013,13 @@ const styles = StyleSheet.create({
     marginBottom: 3,
   },
   luggagePurposeText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     color: "#ecd99a",
     lineHeight: 17,
   },
   luggageSubtitle: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     color: "#8b91ad",
     marginBottom: 10,
@@ -6881,6 +7037,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#16100a",
   },
   luggageCaseLabel: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
     fontWeight: "800",
     letterSpacing: 0.8,
@@ -6888,11 +7045,13 @@ const styles = StyleSheet.create({
     marginBottom: 2,
   },
   luggageCaseStamp: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
     color: "#a8956a",
     marginBottom: 2,
   },
   luggageCaseNote: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
     color: "#6b7280",
     marginBottom: 8,
@@ -6936,6 +7095,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#22c55e",
   },
   luggageRouteLabel: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     color: "#9ca3af",
     flex: 1,
@@ -6955,6 +7115,7 @@ const styles = StyleSheet.create({
     opacity: 0.4,
   },
   luggageSubmitText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     fontWeight: "700",
     color: "#1a1205",
@@ -6972,6 +7133,7 @@ const styles = StyleSheet.create({
     opacity: 0.5,
   },
   luggageHintText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     color: "#fbbf24",
   },
@@ -6984,6 +7146,7 @@ const styles = StyleSheet.create({
     borderRadius: 6,
   },
   luggageHintRevealText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     color: "#fbbf24",
     lineHeight: 17,
@@ -7000,6 +7163,7 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(220,38,38,0.12)",
   },
   luggageResultText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     lineHeight: 18,
   },
@@ -7018,6 +7182,7 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(34,197,94,0.08)",
   },
   luggageGridEffectLabel: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 9,
     fontWeight: "800",
     letterSpacing: 1.2,
@@ -7025,6 +7190,7 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   luggageGridEffectText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     fontWeight: "700",
     color: "#b7f7c8",
@@ -7032,6 +7198,7 @@ const styles = StyleSheet.create({
   },
   luggageAciklama: {
     marginTop: 8,
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     color: "#8b91ad",
     fontStyle: "italic",
@@ -7053,6 +7220,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   negativeHeaderText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
     fontWeight: "800",
     letterSpacing: 1.4,
@@ -7067,6 +7235,7 @@ const styles = StyleSheet.create({
     borderRadius: 6,
   },
   negativePurposeLabel: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 9,
     fontWeight: "800",
     letterSpacing: 1.2,
@@ -7074,11 +7243,13 @@ const styles = StyleSheet.create({
     marginBottom: 3,
   },
   negativePurposeText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     color: "#ecd99a",
     lineHeight: 17,
   },
   negativeSubtitle: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     color: "#8b91ad",
     marginBottom: 10,
@@ -7096,6 +7267,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#0d1520",
   },
   negativeCheckLabel: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
     fontWeight: "800",
     letterSpacing: 0.8,
@@ -7124,6 +7296,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
   },
   negativePhotoCellLabel: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 8,
     fontWeight: "800",
     letterSpacing: 1,
@@ -7131,11 +7304,13 @@ const styles = StyleSheet.create({
     color: "#6b7280",
   },
   negativePositiveText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
     fontWeight: "700",
     color: "#151a25",
   },
   negativeNegativeText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
     fontWeight: "700",
     color: "#eef2fb",
@@ -7178,6 +7353,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#22c55e",
   },
   negativeOptionLabel: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     color: "#9ca3af",
     flex: 1,
@@ -7197,6 +7373,7 @@ const styles = StyleSheet.create({
     opacity: 0.4,
   },
   negativeSubmitText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     fontWeight: "700",
     color: "#1a1205",
@@ -7214,6 +7391,7 @@ const styles = StyleSheet.create({
     opacity: 0.5,
   },
   negativeHintText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     color: "#fbbf24",
   },
@@ -7226,6 +7404,7 @@ const styles = StyleSheet.create({
     borderRadius: 6,
   },
   negativeHintRevealText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     color: "#fbbf24",
     lineHeight: 17,
@@ -7242,6 +7421,7 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(220,38,38,0.12)",
   },
   negativeResultText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     lineHeight: 18,
   },
@@ -7260,6 +7440,7 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(34,197,94,0.08)",
   },
   negativeGridEffectLabel: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 9,
     fontWeight: "800",
     letterSpacing: 1.2,
@@ -7267,6 +7448,7 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   negativeGridEffectText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     fontWeight: "700",
     color: "#b7f7c8",
@@ -7274,6 +7456,7 @@ const styles = StyleSheet.create({
   },
   negativeAciklama: {
     marginTop: 8,
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     color: "#8b91ad",
     fontStyle: "italic",
@@ -7295,6 +7478,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   morseHeaderText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
     fontWeight: "800",
     letterSpacing: 1.4,
@@ -7309,6 +7493,7 @@ const styles = StyleSheet.create({
     borderRadius: 6,
   },
   morsePurposeLabel: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 9,
     fontWeight: "800",
     letterSpacing: 1.2,
@@ -7316,11 +7501,13 @@ const styles = StyleSheet.create({
     marginBottom: 3,
   },
   morsePurposeText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     color: "#ecd99a",
     lineHeight: 17,
   },
   morseSubtitle: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     color: "#8b91ad",
     marginBottom: 10,
@@ -7335,6 +7522,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#0d180d",
   },
   morseChartLabel: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 9,
     fontWeight: "800",
     letterSpacing: 1.2,
@@ -7351,11 +7539,13 @@ const styles = StyleSheet.create({
     gap: 2,
   },
   morseChartChar: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     fontWeight: "800",
     color: "#D4A843",
   },
   morseChartCode: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
     color: "#f3d77d",
     letterSpacing: 2,
@@ -7372,6 +7562,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#0d180d",
   },
   morseSignalLabel: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
     fontWeight: "800",
     letterSpacing: 0.8,
@@ -7403,6 +7594,7 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(34,197,94,0.12)",
   },
   morseOptionChar: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 16,
     fontWeight: "800",
     color: "#6b7280",
@@ -7421,6 +7613,7 @@ const styles = StyleSheet.create({
     opacity: 0.4,
   },
   morseSubmitText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     fontWeight: "700",
     color: "#1a1205",
@@ -7438,6 +7631,7 @@ const styles = StyleSheet.create({
     opacity: 0.5,
   },
   morseHintText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     color: "#fbbf24",
   },
@@ -7450,6 +7644,7 @@ const styles = StyleSheet.create({
     borderRadius: 6,
   },
   morseHintRevealText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     color: "#fbbf24",
     lineHeight: 17,
@@ -7466,6 +7661,7 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(220,38,38,0.12)",
   },
   morseResultText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     lineHeight: 18,
   },
@@ -7484,6 +7680,7 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(34,197,94,0.08)",
   },
   morseGridEffectLabel: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 9,
     fontWeight: "800",
     letterSpacing: 1.2,
@@ -7491,6 +7688,7 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   morseGridEffectText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     fontWeight: "700",
     color: "#b7f7c8",
@@ -7498,6 +7696,7 @@ const styles = StyleSheet.create({
   },
   morseAciklama: {
     marginTop: 8,
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     color: "#8b91ad",
     fontStyle: "italic",
@@ -7519,6 +7718,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   archiveHeaderText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
     fontWeight: "800",
     letterSpacing: 1.4,
@@ -7533,6 +7733,7 @@ const styles = StyleSheet.create({
     borderRadius: 6,
   },
   archivePurposeLabel: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 9,
     fontWeight: "800",
     letterSpacing: 1.2,
@@ -7540,11 +7741,13 @@ const styles = StyleSheet.create({
     marginBottom: 3,
   },
   archivePurposeText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     color: "#ecd99a",
     lineHeight: 17,
   },
   archiveSubtitle: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     color: "#8b91ad",
     marginBottom: 10,
@@ -7568,17 +7771,20 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   archiveFileCode: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     fontWeight: "800",
     color: "#D4A843",
     letterSpacing: 1,
   },
   archiveFileDate: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
     color: "#8b7a4a",
     fontStyle: "italic",
   },
   archiveFileNote: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
     color: "#a09060",
     marginBottom: 8,
@@ -7621,6 +7827,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#D4A843",
   },
   archiveSlotLabel: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
     color: "#7a6a3a",
     flex: 1,
@@ -7640,6 +7847,7 @@ const styles = StyleSheet.create({
     opacity: 0.4,
   },
   archiveSubmitText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     fontWeight: "700",
     color: "#1a1205",
@@ -7657,6 +7865,7 @@ const styles = StyleSheet.create({
     opacity: 0.5,
   },
   archiveHintText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     color: "#fbbf24",
   },
@@ -7669,6 +7878,7 @@ const styles = StyleSheet.create({
     borderRadius: 6,
   },
   archiveHintRevealText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     color: "#fbbf24",
     lineHeight: 17,
@@ -7685,6 +7895,7 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(220,38,38,0.12)",
   },
   archiveResultText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     lineHeight: 18,
   },
@@ -7703,6 +7914,7 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(212,168,67,0.08)",
   },
   archiveGridEffectLabel: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 9,
     fontWeight: "800",
     letterSpacing: 1.2,
@@ -7710,6 +7922,7 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   archiveGridEffectText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     fontWeight: "700",
     color: "#f3d77d",
@@ -7717,6 +7930,7 @@ const styles = StyleSheet.create({
   },
   archiveAciklama: {
     marginTop: 8,
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     color: "#8b91ad",
     fontStyle: "italic",
@@ -7738,6 +7952,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   lockHeaderText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
     fontWeight: "800",
     letterSpacing: 1.4,
@@ -7752,6 +7967,7 @@ const styles = StyleSheet.create({
     borderRadius: 6,
   },
   lockPurposeLabel: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 9,
     fontWeight: "800",
     letterSpacing: 1.2,
@@ -7759,11 +7975,13 @@ const styles = StyleSheet.create({
     marginBottom: 3,
   },
   lockPurposeText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     color: "#ecd99a",
     lineHeight: 17,
   },
   lockSubtitle: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     color: "#8b91ad",
     marginBottom: 10,
@@ -7787,6 +8005,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#150f06",
   },
   lockDialLabel: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 9,
     fontWeight: "800",
     letterSpacing: 0.8,
@@ -7804,6 +8023,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#1a1206",
   },
   lockDialSymbol: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 22,
     color: "#f4e6ae",
   },
@@ -7822,6 +8042,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#1a1206",
   },
   lockRotateText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 18,
     color: "#D4A843",
   },
@@ -7833,6 +8054,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   lockSubmitText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     fontWeight: "700",
     color: "#1a1205",
@@ -7850,6 +8072,7 @@ const styles = StyleSheet.create({
     opacity: 0.5,
   },
   lockHintText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     color: "#fbbf24",
   },
@@ -7862,6 +8085,7 @@ const styles = StyleSheet.create({
     borderRadius: 6,
   },
   lockHintRevealText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     color: "#fbbf24",
     lineHeight: 17,
@@ -7878,6 +8102,7 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(220,38,38,0.12)",
   },
   lockResultText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     lineHeight: 18,
   },
@@ -7896,6 +8121,7 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(212,168,67,0.08)",
   },
   lockGridEffectLabel: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 9,
     fontWeight: "800",
     letterSpacing: 1.2,
@@ -7903,6 +8129,7 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   lockGridEffectText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     fontWeight: "700",
     color: "#f3d77d",
@@ -7910,6 +8137,7 @@ const styles = StyleSheet.create({
   },
   lockAciklama: {
     marginTop: 8,
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     color: "#8b91ad",
     fontStyle: "italic",
@@ -7925,6 +8153,7 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   fenSubmitText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     fontWeight: "700",
     color: "#1a1205",
@@ -7934,17 +8163,20 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   discTitle: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 14,
     fontWeight: "700",
     color: "#D4A843",
     marginBottom: 2,
   },
   discSubtitle: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     color: "#8b91ad",
     marginBottom: 4,
   },
   discPurposeHint: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
     color: "#6b7280",
     fontStyle: "italic",
@@ -7961,6 +8193,7 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   discLabel: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     color: "#9ca3af",
     flex: 1,
@@ -7984,6 +8217,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   discSymbol: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 22,
     color: "#D4A843",
   },
@@ -7992,17 +8226,20 @@ const styles = StyleSheet.create({
     gap: 6,
   },
   tlTitle: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 14,
     fontWeight: "700",
     color: "#D4A843",
     marginBottom: 2,
   },
   tlSubtitle: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     color: "#8b91ad",
     marginBottom: 4,
   },
   tlPurposeHint: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
     color: "#6b7280",
     fontStyle: "italic",
@@ -8027,6 +8264,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   tlCardBadgeText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     fontWeight: "700",
     color: "#D4A843",
@@ -8035,12 +8273,14 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   tlCardLabel: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     fontWeight: "700",
     color: "#e2e8f0",
     marginBottom: 2,
   },
   tlCardText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
     color: "#8b91ad",
     lineHeight: 15,
@@ -8056,17 +8296,20 @@ const styles = StyleSheet.create({
     gap: 6,
   },
   xrayTitle: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 14,
     fontWeight: "700",
     color: "#60a5fa",
     marginBottom: 2,
   },
   xraySubtitle: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     color: "#8b91ad",
     marginBottom: 4,
   },
   xrayPurposeHint: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
     color: "#6b7280",
     fontStyle: "italic",
@@ -8088,11 +8331,13 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   xrayLayerLabel: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     fontWeight: "700",
     color: "#93c5fd",
   },
   xrayLayerScan: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
     color: "#6b7280",
     fontStyle: "italic",
@@ -8114,6 +8359,7 @@ const styles = StyleSheet.create({
     borderColor: "#60a5fa",
   },
   xrayOptionText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
     color: "#9ca3af",
     lineHeight: 15,
@@ -8127,17 +8373,20 @@ const styles = StyleSheet.create({
     gap: 6,
   },
   waltzTitle: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 14,
     fontWeight: "700",
     color: "#e879f9",
     marginBottom: 2,
   },
   waltzSubtitle: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     color: "#8b91ad",
     marginBottom: 4,
   },
   waltzPurposeHint: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
     color: "#6b7280",
     fontStyle: "italic",
@@ -8167,16 +8416,19 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   waltzMeasureNumText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     fontWeight: "700",
     color: "#e879f9",
   },
   waltzMeasureLabel: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     fontWeight: "700",
     color: "#e2e8f0",
   },
   waltzMeasureNote: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 10,
     color: "#8b91ad",
     fontStyle: "italic",
@@ -8210,6 +8462,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#e879f9",
   },
   waltzOptionText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
     color: "#9ca3af",
     flex: 1,
@@ -8224,17 +8477,20 @@ const styles = StyleSheet.create({
     gap: 6,
   },
   valveTitle: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 14,
     fontWeight: "700",
     color: "#34d399",
     marginBottom: 2,
   },
   valveSubtitle: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     color: "#8b91ad",
     marginBottom: 4,
   },
   valvePurposeHint: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
     color: "#6b7280",
     fontStyle: "italic",
@@ -8276,12 +8532,14 @@ const styles = StyleSheet.create({
     borderColor: "rgba(239,68,68,0.3)",
   },
   valveLabel: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
     color: "#9ca3af",
     textAlign: "center",
     marginBottom: 4,
   },
   valveState: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 10,
     fontWeight: "700",
     letterSpacing: 0.8,

@@ -102,6 +102,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   title: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 20,
     fontWeight: "800",
     textAlign: "center",
@@ -117,6 +118,7 @@ const styles = StyleSheet.create({
   },
   warningText: {
     flex: 1,
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     fontWeight: "500",
     lineHeight: 19,
@@ -130,12 +132,12 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     gap: 8,
   },
-  continueBtnText: { fontSize: 15, fontWeight: "800" },
+  continueBtnText: { fontFamily: "DroidSerifRegular", fontSize: 15, fontWeight: "800" },
   exitBtn: {
     alignItems: "center",
     paddingVertical: 12,
     borderRadius: 12,
     borderWidth: 1,
   },
-  exitBtnText: { fontSize: 14, fontWeight: "700" },
+  exitBtnText: { fontFamily: "DroidSerifRegular", fontSize: 14, fontWeight: "700" },
 });

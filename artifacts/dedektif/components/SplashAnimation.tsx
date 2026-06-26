@@ -369,6 +369,7 @@ const styles = StyleSheet.create({
 
   subtitle: {
     color: "#7A6F5E",
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     fontWeight: "500",
     letterSpacing: 2,
@@ -379,6 +380,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 52,
     color: "#3A3530",
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
     fontWeight: "500",
     letterSpacing: 1.5,

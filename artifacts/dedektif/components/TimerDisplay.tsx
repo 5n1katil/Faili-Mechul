@@ -152,12 +152,14 @@ const styles = StyleSheet.create({
     gap: 6,
   },
   timerValue: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 18,
     fontWeight: "700",
     fontVariant: ["tabular-nums"],
     minWidth: 44,
   },
   timerLabel: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 9,
     fontWeight: "700",
     letterSpacing: 1,
@@ -176,10 +178,12 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   wrongValue: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 16,
     fontWeight: "700",
   },
   penaltyLabel: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 9,
     fontWeight: "700",
     letterSpacing: 1,
@@ -197,6 +201,7 @@ const styles = StyleSheet.create({
     right: 0,
   },
   penaltyToastText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 10,
     fontWeight: "800",
     color: "#C8372D",

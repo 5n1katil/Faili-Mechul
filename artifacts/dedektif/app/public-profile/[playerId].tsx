@@ -325,9 +325,9 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
   backBtn: { width: 40, height: 40, alignItems: "center", justifyContent: "center" },
-  headerTitle: { flex: 1, fontSize: 17, fontWeight: "700", textAlign: "center" },
+  headerTitle: { flex: 1, fontFamily: "DroidSerifRegular", fontSize: 17, fontWeight: "700", textAlign: "center" },
   center: { flex: 1, alignItems: "center", justifyContent: "center", gap: 12 },
-  errorText: { fontSize: 15, textAlign: "center", paddingHorizontal: 32 },
+  errorText: { fontFamily: "DroidSerifRegular", fontSize: 15, textAlign: "center", paddingHorizontal: 32 },
   content: { padding: 16, gap: 16 },
   card: {
     borderRadius: 16,
@@ -343,7 +343,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  name: { fontSize: 22, fontWeight: "700", textAlign: "center" },
+  name: { fontFamily: "DroidSerifRegular", fontSize: 22, fontWeight: "700", textAlign: "center" },
   badge: {
     flexDirection: "row",
     alignItems: "center",
@@ -353,9 +353,9 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     borderWidth: 1,
   },
-  badgeText: { fontSize: 12, fontWeight: "600" },
-  bio: { fontSize: 14, textAlign: "center", lineHeight: 20, paddingHorizontal: 8 },
-  sectionLabel: { fontSize: 12, fontWeight: "700", letterSpacing: 1, marginBottom: 8 },
+  badgeText: { fontFamily: "DroidSerifRegular", fontSize: 12, fontWeight: "600" },
+  bio: { fontFamily: "DroidSerifRegular", fontSize: 14, textAlign: "center", lineHeight: 20, paddingHorizontal: 8 },
+  sectionLabel: { fontFamily: "DroidSerifRegular", fontSize: 12, fontWeight: "700", letterSpacing: 1, marginBottom: 8 },
   statsGrid: { flexDirection: "row", flexWrap: "wrap", gap: 10 },
   statCard: {
     flex: 1,
@@ -366,8 +366,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 4,
   },
-  statValue: { fontSize: 22, fontWeight: "800" },
-  statLabel: { fontSize: 12, fontWeight: "500" },
+  statValue: { fontFamily: "DroidSerifRegular", fontSize: 22, fontWeight: "800" },
+  statLabel: { fontFamily: "DroidSerifRegular", fontSize: 12, fontWeight: "500" },
   badgesWrap: { flexDirection: "row", flexWrap: "wrap", gap: 8 },
   badgeChip: {
     paddingHorizontal: 12,
@@ -375,7 +375,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     borderWidth: 1,
   },
-  badgeChipText: { fontSize: 13, fontWeight: "600" },
+  badgeChipText: { fontFamily: "DroidSerifRegular", fontSize: 13, fontWeight: "600" },
   privacyPlaceholder: {
     flexDirection: "row",
     alignItems: "center",
@@ -385,5 +385,5 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     borderWidth: 1,
   },
-  privacyPlaceholderText: { fontSize: 14 },
+  privacyPlaceholderText: { fontFamily: "DroidSerifRegular", fontSize: 14 },
 });

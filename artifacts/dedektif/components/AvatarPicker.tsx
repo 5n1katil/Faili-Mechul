@@ -244,6 +244,7 @@ const styles = StyleSheet.create({
     borderBottomColor: BORDER,
   },
   headerTitle: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 18,
     fontWeight: "800",
     color: "#F9FAFB",
@@ -263,6 +264,7 @@ const styles = StyleSheet.create({
     borderBottomColor: BORDER,
   },
   previewLabel: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
     color: "#6B7280",
     fontWeight: "600",
@@ -270,6 +272,7 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
   },
   previewName: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 16,
     color: "#F9FAFB",
     fontWeight: "700",
@@ -293,6 +296,7 @@ const styles = StyleSheet.create({
     paddingVertical: 7,
   },
   tabText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     fontWeight: "700",
   },
@@ -317,6 +321,7 @@ const styles = StyleSheet.create({
     position: "relative",
   },
   cellLabel: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 10,
     fontWeight: "600",
     color: "#6B7280",
@@ -352,6 +357,7 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
   },
   galleryBtnText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 15,
     fontWeight: "700",
     color: GOLD,
@@ -367,6 +373,7 @@ const styles = StyleSheet.create({
   },
   galleryCurrentText: {
     flex: 1,
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     color: "#D1D5DB",
     fontWeight: "500",

@@ -392,6 +392,7 @@ const styles = StyleSheet.create({
     marginBottom: 2,
   },
   restoreBtnText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     fontWeight: "500",
   },
@@ -407,6 +408,7 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   packIconEmoji: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 32,
     lineHeight: 40,
   },
@@ -421,6 +423,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.2,
   },
   packSubtitle: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     fontStyle: "italic",
   },
@@ -431,6 +434,7 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   puzzleCountBadge: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
     fontWeight: "600",
     opacity: 0.8,
@@ -444,10 +448,12 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   ownedText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
     fontWeight: "700",
   },
   priceLabel: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     fontWeight: "700",
   },
@@ -457,6 +463,7 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   packDescription: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     lineHeight: 19,
     marginBottom: 4,
@@ -475,14 +482,17 @@ const styles = StyleSheet.create({
     gap: 1,
   },
   puzzleDifficulty: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
     letterSpacing: 2,
   },
   puzzleTitle: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 14,
     fontWeight: "600",
   },
   puzzleSubtitle: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
     fontStyle: "italic",
   },
@@ -500,6 +510,7 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   purchaseBtnText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 15,
     fontWeight: "700",
     color: "#000000",
@@ -513,15 +524,18 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   legalLink: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     color: "#888888",
     textDecorationLine: "underline",
   },
   legalSep: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     color: "#555555",
   },
   legalNote: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
     color: "#555555",
     textAlign: "center",

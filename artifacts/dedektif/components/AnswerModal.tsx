@@ -161,11 +161,13 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   title: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 20,
     fontWeight: "700",
     letterSpacing: 1,
   },
   sectionLabel: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
     fontWeight: "700",
     letterSpacing: 2,
@@ -195,6 +197,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   optionText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 15,
     fontWeight: "500",
   },
@@ -208,6 +211,7 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   submitText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 16,
     fontWeight: "700",
     letterSpacing: 1,

@@ -548,12 +548,14 @@ const styles = StyleSheet.create({
   },
   bioText: {
     flex: 1,
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     lineHeight: 19,
     textAlign: "center",
   },
   bioEditRow: { width: "100%", gap: 4 },
   bioInput: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     lineHeight: 18,
     borderWidth: 1,

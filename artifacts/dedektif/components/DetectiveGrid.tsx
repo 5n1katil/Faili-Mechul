@@ -151,6 +151,7 @@ function GridCell({
         {mark === "question" && (
           <Text
             style={{
+              fontFamily: "DroidSerifRegular",
               fontSize: Math.max(12, Math.floor(cellSize * 0.42)),
               fontWeight: "900",
               color: "#D4A843",
@@ -253,6 +254,7 @@ function EntityLabel({
         <Text
           numberOfLines={1}
           style={{
+            fontFamily: "DroidSerifRegular",
             fontSize: iconPx,
             lineHeight: iconPx * 1.2,
             includeFontPadding: false,
@@ -566,12 +568,14 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   groupLabel: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 10,
     fontWeight: "800",
     letterSpacing: 1.6,
     paddingVertical: 3,
   },
   sectionLabelText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 10,
     fontWeight: "800",
     letterSpacing: 1.4,

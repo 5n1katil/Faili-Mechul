@@ -349,6 +349,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   sheetTitle: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 17,
     fontWeight: "800",
     flex: 1,
@@ -371,6 +372,7 @@ const styles = StyleSheet.create({
   },
   wrongToastText: {
     color: "#fff",
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     fontWeight: "700",
     flex: 1,
@@ -399,11 +401,13 @@ const styles = StyleSheet.create({
     gap: 3,
   },
   dropdownLabel: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 10,
     fontWeight: "700",
     letterSpacing: 1.3,
   },
   dropdownValue: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     fontWeight: "600",
   },
@@ -421,6 +425,7 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   optionText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 14,
     fontWeight: "500",
   },
@@ -435,6 +440,7 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   submitText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 16,
     fontWeight: "700",
     letterSpacing: 0.5,

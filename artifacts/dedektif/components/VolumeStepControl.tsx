@@ -87,9 +87,9 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     gap: 8,
   },
-  label: { fontSize: 15, fontWeight: "700" },
-  subtitle: { fontSize: 12, marginTop: 2, lineHeight: 17 },
-  valueBadge: { fontSize: 13, fontWeight: "800", marginTop: 2 },
+  label: { fontFamily: "DroidSerifRegular", fontSize: 15, fontWeight: "700" },
+  subtitle: { fontFamily: "DroidSerifRegular", fontSize: 12, marginTop: 2, lineHeight: 17 },
+  valueBadge: { fontFamily: "DroidSerifRegular", fontSize: 13, fontWeight: "800", marginTop: 2 },
   stepsRow: {
     flexDirection: "row",
     flexWrap: "wrap",
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     alignItems: "center",
   },
-  stepText: { fontSize: 12, fontWeight: "700" },
+  stepText: { fontFamily: "DroidSerifRegular", fontSize: 12, fontWeight: "700" },
   muteBtn: {
     flexDirection: "row",
     alignItems: "center",
@@ -113,5 +113,5 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 1,
   },
-  muteText: { fontSize: 13, fontWeight: "600" },
+  muteText: { fontFamily: "DroidSerifRegular", fontSize: 13, fontWeight: "600" },
 });

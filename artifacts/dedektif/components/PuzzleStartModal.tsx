@@ -165,6 +165,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   title: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 20,
     fontWeight: "800",
     textAlign: "center",
@@ -184,8 +185,8 @@ const styles = StyleSheet.create({
     paddingVertical: 3,
     borderWidth: 1,
   },
-  diffText: { fontSize: 11, fontWeight: "700" },
-  puzzleName: { fontSize: 14, fontWeight: "600", lineHeight: 20 },
+  diffText: { fontFamily: "DroidSerifRegular", fontSize: 11, fontWeight: "700" },
+  puzzleName: { fontFamily: "DroidSerifRegular", fontSize: 14, fontWeight: "600", lineHeight: 20 },
   tipBox: {
     width: "100%",
     flexDirection: "row",
@@ -199,6 +200,7 @@ const styles = StyleSheet.create({
   },
   tipText: {
     flex: 1,
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     fontWeight: "600",
     lineHeight: 19,
@@ -215,11 +217,13 @@ const styles = StyleSheet.create({
   },
   infoText: {
     flex: 1,
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     fontWeight: "600",
     lineHeight: 19,
   },
   ruleText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     lineHeight: 18,
     textAlign: "center",
@@ -237,6 +241,7 @@ const styles = StyleSheet.create({
   },
   fpWarningText: {
     flex: 1,
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     fontWeight: "600",
     lineHeight: 18,
@@ -252,12 +257,12 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     gap: 8,
   },
-  startBtnText: { fontSize: 15, fontWeight: "800" },
+  startBtnText: { fontFamily: "DroidSerifRegular", fontSize: 15, fontWeight: "800" },
   cancelBtn: {
     alignItems: "center",
     paddingVertical: 12,
     borderRadius: 12,
     borderWidth: 1,
   },
-  cancelBtnText: { fontSize: 14, fontWeight: "600" },
+  cancelBtnText: { fontFamily: "DroidSerifRegular", fontSize: 14, fontWeight: "600" },
 });

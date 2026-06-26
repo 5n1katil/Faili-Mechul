@@ -523,6 +523,7 @@ function FilterPill3D({
           }]}>
             <Text style={[listStyles.filterPillCountText3d, {
               color: isSelected ? "#0F1117" : color,
+              fontFamily: "DroidSerifRegular",
               fontSize: 15,
               fontWeight: "800",
             }]}>{count}</Text>
@@ -1777,6 +1778,7 @@ const listStyles = StyleSheet.create({
     paddingVertical: 3,
   },
   premiumCtaCountText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     fontWeight: "700",
     color: "#D4A843",
@@ -1812,6 +1814,7 @@ const listStyles = StyleSheet.create({
     paddingVertical: 2,
   },
   tabCountText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     fontWeight: "700",
   },
@@ -1825,11 +1828,13 @@ const listStyles = StyleSheet.create({
     marginTop: 16,
   },
   emptyTitle: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 16,
     fontWeight: "700",
     textAlign: "center",
   },
   emptyText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     textAlign: "center",
     lineHeight: 20,
@@ -1953,6 +1958,7 @@ const listStyles = StyleSheet.create({
     alignItems: "center",
   },
   diffFilterCountText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
     fontWeight: "700",
   },
@@ -2080,6 +2086,7 @@ const listStyles = StyleSheet.create({
     borderWidth: 1,
   },
   cozulenlerBtnText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
     fontWeight: "700",
     letterSpacing: 0.1,
@@ -2133,6 +2140,7 @@ const listStyles = StyleSheet.create({
     letterSpacing: 0.2,
   },
   premAccordionSub: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     marginTop: 2,
   },
@@ -2156,6 +2164,7 @@ const listStyles = StyleSheet.create({
     letterSpacing: 0.3,
   },
   pageSubtitle: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     marginTop: 1,
   },
@@ -2215,6 +2224,7 @@ const listStyles = StyleSheet.create({
     letterSpacing: 0.2,
   },
   standartStatLabel: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 10,
     fontWeight: "600",
     letterSpacing: 0.4,
@@ -2254,6 +2264,7 @@ const listStyles = StyleSheet.create({
     alignItems: "center",
   },
   premSegmentCountText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
     fontWeight: "700",
   },
@@ -2372,6 +2383,7 @@ const gameStyles = StyleSheet.create({
     borderWidth: 1,
   },
   packNavNextText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     fontWeight: "700",
   },
@@ -2464,6 +2476,7 @@ const gameStyles = StyleSheet.create({
     gap: 3,
   },
   practiceBadgeText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 10,
     fontWeight: "700",
   },
@@ -2600,6 +2613,7 @@ const premiumInfoStyles = StyleSheet.create({
     gap: 10,
   },
   featureText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     color: "#aaa",
     lineHeight: 19,
@@ -2620,6 +2634,7 @@ const premiumInfoStyles = StyleSheet.create({
     gap: 8,
   },
   buyBtnText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 15,
     fontWeight: "800",
     color: "#0F1117",
@@ -2634,6 +2649,7 @@ const premiumInfoStyles = StyleSheet.create({
     borderColor: "#333",
   },
   closeBtnText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 14,
     fontWeight: "600",
     color: "#666",

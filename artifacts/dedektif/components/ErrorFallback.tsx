@@ -188,12 +188,14 @@ const styles = StyleSheet.create({
     maxWidth: 600,
   },
   title: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 28,
     fontWeight: "700",
     textAlign: "center",
     lineHeight: 40,
   },
   message: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 16,
     textAlign: "center",
     lineHeight: 24,
@@ -226,6 +228,7 @@ const styles = StyleSheet.create({
   buttonText: {
     fontWeight: "600",
     textAlign: "center",
+    fontFamily: "DroidSerifRegular",
     fontSize: 16,
   },
   modalOverlay: {
@@ -249,6 +252,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
   modalTitle: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 20,
     fontWeight: "600",
   },
@@ -271,6 +275,7 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   errorText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     lineHeight: 18,
     width: "100%",

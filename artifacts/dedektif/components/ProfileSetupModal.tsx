@@ -136,12 +136,14 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   title: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 20,
     fontWeight: "900",
     letterSpacing: 0.5,
     textAlign: "center",
   },
   subtitle: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     textAlign: "center",
     lineHeight: 19,
@@ -167,6 +169,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   avatarHint: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     marginTop: -4,
   },
@@ -181,6 +184,7 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
+    fontFamily: "DroidSerifRegular",
     fontSize: 15,
     paddingRight: 12,
     height: "100%",
@@ -197,6 +201,7 @@ const styles = StyleSheet.create({
   },
   warningText: {
     flex: 1,
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     lineHeight: 17,
   },
@@ -211,6 +216,7 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   startBtnText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 17,
     fontWeight: "800",
     letterSpacing: 0.5,

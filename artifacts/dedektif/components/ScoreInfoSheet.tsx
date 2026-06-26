@@ -153,6 +153,7 @@ const styles = StyleSheet.create({
   },
   title: {
     flex: 1,
+    fontFamily: "DroidSerifRegular",
     fontSize: 16,
     fontWeight: "700",
   },
@@ -177,9 +178,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   rowText: { flex: 1 },
-  rowLabel: { fontSize: 13, fontWeight: "700", marginBottom: 2 },
-  rowFormula: { fontSize: 13, fontWeight: "800", marginBottom: 3 },
-  rowNote: { fontSize: 11, lineHeight: 16 },
+  rowLabel: { fontFamily: "DroidSerifRegular", fontSize: 13, fontWeight: "700", marginBottom: 2 },
+  rowFormula: { fontFamily: "DroidSerifRegular", fontSize: 13, fontWeight: "800", marginBottom: 3 },
+  rowNote: { fontFamily: "DroidSerifRegular", fontSize: 11, lineHeight: 16 },
   finalRow: {
     flexDirection: "row",
     alignItems: "flex-start",
@@ -189,6 +190,6 @@ const styles = StyleSheet.create({
     padding: 14,
     marginTop: 4,
   },
-  finalText: { flex: 1, fontSize: 13, fontWeight: "700", lineHeight: 20 },
-  finalSub: { fontSize: 11, fontWeight: "500" },
+  finalText: { flex: 1, fontFamily: "DroidSerifRegular", fontSize: 13, fontWeight: "700", lineHeight: 20 },
+  finalSub: { fontFamily: "DroidSerifRegular", fontSize: 11, fontWeight: "500" },
 });

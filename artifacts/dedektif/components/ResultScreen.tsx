@@ -679,10 +679,12 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
   },
   headerBtnText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 14,
     fontWeight: "600",
   },
   headerTitle: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 15,
     fontWeight: "800",
     letterSpacing: 1,
@@ -702,12 +704,14 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   resultTitle: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 24,
     fontWeight: "800",
     textAlign: "center",
     letterSpacing: 1,
   },
   subtitle: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 16,
     textAlign: "center",
     lineHeight: 24,
@@ -719,6 +723,7 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   solutionTitle: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     fontWeight: "700",
     letterSpacing: 2,
@@ -730,6 +735,7 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   solutionText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 16,
     fontWeight: "600",
   },
@@ -745,10 +751,12 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   statValue: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 24,
     fontWeight: "700",
   },
   statLabel: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
     fontWeight: "700",
     letterSpacing: 1,
@@ -766,6 +774,7 @@ const styles = StyleSheet.create({
     marginBottom: 2,
   },
   breakdownTitle: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 11,
     fontWeight: "700",
     letterSpacing: 2,
@@ -781,11 +790,13 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   breakdownLabel: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 13,
     fontWeight: "500",
     flex: 1,
   },
   breakdownValue: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 14,
     fontWeight: "700",
     fontVariant: ["tabular-nums"],
@@ -806,16 +817,19 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   rankMeta: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     fontWeight: "700",
     letterSpacing: 0.4,
     textTransform: "uppercase",
   },
   rankLabel: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 17,
     fontWeight: "800",
   },
   rankSub: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     fontWeight: "500",
     marginLeft: 22,
@@ -837,6 +851,7 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   shareBtnText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 15,
     fontWeight: "700",
   },
@@ -849,6 +864,7 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   btnText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 16,
     fontWeight: "700",
   },
@@ -859,6 +875,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   btnOutlineText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 14,
     fontWeight: "600",
   },
@@ -874,6 +891,7 @@ const styles = StyleSheet.create({
   },
   practiceNoteText: {
     flex: 1,
+    fontFamily: "DroidSerifRegular",
     fontSize: 12,
     fontWeight: "500",
   },

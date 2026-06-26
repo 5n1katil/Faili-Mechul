@@ -512,6 +512,7 @@ const styles = StyleSheet.create({
     paddingVertical: 2,
   },
   premiumChipText: {
+    fontFamily: "DroidSerifRegular",
     fontSize: 10,
     fontWeight: "700",
     letterSpacing: 0.2,
