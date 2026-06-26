@@ -474,7 +474,7 @@ export default function HomeScreen() {
               onPress={handleDailyPlay}
               style={[
                 styles.dailyCard,
-                { backgroundColor: wonToday ? "#16200E" : "#111520", borderColor: wonToday ? "#D4A84355" : "#D4A84380" },
+                { backgroundColor: wonToday ? "#192310" : "#1E2540", borderColor: wonToday ? "#D4A84355" : "#D4A84388" },
               ]}
             >
               {/* Subtle top gradient line */}
