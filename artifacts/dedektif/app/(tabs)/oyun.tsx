@@ -1611,11 +1611,13 @@ export default function VakalarScreen() {
                 <Pressable onPress={handleBackPress} style={gameStyles.backBtn} hitSlop={8}>
                   <MaterialIcons name="arrow-back" size={20} color={colors.mutedForeground} />
                 </Pressable>
-                <Text style={[gameStyles.caseNumber, { color: colors.mutedForeground }]}>
-                  {getDifficultyLabel(puzzle.difficulty as Difficulty).toLocaleUpperCase("tr-TR")}
-                </Text>
+                <View style={gameStyles.difficultyBadge}>
+                  <Text style={[gameStyles.caseNumber, { color: "#D4A843" }]}>
+                    {getDifficultyLabel(puzzle.difficulty as Difficulty).toLocaleUpperCase("tr-TR")}
+                  </Text>
+                </View>
               </View>
-              <View style={gameStyles.timerRow}>
+              <View style={gameStyles.statBarCard}>
                 {!isRanked && (
                   <View style={[gameStyles.practiceBadge, { backgroundColor: "#6B728020", borderColor: "#6B728044" }]}>
                     <MaterialIcons name="fitness-center" size={11} color={colors.mutedForeground} />
@@ -1627,12 +1629,13 @@ export default function VakalarScreen() {
                   wrongGuesses={wrongGuesses}
                   penaltyCount={penaltyCount}
                 />
+                <View style={gameStyles.statBarDivider} />
                 <Pressable
                   onPress={() => setShowScoreInfo(true)}
                   hitSlop={10}
-                  style={[gameStyles.scoreInfoBtn, { backgroundColor: `${colors.primary}15`, borderColor: `${colors.primary}40` }]}
+                  style={gameStyles.scoreInfoBtn}
                 >
-                  <MaterialIcons name="help-outline" size={16} color={colors.primary} />
+                  <MaterialIcons name="help-outline" size={17} color="#D4A843" />
                 </Pressable>
               </View>
             </View>
@@ -2407,10 +2410,17 @@ const gameStyles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 16,
-    marginTop: 2,
   },
-  caseNumber: { fontSize: 10, fontWeight: "700", letterSpacing: 2, marginBottom: 2 },
-  puzzleTitle: { fontSize: 17, fontFamily: "PlayfairDisplay", fontWeight: "400", lineHeight: 25 },
+  difficultyBadge: {
+    backgroundColor: "#D4A84318",
+    borderColor: "#D4A84355",
+    borderWidth: 1,
+    borderRadius: 8,
+    paddingHorizontal: 9,
+    paddingVertical: 4,
+  },
+  caseNumber: { fontSize: 10, fontWeight: "700", letterSpacing: 2 },
+  puzzleTitle: { fontSize: 19, fontFamily: "PlayfairDisplay", fontWeight: "400", lineHeight: 28 },
   storyBox: { borderRadius: 12, borderWidth: 1, padding: 14, gap: 8 },
   storyHeader: { flexDirection: "row", alignItems: "center", gap: 8 },
   storyLabel: { fontSize: 11, fontWeight: "700", letterSpacing: 1 },
@@ -2423,12 +2433,26 @@ const gameStyles = StyleSheet.create({
     alignSelf: "center",
   },
   gridWrapper: { minHeight: 240 },
-  timerRow: {
+  statBarCard: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 6,
-    flexWrap: "wrap",
-    justifyContent: "flex-end",
+    gap: 8,
+    backgroundColor: "#1E2540",
+    borderColor: "#D4A84344",
+    borderWidth: 1,
+    borderRadius: 14,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    shadowColor: "#D4A843",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.12,
+    shadowRadius: 8,
+    elevation: 4,
+  },
+  statBarDivider: {
+    width: 1,
+    height: 28,
+    backgroundColor: "#D4A84333",
   },
   practiceBadge: {
     flexDirection: "row",
@@ -2444,10 +2468,8 @@ const gameStyles = StyleSheet.create({
     fontWeight: "700",
   },
   scoreInfoBtn: {
-    width: 34,
-    height: 34,
-    borderRadius: 17,
-    borderWidth: 1,
+    width: 30,
+    height: 30,
     alignItems: "center",
     justifyContent: "center",
   },
