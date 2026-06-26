@@ -255,7 +255,7 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     gap: 8,
   },
-  startBtnText: { fontFamily: "DroidSerifRegular", fontSize: 15, fontWeight: "800" },
+  startBtnText: { fontFamily: "UnnaBold", fontSize: 16 },
   cancelBtn: {
     alignItems: "center",
     paddingVertical: 12,

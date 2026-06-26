@@ -610,20 +610,29 @@ export default function HomeScreen() {
               style={styles.rankCard}
             >
               <View style={styles.rankCardAccent} />
+
+              {/* Decorative trophy — top-left */}
+              <Image
+                source={require("../../assets/images/icon_liderlik.png")}
+                style={styles.rankDecorIcon}
+                resizeMode="contain"
+              />
+
               <View style={styles.rankCardInner}>
+                {/* Top row: badge + rank number */}
                 <View style={styles.rankTopRow}>
                   <View style={styles.rankBadge}>
-                    <Image source={require("../../assets/images/icon_liderlik.png")} style={{ width: 16, height: 16 }} resizeMode="contain" />
                     <Text style={styles.rankBadgeText}>Liderlik Sıralaması</Text>
                   </View>
                   <Text style={styles.rankPosition}>#{myRank}</Text>
                 </View>
 
+                {/* User row */}
                 <View style={styles.rankUserRow}>
                   <View style={[styles.rankUserAvatar, { borderColor: "#D4A84366", backgroundColor: "#D4A84315" }]}>
                     <AvatarDisplay
                       avatar={profile.avatar || "detective"}
-                      size={30}
+                      size={32}
                       color={colors.primary}
                       backgroundColor="transparent"
                     />
@@ -637,13 +646,13 @@ export default function HomeScreen() {
                     </Text>
                   </View>
                   <View style={[styles.rankTotalBadge, { backgroundColor: "#D4A84314", borderColor: "#D4A84330" }]}>
-                    <Text style={[styles.rankTotalText, { color: colors.mutedForeground }]}>
+                    <Text style={[styles.rankTotalText, { color: "#D4A843" }]}>
                       {allEntries.length} dedektif
                     </Text>
                   </View>
                 </View>
 
-                <View style={[styles.rankDivider, { borderTopColor: colors.border }]} />
+                <View style={styles.rankDivider} />
 
                 {personAbove ? (
                   <View style={styles.rankAheadRow}>
@@ -666,7 +675,7 @@ export default function HomeScreen() {
                   </View>
                 ) : (
                   <View style={styles.rankLeaderRow}>
-                    <MaterialIcons name="emoji-events" size={16} color="#D4A843" />
+                    <Image source={require("../../assets/images/icon_liderlik.png")} style={{ width: 18, height: 18 }} resizeMode="contain" />
                     <Text style={[styles.rankLeaderText, { color: "#D4A843" }]}>Sen zirvedesin!</Text>
                   </View>
                 )}
@@ -1007,21 +1016,29 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   rankCardAccent: { height: 2, backgroundColor: "#D4A843" },
-  rankCardInner: { flexDirection: "column", padding: 15, gap: 12 },
+  rankDecorIcon: {
+    position: "absolute",
+    top: 6,
+    left: -8,
+    width: 100,
+    height: 100,
+    opacity: 0.12,
+  },
+  rankCardInner: { flexDirection: "column", paddingHorizontal: 18, paddingVertical: 16, gap: 14 },
   rankTopRow: { flexDirection: "row", alignItems: "center", justifyContent: "space-between" },
   rankBadge: {
     flexDirection: "row",
     alignItems: "center",
     gap: 5,
-    paddingHorizontal: 9,
-    paddingVertical: 4,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
     borderRadius: 8,
     borderWidth: 1,
     backgroundColor: "#D4A84312",
     borderColor: "#D4A84340",
   },
-  rankBadgeText: { fontSize: 15, fontFamily: "UnnaBold", fontWeight: "700", color: "#D4A843", letterSpacing: 0.2 },
-  rankPosition: { fontSize: 30, fontFamily: "UnnaBold", fontWeight: "700", color: "#D4A843", letterSpacing: -0.5 },
+  rankBadgeText: { fontSize: 15, fontFamily: "UnnaBold", color: "#D4A843", letterSpacing: 0.2 },
+  rankPosition: { fontSize: 32, fontFamily: "UnnaBold", color: "#D4A843", letterSpacing: -0.5 },
   rankUserRow: { flexDirection: "row", alignItems: "center", gap: 10 },
   rankUserAvatar: {
     width: 40,
