@@ -256,7 +256,14 @@ const PREMIUM_GOLD = "#D4A843";
 
 const NEON_ORANGE = "#FF6800";
 
-function PremiumTabButton({ active, onPress }: { active: boolean; onPress: () => void }) {
+function PremiumTabButton({
+  active, onPress, subTab, onSubTabChange,
+}: {
+  active: boolean;
+  onPress: () => void;
+  subTab: "vakalar" | "paketler";
+  onSubTabChange: (tab: "vakalar" | "paketler") => void;
+}) {
   const pulse = useSharedValue(0);
   const scale = useSharedValue(1);
 
@@ -271,7 +278,6 @@ function PremiumTabButton({ active, onPress }: { active: boolean; onPress: () =>
     );
   }, []);
 
-  // Animate only opacity — works on all platforms, zero layout impact
   const glowOpacity = useAnimatedStyle(() => ({ opacity: 0.2 + pulse.value * 0.8 }));
   const scaleAnim = useAnimatedStyle(() => ({ transform: [{ scale: scale.value }] }));
 
@@ -295,30 +301,68 @@ function PremiumTabButton({ active, onPress }: { active: boolean; onPress: () =>
           glowOpacity,
         ]}
       />
-      {/* Static button — never changes size */}
+      {/* 2-row compact button */}
       <View
         style={[
-          listStyles.tabBtn3d,
           {
             flex: 1,
             borderWidth: 2,
             borderColor: `${NEON_ORANGE}77`,
             backgroundColor: active ? `${NEON_ORANGE}22` : `${NEON_ORANGE}0D`,
+            borderRadius: 12,
+            flexDirection: "column",
+            overflow: "hidden",
           },
           active ? { borderBottomWidth: 5, borderColor: `${NEON_ORANGE}EE` } : {},
         ]}
       >
+        {/* Row 1: Premium label — press activates the premium tab */}
         <Pressable
           onPressIn={() => { scale.value = withSpring(0.93, { damping: 12, stiffness: 320 }); }}
           onPressOut={() => { scale.value = withSpring(1, { damping: 10, stiffness: 280 }); }}
           onPress={onPress}
-          style={{ flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 7, flex: 1, paddingVertical: 9 }}
+          style={{ flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 6, paddingTop: 7, paddingBottom: 5, paddingHorizontal: 8 }}
         >
-          <MaterialIcons name="workspace-premium" size={19} color={PREMIUM_GOLD} />
-          <Text style={[listStyles.tabBtnText3d, { color: PREMIUM_GOLD, fontWeight: "700", fontSize: 15, letterSpacing: 0.3 }]}>
+          <MaterialIcons name="workspace-premium" size={17} color={PREMIUM_GOLD} />
+          <Text style={[listStyles.tabBtnText3d, { color: PREMIUM_GOLD, fontWeight: "700", fontSize: 14, letterSpacing: 0.3 }]}>
             Premium
           </Text>
         </Pressable>
+        {/* Thin separator */}
+        <View style={{ height: StyleSheet.hairlineWidth, backgroundColor: `${NEON_ORANGE}44`, marginHorizontal: 10 }} />
+        {/* Row 2: Vakalar | Paketler sub-tab selectors */}
+        <View style={{ flexDirection: "row", paddingHorizontal: 6, paddingTop: 4, paddingBottom: 5, gap: 3 }}>
+          <Pressable
+            onPress={() => onSubTabChange("vakalar")}
+            style={{
+              flex: 1,
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 3,
+              paddingVertical: 4,
+              borderRadius: 7,
+              backgroundColor: subTab === "vakalar" && active ? `${PREMIUM_GOLD}22` : "transparent",
+            }}
+          >
+            <MaterialIcons name="auto-stories" size={13} color={subTab === "vakalar" && active ? PREMIUM_GOLD : "#888AAA"} />
+            <Text style={{ fontSize: 11, fontWeight: "700", color: subTab === "vakalar" && active ? PREMIUM_GOLD : "#888AAA" }}>Vakalar</Text>
+          </Pressable>
+          <View style={{ width: StyleSheet.hairlineWidth, backgroundColor: `${PREMIUM_GOLD}33`, alignSelf: "stretch", marginVertical: 2 }} />
+          <Pressable
+            onPress={() => onSubTabChange("paketler")}
+            style={{
+              flex: 1,
+              alignItems: "center",
+              justifyContent: "center",
+              paddingVertical: 4,
+              borderRadius: 7,
+              backgroundColor: subTab === "paketler" && active ? `${PREMIUM_GOLD}22` : "transparent",
+            }}
+          >
+            <MaterialIcons name="inventory-2" size={13} color={subTab === "paketler" && active ? PREMIUM_GOLD : "#888AAA"} />
+          </Pressable>
+        </View>
       </View>
     </Animated.View>
   );
@@ -1024,6 +1068,8 @@ export default function VakalarScreen() {
               <PremiumTabButton
                 active={listTab === "premium"}
                 onPress={() => setListTab("premium")}
+                subTab={premiumSubTab}
+                onSubTabChange={(tab) => { setListTab("premium"); setPremiumSubTab(tab); }}
               />
             </View>
           </View>
@@ -1031,48 +1077,6 @@ export default function VakalarScreen() {
           {listTab === "premium" ? (
             /* ══════════ PREMIUM TAB ══════════ */
             <View style={{ flex: 1 }}>
-              {/* Premium icon tile selector */}
-              <View style={[listStyles.premIconTabRow, { backgroundColor: colors.background, borderBottomColor: colors.border }]}>
-                <View style={[listStyles.premPillWrap, { borderColor: "#D4A84330", backgroundColor: "#D4A8430A" }]}>
-                  {/* Vakalar pill */}
-                  <Pressable
-                    onPress={() => setPremiumSubTab("vakalar")}
-                    style={[
-                      listStyles.premPillBtn,
-                      premiumSubTab === "vakalar" && {
-                        backgroundColor: "#D4A84322",
-                        borderColor: "#D4A843",
-                        shadowColor: "#D4A843",
-                        shadowOpacity: 0.35,
-                        shadowRadius: 6,
-                        elevation: 4,
-                      },
-                    ]}
-                  >
-                    <MaterialIcons name="auto-stories" size={18} color={premiumSubTab === "vakalar" ? "#D4A843" : "#888AAA"} />
-                  </Pressable>
-                  {/* Center divider */}
-                  <View style={[listStyles.premPillSep, { backgroundColor: "#D4A84330" }]} />
-                  {/* Paketler pill */}
-                  <Pressable
-                    onPress={() => setPremiumSubTab("paketler")}
-                    style={[
-                      listStyles.premPillBtn,
-                      premiumSubTab === "paketler" && {
-                        backgroundColor: "#D4A84322",
-                        borderColor: "#D4A843",
-                        shadowColor: "#D4A843",
-                        shadowOpacity: 0.35,
-                        shadowRadius: 6,
-                        elevation: 4,
-                      },
-                    ]}
-                  >
-                    <MaterialIcons name="inventory-2" size={18} color={premiumSubTab === "paketler" ? "#D4A843" : "#888AAA"} />
-                  </Pressable>
-                </View>
-              </View>
-
               {premiumSubTab === "paketler" ? (
                 <Animated.View entering={FadeInDown.delay(0).springify()} style={{ flex: 1 }}>
                   <PaketlerContent embedded />
@@ -1759,7 +1763,7 @@ const listStyles = StyleSheet.create({
     borderWidth: 1,
   },
   diffText: { fontSize: 11, fontWeight: "700" },
-  puzzleTitle: { fontSize: 15, fontFamily: "PlayfairDisplay", fontWeight: "400", lineHeight: 22 },
+  puzzleTitle: { fontSize: 17, fontFamily: "PlayfairDisplay", fontWeight: "600", lineHeight: 24 },
   puzzleStory: { fontSize: 12, lineHeight: 18 },
   solvedBadge: {
     flexDirection: "row",
@@ -2077,7 +2081,7 @@ const listStyles = StyleSheet.create({
     overflow: "hidden",
   },
   standartCardTitle: {
-    fontSize: 17,
+    fontSize: 20,
     fontFamily: "PlayfairDisplay",
     fontWeight: "700",
     color: "#F0F0F8",
