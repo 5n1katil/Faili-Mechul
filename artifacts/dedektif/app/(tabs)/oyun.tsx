@@ -1156,7 +1156,7 @@ export default function VakalarScreen() {
                               </View>
                               <View style={[listStyles.standartStat, { backgroundColor: "#FFFFFF08", borderColor: "#FFFFFF18" }]}>
                                 <Text style={[listStyles.standartStatNum, { color: "#F0F0F8" }]}>{activePremium.length}</Text>
-                                <Text style={[listStyles.standartStatLabel, { color: INACTIVE_COLOR }]}>Aktif</Text>
+                                <Text style={[listStyles.standartStatLabel, { color: INACTIVE_COLOR }]}>AKTİF</Text>
                               </View>
                               <View style={[listStyles.standartStat, { backgroundColor: `${colors.success}10`, borderColor: `${colors.success}28` }]}>
                                 <Text style={[listStyles.standartStatNum, { color: colors.success }]}>{completedPremiumPuzzles.length}</Text>
@@ -1301,8 +1301,8 @@ export default function VakalarScreen() {
                         <Text style={[listStyles.standartStatLabel, { color: INACTIVE_COLOR }]}>Toplam</Text>
                       </View>
                       <View style={[listStyles.standartStat, { backgroundColor: "#FFFFFF08", borderColor: "#FFFFFF18" }]}>
-                        <Text style={[listStyles.standartStatNum, { color: "#F0F0F8" }]}>{filteredActive.filter(p => !premiumPuzzleIdSet.has(p.id)).length}</Text>
-                        <Text style={[listStyles.standartStatLabel, { color: INACTIVE_COLOR }]}>Aktif</Text>
+                        <Text style={[listStyles.standartStatNum, { color: "#F0F0F8" }]}>{activeFree.length}</Text>
+                        <Text style={[listStyles.standartStatLabel, { color: INACTIVE_COLOR }]}>AKTİF</Text>
                       </View>
                       <View style={[listStyles.standartStat, { backgroundColor: `${colors.success}10`, borderColor: `${colors.success}28` }]}>
                         <Text style={[listStyles.standartStatNum, { color: colors.success }]}>{completedPuzzles.filter(p => !premiumPuzzleIdSet.has(p.id)).length}</Text>
