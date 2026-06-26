@@ -217,25 +217,19 @@ export default function HomeScreen() {
       <Modal visible={showSolvedInfo} transparent animationType="fade" onRequestClose={() => setShowSolvedInfo(false)}>
         <Pressable style={styles.modalOverlay} onPress={() => setShowSolvedInfo(false)}>
           <Pressable
-            style={[styles.listModalCard, { backgroundColor: colors.card, borderColor: `${colors.primary}60` }]}
+            style={[styles.modalCard, { backgroundColor: colors.card, borderColor: `${colors.primary}60` }]}
             onPress={(e) => e.stopPropagation()}
           >
-            <View style={styles.listModalHandle} />
-            <View style={styles.listModalHeader}>
-              <View style={[styles.listModalIconWrap, { backgroundColor: `${colors.primary}18` }]}>
-                <Image source={require("../../assets/images/icon_cozulen.png")} style={{ width: 26, height: 26 }} resizeMode="contain" />
-              </View>
-              <View style={{ flex: 1 }}>
-                <Text style={[styles.listModalTitle, { color: colors.foreground }]}>Çözülen Vakalar</Text>
-                <Text style={[styles.listModalSub, { color: colors.mutedForeground }]}>
-                  {profile.gamesWon} vaka başarıyla çözüldü
-                </Text>
-              </View>
-            </View>
+            <Image source={require("../../assets/images/icon_cozulen.png")} style={{ width: 72, height: 72 }} resizeMode="contain" />
+            <Text style={[styles.modalTitle, { color: colors.foreground }]}>Çözülen Vakalar</Text>
+            <Text style={[styles.streakCount, { color: colors.primary }]}>{profile.gamesWon}</Text>
+            <Text style={[styles.streakLabel, { color: colors.mutedForeground }]}>vaka başarıyla çözüldü</Text>
+
+            <View style={[styles.modalDivider, { backgroundColor: colors.border }]} />
 
             {recentSolves.length > 0 ? (
-              <>
-                <Text style={[styles.listSectionLabel, { color: colors.mutedForeground }]}>Son çözülenler</Text>
+              <View style={{ width: "100%", gap: 0 }}>
+                <Text style={[styles.listSectionLabel, { color: colors.mutedForeground, marginBottom: 6 }]}>Son çözülenler</Text>
                 {recentSolves.map((h, i) => {
                   const puzzle = PUZZLES.find((p) => p.id === h.puzzleId);
                   const title = puzzle?.title ?? h.puzzleId;
@@ -244,11 +238,7 @@ export default function HomeScreen() {
                   return (
                     <View
                       key={`${h.puzzleId}-${h.date}-${i}`}
-                      style={[
-                        styles.solveRow,
-                        { borderTopColor: colors.border },
-                        i === 0 && { borderTopWidth: 0 },
-                      ]}
+                      style={[styles.solveRow, { borderTopColor: colors.border }, i === 0 && { borderTopWidth: 0 }]}
                     >
                       <View style={[styles.solveRankBubble, { backgroundColor: `${colors.primary}18` }]}>
                         <Text style={[styles.solveRankText, { color: colors.primary }]}>{i + 1}</Text>
@@ -258,30 +248,25 @@ export default function HomeScreen() {
                           {title}
                         </Text>
                         <Text style={[styles.solveMeta, { color: colors.mutedForeground }]}>
-                          {h.date} · {mins}:{secs.toString().padStart(2, "0")}dk
-                          {h.wrongGuesses > 0 ? ` · ${h.wrongGuesses} hata` : ""}
+                          {h.date} · {mins}:{secs.toString().padStart(2, "0")}dk{h.wrongGuesses > 0 ? ` · ${h.wrongGuesses} hata` : ""}
                         </Text>
                       </View>
-                      <Text style={[styles.solveScore, { color: colors.primary }]}>
-                        {h.score.toLocaleString("tr-TR")}
-                      </Text>
+                      <Text style={[styles.solveScore, { color: colors.primary }]}>{h.score.toLocaleString("tr-TR")}</Text>
                     </View>
                   );
                 })}
-              </>
+              </View>
             ) : (
               <View style={styles.emptyState}>
                 <MaterialIcons name="inbox" size={32} color={colors.mutedForeground} style={{ opacity: 0.4 }} />
-                <Text style={[styles.emptyStateText, { color: colors.mutedForeground }]}>
-                  Henüz çözülmüş vaka yok
-                </Text>
+                <Text style={[styles.emptyStateText, { color: colors.mutedForeground }]}>Henüz çözülmüş vaka yok</Text>
               </View>
             )}
 
             {earnedBadges.length > 0 && (
               <>
                 <View style={[styles.modalDivider, { backgroundColor: colors.border, marginVertical: 4 }]} />
-                <Text style={[styles.listSectionLabel, { color: colors.mutedForeground }]}>Kazanılan rozetler</Text>
+                <Text style={[styles.listSectionLabel, { color: colors.mutedForeground, marginBottom: 4 }]}>Kazanılan rozetler</Text>
                 <View style={styles.badgeGrid}>
                   {earnedBadges.map((b) => (
                     <View key={b.id} style={[styles.badgeChip, { backgroundColor: `${b.color}18`, borderColor: `${b.color}40` }]}>
@@ -301,9 +286,9 @@ export default function HomeScreen() {
 
             <Pressable
               onPress={() => setShowSolvedInfo(false)}
-              style={[styles.modalBtn, { backgroundColor: `${colors.primary}18`, marginTop: 4 }]}
+              style={[styles.modalBtn, { backgroundColor: colors.primary }]}
             >
-              <Text style={[styles.modalBtnText, { color: colors.primary }]}>Kapat</Text>
+              <Text style={[styles.modalBtnText, { color: colors.primaryForeground }]}>Anladım</Text>
             </Pressable>
           </Pressable>
         </Pressable>
