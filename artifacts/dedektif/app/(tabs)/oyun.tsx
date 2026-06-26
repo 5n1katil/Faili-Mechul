@@ -952,6 +952,15 @@ export default function VakalarScreen() {
     startPuzzle(next);
   };
 
+  const handleNextPackPuzzle = (nextPuzzle: (typeof PUZZLES)[0]) => {
+    // If a ranked game is in progress, invalidate it silently before moving on
+    if (gameState && gameState.timerActive && !gameState.isComplete && gameState.isRanked) {
+      invalidateGame();
+    }
+    setShowResult(false);
+    startPuzzle(nextPuzzle);
+  };
+
   const handleBackPress = () => {
     if (gameState && !gameState.isComplete && gameState.timerActive) {
       setShowExitConfirm(true);
@@ -1487,6 +1496,14 @@ export default function VakalarScreen() {
   const penaltyCount = wrongGuesses + bonusCluesRevealedCount;
   const displayScore = finalScore ?? 0;
 
+  // Pack navigation: detect if current puzzle belongs to a purchasable pack
+  const currentPack = PURCHASABLE_PACKS.find((p) => puzzle.id.startsWith(p.packId + "_")) ?? null;
+  const packPuzzles = currentPack ? getPuzzlesForPack(currentPack.packId) : [];
+  const currentPuzzleIdxInPack = packPuzzles.findIndex((p) => p.id === puzzle.id);
+  const nextPackPuzzle = currentPuzzleIdxInPack >= 0 && currentPuzzleIdxInPack < packPuzzles.length - 1
+    ? packPuzzles[currentPuzzleIdxInPack + 1]
+    : null;
+
   const suspectName = accuseSuspect
     ? puzzle.suspects.find((s) => s.id === accuseSuspect)?.name ?? null
     : null;
@@ -1536,6 +1553,29 @@ export default function VakalarScreen() {
       />
 
       <ScoreInfoSheet visible={showScoreInfo} onClose={() => setShowScoreInfo(false)} />
+
+      {/* ── Pack navigation bar: fixed strip above game content ── */}
+      {currentPack && packPuzzles.length > 1 && !showResult && (
+        <View style={[gameStyles.packNavBar, { borderBottomColor: currentPack.accentColor + "33", backgroundColor: currentPack.packColor + "14" }]}>
+          <MaterialIcons name="inventory-2" size={13} color={currentPack.accentColor} />
+          <Text style={[gameStyles.packNavTitle, { color: currentPack.accentColor }]} numberOfLines={1}>
+            {currentPack.packTitle}
+          </Text>
+          <Text style={[gameStyles.packNavCounter, { color: currentPack.accentColor + "AA" }]}>
+            {currentPuzzleIdxInPack + 1} / {packPuzzles.length}
+          </Text>
+          {nextPackPuzzle && (
+            <Pressable
+              onPress={() => handleNextPackPuzzle(nextPackPuzzle)}
+              style={[gameStyles.packNavNextBtn, { borderColor: currentPack.accentColor + "55", backgroundColor: currentPack.accentColor + "18" }]}
+              hitSlop={6}
+            >
+              <Text style={[gameStyles.packNavNextText, { color: currentPack.accentColor }]}>Sıradaki</Text>
+              <MaterialIcons name="chevron-right" size={15} color={currentPack.accentColor} />
+            </Pressable>
+          )}
+        </View>
+      )}
 
       <ScrollView
         style={gameStyles.scroll}
@@ -2291,6 +2331,37 @@ const gameStyles = StyleSheet.create({
   container: { flex: 1 },
   scroll: { flex: 1 },
   content: { paddingHorizontal: 10, gap: 16 },
+  packNavBar: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+    paddingHorizontal: 14,
+    paddingVertical: 7,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+  },
+  packNavTitle: {
+    flex: 1,
+    fontSize: 12,
+    fontWeight: "600",
+    letterSpacing: 0.2,
+  },
+  packNavCounter: {
+    fontSize: 11,
+    fontWeight: "600",
+  },
+  packNavNextBtn: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 2,
+    paddingHorizontal: 9,
+    paddingVertical: 4,
+    borderRadius: 8,
+    borderWidth: 1,
+  },
+  packNavNextText: {
+    fontSize: 12,
+    fontWeight: "700",
+  },
   contentWeb: {
     width: "100%",
     maxWidth: 640,

@@ -1,0 +1,485 @@
+/* ============================================================
+ *  FAİLİ MEÇHUL — REPLIT TEK SEFERLİK ENTEGRASYON PAKETİ
+ *  Bu metni Replit Agent sohbetine TEK PARÇA olarak yapıştır.
+ *  Görev: sadece JSON kaydetme. Vaka verisini mevcut kaynakta
+ *  yükle, aşağıdaki eksik renderer altyapısını ekle ve çalıştır.
+ * ------------------------------------------------------------
+ *  Vaka: Orient Ekspresi'nin Kayıp Vagonu · puzzleId=ede_002
+ *  1) Önce mevcut vaka veri kaydını ve mini-oyun dispatcherını bul.
+ *  2) Var olan rendererları bozma; yalnız eksik olan dalı ekle.
+ *  3) Aşağıdaki vaka JSON’unu uygulamanın KANONİK case kaynağına ekle.
+ *  4) Kod değişikliklerinden sonra aşağıdaki kabul testlerini tarayıcıda yap.
+ *  5) Sadece açıklama yazma: dosyaları gerçekten güncelle ve test sonucunu bildir.
+ * ============================================================ */
+
+
+===== PREMIUM v26 ÖZEL MİNİ OYUN RENDERER'I — DOSYA OLUŞTUR / EKSİKSE EKLE =====
+// src/components/caseMechanics/PremiumMechanicRenderer.jsx
+import { useMemo, useState } from "react";
+
+const premiumStyles = new Set([
+  "luggage_label_match",
+  "negative_contact_sheet",
+  "morse_transceiver",
+  "archive_index_reconstruction",
+  "mechanical_lock_sequence",
+]);
+
+export const isPremiumMechanic = (clue) =>
+  clue?.mechanicType === "sifreli_mesaj" &&
+  premiumStyles.has(clue?.sifre?.presentation?.style);
+
+export default function PremiumMechanicRenderer({ clue, onSolved, onRequestHint }) {
+  const p = clue?.sifre?.presentation ?? {};
+  const style = p.style;
+  const [choices, setChoices] = useState({});
+  const [dials, setDials] = useState(() =>
+    Object.fromEntries((p.dials ?? []).map((d) => [d.id, d.initial ?? d.symbols?.[0] ?? ""]))
+  );
+  const [result, setResult] = useState(null);
+  const [hintOpen, setHintOpen] = useState(false);
+  const [hintUsed, setHintUsed] = useState(false);
+
+  const setChoice = (itemId, answerId) =>
+    setChoices((old) => ({ ...old, [itemId]: answerId }));
+
+  const rotate = (dial, delta) => {
+    const symbols = dial.symbols ?? [];
+    const current = dials[dial.id] ?? symbols[0];
+    const index = Math.max(0, symbols.indexOf(current));
+    const next = symbols[(index + delta + symbols.length) % symbols.length];
+    setDials((old) => ({ ...old, [dial.id]: next }));
+    setResult(null);
+  };
+
+  const valid = useMemo(() => {
+    if (!premiumStyles.has(style)) return false;
+    if (style === "mechanical_lock_sequence") {
+      return (p.correctCode ?? []).length === (p.dials ?? []).length &&
+        (p.correctCode ?? []).every((entry) => dials[entry.dialId] === entry.symbol);
+    }
+    return (p.correctAssignments ?? []).length > 0 &&
+      (p.correctAssignments ?? []).every((entry) => choices[entry.itemId] === entry.answerId);
+  }, [choices, dials, p, style]);
+
+  const submit = () => {
+    if (valid) {
+      setResult("ok");
+      onSolved?.({ clueId: clue.id, mechanic: style });
+    } else setResult("no");
+  };
+
+  const useHint = () => {
+    setHintOpen(true);
+    if (!hintUsed) {
+      setHintUsed(true);
+      onRequestHint?.({ clueId: clue.id, penaltySeconds: 60 });
+    }
+  };
+
+  const select = (itemId, options, placeholder) => (
+    <select value={choices[itemId] ?? ""} onChange={(e) => { setChoice(itemId, e.target.value); setResult(null); }}>
+      <option value="">{placeholder}</option>
+      {options.map((option) => <option key={option.id ?? option} value={option.id ?? option}>{option.label ?? option}</option>)}
+    </select>
+  );
+
+  const card = (title, body) => <article style={styles.card}><b>{title}</b>{body}</article>;
+  let board = null;
+
+  if (style === "luggage_label_match") {
+    board = <div style={styles.grid}>{(p.cases ?? []).map((item) => card(item.label, <><small>{item.stamp} · {item.note}</small>{select(item.id, p.routes ?? [], "Rotayı seç…")}</>))}</div>;
+  } else if (style === "negative_contact_sheet") {
+    board = <div style={styles.grid}>{(p.checks ?? []).map((item) => card(item.label, <><div style={styles.pair}><div style={styles.positive}>{item.positive}</div><div style={styles.negative}>{item.negative}</div></div>{select(item.id, item.options ?? [], "Farkı seç…")}</>))}</div>;
+  } else if (style === "morse_transceiver") {
+    board = <><div style={styles.chart}>{(p.chart ?? []).map((item) => <span key={item.char}><b>{item.char}</b> {item.code}</span>)}</div><div style={styles.grid}>{(p.signals ?? []).map((item) => card(item.label, <><div style={styles.morse}>{item.code}</div>{select(item.id, item.options ?? [], "Harfi seç…")}</>))}</div></>;
+  } else if (style === "archive_index_reconstruction") {
+    board = <div style={styles.archive}>{(p.files ?? []).map((item) => card(item.code ?? item.label, <><small>{item.date}<br />{item.note}</small>{select(item.id, p.slots ?? [], "Raf gözü…")}</>))}</div>;
+  } else if (style === "mechanical_lock_sequence") {
+    board = <div style={styles.dials}>{(p.dials ?? []).map((dial) => <article key={dial.id} style={styles.dial}><b>{dial.label}</b><div style={styles.symbol}>{dials[dial.id]}</div><div style={styles.controls}><button onClick={() => rotate(dial, -1)}>↶</button><button onClick={() => rotate(dial, 1)}>↷</button></div></article>)}</div>;
+  }
+
+  return <section style={styles.wrap}>
+    <h4 style={styles.title}>{p.title}</h4>
+    <p style={styles.sub}>{p.subtitle}</p>
+    <p style={styles.purpose}><b>ÇÖZÜMÜN İŞLEVİ</b><br />{p.purposeHint}</p>
+    {board}
+    {p.hint && <><button style={styles.ghost} onClick={useHint}>💡 İpucu iste</button>{hintOpen && <p style={styles.hint}>{p.hint}</p>}</>}
+    <button style={styles.submit} onClick={submit}>{p.interaction?.submitLabel ?? "Kaydı doğrula"}</button>
+    {result === "ok" && <p style={styles.ok}><b>IZGARA ETKİSİ</b><br />{p.resultText}</p>}
+    {result === "no" && <p style={styles.no}>{p.interaction?.failureMessage ?? "Kayıtlar aynı düzeni vermiyor. Ayrıntıları yeniden karşılaştır."}</p>}
+  </section>;
+}
+
+const styles = {
+  wrap:{marginTop:10,padding:12,border:"1px solid #2d3650",borderRadius:12,background:"#101522",color:"#e8eaf2"},
+  title:{margin:"0 0 4px",color:"#e0b54e",fontSize:14},sub:{margin:"0 0 8px",fontSize:12,color:"#a9b0ca"},
+  purpose:{margin:"0 0 10px",padding:9,borderLeft:"2px solid #e0b54e",background:"rgba(224,181,78,.06)",fontSize:12,lineHeight:1.45},
+  grid:{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(160px,1fr))",gap:8},archive:{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(145px,1fr))",gap:8},
+  card:{border:"1px solid #303a55",borderRadius:10,padding:10,display:"grid",gap:8,fontSize:12},pair:{display:"grid",gridTemplateColumns:"1fr 1fr",gap:6},
+  positive:{minHeight:54,padding:7,display:"grid",alignItems:"end",background:"#eef2fb",color:"#151a25",fontSize:10,fontWeight:700},negative:{minHeight:54,padding:7,display:"grid",alignItems:"end",background:"#20283d",color:"#eef2fb",fontSize:10,fontWeight:700},
+  chart:{display:"flex",gap:8,flexWrap:"wrap",padding:8,marginBottom:8,border:"1px solid #303a55",borderRadius:8,fontSize:11},morse:{fontSize:18,letterSpacing:3,color:"#f3d77d"},
+  dials:{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(100px,1fr))",gap:8},dial:{border:"1px solid #6e5a34",borderRadius:10,padding:9,textAlign:"center",display:"grid",gap:8},symbol:{height:48,border:"1px solid #b99b57",borderRadius:"50%",display:"grid",placeItems:"center",fontSize:22,color:"#f4e6ae"},
+  controls:{display:"grid",gridTemplateColumns:"1fr 1fr",gap:5},submit:{width:"100%",marginTop:10,padding:10,border:0,borderRadius:8,background:"#e0b54e",color:"#1a1205",fontWeight:700},ghost:{width:"100%",marginTop:8,padding:8,border:"1px dashed #caa544",borderRadius:8,background:"transparent",color:"#e0b54e"},
+  hint:{padding:8,borderRadius:8,background:"rgba(224,181,78,.08)",fontSize:12},ok:{padding:10,border:"1px solid #22c55e",borderRadius:8,background:"rgba(34,197,94,.1)",color:"#bbf7d0",fontSize:12},no:{padding:10,border:"1px solid #dc2626",borderRadius:8,background:"rgba(220,38,38,.1)",color:"#fecaca",fontSize:12}
+};
+===== DOSYA SONU =====
+
+===== MEVCUT MİNİ-OYUN DISPATCHERINA EKLENECEK DAL =====
+// Mevcut genel sifreli_mesaj renderer'INDEN ÖNCE ekle.
+import PremiumMechanicRenderer, { isPremiumMechanic } from "@/components/caseMechanics/PremiumMechanicRenderer";
+
+if (isPremiumMechanic(clue)) {
+  return (
+    <PremiumMechanicRenderer
+      clue={clue}
+      onSolved={({ clueId }) => markMiniGameSolved?.(clueId)}
+      onRequestHint={({ clueId, penaltySeconds }) => applyHintPenalty?.({ clueId, penaltySeconds })}
+    />
+  );
+}
+// Buradan sonra mevcut genel şifre renderer'ı aynen çalışmalı.
+===== YAMA SONU =====
+
+===== PREMIUM v26 KABUL TESTLERİ =====
+- c4: morse_transceiver renderer'ı JSON verisinden çalışır; doğru sonuç öncesinde resultText görünmez, yanlış deneme doğru eşlemeyi açmaz, mobilde kartlar tek kolon akışına iner.
+===== TESTLER SONU =====
+===== ZORUNLU KABUL TESTLERİ =====
+1. Eski klasik sifreli_mesaj, parmak_izi, profil_sentezi ve genel ses_kaydi rendererları regresyona uğramaz.
+===== TEST LİSTESİ SONU =====
+
+===== KANONİK VAKA VERİSİ — mevcut case registry’de ede_002 olarak ekle/değiştir =====
+{
+  "puzzleId": "ede_002",
+  "stars": "★★☆☆☆",
+  "gridSize": "3x3",
+  "timeLimit": 540,
+  "storyParagraphs": [
+    "İstanbul’dan ayrıldıktan sonra kar, trenin camlarına ince bir tuz gibi yapıştı. Yemek vagonu kapandığında istasyon ışıkları geride kalmış, koridorlarda yalnız tekerleklerin düzenli vuruşu kalmıştı. Sabah, A7’nin pirinç kapısında kahve kokusu değil; fincan dibine çökmüş ağır bir sessizlik vardı.",
+    "Kapı içeriden sürgülüydü. Fakat servis arabasında eksik olan şey yalnız bir fincan değildi: A7’ye ait küçük ısıtma plağı da yerinde yoktu. Vagon görevlisi, gece yarısında duvar içindeki çağrı hattından dört kısa-uzun sinyal duyduğunu; ardından bakır samovarın kapağının kapandığını söyledi.",
+    "Hasan Bey, yolcuların söylediklerini değil, söyledikleri sırada ellerinde tuttukları eşyaları yazdı: nikel bir seyahat matarası, mühürlü bir servis çantası, solmuş bir alay fuları ve samovarın kulpunda parlayan eski bir yüzük. Küçük gri hücreler bazen sıcaklığın nereden geldiğini değil, elde kalan işaretin kime ait olduğunu sorar."
+  ],
+  "qaRationale": {
+    "c1": "Fincandaki alkaloid ve yüzük oksidi, Prenses’i ölüm aracına bağlar.",
+    "c2": "Kolonelin mühürlü çantası kısa kasalık bıçağı dışlar.",
+    "c3": "Fren tozu bıçağı gece koridoruyla eşler.",
+    "c4": "Mors telgrafı, Kolonelin Prenses’in Kompartımanıyla eşleşmesini eler.",
+    "leaveOneOut": "c1, c2, c3 veya c4 çıkarıldığında Rus Prenses Natasha · Şark Kahvesi · Prenses’in Kompartımanı üçlüsü tek kalmaz."
+  },
+  "qaNarrativeContract": {
+    "narrativeSignal": "Hikâyedeki duvar içi çağrı hattı ve dört kısa-uzun darbe, c4’te yazılı Mors çözümlemesi yapılacağını oyuncuya önceden bildirir.",
+    "linkedClueId": "c4",
+    "playerAction": "Telgraf makarasındaki dört Mors kesitini kod tablosuyla eşleştirir; oluşan çağrı işaretini kondüktörün iç panel kaydıyla yorumlar.",
+    "fairReason": "Hikâye kodu ya da failin adını söylemez; yalnız ses kaynağını ve çözüm aracını görünür biçimde kurar."
+  },
+  "qaVersion": "v30.2 · fixed-v29.2-simulator-compatible",
+  "qaTests": {
+    "qaSimulator": "Faili Meçhul Vaka Simülatörü v29.2 · sabit renderer",
+    "logicSolver": "PASS · 100/100 · ONAYLANDI ✦ (Kusursuz)",
+    "productionValidation": "PASS · 0 error / 0 warning",
+    "miniGameInteraction": "PASS · 4 Mors kesiti render edildi; yanlış yanıt çözüm sızdırmadı; doğru yanıt ızgara etkisini açtı.",
+    "simulatorModified": false
+  },
+  "qaSourceHandling": "Kaynak puzzleId ve çözüm kimlikleri korunmuştur. Vaka, sabit v29.2 simülatörünün yerleşik morse_transceiver sözleşmesine göre yeniden yazılmıştır; renderer kaynak kodu değiştirilmemiştir.",
+  "title": "Orient Ekspresi'nin Kayıp Vagonu",
+  "subtitle": "Doğu Ekspresi · Kapalı Kompartıman Vakası",
+  "difficulty": "Polis Memuru",
+  "difficultyLevel": 2,
+  "specialMechanic": "sifreli_mesaj · morse_transceiver · metinsel kod çözümü",
+  "story": "İstanbul’dan ayrıldıktan sonra kar, trenin camlarına ince bir tuz gibi yapıştı. Yemek vagonu kapandığında istasyon ışıkları geride kalmış, koridorlarda yalnız tekerleklerin düzenli vuruşu kalmıştı. Sabah, A7’nin pirinç kapısında kahve kokusu değil; fincan dibine çökmüş ağır bir sessizlik vardı.\n\nKapı içeriden sürgülüydü. Fakat servis arabasında eksik olan şey yalnız bir fincan değildi: A7’ye ait küçük ısıtma plağı da yerinde yoktu. Vagon görevlisi, gece yarısında duvar içindeki çağrı hattından dört kısa-uzun sinyal duyduğunu; ardından bakır samovarın kapağının kapandığını söyledi.\n\nHasan Bey, yolcuların söylediklerini değil, söyledikleri sırada ellerinde tuttukları eşyaları yazdı: nikel bir seyahat matarası, mühürlü bir servis çantası, solmuş bir alay fuları ve samovarın kulpunda parlayan eski bir yüzük. Küçük gri hücreler bazen sıcaklığın nereden geldiğini değil, elde kalan işaretin kime ait olduğunu sorar.",
+  "atmosphere": "Kar fırtınası · Pirinç kapı kolları · Kömürlü samovar · Vagon içi çağrı hattı",
+  "suspects": [
+    {
+      "id": "s1",
+      "name": "Rus Prenses Natasha",
+      "icon": "👑",
+      "description": "Devrimden sonra sürgünde yaşayan aristokrat.",
+      "detail": "Kendi bakır samovar setini taşır; kulpunda koyu taşlı eski bir yüzük var."
+    },
+    {
+      "id": "s2",
+      "name": "İngiliz Kolonel Ashworth",
+      "icon": "🎖️",
+      "description": "Eski istihbarat subayı.",
+      "detail": "Gece boyunca mühürlü servis çantasını açmadığını iddia ediyor."
+    },
+    {
+      "id": "s3",
+      "name": "Fransız Mücevher Kaçakçısı Émile",
+      "icon": "💎",
+      "description": "Bagajından hiç ayrılmayan kaçakçı.",
+      "detail": "Nikel seyahat matarasıyla tanınır; sıcak içeceği metal matarasından içer."
+    }
+  ],
+  "weapons": [
+    {
+      "id": "w1",
+      "name": "Şark Kahvesi (Zehirli)",
+      "icon": "☕",
+      "description": "Alkaloid karıştırılmış koyu kahve.",
+      "detail": "Küçük porselen fincanda gizlenir."
+    },
+    {
+      "id": "w2",
+      "name": "Mücevher Kasası Bıçağı",
+      "icon": "🗡️",
+      "description": "Kısa, ince ve keskin bıçak.",
+      "detail": "Kumaşta kesik ve deride giriş izi bırakır."
+    },
+    {
+      "id": "w3",
+      "name": "İpek Fular",
+      "icon": "🧣",
+      "description": "İnce dokumalı boğucu araç.",
+      "detail": "Boyunda lif ve basınç izi bırakması beklenir."
+    }
+  ],
+  "locations": [
+    {
+      "id": "l1",
+      "name": "Yemek Vagonu",
+      "icon": "🍽️",
+      "description": "Gece servisinin yapıldığı ortak alan.",
+      "detail": "Masa örtülerinde kömür isi ve şeker kristali birikir."
+    },
+    {
+      "id": "l2",
+      "name": "Prenses'in Kompartımanı",
+      "icon": "🚂",
+      "description": "A7 numaralı birinci sınıf kompartıman.",
+      "detail": "Bakır samovar plağı burada kullanılır."
+    },
+    {
+      "id": "l3",
+      "name": "Gece Koridoru",
+      "icon": "🌙",
+      "description": "Karanlık ve dar geçiş.",
+      "detail": "Kar suyu, zımpara tozu ve fren titreşimi taşır."
+    }
+  ],
+  "clues": [
+    {
+      "id": "c1",
+      "title": "Yüzük İzli Kahve Fincanı",
+      "type": "adli",
+      "mechanicType": "text",
+      "text": "Adli tabip, ölümün fincandaki alkaloid karışımla başladığını saptadı. Porselen kulpun iç yüzeyinde, koyu taşlı yüzüğün bıraktığı ince halka ve aynı yüzüğe özgü gümüş oksit tozu var; fincanı son kez bu işareti taşıyan el tutmuş.",
+      "deductionHint": "Fincanın kulpundaki halka ve oksit tozu, hangi kişinin yanında taşıdığı eşya ile aynı imzayı verir?",
+      "isBonus": false,
+      "revealOrder": 1,
+      "isRevealed": true,
+      "pointCost": 0
+    },
+    {
+      "id": "c2",
+      "title": "Mühürlü Çantanın Dar Yuvası",
+      "type": "tanik",
+      "mechanicType": "text",
+      "text": "Kolonelin mühürlü servis çantasındaki bölmeler, yalnız düz tabanlı çay araçlarının izini taşıyor. Dar kasalık bıçağın kabzasına özgü yağ, lif ya da kılıf sürtünmesi yok; kurşun mühür gece boyunca bozulmamış.",
+      "deductionHint": "Açılmamış bir çantada ince metal alete ait tek bir iz bile yoksa, bu alet o yolcuyla eşleşebilir mi?",
+      "isBonus": false,
+      "revealOrder": 2,
+      "isRevealed": false,
+      "pointCost": 0
+    },
+    {
+      "id": "c3",
+      "title": "Fren Tozunun Kılıfı",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Gece freninde ortaya çıkan gri zımpara tozu, kısa kasalık bıçağın kılıf ağzındaki balmuma gömülmüş. Aynı toz yalnız dar geçişin taban şeridinde bulunuyor; bıçak o hattın dışına taşınmamış.",
+      "deductionHint": "Kılıftaki gri toz, hangi dar geçişin tabanından alınmış olabilir?",
+      "isBonus": false,
+      "revealOrder": 3,
+      "isRevealed": false,
+      "pointCost": 0
+    },
+    {
+      "id": "c4",
+      "title": "Vagon İçi Telgraf",
+      "type": "sifreli",
+      "mechanicType": "sifreli_mesaj",
+      "text": "Kondüktörün duvar hattı makarası, birbirinden uzun bağlantı sesleriyle ayrılmış dört kısa-uzun kesiti saklıyor. Makaradaki çağrı, fincanın hazırlandığı geceye ait tek işitsel kayıt.",
+      "deductionHint": "Kısa ve uzun darbeleri anahtar tablodaki karşılıklarıyla eşleştir; dört karakteri soldan sağa oku.",
+      "isBonus": false,
+      "revealOrder": 4,
+      "isRevealed": false,
+      "pointCost": 0,
+      "sifre": {
+        "sifreleTuru": "Mors çözümlemesi · yazılı telgraf makarası",
+        "sifrelenmis": "·− / −−··· / ·−−· / ·−·",
+        "cozulmus": "A7PR",
+        "answerAliases": [
+          "A7-PR",
+          "A 7 P R"
+        ],
+        "cozumIpucu": "Her sinyal için tablodaki kısa–uzun karşılığını bul. Elde edilen dört karakter, kondüktörün servis kodudur.",
+        "aciklama": "Karanlık hattın darbeleri çözüldü; gece servisinin hangi devreden geçtiği artık kayıtla sabit.",
+        "presentation": {
+          "style": "morse_transceiver",
+          "title": "Vagon İçi Telgraf",
+          "subtitle": "Dört ses kesitini Mors anahtarıyla eşleştir. Soldan sağa oluşan kayıt, gece servisinin çağrı işaretini verir.",
+          "purposeHint": "Doğru işaret, çağrının iç panelden başlatıldığını gösterir. Bu sonuç soruşturma ızgarasında yalnız bir şüpheli–mekân bağını eler.",
+          "resultText": "Çağrı işareti çözüldü. Kayıt, gece servisinin iç panel üzerinden başlatıldığını gösterdi; ızgarada tek bir bağ elendi.",
+          "chart": [
+            {
+              "char": "A",
+              "code": "·−"
+            },
+            {
+              "char": "7",
+              "code": "−−···"
+            },
+            {
+              "char": "P",
+              "code": "·−−·"
+            },
+            {
+              "char": "R",
+              "code": "·−·"
+            }
+          ],
+          "signals": [
+            {
+              "id": "sig1",
+              "label": "Kesit I",
+              "code": "·−",
+              "options": [
+                "A",
+                "7",
+                "P",
+                "R"
+              ]
+            },
+            {
+              "id": "sig2",
+              "label": "Kesit II",
+              "code": "−−···",
+              "options": [
+                "A",
+                "7",
+                "P",
+                "R"
+              ]
+            },
+            {
+              "id": "sig3",
+              "label": "Kesit III",
+              "code": "·−−·",
+              "options": [
+                "A",
+                "7",
+                "P",
+                "R"
+              ]
+            },
+            {
+              "id": "sig4",
+              "label": "Kesit IV",
+              "code": "·−·",
+              "options": [
+                "A",
+                "7",
+                "P",
+                "R"
+              ]
+            }
+          ],
+          "correctAssignments": [
+            {
+              "itemId": "sig1",
+              "answerId": "A"
+            },
+            {
+              "itemId": "sig2",
+              "answerId": "7"
+            },
+            {
+              "itemId": "sig3",
+              "answerId": "P"
+            },
+            {
+              "itemId": "sig4",
+              "answerId": "R"
+            }
+          ],
+          "interaction": {
+            "mode": "morse_decode_match",
+            "submitLabel": "Çağrı Kodunu Doğrula",
+            "successMessage": "Çağrı işareti çözüldü. İç panel kaydı doğrulandı.",
+            "failureMessage": "Kesitlerden en az biri yanlış eşleşti. Uzun/kısa dizilerini yeniden karşılaştır."
+          }
+        }
+      }
+    },
+    {
+      "id": "c5",
+      "title": "Nikel Mataranın Koridor Sıçraması — Bonus",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Émile’in nikel matarasında, fren anında dar geçişin duvarından sıçrayan ince kar suyu damlaları ve zımpara tozu bulundu. Mataranın kapağı o gece hiç açılmamış; izler yalnız taşınırken birikmiş.",
+      "deductionHint": "Kar suyu ve zımpara tozu birlikte, hangi geçişe temas eden bir eşyayı anlatır?",
+      "isBonus": true,
+      "revealOrder": 5,
+      "isRevealed": false,
+      "pointCost": 55
+    },
+    {
+      "id": "c6",
+      "title": "Alay Fularının Dokuması — Bonus",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Ashworth’un paltosunun yakasında kalan soluk mavi ipek lif, bagajdaki alay fularının tek balıksırtı dikişiyle aynı yönde ilerliyor. Lifte kahve ya da boğuşma izi yok.",
+      "deductionHint": "Aynı dikiş yönü hangi kişisel eşyayı sahibine bağlar?",
+      "isBonus": true,
+      "revealOrder": 6,
+      "isRevealed": false,
+      "pointCost": 55
+    }
+  ],
+  "assetManifest": [],
+  "solution": {
+    "suspectId": "s1",
+    "weaponId": "w1",
+    "locationId": "l2"
+  },
+  "solutionNarrative": "Natasha, özel samovarından hazırladığı şark kahvesini A7’de sundu. Adli bulgu kahveyi ve A7 ısıtma plağını aynı üçlüye bağladı. Yemek vagonu için hem Natasha hem Kolonel elendi; Morsla çözülen A7-PR iç hat çağrısı ise Kolonelin mühürlü dış servis çantısıyla bu kompartımanda olamayacağını gösterdi. Geriye zehirli kahveyle A7’de kesişen Natasha kaldı. Émile’in bıçağı ve Ashworth’un alay fuları ise yalnız masum eşya dağılımını tamamladı.",
+  "replitIntegration": {
+    "schema": "fm_replit_runtime_contract_v1",
+    "copyTarget": "Replit Agent prompt",
+    "canonicalCaseFile": "src/data/cases/ede_002.json",
+    "policy": "Var olan renderer varsa onu bozma; yoksa bu paketteki component ve dispatcher dalını ekle.",
+    "mechanics": [
+      {
+        "clueId": "c4",
+        "mechanicType": "sifreli_mesaj",
+        "renderer": "morse_transceiver",
+        "completionEvent": "onSolved({ clueId, mechanic: \"sifreli_mesaj\" })"
+      },
+      {
+        "clueId": "c4",
+        "mechanicType": "sifreli_mesaj",
+        "renderer": "morse_transceiver",
+        "componentFile": "src/components/caseMechanics/PremiumMechanicRenderer.jsx",
+        "dispatcherBranch": "clue.mechanicType === \"sifreli_mesaj\" && [\"luggage_label_match\",\"negative_contact_sheet\",\"morse_transceiver\",\"archive_index_reconstruction\",\"mechanical_lock_sequence\"].includes(clue.sifre?.presentation?.style)",
+        "completionEvent": "onSolved({ clueId, mechanic: \"morse_transceiver\" })",
+        "hintEvent": "onRequestHint({ clueId, penaltySeconds: 60 })",
+        "requiredData": [
+          "title",
+          "subtitle",
+          "purposeHint",
+          "resultText",
+          "interaction",
+          "style-specific data"
+        ],
+        "nonNegotiable": [
+          "Veriyi component içine hard-code etme.",
+          "Başarı öncesinde resultText veya çözüm eşleşmesini gösterme.",
+          "Yanlış deneme doğru eşlemeyi otomatik kurmamalı.",
+          "Mobilde kartlar/diallar tek sütuna akmalı."
+        ]
+      }
+    ]
+  }
+}
+===== VAKA VERİSİ SONU =====

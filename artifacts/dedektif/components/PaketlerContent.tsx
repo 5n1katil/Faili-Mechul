@@ -33,6 +33,7 @@ const PRIVACY_URL = "https://doc-hosting.flycricket.io/faili-mechul-privacy-poli
 const TERMS_URL = "https://doc-hosting.flycricket.io/faili-mechul-terms-of-use/4f269815-97dc-472b-b9a5-d57f8e1c8673/terms";
 
 let _embeddedScrollY = 0;
+let _embeddedExpandedPack: string | null = null;
 
 export default function PaketlerContent({ embedded = false }: { embedded?: boolean }) {
   const colors = useColors();
@@ -45,17 +46,24 @@ export default function PaketlerContent({ embedded = false }: { embedded?: boole
 
   const scrollRef = useRef<ScrollView>(null);
 
-  const [expandedPack, setExpandedPack] = useState<string | null>(null);
+  // Restore expanded pack from module-level var so state survives game navigation
+  const [expandedPack, setExpandedPack] = useState<string | null>(_embeddedExpandedPack);
   const [purchasing, setPurchasing] = useState<string | null>(null);
   const [restoring, setRestoring] = useState(false);
+
+  // Keep module-level var in sync with state changes (user toggling packs manually)
+  useEffect(() => {
+    if (embedded) _embeddedExpandedPack = expandedPack;
+  }, [embedded, expandedPack]);
 
   useEffect(() => {
     if (!embedded) return;
     const savedY = _embeddedScrollY;
     if (savedY > 0) {
+      // Slightly longer timeout to let the restored expanded pack render first
       setTimeout(() => {
         scrollRef.current?.scrollTo({ y: savedY, animated: false });
-      }, 50);
+      }, 100);
     }
   }, [embedded]);
 
