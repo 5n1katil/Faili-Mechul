@@ -687,6 +687,7 @@ export default function VakalarScreen() {
   const [diffFilter, setDiffFilter] = useState<Difficulty | "all" | "tamamlananlar">("all");
   const [premiumSubTab, setPremiumSubTab] = useState<"vakalar" | "paketler">("vakalar");
   const [premiumVakalarExpanded, setPremiumVakalarExpanded] = useState(false);
+  const [premDiffFilter, setPremDiffFilter] = useState<Difficulty | "all" | "tamamlananlar">("all");
 
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const resultTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -970,6 +971,10 @@ export default function VakalarScreen() {
     const activePremium = premiumPuzzles.filter((p) => !completedPuzzleIds.has(p.id));
 
     const premiumPuzzleIdSet = new Set(premiumPuzzles.map((p) => p.id));
+    const completedPremiumPuzzles = completedPuzzles.filter((p) => premiumPuzzleIdSet.has(p.id));
+    const premFilteredActive = (premDiffFilter === "all" || premDiffFilter === "tamamlananlar")
+      ? activePremium
+      : activePremium.filter((p) => p.difficulty === (premDiffFilter as Difficulty));
     const availableActive = [...activeFree, ...(isPremium ? activePremium : [])];
     const filteredActive = (diffFilter === "all" || diffFilter === "tamamlananlar")
       ? availableActive
@@ -1086,7 +1091,7 @@ export default function VakalarScreen() {
                     </View>
                   </Animated.View>
 
-                  {/* Buy CTA banner for non-premium users */}
+                  {/* Buy CTA banner — only for non-premium users */}
                   {!isPremium && (
                     <Animated.View entering={FadeInDown.delay(60).springify()}>
                       <Pressable
@@ -1095,7 +1100,7 @@ export default function VakalarScreen() {
                       >
                         <View style={{ flex: 1 }}>
                           <Text style={[listStyles.premAccordionTitle, { color: "#F0F0F8", fontSize: 14 }]}>
-                            Vaka Arşivi — Tek Seferlik
+                            Vaka Arşivi — Tek Seferlik Satın Alma
                           </Text>
                           <Text style={[listStyles.premAccordionSub, { color: "#D4A84399", marginTop: 3, fontSize: 13 }]}>
                             Tüm {premiumPuzzles.length} vakayı hemen aç · ₺79,99
@@ -1108,23 +1113,167 @@ export default function VakalarScreen() {
                     </Animated.View>
                   )}
 
-                  {/* Always-visible premium puzzle list */}
-                  {premiumPuzzles.map((puzzle, i) => {
+                  {/* Locked puzzle list — non-premium only */}
+                  {!isPremium && premiumPuzzles.map((puzzle, i) => {
                     const isCompleted = completedPuzzleIds.has(puzzle.id);
                     const stats = isCompleted ? playStatsForPuzzle(puzzle.id) : null;
                     return (
                       <PuzzleCard
                         key={puzzle.id}
                         puzzle={puzzle}
-                        onPress={() => isPremium ? startPuzzle(puzzle) : setShowPaywall(true)}
+                        onPress={() => setShowPaywall(true)}
                         delay={40 + i * 28}
                         completed={isCompleted}
                         playStats={stats}
-                        locked={!isPremium}
-                        showReplay={isCompleted && isPremium}
+                        locked={true}
+                        showReplay={false}
                       />
                     );
                   })}
+
+                  {/* Premium purchased: stats card + filters + tamamlananlar + list */}
+                  {isPremium && (
+                    <>
+                      {/* Stats card */}
+                      <Animated.View entering={FadeInDown.delay(30).springify()}>
+                        <View style={[listStyles.standartCard, { backgroundColor: colors.card, borderColor: "#D4A84344", shadowColor: "#D4A843", shadowOpacity: 0.2, shadowRadius: 10, shadowOffset: { width: 0, height: 4 }, elevation: 6 }]}>
+                          <View style={[listStyles.standartCardAccent, { backgroundColor: "#D4A843" }]} />
+                          <View style={{ flex: 1, paddingVertical: 13, paddingHorizontal: 14, gap: 8 }}>
+                            <View style={listStyles.standartCardTop}>
+                              <View style={[listStyles.heroCardIcon, { backgroundColor: "#D4A84318", width: 40, height: 40 }]}>
+                                <MaterialIcons name="workspace-premium" size={22} color="#D4A843" />
+                              </View>
+                              <View style={{ flex: 1 }}>
+                                <Text style={[listStyles.standartCardTitle, { color: "#D4A843" }]}>Premium Vakalar</Text>
+                                <Text style={[listStyles.heroCardSub, { color: INACTIVE_COLOR }]}>Arşiv · erişilebilir</Text>
+                              </View>
+                            </View>
+                            <View style={listStyles.standartStatsRow}>
+                              <View style={[listStyles.standartStat, { backgroundColor: "#D4A84314", borderColor: "#D4A84330" }]}>
+                                <Text style={[listStyles.standartStatNum, { color: "#D4A843" }]}>{premiumPuzzles.length}</Text>
+                                <Text style={[listStyles.standartStatLabel, { color: INACTIVE_COLOR }]}>Toplam</Text>
+                              </View>
+                              <View style={[listStyles.standartStat, { backgroundColor: "#FFFFFF08", borderColor: "#FFFFFF18" }]}>
+                                <Text style={[listStyles.standartStatNum, { color: "#F0F0F8" }]}>{activePremium.length}</Text>
+                                <Text style={[listStyles.standartStatLabel, { color: INACTIVE_COLOR }]}>Aktif</Text>
+                              </View>
+                              <View style={[listStyles.standartStat, { backgroundColor: `${colors.success}10`, borderColor: `${colors.success}28` }]}>
+                                <Text style={[listStyles.standartStatNum, { color: colors.success }]}>{completedPremiumPuzzles.length}</Text>
+                                <Text style={[listStyles.standartStatLabel, { color: INACTIVE_COLOR }]}>Çözüldü</Text>
+                              </View>
+                            </View>
+                          </View>
+                        </View>
+                      </Animated.View>
+
+                      {/* Difficulty filter pills */}
+                      <View style={listStyles.diffFilterRow}>
+                        {(["caylak", "dedektif", "baskomiser"] as Difficulty[]).map((diff) => {
+                          const isSelected = premDiffFilter === diff;
+                          const color = getDifficultyColor(diff);
+                          const icon: MaterialIconName = diff === "caylak" ? "sentiment-satisfied" : diff === "dedektif" ? "search" : "local-police";
+                          const count = activePremium.filter((p) => p.difficulty === diff).length;
+                          return (
+                            <FilterPill3D
+                              key={diff}
+                              label={getDifficultyLabel(diff)}
+                              icon={icon}
+                              isSelected={isSelected}
+                              onPress={() => setPremDiffFilter(isSelected ? "all" : diff)}
+                              color={color}
+                              count={count}
+                            />
+                          );
+                        })}
+                      </View>
+
+                      {/* Tamamlananlar wide pill */}
+                      <Animated.View entering={FadeInDown.delay(30).springify()}>
+                        <Pressable
+                          onPress={() => setPremDiffFilter(premDiffFilter === "tamamlananlar" ? "all" : "tamamlananlar")}
+                          style={[
+                            listStyles.tamamlananlarPill,
+                            premDiffFilter === "tamamlananlar"
+                              ? { backgroundColor: `${colors.success}22`, borderColor: colors.success, borderBottomWidth: 3, borderBottomColor: `${colors.success}AA`, shadowColor: colors.success, shadowOpacity: 0.35, shadowRadius: 8, shadowOffset: { width: 0, height: 3 }, elevation: 6 }
+                              : { backgroundColor: colors.card, borderColor: colors.border },
+                          ]}
+                        >
+                          <View style={[listStyles.tamamlananlarPillIcon, { backgroundColor: premDiffFilter === "tamamlananlar" ? `${colors.success}22` : "#FFFFFF14" }]}>
+                            <MaterialIcons name="check-circle" size={16} color={premDiffFilter === "tamamlananlar" ? colors.success : "#C8CAE0"} />
+                          </View>
+                          <Text style={[listStyles.tamamlananlarPillText, { color: premDiffFilter === "tamamlananlar" ? colors.success : "#E2E4F0" }]}>
+                            Tamamlananlar
+                          </Text>
+                          {completedPremiumPuzzles.length > 0 && (
+                            <View style={[listStyles.tamamlananlarPillCount, { backgroundColor: premDiffFilter === "tamamlananlar" ? `${colors.success}33` : "#FFFFFF20" }]}>
+                              <Text style={[listStyles.tamamlananlarPillCountText, { color: premDiffFilter === "tamamlananlar" ? colors.success : "#F0F2FF" }]}>
+                                {completedPremiumPuzzles.length}
+                              </Text>
+                            </View>
+                          )}
+                          <View style={{ flex: 1 }} />
+                          <MaterialIcons
+                            name={premDiffFilter === "tamamlananlar" ? "keyboard-arrow-up" : "keyboard-arrow-down"}
+                            size={20}
+                            color={premDiffFilter === "tamamlananlar" ? colors.success : "#C8CAE0"}
+                          />
+                        </Pressable>
+                      </Animated.View>
+
+                      {premDiffFilter === "tamamlananlar" ? (
+                        completedPremiumPuzzles.length === 0 ? (
+                          <View style={[listStyles.emptyBox, { borderColor: colors.border }]}>
+                            <MaterialIcons name="folder-open" size={40} color={colors.mutedForeground} />
+                            <Text style={[listStyles.emptyTitle, { color: colors.foreground }]}>Henüz Çözülen Premium Vaka Yok</Text>
+                            <Text style={[listStyles.emptyText, { color: colors.mutedForeground }]}>
+                              Premium vakalardan birini çözdükten sonra burada görünecek.
+                            </Text>
+                          </View>
+                        ) : (
+                          completedPremiumPuzzles.map((puzzle, i) => {
+                            const stats = playStatsForPuzzle(puzzle.id);
+                            return (
+                              <PuzzleCard
+                                key={puzzle.id}
+                                puzzle={puzzle}
+                                onPress={() => startPuzzle(puzzle)}
+                                delay={60 + i * 30}
+                                completed={true}
+                                playStats={stats}
+                                showReplay={true}
+                              />
+                            );
+                          })
+                        )
+                      ) : (
+                        <>
+                          {premFilteredActive.length === 0 ? (
+                            <View style={[listStyles.emptyBox, { borderColor: colors.border }]}>
+                              <MaterialIcons name="check-circle-outline" size={40} color={colors.success} />
+                              <Text style={[listStyles.emptyTitle, { color: colors.foreground }]}>
+                                {premDiffFilter === "all" ? "Tüm Premium Vakalar Çözüldü!" : `${getDifficultyLabel(premDiffFilter as Difficulty)} premium vakası kalmadı`}
+                              </Text>
+                              <Text style={[listStyles.emptyText, { color: colors.mutedForeground }]}>
+                                Tamamlananlar filtresine bakabilirsiniz.
+                              </Text>
+                            </View>
+                          ) : (
+                            premFilteredActive.map((puzzle, i) => (
+                              <PuzzleCard
+                                key={puzzle.id}
+                                puzzle={puzzle}
+                                onPress={() => startPuzzle(puzzle)}
+                                delay={80 + i * 35}
+                                completed={false}
+                                playStats={null}
+                                locked={false}
+                              />
+                            ))
+                          )}
+                        </>
+                      )}
+                    </>
+                  )}
                 </ScrollView>
               )}
             </View>
