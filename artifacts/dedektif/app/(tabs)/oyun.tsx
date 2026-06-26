@@ -56,6 +56,8 @@ import {
 } from "@/utils/leaderboardRank";
 import PaketlerContent from "@/components/PaketlerContent";
 import type { EntityInfo } from "@/components/EntityInfoSheet";
+import { SuspectPortrait } from "@/components/SuspectPortrait";
+import { buildSuspectPortraitMap } from "@/utils/suspectPortraitAssignments";
 import Animated, {
   FadeInDown,
   useAnimatedStyle,
@@ -601,6 +603,7 @@ function PuzzleCard({
 }) {
   const colors = useColors();
   const diffColor = getDifficultyColor(puzzle.difficulty as Difficulty);
+  const portraitMap = buildSuspectPortraitMap(puzzle.id, puzzle.suspects);
 
   return (
     <Animated.View entering={FadeInDown.delay(delay).springify()}>
@@ -647,11 +650,21 @@ function PuzzleCard({
                 <Text style={[listStyles.solvedText, { color: colors.success }]}>Çözüldü</Text>
               </View>
             ) : (
-              <View style={listStyles.puzzleCardMeta}>
-                <MaterialIcons name="person" size={13} color={INACTIVE_COLOR} />
-                <Text style={[listStyles.metaText, { color: INACTIVE_COLOR }]}>
-                  {puzzle.suspects.length} şüpheli
-                </Text>
+              <View style={listStyles.suspectAvatarRow}>
+                {puzzle.suspects.map((s, i) => (
+                  <View
+                    key={s.id}
+                    style={[
+                      listStyles.suspectAvatarCircle,
+                      i > 0 && { marginLeft: -8 },
+                    ]}
+                  >
+                    <SuspectPortrait
+                      portrait={portraitMap[s.id] ?? "noir-m-office-tie"}
+                      size={20}
+                    />
+                  </View>
+                ))}
               </View>
             )}
           </View>
@@ -1862,6 +1875,19 @@ const listStyles = StyleSheet.create({
   puzzleCardRight: { flexDirection: "row", alignItems: "center" },
   puzzleCardMeta: { flexDirection: "row", alignItems: "center", gap: 4 },
   metaText: { fontFamily: "DroidSerifRegular", fontSize: 12 },
+  suspectAvatarRow: { flexDirection: "row", alignItems: "center" },
+  suspectAvatarCircle: {
+    width: 26,
+    height: 26,
+    borderRadius: 13,
+    backgroundColor: "#1A1F2E",
+    borderWidth: 1.5,
+    borderColor: "#D4A84355",
+    overflow: "hidden",
+    alignItems: "center",
+    justifyContent: "center",
+    opacity: 0.65,
+  },
   diffBadge: {
     borderRadius: 6,
     paddingHorizontal: 8,
