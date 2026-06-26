@@ -973,8 +973,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flexShrink: 0,
   },
-  missionsTitle: { fontSize: 14, fontFamily: "UnnaBold", fontWeight: "600", color: "#FFFFFF", letterSpacing: 0.1 },
-  missionsSubtitle: { fontSize: 11, marginTop: 2 },
+  missionsTitle: { fontSize: 16, fontFamily: "UnnaBold", fontWeight: "700", color: "#FFFFFF", letterSpacing: 0.1 },
+  missionsSubtitle: { fontSize: 13, marginTop: 2 },
   missionsRight: { flexDirection: "row", alignItems: "center", gap: 6, flexShrink: 0 },
   missionsDots: { flexDirection: "row", gap: 4, alignItems: "center" },
   missionDot: { width: 7, height: 7, borderRadius: 3.5 },
@@ -1020,7 +1020,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#D4A84312",
     borderColor: "#D4A84340",
   },
-  rankBadgeText: { fontSize: 12, fontFamily: "UnnaBold", fontWeight: "600", color: "#D4A843", letterSpacing: 0.2 },
+  rankBadgeText: { fontSize: 15, fontFamily: "UnnaBold", fontWeight: "700", color: "#D4A843", letterSpacing: 0.2 },
   rankPosition: { fontSize: 30, fontFamily: "UnnaBold", fontWeight: "700", color: "#D4A843", letterSpacing: -0.5 },
   rankUserRow: { flexDirection: "row", alignItems: "center", gap: 10 },
   rankUserAvatar: {
@@ -1088,5 +1088,5 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  tipsBtnText: { flex: 1, fontSize: 13, fontFamily: "UnnaBold", fontWeight: "400", color: "rgba(255,255,255,0.7)" },
+  tipsBtnText: { flex: 1, fontSize: 16, fontFamily: "UnnaBold", fontWeight: "700", color: "rgba(255,255,255,0.85)" },
 });
