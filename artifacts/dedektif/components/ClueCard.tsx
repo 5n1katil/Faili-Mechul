@@ -228,12 +228,6 @@ function TelephoneSwitchboardBlock({
         <Text style={styles.switchboardTitleText}>{(puzzle.title ?? "DAHİLİ HAT DÜZENİ").toLocaleUpperCase("tr-TR")}</Text>
       </View>
       {puzzle.subtitle ? <Text style={styles.switchboardSubtitle}>{puzzle.subtitle}</Text> : null}
-      {puzzle.purposeHint ? (
-        <View style={styles.switchboardPurpose}>
-          <Text style={styles.switchboardPurposeLabel}>ÇÖZÜMÜN İŞLEVİ</Text>
-          <Text style={styles.switchboardPurposeText}>{puzzle.purposeHint}</Text>
-        </View>
-      ) : null}
 
       <Text style={styles.switchboardSectionLabel}>MAKARADAN KESİT DİNLE</Text>
       <View style={styles.switchboardSegments}>
@@ -548,12 +542,6 @@ function SymbolCrossgridBlock({
         <Text style={styles.crossgridTitleText}>{pres.title ?? "EŞLEME TAHTASI"}</Text>
       </View>
       {pres.subtitle ? <Text style={styles.crossgridSubtitle}>{pres.subtitle as string}</Text> : null}
-      {pres.purposeHint ? (
-        <View style={styles.crossgridPurpose}>
-          <Text style={styles.crossgridPurposeLabel}>ÇÖZÜMÜN İŞLEVİ</Text>
-          <Text style={styles.crossgridPurposeText}>{pres.purposeHint as string}</Text>
-        </View>
-      ) : null}
 
       {/* Grid — sized precisely from measured block width */}
       {blockWidth > 0 ? (
@@ -901,12 +889,6 @@ function TornRouteReconstructionBlock({
           {String((p as Record<string, unknown>).title ?? "YIRTIK ROTA SAYFASI")}
         </Text>
       </View>
-      {(p as Record<string, unknown>).purposeHint ? (
-        <View style={styles.tornRoutePurposeHint}>
-          <Text style={styles.tornRoutePurposeLabel}>ÇÖZÜMÜN İŞLEVİ</Text>
-          <Text style={styles.tornRoutePurposeText}>{String((p as Record<string, unknown>).purposeHint)}</Text>
-        </View>
-      ) : null}
       {(p as Record<string, unknown>).subtitle ? (
         <Text style={styles.tornRouteSubtitle}>{String((p as Record<string, unknown>).subtitle)}</Text>
       ) : null}
@@ -1096,12 +1078,6 @@ function BrokenCompassCalibrationBlock({
           {String(pr.title ?? "KIRIK PUSULA KALİBRASYONU")}
         </Text>
       </View>
-      {pr.purposeHint ? (
-        <View style={styles.compassPurposeHint}>
-          <Text style={styles.compassPurposeLabel}>ÇÖZÜMÜN İŞLEVİ</Text>
-          <Text style={styles.compassPurposeText}>{String(pr.purposeHint)}</Text>
-        </View>
-      ) : null}
       <View style={styles.compassNorthKey}>
         <Text style={styles.compassNorthKeyLabel}>{String(pr.sceneLabel ?? "SEYRÜSEFER KAYDI")}</Text>
         <Text style={styles.compassNorthKeyText}>{String(pr.northKey ?? "")}</Text>
@@ -1298,12 +1274,6 @@ function LuggageLabelMatchBlock({
           {String(pr.title ?? "VALİZ ETİKETİ EŞLEME")}
         </Text>
       </View>
-      {pr.purposeHint ? (
-        <View style={styles.luggagePurposeHint}>
-          <Text style={styles.luggagePurposeLabel}>ÇÖZÜMÜN İŞLEVİ</Text>
-          <Text style={styles.luggagePurposeText}>{String(pr.purposeHint)}</Text>
-        </View>
-      ) : null}
       {pr.subtitle ? (
         <Text style={styles.luggageSubtitle}>{String(pr.subtitle)}</Text>
       ) : null}
@@ -1446,12 +1416,6 @@ function NegativeContactSheetBlock({
           {String(pr.title ?? "NEGATİF KARŞILAŞTIRMA")}
         </Text>
       </View>
-      {pr.purposeHint ? (
-        <View style={styles.negativePurposeHint}>
-          <Text style={styles.negativePurposeLabel}>ÇÖZÜMÜN İŞLEVİ</Text>
-          <Text style={styles.negativePurposeText}>{String(pr.purposeHint)}</Text>
-        </View>
-      ) : null}
       {pr.subtitle ? (
         <Text style={styles.negativeSubtitle}>{String(pr.subtitle)}</Text>
       ) : null}
@@ -1605,12 +1569,6 @@ function MorseTransceiverBlock({
           {String(pr.title ?? "MORS / TELSİZ KESİTİ")}
         </Text>
       </View>
-      {pr.purposeHint ? (
-        <View style={styles.morsePurposeHint}>
-          <Text style={styles.morsePurposeLabel}>ÇÖZÜMÜN İŞLEVİ</Text>
-          <Text style={styles.morsePurposeText}>{String(pr.purposeHint)}</Text>
-        </View>
-      ) : null}
       {pr.subtitle ? (
         <Text style={styles.morseSubtitle}>{String(pr.subtitle)}</Text>
       ) : null}
@@ -1763,12 +1721,6 @@ function ArchiveIndexReconstructionBlock({
           {String(pr.title ?? "ARŞİV DİZİNİ")}
         </Text>
       </View>
-      {pr.purposeHint ? (
-        <View style={styles.archivePurposeHint}>
-          <Text style={styles.archivePurposeLabel}>ÇÖZÜMÜN İŞLEVİ</Text>
-          <Text style={styles.archivePurposeText}>{String(pr.purposeHint)}</Text>
-        </View>
-      ) : null}
       {pr.subtitle ? (
         <Text style={styles.archiveSubtitle}>{String(pr.subtitle)}</Text>
       ) : null}
@@ -1917,12 +1869,6 @@ function MechanicalLockSequenceBlock({
           {String(pr.title ?? "MEKANİK KİLİT DİZİSİ")}
         </Text>
       </View>
-      {pr.purposeHint ? (
-        <View style={styles.lockPurposeHint}>
-          <Text style={styles.lockPurposeLabel}>ÇÖZÜMÜN İŞLEVİ</Text>
-          <Text style={styles.lockPurposeText}>{String(pr.purposeHint)}</Text>
-        </View>
-      ) : null}
       {pr.subtitle ? (
         <Text style={styles.lockSubtitle}>{String(pr.subtitle)}</Text>
       ) : null}
@@ -2028,7 +1974,6 @@ function CipherDiscAlignmentBlock({ sifre, isSolved, onSolve }: { sifre: ClueSif
     <View style={styles.discContainer}>
       <Text style={styles.discTitle}>{pres.title}</Text>
       <Text style={styles.discSubtitle}>{pres.subtitle}</Text>
-      <Text style={styles.discPurposeHint}>{(pres as Record<string,string>).purposeHint}</Text>
       {discs.map(disc => (
         <View key={disc.id} style={styles.discRow}>
           <Text style={styles.discLabel}>{disc.label}</Text>
@@ -2091,7 +2036,6 @@ function TimelineBoardBlock({ sifre, isSolved, onSolve }: { sifre: ClueSifre; is
     <View style={styles.tlContainer}>
       <Text style={styles.tlTitle}>{pres.title}</Text>
       <Text style={styles.tlSubtitle}>{pres.subtitle}</Text>
-      <Text style={styles.tlPurposeHint}>{(pres as Record<string,string>).purposeHint}</Text>
       {order.map((id, idx) => {
         const ev = events.find(e => e.id === id)!;
         return (
@@ -2153,7 +2097,6 @@ function ParcelXrayLayersBlock({ sifre, isSolved, onSolve }: { sifre: ClueSifre;
     <View style={styles.xrayContainer}>
       <Text style={styles.xrayTitle}>{pres.title}</Text>
       <Text style={styles.xraySubtitle}>{pres.subtitle}</Text>
-      <Text style={styles.xrayPurposeHint}>{(pres as Record<string,string>).purposeHint}</Text>
       {layers.map(layer => {
         const sel = assignments[layer.id];
         return (
@@ -2217,7 +2160,6 @@ function WaltzScoreStitchBlock({ sifre, isSolved, onSolve }: { sifre: ClueSifre;
     <View style={styles.waltzContainer}>
       <Text style={styles.waltzTitle}>{pres.title}</Text>
       <Text style={styles.waltzSubtitle}>{pres.subtitle}</Text>
-      <Text style={styles.waltzPurposeHint}>{(pres as Record<string,string>).purposeHint}</Text>
       {measures.map((m, idx) => {
         const sel = selections[m.id];
         return (
@@ -2288,7 +2230,6 @@ function VentilationValveNetworkBlock({ sifre, isSolved, onSolve }: { sifre: Clu
     <View style={styles.valveContainer}>
       <Text style={styles.valveTitle}>{pres.title}</Text>
       <Text style={styles.valveSubtitle}>{pres.subtitle}</Text>
-      <Text style={styles.valvePurposeHint}>{(pres as Record<string,string>).purposeHint}</Text>
       <View style={styles.valveGrid}>
         {valves.map(valve => {
           const isOpen = states[valve.id] === "acik";
@@ -2346,7 +2287,6 @@ function OlympianOfferingScaleBlock({ sifre, isSolved, onSolve }: { sifre: ClueS
     <View style={styles.scaleContainer}>
       <Text style={styles.scaleTitle}>{pres.title}</Text>
       <Text style={styles.scaleSubtitle}>{pres.subtitle}</Text>
-      <Text style={styles.scalePurposeHint}>{(pres as Record<string,string>).purposeHint}</Text>
       {offerings.map(offering => {
         const sel = assignments[offering.id];
         return (
@@ -2417,7 +2357,6 @@ function ForgeBellowsCycleBlock({ sifre, isSolved, onSolve }: { sifre: ClueSifre
     <View style={styles.bellowsContainer}>
       <Text style={styles.bellowsTitle}>{pres.title}</Text>
       <Text style={styles.bellowsSubtitle}>{pres.subtitle}</Text>
-      <Text style={styles.bellowsPurposeHint}>{(pres as Record<string,string>).purposeHint}</Text>
       {order.map((id, idx) => {
         const bellow = bellows.find(b => b.id === id)!;
         return (
@@ -2479,7 +2418,6 @@ function LaurelKnotDecoderBlock({ sifre, isSolved, onSolve }: { sifre: ClueSifre
     <View style={styles.knotContainer}>
       <Text style={styles.knotTitle}>{pres.title}</Text>
       <Text style={styles.knotSubtitle}>{pres.subtitle}</Text>
-      <Text style={styles.knotPurposeHint}>{(pres as Record<string,string>).purposeHint}</Text>
       {cords.map(cord => {
         const sel = assignments[cord.id];
         return (
@@ -2544,7 +2482,6 @@ function SunstoneReflectionArrayBlock({ sifre, isSolved, onSolve }: { sifre: Clu
     <View style={styles.sunstoneContainer}>
       <Text style={styles.sunstoneTitle}>{pres.title}</Text>
       <Text style={styles.sunstoneSubtitle}>{pres.subtitle}</Text>
-      <Text style={styles.sunstonePurposeHint}>{(pres as Record<string,string>).purposeHint}</Text>
       {mirrors.map(mirror => {
         const sel = assignments[mirror.id];
         return (
@@ -2609,7 +2546,6 @@ function RavenFeatherLatticeBlock({ sifre, isSolved, onSolve }: { sifre: ClueSif
     <View style={styles.ravenContainer}>
       <Text style={styles.ravenTitle}>{pres.title}</Text>
       <Text style={styles.ravenSubtitle}>{pres.subtitle}</Text>
-      <Text style={styles.ravenPurposeHint}>{(pres as Record<string,string>).purposeHint}</Text>
       {feathers.map(feather => {
         const sel = assignments[feather.id];
         return (
@@ -2702,12 +2638,6 @@ function LedgerChecksumConsoleBlock({
         <Text style={styles.ledgerTitleText}>{String(pr.title ?? "ZİNCİR BÜTÜNLÜK KADRANI").toLocaleUpperCase("tr-TR")}</Text>
       </View>
       {pr.subtitle ? <Text style={styles.ledgerSubtitle}>{String(pr.subtitle)}</Text> : null}
-      {pr.purposeHint ? (
-        <View style={styles.ledgerPurpose}>
-          <Text style={styles.ledgerPurposeLabel}>ÇÖZÜMÜN İŞLEVİ</Text>
-          <Text style={styles.ledgerPurposeText}>{String(pr.purposeHint)}</Text>
-        </View>
-      ) : null}
       {pr.digitRule ? (
         <View style={styles.ledgerRule}>
           <Text style={styles.ledgerRuleLabel}>KURAL</Text>
@@ -2803,7 +2733,6 @@ function BlockchainTransactionForkBlock({
         <Text style={styles.btfTitle}>{String(pr.title ?? "İŞLEM ÇATALI DOĞRULAMA").toLocaleUpperCase("tr-TR")}</Text>
       </View>
       {pr.subtitle ? <Text style={styles.btfSubtitle}>{String(pr.subtitle)}</Text> : null}
-      {pr.purposeHint ? <View style={styles.btfPurpose}><Text style={styles.btfPurposeText}>{String(pr.purposeHint)}</Text></View> : null}
       <Text style={styles.btfInstruction}>Hangi dal geçerli? Nonce ve alındı sırasını kontrol et:</Text>
       {branches.map((branch) => {
         const isSelected = selectedId === branch.id;
@@ -2884,7 +2813,6 @@ function DeepfakeFrameArtifactAnalysisBlock({
         <Text style={styles.dfTitle}>{String(pr.title ?? "KARE ARTEFAKT ANALİZİ").toLocaleUpperCase("tr-TR")}</Text>
       </View>
       {pr.subtitle ? <Text style={styles.dfSubtitle}>{String(pr.subtitle)}</Text> : null}
-      {pr.purposeHint ? <View style={styles.dfPurpose}><Text style={styles.dfPurposeText}>{String(pr.purposeHint)}</Text></View> : null}
       <Text style={styles.dfInstruction}>{focusedFrameId ? "Artefakt seç ↓" : "Bir kare seç:"}</Text>
       <View style={styles.dfFrames}>
         {frames.map((frame) => {
@@ -2978,7 +2906,6 @@ function TorNodeRouteBlock({
         <Text style={styles.torTitle}>{String(pr.title ?? "TOR DÜĞÜM GÜZERGAHI").toLocaleUpperCase("tr-TR")}</Text>
       </View>
       {pr.subtitle ? <Text style={styles.torSubtitle}>{String(pr.subtitle)}</Text> : null}
-      {pr.purposeHint ? <View style={styles.torPurpose}><Text style={styles.torPurposeText}>{String(pr.purposeHint)}</Text></View> : null}
       {targetLatency ? <Text style={styles.torTarget}>Hedef gecikme: <Text style={styles.torTargetVal}>{targetLatency} ms</Text></Text> : null}
       <Text style={styles.torInstruction}>
         {path.length === 0 ? `"${nodes[0]?.label ?? "GİRİŞ"}" ile başla, sıradaki düğümleri seç:` : "Sıradaki geçerli düğümü seç:"}
@@ -3055,7 +2982,6 @@ function BadgeUpsCorrelationBlock({
         <Text style={styles.upsTitle}>{String(pr.title ?? "KART–UPS KORELASYON").toLocaleUpperCase("tr-TR")}</Text>
       </View>
       {pr.subtitle ? <Text style={styles.upsSubtitle}>{String(pr.subtitle)}</Text> : null}
-      {pr.purposeHint ? <View style={styles.upsPurpose}><Text style={styles.upsPurposeText}>{String(pr.purposeHint)}</Text></View> : null}
       <Text style={styles.upsInstruction}>Fiziksel olayı açıklayan pencereyi seç:</Text>
       {windows.map((win) => {
         const isSelected = selectedId === win.id;
@@ -3140,7 +3066,6 @@ function IoTCommandChainBlock({
         <Text style={styles.iotTitle}>{String(pr.title ?? "IOT KOMUT ZİNCİRİ").toLocaleUpperCase("tr-TR")}</Text>
       </View>
       {pr.subtitle ? <Text style={styles.iotSubtitle}>{String(pr.subtitle)}</Text> : null}
-      {pr.purposeHint ? <View style={styles.iotPurpose}><Text style={styles.iotPurposeText}>{String(pr.purposeHint)}</Text></View> : null}
       <Text style={styles.iotInstruction}>
         {sourceId ? `"${nodes.find((n) => n.id === sourceId)?.label ?? sourceId}" seçildi → hedef düğümü seç` : "Kaynak düğüm seç, ardından hedefi seç:"}
       </Text>
@@ -4086,12 +4011,6 @@ function FrameShadowProfileBlock({
           {String(presentation.reflectionNote ?? "Yüz seçilemiyor; fiziksel izleri karşılaştır.")}
         </Text>
       </View>
-      {presentation.purposeHint ? (
-        <View style={styles.tornRoutePurposeHint}>
-          <Text style={styles.tornRoutePurposeLabel}>ÇÖZÜMÜN İŞLEVİ</Text>
-          <Text style={styles.tornRoutePurposeText}>{String(presentation.purposeHint)}</Text>
-        </View>
-      ) : null}
       <Text style={styles.profilAciklama}>{profilSenteziVerisi.aciklama}</Text>
       <Text style={styles.frameShadowEvidenceLabel}>
         {String(presentation.physicalEvidenceLabel ?? "FİZİKSEL İŞARETLER")}

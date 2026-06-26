@@ -1503,6 +1503,9 @@ export default function VakalarScreen() {
   const nextPackPuzzle = currentPuzzleIdxInPack >= 0 && currentPuzzleIdxInPack < packPuzzles.length - 1
     ? packPuzzles[currentPuzzleIdxInPack + 1]
     : null;
+  const prevPackPuzzle = currentPuzzleIdxInPack > 0
+    ? packPuzzles[currentPuzzleIdxInPack - 1]
+    : null;
 
   const suspectName = accuseSuspect
     ? puzzle.suspects.find((s) => s.id === accuseSuspect)?.name ?? null
@@ -1564,6 +1567,16 @@ export default function VakalarScreen() {
           <Text style={[gameStyles.packNavCounter, { color: currentPack.accentColor + "AA" }]}>
             {currentPuzzleIdxInPack + 1} / {packPuzzles.length}
           </Text>
+          {prevPackPuzzle && (
+            <Pressable
+              onPress={() => handleNextPackPuzzle(prevPackPuzzle)}
+              style={[gameStyles.packNavNextBtn, { borderColor: currentPack.accentColor + "55", backgroundColor: currentPack.accentColor + "18" }]}
+              hitSlop={6}
+            >
+              <MaterialIcons name="chevron-left" size={15} color={currentPack.accentColor} />
+              <Text style={[gameStyles.packNavNextText, { color: currentPack.accentColor }]}>Önceki</Text>
+            </Pressable>
+          )}
           {nextPackPuzzle && (
             <Pressable
               onPress={() => handleNextPackPuzzle(nextPackPuzzle)}
@@ -2341,9 +2354,9 @@ const gameStyles = StyleSheet.create({
   },
   packNavTitle: {
     flex: 1,
-    fontSize: 12,
-    fontWeight: "600",
-    letterSpacing: 0.2,
+    fontSize: 13,
+    fontFamily: "MightySouly",
+    letterSpacing: 0.3,
   },
   packNavCounter: {
     fontSize: 11,

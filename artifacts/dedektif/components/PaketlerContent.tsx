@@ -415,10 +415,9 @@ const styles = StyleSheet.create({
     gap: 2,
   },
   packTitle: {
-    fontSize: 17,
-    fontFamily: "PlayfairDisplay",
-    fontWeight: "600",
-    letterSpacing: 0.2,
+    fontSize: 18,
+    fontFamily: "MightySouly",
+    letterSpacing: 0.4,
   },
   packSubtitle: {
     fontSize: 12,
