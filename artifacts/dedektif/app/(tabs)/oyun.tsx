@@ -56,8 +56,7 @@ import {
 } from "@/utils/leaderboardRank";
 import PaketlerContent from "@/components/PaketlerContent";
 import type { EntityInfo } from "@/components/EntityInfoSheet";
-import { SuspectPortrait } from "@/components/SuspectPortrait";
-import { buildSuspectPortraitMap } from "@/utils/suspectPortraitAssignments";
+import CustomAvatar from "@/components/CustomAvatar";
 import Animated, {
   FadeInDown,
   useAnimatedStyle,
@@ -603,8 +602,6 @@ function PuzzleCard({
 }) {
   const colors = useColors();
   const diffColor = getDifficultyColor(puzzle.difficulty as Difficulty);
-  const portraitMap = buildSuspectPortraitMap(puzzle.id, puzzle.suspects);
-
   return (
     <Animated.View entering={FadeInDown.delay(delay).springify()}>
       <Pressable
@@ -659,9 +656,9 @@ function PuzzleCard({
                       i > 0 && { marginLeft: -9 },
                     ]}
                   >
-                    <SuspectPortrait
-                      portrait={portraitMap[s.id] ?? "noir-m-office-tie"}
-                      size={22}
+                    <CustomAvatar
+                      icon={s.icon}
+                      size={20}
                       color="#A855F7"
                     />
                   </View>
