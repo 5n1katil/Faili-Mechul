@@ -653,12 +653,12 @@ function PuzzleCard({
                     key={s.id}
                     style={[
                       listStyles.suspectAvatarCircle,
-                      i > 0 && { marginLeft: -9 },
+                      i > 0 && { marginLeft: -12 },
                     ]}
                   >
                     <CustomAvatar
                       icon={s.icon}
-                      size={20}
+                      size={26}
                       color="#A855F7"
                     />
                   </View>
@@ -1875,16 +1875,15 @@ const listStyles = StyleSheet.create({
   metaText: { fontFamily: "DroidSerifRegular", fontSize: 12 },
   suspectAvatarRow: { flexDirection: "row", alignItems: "center" },
   suspectAvatarCircle: {
-    width: 26,
-    height: 26,
-    borderRadius: 13,
+    width: 36,
+    height: 36,
+    borderRadius: 18,
     backgroundColor: "#1A1F2E",
-    borderWidth: 1.5,
-    borderColor: "#D4A84355",
+    borderWidth: 2,
+    borderColor: "#A855F7AA",
     overflow: "hidden",
     alignItems: "center",
     justifyContent: "center",
-    opacity: 0.65,
   },
   diffBadge: {
     borderRadius: 6,
