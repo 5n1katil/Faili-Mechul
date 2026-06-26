@@ -656,12 +656,13 @@ function PuzzleCard({
                     key={s.id}
                     style={[
                       listStyles.suspectAvatarCircle,
-                      i > 0 && { marginLeft: -8 },
+                      i > 0 && { marginLeft: -9 },
                     ]}
                   >
                     <SuspectPortrait
                       portrait={portraitMap[s.id] ?? "noir-m-office-tie"}
-                      size={20}
+                      size={22}
+                      color="#A855F7"
                     />
                   </View>
                 ))}
