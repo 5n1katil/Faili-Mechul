@@ -1646,7 +1646,7 @@ export default function VakalarScreen() {
         </Animated.View>
 
         <Animated.View entering={FadeInDown.delay(80).springify()}>
-          <View style={[gameStyles.storyBox, { backgroundColor: colors.card, borderColor: colors.border }]}>
+          <View style={[gameStyles.storyBox, { backgroundColor: "#1E2540", borderColor: "#D4A84330" }]}>
             <View style={gameStyles.storyHeader}>
               <MaterialIcons name="auto-stories" size={16} color={colors.primary} />
               <Text style={[gameStyles.storyLabel, { color: colors.primary }]}>OLAY</Text>
@@ -1661,7 +1661,7 @@ export default function VakalarScreen() {
             style={[
               gameStyles.gridContainer,
               Platform.OS === "web" && gameStyles.gridContainerWeb,
-              { backgroundColor: colors.card, borderColor: colors.border },
+              { backgroundColor: "#1E2540", borderColor: "#D4A84330" },
             ]}
           >
             <View style={gameStyles.gridWrapper}>

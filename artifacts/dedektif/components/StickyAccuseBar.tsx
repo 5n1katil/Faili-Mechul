@@ -40,8 +40,8 @@ export default function StickyAccuseBar({
       style={({ pressed }) => [
         styles.bar,
         {
-          backgroundColor: colors.card,
-          borderColor: allSelected ? `${colors.primary}66` : colors.border,
+          backgroundColor: "#1E2540",
+          borderColor: allSelected ? `${colors.primary}66` : "#D4A84330",
           opacity: pressed && !disabled ? 0.85 : 1,
         },
         disabled && { opacity: 0.5 },
