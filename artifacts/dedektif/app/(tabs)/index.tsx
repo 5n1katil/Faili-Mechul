@@ -1018,11 +1018,11 @@ const styles = StyleSheet.create({
   rankCardAccent: { height: 2, backgroundColor: "#D4A843" },
   rankDecorIcon: {
     position: "absolute",
-    bottom: -18,
-    left: -4,
-    width: 88,
-    height: 88,
-    opacity: 0.25,
+    top: 4,
+    left: 4,
+    width: 82,
+    height: 82,
+    opacity: 0.22,
   },
   rankCardInner: { flexDirection: "column", paddingHorizontal: 18, paddingVertical: 16, gap: 14 },
   rankTopRow: { flexDirection: "row", alignItems: "center", justifyContent: "space-between" },
@@ -1036,6 +1036,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     backgroundColor: "#D4A84312",
     borderColor: "#D4A84340",
+    marginLeft: 68,
   },
   rankBadgeText: { fontSize: 15, fontFamily: "UnnaBold", color: "#D4A843", letterSpacing: 0.2 },
   rankPosition: { fontSize: 32, fontFamily: "UnnaBold", color: "#D4A843", letterSpacing: -0.5 },
@@ -1083,7 +1084,7 @@ const styles = StyleSheet.create({
     borderTopColor: "#FFFFFF0F",
     gap: 4,
   },
-  rankCardFooterText: { fontFamily: "DroidSerifRegular", fontSize: 13, color: "rgba(255,255,255,0.6)" },
+  rankCardFooterText: { fontFamily: "DroidSerifRegular", fontSize: 13, color: "#FFFFFF" },
 
   /* ─── Tips Button ─── */
   tipsBtn: {
