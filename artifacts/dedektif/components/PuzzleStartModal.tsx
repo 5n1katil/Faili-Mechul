@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  Image,
   Modal,
   Pressable,
   StyleSheet,
@@ -39,10 +40,10 @@ export default function PuzzleStartModal({ visible, puzzle, isRanked, onStart, o
       <View style={[styles.overlay, { backgroundColor: "rgba(0,0,0,0.85)" }]}>
         <View style={[styles.sheet, { backgroundColor: colors.card, borderColor: colors.border }]}>
           <View style={[styles.iconRow, { backgroundColor: isRanked ? "#D4A84322" : "#6B728022" }]}>
-            <MaterialIcons
-              name={isRanked ? "emoji-events" : "fitness-center"}
-              size={36}
-              color={isRanked ? "#D4A843" : colors.mutedForeground}
+            <Image
+              source={require("../assets/images/icon_detektif_sapka.png")}
+              style={{ width: 56, height: 56 }}
+              resizeMode="contain"
             />
           </View>
 
@@ -165,9 +166,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   title: {
-    fontFamily: "DroidSerifRegular",
+    fontFamily: "UnnaBold",
     fontSize: 20,
-    fontWeight: "800",
     textAlign: "center",
     lineHeight: 28,
   },
@@ -202,7 +202,6 @@ const styles = StyleSheet.create({
     flex: 1,
     fontFamily: "DroidSerifRegular",
     fontSize: 13,
-    fontWeight: "600",
     lineHeight: 19,
     color: "#93C5FD",
   },
@@ -219,7 +218,6 @@ const styles = StyleSheet.create({
     flex: 1,
     fontFamily: "DroidSerifRegular",
     fontSize: 13,
-    fontWeight: "600",
     lineHeight: 19,
   },
   ruleText: {
