@@ -586,30 +586,27 @@ export default function HomeScreen() {
                 style={[styles.statCard, { backgroundColor: colors.card, borderColor: `${colors.primary}50` }]}
               >
                 <View style={[styles.statAccent, { backgroundColor: colors.primary }]} />
-                <Image source={require("../../assets/images/icon_cozulen.png")} style={{ width: 26, height: 26, marginTop: 6 }} resizeMode="contain" />
+                <Image source={require("../../assets/images/icon_cozulen.png")} style={styles.statIcon} resizeMode="contain" />
                 <Text style={[styles.statValue, { color: colors.primary }]}>{profile.gamesWon}</Text>
                 <Text style={[styles.statLabel, { color: "#FFFFFF" }]}>Çözülen</Text>
-                <MaterialIcons name="info-outline" size={11} color={`${colors.primary}80`} style={{ marginTop: 1 }} />
               </Pressable>
               <Pressable
                 onPress={() => setShowScoreInfo(true)}
                 style={[styles.statCard, { backgroundColor: colors.card, borderColor: "#9333ea50" }]}
               >
                 <View style={[styles.statAccent, { backgroundColor: "#9333ea" }]} />
-                <Image source={require("../../assets/images/icon_toplam_puan.png")} style={{ width: 26, height: 26, marginTop: 6 }} resizeMode="contain" />
+                <Image source={require("../../assets/images/icon_toplam_puan.png")} style={styles.statIcon} resizeMode="contain" />
                 <Text style={[styles.statValue, { color: colors.foreground }]}>{profile.totalScore.toLocaleString("tr-TR")}</Text>
                 <Text style={[styles.statLabel, { color: "#FFFFFF" }]}>Toplam Puan</Text>
-                <MaterialIcons name="info-outline" size={11} color="#9333ea80" style={{ marginTop: 1 }} />
               </Pressable>
               <Pressable
                 onPress={() => setShowStreakInfo(true)}
                 style={[styles.statCard, { backgroundColor: colors.card, borderColor: "#FF6B3550" }]}
               >
                 <View style={[styles.statAccent, { backgroundColor: "#FF6B35" }]} />
-                <Image source={require("../../assets/images/icon_seri.png")} style={{ width: 26, height: 26, marginTop: 6 }} resizeMode="contain" />
+                <Image source={require("../../assets/images/icon_seri.png")} style={styles.statIcon} resizeMode="contain" />
                 <Text style={[styles.statValue, { color: "#FF6B35" }]}>{profile.currentStreak}</Text>
                 <Text style={[styles.statLabel, { color: "#FFFFFF" }]}>Seri</Text>
-                <MaterialIcons name="info-outline" size={11} color="#FF6B3580" style={{ marginTop: 1 }} />
               </Pressable>
             </View>
           </Animated.View>
@@ -997,16 +994,17 @@ const styles = StyleSheet.create({
     flex: 1,
     borderRadius: 16,
     borderWidth: 1,
-    paddingVertical: 14,
-    paddingHorizontal: 8,
+    paddingVertical: 12,
+    paddingHorizontal: 6,
     alignItems: "center",
-    gap: 4,
+    gap: 3,
     overflow: "hidden",
     backgroundColor: "#1E2540",
   },
   statAccent: { position: "absolute", top: 0, left: 0, right: 0, height: 2 },
-  statValue: { fontSize: 22, fontFamily: "PlayfairDisplay", fontWeight: "800", letterSpacing: -0.5 },
-  statLabel: { fontSize: 11, fontFamily: "PlayfairDisplay", fontWeight: "500", color: "rgba(255,255,255,0.6)" },
+  statIcon: { width: 36, height: 36, marginTop: 4 },
+  statValue: { fontSize: 24, fontFamily: "PlayfairDisplay", fontWeight: "800", letterSpacing: -0.5 },
+  statLabel: { fontSize: 12, fontFamily: "PlayfairDisplay", fontWeight: "500", color: "rgba(255,255,255,0.75)" },
 
   /* ─── Rank Card ─── */
   rankCard: {
