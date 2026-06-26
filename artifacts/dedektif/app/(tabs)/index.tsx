@@ -974,7 +974,7 @@ const styles = StyleSheet.create({
     flexShrink: 0,
   },
   missionsTitle: { fontSize: 16, fontFamily: "UnnaBold", fontWeight: "700", color: "#FFFFFF", letterSpacing: 0.1 },
-  missionsSubtitle: { fontSize: 13, marginTop: 2 },
+  missionsSubtitle: { fontSize: 13, fontFamily: "DroidSerifRegular", marginTop: 2 },
   missionsRight: { flexDirection: "row", alignItems: "center", gap: 6, flexShrink: 0 },
   missionsDots: { flexDirection: "row", gap: 4, alignItems: "center" },
   missionDot: { width: 7, height: 7, borderRadius: 3.5 },

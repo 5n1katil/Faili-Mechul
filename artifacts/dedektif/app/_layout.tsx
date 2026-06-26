@@ -554,6 +554,10 @@ export default function RootLayout() {
     UnnaBold: require("../assets/fonts/Unna-Bold.ttf"),
     UnnaBoldItalic: require("../assets/fonts/Unna-BoldItalic.ttf"),
     UnnaItalic: require("../assets/fonts/Unna-Italic.ttf"),
+    DroidSerifRegular: require("../assets/fonts/DroidSerif-Regular.ttf"),
+    DroidSerifBold: require("../assets/fonts/DroidSerif-Bold.ttf"),
+    DroidSerifBoldItalic: require("../assets/fonts/DroidSerif-BoldItalic.ttf"),
+    DroidSerifItalic: require("../assets/fonts/DroidSerif-Italic.ttf"),
   });
 
   useEffect(() => {
