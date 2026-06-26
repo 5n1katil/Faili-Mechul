@@ -195,7 +195,7 @@ export default function HomeScreen() {
             style={[styles.modalCard, { backgroundColor: colors.card, borderColor: "#FF6B3560" }]}
             onPress={(e) => e.stopPropagation()}
           >
-            <MaterialIcons name="local-fire-department" size={52} color="#FF6B35" />
+            <Image source={require("../../assets/images/icon_seri.png")} style={{ width: 72, height: 72 }} resizeMode="contain" />
             <Text style={[styles.modalTitle, { color: colors.foreground }]}>Günlük Seri</Text>
             <Text style={[styles.streakCount, { color: "#FF6B35" }]}>{profile.currentStreak}</Text>
             <Text style={[styles.streakLabel, { color: colors.mutedForeground }]}>gün üst üste</Text>
@@ -223,7 +223,7 @@ export default function HomeScreen() {
             <View style={styles.listModalHandle} />
             <View style={styles.listModalHeader}>
               <View style={[styles.listModalIconWrap, { backgroundColor: `${colors.primary}18` }]}>
-                <MaterialIcons name="check-circle-outline" size={22} color={colors.primary} />
+                <Image source={require("../../assets/images/icon_cozulen.png")} style={{ width: 26, height: 26 }} resizeMode="contain" />
               </View>
               <View style={{ flex: 1 }}>
                 <Text style={[styles.listModalTitle, { color: colors.foreground }]}>Çözülen Vakalar</Text>
@@ -316,7 +316,7 @@ export default function HomeScreen() {
             style={[styles.modalCard, { backgroundColor: colors.card, borderColor: "#9333ea60" }]}
             onPress={(e) => e.stopPropagation()}
           >
-            <MaterialIcons name="stars" size={52} color="#9333ea" />
+            <Image source={require("../../assets/images/icon_toplam_puan.png")} style={{ width: 72, height: 72 }} resizeMode="contain" />
             <Text style={[styles.modalTitle, { color: colors.foreground }]}>Toplam Puan</Text>
             <Text style={[styles.scoreCount, { color: "#9333ea" }]}>
               {profile.totalScore.toLocaleString("tr-TR")}
@@ -601,7 +601,7 @@ export default function HomeScreen() {
                 style={[styles.statCard, { backgroundColor: colors.card, borderColor: `${colors.primary}50` }]}
               >
                 <View style={[styles.statAccent, { backgroundColor: colors.primary }]} />
-                <Image source={require("../../assets/images/icon_cozulen.png")} style={{ width: 36, height: 36, marginTop: 6 }} resizeMode="contain" />
+                <Image source={require("../../assets/images/icon_cozulen.png")} style={{ width: 26, height: 26, marginTop: 6 }} resizeMode="contain" />
                 <Text style={[styles.statValue, { color: colors.primary }]}>{profile.gamesWon}</Text>
                 <Text style={[styles.statLabel, { color: "#FFFFFF" }]}>Çözülen</Text>
                 <MaterialIcons name="info-outline" size={11} color={`${colors.primary}80`} style={{ marginTop: 1 }} />
@@ -611,7 +611,7 @@ export default function HomeScreen() {
                 style={[styles.statCard, { backgroundColor: colors.card, borderColor: "#9333ea50" }]}
               >
                 <View style={[styles.statAccent, { backgroundColor: "#9333ea" }]} />
-                <Image source={require("../../assets/images/icon_toplam_puan.png")} style={{ width: 36, height: 36, marginTop: 6 }} resizeMode="contain" />
+                <Image source={require("../../assets/images/icon_toplam_puan.png")} style={{ width: 26, height: 26, marginTop: 6 }} resizeMode="contain" />
                 <Text style={[styles.statValue, { color: colors.foreground }]}>{profile.totalScore.toLocaleString("tr-TR")}</Text>
                 <Text style={[styles.statLabel, { color: "#FFFFFF" }]}>Toplam Puan</Text>
                 <MaterialIcons name="info-outline" size={11} color="#9333ea80" style={{ marginTop: 1 }} />
@@ -621,7 +621,7 @@ export default function HomeScreen() {
                 style={[styles.statCard, { backgroundColor: colors.card, borderColor: "#FF6B3550" }]}
               >
                 <View style={[styles.statAccent, { backgroundColor: "#FF6B35" }]} />
-                <Image source={require("../../assets/images/icon_seri.png")} style={{ width: 36, height: 36, marginTop: 6 }} resizeMode="contain" />
+                <Image source={require("../../assets/images/icon_seri.png")} style={{ width: 26, height: 26, marginTop: 6 }} resizeMode="contain" />
                 <Text style={[styles.statValue, { color: "#FF6B35" }]}>{profile.currentStreak}</Text>
                 <Text style={[styles.statLabel, { color: "#FFFFFF" }]}>Seri</Text>
                 <MaterialIcons name="info-outline" size={11} color="#FF6B3580" style={{ marginTop: 1 }} />
