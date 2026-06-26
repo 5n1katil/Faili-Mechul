@@ -348,7 +348,7 @@ const styles = StyleSheet.create({
   },
   premHeaderTitle: {
     fontSize: 20,
-    fontFamily: "PlayfairDisplay",
+    fontFamily: "UnnaBold",
     fontWeight: "700",
     letterSpacing: 0.4,
     color: "#D4A843",
@@ -365,13 +365,13 @@ const styles = StyleSheet.create({
   },
   premHeaderBadgeText: {
     fontSize: 13,
-    fontFamily: "PlayfairDisplay",
+    fontFamily: "UnnaBold",
     fontWeight: "800",
     color: "#D4A843",
   },
   screenTitle: {
     fontSize: 26,
-    fontFamily: "PlayfairDisplay",
+    fontFamily: "UnnaBold",
     fontWeight: "600",
     letterSpacing: 0.3,
     marginBottom: 2,
@@ -416,7 +416,7 @@ const styles = StyleSheet.create({
   },
   packTitle: {
     fontSize: 17,
-    fontFamily: "PlayfairDisplay",
+    fontFamily: "UnnaBold",
     fontWeight: "600",
     letterSpacing: 0.2,
   },

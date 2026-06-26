@@ -1763,7 +1763,7 @@ const listStyles = StyleSheet.create({
   },
   listHeaderText: {
     fontSize: 21,
-    fontFamily: "PlayfairDisplay",
+    fontFamily: "UnnaBold",
     fontWeight: "400",
     letterSpacing: 0.3,
   },
@@ -1803,7 +1803,7 @@ const listStyles = StyleSheet.create({
   },
   tabBtnText: {
     fontSize: 13,
-    fontFamily: "PlayfairDisplay",
+    fontFamily: "UnnaBold",
     fontWeight: "600",
   },
   tabCount: {
@@ -1864,7 +1864,7 @@ const listStyles = StyleSheet.create({
     borderWidth: 1,
   },
   diffText: { fontSize: 11, fontWeight: "700" },
-  puzzleTitle: { fontSize: 17, fontFamily: "PlayfairDisplay", fontWeight: "600", lineHeight: 24 },
+  puzzleTitle: { fontSize: 17, fontFamily: "UnnaBold", fontWeight: "600", lineHeight: 24 },
   puzzleStory: { fontSize: 12, lineHeight: 18 },
   solvedBadge: {
     flexDirection: "row",
@@ -1942,7 +1942,7 @@ const listStyles = StyleSheet.create({
   },
   diffFilterText: {
     fontSize: 12,
-    fontFamily: "PlayfairDisplay",
+    fontFamily: "UnnaBold",
     fontWeight: "600",
   },
   diffFilterCount: {
@@ -1980,7 +1980,7 @@ const listStyles = StyleSheet.create({
   },
   heroCardTitle: {
     fontSize: 16,
-    fontFamily: "PlayfairDisplay",
+    fontFamily: "UnnaBold",
     fontWeight: "600",
     letterSpacing: 0.2,
   },
@@ -1997,7 +1997,7 @@ const listStyles = StyleSheet.create({
   },
   heroCardCtaText: {
     fontSize: 12,
-    fontFamily: "PlayfairDisplay",
+    fontFamily: "UnnaBold",
     fontWeight: "600",
   },
   premBadge: {
@@ -2021,7 +2021,7 @@ const listStyles = StyleSheet.create({
   },
   tabBtnText3d: {
     fontSize: 13,
-    fontFamily: "PlayfairDisplay",
+    fontFamily: "UnnaBold",
     fontWeight: "600",
     letterSpacing: 0.2,
   },
@@ -2032,7 +2032,7 @@ const listStyles = StyleSheet.create({
   },
   tabCountText3d: {
     fontSize: 12,
-    fontFamily: "PlayfairDisplay",
+    fontFamily: "UnnaBold",
     fontWeight: "700",
   },
   filterPill3d: {
@@ -2053,7 +2053,7 @@ const listStyles = StyleSheet.create({
   },
   filterPillText3d: {
     fontSize: 13,
-    fontFamily: "PlayfairDisplay",
+    fontFamily: "UnnaBold",
     fontWeight: "700",
     letterSpacing: 0.2,
     textAlign: "center",
@@ -2067,7 +2067,7 @@ const listStyles = StyleSheet.create({
   },
   filterPillCountText3d: {
     fontSize: 11,
-    fontFamily: "PlayfairDisplay",
+    fontFamily: "UnnaBold",
     fontWeight: "700",
   },
   cozulenlerBtn: {
@@ -2098,7 +2098,7 @@ const listStyles = StyleSheet.create({
   },
   cozulenlerModalTitle: {
     fontSize: 18,
-    fontFamily: "PlayfairDisplay",
+    fontFamily: "UnnaBold",
     fontWeight: "600",
     letterSpacing: 0.2,
   },
@@ -2128,7 +2128,7 @@ const listStyles = StyleSheet.create({
   },
   premAccordionTitle: {
     fontSize: 16,
-    fontFamily: "PlayfairDisplay",
+    fontFamily: "UnnaBold",
     fontWeight: "600",
     letterSpacing: 0.2,
   },
@@ -2151,7 +2151,7 @@ const listStyles = StyleSheet.create({
   },
   pageTitle: {
     fontSize: 26,
-    fontFamily: "PlayfairDisplay",
+    fontFamily: "UnnaBold",
     fontWeight: "700",
     letterSpacing: 0.3,
   },
@@ -2170,7 +2170,7 @@ const listStyles = StyleSheet.create({
   },
   completedHeaderText: {
     fontSize: 12,
-    fontFamily: "PlayfairDisplay",
+    fontFamily: "UnnaBold",
     fontWeight: "600",
   },
   standartCard: {
@@ -2181,7 +2181,7 @@ const listStyles = StyleSheet.create({
   },
   standartCardTitle: {
     fontSize: 20,
-    fontFamily: "PlayfairDisplay",
+    fontFamily: "UnnaBold",
     fontWeight: "700",
     color: "#F0F0F8",
     letterSpacing: 0.3,
@@ -2210,7 +2210,7 @@ const listStyles = StyleSheet.create({
   },
   standartStatNum: {
     fontSize: 17,
-    fontFamily: "PlayfairDisplay",
+    fontFamily: "UnnaBold",
     fontWeight: "700",
     letterSpacing: 0.2,
   },
@@ -2242,7 +2242,7 @@ const listStyles = StyleSheet.create({
   },
   premSegmentText: {
     fontSize: 13,
-    fontFamily: "PlayfairDisplay",
+    fontFamily: "UnnaBold",
     fontWeight: "600",
     letterSpacing: 0.1,
   },
@@ -2308,7 +2308,7 @@ const listStyles = StyleSheet.create({
   premPillBtnText: {
     fontSize: 13,
     fontWeight: "700",
-    fontFamily: "PlayfairDisplay",
+    fontFamily: "UnnaBold",
   },
   premVakalarHeader: {
     flexDirection: "row",
@@ -2320,7 +2320,7 @@ const listStyles = StyleSheet.create({
   },
   premVakalarTitle: {
     fontSize: 20,
-    fontFamily: "PlayfairDisplay",
+    fontFamily: "UnnaBold",
     fontWeight: "700",
     letterSpacing: 0.4,
     flexShrink: 1,
@@ -2334,7 +2334,7 @@ const listStyles = StyleSheet.create({
   },
   premVakalarCountText: {
     fontSize: 13,
-    fontFamily: "PlayfairDisplay",
+    fontFamily: "UnnaBold",
     fontWeight: "800",
   },
 });
@@ -2354,7 +2354,7 @@ const gameStyles = StyleSheet.create({
   packNavTitle: {
     flex: 1,
     fontSize: 12,
-    fontFamily: "PlayfairDisplay",
+    fontFamily: "UnnaBold",
     fontWeight: "600",
     letterSpacing: 0.2,
   },
@@ -2420,12 +2420,12 @@ const gameStyles = StyleSheet.create({
     paddingVertical: 4,
   },
   caseNumber: { fontSize: 10, fontWeight: "700", letterSpacing: 2 },
-  puzzleTitle: { fontSize: 19, fontFamily: "PlayfairDisplay", fontWeight: "400", lineHeight: 28 },
+  puzzleTitle: { fontSize: 19, fontFamily: "UnnaBold", fontWeight: "400", lineHeight: 28 },
   storyBox: { borderRadius: 12, borderWidth: 1, padding: 14, gap: 8 },
   storyHeader: { flexDirection: "row", alignItems: "center", gap: 8 },
   storyLabel: { fontSize: 11, fontWeight: "700", letterSpacing: 1 },
   storyText: { fontSize: 14, lineHeight: 22 },
-  sectionTitle: { fontSize: 16, fontFamily: "PlayfairDisplay", fontWeight: "400", marginBottom: 8 },
+  sectionTitle: { fontSize: 16, fontFamily: "UnnaBold", fontWeight: "400", marginBottom: 8 },
   gridContainer: { borderRadius: 14, borderWidth: 1, padding: 10, overflow: "hidden" },
   gridContainerWeb: {
     maxWidth: 560,
@@ -2507,7 +2507,7 @@ const accordionStyles = StyleSheet.create({
   },
   title: {
     fontSize: 16,
-    fontFamily: "PlayfairDisplay",
+    fontFamily: "UnnaBold",
     fontWeight: "600",
     letterSpacing: 0.2,
   },
@@ -2519,7 +2519,7 @@ const accordionStyles = StyleSheet.create({
   },
   titleCompact: {
     fontSize: 14,
-    fontFamily: "PlayfairDisplay",
+    fontFamily: "UnnaBold",
     fontWeight: "400",
     letterSpacing: 0.1,
   },
@@ -2531,7 +2531,7 @@ const accordionStyles = StyleSheet.create({
   },
   countText: {
     fontSize: 12,
-    fontFamily: "PlayfairDisplay",
+    fontFamily: "UnnaBold",
     fontWeight: "700",
   },
   body: {
@@ -2577,7 +2577,7 @@ const premiumInfoStyles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    fontFamily: "PlayfairDisplay",
+    fontFamily: "UnnaBold",
     fontWeight: "400",
     color: "#D4A843",
     textAlign: "center",

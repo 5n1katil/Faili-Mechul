@@ -331,7 +331,7 @@ const styles = StyleSheet.create({
   titleWord: {
     color: "#E8D5B7",
     fontSize: 26,
-    fontFamily: "PlayfairDisplay",
+    fontFamily: "UnnaBold",
     letterSpacing: 6,
     textAlign: "center",
   },

@@ -539,7 +539,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  profileName: { fontSize: 22, fontFamily: "PlayfairDisplay", fontWeight: "400", letterSpacing: 0.2 },
+  profileName: { fontSize: 22, fontFamily: "UnnaBold", fontWeight: "400", letterSpacing: 0.2 },
   bioRow: {
     flexDirection: "row",
     alignItems: "center",
@@ -583,7 +583,7 @@ const styles = StyleSheet.create({
   },
   sectionTitleText: {
     fontSize: 13,
-    fontFamily: "PlayfairDisplay",
+    fontFamily: "UnnaBold",
     fontWeight: "600",
     letterSpacing: 0.5,
   },
@@ -603,7 +603,7 @@ const styles = StyleSheet.create({
   },
   statGroupLabel: {
     fontSize: 10,
-    fontFamily: "PlayfairDisplay",
+    fontFamily: "UnnaBold",
     fontWeight: "600",
     letterSpacing: 0.8,
     textTransform: "uppercase",
@@ -621,7 +621,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 3,
   },
-  statGroupValue: { fontSize: 24, fontFamily: "PlayfairDisplay", fontWeight: "600", letterSpacing: 0.2 },
+  statGroupValue: { fontSize: 24, fontFamily: "UnnaBold", fontWeight: "600", letterSpacing: 0.2 },
   statGroupItemLabel: { fontSize: 11, fontWeight: "600", textAlign: "center" },
 
   /* ── Badges ── */
@@ -667,7 +667,7 @@ const styles = StyleSheet.create({
     flexShrink: 0,
   },
   settingsInfo: { flex: 1 },
-  settingsTitle: { fontSize: 15, fontFamily: "PlayfairDisplay", fontWeight: "600" },
+  settingsTitle: { fontSize: 15, fontFamily: "UnnaBold", fontWeight: "600" },
   settingsSubtitle: { fontSize: 12, marginTop: 2, lineHeight: 17 },
 
   /* ── Premium kart ── */
@@ -692,7 +692,7 @@ const styles = StyleSheet.create({
   },
   premiumStat: { flex: 1, alignItems: "center", gap: 2 },
   premiumStatDivider: { width: 1, marginVertical: 2 },
-  premiumStatValue: { fontSize: 18, fontFamily: "PlayfairDisplay", fontWeight: "600" },
+  premiumStatValue: { fontSize: 18, fontFamily: "UnnaBold", fontWeight: "600" },
   premiumStatLabel: { fontSize: 10, fontWeight: "600", textAlign: "center" },
 
   /* ── Son oyunlar ── */

@@ -405,7 +405,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
   },
-  headerTitle: { fontSize: 22, fontFamily: "PlayfairDisplay", fontWeight: "700", letterSpacing: 0 },
+  headerTitle: { fontSize: 22, fontFamily: "UnnaBold", fontWeight: "700", letterSpacing: 0 },
   headerSub: { fontSize: 12, fontWeight: "500", marginTop: 2 },
   myRankBadge: {
     flexDirection: "row",
@@ -419,7 +419,7 @@ const styles = StyleSheet.create({
   myRankText: {
     fontSize: 14,
     fontWeight: "700",
-    fontFamily: "PlayfairDisplay",
+    fontFamily: "UnnaBold",
     letterSpacing: 0.3,
   },
   filterBar: {
@@ -458,7 +458,7 @@ const styles = StyleSheet.create({
   },
   filterTabText: {
     fontSize: 12,
-    fontFamily: "PlayfairDisplay",
+    fontFamily: "UnnaBold",
     fontWeight: "600",
     letterSpacing: 0.2,
   },
@@ -495,7 +495,7 @@ const styles = StyleSheet.create({
   },
   rankInfo: { flex: 1, minWidth: 0 },
   nameRow: { flexDirection: "row", alignItems: "center", gap: 5, marginBottom: 3, flexWrap: "nowrap" },
-  rankName: { fontSize: 14, fontFamily: "PlayfairDisplay", fontWeight: "600", flexShrink: 1 },
+  rankName: { fontSize: 14, fontFamily: "UnnaBold", fontWeight: "600", flexShrink: 1 },
   youBadge: {
     paddingHorizontal: 6,
     paddingVertical: 1,
@@ -521,6 +521,6 @@ const styles = StyleSheet.create({
   avgTimeRow: { flexDirection: "row", alignItems: "center", gap: 3, marginTop: 2 },
   avgTimeText: { fontSize: 10 },
   rankScore: { alignItems: "flex-end", minWidth: 52 },
-  scoreValue: { fontSize: 18, fontFamily: "PlayfairDisplay", fontWeight: "600" },
+  scoreValue: { fontSize: 18, fontFamily: "UnnaBold", fontWeight: "600" },
   scoreLabel: { fontSize: 10, fontWeight: "500" },
 });

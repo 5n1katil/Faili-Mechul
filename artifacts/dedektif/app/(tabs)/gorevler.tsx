@@ -659,7 +659,7 @@ const styles = StyleSheet.create({
   },
   pageTitle: {
     fontSize: 24,
-    fontFamily: "PlayfairDisplay",
+    fontFamily: "UnnaBold",
     fontWeight: "700",
     letterSpacing: 0.3,
   },
@@ -716,7 +716,7 @@ const styles = StyleSheet.create({
   },
   statValue: {
     fontSize: 26,
-    fontFamily: "PlayfairDisplay",
+    fontFamily: "UnnaBold",
     fontWeight: "700",
     letterSpacing: 0.2,
   },
@@ -791,7 +791,7 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 16,
-    fontFamily: "PlayfairDisplay",
+    fontFamily: "UnnaBold",
     fontWeight: "600",
     letterSpacing: 0.2,
   },
@@ -871,12 +871,12 @@ const styles = StyleSheet.create({
   },
   missionTitle: {
     fontSize: 15,
-    fontFamily: "PlayfairDisplay",
+    fontFamily: "UnnaBold",
     fontWeight: "600",
   },
   completedTag: {
     fontSize: 15,
-    fontFamily: "PlayfairDisplay",
+    fontFamily: "UnnaBold",
     fontWeight: "600",
   },
   missionDesc: {
@@ -896,7 +896,7 @@ const styles = StyleSheet.create({
   },
   rewardText: {
     fontSize: 13,
-    fontFamily: "PlayfairDisplay",
+    fontFamily: "UnnaBold",
     fontWeight: "700",
   },
   progressRow: {
@@ -941,7 +941,7 @@ const styles = StyleSheet.create({
   claimBtnPoints: {
     color: "#000",
     fontSize: 12,
-    fontFamily: "PlayfairDisplay",
+    fontFamily: "UnnaBold",
     fontWeight: "700",
   },
   emptyState: {

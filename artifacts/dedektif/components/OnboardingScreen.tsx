@@ -686,7 +686,7 @@ const styles = StyleSheet.create({
   },
   slideTitle: {
     fontSize: 26,
-    fontFamily: "PlayfairDisplay",
+    fontFamily: "UnnaBold",
     fontWeight: "600",
     color: "#F9FAFB",
     textAlign: "center",

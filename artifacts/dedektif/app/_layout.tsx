@@ -552,6 +552,8 @@ export default function RootLayout() {
     PlayfairDisplay: require("../assets/fonts/PlayfairDisplay.ttf"),
     UnnaRegular: require("../assets/fonts/Unna-Regular.ttf"),
     UnnaBold: require("../assets/fonts/Unna-Bold.ttf"),
+    UnnaBoldItalic: require("../assets/fonts/Unna-BoldItalic.ttf"),
+    UnnaItalic: require("../assets/fonts/Unna-Italic.ttf"),
   });
 
   useEffect(() => {

@@ -386,7 +386,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
   headerBtn: { width: 40, height: 40, alignItems: "center", justifyContent: "center" },
-  headerTitle: { flex: 1, textAlign: "center", fontSize: 17, fontFamily: "PlayfairDisplay", fontWeight: "600" },
+  headerTitle: { flex: 1, textAlign: "center", fontSize: 17, fontFamily: "UnnaBold", fontWeight: "600" },
   scrollContent: { padding: 16, gap: 12, paddingBottom: 32 },
   sectionHeader: {
     flexDirection: "row",
@@ -394,7 +394,7 @@ const styles = StyleSheet.create({
     gap: 8,
     marginTop: 4,
   },
-  sectionLabel: { fontSize: 11, fontFamily: "PlayfairDisplay", fontWeight: "600", letterSpacing: 0.8 },
+  sectionLabel: { fontSize: 11, fontFamily: "UnnaBold", fontWeight: "600", letterSpacing: 0.8 },
   sectionLine: { flex: 1, height: 1 },
   card: {
     borderRadius: 14,
@@ -419,7 +419,7 @@ const styles = StyleSheet.create({
     flexShrink: 0,
   },
   settingsInfo: { flex: 1 },
-  settingsTitle: { fontSize: 15, fontFamily: "PlayfairDisplay", fontWeight: "600" },
+  settingsTitle: { fontSize: 15, fontFamily: "UnnaBold", fontWeight: "600" },
   settingsSubtitle: { fontSize: 12, marginTop: 2, lineHeight: 17 },
   premiumActive: {
     flexDirection: "row",

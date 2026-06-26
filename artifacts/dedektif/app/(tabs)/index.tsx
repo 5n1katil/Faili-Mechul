@@ -466,10 +466,17 @@ export default function HomeScreen() {
               <View style={[styles.dailyTopLine, { backgroundColor: wonToday ? "#D4A84340" : "#D4A843" }]} />
 
               <View style={styles.dailyCardInner}>
+                {/* Decorative pocket watch — top right */}
+                <Image
+                  source={require("../../assets/images/icon_gunun_vakasi.png")}
+                  style={{ width: 80, height: 80, position: "absolute", top: -8, right: -8, opacity: 0.28 }}
+                  resizeMode="contain"
+                  pointerEvents="none"
+                />
+
                 {/* Top row: badge + done */}
                 <View style={styles.dailyTop}>
                   <View style={styles.dailyBadge}>
-                    <Image source={require("../../assets/images/icon_gunun_vakasi.png")} style={{ width: 14, height: 14 }} resizeMode="contain" />
                     <Text style={styles.dailyBadgeText}>GÜNÜN VAKASI</Text>
                   </View>
                   {wonToday && (
@@ -535,8 +542,8 @@ export default function HomeScreen() {
                   style={[styles.missionsCard, { borderColor: allDone ? "#4ADE8030" : "#60A5FA22" }]}
                 >
                   <View style={styles.missionsInner}>
-                    <View style={[styles.missionsIconWrap, { backgroundColor: allDone ? "#4ADE8015" : "#60A5FA12" }]}>
-                      <MaterialIcons name="assignment" size={20} color={allDone ? "#4ADE80" : "#60A5FA"} />
+                    <View style={[styles.missionsIconWrap, { backgroundColor: "transparent" }]}>
+                      <Image source={require("../../assets/images/icon_gorevler.png")} style={{ width: 38, height: 38 }} resizeMode="contain" />
                     </View>
                     <View style={{ flex: 1 }}>
                       <Text style={styles.missionsTitle}>Günlük Görevler</Text>
@@ -606,7 +613,7 @@ export default function HomeScreen() {
               <View style={styles.rankCardInner}>
                 <View style={styles.rankTopRow}>
                   <View style={styles.rankBadge}>
-                    <MaterialIcons name="emoji-events" size={13} color="#D4A843" />
+                    <Image source={require("../../assets/images/icon_liderlik.png")} style={{ width: 16, height: 16 }} resizeMode="contain" />
                     <Text style={styles.rankBadgeText}>Liderlik Sıralaması</Text>
                   </View>
                   <Text style={styles.rankPosition}>#{myRank}</Text>
@@ -678,8 +685,8 @@ export default function HomeScreen() {
               onPress={() => setShowTips(true)}
               style={[styles.tipsBtn, { backgroundColor: colors.card, borderColor: colors.border }]}
             >
-              <View style={[styles.tipsBtnIcon, { backgroundColor: `${colors.primary}18` }]}>
-                <MaterialIcons name="lightbulb-outline" size={18} color={colors.primary} />
+              <View style={[styles.tipsBtnIcon, { backgroundColor: "transparent" }]}>
+                <Image source={require("../../assets/images/icon_ipuclari.png")} style={{ width: 32, height: 32 }} resizeMode="contain" />
               </View>
               <Text style={[styles.tipsBtnText, { color: colors.foreground }]}>Dedektif İpuçları</Text>
               <MaterialIcons name="chevron-right" size={18} color={colors.mutedForeground} />
@@ -840,7 +847,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  tipsModalTitle: { fontSize: 16, fontFamily: "PlayfairDisplay", fontWeight: "600", letterSpacing: 0.2 },
+  tipsModalTitle: { fontSize: 16, fontFamily: "UnnaBold", fontWeight: "600", letterSpacing: 0.2 },
   tipRow: {
     flexDirection: "row",
     alignItems: "flex-start",
@@ -871,7 +878,7 @@ const styles = StyleSheet.create({
     borderWidth: 1.5, borderColor: "#D4A84355",
   },
   greetingSmall: { fontSize: 11, letterSpacing: 0.3, marginBottom: 1 },
-  appTitle: { fontSize: 22, fontFamily: "PlayfairDisplay", fontWeight: "700", letterSpacing: 0.6, color: "#D4A843" },
+  appTitle: { fontSize: 22, fontFamily: "UnnaBold", fontWeight: "700", letterSpacing: 0.6, color: "#D4A843" },
   appSubtitle: { fontSize: 11, letterSpacing: 0.5, marginTop: 1 },
   headerRight: { flexDirection: "row", alignItems: "center", gap: 8 },
   iconBtn: {
@@ -966,7 +973,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flexShrink: 0,
   },
-  missionsTitle: { fontSize: 14, fontFamily: "PlayfairDisplay", fontWeight: "600", color: "#FFFFFF", letterSpacing: 0.1 },
+  missionsTitle: { fontSize: 14, fontFamily: "UnnaBold", fontWeight: "600", color: "#FFFFFF", letterSpacing: 0.1 },
   missionsSubtitle: { fontSize: 11, marginTop: 2 },
   missionsRight: { flexDirection: "row", alignItems: "center", gap: 6, flexShrink: 0 },
   missionsDots: { flexDirection: "row", gap: 4, alignItems: "center" },
@@ -988,8 +995,8 @@ const styles = StyleSheet.create({
   },
   statAccent: { position: "absolute", top: 0, left: 0, right: 0, height: 2 },
   statIcon: { width: 36, height: 36, marginTop: 4 },
-  statValue: { fontSize: 24, fontFamily: "PlayfairDisplay", fontWeight: "800", letterSpacing: -0.5 },
-  statLabel: { fontSize: 12, fontFamily: "PlayfairDisplay", fontWeight: "500", color: "rgba(255,255,255,0.75)" },
+  statValue: { fontSize: 24, fontFamily: "UnnaBold", fontWeight: "800", letterSpacing: -0.5 },
+  statLabel: { fontSize: 12, fontFamily: "UnnaBold", fontWeight: "500", color: "rgba(255,255,255,0.75)" },
 
   /* ─── Rank Card ─── */
   rankCard: {
@@ -1013,8 +1020,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#D4A84312",
     borderColor: "#D4A84340",
   },
-  rankBadgeText: { fontSize: 12, fontFamily: "PlayfairDisplay", fontWeight: "600", color: "#D4A843", letterSpacing: 0.2 },
-  rankPosition: { fontSize: 30, fontFamily: "PlayfairDisplay", fontWeight: "700", color: "#D4A843", letterSpacing: -0.5 },
+  rankBadgeText: { fontSize: 12, fontFamily: "UnnaBold", fontWeight: "600", color: "#D4A843", letterSpacing: 0.2 },
+  rankPosition: { fontSize: 30, fontFamily: "UnnaBold", fontWeight: "700", color: "#D4A843", letterSpacing: -0.5 },
   rankUserRow: { flexDirection: "row", alignItems: "center", gap: 10 },
   rankUserAvatar: {
     width: 40,
@@ -1027,7 +1034,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   rankUserInfo: { flex: 1, gap: 2 },
-  rankUserName: { fontSize: 15, fontFamily: "PlayfairDisplay", fontWeight: "600", color: "#FFFFFF" },
+  rankUserName: { fontSize: 15, fontFamily: "UnnaBold", fontWeight: "600", color: "#FFFFFF" },
   rankUserMeta: { fontSize: 12, color: "rgba(255,255,255,0.4)" },
   rankTotalBadge: { paddingHorizontal: 8, paddingVertical: 4, borderRadius: 8, borderWidth: 1, borderColor: "#D4A84325", backgroundColor: "#D4A84310" },
   rankTotalText: { fontSize: 11, fontWeight: "600", color: "rgba(255,255,255,0.4)" },
@@ -1044,10 +1051,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  rankAheadName: { fontSize: 12, fontFamily: "PlayfairDisplay", fontWeight: "400", color: "#FFFFFF", flexShrink: 1 },
+  rankAheadName: { fontSize: 12, fontFamily: "UnnaBold", fontWeight: "400", color: "#FFFFFF", flexShrink: 1 },
   rankAheadScore: { fontSize: 12, fontWeight: "700", color: "#D4A843" },
   rankLeaderRow: { flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 6 },
-  rankLeaderText: { fontSize: 14, fontFamily: "PlayfairDisplay", fontWeight: "600", color: "#D4A843" },
+  rankLeaderText: { fontSize: 14, fontFamily: "UnnaBold", fontWeight: "600", color: "#D4A843" },
   rankCardFooter: {
     flexDirection: "row",
     alignItems: "center",
@@ -1081,5 +1088,5 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  tipsBtnText: { flex: 1, fontSize: 13, fontFamily: "PlayfairDisplay", fontWeight: "400", color: "rgba(255,255,255,0.7)" },
+  tipsBtnText: { flex: 1, fontSize: 13, fontFamily: "UnnaBold", fontWeight: "400", color: "rgba(255,255,255,0.7)" },
 });
