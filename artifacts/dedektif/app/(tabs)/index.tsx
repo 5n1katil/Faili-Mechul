@@ -405,7 +405,7 @@ export default function HomeScreen() {
 
       <View style={[styles.container, { backgroundColor: colors.background, paddingTop: Platform.OS === "web" ? 67 : insets.top }]}>
         {/* Header */}
-        <View style={[styles.headerRow, { paddingHorizontal: 16, paddingBottom: 10 }]}>
+        <View style={[styles.headerRow, { paddingLeft: 16, paddingRight: 8, paddingBottom: 10 }]}>
           <View style={styles.headerBrand}>
             <View style={styles.headerLogoWrap}>
               <Image
