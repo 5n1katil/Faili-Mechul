@@ -117,15 +117,17 @@ function RankItem({ entry, rank, sortKey, colors, delay, onPress }: RankItemProp
     rank === 3 ? "military-tech" :
     "tag";
 
-  // Pulsing glow animation — only runs for top 3
-  const glow = useSharedValue(0);
+  // Glow ring: only opacity is animated — GPU-accelerated, glitch-free everywhere
+  const minOp = rank === 1 ? 0.18 : rank === 2 ? 0.1 : 0.06;
+  const maxOp = rank === 1 ? 0.72 : rank === 2 ? 0.46 : 0.28;
+  const glowOp = useSharedValue(minOp);
   React.useEffect(() => {
     if (!isTop3) return;
-    const dur = rank === 1 ? 1200 : rank === 2 ? 1700 : 2300;
-    glow.value = withRepeat(
+    const dur = rank === 1 ? 2000 : rank === 2 ? 2600 : 3200;
+    glowOp.value = withRepeat(
       withSequence(
-        withTiming(1, { duration: dur, easing: Easing.inOut(Easing.sin) }),
-        withTiming(0, { duration: dur, easing: Easing.inOut(Easing.sin) }),
+        withTiming(maxOp, { duration: dur, easing: Easing.inOut(Easing.sin) }),
+        withTiming(minOp, { duration: dur, easing: Easing.inOut(Easing.sin) }),
       ),
       -1,
       false,
@@ -133,19 +135,16 @@ function RankItem({ entry, rank, sortKey, colors, delay, onPress }: RankItemProp
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const maxShadowOp = rank === 1 ? 0.88 : rank === 2 ? 0.5 : 0.32;
-  const maxShadowR  = rank === 1 ? 28   : rank === 2 ? 16  : 10;
+  const glowRingStyle = useAnimatedStyle(() => ({ opacity: glowOp.value }));
 
-  const glowAnimStyle = useAnimatedStyle(() => {
-    if (!isTop3) return {};
-    return {
-      shadowColor:   rankColor,
-      shadowOpacity: 0.1 + glow.value * maxShadowOp,
-      shadowRadius:  4   + glow.value * maxShadowR,
-      shadowOffset:  { width: 0, height: rank === 1 ? 6 : 3 },
-      elevation:     rank === 1 ? 20 : rank === 2 ? 12 : 7,
-    };
-  });
+  // Static (non-animated) depth shadow for premium look
+  const staticShadow = isTop3 ? {
+    shadowColor:   rankColor,
+    shadowOpacity: rank === 1 ? 0.38 : rank === 2 ? 0.2 : 0.13,
+    shadowRadius:  rank === 1 ? 14   : rank === 2 ? 8   : 5,
+    shadowOffset:  { width: 0, height: rank === 1 ? 6 : 3 },
+    elevation:     rank === 1 ? 18   : rank === 2 ? 10  : 6,
+  } : {};
 
   // Card backgrounds
   const bgColor = entry.isCurrentUser
@@ -184,7 +183,26 @@ function RankItem({ entry, rank, sortKey, colors, delay, onPress }: RankItemProp
 
   return (
     <Animated.View entering={FadeInDown.delay(delay).springify()}>
-      <Animated.View style={[{ borderRadius: 14 }, isTop3 ? glowAnimStyle : undefined]}>
+      <View style={[{ borderRadius: 14, overflow: "visible" }, staticShadow]}>
+        {/* Pulsing glow ring — absolute positioned, only opacity animates */}
+        {isTop3 && (
+          <Animated.View
+            pointerEvents="none"
+            style={[
+              {
+                position: "absolute",
+                top: -5,
+                left: -5,
+                right: -5,
+                bottom: -5,
+                borderRadius: 19,
+                borderWidth: rank === 1 ? 2.5 : rank === 2 ? 2 : 1.5,
+                borderColor: rankColor,
+              },
+              glowRingStyle,
+            ]}
+          />
+        )}
         <Pressable
           onPress={onPress}
           style={({ pressed }) => [
@@ -297,7 +315,7 @@ function RankItem({ entry, rank, sortKey, colors, delay, onPress }: RankItemProp
             <Text style={[styles.scoreLabel, { color: metaColor }]}>{metaLabel}</Text>
           </View>
         </Pressable>
-      </Animated.View>
+      </View>
     </Animated.View>
   );
 }
