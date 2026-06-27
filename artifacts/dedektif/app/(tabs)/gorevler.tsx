@@ -1,5 +1,6 @@
 import React, { useCallback, useRef, type ComponentProps } from "react";
 import {
+  Image,
   Platform,
   Pressable,
   ScrollView,
@@ -7,6 +8,7 @@ import {
   Text,
   View,
   type DimensionValue,
+  type ImageSourcePropType,
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -346,17 +348,23 @@ function TierSection({
 function SectionHeader({
   title,
   icon,
+  image,
   subtitle,
 }: {
   title: string;
   icon: MatIconName;
+  image?: ImageSourcePropType;
   subtitle?: string;
 }) {
   const colors = useColors();
   return (
     <View style={styles.sectionHeaderRow}>
       <View style={[styles.sectionIconWrap, { backgroundColor: `${colors.primary}18` }]}>
-        <MaterialIcons name={icon} size={20} color={colors.primary} />
+        {image ? (
+          <Image source={image} style={{ width: 26, height: 26 }} resizeMode="contain" />
+        ) : (
+          <MaterialIcons name={icon} size={20} color={colors.primary} />
+        )}
       </View>
       <View style={styles.sectionHeaderText}>
         <Text style={[styles.sectionTitle, { color: colors.foreground }]}>
@@ -429,7 +437,11 @@ function StatsCard({ totalAwardedPoints, totalScore }: { totalAwardedPoints: num
     <View style={styles.statsRow}>
       <View style={[styles.statCard, { backgroundColor: `${colors.primary}12`, borderColor: `${colors.primary}33` }]}>
         <View style={[styles.statIconWrap, { backgroundColor: `${colors.primary}22` }]}>
-          <MaterialIcons name="military-tech" size={20} color={colors.primary} />
+          <Image
+            source={require("@/assets/images/gorev-puani.png")}
+            style={{ width: 32, height: 32 }}
+            resizeMode="contain"
+          />
         </View>
         <Text style={[styles.statValue, { color: colors.foreground }]}>
           {formatPoints(totalAwardedPoints)}
@@ -440,7 +452,11 @@ function StatsCard({ totalAwardedPoints, totalScore }: { totalAwardedPoints: num
       </View>
       <View style={[styles.statCard, { backgroundColor: "#60A5FA12", borderColor: "#60A5FA33" }]}>
         <View style={[styles.statIconWrap, { backgroundColor: "#60A5FA22" }]}>
-          <MaterialIcons name="leaderboard" size={20} color="#60A5FA" />
+          <Image
+            source={require("@/assets/images/toplam-puanim.png")}
+            style={{ width: 32, height: 32 }}
+            resizeMode="contain"
+          />
         </View>
         <Text style={[styles.statValue, { color: colors.foreground }]}>
           {formatPoints(totalScore)}
@@ -543,6 +559,7 @@ export default function GorevlerScreen() {
             <SectionHeader
               title="Günlük Görevler"
               icon="today"
+              image={require("@/assets/images/gunluk-gorevler.png")}
               subtitle="Her gün sıfırlanır"
             />
             <View style={[styles.countdownChip, { backgroundColor: `${colors.primary}10`, borderColor: `${colors.primary}44` }]}>
