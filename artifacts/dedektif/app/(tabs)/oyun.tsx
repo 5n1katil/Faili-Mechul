@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   BackHandler,
+  Image,
   InteractionManager,
   Modal,
   Platform,
@@ -11,6 +12,7 @@ import {
   View,
   LayoutAnimation,
   UIManager,
+  type ImageSourcePropType,
 } from "react-native";
 
 if (Platform.OS === "android" && UIManager.setLayoutAnimationEnabledExperimental) {
@@ -325,7 +327,7 @@ function PremiumTabButton({
           onPress={onPress}
           style={{ flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 6, paddingTop: 7, paddingBottom: 5, paddingHorizontal: 8 }}
         >
-          <MaterialIcons name="workspace-premium" size={17} color={PREMIUM_GOLD} />
+          <Image source={require("@/assets/images/premium-icon.png")} style={{ width: 20, height: 20 }} resizeMode="contain" />
           <Text style={[listStyles.tabBtnText3d, { color: PREMIUM_GOLD, fontWeight: "700", fontFamily: "DroidSerifRegular", fontSize: 14, letterSpacing: 0.3 }]}>
             Premium
           </Text>
@@ -347,7 +349,7 @@ function PremiumTabButton({
               backgroundColor: subTab === "vakalar" && active ? `${PREMIUM_GOLD}22` : "transparent",
             }}
           >
-            <MaterialIcons name="auto-stories" size={13} color={subTab === "vakalar" && active ? PREMIUM_GOLD : "#888AAA"} />
+            <Image source={require("@/assets/images/premium-vakalar-icon.png")} style={{ width: 16, height: 16, opacity: subTab === "vakalar" && active ? 1 : 0.45 }} resizeMode="contain" />
             <Text style={{ fontFamily: "DroidSerifRegular", fontSize: 11, fontWeight: "700", color: subTab === "vakalar" && active ? PREMIUM_GOLD : "#888AAA" }}>Vakalar</Text>
           </Pressable>
           <View style={{ width: StyleSheet.hairlineWidth, backgroundColor: `${PREMIUM_GOLD}33`, alignSelf: "stretch", marginVertical: 2 }} />
@@ -364,7 +366,7 @@ function PremiumTabButton({
               backgroundColor: subTab === "paketler" && active ? `${PREMIUM_GOLD}22` : "transparent",
             }}
           >
-            <MaterialIcons name="inventory-2" size={13} color={subTab === "paketler" && active ? PREMIUM_GOLD : "#888AAA"} />
+            <Image source={require("@/assets/images/premium-paketler-icon.png")} style={{ width: 16, height: 16, opacity: subTab === "paketler" && active ? 1 : 0.45 }} resizeMode="contain" />
             <Text style={{ fontFamily: "DroidSerifRegular", fontSize: 11, fontWeight: "700", color: subTab === "paketler" && active ? PREMIUM_GOLD : "#888AAA" }}>Paketler</Text>
           </Pressable>
         </View>
@@ -374,9 +376,9 @@ function PremiumTabButton({
 }
 
 function TabButton3D({
-  label, icon, active, count, onPress, activeColor,
+  label, icon, image, active, count, onPress, activeColor,
 }: {
-  label: string; icon: MaterialIconName; active: boolean; count?: number;
+  label: string; icon: MaterialIconName; image?: ImageSourcePropType; active: boolean; count?: number;
   onPress: () => void; activeColor: string;
 }) {
   const colors = useColors();
@@ -415,7 +417,11 @@ function TabButton3D({
               },
         ]}
       >
-        <MaterialIcons name={icon} size={17} color={active ? activeColor : "#8899BB"} />
+        {image ? (
+          <Image source={image} style={{ width: 22, height: 22, opacity: active ? 1 : 0.55 }} resizeMode="contain" />
+        ) : (
+          <MaterialIcons name={icon} size={17} color={active ? activeColor : "#8899BB"} />
+        )}
         <Text style={[listStyles.tabBtnText3d, { color: active ? activeColor : "#AAAACC", fontFamily: "DroidSerifRegular", fontSize: 16, fontWeight: active ? "700" : "600" }]}>
           {label}
         </Text>
@@ -1232,6 +1238,7 @@ export default function VakalarScreen() {
               <TabButton3D
                 label="Vakalar"
                 icon="folder-open"
+                image={require("@/assets/images/vakalar-icon.png")}
                 active={listTab === "vakalar"}
                 count={totalActiveCount}
                 onPress={() => setListTab("vakalar")}
@@ -1262,7 +1269,7 @@ export default function VakalarScreen() {
                   {/* Premium Vakalar header — yalnızca satın alınmamışsa göster */}
                   {!isPremium && (
                     <Animated.View entering={FadeInDown.delay(0).springify()} style={listStyles.premVakalarHeader}>
-                      <MaterialIcons name="workspace-premium" size={22} color="#D4A843" />
+                      <Image source={require("@/assets/images/premium-icon.png")} style={{ width: 26, height: 26 }} resizeMode="contain" />
                       <Text style={[listStyles.premVakalarTitle, { color: "#D4A843" }]}>Premium Vakalar</Text>
                       <View style={[listStyles.premVakalarCount, { backgroundColor: "#D4A84330", borderColor: "#D4A84360" }]}>
                         <Text style={[listStyles.premVakalarCountText, { color: "#D4A843" }]}>{premiumPuzzles.length} vaka</Text>
@@ -1421,7 +1428,7 @@ export default function VakalarScreen() {
                   <View style={{ flex: 1, paddingVertical: 13, paddingHorizontal: 14, gap: 10 }}>
                     <View style={listStyles.standartCardTop}>
                       <View style={[listStyles.heroCardIcon, { backgroundColor: "#D4A84318", width: 40, height: 40 }]}>
-                        <MaterialIcons name="folder-open" size={22} color="#D4A843" />
+                        <Image source={require("@/assets/images/vakalar-icon.png")} style={{ width: 28, height: 28 }} resizeMode="contain" />
                       </View>
                       <View style={{ flex: 1 }}>
                         <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
