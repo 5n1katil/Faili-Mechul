@@ -891,7 +891,7 @@ const styles = StyleSheet.create({
   greetingSmall: { fontFamily: "DroidSerifRegular", fontSize: 11, letterSpacing: 0.3, marginBottom: 1 },
   appTitle: { fontSize: 26, fontFamily: "UnnaBold", fontWeight: "700", letterSpacing: 0.6, color: "#D4A843" },
   appSubtitle: { fontFamily: "DroidSerifRegular", fontSize: 11, letterSpacing: 0.5, marginTop: 1 },
-  headerRight: { flexDirection: "row", alignItems: "center", gap: 16 },
+  headerRight: { flexDirection: "row", alignItems: "center", gap: 6 },
   iconBtn: {
     width: 38,
     height: 38,
