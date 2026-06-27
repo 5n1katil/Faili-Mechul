@@ -15,7 +15,15 @@ import { useFocusEffect } from "expo-router";
 import { useColors } from "@/hooks/useColors";
 import { useGame } from "@/context/GameContext";
 import { usePurchase } from "@/context/PurchaseContext";
-import Animated, { FadeInDown } from "react-native-reanimated";
+import Animated, {
+  FadeInDown,
+  useSharedValue,
+  useAnimatedStyle,
+  withRepeat,
+  withSequence,
+  withTiming,
+  Easing,
+} from "react-native-reanimated";
 import { AvatarDisplay } from "@/utils/avatarHelpers";
 import { AI_DETECTIVES } from "@/data/aiDetectives";
 import { useRouter } from "expo-router";
@@ -93,10 +101,69 @@ interface RankItemProps {
 }
 
 function RankItem({ entry, rank, sortKey, colors, delay, onPress }: RankItemProps) {
+  const isTop3 = rank <= 3;
+
+  // Premium palette: gold / silver-steel / warm bronze
   const rankColor =
-    rank === 1 ? "#FFD700" : rank === 2 ? "#C0C0C0" : rank === 3 ? "#CD7F32" : colors.mutedForeground;
+    rank === 1 ? "#FFD700" :
+    rank === 2 ? "#C8D8F0" :
+    rank === 3 ? "#E8946A" :
+    "#6B7A99";
+
+  // Flame icon for 1st, premium / military for 2nd-3rd, tag for rest
   const rankIcon: MaterialIconName =
-    rank === 1 ? "emoji-events" : rank === 2 ? "workspace-premium" : rank === 3 ? "military-tech" : "tag";
+    rank === 1 ? "local-fire-department" :
+    rank === 2 ? "workspace-premium" :
+    rank === 3 ? "military-tech" :
+    "tag";
+
+  // Pulsing glow animation — only runs for top 3
+  const glow = useSharedValue(0);
+  React.useEffect(() => {
+    if (!isTop3) return;
+    const dur = rank === 1 ? 1200 : rank === 2 ? 1700 : 2300;
+    glow.value = withRepeat(
+      withSequence(
+        withTiming(1, { duration: dur, easing: Easing.inOut(Easing.sin) }),
+        withTiming(0, { duration: dur, easing: Easing.inOut(Easing.sin) }),
+      ),
+      -1,
+      false,
+    );
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const maxShadowOp = rank === 1 ? 0.88 : rank === 2 ? 0.5 : 0.32;
+  const maxShadowR  = rank === 1 ? 28   : rank === 2 ? 16  : 10;
+
+  const glowAnimStyle = useAnimatedStyle(() => {
+    if (!isTop3) return {};
+    return {
+      shadowColor:   rankColor,
+      shadowOpacity: 0.1 + glow.value * maxShadowOp,
+      shadowRadius:  4   + glow.value * maxShadowR,
+      shadowOffset:  { width: 0, height: rank === 1 ? 6 : 3 },
+      elevation:     rank === 1 ? 20 : rank === 2 ? 12 : 7,
+    };
+  });
+
+  // Card backgrounds
+  const bgColor = entry.isCurrentUser
+    ? `${colors.primary}20`
+    : rank === 1 ? "#2E2508"    // deep gold
+    : rank === 2 ? "#1A2535"    // steel blue
+    : rank === 3 ? "#261B10"    // warm bronze
+    : "#1A2340";                // light blue for regular
+
+  const borderColorVal = entry.isCurrentUser
+    ? colors.primary
+    : rank === 1 ? "#FFD700CC"
+    : rank === 2 ? "#C8D8F066"
+    : rank === 3 ? "#E8946A55"
+    : "#FFFFFF1A";
+
+  const badgeSize = rank === 1 ? 52 : rank === 2 ? 46 : rank === 3 ? 42 : 38;
+  const iconSize  = rank === 1 ? 28 : rank === 2 ? 22 : rank === 3 ? 20 : 14;
 
   const metaValue: string | number =
     sortKey === "score"  ? entry.totalScore :
@@ -110,106 +177,127 @@ function RankItem({ entry, rank, sortKey, colors, delay, onPress }: RankItemProp
     sortKey === "streak" ? "seri" :
     "süre";
 
-  const isTop3 = rank <= 3;
+  const nameColor  = entry.isCurrentUser ? colors.primary : isTop3 ? rankColor : colors.foreground;
+  const scoreColor = entry.isCurrentUser ? colors.primary : isTop3 ? rankColor : colors.foreground;
+  const metaColor  = isTop3 ? `${rankColor}99` : colors.mutedForeground;
+  const timeColor  = isTop3 ? `${rankColor}77` : colors.mutedForeground;
 
   return (
     <Animated.View entering={FadeInDown.delay(delay).springify()}>
-      <Pressable
-        onPress={onPress}
-        style={({ pressed }) => [
-          styles.rankItem,
-          {
-            backgroundColor: entry.isCurrentUser
-              ? `${colors.primary}18`
-              : isTop3
-              ? `${rankColor}09`
-              : colors.card,
-            borderColor: entry.isCurrentUser
-              ? colors.primary
-              : isTop3
-              ? `${rankColor}44`
-              : colors.border,
-            opacity: pressed ? 0.75 : 1,
-          },
-        ]}
-      >
-        <View style={[styles.rankBadge, { backgroundColor: `${rankColor}22` }]}>
-          <MaterialIcons name={rankIcon} size={isTop3 ? 20 : 14} color={rankColor} />
-          {rank > 3 && (
-            <Text style={[styles.rankNum, { color: rankColor }]}>{rank}</Text>
-          )}
-        </View>
-
-        <View style={[styles.avatarWrapper, { backgroundColor: `${colors.primary}15`, borderColor: `${colors.primary}40` }]}>
-          <AvatarDisplay
-            avatar={entry.avatar || "d01"}
-            size={36}
-            color={entry.isCurrentUser ? colors.primary : colors.mutedForeground}
-            backgroundColor="transparent"
-          />
-        </View>
-
-        <View style={styles.rankInfo}>
-          <View style={styles.nameRow}>
-            <Text
-              style={[
-                styles.rankName,
-                { color: entry.isCurrentUser ? colors.primary : colors.foreground },
-              ]}
-              numberOfLines={1}
-            >
-              {entry.name}
-            </Text>
-            {entry.isCurrentUser && (
-              <View style={[styles.youBadge, { backgroundColor: `${colors.primary}30` }]}>
-                <Text style={[styles.youText, { color: colors.primary }]}>Sen</Text>
-              </View>
-            )}
-            {entry.isPremiumUser && (
-              <View style={[styles.premiumChip, { backgroundColor: "#D4A84320", borderColor: "#D4A84355" }]}>
-                <MaterialIcons name="workspace-premium" size={10} color="#D4A843" />
-                <Text style={[styles.premiumChipText, { color: "#D4A843" }]}>Baş Dedektif</Text>
-              </View>
+      <Animated.View style={[{ borderRadius: 14 }, isTop3 ? glowAnimStyle : undefined]}>
+        <Pressable
+          onPress={onPress}
+          style={({ pressed }) => [
+            styles.rankItem,
+            {
+              backgroundColor: bgColor,
+              borderColor: borderColorVal,
+              borderWidth: rank === 1 ? 1.5 : 1,
+              opacity: pressed ? 0.78 : 1,
+            },
+          ]}
+        >
+          {/* Rank badge — larger + bordered for top 3 */}
+          <View
+            style={[
+              styles.rankBadge,
+              {
+                width: badgeSize,
+                height: badgeSize,
+                borderRadius: badgeSize / 2,
+                backgroundColor: `${rankColor}${isTop3 ? "28" : "18"}`,
+                borderWidth: isTop3 ? 1.5 : 0,
+                borderColor: `${rankColor}55`,
+              },
+            ]}
+          >
+            {isTop3 ? (
+              <MaterialIcons name={rankIcon} size={iconSize} color={rankColor} />
+            ) : (
+              <>
+                <MaterialIcons name={rankIcon} size={iconSize} color={rankColor} />
+                <Text style={[styles.rankNum, { color: rankColor }]}>{rank}</Text>
+              </>
             )}
           </View>
-          <View style={styles.metaRow}>
-            <MaterialIcons
-              name={
-                sortKey === "streak" ? "local-fire-department" :
-                sortKey === "cases"  ? "folder" :
-                sortKey === "hiz"    ? "bolt" :
-                "star"
-              }
-              size={11}
-              color={colors.mutedForeground}
+
+          {/* Avatar — colored border for top 3 */}
+          <View
+            style={[
+              styles.avatarWrapper,
+              {
+                backgroundColor: `${colors.primary}15`,
+                borderColor: isTop3 ? `${rankColor}55` : `${colors.primary}40`,
+                borderWidth: isTop3 ? 2 : 1.5,
+              },
+            ]}
+          >
+            <AvatarDisplay
+              avatar={entry.avatar || "d01"}
+              size={36}
+              color={entry.isCurrentUser ? colors.primary : isTop3 ? rankColor : colors.mutedForeground}
+              backgroundColor="transparent"
             />
-            <Text style={[styles.metaText, { color: colors.mutedForeground }]}>
-              {sortKey === "score"
-                ? `${entry.gamesWon} vaka · ${entry.maxStreak} seri`
-                : sortKey === "cases"
-                ? `${entry.totalScore.toLocaleString("tr-TR")} puan · ${entry.maxStreak} seri`
-                : sortKey === "streak"
-                ? `${entry.totalScore.toLocaleString("tr-TR")} puan · ${entry.gamesWon} vaka`
-                : `${entry.gamesWon} vaka · ${entry.maxStreak} seri`}
-            </Text>
           </View>
-          {sortKey !== "hiz" && entry.avgSolveTimeSeconds != null && entry.avgSolveTimeSeconds > 0 && (
-            <View style={styles.avgTimeRow}>
-              <MaterialIcons name="schedule" size={10} color={colors.mutedForeground} />
-              <Text style={[styles.avgTimeText, { color: colors.mutedForeground }]}>
-                {`ort. ${Math.floor(entry.avgSolveTimeSeconds / 60)}:${(entry.avgSolveTimeSeconds % 60).toString().padStart(2, "0")}`}
+
+          {/* Info */}
+          <View style={styles.rankInfo}>
+            <View style={styles.nameRow}>
+              <Text style={[styles.rankName, { color: nameColor }]} numberOfLines={1}>
+                {entry.name}
+              </Text>
+              {entry.isCurrentUser && (
+                <View style={[styles.youBadge, { backgroundColor: `${colors.primary}30` }]}>
+                  <Text style={[styles.youText, { color: colors.primary }]}>Sen</Text>
+                </View>
+              )}
+              {entry.isPremiumUser && (
+                <View style={[styles.premiumChip, { backgroundColor: "#D4A84320", borderColor: "#D4A84355" }]}>
+                  <MaterialIcons name="workspace-premium" size={10} color="#D4A843" />
+                  <Text style={[styles.premiumChipText, { color: "#D4A843" }]}>Baş Dedektif</Text>
+                </View>
+              )}
+            </View>
+            <View style={styles.metaRow}>
+              <MaterialIcons
+                name={
+                  sortKey === "streak" ? "local-fire-department" :
+                  sortKey === "cases"  ? "folder" :
+                  sortKey === "hiz"    ? "bolt" :
+                  "star"
+                }
+                size={11}
+                color={metaColor}
+              />
+              <Text style={[styles.metaText, { color: metaColor }]}>
+                {sortKey === "score"
+                  ? `${entry.gamesWon} vaka · ${entry.maxStreak} seri`
+                  : sortKey === "cases"
+                  ? `${entry.totalScore.toLocaleString("tr-TR")} puan · ${entry.maxStreak} seri`
+                  : sortKey === "streak"
+                  ? `${entry.totalScore.toLocaleString("tr-TR")} puan · ${entry.gamesWon} vaka`
+                  : `${entry.gamesWon} vaka · ${entry.maxStreak} seri`}
               </Text>
             </View>
-          )}
-        </View>
+            {sortKey !== "hiz" && entry.avgSolveTimeSeconds != null && entry.avgSolveTimeSeconds > 0 && (
+              <View style={styles.avgTimeRow}>
+                <MaterialIcons name="schedule" size={10} color={timeColor} />
+                <Text style={[styles.avgTimeText, { color: timeColor }]}>
+                  {`ort. ${Math.floor(entry.avgSolveTimeSeconds / 60)}:${(entry.avgSolveTimeSeconds % 60).toString().padStart(2, "0")}`}
+                </Text>
+              </View>
+            )}
+          </View>
 
-        <View style={styles.rankScore}>
-          <Text style={[styles.scoreValue, { color: entry.isCurrentUser ? colors.primary : colors.foreground }]}>
-            {typeof metaValue === "number" ? metaValue.toLocaleString("tr-TR") : metaValue}
-          </Text>
-          <Text style={[styles.scoreLabel, { color: colors.mutedForeground }]}>{metaLabel}</Text>
-        </View>
-      </Pressable>
+          {/* Score — bigger font for top 3 */}
+          <View style={styles.rankScore}>
+            <Text style={[styles.scoreValue, { color: scoreColor, fontSize: rank === 1 ? 24 : rank === 2 ? 22 : 20 }]}>
+              {typeof metaValue === "number" ? metaValue.toLocaleString("tr-TR") : metaValue}
+            </Text>
+            <Text style={[styles.scoreLabel, { color: metaColor }]}>{metaLabel}</Text>
+          </View>
+        </Pressable>
+      </Animated.View>
     </Animated.View>
   );
 }
@@ -476,7 +564,7 @@ const styles = StyleSheet.create({
   rankItem: {
     flexDirection: "row",
     alignItems: "center",
-    borderRadius: 12,
+    borderRadius: 14,
     borderWidth: 1,
     padding: 10,
     gap: 10,
