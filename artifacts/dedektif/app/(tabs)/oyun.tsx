@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   BackHandler,
+  InteractionManager,
   Modal,
   Platform,
   Pressable,
@@ -913,14 +914,23 @@ export default function VakalarScreen() {
   }, [gameState, resetCurrentGame]);
 
   const handleBackToList = () => {
-    setShowResult(false);
-    resetCurrentGame();
     const src = launchSourceRef.current;
     if (src === "home") {
       router.navigate("/");
+      InteractionManager.runAfterInteractions(() => {
+        setShowResult(false);
+        resetCurrentGame();
+      });
     } else if (src === "gorevler") {
       router.navigate("/gorevler");
+      InteractionManager.runAfterInteractions(() => {
+        setShowResult(false);
+        resetCurrentGame();
+      });
     } else {
+      // Vakalar sekmesinde kal — sadece state sıfırla ve scroll pozisyonunu geri yükle.
+      setShowResult(false);
+      resetCurrentGame();
       const savedY = listScrollY.current;
       setTimeout(() => {
         listScrollRef.current?.scrollTo({ y: savedY, animated: false });
@@ -929,24 +939,30 @@ export default function VakalarScreen() {
   };
 
   const handleCancelStart = () => {
-    resetCurrentGame();
     const src = launchSourceRef.current;
     if (src === "home") {
       router.navigate("/");
+      // State'i animasyon bittikten sonra sıfırla — aksi hâlde tab geçişi sırasında
+      // liste görünümü kısa süreliğine yanıp söner (takılma hissi verir).
+      InteractionManager.runAfterInteractions(() => { resetCurrentGame(); });
     } else if (src === "gorevler") {
       router.navigate("/gorevler");
+      InteractionManager.runAfterInteractions(() => { resetCurrentGame(); });
+    } else {
+      // Vakalar sekmesindeyken: navigasyon yok, sadece state sıfırla (liste görünümüne dön).
+      resetCurrentGame();
     }
-    // Vakalar sekmesi state-based navigasyon kullanır; router.back() çağrılmaz.
-    // resetCurrentGame() gameState'i sıfırlar → bileşen otomatik liste görünümünü render eder.
   };
 
   const handleGoHome = () => {
     if (homeTimerRef.current) clearTimeout(homeTimerRef.current);
-    // Modal'ı ve state'i önce temizle, sonra navigate et — aksi hâlde mobilde
-    // Modal önce kapanmaz ve sekme geçişi görünmez.
-    setShowResult(false);
-    resetCurrentGame();
     router.navigate("/");
+    // State'i animasyon bittikten sonra sıfırla — navigasyonla eş zamanlı
+    // sıfırlama, geçiş sırasında anlık liste/sonuç yanıp sönmesine yol açar.
+    InteractionManager.runAfterInteractions(() => {
+      setShowResult(false);
+      resetCurrentGame();
+    });
   };
 
   const handlePlayNext = () => {
