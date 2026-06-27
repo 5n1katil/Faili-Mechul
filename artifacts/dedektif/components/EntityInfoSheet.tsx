@@ -34,7 +34,7 @@ export interface EntityInfo {
   parmakIziDeseni?: string;
 }
 
-const FINGERPRINT_IMAGES: Record<string, ReturnType<typeof require>> = {
+const FINGERPRINT_IMAGES: Record<string, any> = {
   fp_whorl: require("../assets/images/fingerprints/fp_whorl.png"),
   fp_loop_right: require("../assets/images/fingerprints/fp_loop_right.png"),
   fp_loop_left: require("../assets/images/fingerprints/fp_loop_left.png"),

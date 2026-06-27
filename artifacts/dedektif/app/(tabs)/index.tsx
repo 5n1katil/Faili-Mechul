@@ -468,12 +468,13 @@ export default function HomeScreen() {
 
               <View style={styles.dailyCardInner}>
                 {/* Decorative pocket watch — top right */}
-                <Image
-                  source={require("../../assets/images/icon_gunun_vakasi.png")}
-                  style={{ width: 80, height: 80, position: "absolute", top: -8, right: -8, opacity: 0.28 }}
-                  resizeMode="contain"
-                  pointerEvents="none"
-                />
+                <View pointerEvents="none" style={{ position: "absolute", top: -8, right: -8, width: 80, height: 80 }}>
+                  <Image
+                    source={require("../../assets/images/icon_gunun_vakasi.png")}
+                    style={{ width: 80, height: 80, opacity: 0.28 }}
+                    resizeMode="contain"
+                  />
+                </View>
 
                 {/* Top row: badge + done */}
                 <View style={styles.dailyTop}>

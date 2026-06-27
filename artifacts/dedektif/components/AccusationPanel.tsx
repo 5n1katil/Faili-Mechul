@@ -148,14 +148,14 @@ export default function AccusationPanel({
     },
     {
       label: "NEREDE",
-      icon: "location_on" as const,
+      icon: "location-on" as const,
       items: puzzle.locations.map((l) => ({ id: l.id, name: l.name })),
       selected: selectedLocation,
       onSelect: onSelectLocation,
     },
     {
       label: "NEYLE",
-      icon: "gps_not_fixed" as const,
+      icon: "gps-not-fixed" as const,
       items: puzzle.weapons.map((w) => ({ id: w.id, name: w.name })),
       selected: selectedWeapon,
       onSelect: onSelectWeapon,

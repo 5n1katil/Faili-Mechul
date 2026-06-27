@@ -30,8 +30,8 @@ export default function StickyAccuseBar({
 
   const chips = [
     { key: "suspect", name: suspectName, icon: "person" as const },
-    { key: "location", name: locationName, icon: "location_on" as const },
-    { key: "weapon", name: weaponName, icon: "gps_not_fixed" as const },
+    { key: "location", name: locationName, icon: "location-on" as const },
+    { key: "weapon", name: weaponName, icon: "gps-not-fixed" as const },
   ];
 
   return (

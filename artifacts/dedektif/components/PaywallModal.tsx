@@ -25,7 +25,7 @@ interface Props {
 function makeFeatures(count: number) {
   return [
     {
-      icon: "folder_open" as const,
+      icon: "folder-open" as const,
       label: `${count} Premium Vaka`,
       text: "Çaylak'tan Baş Komiser'e kadar tüm zorluk seviyelerinde özgün bulmacalar",
     },
@@ -35,17 +35,17 @@ function makeFeatures(count: number) {
       text: "Yeni vakalar çıktıkça otomatik olarak kilidini açar — ek ödeme yok",
     },
     {
-      icon: "emoji_events" as const,
+      icon: "emoji-events" as const,
       label: "Baş Dedektif Rozeti",
       text: "Liderlik tablosunda 🔱 altın Baş Dedektif ünvanı ve özel rozet",
     },
     {
-      icon: "trending_up" as const,
+      icon: "trending-up" as const,
       label: "İlerleme Takibi",
       text: "Kişisel istatistikler ve zorluk bazlı performans geçmişi",
     },
     {
-      icon: "all_inclusive" as const,
+      icon: "all-inclusive" as const,
       label: "Tek Seferlik Ödeme",
       text: "Abonelik yok, süre sınırı yok — bir kez öde, sonsuza kadar oyna",
     },
@@ -55,7 +55,7 @@ function makeFeatures(count: number) {
       text: "Aynı Apple ID / Google hesabıyla iPhone, iPad ve Android'de geçerli",
     },
     {
-      icon: "support_agent" as const,
+      icon: "support-agent" as const,
       label: "Öncelikli Destek",
       text: "Doğrudan geliştirici desteği ve yeni vakalara erken erişim",
     },

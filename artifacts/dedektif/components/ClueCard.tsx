@@ -111,6 +111,13 @@ const CLUE_META: Record<
     cardTint: "#14b8a610",
     borderStyle: "dotted",
   },
+  record: {
+    icon: "videocam",
+    color: "#6366f1",
+    label: "Kayıt",
+    cardTint: "#6366f110",
+    borderStyle: "solid",
+  },
 };
 
 function DeductionHint({ hint }: { hint: string }) {
@@ -4765,7 +4772,6 @@ const styles = StyleSheet.create({
     gap: 6,
   },
   terminalFieldLabel: {
-    fontFamily: "monospace",
     fontFamily: "DroidSerifRegular",
     fontSize: 11,
     fontWeight: "700",
@@ -4790,7 +4796,6 @@ const styles = StyleSheet.create({
     borderColor: "#22c55e",
   },
   terminalOptionText: {
-    fontFamily: "monospace",
     fontFamily: "DroidSerifRegular",
     fontSize: 11,
     color: "#4a7c59",
@@ -4816,7 +4821,6 @@ const styles = StyleSheet.create({
     borderColor: "#1e3a2a",
   },
   terminalSubmitText: {
-    fontFamily: "monospace",
     fontFamily: "DroidSerifRegular",
     fontSize: 12,
     fontWeight: "800",
@@ -4833,7 +4837,6 @@ const styles = StyleSheet.create({
     gap: 6,
   },
   sifreText: {
-    fontFamily: "monospace",
     fontFamily: "DroidSerifRegular",
     fontSize: 14,
     color: "#9333ea",

@@ -258,13 +258,13 @@ function ScoreBreakdownCard({
       ? [{ label: `Yanlış (${wrongGuesses} × 500)`, value: `-${wrongPenalty.toLocaleString("tr-TR")}`, color: "#C8372D", icon: "gavel" as const }]
       : []),
     ...(bonusCluesRevealedCount > 0
-      ? [{ label: `Ek İpucu (${bonusCluesRevealedCount} × 300)`, value: `-${bonusPenalty.toLocaleString("tr-TR")}`, color: "#f97316", icon: "lock_open" as const }]
+      ? [{ label: `Ek İpucu (${bonusCluesRevealedCount} × 300)`, value: `-${bonusPenalty.toLocaleString("tr-TR")}`, color: "#f97316", icon: "lock-open" as const }]
       : []),
     ...(difficultyBonus > 0
       ? [{ label: "Zorluk Bonusu", value: `+${difficultyBonus.toLocaleString("tr-TR")}`, color: "#4ade80", icon: "upgrade" as const }]
       : []),
     ...(streakBonus > 0
-      ? [{ label: `Seri Bonusu (${currentStreak} gün × 50)`, value: `+${streakBonus.toLocaleString("tr-TR")}`, color: "#FF6B35", icon: "local_fire_department" as const }]
+      ? [{ label: `Seri Bonusu (${currentStreak} gün × 50)`, value: `+${streakBonus.toLocaleString("tr-TR")}`, color: "#FF6B35", icon: "local-fire-department" as const }]
       : []),
   ];
 
