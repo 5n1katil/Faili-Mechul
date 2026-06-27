@@ -888,14 +888,16 @@ export default function VakalarScreen() {
           setShowExitConfirm(true);
         } else {
           // Timer aktif değil (başlangıç ekranı veya tamamlanmış oyun): geri dön
-          setShowResult(false);
-          resetCurrentGame();
           const src = launchSourceRef.current;
+          setShowResult(false); // önce modalı kapat, sonra navigate
           if (src === "home") {
             router.navigate("/");
+            InteractionManager.runAfterInteractions(() => { resetCurrentGame(); });
           } else if (src === "gorevler") {
             router.navigate("/gorevler");
+            InteractionManager.runAfterInteractions(() => { resetCurrentGame(); });
           } else {
+            resetCurrentGame();
             const savedY = listScrollY.current;
             setTimeout(() => {
               listScrollRef.current?.scrollTo({ y: savedY, animated: false });
@@ -921,21 +923,15 @@ export default function VakalarScreen() {
 
   const handleBackToList = () => {
     const src = launchSourceRef.current;
+    setShowResult(false); // modalı navigate'den önce kapat — animasyon sırasında re-render olmaz
     if (src === "home") {
       router.navigate("/");
-      InteractionManager.runAfterInteractions(() => {
-        setShowResult(false);
-        resetCurrentGame();
-      });
+      InteractionManager.runAfterInteractions(() => { resetCurrentGame(); });
     } else if (src === "gorevler") {
       router.navigate("/gorevler");
-      InteractionManager.runAfterInteractions(() => {
-        setShowResult(false);
-        resetCurrentGame();
-      });
+      InteractionManager.runAfterInteractions(() => { resetCurrentGame(); });
     } else {
       // Vakalar sekmesinde kal — sadece state sıfırla ve scroll pozisyonunu geri yükle.
-      setShowResult(false);
       resetCurrentGame();
       const savedY = listScrollY.current;
       setTimeout(() => {
@@ -962,13 +958,9 @@ export default function VakalarScreen() {
 
   const handleGoHome = () => {
     if (homeTimerRef.current) clearTimeout(homeTimerRef.current);
+    setShowResult(false); // modalı navigate'den önce kapat — geçiş animasyonu temiz kalır
     router.navigate("/");
-    // State'i animasyon bittikten sonra sıfırla — navigasyonla eş zamanlı
-    // sıfırlama, geçiş sırasında anlık liste/sonuç yanıp sönmesine yol açar.
-    InteractionManager.runAfterInteractions(() => {
-      setShowResult(false);
-      resetCurrentGame();
-    });
+    InteractionManager.runAfterInteractions(() => { resetCurrentGame(); });
   };
 
   const handlePlayNext = () => {
