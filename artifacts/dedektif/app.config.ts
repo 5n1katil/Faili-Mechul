@@ -20,7 +20,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
     ios: {
       supportsTablet: false,
       bundleIdentifier: "com.failimechul.dedektif",
-      buildNumber: "3",
+      buildNumber: "4",
       minimumOsVersion: "13.4",
       privacyManifests: {
         NSPrivacyAccessedAPITypes: [
