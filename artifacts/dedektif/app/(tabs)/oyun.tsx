@@ -1892,7 +1892,7 @@ const listStyles = StyleSheet.create({
     borderWidth: 1,
   },
   diffText: { fontFamily: "DroidSerifRegular", fontSize: 11, fontWeight: "700" },
-  puzzleTitle: { fontSize: 17, fontFamily: "UnnaBold", fontWeight: "600", lineHeight: 24 },
+  puzzleTitle: { fontSize: 20, fontFamily: "UnnaBold", fontWeight: "700", lineHeight: 28 },
   puzzleStory: { fontFamily: "DroidSerifRegular", fontSize: 12, lineHeight: 18 },
   solvedBadge: {
     flexDirection: "row",
@@ -2455,7 +2455,7 @@ const gameStyles = StyleSheet.create({
     paddingVertical: 4,
   },
   caseNumber: { fontFamily: "DroidSerifRegular", fontSize: 10, fontWeight: "700", letterSpacing: 2 },
-  puzzleTitle: { fontSize: 19, fontFamily: "UnnaBold", fontWeight: "400", lineHeight: 28 },
+  puzzleTitle: { fontSize: 22, fontFamily: "UnnaBold", fontWeight: "700", lineHeight: 30 },
   storyBox: { borderRadius: 12, borderWidth: 1, padding: 14, gap: 8 },
   storyHeader: { flexDirection: "row", alignItems: "center", gap: 8 },
   storyLabel: { fontFamily: "DroidSerifRegular", fontSize: 11, fontWeight: "700", letterSpacing: 1 },

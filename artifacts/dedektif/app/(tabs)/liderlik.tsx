@@ -336,6 +336,9 @@ export default function LiderlikScreen() {
                   styles.filterTabText,
                   { color: active ? "#1a1205" : "#ffffff" },
                 ]}
+                numberOfLines={1}
+                adjustsFontSizeToFit
+                minimumFontScale={0.8}
               >
                 {tab.label}
               </Text>
@@ -424,8 +427,8 @@ const styles = StyleSheet.create({
   },
   filterBar: {
     flexDirection: "row",
-    gap: 7,
-    paddingHorizontal: 16,
+    gap: 6,
+    paddingHorizontal: 12,
     paddingVertical: 12,
     borderBottomWidth: 1,
   },
@@ -433,10 +436,11 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    paddingVertical: 9,
-    paddingHorizontal: 4,
+    paddingVertical: 10,
+    paddingHorizontal: 2,
     borderRadius: 22,
     borderWidth: 1.5,
+    minWidth: 0,
   },
   filterTabActive: {
     backgroundColor: "#D4A843",
@@ -457,10 +461,11 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   filterTabText: {
-    fontSize: 12,
+    fontSize: 13,
     fontFamily: "UnnaBold",
-    fontWeight: "600",
-    letterSpacing: 0.2,
+    fontWeight: "700",
+    letterSpacing: 0.1,
+    textAlign: "center",
   },
   list: { padding: 12, gap: 0 },
   loadingContainer: {
@@ -495,7 +500,7 @@ const styles = StyleSheet.create({
   },
   rankInfo: { flex: 1, minWidth: 0 },
   nameRow: { flexDirection: "row", alignItems: "center", gap: 5, marginBottom: 3, flexWrap: "nowrap" },
-  rankName: { fontSize: 14, fontFamily: "UnnaBold", fontWeight: "600", flexShrink: 1 },
+  rankName: { fontSize: 16, fontFamily: "UnnaBold", fontWeight: "700", flexShrink: 1 },
   youBadge: {
     paddingHorizontal: 6,
     paddingVertical: 1,
@@ -518,10 +523,10 @@ const styles = StyleSheet.create({
     letterSpacing: 0.2,
   },
   metaRow: { flexDirection: "row", alignItems: "center", gap: 4 },
-  metaText: { fontFamily: "DroidSerifRegular", fontSize: 11 },
+  metaText: { fontFamily: "DroidSerifRegular", fontSize: 12 },
   avgTimeRow: { flexDirection: "row", alignItems: "center", gap: 3, marginTop: 2 },
   avgTimeText: { fontFamily: "DroidSerifRegular", fontSize: 10 },
   rankScore: { alignItems: "flex-end", minWidth: 52 },
-  scoreValue: { fontSize: 18, fontFamily: "UnnaBold", fontWeight: "600" },
-  scoreLabel: { fontFamily: "DroidSerifRegular", fontSize: 10, fontWeight: "500" },
+  scoreValue: { fontSize: 20, fontFamily: "UnnaBold", fontWeight: "700" },
+  scoreLabel: { fontFamily: "DroidSerifRegular", fontSize: 11, fontWeight: "500" },
 });

@@ -22,6 +22,7 @@ import {
   PUZZLES,
   type Difficulty,
 } from "@/data/puzzles";
+import { getPackPuzzleById } from "@/data/packs";
 import Animated, { FadeInDown } from "react-native-reanimated";
 import OnboardingScreen from "@/components/OnboardingScreen";
 import SettingsScreen from "@/components/SettingsScreen";
@@ -232,7 +233,7 @@ export default function HomeScreen() {
                 <Text style={[styles.listSectionLabel, { color: colors.mutedForeground, marginBottom: 6 }]}>Son çözülenler</Text>
                 {recentSolves.map((h, i) => {
                   const puzzle = PUZZLES.find((p) => p.id === h.puzzleId);
-                  const title = puzzle?.title ?? h.puzzleId;
+                  const title = puzzle?.title ?? getPackPuzzleById(h.puzzleId)?.title ?? h.puzzleId;
                   const mins = Math.floor(h.timeSeconds / 60);
                   const secs = h.timeSeconds % 60;
                   return (
@@ -887,7 +888,7 @@ const styles = StyleSheet.create({
     borderWidth: 1.5, borderColor: "#D4A84355",
   },
   greetingSmall: { fontFamily: "DroidSerifRegular", fontSize: 11, letterSpacing: 0.3, marginBottom: 1 },
-  appTitle: { fontSize: 22, fontFamily: "UnnaBold", fontWeight: "700", letterSpacing: 0.6, color: "#D4A843" },
+  appTitle: { fontSize: 26, fontFamily: "UnnaBold", fontWeight: "700", letterSpacing: 0.6, color: "#D4A843" },
   appSubtitle: { fontFamily: "DroidSerifRegular", fontSize: 11, letterSpacing: 0.5, marginTop: 1 },
   headerRight: { flexDirection: "row", alignItems: "center", gap: 8 },
   iconBtn: {
@@ -907,17 +908,19 @@ const styles = StyleSheet.create({
   },
   dailyTopLine: { height: 2 },
   dailyCardInner: { padding: 16, gap: 13 },
-  dailyTop: { flexDirection: "row", alignItems: "center", gap: 8 },
+  dailyTop: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 8 },
   dailyBadge: {
     flexDirection: "row",
     alignItems: "center",
-    borderRadius: 5,
-    paddingHorizontal: 8,
-    paddingVertical: 3,
+    justifyContent: "center",
+    borderRadius: 6,
+    paddingHorizontal: 12,
+    paddingVertical: 5,
     gap: 4,
     backgroundColor: "#D4A843",
+    alignSelf: "flex-start",
   },
-  dailyBadgeText: { fontSize: 12, fontFamily: "UnnaBold", fontWeight: "700", letterSpacing: 1.0, color: "#0F1117" },
+  dailyBadgeText: { fontSize: 14, fontFamily: "UnnaBold", fontWeight: "700", letterSpacing: 1.2, color: "#0F1117" },
   doneBadge: {
     flexDirection: "row",
     alignItems: "center",
