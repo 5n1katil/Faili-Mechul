@@ -471,7 +471,7 @@ export default function GorevlerScreen() {
     const puzzle = getMissionTargetPuzzle(mission, completedPuzzleIds);
     startPuzzle(puzzle);
     setPendingNavSource("gorevler");
-    router.push("/oyun");
+    router.navigate("/(tabs)/oyun");
   };
 
   const dailyByTier = {

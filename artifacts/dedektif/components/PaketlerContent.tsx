@@ -101,7 +101,7 @@ export default function PaketlerContent({ embedded = false }: { embedded?: boole
       if (!puzzle) return;
       startPuzzle(puzzle);
       if (!embedded) {
-        router.push("/(tabs)/oyun");
+        router.navigate("/(tabs)/oyun");
       }
     },
     [startPuzzle, router, embedded]

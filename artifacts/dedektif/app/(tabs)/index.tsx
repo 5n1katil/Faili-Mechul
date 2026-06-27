@@ -133,7 +133,7 @@ export default function HomeScreen() {
     unlockMusicFromGesture();
     startDailyPuzzle();
     setPendingNavSource("home");
-    router.push("/(tabs)/oyun");
+    router.navigate("/(tabs)/oyun");
   };
 
   const allEntries = [
