@@ -403,9 +403,9 @@ function TabButton3D({
                 elevation: 12,
               }
             : {
-                backgroundColor: "#12151E",
-                borderColor: "#FFFFFF12",
-                borderBottomWidth: StyleSheet.hairlineWidth,
+                backgroundColor: "#1C2130",
+                borderColor: "#FFFFFF28",
+                borderBottomWidth: 1.5,
                 shadowColor: "#000",
                 shadowOpacity: 0.4,
                 shadowRadius: 4,
@@ -414,8 +414,8 @@ function TabButton3D({
               },
         ]}
       >
-        <MaterialIcons name={icon} size={17} color={active ? activeColor : "#666888"} />
-        <Text style={[listStyles.tabBtnText3d, { color: active ? activeColor : "#888AAA", fontFamily: "DroidSerifRegular", fontSize: 15, fontWeight: active ? "700" : "600" }]}>
+        <MaterialIcons name={icon} size={17} color={active ? activeColor : "#8899BB"} />
+        <Text style={[listStyles.tabBtnText3d, { color: active ? activeColor : "#AAAACC", fontFamily: "DroidSerifRegular", fontSize: 16, fontWeight: active ? "700" : "600" }]}>
           {label}
         </Text>
         {count !== undefined && count > 0 && (
@@ -671,8 +671,6 @@ function PuzzleCard({
         <Text
           style={[listStyles.puzzleTitle, { color: "#D4A843" }]}
           numberOfLines={2}
-          adjustsFontSizeToFit
-          minimumFontScale={0.65}
         >
           {puzzle.title}
         </Text>

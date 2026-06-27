@@ -461,7 +461,7 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   filterTabText: {
-    fontSize: 13,
+    fontSize: 15,
     fontFamily: "UnnaBold",
     fontWeight: "700",
     letterSpacing: 0.1,

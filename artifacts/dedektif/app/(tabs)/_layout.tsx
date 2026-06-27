@@ -60,6 +60,8 @@ function ClassicTabLayout() {
 
   return (
     <Tabs
+      // @ts-expect-error sceneContainerStyle is a valid RN BottomTab prop at runtime; Expo Router types lag behind
+      sceneContainerStyle={{ backgroundColor: "#0F1117" }}
       screenOptions={{
         headerShown: false,
         animation: "fade",

@@ -891,7 +891,7 @@ const styles = StyleSheet.create({
   greetingSmall: { fontFamily: "DroidSerifRegular", fontSize: 11, letterSpacing: 0.3, marginBottom: 1 },
   appTitle: { fontSize: 26, fontFamily: "UnnaBold", fontWeight: "700", letterSpacing: 0.6, color: "#D4A843" },
   appSubtitle: { fontFamily: "DroidSerifRegular", fontSize: 11, letterSpacing: 0.5, marginTop: 1 },
-  headerRight: { flexDirection: "row", alignItems: "center", gap: 8 },
+  headerRight: { flexDirection: "row", alignItems: "center", gap: 16 },
   iconBtn: {
     width: 38,
     height: 38,
@@ -925,13 +925,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 6,
-    paddingHorizontal: 12,
-    paddingVertical: 5,
+    paddingHorizontal: 14,
+    paddingVertical: 6,
     gap: 4,
     backgroundColor: "#D4A843",
-    alignSelf: "flex-start",
   },
-  dailyBadgeText: { fontSize: 14, fontFamily: "UnnaBold", fontWeight: "700", letterSpacing: 1.2, color: "#0F1117" },
+  dailyBadgeText: { fontSize: 16, fontFamily: "UnnaBold", fontWeight: "700", letterSpacing: 1.2, color: "#0F1117", textAlign: "center" },
   doneBadge: {
     flexDirection: "row",
     alignItems: "center",
@@ -996,11 +995,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flexShrink: 0,
   },
-  missionsTitle: { fontSize: 16, fontFamily: "UnnaBold", fontWeight: "700", color: "#FFFFFF", letterSpacing: 0.1 },
+  missionsTitle: { fontSize: 18, fontFamily: "UnnaBold", fontWeight: "700", color: "#FFFFFF", letterSpacing: 0.1 },
   missionsSubtitle: { fontSize: 13, fontFamily: "DroidSerifRegular", marginTop: 2 },
   missionsRight: { flexDirection: "row", alignItems: "center", gap: 6, flexShrink: 0 },
   missionsDots: { flexDirection: "row", gap: 4, alignItems: "center" },
-  missionDot: { width: 7, height: 7, borderRadius: 3.5 },
+  missionDot: { width: 11, height: 11, borderRadius: 5.5 },
   missionsDotLabel: { fontFamily: "DroidSerifRegular", fontSize: 11, color: "rgba(255,255,255,0.35)", fontVariant: ["tabular-nums"] },
 
   /* ─── Stats ─── */
@@ -1052,7 +1051,7 @@ const styles = StyleSheet.create({
     borderColor: "#D4A84340",
     marginLeft: 68,
   },
-  rankBadgeText: { fontSize: 15, fontFamily: "UnnaBold", color: "#D4A843", letterSpacing: 0.2 },
+  rankBadgeText: { fontSize: 17, fontFamily: "UnnaBold", color: "#D4A843", letterSpacing: 0.2 },
   rankPosition: { fontSize: 32, fontFamily: "UnnaBold", color: "#D4A843", letterSpacing: -0.5 },
   rankUserRow: { flexDirection: "row", alignItems: "center", gap: 10 },
   rankUserAvatar: {
@@ -1120,5 +1119,5 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  tipsBtnText: { flex: 1, fontSize: 16, fontFamily: "UnnaBold", fontWeight: "700", color: "rgba(255,255,255,0.85)" },
+  tipsBtnText: { flex: 1, fontSize: 18, fontFamily: "UnnaBold", fontWeight: "700", color: "rgba(255,255,255,0.85)" },
 });
