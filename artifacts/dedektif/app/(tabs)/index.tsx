@@ -428,19 +428,19 @@ export default function HomeScreen() {
           <View style={styles.headerRight}>
             <Pressable
               onPress={() => { unlockMusicFromGesture(); setShowHowToPlay(true); }}
-              style={[styles.iconBtn, { backgroundColor: `${colors.primary}12`, borderColor: `${colors.primary}30` }]}
+              style={styles.iconBtnImg}
               hitSlop={8}
               accessibilityLabel="Nasıl Oynanır"
             >
-              <MaterialIcons name="help-outline" size={20} color={colors.primary} />
+              <Image source={require("../../assets/images/icon_nasil_oynanir.png")} style={styles.headerIconImg} resizeMode="contain" />
             </Pressable>
             <Pressable
               onPress={handleSettingsPress}
-              style={[styles.iconBtn, { backgroundColor: "#FFFFFF08", borderColor: "#FFFFFF14" }]}
+              style={styles.iconBtnImg}
               hitSlop={8}
               accessibilityLabel="Ayarlar"
             >
-              <MaterialIcons name="settings" size={20} color="rgba(255,255,255,0.45)" />
+              <Image source={require("../../assets/images/icon_ayarlar.png")} style={styles.headerIconImg} resizeMode="contain" />
             </Pressable>
           </View>
         </View>
@@ -898,6 +898,16 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     alignItems: "center",
     justifyContent: "center",
+  },
+  iconBtnImg: {
+    width: 44,
+    height: 44,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  headerIconImg: {
+    width: 44,
+    height: 44,
   },
 
   /* ─── Daily Card ─── */

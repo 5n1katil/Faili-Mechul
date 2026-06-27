@@ -1,6 +1,7 @@
 import React, { useCallback, useRef, useState } from "react";
 import type { ComponentProps } from "react";
 import {
+  Image,
   Platform,
   Pressable,
   ScrollView,
@@ -119,6 +120,7 @@ function BadgeItem({ badgeId, colors }: { badgeId: string; colors: ReturnType<ty
 
 function SettingsRow({
   icon,
+  customIcon,
   title,
   subtitle,
   right,
@@ -126,6 +128,7 @@ function SettingsRow({
   hasDivider,
 }: {
   icon: MaterialIconName;
+  customIcon?: ReturnType<typeof require>;
   title: string;
   subtitle?: string;
   right?: React.ReactNode;
@@ -135,8 +138,12 @@ function SettingsRow({
   const colors = useColors();
   const inner = (
     <View style={[styles.settingsRowInner, hasDivider && { borderBottomWidth: 1, borderBottomColor: colors.border }]}>
-      <View style={[styles.settingsIcon, { backgroundColor: `${colors.primary}18` }]}>
-        <MaterialIcons name={icon} size={20} color={colors.primary} />
+      <View style={[styles.settingsIcon, { backgroundColor: customIcon ? "transparent" : `${colors.primary}18` }]}>
+        {customIcon ? (
+          <Image source={customIcon} style={{ width: 40, height: 40 }} resizeMode="contain" />
+        ) : (
+          <MaterialIcons name={icon} size={20} color={colors.primary} />
+        )}
       </View>
       <View style={styles.settingsInfo}>
         <Text style={[styles.settingsTitle, { color: colors.foreground }]}>{title}</Text>
@@ -440,6 +447,7 @@ export default function ProfilScreen() {
             >
               <SettingsRow
                 icon="settings"
+                customIcon={require("../../assets/images/icon_ayarlar.png")}
                 title="Ayarlar"
                 subtitle="Müzik, ses efektleri, gizlilik, premium"
                 right={<MaterialIcons name="chevron-right" size={20} color={colors.secondaryForeground} />}
