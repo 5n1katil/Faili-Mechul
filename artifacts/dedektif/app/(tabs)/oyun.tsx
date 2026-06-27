@@ -1269,7 +1269,7 @@ export default function VakalarScreen() {
                   {/* Premium Vakalar header — yalnızca satın alınmamışsa göster */}
                   {!isPremium && (
                     <Animated.View entering={FadeInDown.delay(0).springify()} style={listStyles.premVakalarHeader}>
-                      <Image source={require("@/assets/images/premium-icon.png")} style={{ width: 26, height: 26 }} resizeMode="contain" />
+                      <Image source={require("@/assets/images/premium-vakalar-icon.png")} style={{ width: 30, height: 30 }} resizeMode="contain" />
                       <Text style={[listStyles.premVakalarTitle, { color: "#D4A843" }]}>Premium Vakalar</Text>
                       <View style={[listStyles.premVakalarCount, { backgroundColor: "#D4A84330", borderColor: "#D4A84360" }]}>
                         <Text style={[listStyles.premVakalarCountText, { color: "#D4A843" }]}>{premiumPuzzles.length} vaka</Text>
@@ -1326,7 +1326,7 @@ export default function VakalarScreen() {
                           <View style={{ flex: 1, paddingVertical: 13, paddingHorizontal: 14, gap: 10 }}>
                             <View style={listStyles.standartCardTop}>
                               <View style={[listStyles.heroCardIcon, { backgroundColor: "#C8581A18", width: 40, height: 40 }]}>
-                                <MaterialIcons name="workspace-premium" size={22} color="#C8581A" />
+                                <Image source={require("@/assets/images/premium-vakalar-icon.png")} style={{ width: 28, height: 28 }} resizeMode="contain" />
                               </View>
                               <View style={{ flex: 1 }}>
                                 <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>

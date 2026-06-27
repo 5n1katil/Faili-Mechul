@@ -2,6 +2,7 @@ import React, { useState, useCallback, useRef, useEffect } from "react";
 import {
   ActivityIndicator,
   Alert,
+  Image,
   LayoutAnimation,
   Linking,
   Platform,
@@ -124,7 +125,7 @@ export default function PaketlerContent({ embedded = false }: { embedded?: boole
     >
       {/* Premium Paketler header — matches Premium Vakalar style */}
       <View style={styles.premHeader}>
-        <MaterialIcons name="workspace-premium" size={22} color="#D4A843" />
+        <Image source={require("@/assets/images/premium-paketler-icon.png")} style={{ width: 30, height: 30 }} resizeMode="contain" />
         <Text style={styles.premHeaderTitle}>Premium Paketler</Text>
         <View style={styles.premHeaderBadge}>
           <Text style={styles.premHeaderBadgeText}>{PURCHASABLE_PACKS.length} Paket</Text>
@@ -347,7 +348,7 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   premHeaderTitle: {
-    fontSize: 20,
+    fontSize: 24,
     fontFamily: "UnnaBold",
     fontWeight: "700",
     letterSpacing: 0.4,
