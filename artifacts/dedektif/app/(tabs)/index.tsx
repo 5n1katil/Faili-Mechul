@@ -23,7 +23,7 @@ import {
   type Difficulty,
 } from "@/data/puzzles";
 import { getPackPuzzleById } from "@/data/packs";
-import Animated, { FadeInDown } from "react-native-reanimated";
+import Animated, { FadeInDown, useSharedValue, useAnimatedStyle, withSpring } from "react-native-reanimated";
 import OnboardingScreen from "@/components/OnboardingScreen";
 import SettingsScreen from "@/components/SettingsScreen";
 import { unlockMusicFromGesture } from "@/utils/backgroundMusic";
@@ -78,6 +78,8 @@ export default function HomeScreen() {
   const countdown = useDailyCountdown();
   const { getMissionProgress, isAwarded } = useMission();
   const scrollRef = useRef<import("react-native").ScrollView>(null);
+  const dailyCardScale = useSharedValue(1);
+  const dailyCardAnimStyle = useAnimatedStyle(() => ({ transform: [{ scale: dailyCardScale.value }] }));
 
   useFocusEffect(
     useCallback(() => {
@@ -455,12 +457,19 @@ export default function HomeScreen() {
           showsVerticalScrollIndicator={false}
         >
           {/* Daily Puzzle Card */}
-          <Animated.View entering={FadeInDown.delay(80).springify()}>
+          <Animated.View entering={FadeInDown.delay(80).springify()} style={dailyCardAnimStyle}>
             <Pressable
               onPress={handleDailyPlay}
-              style={[
+              onPressIn={() => { dailyCardScale.value = withSpring(0.97, { damping: 15, stiffness: 400 }); }}
+              onPressOut={() => { dailyCardScale.value = withSpring(1, { damping: 12, stiffness: 280 }); }}
+              style={({ pressed }) => [
                 styles.dailyCard,
-                { backgroundColor: wonToday ? "#192310" : "#1E2540", borderColor: wonToday ? "#D4A84355" : "#D4A84388" },
+                {
+                  backgroundColor: pressed
+                    ? wonToday ? "#1F2D15" : "#252E55"
+                    : wonToday ? "#192310" : "#1E2540",
+                  borderColor: wonToday ? "#D4A84355" : "#D4A84388",
+                },
               ]}
             >
               {/* Subtle top gradient line */}

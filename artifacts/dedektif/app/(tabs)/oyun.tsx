@@ -609,15 +609,21 @@ function PuzzleCard({
 }) {
   const colors = useColors();
   const diffColor = getDifficultyColor(puzzle.difficulty as Difficulty);
+  const pressScale = useSharedValue(1);
+  const pressStyle = useAnimatedStyle(() => ({ transform: [{ scale: pressScale.value }] }));
   return (
-    <Animated.View entering={FadeInDown.delay(delay).springify()}>
+    <Animated.View entering={FadeInDown.delay(delay).springify()} style={pressStyle}>
       <Pressable
         testID="puzzle-card"
         onPress={onPress}
+        onPressIn={() => { pressScale.value = withSpring(0.97, { damping: 15, stiffness: 400 }); }}
+        onPressOut={() => { pressScale.value = withSpring(1, { damping: 12, stiffness: 280 }); }}
         style={({ pressed }) => [
           listStyles.puzzleCard,
           {
-            backgroundColor: colors.card,
+            backgroundColor: pressed
+              ? locked ? "#1E1A28" : completed ? `${colors.success}14` : `${diffColor}18`
+              : completed && !locked ? `${colors.success}08` : colors.card,
             borderColor: completed
               ? `${colors.success}55`
               : locked
@@ -625,9 +631,7 @@ function PuzzleCard({
               : `${diffColor}33`,
             borderLeftColor: completed ? colors.success : locked ? "#D4A843" : diffColor,
             borderLeftWidth: 3.5,
-            opacity: pressed ? 0.78 : 1,
           },
-          completed && !locked && { backgroundColor: `${colors.success}08` },
           locked && { borderStyle: "dashed" as const },
         ]}
       >
@@ -723,9 +727,9 @@ function PuzzleCard({
             )}
           </View>
         ) : (
-          <View style={[listStyles.playRow, { borderTopColor: `${diffColor}44`, backgroundColor: `${diffColor}0A` }]}>
-            <Text style={[listStyles.playText, { color: diffColor }]}>Oynamak için dokun</Text>
-            <MaterialIcons name="chevron-right" size={20} color={diffColor} />
+          <View style={[listStyles.playRow, { borderTopColor: `${diffColor}55`, backgroundColor: `${diffColor}16` }]}>
+            <Text style={[listStyles.playText, { color: diffColor, fontWeight: "700" }]}>Oynamak için dokun</Text>
+            <MaterialIcons name="chevron-right" size={22} color={diffColor} />
           </View>
         )}
       </Pressable>
@@ -1815,6 +1819,8 @@ const listStyles = StyleSheet.create({
   tabBarInner: {
     flexDirection: "row",
     gap: 8,
+    alignItems: "stretch",
+    minHeight: 70,
   },
   tabBtn: {
     flex: 1,
@@ -1906,7 +1912,7 @@ const listStyles = StyleSheet.create({
   },
   diffText: { fontFamily: "DroidSerifRegular", fontSize: 11, fontWeight: "700" },
   puzzleTitle: { fontSize: 20, fontFamily: "UnnaBold", fontWeight: "700", lineHeight: 28 },
-  puzzleStory: { fontFamily: "DroidSerifRegular", fontSize: 12, lineHeight: 18 },
+  puzzleStory: { fontFamily: "DroidSerifRegular", fontSize: 13, lineHeight: 20, minHeight: 40 },
   solvedBadge: {
     flexDirection: "row",
     alignItems: "center",
