@@ -7,6 +7,7 @@ import {
   Text,
   View,
 } from "react-native";
+import Animated, { useSharedValue, useAnimatedStyle, withSpring } from "react-native-reanimated";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useColors } from "@/hooks/useColors";
 import { getDifficultyColor, getDifficultyLabel, type Difficulty } from "@/data/puzzles";
@@ -28,6 +29,11 @@ export default function PuzzleStartModal({ visible, puzzle, isRanked, onStart, o
   const colors = useColors();
   const diffColor = getDifficultyColor(puzzle.difficulty as Difficulty);
   const diffLabel = getDifficultyLabel(puzzle.difficulty as Difficulty);
+
+  const startScale = useSharedValue(1);
+  const startStyle = useAnimatedStyle(() => ({ transform: [{ scale: startScale.value }] }));
+  const cancelScale = useSharedValue(1);
+  const cancelStyle = useAnimatedStyle(() => ({ transform: [{ scale: cancelScale.value }] }));
 
   return (
     <Modal
@@ -105,37 +111,54 @@ export default function PuzzleStartModal({ visible, puzzle, isRanked, onStart, o
           )}
 
           <View style={styles.buttons}>
-            <Pressable
-              testID="start-game-btn"
-              onPress={onStart}
-              style={({ pressed }) => [
-                styles.startBtn,
-                {
-                  backgroundColor: isRanked ? "#D4A843" : colors.card,
-                  borderColor: isRanked ? "#D4A843" : colors.border,
-                  opacity: pressed ? 0.85 : 1,
-                },
-              ]}
-            >
-              <MaterialIcons
-                name={isRanked ? "play-arrow" : "replay"}
-                size={20}
-                color={isRanked ? "#0F1117" : colors.foreground}
-              />
-              <Text style={[styles.startBtnText, { color: isRanked ? "#0F1117" : colors.foreground }]}>
-                {isRanked ? "Oyunu Başlat" : "Oynamaya Devam Et"}
-              </Text>
-            </Pressable>
+            {/* ── Oyunu Başlat ── */}
+            <Animated.View style={startStyle}>
+              <Pressable
+                testID="start-game-btn"
+                onPress={onStart}
+                onPressIn={() => { startScale.value = withSpring(0.96, { damping: 15, stiffness: 400 }); }}
+                onPressOut={() => { startScale.value = withSpring(1, { damping: 12, stiffness: 280 }); }}
+                style={({ pressed }) => [
+                  styles.startBtn,
+                  {
+                    backgroundColor: pressed
+                      ? isRanked ? "#B8922F" : colors.border
+                      : isRanked ? "#D4A843" : colors.card,
+                    borderColor: isRanked
+                      ? pressed ? "#C8A040" : "#D4A843"
+                      : colors.border,
+                  },
+                ]}
+              >
+                <MaterialIcons
+                  name={isRanked ? "play-arrow" : "replay"}
+                  size={22}
+                  color={isRanked ? "#0F1117" : colors.foreground}
+                />
+                <Text style={[styles.startBtnText, { color: isRanked ? "#0F1117" : colors.foreground }]}>
+                  {isRanked ? "Oyunu Başlat" : "Oynamaya Devam Et"}
+                </Text>
+              </Pressable>
+            </Animated.View>
 
-            <Pressable
-              onPress={onCancel}
-              style={({ pressed }) => [
-                styles.cancelBtn,
-                { borderColor: colors.border, opacity: pressed ? 0.7 : 1 },
-              ]}
-            >
-              <Text style={[styles.cancelBtnText, { color: colors.mutedForeground }]}>Geri Dön</Text>
-            </Pressable>
+            {/* ── Geri Dön ── */}
+            <Animated.View style={cancelStyle}>
+              <Pressable
+                onPress={onCancel}
+                onPressIn={() => { cancelScale.value = withSpring(0.96, { damping: 15, stiffness: 400 }); }}
+                onPressOut={() => { cancelScale.value = withSpring(1, { damping: 12, stiffness: 280 }); }}
+                style={({ pressed }) => [
+                  styles.cancelBtn,
+                  {
+                    backgroundColor: pressed ? "#FFFFFF0E" : "#FFFFFF08",
+                    borderColor: pressed ? "#FFFFFF30" : "#FFFFFF18",
+                  },
+                ]}
+              >
+                <MaterialIcons name="chevron-left" size={18} color={colors.foreground} />
+                <Text style={[styles.cancelBtnText, { color: colors.foreground }]}>Geri Dön</Text>
+              </Pressable>
+            </Animated.View>
           </View>
         </View>
       </View>
@@ -252,15 +275,18 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     borderRadius: 12,
     borderWidth: 1.5,
-    paddingVertical: 14,
+    paddingVertical: 15,
     gap: 8,
   },
-  startBtnText: { fontFamily: "UnnaBold", fontSize: 16 },
+  startBtnText: { fontFamily: "UnnaBold", fontSize: 17, fontWeight: "700" },
   cancelBtn: {
+    flexDirection: "row",
     alignItems: "center",
-    paddingVertical: 12,
+    justifyContent: "center",
+    paddingVertical: 13,
     borderRadius: 12,
     borderWidth: 1,
+    gap: 4,
   },
-  cancelBtnText: { fontFamily: "DroidSerifRegular", fontSize: 14, fontWeight: "600" },
+  cancelBtnText: { fontFamily: "DroidSerifRegular", fontSize: 15, fontWeight: "600" },
 });

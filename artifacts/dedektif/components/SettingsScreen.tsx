@@ -48,7 +48,7 @@ function SectionHeader({
   const accent = iconColor ?? colors.primary;
   return (
     <View style={styles.sectionHeader}>
-      <MaterialIcons name={icon} size={16} color={accent} />
+      <MaterialIcons name={icon} size={18} color={accent} />
       <Text style={[styles.sectionLabel, { color: accent }]}>{label}</Text>
       <View style={[styles.sectionLine, { backgroundColor: colors.border }]} />
     </View>
@@ -392,10 +392,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 8,
-    marginTop: 4,
+    marginTop: 10,
+    marginBottom: 2,
   },
-  sectionLabel: { fontSize: 11, fontFamily: "UnnaBold", fontWeight: "600", letterSpacing: 0.8 },
-  sectionLine: { flex: 1, height: 1 },
+  sectionLabel: { fontSize: 13, fontFamily: "UnnaBold", fontWeight: "700", letterSpacing: 1.4 },
+  sectionLine: { flex: 1, height: StyleSheet.hairlineWidth * 2 },
   card: {
     borderRadius: 14,
     borderWidth: 1,
