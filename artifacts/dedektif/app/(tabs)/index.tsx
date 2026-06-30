@@ -680,7 +680,7 @@ export default function HomeScreen() {
                       {personAbove.name}
                     </Text>
                     <View style={{ flex: 1 }} />
-                    <Text style={[styles.rankAheadScore, { color: "#D4A843" }]}>
+                    <Text style={[styles.rankAheadScore, { color: "#D4A843" }]} numberOfLines={1}>
                       {scoreDiff.toLocaleString("tr-TR")} puan gerisindesin
                     </Text>
                   </View>
