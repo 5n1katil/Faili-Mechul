@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import {
   Image,
   Modal,
@@ -34,6 +34,11 @@ export default function PuzzleStartModal({ visible, puzzle, isRanked, onStart, o
   const startStyle = useAnimatedStyle(() => ({ transform: [{ scale: startScale.value }] }));
   const cancelScale = useSharedValue(1);
   const cancelStyle = useAnimatedStyle(() => ({ transform: [{ scale: cancelScale.value }] }));
+  const cancelPressedRef = useRef(false);
+
+  useEffect(() => {
+    if (visible) cancelPressedRef.current = false;
+  }, [visible]);
 
   return (
     <Modal
@@ -144,7 +149,11 @@ export default function PuzzleStartModal({ visible, puzzle, isRanked, onStart, o
             {/* ── Geri Dön ── */}
             <Animated.View style={cancelStyle}>
               <Pressable
-                onPress={onCancel}
+                onPress={() => {
+                  if (cancelPressedRef.current) return;
+                  cancelPressedRef.current = true;
+                  onCancel();
+                }}
                 onPressIn={() => { cancelScale.value = withSpring(0.96, { damping: 15, stiffness: 400 }); }}
                 onPressOut={() => { cancelScale.value = withSpring(1, { damping: 12, stiffness: 280 }); }}
                 style={({ pressed }) => [

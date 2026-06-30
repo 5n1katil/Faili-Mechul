@@ -61,6 +61,7 @@ import PaketlerContent from "@/components/PaketlerContent";
 import type { EntityInfo } from "@/components/EntityInfoSheet";
 import CustomAvatar from "@/components/CustomAvatar";
 import Animated, {
+  FadeIn,
   FadeInDown,
   useAnimatedStyle,
   useSharedValue,
@@ -597,6 +598,7 @@ function PuzzleCard({
   locked,
   showReplay,
   premiumBadge,
+  noEnter,
 }: {
   puzzle: (typeof PUZZLES)[0];
   onPress: () => void;
@@ -606,13 +608,14 @@ function PuzzleCard({
   locked?: boolean;
   showReplay?: boolean;
   premiumBadge?: boolean;
+  noEnter?: boolean;
 }) {
   const colors = useColors();
   const diffColor = getDifficultyColor(puzzle.difficulty as Difficulty);
   const pressScale = useSharedValue(1);
   const pressStyle = useAnimatedStyle(() => ({ transform: [{ scale: pressScale.value }] }));
   return (
-    <Animated.View entering={FadeInDown.delay(delay).springify()} style={pressStyle}>
+    <Animated.View entering={noEnter ? undefined : FadeInDown.delay(delay).springify()} style={pressStyle}>
       <Pressable
         testID="puzzle-card"
         onPress={onPress}
@@ -1492,17 +1495,20 @@ export default function VakalarScreen() {
                   </Text>
                 </View>
               ) : (
-                filteredActive.map((puzzle, i) => (
+                <Animated.View key={diffFilter} entering={FadeIn.duration(220)}>
+                {filteredActive.map((puzzle) => (
                   <PuzzleCard
                     key={puzzle.id}
                     puzzle={puzzle}
                     onPress={() => startPuzzle(puzzle)}
-                    delay={80 + i * 35}
+                    delay={0}
                     completed={false}
                     playStats={null}
                     locked={false}
+                    noEnter
                   />
-                ))
+                ))}
+              </Animated.View>
               )}
             </ScrollView>
           )}
@@ -1668,7 +1674,12 @@ export default function VakalarScreen() {
                 </Pressable>
               </View>
             </View>
-            <Text style={[gameStyles.puzzleTitle, { color: colors.foreground }]}>
+            <Text
+              style={[gameStyles.puzzleTitle, { color: colors.foreground }]}
+              numberOfLines={2}
+              adjustsFontSizeToFit
+              minimumFontScale={0.7}
+            >
               {puzzle.title}
             </Text>
           </View>
@@ -2474,12 +2485,12 @@ const gameStyles = StyleSheet.create({
     paddingVertical: 4,
   },
   caseNumber: { fontFamily: "DroidSerifRegular", fontSize: 10, fontWeight: "700", letterSpacing: 2 },
-  puzzleTitle: { fontSize: 22, fontFamily: "UnnaBold", fontWeight: "700", lineHeight: 30 },
+  puzzleTitle: { fontSize: 26, fontFamily: "UnnaBold", fontWeight: "700", lineHeight: 34 },
   storyBox: { borderRadius: 12, borderWidth: 1, padding: 14, gap: 8 },
   storyHeader: { flexDirection: "row", alignItems: "center", gap: 8 },
   storyLabel: { fontFamily: "DroidSerifRegular", fontSize: 11, fontWeight: "700", letterSpacing: 1 },
   storyText: { fontFamily: "DroidSerifRegular", fontSize: 14, lineHeight: 22 },
-  sectionTitle: { fontSize: 16, fontFamily: "UnnaBold", fontWeight: "400", marginBottom: 8 },
+  sectionTitle: { fontSize: 21, fontFamily: "UnnaBold", fontWeight: "700", marginBottom: 10, letterSpacing: 0.2 },
   gridContainer: { borderRadius: 14, borderWidth: 1, padding: 10, overflow: "hidden" },
   gridContainerWeb: {
     maxWidth: 560,

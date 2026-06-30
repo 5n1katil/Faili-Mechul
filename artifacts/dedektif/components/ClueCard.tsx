@@ -4388,7 +4388,7 @@ export default function ClueCard({
       >
         <View style={styles.header}>
           <View style={[styles.iconBadge, { backgroundColor: `${meta.color}22` }]}>
-            <MaterialIcons name={meta.icon} size={14} color={meta.color} />
+            <MaterialIcons name={meta.icon} size={16} color={meta.color} />
           </View>
           <Text style={[styles.clueLabel, { color: meta.color }]}>
             {meta.label}
@@ -4432,15 +4432,15 @@ const styles = StyleSheet.create({
     gap: 6,
   },
   iconBadge: {
-    width: 24,
-    height: 24,
-    borderRadius: 12,
+    width: 28,
+    height: 28,
+    borderRadius: 14,
     alignItems: "center",
     justifyContent: "center",
   },
   clueLabel: {
     fontFamily: "DroidSerifRegular",
-    fontSize: 11,
+    fontSize: 13,
     fontWeight: "700",
     letterSpacing: 0.5,
   },
@@ -4462,8 +4462,8 @@ const styles = StyleSheet.create({
   },
   clueNumber: {
     fontFamily: "DroidSerifRegular",
-    fontSize: 12,
-    fontWeight: "500",
+    fontSize: 13,
+    fontWeight: "600",
     flex: 1,
   },
   clueText: {

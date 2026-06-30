@@ -133,9 +133,9 @@ export default function HomeScreen() {
 
   const handleDailyPlay = () => {
     unlockMusicFromGesture();
-    startDailyPuzzle();
     setPendingNavSource("home");
     router.navigate("/(tabs)/oyun");
+    requestAnimationFrame(() => startDailyPuzzle());
   };
 
   const allEntries = [
@@ -693,8 +693,8 @@ export default function HomeScreen() {
               </View>
 
               <View style={[styles.rankCardFooter, { borderTopColor: colors.border }]}>
-                <Text style={[styles.rankCardFooterText, { color: colors.mutedForeground }]}>Tam sıralamayı gör</Text>
-                <MaterialIcons name="chevron-right" size={16} color={colors.mutedForeground} />
+                <Text style={[styles.rankCardFooterText, { color: "#FFFFFF" }]}>Tam sıralamayı gör</Text>
+                <MaterialIcons name="chevron-right" size={18} color="#FFFFFF" />
               </View>
             </Pressable>
           </Animated.View>
@@ -900,7 +900,7 @@ const styles = StyleSheet.create({
   greetingSmall: { fontFamily: "DroidSerifRegular", fontSize: 11, letterSpacing: 0.3, marginBottom: 1 },
   appTitle: { fontSize: 26, fontFamily: "UnnaBold", fontWeight: "700", letterSpacing: 0.6, color: "#D4A843" },
   appSubtitle: { fontFamily: "DroidSerifRegular", fontSize: 11, letterSpacing: 0.5, marginTop: 1 },
-  headerRight: { flexDirection: "row", alignItems: "center", gap: 6 },
+  headerRight: { flexDirection: "row", alignItems: "center", gap: 16 },
   iconBtn: {
     width: 38,
     height: 38,
@@ -968,10 +968,10 @@ const styles = StyleSheet.create({
     paddingTop: 11,
   },
   countdownLeft: { flexDirection: "row", alignItems: "center", gap: 5 },
-  countdownLabel: { fontFamily: "DroidSerifRegular", fontSize: 11, color: "rgba(212,168,67,0.5)" },
-  countdownValue: { fontFamily: "DroidSerifRegular", fontSize: 13, fontWeight: "700", color: "#D4A843", fontVariant: ["tabular-nums"] },
-  diffBadge: { borderRadius: 5, paddingHorizontal: 8, paddingVertical: 3, borderWidth: 1 },
-  diffText: { fontFamily: "DroidSerifRegular", fontSize: 11, fontWeight: "700" },
+  countdownLabel: { fontFamily: "DroidSerifRegular", fontSize: 13, color: "rgba(212,168,67,0.75)" },
+  countdownValue: { fontFamily: "DroidSerifRegular", fontSize: 16, fontWeight: "700", color: "#D4A843", fontVariant: ["tabular-nums"] },
+  diffBadge: { borderRadius: 5, paddingHorizontal: 9, paddingVertical: 4, borderWidth: 1 },
+  diffText: { fontFamily: "DroidSerifRegular", fontSize: 12, fontWeight: "700" },
   playCta: {
     flexDirection: "row",
     alignItems: "center",
@@ -1027,7 +1027,7 @@ const styles = StyleSheet.create({
   statAccent: { position: "absolute", top: 0, left: 0, right: 0, height: 2 },
   statIcon: { width: 36, height: 36, marginTop: 4 },
   statValue: { fontSize: 24, fontFamily: "UnnaBold", fontWeight: "800", letterSpacing: -0.5 },
-  statLabel: { fontSize: 12, fontFamily: "UnnaBold", fontWeight: "500", color: "rgba(255,255,255,0.75)" },
+  statLabel: { fontSize: 14, fontFamily: "UnnaBold", fontWeight: "600", color: "rgba(255,255,255,0.85)" },
 
   /* ─── Rank Card ─── */
   rankCard: {
@@ -1074,13 +1074,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   rankUserInfo: { flex: 1, gap: 2 },
-  rankUserName: { fontSize: 15, fontFamily: "UnnaBold", fontWeight: "600", color: "#FFFFFF" },
-  rankUserMeta: { fontFamily: "DroidSerifRegular", fontSize: 12, color: "rgba(255,255,255,0.4)" },
-  rankTotalBadge: { paddingHorizontal: 8, paddingVertical: 4, borderRadius: 8, borderWidth: 1, borderColor: "#D4A84325", backgroundColor: "#D4A84310" },
-  rankTotalText: { fontFamily: "DroidSerifRegular", fontSize: 11, fontWeight: "600", color: "rgba(255,255,255,0.4)" },
+  rankUserName: { fontSize: 16, fontFamily: "UnnaBold", fontWeight: "700", color: "#FFFFFF" },
+  rankUserMeta: { fontFamily: "DroidSerifRegular", fontSize: 13, color: "rgba(255,255,255,0.55)" },
+  rankTotalBadge: { paddingHorizontal: 10, paddingVertical: 5, borderRadius: 8, borderWidth: 1, borderColor: "#D4A84340", backgroundColor: "#D4A84318" },
+  rankTotalText: { fontFamily: "DroidSerifRegular", fontSize: 13, fontWeight: "700", color: "#D4A843" },
   rankDivider: { borderTopWidth: 1, borderTopColor: "#FFFFFF0F" },
   rankAheadRow: { flexDirection: "row", alignItems: "center", gap: 7 },
-  rankAheadLabel: { fontFamily: "DroidSerifRegular", fontSize: 11, fontWeight: "600", color: "rgba(255,255,255,0.35)" },
+  rankAheadLabel: { fontFamily: "DroidSerifRegular", fontSize: 12, fontWeight: "600", color: "rgba(255,255,255,0.5)" },
   rankAheadAvatar: {
     width: 28,
     height: 28,
@@ -1091,8 +1091,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  rankAheadName: { fontSize: 12, fontFamily: "UnnaBold", fontWeight: "400", color: "#FFFFFF", flexShrink: 1 },
-  rankAheadScore: { fontFamily: "DroidSerifRegular", fontSize: 12, fontWeight: "700", color: "#D4A843" },
+  rankAheadName: { fontSize: 14, fontFamily: "UnnaBold", fontWeight: "600", color: "#FFFFFF", flexShrink: 1 },
+  rankAheadScore: { fontFamily: "DroidSerifRegular", fontSize: 13, fontWeight: "700", color: "#D4A843" },
   rankLeaderRow: { flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 6 },
   rankLeaderText: { fontSize: 14, fontFamily: "UnnaBold", fontWeight: "600", color: "#D4A843" },
   rankCardFooter: {
@@ -1106,7 +1106,7 @@ const styles = StyleSheet.create({
     borderTopColor: "#FFFFFF0F",
     gap: 4,
   },
-  rankCardFooterText: { fontFamily: "DroidSerifRegular", fontSize: 13, color: "#FFFFFF" },
+  rankCardFooterText: { fontFamily: "DroidSerifRegular", fontSize: 15, fontWeight: "600", color: "#FFFFFF" },
 
   /* ─── Tips Button ─── */
   tipsBtn: {
