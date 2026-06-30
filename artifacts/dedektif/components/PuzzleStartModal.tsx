@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import {
   Image,
   Modal,
@@ -7,7 +7,7 @@ import {
   Text,
   View,
 } from "react-native";
-import Animated, { useSharedValue, useAnimatedStyle, withSpring } from "react-native-reanimated";
+import Animated, { useSharedValue, useAnimatedStyle, withSpring, withSequence, runOnJS } from "react-native-reanimated";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useColors } from "@/hooks/useColors";
 import { getDifficultyColor, getDifficultyLabel, type Difficulty } from "@/data/puzzles";
@@ -34,11 +34,6 @@ export default function PuzzleStartModal({ visible, puzzle, isRanked, onStart, o
   const startStyle = useAnimatedStyle(() => ({ transform: [{ scale: startScale.value }] }));
   const cancelScale = useSharedValue(1);
   const cancelStyle = useAnimatedStyle(() => ({ transform: [{ scale: cancelScale.value }] }));
-  const cancelPressedRef = useRef(false);
-
-  useEffect(() => {
-    if (visible) cancelPressedRef.current = false;
-  }, [visible]);
 
   return (
     <Modal
@@ -150,12 +145,13 @@ export default function PuzzleStartModal({ visible, puzzle, isRanked, onStart, o
             <Animated.View style={cancelStyle}>
               <Pressable
                 onPress={() => {
-                  if (cancelPressedRef.current) return;
-                  cancelPressedRef.current = true;
-                  onCancel();
+                  cancelScale.value = withSequence(
+                    withSpring(0.95, { damping: 20, stiffness: 600 }),
+                    withSpring(1, { damping: 14, stiffness: 320 }, (finished) => {
+                      if (finished) runOnJS(onCancel)();
+                    })
+                  );
                 }}
-                onPressIn={() => { cancelScale.value = withSpring(0.96, { damping: 15, stiffness: 400 }); }}
-                onPressOut={() => { cancelScale.value = withSpring(1, { damping: 12, stiffness: 280 }); }}
                 style={({ pressed }) => [
                   styles.cancelBtn,
                   {
