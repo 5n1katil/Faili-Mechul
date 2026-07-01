@@ -275,20 +275,37 @@ function PremiumTabButton({
   React.useEffect(() => {
     pulse.value = withRepeat(
       withSequence(
-        withTiming(1, { duration: 750, easing: Easing.out(Easing.quad) }),
-        withTiming(0, { duration: 1250, easing: Easing.in(Easing.quad) }),
+        withTiming(1, { duration: 550, easing: Easing.inOut(Easing.sin) }),
+        withTiming(0, { duration: 950, easing: Easing.inOut(Easing.sin) }),
       ),
       -1,
       false,
     );
   }, []);
 
-  const glowOpacity = useAnimatedStyle(() => ({ opacity: 0.2 + pulse.value * 0.8 }));
+  const glowOuter = useAnimatedStyle(() => ({ opacity: 0.35 + pulse.value * 0.65 }));
+  const glowInner = useAnimatedStyle(() => ({ opacity: 0.55 + pulse.value * 0.45 }));
   const scaleAnim = useAnimatedStyle(() => ({ transform: [{ scale: scale.value }] }));
 
   return (
     <Animated.View style={[{ flex: 1 }, scaleAnim]}>
-      {/* Glow halo — absolute overlay, opacity only, never affects layout */}
+      {/* Outer diffuse glow */}
+      <Animated.View
+        pointerEvents="none"
+        style={[
+          StyleSheet.absoluteFillObject,
+          {
+            borderRadius: 14,
+            shadowColor: NEON_ORANGE,
+            shadowOffset: { width: 0, height: 0 },
+            shadowOpacity: 1,
+            shadowRadius: 32,
+            elevation: 28,
+          },
+          glowOuter,
+        ]}
+      />
+      {/* Inner sharp glow with border */}
       <Animated.View
         pointerEvents="none"
         style={[
@@ -300,10 +317,10 @@ function PremiumTabButton({
             shadowColor: NEON_ORANGE,
             shadowOffset: { width: 0, height: 0 },
             shadowOpacity: 1,
-            shadowRadius: 18,
-            elevation: 20,
+            shadowRadius: 10,
+            elevation: 16,
           },
-          glowOpacity,
+          glowInner,
         ]}
       />
       {/* 2-row compact button */}
@@ -339,16 +356,18 @@ function PremiumTabButton({
         <View style={{ flexDirection: "row", paddingHorizontal: 6, paddingTop: 4, paddingBottom: 5, gap: 3 }}>
           <Pressable
             onPress={() => onSubTabChange("vakalar")}
-            style={{
+            style={({ pressed }) => ({
               flex: 1,
               flexDirection: "row",
               alignItems: "center",
               justifyContent: "center",
               gap: 3,
-              paddingVertical: 4,
+              paddingVertical: 5,
               borderRadius: 7,
               backgroundColor: subTab === "vakalar" && active ? `${PREMIUM_GOLD}22` : "transparent",
-            }}
+              opacity: pressed ? 0.6 : 1,
+              transform: [{ scale: pressed ? 0.91 : 1 }],
+            })}
           >
             <Image source={require("@/assets/images/premium-vakalar-icon.png")} style={{ width: 16, height: 16, opacity: subTab === "vakalar" && active ? 1 : 0.45 }} resizeMode="contain" />
             <Text style={{ fontFamily: "DroidSerifRegular", fontSize: 11, fontWeight: "700", color: subTab === "vakalar" && active ? PREMIUM_GOLD : "#888AAA" }}>Vakalar</Text>
@@ -356,16 +375,18 @@ function PremiumTabButton({
           <View style={{ width: StyleSheet.hairlineWidth, backgroundColor: `${PREMIUM_GOLD}33`, alignSelf: "stretch", marginVertical: 2 }} />
           <Pressable
             onPress={() => onSubTabChange("paketler")}
-            style={{
+            style={({ pressed }) => ({
               flex: 1,
               flexDirection: "row",
               alignItems: "center",
               justifyContent: "center",
               gap: 3,
-              paddingVertical: 4,
+              paddingVertical: 5,
               borderRadius: 7,
               backgroundColor: subTab === "paketler" && active ? `${PREMIUM_GOLD}22` : "transparent",
-            }}
+              opacity: pressed ? 0.6 : 1,
+              transform: [{ scale: pressed ? 0.91 : 1 }],
+            })}
           >
             <Image source={require("@/assets/images/premium-paketler-icon.png")} style={{ width: 16, height: 16, opacity: subTab === "paketler" && active ? 1 : 0.45 }} resizeMode="contain" />
             <Text style={{ fontFamily: "DroidSerifRegular", fontSize: 11, fontWeight: "700", color: subTab === "paketler" && active ? PREMIUM_GOLD : "#888AAA" }}>Paketler</Text>
@@ -423,7 +444,7 @@ function TabButton3D({
         ) : (
           <MaterialIcons name={icon} size={17} color={active ? activeColor : "#8899BB"} />
         )}
-        <Text style={[listStyles.tabBtnText3d, { color: active ? activeColor : "#AAAACC", fontFamily: "DroidSerifRegular", fontSize: 16, fontWeight: active ? "700" : "600" }]}>
+        <Text style={[listStyles.tabBtnText3d, { color: active ? activeColor : "#AAAACC", fontFamily: "DroidSerifRegular", fontSize: 18, fontWeight: active ? "700" : "600" }]}>
           {label}
         </Text>
         {count !== undefined && count > 0 && (
@@ -447,19 +468,22 @@ function PulsingGlowCard({
   React.useEffect(() => {
     glow.value = withRepeat(
       withSequence(
-        withTiming(1, { duration: 2000, easing: Easing.inOut(Easing.sin) }),
-        withTiming(0, { duration: 2000, easing: Easing.inOut(Easing.sin) }),
+        withTiming(1, { duration: 1300, easing: Easing.inOut(Easing.sin) }),
+        withTiming(0, { duration: 1300, easing: Easing.inOut(Easing.sin) }),
       ),
       -1,
       false,
     );
   }, []);
   const glowLayerStyle = useAnimatedStyle(() => ({
-    opacity: 0.18 + glow.value * 0.42,
+    opacity: 0.42 + glow.value * 0.58,
+  }));
+  const glowInnerStyle = useAnimatedStyle(() => ({
+    opacity: 0.25 + glow.value * 0.75,
   }));
   return (
     <Animated.View entering={entering} style={{ borderRadius: 14 }}>
-      {/* Glow halo — static shadow, only opacity pulses (web-safe) */}
+      {/* Glow halo outer — wide diffuse */}
       <Animated.View
         pointerEvents="none"
         style={[
@@ -467,12 +491,30 @@ function PulsingGlowCard({
           {
             borderRadius: 14,
             shadowColor: color,
-            shadowRadius: 22,
+            shadowRadius: 32,
             shadowOffset: { width: 0, height: 0 },
             shadowOpacity: 1,
-            elevation: 10,
+            elevation: 14,
           },
           glowLayerStyle,
+        ]}
+      />
+      {/* Glow halo inner — sharp concentrated */}
+      <Animated.View
+        pointerEvents="none"
+        style={[
+          StyleSheet.absoluteFillObject,
+          {
+            borderRadius: 14,
+            borderWidth: 1.5,
+            borderColor: color,
+            shadowColor: color,
+            shadowRadius: 10,
+            shadowOffset: { width: 0, height: 0 },
+            shadowOpacity: 1,
+            elevation: 8,
+          },
+          glowInnerStyle,
         ]}
       />
       {children}
@@ -543,6 +585,28 @@ function FilterPill3D({
           textAlign: "center",
         }]}>
           {label}
+        </Text>
+      </Pressable>
+    </Animated.View>
+  );
+}
+
+function CozulenlerButton({ onPress, count }: { onPress: () => void; count: number }) {
+  const colors = useColors();
+  const scale = useSharedValue(1);
+  const animStyle = useAnimatedStyle(() => ({ transform: [{ scale: scale.value }] }));
+  return (
+    <Animated.View style={animStyle}>
+      <Pressable
+        onPressIn={() => { scale.value = withSpring(0.87, { damping: 11, stiffness: 420 }); }}
+        onPressOut={() => { scale.value = withSpring(1, { damping: 9, stiffness: 300 }); }}
+        onPress={onPress}
+        hitSlop={4}
+        style={[listStyles.cozulenlerBtn, { backgroundColor: `${colors.success}1C`, borderColor: `${colors.success}55`, borderBottomColor: `${colors.success}88` }]}
+      >
+        <MaterialIcons name="check-circle" size={13} color={colors.success} />
+        <Text style={[listStyles.cozulenlerBtnText, { color: colors.success }]}>
+          Çözülenler{count > 0 ? ` ${count}` : ""}
         </Text>
       </Pressable>
     </Animated.View>
@@ -1252,6 +1316,7 @@ export default function VakalarScreen() {
             </View>
           </View>
 
+          <Animated.View key={listTab} style={{ flex: 1 }} entering={FadeIn.duration(170)}>
           {listTab === "premium" ? (
             /* ══════════ PREMIUM TAB ══════════ */
             <View style={{ flex: 1 }}>
@@ -1330,16 +1395,7 @@ export default function VakalarScreen() {
                               <View style={{ flex: 1 }}>
                                 <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
                                   <Text style={[listStyles.standartCardTitle, { color: "#E87A3A" }]}>Premium Vakalar</Text>
-                                  <Pressable
-                                    onPress={() => setShowCozulenlerPrem(true)}
-                                    style={[listStyles.cozulenlerBtn, { backgroundColor: `${colors.success}18`, borderColor: `${colors.success}44` }]}
-                                    hitSlop={6}
-                                  >
-                                    <MaterialIcons name="check-circle" size={11} color={colors.success} />
-                                    <Text style={[listStyles.cozulenlerBtnText, { color: colors.success }]}>
-                                      Çözülenler{completedPremiumPuzzles.length > 0 ? ` ${completedPremiumPuzzles.length}` : ""}
-                                    </Text>
-                                  </Pressable>
+                                  <CozulenlerButton onPress={() => setShowCozulenlerPrem(true)} count={completedPremiumPuzzles.length} />
                                 </View>
                                 <Text style={[listStyles.heroCardSub, { color: INACTIVE_COLOR }]}>Arşiv · erişilebilir</Text>
                               </View>
@@ -1432,16 +1488,7 @@ export default function VakalarScreen() {
                       <View style={{ flex: 1 }}>
                         <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
                           <Text style={[listStyles.standartCardTitle, { color: "#D4A843" }]}>Standart Vakalar</Text>
-                          <Pressable
-                            onPress={() => setShowCozulenlerFree(true)}
-                            style={[listStyles.cozulenlerBtn, { backgroundColor: `${colors.success}18`, borderColor: `${colors.success}44` }]}
-                            hitSlop={6}
-                          >
-                            <MaterialIcons name="check-circle" size={11} color={colors.success} />
-                            <Text style={[listStyles.cozulenlerBtnText, { color: colors.success }]}>
-                              Çözülenler{completedFreePuzzles.length > 0 ? ` ${completedFreePuzzles.length}` : ""}
-                            </Text>
-                          </Pressable>
+                          <CozulenlerButton onPress={() => setShowCozulenlerFree(true)} count={completedFreePuzzles.length} />
                         </View>
                         <Text style={[listStyles.heroCardSub, { color: INACTIVE_COLOR }]}>Ücretsiz · erişilebilir</Text>
                       </View>
@@ -1456,7 +1503,7 @@ export default function VakalarScreen() {
                         <Text style={[listStyles.standartStatLabel, { color: INACTIVE_COLOR }]}>AKTİF</Text>
                       </View>
                       <View style={[listStyles.standartStat, { backgroundColor: `${colors.success}10`, borderColor: `${colors.success}28` }]}>
-                        <Text style={[listStyles.standartStatNum, { color: colors.success }]}>{completedPuzzles.filter(p => !premiumPuzzleIdSet.has(p.id)).length}</Text>
+                        <Text style={[listStyles.standartStatNum, { color: colors.success }]}>{completedFreePuzzles.length}</Text>
                         <Text style={[listStyles.standartStatLabel, { color: INACTIVE_COLOR }]}>Çözüldü</Text>
                       </View>
                     </View>
@@ -1512,6 +1559,7 @@ export default function VakalarScreen() {
               )}
             </ScrollView>
           )}
+          </Animated.View>
         </View>
       </>
     );
@@ -1923,7 +1971,7 @@ const listStyles = StyleSheet.create({
   },
   diffText: { fontFamily: "DroidSerifRegular", fontSize: 11, fontWeight: "700" },
   puzzleTitle: { fontSize: 20, fontFamily: "UnnaBold", fontWeight: "700", lineHeight: 28 },
-  puzzleStory: { fontFamily: "DroidSerifRegular", fontSize: 13, lineHeight: 20, minHeight: 40 },
+  puzzleStory: { fontFamily: "DroidSerifRegular", fontSize: 13, lineHeight: 20, height: 40 },
   solvedBadge: {
     flexDirection: "row",
     alignItems: "center",
@@ -2132,15 +2180,16 @@ const listStyles = StyleSheet.create({
   cozulenlerBtn: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 4,
-    paddingHorizontal: 8,
-    paddingVertical: 3,
-    borderRadius: 8,
+    gap: 5,
+    paddingHorizontal: 11,
+    paddingVertical: 6,
+    borderRadius: 10,
     borderWidth: 1,
+    borderBottomWidth: 3,
   },
   cozulenlerBtnText: {
     fontFamily: "DroidSerifRegular",
-    fontSize: 11,
+    fontSize: 12,
     fontWeight: "700",
     letterSpacing: 0.1,
   },
