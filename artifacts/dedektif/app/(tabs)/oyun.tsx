@@ -1244,6 +1244,8 @@ export default function VakalarScreen() {
       getPuzzlesForPack(pack.packId).filter((p) => completedPuzzleIds.has(p.id))
     );
     const completedPuzzles = [...completedStandardPuzzles, ...completedPackPuzzles];
+    const allPackPuzzles = PACKS.flatMap((pack) => getPuzzlesForPack(pack.packId));
+    const activePackPuzzles = allPackPuzzles.filter((p) => !completedPuzzleIds.has(p.id));
 
     const activeFree = freePuzzles.filter((p) => !completedPuzzleIds.has(p.id));
     const activePremium = premiumPuzzles.filter((p) => !completedPuzzleIds.has(p.id));
@@ -1426,11 +1428,33 @@ export default function VakalarScreen() {
             <View style={{ flex: 1 }}>
               {premiumSubTab === "paketler" ? (
                 <Animated.View entering={FadeInDown.delay(0).springify()} style={{ flex: 1 }}>
-                  {completedPackPuzzles.length > 0 && (
-                    <View style={{ paddingHorizontal: 14, paddingTop: 10, paddingBottom: 2, flexDirection: "row", justifyContent: "flex-end" }}>
-                      <CozulenlerButton onPress={() => setShowCozulenlerPaket(true)} count={completedPackPuzzles.length} />
+                  <View style={{ paddingHorizontal: 14, paddingTop: 12, paddingBottom: 8 }}>
+                    <View style={listStyles.standartStatsRow}>
+                      <View style={[listStyles.standartStat, { backgroundColor: "#A855F714", borderColor: "#A855F730" }]}>
+                        <Text style={[listStyles.standartStatNum, { color: "#C084FC" }]}>{allPackPuzzles.length}</Text>
+                        <Text style={[listStyles.standartStatLabel, { color: INACTIVE_COLOR }]}>Toplam</Text>
+                      </View>
+                      <View style={[listStyles.standartStat, { backgroundColor: "#FFFFFF08", borderColor: "#FFFFFF18" }]}>
+                        <Text style={[listStyles.standartStatNum, { color: "#F0F0F8" }]}>{activePackPuzzles.length}</Text>
+                        <Text style={[listStyles.standartStatLabel, { color: INACTIVE_COLOR }]}>Aktif</Text>
+                      </View>
+                      <Pressable
+                        onPress={() => completedPackPuzzles.length > 0 && setShowCozulenlerPaket(true)}
+                        style={({ pressed }) => [
+                          listStyles.standartStat,
+                          {
+                            backgroundColor: completedPackPuzzles.length > 0 ? (pressed ? `${colors.success}28` : `${colors.success}10`) : `${colors.success}0A`,
+                            borderColor: completedPackPuzzles.length > 0 ? `${colors.success}55` : `${colors.success}28`,
+                            borderBottomColor: completedPackPuzzles.length > 0 ? `${colors.success}88` : undefined,
+                          },
+                        ]}
+                      >
+                        <Text style={[listStyles.standartStatNum, { color: colors.success }]}>{completedPackPuzzles.length}</Text>
+                        <Text style={[listStyles.standartStatLabel, { color: completedPackPuzzles.length > 0 ? colors.success : INACTIVE_COLOR }]}>Çözüldü</Text>
+                        {completedPackPuzzles.length > 0 && <MaterialIcons name="chevron-right" size={11} color={colors.success} />}
+                      </Pressable>
                     </View>
-                  )}
+                  </View>
                   <PaketlerContent embedded />
                 </Animated.View>
               ) : (
@@ -1502,14 +1526,36 @@ export default function VakalarScreen() {
                                 <Image source={require("@/assets/images/premium-vakalar-icon.png")} style={{ width: 28, height: 28 }} resizeMode="contain" />
                               </View>
                               <View style={{ flex: 1 }}>
-                                <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
-                                  <Text style={[listStyles.standartCardTitle, { color: "#E87A3A" }]}>Premium Vakalar</Text>
-                                  <CozulenlerButton onPress={() => setShowCozulenlerPrem(true)} count={completedPremiumPuzzles.length} />
-                                </View>
+                                <Text style={[listStyles.standartCardTitle, { color: "#E87A3A" }]}>Premium Vakalar</Text>
                                 <Text style={[listStyles.heroCardSub, { color: INACTIVE_COLOR }]}>Arşiv · erişilebilir</Text>
                               </View>
                             </View>
-                                    <View style={{ height: 1, backgroundColor: "#FFFFFF0D", marginHorizontal: -14 }} />
+                            <View style={listStyles.standartStatsRow}>
+                              <View style={[listStyles.standartStat, { backgroundColor: "#C8581A14", borderColor: "#C8581A30" }]}>
+                                <Text style={[listStyles.standartStatNum, { color: "#E87A3A" }]}>{premiumPuzzles.length}</Text>
+                                <Text style={[listStyles.standartStatLabel, { color: INACTIVE_COLOR }]}>Toplam</Text>
+                              </View>
+                              <View style={[listStyles.standartStat, { backgroundColor: "#FFFFFF08", borderColor: "#FFFFFF18" }]}>
+                                <Text style={[listStyles.standartStatNum, { color: "#F0F0F8" }]}>{activePremium.length}</Text>
+                                <Text style={[listStyles.standartStatLabel, { color: INACTIVE_COLOR }]}>Aktif</Text>
+                              </View>
+                              <Pressable
+                                onPress={() => completedPremiumPuzzles.length > 0 && setShowCozulenlerPrem(true)}
+                                style={({ pressed }) => [
+                                  listStyles.standartStat,
+                                  {
+                                    backgroundColor: completedPremiumPuzzles.length > 0 ? (pressed ? `${colors.success}28` : `${colors.success}10`) : `${colors.success}0A`,
+                                    borderColor: completedPremiumPuzzles.length > 0 ? `${colors.success}55` : `${colors.success}28`,
+                                    borderBottomColor: completedPremiumPuzzles.length > 0 ? `${colors.success}88` : undefined,
+                                  },
+                                ]}
+                              >
+                                <Text style={[listStyles.standartStatNum, { color: colors.success }]}>{completedPremiumPuzzles.length}</Text>
+                                <Text style={[listStyles.standartStatLabel, { color: completedPremiumPuzzles.length > 0 ? colors.success : INACTIVE_COLOR }]}>Çözüldü</Text>
+                                {completedPremiumPuzzles.length > 0 && <MaterialIcons name="chevron-right" size={11} color={colors.success} />}
+                              </Pressable>
+                            </View>
+                            <View style={{ height: 1, backgroundColor: "#FFFFFF0D", marginHorizontal: -14 }} />
                             <View style={{ flexDirection: "row", gap: 8 }}>
                               {(["caylak", "dedektif", "baskomiser"] as Difficulty[]).map((diff) => {
                                 const isSelected = premDiffFilter === diff;
@@ -1581,12 +1627,34 @@ export default function VakalarScreen() {
                         <Image source={require("@/assets/images/vakalar-icon.png")} style={{ width: 28, height: 28 }} resizeMode="contain" />
                       </View>
                       <View style={{ flex: 1 }}>
-                        <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
-                          <Text style={[listStyles.standartCardTitle, { color: "#D4A843" }]}>Standart Vakalar</Text>
-                          <CozulenlerButton onPress={() => setShowCozulenlerFree(true)} count={completedFreePuzzles.length} />
-                        </View>
+                        <Text style={[listStyles.standartCardTitle, { color: "#D4A843" }]}>Standart Vakalar</Text>
                         <Text style={[listStyles.heroCardSub, { color: INACTIVE_COLOR }]}>Ücretsiz · erişilebilir</Text>
                       </View>
+                    </View>
+                    <View style={listStyles.standartStatsRow}>
+                      <View style={[listStyles.standartStat, { backgroundColor: "#D4A84314", borderColor: "#D4A84330" }]}>
+                        <Text style={[listStyles.standartStatNum, { color: "#D4A843" }]}>{freePuzzles.length}</Text>
+                        <Text style={[listStyles.standartStatLabel, { color: INACTIVE_COLOR }]}>Toplam</Text>
+                      </View>
+                      <View style={[listStyles.standartStat, { backgroundColor: "#FFFFFF08", borderColor: "#FFFFFF18" }]}>
+                        <Text style={[listStyles.standartStatNum, { color: "#F0F0F8" }]}>{activeFree.length}</Text>
+                        <Text style={[listStyles.standartStatLabel, { color: INACTIVE_COLOR }]}>Aktif</Text>
+                      </View>
+                      <Pressable
+                        onPress={() => completedFreePuzzles.length > 0 && setShowCozulenlerFree(true)}
+                        style={({ pressed }) => [
+                          listStyles.standartStat,
+                          {
+                            backgroundColor: completedFreePuzzles.length > 0 ? (pressed ? `${colors.success}28` : `${colors.success}10`) : `${colors.success}0A`,
+                            borderColor: completedFreePuzzles.length > 0 ? `${colors.success}55` : `${colors.success}28`,
+                            borderBottomColor: completedFreePuzzles.length > 0 ? `${colors.success}88` : undefined,
+                          },
+                        ]}
+                      >
+                        <Text style={[listStyles.standartStatNum, { color: colors.success }]}>{completedFreePuzzles.length}</Text>
+                        <Text style={[listStyles.standartStatLabel, { color: completedFreePuzzles.length > 0 ? colors.success : INACTIVE_COLOR }]}>Çözüldü</Text>
+                        {completedFreePuzzles.length > 0 && <MaterialIcons name="chevron-right" size={11} color={colors.success} />}
+                      </Pressable>
                     </View>
                     <View style={{ height: 1, backgroundColor: "#FFFFFF0D", marginHorizontal: -14 }} />
                     <View style={{ flexDirection: "row", gap: 8 }}>
