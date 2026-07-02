@@ -407,7 +407,7 @@ export default function HomeScreen() {
 
       <View style={[styles.container, { backgroundColor: colors.background, paddingTop: Platform.OS === "web" ? 67 : insets.top }]}>
         {/* Header */}
-        <View style={[styles.headerRow, { paddingLeft: 16, paddingRight: 8, paddingBottom: 10 }]}>
+        <View style={[styles.headerRow, { paddingLeft: 16, paddingRight: 16, paddingBottom: 10 }]}>
           <View style={styles.headerBrand}>
             <View style={styles.headerLogoWrap}>
               <Image
@@ -1099,14 +1099,15 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "flex-end",
-    paddingHorizontal: 15,
+    paddingLeft: 15,
+    paddingRight: 16,
     paddingBottom: 12,
     paddingTop: 10,
     borderTopWidth: 1,
     borderTopColor: "#FFFFFF0F",
     gap: 4,
   },
-  rankCardFooterText: { fontFamily: "DroidSerifRegular", fontSize: 15, fontWeight: "600", color: "#FFFFFF" },
+  rankCardFooterText: { fontFamily: "DroidSerifRegular", fontSize: 13, fontWeight: "600", color: "#FFFFFF" },
 
   /* ─── Tips Button ─── */
   tipsBtn: {
