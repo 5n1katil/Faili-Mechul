@@ -8,7 +8,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
     ...config,
     name: "Faili Meçhul",
     slug: "dedektif",
-    version: "1.3.0",
+    version: "1.4.0",
     orientation: "portrait",
     icon: "./assets/images/icon.png",
     scheme: "dedektif",
@@ -20,7 +20,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
     ios: {
       supportsTablet: false,
       bundleIdentifier: "com.failimechul.dedektif",
-      buildNumber: "10",
+      buildNumber: "11",
       minimumOsVersion: "13.4",
       privacyManifests: {
         NSPrivacyAccessedAPITypes: [
