@@ -11,11 +11,13 @@ import {
 import { MaterialIcons } from "@expo/vector-icons";
 import * as Haptics from "expo-haptics";
 import Animated, {
+  FadeInDown,
   useAnimatedStyle,
   useSharedValue,
   withSequence,
   withSpring,
   withTiming,
+  ZoomIn,
 } from "react-native-reanimated";
 import { useColors } from "@/hooks/useColors";
 import type { Puzzle } from "@/data/puzzles";
@@ -36,10 +38,10 @@ interface Props {
 
 type Column = "suspect" | "location" | "weapon";
 
-const ICONS = {
-  suspect: "person" as const,
-  location: "location-on" as const,
-  weapon: "gps-not-fixed" as const,
+const COL_CONFIG: Record<Column, { icon: React.ComponentProps<typeof MaterialIcons>["name"]; label: string; color: string }> = {
+  suspect: { icon: "person", label: "KİM", color: "#A855F7" },
+  location: { icon: "location-on", label: "NEREDE", color: "#D4A843" },
+  weapon: { icon: "gps-not-fixed", label: "NEYLE", color: "#C8372D" },
 };
 
 export default function AccusationSheet({
@@ -62,7 +64,20 @@ export default function AccusationSheet({
   const flashOpacity = useSharedValue(0);
   const btnScale = useSharedValue(1);
   const wrongToastOpacity = useSharedValue(0);
+  const sheetScale = useSharedValue(0.92);
+  const sheetOpacity = useSharedValue(0);
   const wrongToastRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    if (visible) {
+      sheetScale.value = withSpring(1, { damping: 18, stiffness: 280 });
+      sheetOpacity.value = withTiming(1, { duration: 200 });
+    } else {
+      sheetScale.value = withTiming(0.92, { duration: 160 });
+      sheetOpacity.value = withTiming(0, { duration: 160 });
+      setActiveColumn(null);
+    }
+  }, [visible]);
 
   useEffect(() => {
     return () => {
@@ -83,24 +98,26 @@ export default function AccusationSheet({
 
   const canSubmit = Boolean(selectedSuspect && selectedWeapon && selectedLocation);
 
-  const columns: { key: Column; label: string; items: { id: string; name: string }[]; selected: string | null; onSelect: (id: string) => void }[] = [
+  const columns: {
+    key: Column;
+    items: { id: string; name: string }[];
+    selected: string | null;
+    onSelect: (id: string) => void;
+  }[] = [
     {
       key: "suspect",
-      label: "KİM",
       items: puzzle.suspects.map((s) => ({ id: s.id, name: s.name })),
       selected: selectedSuspect,
       onSelect: (id) => { onSelectSuspect(id); setActiveColumn(null); },
     },
     {
       key: "location",
-      label: "NEREDE",
       items: puzzle.locations.map((l) => ({ id: l.id, name: l.name })),
       selected: selectedLocation,
       onSelect: (id) => { onSelectLocation(id); setActiveColumn(null); },
     },
     {
       key: "weapon",
-      label: "NEYLE",
       items: puzzle.weapons.map((w) => ({ id: w.id, name: w.name })),
       selected: selectedWeapon,
       onSelect: (id) => { onSelectWeapon(id); setActiveColumn(null); },
@@ -145,164 +162,206 @@ export default function AccusationSheet({
   const flashStyle = useAnimatedStyle(() => ({ opacity: flashOpacity.value }));
   const btnStyle = useAnimatedStyle(() => ({ transform: [{ scale: btnScale.value }] }));
   const wrongToastStyle = useAnimatedStyle(() => ({ opacity: wrongToastOpacity.value }));
+  const sheetAnimStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: sheetScale.value }],
+    opacity: sheetOpacity.value,
+  }));
 
-  const activeColData = activeColumn ? columns.find((c) => c.key === activeColumn) : null;
+  const totalSelected = [selectedSuspect, selectedLocation, selectedWeapon].filter(Boolean).length;
 
   return (
     <Modal
       visible={visible}
       transparent
-      animationType="slide"
+      animationType="fade"
       onRequestClose={onClose}
       statusBarTranslucent
     >
       <Pressable style={styles.backdrop} onPress={() => { setActiveColumn(null); onClose(); }} />
 
-      <View style={[styles.sheet, { backgroundColor: colors.card }]}>
-        <View style={[styles.handle, { backgroundColor: colors.border }]} />
+      <View style={styles.centeredWrapper} pointerEvents="box-none">
+        <Animated.View style={[styles.sheet, { backgroundColor: colors.card }, sheetAnimStyle]}>
+          <Animated.View pointerEvents="none" style={[styles.flashOverlay, flashStyle]} />
 
-        <Animated.View pointerEvents="none" style={[styles.flashOverlay, flashStyle]} />
-
-        <View style={styles.sheetHeader}>
-          <View style={[styles.headerIconWrap, { backgroundColor: `${colors.primary}20` }]}>
-            <MaterialIcons name="gps-fixed" size={18} color={colors.primary} />
-          </View>
-          <Text style={[styles.sheetTitle, { color: colors.primary }]}>Son Çıkarım</Text>
-          <Pressable onPress={onClose} style={styles.closeBtn} hitSlop={10}>
-            <MaterialIcons name="close" size={20} color={colors.mutedForeground} />
-          </Pressable>
-        </View>
-
-        {wrongToastVisible && (
-          <Animated.View style={[styles.wrongToast, wrongToastStyle]}>
-            <MaterialIcons name="warning" size={14} color="#fff" />
-            <Text style={styles.wrongToastText}>Yanlış suçlama — +30 saniye eklendi!</Text>
-          </Animated.View>
-        )}
-
-        <View style={styles.dropdownRow}>
-          {columns.map((col) => {
-            const isOpen = activeColumn === col.key;
-            const selectedItem = col.items.find((i) => i.id === col.selected);
-            return (
-              <Pressable
-                key={col.key}
-                onPress={() => setActiveColumn(isOpen ? null : col.key)}
-                style={[
-                  styles.dropdownBtn,
-                  {
-                    backgroundColor: isOpen
-                      ? `${colors.primary}18`
-                      : col.selected
-                      ? `${colors.primary}0D`
-                      : colors.background,
-                    borderColor: isOpen
-                      ? colors.primary
-                      : col.selected
-                      ? `${colors.primary}66`
-                      : colors.border,
-                  },
-                ]}
-              >
-                <View style={styles.dropdownBtnInner}>
-                  <View style={styles.dropdownLabelRow}>
-                    <MaterialIcons name={ICONS[col.key]} size={11} color={colors.mutedForeground} />
-                    <Text style={[styles.dropdownLabel, { color: colors.mutedForeground }]}>
-                      {col.label}
-                    </Text>
-                  </View>
-                  <Text
-                    style={[
-                      styles.dropdownValue,
-                      { color: selectedItem ? colors.primary : colors.mutedForeground },
-                    ]}
-                    numberOfLines={1}
-                  >
-                    {selectedItem ? selectedItem.name : "— Seçiniz —"}
-                  </Text>
-                </View>
-                <MaterialIcons
-                  name={isOpen ? "keyboard-arrow-up" : "keyboard-arrow-down"}
-                  size={18}
-                  color={isOpen ? colors.primary : colors.mutedForeground}
-                />
-              </Pressable>
-            );
-          })}
-        </View>
-
-        {activeColData && (
-          <View style={[styles.optionList, { backgroundColor: colors.background, borderColor: colors.border }]}>
+          {/* ── Header ── */}
+          <View style={[styles.sheetHeader, { borderBottomColor: `${colors.primary}22` }]}>
+            <View style={[styles.headerIconWrap, { backgroundColor: `${colors.primary}20` }]}>
+              <MaterialIcons name="gavel" size={18} color={colors.primary} />
+            </View>
+            <View style={{ flex: 1 }}>
+              <Text style={[styles.sheetTitle, { color: colors.primary }]}>Son Çıkarım</Text>
+              <Text style={[styles.sheetSubtitle, { color: colors.mutedForeground }]}>
+                {totalSelected}/3 seçim tamamlandı
+              </Text>
+            </View>
             <Pressable
-              onPress={() => {
-                if (activeColumn === "suspect") onSelectSuspect(null);
-                else if (activeColumn === "location") onSelectLocation(null);
-                else if (activeColumn === "weapon") onSelectWeapon(null);
-                setActiveColumn(null);
-              }}
-              style={[styles.optionItem, { borderBottomColor: colors.border }]}
+              onPress={onClose}
+              style={({ pressed }) => [styles.closeBtn, pressed && { opacity: 0.6 }]}
+              hitSlop={10}
             >
-              <Text style={[styles.optionText, { color: colors.mutedForeground }]}>— Seçiniz —</Text>
+              <MaterialIcons name="close" size={20} color={colors.mutedForeground} />
             </Pressable>
-            <ScrollView style={{ maxHeight: 160 }} showsVerticalScrollIndicator={false}>
-              {activeColData.items.map((item) => {
-                const isSelected = activeColData.selected === item.id;
-                return (
+          </View>
+
+          {/* ── Wrong Toast ── */}
+          {wrongToastVisible && (
+            <Animated.View style={[styles.wrongToast, wrongToastStyle]}>
+              <MaterialIcons name="warning" size={14} color="#fff" />
+              <Text style={styles.wrongToastText}>Yanlış suçlama — +30 saniye eklendi!</Text>
+            </Animated.View>
+          )}
+
+          {/* ── Vertical Column Rows ── */}
+          <View style={styles.columnsContainer}>
+            {columns.map((col, idx) => {
+              const cfg = COL_CONFIG[col.key];
+              const isOpen = activeColumn === col.key;
+              const selectedItem = col.items.find((i) => i.id === col.selected);
+              const hasSelection = Boolean(col.selected);
+
+              return (
+                <Animated.View
+                  key={col.key}
+                  entering={FadeInDown.delay(idx * 60).springify()}
+                >
                   <Pressable
-                    key={item.id}
-                    onPress={() => activeColData.onSelect(item.id)}
+                    onPress={() => setActiveColumn(isOpen ? null : col.key)}
                     style={({ pressed }) => [
-                      styles.optionItem,
-                      { borderBottomColor: colors.border },
-                      isSelected && { backgroundColor: `${colors.primary}15` },
-                      pressed && { opacity: 0.7 },
+                      styles.colRow,
+                      {
+                        backgroundColor: isOpen
+                          ? `${cfg.color}18`
+                          : hasSelection
+                          ? `${cfg.color}0D`
+                          : colors.background,
+                        borderColor: isOpen
+                          ? cfg.color
+                          : hasSelection
+                          ? `${cfg.color}66`
+                          : `${colors.border}`,
+                        opacity: pressed ? 0.85 : 1,
+                      },
                     ]}
                   >
-                    {isSelected && (
-                      <MaterialIcons name="check" size={14} color={colors.primary} />
-                    )}
-                    <Text
-                      style={[
-                        styles.optionText,
-                        { color: isSelected ? colors.primary : colors.foreground },
-                        isSelected && { fontWeight: "700" },
-                      ]}
-                    >
-                      {item.name}
-                    </Text>
+                    {/* Left: icon + label */}
+                    <View style={[styles.colIconWrap, { backgroundColor: `${cfg.color}22` }]}>
+                      <MaterialIcons name={cfg.icon} size={18} color={cfg.color} />
+                    </View>
+                    <View style={styles.colInfo}>
+                      <Text style={[styles.colLabel, { color: cfg.color }]}>{cfg.label}</Text>
+                      <Text
+                        style={[
+                          styles.colValue,
+                          { color: hasSelection ? colors.foreground : colors.mutedForeground },
+                          hasSelection && { fontWeight: "700" },
+                        ]}
+                        numberOfLines={1}
+                      >
+                        {selectedItem ? selectedItem.name : "— Seçiniz —"}
+                      </Text>
+                    </View>
+                    {/* Right: status + chevron */}
+                    <View style={styles.colRight}>
+                      {hasSelection && (
+                        <View style={[styles.checkBadge, { backgroundColor: `${cfg.color}22` }]}>
+                          <MaterialIcons name="check" size={13} color={cfg.color} />
+                        </View>
+                      )}
+                      <MaterialIcons
+                        name={isOpen ? "keyboard-arrow-up" : "keyboard-arrow-down"}
+                        size={20}
+                        color={isOpen ? cfg.color : colors.mutedForeground}
+                      />
+                    </View>
                   </Pressable>
-                );
-              })}
-            </ScrollView>
-          </View>
-        )}
 
-        <Animated.View style={btnStyle}>
-          <Pressable
-            onPress={handleSubmit}
-            disabled={!canSubmit || disabled}
-            style={[
-              styles.submitBtn,
-              {
-                backgroundColor: canSubmit && !disabled ? colors.primary : colors.muted,
-                borderColor: canSubmit && !disabled ? colors.primary : colors.border,
-              },
-            ]}
-          >
-            <MaterialIcons
-              name="gavel"
-              size={18}
-              color={canSubmit && !disabled ? colors.primaryForeground : colors.mutedForeground}
-            />
-            <Text
+                  {/* Options list */}
+                  {isOpen && (
+                    <Animated.View
+                      entering={ZoomIn.duration(180).springify()}
+                      style={[styles.optionList, { backgroundColor: colors.background, borderColor: `${cfg.color}44` }]}
+                    >
+                      <Pressable
+                        onPress={() => {
+                          if (col.key === "suspect") onSelectSuspect(null);
+                          else if (col.key === "location") onSelectLocation(null);
+                          else onSelectWeapon(null);
+                          setActiveColumn(null);
+                        }}
+                        style={({ pressed }) => [
+                          styles.optionItem,
+                          { borderBottomColor: colors.border },
+                          pressed && { backgroundColor: `${colors.border}40` },
+                        ]}
+                      >
+                        <Text style={[styles.optionText, { color: colors.mutedForeground }]}>— Seçiniz —</Text>
+                      </Pressable>
+                      <ScrollView style={{ maxHeight: 150 }} showsVerticalScrollIndicator={false}>
+                        {col.items.map((item) => {
+                          const isSel = col.selected === item.id;
+                          return (
+                            <Pressable
+                              key={item.id}
+                              onPress={() => col.onSelect(item.id)}
+                              style={({ pressed }) => [
+                                styles.optionItem,
+                                { borderBottomColor: colors.border },
+                                isSel && { backgroundColor: `${cfg.color}15` },
+                                pressed && { opacity: 0.7 },
+                              ]}
+                            >
+                              {isSel && <MaterialIcons name="check" size={14} color={cfg.color} />}
+                              <Text
+                                style={[
+                                  styles.optionText,
+                                  { color: isSel ? cfg.color : colors.foreground },
+                                  isSel && { fontWeight: "700" },
+                                ]}
+                              >
+                                {item.name}
+                              </Text>
+                            </Pressable>
+                          );
+                        })}
+                      </ScrollView>
+                    </Animated.View>
+                  )}
+                </Animated.View>
+              );
+            })}
+          </View>
+
+          {/* ── Submit ── */}
+          <Animated.View style={btnStyle}>
+            <Pressable
+              onPress={handleSubmit}
+              disabled={!canSubmit || disabled}
+              onPressIn={() => { if (canSubmit && !disabled) btnScale.value = withSpring(0.97, { damping: 14, stiffness: 380 }); }}
+              onPressOut={() => { btnScale.value = withSpring(1, { damping: 12, stiffness: 280 }); }}
               style={[
-                styles.submitText,
-                { color: canSubmit && !disabled ? colors.primaryForeground : colors.mutedForeground },
+                styles.submitBtn,
+                {
+                  backgroundColor: canSubmit && !disabled ? colors.primary : colors.muted,
+                  borderColor: canSubmit && !disabled ? colors.primary : colors.border,
+                  opacity: canSubmit && !disabled ? 1 : 0.55,
+                },
               ]}
             >
-              Raporu Gönder
-            </Text>
-          </Pressable>
+              <MaterialIcons
+                name="gavel"
+                size={20}
+                color={canSubmit && !disabled ? colors.primaryForeground : colors.mutedForeground}
+              />
+              <Text
+                style={[
+                  styles.submitText,
+                  { color: canSubmit && !disabled ? colors.primaryForeground : colors.mutedForeground },
+                ]}
+              >
+                Raporu Gönder
+              </Text>
+            </Pressable>
+          </Animated.View>
         </Animated.View>
       </View>
     </Modal>
@@ -311,17 +370,29 @@ export default function AccusationSheet({
 
 const styles = StyleSheet.create({
   backdrop: {
-    flex: 1,
-    backgroundColor: "rgba(0,0,0,0.55)",
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: "rgba(0,0,0,0.72)",
+  },
+  centeredWrapper: {
+    ...StyleSheet.absoluteFillObject,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingHorizontal: 16,
+    paddingVertical: 60,
   },
   sheet: {
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    paddingHorizontal: 20,
-    paddingBottom: 36,
-    paddingTop: 14,
-    gap: 16,
+    width: "100%",
+    borderRadius: 24,
+    paddingHorizontal: 18,
+    paddingBottom: 22,
+    paddingTop: 16,
+    gap: 12,
     overflow: "hidden",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.45,
+    shadowRadius: 24,
+    elevation: 20,
   },
   flashOverlay: {
     ...StyleSheet.absoluteFillObject,
@@ -329,45 +400,45 @@ const styles = StyleSheet.create({
     zIndex: 10,
     pointerEvents: "none",
   },
-  handle: {
-    width: 40,
-    height: 4,
-    borderRadius: 2,
-    alignSelf: "center",
-    marginBottom: 4,
-  },
   sheetHeader: {
     flexDirection: "row",
     alignItems: "center",
     gap: 10,
+    paddingBottom: 12,
+    borderBottomWidth: 1,
   },
   headerIconWrap: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
+    width: 36,
+    height: 36,
+    borderRadius: 18,
     alignItems: "center",
     justifyContent: "center",
   },
   sheetTitle: {
     fontFamily: "DroidSerifRegular",
-    fontSize: 17,
+    fontSize: 18,
     fontWeight: "800",
-    flex: 1,
     letterSpacing: 0.3,
   },
+  sheetSubtitle: {
+    fontFamily: "DroidSerifRegular",
+    fontSize: 11,
+    marginTop: 1,
+  },
   closeBtn: {
-    width: 32,
-    height: 32,
+    width: 34,
+    height: 34,
     alignItems: "center",
     justifyContent: "center",
+    borderRadius: 17,
   },
   wrongToast: {
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: "#C8372D",
-    borderRadius: 8,
+    borderRadius: 10,
     paddingHorizontal: 12,
-    paddingVertical: 8,
+    paddingVertical: 9,
     gap: 8,
   },
   wrongToastText: {
@@ -377,50 +448,63 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     flex: 1,
   },
-  dropdownRow: {
-    flexDirection: "row",
-    gap: 8,
+  columnsContainer: {
+    gap: 10,
   },
-  dropdownBtn: {
-    flex: 1,
+  colRow: {
     flexDirection: "row",
     alignItems: "center",
-    borderWidth: 1,
-    borderRadius: 12,
-    paddingHorizontal: 12,
+    borderWidth: 1.5,
+    borderRadius: 14,
+    paddingHorizontal: 14,
     paddingVertical: 13,
-    gap: 4,
+    gap: 12,
   },
-  dropdownBtnInner: {
+  colIconWrap: {
+    width: 38,
+    height: 38,
+    borderRadius: 19,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  colInfo: {
     flex: 1,
     gap: 2,
   },
-  dropdownLabelRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 3,
-  },
-  dropdownLabel: {
+  colLabel: {
     fontFamily: "DroidSerifRegular",
     fontSize: 10,
-    fontWeight: "700",
-    letterSpacing: 1.3,
+    fontWeight: "800",
+    letterSpacing: 1.4,
   },
-  dropdownValue: {
+  colValue: {
     fontFamily: "DroidSerifRegular",
-    fontSize: 13,
-    fontWeight: "600",
+    fontSize: 15,
+    fontWeight: "500",
+  },
+  colRight: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+  },
+  checkBadge: {
+    width: 22,
+    height: 22,
+    borderRadius: 11,
+    alignItems: "center",
+    justifyContent: "center",
   },
   optionList: {
-    borderWidth: 1,
-    borderRadius: 10,
+    borderWidth: 1.5,
+    borderRadius: 12,
     overflow: "hidden",
+    marginTop: 4,
   },
   optionItem: {
     flexDirection: "row",
     alignItems: "center",
-    paddingHorizontal: 14,
-    paddingVertical: 12,
+    paddingHorizontal: 16,
+    paddingVertical: 13,
     borderBottomWidth: StyleSheet.hairlineWidth,
     gap: 8,
   },
@@ -433,15 +517,16 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    paddingVertical: 16,
+    paddingVertical: 17,
     paddingHorizontal: 15,
-    borderRadius: 13,
-    borderWidth: 1,
+    borderRadius: 15,
+    borderWidth: 1.5,
     gap: 8,
+    marginTop: 2,
   },
   submitText: {
     fontFamily: "DroidSerifRegular",
-    fontSize: 16,
+    fontSize: 17,
     fontWeight: "700",
     letterSpacing: 0.5,
   },

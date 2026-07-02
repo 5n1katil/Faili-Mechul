@@ -440,7 +440,7 @@ function TabButton3D({
         ]}
       >
         {image ? (
-          <Image source={image} style={{ width: 22, height: 22, opacity: active ? 1 : 0.55 }} resizeMode="contain" />
+          <Image source={image} style={{ width: 28, height: 28, opacity: active ? 1 : 0.55 }} resizeMode="contain" />
         ) : (
           <MaterialIcons name={icon} size={17} color={active ? activeColor : "#8899BB"} />
         )}
@@ -609,6 +609,84 @@ function CozulenlerButton({ onPress, count }: { onPress: () => void; count: numb
           Çözülenler{count > 0 ? ` ${count}` : ""}
         </Text>
       </Pressable>
+    </Animated.View>
+  );
+}
+
+function CompletedCaseDetailCard({
+  puzzle,
+  playStats,
+  onReplay,
+}: {
+  puzzle: { id: string; title: string; story: string; difficulty: string };
+  playStats: import("@/context/GameContext").PlayStats | null;
+  onReplay: () => void;
+}) {
+  const colors = useColors();
+  const diffColor = getDifficultyColor(puzzle.difficulty as Difficulty);
+  const diffLabel: Record<string, string> = { caylak: "Çaylak", dedektif: "Dedektif", baskomiser: "Başkomiser" };
+  const firstPlay = playStats?.firstPlay;
+  const latestPlay = playStats?.latestPlay;
+  const fmt = (s: number) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;
+  return (
+    <Animated.View entering={FadeInDown.springify()}>
+      <View style={[listStyles.ccdCard, { backgroundColor: colors.card, borderColor: `${colors.primary}30` }]}>
+        <View style={{ flex: 1, gap: 3 }}>
+          <View style={{ flexDirection: "row", gap: 6, alignItems: "center", flexWrap: "wrap" }}>
+            <View style={[listStyles.ccdDiffBadge, { backgroundColor: `${diffColor}18`, borderColor: `${diffColor}44` }]}>
+              <Text style={[listStyles.ccdDiffText, { color: diffColor }]}>{diffLabel[puzzle.difficulty] ?? puzzle.difficulty}</Text>
+            </View>
+            <View style={[listStyles.ccdSolvedBadge, { backgroundColor: `${colors.success}14`, borderColor: `${colors.success}44` }]}>
+              <MaterialIcons name="check-circle" size={11} color={colors.success} />
+              <Text style={[listStyles.ccdSolvedText, { color: colors.success }]}>Çözüldü</Text>
+            </View>
+          </View>
+          <Text style={[listStyles.ccdTitle, { color: colors.foreground }]} numberOfLines={2}>{puzzle.title}</Text>
+          <Text style={[listStyles.ccdStory, { color: colors.mutedForeground }]} numberOfLines={3}>{puzzle.story}</Text>
+        </View>
+        {firstPlay && (
+          <View style={[listStyles.ccdStatsRow, { borderTopColor: `${colors.border}80` }]}>
+            <View style={listStyles.ccdStatGroup}>
+              <Text style={[listStyles.ccdStatLabel, { color: colors.mutedForeground }]}>İlk Oynanış</Text>
+              <View style={listStyles.ccdStatItems}>
+                <View style={listStyles.ccdStatItem}>
+                  <MaterialIcons name="star" size={12} color={colors.primary} />
+                  <Text style={[listStyles.ccdStatVal, { color: colors.foreground }]}>{firstPlay.score}</Text>
+                </View>
+                <View style={listStyles.ccdStatItem}>
+                  <MaterialIcons name="timer" size={12} color="#6B7FA8" />
+                  <Text style={[listStyles.ccdStatVal, { color: colors.foreground }]}>{fmt(firstPlay.timeSeconds)}</Text>
+                </View>
+              </View>
+            </View>
+            {latestPlay && latestPlay.score !== firstPlay.score && (
+              <View style={[listStyles.ccdStatGroup, { borderLeftWidth: 1, borderLeftColor: `${colors.border}60`, paddingLeft: 12 }]}>
+                <Text style={[listStyles.ccdStatLabel, { color: colors.mutedForeground }]}>Son Oynanış</Text>
+                <View style={listStyles.ccdStatItems}>
+                  <View style={listStyles.ccdStatItem}>
+                    <MaterialIcons name="star" size={12} color={colors.primary} />
+                    <Text style={[listStyles.ccdStatVal, { color: colors.primary }]}>{latestPlay.score}</Text>
+                  </View>
+                  <View style={listStyles.ccdStatItem}>
+                    <MaterialIcons name="timer" size={12} color="#6B7FA8" />
+                    <Text style={[listStyles.ccdStatVal, { color: colors.foreground }]}>{fmt(latestPlay.timeSeconds)}</Text>
+                  </View>
+                </View>
+              </View>
+            )}
+          </View>
+        )}
+        <Pressable
+          onPress={onReplay}
+          style={({ pressed }) => [
+            listStyles.ccdReplayBtn,
+            { backgroundColor: pressed ? "#B8922F" : colors.primary, transform: [{ scale: pressed ? 0.97 : 1 }] },
+          ]}
+        >
+          <MaterialIcons name="refresh" size={14} color="#0F1117" />
+          <Text style={[listStyles.ccdReplayText, { color: "#0F1117" }]}>Tekrar Oyna</Text>
+        </Pressable>
+      </View>
     </Animated.View>
   );
 }
@@ -871,6 +949,7 @@ export default function VakalarScreen() {
   const [premDiffFilter, setPremDiffFilter] = useState<Difficulty | "all">("all");
   const [showCozulenlerFree, setShowCozulenlerFree] = useState(false);
   const [showCozulenlerPrem, setShowCozulenlerPrem] = useState(false);
+  const [showCozulenlerPaket, setShowCozulenlerPaket] = useState(false);
 
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const resultTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -1201,24 +1280,21 @@ export default function VakalarScreen() {
                 <MaterialIcons name="close" size={22} color={colors.mutedForeground} />
               </Pressable>
             </View>
-            <ScrollView contentContainerStyle={{ paddingHorizontal: 14, paddingBottom: insets.bottom + 32 }} showsVerticalScrollIndicator={false}>
+            <ScrollView contentContainerStyle={{ paddingHorizontal: 14, paddingBottom: insets.bottom + 32, gap: 10 }} showsVerticalScrollIndicator={false}>
               {completedFreePuzzles.length === 0 ? (
                 <View style={[listStyles.emptyBox, { borderColor: colors.border, marginTop: 24 }]}>
                   <MaterialIcons name="folder-open" size={40} color={colors.mutedForeground} />
                   <Text style={[listStyles.emptyTitle, { color: colors.foreground }]}>Henüz Çözülen Vaka Yok</Text>
                 </View>
               ) : (
-                completedFreePuzzles.map((puzzle, i) => {
+                completedFreePuzzles.map((puzzle) => {
                   const stats = playStatsForPuzzle(puzzle.id);
                   return (
-                    <PuzzleCard
+                    <CompletedCaseDetailCard
                       key={puzzle.id}
                       puzzle={puzzle}
-                      onPress={() => { setShowCozulenlerFree(false); startPuzzle(puzzle); }}
-                      delay={i * 25}
-                      completed={true}
                       playStats={stats}
-                      showReplay={true}
+                      onReplay={() => { setShowCozulenlerFree(false); startPuzzle(puzzle); }}
                     />
                   );
                 })
@@ -1244,24 +1320,61 @@ export default function VakalarScreen() {
                 <MaterialIcons name="close" size={22} color={colors.mutedForeground} />
               </Pressable>
             </View>
-            <ScrollView contentContainerStyle={{ paddingHorizontal: 14, paddingBottom: insets.bottom + 32 }} showsVerticalScrollIndicator={false}>
+            <ScrollView contentContainerStyle={{ paddingHorizontal: 14, paddingBottom: insets.bottom + 32, gap: 10 }} showsVerticalScrollIndicator={false}>
               {completedPremiumPuzzles.length === 0 ? (
                 <View style={[listStyles.emptyBox, { borderColor: colors.border, marginTop: 24 }]}>
                   <MaterialIcons name="folder-open" size={40} color={colors.mutedForeground} />
                   <Text style={[listStyles.emptyTitle, { color: colors.foreground }]}>Henüz Çözülen Premium Vaka Yok</Text>
                 </View>
               ) : (
-                completedPremiumPuzzles.map((puzzle, i) => {
+                completedPremiumPuzzles.map((puzzle) => {
                   const stats = playStatsForPuzzle(puzzle.id);
                   return (
-                    <PuzzleCard
+                    <CompletedCaseDetailCard
                       key={puzzle.id}
                       puzzle={puzzle}
-                      onPress={() => { setShowCozulenlerPrem(false); startPuzzle(puzzle); }}
-                      delay={i * 25}
-                      completed={true}
                       playStats={stats}
-                      showReplay={true}
+                      onReplay={() => { setShowCozulenlerPrem(false); startPuzzle(puzzle); }}
+                    />
+                  );
+                })
+              )}
+            </ScrollView>
+          </View>
+        </Modal>
+
+        {/* ── Çözülenler Modal (Paketler) ── */}
+        <Modal
+          visible={showCozulenlerPaket}
+          animationType="slide"
+          presentationStyle="pageSheet"
+          onRequestClose={() => setShowCozulenlerPaket(false)}
+        >
+          <View style={[listStyles.cozulenlerModal, { backgroundColor: colors.background, paddingTop: insets.top + 16 }]}>
+            <View style={[listStyles.cozulenlerModalHeader, { borderBottomColor: colors.border }]}>
+              <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
+                <MaterialIcons name="check-circle" size={20} color={colors.success} />
+                <Text style={[listStyles.cozulenlerModalTitle, { color: colors.foreground }]}>Paket Çözülenler</Text>
+              </View>
+              <Pressable onPress={() => setShowCozulenlerPaket(false)} hitSlop={10}>
+                <MaterialIcons name="close" size={22} color={colors.mutedForeground} />
+              </Pressable>
+            </View>
+            <ScrollView contentContainerStyle={{ paddingHorizontal: 14, paddingBottom: insets.bottom + 32, gap: 10 }} showsVerticalScrollIndicator={false}>
+              {completedPackPuzzles.length === 0 ? (
+                <View style={[listStyles.emptyBox, { borderColor: colors.border, marginTop: 24 }]}>
+                  <MaterialIcons name="folder-open" size={40} color={colors.mutedForeground} />
+                  <Text style={[listStyles.emptyTitle, { color: colors.foreground }]}>Henüz Çözülen Paket Vakası Yok</Text>
+                </View>
+              ) : (
+                completedPackPuzzles.map((puzzle) => {
+                  const stats = playStatsForPuzzle(puzzle.id);
+                  return (
+                    <CompletedCaseDetailCard
+                      key={puzzle.id}
+                      puzzle={puzzle}
+                      playStats={stats}
+                      onReplay={() => { setShowCozulenlerPaket(false); startPuzzle(puzzle); }}
                     />
                   );
                 })
@@ -1284,15 +1397,6 @@ export default function VakalarScreen() {
               <Text style={[listStyles.pageTitle, { color: colors.foreground }]}>Vakalar</Text>
               <Text style={[listStyles.pageSubtitle, { color: colors.mutedForeground }]}>Davaları çöz · puan kazan</Text>
             </View>
-            {completedPuzzles.length > 0 && (
-              <Pressable
-                onPress={() => { setListTab("vakalar"); setShowCozulenlerFree(true); }}
-                style={[listStyles.completedHeaderBadge, { backgroundColor: `${colors.success}18`, borderColor: `${colors.success}44` }]}
-              >
-                <MaterialIcons name="check-circle" size={13} color={colors.success} />
-                <Text style={[listStyles.completedHeaderText, { color: colors.success }]}>{completedPuzzles.length} çözüldü</Text>
-              </Pressable>
-            )}
           </View>
 
           {/* ── 3D Tab Bar ── */}
@@ -1322,6 +1426,11 @@ export default function VakalarScreen() {
             <View style={{ flex: 1 }}>
               {premiumSubTab === "paketler" ? (
                 <Animated.View entering={FadeInDown.delay(0).springify()} style={{ flex: 1 }}>
+                  {completedPackPuzzles.length > 0 && (
+                    <View style={{ paddingHorizontal: 14, paddingTop: 10, paddingBottom: 2, flexDirection: "row", justifyContent: "flex-end" }}>
+                      <CozulenlerButton onPress={() => setShowCozulenlerPaket(true)} count={completedPackPuzzles.length} />
+                    </View>
+                  )}
                   <PaketlerContent embedded />
                 </Animated.View>
               ) : (
@@ -1400,21 +1509,7 @@ export default function VakalarScreen() {
                                 <Text style={[listStyles.heroCardSub, { color: INACTIVE_COLOR }]}>Arşiv · erişilebilir</Text>
                               </View>
                             </View>
-                            <View style={listStyles.standartStatsRow}>
-                              <View style={[listStyles.standartStat, { backgroundColor: "#C8581A14", borderColor: "#C8581A30" }]}>
-                                <Text style={[listStyles.standartStatNum, { color: "#E87A3A" }]}>{premiumPuzzles.length}</Text>
-                                <Text style={[listStyles.standartStatLabel, { color: INACTIVE_COLOR }]}>Toplam</Text>
-                              </View>
-                              <View style={[listStyles.standartStat, { backgroundColor: "#FFFFFF08", borderColor: "#FFFFFF18" }]}>
-                                <Text style={[listStyles.standartStatNum, { color: "#F0F0F8" }]}>{activePremium.length}</Text>
-                                <Text style={[listStyles.standartStatLabel, { color: INACTIVE_COLOR }]}>AKTİF</Text>
-                              </View>
-                              <View style={[listStyles.standartStat, { backgroundColor: `${colors.success}10`, borderColor: `${colors.success}28` }]}>
-                                <Text style={[listStyles.standartStatNum, { color: colors.success }]}>{completedPremiumPuzzles.length}</Text>
-                                <Text style={[listStyles.standartStatLabel, { color: INACTIVE_COLOR }]}>Çözüldü</Text>
-                              </View>
-                            </View>
-                            <View style={{ height: 1, backgroundColor: "#FFFFFF0D", marginHorizontal: -14 }} />
+                                    <View style={{ height: 1, backgroundColor: "#FFFFFF0D", marginHorizontal: -14 }} />
                             <View style={{ flexDirection: "row", gap: 8 }}>
                               {(["caylak", "dedektif", "baskomiser"] as Difficulty[]).map((diff) => {
                                 const isSelected = premDiffFilter === diff;
@@ -1491,20 +1586,6 @@ export default function VakalarScreen() {
                           <CozulenlerButton onPress={() => setShowCozulenlerFree(true)} count={completedFreePuzzles.length} />
                         </View>
                         <Text style={[listStyles.heroCardSub, { color: INACTIVE_COLOR }]}>Ücretsiz · erişilebilir</Text>
-                      </View>
-                    </View>
-                    <View style={listStyles.standartStatsRow}>
-                      <View style={[listStyles.standartStat, { backgroundColor: "#D4A84314", borderColor: "#D4A84330" }]}>
-                        <Text style={[listStyles.standartStatNum, { color: "#D4A843" }]}>{freePuzzles.length}</Text>
-                        <Text style={[listStyles.standartStatLabel, { color: INACTIVE_COLOR }]}>Toplam</Text>
-                      </View>
-                      <View style={[listStyles.standartStat, { backgroundColor: "#FFFFFF08", borderColor: "#FFFFFF18" }]}>
-                        <Text style={[listStyles.standartStatNum, { color: "#F0F0F8" }]}>{activeFree.length}</Text>
-                        <Text style={[listStyles.standartStatLabel, { color: INACTIVE_COLOR }]}>AKTİF</Text>
-                      </View>
-                      <View style={[listStyles.standartStat, { backgroundColor: `${colors.success}10`, borderColor: `${colors.success}28` }]}>
-                        <Text style={[listStyles.standartStatNum, { color: colors.success }]}>{completedFreePuzzles.length}</Text>
-                        <Text style={[listStyles.standartStatLabel, { color: INACTIVE_COLOR }]}>Çözüldü</Text>
                       </View>
                     </View>
                     <View style={{ height: 1, backgroundColor: "#FFFFFF0D", marginHorizontal: -14 }} />
@@ -1971,7 +2052,7 @@ const listStyles = StyleSheet.create({
   },
   diffText: { fontFamily: "DroidSerifRegular", fontSize: 11, fontWeight: "700" },
   puzzleTitle: { fontSize: 20, fontFamily: "UnnaBold", fontWeight: "700", lineHeight: 28 },
-  puzzleStory: { fontFamily: "DroidSerifRegular", fontSize: 13, lineHeight: 20, height: 40 },
+  puzzleStory: { fontFamily: "DroidSerifRegular", fontSize: 13, lineHeight: 20 },
   solvedBadge: {
     flexDirection: "row",
     alignItems: "center",
@@ -2209,6 +2290,95 @@ const listStyles = StyleSheet.create({
     fontSize: 18,
     fontFamily: "UnnaBold",
     fontWeight: "600",
+    letterSpacing: 0.2,
+  },
+  ccdCard: {
+    borderRadius: 14,
+    borderWidth: 1,
+    padding: 14,
+    gap: 10,
+  },
+  ccdDiffBadge: {
+    borderRadius: 6,
+    borderWidth: 1,
+    paddingHorizontal: 7,
+    paddingVertical: 2,
+  },
+  ccdDiffText: {
+    fontFamily: "DroidSerifRegular",
+    fontSize: 11,
+    fontWeight: "700",
+    letterSpacing: 0.4,
+  },
+  ccdSolvedBadge: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 3,
+    borderRadius: 6,
+    borderWidth: 1,
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+  },
+  ccdSolvedText: {
+    fontFamily: "DroidSerifRegular",
+    fontSize: 11,
+    fontWeight: "700",
+  },
+  ccdTitle: {
+    fontFamily: "UnnaBold",
+    fontSize: 16,
+    fontWeight: "700",
+    lineHeight: 22,
+    marginTop: 2,
+  },
+  ccdStory: {
+    fontFamily: "DroidSerifRegular",
+    fontSize: 13,
+    lineHeight: 19,
+  },
+  ccdStatsRow: {
+    flexDirection: "row",
+    gap: 12,
+    paddingTop: 10,
+    borderTopWidth: StyleSheet.hairlineWidth,
+  },
+  ccdStatGroup: {
+    flex: 1,
+    gap: 4,
+  },
+  ccdStatLabel: {
+    fontFamily: "DroidSerifRegular",
+    fontSize: 10,
+    fontWeight: "700",
+    letterSpacing: 0.5,
+    textTransform: "uppercase",
+  },
+  ccdStatItems: {
+    flexDirection: "row",
+    gap: 10,
+  },
+  ccdStatItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 3,
+  },
+  ccdStatVal: {
+    fontFamily: "DroidSerifRegular",
+    fontSize: 13,
+    fontWeight: "600",
+  },
+  ccdReplayBtn: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 5,
+    borderRadius: 10,
+    paddingVertical: 9,
+  },
+  ccdReplayText: {
+    fontFamily: "DroidSerifRegular",
+    fontSize: 13,
+    fontWeight: "700",
     letterSpacing: 0.2,
   },
   premSubFilterRow: {

@@ -208,7 +208,10 @@ export default function HomeScreen() {
             </Text>
             <Pressable
               onPress={() => setShowStreakInfo(false)}
-              style={[styles.modalBtn, { backgroundColor: colors.primary }]}
+              style={({ pressed }) => [
+                styles.modalBtn,
+                { backgroundColor: pressed ? "#B8922F" : colors.primary, transform: [{ scale: pressed ? 0.97 : 1 }] },
+              ]}
             >
               <Text style={[styles.modalBtnText, { color: colors.primaryForeground }]}>Anladım</Text>
             </Pressable>
@@ -289,7 +292,10 @@ export default function HomeScreen() {
 
             <Pressable
               onPress={() => setShowSolvedInfo(false)}
-              style={[styles.modalBtn, { backgroundColor: colors.primary }]}
+              style={({ pressed }) => [
+                styles.modalBtn,
+                { backgroundColor: pressed ? "#B8922F" : colors.primary, transform: [{ scale: pressed ? 0.97 : 1 }] },
+              ]}
             >
               <Text style={[styles.modalBtnText, { color: colors.primaryForeground }]}>Anladım</Text>
             </Pressable>
@@ -359,7 +365,10 @@ export default function HomeScreen() {
 
             <Pressable
               onPress={() => setShowScoreInfo(false)}
-              style={[styles.modalBtn, { backgroundColor: "#9333ea" }]}
+              style={({ pressed }) => [
+                styles.modalBtn,
+                { backgroundColor: pressed ? "#7B28C8" : "#9333ea", transform: [{ scale: pressed ? 0.97 : 1 }] },
+              ]}
             >
               <Text style={[styles.modalBtnText, { color: "#fff" }]}>Anladım</Text>
             </Pressable>
@@ -586,7 +595,14 @@ export default function HomeScreen() {
             <View style={styles.statsRow}>
               <Pressable
                 onPress={() => setShowSolvedInfo(true)}
-                style={[styles.statCard, { backgroundColor: colors.card, borderColor: `${colors.primary}50` }]}
+                style={({ pressed }) => [
+                  styles.statCard,
+                  {
+                    backgroundColor: pressed ? "#252E55" : colors.card,
+                    borderColor: `${colors.primary}50`,
+                    transform: [{ scale: pressed ? 0.95 : 1 }],
+                  },
+                ]}
               >
                 <View style={[styles.statAccent, { backgroundColor: colors.primary }]} />
                 <Image source={require("../../assets/images/icon_cozulen.png")} style={styles.statIcon} resizeMode="contain" />
@@ -595,7 +611,14 @@ export default function HomeScreen() {
               </Pressable>
               <Pressable
                 onPress={() => setShowScoreInfo(true)}
-                style={[styles.statCard, { backgroundColor: colors.card, borderColor: "#9333ea50" }]}
+                style={({ pressed }) => [
+                  styles.statCard,
+                  {
+                    backgroundColor: pressed ? "#1E1830" : colors.card,
+                    borderColor: "#9333ea50",
+                    transform: [{ scale: pressed ? 0.95 : 1 }],
+                  },
+                ]}
               >
                 <View style={[styles.statAccent, { backgroundColor: "#9333ea" }]} />
                 <Image source={require("../../assets/images/icon_toplam_puan.png")} style={styles.statIcon} resizeMode="contain" />
@@ -604,7 +627,14 @@ export default function HomeScreen() {
               </Pressable>
               <Pressable
                 onPress={() => setShowStreakInfo(true)}
-                style={[styles.statCard, { backgroundColor: colors.card, borderColor: "#FF6B3550" }]}
+                style={({ pressed }) => [
+                  styles.statCard,
+                  {
+                    backgroundColor: pressed ? "#221A12" : colors.card,
+                    borderColor: "#FF6B3550",
+                    transform: [{ scale: pressed ? 0.95 : 1 }],
+                  },
+                ]}
               >
                 <View style={[styles.statAccent, { backgroundColor: "#FF6B35" }]} />
                 <Image source={require("../../assets/images/icon_seri.png")} style={styles.statIcon} resizeMode="contain" />
