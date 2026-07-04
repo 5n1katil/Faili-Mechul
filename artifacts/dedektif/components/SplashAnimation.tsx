@@ -20,39 +20,30 @@ interface SplashAnimationProps {
   onComplete: () => void;
 }
 
-const LOGO_SIZE = Math.min(width * 0.32, 128);
-const GLOW_SIZE = LOGO_SIZE + 52;
-const GLOW_OUTER_SIZE = LOGO_SIZE + 100;
-const LINE_HALF = 56;
+const HERO_HEIGHT = height * 0.54;
+const LINE_HALF = 60;
 
 export function SplashAnimation({ onComplete }: SplashAnimationProps) {
   const containerOpacity = useSharedValue(1);
 
-  // Logo — zooms in from 1.4, settles with spring
-  const logoScale = useSharedValue(1.4);
-  const logoOpacity = useSharedValue(0);
+  const heroOpacity = useSharedValue(0);
+  const heroScale = useSharedValue(1.08);
 
-  // Glow layers — inner and outer pulse in opposite phase
-  const glowOpacity = useSharedValue(0);
-  const glowScale = useSharedValue(1);
-  const glowOuterScale = useSharedValue(1);
+  const ambientOpacity = useSharedValue(0);
+  const ambientScale = useSharedValue(0.85);
 
-  // Title — two words enter from opposite vertical directions
   const failOpacity = useSharedValue(0);
-  const failY = useSharedValue(-18);
+  const failY = useSharedValue(-20);
   const mechulOpacity = useSharedValue(0);
-  const mechulY = useSharedValue(18);
+  const mechulY = useSharedValue(20);
 
-  // Separator — two halves expand from center diamond
   const lineLeftW = useSharedValue(0);
   const lineRightW = useSharedValue(0);
   const lineDotOpacity = useSharedValue(0);
 
-  // Subtitle
   const subtitleOpacity = useSharedValue(0);
   const subtitleY = useSharedValue(10);
 
-  // Studio badge
   const badgeOpacity = useSharedValue(0);
 
   const animationStarted = useRef(false);
@@ -66,70 +57,46 @@ export function SplashAnimation({ onComplete }: SplashAnimationProps) {
     const easeIn = Easing.in(Easing.cubic);
     const easeInOut = Easing.inOut(Easing.ease);
 
-    // ── 1. Logo: quick fade + spring settle from 1.4 → 1.0 ──
-    logoOpacity.value = withTiming(1, { duration: 220, easing: easeOut });
-    logoScale.value = withSpring(1, {
-      damping: 14,
-      stiffness: 85,
-      overshootClamping: false,
-    });
+    heroOpacity.value = withTiming(1, { duration: 480, easing: easeOut });
+    heroScale.value = withTiming(1, { duration: 2600, easing: Easing.out(Easing.quad) });
 
-    // ── 2. Glow: reveal then breathe in opposite phases ──
-    glowOpacity.value = withDelay(280, withTiming(1, { duration: 420, easing: easeOut }));
-
-    glowScale.value = withDelay(
-      700,
+    ambientOpacity.value = withDelay(200, withTiming(1, { duration: 600, easing: easeOut }));
+    ambientScale.value = withDelay(
+      200,
       withRepeat(
         withSequence(
-          withTiming(1.12, { duration: 950, easing: easeInOut }),
-          withTiming(1.0, { duration: 950, easing: easeInOut })
-        ),
-        -1,
-        true
-      )
-    );
-    glowOuterScale.value = withDelay(
-      700,
-      withRepeat(
-        withSequence(
-          withTiming(1.0, { duration: 950, easing: easeInOut }),
-          withTiming(1.14, { duration: 950, easing: easeInOut })
+          withTiming(1.12, { duration: 1800, easing: easeInOut }),
+          withTiming(1.0, { duration: 1800, easing: easeInOut })
         ),
         -1,
         true
       )
     );
 
-    // ── 3. Title — FAİLİ from above, MEÇHUL from below ──
-    failOpacity.value = withDelay(520, withTiming(1, { duration: 380, easing: easeOut }));
-    failY.value = withDelay(520, withTiming(0, { duration: 380, easing: easeOut }));
+    failOpacity.value = withDelay(560, withTiming(1, { duration: 420, easing: easeOut }));
+    failY.value = withDelay(560, withTiming(0, { duration: 420, easing: easeOut }));
 
-    mechulOpacity.value = withDelay(640, withTiming(1, { duration: 380, easing: easeOut }));
-    mechulY.value = withDelay(640, withTiming(0, { duration: 380, easing: easeOut }));
+    mechulOpacity.value = withDelay(700, withTiming(1, { duration: 420, easing: easeOut }));
+    mechulY.value = withDelay(700, withTiming(0, { duration: 420, easing: easeOut }));
 
-    // ── 4. Separator — center dot then lines expand outward ──
-    lineDotOpacity.value = withDelay(780, withTiming(1, { duration: 200, easing: easeOut }));
-    lineLeftW.value = withDelay(820, withTiming(LINE_HALF, { duration: 440, easing: easeOut }));
-    lineRightW.value = withDelay(820, withTiming(LINE_HALF, { duration: 440, easing: easeOut }));
+    lineDotOpacity.value = withDelay(850, withTiming(1, { duration: 220, easing: easeOut }));
+    lineLeftW.value = withDelay(890, withTiming(LINE_HALF, { duration: 480, easing: easeOut }));
+    lineRightW.value = withDelay(890, withTiming(LINE_HALF, { duration: 480, easing: easeOut }));
 
-    // ── 5. Subtitle ──
-    subtitleOpacity.value = withDelay(960, withTiming(1, { duration: 380, easing: easeOut }));
-    subtitleY.value = withDelay(960, withTiming(0, { duration: 380, easing: easeOut }));
+    subtitleOpacity.value = withDelay(1060, withTiming(1, { duration: 400, easing: easeOut }));
+    subtitleY.value = withDelay(1060, withTiming(0, { duration: 400, easing: easeOut }));
 
-    // ── 6. Studio badge (bottom) ──
-    badgeOpacity.value = withDelay(1100, withTiming(1, { duration: 400, easing: easeOut }));
+    badgeOpacity.value = withDelay(1220, withTiming(1, { duration: 400, easing: easeOut }));
 
-    // ── 7. Landed haptic — subtle pulse as logo settles ──
     if (Platform.OS !== "web") {
       setTimeout(() => {
         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light).catch(() => {});
-      }, 600);
+      }, 700);
     }
 
-    // ── 8. Exit ──
     containerOpacity.value = withDelay(
-      2800,
-      withTiming(0, { duration: 400, easing: easeIn }, (finished) => {
+      2900,
+      withTiming(0, { duration: 420, easing: easeIn }, (finished) => {
         if (finished) runOnJS(onComplete)();
       })
     );
@@ -150,22 +117,16 @@ export function SplashAnimation({ onComplete }: SplashAnimationProps) {
     };
   }, []);
 
-  // ── Animated styles ──
   const containerStyle = useAnimatedStyle(() => ({ opacity: containerOpacity.value }));
 
-  const logoStyle = useAnimatedStyle(() => ({
-    opacity: logoOpacity.value,
-    transform: [{ scale: logoScale.value }],
+  const heroStyle = useAnimatedStyle(() => ({
+    opacity: heroOpacity.value,
+    transform: [{ scale: heroScale.value }],
   }));
 
-  const glowStyle = useAnimatedStyle(() => ({
-    opacity: glowOpacity.value,
-    transform: [{ scale: glowScale.value }],
-  }));
-
-  const glowOuterStyle = useAnimatedStyle(() => ({
-    opacity: glowOpacity.value,
-    transform: [{ scale: glowOuterScale.value }],
+  const ambientStyle = useAnimatedStyle(() => ({
+    opacity: ambientOpacity.value,
+    transform: [{ scale: ambientScale.value }],
   }));
 
   const failStyle = useAnimatedStyle(() => ({
@@ -199,52 +160,44 @@ export function SplashAnimation({ onComplete }: SplashAnimationProps) {
 
   return (
     <Animated.View style={[styles.container, containerStyle]}>
-      {/* Vignette — gradient fade from edges to transparent */}
-      <LinearGradient
-        colors={["rgba(0,0,0,0.55)", "transparent"]}
-        style={styles.vignetteTop}
-        pointerEvents="none"
-      />
-      <LinearGradient
-        colors={["transparent", "rgba(0,0,0,0.55)"]}
-        style={styles.vignetteBottom}
-        pointerEvents="none"
-      />
 
-      {/* Main content */}
-      <View style={styles.inner}>
-        {/* Logo with layered glow */}
-        <View style={styles.logoWrapper}>
-          <Animated.View style={[styles.glowOuter, glowOuterStyle]} />
-          <Animated.View style={[styles.glow, glowStyle]} />
-          <Animated.View style={logoStyle}>
-            <Image
-              source={require("../assets/images/icon.png")}
-              style={styles.logo}
-              resizeMode="cover"
-              onLoad={handleImageLoad}
-              onError={handleImageLoad}
-              fadeDuration={0}
-            />
-          </Animated.View>
-        </View>
+      {/* ── Hero logo — covers top of screen ── */}
+      <Animated.View style={[styles.heroWrap, heroStyle]}>
+        <Image
+          source={require("../assets/images/logo.png")}
+          style={styles.heroImage}
+          resizeMode="contain"
+          onLoad={handleImageLoad}
+          onError={handleImageLoad}
+          fadeDuration={0}
+        />
+        {/* Gradient fade: logo → background */}
+        <LinearGradient
+          colors={["transparent", "transparent", "rgba(15,17,23,0.55)", "#0F1117"]}
+          locations={[0, 0.42, 0.72, 1]}
+          style={styles.heroFade}
+          pointerEvents="none"
+        />
+      </Animated.View>
 
-        {/* Title: two words meet from opposite directions */}
+      {/* Ambient radial glow — lives at the border between hero and text */}
+      <Animated.View style={[styles.ambient, ambientStyle]} pointerEvents="none" />
+
+      {/* ── Text content — positioned below the hero fade ── */}
+      <View style={styles.content}>
+
+        {/* Title */}
         <View style={styles.titleRow}>
-          <Animated.Text style={[styles.titleWord, failStyle]}>
-            FAİLİ
-          </Animated.Text>
+          <Animated.Text style={[styles.titleWord, failStyle]}>FAİLİ</Animated.Text>
           <View style={styles.titleGap} />
-          <Animated.Text style={[styles.titleWord, mechulStyle]}>
-            MEÇHUL
-          </Animated.Text>
+          <Animated.Text style={[styles.titleWord, mechulStyle]}>MEÇHUL</Animated.Text>
         </View>
 
-        {/* Separator: center diamond + two expanding lines */}
+        {/* Separator */}
         <View style={styles.separatorRow}>
-          <Animated.View style={[styles.lineHalf, styles.lineLeft, lineLeftStyle]} />
+          <Animated.View style={[styles.lineHalf, lineLeftStyle]} />
           <Animated.View style={[styles.lineDiamond, lineDotStyle]} />
-          <Animated.View style={[styles.lineHalf, styles.lineRight, lineRightStyle]} />
+          <Animated.View style={[styles.lineHalf, lineRightStyle]} />
         </View>
 
         {/* Subtitle */}
@@ -253,7 +206,7 @@ export function SplashAnimation({ onComplete }: SplashAnimationProps) {
         </Animated.Text>
       </View>
 
-      {/* Studio badge — bottom */}
+      {/* Studio badge */}
       <Animated.Text style={[styles.badge, badgeStyle]}>
         Faili Meçhul Studio
       </Animated.Text>
@@ -267,119 +220,98 @@ const styles = StyleSheet.create({
     backgroundColor: "#0F1117",
     zIndex: 9999,
     alignItems: "center",
-    justifyContent: "center",
     pointerEvents: "none" as const,
   },
 
-  // Vignette
-  vignetteTop: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-    height: height * 0.22,
+  heroWrap: {
+    width: width,
+    height: HERO_HEIGHT,
+    alignItems: "center",
+    justifyContent: "center",
+    overflow: "hidden",
   },
-  vignetteBottom: {
+  heroImage: {
+    width: width * 0.78,
+    height: HERO_HEIGHT * 0.82,
+  },
+  heroFade: {
     position: "absolute",
     bottom: 0,
     left: 0,
     right: 0,
-    height: height * 0.22,
+    height: HERO_HEIGHT * 0.52,
   },
 
-  inner: {
-    alignItems: "center",
-  },
-
-  logoWrapper: {
-    width: GLOW_OUTER_SIZE,
-    height: GLOW_OUTER_SIZE,
-    alignItems: "center",
-    justifyContent: "center",
-    marginBottom: 34,
-  },
-  glowOuter: {
+  ambient: {
     position: "absolute",
-    width: GLOW_OUTER_SIZE,
-    height: GLOW_OUTER_SIZE,
-    borderRadius: GLOW_OUTER_SIZE / 2,
-    backgroundColor: "#D4A84310",
-  },
-  glow: {
-    position: "absolute",
-    width: GLOW_SIZE,
-    height: GLOW_SIZE,
-    borderRadius: GLOW_SIZE / 2,
-    backgroundColor: "#D4A84328",
+    top: HERO_HEIGHT * 0.6,
+    width: width * 0.7,
+    height: width * 0.7,
+    borderRadius: (width * 0.7) / 2,
+    backgroundColor: "#D4A84309",
     shadowColor: "#D4A843",
     shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 1,
-    shadowRadius: 38,
+    shadowOpacity: 0.55,
+    shadowRadius: 60,
   },
-  logo: {
-    width: LOGO_SIZE,
-    height: LOGO_SIZE,
-    borderRadius: LOGO_SIZE * 0.22,
+
+  content: {
+    alignItems: "center",
+    marginTop: 8,
   },
 
   titleRow: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 18,
+    marginBottom: 20,
     overflow: "visible",
   },
   titleWord: {
-    color: "#E8D5B7",
-    fontSize: 26,
+    color: "#EDE0CC",
+    fontSize: 30,
     fontFamily: "UnnaBold",
-    letterSpacing: 6,
+    letterSpacing: 7,
     textAlign: "center",
   },
   titleGap: {
-    width: 11,
+    width: 10,
   },
 
   separatorRow: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 13,
+    marginBottom: 14,
     height: 6,
   },
   lineHalf: {
     height: 1.5,
     backgroundColor: "#D4A843",
   },
-  lineLeft: {
-    alignSelf: "center",
-  },
-  lineRight: {
-    alignSelf: "center",
-  },
   lineDiamond: {
     width: 5,
     height: 5,
     backgroundColor: "#D4A843",
     transform: [{ rotate: "45deg" }],
-    marginHorizontal: 4,
+    marginHorizontal: 5,
     shadowColor: "#D4A843",
     shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.8,
-    shadowRadius: 4,
+    shadowOpacity: 0.9,
+    shadowRadius: 5,
   },
 
   subtitle: {
-    color: "#7A6F5E",
+    color: "#6B6051",
     fontFamily: "DroidSerifRegular",
     fontSize: 13,
     fontWeight: "500",
-    letterSpacing: 2,
+    letterSpacing: 2.5,
     textAlign: "center",
   },
 
   badge: {
     position: "absolute",
     bottom: 52,
-    color: "#3A3530",
+    color: "#35302B",
     fontFamily: "DroidSerifRegular",
     fontSize: 11,
     fontWeight: "500",
