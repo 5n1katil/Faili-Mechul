@@ -565,22 +565,20 @@ function FilterPill3D({
         ]}
       >
         {img ? (
-          <View style={{ width: "100%", alignItems: "center", gap: 4 }}>
-            <View style={[listStyles.filterPillLabel, { backgroundColor: isSelected ? color : `${color}33` }]}>
-              <Text style={[listStyles.filterPillLabelText, { color: isSelected ? "#0F1117" : color }]}>{label}</Text>
+          <View style={listStyles.filterPillImgWrap}>
+            <Image source={img} style={listStyles.filterPillImg} />
+            <View style={[listStyles.filterPillLabel, { backgroundColor: isSelected ? `${color}EE` : `${color}AA` }]}>
+              <Text style={[listStyles.filterPillLabelText, { color: isSelected ? "#0F1117" : "#FFFFFF" }]}>{label}</Text>
             </View>
-            <View style={listStyles.filterPillImgWrap}>
-              <Image source={img} style={listStyles.filterPillImg} />
-              {count !== undefined && count > 0 && (
-                <View style={[listStyles.filterPillImgCount, {
-                  backgroundColor: isSelected ? color : `${color}DD`,
-                }]}>
-                  <Text style={[listStyles.filterPillImgCountText, {
-                    color: isSelected ? "#0F1117" : "#FFFFFF",
-                  }]}>{count}</Text>
-                </View>
-              )}
-            </View>
+            {count !== undefined && count > 0 && (
+              <View style={[listStyles.filterPillImgCount, {
+                backgroundColor: isSelected ? color : `${color}DD`,
+              }]}>
+                <Text style={[listStyles.filterPillImgCountText, {
+                  color: isSelected ? "#0F1117" : "#FFFFFF",
+                }]}>{count}</Text>
+              </View>
+            )}
           </View>
         ) : icon ? (
           <>
@@ -2326,29 +2324,33 @@ const listStyles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
-    paddingVertical: 8,
-    paddingHorizontal: 8,
+    paddingVertical: 5,
+    paddingHorizontal: 5,
     borderRadius: 13,
     borderWidth: 1.5,
     gap: 0,
-    minHeight: 72,
+    minHeight: 58,
     shadowOffset: { width: 0, height: 4 },
     shadowRadius: 8,
     shadowOpacity: 0.35,
     elevation: 6,
   },
   filterPillLabel: {
-    borderRadius: 6,
-    paddingHorizontal: 7,
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+    paddingHorizontal: 4,
     paddingVertical: 3,
-    alignSelf: "stretch",
     alignItems: "center",
   },
   filterPillLabelText: {
     fontFamily: "UnnaBold",
-    fontSize: 11,
+    fontSize: 10,
     fontWeight: "700",
-    letterSpacing: 0.3,
+    letterSpacing: 0.2,
     textAlign: "center",
   },
   filterPillImgWrap: {
