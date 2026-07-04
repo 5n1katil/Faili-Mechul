@@ -16,34 +16,38 @@ import Animated, {
 
 const { width, height } = Dimensions.get("window");
 
+const BG_LOGO_SIZE = width * 1.15;
+const LINE_HALF = 60;
+
 interface SplashAnimationProps {
   onComplete: () => void;
 }
 
-const HERO_HEIGHT = height * 0.54;
-const LINE_HALF = 60;
-
 export function SplashAnimation({ onComplete }: SplashAnimationProps) {
   const containerOpacity = useSharedValue(1);
 
-  const heroOpacity = useSharedValue(0);
-  const heroScale = useSharedValue(1.08);
+  // Background logo — large, semi-transparent, slow Ken Burns drift
+  const bgLogoOpacity = useSharedValue(0);
+  const bgLogoScale = useSharedValue(1.12);
 
-  const ambientOpacity = useSharedValue(0);
-  const ambientScale = useSharedValue(0.85);
+  // Inner glow ring — pulses slowly
+  const glowOpacity = useSharedValue(0);
+  const glowScale = useSharedValue(0.9);
 
+  // Title words — enter from opposite directions
   const failOpacity = useSharedValue(0);
-  const failY = useSharedValue(-20);
+  const failY = useSharedValue(-22);
   const mechulOpacity = useSharedValue(0);
-  const mechulY = useSharedValue(20);
+  const mechulY = useSharedValue(22);
 
+  // Separator
   const lineLeftW = useSharedValue(0);
   const lineRightW = useSharedValue(0);
   const lineDotOpacity = useSharedValue(0);
 
+  // Subtitle & badge
   const subtitleOpacity = useSharedValue(0);
   const subtitleY = useSharedValue(10);
-
   const badgeOpacity = useSharedValue(0);
 
   const animationStarted = useRef(false);
@@ -57,43 +61,50 @@ export function SplashAnimation({ onComplete }: SplashAnimationProps) {
     const easeIn = Easing.in(Easing.cubic);
     const easeInOut = Easing.inOut(Easing.ease);
 
-    heroOpacity.value = withTiming(1, { duration: 480, easing: easeOut });
-    heroScale.value = withTiming(1, { duration: 2600, easing: Easing.out(Easing.quad) });
+    // 1. Background logo: slow fade in to ~13% opacity, gentle scale drift
+    bgLogoOpacity.value = withTiming(0.13, { duration: 900, easing: easeOut });
+    bgLogoScale.value = withTiming(1.0, { duration: 3200, easing: Easing.out(Easing.quad) });
 
-    ambientOpacity.value = withDelay(200, withTiming(1, { duration: 600, easing: easeOut }));
-    ambientScale.value = withDelay(
-      200,
+    // 2. Inner glow ring: appears with pulsing breath
+    glowOpacity.value = withDelay(300, withTiming(1, { duration: 500, easing: easeOut }));
+    glowScale.value = withDelay(
+      300,
       withRepeat(
         withSequence(
-          withTiming(1.12, { duration: 1800, easing: easeInOut }),
-          withTiming(1.0, { duration: 1800, easing: easeInOut })
+          withTiming(1.1, { duration: 1400, easing: easeInOut }),
+          withTiming(0.95, { duration: 1400, easing: easeInOut })
         ),
         -1,
         true
       )
     );
 
-    failOpacity.value = withDelay(560, withTiming(1, { duration: 420, easing: easeOut }));
-    failY.value = withDelay(560, withTiming(0, { duration: 420, easing: easeOut }));
+    // 3. Title — FAİLİ from above, MEÇHUL from below
+    failOpacity.value = withDelay(520, withTiming(1, { duration: 420, easing: easeOut }));
+    failY.value = withDelay(520, withTiming(0, { duration: 420, easing: easeOut }));
+    mechulOpacity.value = withDelay(660, withTiming(1, { duration: 420, easing: easeOut }));
+    mechulY.value = withDelay(660, withTiming(0, { duration: 420, easing: easeOut }));
 
-    mechulOpacity.value = withDelay(700, withTiming(1, { duration: 420, easing: easeOut }));
-    mechulY.value = withDelay(700, withTiming(0, { duration: 420, easing: easeOut }));
+    // 4. Separator
+    lineDotOpacity.value = withDelay(820, withTiming(1, { duration: 200, easing: easeOut }));
+    lineLeftW.value = withDelay(860, withTiming(LINE_HALF, { duration: 480, easing: easeOut }));
+    lineRightW.value = withDelay(860, withTiming(LINE_HALF, { duration: 480, easing: easeOut }));
 
-    lineDotOpacity.value = withDelay(850, withTiming(1, { duration: 220, easing: easeOut }));
-    lineLeftW.value = withDelay(890, withTiming(LINE_HALF, { duration: 480, easing: easeOut }));
-    lineRightW.value = withDelay(890, withTiming(LINE_HALF, { duration: 480, easing: easeOut }));
+    // 5. Subtitle
+    subtitleOpacity.value = withDelay(1020, withTiming(1, { duration: 400, easing: easeOut }));
+    subtitleY.value = withDelay(1020, withTiming(0, { duration: 400, easing: easeOut }));
 
-    subtitleOpacity.value = withDelay(1060, withTiming(1, { duration: 400, easing: easeOut }));
-    subtitleY.value = withDelay(1060, withTiming(0, { duration: 400, easing: easeOut }));
+    // 6. Studio badge
+    badgeOpacity.value = withDelay(1180, withTiming(1, { duration: 400, easing: easeOut }));
 
-    badgeOpacity.value = withDelay(1220, withTiming(1, { duration: 400, easing: easeOut }));
-
+    // 7. Haptic
     if (Platform.OS !== "web") {
       setTimeout(() => {
         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light).catch(() => {});
-      }, 700);
+      }, 650);
     }
 
+    // 8. Exit
     containerOpacity.value = withDelay(
       2900,
       withTiming(0, { duration: 420, easing: easeIn }, (finished) => {
@@ -102,88 +113,74 @@ export function SplashAnimation({ onComplete }: SplashAnimationProps) {
     );
   }, []);
 
-  const handleImageLoad = useCallback(() => {
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-      timeoutRef.current = null;
-    }
-    startAnimation();
-  }, [startAnimation]);
-
   useEffect(() => {
-    timeoutRef.current = setTimeout(() => startAnimation(), 150);
+    timeoutRef.current = setTimeout(() => startAnimation(), 100);
     return () => {
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
     };
   }, []);
 
   const containerStyle = useAnimatedStyle(() => ({ opacity: containerOpacity.value }));
-
-  const heroStyle = useAnimatedStyle(() => ({
-    opacity: heroOpacity.value,
-    transform: [{ scale: heroScale.value }],
+  const bgLogoStyle = useAnimatedStyle(() => ({
+    opacity: bgLogoOpacity.value,
+    transform: [{ scale: bgLogoScale.value }],
   }));
-
-  const ambientStyle = useAnimatedStyle(() => ({
-    opacity: ambientOpacity.value,
-    transform: [{ scale: ambientScale.value }],
+  const glowStyle = useAnimatedStyle(() => ({
+    opacity: glowOpacity.value,
+    transform: [{ scale: glowScale.value }],
   }));
-
   const failStyle = useAnimatedStyle(() => ({
     opacity: failOpacity.value,
     transform: [{ translateY: failY.value }],
   }));
-
   const mechulStyle = useAnimatedStyle(() => ({
     opacity: mechulOpacity.value,
     transform: [{ translateY: mechulY.value }],
   }));
-
   const lineDotStyle = useAnimatedStyle(() => ({ opacity: lineDotOpacity.value }));
-
   const lineLeftStyle = useAnimatedStyle(() => ({
     width: lineLeftW.value,
     opacity: lineLeftW.value / LINE_HALF,
   }));
-
   const lineRightStyle = useAnimatedStyle(() => ({
     width: lineRightW.value,
     opacity: lineRightW.value / LINE_HALF,
   }));
-
   const subtitleStyle = useAnimatedStyle(() => ({
     opacity: subtitleOpacity.value,
     transform: [{ translateY: subtitleY.value }],
   }));
-
   const badgeStyle = useAnimatedStyle(() => ({ opacity: badgeOpacity.value }));
 
   return (
     <Animated.View style={[styles.container, containerStyle]}>
 
-      {/* ── Hero logo — covers top of screen ── */}
-      <Animated.View style={[styles.heroWrap, heroStyle]}>
+      {/* ── Background logo — large, behind everything, semi-transparent ── */}
+      <Animated.View style={[styles.bgLogoWrap, bgLogoStyle]} pointerEvents="none">
         <Image
-          source={require("../assets/images/logo.png")}
-          style={styles.heroImage}
+          source={require("../assets/images/icon.png")}
+          style={styles.bgLogo}
           resizeMode="contain"
-          onLoad={handleImageLoad}
-          onError={handleImageLoad}
           fadeDuration={0}
-        />
-        {/* Gradient fade: logo → background */}
-        <LinearGradient
-          colors={["transparent", "transparent", "rgba(15,17,23,0.55)", "#0F1117"]}
-          locations={[0, 0.42, 0.72, 1]}
-          style={styles.heroFade}
-          pointerEvents="none"
         />
       </Animated.View>
 
-      {/* Ambient radial glow — lives at the border between hero and text */}
-      <Animated.View style={[styles.ambient, ambientStyle]} pointerEvents="none" />
+      {/* Dark gradient vignette — top and bottom depth */}
+      <LinearGradient
+        colors={["rgba(15,17,23,0.72)", "transparent"]}
+        style={styles.vignetteTop}
+        pointerEvents="none"
+      />
+      <LinearGradient
+        colors={["transparent", "rgba(15,17,23,0.88)"]}
+        style={styles.vignetteBottom}
+        pointerEvents="none"
+      />
 
-      {/* ── Text content — positioned below the hero fade ── */}
+      {/* Radial glow — behind the text, centered */}
+      <Animated.View style={[styles.glowRing, glowStyle]} pointerEvents="none" />
+
+      {/* ── Foreground: text content ── */}
       <View style={styles.content}>
 
         {/* Title */}
@@ -220,51 +217,55 @@ const styles = StyleSheet.create({
     backgroundColor: "#0F1117",
     zIndex: 9999,
     alignItems: "center",
+    justifyContent: "center",
     pointerEvents: "none" as const,
   },
 
-  heroWrap: {
-    width: width,
-    height: HERO_HEIGHT,
+  bgLogoWrap: {
+    position: "absolute",
     alignItems: "center",
     justifyContent: "center",
-    overflow: "hidden",
   },
-  heroImage: {
-    width: width * 0.78,
-    height: HERO_HEIGHT * 0.82,
+  bgLogo: {
+    width: BG_LOGO_SIZE,
+    height: BG_LOGO_SIZE,
   },
-  heroFade: {
+
+  vignetteTop: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    height: height * 0.28,
+  },
+  vignetteBottom: {
     position: "absolute",
     bottom: 0,
     left: 0,
     right: 0,
-    height: HERO_HEIGHT * 0.52,
+    height: height * 0.28,
   },
 
-  ambient: {
+  glowRing: {
     position: "absolute",
-    top: HERO_HEIGHT * 0.6,
-    width: width * 0.7,
-    height: width * 0.7,
-    borderRadius: (width * 0.7) / 2,
-    backgroundColor: "#D4A84309",
+    width: width * 0.82,
+    height: width * 0.82,
+    borderRadius: (width * 0.82) / 2,
     shadowColor: "#D4A843",
     shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.55,
-    shadowRadius: 60,
+    shadowOpacity: 0.45,
+    shadowRadius: 70,
+    backgroundColor: "#D4A84306",
   },
 
   content: {
     alignItems: "center",
-    marginTop: 8,
   },
 
   titleRow: {
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 20,
-    overflow: "visible",
   },
   titleWord: {
     color: "#EDE0CC",
@@ -272,6 +273,9 @@ const styles = StyleSheet.create({
     fontFamily: "UnnaBold",
     letterSpacing: 7,
     textAlign: "center",
+    textShadowColor: "#000000AA",
+    textShadowOffset: { width: 0, height: 2 },
+    textShadowRadius: 8,
   },
   titleGap: {
     width: 10,
@@ -303,9 +307,11 @@ const styles = StyleSheet.create({
     color: "#6B6051",
     fontFamily: "DroidSerifRegular",
     fontSize: 13,
-    fontWeight: "500",
     letterSpacing: 2.5,
     textAlign: "center",
+    textShadowColor: "#000000AA",
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 4,
   },
 
   badge: {
@@ -314,7 +320,6 @@ const styles = StyleSheet.create({
     color: "#35302B",
     fontFamily: "DroidSerifRegular",
     fontSize: 11,
-    fontWeight: "500",
     letterSpacing: 1.5,
     textAlign: "center",
   },
