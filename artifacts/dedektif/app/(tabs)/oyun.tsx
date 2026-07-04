@@ -565,17 +565,22 @@ function FilterPill3D({
         ]}
       >
         {img ? (
-          <View style={listStyles.filterPillImgWrap}>
-            <Image source={img} style={listStyles.filterPillImg} />
-            {count !== undefined && count > 0 && (
-              <View style={[listStyles.filterPillImgCount, {
-                backgroundColor: isSelected ? color : `${color}CC`,
-              }]}>
-                <Text style={[listStyles.filterPillImgCountText, {
-                  color: isSelected ? "#0F1117" : "#FFFFFF",
-                }]}>{count}</Text>
-              </View>
-            )}
+          <View style={{ width: "100%", alignItems: "center", gap: 4 }}>
+            <View style={[listStyles.filterPillLabel, { backgroundColor: isSelected ? color : `${color}33` }]}>
+              <Text style={[listStyles.filterPillLabelText, { color: isSelected ? "#0F1117" : color }]}>{label}</Text>
+            </View>
+            <View style={listStyles.filterPillImgWrap}>
+              <Image source={img} style={listStyles.filterPillImg} />
+              {count !== undefined && count > 0 && (
+                <View style={[listStyles.filterPillImgCount, {
+                  backgroundColor: isSelected ? color : `${color}DD`,
+                }]}>
+                  <Text style={[listStyles.filterPillImgCountText, {
+                    color: isSelected ? "#0F1117" : "#FFFFFF",
+                  }]}>{count}</Text>
+                </View>
+              )}
+            </View>
           </View>
         ) : icon ? (
           <>
@@ -2331,6 +2336,20 @@ const listStyles = StyleSheet.create({
     shadowRadius: 8,
     shadowOpacity: 0.35,
     elevation: 6,
+  },
+  filterPillLabel: {
+    borderRadius: 6,
+    paddingHorizontal: 7,
+    paddingVertical: 3,
+    alignSelf: "stretch",
+    alignItems: "center",
+  },
+  filterPillLabelText: {
+    fontFamily: "UnnaBold",
+    fontSize: 11,
+    fontWeight: "700",
+    letterSpacing: 0.3,
+    textAlign: "center",
   },
   filterPillImgWrap: {
     width: "100%",
