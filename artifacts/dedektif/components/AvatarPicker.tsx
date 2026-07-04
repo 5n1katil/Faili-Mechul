@@ -10,8 +10,10 @@ import {
   Text,
   View,
   useWindowDimensions,
+  Image,
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
+import { LinearGradient } from "expo-linear-gradient";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import * as ImagePicker from "expo-image-picker";
 import * as FileSystem from "expo-file-system";
@@ -24,12 +26,13 @@ import {
   type AvatarPreset,
 } from "@/utils/avatarHelpers";
 
-const CATEGORIES: AvatarCategory[] = ["dedektif", "hafiye", "supheji", "uzman", "efsane"];
-const COLUMNS = 5;
+const CATEGORIES: AvatarCategory[] = ["dedektif", "gorevli", "ajan", "uzman"];
+const COLUMNS = 4;
 const GOLD = "#D4A843";
 const BG = "#0F1117";
 const CARD = "#1A1F2E";
 const BORDER = "#2A3050";
+const ACCENT_BLUE = "#1E2A4A";
 
 interface AvatarPickerProps {
   value: string;
@@ -44,7 +47,9 @@ export default function AvatarPicker({ value, onChange, visible, onClose }: Avat
   const [activeCategory, setActiveCategory] = useState<AvatarCategory>("dedektif");
   const flatListRef = useRef<FlatList<AvatarPreset>>(null);
 
-  const cellSize = Math.floor((screenWidth - 32 - (COLUMNS - 1) * 8) / COLUMNS);
+  const PAD = 16;
+  const GAP = 10;
+  const cellSize = Math.floor((screenWidth - PAD * 2 - GAP * (COLUMNS - 1)) / COLUMNS);
 
   const filtered = PRESET_AVATARS.filter((p) => p.category === activeCategory);
 
@@ -101,25 +106,34 @@ export default function AvatarPicker({ value, onChange, visible, onClose }: Avat
     return (
       <Pressable
         onPress={() => handlePreset(item.key)}
-        style={[
+        style={({ pressed }) => [
           styles.cell,
           {
             width: cellSize,
-            height: cellSize + 22,
+            height: cellSize + 28,
             borderColor: selected ? GOLD : BORDER,
-            backgroundColor: selected ? `${GOLD}18` : CARD,
+            backgroundColor: selected ? `${GOLD}12` : CARD,
+            opacity: pressed ? 0.82 : 1,
+            transform: [{ scale: pressed ? 0.96 : 1 }],
           },
+          selected && styles.cellSelected,
         ]}
       >
-        <AvatarDisplay avatar={item.key} size={cellSize - 16} />
-        <Text style={[styles.cellLabel, selected && { color: GOLD }]} numberOfLines={1}>
+        <View style={[styles.imageWrap, { width: cellSize - 8, height: cellSize - 8 }]}>
+          <AvatarDisplay
+            avatar={item.key}
+            size={cellSize - 8}
+            borderRadius={12}
+          />
+          {selected && (
+            <View style={styles.checkOverlay}>
+              <MaterialIcons name="check-circle" size={22} color={GOLD} />
+            </View>
+          )}
+        </View>
+        <Text style={[styles.cellLabel, selected && { color: GOLD, fontFamily: "UnnaBold" }]} numberOfLines={1}>
           {item.label}
         </Text>
-        {selected && (
-          <View style={styles.checkBadge}>
-            <MaterialIcons name="check" size={10} color="#0F1117" />
-          </View>
-        )}
       </Pressable>
     );
   }, [value, cellSize, handlePreset]);
@@ -128,7 +142,7 @@ export default function AvatarPicker({ value, onChange, visible, onClose }: Avat
 
   const getItemLayout = useCallback(
     (_data: ArrayLike<AvatarPreset> | null | undefined, index: number) => {
-      const rowHeight = cellSize + 22 + 8;
+      const rowHeight = cellSize + 28 + GAP;
       const row = Math.floor(index / COLUMNS);
       return { length: rowHeight, offset: rowHeight * row, index };
     },
@@ -136,6 +150,9 @@ export default function AvatarPicker({ value, onChange, visible, onClose }: Avat
   );
 
   const currentPreset = !value.startsWith("gallery:") ? getAvatarPreset(value) : null;
+  const currentLabel = value.startsWith("gallery:")
+    ? "Galeriden fotoğraf"
+    : currentPreset?.label ?? "—";
 
   return (
     <Modal
@@ -145,32 +162,52 @@ export default function AvatarPicker({ value, onChange, visible, onClose }: Avat
       onRequestClose={onClose}
     >
       <View style={[styles.container, { paddingTop: Platform.OS === "web" ? 60 : insets.top }]}>
-        {/* Header */}
+
+        {/* ── Header ── */}
         <View style={styles.header}>
-          <View style={{ width: 40 }} />
+          <View style={{ width: 44 }} />
           <Text style={styles.headerTitle}>Avatar Seç</Text>
-          <Pressable onPress={onClose} style={styles.closeBtn} hitSlop={12}>
-            <MaterialIcons name="close" size={22} color="#9CA3AF" />
+          <Pressable
+            onPress={onClose}
+            hitSlop={10}
+            style={({ pressed }) => [
+              styles.closeBtn,
+              pressed && { opacity: 0.6, transform: [{ scale: 0.88 }] },
+            ]}
+          >
+            <MaterialIcons name="close" size={24} color="#9CA3AF" />
           </Pressable>
         </View>
 
-        {/* Current avatar preview */}
-        <View style={styles.previewRow}>
-          <AvatarDisplay
-            avatar={value}
-            size={56}
-          />
-          <View style={{ flex: 1 }}>
-            <Text style={styles.previewLabel}>Seçili Avatar</Text>
-            <Text style={styles.previewName}>
-              {value.startsWith("gallery:")
-                ? "Galeriden fotoğraf"
-                : currentPreset?.label ?? "—"}
-            </Text>
+        {/* ── Current avatar preview ── */}
+        <LinearGradient
+          colors={[`${ACCENT_BLUE}CC`, BG]}
+          style={styles.previewGradient}
+        >
+          <View style={styles.previewRow}>
+            <View style={styles.previewAvatarWrap}>
+              <AvatarDisplay avatar={value} size={72} borderRadius={16} />
+              {!value.startsWith("gallery:") && (
+                <View style={styles.previewBadge}>
+                  <MaterialIcons name="star" size={10} color={GOLD} />
+                </View>
+              )}
+            </View>
+            <View style={{ flex: 1 }}>
+              <Text style={styles.previewSublabel}>SEÇİLİ AVATAR</Text>
+              <Text style={styles.previewName}>{currentLabel}</Text>
+              <Text style={styles.previewCategory}>
+                {value.startsWith("gallery:")
+                  ? "Kendi fotoğrafın"
+                  : currentPreset
+                  ? CATEGORY_LABELS[currentPreset.category]
+                  : ""}
+              </Text>
+            </View>
           </View>
-        </View>
+        </LinearGradient>
 
-        {/* Category tabs */}
+        {/* ── Category tabs ── */}
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
@@ -179,24 +216,28 @@ export default function AvatarPicker({ value, onChange, visible, onClose }: Avat
         >
           {CATEGORIES.map((cat) => {
             const active = cat === activeCategory;
+            const count = PRESET_AVATARS.filter((p) => p.category === cat).length;
             return (
               <Pressable
                 key={cat}
                 onPress={() => handleSelectCategory(cat)}
                 style={[
                   styles.tab,
-                  { borderColor: active ? GOLD : BORDER, backgroundColor: active ? `${GOLD}18` : CARD },
+                  { borderColor: active ? GOLD : BORDER, backgroundColor: active ? `${GOLD}1A` : "transparent" },
                 ]}
               >
                 <Text style={[styles.tabText, { color: active ? GOLD : "#6B7280" }]}>
                   {CATEGORY_LABELS[cat]}
                 </Text>
+                <View style={[styles.tabCount, { backgroundColor: active ? `${GOLD}30` : `${BORDER}80` }]}>
+                  <Text style={[styles.tabCountText, { color: active ? GOLD : "#6B7280" }]}>{count}</Text>
+                </View>
               </Pressable>
             );
           })}
         </ScrollView>
 
-        {/* Avatar grid */}
+        {/* ── Avatar grid ── */}
         <FlatList
           ref={flatListRef}
           data={filtered}
@@ -204,26 +245,38 @@ export default function AvatarPicker({ value, onChange, visible, onClose }: Avat
           keyExtractor={keyExtractor}
           numColumns={COLUMNS}
           getItemLayout={getItemLayout}
-          contentContainerStyle={styles.gridContent}
+          contentContainerStyle={[styles.gridContent, { paddingBottom: Math.max(insets.bottom, 16) + 90 }]}
           showsVerticalScrollIndicator={false}
           columnWrapperStyle={styles.row}
           style={styles.flatList}
         />
 
-        {/* Gallery button */}
+        {/* ── Gallery button (floating) ── */}
         <View style={[styles.footer, { paddingBottom: Math.max(insets.bottom, 16) }]}>
           {value.startsWith("gallery:") && (
             <View style={styles.galleryCurrentRow}>
-              <AvatarDisplay avatar={value} size={36} />
+              <AvatarDisplay avatar={value} size={34} borderRadius={10} />
               <Text style={styles.galleryCurrentText}>Galeriden seçildi</Text>
               <MaterialIcons name="check-circle" size={18} color={GOLD} />
             </View>
           )}
-          <Pressable onPress={handleGallery} style={styles.galleryBtn}>
-            <MaterialIcons name="add-photo-alternate" size={22} color={GOLD} />
-            <Text style={styles.galleryBtnText}>Galeriden Fotoğraf Seç</Text>
+          <Pressable
+            onPress={handleGallery}
+            style={({ pressed }) => [
+              styles.galleryBtn,
+              pressed && { opacity: 0.8, transform: [{ scale: 0.98 }] },
+            ]}
+          >
+            <LinearGradient
+              colors={[`${GOLD}20`, `${GOLD}08`]}
+              style={styles.galleryBtnInner}
+            >
+              <MaterialIcons name="add-photo-alternate" size={22} color={GOLD} />
+              <Text style={styles.galleryBtnText}>Galeriden Fotoğraf Seç</Text>
+            </LinearGradient>
           </Pressable>
         </View>
+
       </View>
     </Modal>
   );
@@ -244,62 +297,105 @@ const styles = StyleSheet.create({
     borderBottomColor: BORDER,
   },
   headerTitle: {
-    fontFamily: "DroidSerifRegular",
-    fontSize: 18,
-    fontWeight: "800",
+    fontFamily: "UnnaBold",
+    fontSize: 19,
+    fontWeight: "700",
     color: "#F9FAFB",
-    letterSpacing: 0.5,
+    letterSpacing: 0.4,
   },
   closeBtn: {
-    width: 40,
-    alignItems: "flex-end",
+    width: 44,
+    height: 44,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 22,
+  },
+
+  previewGradient: {
+    borderBottomWidth: 1,
+    borderBottomColor: `${BORDER}80`,
   },
   previewRow: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 14,
+    gap: 16,
     paddingHorizontal: 16,
-    paddingVertical: 12,
-    borderBottomWidth: 1,
-    borderBottomColor: BORDER,
+    paddingVertical: 14,
   },
-  previewLabel: {
-    fontFamily: "DroidSerifRegular",
-    fontSize: 11,
+  previewAvatarWrap: {
+    position: "relative",
+  },
+  previewBadge: {
+    position: "absolute",
+    bottom: -2,
+    right: -2,
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    backgroundColor: BG,
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: 1.5,
+    borderColor: GOLD,
+  },
+  previewSublabel: {
+    fontFamily: "UnnaBold",
+    fontSize: 10,
     color: "#6B7280",
-    fontWeight: "600",
-    letterSpacing: 0.5,
+    letterSpacing: 1.4,
     textTransform: "uppercase",
+    marginBottom: 4,
   },
   previewName: {
-    fontFamily: "DroidSerifRegular",
-    fontSize: 16,
+    fontFamily: "UnnaBold",
+    fontSize: 18,
     color: "#F9FAFB",
     fontWeight: "700",
-    marginTop: 2,
   },
+  previewCategory: {
+    fontFamily: "DroidSerifRegular",
+    fontSize: 12,
+    color: "#9CA3AF",
+    marginTop: 2,
+    fontStyle: "italic",
+  },
+
   tabs: {
     flexGrow: 0,
     borderBottomWidth: 1,
     borderBottomColor: BORDER,
   },
   tabsContent: {
-    paddingHorizontal: 12,
+    paddingHorizontal: 14,
     paddingVertical: 10,
     gap: 8,
     flexDirection: "row",
   },
   tab: {
-    borderRadius: 20,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+    borderRadius: 22,
     borderWidth: 1,
     paddingHorizontal: 14,
-    paddingVertical: 7,
+    paddingVertical: 8,
   },
   tabText: {
-    fontFamily: "DroidSerifRegular",
+    fontFamily: "UnnaBold",
     fontSize: 13,
     fontWeight: "700",
   },
+  tabCount: {
+    borderRadius: 8,
+    paddingHorizontal: 6,
+    paddingVertical: 1,
+  },
+  tabCountText: {
+    fontFamily: "UnnaBold",
+    fontSize: 11,
+    fontWeight: "700",
+  },
+
   flatList: {
     flex: 1,
   },
@@ -308,59 +404,80 @@ const styles = StyleSheet.create({
     paddingBottom: 8,
   },
   row: {
-    gap: 8,
-    marginBottom: 8,
+    gap: 10,
+    marginBottom: 10,
   },
   cell: {
-    borderRadius: 14,
+    borderRadius: 16,
     borderWidth: 1.5,
     alignItems: "center",
-    justifyContent: "center",
-    gap: 4,
-    paddingVertical: 8,
+    justifyContent: "flex-start",
+    paddingTop: 5,
+    paddingBottom: 6,
     position: "relative",
+    overflow: "hidden",
+  },
+  cellSelected: {
+    shadowColor: GOLD,
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.35,
+    shadowRadius: 8,
+    elevation: 6,
+  },
+  imageWrap: {
+    borderRadius: 12,
+    overflow: "hidden",
+    position: "relative",
+  },
+  checkOverlay: {
+    position: "absolute",
+    top: 4,
+    right: 4,
+    backgroundColor: "rgba(15,17,23,0.75)",
+    borderRadius: 12,
+    padding: 1,
   },
   cellLabel: {
     fontFamily: "DroidSerifRegular",
     fontSize: 10,
     fontWeight: "600",
-    color: "#6B7280",
+    color: "#9CA3AF",
     textAlign: "center",
+    marginTop: 5,
+    paddingHorizontal: 4,
   },
-  checkBadge: {
-    position: "absolute",
-    top: 5,
-    right: 5,
-    width: 18,
-    height: 18,
-    borderRadius: 9,
-    backgroundColor: GOLD,
-    alignItems: "center",
-    justifyContent: "center",
-  },
+
   footer: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    paddingHorizontal: 16,
+    paddingTop: 10,
+    gap: 8,
+    backgroundColor: `${BG}F0`,
     borderTopWidth: 1,
     borderTopColor: BORDER,
-    paddingHorizontal: 16,
-    paddingTop: 12,
-    gap: 8,
   },
   galleryBtn: {
+    borderRadius: 14,
+    borderWidth: 1,
+    borderColor: `${GOLD}44`,
+    overflow: "hidden",
+  },
+  galleryBtnInner: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
     gap: 10,
-    backgroundColor: CARD,
-    borderRadius: 14,
-    borderWidth: 1,
-    borderColor: `${GOLD}44`,
     paddingVertical: 14,
   },
   galleryBtnText: {
-    fontFamily: "DroidSerifRegular",
+    fontFamily: "UnnaBold",
     fontSize: 15,
     fontWeight: "700",
     color: GOLD,
+    letterSpacing: 0.3,
   },
   galleryCurrentRow: {
     flexDirection: "row",

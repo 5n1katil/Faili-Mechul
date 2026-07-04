@@ -1,88 +1,82 @@
 import React, { useEffect, useState } from "react";
 import { Image, Text, View } from "react-native";
+import type { ImageSourcePropType } from "react-native";
 
-export type AvatarCategory = "dedektif" | "hafiye" | "supheji" | "uzman" | "efsane";
+export type AvatarCategory = "dedektif" | "gorevli" | "ajan" | "uzman";
 
 export const CATEGORY_LABELS: Record<AvatarCategory, string> = {
   dedektif: "Dedektifler",
-  hafiye:   "Hafiyeler",
-  supheji:  "Şüpheliler",
+  gorevli:  "Görevliler",
+  ajan:     "Ajanlar",
   uzman:    "Uzmanlar",
-  efsane:   "Efsaneler",
 };
 
 export interface AvatarPreset {
   key: string;
-  emoji: string;
   label: string;
   category: AvatarCategory;
-  bg: string;
+  image: ImageSourcePropType;
+  emoji?: string;
+  bg?: string;
 }
 
+export const PLAYER_AVATAR_IMAGES: Record<string, ImageSourcePropType> = {
+  av_dedektif:  require("../assets/images/player_avatars/av_dedektif.png"),
+  av_gece:      require("../assets/images/player_avatars/av_gece.png"),
+  av_komiser:   require("../assets/images/player_avatars/av_komiser.png"),
+  av_genckadin: require("../assets/images/player_avatars/av_genckadin.png"),
+  av_fbi:       require("../assets/images/player_avatars/av_fbi.png"),
+  av_sert:      require("../assets/images/player_avatars/av_sert.png"),
+  av_polis:     require("../assets/images/player_avatars/av_polis.png"),
+  av_memur:     require("../assets/images/player_avatars/av_memur.png"),
+  av_trafik:    require("../assets/images/player_avatars/av_trafik.png"),
+  av_denizci:   require("../assets/images/player_avatars/av_denizci.png"),
+  av_ajan:      require("../assets/images/player_avatars/av_ajan.png"),
+  av_operator:  require("../assets/images/player_avatars/av_operator.png"),
+  av_muhabir:   require("../assets/images/player_avatars/av_muhabir.png"),
+  av_sokak:     require("../assets/images/player_avatars/av_sokak.png"),
+  av_uzman:     require("../assets/images/player_avatars/av_uzman.png"),
+  av_katip:     require("../assets/images/player_avatars/av_katip.png"),
+  av_pipo:      require("../assets/images/player_avatars/av_pipo.png"),
+  av_golge:     require("../assets/images/player_avatars/av_golge.png"),
+  av_asil:      require("../assets/images/player_avatars/av_asil.png"),
+};
+
 export const PRESET_AVATARS: AvatarPreset[] = [
-  // ── Dedektifler ────────────────────────────────
-  { key: "d01", emoji: "🕵️",    label: "Dedektif",    category: "dedektif", bg: "#1A2448" },
-  { key: "d02", emoji: "👮",    label: "Komiser",     category: "dedektif", bg: "#1A2448" },
-  { key: "d03", emoji: "🧑‍⚖️",  label: "Yargıç",     category: "dedektif", bg: "#1A2448" },
-  { key: "d04", emoji: "🫡",    label: "Albay",       category: "dedektif", bg: "#1A2448" },
-  { key: "d05", emoji: "💂",    label: "Muhafız",     category: "dedektif", bg: "#1A2448" },
-  { key: "d06", emoji: "🕴️",    label: "Ajan",        category: "dedektif", bg: "#1A2448" },
-  { key: "d07", emoji: "🦸",    label: "Kahraman",    category: "dedektif", bg: "#1A2448" },
-  { key: "d08", emoji: "🧑‍✈️",  label: "Kaptan",     category: "dedektif", bg: "#1A2448" },
-  { key: "d09", emoji: "👷",    label: "Teknisyen",   category: "dedektif", bg: "#1A2448" },
-  { key: "d10", emoji: "👨‍✈️",  label: "Pilot",      category: "dedektif", bg: "#1A2448" },
+  // ── Dedektifler ────────────────────────────────────
+  { key: "av_dedektif",  label: "Dedektif",      category: "dedektif", image: PLAYER_AVATAR_IMAGES.av_dedektif },
+  { key: "av_gece",      label: "Gece Dedektifi", category: "dedektif", image: PLAYER_AVATAR_IMAGES.av_gece },
+  { key: "av_komiser",   label: "Komiser",        category: "dedektif", image: PLAYER_AVATAR_IMAGES.av_komiser },
+  { key: "av_genckadin", label: "Genç Dedektif",  category: "dedektif", image: PLAYER_AVATAR_IMAGES.av_genckadin },
+  { key: "av_fbi",       label: "FBI Ajanı",      category: "dedektif", image: PLAYER_AVATAR_IMAGES.av_fbi },
+  { key: "av_sert",      label: "Sert Adam",      category: "dedektif", image: PLAYER_AVATAR_IMAGES.av_sert },
 
-  // ── Hafiyeler ──────────────────────────────────
-  { key: "h01", emoji: "🤵",    label: "Smokin",      category: "hafiye", bg: "#221048" },
-  { key: "h02", emoji: "🥷",    label: "Ninja",       category: "hafiye", bg: "#221048" },
-  { key: "h03", emoji: "😎",    label: "Soğukkanlı",  category: "hafiye", bg: "#221048" },
-  { key: "h04", emoji: "🧐",    label: "Araştırmacı", category: "hafiye", bg: "#221048" },
-  { key: "h05", emoji: "🤫",    label: "Sessiz",      category: "hafiye", bg: "#221048" },
-  { key: "h06", emoji: "🥸",    label: "Kılık D.",    category: "hafiye", bg: "#221048" },
-  { key: "h07", emoji: "🎭",    label: "Aktör",       category: "hafiye", bg: "#221048" },
-  { key: "h08", emoji: "🃏",    label: "Joker",       category: "hafiye", bg: "#221048" },
-  { key: "h09", emoji: "🕵️‍♀️", label: "Ajan K.",    category: "hafiye", bg: "#221048" },
-  { key: "h10", emoji: "👩‍💼",  label: "Temsilci",   category: "hafiye", bg: "#221048" },
+  // ── Görevliler ─────────────────────────────────────
+  { key: "av_polis",     label: "Polis Memuru",   category: "gorevli",  image: PLAYER_AVATAR_IMAGES.av_polis },
+  { key: "av_memur",     label: "Memur",          category: "gorevli",  image: PLAYER_AVATAR_IMAGES.av_memur },
+  { key: "av_trafik",    label: "Trafik Polisi",  category: "gorevli",  image: PLAYER_AVATAR_IMAGES.av_trafik },
+  { key: "av_denizci",   label: "Denizci",        category: "gorevli",  image: PLAYER_AVATAR_IMAGES.av_denizci },
 
-  // ── Şüpheliler ─────────────────────────────────
-  { key: "s01", emoji: "🦹",    label: "Kötü Adam",   category: "supheji", bg: "#381018" },
-  { key: "s02", emoji: "😈",    label: "Şeytan",      category: "supheji", bg: "#381018" },
-  { key: "s03", emoji: "🥺",    label: "Masum",       category: "supheji", bg: "#381018" },
-  { key: "s04", emoji: "😰",    label: "Endişeli",    category: "supheji", bg: "#381018" },
-  { key: "s05", emoji: "😬",    label: "Gergin",      category: "supheji", bg: "#381018" },
-  { key: "s06", emoji: "🤥",    label: "Yalancı",     category: "supheji", bg: "#381018" },
-  { key: "s07", emoji: "😱",    label: "Şaşkın",      category: "supheji", bg: "#381018" },
-  { key: "s08", emoji: "😤",    label: "Sinirli",     category: "supheji", bg: "#381018" },
-  { key: "s09", emoji: "😼",    label: "Sinsi",       category: "supheji", bg: "#381018" },
-  { key: "s10", emoji: "🦹‍♀️", label: "Kötü Kadın", category: "supheji", bg: "#381018" },
+  // ── Ajanlar ────────────────────────────────────────
+  { key: "av_ajan",      label: "Gizli Ajan",     category: "ajan",     image: PLAYER_AVATAR_IMAGES.av_ajan },
+  { key: "av_operator",  label: "Operatör",       category: "ajan",     image: PLAYER_AVATAR_IMAGES.av_operator },
+  { key: "av_muhabir",   label: "Muhabir",        category: "ajan",     image: PLAYER_AVATAR_IMAGES.av_muhabir },
+  { key: "av_sokak",     label: "Sokak Ajan",     category: "ajan",     image: PLAYER_AVATAR_IMAGES.av_sokak },
 
-  // ── Uzmanlar ───────────────────────────────────
-  { key: "u01", emoji: "👨‍🔬",  label: "Bilimci",    category: "uzman", bg: "#103020" },
-  { key: "u02", emoji: "👩‍🔬",  label: "Araşt. K.",  category: "uzman", bg: "#103020" },
-  { key: "u03", emoji: "🧑‍⚕️",  label: "Doktor",    category: "uzman", bg: "#103020" },
-  { key: "u04", emoji: "👨‍💻",  label: "Analist",    category: "uzman", bg: "#103020" },
-  { key: "u05", emoji: "👩‍💻",  label: "Hacker",     category: "uzman", bg: "#103020" },
-  { key: "u06", emoji: "🧑‍🏫",  label: "Öğretmen",  category: "uzman", bg: "#103020" },
-  { key: "u07", emoji: "👨‍🎨",  label: "Ressam",     category: "uzman", bg: "#103020" },
-  { key: "u08", emoji: "👩‍🎨",  label: "Sanatçı",    category: "uzman", bg: "#103020" },
-  { key: "u09", emoji: "🧑‍🚀",  label: "Kaşif",     category: "uzman", bg: "#103020" },
-  { key: "u10", emoji: "👩‍⚖️",  label: "Hâkim",     category: "uzman", bg: "#103020" },
-
-  // ── Efsaneler ──────────────────────────────────
-  { key: "e01", emoji: "🧙",    label: "Büyücü",      category: "efsane", bg: "#102028" },
-  { key: "e02", emoji: "🧙‍♀️", label: "Cadı",        category: "efsane", bg: "#102028" },
-  { key: "e03", emoji: "🧛",    label: "Vampir",      category: "efsane", bg: "#102028" },
-  { key: "e04", emoji: "🧛‍♀️", label: "Vampir K.",   category: "efsane", bg: "#102028" },
-  { key: "e05", emoji: "👻",    label: "Hayalet",     category: "efsane", bg: "#102028" },
-  { key: "e06", emoji: "💀",    label: "Kurukafa",    category: "efsane", bg: "#102028" },
-  { key: "e07", emoji: "🤖",    label: "Robot",       category: "efsane", bg: "#102028" },
-  { key: "e08", emoji: "🧟",    label: "Zombi",       category: "efsane", bg: "#102028" },
-  { key: "e09", emoji: "🧝",    label: "Elf",         category: "efsane", bg: "#102028" },
-  { key: "e10", emoji: "🧜‍♀️", label: "Deniz Kızı", category: "efsane", bg: "#102028" },
+  // ── Uzmanlar ───────────────────────────────────────
+  { key: "av_uzman",     label: "Uzman",          category: "uzman",    image: PLAYER_AVATAR_IMAGES.av_uzman },
+  { key: "av_katip",     label: "Kâtip",          category: "uzman",    image: PLAYER_AVATAR_IMAGES.av_katip },
+  { key: "av_pipo",      label: "Komisyon Üyesi", category: "uzman",    image: PLAYER_AVATAR_IMAGES.av_pipo },
+  { key: "av_golge",     label: "Gölge",          category: "uzman",    image: PLAYER_AVATAR_IMAGES.av_golge },
+  { key: "av_asil",      label: "Asil Hanım",     category: "uzman",    image: PLAYER_AVATAR_IMAGES.av_asil },
 ];
 
 export function getAvatarPreset(key: string): AvatarPreset {
   return PRESET_AVATARS.find((p) => p.key === key) ?? PRESET_AVATARS[0];
+}
+
+function isPlayerAvatar(key: string): boolean {
+  return key.startsWith("av_");
 }
 
 interface AvatarDisplayProps {
@@ -90,10 +84,12 @@ interface AvatarDisplayProps {
   size: number;
   color?: string;
   backgroundColor?: string;
+  borderRadius?: number;
 }
 
-export function AvatarDisplay({ avatar, size }: AvatarDisplayProps) {
+export function AvatarDisplay({ avatar, size, borderRadius }: AvatarDisplayProps) {
   const [galleryFailed, setGalleryFailed] = useState(false);
+  const radius = borderRadius ?? size / 2;
 
   useEffect(() => {
     setGalleryFailed(false);
@@ -104,18 +100,35 @@ export function AvatarDisplay({ avatar, size }: AvatarDisplayProps) {
     return (
       <Image
         source={{ uri }}
-        style={{
-          width: size,
-          height: size,
-          borderRadius: size / 2,
-        }}
+        style={{ width: size, height: size, borderRadius: radius }}
         resizeMode="cover"
         onError={() => setGalleryFailed(true)}
       />
     );
   }
 
+  if (isPlayerAvatar(avatar) || avatar.startsWith("av_")) {
+    const preset = getAvatarPreset(avatar);
+    return (
+      <Image
+        source={preset.image}
+        style={{ width: size, height: size, borderRadius: radius }}
+        resizeMode="cover"
+      />
+    );
+  }
+
   const preset = getAvatarPreset(avatar.startsWith("gallery:") ? "" : avatar);
+
+  if (preset.image) {
+    return (
+      <Image
+        source={preset.image}
+        style={{ width: size, height: size, borderRadius: radius }}
+        resizeMode="cover"
+      />
+    );
+  }
 
   return (
     <View
@@ -123,8 +136,8 @@ export function AvatarDisplay({ avatar, size }: AvatarDisplayProps) {
       style={{
         width: size,
         height: size,
-        borderRadius: size / 2,
-        backgroundColor: preset.bg,
+        borderRadius: radius,
+        backgroundColor: preset.bg ?? "#1A2448",
         alignItems: "center",
         justifyContent: "center",
       }}
@@ -133,7 +146,7 @@ export function AvatarDisplay({ avatar, size }: AvatarDisplayProps) {
         style={{ fontSize: size * 0.56, lineHeight: size * 0.72 }}
         numberOfLines={1}
       >
-        {preset.emoji}
+        {preset.emoji ?? "🕵️"}
       </Text>
     </View>
   );
