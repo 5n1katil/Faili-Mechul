@@ -52,6 +52,14 @@ export function SplashAnimation({ onComplete }: SplashAnimationProps) {
 
   const animationStarted = useRef(false);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const completeCalledRef = useRef(false);
+  const safetyRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const safeComplete = useCallback(() => {
+    if (completeCalledRef.current) return;
+    completeCalledRef.current = true;
+    onComplete();
+  }, [onComplete]);
 
   const startAnimation = useCallback(() => {
     if (animationStarted.current) return;
@@ -104,19 +112,21 @@ export function SplashAnimation({ onComplete }: SplashAnimationProps) {
       }, 650);
     }
 
-    // 8. Exit
+    // 8. Exit — JS-side timer is authoritative; animation callback is backup
+    safetyRef.current = setTimeout(() => safeComplete(), 3350);
     containerOpacity.value = withDelay(
       2900,
       withTiming(0, { duration: 420, easing: easeIn }, (finished) => {
-        if (finished) runOnJS(onComplete)();
+        if (finished) runOnJS(safeComplete)();
       })
     );
-  }, []);
+  }, [safeComplete]);
 
   useEffect(() => {
     timeoutRef.current = setTimeout(() => startAnimation(), 100);
     return () => {
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
+      if (safetyRef.current) clearTimeout(safetyRef.current);
     };
   }, []);
 
