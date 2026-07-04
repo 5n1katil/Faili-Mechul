@@ -38,11 +38,11 @@ const ONBOARDING_KEY = "@dedektif_onboarding_done";
 const SETUP_KEY = "@dedektif_setup_done";
 
 const TIPS = [
-  { icon: "grid-on" as const, text: "Vakaya başlarken önce hikayeyi oku, ardından ızgaradaki şüphelileri, silahları ve mekanları tek tek incele — hepsini tanımadan çözüme ulaşamazsın." },
-  { icon: "auto-stories" as const, text: "İpuçlarını dikkatle oku; detaylar çözüme giden yolda sana yardımcı olacak." },
-  { icon: "grid-4x4" as const, text: "Bazen olmayanları eleyerek de cevaba ulaşabilirsin — mümkün olduğunca dedektif ızgarasını doldurmaya çalış." },
-  { icon: "psychology" as const, text: "Çelişkileri tespit etmek seni hızlıca çözüme götürür." },
-  { icon: "gavel" as const, text: "Her yanlış suçlama +30 saniye ve 500 puan kaybettirir — emin olmadan suçlama!" },
+  { img: require("@/assets/images/tip_1_grid.png"),      text: "Vakaya başlarken önce hikayeyi oku, ardından ızgaradaki şüphelileri, silahları ve mekanları tek tek incele — hepsini tanımadan çözüme ulaşamazsın." },
+  { img: require("@/assets/images/tip_2_magnify.png"),   text: "İpuçlarını dikkatle oku; detaylar çözüme giden yolda sana yardımcı olacak." },
+  { img: require("@/assets/images/tip_3_eliminate.png"), text: "Bazen olmayanları eleyerek de cevaba ulaşabilirsin — mümkün olduğunca dedektif ızgarasını doldurmaya çalış." },
+  { img: require("@/assets/images/tip_4_brain.png"),     text: "Çelişkileri tespit etmek seni hızlıca çözüme götürür." },
+  { img: require("@/assets/images/tip_5_gavel.png"),     text: "Her yanlış suçlama +30 saniye ve 500 puan kaybettirir — emin olmadan suçlama!" },
 ];
 
 function useDailyCountdown() {
@@ -385,8 +385,8 @@ export default function HomeScreen() {
           >
             <View style={styles.tipsModalHandle} />
             <View style={styles.tipsModalHeader}>
-              <View style={[styles.tipsModalIconWrap, { backgroundColor: `${colors.primary}18` }]}>
-                <MaterialIcons name="lightbulb" size={22} color={colors.primary} />
+              <View style={styles.tipsModalIconWrap}>
+                <Image source={require("@/assets/images/tip_header.png")} style={styles.tipsHeaderIcon} resizeMode="contain" />
               </View>
               <Text style={[styles.tipsModalTitle, { color: colors.foreground }]}>Dedektif İpuçları</Text>
             </View>
@@ -398,8 +398,8 @@ export default function HomeScreen() {
                   i > 0 && { borderTopWidth: 1, borderTopColor: colors.border },
                 ]}
               >
-                <View style={[styles.tipIconBox, { backgroundColor: `${colors.primary}15` }]}>
-                  <MaterialIcons name={tip.icon} size={18} color={colors.primary} />
+                <View style={styles.tipIconBox}>
+                  <Image source={tip.img} style={styles.tipIcon} resizeMode="contain" />
                 </View>
                 <Text style={[styles.tipText, { color: colors.foreground }]}>{tip.text}</Text>
               </View>
@@ -897,11 +897,16 @@ const styles = StyleSheet.create({
     marginBottom: 14,
   },
   tipsModalIconWrap: {
-    width: 36,
-    height: 36,
+    width: 42,
+    height: 42,
     borderRadius: 10,
     alignItems: "center",
     justifyContent: "center",
+    overflow: "hidden",
+  },
+  tipsHeaderIcon: {
+    width: 42,
+    height: 42,
   },
   tipsModalTitle: { fontSize: 16, fontFamily: "UnnaBold", fontWeight: "600", letterSpacing: 0.2 },
   tipRow: {
@@ -911,12 +916,17 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
   },
   tipIconBox: {
-    width: 32,
-    height: 32,
-    borderRadius: 9,
+    width: 44,
+    height: 44,
+    borderRadius: 12,
     alignItems: "center",
     justifyContent: "center",
     flexShrink: 0,
+    overflow: "hidden",
+  },
+  tipIcon: {
+    width: 44,
+    height: 44,
   },
   tipText: { flex: 1, fontFamily: "DroidSerifRegular", fontSize: 13, lineHeight: 19 },
 
