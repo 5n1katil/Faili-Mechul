@@ -565,40 +565,44 @@ function FilterPill3D({
         ]}
       >
         {img ? (
-          <View style={[
-            listStyles.filterPillImgFrame,
-            {
-              borderColor: isSelected ? color : `${color}55`,
-              shadowColor: color,
-              shadowOpacity: isSelected ? 0.5 : 0.15,
-            },
-          ]}>
+          <View style={listStyles.filterPillImgWrap}>
             <Image source={img} style={listStyles.filterPillImg} />
+            {count !== undefined && count > 0 && (
+              <View style={[listStyles.filterPillImgCount, {
+                backgroundColor: isSelected ? color : `${color}CC`,
+              }]}>
+                <Text style={[listStyles.filterPillImgCountText, {
+                  color: isSelected ? "#0F1117" : "#FFFFFF",
+                }]}>{count}</Text>
+              </View>
+            )}
           </View>
         ) : icon ? (
-          <MaterialIcons name={icon} size={20} color={isSelected ? color : `${color}99`} />
+          <>
+            <MaterialIcons name={icon} size={20} color={isSelected ? color : `${color}99`} />
+            {count !== undefined && count > 0 && (
+              <View style={[listStyles.filterPillCount3d, {
+                backgroundColor: isSelected ? color : `${color}28`,
+                paddingHorizontal: 9,
+                paddingVertical: 3,
+                minWidth: 30,
+              }]}>
+                <Text style={[listStyles.filterPillCountText3d, {
+                  color: isSelected ? "#0F1117" : color,
+                  fontFamily: "DroidSerifRegular",
+                  fontSize: 15,
+                  fontWeight: "800",
+                }]}>{count}</Text>
+              </View>
+            )}
+            <Text style={[listStyles.filterPillText3d, {
+              color: isSelected ? color : `${color}88`,
+              textAlign: "center",
+            }]}>
+              {label}
+            </Text>
+          </>
         ) : null}
-        {count !== undefined && count > 0 && (
-          <View style={[listStyles.filterPillCount3d, {
-            backgroundColor: isSelected ? color : `${color}28`,
-            paddingHorizontal: 9,
-            paddingVertical: 3,
-            minWidth: 30,
-          }]}>
-            <Text style={[listStyles.filterPillCountText3d, {
-              color: isSelected ? "#0F1117" : color,
-              fontFamily: "DroidSerifRegular",
-              fontSize: 15,
-              fontWeight: "800",
-            }]}>{count}</Text>
-          </View>
-        )}
-        <Text style={[listStyles.filterPillText3d, {
-          color: isSelected ? color : `${color}88`,
-          textAlign: "center",
-        }]}>
-          {label}
-        </Text>
       </Pressable>
     </Animated.View>
   );
@@ -2317,31 +2321,43 @@ const listStyles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
-    paddingVertical: 12,
+    paddingVertical: 8,
     paddingHorizontal: 8,
     borderRadius: 13,
     borderWidth: 1.5,
-    gap: 5,
+    gap: 0,
     minHeight: 72,
     shadowOffset: { width: 0, height: 4 },
     shadowRadius: 8,
     shadowOpacity: 0.35,
     elevation: 6,
   },
-  filterPillImgFrame: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
-    borderWidth: 2,
+  filterPillImgWrap: {
+    width: "100%",
+    aspectRatio: 1,
+    borderRadius: 10,
     overflow: "hidden",
-    shadowRadius: 6,
-    shadowOffset: { width: 0, height: 2 },
-    elevation: 6,
+    position: "relative",
   },
   filterPillImg: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
+    width: "100%",
+    height: "100%",
+    resizeMode: "cover",
+  },
+  filterPillImgCount: {
+    position: "absolute",
+    bottom: 4,
+    right: 4,
+    borderRadius: 6,
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    minWidth: 22,
+    alignItems: "center",
+  },
+  filterPillImgCountText: {
+    fontFamily: "UnnaBold",
+    fontSize: 13,
+    fontWeight: "800",
   },
   filterPillText3d: {
     fontSize: 13,
