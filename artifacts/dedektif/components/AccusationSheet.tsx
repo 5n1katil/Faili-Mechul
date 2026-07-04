@@ -64,17 +64,17 @@ export default function AccusationSheet({
   const flashOpacity = useSharedValue(0);
   const btnScale = useSharedValue(1);
   const wrongToastOpacity = useSharedValue(0);
-  const sheetScale = useSharedValue(0.92);
+  const sheetScale = useSharedValue(0.96);
   const sheetOpacity = useSharedValue(0);
   const wrongToastRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     if (visible) {
-      sheetScale.value = withSpring(1, { damping: 18, stiffness: 280 });
-      sheetOpacity.value = withTiming(1, { duration: 200 });
+      sheetScale.value = withSpring(1, { damping: 32, stiffness: 320, mass: 0.8 });
+      sheetOpacity.value = withTiming(1, { duration: 180 });
     } else {
-      sheetScale.value = withTiming(0.92, { duration: 160 });
-      sheetOpacity.value = withTiming(0, { duration: 160 });
+      sheetScale.value = withTiming(0.96, { duration: 150 });
+      sheetOpacity.value = withTiming(0, { duration: 150 });
       setActiveColumn(null);
     }
   }, [visible]);
@@ -415,15 +415,15 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   sheetTitle: {
-    fontFamily: "DroidSerifRegular",
-    fontSize: 18,
+    fontFamily: "UnnaBold",
+    fontSize: 22,
     fontWeight: "800",
     letterSpacing: 0.3,
   },
   sheetSubtitle: {
     fontFamily: "DroidSerifRegular",
-    fontSize: 11,
-    marginTop: 1,
+    fontSize: 14,
+    marginTop: 2,
   },
   closeBtn: {
     width: 34,
@@ -473,13 +473,13 @@ const styles = StyleSheet.create({
   },
   colLabel: {
     fontFamily: "DroidSerifRegular",
-    fontSize: 10,
+    fontSize: 13,
     fontWeight: "800",
-    letterSpacing: 1.4,
+    letterSpacing: 1.2,
   },
   colValue: {
     fontFamily: "DroidSerifRegular",
-    fontSize: 15,
+    fontSize: 16,
     fontWeight: "500",
   },
   colRight: {

@@ -439,7 +439,7 @@ export default function HomeScreen() {
           <View style={styles.headerRight}>
             <Pressable
               onPress={() => { unlockMusicFromGesture(); setShowHowToPlay(true); }}
-              style={styles.iconBtnImg}
+              style={({ pressed }) => [styles.iconBtnImg, { opacity: pressed ? 0.6 : 1, transform: [{ scale: pressed ? 0.88 : 1 }] }]}
               hitSlop={8}
               accessibilityLabel="Nasıl Oynanır"
             >
@@ -447,7 +447,7 @@ export default function HomeScreen() {
             </Pressable>
             <Pressable
               onPress={handleSettingsPress}
-              style={styles.iconBtnImg}
+              style={({ pressed }) => [styles.iconBtnImg, { opacity: pressed ? 0.6 : 1, transform: [{ scale: pressed ? 0.88 : 1 }] }]}
               hitSlop={8}
               accessibilityLabel="Ayarlar"
             >
@@ -559,7 +559,10 @@ export default function HomeScreen() {
               return (
                 <Pressable
                   onPress={() => router.push("/(tabs)/gorevler")}
-                  style={[styles.missionsCard, { borderColor: allDone ? "#4ADE8030" : "#60A5FA22" }]}
+                  style={({ pressed }) => [
+                    styles.missionsCard,
+                    { borderColor: allDone ? "#4ADE8030" : "#60A5FA22", transform: [{ scale: pressed ? 0.97 : 1 }], opacity: pressed ? 0.88 : 1 },
+                  ]}
                 >
                   <View style={styles.missionsInner}>
                     <View style={[styles.missionsIconWrap, { backgroundColor: "transparent" }]}>
@@ -648,7 +651,7 @@ export default function HomeScreen() {
           <Animated.View entering={FadeInDown.delay(270).springify()}>
             <Pressable
               onPress={() => router.push("/liderlik")}
-              style={styles.rankCard}
+              style={({ pressed }) => [styles.rankCard, { transform: [{ scale: pressed ? 0.97 : 1 }], opacity: pressed ? 0.9 : 1 }]}
             >
               <View style={styles.rankCardAccent} />
 
@@ -733,7 +736,10 @@ export default function HomeScreen() {
           <Animated.View entering={FadeInDown.delay(330).springify()}>
             <Pressable
               onPress={() => setShowTips(true)}
-              style={[styles.tipsBtn, { backgroundColor: colors.card, borderColor: colors.border }]}
+              style={({ pressed }) => [
+                styles.tipsBtn,
+                { backgroundColor: pressed ? "#252B40" : colors.card, borderColor: colors.border, transform: [{ scale: pressed ? 0.97 : 1 }] },
+              ]}
             >
               <View style={[styles.tipsBtnIcon, { backgroundColor: "transparent" }]}>
                 <Image source={require("../../assets/images/icon_ipuclari.png")} style={{ width: 32, height: 32 }} resizeMode="contain" />
