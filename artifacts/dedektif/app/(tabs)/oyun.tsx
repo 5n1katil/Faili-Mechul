@@ -2561,7 +2561,6 @@ const listStyles = StyleSheet.create({
     flexDirection: "row",
     borderRadius: 12,
     borderWidth: 1,
-    overflow: "hidden",
   },
   unifiedStatItem: {
     flex: 1,
