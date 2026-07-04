@@ -301,19 +301,19 @@ export const PUZZLES: Puzzle[] = [
     story:
       "Tarihi konaktaki gece davetinin ardından ev sahibinin sadık yardımcısı Selma, kan içinde bulundu. Adli tıp, cinayetin 23:30 ile 00:00 arasında işlendiğini tahmin ediyor. Fırtına nedeniyle kimsenin ayrılamadığı bu konakta, katil hala aramızda.",
     suspects: [
-      { id: "s1", name: "Nazik Hanım", description: "Konağın en yaşlı misafiri. Fiziksel olarak güçsüz olsa da etrafında olan bitene karşı son derece dikkatli ve gözlemci.", icon: "noun-nazik-hanim-avatar.png" },
-      { id: "s2", name: "Cem Bey", description: "Ev sahibinin uzaktan akrabası. Boylu poslu, ağır fiziksel işleri kolayca yapabilecek kuvvette bir yapıya sahip.", icon: "noun-cem-bey-avatar.png" },
-      { id: "s3", name: "Zeynep Hanım", description: "Genç ve hırslı bir davetli. Atik yapısıyla dikkat çekiyor, stres altında çok hızlı ve fevri hareket edebiliyor.", icon: "noun-zeynep-hanim-avatar.png" },
+      { id: "s1", name: "Nazik Hanım", description: "Konağın en yaşlı misafiri. Fiziksel olarak güçsüz olsa da etrafında olan bitene karşı son derece dikkatli ve gözlemci.", icon: "pa:konakta_s1" },
+      { id: "s2", name: "Cem Bey", description: "Ev sahibinin uzaktan akrabası. Boylu poslu, ağır fiziksel işleri kolayca yapabilecek kuvvette bir yapıya sahip.", icon: "pa:konakta_s2" },
+      { id: "s3", name: "Zeynep Hanım", description: "Genç ve hırslı bir davetli. Atik yapısıyla dikkat çekiyor, stres altında çok hızlı ve fevri hareket edebiliyor.", icon: "pa:konakta_s3" },
     ],
     weapons: [
-      { id: "w1", name: "Makas", description: "Et ve kemik parçalamak için tasarlanmış, tek hamlede derin yara açabilen ağır ve keskin mutfak aleti.", icon: "content-cut" },
-      { id: "w2", name: "Kimyasal", description: "Renksiz ve kokusuz bir endüstriyel çözücü. Yiyecek veya içeceklere karıştırıldığında fark edilmesi imkansız.", icon: "science" },
-      { id: "w3", name: "İp", description: "Ağır perdeleri ve dekorasyonları asmak için kullanılan, kalın ve oldukça sağlam kenevir halat.", icon: "gesture" },
+      { id: "w1", name: "Makas", description: "Et ve kemik parçalamak için tasarlanmış, tek hamlede derin yara açabilen ağır ve keskin mutfak aleti.", icon: "pa:konakta_w1" },
+      { id: "w2", name: "Kimyasal", description: "Renksiz ve kokusuz bir endüstriyel çözücü. Yiyecek veya içeceklere karıştırıldığında fark edilmesi imkansız.", icon: "pa:konakta_w2" },
+      { id: "w3", name: "İp", description: "Ağır perdeleri ve dekorasyonları asmak için kullanılan, kalın ve oldukça sağlam kenevir halat.", icon: "pa:konakta_w3" },
     ],
     locations: [
-      { id: "l1", name: "Kütüphane", description: "Kalın duvarları ve ağır meşe kapısı sayesinde dışarıya veya içeriye hiçbir sesin sızmadığı izole çalışma alanı.", icon: "menu-book" },
-      { id: "l2", name: "Bahçe", description: "Konağın etrafını saran açık alan. Loş aydınlatması sayesinde kuytu köşelerde rahatça gizlenme imkanı sunuyor.", icon: "yard" },
-      { id: "l3", name: "Mutfak", description: "Yerleri genellikle nemli ve kaygan olan, içinde onlarca tehlikeli aletin bulunduğu arka cephedeki hazırlık alanı.", icon: "soup-kitchen" },
+      { id: "l1", name: "Kütüphane", description: "Kalın duvarları ve ağır meşe kapısı sayesinde dışarıya veya içeriye hiçbir sesin sızmadığı izole çalışma alanı.", icon: "pa:konakta_l1" },
+      { id: "l2", name: "Bahçe", description: "Konağın etrafını saran açık alan. Loş aydınlatması sayesinde kuytu köşelerde rahatça gizlenme imkanı sunuyor.", icon: "pa:konakta_l2" },
+      { id: "l3", name: "Mutfak", description: "Yerleri genellikle nemli ve kaygan olan, içinde onlarca tehlikeli aletin bulunduğu arka cephedeki hazırlık alanı.", icon: "pa:konakta_l3" },
     ],
     clues: [
       { id: "c1", text: "Kurban zehirlenmemiş veya iple boğulmamış; derin bir kesici alet darbesiyle hayatını kaybetmiş.", type: "forensic", isBonus: false },

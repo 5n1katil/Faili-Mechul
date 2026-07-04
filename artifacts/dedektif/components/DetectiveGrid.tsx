@@ -18,10 +18,12 @@ import Animated, {
 import type { GridMark, Suspect, Weapon, Location } from "@/data/puzzles";
 import type { EntityInfo } from "@/components/EntityInfoSheet";
 import type { ComponentProps } from "react";
+import { Image } from "react-native";
 import CustomAvatar from "@/components/CustomAvatar";
 import { SuspectPortrait, type SuspectPortraitKey } from "@/components/SuspectPortrait";
 import { isCustomAvatarIcon } from "@/utils/avatarAssets";
 import { buildSuspectPortraitMap } from "@/utils/suspectPortraitAssignments";
+import { isPuzzleAsset, getPuzzleAsset } from "@/utils/puzzleAssetMap";
 
 const SUSPECT_COLOR = "#A855F7";
 const WEAPON_COLOR = "#C8372D";
@@ -233,6 +235,19 @@ function EntityLabel({
   const renderIcon = isEmojiIcon(icon) ? icon : normalizedIcon;
 
   const renderInnerIcon = () => {
+    if (isPuzzleAsset(icon)) {
+      const src = getPuzzleAsset(icon);
+      if (src !== undefined) {
+        const imgSize = Math.floor(avatarSize * 0.82);
+        return (
+          <Image
+            source={src}
+            style={{ width: imgSize, height: imgSize, borderRadius: Math.floor(imgSize / 2) }}
+            resizeMode="cover"
+          />
+        );
+      }
+    }
     if (type === "suspect") {
       const inner = Math.floor(avatarSize * 0.64);
       if (isCustomAvatarIcon(icon)) {
