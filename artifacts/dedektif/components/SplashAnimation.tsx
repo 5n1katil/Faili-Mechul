@@ -61,8 +61,8 @@ export function SplashAnimation({ onComplete }: SplashAnimationProps) {
     const easeIn = Easing.in(Easing.cubic);
     const easeInOut = Easing.inOut(Easing.ease);
 
-    // 1. Background logo: slow fade in to ~13% opacity, gentle scale drift
-    bgLogoOpacity.value = withTiming(0.13, { duration: 900, easing: easeOut });
+    // 1. Background logo: slow fade in to ~28% opacity, gentle scale drift
+    bgLogoOpacity.value = withTiming(0.28, { duration: 900, easing: easeOut });
     bgLogoScale.value = withTiming(1.0, { duration: 3200, easing: Easing.out(Easing.quad) });
 
     // 2. Inner glow ring: appears with pulsing breath
@@ -223,6 +223,8 @@ const styles = StyleSheet.create({
 
   bgLogoWrap: {
     position: "absolute",
+    width: BG_LOGO_SIZE,
+    height: BG_LOGO_SIZE,
     alignItems: "center",
     justifyContent: "center",
   },
