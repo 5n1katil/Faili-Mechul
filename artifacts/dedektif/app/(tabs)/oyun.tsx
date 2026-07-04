@@ -523,9 +523,9 @@ function PulsingGlowCard({
 }
 
 function FilterPill3D({
-  label, icon, isSelected, onPress, color, count,
+  label, icon, img, isSelected, onPress, color, count,
 }: {
-  label: string; icon: MaterialIconName; isSelected: boolean;
+  label: string; icon?: MaterialIconName; img?: ImageSourcePropType; isSelected: boolean;
   onPress: () => void; color: string; count?: number;
 }) {
   const colors = useColors();
@@ -564,7 +564,20 @@ function FilterPill3D({
               },
         ]}
       >
-        <MaterialIcons name={icon} size={20} color={isSelected ? color : `${color}99`} />
+        {img ? (
+          <View style={[
+            listStyles.filterPillImgFrame,
+            {
+              borderColor: isSelected ? color : `${color}55`,
+              shadowColor: color,
+              shadowOpacity: isSelected ? 0.5 : 0.15,
+            },
+          ]}>
+            <Image source={img} style={listStyles.filterPillImg} />
+          </View>
+        ) : icon ? (
+          <MaterialIcons name={icon} size={20} color={isSelected ? color : `${color}99`} />
+        ) : null}
         {count !== undefined && count > 0 && (
           <View style={[listStyles.filterPillCount3d, {
             backgroundColor: isSelected ? color : `${color}28`,
@@ -1560,13 +1573,17 @@ export default function VakalarScreen() {
                               {(["caylak", "dedektif", "baskomiser"] as Difficulty[]).map((diff) => {
                                 const isSelected = premDiffFilter === diff;
                                 const color = getDifficultyColor(diff);
-                                const icon: MaterialIconName = diff === "caylak" ? "sentiment-satisfied" : diff === "dedektif" ? "search" : "local-police";
+                                const img = diff === "caylak"
+                                  ? require("@/assets/images/diff_caylak.png")
+                                  : diff === "dedektif"
+                                  ? require("@/assets/images/diff_dedektif.png")
+                                  : require("@/assets/images/diff_bas_komiser.png");
                                 const count = activePremium.filter((p) => p.difficulty === diff).length;
                                 return (
                                   <FilterPill3D
                                     key={diff}
                                     label={getDifficultyLabel(diff)}
-                                    icon={icon}
+                                    img={img}
                                     isSelected={isSelected}
                                     onPress={() => setPremDiffFilter(isSelected ? "all" : diff)}
                                     color={color}
@@ -1661,13 +1678,17 @@ export default function VakalarScreen() {
                       {(["caylak", "dedektif", "baskomiser"] as Difficulty[]).map((diff) => {
                         const isSelected = diffFilter === diff;
                         const color = getDifficultyColor(diff);
-                        const icon: MaterialIconName = diff === "caylak" ? "sentiment-satisfied" : diff === "dedektif" ? "search" : "local-police";
+                        const img = diff === "caylak"
+                          ? require("@/assets/images/diff_caylak.png")
+                          : diff === "dedektif"
+                          ? require("@/assets/images/diff_dedektif.png")
+                          : require("@/assets/images/diff_bas_komiser.png");
                         const count = activeFree.filter((p) => p.difficulty === diff).length;
                         return (
                           <FilterPill3D
                             key={diff}
                             label={getDifficultyLabel(diff)}
-                            icon={icon}
+                            img={img}
                             isSelected={isSelected}
                             onPress={() => setDiffFilter(isSelected ? "all" : diff)}
                             color={color}
@@ -2306,6 +2327,21 @@ const listStyles = StyleSheet.create({
     shadowRadius: 8,
     shadowOpacity: 0.35,
     elevation: 6,
+  },
+  filterPillImgFrame: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    borderWidth: 2,
+    overflow: "hidden",
+    shadowRadius: 6,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 6,
+  },
+  filterPillImg: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
   },
   filterPillText3d: {
     fontSize: 13,
