@@ -41,8 +41,6 @@ export default ({ config }: ConfigContext): ExpoConfig => {
           "Günlük bulmaca hatırlatmaları için bildirim göndermek istiyoruz.",
         NSPhotoLibraryUsageDescription:
           "Profil fotoğrafınızı seçmek için fotoğraf kütüphanesine erişim gerekiyor.",
-        NSUserTrackingUsageDescription:
-          "Uygulama deneyimini iyileştirmek ve içeriği kişiselleştirmek için kullanılır.",
       },
     },
     android: {

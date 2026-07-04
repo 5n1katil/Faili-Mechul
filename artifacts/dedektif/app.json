@@ -21,8 +21,7 @@
       "infoPlist": {
         "NSCameraUsageDescription": "Profil fotoğrafınızı çekmek için kamera erişimi gerekiyor.",
         "NSUserNotificationUsageDescription": "Günlük bulmaca hatırlatmaları için bildirim göndermek istiyoruz.",
-        "NSPhotoLibraryUsageDescription": "Profil fotoğrafınızı seçmek için fotoğraf kütüphanesine erişim gerekiyor.",
-        "NSUserTrackingUsageDescription": "Uygulama deneyimini iyileştirmek ve içeriği kişiselleştirmek için kullanılır."
+        "NSPhotoLibraryUsageDescription": "Profil fotoğrafınızı seçmek için fotoğraf kütüphanesine erişim gerekiyor."
       }
     },
     "android": {
@@ -45,7 +44,6 @@
       ],
       "expo-font",
       "expo-web-browser",
-      "expo-tracking-transparency",
       "./plugins/withRevenueCat",
       "./plugins/withPrivacyManifest"
     ],
