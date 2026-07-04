@@ -406,7 +406,10 @@ export default function HomeScreen() {
             ))}
             <Pressable
               onPress={() => setShowTips(false)}
-              style={[styles.modalBtn, { backgroundColor: `${colors.primary}18`, marginTop: 4 }]}
+              style={({ pressed }) => [
+                styles.modalBtn,
+                { backgroundColor: pressed ? `${colors.primary}30` : `${colors.primary}18`, marginTop: 4, transform: [{ scale: pressed ? 0.97 : 1 }] },
+              ]}
             >
               <Text style={[styles.modalBtnText, { color: colors.primary }]}>Kapat</Text>
             </Pressable>
