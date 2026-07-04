@@ -1413,6 +1413,13 @@ export default function VakalarScreen() {
           onClose={() => setShowPremiumInfo(false)}
         />
         <View style={[gameStyles.container, { backgroundColor: colors.background, paddingTop: Platform.OS === "web" ? 67 : insets.top }]}>
+          <View style={StyleSheet.absoluteFillObject} pointerEvents="none">
+            <Image
+              source={require("@/assets/images/intro_bg.png")}
+              style={[StyleSheet.absoluteFillObject, { opacity: 0.07 }]}
+              resizeMode="cover"
+            />
+          </View>
 
           {/* ── Page Header ── */}
           <View style={[listStyles.pageHeader, { paddingHorizontal: 16, paddingTop: 14, paddingBottom: 6 }]}>
@@ -1782,6 +1789,13 @@ export default function VakalarScreen() {
 
   return (
     <Animated.View style={[gameStyles.container, { backgroundColor: colors.background, paddingTop: Platform.OS === "web" ? 67 : insets.top }, pageAnimStyle]}>
+      <View style={StyleSheet.absoluteFillObject} pointerEvents="none">
+        <Image
+          source={require("@/assets/images/intro_bg.png")}
+          style={[StyleSheet.absoluteFillObject, { opacity: 0.07 }]}
+          resizeMode="cover"
+        />
+      </View>
       {showResult && (
         <ResultScreen
           puzzle={puzzle}
