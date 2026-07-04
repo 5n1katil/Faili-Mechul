@@ -563,9 +563,16 @@ export default function OnboardingScreen({ visible, onDone, closeLabel }: Props)
               />
             ))}
           </View>
-          <Pressable onPress={handleSkip} style={styles.skipBtn} hitSlop={10}>
+          <Pressable
+            onPress={handleSkip}
+            hitSlop={8}
+            style={({ pressed }) => [
+              styles.skipBtn,
+              pressed && { opacity: 0.6, transform: [{ scale: 0.88 }] },
+            ]}
+          >
             <Text style={styles.skipText}>{closeLabel ?? "Atla"}</Text>
-            <MaterialIcons name="close" size={16} color="#6B7280" />
+            <MaterialIcons name="close" size={22} color="#9CA3AF" />
           </Pressable>
         </View>
 

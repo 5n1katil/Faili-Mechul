@@ -48,9 +48,9 @@ function SectionHeader({
   const accent = iconColor ?? colors.primary;
   return (
     <View style={styles.sectionHeader}>
-      <MaterialIcons name={icon} size={18} color={accent} />
+      <MaterialIcons name={icon} size={20} color={accent} />
       <Text style={[styles.sectionLabel, { color: accent }]}>{label}</Text>
-      <View style={[styles.sectionLine, { backgroundColor: colors.border }]} />
+      <View style={[styles.sectionLine, { backgroundColor: `${accent}40` }]} />
     </View>
   );
 }
@@ -203,11 +203,18 @@ export default function SettingsScreen({ visible, onClose }: Props) {
           ]}
         >
           <View style={[styles.header, { borderBottomColor: colors.border }]}>
-            <Pressable onPress={onClose} hitSlop={12} style={styles.headerBtn}>
-              <MaterialIcons name="close" size={24} color={colors.foreground} />
-            </Pressable>
-            <Text style={[styles.headerTitle, { color: colors.foreground }]}>Ayarlar</Text>
             <View style={styles.headerBtn} />
+            <Text style={[styles.headerTitle, { color: colors.foreground }]}>Ayarlar</Text>
+            <Pressable
+              onPress={onClose}
+              hitSlop={10}
+              style={({ pressed }) => [
+                styles.headerCloseBtn,
+                pressed && { opacity: 0.65, transform: [{ scale: 0.88 }] },
+              ]}
+            >
+              <MaterialIcons name="close" size={26} color={colors.foreground} />
+            </Pressable>
           </View>
 
           <ScrollView
@@ -385,7 +392,8 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderBottomWidth: 1,
   },
-  headerBtn: { width: 40, height: 40, alignItems: "center", justifyContent: "center" },
+  headerBtn: { width: 44, height: 44, alignItems: "center", justifyContent: "center" },
+  headerCloseBtn: { width: 44, height: 44, alignItems: "center", justifyContent: "center", borderRadius: 22 },
   headerTitle: { flex: 1, textAlign: "center", fontSize: 17, fontFamily: "UnnaBold", fontWeight: "600" },
   scrollContent: { padding: 16, gap: 12, paddingBottom: 32 },
   sectionHeader: {
@@ -395,8 +403,8 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 2,
   },
-  sectionLabel: { fontSize: 13, fontFamily: "UnnaBold", fontWeight: "700", letterSpacing: 1.4 },
-  sectionLine: { flex: 1, height: StyleSheet.hairlineWidth * 2 },
+  sectionLabel: { fontSize: 15, fontFamily: "UnnaBold", fontWeight: "700", letterSpacing: 1.6 },
+  sectionLine: { flex: 1, height: 1.5 },
   card: {
     borderRadius: 14,
     borderWidth: 1,

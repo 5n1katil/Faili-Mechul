@@ -388,7 +388,17 @@ export default function HomeScreen() {
               <View style={styles.tipsModalIconWrap}>
                 <Image source={require("@/assets/images/tip_header.png")} style={styles.tipsHeaderIcon} resizeMode="contain" />
               </View>
-              <Text style={[styles.tipsModalTitle, { color: colors.foreground }]}>Dedektif İpuçları</Text>
+              <Text style={[styles.tipsModalTitle, { color: colors.foreground, flex: 1 }]}>Dedektif İpuçları</Text>
+              <Pressable
+                onPress={() => setShowTips(false)}
+                hitSlop={8}
+                style={({ pressed }) => [
+                  styles.tipsCloseBtn,
+                  pressed && { opacity: 0.6, backgroundColor: `${colors.foreground}15`, transform: [{ scale: 0.88 }] },
+                ]}
+              >
+                <MaterialIcons name="close" size={22} color={colors.foreground} />
+              </Pressable>
             </View>
             {TIPS.map((tip, i) => (
               <View
@@ -898,6 +908,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 10,
     marginBottom: 14,
+  },
+  tipsCloseBtn: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    alignItems: "center",
+    justifyContent: "center",
   },
   tipsModalIconWrap: {
     width: 42,
