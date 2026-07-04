@@ -60,6 +60,17 @@ export const PLAYER_AVATAR_IMAGES: Record<string, ImageSourcePropType> = {
   av_mor:        require("../assets/images/player_avatars/av_mor.png"),
   av_elit:       require("../assets/images/player_avatars/av_elit.png"),
   av_gorevli:    require("../assets/images/player_avatars/av_gorevli.png"),
+  av_kizil:      require("../assets/images/player_avatars/av_kizil.png"),
+  av_kartal:     require("../assets/images/player_avatars/av_kartal.png"),
+  av_fedora:     require("../assets/images/player_avatars/av_fedora.png"),
+  av_esarp:      require("../assets/images/player_avatars/av_esarp.png"),
+  av_buyukanne:  require("../assets/images/player_avatars/av_buyukanne.png"),
+  av_albay:      require("../assets/images/player_avatars/av_albay.png"),
+  av_bogazli:    require("../assets/images/player_avatars/av_bogazli.png"),
+  av_silindir:   require("../assets/images/player_avatars/av_silindir.png"),
+  av_mufekkir:   require("../assets/images/player_avatars/av_mufekkir.png"),
+  av_bob:        require("../assets/images/player_avatars/av_bob.png"),
+  av_siyahsapka: require("../assets/images/player_avatars/av_siyahsapka.png"),
 };
 
 export const PRESET_AVATARS: AvatarPreset[] = [
@@ -74,6 +85,9 @@ export const PRESET_AVATARS: AvatarPreset[] = [
   { key: "av_foto",      label: "Fotoğrafçı",     category: "dedektif", image: PLAYER_AVATAR_IMAGES.av_foto },
   { key: "av_basin",     label: "Basın",          category: "dedektif", image: PLAYER_AVATAR_IMAGES.av_basin },
   { key: "av_kasket",    label: "Hafiye",         category: "dedektif", image: PLAYER_AVATAR_IMAGES.av_kasket },
+  { key: "av_mufekkir",  label: "Müfettiş",       category: "dedektif", image: PLAYER_AVATAR_IMAGES.av_mufekkir },
+  { key: "av_silindir",  label: "Silindirli Bay",  category: "dedektif", image: PLAYER_AVATAR_IMAGES.av_silindir },
+  { key: "av_fedora",    label: "Karanlık",        category: "dedektif", image: PLAYER_AVATAR_IMAGES.av_fedora },
 
   // ── Görevliler ─────────────────────────────────────
   { key: "av_polis",     label: "Polis Memuru",   category: "gorevli",  image: PLAYER_AVATAR_IMAGES.av_polis },
@@ -85,6 +99,8 @@ export const PRESET_AVATARS: AvatarPreset[] = [
   { key: "av_patron",    label: "Patron",         category: "gorevli",  image: PLAYER_AVATAR_IMAGES.av_patron },
   { key: "av_yonetici",  label: "Yönetici",       category: "gorevli",  image: PLAYER_AVATAR_IMAGES.av_yonetici },
   { key: "av_barista",   label: "Barmen",         category: "gorevli",  image: PLAYER_AVATAR_IMAGES.av_barista },
+  { key: "av_albay",    label: "Albay",          category: "gorevli",  image: PLAYER_AVATAR_IMAGES.av_albay },
+  { key: "av_bogazli",  label: "Güvenlik",       category: "gorevli",  image: PLAYER_AVATAR_IMAGES.av_bogazli },
 
   // ── Ajanlar ────────────────────────────────────────
   { key: "av_ajan",      label: "Gizli Ajan",     category: "ajan",     image: PLAYER_AVATAR_IMAGES.av_ajan },
@@ -97,6 +113,10 @@ export const PRESET_AVATARS: AvatarPreset[] = [
   { key: "av_elit",      label: "Elit Ajan",      category: "ajan",     image: PLAYER_AVATAR_IMAGES.av_elit },
   { key: "av_supheji",   label: "Şüpheli",        category: "ajan",     image: PLAYER_AVATAR_IMAGES.av_supheji },
   { key: "av_analist",   label: "Analist",        category: "ajan",     image: PLAYER_AVATAR_IMAGES.av_analist },
+  { key: "av_kizil",    label: "Kızıl Adam",     category: "ajan",     image: PLAYER_AVATAR_IMAGES.av_kizil },
+  { key: "av_kartal",   label: "Kartal",         category: "ajan",     image: PLAYER_AVATAR_IMAGES.av_kartal },
+  { key: "av_bob",      label: "Bob Saç",        category: "ajan",     image: PLAYER_AVATAR_IMAGES.av_bob },
+  { key: "av_siyahsapka", label: "Siyah Şapka",  category: "ajan",     image: PLAYER_AVATAR_IMAGES.av_siyahsapka },
 
   // ── Uzmanlar ───────────────────────────────────────
   { key: "av_uzman",     label: "Uzman",          category: "uzman",    image: PLAYER_AVATAR_IMAGES.av_uzman },
@@ -109,6 +129,8 @@ export const PRESET_AVATARS: AvatarPreset[] = [
   { key: "av_professore",label: "Profesör",       category: "uzman",    image: PLAYER_AVATAR_IMAGES.av_professore },
   { key: "av_yazar",     label: "Yazar",          category: "uzman",    image: PLAYER_AVATAR_IMAGES.av_yazar },
   { key: "av_diva",      label: "Diva",           category: "uzman",    image: PLAYER_AVATAR_IMAGES.av_diva },
+  { key: "av_esarp",     label: "Atkılı Uzman",   category: "uzman",    image: PLAYER_AVATAR_IMAGES.av_esarp },
+  { key: "av_buyukanne", label: "Büyük Hanım",    category: "uzman",    image: PLAYER_AVATAR_IMAGES.av_buyukanne },
 ];
 
 export function getAvatarPreset(key: string): AvatarPreset {
