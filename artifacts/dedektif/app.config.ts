@@ -8,7 +8,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
     ...config,
     name: "Faili Meçhul",
     slug: "dedektif",
-    version: "1.5.0",
+    version: "1.6.0",
     orientation: "portrait",
     icon: "./assets/images/icon.png",
     scheme: "dedektif",
@@ -20,7 +20,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
     ios: {
       supportsTablet: false,
       bundleIdentifier: "com.failimechul.dedektif",
-      buildNumber: "12",
+      buildNumber: "13",
       minimumOsVersion: "13.4",
       privacyManifests: {
         NSPrivacyAccessedAPITypes: [
@@ -35,10 +35,14 @@ export default ({ config }: ConfigContext): ExpoConfig => {
       },
       infoPlist: {
         ITSAppUsesNonExemptEncryption: false,
+        NSCameraUsageDescription:
+          "Profil fotoğrafınızı çekmek için kamera erişimi gerekiyor.",
         NSUserNotificationUsageDescription:
           "Günlük bulmaca hatırlatmaları için bildirim göndermek istiyoruz.",
         NSPhotoLibraryUsageDescription:
           "Profil fotoğrafınızı seçmek için fotoğraf kütüphanesine erişim gerekiyor.",
+        NSUserTrackingUsageDescription:
+          "Uygulama deneyimini iyileştirmek ve içeriği kişiselleştirmek için kullanılır.",
       },
     },
     android: {
