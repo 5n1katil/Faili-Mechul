@@ -942,7 +942,7 @@ export default function VakalarScreen() {
     playStatsForPuzzle,
     playerId,
   } = useGame();
-  const { isPremium } = usePurchase();
+  const { isPremium, isPackPurchased } = usePurchase();
   const { play, playVictorySequence } = useSounds();
 
   const [showResult, setShowResult] = useState(false);
@@ -1264,7 +1264,8 @@ export default function VakalarScreen() {
       getPuzzlesForPack(pack.packId).filter((p) => completedPuzzleIds.has(p.id))
     );
     const completedPuzzles = [...completedStandardPuzzles, ...completedPackPuzzles];
-    const allPackPuzzles = PACKS.flatMap((pack) => getPuzzlesForPack(pack.packId));
+    const accessiblePacks = PACKS.filter((pack) => isPremium || isPackPurchased(pack.packId));
+    const allPackPuzzles = accessiblePacks.flatMap((pack) => getPuzzlesForPack(pack.packId));
     const activePackPuzzles = allPackPuzzles.filter((p) => !completedPuzzleIds.has(p.id));
 
     const activeFree = freePuzzles.filter((p) => !completedPuzzleIds.has(p.id));
