@@ -62,6 +62,26 @@ const SORT_KEY_TO_API: Record<SortKey, LeaderboardSortBy> = {
   hiz:    "avgSolveTimeSeconds",
 };
 
+const LEADERBOARD_AVATARS = [
+  "av_dedektif", "av_gece", "av_komiser", "av_genckadin", "av_fbi", "av_sert",
+  "av_polis", "av_memur", "av_trafik", "av_denizci", "av_ajan", "av_operator",
+  "av_muhabir", "av_sokak", "av_uzman", "av_katip", "av_pipo", "av_golge",
+  "av_asil", "av_hacker", "av_sheriff", "av_yargi", "av_doktor", "av_foto",
+  "av_adli", "av_professore", "av_yonetici", "av_analist", "av_supheji",
+  "av_yazar", "av_diva", "av_patron", "av_kedi", "av_basin", "av_barista",
+  "av_kasket", "av_mor", "av_elit", "av_gorevli", "av_kizil", "av_kartal",
+  "av_fedora", "av_esarp", "av_buyukanne", "av_albay", "av_bogazli",
+  "av_silindir", "av_mufekkir", "av_bob", "av_siyahsapka",
+];
+
+function hashStringToAvatarIndex(str: string): number {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    hash = (hash * 31 + str.charCodeAt(i)) >>> 0;
+  }
+  return hash % LEADERBOARD_AVATARS.length;
+}
+
 function fmtTime(s: number): string {
   return `${Math.floor(s / 60)}:${(s % 60).toString().padStart(2, "0")}`;
 }
@@ -78,9 +98,13 @@ function sortEntries(entries: RankEntry[], key: SortKey): RankEntry[] {
 }
 
 function apiEntryToRank(e: LeaderboardEntry): RankEntry {
+  const avatar =
+    e.avatar && e.avatar !== "detective"
+      ? e.avatar
+      : LEADERBOARD_AVATARS[hashStringToAvatarIndex(e.playerId || e.displayName)];
   return {
     name: e.displayName,
-    avatar: e.avatar || "detective",
+    avatar,
     totalScore: e.totalScore,
     gamesWon: e.gamesWon,
     maxStreak: e.maxStreak,
@@ -381,7 +405,9 @@ export default function LiderlikScreen() {
 
   const realEntries: RankEntry[] =
     apiEntries !== null && apiEntries.length > 0
-      ? apiEntries.filter((e) => e.playerId !== playerId).map(apiEntryToRank)
+      ? apiEntries
+          .filter((e) => e.playerId !== playerId && e.totalScore > 0)
+          .map(apiEntryToRank)
       : [];
 
   const sorted = sortEntries([...npcEntries, ...realEntries, myEntry], sortKey);
