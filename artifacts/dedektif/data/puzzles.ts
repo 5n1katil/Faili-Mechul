@@ -517,19 +517,19 @@ export const PUZZLES: Puzzle[] = [
     story:
       "Büyükada'da yaz tatilinin huzuru, lüks bir villada işlenen cinayetle paramparça oldu. Adayı anakaraya bağlayan feribot seferleri iptal edilince, katil kurbanıyla aynı adada mahsur kaldı.",
     suspects: [
-      { id: "s1", name: "Emekli Albay", description: "Sabahları erken uyanıp yürüyüş yapan, disiplinli ve sert mizaçlı villa komşusu.", icon: "noun-emekli-albay-avatar" },
-      { id: "s2", name: "Ressam Leyla", description: "Bütün yazını adada manzara resimleri çizerek geçiren, sessiz ve içine kapanık sanatçı.", icon: "noun-ressam-leyla-avatar" },
-      { id: "s3", name: "Genç Yatçı", description: "Özel sürat teknesiyle adaya yeni gelen, fevri hareketleri olan gizemli misafir.", icon: "noun-genc-yatci-avatar" },
+      { id: "s1", name: "Emekli Albay", description: "Sabahları erken uyanıp yürüyüş yapan, disiplinli ve sert mizaçlı villa komşusu.", icon: "pa:adada_s1" },
+      { id: "s2", name: "Ressam Leyla", description: "Bütün yazını adada manzara resimleri çizerek geçiren, sessiz ve içine kapanık sanatçı.", icon: "pa:adada_s2" },
+      { id: "s3", name: "Genç Yatçı", description: "Özel sürat teknesiyle adaya yeni gelen, fevri hareketleri olan gizemli misafir.", icon: "pa:adada_s3" },
     ],
     weapons: [
-      { id: "w1", name: "Av Tüfeği", description: "Dolapta saklanan, yakından ateşlendiğinde korkunç ses çıkaran çift namlulu ateşli silah.", icon: "sports" },
-      { id: "w2", name: "Zehir", description: "Doğal bitkilerden elde edilen, yiyeceklere karıştırılan sinsi bitki toksini.", icon: "science" },
-      { id: "w3", name: "Gemi Halatı", description: "Tekneleri iskeleye bağlamak için kullanılan, son derece sağlam ve kalın denizci ipi.", icon: "all-inclusive" },
+      { id: "w1", name: "Av Tüfeği", description: "Dolapta saklanan, yakından ateşlendiğinde korkunç ses çıkaran çift namlulu ateşli silah.", icon: "pa:adada_w1" },
+      { id: "w2", name: "Zehir", description: "Doğal bitkilerden elde edilen, yiyeceklere karıştırılan sinsi bitki toksini.", icon: "pa:adada_w2" },
+      { id: "w3", name: "Gemi Halatı", description: "Tekneleri iskeleye bağlamak için kullanılan, son derece sağlam ve kalın denizci ipi.", icon: "pa:adada_w3" },
     ],
     locations: [
-      { id: "l1", name: "Villa Bahçesi", description: "Akdeniz bitkileri ve yüzme havuzuyla süslü, dışarıdan izole edilmiş geniş peyzaj alanı.", icon: "park" },
-      { id: "l2", name: "Sahil Şeridi", description: "Deniz dalgalarının vurduğu, insanların yürüyüş yaptığı uzun sahil yolu.", icon: "waves" },
-      { id: "l3", name: "Kayalık", description: "Adanın güney ucundaki, manzarası güzel ancak uçurum kenarında yer alan sarp alan.", icon: "terrain" },
+      { id: "l1", name: "Villa Bahçesi", description: "Akdeniz bitkileri ve yüzme havuzuyla süslü, dışarıdan izole edilmiş geniş peyzaj alanı.", icon: "pa:adada_l1" },
+      { id: "l2", name: "Sahil Şeridi", description: "Deniz dalgalarının vurduğu, insanların yürüyüş yaptığı uzun sahil yolu.", icon: "pa:adada_l2" },
+      { id: "l3", name: "Kayalık", description: "Adanın güney ucundaki, manzarası güzel ancak uçurum kenarında yer alan sarp alan.", icon: "pa:adada_l3" },
     ],
     clues: [
       { id: "c1", text: "Cinayet sahil şeridinde veya sarp kayalıklarda işlenmedi; kurbanın bedeni villanın dışa kapalı peyzaj alanında bulundu.", type: "evidence", isBonus: false },
@@ -589,19 +589,19 @@ export const PUZZLES: Puzzle[] = [
     story:
       "Sultanahmet'in asırlık kubbeleri altında yankılanan huzur verici su sesleri, dehşet dolu bir çığlıkla bıçak gibi kesildi. Tanınmış bir tüccar, tarihi hamamın yoğun buharlı sıcak odasında, göbek taşının hemen yanında cansız yatıyordu. Kapıların içeriden sürgülü olması ve dışarıdan kimsenin girmemiş olması, katilin hala o nefes kesici sisin ardında, peştamalların arasında gezindiğini kanıtlıyordu.",
     suspects: [
-      { id: "s1", name: "Veznedar", description: "Hamamın girişinden, soyunma dolaplarından ve hesaplardan sorumlu genç görevli.", icon: "noun-receptionist-1574384" },
-      { id: "s2", name: "Hamam Ağası", description: "Tarihi hamamın işletmecisi. Önemli konuklarla ve hamamın genel düzeniyle bizzat ilgilenen otoriter figür.", icon: "noun-teacher-1908918-avatar.png" },
-      { id: "s3", name: "Tellak", description: "Yılların tecrübesine sahip, göbek taşında kese atan, son derece güçlü kollara sahip emektar çalışan.", icon: "noun-driver-1574358-avatar.png" },
+      { id: "s1", name: "Veznedar", description: "Hamamın girişinden, soyunma dolaplarından ve hesaplardan sorumlu genç görevli.", icon: "pa:hamam_s1" },
+      { id: "s2", name: "Hamam Ağası", description: "Tarihi hamamın işletmecisi. Önemli konuklarla ve hamamın genel düzeniyle bizzat ilgilenen otoriter figür.", icon: "pa:hamam_s2" },
+      { id: "s3", name: "Tellak", description: "Yılların tecrübesine sahip, göbek taşında kese atan, son derece güçlü kollara sahip emektar çalışan.", icon: "pa:hamam_s3" },
     ],
     weapons: [
-      { id: "w1", name: "Acı Sabun", description: "Ağır kimyasallar içeren, yanlış kullanımda solunum yollarını tıkayıp zehirleyebilen özel yapım sabun.", icon: "wash" },
-      { id: "w2", name: "Zehirli Şerbet", description: "Maktulün dinlenirken içtiği, içine kalbi anında durduran güçlü bir bitkisel zehir karıştırılmış içecek.", icon: "medication" },
-      { id: "w3", name: "Çıplak El", description: "Hiçbir alet kullanmadan, acımasız ve doğrudan uygulanan ölümcül fiziksel boğma gücü.", icon: "front-hand" },
+      { id: "w1", name: "Acı Sabun", description: "Ağır kimyasallar içeren, yanlış kullanımda solunum yollarını tıkayıp zehirleyebilen özel yapım sabun.", icon: "pa:hamam_w1" },
+      { id: "w2", name: "Zehirli Şerbet", description: "Maktulün dinlenirken içtiği, içine kalbi anında durduran güçlü bir bitkisel zehir karıştırılmış içecek.", icon: "pa:hamam_w2" },
+      { id: "w3", name: "Çıplak El", description: "Hiçbir alet kullanmadan, acımasız ve doğrudan uygulanan ölümcül fiziksel boğma gücü.", icon: "pa:hamam_w3" },
     ],
     locations: [
-      { id: "l1", name: "Sıcak Oda", description: "Yoğun buharlı, göbek taşının bulunduğu, göz gözü görmeyen ve nefes almanın zor olduğu mermer yıkanma alanı.", icon: "spa" },
-      { id: "l2", name: "Soğuk Oda", description: "Müşterilerin hamam sonrası peştamallarla uzanıp dinlendiği, şerbet servisinin yapıldığı serin bölüm.", icon: "ac-unit" },
-      { id: "l3", name: "Giriş Salonu", description: "Hamamın ana kapısı, ahşap soyunma kabinlerinin ve kasanın bulunduğu aydınlık alan.", icon: "point-of-sale" },
+      { id: "l1", name: "Sıcak Oda", description: "Yoğun buharlı, göbek taşının bulunduğu, göz gözü görmeyen ve nefes almanın zor olduğu mermer yıkanma alanı.", icon: "pa:hamam_l1" },
+      { id: "l2", name: "Soğuk Oda", description: "Müşterilerin hamam sonrası peştamallarla uzanıp dinlendiği, şerbet servisinin yapıldığı serin bölüm.", icon: "pa:hamam_l2" },
+      { id: "l3", name: "Giriş Salonu", description: "Hamamın ana kapısı, ahşap soyunma kabinlerinin ve kasanın bulunduğu aydınlık alan.", icon: "pa:hamam_l3" },
     ],
     clues: [
       { id: "c1", text: "Veznedar'ın vardiyası boyunca kasanın bulunduğu aydınlık giriş salonundan bir an olsun ayrılmadığı şahitlerle sabitlendi.", type: "witness", isBonus: false },
