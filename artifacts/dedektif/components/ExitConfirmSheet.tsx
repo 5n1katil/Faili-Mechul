@@ -33,7 +33,9 @@ export default function ExitConfirmSheet({ visible, isRanked, onContinue, onExit
             <MaterialIcons name="exit-to-app" size={30} color="#C8372D" />
           </View>
 
-          <Text style={[styles.title, { color: colors.foreground }]}>Oyundan Çık?</Text>
+          <Text style={[styles.title, { color: colors.foreground }]}>
+            {isRanked ? "Oyundan Çıkış Yapıyorsunuz" : "Antrenman Modundan\nÇıkış Yapıyorsunuz"}
+          </Text>
 
           {isRanked ? (
             <View style={[styles.warningBox, { backgroundColor: "#C8372D12", borderColor: "#C8372D44" }]}>

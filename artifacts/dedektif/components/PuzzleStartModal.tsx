@@ -54,7 +54,7 @@ export default function PuzzleStartModal({ visible, puzzle, isRanked, onStart, o
           </View>
 
           <Text style={[styles.title, { color: colors.foreground }]}>
-            {isRanked ? "Cinayet Gizemini Çözmeye\nHazır Mısınız?" : "Tekrar Oynuyorsunuz"}
+            {isRanked ? "Cinayet Gizemini Çözmeye\nHazır Mısınız?" : "Antrenman Modunda\nOynuyorsunuz"}
           </Text>
 
           <View style={[styles.puzzleInfo, { backgroundColor: colors.background, borderColor: colors.border }]}>

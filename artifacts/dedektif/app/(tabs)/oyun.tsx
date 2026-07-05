@@ -52,6 +52,7 @@ import {
 } from "@/data/puzzles";
 import { PACKS, PURCHASABLE_PACKS, getPuzzlesForPack, PACK_PRODUCT_IDS } from "@/data/packs";
 import { fetchLeaderboard } from "@/utils/apiClient";
+import { isPuzzleAsset, getPuzzleAsset } from "@/utils/puzzleAssetMap";
 import {
   computeCaseRank,
   computeOverallRank,
@@ -824,21 +825,24 @@ function PuzzleCard({
               </View>
             ) : (
               <View style={listStyles.suspectAvatarRow}>
-                {puzzle.suspects.map((s, i) => (
-                  <View
-                    key={s.id}
-                    style={[
-                      listStyles.suspectAvatarCircle,
-                      i > 0 && { marginLeft: -12 },
-                    ]}
-                  >
-                    <CustomAvatar
-                      icon={s.icon}
-                      size={26}
-                      color="#A855F7"
-                    />
-                  </View>
-                ))}
+                {puzzle.suspects.map((s, i) => {
+                  const paAsset = isPuzzleAsset(s.icon) ? getPuzzleAsset(s.icon) : null;
+                  return (
+                    <View
+                      key={s.id}
+                      style={[
+                        listStyles.suspectAvatarCircle,
+                        i > 0 && { marginLeft: -12 },
+                      ]}
+                    >
+                      {paAsset ? (
+                        <Image source={paAsset} style={{ width: 26, height: 26, borderRadius: 13 }} resizeMode="cover" />
+                      ) : (
+                        <CustomAvatar icon={s.icon} size={26} color="#A855F7" />
+                      )}
+                    </View>
+                  );
+                })}
               </View>
             )}
           </View>
@@ -1040,8 +1044,12 @@ export default function VakalarScreen() {
         cancelled = true;
         const gs = gameStateRef.current;
         const inv = invalidateGameRef.current;
-        if (gs && gs.timerActive && !gs.isComplete && gs.isRanked) {
-          inv();
+        if (gs && gs.timerActive && !gs.isComplete) {
+          if (gs.isRanked) {
+            inv();
+          } else {
+            setShowExitConfirm(true);
+          }
         }
       };
     }, [])

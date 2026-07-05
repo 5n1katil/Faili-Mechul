@@ -20,6 +20,7 @@ import type { ComponentProps } from "react";
 import CustomAvatar from "@/components/CustomAvatar";
 import { SuspectPortrait, type SuspectPortraitKey } from "@/components/SuspectPortrait";
 import { isCustomAvatarIcon } from "@/utils/avatarAssets";
+import { isPuzzleAsset, getPuzzleAsset } from "@/utils/puzzleAssetMap";
 
 export type EntityType = "suspect" | "weapon" | "location";
 
@@ -140,7 +141,16 @@ export default function EntityInfoSheet({ visible, entity, onClose }: Props) {
           </View>
 
           <View style={[styles.iconRing, { backgroundColor: config.bg, borderColor: config.color }]}>
-            {entity.type === "suspect" ? (
+            {isPuzzleAsset(entity.icon) ? (
+              (() => {
+                const src = getPuzzleAsset(entity.icon);
+                return src ? (
+                  <Image source={src} style={{ width: 60, height: 60, borderRadius: 30 }} resizeMode="cover" />
+                ) : (
+                  <MaterialIcons name={normalizedIcon as ComponentProps<typeof MaterialIcons>["name"]} size={36} color={config.color} />
+                );
+              })()
+            ) : entity.type === "suspect" ? (
               isCustomAvatarIcon(entity.icon) ? (
                 <CustomAvatar icon={entity.icon} size={52} color={config.color} />
               ) : entity.suspectPortrait ? (
