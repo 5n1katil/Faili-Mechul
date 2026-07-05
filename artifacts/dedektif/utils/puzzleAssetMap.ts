@@ -35,6 +35,15 @@ const PUZZLE_ASSET_MAP: Record<string, number> = {
   hamam_l1: require("../assets/images/puzzle_assets/hamam_l1.png"),
   hamam_l2: require("../assets/images/puzzle_assets/hamam_l2.png"),
   hamam_l3: require("../assets/images/puzzle_assets/hamam_l3.png"),
+  neon_s1: require("../assets/images/puzzle_assets/neon_s1.png"),
+  neon_s2: require("../assets/images/puzzle_assets/neon_s2.png"),
+  neon_s3: require("../assets/images/puzzle_assets/neon_s3.png"),
+  neon_w1: require("../assets/images/puzzle_assets/neon_w1.png"),
+  neon_w2: require("../assets/images/puzzle_assets/neon_w2.png"),
+  neon_w3: require("../assets/images/puzzle_assets/neon_w3.png"),
+  neon_l1: require("../assets/images/puzzle_assets/neon_l1.png"),
+  neon_l2: require("../assets/images/puzzle_assets/neon_l2.png"),
+  neon_l3: require("../assets/images/puzzle_assets/neon_l3.png"),
 };
 
 export function isPuzzleAsset(icon: string | undefined): boolean {
