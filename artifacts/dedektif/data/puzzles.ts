@@ -445,19 +445,19 @@ export const PUZZLES: Puzzle[] = [
     story:
       "İstanbul'un kalabalık ve gürültülü çarşısında ünlü tatlıcı Halit Usta, tezgahının başında altın sarısı tatlıların üzerine yığılarak son nefesini verdi. Geriye üç şüpheli ve zehirli bir sır kaldı.",
     suspects: [
-      { id: "s1", name: "Müşteri Hanım", description: "Yıllardır her pazar alışverişe gelen, elindeki bastonuyla çarşıyı adımlayan yaşlı müdavim.", icon: "noun-pazar-musteri-hanim" },
-      { id: "s2", name: "Tedarikçi Genç", description: "Ağır tepsileri taşıyan, yorgunluktan gözleri kanlanmış, aceleci depo görevlisi.", icon: "noun-pazar-tedarikci-genc" },
-      { id: "s3", name: "Komşu Satıcı", description: "Kendi alanında müşteri beklerken gözlerini yan taraftan ayırmayan rakip esnaf.", icon: "noun-pazar-komsu-satici" },
+      { id: "s1", name: "Müşteri Hanım", description: "Yıllardır her pazar alışverişe gelen, elindeki bastonuyla çarşıyı adımlayan yaşlı müdavim.", icon: "pa:pazar_s1" },
+      { id: "s2", name: "Tedarikçi Genç", description: "Ağır tepsileri taşıyan, yorgunluktan gözleri kanlanmış, aceleci depo görevlisi.", icon: "pa:pazar_s2" },
+      { id: "s3", name: "Komşu Satıcı", description: "Kendi alanında müşteri beklerken gözlerini yan taraftan ayırmayan rakip esnaf.", icon: "pa:pazar_s3" },
     ],
     weapons: [
-      { id: "w1", name: "Baklava", description: "Üzeri fıstıklarla süslenmiş, taze görünümüyle iştah açan ünlü pazar tatlısı.", icon: "cake" },
-      { id: "w2", name: "Şerbet", description: "Büyük bakır güğümde kaynatılmış, berrak ve yoğun şekerli geleneksel sıvı.", icon: "local-drink" },
-      { id: "w3", name: "Kimyasal Madde", description: "Zemin temizliğinde kullanılan, keskin kokulu endüstriyel çözücü.", icon: "science" },
+      { id: "w1", name: "Baklava", description: "Üzeri fıstıklarla süslenmiş, taze görünümüyle iştah açan ünlü pazar tatlısı.", icon: "pa:pazar_w1" },
+      { id: "w2", name: "Şerbet", description: "Büyük bakır güğümde kaynatılmış, berrak ve yoğun şekerli geleneksel sıvı.", icon: "pa:pazar_w2" },
+      { id: "w3", name: "Kimyasal Madde", description: "Zemin temizliğinde kullanılan, keskin kokulu endüstriyel çözücü.", icon: "pa:pazar_w3" },
     ],
     locations: [
-      { id: "l1", name: "Tezgah", description: "Tepsilerin dizildiği, şerbetin damladığı ve müşterilerin alışveriş yaptığı ana satış noktası.", icon: "store" },
-      { id: "l2", name: "Ara Sokak", description: "Müşterilerin kestirme olarak kullandığı, dükkanların arka kapılarına açılan loş yaya geçidi.", icon: "turn-right" },
-      { id: "l3", name: "Park", description: "Sabah erken saatlerde araçların mal indirdiği, satış alanlarına oldukça uzak nokta.", icon: "local-parking" },
+      { id: "l1", name: "Tezgah", description: "Tepsilerin dizildiği, şerbetin damladığı ve müşterilerin alışveriş yaptığı ana satış noktası.", icon: "pa:pazar_l1" },
+      { id: "l2", name: "Ara Sokak", description: "Müşterilerin kestirme olarak kullandığı, dükkanların arka kapılarına açılan loş yaya geçidi.", icon: "pa:pazar_l2" },
+      { id: "l3", name: "Park", description: "Sabah erken saatlerde araçların mal indirdiği, satış alanlarına oldukça uzak nokta.", icon: "pa:pazar_l3" },
     ],
     clues: [
       { id: "c1", text: "Adli tıp, maktulün ne şerbetten ne de temizlik maddesinden zehirlenmediğini, ölümün fıstıklı tatlıdan kaynaklandığını kesinleştirdi.", type: "forensic", isBonus: false },

@@ -163,8 +163,8 @@ const fail = (msg) => failures.push(msg);
             map.set(name, i + 1);
           }
         }
-      } else if (!GLYPH_NAMES.has(name)) {
-        fail(`puzzles.ts:${i + 1}  invalid icon "${name}" (must be a valid MaterialIcons glyph)`);
+      } else if (!name.startsWith("pa:") && !GLYPH_NAMES.has(name)) {
+        fail(`puzzles.ts:${i + 1}  invalid icon "${name}" (must be a valid MaterialIcons glyph or pa: puzzle asset)`);
       }
     }
 
