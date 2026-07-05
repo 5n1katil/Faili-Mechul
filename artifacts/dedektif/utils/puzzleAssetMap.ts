@@ -62,6 +62,15 @@ const PUZZLE_ASSET_MAP: Record<string, number> = {
   pbaski_l1: require("../assets/images/puzzle_assets/pbaski_l1.png"),
   pbaski_l2: require("../assets/images/puzzle_assets/pbaski_l2.png"),
   pbaski_l3: require("../assets/images/puzzle_assets/pbaski_l3.png"),
+  vapur_s1: require("../assets/images/puzzle_assets/vapur_s1.png"),
+  vapur_s2: require("../assets/images/puzzle_assets/vapur_s2.png"),
+  vapur_s3: require("../assets/images/puzzle_assets/vapur_s3.png"),
+  vapur_w1: require("../assets/images/puzzle_assets/vapur_w1.png"),
+  vapur_w2: require("../assets/images/puzzle_assets/vapur_w2.png"),
+  vapur_w3: require("../assets/images/puzzle_assets/vapur_w3.png"),
+  vapur_l1: require("../assets/images/puzzle_assets/vapur_l1.png"),
+  vapur_l2: require("../assets/images/puzzle_assets/vapur_l2.png"),
+  vapur_l3: require("../assets/images/puzzle_assets/vapur_l3.png"),
 };
 
 export function isPuzzleAsset(icon: string | undefined): boolean {
