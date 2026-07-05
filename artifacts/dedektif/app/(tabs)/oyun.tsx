@@ -776,14 +776,46 @@ function PuzzleCard({
   const colors = useColors();
   const diffColor = getDifficultyColor(puzzle.difficulty as Difficulty);
   const pressScale = useSharedValue(1);
-  const pressStyle = useAnimatedStyle(() => ({ transform: [{ scale: pressScale.value }] }));
+  const pressY = useSharedValue(0);
+  const pressShadow = useSharedValue(4);
+
+  const animatePress = (down: boolean) => {
+    pressScale.value = withTiming(down ? 0.985 : 1, {
+      duration: down ? 90 : 140,
+      easing: Easing.out(Easing.cubic),
+    });
+    pressY.value = withTiming(down ? 2 : 0, {
+      duration: down ? 90 : 140,
+      easing: Easing.out(Easing.cubic),
+    });
+    pressShadow.value = withTiming(down ? 1 : 4, {
+      duration: down ? 90 : 140,
+      easing: Easing.out(Easing.cubic),
+    });
+  };
+
+  const pressStyle = useAnimatedStyle(() => ({
+    transform: [
+      { scale: pressScale.value },
+      { translateY: pressY.value },
+    ],
+    shadowColor: "#000",
+    shadowRadius: 4 + (pressShadow.value / 4) * 4,
+    shadowOffset: { width: 0, height: pressShadow.value },
+    shadowOpacity: 0.1 + (pressShadow.value / 4) * 0.18,
+    elevation: 2 + (pressShadow.value / 4) * 3,
+  }));
+
   return (
-    <Animated.View entering={noEnter ? undefined : FadeInDown.delay(delay).springify()} style={pressStyle}>
+    <Animated.View
+      entering={noEnter ? undefined : FadeInDown.delay(delay).duration(320)}
+      style={pressStyle}
+    >
       <Pressable
         testID="puzzle-card"
         onPress={onPress}
-        onPressIn={() => { pressScale.value = withSpring(0.97, { damping: 15, stiffness: 400 }); }}
-        onPressOut={() => { pressScale.value = withSpring(1, { damping: 12, stiffness: 280 }); }}
+        onPressIn={() => animatePress(true)}
+        onPressOut={() => animatePress(false)}
         style={({ pressed }) => [
           listStyles.puzzleCard,
           {
@@ -797,6 +829,8 @@ function PuzzleCard({
               : `${diffColor}33`,
             borderLeftColor: completed ? colors.success : locked ? "#D4A843" : diffColor,
             borderLeftWidth: 3.5,
+            shadowColor: "#000",
+            shadowRadius: pressed ? 4 : 8,
           },
           locked && { borderStyle: "dashed" as const },
         ]}
@@ -2137,11 +2171,6 @@ const listStyles = StyleSheet.create({
     gap: 8,
     marginBottom: 4,
     overflow: "hidden",
-    shadowColor: "#000",
-    shadowOpacity: 0.28,
-    shadowRadius: 8,
-    shadowOffset: { width: 0, height: 4 },
-    elevation: 5,
   },
   puzzleCardTop: {
     flexDirection: "row",
