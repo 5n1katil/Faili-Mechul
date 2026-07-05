@@ -1424,7 +1424,7 @@ export default function VakalarScreen() {
           <View style={StyleSheet.absoluteFillObject} pointerEvents="none">
             <Image
               source={require("@/assets/images/intro_bg.png")}
-              style={[StyleSheet.absoluteFillObject, { opacity: 0.07 }]}
+              style={[StyleSheet.absoluteFillObject, { opacity: 0.13 }]}
               resizeMode="cover"
             />
           </View>
@@ -1800,7 +1800,7 @@ export default function VakalarScreen() {
       <View style={StyleSheet.absoluteFillObject} pointerEvents="none">
         <Image
           source={require("@/assets/images/intro_bg.png")}
-          style={[StyleSheet.absoluteFillObject, { opacity: 0.07 }]}
+          style={[StyleSheet.absoluteFillObject, { opacity: 0.13 }]}
           resizeMode="cover"
         />
       </View>
