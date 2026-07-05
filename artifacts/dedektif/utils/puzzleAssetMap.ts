@@ -44,6 +44,15 @@ const PUZZLE_ASSET_MAP: Record<string, number> = {
   neon_l1: require("../assets/images/puzzle_assets/neon_l1.png"),
   neon_l2: require("../assets/images/puzzle_assets/neon_l2.png"),
   neon_l3: require("../assets/images/puzzle_assets/neon_l3.png"),
+  konvak_s1: require("../assets/images/puzzle_assets/konvak_s1.png"),
+  konvak_s2: require("../assets/images/puzzle_assets/konvak_s2.png"),
+  konvak_s3: require("../assets/images/puzzle_assets/konvak_s3.png"),
+  konvak_w1: require("../assets/images/puzzle_assets/konvak_w1.png"),
+  konvak_w2: require("../assets/images/puzzle_assets/konvak_w2.png"),
+  konvak_w3: require("../assets/images/puzzle_assets/konvak_w3.png"),
+  konvak_l1: require("../assets/images/puzzle_assets/konvak_l1.png"),
+  konvak_l2: require("../assets/images/puzzle_assets/konvak_l2.png"),
+  konvak_l3: require("../assets/images/puzzle_assets/konvak_l3.png"),
 };
 
 export function isPuzzleAsset(icon: string | undefined): boolean {
