@@ -11,7 +11,7 @@ export interface AIDetective {
 export const AI_DETECTIVES: AIDetective[] = [
   {
     name: "Komiser Kemal",
-    avatar: "d02",
+    avatar: "av_komiser",
     totalScore: 195400,
     gamesWon: 31,
     maxStreak: 20,
@@ -20,7 +20,7 @@ export const AI_DETECTIVES: AIDetective[] = [
   },
   {
     name: "Baş Dedektif Meral",
-    avatar: "h03",
+    avatar: "av_dedektif",
     totalScore: 178200,
     gamesWon: 28,
     maxStreak: 18,
@@ -29,7 +29,7 @@ export const AI_DETECTIVES: AIDetective[] = [
   },
   {
     name: "Müfettiş Orhan",
-    avatar: "d05",
+    avatar: "av_mufekkir",
     totalScore: 161500,
     gamesWon: 26,
     maxStreak: 16,
@@ -38,7 +38,7 @@ export const AI_DETECTIVES: AIDetective[] = [
   },
   {
     name: "Ajan Sevda",
-    avatar: "h09",
+    avatar: "av_ajan",
     totalScore: 147300,
     gamesWon: 24,
     maxStreak: 15,
@@ -47,7 +47,7 @@ export const AI_DETECTIVES: AIDetective[] = [
   },
   {
     name: "Kriminolog Dr. Sibel",
-    avatar: "u02",
+    avatar: "av_doktor",
     totalScore: 134800,
     gamesWon: 22,
     maxStreak: 14,
@@ -56,7 +56,7 @@ export const AI_DETECTIVES: AIDetective[] = [
   },
   {
     name: "Araştırmacı Mert",
-    avatar: "h04",
+    avatar: "av_muhabir",
     totalScore: 122600,
     gamesWon: 20,
     maxStreak: 13,
@@ -65,7 +65,7 @@ export const AI_DETECTIVES: AIDetective[] = [
   },
   {
     name: "Yargıç Bülent",
-    avatar: "d03",
+    avatar: "av_yargi",
     totalScore: 111400,
     gamesWon: 18,
     maxStreak: 12,
@@ -74,7 +74,7 @@ export const AI_DETECTIVES: AIDetective[] = [
   },
   {
     name: "İstihbarat Uzmanı Naz",
-    avatar: "h08",
+    avatar: "av_operator",
     totalScore: 101200,
     gamesWon: 17,
     maxStreak: 11,
@@ -83,7 +83,7 @@ export const AI_DETECTIVES: AIDetective[] = [
   },
   {
     name: "Operasyon Uzmanı Alper Yalın",
-    avatar: "d06",
+    avatar: "av_sert",
     totalScore: 92800,
     gamesWon: 16,
     maxStreak: 11,
@@ -92,7 +92,7 @@ export const AI_DETECTIVES: AIDetective[] = [
   },
   {
     name: "Patoloji Uzmanı Hande",
-    avatar: "u01",
+    avatar: "av_adli",
     totalScore: 85100,
     gamesWon: 15,
     maxStreak: 10,
@@ -101,7 +101,7 @@ export const AI_DETECTIVES: AIDetective[] = [
   },
   {
     name: "Suç Analisti Barış",
-    avatar: "h05",
+    avatar: "av_analist",
     totalScore: 78400,
     gamesWon: 14,
     maxStreak: 9,
@@ -110,7 +110,7 @@ export const AI_DETECTIVES: AIDetective[] = [
   },
   {
     name: "Dedektif Tarık",
-    avatar: "d01",
+    avatar: "av_gece",
     totalScore: 72300,
     gamesWon: 13,
     maxStreak: 9,
@@ -119,7 +119,7 @@ export const AI_DETECTIVES: AIDetective[] = [
   },
   {
     name: "İstihbarat Analisti Veli Çakır",
-    avatar: "d09",
+    avatar: "av_hacker",
     totalScore: 66700,
     gamesWon: 12,
     maxStreak: 8,
@@ -128,7 +128,7 @@ export const AI_DETECTIVES: AIDetective[] = [
   },
   {
     name: "Araştırmacı Muhabir Can Erdem",
-    avatar: "u04",
+    avatar: "av_basin",
     totalScore: 61200,
     gamesWon: 11,
     maxStreak: 8,
@@ -137,7 +137,7 @@ export const AI_DETECTIVES: AIDetective[] = [
   },
   {
     name: "Saha Araştırmacısı Zeynep Aksoy",
-    avatar: "e05",
+    avatar: "av_genckadin",
     totalScore: 56100,
     gamesWon: 10,
     maxStreak: 7,
@@ -146,7 +146,7 @@ export const AI_DETECTIVES: AIDetective[] = [
   },
   {
     name: "Uzman Polis Tamer",
-    avatar: "d04",
+    avatar: "av_polis",
     totalScore: 51400,
     gamesWon: 10,
     maxStreak: 7,
@@ -155,7 +155,7 @@ export const AI_DETECTIVES: AIDetective[] = [
   },
   {
     name: "Denetim Uzmanı İrem Aydın",
-    avatar: "h02",
+    avatar: "av_uzman",
     totalScore: 47100,
     gamesWon: 9,
     maxStreak: 6,
@@ -164,7 +164,7 @@ export const AI_DETECTIVES: AIDetective[] = [
   },
   {
     name: "Teknoloji Analisti Tuğba",
-    avatar: "h01",
+    avatar: "av_elit",
     totalScore: 43300,
     gamesWon: 8,
     maxStreak: 6,
@@ -173,7 +173,7 @@ export const AI_DETECTIVES: AIDetective[] = [
   },
   {
     name: "Gözlemci Levent",
-    avatar: "d07",
+    avatar: "av_golge",
     totalScore: 39800,
     gamesWon: 8,
     maxStreak: 5,
@@ -182,7 +182,7 @@ export const AI_DETECTIVES: AIDetective[] = [
   },
   {
     name: "Arşiv Araştırmacısı Filiz",
-    avatar: "u03",
+    avatar: "av_katip",
     totalScore: 36600,
     gamesWon: 7,
     maxStreak: 5,
@@ -191,7 +191,7 @@ export const AI_DETECTIVES: AIDetective[] = [
   },
   {
     name: "İnceleme Uzmanı Kadir",
-    avatar: "u05",
+    avatar: "av_foto",
     totalScore: 33700,
     gamesWon: 7,
     maxStreak: 5,
@@ -200,7 +200,7 @@ export const AI_DETECTIVES: AIDetective[] = [
   },
   {
     name: "Başmüfettiş Kadir Demir",
-    avatar: "d08",
+    avatar: "av_albay",
     totalScore: 31000,
     gamesWon: 6,
     maxStreak: 4,
@@ -209,7 +209,7 @@ export const AI_DETECTIVES: AIDetective[] = [
   },
   {
     name: "Emekli Komiser Fikret",
-    avatar: "d02",
+    avatar: "av_silindir",
     totalScore: 28600,
     gamesWon: 6,
     maxStreak: 4,
@@ -218,7 +218,7 @@ export const AI_DETECTIVES: AIDetective[] = [
   },
   {
     name: "Sivil Soruşturmacı Ece Tan",
-    avatar: "h06",
+    avatar: "av_diva",
     totalScore: 26400,
     gamesWon: 5,
     maxStreak: 4,
@@ -227,7 +227,7 @@ export const AI_DETECTIVES: AIDetective[] = [
   },
   {
     name: "Saha Komiseri Erkan Yücel",
-    avatar: "d03",
+    avatar: "av_memur",
     totalScore: 24300,
     gamesWon: 5,
     maxStreak: 3,
@@ -236,7 +236,7 @@ export const AI_DETECTIVES: AIDetective[] = [
   },
   {
     name: "Müzakere Uzmanı Musa Kılıç",
-    avatar: "h07",
+    avatar: "av_bogazli",
     totalScore: 22400,
     gamesWon: 5,
     maxStreak: 3,
@@ -245,7 +245,7 @@ export const AI_DETECTIVES: AIDetective[] = [
   },
   {
     name: "Freelance Araştırmacı Leyla",
-    avatar: "h10",
+    avatar: "av_esarp",
     totalScore: 20700,
     gamesWon: 4,
     maxStreak: 3,
@@ -254,7 +254,7 @@ export const AI_DETECTIVES: AIDetective[] = [
   },
   {
     name: "Analist Selim Arslan",
-    avatar: "h08",
+    avatar: "av_professore",
     totalScore: 19100,
     gamesWon: 4,
     maxStreak: 3,
@@ -263,7 +263,7 @@ export const AI_DETECTIVES: AIDetective[] = [
   },
   {
     name: "Adli Kimya Uzmanı Alp Karaca",
-    avatar: "u01",
+    avatar: "av_pipo",
     totalScore: 17700,
     gamesWon: 4,
     maxStreak: 2,
@@ -272,7 +272,7 @@ export const AI_DETECTIVES: AIDetective[] = [
   },
   {
     name: "Dijital İnceleme Uzmanı Taha Tunç",
-    avatar: "e07",
+    avatar: "av_sheriff",
     totalScore: 16400,
     gamesWon: 4,
     maxStreak: 2,
@@ -281,7 +281,7 @@ export const AI_DETECTIVES: AIDetective[] = [
   },
   {
     name: "Gece Ekibi Amiri Gökhan Er",
-    avatar: "e03",
+    avatar: "av_fbi",
     totalScore: 15200,
     gamesWon: 3,
     maxStreak: 2,
@@ -290,7 +290,7 @@ export const AI_DETECTIVES: AIDetective[] = [
   },
   {
     name: "Dedektif Pınar Eren",
-    avatar: "u07",
+    avatar: "av_kizil",
     totalScore: 14100,
     gamesWon: 3,
     maxStreak: 2,
@@ -299,7 +299,7 @@ export const AI_DETECTIVES: AIDetective[] = [
   },
   {
     name: "İstatistik Uzmanı Burak Anal",
-    avatar: "e01",
+    avatar: "av_yonetici",
     totalScore: 13000,
     gamesWon: 3,
     maxStreak: 2,
@@ -308,7 +308,7 @@ export const AI_DETECTIVES: AIDetective[] = [
   },
   {
     name: "Bağımsız Soruşturmacı Serkan Öztürk",
-    avatar: "d08",
+    avatar: "av_kasket",
     totalScore: 12000,
     gamesWon: 3,
     maxStreak: 2,
@@ -317,7 +317,7 @@ export const AI_DETECTIVES: AIDetective[] = [
   },
   {
     name: "Hâkim Berin",
-    avatar: "u10",
+    avatar: "av_buyukanne",
     totalScore: 11100,
     gamesWon: 3,
     maxStreak: 1,
@@ -326,7 +326,7 @@ export const AI_DETECTIVES: AIDetective[] = [
   },
   {
     name: "Gazete Muhabiri Gül",
-    avatar: "h04",
+    avatar: "av_barista",
     totalScore: 10200,
     gamesWon: 2,
     maxStreak: 1,
@@ -335,7 +335,7 @@ export const AI_DETECTIVES: AIDetective[] = [
   },
   {
     name: "Saha Uzmanı Deniz Akın",
-    avatar: "u09",
+    avatar: "av_trafik",
     totalScore: 9400,
     gamesWon: 2,
     maxStreak: 1,
@@ -344,7 +344,7 @@ export const AI_DETECTIVES: AIDetective[] = [
   },
   {
     name: "Sivil Gözlemci Mustafa Yaman",
-    avatar: "u08",
+    avatar: "av_patron",
     totalScore: 8700,
     gamesWon: 2,
     maxStreak: 1,
@@ -353,7 +353,7 @@ export const AI_DETECTIVES: AIDetective[] = [
   },
   {
     name: "Adli İnceleme Görevlisi Cengiz Acar",
-    avatar: "e06",
+    avatar: "av_fedora",
     totalScore: 8000,
     gamesWon: 2,
     maxStreak: 1,
@@ -362,7 +362,7 @@ export const AI_DETECTIVES: AIDetective[] = [
   },
   {
     name: "Araştırmacı Nihat Kara",
-    avatar: "h02",
+    avatar: "av_kartal",
     totalScore: 7300,
     gamesWon: 2,
     maxStreak: 1,
@@ -371,7 +371,7 @@ export const AI_DETECTIVES: AIDetective[] = [
   },
   {
     name: "Hukuk Öğrencisi Buse",
-    avatar: "u02",
+    avatar: "av_yazar",
     totalScore: 6600,
     gamesWon: 2,
     maxStreak: 1,
@@ -380,7 +380,7 @@ export const AI_DETECTIVES: AIDetective[] = [
   },
   {
     name: "Arşiv Uzmanı Seda Işık",
-    avatar: "e09",
+    avatar: "av_mor",
     totalScore: 5900,
     gamesWon: 1,
     maxStreak: 1,
@@ -389,7 +389,7 @@ export const AI_DETECTIVES: AIDetective[] = [
   },
   {
     name: "Stajyer Dedektif Ceren",
-    avatar: "h10",
+    avatar: "av_sokak",
     totalScore: 5200,
     gamesWon: 1,
     maxStreak: 1,
@@ -398,7 +398,7 @@ export const AI_DETECTIVES: AIDetective[] = [
   },
   {
     name: "Öğretmen Haluk",
-    avatar: "u06",
+    avatar: "av_bob",
     totalScore: 4500,
     gamesWon: 1,
     maxStreak: 1,
@@ -407,7 +407,7 @@ export const AI_DETECTIVES: AIDetective[] = [
   },
   {
     name: "Amatör Soruşturmacı Kaan",
-    avatar: "h07",
+    avatar: "av_kedi",
     totalScore: 3800,
     gamesWon: 1,
     maxStreak: 1,
@@ -416,7 +416,7 @@ export const AI_DETECTIVES: AIDetective[] = [
   },
   {
     name: "Ressam Tanık Aylin",
-    avatar: "u07",
+    avatar: "av_asil",
     totalScore: 3100,
     gamesWon: 1,
     maxStreak: 1,
@@ -425,7 +425,7 @@ export const AI_DETECTIVES: AIDetective[] = [
   },
   {
     name: "Meraklı Emekli Cemal",
-    avatar: "d05",
+    avatar: "av_supheji",
     totalScore: 2500,
     gamesWon: 1,
     maxStreak: 1,
@@ -434,7 +434,7 @@ export const AI_DETECTIVES: AIDetective[] = [
   },
   {
     name: "Polis Memuru Hüseyin Kurt",
-    avatar: "d09",
+    avatar: "av_gorevli",
     totalScore: 1900,
     gamesWon: 1,
     maxStreak: 1,
@@ -443,7 +443,7 @@ export const AI_DETECTIVES: AIDetective[] = [
   },
   {
     name: "Araştırmacı Selin Yıldız",
-    avatar: "h09",
+    avatar: "av_siyahsapka",
     totalScore: 1300,
     gamesWon: 1,
     maxStreak: 1,
@@ -452,7 +452,7 @@ export const AI_DETECTIVES: AIDetective[] = [
   },
   {
     name: "Stajyer Elif Acar",
-    avatar: "u03",
+    avatar: "av_denizci",
     totalScore: 800,
     gamesWon: 1,
     maxStreak: 1,
@@ -461,7 +461,7 @@ export const AI_DETECTIVES: AIDetective[] = [
   },
   {
     name: "Aday Dedektif Çağrı Demirtaş",
-    avatar: "d10",
+    avatar: "av_asil",
     totalScore: 400,
     gamesWon: 1,
     maxStreak: 1,

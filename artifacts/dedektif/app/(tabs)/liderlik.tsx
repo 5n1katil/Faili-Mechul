@@ -405,9 +405,7 @@ export default function LiderlikScreen() {
 
   const realEntries: RankEntry[] =
     apiEntries !== null && apiEntries.length > 0
-      ? apiEntries
-          .filter((e) => e.playerId !== playerId && e.totalScore > 0)
-          .map(apiEntryToRank)
+      ? apiEntries.filter((e) => e.playerId !== playerId).map(apiEntryToRank)
       : [];
 
   const sorted = sortEntries([...npcEntries, ...realEntries, myEntry], sortKey);
