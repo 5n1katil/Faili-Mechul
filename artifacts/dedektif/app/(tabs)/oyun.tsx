@@ -1291,6 +1291,10 @@ export default function VakalarScreen() {
     const accessiblePacks = PACKS.filter((pack) => isPremium || isPackPurchased(pack.packId));
     const allPackPuzzles = accessiblePacks.flatMap((pack) => getPuzzlesForPack(pack.packId));
     const activePackPuzzles = allPackPuzzles.filter((p) => !completedPuzzleIds.has(p.id));
+    const allPurchasablePackPuzzles = PURCHASABLE_PACKS.flatMap((pack) => getPuzzlesForPack(pack.packId));
+    const purchasedPackPuzzles = PURCHASABLE_PACKS
+      .filter((pack) => isPackPurchased(pack.packId))
+      .flatMap((pack) => getPuzzlesForPack(pack.packId));
 
     const activeFree = freePuzzles.filter((p) => !completedPuzzleIds.has(p.id));
     const activePremium = premiumPuzzles.filter((p) => !completedPuzzleIds.has(p.id));
@@ -1483,12 +1487,12 @@ export default function VakalarScreen() {
                   <View style={{ paddingHorizontal: 14, paddingTop: 12, paddingBottom: 8 }}>
                     <View style={[listStyles.unifiedStatsRow, { backgroundColor: "#A855F709", borderColor: "#A855F732" }]}>
                       <View style={listStyles.unifiedStatItem}>
-                        <Text style={[listStyles.standartStatNum, { color: "#C084FC" }]}>{allPackPuzzles.length}</Text>
+                        <Text style={[listStyles.standartStatNum, { color: "#C084FC" }]}>{allPurchasablePackPuzzles.length}</Text>
                         <Text style={[listStyles.standartStatLabel, { color: INACTIVE_COLOR }]}>TOPLAM</Text>
                       </View>
                       <View style={[listStyles.unifiedStatDivider, { backgroundColor: "#A855F728" }]} />
                       <View style={listStyles.unifiedStatItem}>
-                        <Text style={[listStyles.standartStatNum, { color: "#F0F0F8" }]}>{activePackPuzzles.length}</Text>
+                        <Text style={[listStyles.standartStatNum, { color: "#F0F0F8" }]}>{purchasedPackPuzzles.length}</Text>
                         <Text style={[listStyles.standartStatLabel, { color: INACTIVE_COLOR }]}>AKTİF</Text>
                       </View>
                       <View style={[listStyles.unifiedStatDivider, { backgroundColor: "#A855F728" }]} />

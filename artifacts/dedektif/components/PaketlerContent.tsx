@@ -125,7 +125,7 @@ export default function PaketlerContent({ embedded = false }: { embedded?: boole
     >
       {/* Premium Paketler header — matches Premium Vakalar style */}
       <View style={styles.premHeader}>
-        <Image source={require("@/assets/images/premium-paketler-icon.png")} style={{ width: 30, height: 30 }} resizeMode="contain" />
+        <Image source={require("@/assets/images/premium-paketler-icon.png")} style={{ width: 48, height: 48 }} resizeMode="contain" />
         <Text style={styles.premHeaderTitle}>Premium Paketler</Text>
         <View style={styles.premHeaderBadge}>
           <Text style={styles.premHeaderBadgeText}>{PURCHASABLE_PACKS.length} Paket</Text>
@@ -357,15 +357,15 @@ const styles = StyleSheet.create({
   },
   premHeaderBadge: {
     backgroundColor: "#D4A84330",
-    borderRadius: 10,
-    paddingHorizontal: 10,
-    paddingVertical: 3,
+    borderRadius: 12,
+    paddingHorizontal: 12,
+    paddingVertical: 5,
     borderWidth: 1,
     borderColor: "#D4A84360",
     alignItems: "center",
   },
   premHeaderBadgeText: {
-    fontSize: 13,
+    fontSize: 16,
     fontFamily: "UnnaBold",
     fontWeight: "800",
     color: "#D4A843",
