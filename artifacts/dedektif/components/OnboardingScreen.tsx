@@ -267,7 +267,7 @@ function SlideStartOptions({ contentWidth }: { contentWidth: number }) {
       badge: "Her gün yenilenir · Ücretsiz",
     },
     {
-      icon: "folder-special" as MaterialIconName,
+      imageIcon: require("@/assets/images/vakalar-icon.png"),
       iconColor: "#A855F7",
       accent: "#A855F7",
       label: "Vakalar",
