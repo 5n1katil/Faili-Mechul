@@ -7,6 +7,12 @@ import {
   Text,
   View,
 } from "react-native";
+
+const DIFF_IMAGES: Record<string, ReturnType<typeof require>> = {
+  caylak: require("../assets/images/diff_caylak.png"),
+  dedektif: require("../assets/images/diff_dedektif.png"),
+  baskomiser: require("../assets/images/diff_bas_komiser.png"),
+};
 import Animated, { useSharedValue, useAnimatedStyle, withSpring } from "react-native-reanimated";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useColors } from "@/hooks/useColors";
@@ -58,7 +64,12 @@ export default function PuzzleStartModal({ visible, puzzle, isRanked, onStart, o
           </Text>
 
           <View style={[styles.puzzleInfo, { backgroundColor: colors.background, borderColor: colors.border }]}>
-            <View style={[styles.diffBadge, { backgroundColor: `${diffColor}22`, borderColor: `${diffColor}55` }]}>
+            <View style={[styles.diffBadge, { backgroundColor: `${diffColor}22`, borderColor: `${diffColor}55`, flexDirection: "row", alignItems: "center", gap: 6 }]}>
+              <Image
+                source={DIFF_IMAGES[puzzle.difficulty] ?? DIFF_IMAGES.caylak}
+                style={{ width: 26, height: 26 }}
+                resizeMode="contain"
+              />
               <Text style={[styles.diffText, { color: diffColor }]}>{diffLabel}</Text>
             </View>
             <Text style={[styles.puzzleName, { color: colors.foreground }]} numberOfLines={2}>

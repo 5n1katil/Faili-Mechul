@@ -73,6 +73,12 @@ import Animated, {
   Easing,
 } from "react-native-reanimated";
 
+const DIFF_IMAGES: Record<string, ReturnType<typeof require>> = {
+  caylak: require("@/assets/images/diff_caylak.png"),
+  dedektif: require("@/assets/images/diff_dedektif.png"),
+  baskomiser: require("@/assets/images/diff_bas_komiser.png"),
+};
+
 const FREE_PUZZLE_COUNT = 10;
 const TOTAL_PURCHASABLE_PUZZLES = PURCHASABLE_PACKS.reduce(
   (sum, p) => sum + getPuzzlesForPack(p.packId).length, 0
@@ -805,9 +811,14 @@ function PuzzleCard({
           <View
             style={[
               listStyles.diffBadge,
-              { backgroundColor: `${diffColor}22`, borderColor: `${diffColor}66` },
+              { backgroundColor: `${diffColor}22`, borderColor: `${diffColor}66`, flexDirection: "row", alignItems: "center", gap: 5 },
             ]}
           >
+            <Image
+              source={DIFF_IMAGES[puzzle.difficulty] ?? DIFF_IMAGES.caylak}
+              style={{ width: 20, height: 20 }}
+              resizeMode="contain"
+            />
             <Text style={[listStyles.diffText, { color: diffColor }]}>
               {getDifficultyLabel(puzzle.difficulty as Difficulty)}
             </Text>
@@ -1894,8 +1905,17 @@ export default function VakalarScreen() {
                 <Pressable onPress={handleBackPress} style={gameStyles.backBtn} hitSlop={8}>
                   <MaterialIcons name="arrow-back" size={20} color={colors.mutedForeground} />
                 </Pressable>
-                <View style={gameStyles.difficultyBadge}>
-                  <Text style={[gameStyles.caseNumber, { color: "#D4A843" }]}>
+                <View style={[gameStyles.difficultyBadge, {
+                  backgroundColor: `${getDifficultyColor(puzzle.difficulty as Difficulty)}18`,
+                  borderColor: `${getDifficultyColor(puzzle.difficulty as Difficulty)}55`,
+                  flexDirection: "row", alignItems: "center", gap: 5,
+                }]}>
+                  <Image
+                    source={DIFF_IMAGES[puzzle.difficulty] ?? DIFF_IMAGES.caylak}
+                    style={{ width: 18, height: 18 }}
+                    resizeMode="contain"
+                  />
+                  <Text style={[gameStyles.caseNumber, { color: getDifficultyColor(puzzle.difficulty as Difficulty) }]}>
                     {getDifficultyLabel(puzzle.difficulty as Difficulty).toLocaleUpperCase("tr-TR")}
                   </Text>
                 </View>
