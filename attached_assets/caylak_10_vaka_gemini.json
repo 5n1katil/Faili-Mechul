@@ -1,0 +1,1832 @@
+{
+  "meta": {
+    "description": "Faili Meçhul — Çaylak seviyesi 10 başlangıç vakası. Gemini premium dedüksiyon rewrite için read-only referans.",
+    "generatedAt": "2026-06-26T20:46:26.948Z",
+    "standartFormatNotes": "Vaka 1–5: puzzles.ts — solvabilityMeta, 6 clues (4 free + 2 bonus), difficulty caylak.",
+    "premiumFormatNotes": "Vaka 6–10: pack_caylik — solution_table, 8 clues with pointCost/mechanicType, gridSize 3x3, timeLimit 540.",
+    "rewriteRedLines": [
+      "Sadece metin alanları değiştirilebilir: story, atmosphere, clues.*.text, deductionHint, solutionNarrative vb.",
+      "id, solution, mechanicType, interaktif veri (parmakIziVerisi, timelineVerisi, sesMetni) korunmalı."
+    ]
+  },
+  "cases": [
+    {
+      "caseNumber": 1,
+      "title": "Folklor Festivalinde Ölüm",
+      "region": "Ankara",
+      "source": "artifacts/dedektif/data/puzzles.ts",
+      "format": "standart",
+      "analysis": "Ankara folklor festivalinde koordinatör sahnede elektrik şokuyla ölür; ipuçları voltaj yanığını sahne + elektrik sabotajına, suçu ses altyapısına hakim teknik personele bağlar. Çözüm: Ses Teknikeri + Elektrik Darbesi + Sahne.",
+      "puzzle": {
+        "id": "folklor-festivalinde-olum",
+        "title": "Folklor Festivalinde Ölüm",
+        "difficulty": "caylak",
+        "dayIndex": 12,
+        "story": "Ankara'nın serin bir sonbahar akşamında, binlerce kişinin coşkuyla izlediği folklor festivalinin baş koordinatörü sahnede aniden yere yığıldı. Rengarenk sahne ışıklarının altında yaşanan bu trajedi, alkış seslerini keserken sahne arkasındaki karanlık rekabetin de üzerindeki perdeyi kaldırdı.",
+        "suspects": [
+          {
+            "id": "s1",
+            "name": "Rakip Sanatçı",
+            "description": "Ana kadroya alınmadığı için alev alev bir kinle yanan, sahnede olmak için her yolu mubah gören hırslı ve dışlanmış sanatçı.",
+            "icon": "noun-folklor-rakip-sanatci-avatar.png"
+          },
+          {
+            "id": "s2",
+            "name": "Ses Teknikeri",
+            "description": "Festivalin tüm devasa ve karmaşık elektriksel altyapısını, şalterleri ve ölümcül voltaj hatlarını santim santim bilen tecrübeli teknisyen.",
+            "icon": "noun-folklor-ses-teknikeri-avatar.png"
+          },
+          {
+            "id": "s3",
+            "name": "Sponsorların Temsilcisi",
+            "description": "Festivalin bütçesi yüzünden maktulle ciddi krizler yaşayan, yatırımlarını çekmekle tehdit eden takım elbiseli, soğukkanlı yönetici.",
+            "icon": "noun-folklor-sponsor-temsilcisi-avatar.png"
+          }
+        ],
+        "weapons": [
+          {
+            "id": "w1",
+            "name": "Zehirli Su",
+            "description": "Kişisel su şişelerine damlatıldığında kalp ritmini saniyeler içinde geri dönülmez şekilde durduran, renksiz ve kokusuz sentetik zehir.",
+            "icon": "water-drop"
+          },
+          {
+            "id": "w2",
+            "name": "Elektrik Darbesi",
+            "description": "Sahne zeminindeki metal plakalara özel bir mühendislikle yönlendirilen ve dokunulduğunda kasları kilitleyip ölümcül şok yaratan ana akım.",
+            "icon": "flash-on"
+          },
+          {
+            "id": "w3",
+            "name": "Gizli Enjeksiyon",
+            "description": "Kalabalık arasında fark edilmeden deriye temas ettirilebilen, ucunda sinsi bir toksin barındıran ince uçlu medikal iğne.",
+            "icon": "vaccines"
+          }
+        ],
+        "locations": [
+          {
+            "id": "l1",
+            "name": "Sahne",
+            "description": "Binlerce gözün üzerinde olduğu, devasa hoparlörler ve açıkta duran yüksek voltajlı güç kablolarıyla çevrili açık hava performans platformu.",
+            "icon": "theater-comedy"
+          },
+          {
+            "id": "l2",
+            "name": "Soyunma Odası",
+            "description": "Sanatçıların kostüm değiştirdiği, dışarıya kapalı, güvenli ve elektronik kilit sistemiyle korunan izole arka oda.",
+            "icon": "room"
+          },
+          {
+            "id": "l3",
+            "name": "Kontrol Odası",
+            "description": "Ses ve ışık düzeneklerinin yönetildiği, sahneyi uzaktan gören, dar ve elektronik cihazlarla dolu teknik kontrol odası.",
+            "icon": "settings"
+          }
+        ],
+        "clues": [
+          {
+            "id": "c1",
+            "text": "Adli tabip, kurbanın vücudunda geniş çaplı doku yanıkları ve kas spazmları tespit etti; bu bulgular, doğrudan ana şebekeden çekilen kontrolsüz bir yüksek voltaj akımını işaret ediyordu.",
+            "type": "forensic",
+            "isBonus": false
+          },
+          {
+            "id": "c2",
+            "text": "Kriminal inceleme, güç kablolarındaki kasıtlı kesiklerin sadece dışarıdaki açık hava performans platformunda yapıldığını, kapalı odaların temiz olduğunu belirledi.",
+            "type": "witness",
+            "isBonus": false
+          },
+          {
+            "id": "c3",
+            "text": "Gösteri boyunca sahne arkası logları, rakip sanatçının sadece mikser ve ışık panellerinin bulunduğu teknik odada tutulduğunu ve dışarı adım atmadığını kanıtladı.",
+            "type": "witness",
+            "isBonus": false
+          },
+          {
+            "id": "c4",
+            "text": "Sponsor temsilcisinin VIP çadırında imzaladığı faturaların saat damgaları, onun trajedi anında sahne alanından çok uzakta, müzisyenlerle kilitli bir toplantıda olduğunu doğruladı.",
+            "type": "evidence",
+            "isBonus": false
+          },
+          {
+            "id": "c5",
+            "text": "Açık sahneye giden ana akım hattında kurulan o kusursuz ve ölümcül 'kısa devre' köprüsü, amatör birinin yapamayacağı kadar ileri düzey bir mühendislik gerektiriyordu.",
+            "type": "evidence",
+            "isBonus": true
+          },
+          {
+            "id": "c6",
+            "text": "Ana şalter kutusunun iç kapağında, festivalin tüm teknik işleyişinden sorumlu olan o kişinin izole eldivenlerine ait taze yanık ve erime izleri bulundu.",
+            "type": "evidence",
+            "isBonus": true
+          }
+        ],
+        "solvabilityMeta": {
+          "freeEliminations": [
+            "l2",
+            "l3",
+            "s1",
+            "s3",
+            "w1",
+            "w3"
+          ],
+          "bonusEliminations": []
+        },
+        "solution": {
+          "suspectId": "s2",
+          "weaponId": "w2",
+          "locationId": "l1"
+        }
+      }
+    },
+    {
+      "caseNumber": 2,
+      "title": "Termal Otelde Şüpheli Vaka",
+      "region": "Bursa",
+      "source": "artifacts/dedektif/data/puzzles.ts",
+      "format": "standart",
+      "analysis": "Bursa termal otelinde ünlü şarkıcı buharlı saunada boğularak ölür; ipuçları nefes kesilmesini sauna mekanına, suçu takıntılı eski hayrana yönlendirir. Çözüm: Eski Hayranı + Boğma + Sauna.",
+      "puzzle": {
+        "id": "termal-otelde-supheli-vaka",
+        "title": "Termal Otelde Şüpheli Vaka",
+        "difficulty": "caylak",
+        "dayIndex": 16,
+        "story": "Bursa'nın ormanlarla çevrili lüks termal otelinde, suların huzur veren şırıltısı ünlü bir şarkıcının son çığlığıyla kesildi. Yoğun buharın göz gözü görmez ettiği spa alanında, ihtişamlı bir hayat karanlık bir sırla son buldu.",
+        "suspects": [
+          {
+            "id": "s1",
+            "name": "Otel Müdürü",
+            "description": "Otelin biriken borçları yüzünden köşeye sıkışan ve ünlü misafirlerin skandallarından korkan, sürekli güvenlik kameralarını izleyen gergin otel müdürü.",
+            "icon": "noun-termal-otel-muduru-avatar.png"
+          },
+          {
+            "id": "s2",
+            "name": "Eski Hayranı",
+            "description": "Maktulün her adımını gölgelerden takip eden, reddedilmeyi asla hazmedemeyen ve gözlerini ondan ayırmayan takıntılı eski hayran.",
+            "icon": "noun-termal-kapici-avatar.png"
+          },
+          {
+            "id": "s3",
+            "name": "Rakip Şarkıcı",
+            "description": "Aynı gece otelin devasa açık hava sahnesinde performans sergileyen, kurbanın gölgesinde kalmaktan nefret eden hırslı rakip şarkıcı.",
+            "icon": "noun-termal-gazeteci-avatar.png"
+          }
+        ],
+        "weapons": [
+          {
+            "id": "w1",
+            "name": "Boğma",
+            "description": "Kurbanı yoğun buhar ve sıcaklığın olduğu ıslak bir zeminde, savunmasız bir anında çıplak ellerle nefessiz bırakan vahşi bir güç.",
+            "icon": "back-hand"
+          },
+          {
+            "id": "w2",
+            "name": "Uyku Hapı",
+            "description": "Kişisel içeceklere karıştırıldığında bedeni saniyeler içinde uyuşturan ve kalbi yavaşlatan ağır reçeteli uyku ilacı.",
+            "icon": "medication"
+          },
+          {
+            "id": "w3",
+            "name": "Bıçak",
+            "description": "Havlu ve spa malzemeleri arasına ustaca saklanmış, tek bir pürüzsüz hamleyle hayati organları delebilecek küçük katlanır bıçak.",
+            "icon": "content-cut"
+          }
+        ],
+        "locations": [
+          {
+            "id": "l1",
+            "name": "Havuz Başı",
+            "description": "Termal suyun devir daim yaptığı, etrafı şezlonglarla çevrili, açık havada bulunan aydınlık ve geniş yüzme havuzu kenarı.",
+            "icon": "pool"
+          },
+          {
+            "id": "l2",
+            "name": "Spa Odası",
+            "description": "Kokulu yağların ve masaj yataklarının bulunduğu, yumuşak müziklerin çaldığı, dışarıdan rahatça girilebilen aromaterapi kabini.",
+            "icon": "spa"
+          },
+          {
+            "id": "l3",
+            "name": "Sauna",
+            "description": "Ahşap duvarlı, içeriden kilitlenebilen, nefes almayı zorlaştıran yoğun buhar ve yüksek sıcaklıkta tutulan izole terleme odası.",
+            "icon": "whatshot"
+          }
+        ],
+        "clues": [
+          {
+            "id": "c1",
+            "text": "İçeriden kilitlenmiş yoğun buharlı ahşap odanın duvarlarında tespit edilen çırpınış ve el baskısı izleri, kurbanın o dar ve cehennem gibi sıcak alanda nefessiz bırakıldığını kanıtlıyordu.",
+            "type": "evidence",
+            "isBonus": false
+          },
+          {
+            "id": "c2",
+            "text": "Açık yüzme havuzunun ıslak kenarlarında suya karışmadan kalmış mikroskobik sedatif tozları, bu sinsi planın kimyasal bir eylemden mekanik bir cinayete dönüştüğünü gösterdi.",
+            "type": "evidence",
+            "isBonus": false
+          },
+          {
+            "id": "c3",
+            "text": "Otel müdürünün olay gecesi boyunca ön bürodaki operasyonları yönettiği ve POS cihazlarından alınan kesintisiz işlem kayıtlarıyla resepsiyondan hiç ayrılmadığı saptandı.",
+            "type": "witness",
+            "isBonus": false
+          },
+          {
+            "id": "c4",
+            "text": "Otel sistemindeki dijital kart logları, rakip şarkıcının cinayet saatinden çok önce aromaterapi kabinine girdiğini ve sadece o alanda kaldığını teyit etti.",
+            "type": "evidence",
+            "isBonus": false
+          },
+          {
+            "id": "c5",
+            "text": "Lobideki güvenlik kameraları, gözleri kurbanı arayan takıntılı hayranın doğrudan en sıcak ve kilitlenebilir ahşap kabine yöneldiğini saniye saniye kaydetmişti.",
+            "type": "evidence",
+            "isBonus": true
+          },
+          {
+            "id": "c6",
+            "text": "Rakip şarkıcının o akşam binlerce kişinin izlediği açık hava konserinde sahne aldığı magazin basınının canlı yayınlarıyla belgelenerek şüpheleri ondan tamamen uzaklaştırdı.",
+            "type": "witness",
+            "isBonus": true
+          }
+        ],
+        "solvabilityMeta": {
+          "freeEliminations": [
+            "l1",
+            "l2",
+            "s1",
+            "s3",
+            "w2",
+            "w3"
+          ],
+          "bonusEliminations": []
+        },
+        "solution": {
+          "suspectId": "s2",
+          "weaponId": "w1",
+          "locationId": "l3"
+        }
+      }
+    },
+    {
+      "caseNumber": 3,
+      "title": "Köy Düğününde Trajedi",
+      "region": "Doğu Anadolu",
+      "source": "artifacts/dedektif/data/puzzles.ts",
+      "format": "standart",
+      "analysis": "Doğu Anadolu köy düğününde gelinin babası ahır arkasında av tüfeğiyle vurulur; halay alibisi damadı ve fotoğrafçıyı temizler, kan davalı muhtarı işaret eder. Çözüm: Köy Muhtarı + Av Tüfeği + Ahır Arkası.",
+      "puzzle": {
+        "id": "koy-dugununde-trajedi",
+        "title": "Köy Düğününde Trajedi",
+        "difficulty": "caylak",
+        "dayIndex": 20,
+        "story": "Doğu Anadolu'nun etrafı karlı dağlarla çevrili şenlikli bir köyünde, davul ve zurna sesleri geceyi delerken gelinin babası kanlar içinde bulundu. Halayların coşkusu, yıllanmış bir intikamın yankısını bastırmak için mükemmel bir kamuflajdı.",
+        "suspects": [
+          {
+            "id": "s1",
+            "name": "Damat",
+            "description": "Maktulle düğün öncesi büyük bir aile krizi yaşayan, yüzlerce akrabasıyla birlikte eğlencenin merkezinde olması beklenen gergin damat.",
+            "icon": "noun-koy-dugunu-damat-avatar.png"
+          },
+          {
+            "id": "s2",
+            "name": "Köy Muhtarı",
+            "description": "Kurbanla sınır tarlaları yüzünden yıllardır kan davalı olan, evinde uzun namlulu silahlar bulunduran, otoriter ve öfkeli ihtiyar köy yöneticisi.",
+            "icon": "noun-koy-dugunu-muhtar-avatar.png"
+          },
+          {
+            "id": "s3",
+            "name": "Düğün Fotoğrafçısı",
+            "description": "Köyün yabancısı olan, sürekli dijital ekipmanlarıyla anı yakalayan ve kalabalıktan uzak durmayı tercih eden sessiz fotoğrafçı.",
+            "icon": "noun-koy-dugunu-fotografci-avatar.png"
+          }
+        ],
+        "weapons": [
+          {
+            "id": "w1",
+            "name": "Av Tüfeği",
+            "description": "Uzak mesafeden hedefini bulduğunda göğüs kafesinde devasa ve geri dönülmez saçma tahribatları yaratan ağır namlulu av tüfeği.",
+            "icon": "sports"
+          },
+          {
+            "id": "w2",
+            "name": "Bıçak",
+            "description": "Köylülerin günlük hayatta kemerlerinde taşıdığı, yakın mesafeden sessizce kullanılabilecek keskin ve ağır çelik bıçak.",
+            "icon": "content-cut"
+          },
+          {
+            "id": "w3",
+            "name": "Zehir",
+            "description": "Bitkisel kökenli, yiyecek veya içeceklere karıştırıldığında saatler sonra kurbanı yavaş yavaş içeriden çürüten yöresel bir toksin.",
+            "icon": "science"
+          }
+        ],
+        "locations": [
+          {
+            "id": "l1",
+            "name": "Düğün Çadırı",
+            "description": "Rengarenk ampullerle süslenmiş, davul zurna seslerinin hiç susmadığı, yüzlerce kişinin dip dibe eğlendiği devasa ve aydınlık çadır.",
+            "icon": "festival"
+          },
+          {
+            "id": "l2",
+            "name": "Köy Meydanı",
+            "description": "Büyük ateşlerin yakıldığı, halayların çekildiği ve köyün tam kalbinde yer alan, herkesin birbirini net görebildiği açık meydan.",
+            "icon": "location-city"
+          },
+          {
+            "id": "l3",
+            "name": "Ahır Arkası",
+            "description": "Işıkların ulaşmadığı, kerpiç duvarların ardında kalan, ayak basıldığında sadece çamur ve karanlık sunan ıssız hayvan barınağının arkası.",
+            "icon": "agriculture"
+          }
+        ],
+        "clues": [
+          {
+            "id": "c1",
+            "text": "Maktulün bedeninde sinsi bir toksin belirtisi veya yakın mesafeli bir kesik izi yoktu; göğüs kafesindeki geniş ve ağır saçma tahribatı, tetiğin metrelerce uzaktan çekildiğini kanıtlıyordu.",
+            "type": "forensic",
+            "isBonus": false
+          },
+          {
+            "id": "c2",
+            "text": "Jandarma incelemesi, kan izlerinin ve barut kokusunun aydınlık köy meydanında değil; köyün en karanlık, en ıssız noktası olan kerpiç yapılı hayvan barınağının hemen arkasında toplandığını gösterdi.",
+            "type": "witness",
+            "isBonus": false
+          },
+          {
+            "id": "c3",
+            "text": "Husumetli olduğu bilinen damadın, olay saatinde yüzlerce akrabasıyla birlikte devasa ışıklı çadırda halay başı çektiği ve oradan bir an olsun ayrılmadığı sayısız şahitle doğrulandı.",
+            "type": "witness",
+            "isBonus": false
+          },
+          {
+            "id": "c4",
+            "text": "Şehirden gelen yabancı fotoğrafçının, o kritik dakikalarda sadece meydandaki ateşin etrafında portre çekimleri yaptığı dijital makinesindeki silinmez zaman damgalarıyla kesinleşti.",
+            "type": "evidence",
+            "isBonus": false
+          },
+          {
+            "id": "c5",
+            "text": "Köyün yaşlıları, maktulle yıllardır kan davalı bir arazi kavgası olan ihtiyar adamın, düğün alanından gizlice sıvışıp karanlık ahır bölgesine doğru tek başına ilerlediğini yeminle itiraf ettiler.",
+            "type": "direct",
+            "isBonus": true
+          },
+          {
+            "id": "c6",
+            "text": "Ahırın arkasındaki çamurlu zeminde bulunan boş kovanın ateşleme izi, köyün o yaşlı yöneticisinin evindeki duvarda asılı duran uzun namlulu silahın balistik raporuyla %100 eşleşti.",
+            "type": "evidence",
+            "isBonus": true
+          }
+        ],
+        "solvabilityMeta": {
+          "freeEliminations": [
+            "l1",
+            "l2",
+            "s1",
+            "s3",
+            "w2",
+            "w3"
+          ],
+          "bonusEliminations": []
+        },
+        "solution": {
+          "suspectId": "s2",
+          "weaponId": "w1",
+          "locationId": "l3"
+        }
+      }
+    },
+    {
+      "caseNumber": 4,
+      "title": "Üsküdar'da Kayıp Vapur",
+      "region": "İstanbul",
+      "source": "artifacts/dedektif/data/puzzles.ts",
+      "format": "standart",
+      "analysis": "Boğaz vapuru üzerinde yönetici motor dairesinde halatla boğulur; kaptan ve iskelede kalan yolcu elenir, biletçi/güverte görevlisinin alt kata erişimi suçu işaret eder. Çözüm: Muzaffer + Gemi Halatı + Motor Dairesi.",
+      "puzzle": {
+        "id": "uskudarda-kayip-vapur",
+        "title": "Üsküdar'da Kayıp Vapur",
+        "difficulty": "caylak",
+        "dayIndex": 23,
+        "story": "Boğaz'ın buz gibi gri sisleri arasına karışan ilk sabah vapurunda, üst düzey bir yönetici bir daha inmemek üzere ortadan kayboldu. Dalgaların sesi ve martıların çığlıkları, denizin ortasında işlenen bu kusursuz cinayetin tek sessiz tanığıydı.",
+        "suspects": [
+          {
+            "id": "s1",
+            "name": "Fatma Reis",
+            "description": "Yirmi yıldır bu sularda dümen sallayan, vapurun rotasından ve seyir defterinden sorumlu olan, köşkünden dışarıyı izleyen tecrübeli kadın kaptan.",
+            "icon": "sailing"
+          },
+          {
+            "id": "s2",
+            "name": "Muzaffer",
+            "description": "Alt katlardaki kilitli alanların şifrelerini bilen, elleri halat çekmekten nasırlaşmış, öfkeli biletçi ve güverte görevlisi.",
+            "icon": "person"
+          },
+          {
+            "id": "s3",
+            "name": "İrem Şen",
+            "description": "Şık pardösüsüyle dikkat çeken, sis yüzünden deniz yolculuğundan çekinen, sürekli saatiyle oynayan telaşlı iş kadını yolcu.",
+            "icon": "account-circle"
+          }
+        ],
+        "weapons": [
+          {
+            "id": "w1",
+            "name": "Duman Bombası",
+            "description": "Acil durumlarda yeri belli etmek için kullanılan, kapalı alanda patlatıldığında nefesi anında kesen endüstriyel kırmızı duman tüpü.",
+            "icon": "cloud"
+          },
+          {
+            "id": "w2",
+            "name": "Gemi Halatı",
+            "description": "Gemileri iskeleye bağlamak için kullanılan, insan boynuna dolandığında derin ve pürüzlü yanık izleri bırakan kalın naylon örgü halat.",
+            "icon": "link"
+          },
+          {
+            "id": "w3",
+            "name": "Deniz Feneri",
+            "description": "Sinyalizasyon için kullanılan, kafa tasına indirildiğinde ağır ve küt bir hasar yaratacak olan masif metal el feneri.",
+            "icon": "light-mode"
+          }
+        ],
+        "locations": [
+          {
+            "id": "l1",
+            "name": "Üst Güverte",
+            "description": "Yolcuların çay içip martılara simit attığı, denizin soğuk rüzgarlarını doğrudan alan geniş ve açık hava seyir terası.",
+            "icon": "waves"
+          },
+          {
+            "id": "l2",
+            "name": "Motor Dairesi",
+            "description": "Yalnızca şifreli çelik bir kapıyla inilebilen, devasa pistonların sağır edici bir gürültüyle çalıştığı yağ kokulu kapalı makine dairesi.",
+            "icon": "engineering"
+          },
+          {
+            "id": "l3",
+            "name": "İskele",
+            "description": "Turnikelerin ve bekleme salonlarının bulunduğu, karayla denizin birleştiği yolcu kabul ve bindirme alanı.",
+            "icon": "directions-boat"
+          }
+        ],
+        "clues": [
+          {
+            "id": "c1",
+            "text": "Kurbanın boynundaki derin ve kalın sürtünme izleri, endüstriyel bir duman zehirlenmesini veya ağır metal darbesini değil; gemileri iskeleye sabitleyen son derece kalın ve pürüzlü bir sentetik kordon baskısını işaret ediyordu.",
+            "type": "evidence",
+            "isBonus": false
+          },
+          {
+            "id": "c2",
+            "text": "Güvenlik kameraları, mücadelenin yolcuların doluştuğu iskelede veya deniz manzaralı açık teraslarda değil; yalnızca yetkili personelin girebildiği, sağır edici motor sesleriyle dolu alt katmanlarda yaşandığını saptadı.",
+            "type": "evidence",
+            "isBonus": false
+          },
+          {
+            "id": "c3",
+            "text": "Kaptanın seyir defteri ve köprü üstü güvenlik logları, yılların emektar kaptanının yolculuk boyunca dümen başından bir saniye bile ayrılmadığını kesin olarak teyit etti.",
+            "type": "witness",
+            "isBonus": false
+          },
+          {
+            "id": "c4",
+            "text": "İş seyahati yapan yolcu İrem'in, turnikelerden geçtikten sonra deniz tutması endişesiyle vapura hiç binmeyip iskeledeki bekleme salonunda kaldığı güvenlik kayıtlarıyla ispatlandı.",
+            "type": "witness",
+            "isBonus": false
+          },
+          {
+            "id": "c5",
+            "text": "Alt kattaki gürültülü teknik odaya inen çelik kapının elektronik kilidini açan dijital kod, yalnızca o sabah güvertede bilet kesen ve yolcuları yönlendiren o personele zimmetliydi.",
+            "type": "direct",
+            "isBonus": true
+          },
+          {
+            "id": "c6",
+            "text": "Makine dairesinin yağlı zemininde kopmuş olarak bulunan kalın naylon lifleri ve biletçi Muzaffer'in avuç içlerindeki taze kenevir yanıkları, karanlık gerçeği su yüzüne çıkardı.",
+            "type": "evidence",
+            "isBonus": true
+          }
+        ],
+        "solvabilityMeta": {
+          "freeEliminations": [
+            "l1",
+            "l3",
+            "s1",
+            "s3",
+            "w1",
+            "w3"
+          ],
+          "bonusEliminations": []
+        },
+        "solution": {
+          "suspectId": "s2",
+          "weaponId": "w2",
+          "locationId": "l2"
+        }
+      }
+    },
+    {
+      "caseNumber": 5,
+      "title": "Sultanahmet'te Turist Tuzağı",
+      "region": "İstanbul",
+      "source": "artifacts/dedektif/data/puzzles.ts",
+      "format": "standart",
+      "analysis": "Sultanahmet'te turist gasp değil, Yerebatan Sarnıcı'nda uyuşturucu şişeyle hedefli suikasttır; sokak satıcısı ve çatıdaki fotoğrafçı elenir, resmi rehber suçlu kalır. Çözüm: Ayşen Demir + Uyuşturucu Şişe + Yerebatan Sarnıcı.",
+      "puzzle": {
+        "id": "sultanahmette-turist-tuzagi",
+        "title": "Sultanahmet'te Turist Tuzağı",
+        "difficulty": "caylak",
+        "dayIndex": 26,
+        "story": "Tarihi yarımadanın binlerce yıllık sırlarını barındıran taş sokaklarında, yalnız bir turist ağlayan sütunların dibinde bilincini kaybetmiş halde bulundu. Değerli eşyaları yerindeydi; bu sıradan bir gasp değil, hedefe yönelik ve son derece sinsi bir hamleydi.",
+        "suspects": [
+          {
+            "id": "s1",
+            "name": "Rüzgar",
+            "description": "Bölgedeki tüm çıkmaz sokakları bilen, anıtların etrafında tezgah açan ancak turistlerle arası bozuk olan genç ve asabi sokak satıcısı.",
+            "icon": "person"
+          },
+          {
+            "id": "s2",
+            "name": "Ayşen Demir",
+            "description": "Tarihi yapıların dehlizlerine özel erişim izni olan, güler yüzlü maskesinin ardında profesyonel bir soğukkanlılık taşıyan resmi tur rehberi.",
+            "icon": "support-agent"
+          },
+          {
+            "id": "s3",
+            "name": "Haluk Çiçek",
+            "description": "Kalabalığa karışıp uzaktan kurbanlarını izleyen, tarihi binaların çatılarından yüksek çözünürlüklü kareler yakalayan bağımsız fotoğrafçı.",
+            "icon": "face"
+          }
+        ],
+        "weapons": [
+          {
+            "id": "w1",
+            "name": "Biber Gazı",
+            "description": "Turistlerin el çantalarında taşıdığı, sıkıldığında gözleri ve solunum yollarını anında kör eden basınçlı savunma gazı.",
+            "icon": "air"
+          },
+          {
+            "id": "w2",
+            "name": "Ağır Demir Parçası",
+            "description": "Yüz yıllardır toprak altında yatan, kafaya vurulduğunda kaba ve ezici bir yara açacak olan paslı ve ağır tarihi demir cıvata.",
+            "icon": "hardware"
+          },
+          {
+            "id": "w3",
+            "name": "Uyuşturucu Şişe",
+            "description": "İçeceklere karıştırıldığında hiçbir tat bırakmayan, ancak saniyeler içinde sinir sistemini donduran güçlü bir medikal uyuşturucu sıvısı.",
+            "icon": "local-bar"
+          }
+        ],
+        "locations": [
+          {
+            "id": "l1",
+            "name": "Hipodrom Meydanı",
+            "description": "Antik dikilitaşların çevrelediği, binlerce turistin her saniye fotoğraf çektiği, güneş altında kavrulan geniş ve açık meydan.",
+            "icon": "location-city"
+          },
+          {
+            "id": "l2",
+            "name": "Yerebatan Sarnıcı",
+            "description": "Yerin metrelerce altında, devasa sütunların arasından suların damladığı, yankılı, loş ve son derece klostrofobik tarihi sarnıç.",
+            "icon": "water"
+          },
+          {
+            "id": "l3",
+            "name": "Eski Bedesten",
+            "description": "Yüzlerce dükkanın labirent gibi iç içe geçtiği, baharat kokularının ve kumaşların birbirine karıştığı kapalı tarihi pazar.",
+            "icon": "storefront"
+          }
+        ],
+        "clues": [
+          {
+            "id": "c1",
+            "text": "Hastaneden alınan kan tahlillerinde biber gazı veya künt bir demir travması bulgusuna rastlanmadı; kurban doğrudan sıvısına karıştırılan, kokusuz ve anında felç eden bir medikal çözeltiyle etkisiz hale getirilmişti.",
+            "type": "evidence",
+            "isBonus": false
+          },
+          {
+            "id": "c2",
+            "text": "Polis köpekleri ve olay yeri inceleme, olayın açık havadaki anıtların etrafında veya tarihi bedestenin vitrinli geçitlerinde değil; doğrudan yerin altındaki o rutubetli, loş ve ıslak taş yapının içinde gerçekleştiğini belirledi.",
+            "type": "evidence",
+            "isBonus": false
+          },
+          {
+            "id": "c3",
+            "text": "Hipodrom meydanını gören MOBESE kameraları, genç sokak satıcısının tüm gün boyunca anıtların etrafındaki arabasından hiç ayrılmadığını mühürlü kayıtlarla doğruladı.",
+            "type": "witness",
+            "isBonus": false
+          },
+          {
+            "id": "c4",
+            "text": "Bağımsız fotoğrafçının olay saatlerinde Eski Bedesten'in çatısında panoramik çekimler yaptığı, makinesindeki silinemez RAW formatlı zaman damgalarıyla şüpheye yer bırakmayacak şekilde kanıtlandı.",
+            "type": "witness",
+            "isBonus": false
+          },
+          {
+            "id": "c5",
+            "text": "Rehberlik acentesinin rotasına göre, turistin o kritik saatlerde sadece yetkili tur rehberiyle birlikte yeraltı yapılarını gezmek üzere bilet kullandığı ve yalnız olmadığı tespit edildi.",
+            "type": "direct",
+            "isBonus": true
+          },
+          {
+            "id": "c6",
+            "text": "Sarnıcın buz gibi sularının hemen kenarında, loş ışıkta parlayan o küçük şüpheli şişenin üzerinde, turu yönlendiren profesyonel rehberin işaret parmağına ait taze bir ter izi bulundu.",
+            "type": "forensic",
+            "isBonus": true
+          }
+        ],
+        "solvabilityMeta": {
+          "freeEliminations": [
+            "l1",
+            "l3",
+            "s1",
+            "s3",
+            "w1",
+            "w2"
+          ],
+          "bonusEliminations": []
+        },
+        "solution": {
+          "suspectId": "s2",
+          "weaponId": "w3",
+          "locationId": "l2"
+        }
+      }
+    },
+    {
+      "caseNumber": 6,
+      "title": "Büyükada'da Kan İzleri",
+      "region": "Büyükada, Ahşap Köşk",
+      "source": "artifacts/dedektif/data/puzzles_database.json (pack_caylik)",
+      "format": "premium",
+      "analysis": "Büyükada köşkünde kapalı alan cinayeti; çapraz eleme ile Tarık (vazo/kütüphane) ve Sabri (yastık/yatak) ayrılır — asıl katil emeklilik intikamı için çayı zehirleyen Eski Sekreteri Nilgün. Çözüm: Nilgün + Zehirli Çay + Mutfak.",
+      "puzzle": {
+        "puzzleId": "yeni_c01",
+        "title": "Büyükada'da Kan İzleri",
+        "subtitle": "Büyükada, Ahşap Köşk",
+        "difficulty": 1,
+        "difficultyLabel": "Çaylak",
+        "stars": "★★☆☆☆",
+        "gridSize": "3x3",
+        "timeLimit": 540,
+        "story": "Büyükada'nın en yüksek tepesine kurulan ve çam ağaçlarıyla çevrili asırlık ahşap köşkte, kararlarıyla tanınan emekli bir hakim ölü bulundu. Adaya araç girişi yasaktı; fırtınalı bu gece köşkten kimse çıkmamıştı. Katil, gıcırdayan tahtaların üzerinde aramızda dolaşıyor.",
+        "atmosphere": "Deniz kokusu. Tahta veranda. Faytonun uzak sesi. Ve köşkün içinden çıkmayan üç kişi.",
+        "suspects": [
+          {
+            "id": "s1",
+            "name": "Damadı Tarık",
+            "icon": "noun-cem-bey-avatar.png",
+            "description": "Hakimin kızıyla evli olan, ancak miras ve arazi anlaşmazlıkları yüzünden mahkemelerde kaybetmiş, köşke zorunlu misafir gelmiş soğukkanlı damat.",
+            "detail": "42 yaşında, hukuk eğitimi almış, sürekli plan yapan zeki bir figür.",
+            "parmakIziDeseni": "fp_double_loop"
+          },
+          {
+            "id": "s2",
+            "name": "Eski Sekreteri Nilgün",
+            "icon": "noun-hizmetci-hacer-avatar.png",
+            "description": "Maktule 20 yıl boyunca sadakatle hizmet etmiş ancak emekliliğinde bir kuruş bile tazminat alamamış, botanik bilgisi yüksek eski sekreter.",
+            "detail": "58 yaşında, kırık kalpli, eski bir eczane kalfası, duygularını iyi gizler.",
+            "parmakIziDeseni": "fp_central_pocket"
+          },
+          {
+            "id": "s3",
+            "name": "Komşu Avukat Sabri",
+            "icon": "noun-ortak-sabri-bey-avatar.png",
+            "description": "Hakimle eski dava husumetleri yüzünden yıllardır sürtüşen, o fırtınalı gece adada mahsur kaldığı için köşkte kalmak zorunda olan komşu avukat.",
+            "detail": "65 yaşında, inatçı, kendi doğrularından asla taviz vermeyen sert bir adam.",
+            "parmakIziDeseni": "fp_lateral_pocket"
+          }
+        ],
+        "weapons": [
+          {
+            "id": "w1",
+            "name": "Zehirli Çay",
+            "icon": "🫖",
+            "description": "Gece içilen bitkisel çaya ustaca karıştırılmış, doğada nadir bulunan ve kalbi yavaşça durduran botanik bir uyku otu ekstresi."
+          },
+          {
+            "id": "w2",
+            "name": "Antika Vazo",
+            "icon": "🏺",
+            "description": "Hakimin antika koleksiyonuna ait, kafaya indirildiğinde kafatasını paramparça edecek ağırlıkta, paha biçilemez devasa Osmanlı vazosu."
+          },
+          {
+            "id": "w3",
+            "name": "Yastık Boğması",
+            "icon": "🛏️",
+            "description": "Uyku sırasında yüz üstü bastırılarak kurbanın ciğerlerine giden havayı kesmek için kullanılan işlemeli, ağır köşk yastığı."
+          }
+        ],
+        "locations": [
+          {
+            "id": "l1",
+            "name": "Kütüphane",
+            "icon": "📚",
+            "description": "Zemin katta bulunan, tavana kadar uzanan kitaplarla dolu, antika eserlerin sergilendiği ve verandalı camlara sahip kütüphane odası."
+          },
+          {
+            "id": "l2",
+            "name": "Yatak Odası",
+            "icon": "🛏️",
+            "description": "Üst katta yer alan, fırtınalı denize bakan, kurbanın dinlenmek için çekildiği sessiz ve izole ana yatak odası."
+          },
+          {
+            "id": "l3",
+            "name": "Mutfak",
+            "icon": "🍳",
+            "description": "Zemin katta arka bahçeye açılan, köşk sakinlerine çay ve yemek hazırlanan, tezgahları şifalı otlarla dolu mutfak alanı."
+          }
+        ],
+        "solution_table": {
+          "açıklama": "Kesin çözüm — ızgara bu tabloyu doldurmalı",
+          "s1_tarik": {
+            "weapon": "w2_vazo",
+            "location": "l1_kutuphane"
+          },
+          "s2_nilgun": {
+            "weapon": "w1_cay",
+            "location": "l3_mutfak"
+          },
+          "s3_sabri": {
+            "weapon": "w3_yastik",
+            "location": "l2_yatak"
+          },
+          "katil": "s2_nilgun"
+        },
+        "clues": [
+          {
+            "id": "c1",
+            "type": "kanit",
+            "revealOrder": 1,
+            "isRevealed": true,
+            "pointCost": 0,
+            "title": "Adli Tıp Ön Raporu",
+            "text": "Adli Tıp raporuna göre, maktulün yüzündeki ağır morarmalar ve ciğerlerindeki havasızlık, kimyasal bir toksini veya sert bir porselen darbesini değil; uyku esnasında yumuşak ama ölümcül bir baskıyla nefesinin kesildiğini kanıtlıyordu.",
+            "grid_effect": "w1_cay eleniyor (silah zehir değil). w3_yastik + l2_yatak olası.",
+            "mechanicType": "text",
+            "deductionHint": "Yumuşak ve ölümcül baskı = Yastık. Yastık nerededir? → Yatak Odası."
+          },
+          {
+            "id": "c2",
+            "type": "tanik",
+            "revealOrder": 2,
+            "isRevealed": false,
+            "pointCost": 50,
+            "title": "Faytoncu Rıza'nın İfadesi",
+            "text": "Faytoncu Rıza'nın ifadesi netti: 'Sabahın köründe köşkün önünden geçerken, eski sekreterin alt kattaki mermer tezgahta çay tepsisini büyük bir telaşla yıkadığını bizzat gördüm.'",
+            "grid_effect": "Nilgün mutfaktaydı → s2_nilgun + l3_mutfak = ✓",
+            "mechanicType": "text",
+            "deductionHint": "Sekreter Nilgün + Mutfak + Çay Tepsisi. Sekreterin mekanı ve aracı belli oldu."
+          },
+          {
+            "id": "c3",
+            "type": "eleme",
+            "revealOrder": 3,
+            "isRevealed": false,
+            "pointCost": 50,
+            "title": "Tarık'ın Gece Kayıtları",
+            "text": "Köşkün dış güvenlik kameraları, Damat Tarık'ın gece boyunca zemin kattaki kitap dolu odanın verandasında sigara içtiğini ve üst kata giden merdivenlere hiç yaklaşmadığını mühürledi.",
+            "grid_effect": "s1_tarik + l2_yatak = ✗. Tarık yatak odasına girmedi.",
+            "mechanicType": "text",
+            "deductionHint": "Damat Tarık + Zemin Kat Kütüphanesi. Üst kata çıkmamış, yatak odasında değil."
+          },
+          {
+            "id": "c4",
+            "type": "parmak_izi",
+            "revealOrder": 4,
+            "isRevealed": false,
+            "pointCost": 50,
+            "title": "Vazo İzi",
+            "text": "Kütüphanede devrilmiş antika vazonun üzerinde taze parmak izi.",
+            "mechanicType": "parmak_izi",
+            "parmakIziVerisi": {
+              "aciklama": "Üç şüphelinin parmak izi kartını vazo iziyle eşleştir.",
+              "izler": [
+                {
+                  "izId": "iz1",
+                  "konum": "Vazo gövdesi",
+                  "eslesme": "s1",
+                  "ipucu": "Hukuk eğitimli, masa başı eli. Uzun ince parmak."
+                }
+              ],
+              "sonuc": "Vazoyu tutan: Tarık. (s1)",
+              "sahneGorseli": "fp_double_loop"
+            },
+            "grid_effect": "s1_tarik + w2_vazo = ✓. s2 ve s3 için w2 = ✗.",
+            "deductionHint": "Tarık vazoyu tuttu → w2_vazo + l1_kutuphane = Tarık'ın çifti."
+          },
+          {
+            "id": "c5",
+            "type": "adli",
+            "revealOrder": 5,
+            "isRevealed": false,
+            "pointCost": 50,
+            "title": "Çay Fincanı Analizi",
+            "text": "Mutfakta bulunan fincanın dibinde, doğada nadir bulunan bir alkaloit izi saptandı. Eski çalışanın geçmişteki eczane stajı, bu sinsi botaniği nereden bulduğunu ve nasıl hazırladığını açıklıyordu.",
+            "grid_effect": "w1_cay → s2_nilgun bağlantısı güçlendi. s2 + w1 = ✓ olası.",
+            "mechanicType": "text",
+            "deductionHint": "Eczane geçmişi olan sekreter Nilgün + Zehirli Çay."
+          },
+          {
+            "id": "c6",
+            "type": "dogrudan",
+            "revealOrder": 6,
+            "isRevealed": false,
+            "pointCost": 50,
+            "title": "Çözüm Zinciri",
+            "text": "Bilinen gerçekler: Tarık kütüphanedeydi (vazo izi) ve vazoyla ilgiliydi. Nilgün mutfaktaydı ve çay hazırladı. Sabri'nin konumu: yatak odası.",
+            "grid_effect": "s3_sabri + l2_yatak = ✓ → s1 ve s2 için l2 = ✗. s3 + w3_yastik = ✓ (tek kalan).",
+            "mechanicType": "text",
+            "deductionHint": "Tarık→vazo→kütüphane. Nilgün→çay→mutfak. Sabri→yastık→yatak odası. Katil kim?"
+          },
+          {
+            "id": "c7",
+            "type": "ses_kaydi",
+            "revealOrder": 7,
+            "isRevealed": false,
+            "pointCost": 50,
+            "title": "Nilgün'ün Ses Mesajı",
+            "text": "[Hakimin telefonunda okunmamış ses mesajı] Nilgün: '20 yıl verdim. Emeklilik hediyesi için bile aramadınız. Bu çay son ikramınız olsun.'",
+            "mechanicType": "ses_kaydi",
+            "sesMetni": "Ses sakin ve sert. 'Son ikramınız olsun' — bilinçli söylenmiş.",
+            "grid_effect": "Motif teyit: Nilgün çay yoluyla harekete geçti.",
+            "deductionHint": "'Son ikramınız' → zehirli çay → Nilgün katil."
+          },
+          {
+            "id": "c8",
+            "type": "gorsel_ipucu",
+            "revealOrder": 8,
+            "isRevealed": false,
+            "pointCost": 50,
+            "title": "Mutfak Tezgahı",
+            "text": "Mutfak tezgahında alkaloide özgü küçük şişe. Nilgün'ün el çantasıyla aynı marka — özel eczane ürünü.",
+            "mechanicType": "gorsel_ipucu",
+            "gorselAciklama": "Küçük cam şişe, el yazısı etiket: 'Uyku Otu Ekstresi.' Nilgün'ün çantasındaki eczane makbuzu — aynı ürün.",
+            "grid_effect": "Nilgün + w1_cay + l3_mutfak = ✓✓✓ Kesin.",
+            "deductionHint": "Şişe Nilgün'ün. Mutfakta. Çay. Çözüm tamam."
+          }
+        ],
+        "solution": {
+          "suspectId": "s2",
+          "weaponId": "w1",
+          "locationId": "l3"
+        },
+        "solutionNarrative": "Sekreter Nilgün, 20 yıllık emeğine karşılık hiçbir şey alamamasının öfkesiyle gece hakimin çayına o sinsi ilacı kattı. Hakim uyuyakaldı, ancak bir daha uyanmadı. Çapraz eleme ve kamera logları, sabriyi yatak odasında bırakırken, zehri hazırlayan eli kesin olarak Nilgün'e bağladı."
+      }
+    },
+    {
+      "caseNumber": 7,
+      "title": "Çarşı Hamamında Sessiz Ölüm",
+      "region": "Bursa, Tarihi Kapalı Çarşı Hamamı",
+      "source": "artifacts/dedektif/data/puzzles_database.json (pack_caylik)",
+      "format": "premium",
+      "analysis": "Bursa tarihi hamamında tekstil tüccarı göbek taşında bakır kovayla öldürülür; Fikri soyunma odasında, Nuri su deposunda elenir, zimmet skandalı olan Muhasebeci Dilara kalır. Çözüm: Dilara + Kaynar Su Kovası + Göbek Taşı.",
+      "puzzle": {
+        "puzzleId": "yeni_c02",
+        "title": "Çarşı Hamamında Sessiz Ölüm",
+        "subtitle": "Bursa, Tarihi Kapalı Çarşı Hamamı",
+        "difficulty": 1,
+        "difficultyLabel": "Çaylak",
+        "stars": "★★☆☆☆",
+        "gridSize": "3x3",
+        "timeLimit": 540,
+        "story": "Bursa'nın tarihi kapalı çarşısındaki 600 yıllık kubbeli hamamda, kurnalarından akan suyun sesi dehşet verici bir sessizlikle kesildi. Ünlü tekstil tüccarı, yoğun buharın gizlediği o mermer göbek taşının üzerinde cansız yatıyordu. Dışarıdan kimsenin girmediği bu sıcak cehennemde sadece üç nefes var.",
+        "atmosphere": "Buhar. Mermer soğukluğu. Kümbettin yankısı. Ve taşın üzerindeki bir ceset.",
+        "suspects": [
+          {
+            "id": "s1",
+            "name": "Kumaş Tüccarı Fikri Bey",
+            "icon": "noun-tuccar-vehbi-avatar.png",
+            "description": "Maktulün ipek pazarındaki en büyük rakibi olan, rekabeti hamam duvarlarına kadar taşıyan, kilolu ve nefes darlığı çeken hırslı tüccar.",
+            "detail": "55 yaşında, kalın ve kısa parmaklı, geniş göbekli, sıcağa dayanamayan bir yapısı var."
+          },
+          {
+            "id": "s2",
+            "name": "Hamamcı Nuri Usta",
+            "icon": "noun-vahap-amca-avatar.png",
+            "description": "Maktulün fahiş kira artışlarına itiraz eden, yarım asırdır bu hamamın her taşını ezbere bilen, güçlü ellere sahip yaşlı işletmeci.",
+            "detail": "72 yaşında, devasa ve nasırlı ellere sahip, gözleri zayıf ama kolları kuvvetli."
+          },
+          {
+            "id": "s3",
+            "name": "Muhasebeci Dilara",
+            "icon": "noun-nazik-hanim-avatar.png",
+            "description": "Maktulün şirket hesaplarında kendi zimmetine geçirdiği devasa açığı saklamaya çalışan, dışarıdan sakin görünen zarif muhasebeci kadın.",
+            "detail": "38 yaşında, ince ve küçük ellere sahip, sessiz ama sırlarla dolu."
+          }
+        ],
+        "weapons": [
+          {
+            "id": "w1",
+            "name": "Kaynar Su Kovası",
+            "icon": "♨️",
+            "description": "Sıcak suları kurnalardan taşımak için kullanılan, kafaya indiğinde silindirik bir çukur bırakan ağır, kulplu bakır hamam kovası."
+          },
+          {
+            "id": "w2",
+            "name": "Sabunluk Taşı",
+            "icon": "🪨",
+            "description": "Eski mermer kurnalardan kopmuş, düz bir satıha sahip, ağır ve keskin kenarlı ölümcül sabunluk taşı."
+          },
+          {
+            "id": "w3",
+            "name": "Kese Bezi Boğması",
+            "icon": "🧤",
+            "description": "Hamamcıların kullandığı, ıslatılıp bir boyuna dolandığında asla kopmayan ve boğucu bir güç gerektiren özel dokuma ipek kese bezi."
+          }
+        ],
+        "locations": [
+          {
+            "id": "l1",
+            "name": "Göbek Taşı",
+            "icon": "🔥",
+            "description": "Hamamın tam merkezinde yer alan, alttan ısıtmalı, yoğun buharın ve sıcaklığın en yüksek olduğu devasa mermer platform."
+          },
+          {
+            "id": "l2",
+            "name": "Soyunma Odası",
+            "icon": "🚪",
+            "description": "Girişte yer alan, ahşap bölmelerden oluşan, hamamın sıcaklığından uzak, kuru ve serin soyunma ve dinlenme alanı."
+          },
+          {
+            "id": "l3",
+            "name": "Su Deposu Bölümü",
+            "icon": "💧",
+            "description": "Hamamın en karanlık arka bölgesinde bulunan, kaynar suların depolandığı ve teknik boruların geçtiği loş alan."
+          }
+        ],
+        "solution_table": {
+          "s1_fikri": {
+            "weapon": "w2_sabunluk",
+            "location": "l2_soyunma"
+          },
+          "s2_nuri": {
+            "weapon": "w3_kese",
+            "location": "l3_depo"
+          },
+          "s3_dilara": {
+            "weapon": "w1_kova",
+            "location": "l1_gobek"
+          },
+          "katil": "s3_dilara"
+        },
+        "clues": [
+          {
+            "id": "c1",
+            "type": "kanit",
+            "revealOrder": 1,
+            "isRevealed": true,
+            "pointCost": 0,
+            "title": "Hamam Doktoru Raporu",
+            "text": "Adli muayene; kafatasına inen darbenin düz bir mermer kenarına veya boğucu bir keseye değil, tamamen silindirik, kavisli ve kütlece çok ağır bir metale ait olduğunu kanıtladı.",
+            "grid_effect": "l1_gobek taşı ölüm yeri. Silindirik darbe → w1_kova olası. w2_sabunluk (düz) eleniyor bu mekân için.",
+            "mechanicType": "text",
+            "deductionHint": "Silindirik kavisli metal = Bakır Kova. Cinayet aleti bulundu."
+          },
+          {
+            "id": "c2",
+            "type": "tanik",
+            "revealOrder": 2,
+            "isRevealed": false,
+            "pointCost": 50,
+            "title": "Berber Komşu İfadesi",
+            "text": "Berber esnafının ifadesine göre; rakip tüccar Fikri Bey, sıcaktan bunaldığı için tüm vaktini sadece tahta bölmeli kuru alanda geçirmiş, buharlı yıkanma merkezine adım dahi atmamıştı.",
+            "grid_effect": "s1_fikri + l2_soyunma = ✓. s1 için l1 ve l3 = ✗.",
+            "mechanicType": "text",
+            "deductionHint": "Fikri Bey + Kuru Soyunma Odası. O sıcak göbek taşına hiç yaklaşmadı."
+          },
+          {
+            "id": "c3",
+            "type": "adli",
+            "revealOrder": 3,
+            "isRevealed": false,
+            "pointCost": 50,
+            "title": "Kova İzi Analizi",
+            "text": "Bakır kovada darbe izinin şekli: küçük el, ince parmak. Nuri Usta'nın elleri büyük ve nasırlı — bu iz ona ait olamaz. Fikri Bey'in elleri şişman ve kısa.",
+            "grid_effect": "s1_fikri + w1_kova = ✗. s2_nuri + w1_kova = ✗. → s3_dilara + w1_kova = ✓.",
+            "mechanicType": "gorsel_ipucu",
+            "gorselAciklama": "Kova sapındaki iz ölçümü: parmak kalınlığı 12mm, uzunluk 68mm. Dilara'nın ölçümleriyle eşleşiyor.",
+            "deductionHint": "Küçük el → Dilara. Dilara + kova + göbek taşı."
+          },
+          {
+            "id": "c4",
+            "type": "eleme",
+            "revealOrder": 4,
+            "isRevealed": false,
+            "pointCost": 50,
+            "title": "Nuri Usta'nın Yeri",
+            "text": "Hamam ustasının olay saatinde sıcak su depolarının bulunduğu arka loş alanda sızıntı tamiratı yaptığı, borulardaki taze ve hala sıcak lehim izleriyle ispatlandı.",
+            "grid_effect": "s2_nuri + l3_depo = ✓. s2 için l1 ve l2 = ✗.",
+            "mechanicType": "text",
+            "deductionHint": "Nuri Usta + Su Deposu. Göbek taşı bölgesinde o da yoktu."
+          },
+          {
+            "id": "c5",
+            "type": "dogrudan",
+            "revealOrder": 5,
+            "isRevealed": false,
+            "pointCost": 50,
+            "title": "Muhasebe Defteri",
+            "text": "Dilara'nın çantasında tamamlanmış zimmet raporu: '800.000 TL — maktulün imzasıyla sahte transfer.' Rapor bir savcıya e-postalanmak üzereydi — fakat gönderilmemişti.",
+            "grid_effect": "Motif: Dilara zimmeti açıklayacaktı — maktul öğrendi ve susturmak istedi mi, yoksa Dilara mı önce harekete geçti?",
+            "mechanicType": "gorsel_ipucu",
+            "gorselAciklama": "Taslak e-posta: 'Savcı X'e gönder'. Tarih: bugün. Gönderilmemiş.",
+            "deductionHint": "Dilara raporu göndermeden önce maktul onu tehdit mi etti?"
+          },
+          {
+            "id": "c6",
+            "type": "ses_kaydi",
+            "revealOrder": 6,
+            "isRevealed": false,
+            "pointCost": 50,
+            "title": "Hamam İçinden Ses",
+            "text": "[Akustik ses yansıması — hamam kubbesinin ses iletimi] Maktul: 'O defteri bana ver, yoksa seni bitiririm.' Dilara: 'Sizi bitirmeden önce sizi bitiremedim.'",
+            "mechanicType": "ses_kaydi",
+            "sesMetni": "Dilara'nın sesi titremiyor. 'Sizi bitirmeden önce' — garip kelime sırası.",
+            "grid_effect": "Dilara, maktulün tehdidine yanıt verdi — anlık karar.",
+            "deductionHint": "Maktul Dilara'yı tehdit etti. Dilara harekete geçti."
+          },
+          {
+            "id": "c7",
+            "type": "parmak_izi",
+            "revealOrder": 7,
+            "isRevealed": false,
+            "pointCost": 50,
+            "title": "Sabunluk Köşesi İzi",
+            "text": "Soyunma odası sabunluğunun kırık parçasında iz — bu parça kütüphanede değil, soyunma odasında.",
+            "mechanicType": "parmak_izi",
+            "parmakIziVerisi": {
+              "aciklama": "Sabunluk parçasındaki izi üç şüpheliyle eşleştir.",
+              "izler": [
+                {
+                  "izId": "iz1",
+                  "konum": "Sabunluk kırık kenarı",
+                  "eslesme": "s1",
+                  "ipucu": "Şişman parmak, bastırma izi belirgin."
+                }
+              ],
+              "sonuc": "Sabunluk parçasını tutan: Fikri Bey. (s1)"
+            },
+            "grid_effect": "s1_fikri + w2_sabunluk = ✓. s2 ve s3 için w2 = ✗.",
+            "deductionHint": "Fikri sabunluğu tuttu → soyunma odası uyuşuyor."
+          },
+          {
+            "id": "c8",
+            "type": "adli",
+            "revealOrder": 8,
+            "isRevealed": false,
+            "pointCost": 50,
+            "title": "Kese Bezi",
+            "text": "Depo bölümünde bulunan kese bezi üzerinde lif analizi: pamuk ve ipek karışımı — özel üretim. Nuri Usta'nın depo envanterinde bu kese bezi kayıtlı.",
+            "grid_effect": "s2_nuri + w3_kese = ✓. Tüm silahlar şüphelilere dağıldı: Fikri→sabunluk, Dilara→kova, Nuri→kese.",
+            "mechanicType": "text",
+            "deductionHint": "Nuri kese beziyle + depo. Ama o mekânda maktul yoktu. Katil: göbek taşındaki Dilara."
+          }
+        ],
+        "solution": {
+          "suspectId": "s3",
+          "weaponId": "w1",
+          "locationId": "l1"
+        },
+        "solutionNarrative": "Muhasebeci Dilara, milyonluk zimmetinin ifşa edileceğini anladığında, maktulü o yoğun buharın ortasında ağır bir bakır su kovasıyla susturdu. Tüm şüphelilerin bulunduğu konumlar netleştiğinde, göbek taşındaki silindirik izin tek bir sahibi kalmıştı."
+      }
+    },
+    {
+      "caseNumber": 8,
+      "title": "Kuyumcunun Altın Sırrı",
+      "region": "İzmir, Kemeraltı Çarşısı",
+      "source": "artifacts/dedektif/data/puzzles_database.json (pack_caylik)",
+      "format": "premium",
+      "analysis": "Kemeraltı kuyumcusunda hırsızlık değil intikam; kare pirinç göçüğü terazi kefesini, vitrindeki çırak Ferdi'yi işaret eder. Çözüm: Ferdi + Kuyumcu Terazisi + Vitrin Önü.",
+      "puzzle": {
+        "puzzleId": "yeni_c03",
+        "title": "Kuyumcunun Altın Sırrı",
+        "subtitle": "İzmir, Kemeraltı Çarşısı",
+        "difficulty": 1,
+        "difficultyLabel": "Çaylak",
+        "stars": "★★☆☆☆",
+        "gridSize": "3x3",
+        "timeLimit": 540,
+        "story": "Kemeraltı'nın altın sarısı vitrinlerinin ardında, kapıları içeriden çoklu kilitlerle sürgülenmiş asırlık kuyumcu dükkanında usta ölü bulundu. Kasadaki milyonlarca liralık altına dokunulmamıştı. Bu bir hırsızlık değil, yılların biriktirdiği saf bir öfkenin patlamasıydı.",
+        "atmosphere": "Altın kokusu. Cam vitrinler. Çarşının sabah gürültüsü. Ve kilitli bir dükkânın içinde bir ceset.",
+        "suspects": [
+          {
+            "id": "s1",
+            "name": "Çırak Ferdi",
+            "icon": "noun-cirak-selim-avatar.png",
+            "description": "10 yıldır aynı dükkanda köle gibi çalışan, kendisine söz verilen ortaklık hissesinin verilmediğini o gece öğrenen bıkkın çırak.",
+            "detail": "28 yaşında, kuyumcu aletlerine ve tartılara eli çok yatkın, sabrının sonuna gelmiş."
+          },
+          {
+            "id": "s2",
+            "name": "Rakip Kuyumcu Zeynep",
+            "icon": "noun-zeynep-hanim-avatar.png",
+            "description": "Maktulün pazar payını çalan, açık bir fiyat savaşına girdiği ve o gece dükkana gizli hesapları incelemeye gelen hırslı rakip kuyumcu.",
+            "detail": "45 yaşında, soğukkanlı, iş dünyasında acımasız."
+          },
+          {
+            "id": "s3",
+            "name": "Vergi Müfettişi Canan",
+            "icon": "noun-semiha-hanim-avatar.png",
+            "description": "Önceki gün dükkanda vergi denetimi yapan, maktulden tehdit aldığı için gergin olan ve sabah raporunu teslim edecek olan resmi müfettiş.",
+            "detail": "40 yaşında, kurallara bağlı, laboratuvar ve asit testlerine aşina."
+          }
+        ],
+        "weapons": [
+          {
+            "id": "w1",
+            "name": "Kuyumcu Terazisi",
+            "icon": "⚖️",
+            "description": "Hassas altın tartımlarında kullanılan, saf pirinçten yapılmış, kafaya vurulduğunda kare şeklinde ölümcül bir iz bırakan ağır kefe."
+          },
+          {
+            "id": "w2",
+            "name": "Asit Solüsyonu",
+            "icon": "⚗️",
+            "description": "Altının saflığını ölçmek için kullanılan, deriyle temas ettiğinde saniyeler içinde kemiğe kadar eriten yoğun hidroklorik asit karışımı."
+          },
+          {
+            "id": "w3",
+            "name": "Mücevher Teli",
+            "icon": "🪡",
+            "description": "Kolyelere şekil vermek için kullanılan, boğaza dolandığında keskinliğiyle şah damarını anında kesebilen kalın gümüş mücevher teli."
+          }
+        ],
+        "locations": [
+          {
+            "id": "l1",
+            "name": "Kasa Odası",
+            "icon": "🔒",
+            "description": "Dükkânın arka tarafında yer alan, kalın çelik kapılı, içerisi altın külçeleriyle ve hesap defterleriyle dolu kilitli kasa odası."
+          },
+          {
+            "id": "l2",
+            "name": "Vitrin Önü",
+            "icon": "🪟",
+            "description": "Dükkânın sokağa bakan, camları parmaklıklarla korunan, altın takıların sergilendiği ve terazinin bulunduğu ön müşteri alanı."
+          },
+          {
+            "id": "l3",
+            "name": "İmalat Atölyesi",
+            "icon": "🔨",
+            "description": "Dükkânın dip köşesinde yer alan, tezgahları asit şişeleri, tel makasları ve büyüteçlerle dolu imalat ve tamir atölyesi."
+          }
+        ],
+        "solution_table": {
+          "s1_ferdi": {
+            "weapon": "w1_terazi",
+            "location": "l2_vitrin"
+          },
+          "s2_zeynep": {
+            "weapon": "w3_tel",
+            "location": "l1_kasa"
+          },
+          "s3_canan": {
+            "weapon": "w2_asit",
+            "location": "l3_atolye"
+          },
+          "katil": "s1_ferdi"
+        },
+        "clues": [
+          {
+            "id": "c1",
+            "type": "kanit",
+            "revealOrder": 1,
+            "isRevealed": true,
+            "pointCost": 0,
+            "title": "Kriminal Raporu",
+            "text": "Olay yeri uzmanları, maktulün boynunda tel boğması veya teninde kimyasal bir yanık bulamadı. Ancak kafatasındaki kare biçimli, küt ve ağır pirinç göçüğü, cinayet aletinin ne olduğunu haykırıyordu.",
+            "grid_effect": "l2_vitrin ölüm yeri. Kare metal darbe → w1_terazi (kefe kare). w2 ve w3 eleniyor bu mekân için.",
+            "mechanicType": "text",
+            "deductionHint": "Kare pirinç göçük = Hassas terazi kefesi. Atölye aletleri elendi."
+          },
+          {
+            "id": "c2",
+            "type": "timeline",
+            "revealOrder": 2,
+            "isRevealed": false,
+            "pointCost": 50,
+            "title": "Gece Giriş Çizelgesi",
+            "text": "Dün gece dükkân anahtarı hareketleri.",
+            "mechanicType": "timeline_sort",
+            "timelineVerisi": {
+              "aciklama": "Gece boyunca olayları doğru sıraya diz.",
+              "olaylar": [
+                {
+                  "id": "t1",
+                  "metin": "22:00 — Canan denetim için son kez atölyeye girdi",
+                  "dogruSira": 1
+                },
+                {
+                  "id": "t2",
+                  "metin": "22:30 — Canan çıktı, atölye anahtarını Ferdi'ye verdi",
+                  "dogruSira": 2
+                },
+                {
+                  "id": "t3",
+                  "metin": "23:00 — Zeynep kasa odasında maktulla tartıştı",
+                  "dogruSira": 3
+                },
+                {
+                  "id": "t4",
+                  "metin": "23:30 — Ferdi vitrinde çalışıyordu",
+                  "dogruSira": 4
+                },
+                {
+                  "id": "t5",
+                  "metin": "00:15 — Maktul vitrinde hareketsiz bulundu",
+                  "dogruSira": 5
+                }
+              ],
+              "sonuc": "Ferdi 23:30'da vitrindeydi. Maktul 00:15'te orada bulundu."
+            },
+            "grid_effect": "s1_ferdi + l2_vitrin = ✓ (zamansal örtüşme). s3_canan + l3_atolye = ✓.",
+            "deductionHint": "Ferdi vitrindeydi, Canan atölyedeydi. Zeynep kasa odasında."
+          },
+          {
+            "id": "c3",
+            "type": "parmak_izi",
+            "revealOrder": 3,
+            "isRevealed": false,
+            "pointCost": 50,
+            "title": "Terazi Kefesi",
+            "text": "Kefede taze iz — altın tozu da var.",
+            "mechanicType": "parmak_izi",
+            "parmakIziVerisi": {
+              "aciklama": "Terazi kefesindeki izi eşleştir.",
+              "izler": [
+                {
+                  "izId": "iz1",
+                  "konum": "Kefe alt yüzey",
+                  "eslesme": "s1",
+                  "ipucu": "Çırak eli — defalarca bu aleti tutan, aşina parmak."
+                }
+              ],
+              "sonuc": "Terazi kefesini tutan: Ferdi. (s1)"
+            },
+            "grid_effect": "s1_ferdi + w1_terazi = ✓. s2 ve s3 için w1 = ✗.",
+            "deductionHint": "Ferdi + terazi + vitrin = tam çözüm."
+          },
+          {
+            "id": "c4",
+            "type": "eleme",
+            "revealOrder": 4,
+            "isRevealed": false,
+            "pointCost": 50,
+            "title": "Zeynep'in Kasa Odasındaki Sesi",
+            "text": "Çarşının çapraz güvenlik kameraları, Rakip Kuyumcu Zeynep'in gece boyunca sadece arka çelik kapılı dairede hesapları incelediğini ve sokağı gören ön tarafa hiç geçmediğini belgeledi.",
+            "grid_effect": "s2_zeynep + l1_kasa = ✓. s2 için l2 ve l3 = ✗.",
+            "mechanicType": "text",
+            "deductionHint": "Rakip Zeynep + Çelik Kasa Odası. Ön vitrinde değildi."
+          },
+          {
+            "id": "c5",
+            "type": "adli",
+            "revealOrder": 5,
+            "isRevealed": false,
+            "pointCost": 50,
+            "title": "Asit İzi",
+            "text": "İmalat bölümünde kapağı açık unutulan tehlikeli çözücü şişesinin etrafında, denetim için gelen müfettişin kullandığı özel lateks eldivenlerin erimiş siyah kalıntıları bulundu.",
+            "grid_effect": "s3_canan + w2_asit = ✓. s1 ve s2 için w2 = ✗.",
+            "mechanicType": "text",
+            "deductionHint": "Müfettiş Canan + Asit Şişesi + İmalat Atölyesi. Canan da elendi."
+          },
+          {
+            "id": "c6",
+            "type": "dogrudan",
+            "revealOrder": 6,
+            "isRevealed": false,
+            "pointCost": 50,
+            "title": "Ferdi'nin Ortaklık Belgesi",
+            "text": "Maktulün masasında Ferdi'ye gönderilmek üzere mektup: 'Ortaklık teklifini geri çekiyorum. İş arayabilirsin.' Dün hazırlanmış, henüz verilmemiş.",
+            "mechanicType": "gorsel_ipucu",
+            "gorselAciklama": "El yazısı mektup. 'Ortaklığı geri çekiyorum' satırının altı maktul tarafından çizilmiş.",
+            "grid_effect": "Ferdi için son damla: 10 yıl + reddedilen ortaklık.",
+            "deductionHint": "10 yıl + reddedilen ortaklık + vitrin + terazi = Ferdi katil."
+          },
+          {
+            "id": "c7",
+            "type": "ses_kaydi",
+            "revealOrder": 7,
+            "isRevealed": false,
+            "pointCost": 50,
+            "title": "Ferdi'nin Ses Mesajı",
+            "text": "[Ferdi'nin kendi telefonunda kayıtlı sesli not] 'Bugün söyleyeceğim. 10 yıl yetti. Ya ortaklık ya da başka bir yol bulacağım.'",
+            "mechanicType": "ses_kaydi",
+            "sesMetni": "Ses kararlı. 'Başka bir yol' — ne anlama geliyordu?",
+            "grid_effect": "Ferdi'nin niyetini kendi sözleriyle ortaya koyuyor.",
+            "deductionHint": "'Başka bir yol' — vitrin + terazi = o yol."
+          },
+          {
+            "id": "c8",
+            "type": "tanik",
+            "revealOrder": 8,
+            "isRevealed": false,
+            "pointCost": 50,
+            "title": "Çarşı Bekçisi",
+            "text": "\"Gece 23:45'te vitrin camında gölge gördüm — içeride iki kişi. Biri yüksek sesle konuştu, 10 yıl kelimesini duydum. Sonra sessizlik. Sonra yalnız bir gölge.\"",
+            "mechanicType": "tanik_yuzlesme",
+            "yuzlesmeDialogu": [
+              {
+                "soru": "İki kişi miydi kesinlikle?",
+                "cevap": "Evet, ikisini de gördüm.",
+                "yalan": false
+              },
+              {
+                "soru": "Yüksek sesle konuşan kimdi?",
+                "cevap": "Genç olanı — içerden tanımıyorum.",
+                "yalan": false
+              }
+            ],
+            "grid_effect": "Vitrin içinde Ferdi ve maktul — tartışma ve darbe.",
+            "deductionHint": "Vitrinde iki kişi, genç = Ferdi. Sonra yalnız kaldı."
+          }
+        ],
+        "solution": {
+          "suspectId": "s1",
+          "weaponId": "w1",
+          "locationId": "l2"
+        },
+        "solutionNarrative": "Çırak Ferdi, 10 yıllık emeğinin ardından ortaklığının iptal edildiğini o gece öğrendi. Ana vitrinde ustasıyla karşılaştı, tartıştı ve o ağır terazi kefesiyle son noktayı koydu. Şüphelilerin konumu ve adli deliller, Ferdi'yi tam da o vitrinin önünde köşeye sıkıştırdı."
+      }
+    },
+    {
+      "caseNumber": 9,
+      "title": "Moda Tasarımcısının Son Koleksiyonu",
+      "region": "İstanbul, Nişantaşı Atölyesi",
+      "source": "artifacts/dedektif/data/puzzles_database.json (pack_caylik)",
+      "format": "premium",
+      "analysis": "Nişantaşı atölyesinde Paris defilesi öncesi tasarımcı dikiş makasıyla öldürülür; Bülent ofiste, Sevgi boya odasında elenir, ismi afişten silinen Hande intikam alır. Çözüm: Hande + Dikiş Makası + Dikiş Atölyesi.",
+      "puzzle": {
+        "puzzleId": "yeni_c04",
+        "title": "Moda Tasarımcısının Son Koleksiyonu",
+        "subtitle": "İstanbul, Nişantaşı Atölyesi",
+        "difficulty": 1,
+        "difficultyLabel": "Çaylak",
+        "stars": "★★☆☆☆",
+        "gridSize": "3x3",
+        "timeLimit": 540,
+        "story": "Nişantaşı'nın ipek ve şampanya kokan lüks atölyesinde, Paris defilesine saatler kala baş tasarımcı kanlar içinde bulundu. Yılların emeği olan o muazzam koleksiyonun hakları için atölyede bulunan üç kişi, cansız mankenlerin bakışları altında birbirini suçluyor.",
+        "atmosphere": "Kumaş kokusu. Mankenler. Yarım kalmış dikiş. Ve koleksiyonun telif hakları.",
+        "suspects": [
+          {
+            "id": "s1",
+            "name": "Yardımcı Tasarımcı Hande",
+            "icon": "noun-ressam-leyla-avatar.png",
+            "description": "Koleksiyonun yarısını bizzat kendi elleriyle çizen ancak adının defile afişlerinden son anda silindiğini gören, sinir küpü yardımcı tasarımcı.",
+            "detail": "32 yaşında, yetenekli, dikiş makaslarını ve kumaşları kusursuz kullanan öfkeli biri."
+          },
+          {
+            "id": "s2",
+            "name": "Tekstil Yatırımcısı Bülent",
+            "icon": "noun-komsu-nevzat-avatar.png",
+            "description": "Tasarımlara milyonlarca lira gömen, telif haklarını üzerine almak için gece yarısı maktulle gizli sözleşme görüşmesine gelen sabırsız yatırımcı.",
+            "detail": "52 yaşında, modadan anlamayan, sadece paranın ve gücün dilinden konuşan iş adamı."
+          },
+          {
+            "id": "s3",
+            "name": "Eski Ortak Sevgi",
+            "icon": "noun-torun-nermin-avatar.png",
+            "description": "Beş yıl önce şirketten olaylı bir şekilde kovulan, kendi tasarımlarının çalındığını iddia edip atölyeyi basan ressam ruhlu eski ortak.",
+            "detail": "44 yaşında, boyalara ve kimyasallara bulanmış, sanatsal ama tehlikeli bir figür."
+          }
+        ],
+        "weapons": [
+          {
+            "id": "w1",
+            "name": "Dikiş Makası",
+            "icon": "✂️",
+            "description": "Kumaşları tek hamlede pürüzsüzce kesmek için özel bilenmiş, 30 santimlik, son derece ağır ve ölümcül çelik dikiş makası."
+          },
+          {
+            "id": "w2",
+            "name": "Manken Ayağı",
+            "icon": "🦵",
+            "description": "Kıyafet sergilemek için kullanılan, söküldüğünde devasa ve küt bir sopaya dönüşen demonte, ağır metal manken bacağı."
+          },
+          {
+            "id": "w3",
+            "name": "Zehirli Boya",
+            "icon": "🎨",
+            "description": "Özel kumaşları renklendirmek için kullanılan, kapalı alanda solunduğunda saniyeler içinde zehirleyen ağır endüstriyel solvent boyası."
+          }
+        ],
+        "locations": [
+          {
+            "id": "l1",
+            "name": "Dikiş Atölyesi",
+            "icon": "🧵",
+            "description": "Kumaş toplarının, iğnelerin ve dikiş makinelerinin bulunduğu, elbiselerin hayata geçirildiği dağınık ve geniş ana üretim alanı."
+          },
+          {
+            "id": "l2",
+            "name": "Ofis",
+            "icon": "🖊️",
+            "description": "Tasarım çizimlerinin, kilitli kasaların ve milyonluk sözleşmelerin bulunduğu, dışarıya tamamen yalıtılmış idari yönetim odası."
+          },
+          {
+            "id": "l3",
+            "name": "Boya Odası",
+            "icon": "🌈",
+            "description": "Havalandırması zayıf, her yerinde renkli kimyasalların ve fırçaların olduğu, tehlikeli gaz kokularının sindiği arka baskı odası."
+          }
+        ],
+        "solution_table": {
+          "s1_hande": {
+            "weapon": "w1_makas",
+            "location": "l1_atolye"
+          },
+          "s2_bulent": {
+            "weapon": "w2_manken",
+            "location": "l2_ofis"
+          },
+          "s3_sevgi": {
+            "weapon": "w3_boya",
+            "location": "l3_boya"
+          },
+          "katil": "s1_hande"
+        },
+        "clues": [
+          {
+            "id": "c1",
+            "type": "kanit",
+            "revealOrder": 1,
+            "isRevealed": true,
+            "pointCost": 0,
+            "title": "Adli Rapor",
+            "text": "Adli tıp raporu, maktulün vücudunda zehirli bir solvent yanığı veya küt bir manken uzvunun ezici travması olmadığını; cinayetin profesyonel kumaş biçiminde kullanılan keskin çelik aletlerle işlendiğini ortaya koydu.",
+            "grid_effect": "l1_atolye ölüm yeri. Keskin uzun alet → w1_makas. w2 ve w3 eleniyor bu mekân için.",
+            "mechanicType": "text",
+            "deductionHint": "Pürüzsüz çelik kesiği = Dikiş Makası. Bu alet nerede bulunur? → Dikiş Atölyesi."
+          },
+          {
+            "id": "c2",
+            "type": "tanik",
+            "revealOrder": 2,
+            "isRevealed": false,
+            "pointCost": 50,
+            "title": "Kapı Komşusu Güvenlik",
+            "text": "Gece bekçisinin vardiya logları, yatırımcı Bülent'in sözleşme görüşmeleri için idari ofis kapısını içeriden kilitlediğini ve o elektronik kapıdan saatlerce çıkmadığını gösteriyordu.",
+            "grid_effect": "s2_bulent + l2_ofis = ✓. s2 için l1 ve l3 = ✗.",
+            "mechanicType": "text",
+            "deductionHint": "Yatırımcı Bülent + Kilitli İdari Ofis. Atölye alanında değildi."
+          },
+          {
+            "id": "c3",
+            "type": "adli",
+            "revealOrder": 3,
+            "isRevealed": false,
+            "pointCost": 50,
+            "title": "Boya Odası Solvent İzi",
+            "text": "Eski ortak Sevgi'nin kıyafetlerinde ve tırnak diplerinde, yalnızca arka taraftaki özel üretim odasında bulunan son derece ağır ve baskın kimyasal boya kokusu tespit edildi.",
+            "grid_effect": "s3_sevgi + l3_boya = ✓. s3 için l1 ve l2 = ✗. s3 + w3_boya = ✓.",
+            "mechanicType": "text",
+            "deductionHint": "Eski Ortak Sevgi + Boya Odası. Boyalarla meşguldü."
+          },
+          {
+            "id": "c4",
+            "type": "parmak_izi",
+            "revealOrder": 4,
+            "isRevealed": false,
+            "pointCost": 50,
+            "title": "Manken Ayağı İzi",
+            "text": "Ofiste devrilmiş manken ayağında iz.",
+            "mechanicType": "parmak_izi",
+            "parmakIziVerisi": {
+              "aciklama": "Manken ayağındaki izi eşleştir.",
+              "izler": [
+                {
+                  "izId": "iz1",
+                  "konum": "Metal boru üst kısım",
+                  "eslesme": "s2",
+                  "ipucu": "İş adamı eli — güçlü kavrayış, yüzük izi var."
+                }
+              ],
+              "sonuc": "Manken ayağını tutan: Bülent. (s2)"
+            },
+            "grid_effect": "s2_bulent + w2_manken = ✓. s1 ve s3 için w2 = ✗.",
+            "deductionHint": "Bülent + manken + ofis. Hande için kalan: w1_makas + l1_atolye."
+          },
+          {
+            "id": "c5",
+            "type": "eleme",
+            "revealOrder": 5,
+            "isRevealed": false,
+            "pointCost": 50,
+            "title": "Hande'nin Konumu",
+            "text": "Hande dikiş atölyesinde gece boyunca çalışmış — dikiş makinesi log kaydı ve tamamlanmamış dikiş üzerinde dNA izi. Atölyeden çıkmamış.",
+            "grid_effect": "s1_hande + l1_atolye = ✓. s1 için l2 ve l3 = ✗.",
+            "mechanicType": "text",
+            "deductionHint": "Hande atölyedeydi. Hande + makas + atölye = tam eşleşme."
+          },
+          {
+            "id": "c6",
+            "type": "dogrudan",
+            "revealOrder": 6,
+            "isRevealed": false,
+            "pointCost": 50,
+            "title": "Paris Defilesi Programı",
+            "text": "Defilede tüm tasarımlar maktulün adına. Hande'nin adı hiçbir yerde geçmiyor. Hande bu programı o gece gördü — maktulün masasında açık duruyordu.",
+            "mechanicType": "gorsel_ipucu",
+            "gorselAciklama": "Paris defilesi katalogu. Her tasarımın altında: 'Maktulün ismi.' Hande'nin ismi sıfır.",
+            "grid_effect": "Hande'nin motifi netleşti: isim yokluğu + atölye + makas.",
+            "deductionHint": "İsim yokluğu + son gece + makas = harekete geçme nedeni."
+          },
+          {
+            "id": "c7",
+            "type": "ses_kaydi",
+            "revealOrder": 7,
+            "isRevealed": false,
+            "pointCost": 50,
+            "title": "Hande'nin Kendi Kaydı",
+            "text": "[Hande'nin telefon ses kaydı — kendi kendine düşünürken] 'Paris'te adım olmayacak. 3 yıl bu tasarımlar için. Makas elimde, karar da.'",
+            "mechanicType": "ses_kaydi",
+            "sesMetni": "Hande'nin sesi düz ve soğuk. 'Makas elimde' — somut.",
+            "grid_effect": "Hande kendi ağzından söylüyor: makas + karar.",
+            "deductionHint": "'Makas elimde, karar da' — itiraf niteliğinde."
+          },
+          {
+            "id": "c8",
+            "type": "tanik",
+            "revealOrder": 8,
+            "isRevealed": false,
+            "pointCost": 50,
+            "title": "Temizlikçi İfadesi",
+            "text": "\"Sabah atölyeye girdim. Hande Hanım camın önünde oturuyordu — hareketsiz. Elinde makas vardı. 'Bitti' dedi. Başka bir şey söylemedi.\"",
+            "mechanicType": "tanik_yuzlesme",
+            "yuzlesmeDialogu": [
+              {
+                "soru": "Hande elinde ne tutuyordu?",
+                "cevap": "Dikiş makası.",
+                "yalan": false
+              },
+              {
+                "soru": "'Bitti' ne demekti?",
+                "cevap": "Bilmiyorum. Ama gözleri boştu.",
+                "yalan": false
+              }
+            ],
+            "grid_effect": "Hande suç aletini elinde tutarak bulundu.",
+            "deductionHint": "Makas elinde, 'bitti' dedi — itiraf."
+          }
+        ],
+        "solution": {
+          "suspectId": "s1",
+          "weaponId": "w1",
+          "locationId": "l1"
+        },
+        "solutionNarrative": "Hande, Paris defilesi katalogunda kendi adının tamamen silindiğini görünce 3 yıllık öfkesi patladı. Elindeki o profesyonel dikiş makasını bu kez kumaş için değil, intikam için kullandı. Alibiler ve lokasyonlar, cinayeti onun ellerine teslim etti."
+      }
+    },
+    {
+      "caseNumber": 10,
+      "title": "Dağ Evi Kar Altında",
+      "region": "Uludağ, İzole Dağ Evi",
+      "source": "artifacts/dedektif/data/puzzles_database.json (pack_caylik)",
+      "format": "premium",
+      "analysis": "Uludağ'da kar fırtınasıyla izole dağ evinde maktul yatak odasında sedatif aşırı dozla ölür; Rasim garajda, Selim oturma odasında elenir, Doktor Leyla gece içeceğine ilaç karıştırır. Çözüm: Leyla + Uyku İlacı Aşırı Dozu + Yatak Odası.",
+      "puzzle": {
+        "puzzleId": "yeni_c05",
+        "title": "Dağ Evi Kar Altında",
+        "subtitle": "Uludağ, İzole Dağ Evi",
+        "difficulty": 1,
+        "difficultyLabel": "Çaylak",
+        "stars": "★★☆☆☆",
+        "gridSize": "3x3",
+        "timeLimit": 540,
+        "story": "Uludağ'ı esir alan dondurucu bir kar fırtınası nedeniyle izole dağ evinde mahsur kalan dört kişiden biri sabaha uyanamadı. Telefonların çekmediği, dışarıya adım atmanın donarak ölmek anlamına geldiği bu ahşap hapishanede, katil şömine ateşinin karşısında kurbanını izlemişti.",
+        "atmosphere": "Kar. Rüzgar. Şömine ateşi. Ve dışarı çıkmanın imkânsız olduğu bir ev.",
+        "suspects": [
+          {
+            "id": "s1",
+            "name": "Mimar Selim",
+            "icon": "🔧",
+            "description": "Maktulle devam eden devasa bir telif hırsızlığı davası olan, her adımını önceden tasarlayan saplantılı ve metodolojik mimar eski ortak.",
+            "detail": "46 yaşında, kâğıt işlerine alışkın ince parmaklı, planlı ve sürekli evi gözlemleyen biri."
+          },
+          {
+            "id": "s2",
+            "name": "Doktor Leyla",
+            "icon": "👩‍⚕️",
+            "description": "İki yıl önce maktulün aleyhine verdiği ifade yüzünden doktorluk lisansını kaybetme tehlikesi yaşayan, sakin ama kindar tıp uzmanı.",
+            "detail": "39 yaşında, ilaç dozajlarını ve zehirleri kusursuz hesaplayabilen soğukkanlı doktor."
+          },
+          {
+            "id": "s3",
+            "name": "Dağ Evi Sahibi Rasim",
+            "icon": "noun-vahap-amca-avatar.png",
+            "description": "Maktulün bu değerli mülkünü zorla ve ucuza satın almak istemesinden nefret eden, toprağına ve malına aşırı bağlı, sert dağ evi sahibi.",
+            "detail": "60 yaşında, zorlu kış şartlarına alışkın, kaba kuvveti yüksek, öfkeli bir ihtiyar."
+          }
+        ],
+        "weapons": [
+          {
+            "id": "w1",
+            "name": "Şömine Demiri",
+            "icon": "🔥",
+            "description": "Şöminedeki korları karıştırmak için kullanılan, kafaya indiğinde kafatasını delebilecek sivriliğe ve ağırlığa sahip demir çubuk."
+          },
+          {
+            "id": "w2",
+            "name": "Uyku İlacı Aşırı Dozu",
+            "icon": "💤",
+            "description": "Sıcak içeceklere karıştırıldığında hiçbir tat bırakmayan, ancak kalp ritmini uykuda tamamen durduran yüksek dozda tıbbi sedatif ampulü."
+          },
+          {
+            "id": "w3",
+            "name": "Kar Küreği Sapı",
+            "icon": "❄️",
+            "description": "Kış şartlarında yolu açmak için kullanılan, geniş metal ağızlı ve son derece ağır, küt bir ahşap sapa sahip kar küreği."
+          }
+        ],
+        "locations": [
+          {
+            "id": "l1",
+            "name": "Oturma Odası",
+            "icon": "🛋️",
+            "description": "Evin tam merkezinde yanan büyük bir ateşin olduğu, deri koltuklarla döşenmiş geniş ve sıcak ana toplanma odası."
+          },
+          {
+            "id": "l2",
+            "name": "Yatak Odası",
+            "icon": "🌙",
+            "description": "Üst katta yer alan, dışarıdaki fırtınanın sesinin duyulduğu, maktulün uyumak için çekildiği izole ve sessiz misafir odası."
+          },
+          {
+            "id": "l3",
+            "name": "Garaj",
+            "icon": "🚗",
+            "description": "Evin dışında yer alan, dondurucu soğukta araçların ve bozuk jeneratörün bulunduğu rüzgarlı ve kapalı beton araç alanı."
+          }
+        ],
+        "solution_table": {
+          "s1_selim": {
+            "weapon": "w1_sominedm",
+            "location": "l1_oturma"
+          },
+          "s2_leyla": {
+            "weapon": "w2_ilac",
+            "location": "l2_yatak"
+          },
+          "s3_rasim": {
+            "weapon": "w3_kurek",
+            "location": "l3_garaj"
+          },
+          "katil": "s2_leyla"
+        },
+        "clues": [
+          {
+            "id": "c1",
+            "type": "kanit",
+            "revealOrder": 1,
+            "isRevealed": true,
+            "pointCost": 0,
+            "title": "İlk Tespit",
+            "text": "Otopsi ön bulguları, maktulün bedeninde şömine demiri eziği veya kar küreği travması bulunmadığını; ölümün, gece rutini olan sıcak içeceğe sinsi bir şekilde karıştırılan ölümcül dozda tıbbi bir bileşenden kaynaklandığını kanıtladı.",
+            "grid_effect": "l2_yatak ölüm yeri. Dış yara yok → w1 ve w3 eleniyor. w2_ilac kesin.",
+            "mechanicType": "text",
+            "deductionHint": "Kanlı bir darbe yok, tıbbi bir zehir var. Hangi şüpheli ilaçlara erişebilir? → Doktor."
+          },
+          {
+            "id": "c2",
+            "type": "tanik",
+            "revealOrder": 2,
+            "isRevealed": false,
+            "pointCost": 50,
+            "title": "Rasim'in Beyanı",
+            "text": "Ev sahibinin, dışarıdaki arızalı jeneratörü onarmak için saatlerce dondurucu soğukta ve araçların arasında uğraştığı, buz tutmuş ağır botları ve eldivenlerindeki motor yağıyla mühürlendi.",
+            "grid_effect": "s3_rasim + l3_garaj = ✓. s3 için l1 ve l2 = ✗. s3 + w3_kurek = ✓.",
+            "mechanicType": "text",
+            "deductionHint": "Ev Sahibi Rasim + Jeneratör Arızası = Soğuk Garaj."
+          },
+          {
+            "id": "c3",
+            "type": "adli",
+            "revealOrder": 3,
+            "isRevealed": false,
+            "pointCost": 50,
+            "title": "İlaç Çantası Eksiği",
+            "text": "Leyla'nın acil tıbbi çantasında envanter eksikliği: 1 adet sedatif ampul kayıp. Leyla 'düştü' dedi — ama çanta kilitliydi.",
+            "grid_effect": "s2_leyla + w2_ilac = ✓. s1 ve s3 için w2 = ✗.",
+            "mechanicType": "gorsel_ipucu",
+            "gorselAciklama": "Tıbbi çanta envanteri. 'Midazolam — 1 ampul: EKSİK'. Kilitli çanta — düşemez.",
+            "deductionHint": "Leyla + ilac. Şimdi nerede? → l2_yatak kalan mekân."
+          },
+          {
+            "id": "c4",
+            "type": "parmak_izi",
+            "revealOrder": 4,
+            "isRevealed": false,
+            "pointCost": 50,
+            "title": "Şömine Demiri",
+            "text": "Oturma odasındaki şömine demirinde iz.",
+            "mechanicType": "parmak_izi",
+            "parmakIziVerisi": {
+              "aciklama": "Şömine demirindeki izi eşleştir.",
+              "izler": [
+                {
+                  "izId": "iz1",
+                  "konum": "Demir üst kavrama",
+                  "eslesme": "s1",
+                  "ipucu": "Kâğıt çalışan parmak — ince ve uzun. Aletten alışılmamış kavrayış."
+                }
+              ],
+              "sonuc": "Şömine demirini tutan: Selim. (s1)"
+            },
+            "grid_effect": "s1_selim + w1_somine = ✓. s2 ve s3 için w1 = ✗.",
+            "deductionHint": "Selim + şömine demiri + oturma odası = Selim'in çifti."
+          },
+          {
+            "id": "c5",
+            "type": "eleme",
+            "revealOrder": 5,
+            "isRevealed": false,
+            "pointCost": 50,
+            "title": "Selim'in Oturma Odası Gece Kaydı",
+            "text": "Evin güneş enerjisiyle çalışan yedek kamerasının son kaydı, mimarın gece boyunca oturma odasındaki deri koltuktan kalkmadığını ve sönen ateşi izlediğini net bir şekilde ortaya koydu.",
+            "grid_effect": "s1_selim + l1_oturma = ✓. s1 için l2 ve l3 = ✗.",
+            "mechanicType": "text",
+            "deductionHint": "Mimar Selim + Oturma Odası + Şömine Ateşi."
+          },
+          {
+            "id": "c6",
+            "type": "dogrudan",
+            "revealOrder": 6,
+            "isRevealed": false,
+            "pointCost": 50,
+            "title": "Leyla'nın Geçmişi",
+            "text": "Araştırma: Maktul 2 yıl önce Leyla'nın tıbbi ihmal davasında tanıklık etmişti — aleyhine. Leyla lisansını neredeyse kaybetmişti.",
+            "mechanicType": "gorsel_ipucu",
+            "gorselAciklama": "Mahkeme kaydı: 'Tanık: Maktul. Leyla aleyhine ifade.' Leyla'nın lisans soruşturması dosyası.",
+            "grid_effect": "Leyla'nın motifi: lisans kaybı riski + intikam.",
+            "deductionHint": "Motif + ilac + yatak odası = Leyla katil."
+          },
+          {
+            "id": "c7",
+            "type": "timeline",
+            "revealOrder": 7,
+            "isRevealed": false,
+            "pointCost": 50,
+            "title": "Gece Zaman Çizelgesi",
+            "text": "O geceyi doğru kronolojiye diz.",
+            "mechanicType": "timeline_sort",
+            "timelineVerisi": {
+              "aciklama": "Gece boyunca olayları doğru sıraya diz.",
+              "olaylar": [
+                {
+                  "id": "t1",
+                  "metin": "22:00 — Herkes oturma odasında birlikte.",
+                  "dogruSira": 1
+                },
+                {
+                  "id": "t2",
+                  "metin": "23:00 — Maktul 'baş ağrım var' deyip yatak odasına çekildi.",
+                  "dogruSira": 2
+                },
+                {
+                  "id": "t3",
+                  "metin": "23:10 — Leyla 'iyi geceler içeceği getireyim' dedi, mutfağa gitti.",
+                  "dogruSira": 3
+                },
+                {
+                  "id": "t4",
+                  "metin": "23:20 — Leyla maktula içecek götürdü.",
+                  "dogruSira": 4
+                },
+                {
+                  "id": "t5",
+                  "metin": "07:00 — Maktul yanıt vermedi, ölü bulundu.",
+                  "dogruSira": 5
+                }
+              ],
+              "sonuc": "Leyla içeceği hazırladı ve bizzat götürdü."
+            },
+            "grid_effect": "Leyla maktulla l2_yatak'ta baş başa kaldı.",
+            "deductionHint": "Leyla + içecek + yatak odası = fırsat ve araç."
+          },
+          {
+            "id": "c8",
+            "type": "ses_kaydi",
+            "revealOrder": 8,
+            "isRevealed": false,
+            "pointCost": 50,
+            "title": "Leyla'nın Telefon Görüşmesi",
+            "text": "[Fırtına öncesi son sinyal — ses kaydı] Leyla arkadaşına: 'O kişiyle aynı evde mahsur kaldım. Belki de bu bir işaret.'",
+            "mechanicType": "ses_kaydi",
+            "sesMetni": "'Belki de bu bir işaret' — fırsatı kullanmaya karar verdi mi?",
+            "grid_effect": "Leyla 'işaret' gördü — planlı hareket.",
+            "deductionHint": "Mahsur kalma fırsatı + tıbbi bilgi + motif = Leyla."
+          }
+        ],
+        "solution": {
+          "suspectId": "s2",
+          "weaponId": "w2",
+          "locationId": "l2"
+        },
+        "solutionNarrative": "Doktor Leyla, 2 yıl önce aleyhine tanıklık eden maktulü fırtınanın sunduğu o izole fırsatla susturdu. Çantasından çıkardığı o şifalı olması gereken sedatifi, gece içeceğine katarak intikamını aldı. Kamera kayıtları ve mekan tespitleri, onu yatak odasındaki tek şüpheli yaptı."
+      }
+    }
+  ]
+}
