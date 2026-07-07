@@ -2,7 +2,7 @@
   "expo": {
     "name": "Faili Meçhul",
     "slug": "dedektif",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "dedektif",
@@ -16,7 +16,7 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.failimechul.dedektif",
-      "buildNumber": "24",
+      "buildNumber": "2",
       "minimumOsVersion": "13.4",
       "infoPlist": {
         "NSCameraUsageDescription": "Profil fotoğrafınızı çekmek için kamera erişimi gerekiyor.",
