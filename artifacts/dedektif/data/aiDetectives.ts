@@ -29,7 +29,7 @@ export const AI_DETECTIVES: AIDetective[] = [
   },
   {
     name: "Müfettiş Orhan",
-    avatar: "av_mufekkir",
+    avatar: "av_mistik",
     totalScore: 161500,
     gamesWon: 26,
     maxStreak: 16,

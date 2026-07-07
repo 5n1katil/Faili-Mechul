@@ -71,7 +71,7 @@ const LEADERBOARD_AVATARS = [
   "av_yazar", "av_diva", "av_patron", "av_kedi", "av_basin", "av_barista",
   "av_kasket", "av_mor", "av_elit", "av_gorevli", "av_kizil", "av_kartal",
   "av_fedora", "av_esarp", "av_buyukanne", "av_albay", "av_bogazli",
-  "av_silindir", "av_mufekkir", "av_bob", "av_siyahsapka",
+  "av_silindir", "av_mistik", "av_bob", "av_siyahsapka",
 ];
 
 function hashStringToAvatarIndex(str: string): number {

@@ -68,9 +68,39 @@ export const PLAYER_AVATAR_IMAGES: Record<string, ImageSourcePropType> = {
   av_albay:      require("../assets/images/player_avatars/av_albay.png"),
   av_bogazli:    require("../assets/images/player_avatars/av_bogazli.png"),
   av_silindir:   require("../assets/images/player_avatars/av_silindir.png"),
-  av_mufekkir:   require("../assets/images/player_avatars/av_mufekkir.png"),
+  av_mistik:     require("../assets/images/player_avatars/av_mistik.png"),
   av_bob:        require("../assets/images/player_avatars/av_bob.png"),
   av_siyahsapka: require("../assets/images/player_avatars/av_siyahsapka.png"),
+  av_maskeli:      require("../assets/images/player_avatars/av_maskeli.png"),
+  av_puro:         require("../assets/images/player_avatars/av_puro.png"),
+  av_beyazceket:   require("../assets/images/player_avatars/av_beyazceket.png"),
+  av_kulaklik:     require("../assets/images/player_avatars/av_kulaklik.png"),
+  av_telsiz:       require("../assets/images/player_avatars/av_telsiz.png"),
+  av_grikazak:     require("../assets/images/player_avatars/av_grikazak.png"),
+  av_yarali:       require("../assets/images/player_avatars/av_yarali.png"),
+  av_savasci:      require("../assets/images/player_avatars/av_savasci.png"),
+  av_kirmiziyelek: require("../assets/images/player_avatars/av_kirmiziyelek.png"),
+  av_pembe:        require("../assets/images/player_avatars/av_pembe.png"),
+  av_auburn:       require("../assets/images/player_avatars/av_auburn.png"),
+  av_gulumse:      require("../assets/images/player_avatars/av_gulumse.png"),
+  av_siyahceket:   require("../assets/images/player_avatars/av_siyahceket.png"),
+  av_mavipolis:    require("../assets/images/player_avatars/av_mavipolis.png"),
+  av_motor:        require("../assets/images/player_avatars/av_motor.png"),
+  av_copkur:       require("../assets/images/player_avatars/av_copkur.png"),
+  av_flanel:       require("../assets/images/player_avatars/av_flanel.png"),
+  av_eldiven:      require("../assets/images/player_avatars/av_eldiven.png"),
+  av_halka:        require("../assets/images/player_avatars/av_halka.png"),
+  av_taktikkadin:  require("../assets/images/player_avatars/av_taktikkadin.png"),
+  av_helmet:       require("../assets/images/player_avatars/av_helmet.png"),
+  av_sarigoz:      require("../assets/images/player_avatars/av_sarigoz.png"),
+  av_forensik:     require("../assets/images/player_avatars/av_forensik.png"),
+  av_flas:         require("../assets/images/player_avatars/av_flas.png"),
+  av_trench:       require("../assets/images/player_avatars/av_trench.png"),
+  av_sakal:        require("../assets/images/player_avatars/av_sakal.png"),
+  av_kanli:        require("../assets/images/player_avatars/av_kanli.png"),
+  av_noir:         require("../assets/images/player_avatars/av_noir.png"),
+  av_yara:         require("../assets/images/player_avatars/av_yara.png"),
+  av_monokl:       require("../assets/images/player_avatars/av_monokl.png"),
 };
 
 export const PRESET_AVATARS: AvatarPreset[] = [
@@ -85,9 +115,39 @@ export const PRESET_AVATARS: AvatarPreset[] = [
   { key: "av_foto",      label: "Fotoğrafçı",     category: "dedektif", image: PLAYER_AVATAR_IMAGES.av_foto },
   { key: "av_basin",     label: "Basın",          category: "dedektif", image: PLAYER_AVATAR_IMAGES.av_basin },
   { key: "av_kasket",    label: "Hafiye",         category: "dedektif", image: PLAYER_AVATAR_IMAGES.av_kasket },
-  { key: "av_mufekkir",  label: "Müfettiş",       category: "dedektif", image: PLAYER_AVATAR_IMAGES.av_mufekkir },
+  { key: "av_mistik",    label: "Mistik Dedektif", category: "dedektif", image: PLAYER_AVATAR_IMAGES.av_mistik },
   { key: "av_silindir",  label: "Silindirli Bay",  category: "dedektif", image: PLAYER_AVATAR_IMAGES.av_silindir },
   { key: "av_fedora",    label: "Karanlık",        category: "dedektif", image: PLAYER_AVATAR_IMAGES.av_fedora },
+  { key: "av_maskeli",      label: "Maskeli Kadın",      category: "dedektif", image: PLAYER_AVATAR_IMAGES.av_maskeli },
+  { key: "av_puro",         label: "Puro Dedektif",      category: "dedektif", image: PLAYER_AVATAR_IMAGES.av_puro },
+  { key: "av_beyazceket",   label: "Beyaz Ceket",        category: "dedektif", image: PLAYER_AVATAR_IMAGES.av_beyazceket },
+  { key: "av_kulaklik",     label: "Kulaklıklı Dedektif", category: "dedektif", image: PLAYER_AVATAR_IMAGES.av_kulaklik },
+  { key: "av_telsiz",       label: "Telsizli Genç",      category: "dedektif", image: PLAYER_AVATAR_IMAGES.av_telsiz },
+  { key: "av_grikazak",     label: "Gri Kazaklı",        category: "dedektif", image: PLAYER_AVATAR_IMAGES.av_grikazak },
+  { key: "av_yarali",       label: "Yaralı Dedektif",    category: "dedektif", image: PLAYER_AVATAR_IMAGES.av_yarali },
+  { key: "av_savasci",      label: "Savaşçı Kadın",      category: "dedektif", image: PLAYER_AVATAR_IMAGES.av_savasci },
+  { key: "av_kirmiziyelek", label: "Kırmızı Yelek",      category: "dedektif", image: PLAYER_AVATAR_IMAGES.av_kirmiziyelek },
+  { key: "av_pembe",        label: "Pembe Gözlük",       category: "dedektif", image: PLAYER_AVATAR_IMAGES.av_pembe },
+  { key: "av_auburn",       label: "Auburn Gözlüklü",    category: "dedektif", image: PLAYER_AVATAR_IMAGES.av_auburn },
+  { key: "av_gulumse",      label: "Gülümseyen",         category: "dedektif", image: PLAYER_AVATAR_IMAGES.av_gulumse },
+  { key: "av_siyahceket",   label: "Siyah Ceket",        category: "dedektif", image: PLAYER_AVATAR_IMAGES.av_siyahceket },
+  { key: "av_mavipolis",    label: "Mavi Polis",         category: "dedektif", image: PLAYER_AVATAR_IMAGES.av_mavipolis },
+  { key: "av_motor",        label: "Motorcu",            category: "dedektif", image: PLAYER_AVATAR_IMAGES.av_motor },
+  { key: "av_copkur",       label: "Kop Surat",          category: "dedektif", image: PLAYER_AVATAR_IMAGES.av_copkur },
+  { key: "av_flanel",       label: "Flanel Gömlek",      category: "dedektif", image: PLAYER_AVATAR_IMAGES.av_flanel },
+  { key: "av_eldiven",      label: "Eldivenli Kadın",    category: "dedektif", image: PLAYER_AVATAR_IMAGES.av_eldiven },
+  { key: "av_halka",        label: "Halkalı Kadın",      category: "dedektif", image: PLAYER_AVATAR_IMAGES.av_halka },
+  { key: "av_taktikkadin",  label: "Taktik Kadın",       category: "dedektif", image: PLAYER_AVATAR_IMAGES.av_taktikkadin },
+  { key: "av_helmet",       label: "Kasklı Operatör",    category: "dedektif", image: PLAYER_AVATAR_IMAGES.av_helmet },
+  { key: "av_sarigoz",      label: "Sarı Gözlü",         category: "dedektif", image: PLAYER_AVATAR_IMAGES.av_sarigoz },
+  { key: "av_forensik",     label: "Forensik Uzman",     category: "dedektif", image: PLAYER_AVATAR_IMAGES.av_forensik },
+  { key: "av_flas",         label: "Flaşlı Dedektif",    category: "dedektif", image: PLAYER_AVATAR_IMAGES.av_flas },
+  { key: "av_trench",       label: "Trençkotlu",         category: "dedektif", image: PLAYER_AVATAR_IMAGES.av_trench },
+  { key: "av_sakal",        label: "Sakallı Dedektif",   category: "dedektif", image: PLAYER_AVATAR_IMAGES.av_sakal },
+  { key: "av_kanli",        label: "Kanlı Yelek",        category: "dedektif", image: PLAYER_AVATAR_IMAGES.av_kanli },
+  { key: "av_noir",         label: "Noir Dedektif",      category: "dedektif", image: PLAYER_AVATAR_IMAGES.av_noir },
+  { key: "av_yara",         label: "Bandajlı Kadın",     category: "dedektif", image: PLAYER_AVATAR_IMAGES.av_yara },
+  { key: "av_monokl",       label: "Monokl Bey",         category: "dedektif", image: PLAYER_AVATAR_IMAGES.av_monokl },
 
   // ── Görevliler ─────────────────────────────────────
   { key: "av_polis",     label: "Polis Memuru",   category: "gorevli",  image: PLAYER_AVATAR_IMAGES.av_polis },
@@ -133,8 +193,13 @@ export const PRESET_AVATARS: AvatarPreset[] = [
   { key: "av_buyukanne", label: "Büyük Hanım",    category: "uzman",    image: PLAYER_AVATAR_IMAGES.av_buyukanne },
 ];
 
+const AVATAR_ALIASES: Record<string, string> = {
+  av_mufekkir: "av_mistik",
+};
+
 export function getAvatarPreset(key: string): AvatarPreset {
-  return PRESET_AVATARS.find((p) => p.key === key) ?? PRESET_AVATARS[0];
+  const resolved = AVATAR_ALIASES[key] ?? key;
+  return PRESET_AVATARS.find((p) => p.key === resolved) ?? PRESET_AVATARS[0];
 }
 
 function isPlayerAvatar(key: string): boolean {
