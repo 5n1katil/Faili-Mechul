@@ -456,7 +456,11 @@ function TabButton3D({
         ) : (
           <MaterialIcons name={icon} size={17} color={active ? activeColor : "#8899BB"} />
         )}
-        <Text style={[listStyles.tabBtnText3d, { color: active ? activeColor : "#AAAACC", fontFamily: "DroidSerifRegular", fontSize: 18, fontWeight: active ? "700" : "600" }]}>
+        <Text
+          style={[listStyles.tabBtnText3d, { color: active ? activeColor : "#AAAACC", fontFamily: "DroidSerifRegular", fontSize: 13, fontWeight: active ? "700" : "600", textAlign: "center" }]}
+          numberOfLines={2}
+          adjustsFontSizeToFit
+        >
           {label}
         </Text>
         {count !== undefined && count > 0 && (
@@ -1461,11 +1465,10 @@ export default function VakalarScreen() {
           <View style={[listStyles.tabBar, { paddingTop: 4, paddingBottom: 12, backgroundColor: colors.background, borderBottomColor: colors.border }]}>
             <View style={listStyles.tabBarInner}>
               <TabButton3D
-                label="Vakalar"
+                label={"Standart\nVakalar"}
                 icon="folder-open"
                 image={require("@/assets/images/vakalar-icon.png")}
                 active={listTab === "vakalar"}
-                count={totalActiveCount}
                 onPress={() => setListTab("vakalar")}
                 activeColor={colors.primary}
               />
@@ -1485,30 +1488,44 @@ export default function VakalarScreen() {
               {premiumSubTab === "paketler" ? (
                 <Animated.View entering={FadeInDown.delay(0).springify()} style={{ flex: 1 }}>
                   <View style={{ paddingHorizontal: 14, paddingTop: 12, paddingBottom: 8 }}>
-                    <View style={[listStyles.unifiedStatsRow, { backgroundColor: "#A855F709", borderColor: "#A855F732" }]}>
-                      <View style={listStyles.unifiedStatItem}>
-                        <Text style={[listStyles.standartStatNum, { color: "#C084FC" }]}>{allPurchasablePackPuzzles.length}</Text>
-                        <Text style={[listStyles.standartStatLabel, { color: INACTIVE_COLOR }]}>TOPLAM</Text>
-                      </View>
-                      <View style={[listStyles.unifiedStatDivider, { backgroundColor: "#A855F728" }]} />
-                      <View style={listStyles.unifiedStatItem}>
-                        <Text style={[listStyles.standartStatNum, { color: "#F0F0F8" }]}>{purchasedPackPuzzles.length}</Text>
-                        <Text style={[listStyles.standartStatLabel, { color: INACTIVE_COLOR }]}>AKTİF</Text>
-                      </View>
-                      <View style={[listStyles.unifiedStatDivider, { backgroundColor: "#A855F728" }]} />
-                      <Pressable
-                        onPress={() => completedPackPuzzles.length > 0 && setShowCozulenlerPaket(true)}
-                        style={({ pressed }) => [
-                          listStyles.unifiedStatItem,
-                          completedPackPuzzles.length > 0 && pressed && { backgroundColor: `${colors.success}18`, borderRadius: 8 },
-                        ]}
-                      >
-                        <Text style={[listStyles.standartStatNum, { color: colors.success }]}>{completedPackPuzzles.length}</Text>
-                        <View style={{ flexDirection: "row", alignItems: "center", gap: 2 }}>
-                          <Text style={[listStyles.standartStatLabel, { color: completedPackPuzzles.length > 0 ? colors.success : INACTIVE_COLOR }]}>ÇÖZÜLDÜ</Text>
-                          {completedPackPuzzles.length > 0 && <MaterialIcons name="chevron-right" size={10} color={colors.success} />}
+                    <View style={[listStyles.standartCard, { backgroundColor: colors.card, borderColor: "#A855F744", shadowColor: "#A855F7", shadowOpacity: 0.15, shadowRadius: 10, shadowOffset: { width: 0, height: 4 }, elevation: 6 }]}>
+                      <View style={[listStyles.standartCardAccent, { backgroundColor: "#A855F7" }]} />
+                      <View style={{ flex: 1, paddingVertical: 13, paddingHorizontal: 14, gap: 10 }}>
+                        <View style={listStyles.standartCardTop}>
+                          <View style={[listStyles.heroCardIcon, { backgroundColor: "#A855F718", borderColor: "#A855F740", borderWidth: 1, width: 58, height: 58 }]}>
+                            <Image source={require("@/assets/images/premium-paketler-icon.png")} style={{ width: 48, height: 48 }} resizeMode="contain" />
+                          </View>
+                          <View style={{ flex: 1 }}>
+                            <Text style={[listStyles.standartCardTitle, { color: "#A855F7" }]}>Premium Paketler</Text>
+                            <Text style={[listStyles.heroCardSub, { color: INACTIVE_COLOR }]}>Paketler · erişilebilir</Text>
+                          </View>
                         </View>
-                      </Pressable>
+                        <View style={[listStyles.unifiedStatsRow, { backgroundColor: "#A855F709", borderColor: "#A855F732" }]}>
+                          <View style={listStyles.unifiedStatItem}>
+                            <Text style={[listStyles.standartStatNum, { color: "#C084FC" }]}>{allPurchasablePackPuzzles.length}</Text>
+                            <Text style={[listStyles.standartStatLabel, { color: INACTIVE_COLOR }]}>TOPLAM</Text>
+                          </View>
+                          <View style={[listStyles.unifiedStatDivider, { backgroundColor: "#A855F728" }]} />
+                          <View style={listStyles.unifiedStatItem}>
+                            <Text style={[listStyles.standartStatNum, { color: "#F0F0F8" }]}>{purchasedPackPuzzles.length}</Text>
+                            <Text style={[listStyles.standartStatLabel, { color: INACTIVE_COLOR }]}>AKTİF</Text>
+                          </View>
+                          <View style={[listStyles.unifiedStatDivider, { backgroundColor: "#A855F728" }]} />
+                          <Pressable
+                            onPress={() => completedPackPuzzles.length > 0 && setShowCozulenlerPaket(true)}
+                            style={({ pressed }) => [
+                              listStyles.unifiedStatItem,
+                              completedPackPuzzles.length > 0 && pressed && { backgroundColor: `${colors.success}18`, borderRadius: 8 },
+                            ]}
+                          >
+                            <Text style={[listStyles.standartStatNum, { color: colors.success }]}>{completedPackPuzzles.length}</Text>
+                            <View style={{ flexDirection: "row", alignItems: "center", gap: 2 }}>
+                              <Text style={[listStyles.standartStatLabel, { color: completedPackPuzzles.length > 0 ? colors.success : INACTIVE_COLOR }]}>ÇÖZÜLDÜ</Text>
+                              {completedPackPuzzles.length > 0 && <MaterialIcons name="chevron-right" size={10} color={colors.success} />}
+                            </View>
+                          </Pressable>
+                        </View>
+                      </View>
                     </View>
                   </View>
                   <PaketlerContent embedded />
