@@ -452,7 +452,7 @@ function TabButton3D({
         ]}
       >
         {image ? (
-          <Image source={image} style={{ width: 28, height: 28, opacity: active ? 1 : 0.55 }} resizeMode="contain" />
+          <Image source={image} style={{ width: 38, height: 38, opacity: active ? 1 : 0.55 }} resizeMode="contain" />
         ) : (
           <MaterialIcons name={icon} size={17} color={active ? activeColor : "#8899BB"} />
         )}
@@ -1679,8 +1679,8 @@ export default function VakalarScreen() {
                   <View style={[listStyles.standartCardAccent, { backgroundColor: "#D4A843" }]} />
                   <View style={{ flex: 1, paddingVertical: 13, paddingHorizontal: 14, gap: 10 }}>
                     <View style={listStyles.standartCardTop}>
-                      <View style={[listStyles.heroCardIcon, { backgroundColor: "#D4A84318", width: 40, height: 40 }]}>
-                        <Image source={require("@/assets/images/vakalar-icon.png")} style={{ width: 28, height: 28 }} resizeMode="contain" />
+                      <View style={[listStyles.heroCardIcon, { backgroundColor: "#D4A84318", borderColor: "#D4A84340", borderWidth: 1, width: 58, height: 58 }]}>
+                        <Image source={require("@/assets/images/vakalar-icon.png")} style={{ width: 48, height: 48 }} resizeMode="contain" />
                       </View>
                       <View style={{ flex: 1 }}>
                         <Text style={[listStyles.standartCardTitle, { color: "#D4A843" }]}>Standart Vakalar</Text>
