@@ -78,6 +78,11 @@ const DIFF_IMAGES: Record<string, ReturnType<typeof require>> = {
   dedektif: require("@/assets/images/diff_dedektif.png"),
   baskomiser: require("@/assets/images/diff_bas_komiser.png"),
 };
+const BADGE_IMAGES: Record<string, ReturnType<typeof require>> = {
+  caylak: require("@/assets/images/badge_caylak.png"),
+  dedektif: require("@/assets/images/badge_dedektif.png"),
+  baskomiser: require("@/assets/images/badge_bas_komiser.png"),
+};
 
 const FREE_PUZZLE_COUNT = 10;
 const TOTAL_PURCHASABLE_PUZZLES = PURCHASABLE_PACKS.reduce(
@@ -811,12 +816,12 @@ function PuzzleCard({
           <View
             style={[
               listStyles.diffBadge,
-              { backgroundColor: `${diffColor}22`, borderColor: `${diffColor}66`, flexDirection: "row", alignItems: "center", gap: 5 },
+              { backgroundColor: `${diffColor}18`, borderColor: `${diffColor}55`, flexDirection: "row", alignItems: "center", gap: 4, paddingLeft: 2 },
             ]}
           >
             <Image
-              source={DIFF_IMAGES[puzzle.difficulty] ?? DIFF_IMAGES.caylak}
-              style={{ width: 20, height: 20 }}
+              source={BADGE_IMAGES[puzzle.difficulty] ?? BADGE_IMAGES.caylak}
+              style={{ width: 26, height: 26, marginVertical: -4 }}
               resizeMode="contain"
             />
             <Text style={[listStyles.diffText, { color: diffColor }]}>
@@ -1908,11 +1913,11 @@ export default function VakalarScreen() {
                 <View style={[gameStyles.difficultyBadge, {
                   backgroundColor: `${getDifficultyColor(puzzle.difficulty as Difficulty)}18`,
                   borderColor: `${getDifficultyColor(puzzle.difficulty as Difficulty)}55`,
-                  flexDirection: "row", alignItems: "center", gap: 5,
+                  flexDirection: "row", alignItems: "center", gap: 4, paddingLeft: 2,
                 }]}>
                   <Image
-                    source={DIFF_IMAGES[puzzle.difficulty] ?? DIFF_IMAGES.caylak}
-                    style={{ width: 18, height: 18 }}
+                    source={BADGE_IMAGES[puzzle.difficulty] ?? BADGE_IMAGES.caylak}
+                    style={{ width: 24, height: 24, marginVertical: -4 }}
                     resizeMode="contain"
                   />
                   <Text style={[gameStyles.caseNumber, { color: getDifficultyColor(puzzle.difficulty as Difficulty) }]}>
