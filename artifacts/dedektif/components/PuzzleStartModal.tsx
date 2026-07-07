@@ -8,6 +8,11 @@ import {
   View,
 } from "react-native";
 
+const BADGE_IMAGES: Record<string, ReturnType<typeof require>> = {
+  caylak: require("../assets/images/badge_caylak.png"),
+  dedektif: require("../assets/images/badge_dedektif.png"),
+  baskomiser: require("../assets/images/badge_bas_komiser.png"),
+};
 import Animated, { useSharedValue, useAnimatedStyle, withSpring } from "react-native-reanimated";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useColors } from "@/hooks/useColors";
@@ -59,7 +64,12 @@ export default function PuzzleStartModal({ visible, puzzle, isRanked, onStart, o
           </Text>
 
           <View style={[styles.puzzleInfo, { backgroundColor: colors.background, borderColor: colors.border }]}>
-            <View style={[styles.diffBadge, { backgroundColor: `${diffColor}22`, borderColor: `${diffColor}55` }]}>
+            <View style={[styles.diffBadge, { backgroundColor: `${diffColor}18`, borderColor: `${diffColor}55`, flexDirection: "row", alignItems: "center", gap: 5, paddingLeft: 2 }]}>
+              <Image
+                source={BADGE_IMAGES[puzzle.difficulty] ?? BADGE_IMAGES.caylak}
+                style={{ width: 28, height: 28, marginVertical: -4 }}
+                resizeMode="contain"
+              />
               <Text style={[styles.diffText, { color: diffColor }]}>{diffLabel}</Text>
             </View>
             <Text style={[styles.puzzleName, { color: colors.foreground }]} numberOfLines={2}>
