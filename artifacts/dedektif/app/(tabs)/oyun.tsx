@@ -1574,8 +1574,8 @@ export default function VakalarScreen() {
                           <View style={[listStyles.standartCardAccent, { backgroundColor: "#C8581A" }]} />
                           <View style={{ flex: 1, paddingVertical: 13, paddingHorizontal: 14, gap: 10 }}>
                             <View style={listStyles.standartCardTop}>
-                              <View style={[listStyles.heroCardIcon, { backgroundColor: "#C8581A18", width: 40, height: 40 }]}>
-                                <Image source={require("@/assets/images/premium-vakalar-icon.png")} style={{ width: 28, height: 28 }} resizeMode="contain" />
+                              <View style={[listStyles.heroCardIcon, { backgroundColor: "#C8581A18", borderColor: "#C8581A40", borderWidth: 1, width: 58, height: 58 }]}>
+                                <Image source={require("@/assets/images/premium-vakalar-icon.png")} style={{ width: 48, height: 48 }} resizeMode="contain" />
                               </View>
                               <View style={{ flex: 1 }}>
                                 <Text style={[listStyles.standartCardTitle, { color: "#E87A3A" }]}>Premium Vakalar</Text>
