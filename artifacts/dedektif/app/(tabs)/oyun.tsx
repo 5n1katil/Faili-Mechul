@@ -1463,20 +1463,24 @@ export default function VakalarScreen() {
           {/* ── 3D Tab Bar ── */}
           <View style={[listStyles.tabBar, { paddingTop: 4, paddingBottom: 12, backgroundColor: colors.background, borderBottomColor: colors.border }]}>
             <View style={listStyles.tabBarInner}>
-              <TabButton3D
-                label={"Standart\nVakalar"}
-                icon="folder-open"
-                image={require("@/assets/images/vakalar-icon.png")}
-                active={listTab === "vakalar"}
-                onPress={() => setListTab("vakalar")}
-                activeColor={colors.primary}
-              />
-              <PremiumTabButton
-                active={listTab === "premium"}
-                onPress={() => setListTab("premium")}
-                subTab={premiumSubTab}
-                onSubTabChange={(tab) => { setListTab("premium"); setPremiumSubTab(tab); }}
-              />
+              <View style={{ flex: 0.9 }}>
+                <TabButton3D
+                  label={"Standart\nVakalar"}
+                  icon="folder-open"
+                  image={require("@/assets/images/vakalar-icon.png")}
+                  active={listTab === "vakalar"}
+                  onPress={() => setListTab("vakalar")}
+                  activeColor={colors.primary}
+                />
+              </View>
+              <View style={{ flex: 1.1 }}>
+                <PremiumTabButton
+                  active={listTab === "premium"}
+                  onPress={() => setListTab("premium")}
+                  subTab={premiumSubTab}
+                  onSubTabChange={(tab) => { setListTab("premium"); setPremiumSubTab(tab); }}
+                />
+              </View>
             </View>
           </View>
 
@@ -1489,10 +1493,19 @@ export default function VakalarScreen() {
                   <View style={{ paddingHorizontal: 14, paddingTop: 12, paddingBottom: 8 }}>
                     <View style={[listStyles.standartCard, { backgroundColor: colors.card, borderColor: "#A855F744", shadowColor: "#A855F7", shadowOpacity: 0.15, shadowRadius: 10, shadowOffset: { width: 0, height: 4 }, elevation: 6 }]}>
                       <View style={[listStyles.standartCardAccent, { backgroundColor: "#A855F7" }]} />
-                      <View style={{ flex: 1, paddingVertical: 13, paddingHorizontal: 14 }}>
-                        <View style={{ position: "absolute", top: 10, right: 10, zIndex: 10, flexDirection: "row", alignItems: "center", gap: 4, backgroundColor: "#A855F722", borderColor: "#A855F760", borderWidth: 1, borderRadius: 20, paddingHorizontal: 10, paddingVertical: 4 }}>
-                          <MaterialIcons name="auto-awesome" size={11} color="#C084FC" />
-                          <Text style={{ fontFamily: "DroidSerifRegular", fontSize: 12, fontWeight: "700", color: "#C084FC" }}>{PURCHASABLE_PACKS.length} Paket</Text>
+                      <View style={{ flex: 1, paddingVertical: 13, paddingHorizontal: 14, gap: 10 }}>
+                        <View style={listStyles.standartCardTop}>
+                          <View style={[listStyles.heroCardIcon, { backgroundColor: "#A855F718", borderColor: "#A855F740", borderWidth: 1, width: 58, height: 58 }]}>
+                            <Image source={require("@/assets/images/premium-paketler-icon.png")} style={{ width: 48, height: 48 }} resizeMode="contain" />
+                          </View>
+                          <View style={{ flex: 1 }}>
+                            <Text style={[listStyles.standartCardTitle, { color: "#A855F7" }]}>Premium Paketler</Text>
+                            <Text style={[listStyles.heroCardSub, { color: INACTIVE_COLOR }]}>Paketler · erişilebilir</Text>
+                          </View>
+                          <View style={{ flexDirection: "row", alignItems: "center", gap: 4, backgroundColor: "#A855F722", borderColor: "#A855F760", borderWidth: 1, borderRadius: 20, paddingHorizontal: 10, paddingVertical: 4 }}>
+                            <MaterialIcons name="auto-awesome" size={11} color="#C084FC" />
+                            <Text style={{ fontFamily: "DroidSerifRegular", fontSize: 12, fontWeight: "700", color: "#C084FC" }}>{PURCHASABLE_PACKS.length} Paket</Text>
+                          </View>
                         </View>
                         <View style={[listStyles.unifiedStatsRow, { backgroundColor: "#A855F709", borderColor: "#A855F732" }]}>
                           <View style={listStyles.unifiedStatItem}>
