@@ -123,17 +123,21 @@ export default function PaketlerContent({ embedded = false }: { embedded?: boole
       scrollEventThrottle={16}
       onScroll={embedded ? (e) => { _embeddedScrollY = e.nativeEvent.contentOffset.y; } : undefined}
     >
-      {/* Premium Paketler header — matches Premium Vakalar style */}
-      <View style={styles.premHeader}>
-        <Image source={require("@/assets/images/premium-paketler-icon.png")} style={{ width: 48, height: 48 }} resizeMode="contain" />
-        <Text style={styles.premHeaderTitle}>Premium Paketler</Text>
-        <View style={styles.premHeaderBadge}>
-          <Text style={styles.premHeaderBadgeText}>{PURCHASABLE_PACKS.length} Paket</Text>
-        </View>
-      </View>
-      <Text style={[styles.screenSubtitle, { color: colors.mutedForeground }]}>
-        {PURCHASABLE_PACKS.length} farklı tema · {totalPuzzles} özgün vaka
-      </Text>
+      {/* Premium Paketler header — only shown when not embedded (embedded shows its own card header) */}
+      {!embedded && (
+        <>
+          <View style={styles.premHeader}>
+            <Image source={require("@/assets/images/premium-paketler-icon.png")} style={{ width: 48, height: 48 }} resizeMode="contain" />
+            <Text style={styles.premHeaderTitle}>Premium Paketler</Text>
+            <View style={styles.premHeaderBadge}>
+              <Text style={styles.premHeaderBadgeText}>{PURCHASABLE_PACKS.length} Paket</Text>
+            </View>
+          </View>
+          <Text style={[styles.screenSubtitle, { color: colors.mutedForeground }]}>
+            {PURCHASABLE_PACKS.length} farklı tema · {totalPuzzles} özgün vaka
+          </Text>
+        </>
+      )}
 
       <Pressable
         onPress={handleRestore}
@@ -168,8 +172,13 @@ export default function PaketlerContent({ embedded = false }: { embedded?: boole
             style={[
               styles.packCard,
               {
-                borderColor: isExpanded ? pack.accentColor : pack.packColor + "44",
-                backgroundColor: pack.packColor + "18",
+                borderColor: isExpanded ? pack.accentColor : pack.accentColor + "55",
+                backgroundColor: "transparent",
+                shadowColor: pack.accentColor,
+                shadowOpacity: isExpanded ? 0.35 : 0.12,
+                shadowRadius: isExpanded ? 10 : 5,
+                shadowOffset: { width: 0, height: 2 },
+                elevation: isExpanded ? 6 : 2,
               },
             ]}
           >
