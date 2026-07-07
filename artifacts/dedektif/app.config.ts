@@ -8,7 +8,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
     ...config,
     name: "Faili Meçhul",
     slug: "dedektif",
-    version: "1.6.0",
+    version: "1.7.0",
     orientation: "portrait",
     icon: "./assets/images/icon.png",
     scheme: "dedektif",
