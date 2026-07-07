@@ -18,6 +18,17 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import DetectiveGrid from "@/components/DetectiveGrid";
 import type { Suspect, Weapon, Location } from "@/data/puzzles";
+import { PUZZLES } from "@/data/puzzles";
+import { PURCHASABLE_PACKS, getPuzzlesForPack } from "@/data/packs";
+
+const _FREE_SLICE = 10;
+const _STANDART_TOTAL = _FREE_SLICE + 1;
+const _PREMIUM_ARCHIVE_TOTAL = Math.max(0, PUZZLES.length - _FREE_SLICE);
+const _PACK_COUNT = PURCHASABLE_PACKS.length;
+const _PACK_TOTAL_PUZZLES = PURCHASABLE_PACKS.reduce(
+  (s, p) => s + getPuzzlesForPack(p.packId).length,
+  0
+);
 
 type MaterialIconName = ComponentProps<typeof MaterialIcons>["name"];
 
