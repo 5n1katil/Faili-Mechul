@@ -18,23 +18,34 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import DetectiveGrid from "@/components/DetectiveGrid";
 import type { Suspect, Weapon, Location } from "@/data/puzzles";
+import { PUZZLES } from "@/data/puzzles";
+import { PURCHASABLE_PACKS, getPuzzlesForPack } from "@/data/packs";
+
+const _FREE_SLICE = 10;
+const _STANDART_TOTAL = _FREE_SLICE + 1;
+const _PREMIUM_ARCHIVE_TOTAL = Math.max(0, PUZZLES.length - _FREE_SLICE);
+const _PACK_COUNT = PURCHASABLE_PACKS.length;
+const _PACK_TOTAL_PUZZLES = PURCHASABLE_PACKS.reduce(
+  (s, p) => s + getPuzzlesForPack(p.packId).length,
+  0
+);
 
 type MaterialIconName = ComponentProps<typeof MaterialIcons>["name"];
 
 const DEMO_SUSPECTS: Suspect[] = [
-  { id: "ds1", name: "Ahmet",  description: "", icon: "👨" },
-  { id: "ds2", name: "Zeynep", description: "", icon: "noun-woman-58199.png" },
-  { id: "ds3", name: "Murat",  description: "", icon: "👴" },
+  { id: "ds1", name: "Ahmet",  description: "", icon: "pa:konakta_s2" },
+  { id: "ds2", name: "Zeynep", description: "", icon: "pa:konakta_s3" },
+  { id: "ds3", name: "Murat",  description: "", icon: "pa:pazar_s1" },
 ];
 const DEMO_WEAPONS: Weapon[] = [
-  { id: "dw1", name: "Bıçak",   description: "", icon: "🔪" },
-  { id: "dw2", name: "Zehir",   description: "", icon: "local-pharmacy" },
-  { id: "dw3", name: "Tabanca", description: "", icon: "security" },
+  { id: "dw1", name: "Bıçak",   description: "", icon: "content-cut" },
+  { id: "dw2", name: "Zehir",   description: "", icon: "pa:konakta_w2" },
+  { id: "dw3", name: "Tabanca", description: "", icon: "pa:konakta_w3" },
 ];
 const DEMO_LOCATIONS: Location[] = [
-  { id: "dl1", name: "Mutfak",    description: "", icon: "restaurant" },
-  { id: "dl2", name: "Bahçe",     description: "", icon: "park" },
-  { id: "dl3", name: "Kütüphane", description: "", icon: "library-books" },
+  { id: "dl1", name: "Mutfak",    description: "", icon: "pa:konakta_l3" },
+  { id: "dl2", name: "Bahçe",     description: "", icon: "pa:konakta_l2" },
+  { id: "dl3", name: "Kütüphane", description: "", icon: "pa:konakta_l1" },
 ];
 const DEMO_GRID_STATE: Record<string, "cross" | "check" | "question"> = {
   "dw1_ds1": "cross",  "dw1_ds2": "check",  "dw1_ds3": "cross",
@@ -238,22 +249,30 @@ function SlideStartOptions({ contentWidth }: { contentWidth: number }) {
   const CARD_BG = "#1A1F2E";
   const SEP = "#2A3050";
 
-  const options = [
+  const options: Array<{
+    imageIcon?: ReturnType<typeof require>;
+    icon?: MaterialIconName;
+    iconColor: string;
+    accent: string;
+    label: string;
+    desc: string;
+    badge: string;
+  }> = [
     {
-      icon: "today" as MaterialIconName,
+      imageIcon: require("@/assets/images/icon_gunun_vakasi.png"),
       iconColor: GOLD,
       accent: GOLD,
-      label: "Günlük Vaka",
+      label: "Günün Vakası",
       desc: "Ana sayfada her gün yeni bir vaka seni bekler. Tamamen ücretsiz — oyna butonuna bas, hemen başla.",
       badge: "Her gün yenilenir · Ücretsiz",
     },
     {
-      icon: "folder-special" as MaterialIconName,
+      imageIcon: require("@/assets/images/vakalar-icon.png"),
       iconColor: "#A855F7",
       accent: "#A855F7",
-      label: "Vaka Arşivi",
-      desc: "9 tematik pakette 60'tan fazla vaka! Olimpos'tan Ergenekon'a, Asgard'dan modern şehirlere uzanan bir arşiv.",
-      badge: "9 Paket · 60+ Vaka · Çaylak → Efsane Komiser",
+      label: "Vakalar",
+      desc: `${_STANDART_TOTAL} standart vaka + ${_PREMIUM_ARCHIVE_TOTAL} premium vaka + ${_PACK_COUNT} premium paket (${_PACK_TOTAL_PUZZLES} bulmaca) — her zorluk seviyesinden seçim yap.`,
+      badge: `${_STANDART_TOTAL} Standart · ${_PREMIUM_ARCHIVE_TOTAL} Premium · ${_PACK_COUNT} Paket`,
     },
   ];
 
@@ -280,7 +299,10 @@ function SlideStartOptions({ contentWidth }: { contentWidth: number }) {
               alignItems: "center",
               justifyContent: "center",
             }}>
-              <MaterialIcons name={opt.icon} size={24} color={opt.accent} />
+              {opt.imageIcon
+                ? <Image source={opt.imageIcon} style={{ width: 42, height: 42 }} resizeMode="contain" />
+                : <MaterialIcons name={opt.icon!} size={24} color={opt.accent} />
+              }
             </View>
             <View style={{ flex: 1, gap: 4 }}>
               <Text style={{ fontFamily: "DroidSerifRegular", fontSize: 15, fontWeight: "800", color: "#F9FAFB" }}>{opt.label}</Text>
@@ -311,7 +333,7 @@ function SlideStartOptions({ contentWidth }: { contentWidth: number }) {
         paddingHorizontal: 12,
         paddingVertical: 9,
       }}>
-        <MaterialIcons name="local-fire-department" size={16} color={GOLD} />
+        <Image source={require("@/assets/images/icon_seri.png")} style={{ width: 18, height: 18 }} resizeMode="contain" />
         <Text style={{ flex: 1, fontFamily: "DroidSerifRegular", fontSize: 12, color: GOLD + "DD", lineHeight: 17, fontWeight: "500" }}>
           Her gün yeni bir vaka — üst üste çöz, serini kır ve liderlik tablosunda yüksel!
         </Text>
@@ -354,7 +376,7 @@ const SLIDES: Slide[] = [
     title: "Oyuna Nasıl Başlarsın?",
     subtitle: "İki Yol, Sonsuz Vaka",
     subtitleNoUppercase: true,
-    body: "Günlük Vaka ile ücretsiz başla ya da Vaka Arşivi'nden 9 tematik paket arasından istediğini seç.",
+    body: `Günün Vakası ile ücretsiz başla ya da Vakalar bölümünden ${_STANDART_TOTAL} standart vaka, ${_PREMIUM_ARCHIVE_TOTAL} premium vaka veya ${_PACK_COUNT} tematik paketten istediğini seç.`,
     showStartOptions: true,
   },
   {

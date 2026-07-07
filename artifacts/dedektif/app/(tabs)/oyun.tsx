@@ -73,6 +73,17 @@ import Animated, {
   Easing,
 } from "react-native-reanimated";
 
+const DIFF_IMAGES: Record<string, ReturnType<typeof require>> = {
+  caylak: require("@/assets/images/diff_caylak.png"),
+  dedektif: require("@/assets/images/diff_dedektif.png"),
+  baskomiser: require("@/assets/images/diff_bas_komiser.png"),
+};
+const BADGE_IMAGES: Record<string, ReturnType<typeof require>> = {
+  caylak: require("@/assets/images/badge_caylak.png"),
+  dedektif: require("@/assets/images/badge_dedektif.png"),
+  baskomiser: require("@/assets/images/badge_bas_komiser.png"),
+};
+
 const FREE_PUZZLE_COUNT = 10;
 const TOTAL_PURCHASABLE_PUZZLES = PURCHASABLE_PACKS.reduce(
   (sum, p) => sum + getPuzzlesForPack(p.packId).length, 0
@@ -441,11 +452,15 @@ function TabButton3D({
         ]}
       >
         {image ? (
-          <Image source={image} style={{ width: 28, height: 28, opacity: active ? 1 : 0.55 }} resizeMode="contain" />
+          <Image source={image} style={{ width: 38, height: 38, opacity: active ? 1 : 0.55 }} resizeMode="contain" />
         ) : (
           <MaterialIcons name={icon} size={17} color={active ? activeColor : "#8899BB"} />
         )}
-        <Text style={[listStyles.tabBtnText3d, { color: active ? activeColor : "#AAAACC", fontFamily: "DroidSerifRegular", fontSize: 18, fontWeight: active ? "700" : "600" }]}>
+        <Text
+          style={[listStyles.tabBtnText3d, { color: active ? activeColor : "#AAAACC", fontFamily: "DroidSerifRegular", fontSize: 13, fontWeight: active ? "700" : "600", textAlign: "center" }]}
+          numberOfLines={2}
+          adjustsFontSizeToFit
+        >
           {label}
         </Text>
         {count !== undefined && count > 0 && (
@@ -839,9 +854,14 @@ function PuzzleCard({
           <View
             style={[
               listStyles.diffBadge,
-              { backgroundColor: `${diffColor}22`, borderColor: `${diffColor}66` },
+              { backgroundColor: `${diffColor}18`, borderColor: `${diffColor}55`, flexDirection: "row", alignItems: "center", gap: 4, paddingLeft: 2 },
             ]}
           >
+            <Image
+              source={BADGE_IMAGES[puzzle.difficulty] ?? BADGE_IMAGES.caylak}
+              style={{ width: 26, height: 26, marginVertical: -4 }}
+              resizeMode="contain"
+            />
             <Text style={[listStyles.diffText, { color: diffColor }]}>
               {getDifficultyLabel(puzzle.difficulty as Difficulty)}
             </Text>
@@ -1309,6 +1329,10 @@ export default function VakalarScreen() {
     const accessiblePacks = PACKS.filter((pack) => isPremium || isPackPurchased(pack.packId));
     const allPackPuzzles = accessiblePacks.flatMap((pack) => getPuzzlesForPack(pack.packId));
     const activePackPuzzles = allPackPuzzles.filter((p) => !completedPuzzleIds.has(p.id));
+    const allPurchasablePackPuzzles = PURCHASABLE_PACKS.flatMap((pack) => getPuzzlesForPack(pack.packId));
+    const purchasedPackPuzzles = PURCHASABLE_PACKS
+      .filter((pack) => isPackPurchased(pack.packId))
+      .flatMap((pack) => getPuzzlesForPack(pack.packId));
 
     const activeFree = freePuzzles.filter((p) => !completedPuzzleIds.has(p.id));
     const activePremium = premiumPuzzles.filter((p) => !completedPuzzleIds.has(p.id));
@@ -1475,11 +1499,10 @@ export default function VakalarScreen() {
           <View style={[listStyles.tabBar, { paddingTop: 4, paddingBottom: 12, backgroundColor: colors.background, borderBottomColor: colors.border }]}>
             <View style={listStyles.tabBarInner}>
               <TabButton3D
-                label="Vakalar"
+                label={"Standart\nVakalar"}
                 icon="folder-open"
                 image={require("@/assets/images/vakalar-icon.png")}
                 active={listTab === "vakalar"}
-                count={totalActiveCount}
                 onPress={() => setListTab("vakalar")}
                 activeColor={colors.primary}
               />
@@ -1499,30 +1522,44 @@ export default function VakalarScreen() {
               {premiumSubTab === "paketler" ? (
                 <Animated.View entering={FadeInDown.delay(0).springify()} style={{ flex: 1 }}>
                   <View style={{ paddingHorizontal: 14, paddingTop: 12, paddingBottom: 8 }}>
-                    <View style={[listStyles.unifiedStatsRow, { backgroundColor: "#A855F709", borderColor: "#A855F732" }]}>
-                      <View style={listStyles.unifiedStatItem}>
-                        <Text style={[listStyles.standartStatNum, { color: "#C084FC" }]}>{allPackPuzzles.length}</Text>
-                        <Text style={[listStyles.standartStatLabel, { color: INACTIVE_COLOR }]}>TOPLAM</Text>
-                      </View>
-                      <View style={[listStyles.unifiedStatDivider, { backgroundColor: "#A855F728" }]} />
-                      <View style={listStyles.unifiedStatItem}>
-                        <Text style={[listStyles.standartStatNum, { color: "#F0F0F8" }]}>{activePackPuzzles.length}</Text>
-                        <Text style={[listStyles.standartStatLabel, { color: INACTIVE_COLOR }]}>AKTİF</Text>
-                      </View>
-                      <View style={[listStyles.unifiedStatDivider, { backgroundColor: "#A855F728" }]} />
-                      <Pressable
-                        onPress={() => completedPackPuzzles.length > 0 && setShowCozulenlerPaket(true)}
-                        style={({ pressed }) => [
-                          listStyles.unifiedStatItem,
-                          completedPackPuzzles.length > 0 && pressed && { backgroundColor: `${colors.success}18`, borderRadius: 8 },
-                        ]}
-                      >
-                        <Text style={[listStyles.standartStatNum, { color: colors.success }]}>{completedPackPuzzles.length}</Text>
-                        <View style={{ flexDirection: "row", alignItems: "center", gap: 2 }}>
-                          <Text style={[listStyles.standartStatLabel, { color: completedPackPuzzles.length > 0 ? colors.success : INACTIVE_COLOR }]}>ÇÖZÜLDÜ</Text>
-                          {completedPackPuzzles.length > 0 && <MaterialIcons name="chevron-right" size={10} color={colors.success} />}
+                    <View style={[listStyles.standartCard, { backgroundColor: colors.card, borderColor: "#A855F744", shadowColor: "#A855F7", shadowOpacity: 0.15, shadowRadius: 10, shadowOffset: { width: 0, height: 4 }, elevation: 6 }]}>
+                      <View style={[listStyles.standartCardAccent, { backgroundColor: "#A855F7" }]} />
+                      <View style={{ flex: 1, paddingVertical: 13, paddingHorizontal: 14, gap: 10 }}>
+                        <View style={listStyles.standartCardTop}>
+                          <View style={[listStyles.heroCardIcon, { backgroundColor: "#A855F718", borderColor: "#A855F740", borderWidth: 1, width: 58, height: 58 }]}>
+                            <Image source={require("@/assets/images/premium-paketler-icon.png")} style={{ width: 48, height: 48 }} resizeMode="contain" />
+                          </View>
+                          <View style={{ flex: 1 }}>
+                            <Text style={[listStyles.standartCardTitle, { color: "#A855F7" }]}>Premium Paketler</Text>
+                            <Text style={[listStyles.heroCardSub, { color: INACTIVE_COLOR }]}>Paketler · erişilebilir</Text>
+                          </View>
                         </View>
-                      </Pressable>
+                        <View style={[listStyles.unifiedStatsRow, { backgroundColor: "#A855F709", borderColor: "#A855F732" }]}>
+                          <View style={listStyles.unifiedStatItem}>
+                            <Text style={[listStyles.standartStatNum, { color: "#C084FC" }]}>{allPurchasablePackPuzzles.length}</Text>
+                            <Text style={[listStyles.standartStatLabel, { color: INACTIVE_COLOR }]}>TOPLAM</Text>
+                          </View>
+                          <View style={[listStyles.unifiedStatDivider, { backgroundColor: "#A855F728" }]} />
+                          <View style={listStyles.unifiedStatItem}>
+                            <Text style={[listStyles.standartStatNum, { color: "#F0F0F8" }]}>{purchasedPackPuzzles.length}</Text>
+                            <Text style={[listStyles.standartStatLabel, { color: INACTIVE_COLOR }]}>AKTİF</Text>
+                          </View>
+                          <View style={[listStyles.unifiedStatDivider, { backgroundColor: "#A855F728" }]} />
+                          <Pressable
+                            onPress={() => completedPackPuzzles.length > 0 && setShowCozulenlerPaket(true)}
+                            style={({ pressed }) => [
+                              listStyles.unifiedStatItem,
+                              completedPackPuzzles.length > 0 && pressed && { backgroundColor: `${colors.success}18`, borderRadius: 8 },
+                            ]}
+                          >
+                            <Text style={[listStyles.standartStatNum, { color: colors.success }]}>{completedPackPuzzles.length}</Text>
+                            <View style={{ flexDirection: "row", alignItems: "center", gap: 2 }}>
+                              <Text style={[listStyles.standartStatLabel, { color: completedPackPuzzles.length > 0 ? colors.success : INACTIVE_COLOR }]}>ÇÖZÜLDÜ</Text>
+                              {completedPackPuzzles.length > 0 && <MaterialIcons name="chevron-right" size={10} color={colors.success} />}
+                            </View>
+                          </Pressable>
+                        </View>
+                      </View>
                     </View>
                   </View>
                   <PaketlerContent embedded />
@@ -1592,8 +1629,8 @@ export default function VakalarScreen() {
                           <View style={[listStyles.standartCardAccent, { backgroundColor: "#C8581A" }]} />
                           <View style={{ flex: 1, paddingVertical: 13, paddingHorizontal: 14, gap: 10 }}>
                             <View style={listStyles.standartCardTop}>
-                              <View style={[listStyles.heroCardIcon, { backgroundColor: "#C8581A18", width: 40, height: 40 }]}>
-                                <Image source={require("@/assets/images/premium-vakalar-icon.png")} style={{ width: 28, height: 28 }} resizeMode="contain" />
+                              <View style={[listStyles.heroCardIcon, { backgroundColor: "#C8581A18", borderColor: "#C8581A40", borderWidth: 1, width: 58, height: 58 }]}>
+                                <Image source={require("@/assets/images/premium-vakalar-icon.png")} style={{ width: 48, height: 48 }} resizeMode="contain" />
                               </View>
                               <View style={{ flex: 1 }}>
                                 <Text style={[listStyles.standartCardTitle, { color: "#E87A3A" }]}>Premium Vakalar</Text>
@@ -1697,8 +1734,8 @@ export default function VakalarScreen() {
                   <View style={[listStyles.standartCardAccent, { backgroundColor: "#D4A843" }]} />
                   <View style={{ flex: 1, paddingVertical: 13, paddingHorizontal: 14, gap: 10 }}>
                     <View style={listStyles.standartCardTop}>
-                      <View style={[listStyles.heroCardIcon, { backgroundColor: "#D4A84318", width: 40, height: 40 }]}>
-                        <Image source={require("@/assets/images/vakalar-icon.png")} style={{ width: 28, height: 28 }} resizeMode="contain" />
+                      <View style={[listStyles.heroCardIcon, { backgroundColor: "#D4A84318", borderColor: "#D4A84340", borderWidth: 1, width: 58, height: 58 }]}>
+                        <Image source={require("@/assets/images/vakalar-icon.png")} style={{ width: 48, height: 48 }} resizeMode="contain" />
                       </View>
                       <View style={{ flex: 1 }}>
                         <Text style={[listStyles.standartCardTitle, { color: "#D4A843" }]}>Standart Vakalar</Text>
@@ -1928,8 +1965,17 @@ export default function VakalarScreen() {
                 <Pressable onPress={handleBackPress} style={gameStyles.backBtn} hitSlop={8}>
                   <MaterialIcons name="arrow-back" size={20} color={colors.mutedForeground} />
                 </Pressable>
-                <View style={gameStyles.difficultyBadge}>
-                  <Text style={[gameStyles.caseNumber, { color: "#D4A843" }]}>
+                <View style={[gameStyles.difficultyBadge, {
+                  backgroundColor: `${getDifficultyColor(puzzle.difficulty as Difficulty)}18`,
+                  borderColor: `${getDifficultyColor(puzzle.difficulty as Difficulty)}55`,
+                  flexDirection: "row", alignItems: "center", gap: 4, paddingLeft: 2,
+                }]}>
+                  <Image
+                    source={BADGE_IMAGES[puzzle.difficulty] ?? BADGE_IMAGES.caylak}
+                    style={{ width: 24, height: 24, marginVertical: -4 }}
+                    resizeMode="contain"
+                  />
+                  <Text style={[gameStyles.caseNumber, { color: getDifficultyColor(puzzle.difficulty as Difficulty) }]}>
                     {getDifficultyLabel(puzzle.difficulty as Difficulty).toLocaleUpperCase("tr-TR")}
                   </Text>
                 </View>

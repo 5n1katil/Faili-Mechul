@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import type { ComponentProps } from "react";
 import {
   ActivityIndicator,
+  Image,
   Modal,
   Platform,
   Pressable,
@@ -37,10 +38,12 @@ interface Props {
 
 function SectionHeader({
   icon,
+  image,
   label,
   iconColor,
 }: {
-  icon: MaterialIconName;
+  icon?: MaterialIconName;
+  image?: ReturnType<typeof require>;
   label: string;
   iconColor?: string;
 }) {
@@ -48,7 +51,11 @@ function SectionHeader({
   const accent = iconColor ?? colors.primary;
   return (
     <View style={styles.sectionHeader}>
-      <MaterialIcons name={icon} size={20} color={accent} />
+      {image ? (
+        <Image source={image} style={{ width: 22, height: 22 }} resizeMode="contain" />
+      ) : (
+        <MaterialIcons name={icon!} size={20} color={accent} />
+      )}
       <Text style={[styles.sectionLabel, { color: accent }]}>{label}</Text>
       <View style={[styles.sectionLine, { backgroundColor: `${accent}40` }]} />
     </View>
@@ -57,13 +64,15 @@ function SectionHeader({
 
 function SettingsRow({
   icon,
+  image,
   title,
   subtitle,
   right,
   onPress,
   hasDivider,
 }: {
-  icon: MaterialIconName;
+  icon?: MaterialIconName;
+  image?: ReturnType<typeof require>;
   title: string;
   subtitle?: string;
   right?: React.ReactNode;
@@ -79,7 +88,11 @@ function SettingsRow({
       ]}
     >
       <View style={[styles.settingsIcon, { backgroundColor: `${colors.primary}18` }]}>
-        <MaterialIcons name={icon} size={20} color={colors.primary} />
+        {image ? (
+          <Image source={image} style={{ width: 26, height: 26 }} resizeMode="contain" />
+        ) : (
+          <MaterialIcons name={icon!} size={20} color={colors.primary} />
+        )}
       </View>
       <View style={styles.settingsInfo}>
         <Text style={[styles.settingsTitle, { color: colors.foreground }]}>{title}</Text>
@@ -104,10 +117,10 @@ function SettingsRow({
 }
 
 const PRIVACY_ITEMS = [
-  { key: "showStats" as const, label: "İstatistiklerimi göster", icon: "bar-chart" as const },
-  { key: "showBadges" as const, label: "Rozetlerimi göster", icon: "military-tech" as const },
-  { key: "showBio" as const, label: "Bio'mu göster", icon: "person" as const },
-  { key: "showAvatar" as const, label: "Avatarımı göster", icon: "face" as const },
+  { key: "showStats" as const, label: "İstatistiklerimi göster", image: require("@/assets/images/settings_istatistikler.png") },
+  { key: "showBadges" as const, label: "Rozetlerimi göster", image: require("@/assets/images/settings_rozetler.png") },
+  { key: "showBio" as const, label: "Bio'mu göster", image: require("@/assets/images/settings_bio.png") },
+  { key: "showAvatar" as const, label: "Avatarımı göster", image: require("@/assets/images/settings_avatar.png") },
 ];
 
 export default function SettingsScreen({ visible, onClose }: Props) {
@@ -223,7 +236,7 @@ export default function SettingsScreen({ visible, onClose }: Props) {
             showsVerticalScrollIndicator={false}
           >
             {/* Ses Ayarları */}
-            <SectionHeader icon="volume-up" label="SES AYARLARI" />
+            <SectionHeader image={require("@/assets/images/settings_ses_ayarlari.png")} label="SES AYARLARI" />
 
             <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
               <View style={styles.cardPad}>
@@ -245,7 +258,7 @@ export default function SettingsScreen({ visible, onClose }: Props) {
               </View>
               <View style={[styles.cardDivider, { backgroundColor: colors.border }]} />
               <SettingsRow
-                icon="graphic-eq"
+                image={require("@/assets/images/settings_ses_efektleri.png")}
                 title="Ses Efektleri"
                 subtitle="Dedektif ızgarası ve oyun sesleri"
                 right={
@@ -260,13 +273,13 @@ export default function SettingsScreen({ visible, onClose }: Props) {
             </View>
 
             {/* Profil gizlilik */}
-            <SectionHeader icon="shield" label="PROFİL GİZLİLİK AYARLARI" />
+            <SectionHeader image={require("@/assets/images/settings_profil_gizlilik.png")} label="PROFİL GİZLİLİK AYARLARI" />
 
             <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
               {PRIVACY_ITEMS.map((item, idx, arr) => (
                 <SettingsRow
                   key={item.key}
-                  icon={item.icon}
+                  image={item.image}
                   title={item.label}
                   hasDivider={idx < arr.length - 1}
                   right={
@@ -286,7 +299,7 @@ export default function SettingsScreen({ visible, onClose }: Props) {
             </View>
 
             {/* Premium — en alt */}
-            <SectionHeader icon="local-police" label="PREMİUM" iconColor="#D4A843" />
+            <SectionHeader image={require("@/assets/images/settings_premium.png")} label="PREMİUM" iconColor="#D4A843" />
 
             {isPremium ? (
               <View
@@ -296,7 +309,7 @@ export default function SettingsScreen({ visible, onClose }: Props) {
                   { backgroundColor: "#D4A84314", borderColor: "#D4A843" },
                 ]}
               >
-                <MaterialIcons name="verified" size={22} color="#D4A843" />
+                <Image source={require("@/assets/images/settings_premium_aktif.png")} style={{ width: 36, height: 36 }} resizeMode="contain" />
                 <View style={{ flex: 1 }}>
                   <Text style={[styles.settingsTitle, { color: "#D4A843" }]}>
                     Premium Vaka Arşivi aktif
@@ -320,7 +333,7 @@ export default function SettingsScreen({ visible, onClose }: Props) {
                   ]}
                 >
                   <SettingsRow
-                    icon="lock-open"
+                    image={require("@/assets/images/settings_premium.png")}
                     title="Premium Vaka Arşivini Aç"
                     subtitle={`Tüm vakalar · Tek seferlik · ${priceString}`}
                     right={<MaterialIcons name="chevron-right" size={22} color="#D4A843" />}
