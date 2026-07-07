@@ -300,7 +300,7 @@ function SlideStartOptions({ contentWidth }: { contentWidth: number }) {
               justifyContent: "center",
             }}>
               {opt.imageIcon
-                ? <Image source={opt.imageIcon} style={{ width: 28, height: 28, opacity: 0.85 }} resizeMode="contain" />
+                ? <Image source={opt.imageIcon} style={{ width: 42, height: 42 }} resizeMode="contain" />
                 : <MaterialIcons name={opt.icon!} size={24} color={opt.accent} />
               }
             </View>
