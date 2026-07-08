@@ -452,14 +452,13 @@ function TabButton3D({
         ]}
       >
         {image ? (
-          <Image source={image} style={{ width: 38, height: 38, opacity: active ? 1 : 0.55 }} resizeMode="contain" />
+          <Image source={image} style={{ width: 44, height: 44, opacity: active ? 1 : 0.55 }} resizeMode="contain" />
         ) : (
           <MaterialIcons name={icon} size={17} color={active ? activeColor : "#8899BB"} />
         )}
         <Text
-          style={[listStyles.tabBtnText3d, { color: active ? activeColor : "#AAAACC", fontFamily: "DroidSerifRegular", fontSize: 13, fontWeight: active ? "700" : "600", textAlign: "center" }]}
+          style={[listStyles.tabBtnText3d, { color: active ? activeColor : "#AAAACC", fontFamily: "DroidSerifRegular", fontSize: 15, fontWeight: active ? "700" : "600", textAlign: "left" }]}
           numberOfLines={2}
-          adjustsFontSizeToFit
         >
           {label}
         </Text>
@@ -1498,20 +1497,24 @@ export default function VakalarScreen() {
           {/* ── 3D Tab Bar ── */}
           <View style={[listStyles.tabBar, { paddingTop: 4, paddingBottom: 12, backgroundColor: colors.background, borderBottomColor: colors.border }]}>
             <View style={listStyles.tabBarInner}>
-              <TabButton3D
-                label={"Standart\nVakalar"}
-                icon="folder-open"
-                image={require("@/assets/images/vakalar-icon.png")}
-                active={listTab === "vakalar"}
-                onPress={() => setListTab("vakalar")}
-                activeColor={colors.primary}
-              />
-              <PremiumTabButton
-                active={listTab === "premium"}
-                onPress={() => setListTab("premium")}
-                subTab={premiumSubTab}
-                onSubTabChange={(tab) => { setListTab("premium"); setPremiumSubTab(tab); }}
-              />
+              <View style={{ flex: 0.9 }}>
+                <TabButton3D
+                  label={"Standart\nVakalar"}
+                  icon="folder-open"
+                  image={require("@/assets/images/vakalar-icon.png")}
+                  active={listTab === "vakalar"}
+                  onPress={() => setListTab("vakalar")}
+                  activeColor={colors.primary}
+                />
+              </View>
+              <View style={{ flex: 1.1 }}>
+                <PremiumTabButton
+                  active={listTab === "premium"}
+                  onPress={() => setListTab("premium")}
+                  subTab={premiumSubTab}
+                  onSubTabChange={(tab) => { setListTab("premium"); setPremiumSubTab(tab); }}
+                />
+              </View>
             </View>
           </View>
 
@@ -1532,6 +1535,10 @@ export default function VakalarScreen() {
                           <View style={{ flex: 1 }}>
                             <Text style={[listStyles.standartCardTitle, { color: "#A855F7" }]}>Premium Paketler</Text>
                             <Text style={[listStyles.heroCardSub, { color: INACTIVE_COLOR }]}>Paketler · erişilebilir</Text>
+                          </View>
+                          <View style={{ flexDirection: "row", alignItems: "center", gap: 4, backgroundColor: "#A855F722", borderColor: "#A855F760", borderWidth: 1, borderRadius: 20, paddingHorizontal: 10, paddingVertical: 4 }}>
+                            <MaterialIcons name="auto-awesome" size={11} color="#C084FC" />
+                            <Text style={{ fontFamily: "DroidSerifRegular", fontSize: 12, fontWeight: "700", color: "#C084FC" }}>{PURCHASABLE_PACKS.length} Paket</Text>
                           </View>
                         </View>
                         <View style={[listStyles.unifiedStatsRow, { backgroundColor: "#A855F709", borderColor: "#A855F732" }]}>
@@ -2394,7 +2401,7 @@ const listStyles = StyleSheet.create({
   tabBtn3d: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "flex-start",
     paddingVertical: 9,
     paddingHorizontal: 12,
     borderRadius: 12,
