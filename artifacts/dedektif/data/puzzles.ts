@@ -337,19 +337,19 @@ export const PUZZLES: Puzzle[] = [
     story:
       "İstanbul Boğazı'nın serin sularında süzülen lüks yatta düzenlenen o gösterişli sergi, kanlı bir geceyle son buldu. Paha biçilemez 'Boğaz Elması'nın çalındığı anlaşıldığında, geminin güvenlik şefi Orhan cansız yatıyordu. Dalgaların sesi yatı döverken, katil ve çaldığı elmas hala bu lüks kafesin içinde saklanıyor.",
     suspects: [
-      { id: "s1", name: "Kaptan Levent", description: "Geminin deneyimli kaptanı. Fiziksel olarak oldukça yapılı ve ağır nesneleri kolayca savurabilecek kuvvette.", icon: "noun-kaptan-levent-avatar.png" },
-      { id: "s2", name: "Sponsor Murat", description: "Partinin zengin finansörü. İnce yapılı; ağır fiziksel güç gerektiren işlere ve kirli ortamlara hiç alışkın değil.", icon: "noun-sponsor-murat-avatar.png" },
-      { id: "s3", name: "Organizatör Eda", description: "Serginin sorumlusu. Çevik, esnek ve geminin en dar, gizli alanlarında bile rahatça hareket edebilecek fiziksel yapıda.", icon: "noun-organizator-eda-avatar.png" },
+      { id: "s1", name: "Kaptan Levent", description: "Geminin deneyimli kaptanı. Fiziksel olarak oldukça yapılı ve ağır nesneleri kolayca savurabilecek kuvvette.", icon: "pa:bogaz_s1" },
+      { id: "s2", name: "Sponsor Murat", description: "Partinin zengin finansörü. İnce yapılı; ağır fiziksel güç gerektiren işlere ve kirli ortamlara hiç alışkın değil.", icon: "pa:bogaz_s2" },
+      { id: "s3", name: "Organizatör Eda", description: "Serginin sorumlusu. Çevik, esnek ve geminin en dar, gizli alanlarında bile rahatça hareket edebilecek fiziksel yapıda.", icon: "pa:bogaz_s3" },
     ],
     weapons: [
-      { id: "w1", name: "Gemi Halatı", description: "Gemiyi iskeleye bağlamak için kullanılan kalın sentetik ip. Çok sağlam ve kıvrılabilen esnek bir yapıya sahip.", icon: "all-inclusive" },
-      { id: "w2", name: "Demir Çekiç", description: "Ağır bakım ve onarım aleti. Ciddi bir fiziksel kütleye sahip, tek vuruşta kemik kırabilen paslanmaz çelik donanım.", icon: "hardware" },
-      { id: "w3", name: "Gaz Tüpü", description: "Basınçlı endüstriyel tüp. Kapalı bir alanda sızıntı yapması durumunda ortamdaki oksijeni tüketerek zehirleyici olabilir.", icon: "propane-tank" },
+      { id: "w1", name: "Gemi Halatı", description: "Gemiyi iskeleye bağlamak için kullanılan kalın sentetik ip. Çok sağlam ve kıvrılabilen esnek bir yapıya sahip.", icon: "pa:bogaz_w1" },
+      { id: "w2", name: "Demir Çekiç", description: "Ağır bakım ve onarım aleti. Ciddi bir fiziksel kütleye sahip, tek vuruşta kemik kırabilen paslanmaz çelik donanım.", icon: "pa:bogaz_w2" },
+      { id: "w3", name: "Gaz Tüpü", description: "Basınçlı endüstriyel tüp. Kapalı bir alanda sızıntı yapması durumunda ortamdaki oksijeni tüketerek zehirleyici olabilir.", icon: "pa:bogaz_w3" },
     ],
     locations: [
-      { id: "l1", name: "Makine Dairesi", description: "Geminin en alt katında yer alan, zemini makine yağıyla kaplı, gürültülü, dar ve gözden uzak teknik alan.", icon: "settings" },
-      { id: "l2", name: "Seyir Köprüsü", description: "En üst katta yer alan, geminin yönlendirildiği sürekli kameralarla izlenen aydınlık ve güvenli yönetim merkezi.", icon: "explore" },
-      { id: "l3", name: "VIP Salon", description: "Misafirlerin ağırlandığı, beyaz halılarla kaplı, aydınlık, temiz ve oldukça geniş eğlence alanı.", icon: "star" },
+      { id: "l1", name: "Makine Dairesi", description: "Geminin en alt katında yer alan, zemini makine yağıyla kaplı, gürültülü, dar ve gözden uzak teknik alan.", icon: "pa:bogaz_l1" },
+      { id: "l2", name: "Seyir Köprüsü", description: "En üst katta yer alan, geminin yönlendirildiği sürekli kameralarla izlenen aydınlık ve güvenli yönetim merkezi.", icon: "pa:bogaz_l2" },
+      { id: "l3", name: "VIP Salon", description: "Misafirlerin ağırlandığı, beyaz halılarla kaplı, aydınlık, temiz ve oldukça geniş eğlence alanı.", icon: "pa:bogaz_l3" },
     ],
     clues: [
       { id: "c1", text: "Gemi mühendislerinin raporuna göre, cinayet mahallindeki ağır makine yağı kokusu, olayın üst katlardaki temiz alanlarda yaşanmadığını kanıtlıyordu.", type: "evidence", isBonus: false },
@@ -373,19 +373,19 @@ export const PUZZLES: Puzzle[] = [
     story:
       "Kapalıçarşı'nın yüzlerce yıllık labirent gibi sokaklarına çöken akşam karanlığı, bir cinayeti örtbas etmeye yetmedi. Çarşının en eski kuyumcularından biri, kepenkler indikten hemen sonra dükkanında vahşice katledildi. Katil, çarşının tanıdık simalarından birisiydi.",
     suspects: [
-      { id: "s1", name: "Ahmet Usta", description: "Komşu bakırcı esnaf. Otuz yıllık tecrübesiyle çarşının her köşesini ezbere bilen, kendi dükkanından çıkmayan geleneksel usta.", icon: "noun-ahmet-usta-avatar.png" },
-      { id: "s2", name: "Selma Teyze", description: "Çarşının saygın ve yaşlı muhasebecisi. Rakamlar konusunda hata yapmaz ancak teknolojik cihazlar ve şifrelerle arası hiç iyi değildir.", icon: "noun-selma-teyze-avatar.png" },
-      { id: "s3", name: "Kerem Genç", description: "Stajyer olarak son ay işe başlayan, dijital şifreleme ve kilit teknolojilerine son derece yatkın, meraklı genç çalışan.", icon: "noun-kerem-genc-avatar.png" },
+      { id: "s1", name: "Ahmet Usta", description: "Komşu bakırcı esnaf. Otuz yıllık tecrübesiyle çarşının her köşesini ezbere bilen, kendi dükkanından çıkmayan geleneksel usta.", icon: "pa:kcarsi_s1" },
+      { id: "s2", name: "Selma Teyze", description: "Çarşının saygın ve yaşlı muhasebecisi. Rakamlar konusunda hata yapmaz ancak teknolojik cihazlar ve şifrelerle arası hiç iyi değildir.", icon: "pa:kcarsi_s2" },
+      { id: "s3", name: "Kerem Genç", description: "Stajyer olarak son ay işe başlayan, dijital şifreleme ve kilit teknolojilerine son derece yatkın, meraklı genç çalışan.", icon: "pa:kcarsi_s3" },
     ],
     weapons: [
-      { id: "w1", name: "Ağır Terazi", description: "Kuyumcu terazisinin tunç kefesi, hassas ölçümler için kullanılan ancak birkaç kilogram ağırlığında katı bir cisim.", icon: "balance" },
-      { id: "w2", name: "Kimyasal Madde", description: "Altın eritme sürecinde kullanılan, deriyle temas halinde ölümcül yanıklara yol açan asit bazlı aşındırıcı çözelti.", icon: "science" },
-      { id: "w3", name: "Pençe Anahtar", description: "Kalın çelik kapıları ve kilitleri zorlamak, bükmek için kullanılan, kilit mekanizmalarında derin izler bırakan ağır alet.", icon: "build" },
+      { id: "w1", name: "Ağır Terazi", description: "Kuyumcu terazisinin tunç kefesi, hassas ölçümler için kullanılan ancak birkaç kilogram ağırlığında katı bir cisim.", icon: "pa:kcarsi_w1" },
+      { id: "w2", name: "Kimyasal Madde", description: "Altın eritme sürecinde kullanılan, deriyle temas halinde ölümcül yanıklara yol açan asit bazlı aşındırıcı çözelti.", icon: "pa:kcarsi_w2" },
+      { id: "w3", name: "Pençe Anahtar", description: "Kalın çelik kapıları ve kilitleri zorlamak, bükmek için kullanılan, kilit mekanizmalarında derin izler bırakan ağır alet.", icon: "pa:kcarsi_w3" },
     ],
     locations: [
-      { id: "l1", name: "Dükkan İçi", description: "Vitrinlerin ve kasanın bulunduğu, doğrudan sokağı ve dışarıdan geçenleri gören geniş aydınlık müşteri alanı.", icon: "store" },
-      { id: "l2", name: "Arka Depo", description: "Sadece karmaşık elektronik bir şifreyle girilebilen, altınların saklandığı penceresiz, yalıtımlı güvenlik odası.", icon: "inventory" },
-      { id: "l3", name: "Çarşı Koridoru", description: "Kepenkler kapandıktan sonra sadece gece bekçilerinin devriye gezdiği, yüzlerce yıllık kıvrımlı taş yürüyüş yolları.", icon: "route" },
+      { id: "l1", name: "Dükkan İçi", description: "Vitrinlerin ve kasanın bulunduğu, doğrudan sokağı ve dışarıdan geçenleri gören geniş aydınlık müşteri alanı.", icon: "pa:kcarsi_l1" },
+      { id: "l2", name: "Arka Depo", description: "Sadece karmaşık elektronik bir şifreyle girilebilen, altınların saklandığı penceresiz, yalıtımlı güvenlik odası.", icon: "pa:kcarsi_l2" },
+      { id: "l3", name: "Çarşı Koridoru", description: "Kepenkler kapandıktan sonra sadece gece bekçilerinin devriye gezdiği, yüzlerce yıllık kıvrımlı taş yürüyüş yolları.", icon: "pa:kcarsi_l3" },
     ],
     clues: [
       { id: "c1", text: "Çarşı kapısındaki gece bekçisi kayıtları, Ahmet Usta'nın dükkanını erkenden kilitleyip ana cadde tarafındaki aydınlık vitrinlerle uğraştığını gösteriyor.", type: "record", isBonus: false },
@@ -409,19 +409,19 @@ export const PUZZLES: Puzzle[] = [
     story:
       "İstanbul'un köklü üniversitesindeki sessiz gece, çığır açacak bir araştırma projesinin kana bulanmasıyla yırtıldı. Laboratuvar yöneticisi, masasının başında ölü bulundu ve paha biçilemez kritik araştırma verileri şifreli sunuculardan kalıcı olarak silindi.",
     suspects: [
-      { id: "s1", name: "Prof. Kahraman", description: "Son derece rekabetçi ve sert mizaçlı, tüm gününü sadece evrak dolu odasında makale yazarak geçiren kıdemli akademisyen.", icon: "noun-prof-kahraman-avatar.png" },
-      { id: "s2", name: "Asistan Elif", description: "Gecelerini araştırmalara adayan, projenin tüm teknik altyapısına ve voltaj düzeneklerine hakim hırslı doktora öğrencisi.", icon: "noun-asistan-elif-avatar.png" },
-      { id: "s3", name: "Güvenlik Görevlisi", description: "Sadece gece vardiyasında çalışan, teknik bilgisi olmayan, binaların fiziksel devriye kontrollerini yapan personel.", icon: "noun-guvenlik-gorevlisi-avatar.png" },
+      { id: "s1", name: "Prof. Kahraman", description: "Son derece rekabetçi ve sert mizaçlı, tüm gününü sadece evrak dolu odasında makale yazarak geçiren kıdemli akademisyen.", icon: "pa:uni_s1" },
+      { id: "s2", name: "Asistan Elif", description: "Gecelerini araştırmalara adayan, projenin tüm teknik altyapısına ve voltaj düzeneklerine hakim hırslı doktora öğrencisi.", icon: "pa:uni_s2" },
+      { id: "s3", name: "Güvenlik Görevlisi", description: "Sadece gece vardiyasında çalışan, teknik bilgisi olmayan, binaların fiziksel devriye kontrollerini yapan personel.", icon: "pa:uni_s3" },
     ],
     weapons: [
-      { id: "w1", name: "Elektrik Çarpması", description: "Deney cihazlarının yüksek voltajlı kablolarının kasıtlı olarak birleştirilmesiyle oluşturulan ani ve ölümcül kısa devre.", icon: "flash-on" },
-      { id: "w2", name: "Kimyasal Gaz", description: "Tüplerden sızdırıldığında kapalı ortamda birikebilen, solunum yollarını tahrip eden tehlikeli ve boğucu bileşik.", icon: "air" },
-      { id: "w3", name: "Keskin Nesne", description: "Masanın üzerindeki cam bölmelerden koparılmış, damarları tek hamlede kesebilecek kadar sivri kırık bir parça.", icon: "content-cut" },
+      { id: "w1", name: "Elektrik Çarpması", description: "Deney cihazlarının yüksek voltajlı kablolarının kasıtlı olarak birleştirilmesiyle oluşturulan ani ve ölümcül kısa devre.", icon: "pa:uni_w1" },
+      { id: "w2", name: "Kimyasal Gaz", description: "Tüplerden sızdırıldığında kapalı ortamda birikebilen, solunum yollarını tahrip eden tehlikeli ve boğucu bileşik.", icon: "pa:uni_w2" },
+      { id: "w3", name: "Keskin Nesne", description: "Masanın üzerindeki cam bölmelerden koparılmış, damarları tek hamlede kesebilecek kadar sivri kırık bir parça.", icon: "pa:uni_w3" },
     ],
     locations: [
-      { id: "l1", name: "Laboratuvar", description: "Çeşitli deney düzeneklerinin, yüksek voltajlı prizlerin ve kimyasal tüplerin bulunduğu tam donanımlı araştırma odası.", icon: "science" },
-      { id: "l2", name: "Ofis", description: "Yığınla dosya, basılı evrak ve standart bilgisayar ekranlarıyla dolu olan klasik, tehlikesiz akademisyen çalışma odası.", icon: "business" },
-      { id: "l3", name: "Koridorlar", description: "Gece yarısı tamamen ıssızlaşan, sadece devriye personelinin geçtiği, güvenlik kameralarıyla izlenen uzun geçitler.", icon: "route" },
+      { id: "l1", name: "Laboratuvar", description: "Çeşitli deney düzeneklerinin, yüksek voltajlı prizlerin ve kimyasal tüplerin bulunduğu tam donanımlı araştırma odası.", icon: "pa:uni_l1" },
+      { id: "l2", name: "Ofis", description: "Yığınla dosya, basılı evrak ve standart bilgisayar ekranlarıyla dolu olan klasik, tehlikesiz akademisyen çalışma odası.", icon: "pa:uni_l2" },
+      { id: "l3", name: "Koridorlar", description: "Gece yarısı tamamen ıssızlaşan, sadece devriye personelinin geçtiği, güvenlik kameralarıyla izlenen uzun geçitler.", icon: "pa:uni_l3" },
     ],
     clues: [
       { id: "c1", text: "Olay yerindeki gelişmiş analiz cihazlarının kasıtlı olarak devreden çıkarılması, cinayetin sıradan evrakların bulunduğu bir ofiste işlenmediğini açıkça gösteriyordu.", type: "evidence", isBonus: false },
@@ -481,19 +481,19 @@ export const PUZZLES: Puzzle[] = [
     story:
       "Ankara'daki asırlık müzenin loş koridorlarında, tarihin sessizliği kanla bozuldu. Bizans dönemine ait eşsiz bir broşun çalındığı fırtınalı gecede, gece bekçisi görev yerinde ağır yaralı olarak bulundu. Sırlar müze çalışanlarının arasında gizli.",
     suspects: [
-      { id: "s1", name: "Küratör Bey", description: "Müzenin yöneticisi. Eserlerin tarihini çok iyi bilir ancak pratik restorasyon işlemleri ve kimyasallar konusunda hiçbir yetkinliği yoktur.", icon: "noun-muzede-kurat-avatar.png" },
-      { id: "s2", name: "Restoratör Hanım", description: "Hasar görmüş eserleri hassas sivri aletler ve sıvılarla onaran, depolara giriş izni olan kapalı kapılar ardında çalışan uzman.", icon: "noun-muzede-rehber-avatar.png" },
-      { id: "s3", name: "Ziyaretçi Rehberi", description: "Gündüzleri vitrinlerin önünde turlar düzenleyen, güvenli alanların dışına çıkma yetkisi olmayan sosyal alan görevlisi.", icon: "noun-muzede-bekci-avatar.png" },
+      { id: "s1", name: "Küratör Bey", description: "Müzenin yöneticisi. Eserlerin tarihini çok iyi bilir ancak pratik restorasyon işlemleri ve kimyasallar konusunda hiçbir yetkinliği yoktur.", icon: "pa:muze_s1" },
+      { id: "s2", name: "Restoratör Hanım", description: "Hasar görmüş eserleri hassas sivri aletler ve sıvılarla onaran, depolara giriş izni olan kapalı kapılar ardında çalışan uzman.", icon: "pa:muze_s2" },
+      { id: "s3", name: "Ziyaretçi Rehberi", description: "Gündüzleri vitrinlerin önünde turlar düzenleyen, güvenli alanların dışına çıkma yetkisi olmayan sosyal alan görevlisi.", icon: "pa:muze_s3" },
     ],
     weapons: [
-      { id: "w1", name: "Uyutucu İğne", description: "Deriye temas ettiği an hızla kana karışıp anında etki eden güçlü anestezik sıvı içeren medikal şırınga.", icon: "vaccines" },
-      { id: "w2", name: "Sergi Kaidesi", description: "Vitrinlerin altında bulunan, kafaya isabet ettiğinde felaket yaratan ancak yerinden kıpırdatması çok zor olan ağır mermer destek.", icon: "construction" },
-      { id: "w3", name: "Kimyasal Sprey", description: "Havaya sıkıldığında nefes borusunu yakarak geçici felç ve körlük yaratan, genze dolan yoğun kimyasal gaz karışımı.", icon: "air" },
+      { id: "w1", name: "Uyutucu İğne", description: "Deriye temas ettiği an hızla kana karışıp anında etki eden güçlü anestezik sıvı içeren medikal şırınga.", icon: "pa:muze_w1" },
+      { id: "w2", name: "Sergi Kaidesi", description: "Vitrinlerin altında bulunan, kafaya isabet ettiğinde felaket yaratan ancak yerinden kıpırdatması çok zor olan ağır mermer destek.", icon: "pa:muze_w2" },
+      { id: "w3", name: "Kimyasal Sprey", description: "Havaya sıkıldığında nefes borusunu yakarak geçici felç ve körlük yaratan, genze dolan yoğun kimyasal gaz karışımı.", icon: "pa:muze_w3" },
     ],
     locations: [
-      { id: "l1", name: "Sergi Salonu", description: "Bizans ve Osmanlı eserlerinin ziyaretçilere sunulduğu, cam vitrinlerin bulunduğu, oldukça aydınlık ve geniş salon.", icon: "museum" },
-      { id: "l2", name: "Depolama Odası", description: "Sadece özel yetkili personelin şifreyle girebildiği, restorasyon bekleyen eserlerin tutulduğu penceresiz kilitli oda.", icon: "storage" },
-      { id: "l3", name: "Güvenlik Odası", description: "Tüm müzenin kamera görüntülerinin canlı izlendiği, monitörlerle ve telsizlerle dolu, sürekli personelin bulunduğu kontrol merkezi.", icon: "security" },
+      { id: "l1", name: "Sergi Salonu", description: "Bizans ve Osmanlı eserlerinin ziyaretçilere sunulduğu, cam vitrinlerin bulunduğu, oldukça aydınlık ve geniş salon.", icon: "pa:muze_l1" },
+      { id: "l2", name: "Depolama Odası", description: "Sadece özel yetkili personelin şifreyle girebildiği, restorasyon bekleyen eserlerin tutulduğu penceresiz kilitli oda.", icon: "pa:muze_l2" },
+      { id: "l3", name: "Güvenlik Odası", description: "Tüm müzenin kamera görüntülerinin canlı izlendiği, monitörlerle ve telsizlerle dolu, sürekli personelin bulunduğu kontrol merkezi.", icon: "pa:muze_l3" },
     ],
     clues: [
       { id: "c1", text: "Müzenin turnike sistemi, Ziyaretçi Rehberi'nin tüm gece boyunca sadece aydınlık sergi salonu etrafında turlar attığını elektronik olarak doğruladı.", type: "record", isBonus: false },
