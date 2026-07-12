@@ -553,19 +553,19 @@ export const PUZZLES: Puzzle[] = [
     story:
       "Ankara-İstanbul ekspresinin ritmik tekerlek sesleri, sessiz bir cinayeti gizlemeye yetmedi. Tren yoğun sis altında ilerlerken, birinci mevkide seyahat eden tanınmış bir iş insanı koltuğunda son nefesini vermişti. Tren istasyona varmadan katili bulmalısın.",
     suspects: [
-      { id: "s1", name: "İş Kadını", description: "Sürekli evrak çantasıyla gezen, gergin, sabırsız ve hassas işlemlere eli hiç yatkın olmayan birinci mevki yolcusu.", icon: "noun-tren-kadin-yolcu-avatar.png" },
-      { id: "s2", name: "Üniversite Öğrencisi", description: "Kulağında kulaklıkla kendi odasından hiç çıkmayan, etrafındaki insanlarla sıfır etkileşim kuran ucuz biletli genç yolcu.", icon: "noun-tren-genc-yolcu-avatar.png" },
-      { id: "s3", name: "Emekli Doktor", description: "Anatomik bilgiye sahip, yanında sürekli çeşitli sıvılar ve aletlerin bulunduğu küçük tıbbi çantalar taşıyan sakin yaşlı yolcu.", icon: "noun-tren-doktor-avatar.png" },
+      { id: "s1", name: "İş Kadını", description: "Sürekli evrak çantasıyla gezen, gergin, sabırsız ve hassas işlemlere eli hiç yatkın olmayan birinci mevki yolcusu.", icon: "pa:tren_s1" },
+      { id: "s2", name: "Üniversite Öğrencisi", description: "Kulağında kulaklıkla kendi odasından hiç çıkmayan, etrafındaki insanlarla sıfır etkileşim kuran ucuz biletli genç yolcu.", icon: "pa:tren_s2" },
+      { id: "s3", name: "Emekli Doktor", description: "Anatomik bilgiye sahip, yanında sürekli çeşitli sıvılar ve aletlerin bulunduğu küçük tıbbi çantalar taşıyan sakin yaşlı yolcu.", icon: "pa:tren_s3" },
     ],
     weapons: [
-      { id: "w1", name: "Zehirli İçecek", description: "Bardağa damlatıldığında doğrudan kalp krizini tetikleyen, fark edilmesi imkansız renksiz ve tatsız tıbbi sıvı.", icon: "local-bar" },
-      { id: "w2", name: "Kesici Silah", description: "Hareketli trende saklaması kolay, doğru açıdan vurulduğunda tek hamlede derin yara açan küçük çakı bıçağı.", icon: "content-cut" },
-      { id: "w3", name: "Boğma Halatı", description: "Bavuldan çıkarılan, kurbanın arkasından boyuna dolandığında mekanik baskıyla nefesi anında kesen ince naylon ip.", icon: "fiber-manual-record" },
+      { id: "w1", name: "Zehirli İçecek", description: "Bardağa damlatıldığında doğrudan kalp krizini tetikleyen, fark edilmesi imkansız renksiz ve tatsız tıbbi sıvı.", icon: "pa:tren_w1" },
+      { id: "w2", name: "Kesici Silah", description: "Hareketli trende saklaması kolay, doğru açıdan vurulduğunda tek hamlede derin yara açan küçük çakı bıçağı.", icon: "pa:tren_w2" },
+      { id: "w3", name: "Boğma Halatı", description: "Bavuldan çıkarılan, kurbanın arkasından boyuna dolandığında mekanik baskıyla nefesi anında kesen ince naylon ip.", icon: "pa:tren_w3" },
     ],
     locations: [
-      { id: "l1", name: "Kompartıman", description: "Sadece kendi biletli yolcusunun girebildiği dar, dört kişilik ahşap bölmeli, kapısı kapalı özel konaklama odası.", icon: "train" },
-      { id: "l2", name: "Yemekli Vagon", description: "Beyaz örtülü masaların bulunduğu, çay servisinin yapıldığı, herkesin girip çıkabildiği ortak ve geniş oturma alanı.", icon: "restaurant" },
-      { id: "l3", name: "Tuvalet", description: "Trenin en arka bölümünde yer alan, içeriden mandalla kilitlenebilen, oldukça küçük ve dar ihtiyaç alanı.", icon: "wc" },
+      { id: "l1", name: "Kompartıman", description: "Sadece kendi biletli yolcusunun girebildiği dar, dört kişilik ahşap bölmeli, kapısı kapalı özel konaklama odası.", icon: "pa:tren_l1" },
+      { id: "l2", name: "Yemekli Vagon", description: "Beyaz örtülü masaların bulunduğu, çay servisinin yapıldığı, herkesin girip çıkabildiği ortak ve geniş oturma alanı.", icon: "pa:tren_l2" },
+      { id: "l3", name: "Tuvalet", description: "Trenin en arka bölümünde yer alan, içeriden mandalla kilitlenebilen, oldukça küçük ve dar ihtiyaç alanı.", icon: "pa:tren_l3" },
     ],
     clues: [
       { id: "c1", text: "Bilet kondüktörü, gergin iş kadınının tüm yolculuk boyunca trenin arka tarafındaki küçük kilitli tuvalette mahsur kaldığını ve panik atak geçirdiğini teyit etti.", type: "witness", isBonus: false },
