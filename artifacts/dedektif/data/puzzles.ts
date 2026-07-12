@@ -2199,19 +2199,19 @@ export const PUZZLES: Puzzle[] = [
     story:
       "Bursa'nın köklü termal otelinde, muhasebeci Münibe Hanım havuz kenarında boğulmuş hâlde bulundu. Gece geç saatte otelde yalnızca üç misafir kalmaktaydı. Sular bu kez şifa değil, mükemmel tasarlanmış bir alibi getirdi.",
     suspects: [
-      { id: "s1", name: "Emekli Doktor Vedat Bey", description: "Miras verasetinde tanık olan, bastonuyla zor yürüyen, güçlü fiziksel eylemlerden kaçınan yaşlı adam.", icon: "noun-termal-yasli-bey-avatar.png" },
-      { id: "s2", name: "İş Kadını Perihan Hanım", description: "Hesap anlaşmazlığı yaşadığı ortağına karşı kin güden, lüks kıyafetlere ve monogramlı şahsi eşyalara düşkün hırslı kadın.", icon: "noun-termal-kadin-misafir-avatar.png" },
-      { id: "s3", name: "Genç Sporcu Erdal", description: "Milli takım sporcusu. Fiziksel kondisyonu zirvede olan, sürekli lobide veya dış alanlarda telefonla konuşarak sponsor arayan genç.", icon: "noun-termal-genc-adam-avatar.png" },
+      { id: "s1", name: "Emekli Doktor Vedat Bey", description: "Miras verasetinde tanık olan, bastonuyla zor yürüyen, güçlü fiziksel eylemlerden kaçınan yaşlı adam.", icon: "pa:termol_s1" },
+      { id: "s2", name: "İş Kadını Perihan Hanım", description: "Hesap anlaşmazlığı yaşadığı ortağına karşı kin güden, lüks kıyafetlere ve monogramlı şahsi eşyalara düşkün hırslı kadın.", icon: "pa:termol_s2" },
+      { id: "s3", name: "Genç Sporcu Erdal", description: "Milli takım sporcusu. Fiziksel kondisyonu zirvede olan, sürekli lobide veya dış alanlarda telefonla konuşarak sponsor arayan genç.", icon: "pa:termol_s3" },
     ],
     weapons: [
-      { id: "w1", name: "Havlu", description: "Odalardan alınmış, boyna sıkıca dolandığında sessizce ve etkili biçimde nefesi kesen esnek, kalın otel kumaşı.", icon: "dry-cleaning" },
-      { id: "w2", name: "Kimyasal Temizleyici", description: "Su bakımında kullanılan, içilmesi veya solunması halinde ciğerleri parçalayan aşırı dozda klorlu zehirli sıvı.", icon: "science" },
-      { id: "w3", name: "Metal Trabzan", description: "Merdiven kenarından sökülmüş, sert bir şekilde kafaya vurulduğunda açık yara ve kırık yaratan ağır metal boru.", icon: "construction" },
+      { id: "w1", name: "Havlu", description: "Odalardan alınmış, boyna sıkıca dolandığında sessizce ve etkili biçimde nefesi kesen esnek, kalın otel kumaşı.", icon: "pa:termol_w1" },
+      { id: "w2", name: "Kimyasal Temizleyici", description: "Su bakımında kullanılan, içilmesi veya solunması halinde ciğerleri parçalayan aşırı dozda klorlu zehirli sıvı.", icon: "pa:termol_w2" },
+      { id: "w3", name: "Metal Trabzan", description: "Merdiven kenarından sökülmüş, sert bir şekilde kafaya vurulduğunda açık yara ve kırık yaratan ağır metal boru.", icon: "pa:termol_w3" },
     ],
     locations: [
-      { id: "l1", name: "Termal Havuz", description: "Otelin alt katında yer alan, sıcak su buharıyla kaplı, sığ kenarları olan ve zeminleri her daim ıslak kapalı alan.", icon: "pool" },
-      { id: "l2", name: "Koridor", description: "Oda katlarını birbirine bağlayan, uzun halılarla kaplı, aydınlık ve güvenlik kamerasının kısmen gördüğü sessiz geçit.", icon: "meeting-room" },
-      { id: "l3", name: "Lobi", description: "Otelin ana girişinin bulunduğu, resepsiyon görevlisinin durduğu, geniş oturma gruplarına sahip ana karşılama alanı.", icon: "hotel" },
+      { id: "l1", name: "Termal Havuz", description: "Otelin alt katında yer alan, sıcak su buharıyla kaplı, sığ kenarları olan ve zeminleri her daim ıslak kapalı alan.", icon: "pa:termol_l1" },
+      { id: "l2", name: "Koridor", description: "Oda katlarını birbirine bağlayan, uzun halılarla kaplı, aydınlık ve güvenlik kamerasının kısmen gördüğü sessiz geçit.", icon: "pa:termol_l2" },
+      { id: "l3", name: "Lobi", description: "Otelin ana girişinin bulunduğu, resepsiyon görevlisinin durduğu, geniş oturma gruplarına sahip ana karşılama alanı.", icon: "pa:termol_l3" },
     ],
     clues: [
       { id: "c1", text: "Otel halılarında veya geniş lobi koltuklarında hiçbir su damlası yoktu; kurban tamamen ıslak bir zeminde, yoğun buharın olduğu bir alanda can vermişti.", type: "evidence", isBonus: false },

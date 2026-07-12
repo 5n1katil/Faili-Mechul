@@ -143,6 +143,15 @@ const PUZZLE_ASSET_MAP: Record<string, number> = {
   foto_l1: require("../assets/images/puzzle_assets/foto_l1.png"),
   foto_l2: require("../assets/images/puzzle_assets/foto_l2.png"),
   foto_l3: require("../assets/images/puzzle_assets/foto_l3.png"),
+  termol_s1: require("../assets/images/puzzle_assets/termol_s1.png"),
+  termol_s2: require("../assets/images/puzzle_assets/termol_s2.png"),
+  termol_s3: require("../assets/images/puzzle_assets/termol_s3.png"),
+  termol_w1: require("../assets/images/puzzle_assets/termol_w1.png"),
+  termol_w2: require("../assets/images/puzzle_assets/termol_w2.png"),
+  termol_w3: require("../assets/images/puzzle_assets/termol_w3.png"),
+  termol_l1: require("../assets/images/puzzle_assets/termol_l1.png"),
+  termol_l2: require("../assets/images/puzzle_assets/termol_l2.png"),
+  termol_l3: require("../assets/images/puzzle_assets/termol_l3.png"),
 };
 
 export function isPuzzleAsset(icon: string | undefined): boolean {
