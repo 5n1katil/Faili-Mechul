@@ -152,6 +152,15 @@ const PUZZLE_ASSET_MAP: Record<string, number> = {
   termol_l1: require("../assets/images/puzzle_assets/termol_l1.png"),
   termol_l2: require("../assets/images/puzzle_assets/termol_l2.png"),
   termol_l3: require("../assets/images/puzzle_assets/termol_l3.png"),
+  mektup_s1: require("../assets/images/puzzle_assets/mektup_s1.png"),
+  mektup_s2: require("../assets/images/puzzle_assets/mektup_s2.png"),
+  mektup_s3: require("../assets/images/puzzle_assets/mektup_s3.png"),
+  mektup_w1: require("../assets/images/puzzle_assets/mektup_w1.png"),
+  mektup_w2: require("../assets/images/puzzle_assets/mektup_w2.png"),
+  mektup_w3: require("../assets/images/puzzle_assets/mektup_w3.png"),
+  mektup_l1: require("../assets/images/puzzle_assets/mektup_l1.png"),
+  mektup_l2: require("../assets/images/puzzle_assets/mektup_l2.png"),
+  mektup_l3: require("../assets/images/puzzle_assets/mektup_l3.png"),
 };
 
 export function isPuzzleAsset(icon: string | undefined): boolean {

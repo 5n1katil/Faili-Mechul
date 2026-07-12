@@ -2235,19 +2235,19 @@ export const PUZZLES: Puzzle[] = [
     story:
       "Samsun'un liman mahallelerinden birinde postacı Cafer Bey, akşam erken saatte bir arka sokakta bıçaklanmış bulundu. Çantasındaki birkaç mektup kayıp. Gün içinde tartışma yaşadığı üç kişiden birisi, zarfın içindeki sırları korumak için cinayeti işledi.",
     suspects: [
-      { id: "s1", name: "Bakkal Necati", description: "Koli şikayeti bulunan mahalle esnafı. Sürekli dükkanının önünde bekleyen, kendi bölgesinden pek ayrılmayan tanıdık yüz.", icon: "noun-mektup-mahalle-adami-avatar.png" },
-      { id: "s2", name: "Liman İşçisi Tahsin", description: "İşten çıkarılma belgesinin postalanmasından korkan, üzerinde her daim ağır iş aletleri taşıyan öfkeli tersane işçisi.", icon: "noun-mektup-tamirci-avatar.png" },
-      { id: "s3", name: "Ev Hanımı Hatice Teyze", description: "Postaların geç gelmesinden şikayetçi olan ev hanımı. Fiziksel olarak yavaş hareket eden, kargoları için depo binalarını aşındıran kadın.", icon: "noun-mektup-komsu-kadin-avatar.png" },
+      { id: "s1", name: "Bakkal Necati", description: "Koli şikayeti bulunan mahalle esnafı. Sürekli dükkanının önünde bekleyen, kendi bölgesinden pek ayrılmayan tanıdık yüz.", icon: "pa:mektup_s1" },
+      { id: "s2", name: "Liman İşçisi Tahsin", description: "İşten çıkarılma belgesinin postalanmasından korkan, üzerinde her daim ağır iş aletleri taşıyan öfkeli tersane işçisi.", icon: "pa:mektup_s2" },
+      { id: "s3", name: "Ev Hanımı Hatice Teyze", description: "Postaların geç gelmesinden şikayetçi olan ev hanımı. Fiziksel olarak yavaş hareket eden, kargoları için depo binalarını aşındıran kadın.", icon: "pa:mektup_s3" },
     ],
     weapons: [
-      { id: "w1", name: "Çakı", description: "Küçük, katlanabilir, yakından yapılan tek bir pürüzsüz hamleyle ince ve derin bir kesik açabilen cep aleti.", icon: "content-cut" },
-      { id: "w2", name: "Kanca", description: "Ağır yükleri kavramak için kullanılan, saplandığında geniş ve parçalı derin tahribat yaratan paslı demir alet.", icon: "anchor" },
-      { id: "w3", name: "Cam Parçası", description: "Sokaktaki kırık bir şişeden alınmış, boynu düzensiz ve tırtıklı şekilde parçalayan rastgele kesici alet.", icon: "broken-image" },
+      { id: "w1", name: "Çakı", description: "Küçük, katlanabilir, yakından yapılan tek bir pürüzsüz hamleyle ince ve derin bir kesik açabilen cep aleti.", icon: "pa:mektup_w1" },
+      { id: "w2", name: "Kanca", description: "Ağır yükleri kavramak için kullanılan, saplandığında geniş ve parçalı derin tahribat yaratan paslı demir alet.", icon: "pa:mektup_w2" },
+      { id: "w3", name: "Cam Parçası", description: "Sokaktaki kırık bir şişeden alınmış, boynu düzensiz ve tırtıklı şekilde parçalayan rastgele kesici alet.", icon: "pa:mektup_w3" },
     ],
     locations: [
-      { id: "l1", name: "Arka Sokak", description: "Esnaf dükkanlarının arka tarafına düşen, görüş açısı kapalı, dar, ıssız ve kimsenin geçmediği taşlı yol.", icon: "place" },
-      { id: "l2", name: "Liman Rıhtımı", description: "Devasa gemilerin yanaştığı, yükleme işlemlerinin yapıldığı geniş ve rüzgarlı açık sahil alanı.", icon: "directions-boat" },
-      { id: "l3", name: "Posta Deposu", description: "Gelen mektupların sınıflandırıldığı, kargoların yığıldığı dört duvar arası küçük resmi bina.", icon: "local-post-office" },
+      { id: "l1", name: "Arka Sokak", description: "Esnaf dükkanlarının arka tarafına düşen, görüş açısı kapalı, dar, ıssız ve kimsenin geçmediği taşlı yol.", icon: "pa:mektup_l1" },
+      { id: "l2", name: "Liman Rıhtımı", description: "Devasa gemilerin yanaştığı, yükleme işlemlerinin yapıldığı geniş ve rüzgarlı açık sahil alanı.", icon: "pa:mektup_l2" },
+      { id: "l3", name: "Posta Deposu", description: "Gelen mektupların sınıflandırıldığı, kargoların yığıldığı dört duvar arası küçük resmi bina.", icon: "pa:mektup_l3" },
     ],
     clues: [
       { id: "c1", text: "Postane amirinin tutanakları, Hatice Teyze'nin tüm akşamüstünü kargoların sınıflandırıldığı ana resmi binada memurlarla tartışarak geçirdiğini kesinleştirdi.", type: "record", isBonus: false },
