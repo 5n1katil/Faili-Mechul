@@ -2163,19 +2163,19 @@ export const PUZZLES: Puzzle[] = [
     story:
       "Ankara'nın eski Ulus semtinde tanınmış bir fotoğrafçı olan Faruk Bey, stüdyosunda ölü bulundu. Kırmızı lamba yanık, banyo teknelerinde yarı işlenmiş filmler hâlâ duruyordu. Gün içinde gelen üç şüphelinin her biri diğerini suçlarken gerçek karanlıkta gizli.",
     suspects: [
-      { id: "s1", name: "Gazeteci Selda Hanım", description: "Fotoğrafları izinsiz yayımlayan muhalif muhabir. Sadece ön ofisteki açık alanlara ve çekim ekipmanlarına erişimi vardı.", icon: "noun-foto-kadin-muhabir-avatar.png" },
-      { id: "s2", name: "Asistan Cumhur", description: "Fotoğrafçının stüdyo çalışanı. Terfi alamadığı için öfkeli; banyo sıvıları dahil stüdyonun tüm teknik alanlarını kullanma yetkisine sahip.", icon: "noun-foto-stajyer-avatar.png" },
-      { id: "s3", name: "Koleksiyoner Münir Bey", description: "Nadir eserler için baskı yapan yaşlı koleksiyoner. Sadece depolanmış eski kutularla ilgilenir, güncel çekim alanlarına hiç uğramaz.", icon: "noun-foto-koleksiyoner-avatar.png" },
+      { id: "s1", name: "Gazeteci Selda Hanım", description: "Fotoğrafları izinsiz yayımlayan muhalif muhabir. Sadece ön ofisteki açık alanlara ve çekim ekipmanlarına erişimi vardı.", icon: "pa:foto_s1" },
+      { id: "s2", name: "Asistan Cumhur", description: "Fotoğrafçının stüdyo çalışanı. Terfi alamadığı için öfkeli; banyo sıvıları dahil stüdyonun tüm teknik alanlarını kullanma yetkisine sahip.", icon: "pa:foto_s2" },
+      { id: "s3", name: "Koleksiyoner Münir Bey", description: "Nadir eserler için baskı yapan yaşlı koleksiyoner. Sadece depolanmış eski kutularla ilgilenir, güncel çekim alanlarına hiç uğramaz.", icon: "pa:foto_s3" },
     ],
     weapons: [
-      { id: "w1", name: "Tripod Bacağı", description: "Kamera sehpasından sökülmüş uzun ve ağır alüminyum boru; kafaya küt bir darbe vurulduğunda anında ölümcül olabilir.", icon: "straighten" },
-      { id: "w2", name: "Kimyasal Banyo", description: "Filmleri yıkamakta kullanılan, zorla içirildiğinde iç organları saniyeler içinde eriten yüksek asitli zehirli çözelti.", icon: "science" },
-      { id: "w3", name: "Cam Negatif Kutusu", description: "İçi eski cam filmlerle dolu, kaldırıp atıldığında ezici tahribat yaratan son derece ağır ve köşeli metal kutu.", icon: "inventory-2" },
+      { id: "w1", name: "Tripod Bacağı", description: "Kamera sehpasından sökülmüş uzun ve ağır alüminyum boru; kafaya küt bir darbe vurulduğunda anında ölümcül olabilir.", icon: "pa:foto_w1" },
+      { id: "w2", name: "Kimyasal Banyo", description: "Filmleri yıkamakta kullanılan, zorla içirildiğinde iç organları saniyeler içinde eriten yüksek asitli zehirli çözelti.", icon: "pa:foto_w2" },
+      { id: "w3", name: "Cam Negatif Kutusu", description: "İçi eski cam filmlerle dolu, kaldırıp atıldığında ezici tahribat yaratan son derece ağır ve köşeli metal kutu.", icon: "pa:foto_w3" },
     ],
     locations: [
-      { id: "l1", name: "Karanlık Oda", description: "Sadece kırmızı lambanın yandığı, filmlerin yıkandığı banyo teknelerinin bulunduğu stüdyonun en kapalı ve loş arka alanı.", icon: "camera-roll" },
-      { id: "l2", name: "Stüdyo Salonu", description: "Müşterilerin poz verdiği, kamera ve flaşların bulunduğu oldukça geniş, aydınlık ve ferah ön çekim alanı.", icon: "photo-camera" },
-      { id: "l3", name: "Depo Odası", description: "Kullanılmayan malzemelerin ve geçmiş yıllara ait arşiv kutularının üst üste yığıldığı tozlu ve dar arka oda.", icon: "warehouse" },
+      { id: "l1", name: "Karanlık Oda", description: "Sadece kırmızı lambanın yandığı, filmlerin yıkandığı banyo teknelerinin bulunduğu stüdyonun en kapalı ve loş arka alanı.", icon: "pa:foto_l1" },
+      { id: "l2", name: "Stüdyo Salonu", description: "Müşterilerin poz verdiği, kamera ve flaşların bulunduğu oldukça geniş, aydınlık ve ferah ön çekim alanı.", icon: "pa:foto_l2" },
+      { id: "l3", name: "Depo Odası", description: "Kullanılmayan malzemelerin ve geçmiş yıllara ait arşiv kutularının üst üste yığıldığı tozlu ve dar arka oda.", icon: "pa:foto_l3" },
     ],
     clues: [
       { id: "c1", text: "Kriminal inceleme, asit banyosu yanıklarının kurbana ölümünden sonra yapıldığını; gerçek ölüm nedeninin kafatasına indirilen silindirik ve ağır bir alüminyum obje olduğunu saptadı.", type: "forensic", isBonus: false },
