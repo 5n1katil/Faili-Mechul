@@ -2343,19 +2343,19 @@ export const PUZZLES: Puzzle[] = [
     story:
       "Konya'da tarihi bir hanın sahibi Lütfi Bey, sahur sonrasında odasının hemen önünde ölü bulundu. Kandiller yanıyor, kapılar kilitliydi. Katil, geceyi handa geçiren misafirlerden birisiydi.",
     suspects: [
-      { id: "s1", name: "Hacı Efendi Rüstem", description: "Hac dönüşü Konya'ya uğrayan yaşlı tüccar; Lütfi Bey'den yıllar önce borç almış ama geri ödememiş.", icon: "noun-ramazan-tesbihli-adam-avatar.png" },
-      { id: "s2", name: "Genç Mühendis Adnan", description: "Konya'ya iş için gelen altyapı mühendisi; Lütfi Bey'in otelini yıkımdan kurtarma talebini reddetmiş.", icon: "noun-ramazan-kapici-avatar.png" },
-      { id: "s3", name: "Dul Kadın Zümrüt Hanım", description: "Konya'ya akraba ziyaretine gelen dul; Lütfi Bey'in kendisine yönelik taciz girişimini yaşadığını söylüyor.", icon: "noun-ramazan-hizmetci-kadin-avatar.png" },
+      { id: "s1", name: "Hacı Efendi Rüstem", description: "Hac dönüşü Konya'ya uğrayan yaşlı tüccar; Lütfi Bey'den yıllar önce borç almış ama geri ödememiş.", icon: "pa:ramazan_s1" },
+      { id: "s2", name: "Genç Mühendis Adnan", description: "Konya'ya iş için gelen altyapı mühendisi; Lütfi Bey'in otelini yıkımdan kurtarma talebini reddetmiş.", icon: "pa:ramazan_s2" },
+      { id: "s3", name: "Dul Kadın Zümrüt Hanım", description: "Konya'ya akraba ziyaretine gelen dul; Lütfi Bey'in kendisine yönelik taciz girişimini yaşadığını söylüyor.", icon: "pa:ramazan_s3" },
     ],
     weapons: [
-      { id: "w1", name: "Şam Bıçağı", description: "İnce, uzun ve her iki tarafı keskin süslü Şam bıçağı.", icon: "content-cut" },
-      { id: "w2", name: "Kandil Direği", description: "Koridorda asılı kandillerden birinin ağır pirinç direği.", icon: "wb-incandescent" },
-      { id: "w3", name: "Halat", description: "Han çatı katında bulunan kalın sarma halat.", icon: "link" },
+      { id: "w1", name: "Şam Bıçağı", description: "İnce, uzun ve her iki tarafı keskin süslü Şam bıçağı.", icon: "pa:ramazan_w1" },
+      { id: "w2", name: "Kandil Direği", description: "Koridorda asılı kandillerden birinin ağır pirinç direği.", icon: "pa:ramazan_w2" },
+      { id: "w3", name: "Halat", description: "Han çatı katında bulunan kalın sarma halat.", icon: "pa:ramazan_w3" },
     ],
     locations: [
-      { id: "l1", name: "Koridor", description: "Odaların önündeki loş kandil ışıklı uzun koridor.", icon: "meeting-room" },
-      { id: "l2", name: "Avlu", description: "Hanın ortasındaki açık avlu; gece boyunca bekçi dolaşıyor.", icon: "park" },
-      { id: "l3", name: "Çatı Katı", description: "Han eşyalarının depolandığı üst çatı katı.", icon: "roofing" },
+      { id: "l1", name: "Koridor", description: "Odaların önündeki loş kandil ışıklı uzun koridor.", icon: "pa:ramazan_l1" },
+      { id: "l2", name: "Avlu", description: "Hanın ortasındaki açık avlu; gece boyunca bekçi dolaşıyor.", icon: "pa:ramazan_l2" },
+      { id: "l3", name: "Çatı Katı", description: "Han eşyalarının depolandığı üst çatı katı.", icon: "pa:ramazan_l3" },
     ],
     clues: [
       { id: "c1", text: "Kan sıçrama desenleri, kurbanın açık hava avlusunda veya üst çatı katında saldırıya uğramadığını, doğrudan odaların dizili olduğu loş hattın tam ortasında yığıldığını gösteriyordu.", type: "evidence", isBonus: false },

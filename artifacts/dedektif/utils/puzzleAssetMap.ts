@@ -191,6 +191,15 @@ const PUZZLE_ASSET_MAP: Record<string, number> = {
   dag_l1: require("../assets/images/puzzle_assets/dag_l1.png"),
   dag_l2: require("../assets/images/puzzle_assets/dag_l2.png"),
   dag_l3: require("../assets/images/puzzle_assets/dag_l3.png"),
+  ramazan_s1: require("../assets/images/puzzle_assets/ramazan_s1.png"),
+  ramazan_s2: require("../assets/images/puzzle_assets/ramazan_s2.png"),
+  ramazan_s3: require("../assets/images/puzzle_assets/ramazan_s3.png"),
+  ramazan_w1: require("../assets/images/puzzle_assets/ramazan_w1.png"),
+  ramazan_w2: require("../assets/images/puzzle_assets/ramazan_w2.png"),
+  ramazan_w3: require("../assets/images/puzzle_assets/ramazan_w3.png"),
+  ramazan_l1: require("../assets/images/puzzle_assets/ramazan_l1.png"),
+  ramazan_l2: require("../assets/images/puzzle_assets/ramazan_l2.png"),
+  ramazan_l3: require("../assets/images/puzzle_assets/ramazan_l3.png"),
 };
 
 export function isPuzzleAsset(icon: string | undefined): boolean {
