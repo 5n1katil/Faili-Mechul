@@ -212,6 +212,18 @@ const PUZZLE_ASSET_MAP: Record<string, number> = {
   senfoni_l2: require("../assets/images/puzzle_assets/senfoni_l2.png"),
   senfoni_l3: require("../assets/images/puzzle_assets/senfoni_l3.png"),
   senfoni_l4: require("../assets/images/puzzle_assets/senfoni_l4.png"),
+  kanli_s1: require("../assets/images/puzzle_assets/kanli_s1.png"),
+  kanli_s2: require("../assets/images/puzzle_assets/kanli_s2.png"),
+  kanli_s3: require("../assets/images/puzzle_assets/kanli_s3.png"),
+  kanli_s4: require("../assets/images/puzzle_assets/kanli_s4.png"),
+  kanli_w1: require("../assets/images/puzzle_assets/kanli_w1.png"),
+  kanli_w2: require("../assets/images/puzzle_assets/kanli_w2.png"),
+  kanli_w3: require("../assets/images/puzzle_assets/kanli_w3.png"),
+  kanli_w4: require("../assets/images/puzzle_assets/kanli_w4.png"),
+  kanli_l1: require("../assets/images/puzzle_assets/kanli_l1.png"),
+  kanli_l2: require("../assets/images/puzzle_assets/kanli_l2.png"),
+  kanli_l3: require("../assets/images/puzzle_assets/kanli_l3.png"),
+  kanli_l4: require("../assets/images/puzzle_assets/kanli_l4.png"),
 };
 
 export function isPuzzleAsset(icon: string | undefined): boolean {
