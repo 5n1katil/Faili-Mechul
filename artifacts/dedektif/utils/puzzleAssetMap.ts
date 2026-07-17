@@ -182,6 +182,15 @@ const PUZZLE_ASSET_MAP: Record<string, number> = {
   zeytin_l1: require("../assets/images/puzzle_assets/zeytin_l1.png"),
   zeytin_l2: require("../assets/images/puzzle_assets/zeytin_l2.png"),
   zeytin_l3: require("../assets/images/puzzle_assets/zeytin_l3.png"),
+  dag_s1: require("../assets/images/puzzle_assets/dag_s1.png"),
+  dag_s2: require("../assets/images/puzzle_assets/dag_s2.png"),
+  dag_s3: require("../assets/images/puzzle_assets/dag_s3.png"),
+  dag_w1: require("../assets/images/puzzle_assets/dag_w1.png"),
+  dag_w2: require("../assets/images/puzzle_assets/dag_w2.png"),
+  dag_w3: require("../assets/images/puzzle_assets/dag_w3.png"),
+  dag_l1: require("../assets/images/puzzle_assets/dag_l1.png"),
+  dag_l2: require("../assets/images/puzzle_assets/dag_l2.png"),
+  dag_l3: require("../assets/images/puzzle_assets/dag_l3.png"),
 };
 
 export function isPuzzleAsset(icon: string | undefined): boolean {
