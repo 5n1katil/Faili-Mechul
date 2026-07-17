@@ -161,6 +161,18 @@ const PUZZLE_ASSET_MAP: Record<string, number> = {
   mektup_l1: require("../assets/images/puzzle_assets/mektup_l1.png"),
   mektup_l2: require("../assets/images/puzzle_assets/mektup_l2.png"),
   mektup_l3: require("../assets/images/puzzle_assets/mektup_l3.png"),
+  sabanci_s1: require("../assets/images/puzzle_assets/sabanci_s1.png"),
+  sabanci_s2: require("../assets/images/puzzle_assets/sabanci_s2.png"),
+  sabanci_s3: require("../assets/images/puzzle_assets/sabanci_s3.png"),
+  sabanci_s4: require("../assets/images/puzzle_assets/sabanci_s4.png"),
+  sabanci_w1: require("../assets/images/puzzle_assets/sabanci_w1.png"),
+  sabanci_w2: require("../assets/images/puzzle_assets/sabanci_w2.png"),
+  sabanci_w3: require("../assets/images/puzzle_assets/sabanci_w3.png"),
+  sabanci_w4: require("../assets/images/puzzle_assets/sabanci_w4.png"),
+  sabanci_l1: require("../assets/images/puzzle_assets/sabanci_l1.png"),
+  sabanci_l2: require("../assets/images/puzzle_assets/sabanci_l2.png"),
+  sabanci_l3: require("../assets/images/puzzle_assets/sabanci_l3.png"),
+  sabanci_l4: require("../assets/images/puzzle_assets/sabanci_l4.png"),
 };
 
 export function isPuzzleAsset(icon: string | undefined): boolean {
