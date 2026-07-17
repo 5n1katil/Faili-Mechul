@@ -218,7 +218,7 @@ const PUZZLE_ASSET_MAP: Record<string, number> = {
   kanli_s4: require("../assets/images/puzzle_assets/kanli_s4.png"),
   kanli_w1: require("../assets/images/puzzle_assets/kanli_w1.png"),
   kanli_w2: require("../assets/images/puzzle_assets/kanli_w2.png"),
-  kanli_w3: require("../assets/images/puzzle_assets/kanli_w3.png"),
+  kanli_w3: require("../assets/images/puzzle_assets/kanli_w3_fit.png"),
   kanli_w4: require("../assets/images/puzzle_assets/kanli_w4.png"),
   kanli_l1: require("../assets/images/puzzle_assets/kanli_l1.png"),
   kanli_l2: require("../assets/images/puzzle_assets/kanli_l2.png"),
