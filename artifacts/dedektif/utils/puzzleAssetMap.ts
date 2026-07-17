@@ -236,6 +236,18 @@ const PUZZLE_ASSET_MAP: Record<string, number> = {
   derin_l2: require("../assets/images/puzzle_assets/derin_l2.png"),
   derin_l3: require("../assets/images/puzzle_assets/derin_l3.png"),
   derin_l4: require("../assets/images/puzzle_assets/derin_l4.png"),
+  tuval_s1: require("../assets/images/puzzle_assets/tuval_s1.png"),
+  tuval_s2: require("../assets/images/puzzle_assets/tuval_s2.png"),
+  tuval_s3: require("../assets/images/puzzle_assets/tuval_s3.png"),
+  tuval_s4: require("../assets/images/puzzle_assets/tuval_s4.png"),
+  tuval_w1: require("../assets/images/puzzle_assets/tuval_w1.png"),
+  tuval_w2: require("../assets/images/puzzle_assets/tuval_w2.png"),
+  tuval_w3: require("../assets/images/puzzle_assets/tuval_w3.png"),
+  tuval_w4: require("../assets/images/puzzle_assets/tuval_w4.png"),
+  tuval_l1: require("../assets/images/puzzle_assets/tuval_l1.png"),
+  tuval_l2: require("../assets/images/puzzle_assets/tuval_l2.png"),
+  tuval_l3: require("../assets/images/puzzle_assets/tuval_l3.png"),
+  tuval_l4: require("../assets/images/puzzle_assets/tuval_l4.png"),
 };
 
 export function isPuzzleAsset(icon: string | undefined): boolean {
