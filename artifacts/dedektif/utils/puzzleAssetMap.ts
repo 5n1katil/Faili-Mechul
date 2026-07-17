@@ -224,6 +224,18 @@ const PUZZLE_ASSET_MAP: Record<string, number> = {
   kanli_l2: require("../assets/images/puzzle_assets/kanli_l2.png"),
   kanli_l3: require("../assets/images/puzzle_assets/kanli_l3.png"),
   kanli_l4: require("../assets/images/puzzle_assets/kanli_l4.png"),
+  derin_s1: require("../assets/images/puzzle_assets/derin_s1.png"),
+  derin_s2: require("../assets/images/puzzle_assets/derin_s2.png"),
+  derin_s3: require("../assets/images/puzzle_assets/derin_s3.png"),
+  derin_s4: require("../assets/images/puzzle_assets/derin_s4.png"),
+  derin_w1: require("../assets/images/puzzle_assets/derin_w1.png"),
+  derin_w2: require("../assets/images/puzzle_assets/derin_w2.png"),
+  derin_w3: require("../assets/images/puzzle_assets/derin_w3_fit.png"),
+  derin_w4: require("../assets/images/puzzle_assets/derin_w4_alpha.png"),
+  derin_l1: require("../assets/images/puzzle_assets/derin_l1.png"),
+  derin_l2: require("../assets/images/puzzle_assets/derin_l2.png"),
+  derin_l3: require("../assets/images/puzzle_assets/derin_l3.png"),
+  derin_l4: require("../assets/images/puzzle_assets/derin_l4.png"),
 };
 
 export function isPuzzleAsset(icon: string | undefined): boolean {
