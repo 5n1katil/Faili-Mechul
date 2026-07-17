@@ -35,10 +35,10 @@ type MaterialIconName = ComponentProps<typeof MaterialIcons>["name"];
 const DEMO_SUSPECTS: Suspect[] = [
   { id: "ds1", name: "Ahmet",  description: "", icon: "pa:konakta_s2" },
   { id: "ds2", name: "Zeynep", description: "", icon: "pa:konakta_s3" },
-  { id: "ds3", name: "Murat",  description: "", icon: "pa:pazar_s1" },
+  { id: "ds3", name: "Murat",  description: "", icon: "pa:onboard_s3" },
 ];
 const DEMO_WEAPONS: Weapon[] = [
-  { id: "dw1", name: "Bıçak",   description: "", icon: "content-cut" },
+  { id: "dw1", name: "Bıçak",   description: "", icon: "pa:onboard_w1" },
   { id: "dw2", name: "Zehir",   description: "", icon: "pa:konakta_w2" },
   { id: "dw3", name: "Tabanca", description: "", icon: "pa:konakta_w3" },
 ];
@@ -90,6 +90,7 @@ function DemoGridWrapper({ contentWidth, screenHeight }: { contentWidth: number;
           gridState={DEMO_GRID_STATE}
           onCellPress={() => {}}
           disabled
+          showEntityNames
         />
       </View>
     </View>

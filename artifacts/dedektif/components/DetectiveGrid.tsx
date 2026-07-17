@@ -50,6 +50,7 @@ interface Props {
   disabled?: boolean;
   onHeaderPress?: (entity: EntityInfo) => void;
   isComplete?: boolean;
+  showEntityNames?: boolean;
 }
 
 function normalizeMaterialIconName(icon: string | undefined, type: "suspect" | "weapon" | "location"): string {
@@ -183,6 +184,7 @@ function EntityLabel({
   labelWidth,
   onHeaderPress,
   isRowLabel,
+  showEntityNames,
 }: {
   icon: string;
   name: string;
@@ -198,6 +200,7 @@ function EntityLabel({
   labelWidth: number;
   onHeaderPress?: (entity: EntityInfo) => void;
   isRowLabel: boolean;
+  showEntityNames?: boolean;
 }) {
   const scale = useSharedValue(1);
 
@@ -293,7 +296,7 @@ function EntityLabel({
     return (
       <Pressable
         onPress={onHeaderPress ? handlePress : undefined}
-        style={{ width: labelWidth, height: cellSize, alignItems: "center", justifyContent: "center" }}
+        style={{ width: labelWidth, height: cellSize, alignItems: "center", justifyContent: "center", overflow: "visible" }}
       >
         <Animated.View
           style={[
@@ -302,6 +305,7 @@ function EntityLabel({
               height: cellSize,
               alignItems: "center",
               justifyContent: "center",
+              overflow: "visible",
             },
             animStyle,
           ]}
@@ -321,6 +325,24 @@ function EntityLabel({
           >
             {renderInnerIcon()}
           </View>
+          {showEntityNames && (
+            <Text
+              numberOfLines={1}
+              style={{
+                position: "absolute",
+                top: avatarSize + 1,
+                width: labelWidth,
+                textAlign: "center",
+                fontSize: 7,
+                fontFamily: "DroidSerifRegular",
+                fontWeight: "700",
+                color: color,
+                letterSpacing: 0.2,
+              }}
+            >
+              {name}
+            </Text>
+          )}
         </Animated.View>
       </Pressable>
     );
@@ -338,12 +360,29 @@ function EntityLabel({
             width: cellSize,
             height: headerHeight,
             alignItems: "center",
-            justifyContent: "flex-end",
+            justifyContent: showEntityNames ? "space-between" : "flex-end",
+            paddingTop: showEntityNames ? 4 : 0,
             paddingBottom: 6,
           },
           animStyle,
         ]}
       >
+        {showEntityNames && (
+          <Text
+            numberOfLines={1}
+            style={{
+              fontSize: 7,
+              fontFamily: "DroidSerifRegular",
+              fontWeight: "700",
+              color: color,
+              letterSpacing: 0.2,
+              textAlign: "center",
+              width: cellSize,
+            }}
+          >
+            {name}
+          </Text>
+        )}
         <View
           style={{
             width: avatarSize,
@@ -375,6 +414,7 @@ export default function DetectiveGrid({
   disabled,
   onHeaderPress,
   isComplete,
+  showEntityNames,
 }: Props) {
   const [containerWidth, setContainerWidth] = useState(0);
 
@@ -490,6 +530,7 @@ export default function DetectiveGrid({
                 parmakIziDeseni={(s as any).parmakIziDeseni}
                 cellSize={cellSize} labelWidth={labelWidth}
                 onHeaderPress={onHeaderPress} isRowLabel={false}
+                showEntityNames={showEntityNames}
               />
             ))}
             <View style={{ width: divider + 2, backgroundColor: BLOCK_DIVIDER_COLOR }} />
@@ -501,6 +542,7 @@ export default function DetectiveGrid({
                 type="location"
                 cellSize={cellSize} labelWidth={labelWidth}
                 onHeaderPress={onHeaderPress} isRowLabel={false}
+                showEntityNames={showEntityNames}
               />
             ))}
           </View>
@@ -520,6 +562,7 @@ export default function DetectiveGrid({
                 type="weapon"
                 cellSize={cellSize} labelWidth={labelWidth}
                 onHeaderPress={onHeaderPress} isRowLabel={true}
+                showEntityNames={showEntityNames}
               />
               <View style={[styles.cellsBlock, { width: weaponBlockOuter }]}>
                 {renderCells(weapon.id, suspects)}
@@ -549,6 +592,7 @@ export default function DetectiveGrid({
                 type="location"
                 cellSize={cellSize} labelWidth={labelWidth}
                 onHeaderPress={onHeaderPress} isRowLabel={true}
+                showEntityNames={showEntityNames}
               />
               <View
                 style={[

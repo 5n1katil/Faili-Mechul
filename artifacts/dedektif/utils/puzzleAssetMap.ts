@@ -248,6 +248,9 @@ const PUZZLE_ASSET_MAP: Record<string, number> = {
   tuval_l2: require("../assets/images/puzzle_assets/tuval_l2.png"),
   tuval_l3: require("../assets/images/puzzle_assets/tuval_l3.png"),
   tuval_l4: require("../assets/images/puzzle_assets/tuval_l4.png"),
+  onboard_s3: require("../assets/images/puzzle_assets/onboard_s3.png"),
+  onboard_w1: require("../assets/images/puzzle_assets/onboard_w1.png"),
+  onboard_w2: require("../assets/images/puzzle_assets/onboard_w2.png"),
 };
 
 export function isPuzzleAsset(icon: string | undefined): boolean {
