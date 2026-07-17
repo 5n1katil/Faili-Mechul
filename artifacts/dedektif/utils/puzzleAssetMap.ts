@@ -173,6 +173,15 @@ const PUZZLE_ASSET_MAP: Record<string, number> = {
   sabanci_l2: require("../assets/images/puzzle_assets/sabanci_l2.png"),
   sabanci_l3: require("../assets/images/puzzle_assets/sabanci_l3.png"),
   sabanci_l4: require("../assets/images/puzzle_assets/sabanci_l4.png"),
+  zeytin_s1: require("../assets/images/puzzle_assets/zeytin_s1.png"),
+  zeytin_s2: require("../assets/images/puzzle_assets/zeytin_s2.png"),
+  zeytin_s3: require("../assets/images/puzzle_assets/zeytin_s3.png"),
+  zeytin_w1: require("../assets/images/puzzle_assets/zeytin_w1.png"),
+  zeytin_w2: require("../assets/images/puzzle_assets/zeytin_w2.png"),
+  zeytin_w3: require("../assets/images/puzzle_assets/zeytin_w3.png"),
+  zeytin_l1: require("../assets/images/puzzle_assets/zeytin_l1.png"),
+  zeytin_l2: require("../assets/images/puzzle_assets/zeytin_l2.png"),
+  zeytin_l3: require("../assets/images/puzzle_assets/zeytin_l3.png"),
 };
 
 export function isPuzzleAsset(icon: string | undefined): boolean {
