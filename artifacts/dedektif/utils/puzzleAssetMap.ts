@@ -200,6 +200,18 @@ const PUZZLE_ASSET_MAP: Record<string, number> = {
   ramazan_l1: require("../assets/images/puzzle_assets/ramazan_l1.png"),
   ramazan_l2: require("../assets/images/puzzle_assets/ramazan_l2.png"),
   ramazan_l3: require("../assets/images/puzzle_assets/ramazan_l3.png"),
+  senfoni_s1: require("../assets/images/puzzle_assets/senfoni_s1.png"),
+  senfoni_s2: require("../assets/images/puzzle_assets/senfoni_s2.png"),
+  senfoni_s3: require("../assets/images/puzzle_assets/senfoni_s3.png"),
+  senfoni_s4: require("../assets/images/puzzle_assets/senfoni_s4.png"),
+  senfoni_w1: require("../assets/images/puzzle_assets/senfoni_w1.png"),
+  senfoni_w2: require("../assets/images/puzzle_assets/senfoni_w2.png"),
+  senfoni_w3: require("../assets/images/puzzle_assets/senfoni_w3.png"),
+  senfoni_w4: require("../assets/images/puzzle_assets/senfoni_w4.png"),
+  senfoni_l1: require("../assets/images/puzzle_assets/senfoni_l1.png"),
+  senfoni_l2: require("../assets/images/puzzle_assets/senfoni_l2.png"),
+  senfoni_l3: require("../assets/images/puzzle_assets/senfoni_l3.png"),
+  senfoni_l4: require("../assets/images/puzzle_assets/senfoni_l4.png"),
 };
 
 export function isPuzzleAsset(icon: string | undefined): boolean {
