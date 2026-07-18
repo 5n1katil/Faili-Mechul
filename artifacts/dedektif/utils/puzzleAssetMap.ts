@@ -260,6 +260,15 @@ const PUZZLE_ASSET_MAP: Record<string, number> = {
   folklor_l1: require("../assets/images/puzzle_assets/folklor_l1.png"),
   folklor_l2: require("../assets/images/puzzle_assets/folklor_l2.png"),
   folklor_l3: require("../assets/images/puzzle_assets/folklor_l3.png"),
+  termal_s1: require("../assets/images/puzzle_assets/termal_s1.png"),
+  termal_s2: require("../assets/images/puzzle_assets/termal_s2.png"),
+  termal_s3: require("../assets/images/puzzle_assets/termal_s3.png"),
+  termal_w1: require("../assets/images/puzzle_assets/termal_w1.png"),
+  termal_w2: require("../assets/images/puzzle_assets/termal_w2.png"),
+  termal_w3: require("../assets/images/puzzle_assets/termal_w3.png"),
+  termal_l1: require("../assets/images/puzzle_assets/termal_l1.png"),
+  termal_l2: require("../assets/images/puzzle_assets/termal_l2.png"),
+  termal_l3: require("../assets/images/puzzle_assets/termal_l3.png"),
 };
 
 export function isPuzzleAsset(icon: string | undefined): boolean {

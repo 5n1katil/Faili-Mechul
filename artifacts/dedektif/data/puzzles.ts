@@ -975,19 +975,19 @@ export const PUZZLES: Puzzle[] = [
     story:
       "Bursa'nın ormanlarla çevrili lüks termal otelinde, suların huzur veren şırıltısı ünlü bir şarkıcının son çığlığıyla kesildi. Yoğun buharın göz gözü görmez ettiği spa alanında, ihtişamlı bir hayat karanlık bir sırla son buldu.",
     suspects: [
-      { id: "s1", name: "Otel Müdürü", description: "Otelin biriken borçları yüzünden köşeye sıkışan ve ünlü misafirlerin skandallarından korkan, sürekli güvenlik kameralarını izleyen gergin otel müdürü.", icon: "noun-termal-otel-muduru-avatar.png" },
-      { id: "s2", name: "Eski Hayranı", description: "Maktulün her adımını gölgelerden takip eden, reddedilmeyi asla hazmedemeyen ve gözlerini ondan ayırmayan takıntılı eski hayran.", icon: "noun-termal-kapici-avatar.png" },
-      { id: "s3", name: "Rakip Şarkıcı", description: "Aynı gece otelin devasa açık hava sahnesinde performans sergileyen, kurbanın gölgesinde kalmaktan nefret eden hırslı rakip şarkıcı.", icon: "noun-termal-gazeteci-avatar.png" },
+      { id: "s1", name: "Otel Müdürü", description: "Otelin biriken borçları yüzünden köşeye sıkışan ve ünlü misafirlerin skandallarından korkan, sürekli güvenlik kameralarını izleyen gergin otel müdürü.", icon: "pa:termal_s1" },
+      { id: "s2", name: "Eski Hayranı", description: "Maktulün her adımını gölgelerden takip eden, reddedilmeyi asla hazmedemeyen ve gözlerini ondan ayırmayan takıntılı eski hayran.", icon: "pa:termal_s2" },
+      { id: "s3", name: "Rakip Şarkıcı", description: "Aynı gece otelin devasa açık hava sahnesinde performans sergileyen, kurbanın gölgesinde kalmaktan nefret eden hırslı rakip şarkıcı.", icon: "pa:termal_s3" },
     ],
     weapons: [
-      { id: "w1", name: "Boğma", description: "Kurbanı yoğun buhar ve sıcaklığın olduğu ıslak bir zeminde, savunmasız bir anında çıplak ellerle nefessiz bırakan vahşi bir güç.", icon: "back-hand" },
-      { id: "w2", name: "Uyku Hapı", description: "Kişisel içeceklere karıştırıldığında bedeni saniyeler içinde uyuşturan ve kalbi yavaşlatan ağır reçeteli uyku ilacı.", icon: "medication" },
-      { id: "w3", name: "Bıçak", description: "Havlu ve spa malzemeleri arasına ustaca saklanmış, tek bir pürüzsüz hamleyle hayati organları delebilecek küçük katlanır bıçak.", icon: "content-cut" },
+      { id: "w1", name: "Boğma", description: "Kurbanı yoğun buhar ve sıcaklığın olduğu ıslak bir zeminde, savunmasız bir anında çıplak ellerle nefessiz bırakan vahşi bir güç.", icon: "pa:termal_w1" },
+      { id: "w2", name: "Uyku Hapı", description: "Kişisel içeceklere karıştırıldığında bedeni saniyeler içinde uyuşturan ve kalbi yavaşlatan ağır reçeteli uyku ilacı.", icon: "pa:termal_w2" },
+      { id: "w3", name: "Bıçak", description: "Havlu ve spa malzemeleri arasına ustaca saklanmış, tek bir pürüzsüz hamleyle hayati organları delebilecek küçük katlanır bıçak.", icon: "pa:termal_w3" },
     ],
     locations: [
-      { id: "l1", name: "Havuz Başı", description: "Termal suyun devir daim yaptığı, etrafı şezlonglarla çevrili, açık havada bulunan aydınlık ve geniş yüzme havuzu kenarı.", icon: "pool" },
-      { id: "l2", name: "Spa Odası", description: "Kokulu yağların ve masaj yataklarının bulunduğu, yumuşak müziklerin çaldığı, dışarıdan rahatça girilebilen aromaterapi kabini.", icon: "spa" },
-      { id: "l3", name: "Sauna", description: "Ahşap duvarlı, içeriden kilitlenebilen, nefes almayı zorlaştıran yoğun buhar ve yüksek sıcaklıkta tutulan izole terleme odası.", icon: "whatshot" },
+      { id: "l1", name: "Havuz Başı", description: "Termal suyun devir daim yaptığı, etrafı şezlonglarla çevrili, açık havada bulunan aydınlık ve geniş yüzme havuzu kenarı.", icon: "pa:termal_l1" },
+      { id: "l2", name: "Spa Odası", description: "Kokulu yağların ve masaj yataklarının bulunduğu, yumuşak müziklerin çaldığı, dışarıdan rahatça girilebilen aromaterapi kabini.", icon: "pa:termal_l2" },
+      { id: "l3", name: "Sauna", description: "Ahşap duvarlı, içeriden kilitlenebilen, nefes almayı zorlaştıran yoğun buhar ve yüksek sıcaklıkta tutulan izole terleme odası.", icon: "pa:termal_l3" },
     ],
     clues: [
       {
