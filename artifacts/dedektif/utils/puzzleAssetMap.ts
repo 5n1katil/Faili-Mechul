@@ -269,6 +269,15 @@ const PUZZLE_ASSET_MAP: Record<string, number> = {
   termal_l1: require("../assets/images/puzzle_assets/termal_l1.png"),
   termal_l2: require("../assets/images/puzzle_assets/termal_l2.png"),
   termal_l3: require("../assets/images/puzzle_assets/termal_l3.png"),
+  koydugun_s1: require("../assets/images/puzzle_assets/koydugun_s1.png"),
+  koydugun_s2: require("../assets/images/puzzle_assets/koydugun_s2.png"),
+  koydugun_s3: require("../assets/images/puzzle_assets/koydugun_s3.png"),
+  koydugun_w1: require("../assets/images/puzzle_assets/koydugun_w1.png"),
+  koydugun_w2: require("../assets/images/puzzle_assets/koydugun_w2.png"),
+  koydugun_w3: require("../assets/images/puzzle_assets/koydugun_w3.png"),
+  koydugun_l1: require("../assets/images/puzzle_assets/koydugun_l1.png"),
+  koydugun_l2: require("../assets/images/puzzle_assets/koydugun_l2.png"),
+  koydugun_l3: require("../assets/images/puzzle_assets/koydugun_l3.png"),
 };
 
 export function isPuzzleAsset(icon: string | undefined): boolean {

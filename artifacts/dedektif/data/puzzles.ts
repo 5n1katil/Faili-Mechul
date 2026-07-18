@@ -1269,19 +1269,19 @@ export const PUZZLES: Puzzle[] = [
     story:
       "Doğu Anadolu'nun etrafı karlı dağlarla çevrili şenlikli bir köyünde, davul ve zurna sesleri geceyi delerken gelinin babası kanlar içinde bulundu. Halayların coşkusu, yıllanmış bir intikamın yankısını bastırmak için mükemmel bir kamuflajdı.",
     suspects: [
-      { id: "s1", name: "Damat", description: "Maktulle düğün öncesi büyük bir aile krizi yaşayan, yüzlerce akrabasıyla birlikte eğlencenin merkezinde olması beklenen gergin damat.", icon: "noun-koy-dugunu-damat-avatar.png" },
-      { id: "s2", name: "Köy Muhtarı", description: "Kurbanla sınır tarlaları yüzünden yıllardır kan davalı olan, evinde uzun namlulu silahlar bulunduran, otoriter ve öfkeli ihtiyar köy yöneticisi.", icon: "noun-koy-dugunu-muhtar-avatar.png" },
-      { id: "s3", name: "Düğün Fotoğrafçısı", description: "Köyün yabancısı olan, sürekli dijital ekipmanlarıyla anı yakalayan ve kalabalıktan uzak durmayı tercih eden sessiz fotoğrafçı.", icon: "noun-koy-dugunu-fotografci-avatar.png" },
+      { id: "s1", name: "Damat", description: "Maktulle düğün öncesi büyük bir aile krizi yaşayan, yüzlerce akrabasıyla birlikte eğlencenin merkezinde olması beklenen gergin damat.", icon: "pa:koydugun_s1" },
+      { id: "s2", name: "Köy Muhtarı", description: "Kurbanla sınır tarlaları yüzünden yıllardır kan davalı olan, evinde uzun namlulu silahlar bulunduran, otoriter ve öfkeli ihtiyar köy yöneticisi.", icon: "pa:koydugun_s2" },
+      { id: "s3", name: "Düğün Fotoğrafçısı", description: "Köyün yabancısı olan, sürekli dijital ekipmanlarıyla anı yakalayan ve kalabalıktan uzak durmayı tercih eden sessiz fotoğrafçı.", icon: "pa:koydugun_s3" },
     ],
     weapons: [
-      { id: "w1", name: "Av Tüfeği", description: "Uzak mesafeden hedefini bulduğunda göğüs kafesinde devasa ve geri dönülmez saçma tahribatları yaratan ağır namlulu av tüfeği.", icon: "sports" },
-      { id: "w2", name: "Bıçak", description: "Köylülerin günlük hayatta kemerlerinde taşıdığı, yakın mesafeden sessizce kullanılabilecek keskin ve ağır çelik bıçak.", icon: "content-cut" },
-      { id: "w3", name: "Zehir", description: "Bitkisel kökenli, yiyecek veya içeceklere karıştırıldığında saatler sonra kurbanı yavaş yavaş içeriden çürüten yöresel bir toksin.", icon: "science" },
+      { id: "w1", name: "Av Tüfeği", description: "Uzak mesafeden hedefini bulduğunda göğüs kafesinde devasa ve geri dönülmez saçma tahribatları yaratan ağır namlulu av tüfeği.", icon: "pa:koydugun_w1" },
+      { id: "w2", name: "Bıçak", description: "Köylülerin günlük hayatta kemerlerinde taşıdığı, yakın mesafeden sessizce kullanılabilecek keskin ve ağır çelik bıçak.", icon: "pa:koydugun_w2" },
+      { id: "w3", name: "Zehir", description: "Bitkisel kökenli, yiyecek veya içeceklere karıştırıldığında saatler sonra kurbanı yavaş yavaş içeriden çürüten yöresel bir toksin.", icon: "pa:koydugun_w3" },
     ],
     locations: [
-      { id: "l1", name: "Düğün Çadırı", description: "Rengarenk ampullerle süslenmiş, davul zurna seslerinin hiç susmadığı, yüzlerce kişinin dip dibe eğlendiği devasa ve aydınlık çadır.", icon: "festival" },
-      { id: "l2", name: "Köy Meydanı", description: "Büyük ateşlerin yakıldığı, halayların çekildiği ve köyün tam kalbinde yer alan, herkesin birbirini net görebildiği açık meydan.", icon: "location-city" },
-      { id: "l3", name: "Ahır Arkası", description: "Işıkların ulaşmadığı, kerpiç duvarların ardında kalan, ayak basıldığında sadece çamur ve karanlık sunan ıssız hayvan barınağının arkası.", icon: "agriculture" },
+      { id: "l1", name: "Düğün Çadırı", description: "Rengarenk ampullerle süslenmiş, davul zurna seslerinin hiç susmadığı, yüzlerce kişinin dip dibe eğlendiği devasa ve aydınlık çadır.", icon: "pa:koydugun_l1" },
+      { id: "l2", name: "Köy Meydanı", description: "Büyük ateşlerin yakıldığı, halayların çekildiği ve köyün tam kalbinde yer alan, herkesin birbirini net görebildiği açık meydan.", icon: "pa:koydugun_l2" },
+      { id: "l3", name: "Ahır Arkası", description: "Işıkların ulaşmadığı, kerpiç duvarların ardında kalan, ayak basıldığında sadece çamur ve karanlık sunan ıssız hayvan barınağının arkası.", icon: "pa:koydugun_l3" },
     ],
     clues: [
       {
