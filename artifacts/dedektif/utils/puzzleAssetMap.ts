@@ -251,6 +251,15 @@ const PUZZLE_ASSET_MAP: Record<string, number> = {
   onboard_s3: require("../assets/images/puzzle_assets/onboard_s3.png"),
   onboard_w1: require("../assets/images/puzzle_assets/onboard_w1.png"),
   onboard_w2: require("../assets/images/puzzle_assets/onboard_w2.png"),
+  folklor_s1: require("../assets/images/puzzle_assets/folklor_s1.png"),
+  folklor_s2: require("../assets/images/puzzle_assets/folklor_s2.png"),
+  folklor_s3: require("../assets/images/puzzle_assets/folklor_s3.png"),
+  folklor_w1: require("../assets/images/puzzle_assets/folklor_w1.png"),
+  folklor_w2: require("../assets/images/puzzle_assets/folklor_w2.png"),
+  folklor_w3: require("../assets/images/puzzle_assets/folklor_w3.png"),
+  folklor_l1: require("../assets/images/puzzle_assets/folklor_l1.png"),
+  folklor_l2: require("../assets/images/puzzle_assets/folklor_l2.png"),
+  folklor_l3: require("../assets/images/puzzle_assets/folklor_l3.png"),
 };
 
 export function isPuzzleAsset(icon: string | undefined): boolean {

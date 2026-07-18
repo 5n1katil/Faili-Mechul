@@ -700,19 +700,19 @@ export const PUZZLES: Puzzle[] = [
     story:
       "Ankara'nın serin bir sonbahar akşamında, binlerce kişinin coşkuyla izlediği folklor festivalinin baş koordinatörü sahnede aniden yere yığıldı. Rengarenk sahne ışıklarının altında yaşanan bu trajedi, alkış seslerini keserken sahne arkasındaki karanlık rekabetin de üzerindeki perdeyi kaldırdı.",
     suspects: [
-      { id: "s1", name: "Rakip Sanatçı", description: "Ana kadroya alınmadığı için alev alev bir kinle yanan, sahnede olmak için her yolu mubah gören hırslı ve dışlanmış sanatçı.", icon: "noun-folklor-rakip-sanatci-avatar.png" },
-      { id: "s2", name: "Ses Teknikeri", description: "Festivalin tüm devasa ve karmaşık elektriksel altyapısını, şalterleri ve ölümcül voltaj hatlarını santim santim bilen tecrübeli teknisyen.", icon: "noun-folklor-ses-teknikeri-avatar.png" },
-      { id: "s3", name: "Sponsorların Temsilcisi", description: "Festivalin bütçesi yüzünden maktulle ciddi krizler yaşayan, yatırımlarını çekmekle tehdit eden takım elbiseli, soğukkanlı yönetici.", icon: "noun-folklor-sponsor-temsilcisi-avatar.png" },
+      { id: "s1", name: "Rakip Sanatçı", description: "Ana kadroya alınmadığı için alev alev bir kinle yanan, sahnede olmak için her yolu mubah gören hırslı ve dışlanmış sanatçı.", icon: "pa:folklor_s1" },
+      { id: "s2", name: "Ses Teknikeri", description: "Festivalin tüm devasa ve karmaşık elektriksel altyapısını, şalterleri ve ölümcül voltaj hatlarını santim santim bilen tecrübeli teknisyen.", icon: "pa:folklor_s2" },
+      { id: "s3", name: "Sponsorların Temsilcisi", description: "Festivalin bütçesi yüzünden maktulle ciddi krizler yaşayan, yatırımlarını çekmekle tehdit eden takım elbiseli, soğukkanlı yönetici.", icon: "pa:folklor_s3" },
     ],
     weapons: [
-      { id: "w1", name: "Zehirli Su", description: "Kişisel su şişelerine damlatıldığında kalp ritmini saniyeler içinde geri dönülmez şekilde durduran, renksiz ve kokusuz sentetik zehir.", icon: "water-drop" },
-      { id: "w2", name: "Elektrik Darbesi", description: "Sahne zeminindeki metal plakalara özel bir mühendislikle yönlendirilen ve dokunulduğunda kasları kilitleyip ölümcül şok yaratan ana akım.", icon: "flash-on" },
-      { id: "w3", name: "Gizli Enjeksiyon", description: "Kalabalık arasında fark edilmeden deriye temas ettirilebilen, ucunda sinsi bir toksin barındıran ince uçlu medikal iğne.", icon: "vaccines" },
+      { id: "w1", name: "Zehirli Su", description: "Kişisel su şişelerine damlatıldığında kalp ritmini saniyeler içinde geri dönülmez şekilde durduran, renksiz ve kokusuz sentetik zehir.", icon: "pa:folklor_w1" },
+      { id: "w2", name: "Elektrik Darbesi", description: "Sahne zeminindeki metal plakalara özel bir mühendislikle yönlendirilen ve dokunulduğunda kasları kilitleyip ölümcül şok yaratan ana akım.", icon: "pa:folklor_w2" },
+      { id: "w3", name: "Gizli Enjeksiyon", description: "Kalabalık arasında fark edilmeden deriye temas ettirilebilen, ucunda sinsi bir toksin barındıran ince uçlu medikal iğne.", icon: "pa:folklor_w3" },
     ],
     locations: [
-      { id: "l1", name: "Sahne", description: "Binlerce gözün üzerinde olduğu, devasa hoparlörler ve açıkta duran yüksek voltajlı güç kablolarıyla çevrili açık hava performans platformu.", icon: "theater-comedy" },
-      { id: "l2", name: "Soyunma Odası", description: "Sanatçıların kostüm değiştirdiği, dışarıya kapalı, güvenli ve elektronik kilit sistemiyle korunan izole arka oda.", icon: "room" },
-      { id: "l3", name: "Kontrol Odası", description: "Ses ve ışık düzeneklerinin yönetildiği, sahneyi uzaktan gören, dar ve elektronik cihazlarla dolu teknik kontrol odası.", icon: "settings" },
+      { id: "l1", name: "Sahne", description: "Binlerce gözün üzerinde olduğu, devasa hoparlörler ve açıkta duran yüksek voltajlı güç kablolarıyla çevrili açık hava performans platformu.", icon: "pa:folklor_l1" },
+      { id: "l2", name: "Soyunma Odası", description: "Sanatçıların kostüm değiştirdiği, dışarıya kapalı, güvenli ve elektronik kilit sistemiyle korunan izole arka oda.", icon: "pa:folklor_l2" },
+      { id: "l3", name: "Kontrol Odası", description: "Ses ve ışık düzeneklerinin yönetildiği, sahneyi uzaktan gören, dar ve elektronik cihazlarla dolu teknik kontrol odası.", icon: "pa:folklor_l3" },
     ],
     clues: [
       {
