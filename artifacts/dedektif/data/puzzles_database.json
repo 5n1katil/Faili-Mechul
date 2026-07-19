@@ -12577,7 +12577,7 @@
             {
               "id": "s1",
               "name": "İş Ortağı Kerem",
-              "icon": "noun-ortak-sabri-bey-avatar.png",
+              "icon": "pa:bogaz_s1",
               "description": "Şirket hisselerinin devri nedeniyle maktulle mahkemelik olan, iflasın eşiğindeki öfkesi yatışmayan ve teknede hesap sormayı bekleyen iş ortağı.",
               "detail": "48 yaşında, sürekli ellerini ovuşturan, lüks giyimli, sağduyusunu kaybetmiş kurnaz bir adam.",
               "parmakIziDeseni": "fp_whorl"
@@ -12585,7 +12585,7 @@
             {
               "id": "s2",
               "name": "Denizci Kaptan Yusuf",
-              "icon": "👨‍✈️",
+              "icon": "pa:bogaz_s2",
               "description": "Teknenin dümeninde duran, işten atılma tehdidi aldığı için gergince seyri sürdüren ve halat çekmekten elleri nasırlaşmış profesyonel kaptan.",
               "detail": "55 yaşında, rüzgardan yüzü kurumuş, emir almaktan nefret eden eski bir deniz kurdu.",
               "parmakIziDeseni": "fp_loop_right"
@@ -12593,7 +12593,7 @@
             {
               "id": "s3",
               "name": "Finans Direktörü Pınar",
-              "icon": "noun-teacher-1908918-avatar.png",
+              "icon": "pa:bogaz_s3",
               "description": "Maktulün hesaplarında milyonlarca liralık usulsüzlük saptayan, geceyi elindeki lüks kadehlerle salon barında geçiren finans direktörü.",
               "detail": "41 yaşında, topuklu ayakkabıları ve kırmızı rujuyla dikkat çeken, analitik düşünen soğukkanlı kadın.",
               "parmakIziDeseni": "fp_loop_left"
@@ -12601,7 +12601,7 @@
             {
               "id": "s4",
               "name": "Gazeteci Mert",
-              "icon": "🚗",
+              "icon": "pa:bogaz_s4",
               "description": "Maktulün kirli çamaşırlarını ertesi gün manşet yapacak olan, sürekli cebindeki kasetçalarla alt katlarda bilgi arayan araştırmacı gazeteci.",
               "detail": "33 yaşında, pasaklı bir pardösü giyen, girdiği her deliği karıştıran idealist araştırmacı.",
               "parmakIziDeseni": "fp_arch"
@@ -12611,25 +12611,25 @@
             {
               "id": "w1",
               "name": "Gemi Halatı",
-              "icon": "🪝",
+              "icon": "pa:bogaz_w1",
               "description": "Güvertede gemileri iskeleye bağlamak için bekletilen, birinin boğazına dolandığında derin, ağsı ve pürüzlü sürtünme yanıkları bırakan kalın naylon halat."
             },
             {
               "id": "w2",
               "name": "Şişe Viski",
-              "icon": "🥃",
+              "icon": "pa:bogaz_w2",
               "description": "İç salon barında ikram edilen, içine yüksek dozda sedatif karıştırılarak kurbanın bilincini saniyeler içinde karanlığa gömen şık kristal bardaktaki içki."
             },
             {
               "id": "w3",
               "name": "Deniz Feneri Kolu",
-              "icon": "🔦",
+              "icon": "pa:bogaz_w3",
               "description": "Karanlıkta yolları aydınlatmak için kullanılan, kafa tasına bütün gücüyle indirildiğinde kemikte kavisli ve küt bir göçük yaratan ağır metal el feneri."
             },
             {
               "id": "w4",
               "name": "Tekne Kancası",
-              "icon": "🎣",
+              "icon": "pa:bogaz_w4",
               "description": "Motor dairesinde asılı duran, vücuda saplandığında eti ve kıyafetleri parçalayarak derin kancalı yırtıklar bırakan paslanmaz çelik balıkçı kancası."
             }
           ],
@@ -12637,25 +12637,25 @@
             {
               "id": "l1",
               "name": "Ön Güverte",
-              "icon": "🌊",
+              "icon": "pa:bogaz_l1",
               "description": "Teknenin baş tarafında yer alan, Boğaz'ın soğuk rüzgarını doğrudan alan, karanlık, ıslak ve tamamen açık ön güverte alanı."
             },
             {
               "id": "l2",
               "name": "Kaptan Köşkü",
-              "icon": "🧭",
+              "icon": "pa:bogaz_l2",
               "description": "Üst katta yer alan, dümen ve navigasyon cihazlarının bulunduğu, kapısı içeriden sürgülenebilen dar, kısıtlı ve izole kaptan köşkü."
             },
             {
               "id": "l3",
               "name": "Salon",
-              "icon": "🛋️",
+              "icon": "pa:bogaz_l3",
               "description": "Teknenin iç kısmında yer alan, deri koltukların, alkol şişelerinin ve kalın halıların bulunduğu klimalı ve lüks dinlenme salonu."
             },
             {
               "id": "l4",
               "name": "Motor Dairesi",
-              "icon": "⚙️",
+              "icon": "pa:bogaz_l4",
               "description": "Alt katta, devasa pistonların sağır edici bir gürültüyle çalıştığı, sıcak, havasız ve yoğun mazot kokan makine dairesi."
             }
           ],

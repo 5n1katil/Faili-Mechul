@@ -404,6 +404,18 @@ const PUZZLE_ASSET_MAP: Record<string, number> = {
   arnavutkoy_l1: require("../assets/images/puzzle_assets/arnavutkoy_l1.png"),
   arnavutkoy_l2: require("../assets/images/puzzle_assets/arnavutkoy_l2.png"),
   arnavutkoy_l3: require("../assets/images/puzzle_assets/arnavutkoy_l3.png"),
+  bogaz_s1: require("../assets/images/puzzle_assets/bogaz_s1.png"),
+  bogaz_s2: require("../assets/images/puzzle_assets/bogaz_s2.png"),
+  bogaz_s3: require("../assets/images/puzzle_assets/bogaz_s3.png"),
+  bogaz_s4: require("../assets/images/puzzle_assets/bogaz_s4.png"),
+  bogaz_w1: require("../assets/images/puzzle_assets/bogaz_w1.png"),
+  bogaz_w2: require("../assets/images/puzzle_assets/bogaz_w2.png"),
+  bogaz_w3: require("../assets/images/puzzle_assets/bogaz_w3.png"),
+  bogaz_w4: require("../assets/images/puzzle_assets/bogaz_w4.png"),
+  bogaz_l1: require("../assets/images/puzzle_assets/bogaz_l1.png"),
+  bogaz_l2: require("../assets/images/puzzle_assets/bogaz_l2.png"),
+  bogaz_l3: require("../assets/images/puzzle_assets/bogaz_l3.png"),
+  bogaz_l4: require("../assets/images/puzzle_assets/bogaz_l4.png"),
 };
 
 export function isPuzzleAsset(icon: string | undefined): boolean {
