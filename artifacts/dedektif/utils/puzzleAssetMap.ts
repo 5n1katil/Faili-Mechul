@@ -464,6 +464,15 @@ const PUZZLE_ASSET_MAP: Record<string, number> = {
   festival_l2: require("../assets/images/puzzle_assets/festival_l2.png"),
   festival_l3: require("../assets/images/puzzle_assets/festival_l3.png"),
   festival_l4: require("../assets/images/puzzle_assets/festival_l4.png"),
+  beyoglu_s1: require("../assets/images/puzzle_assets/beyoglu_s1.png"),
+  beyoglu_s2: require("../assets/images/puzzle_assets/beyoglu_s2.png"),
+  beyoglu_s3: require("../assets/images/puzzle_assets/beyoglu_s3.png"),
+  beyoglu_w1: require("../assets/images/puzzle_assets/beyoglu_w1.png"),
+  beyoglu_w2: require("../assets/images/puzzle_assets/beyoglu_w2.png"),
+  beyoglu_w3: require("../assets/images/puzzle_assets/beyoglu_w3.png"),
+  beyoglu_l1: require("../assets/images/puzzle_assets/beyoglu_l1.png"),
+  beyoglu_l2: require("../assets/images/puzzle_assets/beyoglu_l2.png"),
+  beyoglu_l3: require("../assets/images/puzzle_assets/beyoglu_l3.png"),
 };
 
 export function isPuzzleAsset(icon: string | undefined): boolean {

@@ -1539,19 +1539,19 @@ export const PUZZLES: Puzzle[] = [
     story:
       "Art Nouveau mimarisiyle süslü tarihi Beyoğlu pasajında, loş bir antikacının arka deposunda gizli bir anlaşma kanla mühürlendi. Etrafı paha biçilemez eşyalarla dolu bu odada, pasajın karmaşık insan ağının çürük bir ipi koptu.",
     suspects: [
-      { id: "s1", name: "Orhan Aras", description: "Pasajın en eski esnafı, şifreli deposunda milyonluk antika eserler saklayan, karanlık anlaşmalarını yaldızlı dükkanında gizleyen kurnaz antikacı.", icon: "👴" },
-      { id: "s2", name: "Suna Çakır", description: "Hukuk bürosundaki toplantılarından sonra yorgunluğunu atmak için çatı katındaki restoranda kadeh tokuşturan, lüks giyimli elit avukat.", icon: "👩‍💼" },
-      { id: "s3", name: "Talip Uzun", description: "Pasajın ana kapısında sebze tezgahı olan, bütün gün bağıra çağıra satış yapan, içeriye ve lüks dükkanlara adım atmayan manav.", icon: "👷" },
+      { id: "s1", name: "Orhan Aras", description: "Pasajın en eski esnafı, şifreli deposunda milyonluk antika eserler saklayan, karanlık anlaşmalarını yaldızlı dükkanında gizleyen kurnaz antikacı.", icon: "pa:beyoglu_s1" },
+      { id: "s2", name: "Suna Çakır", description: "Hukuk bürosundaki toplantılarından sonra yorgunluğunu atmak için çatı katındaki restoranda kadeh tokuşturan, lüks giyimli elit avukat.", icon: "pa:beyoglu_s2" },
+      { id: "s3", name: "Talip Uzun", description: "Pasajın ana kapısında sebze tezgahı olan, bütün gün bağıra çağıra satış yapan, içeriye ve lüks dükkanlara adım atmayan manav.", icon: "pa:beyoglu_s3" },
     ],
     weapons: [
-      { id: "w1", name: "Zehirli Şarap", description: "Antikacının özel koleksiyonundaki asırlık bir şişeye zerk edilmiş, yutulduğunda boğazı yakan sinsi kimyasal.", icon: "wine-bar" },
-      { id: "w2", name: "Elektrik Kablosu", description: "Tarihi duvarlardaki prizlerden sökülmüş, kurbanın boynunda kavurucu ve çizgisel yanıklar bırakacak olan eski hasarlı tel.", icon: "electrical-services" },
-      { id: "w3", name: "Antika Heykel", description: "Raflardan alınan, kafatasını un ufak edecek ağırlıkta ve sertlikte olan, çanta boyundaki som mermer tarihi büst.", icon: "museum" },
+      { id: "w1", name: "Zehirli Şarap", description: "Antikacının özel koleksiyonundaki asırlık bir şişeye zerk edilmiş, yutulduğunda boğazı yakan sinsi kimyasal.", icon: "pa:beyoglu_w1" },
+      { id: "w2", name: "Elektrik Kablosu", description: "Tarihi duvarlardaki prizlerden sökülmüş, kurbanın boynunda kavurucu ve çizgisel yanıklar bırakacak olan eski hasarlı tel.", icon: "pa:beyoglu_w2" },
+      { id: "w3", name: "Antika Heykel", description: "Raflardan alınan, kafatasını un ufak edecek ağırlıkta ve sertlikte olan, çanta boyundaki som mermer tarihi büst.", icon: "pa:beyoglu_w3" },
     ],
     locations: [
-      { id: "l1", name: "Pasaj Koridoru", description: "Yüksek tavanlı, Art Nouveau işlemelerle süslü, vitrinlerin sokağa taştığı ve insanların sürekli gelip geçtiği aydınlık geçit.", icon: "store" },
-      { id: "l2", name: "Arka Depo", description: "Antikacının dükkanının arka tarafında bulunan, kalın çelik kapılı, penceresiz, nefes kesici ve tozlu kilitli mahzen.", icon: "inventory" },
-      { id: "l3", name: "Çatı Katı", description: "Pasajın en üstünde yer alan, İstanbul'un panoramik manzarasını sunan, elit misafirlerin ağırlandığı açık hava teras restoranı.", icon: "roofing" },
+      { id: "l1", name: "Pasaj Koridoru", description: "Yüksek tavanlı, Art Nouveau işlemelerle süslü, vitrinlerin sokağa taştığı ve insanların sürekli gelip geçtiği aydınlık geçit.", icon: "pa:beyoglu_l1" },
+      { id: "l2", name: "Arka Depo", description: "Antikacının dükkanının arka tarafında bulunan, kalın çelik kapılı, penceresiz, nefes kesici ve tozlu kilitli mahzen.", icon: "pa:beyoglu_l2" },
+      { id: "l3", name: "Çatı Katı", description: "Pasajın en üstünde yer alan, İstanbul'un panoramik manzarasını sunan, elit misafirlerin ağırlandığı açık hava teras restoranı.", icon: "pa:beyoglu_l3" },
     ],
     clues: [
       {
