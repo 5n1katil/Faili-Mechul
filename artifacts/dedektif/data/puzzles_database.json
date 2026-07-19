@@ -12322,21 +12322,21 @@
             {
               "id": "s1",
               "name": "Mimar Selim",
-              "icon": "🔧",
+              "icon": "pa:dagevi_s1",
               "description": "Maktulle devam eden devasa bir telif hırsızlığı davası olan, her adımını önceden tasarlayan saplantılı ve metodolojik mimar eski ortak.",
               "detail": "46 yaşında, kâğıt işlerine alışkın ince parmaklı, planlı ve sürekli evi gözlemleyen biri."
             },
             {
               "id": "s2",
               "name": "Doktor Leyla",
-              "icon": "👩‍⚕️",
+              "icon": "pa:dagevi_s2",
               "description": "İki yıl önce maktulün aleyhine verdiği ifade yüzünden doktorluk lisansını kaybetme tehlikesi yaşayan, sakin ama kindar tıp uzmanı.",
               "detail": "39 yaşında, ilaç dozajlarını ve zehirleri kusursuz hesaplayabilen soğukkanlı doktor."
             },
             {
               "id": "s3",
               "name": "Dağ Evi Sahibi Rasim",
-              "icon": "noun-vahap-amca-avatar.png",
+              "icon": "pa:dagevi_s3",
               "description": "Maktulün bu değerli mülkünü zorla ve ucuza satın almak istemesinden nefret eden, toprağına ve malına aşırı bağlı, sert dağ evi sahibi.",
               "detail": "60 yaşında, zorlu kış şartlarına alışkın, kaba kuvveti yüksek, öfkeli bir ihtiyar."
             }
@@ -12345,19 +12345,19 @@
             {
               "id": "w1",
               "name": "Şömine Demiri",
-              "icon": "🔥",
+              "icon": "pa:dagevi_w1",
               "description": "Şöminedeki korları karıştırmak için kullanılan, kafaya indiğinde kafatasını delebilecek sivriliğe ve ağırlığa sahip demir çubuk."
             },
             {
               "id": "w2",
               "name": "Uyku İlacı Aşırı Dozu",
-              "icon": "💤",
+              "icon": "pa:dagevi_w2",
               "description": "Sıcak içeceklere karıştırıldığında hiçbir tat bırakmayan, ancak kalp ritmini uykuda tamamen durduran yüksek dozda tıbbi sedatif ampulü."
             },
             {
               "id": "w3",
               "name": "Kar Küreği Sapı",
-              "icon": "❄️",
+              "icon": "pa:dagevi_w3",
               "description": "Kış şartlarında yolu açmak için kullanılan, geniş metal ağızlı ve son derece ağır, küt bir ahşap sapa sahip kar küreği."
             }
           ],
@@ -12365,19 +12365,19 @@
             {
               "id": "l1",
               "name": "Oturma Odası",
-              "icon": "🛋️",
+              "icon": "pa:dagevi_l1",
               "description": "Evin tam merkezinde yanan büyük bir ateşin olduğu, deri koltuklarla döşenmiş geniş ve sıcak ana toplanma odası."
             },
             {
               "id": "l2",
               "name": "Yatak Odası",
-              "icon": "🌙",
+              "icon": "pa:dagevi_l2",
               "description": "Üst katta yer alan, dışarıdaki fırtınanın sesinin duyulduğu, maktulün uyumak için çekildiği izole ve sessiz misafir odası."
             },
             {
               "id": "l3",
               "name": "Garaj",
-              "icon": "🚗",
+              "icon": "pa:dagevi_l3",
               "description": "Evin dışında yer alan, dondurucu soğukta araçların ve bozuk jeneratörün bulunduğu rüzgarlı ve kapalı beton araç alanı."
             }
           ],

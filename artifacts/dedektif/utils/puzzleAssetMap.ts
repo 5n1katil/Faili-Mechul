@@ -332,6 +332,15 @@ const PUZZLE_ASSET_MAP: Record<string, number> = {
   moda_l1: require("../assets/images/puzzle_assets/moda_l1.png"),
   moda_l2: require("../assets/images/puzzle_assets/moda_l2.png"),
   moda_l3: require("../assets/images/puzzle_assets/moda_l3.png"),
+  dagevi_s1: require("../assets/images/puzzle_assets/dagevi_s1.png"),
+  dagevi_s2: require("../assets/images/puzzle_assets/dagevi_s2.png"),
+  dagevi_s3: require("../assets/images/puzzle_assets/dagevi_s3.png"),
+  dagevi_w1: require("../assets/images/puzzle_assets/dagevi_w1.png"),
+  dagevi_w2: require("../assets/images/puzzle_assets/dagevi_w2.png"),
+  dagevi_w3: require("../assets/images/puzzle_assets/dagevi_w3.png"),
+  dagevi_l1: require("../assets/images/puzzle_assets/dagevi_l1.png"),
+  dagevi_l2: require("../assets/images/puzzle_assets/dagevi_l2.png"),
+  dagevi_l3: require("../assets/images/puzzle_assets/dagevi_l3.png"),
 };
 
 export function isPuzzleAsset(icon: string | undefined): boolean {
