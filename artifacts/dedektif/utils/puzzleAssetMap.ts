@@ -359,6 +359,15 @@ const PUZZLE_ASSET_MAP: Record<string, number> = {
   kutuphane_l1: require("../assets/images/puzzle_assets/kutuphane_l1.png"),
   kutuphane_l2: require("../assets/images/puzzle_assets/kutuphane_l2.png"),
   kutuphane_l3: require("../assets/images/puzzle_assets/kutuphane_l3.png"),
+  saatfabrika_s1: require("../assets/images/puzzle_assets/saatfabrika_s1.png"),
+  saatfabrika_s2: require("../assets/images/puzzle_assets/saatfabrika_s2.png"),
+  saatfabrika_s3: require("../assets/images/puzzle_assets/saatfabrika_s3.png"),
+  saatfabrika_w1: require("../assets/images/puzzle_assets/saatfabrika_w1.png"),
+  saatfabrika_w2: require("../assets/images/puzzle_assets/saatfabrika_w2.png"),
+  saatfabrika_w3: require("../assets/images/puzzle_assets/saatfabrika_w3.png"),
+  saatfabrika_l1: require("../assets/images/puzzle_assets/saatfabrika_l1.png"),
+  saatfabrika_l2: require("../assets/images/puzzle_assets/saatfabrika_l2.png"),
+  saatfabrika_l3: require("../assets/images/puzzle_assets/saatfabrika_l3.png"),
 };
 
 export function isPuzzleAsset(icon: string | undefined): boolean {

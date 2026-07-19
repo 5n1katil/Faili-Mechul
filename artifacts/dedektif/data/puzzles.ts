@@ -908,19 +908,19 @@ export const PUZZLES: Puzzle[] = [
     story:
       "Eskişehir'in pas ve çelik kokan tarihi saat fabrikasında, dişlilerin ritmik sesi sabah saatlerinde çalan sirenlerle kesildi. Fabrika müdürü, kendi makinesinin çarkları arasında ölü bulundu. İşçi tulumlarının ardında dönen dolaplar artık sır değildi.",
     suspects: [
-      { id: "s1", name: "İşçi Başı", description: "Fabrikanın ağır metal işçilerini örgütleyen, sendika hakları için müdürle sürekli omuz omuza kavgaya giren, iri yarı ve nasırlı ellere sahip lider.", icon: "👷" },
-      { id: "s2", name: "Muhasebe Müdürü", description: "Fabrikanın batmak üzere olan mali tablolarından sorumlu olan, usulsüzlükleri yüzünden müdürle kriz yaşayan takım elbiseli beyaz yakalı.", icon: "🕵️" },
-      { id: "s3", name: "Makine Mühendisi", description: "Fabrikanın tüm elektronik otomasyonunu tasarlayan, insanlardan ziyade kodlarla ve ekranlarla vakit geçiren, izole çalışan zeki tasarımcı.", icon: "👨" },
+      { id: "s1", name: "İşçi Başı", description: "Fabrikanın ağır metal işçilerini örgütleyen, sendika hakları için müdürle sürekli omuz omuza kavgaya giren, iri yarı ve nasırlı ellere sahip lider.", icon: "pa:saatfabrika_s1" },
+      { id: "s2", name: "Muhasebe Müdürü", description: "Fabrikanın batmak üzere olan mali tablolarından sorumlu olan, usulsüzlükleri yüzünden müdürle kriz yaşayan takım elbiseli beyaz yakalı.", icon: "pa:saatfabrika_s2" },
+      { id: "s3", name: "Makine Mühendisi", description: "Fabrikanın tüm elektronik otomasyonunu tasarlayan, insanlardan ziyade kodlarla ve ekranlarla vakit geçiren, izole çalışan zeki tasarımcı.", icon: "pa:saatfabrika_s3" },
     ],
     weapons: [
-      { id: "w1", name: "Çekiç", description: "Kaba metal parçalarını dövmek için kullanılan, sapı yağlı, kafa tasına indiğinde paslı demir oksit kalıntıları bırakan devasa balyoz.", icon: "hardware" },
-      { id: "w2", name: "Zehirli Kimyasal", description: "Endüstriyel makine yağlarına karıştırıldığında buharlaşarak solunum yollarını felç eden, sinsi ve görünmez solvent gazı.", icon: "science" },
-      { id: "w3", name: "Makine Parçası", description: "Üretim bandından zorlukla sökülebilen, üzerinde keskin çark dişlileri bulunan, ağır ve sivri uçlu mekanik bileşen.", icon: "settings" },
+      { id: "w1", name: "Çekiç", description: "Kaba metal parçalarını dövmek için kullanılan, sapı yağlı, kafa tasına indiğinde paslı demir oksit kalıntıları bırakan devasa balyoz.", icon: "pa:saatfabrika_w1" },
+      { id: "w2", name: "Zehirli Kimyasal", description: "Endüstriyel makine yağlarına karıştırıldığında buharlaşarak solunum yollarını felç eden, sinsi ve görünmez solvent gazı.", icon: "pa:saatfabrika_w2" },
+      { id: "w3", name: "Makine Parçası", description: "Üretim bandından zorlukla sökülebilen, üzerinde keskin çark dişlileri bulunan, ağır ve sivri uçlu mekanik bileşen.", icon: "pa:saatfabrika_w3" },
     ],
     locations: [
-      { id: "l1", name: "Üretim Alanı", description: "Dev çarkların döndüğü, yağ kokusunun genzi yaktığı, metal seslerinin kulakları sağır ettiği aktif fabrika atölyesi.", icon: "factory" },
-      { id: "l2", name: "Müdür Odası", description: "Fabrikanın yüksek bir noktasında bulunan, aşağıyı gören cam bölmelere sahip, evraklar ve dosyalarla dolu sessiz idari ofis.", icon: "business" },
-      { id: "l3", name: "Kontrol Odası", description: "Tüm otomasyonun izlendiği, dev ekranların ve klimaların bulunduğu, sadece yetkililerin parmak iziyle girebildiği steril teknoloji merkezi.", icon: "dashboard" },
+      { id: "l1", name: "Üretim Alanı", description: "Dev çarkların döndüğü, yağ kokusunun genzi yaktığı, metal seslerinin kulakları sağır ettiği aktif fabrika atölyesi.", icon: "pa:saatfabrika_l1" },
+      { id: "l2", name: "Müdür Odası", description: "Fabrikanın yüksek bir noktasında bulunan, aşağıyı gören cam bölmelere sahip, evraklar ve dosyalarla dolu sessiz idari ofis.", icon: "pa:saatfabrika_l2" },
+      { id: "l3", name: "Kontrol Odası", description: "Tüm otomasyonun izlendiği, dev ekranların ve klimaların bulunduğu, sadece yetkililerin parmak iziyle girebildiği steril teknoloji merkezi.", icon: "pa:saatfabrika_l3" },
     ],
     clues: [
 
