@@ -766,19 +766,19 @@ export const PUZZLES: Puzzle[] = [
     story:
       "Üniversitenin asırlık kütüphanesinde, gece bekçisi sabahın ilk ışıklarıyla sessiz okuma salonunda kan donduran bir manzarayla karşılaştı. Yüzlerce yıllık çok değerli el yazmaları yok olmuş, geriye sadece tozlu raflar ve bir akademisyenin cansız bedeni kalmıştı.",
     suspects: [
-      { id: "s1", name: "Kütüphaneci", description: "30 yılını eski kağıtlara adamış, kütüphanenin labirent gibi raflarını gözü kapalı bilen ancak gece yarısından önce mesaisini mutlaka bitiren emektar.", icon: "👴" },
-      { id: "s2", name: "Doktora Öğrencisi", description: "Kayıp el yazmaları üzerine takıntılı araştırmalar yapan, akademik kariyerini kurtarmak için o belgelere çaresizce ihtiyaç duyan hırslı araştırmacı.", icon: "👨" },
-      { id: "s3", name: "Temizlik Görevlisi", description: "Gece saat 02.00'de mesaiye başlayan, sadece genel alanları temizleme yetkisi olan ve özel şifreli bölmelere erişimi bulunmayan personel.", icon: "👷" },
+      { id: "s1", name: "Kütüphaneci", description: "30 yılını eski kağıtlara adamış, kütüphanenin labirent gibi raflarını gözü kapalı bilen ancak gece yarısından önce mesaisini mutlaka bitiren emektar.", icon: "pa:kutuphane_s1" },
+      { id: "s2", name: "Doktora Öğrencisi", description: "Kayıp el yazmaları üzerine takıntılı araştırmalar yapan, akademik kariyerini kurtarmak için o belgelere çaresizce ihtiyaç duyan hırslı araştırmacı.", icon: "pa:kutuphane_s2" },
+      { id: "s3", name: "Temizlik Görevlisi", description: "Gece saat 02.00'de mesaiye başlayan, sadece genel alanları temizleme yetkisi olan ve özel şifreli bölmelere erişimi bulunmayan personel.", icon: "pa:kutuphane_s3" },
     ],
     weapons: [
-      { id: "w1", name: "Ağır Kitap", description: "Yaklaşık iki kilogram ağırlığında olan, deri ciltli ve köşeleri pirinç kaplamalı, kafaya savrulduğunda pürüzsüz ve devasa bir göçük açan ansiklopedi.", icon: "menu-book" },
-      { id: "w2", name: "Kimyasal Madde", description: "Cilt restorasyonunda kullanılan, kapalı alanda solunduğunda ciğerleri dakikalar içinde eriten yüksek asitli ve keskin kokulu güçlü solüsyon.", icon: "science" },
-      { id: "w3", name: "Baskı Aleti", description: "Sayfaları kopyalamak için kullanılan, ağırlığı nedeniyle yerinden oynatılması neredeyse imkansız olan, keskin demir kenarlı antika pres makinesi.", icon: "print" },
+      { id: "w1", name: "Ağır Kitap", description: "Yaklaşık iki kilogram ağırlığında olan, deri ciltli ve köşeleri pirinç kaplamalı, kafaya savrulduğunda pürüzsüz ve devasa bir göçük açan ansiklopedi.", icon: "pa:kutuphane_w1" },
+      { id: "w2", name: "Kimyasal Madde", description: "Cilt restorasyonunda kullanılan, kapalı alanda solunduğunda ciğerleri dakikalar içinde eriten yüksek asitli ve keskin kokulu güçlü solüsyon.", icon: "pa:kutuphane_w2" },
+      { id: "w3", name: "Baskı Aleti", description: "Sayfaları kopyalamak için kullanılan, ağırlığı nedeniyle yerinden oynatılması neredeyse imkansız olan, keskin demir kenarlı antika pres makinesi.", icon: "pa:kutuphane_w3" },
     ],
     locations: [
-      { id: "l1", name: "Okuma Salonu", description: "Uzun meşe masaların ve yeşil okuma lambalarının bulunduğu, herkesin kullanımına açık, sessizliğin hakim olduğu devasa ana salon.", icon: "library-books" },
-      { id: "l2", name: "El Yazmaları Bölümü", description: "Yüzlerce yıllık parşömenlerin iklimlendirilmiş cam fanuslarda tutulduğu, sadece özel izinle girilebilen kısıtlı ve şifreli depolama alanı.", icon: "history-edu" },
-      { id: "l3", name: "Katalog Odası", description: "Arşiv indekslerinin ve kartoteks dolaplarının bulunduğu, genelde personelin temizlik malzemelerini de bıraktığı penceresiz dar oda.", icon: "folder" },
+      { id: "l1", name: "Okuma Salonu", description: "Uzun meşe masaların ve yeşil okuma lambalarının bulunduğu, herkesin kullanımına açık, sessizliğin hakim olduğu devasa ana salon.", icon: "pa:kutuphane_l1" },
+      { id: "l2", name: "El Yazmaları Bölümü", description: "Yüzlerce yıllık parşömenlerin iklimlendirilmiş cam fanuslarda tutulduğu, sadece özel izinle girilebilen kısıtlı ve şifreli depolama alanı.", icon: "pa:kutuphane_l2" },
+      { id: "l3", name: "Katalog Odası", description: "Arşiv indekslerinin ve kartoteks dolaplarının bulunduğu, genelde personelin temizlik malzemelerini de bıraktığı penceresiz dar oda.", icon: "pa:kutuphane_l3" },
     ],
     clues: [
 

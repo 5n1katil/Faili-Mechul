@@ -350,6 +350,15 @@ const PUZZLE_ASSET_MAP: Record<string, number> = {
   carsamba_l1: require("../assets/images/puzzle_assets/carsamba_l1.png"),
   carsamba_l2: require("../assets/images/puzzle_assets/carsamba_l2.png"),
   carsamba_l3: require("../assets/images/puzzle_assets/carsamba_l3.png"),
+  kutuphane_s1: require("../assets/images/puzzle_assets/kutuphane_s1.png"),
+  kutuphane_s2: require("../assets/images/puzzle_assets/kutuphane_s2.png"),
+  kutuphane_s3: require("../assets/images/puzzle_assets/kutuphane_s3.png"),
+  kutuphane_w1: require("../assets/images/puzzle_assets/kutuphane_w1.png"),
+  kutuphane_w2: require("../assets/images/puzzle_assets/kutuphane_w2.png"),
+  kutuphane_w3: require("../assets/images/puzzle_assets/kutuphane_w3.png"),
+  kutuphane_l1: require("../assets/images/puzzle_assets/kutuphane_l1.png"),
+  kutuphane_l2: require("../assets/images/puzzle_assets/kutuphane_l2.png"),
+  kutuphane_l3: require("../assets/images/puzzle_assets/kutuphane_l3.png"),
 };
 
 export function isPuzzleAsset(icon: string | undefined): boolean {
