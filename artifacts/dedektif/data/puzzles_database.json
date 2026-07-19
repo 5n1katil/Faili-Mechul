@@ -11851,21 +11851,21 @@
             {
               "id": "s1",
               "name": "Çırak Ferdi",
-              "icon": "noun-cirak-selim-avatar.png",
+              "icon": "pa:kuyumcu_s1",
               "description": "10 yıldır aynı dükkanda köle gibi çalışan, kendisine söz verilen ortaklık hissesinin verilmediğini o gece öğrenen bıkkın çırak.",
               "detail": "28 yaşında, kuyumcu aletlerine ve tartılara eli çok yatkın, sabrının sonuna gelmiş."
             },
             {
               "id": "s2",
               "name": "Rakip Kuyumcu Zeynep",
-              "icon": "noun-zeynep-hanim-avatar.png",
+              "icon": "pa:kuyumcu_s2",
               "description": "Maktulün pazar payını çalan, açık bir fiyat savaşına girdiği ve o gece dükkana gizli hesapları incelemeye gelen hırslı rakip kuyumcu.",
               "detail": "45 yaşında, soğukkanlı, iş dünyasında acımasız."
             },
             {
               "id": "s3",
               "name": "Vergi Müfettişi Canan",
-              "icon": "noun-semiha-hanim-avatar.png",
+              "icon": "pa:kuyumcu_s3",
               "description": "Önceki gün dükkanda vergi denetimi yapan, maktulden tehdit aldığı için gergin olan ve sabah raporunu teslim edecek olan resmi müfettiş.",
               "detail": "40 yaşında, kurallara bağlı, laboratuvar ve asit testlerine aşina."
             }
@@ -11874,19 +11874,19 @@
             {
               "id": "w1",
               "name": "Kuyumcu Terazisi",
-              "icon": "⚖️",
+              "icon": "pa:kuyumcu_w1",
               "description": "Hassas altın tartımlarında kullanılan, saf pirinçten yapılmış, kafaya vurulduğunda kare şeklinde ölümcül bir iz bırakan ağır kefe."
             },
             {
               "id": "w2",
               "name": "Asit Solüsyonu",
-              "icon": "⚗️",
+              "icon": "pa:kuyumcu_w2",
               "description": "Altının saflığını ölçmek için kullanılan, deriyle temas ettiğinde saniyeler içinde kemiğe kadar eriten yoğun hidroklorik asit karışımı."
             },
             {
               "id": "w3",
               "name": "Mücevher Teli",
-              "icon": "🪡",
+              "icon": "pa:kuyumcu_w3",
               "description": "Kolyelere şekil vermek için kullanılan, boğaza dolandığında keskinliğiyle şah damarını anında kesebilen kalın gümüş mücevher teli."
             }
           ],
@@ -11894,19 +11894,19 @@
             {
               "id": "l1",
               "name": "Kasa Odası",
-              "icon": "🔒",
+              "icon": "pa:kuyumcu_l1",
               "description": "Dükkânın arka tarafında yer alan, kalın çelik kapılı, içerisi altın külçeleriyle ve hesap defterleriyle dolu kilitli kasa odası."
             },
             {
               "id": "l2",
               "name": "Vitrin Önü",
-              "icon": "🪟",
+              "icon": "pa:kuyumcu_l2",
               "description": "Dükkânın sokağa bakan, camları parmaklıklarla korunan, altın takıların sergilendiği ve terazinin bulunduğu ön müşteri alanı."
             },
             {
               "id": "l3",
               "name": "İmalat Atölyesi",
-              "icon": "🔨",
+              "icon": "pa:kuyumcu_l3",
               "description": "Dükkânın dip köşesinde yer alan, tezgahları asit şişeleri, tel makasları ve büyüteçlerle dolu imalat ve tamir atölyesi."
             }
           ],
