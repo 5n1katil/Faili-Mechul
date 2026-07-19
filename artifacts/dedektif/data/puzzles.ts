@@ -1743,19 +1743,19 @@ export const PUZZLES: Puzzle[] = [
     story:
       "Büyükada'da motorlu araçların giremediği o dik tepe yolunda, sabahın erken saatlerinde bir fayton kontrolden çıkarak parçalandı. Başta trajik bir kaza gibi görünen bu olay, at arabasının mekanizmasındaki o sinsi dokunuşla bir cinayete dönüştü.",
     suspects: [
-      { id: "s1", name: "Hayriye", description: "Arabacı, faytonların bakımından sorumlu", icon: "👵" },
-      { id: "s2", name: "Fikret Bey", description: "Konak sahibi, Ada'nın en zengin sakini", icon: "🕵️" },
-      { id: "s3", name: "Sevim", description: "Konağın aşçısı, on yıldır adada çalışıyor", icon: "👨‍🍳" },
+      { id: "s1", name: "Hayriye", description: "Arabacı, faytonların bakımından sorumlu", icon: "pa:fayton_s1" },
+      { id: "s2", name: "Fikret Bey", description: "Konak sahibi, Ada'nın en zengin sakini", icon: "pa:fayton_s2" },
+      { id: "s3", name: "Sevim", description: "Konağın aşçısı, on yıldır adada çalışıyor", icon: "pa:fayton_s3" },
     ],
     weapons: [
-      { id: "w1", name: "Zehirli Muhallebi", description: "Sabah kahvaltısı için hazırlanan özel muhallebi", icon: "icecream" },
-      { id: "w2", name: "Ağır Taş", description: "Yolun kenarından alınan keskin köşeli kaya parçası", icon: "landscape" },
-      { id: "w3", name: "Fren Sabotajı", description: "Fayton freninin vida bağlantıları kasıtlı olarak gevşetilmiş", icon: "build" },
+      { id: "w1", name: "Zehirli Muhallebi", description: "Sabah kahvaltısı için hazırlanan özel muhallebi", icon: "pa:fayton_w1" },
+      { id: "w2", name: "Ağır Taş", description: "Yolun kenarından alınan keskin köşeli kaya parçası", icon: "pa:fayton_w2" },
+      { id: "w3", name: "Fren Sabotajı", description: "Fayton freninin vida bağlantıları kasıtlı olarak gevşetilmiş", icon: "pa:fayton_w3" },
     ],
     locations: [
-      { id: "l1", name: "Konak Bahçesi", description: "Gölgeli, çiçekli, tahta çit çevreli büyük konak bahçesi", icon: "park" },
-      { id: "l2", name: "Plaj Kulübesi", description: "Sahil şeridindeki ahşap, çatısız plaj barınağı", icon: "beach-access" },
-      { id: "l3", name: "Dik Tepe Yolu", description: "Adanın en yüksek noktasına çıkan dar, taşlı yol", icon: "terrain" },
+      { id: "l1", name: "Konak Bahçesi", description: "Gölgeli, çiçekli, tahta çit çevreli büyük konak bahçesi", icon: "pa:fayton_l1" },
+      { id: "l2", name: "Plaj Kulübesi", description: "Sahil şeridindeki ahşap, çatısız plaj barınağı", icon: "pa:fayton_l2" },
+      { id: "l3", name: "Dik Tepe Yolu", description: "Adanın en yüksek noktasına çıkan dar, taşlı yol", icon: "pa:fayton_l3" },
     ],
     clues: [
       {

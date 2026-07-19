@@ -386,6 +386,15 @@ const PUZZLE_ASSET_MAP: Record<string, number> = {
   galata_l1: require("../assets/images/puzzle_assets/galata_l1.png"),
   galata_l2: require("../assets/images/puzzle_assets/galata_l2.png"),
   galata_l3: require("../assets/images/puzzle_assets/galata_l3.png"),
+  fayton_s1: require("../assets/images/puzzle_assets/fayton_s1.png"),
+  fayton_s2: require("../assets/images/puzzle_assets/fayton_s2.png"),
+  fayton_s3: require("../assets/images/puzzle_assets/fayton_s3.png"),
+  fayton_w1: require("../assets/images/puzzle_assets/fayton_w1.png"),
+  fayton_w2: require("../assets/images/puzzle_assets/fayton_w2.png"),
+  fayton_w3: require("../assets/images/puzzle_assets/fayton_w3.png"),
+  fayton_l1: require("../assets/images/puzzle_assets/fayton_l1.png"),
+  fayton_l2: require("../assets/images/puzzle_assets/fayton_l2.png"),
+  fayton_l3: require("../assets/images/puzzle_assets/fayton_l3.png"),
 };
 
 export function isPuzzleAsset(icon: string | undefined): boolean {
