@@ -323,6 +323,15 @@ const PUZZLE_ASSET_MAP: Record<string, number> = {
   kuyumcu_l1: require("../assets/images/puzzle_assets/kuyumcu_l1.png"),
   kuyumcu_l2: require("../assets/images/puzzle_assets/kuyumcu_l2.png"),
   kuyumcu_l3: require("../assets/images/puzzle_assets/kuyumcu_l3.png"),
+  moda_s1: require("../assets/images/puzzle_assets/moda_s1.png"),
+  moda_s2: require("../assets/images/puzzle_assets/moda_s2.png"),
+  moda_s3: require("../assets/images/puzzle_assets/moda_s3.png"),
+  moda_w1: require("../assets/images/puzzle_assets/moda_w1.png"),
+  moda_w2: require("../assets/images/puzzle_assets/moda_w2.png"),
+  moda_w3: require("../assets/images/puzzle_assets/moda_w3.png"),
+  moda_l1: require("../assets/images/puzzle_assets/moda_l1.png"),
+  moda_l2: require("../assets/images/puzzle_assets/moda_l2.png"),
+  moda_l3: require("../assets/images/puzzle_assets/moda_l3.png"),
 };
 
 export function isPuzzleAsset(icon: string | undefined): boolean {

@@ -12102,21 +12102,21 @@
             {
               "id": "s1",
               "name": "Yardımcı Tasarımcı Hande",
-              "icon": "noun-ressam-leyla-avatar.png",
+              "icon": "pa:moda_s1",
               "description": "Koleksiyonun yarısını bizzat kendi elleriyle çizen ancak adının defile afişlerinden son anda silindiğini gören, sinir küpü yardımcı tasarımcı.",
               "detail": "32 yaşında, yetenekli, dikiş makaslarını ve kumaşları kusursuz kullanan öfkeli biri."
             },
             {
               "id": "s2",
               "name": "Tekstil Yatırımcısı Bülent",
-              "icon": "noun-komsu-nevzat-avatar.png",
+              "icon": "pa:moda_s2",
               "description": "Tasarımlara milyonlarca lira gömen, telif haklarını üzerine almak için gece yarısı maktulle gizli sözleşme görüşmesine gelen sabırsız yatırımcı.",
               "detail": "52 yaşında, modadan anlamayan, sadece paranın ve gücün dilinden konuşan iş adamı."
             },
             {
               "id": "s3",
               "name": "Eski Ortak Sevgi",
-              "icon": "noun-torun-nermin-avatar.png",
+              "icon": "pa:moda_s3",
               "description": "Beş yıl önce şirketten olaylı bir şekilde kovulan, kendi tasarımlarının çalındığını iddia edip atölyeyi basan ressam ruhlu eski ortak.",
               "detail": "44 yaşında, boyalara ve kimyasallara bulanmış, sanatsal ama tehlikeli bir figür."
             }
@@ -12125,19 +12125,19 @@
             {
               "id": "w1",
               "name": "Dikiş Makası",
-              "icon": "✂️",
+              "icon": "pa:moda_w1",
               "description": "Kumaşları tek hamlede pürüzsüzce kesmek için özel bilenmiş, 30 santimlik, son derece ağır ve ölümcül çelik dikiş makası."
             },
             {
               "id": "w2",
               "name": "Manken Ayağı",
-              "icon": "🦵",
+              "icon": "pa:moda_w2",
               "description": "Kıyafet sergilemek için kullanılan, söküldüğünde devasa ve küt bir sopaya dönüşen demonte, ağır metal manken bacağı."
             },
             {
               "id": "w3",
               "name": "Zehirli Boya",
-              "icon": "🎨",
+              "icon": "pa:moda_w3",
               "description": "Özel kumaşları renklendirmek için kullanılan, kapalı alanda solunduğunda saniyeler içinde zehirleyen ağır endüstriyel solvent boyası."
             }
           ],
@@ -12145,19 +12145,19 @@
             {
               "id": "l1",
               "name": "Dikiş Atölyesi",
-              "icon": "🧵",
+              "icon": "pa:moda_l1",
               "description": "Kumaş toplarının, iğnelerin ve dikiş makinelerinin bulunduğu, elbiselerin hayata geçirildiği dağınık ve geniş ana üretim alanı."
             },
             {
               "id": "l2",
               "name": "Ofis",
-              "icon": "🖊️",
+              "icon": "pa:moda_l2",
               "description": "Tasarım çizimlerinin, kilitli kasaların ve milyonluk sözleşmelerin bulunduğu, dışarıya tamamen yalıtılmış idari yönetim odası."
             },
             {
               "id": "l3",
               "name": "Boya Odası",
-              "icon": "🌈",
+              "icon": "pa:moda_l3",
               "description": "Havalandırması zayıf, her yerinde renkli kimyasalların ve fırçaların olduğu, tehlikeli gaz kokularının sindiği arka baskı odası."
             }
           ],
