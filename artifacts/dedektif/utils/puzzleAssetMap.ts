@@ -278,6 +278,15 @@ const PUZZLE_ASSET_MAP: Record<string, number> = {
   koydugun_l1: require("../assets/images/puzzle_assets/koydugun_l1.png"),
   koydugun_l2: require("../assets/images/puzzle_assets/koydugun_l2.png"),
   koydugun_l3: require("../assets/images/puzzle_assets/koydugun_l3.png"),
+  uskudar_s1: require("../assets/images/puzzle_assets/uskudar_s1.png"),
+  uskudar_s2: require("../assets/images/puzzle_assets/uskudar_s2.png"),
+  uskudar_s3: require("../assets/images/puzzle_assets/uskudar_s3.png"),
+  uskudar_w1: require("../assets/images/puzzle_assets/uskudar_w1.png"),
+  uskudar_w2: require("../assets/images/puzzle_assets/uskudar_w2.png"),
+  uskudar_w3: require("../assets/images/puzzle_assets/uskudar_w3.png"),
+  uskudar_l1: require("../assets/images/puzzle_assets/uskudar_l1.png"),
+  uskudar_l2: require("../assets/images/puzzle_assets/uskudar_l2.png"),
+  uskudar_l3: require("../assets/images/puzzle_assets/uskudar_l3.png"),
 };
 
 export function isPuzzleAsset(icon: string | undefined): boolean {

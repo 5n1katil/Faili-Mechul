@@ -1473,19 +1473,19 @@ export const PUZZLES: Puzzle[] = [
     story:
       "Boğaz'ın buz gibi gri sisleri arasına karışan ilk sabah vapurunda, üst düzey bir yönetici bir daha inmemek üzere ortadan kayboldu. Dalgaların sesi ve martıların çığlıkları, denizin ortasında işlenen bu kusursuz cinayetin tek sessiz tanığıydı.",
     suspects: [
-      { id: "s1", name: "Fatma Reis", description: "Yirmi yıldır bu sularda dümen sallayan, vapurun rotasından ve seyir defterinden sorumlu olan, köşkünden dışarıyı izleyen tecrübeli kadın kaptan.", icon: "sailing" },
-      { id: "s2", name: "Muzaffer", description: "Alt katlardaki kilitli alanların şifrelerini bilen, elleri halat çekmekten nasırlaşmış, öfkeli biletçi ve güverte görevlisi.", icon: "person" },
-      { id: "s3", name: "İrem Şen", description: "Şık pardösüsüyle dikkat çeken, sis yüzünden deniz yolculuğundan çekinen, sürekli saatiyle oynayan telaşlı iş kadını yolcu.", icon: "account-circle" },
+      { id: "s1", name: "Fatma Reis", description: "Yirmi yıldır bu sularda dümen sallayan, vapurun rotasından ve seyir defterinden sorumlu olan, köşkünden dışarıyı izleyen tecrübeli kadın kaptan.", icon: "pa:uskudar_s1" },
+      { id: "s2", name: "Muzaffer", description: "Alt katlardaki kilitli alanların şifrelerini bilen, elleri halat çekmekten nasırlaşmış, öfkeli biletçi ve güverte görevlisi.", icon: "pa:uskudar_s2" },
+      { id: "s3", name: "İrem Şen", description: "Şık pardösüsüyle dikkat çeken, sis yüzünden deniz yolculuğundan çekinen, sürekli saatiyle oynayan telaşlı iş kadını yolcu.", icon: "pa:uskudar_s3" },
     ],
     weapons: [
-      { id: "w1", name: "Duman Bombası", description: "Acil durumlarda yeri belli etmek için kullanılan, kapalı alanda patlatıldığında nefesi anında kesen endüstriyel kırmızı duman tüpü.", icon: "cloud" },
-      { id: "w2", name: "Gemi Halatı", description: "Gemileri iskeleye bağlamak için kullanılan, insan boynuna dolandığında derin ve pürüzlü yanık izleri bırakan kalın naylon örgü halat.", icon: "link" },
-      { id: "w3", name: "Deniz Feneri", description: "Sinyalizasyon için kullanılan, kafa tasına indirildiğinde ağır ve küt bir hasar yaratacak olan masif metal el feneri.", icon: "light-mode" },
+      { id: "w1", name: "Duman Bombası", description: "Acil durumlarda yeri belli etmek için kullanılan, kapalı alanda patlatıldığında nefesi anında kesen endüstriyel kırmızı duman tüpü.", icon: "pa:uskudar_w1" },
+      { id: "w2", name: "Gemi Halatı", description: "Gemileri iskeleye bağlamak için kullanılan, insan boynuna dolandığında derin ve pürüzlü yanık izleri bırakan kalın naylon örgü halat.", icon: "pa:uskudar_w2" },
+      { id: "w3", name: "Deniz Feneri", description: "Sinyalizasyon için kullanılan, kafa tasına indirildiğinde ağır ve küt bir hasar yaratacak olan masif metal el feneri.", icon: "pa:uskudar_w3" },
     ],
     locations: [
-      { id: "l1", name: "Üst Güverte", description: "Yolcuların çay içip martılara simit attığı, denizin soğuk rüzgarlarını doğrudan alan geniş ve açık hava seyir terası.", icon: "waves" },
-      { id: "l2", name: "Motor Dairesi", description: "Yalnızca şifreli çelik bir kapıyla inilebilen, devasa pistonların sağır edici bir gürültüyle çalıştığı yağ kokulu kapalı makine dairesi.", icon: "engineering" },
-      { id: "l3", name: "İskele", description: "Turnikelerin ve bekleme salonlarının bulunduğu, karayla denizin birleştiği yolcu kabul ve bindirme alanı.", icon: "directions-boat" },
+      { id: "l1", name: "Üst Güverte", description: "Yolcuların çay içip martılara simit attığı, denizin soğuk rüzgarlarını doğrudan alan geniş ve açık hava seyir terası.", icon: "pa:uskudar_l1" },
+      { id: "l2", name: "Motor Dairesi", description: "Yalnızca şifreli çelik bir kapıyla inilebilen, devasa pistonların sağır edici bir gürültüyle çalıştığı yağ kokulu kapalı makine dairesi.", icon: "pa:uskudar_l2" },
+      { id: "l3", name: "İskele", description: "Turnikelerin ve bekleme salonlarının bulunduğu, karayla denizin birleştiği yolcu kabul ve bindirme alanı.", icon: "pa:uskudar_l3" },
     ],
     clues: [
       {
