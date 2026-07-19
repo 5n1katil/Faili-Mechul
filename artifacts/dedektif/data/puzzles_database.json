@@ -11642,21 +11642,21 @@
             {
               "id": "s1",
               "name": "Kumaş Tüccarı Fikri Bey",
-              "icon": "noun-tuccar-vehbi-avatar.png",
+              "icon": "pa:carsihamam_s1",
               "description": "Maktulün ipek pazarındaki en büyük rakibi olan, rekabeti hamam duvarlarına kadar taşıyan, kilolu ve nefes darlığı çeken hırslı tüccar.",
               "detail": "55 yaşında, kalın ve kısa parmaklı, geniş göbekli, sıcağa dayanamayan bir yapısı var."
             },
             {
               "id": "s2",
               "name": "Hamamcı Nuri Usta",
-              "icon": "noun-vahap-amca-avatar.png",
+              "icon": "pa:carsihamam_s2",
               "description": "Maktulün fahiş kira artışlarına itiraz eden, yarım asırdır bu hamamın her taşını ezbere bilen, güçlü ellere sahip yaşlı işletmeci.",
               "detail": "72 yaşında, devasa ve nasırlı ellere sahip, gözleri zayıf ama kolları kuvvetli."
             },
             {
               "id": "s3",
               "name": "Muhasebeci Dilara",
-              "icon": "noun-nazik-hanim-avatar.png",
+              "icon": "pa:carsihamam_s3",
               "description": "Maktulün şirket hesaplarında kendi zimmetine geçirdiği devasa açığı saklamaya çalışan, dışarıdan sakin görünen zarif muhasebeci kadın.",
               "detail": "38 yaşında, ince ve küçük ellere sahip, sessiz ama sırlarla dolu."
             }
@@ -11665,19 +11665,19 @@
             {
               "id": "w1",
               "name": "Kaynar Su Kovası",
-              "icon": "♨️",
+              "icon": "pa:carsihamam_w1",
               "description": "Sıcak suları kurnalardan taşımak için kullanılan, kafaya indiğinde silindirik bir çukur bırakan ağır, kulplu bakır hamam kovası."
             },
             {
               "id": "w2",
               "name": "Sabunluk Taşı",
-              "icon": "🪨",
+              "icon": "pa:carsihamam_w2",
               "description": "Eski mermer kurnalardan kopmuş, düz bir satıha sahip, ağır ve keskin kenarlı ölümcül sabunluk taşı."
             },
             {
               "id": "w3",
               "name": "Kese Bezi Boğması",
-              "icon": "🧤",
+              "icon": "pa:carsihamam_w3",
               "description": "Hamamcıların kullandığı, ıslatılıp bir boyuna dolandığında asla kopmayan ve boğucu bir güç gerektiren özel dokuma ipek kese bezi."
             }
           ],
@@ -11685,19 +11685,19 @@
             {
               "id": "l1",
               "name": "Göbek Taşı",
-              "icon": "🔥",
+              "icon": "pa:carsihamam_l1",
               "description": "Hamamın tam merkezinde yer alan, alttan ısıtmalı, yoğun buharın ve sıcaklığın en yüksek olduğu devasa mermer platform."
             },
             {
               "id": "l2",
               "name": "Soyunma Odası",
-              "icon": "🚪",
+              "icon": "pa:carsihamam_l2",
               "description": "Girişte yer alan, ahşap bölmelerden oluşan, hamamın sıcaklığından uzak, kuru ve serin soyunma ve dinlenme alanı."
             },
             {
               "id": "l3",
               "name": "Su Deposu Bölümü",
-              "icon": "💧",
+              "icon": "pa:carsihamam_l3",
               "description": "Hamamın en karanlık arka bölgesinde bulunan, kaynar suların depolandığı ve teknik boruların geçtiği loş alan."
             }
           ],

@@ -305,6 +305,15 @@ const PUZZLE_ASSET_MAP: Record<string, number> = {
   buyukada_l1: require("../assets/images/puzzle_assets/buyukada_l1.png"),
   buyukada_l2: require("../assets/images/puzzle_assets/buyukada_l2.png"),
   buyukada_l3: require("../assets/images/puzzle_assets/buyukada_l3.png"),
+  carsihamam_s1: require("../assets/images/puzzle_assets/carsihamam_s1.png"),
+  carsihamam_s2: require("../assets/images/puzzle_assets/carsihamam_s2.png"),
+  carsihamam_s3: require("../assets/images/puzzle_assets/carsihamam_s3.png"),
+  carsihamam_w1: require("../assets/images/puzzle_assets/carsihamam_w1.png"),
+  carsihamam_w2: require("../assets/images/puzzle_assets/carsihamam_w2.png"),
+  carsihamam_w3: require("../assets/images/puzzle_assets/carsihamam_w3.png"),
+  carsihamam_l1: require("../assets/images/puzzle_assets/carsihamam_l1.png"),
+  carsihamam_l2: require("../assets/images/puzzle_assets/carsihamam_l2.png"),
+  carsihamam_l3: require("../assets/images/puzzle_assets/carsihamam_l3.png"),
 };
 
 export function isPuzzleAsset(icon: string | undefined): boolean {
