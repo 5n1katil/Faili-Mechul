@@ -13919,28 +13919,28 @@
             {
               "id": "s1",
               "name": "Baş Ses Mühendisi Alp",
-              "icon": "⚡",
+              "icon": "pa:festival_s1",
               "description": "Festivalin tüm teknik altyapısını yöneten, devasa ekipmanları çıplak elleriyle kuran ancak sözleşmesi maktul tarafından feshedilmek üzere olan 20 yıllık emektar baş ses mühendisi.",
               "detail": "50 yaşında, ekipman ustası, bağlantısı kesiliyor."
             },
             {
               "id": "s2",
               "name": "Headliner Sanatçı Luna",
-              "icon": "🎤",
+              "icon": "pa:festival_s2",
               "description": "Kaprisleriyle ünlü, maktulün son dakika şarkı listesini değiştirmesi üzerine odasında kriz geçiren ve etrafı yakıp yıkan başrol kadın sanatçı.",
               "detail": "32 yaşında, uluslararası yıldız, sahnede güçlü."
             },
             {
               "id": "s3",
               "name": "Güvenlik Koordinatörü Bora",
-              "icon": "noun-bricklaying-1574372-avatar.png",
+              "icon": "pa:festival_s3",
               "description": "Sahne arkasının tüm yetkilerine sahip olan, kalın elektrik kablolarıyla bariyerler kuran ancak maktulün kendisini atlatmasıyla prestiji sarsılan eski asker güvenlik koordinatörü.",
               "detail": "43 yaşında, askeri geçmiş, disiplinli."
             },
             {
               "id": "s4",
               "name": "Sponsor Şirketi Temsilcisi Deniz",
-              "icon": "noun-cem-bey-avatar.png",
+              "icon": "pa:festival_s4",
               "description": "Milyonlarca euroluk sponsorluğunun maktulün tek bir imzasıyla çöpe gitme ihtimaline karşı tetikte bekleyen, lüks çadırlarda şampanya içen şirket temsilcisi.",
               "detail": "39 yaşında, iş odaklı, kayıptan korkan."
             }
@@ -13949,25 +13949,25 @@
             {
               "id": "w1",
               "name": "Mikrofon Standı",
-              "icon": "🎙️",
+              "icon": "pa:festival_w1",
               "description": "Sahne performansında kullanılan ağır, küt demir döküm altlıklı, kafaya vurulduğunda kemikleri kırabilecek klasik mikrofon standı."
             },
             {
               "id": "w2",
               "name": "Elektrik Kablosu (Sahne)",
-              "icon": "🔋",
+              "icon": "pa:festival_w2",
               "description": "Sahne jeneratöründen çekilmiş, güçlü bir boğma ve boyun kırma aracı olabilen, kalın yalıtımlı endüstriyel elektrik kablosu."
             },
             {
               "id": "w3",
               "name": "Zehirli Kokteyl (Backstage)",
-              "icon": "🍹",
+              "icon": "pa:festival_w3",
               "description": "Kulisteki buzlu ikramlara şırıngayla karıştırılan ve yutulduğunda kalp krizini tetikleyerek vücudu donduran sinsi zehirli kokteyl."
             },
             {
               "id": "w4",
               "name": "Işık Rigging Kolu",
-              "icon": "💡",
+              "icon": "pa:festival_w4",
               "description": "Sahne üstü devasa ışık montajında kullanılan, ağır çelikten yapılma sivri kilit mekanizmalı uzun rigging aydınlatma kolu."
             }
           ],
@@ -13975,25 +13975,25 @@
             {
               "id": "l1",
               "name": "Ses Kontrol Kulübesi",
-              "icon": "🎚️",
+              "icon": "pa:festival_l1",
               "description": "Devasa hoparlörlerin hemen yanında yer alan, binlerce düğmenin bulunduğu ve dışarıdaki sesleri geçirmeyen camlı ses kontrol kulübesi."
             },
             {
               "id": "l2",
               "name": "Sanatçı Odası",
-              "icon": "🌟",
+              "icon": "pa:festival_l2",
               "description": "Aynalar, çiçekler ve lüks kadife koltuklarla döşenmiş, kapısı içeriden kilitlenebilen baş sanatçının özel soyunma odası."
             },
             {
               "id": "l3",
               "name": "Güvenlik Noktası",
-              "icon": "🚧",
+              "icon": "pa:festival_l3",
               "description": "Sahne arkasına geçen herkesin aranıp akredite edildiği, telsiz seslerinin hiç susmadığı demir bariyerli giriş kontrol noktası."
             },
             {
               "id": "l4",
               "name": "Sponsor VIP Çadırı",
-              "icon": "🎪",
+              "icon": "pa:festival_l4",
               "description": "Şampanyaların su gibi aktığı, yatırımcıların ağırlandığı, müzik sesinden nispeten uzak izole sponsor VIP dinlenme çadırı."
             }
           ],

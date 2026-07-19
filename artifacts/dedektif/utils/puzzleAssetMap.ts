@@ -452,6 +452,18 @@ const PUZZLE_ASSET_MAP: Record<string, number> = {
   anatomi_l2: require("../assets/images/puzzle_assets/anatomi_l2.png"),
   anatomi_l3: require("../assets/images/puzzle_assets/anatomi_l3.png"),
   anatomi_l4: require("../assets/images/puzzle_assets/anatomi_l4.png"),
+  festival_s1: require("../assets/images/puzzle_assets/festival_s1.png"),
+  festival_s2: require("../assets/images/puzzle_assets/festival_s2.png"),
+  festival_s3: require("../assets/images/puzzle_assets/festival_s3.png"),
+  festival_s4: require("../assets/images/puzzle_assets/festival_s4.png"),
+  festival_w1: require("../assets/images/puzzle_assets/festival_w1.png"),
+  festival_w2: require("../assets/images/puzzle_assets/festival_w2.png"),
+  festival_w3: require("../assets/images/puzzle_assets/festival_w3.png"),
+  festival_w4: require("../assets/images/puzzle_assets/festival_w4.png"),
+  festival_l1: require("../assets/images/puzzle_assets/festival_l1.png"),
+  festival_l2: require("../assets/images/puzzle_assets/festival_l2.png"),
+  festival_l3: require("../assets/images/puzzle_assets/festival_l3.png"),
+  festival_l4: require("../assets/images/puzzle_assets/festival_l4.png"),
 };
 
 export function isPuzzleAsset(icon: string | undefined): boolean {
