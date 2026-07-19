@@ -416,6 +416,18 @@ const PUZZLE_ASSET_MAP: Record<string, number> = {
   bogaz_l2: require("../assets/images/puzzle_assets/bogaz_l2.png"),
   bogaz_l3: require("../assets/images/puzzle_assets/bogaz_l3.png"),
   bogaz_l4: require("../assets/images/puzzle_assets/bogaz_l4.png"),
+  ankara_s1: require("../assets/images/puzzle_assets/ankara_s1.png"),
+  ankara_s2: require("../assets/images/puzzle_assets/ankara_s2.png"),
+  ankara_s3: require("../assets/images/puzzle_assets/ankara_s3.png"),
+  ankara_s4: require("../assets/images/puzzle_assets/ankara_s4.png"),
+  ankara_w1: require("../assets/images/puzzle_assets/ankara_w1.png"),
+  ankara_w2: require("../assets/images/puzzle_assets/ankara_w2.png"),
+  ankara_w3: require("../assets/images/puzzle_assets/ankara_w3.png"),
+  ankara_w4: require("../assets/images/puzzle_assets/ankara_w4.png"),
+  ankara_l1: require("../assets/images/puzzle_assets/ankara_l1.png"),
+  ankara_l2: require("../assets/images/puzzle_assets/ankara_l2.png"),
+  ankara_l3: require("../assets/images/puzzle_assets/ankara_l3.png"),
+  ankara_l4: require("../assets/images/puzzle_assets/ankara_l4.png"),
 };
 
 export function isPuzzleAsset(icon: string | undefined): boolean {

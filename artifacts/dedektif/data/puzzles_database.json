@@ -12932,28 +12932,28 @@
             {
               "id": "s1",
               "name": "Genel Sekreter Hülya",
-              "icon": "noun-hizmetci-hacer-avatar.png",
+              "icon": "pa:ankara_s1",
               "description": "Maktulün koltuğuna geçmek için sırasını bekleyen ancak istifanın gelmemesiyle hayal kırıklığı yaşayan, tüm gece makam odasından ekranları izleyen genel sekreter.",
               "detail": "52 yaşında, deneyimli, hesaplı."
             },
             {
               "id": "s2",
               "name": "Mali İşler Müdürü Cahit",
-              "icon": "noun-tuccar-vehbi-avatar.png",
+              "icon": "pa:ankara_s2",
               "description": "Parti kasasında milyonlarca liralık açık veren ve bu usulsüzlük raporu maktulün eline geçtiği için köşeye sıkışan paniğe kapılmış mali müdür.",
               "detail": "47 yaşında, sinirli, köşeye sıkışmış."
             },
             {
               "id": "s3",
               "name": "Güvenlik Şefi Orhan",
-              "icon": "👮",
+              "icon": "pa:ankara_s3",
               "description": "Binanın 10 yıllık güvenliğinden sorumlu olan, elinde feneri ve alet çantasıyla alt katlardaki panoları denetleyen, işten çıkarılacağını öğrenen öfkeli güvenlik şefi.",
               "detail": "58 yaşında, eski polis, sert."
             },
             {
               "id": "s4",
               "name": "Basın Danışmanı Ezgi",
-              "icon": "noun-zeynep-hanim-avatar.png",
+              "icon": "pa:ankara_s4",
               "description": "Sızdırılan kriz haberlerini bilerek durdurmadığı için maktulle büyük bir kavga eden, sürekli gazetecilere kahve içerek demeç veren soğukkanlı basın danışmanı.",
               "detail": "36 yaşında, zeki, bağlantıları var."
             }
@@ -12962,25 +12962,25 @@
             {
               "id": "w1",
               "name": "Evrak Delgici",
-              "icon": "📌",
+              "icon": "pa:ankara_w1",
               "description": "Ofis masalarında bulunan, ağır metal bloktan yapılmış ve kafaya küt bir güçle savrulduğunda ölümcül sonuçlar doğuran keskin kenarlı evrak delgici."
             },
             {
               "id": "w2",
               "name": "Zehirli Kahve",
-              "icon": "☕",
+              "icon": "pa:ankara_w2",
               "description": "Seçim gecesi uyanık kalmak için dağıtılan termos kahveye karıştırılmış, yutulduğunda kalp krizini tetikleyerek vücudu donduran sinsi zehirli kokteyl."
             },
             {
               "id": "w3",
               "name": "Elektrik Kablosu",
-              "icon": "🔌",
+              "icon": "pa:ankara_w3",
               "description": "Bina tesisatından sökülen, kurbanın boynuna arkadan dolanıp amansızca sıkıldığında kesik ve yanık izleri bırakan kalın elektrik kablosu."
             },
             {
               "id": "w4",
               "name": "Dosya Dolabı",
-              "icon": "🗄️",
+              "icon": "pa:ankara_w4",
               "description": "Arka montaj vidaları sökülerek, kurbanın üzerine devrildiğinde göğüs kafesini ve omurgayı tamamen ezecek ağırlıktaki devasa metal dosya dolabı."
             }
           ],
@@ -12988,25 +12988,25 @@
             {
               "id": "l1",
               "name": "Genel Sekreter Odası",
-              "icon": "🏛️",
+              "icon": "pa:ankara_l1",
               "description": "2. katta yer alan, lüks deri mobilyalarla döşenmiş, dışarıya tamamen izole ve sessiz genel sekreter liderlik ofisi."
             },
             {
               "id": "l2",
               "name": "Mali İşler Ofisi",
-              "icon": "🧾",
+              "icon": "pa:ankara_l2",
               "description": "3. katta yer alan, çelik kasaların, muhasebe evraklarının ve ağır metal rafların bulunduğu kilitli ve kameralı finans bölümü."
             },
             {
               "id": "l3",
               "name": "Güvenlik Kontrol",
-              "icon": "📹",
+              "icon": "pa:ankara_l3",
               "description": "Zemin katta bulunan, tüm bina kameralarının izlendiği dev ekranların ve elektrik ana panolarının yer aldığı donanımlı güvenlik merkezi."
             },
             {
               "id": "l4",
               "name": "Basın Odası",
-              "icon": "📺",
+              "icon": "pa:ankara_l4",
               "description": "1. katta bulunan, telefonların sürekli çaldığı, televizyon kanallarının açık olduğu hareketli medya koordinasyon odası."
             }
           ],
