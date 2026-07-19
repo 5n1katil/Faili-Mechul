@@ -399,6 +399,8 @@ const EMOJI_TO_MATERIAL: Record<string, string> = {
 
 function emojiToMaterialIcon(emoji: string): string {
   if (!emoji) return "help-outline";
+  // Pass through puzzle asset keys and custom PNG avatars.
+  if (emoji.startsWith("pa:") || emoji.endsWith(".png")) return emoji;
   const mapped = EMOJI_TO_MATERIAL[emoji];
   if (mapped) return mapped;
   const firstChar = emoji[0];

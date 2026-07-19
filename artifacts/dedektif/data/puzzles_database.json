@@ -11429,7 +11429,7 @@
             {
               "id": "s1",
               "name": "Damadı Tarık",
-              "icon": "noun-cem-bey-avatar.png",
+              "icon": "pa:buyukada_s1",
               "description": "Hakimin kızıyla evli olan, ancak miras ve arazi anlaşmazlıkları yüzünden mahkemelerde kaybetmiş, köşke zorunlu misafir gelmiş soğukkanlı damat.",
               "detail": "42 yaşında, hukuk eğitimi almış, sürekli plan yapan zeki bir figür.",
               "parmakIziDeseni": "fp_double_loop"
@@ -11437,7 +11437,7 @@
             {
               "id": "s2",
               "name": "Eski Sekreteri Nilgün",
-              "icon": "noun-hizmetci-hacer-avatar.png",
+              "icon": "pa:buyukada_s2",
               "description": "Maktule 20 yıl boyunca sadakatle hizmet etmiş ancak emekliliğinde bir kuruş bile tazminat alamamış, botanik bilgisi yüksek eski sekreter.",
               "detail": "58 yaşında, kırık kalpli, eski bir eczane kalfası, duygularını iyi gizler.",
               "parmakIziDeseni": "fp_central_pocket"
@@ -11445,7 +11445,7 @@
             {
               "id": "s3",
               "name": "Komşu Avukat Sabri",
-              "icon": "noun-ortak-sabri-bey-avatar.png",
+              "icon": "pa:buyukada_s3",
               "description": "Hakimle eski dava husumetleri yüzünden yıllardır sürtüşen, o fırtınalı gece adada mahsur kaldığı için köşkte kalmak zorunda olan komşu avukat.",
               "detail": "65 yaşında, inatçı, kendi doğrularından asla taviz vermeyen sert bir adam.",
               "parmakIziDeseni": "fp_lateral_pocket"
@@ -11455,19 +11455,19 @@
             {
               "id": "w1",
               "name": "Zehirli Çay",
-              "icon": "🫖",
+              "icon": "pa:buyukada_w1",
               "description": "Gece içilen bitkisel çaya ustaca karıştırılmış, doğada nadir bulunan ve kalbi yavaşça durduran botanik bir uyku otu ekstresi."
             },
             {
               "id": "w2",
               "name": "Antika Vazo",
-              "icon": "🏺",
+              "icon": "pa:buyukada_w2",
               "description": "Hakimin antika koleksiyonuna ait, kafaya indirildiğinde kafatasını paramparça edecek ağırlıkta, paha biçilemez devasa Osmanlı vazosu."
             },
             {
               "id": "w3",
               "name": "Yastık Boğması",
-              "icon": "🛏️",
+              "icon": "pa:buyukada_w3",
               "description": "Uyku sırasında yüz üstü bastırılarak kurbanın ciğerlerine giden havayı kesmek için kullanılan işlemeli, ağır köşk yastığı."
             }
           ],
@@ -11475,19 +11475,19 @@
             {
               "id": "l1",
               "name": "Kütüphane",
-              "icon": "📚",
+              "icon": "pa:buyukada_l1",
               "description": "Zemin katta bulunan, tavana kadar uzanan kitaplarla dolu, antika eserlerin sergilendiği ve verandalı camlara sahip kütüphane odası."
             },
             {
               "id": "l2",
               "name": "Yatak Odası",
-              "icon": "🛏️",
+              "icon": "pa:buyukada_l2",
               "description": "Üst katta yer alan, fırtınalı denize bakan, kurbanın dinlenmek için çekildiği sessiz ve izole ana yatak odası."
             },
             {
               "id": "l3",
               "name": "Mutfak",
-              "icon": "🍳",
+              "icon": "pa:buyukada_l3",
               "description": "Zemin katta arka bahçeye açılan, köşk sakinlerine çay ve yemek hazırlanan, tezgahları şifalı otlarla dolu mutfak alanı."
             }
           ],

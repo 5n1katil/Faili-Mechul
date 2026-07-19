@@ -330,6 +330,10 @@ if (emojiToMaterialKeys) {
         const collect = (arr) => {
           for (const e of arr ?? []) {
             if (!e.icon) continue;
+            // Puzzle asset keys / custom PNGs pass through packs.ts — not emojis.
+            if (typeof e.icon === "string" && (e.icon.startsWith("pa:") || e.icon.endsWith(".png"))) {
+              continue;
+            }
             if (!usedEmojis.has(e.icon)) {
               usedEmojis.set(e.icon, `${pack.packId}/${p.puzzleId}: ${e.name}`);
             }
