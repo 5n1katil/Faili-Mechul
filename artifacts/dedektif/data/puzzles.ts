@@ -1041,19 +1041,19 @@ export const PUZZLES: Puzzle[] = [
     story:
       "Kadıköy'ün bohem tarzı, işlek bir kafesinde daktilo sesleri kesildi. Sivri dilli politik eleştirileriyle tanınan gazeteci, demli çayını yudumlarken aniden masaya yığıldı. Etraftaki onlarca insana rağmen, kimse o sessiz suikastı fark edememişti.",
     suspects: [
-      { id: "s1", name: "Kafe Sahibi", description: "Maktulün gazetede yazdığı sert eleştiriler yüzünden müşteri kaybeden, sürekli kasanın başında hesap kitap yapan mekanın sahibi.", icon: "👨" },
-      { id: "s2", name: "Garson", description: "İşe henüz o sabah başlamış, müşterilerle iletişim kurmaktan çekinen, sadece mutfakla masalar arasında sipariş taşıyan toy ve sessiz çalışan.", icon: "👦" },
-      { id: "s3", name: "Müşteri", description: "Uzun süredir dışarıdaki masada tek başına oturan, maktulü uzaktan kesen ancak içeriye hiç girmemiş olan şüpheli pardösülü adam.", icon: "🧑" },
+      { id: "s1", name: "Kafe Sahibi", description: "Maktulün gazetede yazdığı sert eleştiriler yüzünden müşteri kaybeden, sürekli kasanın başında hesap kitap yapan mekanın sahibi.", icon: "pa:kadikoy_s1" },
+      { id: "s2", name: "Garson", description: "İşe henüz o sabah başlamış, müşterilerle iletişim kurmaktan çekinen, sadece mutfakla masalar arasında sipariş taşıyan toy ve sessiz çalışan.", icon: "pa:kadikoy_s2" },
+      { id: "s3", name: "Müşteri", description: "Uzun süredir dışarıdaki masada tek başına oturan, maktulü uzaktan kesen ancak içeriye hiç girmemiş olan şüpheli pardösülü adam.", icon: "pa:kadikoy_s3" },
     ],
     weapons: [
-      { id: "w1", name: "Zehirli Çay", description: "Özel demliklerin içine kasıtlı olarak damlatılan, yutulduğu anda midede şiddetli asit reaksiyonu yaratan kokusuz ve renksiz toksin.", icon: "local-cafe" },
-      { id: "w2", name: "Gizli Enjeksiyon", description: "Kalabalık arasında kurbana hissettirilmeden batırılabilecek, deride mikroskobik bir kızarıklık bırakan ince uçlu suikast iğnesi.", icon: "vaccines" },
-      { id: "w3", name: "Gürültü Bombası", description: "Kafede büyük bir panik yaratmak ve hedef şaşırtmak için kullanılan, patladığında kulakları sağır eden küçük kimyasal kapsül.", icon: "crisis-alert" },
+      { id: "w1", name: "Zehirli Çay", description: "Özel demliklerin içine kasıtlı olarak damlatılan, yutulduğu anda midede şiddetli asit reaksiyonu yaratan kokusuz ve renksiz toksin.", icon: "pa:kadikoy_w1" },
+      { id: "w2", name: "Gizli Enjeksiyon", description: "Kalabalık arasında kurbana hissettirilmeden batırılabilecek, deride mikroskobik bir kızarıklık bırakan ince uçlu suikast iğnesi.", icon: "pa:kadikoy_w2" },
+      { id: "w3", name: "Gürültü Bombası", description: "Kafede büyük bir panik yaratmak ve hedef şaşırtmak için kullanılan, patladığında kulakları sağır eden küçük kimyasal kapsül.", icon: "pa:kadikoy_w3" },
     ],
     locations: [
-      { id: "l1", name: "Kafe İçi", description: "Duvarları tablolarla dolu, loş ışıklı, kahve makinesi seslerinin hiç susmadığı ve müşterilerin dip dibe oturduğu sıcak iç mekan.", icon: "coffee" },
-      { id: "l2", name: "Tuvalet", description: "Kafenin en arka kısmında yer alan, uzun ve dar bir koridorun sonundaki, kameranın görmediği tek kişilik izole alan.", icon: "wc" },
-      { id: "l3", name: "Dış Terasa", description: "Caddenin gürültüsüyle iç içe olan, rüzgar alan, yaya trafiğinin yoğun olduğu açık hava oturma düzeni.", icon: "outdoor-grill" },
+      { id: "l1", name: "Kafe İçi", description: "Duvarları tablolarla dolu, loş ışıklı, kahve makinesi seslerinin hiç susmadığı ve müşterilerin dip dibe oturduğu sıcak iç mekan.", icon: "pa:kadikoy_l1" },
+      { id: "l2", name: "Tuvalet", description: "Kafenin en arka kısmında yer alan, uzun ve dar bir koridorun sonundaki, kameranın görmediği tek kişilik izole alan.", icon: "pa:kadikoy_l2" },
+      { id: "l3", name: "Dış Terasa", description: "Caddenin gürültüsüyle iç içe olan, rüzgar alan, yaya trafiğinin yoğun olduğu açık hava oturma düzeni.", icon: "pa:kadikoy_l3" },
     ],
     clues: [
       {
