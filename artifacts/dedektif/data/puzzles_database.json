@@ -13594,28 +13594,28 @@
             {
               "id": "s1",
               "name": "Asistan Dr. Tunç",
-              "icon": "👨‍⚕️",
+              "icon": "pa:anatomi_s1",
               "description": "Maktul tarafından tezi intihalle suçlanan, akademik hayatı sona ermek üzere olan ve geceyi sadece bilgisayarının başında geçiren çaresiz asistan doktor.",
               "detail": "29 yaşında, parlak ama kırılgan."
             },
             {
               "id": "s2",
               "name": "Eczacılık Prof. Nilüfer",
-              "icon": "noun-teacher-1908916-avatar.png",
+              "icon": "pa:anatomi_s2",
               "description": "Bölümlerin birleştirilmesi kararıyla profesörlük kürsüsünü maktule kaptıracak olan, gece laboratuvarda dolapları karıştıran öfkeli eczacılık hocası.",
               "detail": "54 yaşında, güçlü akademik ağı var."
             },
             {
               "id": "s3",
               "name": "Hemşire Baş Sorumlu Ayhan",
-              "icon": "👩‍⚕️",
+              "icon": "pa:anatomi_s3",
               "description": "Yolsuzluk raporlarını sümenaltı eden maktulle başı dertte olan, tıbbi cihazları taşırken tüm gece koridorda volta atan başhemşire.",
               "detail": "47 yaşında, adalet arayan, sabırlı."
             },
             {
               "id": "s4",
               "name": "Tıp Öğrencisi Berk",
-              "icon": "noun-cirak-selim-avatar.png",
+              "icon": "pa:anatomi_s4",
               "description": "Sınav hilesi yaparken kameraya yakalanan, maktulün şantajına boyun eğmek istemeyen ve anestezi tekniklerini çok iyi bilen tıp öğrencisi.",
               "detail": "24 yaşında, panikleyebilir, çaresiz."
             }
@@ -13624,25 +13624,25 @@
             {
               "id": "w1",
               "name": "Formaldehit Solüsyonu",
-              "icon": "🧫",
+              "icon": "pa:anatomi_w1",
               "description": "Kadavraları korumak için kullanılan, yutulması halinde iç organları anında çürüten yüksek konsantre formaldehit sıvısı."
             },
             {
               "id": "w2",
               "name": "Kemik Testere",
-              "icon": "🔪",
+              "icon": "pa:anatomi_w2",
               "description": "Cerrahi müdahalelerde kullanılan, etrafa saçıldığında duvarlarda kan izleri bırakabilecek son derece keskin ve elektrikli kemik testeresi."
             },
             {
               "id": "w3",
               "name": "İlaç Dolap Kapağı",
-              "icon": "🗄️",
+              "icon": "pa:anatomi_w3",
               "description": "Tıp malzemelerinin korunduğu eski eczane dolabından sökülen, ağır metal ve küt menteşeli demir kilit kapağı."
             },
             {
               "id": "w4",
               "name": "Anestezi Gazı Tüpü",
-              "icon": "💨",
+              "icon": "pa:anatomi_w4",
               "description": "Odaya salındığında akciğer alveollerini kilitleyip kalp krizini simüle eden küçük, taşınabilir cerrahi anestezi gaz tüpü."
             }
           ],
@@ -13650,25 +13650,25 @@
             {
               "id": "l1",
               "name": "Anatomi Laboratuvarı",
-              "icon": "🔬",
+              "icon": "pa:anatomi_l1",
               "description": "Paslanmaz çelik masaların ve soğutucuların bulunduğu, formaldehit kokulu, dışarıdan hava almayan karanlık kadavra çalışma odası."
             },
             {
               "id": "l2",
               "name": "Eczacılık Bölümü",
-              "icon": "💊",
+              "icon": "pa:anatomi_l2",
               "description": "Kimyasal asitlerin ve ilaç stoklarının bulunduğu, kameralarla sıkı korunan aydınlık ve steril ilaç araştırma bölümü."
             },
             {
               "id": "l3",
               "name": "Koridor (3. Kat)",
-              "icon": "🚶",
+              "icon": "pa:anatomi_l3",
               "description": "Bölümleri birbirine bağlayan, gece yarısı tamamen ıssızlaşan, uzun ve yankılı 3. kat ana koridoru."
             },
             {
               "id": "l4",
               "name": "Anestezi Odası",
-              "icon": "😷",
+              "icon": "pa:anatomi_l4",
               "description": "Sadece cerrahi maskelerin ve teknik oksijen tüplerinin depolandığı, ağır metal bir kapıyla korunan teknik anestezi odası."
             }
           ],

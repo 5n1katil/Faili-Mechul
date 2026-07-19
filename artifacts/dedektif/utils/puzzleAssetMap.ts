@@ -440,6 +440,18 @@ const PUZZLE_ASSET_MAP: Record<string, number> = {
   antika_l2: require("../assets/images/puzzle_assets/antika_l2.png"),
   antika_l3: require("../assets/images/puzzle_assets/antika_l3.png"),
   antika_l4: require("../assets/images/puzzle_assets/antika_l4.png"),
+  anatomi_s1: require("../assets/images/puzzle_assets/anatomi_s1.png"),
+  anatomi_s2: require("../assets/images/puzzle_assets/anatomi_s2.png"),
+  anatomi_s3: require("../assets/images/puzzle_assets/anatomi_s3.png"),
+  anatomi_s4: require("../assets/images/puzzle_assets/anatomi_s4.png"),
+  anatomi_w1: require("../assets/images/puzzle_assets/anatomi_w1.png"),
+  anatomi_w2: require("../assets/images/puzzle_assets/anatomi_w2.png"),
+  anatomi_w3: require("../assets/images/puzzle_assets/anatomi_w3.png"),
+  anatomi_w4: require("../assets/images/puzzle_assets/anatomi_w4.png"),
+  anatomi_l1: require("../assets/images/puzzle_assets/anatomi_l1.png"),
+  anatomi_l2: require("../assets/images/puzzle_assets/anatomi_l2.png"),
+  anatomi_l3: require("../assets/images/puzzle_assets/anatomi_l3.png"),
+  anatomi_l4: require("../assets/images/puzzle_assets/anatomi_l4.png"),
 };
 
 export function isPuzzleAsset(icon: string | undefined): boolean {
