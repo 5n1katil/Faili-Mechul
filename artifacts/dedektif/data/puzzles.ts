@@ -1809,19 +1809,19 @@ export const PUZZLES: Puzzle[] = [
     story:
       "Arnavutköy'ün iyot ve anason kokan tarihi meyhanesinde, ahşap masalardan birine yığılmış bir müdavim bulundu. Önündeki kadeh doluydu ama kokusu her zamankinden çok daha karanlık, çok daha sinsiydi.",
     suspects: [
-      { id: "s1", name: "Bora Deniz", description: "Limanın en eski denizcisi olan, kaba saba yapısıyla bilinen ve teknesini bir kale gibi koruyan, sürekli halat ve ağlarla uğraşan yaşlı balıkçı.", icon: "👨‍✈️" },
-      { id: "s2", name: "Esma Hanım", description: "Meyhanenin tüm özel şifrelerini ve antika dolaplarını bilen, müşterilerine kendi elleriyle hazırladığı özel ikramlar sunan zarif ve gizemli sahibe.", icon: "👵" },
-      { id: "s3", name: "Taner Öz", description: "Acil servis nöbetleri yüzünden gözaltları morarmış, tıbbi toksinlere ve insan anatomisine hakim, mahallenin sessiz ve yorgun doktoru.", icon: "👨‍⚕️" },
+      { id: "s1", name: "Bora Deniz", description: "Limanın en eski denizcisi olan, kaba saba yapısıyla bilinen ve teknesini bir kale gibi koruyan, sürekli halat ve ağlarla uğraşan yaşlı balıkçı.", icon: "pa:arnavutkoy_s1" },
+      { id: "s2", name: "Esma Hanım", description: "Meyhanenin tüm özel şifrelerini ve antika dolaplarını bilen, müşterilerine kendi elleriyle hazırladığı özel ikramlar sunan zarif ve gizemli sahibe.", icon: "pa:arnavutkoy_s2" },
+      { id: "s3", name: "Taner Öz", description: "Acil servis nöbetleri yüzünden gözaltları morarmış, tıbbi toksinlere ve insan anatomisine hakim, mahallenin sessiz ve yorgun doktoru.", icon: "pa:arnavutkoy_s3" },
     ],
     weapons: [
-      { id: "w1", name: "Zıpkın", description: "Ucundaki paslı kancaları sayesinde hedefe saplandığında derin, yırtıcı ve kaba yaralar açan uzun çelik balıkçı zıpkını.", icon: "sports" },
-      { id: "w2", name: "Balık Ağı", description: "Sentetik ve kopmaz liflerden örülmüş, bir insanın boynuna dolandığında keskin, pürüzlü ve ağsı yanık izleri bırakan kalın balık ağı.", icon: "grid-on" },
-      { id: "w3", name: "Zehirli Rakı", description: "Sadece alkol molekülleriyle birleştiğinde aktifleşen, midede şiddetli bir kalp krizini simüle ederek kurbanı saniyeler içinde felç eden nadir bir sıvı.", icon: "local-bar" },
+      { id: "w1", name: "Zıpkın", description: "Ucundaki paslı kancaları sayesinde hedefe saplandığında derin, yırtıcı ve kaba yaralar açan uzun çelik balıkçı zıpkını.", icon: "pa:arnavutkoy_w1" },
+      { id: "w2", name: "Balık Ağı", description: "Sentetik ve kopmaz liflerden örülmüş, bir insanın boynuna dolandığında keskin, pürüzlü ve ağsı yanık izleri bırakan kalın balık ağı.", icon: "pa:arnavutkoy_w2" },
+      { id: "w3", name: "Zehirli Rakı", description: "Sadece alkol molekülleriyle birleştiğinde aktifleşen, midede şiddetli bir kalp krizini simüle ederek kurbanı saniyeler içinde felç eden nadir bir sıvı.", icon: "pa:arnavutkoy_w3" },
     ],
     locations: [
-      { id: "l1", name: "Balıkçı Barınağı", description: "Ahşap teknelerin birbirine sürtündüğü, rüzgarın dondurduğu, deniz suyu ve yosun kokan, zemini tahta paletlerle kaplı kıyı barınağı.", icon: "directions-boat" },
-      { id: "l2", name: "Meyhane İç Salonu", description: "Taş duvarlarına anason ve tütün kokusunun sindiği, loş ışıklarla aydınlatılan, kapalı ve gürültülü tarihi meyhane iç salonu.", icon: "nightlife" },
-      { id: "l3", name: "Boğaz Kıyısı", description: "Dalgaların beton zemini dövdüğü, açık havada yürüyüş yapanların geçtiği, ıslak ve tehlikeli dar sahil şeridi.", icon: "waves" },
+      { id: "l1", name: "Balıkçı Barınağı", description: "Ahşap teknelerin birbirine sürtündüğü, rüzgarın dondurduğu, deniz suyu ve yosun kokan, zemini tahta paletlerle kaplı kıyı barınağı.", icon: "pa:arnavutkoy_l1" },
+      { id: "l2", name: "Meyhane İç Salonu", description: "Taş duvarlarına anason ve tütün kokusunun sindiği, loş ışıklarla aydınlatılan, kapalı ve gürültülü tarihi meyhane iç salonu.", icon: "pa:arnavutkoy_l2" },
+      { id: "l3", name: "Boğaz Kıyısı", description: "Dalgaların beton zemini dövdüğü, açık havada yürüyüş yapanların geçtiği, ıslak ve tehlikeli dar sahil şeridi.", icon: "pa:arnavutkoy_l3" },
     ],
     clues: [
       {

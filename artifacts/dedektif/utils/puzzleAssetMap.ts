@@ -395,6 +395,15 @@ const PUZZLE_ASSET_MAP: Record<string, number> = {
   fayton_l1: require("../assets/images/puzzle_assets/fayton_l1.png"),
   fayton_l2: require("../assets/images/puzzle_assets/fayton_l2.png"),
   fayton_l3: require("../assets/images/puzzle_assets/fayton_l3.png"),
+  arnavutkoy_s1: require("../assets/images/puzzle_assets/arnavutkoy_s1.png"),
+  arnavutkoy_s2: require("../assets/images/puzzle_assets/arnavutkoy_s2.png"),
+  arnavutkoy_s3: require("../assets/images/puzzle_assets/arnavutkoy_s3.png"),
+  arnavutkoy_w1: require("../assets/images/puzzle_assets/arnavutkoy_w1.png"),
+  arnavutkoy_w2: require("../assets/images/puzzle_assets/arnavutkoy_w2.png"),
+  arnavutkoy_w3: require("../assets/images/puzzle_assets/arnavutkoy_w3.png"),
+  arnavutkoy_l1: require("../assets/images/puzzle_assets/arnavutkoy_l1.png"),
+  arnavutkoy_l2: require("../assets/images/puzzle_assets/arnavutkoy_l2.png"),
+  arnavutkoy_l3: require("../assets/images/puzzle_assets/arnavutkoy_l3.png"),
 };
 
 export function isPuzzleAsset(icon: string | undefined): boolean {
