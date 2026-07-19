@@ -13257,28 +13257,28 @@
             {
               "id": "s1",
               "name": "Müzeci Doç. Emre",
-              "icon": "⚖️",
+              "icon": "pa:antika_s1",
               "description": "Eserin sahte olduğunu fark eden ancak müzeye orijinal fiyattan satarak komisyonu cebine indirmeyi planlayan, sürekli depolardaki eserleri inceleyen hırslı akademisyen.",
               "detail": "50 yaşında, akademisyen, paraya ihtiyacı var."
             },
             {
               "id": "s2",
               "name": "Koleksiyoncu Fatma Hanım",
-              "icon": "noun-nazik-hanim-avatar.png",
+              "icon": "pa:antika_s2",
               "description": "Aynı eseri 5 yıldır arayan, maktulün fiyatı aniden katlaması üzerine öfkeden deliye dönen, vitrinleri kırıp dökecek kadar sabırsız koleksiyoner kadın.",
               "detail": "63 yaşında, varlıklı, sabırsız."
             },
             {
               "id": "s3",
               "name": "Eser Kaçakçısı Dimitri",
-              "icon": "👨‍💼",
+              "icon": "pa:antika_s3",
               "description": "Uluslararası bağlantıları olan, eseri yasadışı yollarla yurt dışına çıkarmak için pazarın dar ve rutubetli geçitlerinde pusuda bekleyen sahte kimlikli kaçakçı.",
               "detail": "45 yaşında, Rum asıllı, çift pasaportlu."
             },
             {
               "id": "s4",
               "name": "Sigorta Ajanı Sevcan",
-              "icon": "noun-semiha-hanim-avatar.png",
+              "icon": "pa:antika_s4",
               "description": "Eserin sigorta poliçesi için keşfe gelen ancak parçanın tamamen sahte olduğunu raporlayarak işi bozan, köşede sürekli çayını yudumlayan sigorta uzmanı.",
               "detail": "38 yaşında, dikkatli, belgeci."
             }
@@ -13287,25 +13287,25 @@
             {
               "id": "w1",
               "name": "Cam Vitrin Kapağı",
-              "icon": "🪟",
+              "icon": "pa:antika_w1",
               "description": "Antikacının ön sergi alanından sökülen, ağır meşe çerçeveli ve keskin camlı kalın vitrin kapağı."
             },
             {
               "id": "w2",
               "name": "Bronz Heykelcik",
-              "icon": "🗿",
+              "icon": "pa:antika_w2",
               "description": "Arka raflarda sergilenen, kafaya indirildiğinde ölümcül bir göçük açacak ağırlıktaki som bronz şövalye heykelciği."
             },
             {
               "id": "w3",
               "name": "Zehirli Çay (Pazar Çayı)",
-              "icon": "🫖",
+              "icon": "pa:antika_w3",
               "description": "Pazar esnafına sabahları ikram edilen ve içine kalp durdurucu ilaç damlatılarak sinsi bir suikast silahına dönüşen sıcak çay."
             },
             {
               "id": "w4",
               "name": "Demir Raf Demiri",
-              "icon": "🔩",
+              "icon": "pa:antika_w4",
               "description": "Ağır yük taşımak için pazar tezgahlarında kullanılan, uzun, paslı ve son derece küt çelik montaj raf demiri."
             }
           ],
@@ -13313,25 +13313,25 @@
             {
               "id": "l1",
               "name": "Ana Dükkan",
-              "icon": "🏪",
+              "icon": "pa:antika_l1",
               "description": "Antika dükkanının ön kısmı, vitrinlerin ve kasanın bulunduğu, sokağın gürültüsünü alan aydınlık ana müşteri alanı."
             },
             {
               "id": "l2",
               "name": "Depo Odası",
-              "icon": "📦",
+              "icon": "pa:antika_l2",
               "description": "Dükkanın arka tarafında, değerli parçaların ve envanterlerin saklandığı penceresiz, dar ve asma kilitli izole depo odası."
             },
             {
               "id": "l3",
               "name": "Pazar Aralığı",
-              "icon": "🛤️",
+              "icon": "pa:antika_l3",
               "description": "Dükkanların arasından geçen, sabahları ıssız, gölgelik ve rutubetli olan dar taşlı pazar geçidi."
             },
             {
               "id": "l4",
               "name": "Çay Ocağı Köşesi",
-              "icon": "♨️",
+              "icon": "pa:antika_l4",
               "description": "Pazarın girişinde esnafın toplandığı, sürekli kaynayan semaverin tütüp durduğu küçük ve izole çay ocağı köşesi."
             }
           ],

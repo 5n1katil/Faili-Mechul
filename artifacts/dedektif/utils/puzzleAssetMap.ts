@@ -428,6 +428,18 @@ const PUZZLE_ASSET_MAP: Record<string, number> = {
   ankara_l2: require("../assets/images/puzzle_assets/ankara_l2.png"),
   ankara_l3: require("../assets/images/puzzle_assets/ankara_l3.png"),
   ankara_l4: require("../assets/images/puzzle_assets/ankara_l4.png"),
+  antika_s1: require("../assets/images/puzzle_assets/antika_s1.png"),
+  antika_s2: require("../assets/images/puzzle_assets/antika_s2.png"),
+  antika_s3: require("../assets/images/puzzle_assets/antika_s3.png"),
+  antika_s4: require("../assets/images/puzzle_assets/antika_s4.png"),
+  antika_w1: require("../assets/images/puzzle_assets/antika_w1.png"),
+  antika_w2: require("../assets/images/puzzle_assets/antika_w2.png"),
+  antika_w3: require("../assets/images/puzzle_assets/antika_w3.png"),
+  antika_w4: require("../assets/images/puzzle_assets/antika_w4.png"),
+  antika_l1: require("../assets/images/puzzle_assets/antika_l1.png"),
+  antika_l2: require("../assets/images/puzzle_assets/antika_l2.png"),
+  antika_l3: require("../assets/images/puzzle_assets/antika_l3.png"),
+  antika_l4: require("../assets/images/puzzle_assets/antika_l4.png"),
 };
 
 export function isPuzzleAsset(icon: string | undefined): boolean {
