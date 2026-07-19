@@ -664,19 +664,19 @@ export const PUZZLES: Puzzle[] = [
     story:
       "Çarşamba kasabasının o sakin ve durağan yapısı, belediye başkanının kendi makam odasında, deri koltuğunda ölü bulunmasıyla temelinden sarsıldı. Kasaba halkı şoktayken, cinayetin dışarıdan gelen biri tarafından değil, o kalın ahşap kapıların ardındaki en yakın yüzlerden biri tarafından işlendiği ortaya çıktı.",
     suspects: [
-      { id: "s1", name: "Muhalefet Adayı", description: "Yıllardır başkanın koltuğunda gözü olan, belediye binasına sadece resmi davetlerle, protokol kapısından giriş yapabilen hırslı politikacı.", icon: "👨" },
-      { id: "s2", name: "Sekreter Bayan", description: "Başkanın ajandasını, sırlarını ve kahve saatlerini ezbere bilen; makam odasının kalın kapılarından sorgusuz sualsiz geçebilen yegane kişi.", icon: "👩" },
-      { id: "s3", name: "İnşaat Müteahhit", description: "İptal edilen ihaleler yüzünden iflasın eşiğine gelmiş, öfke kontrolü olmayan ve görüşme talepleri sürekli güvenlikli koridorlarda reddedilen iş adamı.", icon: "👷" },
+      { id: "s1", name: "Muhalefet Adayı", description: "Yıllardır başkanın koltuğunda gözü olan, belediye binasına sadece resmi davetlerle, protokol kapısından giriş yapabilen hırslı politikacı.", icon: "pa:carsamba_s1" },
+      { id: "s2", name: "Sekreter Bayan", description: "Başkanın ajandasını, sırlarını ve kahve saatlerini ezbere bilen; makam odasının kalın kapılarından sorgusuz sualsiz geçebilen yegane kişi.", icon: "pa:carsamba_s2" },
+      { id: "s3", name: "İnşaat Müteahhit", description: "İptal edilen ihaleler yüzünden iflasın eşiğine gelmiş, öfke kontrolü olmayan ve görüşme talepleri sürekli güvenlikli koridorlarda reddedilen iş adamı.", icon: "pa:carsamba_s3" },
     ],
     weapons: [
-      { id: "w1", name: "Ağır Kağıt Ağırlığı", description: "Başkanın masasında duran, kafatasına savrulduğunda derin ve kanamalı çatlaklar oluşturacak ağırlıktaki paha biçilemez kristal obje.", icon: "square" },
-      { id: "w2", name: "Zehirli Kahve", description: "Kana karıştığı anda mide duvarını kilitleyen, kokusuz, renksiz ve tamamen içeceklerle vücuda zerk edilen sinsi bir kimyasal.", icon: "coffee" },
-      { id: "w3", name: "Elektrik Çarpması", description: "Makam odasındaki elektronik aletlerin fişlerine ustaca kurulan, temas halinde deride kavurucu yanıklar bırakan yüksek voltaj tuzağı.", icon: "flash-on" },
+      { id: "w1", name: "Ağır Kağıt Ağırlığı", description: "Başkanın masasında duran, kafatasına savrulduğunda derin ve kanamalı çatlaklar oluşturacak ağırlıktaki paha biçilemez kristal obje.", icon: "pa:carsamba_w1" },
+      { id: "w2", name: "Zehirli Kahve", description: "Kana karıştığı anda mide duvarını kilitleyen, kokusuz, renksiz ve tamamen içeceklerle vücuda zerk edilen sinsi bir kimyasal.", icon: "pa:carsamba_w2" },
+      { id: "w3", name: "Elektrik Çarpması", description: "Makam odasındaki elektronik aletlerin fişlerine ustaca kurulan, temas halinde deride kavurucu yanıklar bırakan yüksek voltaj tuzağı.", icon: "pa:carsamba_w3" },
     ],
     locations: [
-      { id: "l1", name: "Belediye Ofisi", description: "Sadece özel kartlarla girilebilen, deri koltukların ve ahşap panellerin bulunduğu, dışarıya tamamen yalıtılmış makam odası.", icon: "business" },
-      { id: "l2", name: "Toplantı Odası", description: "Çok sayıda delegasyonun ağırlandığı, devasa oval masanın bulunduğu ve sürekli insan sirkülasyonu olan halka açık salon.", icon: "groups" },
-      { id: "l3", name: "Koridor", description: "Kameraların 7/24 kayıtta olduğu, deri bekleme koltuklarının yer aldığı ve ziyaretçilerin adım saydığı geniş güvenlik geçidi.", icon: "route" },
+      { id: "l1", name: "Belediye Ofisi", description: "Sadece özel kartlarla girilebilen, deri koltukların ve ahşap panellerin bulunduğu, dışarıya tamamen yalıtılmış makam odası.", icon: "pa:carsamba_l1" },
+      { id: "l2", name: "Toplantı Odası", description: "Çok sayıda delegasyonun ağırlandığı, devasa oval masanın bulunduğu ve sürekli insan sirkülasyonu olan halka açık salon.", icon: "pa:carsamba_l2" },
+      { id: "l3", name: "Koridor", description: "Kameraların 7/24 kayıtta olduğu, deri bekleme koltuklarının yer aldığı ve ziyaretçilerin adım saydığı geniş güvenlik geçidi.", icon: "pa:carsamba_l3" },
     ],
     clues: [
       { id: "c1", text: "Adli tabip, kurbanın derisinde kavurucu bir voltaj yanığı veya kafatasında kristal bir göçük bulamadı; midesindeki şiddetli asit reaksiyonu, ölümün sıvı ve yutulabilir bir formda geldiğini kanıtlıyordu.", type: "forensic", isBonus: false },

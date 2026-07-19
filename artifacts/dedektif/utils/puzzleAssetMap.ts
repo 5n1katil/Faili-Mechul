@@ -341,6 +341,15 @@ const PUZZLE_ASSET_MAP: Record<string, number> = {
   dagevi_l1: require("../assets/images/puzzle_assets/dagevi_l1.png"),
   dagevi_l2: require("../assets/images/puzzle_assets/dagevi_l2.png"),
   dagevi_l3: require("../assets/images/puzzle_assets/dagevi_l3.png"),
+  carsamba_s1: require("../assets/images/puzzle_assets/carsamba_s1.png"),
+  carsamba_s2: require("../assets/images/puzzle_assets/carsamba_s2.png"),
+  carsamba_s3: require("../assets/images/puzzle_assets/carsamba_s3.png"),
+  carsamba_w1: require("../assets/images/puzzle_assets/carsamba_w1.png"),
+  carsamba_w2: require("../assets/images/puzzle_assets/carsamba_w2.png"),
+  carsamba_w3: require("../assets/images/puzzle_assets/carsamba_w3.png"),
+  carsamba_l1: require("../assets/images/puzzle_assets/carsamba_l1.png"),
+  carsamba_l2: require("../assets/images/puzzle_assets/carsamba_l2.png"),
+  carsamba_l3: require("../assets/images/puzzle_assets/carsamba_l3.png"),
 };
 
 export function isPuzzleAsset(icon: string | undefined): boolean {
