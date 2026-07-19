@@ -1677,19 +1677,19 @@ export const PUZZLES: Puzzle[] = [
     story:
       "Tarihi yarımadanın binlerce yıllık sırlarını barındıran taş sokaklarında, yalnız bir turist ağlayan sütunların dibinde bilincini kaybetmiş halde bulundu. Değerli eşyaları yerindeydi; bu sıradan bir gasp değil, hedefe yönelik ve son derece sinsi bir hamleydi.",
     suspects: [
-      { id: "s1", name: "Rüzgar", description: "Bölgedeki tüm çıkmaz sokakları bilen, anıtların etrafında tezgah açan ancak turistlerle arası bozuk olan genç ve asabi sokak satıcısı.", icon: "person" },
-      { id: "s2", name: "Ayşen Demir", description: "Tarihi yapıların dehlizlerine özel erişim izni olan, güler yüzlü maskesinin ardında profesyonel bir soğukkanlılık taşıyan resmi tur rehberi.", icon: "support-agent" },
-      { id: "s3", name: "Haluk Çiçek", description: "Kalabalığa karışıp uzaktan kurbanlarını izleyen, tarihi binaların çatılarından yüksek çözünürlüklü kareler yakalayan bağımsız fotoğrafçı.", icon: "face" },
+      { id: "s1", name: "Rüzgar", description: "Bölgedeki tüm çıkmaz sokakları bilen, anıtların etrafında tezgah açan ancak turistlerle arası bozuk olan genç ve asabi sokak satıcısı.", icon: "pa:sultanahmet_s1" },
+      { id: "s2", name: "Ayşen Demir", description: "Tarihi yapıların dehlizlerine özel erişim izni olan, güler yüzlü maskesinin ardında profesyonel bir soğukkanlılık taşıyan resmi tur rehberi.", icon: "pa:sultanahmet_s2" },
+      { id: "s3", name: "Haluk Çiçek", description: "Kalabalığa karışıp uzaktan kurbanlarını izleyen, tarihi binaların çatılarından yüksek çözünürlüklü kareler yakalayan bağımsız fotoğrafçı.", icon: "pa:sultanahmet_s3" },
     ],
     weapons: [
-      { id: "w1", name: "Biber Gazı", description: "Turistlerin el çantalarında taşıdığı, sıkıldığında gözleri ve solunum yollarını anında kör eden basınçlı savunma gazı.", icon: "air" },
-      { id: "w2", name: "Ağır Demir Parçası", description: "Yüz yıllardır toprak altında yatan, kafaya vurulduğunda kaba ve ezici bir yara açacak olan paslı ve ağır tarihi demir cıvata.", icon: "hardware" },
-      { id: "w3", name: "Uyuşturucu Şişe", description: "İçeceklere karıştırıldığında hiçbir tat bırakmayan, ancak saniyeler içinde sinir sistemini donduran güçlü bir medikal uyuşturucu sıvısı.", icon: "local-bar" },
+      { id: "w1", name: "Biber Gazı", description: "Turistlerin el çantalarında taşıdığı, sıkıldığında gözleri ve solunum yollarını anında kör eden basınçlı savunma gazı.", icon: "pa:sultanahmet_w1" },
+      { id: "w2", name: "Ağır Demir Parçası", description: "Yüz yıllardır toprak altında yatan, kafaya vurulduğunda kaba ve ezici bir yara açacak olan paslı ve ağır tarihi demir cıvata.", icon: "pa:sultanahmet_w2" },
+      { id: "w3", name: "Uyuşturucu Şişe", description: "İçeceklere karıştırıldığında hiçbir tat bırakmayan, ancak saniyeler içinde sinir sistemini donduran güçlü bir medikal uyuşturucu sıvısı.", icon: "pa:sultanahmet_w3" },
     ],
     locations: [
-      { id: "l1", name: "Hipodrom Meydanı", description: "Antik dikilitaşların çevrelediği, binlerce turistin her saniye fotoğraf çektiği, güneş altında kavrulan geniş ve açık meydan.", icon: "location-city" },
-      { id: "l2", name: "Yerebatan Sarnıcı", description: "Yerin metrelerce altında, devasa sütunların arasından suların damladığı, yankılı, loş ve son derece klostrofobik tarihi sarnıç.", icon: "water" },
-      { id: "l3", name: "Eski Bedesten", description: "Yüzlerce dükkanın labirent gibi iç içe geçtiği, baharat kokularının ve kumaşların birbirine karıştığı kapalı tarihi pazar.", icon: "storefront" },
+      { id: "l1", name: "Hipodrom Meydanı", description: "Antik dikilitaşların çevrelediği, binlerce turistin her saniye fotoğraf çektiği, güneş altında kavrulan geniş ve açık meydan.", icon: "pa:sultanahmet_l1" },
+      { id: "l2", name: "Yerebatan Sarnıcı", description: "Yerin metrelerce altında, devasa sütunların arasından suların damladığı, yankılı, loş ve son derece klostrofobik tarihi sarnıç.", icon: "pa:sultanahmet_l2" },
+      { id: "l3", name: "Eski Bedesten", description: "Yüzlerce dükkanın labirent gibi iç içe geçtiği, baharat kokularının ve kumaşların birbirine karıştığı kapalı tarihi pazar.", icon: "pa:sultanahmet_l3" },
     ],
     clues: [
       {

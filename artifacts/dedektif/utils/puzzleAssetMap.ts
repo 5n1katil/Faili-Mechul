@@ -287,6 +287,15 @@ const PUZZLE_ASSET_MAP: Record<string, number> = {
   uskudar_l1: require("../assets/images/puzzle_assets/uskudar_l1.png"),
   uskudar_l2: require("../assets/images/puzzle_assets/uskudar_l2.png"),
   uskudar_l3: require("../assets/images/puzzle_assets/uskudar_l3.png"),
+  sultanahmet_s1: require("../assets/images/puzzle_assets/sultanahmet_s1.png"),
+  sultanahmet_s2: require("../assets/images/puzzle_assets/sultanahmet_s2.png"),
+  sultanahmet_s3: require("../assets/images/puzzle_assets/sultanahmet_s3.png"),
+  sultanahmet_w1: require("../assets/images/puzzle_assets/sultanahmet_w1.png"),
+  sultanahmet_w2: require("../assets/images/puzzle_assets/sultanahmet_w2.png"),
+  sultanahmet_w3: require("../assets/images/puzzle_assets/sultanahmet_w3.png"),
+  sultanahmet_l1: require("../assets/images/puzzle_assets/sultanahmet_l1.png"),
+  sultanahmet_l2: require("../assets/images/puzzle_assets/sultanahmet_l2.png"),
+  sultanahmet_l3: require("../assets/images/puzzle_assets/sultanahmet_l3.png"),
 };
 
 export function isPuzzleAsset(icon: string | undefined): boolean {
