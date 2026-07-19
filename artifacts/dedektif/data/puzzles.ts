@@ -1335,19 +1335,19 @@ export const PUZZLES: Puzzle[] = [
     story:
       "Yüzyıllara meydan okuyan Galata Kulesi'nde, gece turu sırasında rüzgarın uğultusuna bir çığlık karıştı. Sabah kapılar açıldığında kule tepesinde bir ceset bulundu. Katil, o dar geçitlerde ve karanlıkta izini kaybettirmişti.",
     suspects: [
-      { id: "s1", name: "Serhat Dönmez", description: "Yıllarını bu kuleye adamış, turist gruplarını yönlendiren ve eksik olduğunda grubun peşinden giden tecrübeli ve sorumluluk sahibi tur rehberi.", icon: "👨" },
-      { id: "s2", name: "Nilgün Arslan", description: "Yükseklik korkusu nedeniyle asansöre bile binemeyen, elinde sürekli fotoğraf makinesiyle sadece zemin seviyesinde takılan turist.", icon: "👩‍💼" },
-      { id: "s3", name: "Bekir Yıldız", description: "Kulenin tüm asma kilitlerinin ve kısıtlı alanlarının anahtarlarını kemerinde taşıyan, gece devriyelerinden sorumlu iri yarı güvenlik görevlisi.", icon: "👮" },
+      { id: "s1", name: "Serhat Dönmez", description: "Yıllarını bu kuleye adamış, turist gruplarını yönlendiren ve eksik olduğunda grubun peşinden giden tecrübeli ve sorumluluk sahibi tur rehberi.", icon: "pa:galata_s1" },
+      { id: "s2", name: "Nilgün Arslan", description: "Yükseklik korkusu nedeniyle asansöre bile binemeyen, elinde sürekli fotoğraf makinesiyle sadece zemin seviyesinde takılan turist.", icon: "pa:galata_s2" },
+      { id: "s3", name: "Bekir Yıldız", description: "Kulenin tüm asma kilitlerinin ve kısıtlı alanlarının anahtarlarını kemerinde taşıyan, gece devriyelerinden sorumlu iri yarı güvenlik görevlisi.", icon: "pa:galata_s3" },
     ],
     weapons: [
-      { id: "w1", name: "Yüksekten Düşürme", description: "Kurbanı tarihi parmaklıklardan boşluğa doğru amansızca iterek, yerçekiminin o acımasız ve ölümcül ivmesiyle parçalanmasını sağlamak.", icon: "arrow-downward" },
-      { id: "w2", name: "Halat", description: "Genellikle teknik odada saklanan, insan boynuna dolandığında pürüzlü yanık izleri bırakan son derece kalın ve çelik iplikli örgülü ip.", icon: "link" },
-      { id: "w3", name: "Demir Boru", description: "Çatı katındaki eski tesisattan sökülmüş, kafa tasına indirildiğinde derin ve paslı yaralar açan içi boş, küt paslı metal.", icon: "hardware" },
+      { id: "w1", name: "Yüksekten Düşürme", description: "Kurbanı tarihi parmaklıklardan boşluğa doğru amansızca iterek, yerçekiminin o acımasız ve ölümcül ivmesiyle parçalanmasını sağlamak.", icon: "pa:galata_w1" },
+      { id: "w2", name: "Halat", description: "Genellikle teknik odada saklanan, insan boynuna dolandığında pürüzlü yanık izleri bırakan son derece kalın ve çelik iplikli örgülü ip.", icon: "pa:galata_w2" },
+      { id: "w3", name: "Demir Boru", description: "Çatı katındaki eski tesisattan sökülmüş, kafa tasına indirildiğinde derin ve paslı yaralar açan içi boş, küt paslı metal.", icon: "pa:galata_w3" },
     ],
     locations: [
-      { id: "l1", name: "Kule Tepesi", description: "İstanbul'un rüzgarlarını doğrudan alan, tarihi demir parmaklıklarla çevrili, baş döndürücü bir yüksekliğe sahip açık panoramik seyir terası.", icon: "filter-hdr" },
-      { id: "l2", name: "Tünel Girişi", description: "Kulenin en alt kısmında yer alan, kafelerin bulunduğu, rüzgardan korunaklı ve turistlerin toplandığı güvenli zemin alanı.", icon: "subway" },
-      { id: "l3", name: "Teknik Oda", description: "Sadece personelin girebildiği, içerisi tesisat boruları, halatlar ve şalterlerle dolu, bodrum katındaki karanlık ve izole depo.", icon: "settings" },
+      { id: "l1", name: "Kule Tepesi", description: "İstanbul'un rüzgarlarını doğrudan alan, tarihi demir parmaklıklarla çevrili, baş döndürücü bir yüksekliğe sahip açık panoramik seyir terası.", icon: "pa:galata_l1" },
+      { id: "l2", name: "Tünel Girişi", description: "Kulenin en alt kısmında yer alan, kafelerin bulunduğu, rüzgardan korunaklı ve turistlerin toplandığı güvenli zemin alanı.", icon: "pa:galata_l2" },
+      { id: "l3", name: "Teknik Oda", description: "Sadece personelin girebildiği, içerisi tesisat boruları, halatlar ve şalterlerle dolu, bodrum katındaki karanlık ve izole depo.", icon: "pa:galata_l3" },
     ],
     clues: [
       {
