@@ -1107,22 +1107,22 @@ export const PUZZLES: Puzzle[] = [
     story:
       "Türkiye'nin en sıkı korunan araştırma kurumunun steril koridorlarında, milyarlarca liralık bir projenin ekip başkanı ölü bulundu. Şifreli kapıların ve güvenlik kameralarının ardında işlenen bu cinayet, bilimin karanlık yüzünü aydınlatıyor.",
     suspects: [
-      { id: "s1", name: "Baş Araştırmacı", description: "Hayatını bu projeye adayan, milyonluk buluşun başkalarıyla paylaşılma ihtimalini dahi duyduğunda sinir krizleri geçiren, güçlü ellere sahip hırslı lider.", icon: "👨" },
-      { id: "s2", name: "Veri Analisti", description: "Tüm gizli araştırmaların algoritmalarını tek bir sunucuda toplayan, verileri çalınmaktan koruyan ama maktulle erişim hakları yüzünden çatışan analist.", icon: "👩" },
-      { id: "s3", name: "Etik Komite Üyesi", description: "İnsan deneylerine karşı çıktığı için projenin finansmanını kesmekle tehdit eden, kurallara sıkı sıkıya bağlı ve toplantılarda sürekli masayı terk eden ihtiyar.", icon: "👴" },
-      { id: "s4", name: "Yazılım Mühendisi", description: "Kurumun tüm güvenlik altyapısını ve şifreli kapılarını bizzat yazan, sürekli steril laboratuvar ortamında ekranların başında sabahlayan zeki mühendis.", icon: "🕵️" },
+      { id: "s1", name: "Baş Araştırmacı", description: "Hayatını bu projeye adayan, milyonluk buluşun başkalarıyla paylaşılma ihtimalini dahi duyduğunda sinir krizleri geçiren, güçlü ellere sahip hırslı lider.", icon: "pa:beyin_s1" },
+      { id: "s2", name: "Veri Analisti", description: "Tüm gizli araştırmaların algoritmalarını tek bir sunucuda toplayan, verileri çalınmaktan koruyan ama maktulle erişim hakları yüzünden çatışan analist.", icon: "pa:beyin_s2" },
+      { id: "s3", name: "Etik Komite Üyesi", description: "İnsan deneylerine karşı çıktığı için projenin finansmanını kesmekle tehdit eden, kurallara sıkı sıkıya bağlı ve toplantılarda sürekli masayı terk eden ihtiyar.", icon: "pa:beyin_s3" },
+      { id: "s4", name: "Yazılım Mühendisi", description: "Kurumun tüm güvenlik altyapısını ve şifreli kapılarını bizzat yazan, sürekli steril laboratuvar ortamında ekranların başında sabahlayan zeki mühendis.", icon: "pa:beyin_s4" },
     ],
     weapons: [
-      { id: "w1", name: "Zehirli İğne", description: "Vücuda zerk edildiğinde saatler içinde değil, saniyeler içinde sinir sistemini donduran, geride sadece mikroskobik bir giriş izi bırakan nörotoksin.", icon: "vaccines" },
-      { id: "w2", name: "Bilgisayar Şoku", description: "İşlemciler üzerinde çalışırken ana panele yönlendirildiğinde insan kalbini durduracak boyutta kavurucu bir elektrik deşarjı sağlayan tuzak.", icon: "computer" },
-      { id: "w3", name: "Kimyasal Madde", description: "Havaya karıştığında ciğerlerde kristalleşerek nefes borusunu paramparça eden, araştırma laboratuvarına ait yüksek konsantreli sentetik asit gazı.", icon: "biotech" },
-      { id: "w4", name: "Boğma", description: "Beden gücünün acımasızca kullanıldığı, kurbanın boynunda koyu kırmızı parmak ve avuç içi izleri bırakarak oksijenini kesen ilkel yöntem.", icon: "back-hand" },
+      { id: "w1", name: "Zehirli İğne", description: "Vücuda zerk edildiğinde saatler içinde değil, saniyeler içinde sinir sistemini donduran, geride sadece mikroskobik bir giriş izi bırakan nörotoksin.", icon: "pa:beyin_w1" },
+      { id: "w2", name: "Bilgisayar Şoku", description: "İşlemciler üzerinde çalışırken ana panele yönlendirildiğinde insan kalbini durduracak boyutta kavurucu bir elektrik deşarjı sağlayan tuzak.", icon: "pa:beyin_w2" },
+      { id: "w3", name: "Kimyasal Madde", description: "Havaya karıştığında ciğerlerde kristalleşerek nefes borusunu paramparça eden, araştırma laboratuvarına ait yüksek konsantreli sentetik asit gazı.", icon: "pa:beyin_w3" },
+      { id: "w4", name: "Boğma", description: "Beden gücünün acımasızca kullanıldığı, kurbanın boynunda koyu kırmızı parmak ve avuç içi izleri bırakarak oksijenini kesen ilkel yöntem.", icon: "pa:beyin_w4" },
     ],
     locations: [
-      { id: "l1", name: "Toplantı Odası", description: "Ortasında devasa bir meşe masanın bulunduğu, akustik panellerle yalıtılmış, hararetli tartışmaların ve sunumların yapıldığı geniş alan.", icon: "groups" },
-      { id: "l2", name: "Sunucu Odası", description: "Dev soğutucu fanların sağır edici bir uğultuyla çalıştığı, içerisi devasa veri diskleriyle dolu, giriş çıkışların manyetik kartlarla sağlandığı soğuk oda.", icon: "storage" },
-      { id: "l3", name: "Araştırma Laboratuvarı", description: "Kimyasalların ve biyolojik deney tüplerinin bulunduğu, dışarıdan hava almayan, beyaz floresan ışıklarla aydınlatılan steril ve tehlikeli laboratuvar.", icon: "science" },
-      { id: "l4", name: "Güvenli Alan", description: "Tüm binanın kalbi sayılan, biyometrik retina tarayıcılarıyla girilebilen, sadece en üst düzey yetkililerin erişebildiği kısıtlı ve güvenli bölge.", icon: "lock" },
+      { id: "l1", name: "Toplantı Odası", description: "Ortasında devasa bir meşe masanın bulunduğu, akustik panellerle yalıtılmış, hararetli tartışmaların ve sunumların yapıldığı geniş alan.", icon: "pa:beyin_l1" },
+      { id: "l2", name: "Sunucu Odası", description: "Dev soğutucu fanların sağır edici bir uğultuyla çalıştığı, içerisi devasa veri diskleriyle dolu, giriş çıkışların manyetik kartlarla sağlandığı soğuk oda.", icon: "pa:beyin_l2" },
+      { id: "l3", name: "Araştırma Laboratuvarı", description: "Kimyasalların ve biyolojik deney tüplerinin bulunduğu, dışarıdan hava almayan, beyaz floresan ışıklarla aydınlatılan steril ve tehlikeli laboratuvar.", icon: "pa:beyin_l3" },
+      { id: "l4", name: "Güvenli Alan", description: "Tüm binanın kalbi sayılan, biyometrik retina tarayıcılarıyla girilebilen, sadece en üst düzey yetkililerin erişebildiği kısıtlı ve güvenli bölge.", icon: "pa:beyin_l4" },
     ],
     clues: [
       {

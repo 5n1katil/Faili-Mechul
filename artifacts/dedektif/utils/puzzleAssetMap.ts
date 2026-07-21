@@ -485,6 +485,18 @@ const PUZZLE_ASSET_MAP: Record<string, number> = {
   sahil_l2: require("../assets/images/puzzle_assets/sahil_l2.png"),
   sahil_l3: require("../assets/images/puzzle_assets/sahil_l3.png"),
   sahil_l4: require("../assets/images/puzzle_assets/sahil_l4.png"),
+  beyin_s1: require("../assets/images/puzzle_assets/beyin_s1.png"),
+  beyin_s2: require("../assets/images/puzzle_assets/beyin_s2.png"),
+  beyin_s3: require("../assets/images/puzzle_assets/beyin_s3.png"),
+  beyin_s4: require("../assets/images/puzzle_assets/beyin_s4.png"),
+  beyin_w1: require("../assets/images/puzzle_assets/beyin_w1.png"),
+  beyin_w2: require("../assets/images/puzzle_assets/beyin_w2.png"),
+  beyin_w3: require("../assets/images/puzzle_assets/beyin_w3.png"),
+  beyin_w4: require("../assets/images/puzzle_assets/beyin_w4.png"),
+  beyin_l1: require("../assets/images/puzzle_assets/beyin_l1.png"),
+  beyin_l2: require("../assets/images/puzzle_assets/beyin_l2.png"),
+  beyin_l3: require("../assets/images/puzzle_assets/beyin_l3.png"),
+  beyin_l4: require("../assets/images/puzzle_assets/beyin_l4.png"),
 };
 
 export function isPuzzleAsset(icon: string | undefined): boolean {
