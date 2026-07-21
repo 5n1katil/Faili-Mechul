@@ -833,22 +833,22 @@ export const PUZZLES: Puzzle[] = [
     story:
       "Ege'nin tuzlu rüzgarlarının dövdüğü küçük bir balıkçı köyünde, turistik otel sahibinin cesedi bulundu. Ay ışığının bile bulutların ardına saklandığı bu zifiri karanlık gecede, kurbanın geçmişindeki düşmanlıklar bir bir su yüzüne çıkıyor.",
     suspects: [
-      { id: "s1", name: "Yerli Balıkçı", description: "Otelin inşasıyla balık yollarının kapandığını savunan, teknesini bir savaş gemisi gibi koruyan, ağlarla ve kesici aletlerle bütünleşmiş yaşlı denizci.", icon: "👴" },
-      { id: "s2", name: "Tur Rehberi", description: "Maktulün kurduğu otel yüzünden kendi tur acentesi iflasın eşiğine gelen, bölgedeki tüm otobüs ve rota loglarına hakim, her yeri karış karış bilen öfkeli rehber.", icon: "👨" },
-      { id: "s3", name: "Mülk Sahibi", description: "Otelin inşa edildiği arazinin gerçek sahibi olduğunu iddia eden, maktulle yıllardır süren davalar yüzünden toprak sınırlarını karış karış çitlemiş varlıklı adam.", icon: "👨‍💼" },
-      { id: "s4", name: "Aşçı", description: "Lüks otelin mutfak masraflarından sorumlu olan, usulsüzlükleri maktul tarafından keşfedildiği için kovulma ve hapis korkusu yaşayan gergin başaşçı.", icon: "👨‍🍳" },
+      { id: "s1", name: "Yerli Balıkçı", description: "Otelin inşasıyla balık yollarının kapandığını savunan, teknesini bir savaş gemisi gibi koruyan, ağlarla ve kesici aletlerle bütünleşmiş yaşlı denizci.", icon: "pa:sahil_s1" },
+      { id: "s2", name: "Tur Rehberi", description: "Maktulün kurduğu otel yüzünden kendi tur acentesi iflasın eşiğine gelen, bölgedeki tüm otobüs ve rota loglarına hakim, her yeri karış karış bilen öfkeli rehber.", icon: "pa:sahil_s2" },
+      { id: "s3", name: "Mülk Sahibi", description: "Otelin inşa edildiği arazinin gerçek sahibi olduğunu iddia eden, maktulle yıllardır süren davalar yüzünden toprak sınırlarını karış karış çitlemiş varlıklı adam.", icon: "pa:sahil_s3" },
+      { id: "s4", name: "Aşçı", description: "Lüks otelin mutfak masraflarından sorumlu olan, usulsüzlükleri maktul tarafından keşfedildiği için kovulma ve hapis korkusu yaşayan gergin başaşçı.", icon: "pa:sahil_s4" },
     ],
     weapons: [
-      { id: "w1", name: "Balıkçı Bıçağı", description: "Denizcilerin ağları temizlemek ve balık ayıklamak için kullandığı, deriye saplandığında ince, düz ve son derece derin yırtıklar bırakan paslı çelik.", icon: "content-cut" },
-      { id: "w2", name: "Kayalık", description: "İnsan bedeni metrelerce yüksekten boşluğa bırakılıp doğanın o sarp ve acımasız kütlesine çarptığında oluşan, kemikleri un ufak eden doğa olayı.", icon: "landscape" },
-      { id: "w3", name: "Zehirli İçki", description: "Yerel ikramların içine şırıngayla karıştırılan, mide asidiyle buluştuğunda kalbi saniyeler içinde felç eden ancak iz bırakmayan sinsi sıvı.", icon: "local-bar" },
-      { id: "w4", name: "İp", description: "Tekneleri fırtınada sabit tutmak için örülmüş, bir insanın boynuna tam güçle dolandığında pürüzlü, ağsı ve kalın sürtünme yanıkları bırakan naylon kordon.", icon: "fiber-manual-record" },
+      { id: "w1", name: "Balıkçı Bıçağı", description: "Denizcilerin ağları temizlemek ve balık ayıklamak için kullandığı, deriye saplandığında ince, düz ve son derece derin yırtıklar bırakan paslı çelik.", icon: "pa:sahil_w1" },
+      { id: "w2", name: "Kayalık", description: "İnsan bedeni metrelerce yüksekten boşluğa bırakılıp doğanın o sarp ve acımasız kütlesine çarptığında oluşan, kemikleri un ufak eden doğa olayı.", icon: "pa:sahil_w2" },
+      { id: "w3", name: "Zehirli İçki", description: "Yerel ikramların içine şırıngayla karıştırılan, mide asidiyle buluştuğunda kalbi saniyeler içinde felç eden ancak iz bırakmayan sinsi sıvı.", icon: "pa:sahil_w3" },
+      { id: "w4", name: "İp", description: "Tekneleri fırtınada sabit tutmak için örülmüş, bir insanın boynuna tam güçle dolandığında pürüzlü, ağsı ve kalın sürtünme yanıkları bırakan naylon kordon.", icon: "pa:sahil_w4" },
     ],
     locations: [
-      { id: "l1", name: "Sahil Kenarı", description: "Dalgaların tahta iskeleleri dövdüğü, eski ahşap teknelerin birbirine sürtündüğü, deniz yosunu ve zift kokusunun birbirine karıştığı ıssız liman.", icon: "waves" },
-      { id: "l2", name: "Otel Mutfağı", description: "Devasa endüstriyel fırınların hiç sönmediği, taze deniz ürünlerinin temizlendiği, sürekli gürültülü ve personelle dolu sıcak otel mutfağı.", icon: "restaurant" },
-      { id: "l3", name: "Kayalık Burun", description: "Köyün en karanlık ucunda yer alan, zemini kaygan, rüzgarın insanı dengesizleştirdiği ve kilometrelerce aşağıya bakan o tehlikeli sarp uçurum.", icon: "terrain" },
-      { id: "l4", name: "Otel Lobisi", description: "Deniz manzarasını boydan boya gören camlarla kaplı, sürekli kamera kaydı altında olan ve personelin sabaha kadar nöbet tuttuğu aydınlık ana giriş.", icon: "hotel" },
+      { id: "l1", name: "Sahil Kenarı", description: "Dalgaların tahta iskeleleri dövdüğü, eski ahşap teknelerin birbirine sürtündüğü, deniz yosunu ve zift kokusunun birbirine karıştığı ıssız liman.", icon: "pa:sahil_l1" },
+      { id: "l2", name: "Otel Mutfağı", description: "Devasa endüstriyel fırınların hiç sönmediği, taze deniz ürünlerinin temizlendiği, sürekli gürültülü ve personelle dolu sıcak otel mutfağı.", icon: "pa:sahil_l2" },
+      { id: "l3", name: "Kayalık Burun", description: "Köyün en karanlık ucunda yer alan, zemini kaygan, rüzgarın insanı dengesizleştirdiği ve kilometrelerce aşağıya bakan o tehlikeli sarp uçurum.", icon: "pa:sahil_l3" },
+      { id: "l4", name: "Otel Lobisi", description: "Deniz manzarasını boydan boya gören camlarla kaplı, sürekli kamera kaydı altında olan ve personelin sabaha kadar nöbet tuttuğu aydınlık ana giriş.", icon: "pa:sahil_l4" },
     ],
     clues: [
       {

@@ -473,6 +473,18 @@ const PUZZLE_ASSET_MAP: Record<string, number> = {
   beyoglu_l1: require("../assets/images/puzzle_assets/beyoglu_l1.png"),
   beyoglu_l2: require("../assets/images/puzzle_assets/beyoglu_l2.png"),
   beyoglu_l3: require("../assets/images/puzzle_assets/beyoglu_l3.png"),
+  sahil_s1: require("../assets/images/puzzle_assets/sahil_s1.png"),
+  sahil_s2: require("../assets/images/puzzle_assets/sahil_s2.png"),
+  sahil_s3: require("../assets/images/puzzle_assets/sahil_s3.png"),
+  sahil_s4: require("../assets/images/puzzle_assets/sahil_s4.png"),
+  sahil_w1: require("../assets/images/puzzle_assets/sahil_w1.png"),
+  sahil_w2: require("../assets/images/puzzle_assets/sahil_w2.png"),
+  sahil_w3: require("../assets/images/puzzle_assets/sahil_w3.png"),
+  sahil_w4: require("../assets/images/puzzle_assets/sahil_w4.png"),
+  sahil_l1: require("../assets/images/puzzle_assets/sahil_l1.png"),
+  sahil_l2: require("../assets/images/puzzle_assets/sahil_l2.png"),
+  sahil_l3: require("../assets/images/puzzle_assets/sahil_l3.png"),
+  sahil_l4: require("../assets/images/puzzle_assets/sahil_l4.png"),
 };
 
 export function isPuzzleAsset(icon: string | undefined): boolean {
