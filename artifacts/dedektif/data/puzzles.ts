@@ -1188,22 +1188,22 @@ export const PUZZLES: Puzzle[] = [
     story:
       "Dolmabahçe Sarayı'nın altın varaklı tavanları altında düzenlenen diplomatik şölen, değerli bir elçinin kadehi dudaklarına götürmesiyle zehirli bir kaosa dönüştü. Tarihin tanıklık ettiği bu salonda, ihtişam ve ölüm aynı masada oturdu.",
     suspects: [
-      { id: "s1", name: "Protokol Şefi", description: "Tüm diplomatik kuralları saniye saniye yöneten, ziyafetin kusursuz işlemesi için mutfak ile salon arasında telsiziyle sürekli koşturan gergin yönetici.", icon: "🕵️" },
-      { id: "s2", name: "Özel Aşçı", description: "Sarayın ihtişamlı tabaklarına lezzet ve şatafat katan, kendi tenceresine kimsenin dokunmasına izin vermeyen, keskin ve gizli tariflerin ustası.", icon: "👨‍🍳" },
-      { id: "s3", name: "Yabancı Diplomat", description: "Kurbanla arasında yıllardır süren bir soğuk savaş bulunan, kalabalıktan kaçıp her fırsatta sarayın dış alanlarında purolarını tüketen yabancı konuk.", icon: "👨" },
-      { id: "s4", name: "Saray Kütüphanecisi", description: "Sarayın loş koridorlarındaki binlerce kitabın bekçiliğini yapan, şölenin gürültüsünden nefret eden ve geceyi sadece tozlu sayfalarla geçiren ihtiyar.", icon: "👴" },
+      { id: "s1", name: "Protokol Şefi", description: "Tüm diplomatik kuralları saniye saniye yöneten, ziyafetin kusursuz işlemesi için mutfak ile salon arasında telsiziyle sürekli koşturan gergin yönetici.", icon: "pa:saray_s1" },
+      { id: "s2", name: "Özel Aşçı", description: "Sarayın ihtişamlı tabaklarına lezzet ve şatafat katan, kendi tenceresine kimsenin dokunmasına izin vermeyen, keskin ve gizli tariflerin ustası.", icon: "pa:saray_s2" },
+      { id: "s3", name: "Yabancı Diplomat", description: "Kurbanla arasında yıllardır süren bir soğuk savaş bulunan, kalabalıktan kaçıp her fırsatta sarayın dış alanlarında purolarını tüketen yabancı konuk.", icon: "pa:saray_s3" },
+      { id: "s4", name: "Saray Kütüphanecisi", description: "Sarayın loş koridorlarındaki binlerce kitabın bekçiliğini yapan, şölenin gürültüsünden nefret eden ve geceyi sadece tozlu sayfalarla geçiren ihtiyar.", icon: "pa:saray_s4" },
     ],
     weapons: [
-      { id: "w1", name: "Zehirli Şarap", description: "Osmanlı döneminden kalma kristal kadehlere doldurulan, içine zerk edilen ağır metaller sayesinde kana karıştığında saniyeler içinde bedeni felç eden kırmızı sıvı.", icon: "wine-bar" },
-      { id: "w2", name: "Zehirli Yemek", description: "Gümüş tepsilerde sunulan sıcak lokmaların tam merkezine gizlenmiş, ancak mide enzimleriyle karşılaştığında aktifleşip iç organları yakan sinsi macun.", icon: "room-service" },
-      { id: "w3", name: "Kimyasal Madde", description: "Sadece laboratuvar ortamında bulunabilen, havaya karıştığında ciğerlerde cam kesikleri yaratan ve saray restorasyonlarında kullanılan ağır endüstriyel asit.", icon: "science" },
-      { id: "w4", name: "Zehirli İçecek", description: "Yemek sonrası hazmı kolaylaştırsın diye ikram edilen, ancak içine güçlü bir alkaloit damlatıldığında boğazı anında düğümleyen renksiz meyve suyu.", icon: "local-bar" },
+      { id: "w1", name: "Zehirli Şarap", description: "Osmanlı döneminden kalma kristal kadehlere doldurulan, içine zerk edilen ağır metaller sayesinde kana karıştığında saniyeler içinde bedeni felç eden kırmızı sıvı.", icon: "pa:saray_w1" },
+      { id: "w2", name: "Zehirli Yemek", description: "Gümüş tepsilerde sunulan sıcak lokmaların tam merkezine gizlenmiş, ancak mide enzimleriyle karşılaştığında aktifleşip iç organları yakan sinsi macun.", icon: "pa:saray_w2" },
+      { id: "w3", name: "Kimyasal Madde", description: "Sadece laboratuvar ortamında bulunabilen, havaya karıştığında ciğerlerde cam kesikleri yaratan ve saray restorasyonlarında kullanılan ağır endüstriyel asit.", icon: "pa:saray_w3" },
+      { id: "w4", name: "Zehirli İçecek", description: "Yemek sonrası hazmı kolaylaştırsın diye ikram edilen, ancak içine güçlü bir alkaloit damlatıldığında boğazı anında düğümleyen renksiz meyve suyu.", icon: "pa:saray_w4" },
     ],
     locations: [
-      { id: "l1", name: "Yemek Salonu", description: "Tavana asılı devasa kristal avizelerin aydınlattığı, metrelerce uzanan ağır masaların ve yüzlerce soylunun yer aldığı görkemli şölen alanı.", icon: "dinner-dining" },
-      { id: "l2", name: "Mutfak", description: "Ateşlerin hiç sönmediği, bakır kazanların kaynadığı, gümüş tepsilerin dizildiği ve onlarca aşçının bağırış çağırış çalıştığı devasa ve sıcak üretim merkezi.", icon: "restaurant" },
-      { id: "l3", name: "Bahçe Terası", description: "Boğaz'ın serin sularına bakan, içerideki ihtişamdan uzak, taş korkulukların ve çiçeklerin sardığı dış mekan, rüzgarlı açık alan.", icon: "park" },
-      { id: "l4", name: "Kütüphane", description: "Yüksek raflara dizilmiş binlerce tarihi kitabın nem koktuğu, sessizliğin ve loş ışığın hakim olduğu, ana salondan tamamen izole edilmiş eski koridor.", icon: "library-books" },
+      { id: "l1", name: "Yemek Salonu", description: "Tavana asılı devasa kristal avizelerin aydınlattığı, metrelerce uzanan ağır masaların ve yüzlerce soylunun yer aldığı görkemli şölen alanı.", icon: "pa:saray_l1" },
+      { id: "l2", name: "Mutfak", description: "Ateşlerin hiç sönmediği, bakır kazanların kaynadığı, gümüş tepsilerin dizildiği ve onlarca aşçının bağırış çağırış çalıştığı devasa ve sıcak üretim merkezi.", icon: "pa:saray_l2" },
+      { id: "l3", name: "Bahçe Terası", description: "Boğaz'ın serin sularına bakan, içerideki ihtişamdan uzak, taş korkulukların ve çiçeklerin sardığı dış mekan, rüzgarlı açık alan.", icon: "pa:saray_l3" },
+      { id: "l4", name: "Kütüphane", description: "Yüksek raflara dizilmiş binlerce tarihi kitabın nem koktuğu, sessizliğin ve loş ışığın hakim olduğu, ana salondan tamamen izole edilmiş eski koridor.", icon: "pa:saray_l4" },
     ],
     clues: [
       {
