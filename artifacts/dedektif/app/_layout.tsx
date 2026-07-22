@@ -9,6 +9,7 @@ import {
   DMSans_400Regular,
   DMSans_500Medium,
 } from "@expo-google-fonts/dm-sans";
+import { Platform } from "react-native";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
@@ -541,24 +542,28 @@ function AppWithMissions({ splashReady }: { splashReady: boolean }) {
 export default function RootLayout() {
   const [splashDone, setSplashDone] = useState(false);
 
-  useFonts({
-    Inter_400Regular,
-    Inter_500Medium,
-    Inter_600SemiBold,
-    Inter_700Bold,
-    DMSans_400Regular,
-    DMSans_500Medium,
-    MightySouly: require("../assets/fonts/MightySouly.ttf"),
-    PlayfairDisplay: require("../assets/fonts/PlayfairDisplay.ttf"),
-    UnnaRegular: require("../assets/fonts/Unna-Regular.ttf"),
-    UnnaBold: require("../assets/fonts/Unna-Bold.ttf"),
-    UnnaBoldItalic: require("../assets/fonts/Unna-BoldItalic.ttf"),
-    UnnaItalic: require("../assets/fonts/Unna-Italic.ttf"),
-    DroidSerifRegular: require("../assets/fonts/DroidSerif-Regular.ttf"),
-    DroidSerifBold: require("../assets/fonts/DroidSerif-Bold.ttf"),
-    DroidSerifBoldItalic: require("../assets/fonts/DroidSerif-BoldItalic.ttf"),
-    DroidSerifItalic: require("../assets/fonts/DroidSerif-Italic.ttf"),
-  });
+  useFonts(
+    Platform.OS === "web"
+      ? {}
+      : {
+          Inter_400Regular,
+          Inter_500Medium,
+          Inter_600SemiBold,
+          Inter_700Bold,
+          DMSans_400Regular,
+          DMSans_500Medium,
+          MightySouly: require("../assets/fonts/MightySouly.ttf"),
+          PlayfairDisplay: require("../assets/fonts/PlayfairDisplay.ttf"),
+          UnnaRegular: require("../assets/fonts/Unna-Regular.ttf"),
+          UnnaBold: require("../assets/fonts/Unna-Bold.ttf"),
+          UnnaBoldItalic: require("../assets/fonts/Unna-BoldItalic.ttf"),
+          UnnaItalic: require("../assets/fonts/Unna-Italic.ttf"),
+          DroidSerifRegular: require("../assets/fonts/DroidSerif-Regular.ttf"),
+          DroidSerifBold: require("../assets/fonts/DroidSerif-Bold.ttf"),
+          DroidSerifBoldItalic: require("../assets/fonts/DroidSerif-BoldItalic.ttf"),
+          DroidSerifItalic: require("../assets/fonts/DroidSerif-Italic.ttf"),
+        }
+  );
 
   useEffect(() => {
     async function prepare() {
