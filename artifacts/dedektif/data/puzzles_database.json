@@ -32,21 +32,21 @@
             {
               "id": "s1",
               "name": "Baş Kalfa Hatice",
-              "icon": "noun-hizmetci-hacer-avatar.png",
+              "icon": "pa:ott_001_s1",
               "description": "Otuz yıllık saray hizmetine karşın son aylarda nüfuzunu genç cariyeye kaybetmiş, harem hiyerarşisini ve sarayın tüm yeme-içme ikram düzenini avucunun içi gibi bilen otoriter kadın.",
               "detail": "Orta yaşlı, otoriter, tüm harem protokolünü ezbere bilir."
             },
             {
               "id": "s2",
               "name": "Genç Hekim Selim",
-              "icon": "👨‍⚕️",
+              "icon": "pa:ott_001_s2",
               "description": "Sarayın Avrupalı tıp anlayışını benimsemiş, elindeki şifalı otlar ve ecza sandığıyla koridorlarda dolanan, padişahın güvenini yeni kazanmaya başlayan Viyana eğitimli hekim.",
               "detail": "26 yaşında, Viyana'da eğitim görmüş, çekingen ama zeki."
             },
             {
               "id": "s3",
               "name": "Hazinedar Hüseyin",
-              "icon": "noun-tuccar-vehbi-avatar.png",
+              "icon": "pa:ott_001_s3",
               "description": "Saray masraflarından ve harem bütçesinden sorumlu olan, kayıp altın meselesinde adı şüpheli sıfatıyla geçen ve sürekli dış asitane (çarşı) denetimleriyle uğraşan bürokrat.",
               "detail": "50'li yaşlarda, şişman, her zaman terli."
             }
@@ -55,19 +55,19 @@
             {
               "id": "w1",
               "name": "Afyon Terkibi",
-              "icon": "🌺",
+              "icon": "pa:ott_001_w1",
               "description": "Şerbetin veya sıvıların içine karıştırıldığında saniyeler içinde kalbi durduran, midede koyu renkli ağır tortu bırakan, renksiz doğal uyuşturucu çözelti."
             },
             {
               "id": "w2",
               "name": "Arsenik Tozu",
-              "icon": "🫧",
+              "icon": "pa:ott_001_w2",
               "description": "Buhur ateşine atıldığında yavaşça tüten, etrafındaki eşyaların üzerine ince ve gri bir kül tabakası bırakan, solunduğunda iç organları saniyeler içinde kavuran zehirli kimyasal."
             },
             {
               "id": "w3",
               "name": "İpek Kordon",
-              "icon": "🪢",
+              "icon": "pa:ott_001_w3",
               "description": "Haremdeki ağır kadife perdeleri tutmakta kullanılan, boyna dolandığında sert mekanik baskıyla derin morluklar bırakarak nefesi anında kesen esnek ip."
             }
           ],
@@ -75,19 +75,19 @@
             {
               "id": "l1",
               "name": "Yatak Odası",
-              "icon": "🛏️",
+              "icon": "pa:ott_001_l1",
               "description": "Cariyenin şahsi dairesi; kilitli ağır ahşap kapısıyla bilinen, zemini tamamen kalın Hereke halılarıyla ve yumuşak dokularla kaplı, izole uyku alanı."
             },
             {
               "id": "l2",
               "name": "Hamam Koridoru",
-              "icon": "🚿",
+              "icon": "pa:ott_001_l2",
               "description": "Mermer hamamdan odalara uzanan, zemini her daim ıslak ve soğuk olan, muhafızların devriye saatleri arasında yankı yapan dar geçit."
             },
             {
               "id": "l3",
               "name": "Müzik Salonu",
-              "icon": "🎵",
+              "icon": "pa:ott_001_l3",
               "description": "Ud ve kanun seslerinin duvarlarında yankılandığı, cariyelerin gün içinde toplandığı, buhurdanlıkların sürekli tüttüğü ve eşyaların islendiği geniş sosyal alan."
             }
           ],
