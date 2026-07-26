@@ -509,6 +509,15 @@ const PUZZLE_ASSET_MAP: Record<string, number> = {
   saray_l2: require("../assets/images/puzzle_assets/saray_l2.png"),
   saray_l3: require("../assets/images/puzzle_assets/saray_l3.png"),
   saray_l4: require("../assets/images/puzzle_assets/saray_l4.png"),
+  ott_001_s1: require("../assets/images/puzzle_assets/ott_001_s1.png"),
+  ott_001_s2: require("../assets/images/puzzle_assets/ott_001_s2.png"),
+  ott_001_w1: require("../assets/images/puzzle_assets/ott_001_w1.png"),
+  ott_001_w2: require("../assets/images/puzzle_assets/ott_001_w2.png"),
+  ott_001_l1: require("../assets/images/puzzle_assets/ott_001_l1.png"),
+  ott_001_l2: require("../assets/images/puzzle_assets/ott_001_l2.png"),
+  ott_001_s3: require("../assets/images/puzzle_assets/ott_001_s3.png"),
+  ott_001_w3: require("../assets/images/puzzle_assets/ott_001_w3.png"),
+  ott_001_l3: require("../assets/images/puzzle_assets/ott_001_l3.png"),
 };
 
 export function isPuzzleAsset(icon: string | undefined): boolean {
