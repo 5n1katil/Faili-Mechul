@@ -211,7 +211,7 @@
               "description": "Komşu dükkanın sahibi. Tarihi mühre yıllardır takıntılı olan, günlerini sadece kendi vitrininin önünde geçiren ve maktulün dükkanındaki gizli arka odalara hiç adım atmamış sert müzakereci.",
               "detail": "60'lı yaşlarda, kısık gözlü, piyasada 'sert müzakereci' olarak bilinir.",
               "parmakIziDeseni": "fp_loop_right",
-              "icon": "👷"
+              "icon": "pa:ott_002_s1"
             },
             {
               "id": "s2",
@@ -219,7 +219,7 @@
               "description": "Maktulün kumar borçları yüzünden sıkışmış, dükkanın her kuytusunu, gizli değerleme odasının anahtarını ve eşyaların yerini avucunun içi gibi bilen 3 yıllık çırağı.",
               "detail": "19 yaşında, zeki, ama son ay borçlandığı söyleniyor.",
               "parmakIziDeseni": "fp_loop_left",
-              "icon": "noun-cirak-selim-avatar.png"
+              "icon": "pa:ott_002_s2"
             },
             {
               "id": "s3",
@@ -227,7 +227,7 @@
               "description": "Atina'dan mühür için gelmiş varlıklı elit. Çarşının karmaşık yollarından bihaber, günlerini sürekli şapkasını takıp etrafı izleyerek geçiren bir yabancı.",
               "detail": "45 yaşında, şapkası ve eldiveniyle dikkat çekici.",
               "parmakIziDeseni": "fp_arch",
-              "icon": "noun-semiha-hanim-avatar.png"
+              "icon": "pa:ott_002_s3"
             }
           ],
           "weapons": [
@@ -235,19 +235,19 @@
               "id": "w1",
               "name": "Ağır Tunç Vazo",
               "description": "Dükkanda sergilenen, kaidesi çok geniş olan ve kafatasına şiddetle indirildiğinde ağır kemik kırıklarıyla beraber etrafa tunç tozları saçan Osmanlı vazosu.",
-              "icon": "🏺"
+              "icon": "pa:ott_002_w1"
             },
             {
               "id": "w2",
               "name": "Zehirli Kahve",
               "description": "Fark edilmeden içeceklere karıştırılan, iç organlarda ağır kimyasal tahribat yaratan sinsi ve koyu renkli zehirli çözelti.",
-              "icon": "🧪"
+              "icon": "pa:ott_002_w2"
             },
             {
               "id": "w3",
               "name": "İpek Fular",
               "description": "Vitrinlerde satışta olan, arkadan yaklaşıldığında boğma amacıyla kullanıldığında boyunda ince ve ipeksi sürtünme izleri bırakan antika fular.",
-              "icon": "🧣"
+              "icon": "pa:ott_002_w3"
             }
           ],
           "locations": [
@@ -255,19 +255,19 @@
               "id": "l1",
               "name": "Arka Oda",
               "description": "Sadece dükkan sahibi ve çırağının girebildiği, antika mühürlerin mercekle incelendiği ve kalın perdelerle dışarıdan tamamen yalıtılmış kilitli değerleme odası.",
-              "icon": "🚪"
+              "icon": "pa:ott_002_l1"
             },
             {
               "id": "l2",
               "name": "Ana Koridor",
               "description": "Dükkanların vitrinlerinin açıldığı, çarşı bekçilerinin fenerleriyle sürekli devriye gezdiği, ayak seslerinin yankılandığı geniş taş yürüyüş yolu.",
-              "icon": "🛣️"
+              "icon": "pa:ott_002_l2"
             },
             {
               "id": "l3",
               "name": "Kahvehane Köşesi",
               "description": "Esnafın sabahları toplandığı, herkesin gözü önünde olan, çay bardaklarının seslerinin birbirine karıştığı aydınlık ve açık servis alanı.",
-              "icon": "☕"
+              "icon": "pa:ott_002_l3"
             }
           ],
           "clues": [
