@@ -392,19 +392,19 @@
             {
               "id": "s1",
               "name": "Baş Hafiye Zeki Paşa",
-              "icon": "🕵️",
+              "icon": "pa:ott_003_s1",
               "description": "Barut kokusuna alışkın, askeri nizamdan asla taviz vermeyen ve sarayın devasa istihbarat ağını demir yumrukla yöneten kıdemli komutan."
             },
             {
               "id": "s2",
               "name": "Yaver Fehmi Bey",
-              "icon": "💂",
+              "icon": "pa:ott_003_s2",
               "description": "Sarayın loş koridorlarında sert bot sesleriyle yankı uyandıran, yakın dövüş ve fiziksel müdahale konusunda özel eğitim almış hırslı genç subay."
             },
             {
               "id": "s3",
               "name": "Nermin Hanım",
-              "icon": "👩",
+              "icon": "pa:ott_003_s3",
               "description": "Parmaklarında hokka mürekkebi izleri taşıyan; yabancı dillere, kimyevi maddelere ve sarayın gizli tarihine hakim olan sessiz entelektüel."
             }
           ],
@@ -412,19 +412,19 @@
             {
               "id": "w1",
               "name": "Revolver",
-              "icon": "🔫",
+              "icon": "pa:ott_003_w1",
               "description": "Sarayın sessizliğini barut kokusuyla yırtan, namlusu her daim sıcak, Avrupa yapımı, gürültülü ve mekanik bir suikast aracı."
             },
             {
               "id": "w2",
               "name": "Zehirli Mürekkep",
-              "icon": "✒️",
+              "icon": "pa:ott_003_w2",
               "description": "Deriyle temas ettiği an sinir sistemini saniyeler içinde felç eden, kurbanın parmak uçlarında asidik yanıklar bırakan sinsi bir laboratuvar karışımı."
             },
             {
               "id": "w3",
               "name": "Tel Kement",
-              "icon": "🪢",
+              "icon": "pa:ott_003_w3",
               "description": "Kurbanı arkadan yakalayarak sessizce nefessiz bırakan, boyunda ince ve kanlı kesikler açan acımasız çelik kordon."
             }
           ],
@@ -432,19 +432,19 @@
             {
               "id": "l1",
               "name": "Arşiv Odası",
-              "icon": "📁",
+              "icon": "pa:ott_003_l1",
               "description": "Yüzlerce yıllık eski haritaların ve padişahın gizli jurnallerinin kilit altında tutulduğu, eski kağıt ve rutubet kokan yeraltı mahzeni."
             },
             {
               "id": "l2",
               "name": "Çamlık Köşkü",
-              "icon": "🌲",
+              "icon": "pa:ott_003_l2",
               "description": "Silahlı devriyelerin sürekli gözetiminde olan, devasa pencerelerinden içeri solgun ay ışığı sızan ferah dinlenme alanı."
             },
             {
               "id": "l3",
               "name": "Yaver Dairesi",
-              "icon": "🪟",
+              "icon": "pa:ott_003_l3",
               "description": "Ağır mühimmat sandıklarının yığılı olduğu, nöbet değişimlerinde bot ve tüfek seslerinin hiç susmadığı hareketli karargah odası."
             }
           ],
@@ -608,7 +608,7 @@
             {
               "id": "s1",
               "name": "Mimar Zeynep Hanım",
-              "icon": "👩",
+              "icon": "pa:ott_005_s1",
               "description": "Restorasyon bütçeleri, malzeme izinleri ve çalışma programlarının başındaki titiz mimar. Eksik kalmış her çizgiyi yeniden ölçmeden rahat edemeyen, sakin görünen fakat denetim baskısı altında günlerdir uykusuz kalan bir yönetici.",
               "detail": "32 yaşında. Sağ bileği, iki gün önceki düşüşten sonra doktor bandajı ve ince bir atelle sabitlenmiş durumda.",
               "parmakIziDeseni": "fp_whorl"
@@ -616,7 +616,7 @@
             {
               "id": "s2",
               "name": "Prof. Thomas",
-              "icon": "👨‍🏫",
+              "icon": "pa:ott_005_s2",
               "description": "Bizans eserleri üzerine çalışan İngiliz tarihçi. Kazıdan çıkan parçaları kataloglamak için geçici emanet erişimi almış; kayıp planın batılı koleksiyoncular için değerini herkesten önce kavramış hırslı bir araştırmacı.",
               "detail": "55 yaşında. Sol başparmağında eski bir kesikten kalma ince bir iz taşır; arşiv kartlarını her zaman kendi notlarıyla doldurur.",
               "parmakIziDeseni": "fp_arch"
@@ -624,7 +624,7 @@
             {
               "id": "s3",
               "name": "Bekçi Halil",
-              "icon": "👴",
+              "icon": "pa:ott_005_s3",
               "description": "Mabedin karanlık geçitlerini ezbere bilen, yıllardır gece nöbetini tutan iri yapılı emektar. Dönüşüm kararına kırgın olsa da görev saatlerini bir ayin disipliniyle takip eden eski muhafız.",
               "detail": "65 yaşında. İskele merdivenlerinde kullandığı bakır tokalı nöbet kartını boynundan hiç çıkarmaz.",
               "parmakIziDeseni": "fp_loop_right"
@@ -634,21 +634,21 @@
             {
               "id": "w1",
               "name": "Antika Hançer",
-              "icon": "🗡️",
+              "icon": "pa:ott_005_w1",
               "description": "Kazı sandığından yeni çıkarılan, kabzasında kurumuş toprak bulunan Bizans işi kesici eser. Kırmızı keçe kılıfıyla birlikte numaralı emanet listesine işlenmiş durumda.",
               "detail": ""
             },
             {
               "id": "w2",
               "name": "Asidik Çözücü",
-              "icon": "🧪",
+              "icon": "pa:ott_005_w2",
               "description": "Restorasyon laboratuvarında sıva kalıntılarını çözmek için ölçülü kullanılan renksiz sıvı. Cam şişesi, keskin kokusu ve ciltte bıraktığı yakıcı izlerle ayırt edilir.",
               "detail": ""
             },
             {
               "id": "w3",
               "name": "Ağır Demir Anahtar",
-              "icon": "🗝️",
+              "icon": "pa:ott_005_w3",
               "description": "Eski ahşap kapıların kilitlerini çevirmek için dövme demirden yapılmış, tek başına taşınması güç olacak kadar ağır ve devasa bir anahtar. Uzun sapı ile paslı başlığı, onu sıradan bir eşya olmaktan çıkarır.",
               "detail": ""
             }
@@ -657,21 +657,21 @@
             {
               "id": "l1",
               "name": "Gizli Mahzen",
-              "icon": "🕳️",
+              "icon": "pa:ott_005_l1",
               "description": "Zeminin altında, nemli bir nişin ardına gizlenmiş taş raflı dehliz. Emanet dolabı burada tutulur; duvarlardaki eski mum isleri havayı ağırlaştırır.",
               "detail": ""
             },
             {
               "id": "l2",
               "name": "İskele Tepesi",
-              "icon": "🪜",
+              "icon": "pa:ott_005_l2",
               "description": "Ana kubbedeki mozaiklere ulaşan, rüzgâr alan dar ahşap platform. Gece nöbetinin en tenha ve en tehlikeli noktasıdır.",
               "detail": ""
             },
             {
               "id": "l3",
               "name": "Kazı Çadırı",
-              "icon": "⛺",
+              "icon": "pa:ott_005_l3",
               "description": "Dış avluda kurulu, çizim ruloları ve ölçüm araçlarıyla dolu çalışma çadırı. Yağmur sonrası zemini çamurlu, kandil ışığı ise her köşeyi eşit aydınlatamayacak kadar zayıftır.",
               "detail": ""
             }
@@ -787,28 +787,28 @@
             {
               "id": "s1",
               "name": "İngiliz Mühendis Bradford",
-              "icon": "👷",
+              "icon": "pa:ott_004_s1",
               "description": "İngiliz şirketinin zırhlı sözleşmesi için görevlendirdiği ölçülü temsilci. Müzakereleri yazılı taahhütler ve protokol üzerinden yürütür; tersane işçilerinin arasında bile ceketinin tozlanmasına tahammül edemeyen soğuk bir pazarlıkçıdır.",
               "detail": "48 yaşında. Sol elinin işaret parmağında eski bir mühür yüzüğünün bıraktığı ince çukur vardır."
             },
             {
               "id": "s2",
               "name": "Osmanlı Subayı Nuri Bey",
-              "icon": "🎖️",
+              "icon": "pa:ott_004_s2",
               "description": "Komutanın altında görev yapan, sözleşme heyetinde yer alma arzusundaki hırslı subay. Son aylarda artan borçları ve ertelenen terfisi, disiplinli görünüşünün altında keskin bir baskı yaratmıştır.",
               "detail": "35 yaşında. Sağ avucunda kızağın metal bağlantılarından kalma eski, sertleşmiş bir nasır taşır."
             },
             {
               "id": "s3",
               "name": "Alman Rakip Herr Vogel",
-              "icon": "👨‍💼",
+              "icon": "pa:ott_004_s3",
               "description": "Alman endüstri şirketinin resmî temsilcisi. Sözleşmenin İngilizlere gitmesini engellemek için İstanbul'a gelmiş; nezaketini hiç bozmadan baskı kurabilen, sabırsız ve hesapçı bir diplomat.",
               "detail": "52 yaşında. Sağ elinde siyah deri evrak çantası taşır; imzalı izin olmadan kapalı çalışma bölümlerine girmeyi reddeder."
             },
             {
               "id": "s4",
               "name": "Tersane Bekçisi Rıza",
-              "icon": "👮",
+              "icon": "pa:ott_004_s4",
               "description": "Gece kapılarından ve geçiş defterlerinden sorumlu, tersanenin en eski bekçisi. İşçilerin küçük kaçamaklarını görmezden gelmeye meyillidir; fakat kendi imzasını taşıyan kayıtlara karşı fazlasıyla dikkatli davranır.",
               "detail": "60 yaşında. Boynunda, nöbet noktalarını işaretlemek için kullandığı aşınmış bakır tokalı kart taşır."
             }
@@ -817,28 +817,28 @@
             {
               "id": "w1",
               "name": "Ağır Demir Çekiç",
-              "icon": "🔨",
+              "icon": "pa:ott_004_w1",
               "description": "Gemi saclarını düzeltmek için kullanılan, iki elle kavranmadan güvenle kaldırılamayacak kadar ağır dövme demir iş çekici. Paslı başlığı tek darbede ağır travma bırakabilecek yoğunluktadır.",
               "detail": ""
             },
             {
               "id": "w2",
               "name": "Deniz Halatı",
-              "icon": "🪢",
+              "icon": "pa:ott_004_w2",
               "description": "Gemileri rıhtıma bağlamakta kullanılan, ıslanınca daha da sertleşen kalın kenevir bağlama halatı. Pürüzlü lifleri temas ettiği yerde belirgin sürtünme izleri bırakır.",
               "detail": ""
             },
             {
               "id": "w3",
               "name": "Tabanca",
-              "icon": "🔫",
+              "icon": "pa:ott_004_w3",
               "description": "Subayların belinde taşıdığı, kapalı bir mekânda patladığında barut kokusu ve kulakları delen yankı bırakan yüksek sesli askerî mühimmat.",
               "detail": ""
             },
             {
               "id": "w4",
               "name": "Zehirli İçki",
-              "icon": "🥃",
+              "icon": "pa:ott_004_w4",
               "description": "Kristal kadehe karıştırıldığında rengini neredeyse hiç değiştirmeyen, keskin badem kokulu arsenik terkibi. Yalnızca birkaç yudumda bile ölümcül olabilecek şekilde hazırlanmıştır.",
               "detail": ""
             }
@@ -847,28 +847,28 @@
             {
               "id": "l1",
               "name": "Gemi Güvertesi",
-              "icon": "⚓",
+              "icon": "pa:ott_004_l1",
               "description": "İnşaat hâlindeki zırhlının açık ana güvertesi. Rüzgârın kesilmediği, vinç sesleri ve martı çığlıklarının birbirine karıştığı geniş çalışma sahası.",
               "detail": ""
             },
             {
               "id": "l2",
               "name": "Komutan Ofisi",
-              "icon": "📋",
+              "icon": "pa:ott_004_l2",
               "description": "Tersanenin üst katındaki kilitli idari oda. Burada sözleşme taslakları, yabancı heyet kayıtları ve komutana ait mühürlü içki dolabı tutulur.",
               "detail": ""
             },
             {
               "id": "l3",
               "name": "Depo Ambarı",
-              "icon": "📦",
+              "icon": "pa:ott_004_l3",
               "description": "Tersanenin derininde bulunan, zemini katranla lekeli, dev çapa zincirleri ve ağır malzeme sandıklarıyla dolu karanlık depo. Geceleri kapısı içeriden sürgülenir.",
               "detail": ""
             },
             {
               "id": "l4",
               "name": "Rıhtım Kenarı",
-              "icon": "🌊",
+              "icon": "pa:ott_004_l4",
               "description": "Tahta iskelelerin denize uzandığı açık kıyı hattı. Bağlama halatları burada denetlenir; gece vardiyasında dalga sesi konuşmaları bastıracak kadar yükselir.",
               "detail": ""
             }
@@ -1014,21 +1014,21 @@
             {
               "id": "s1",
               "name": "Rakip Yönetmen Sofia Reyes",
-              "icon": "🎤",
+              "icon": "pa:hw_001_s1",
               "description": "Gecenin en büyük ödülünü alan, Adrian Vale ile yirmi yıllık yaratıcı rekabeti her röportaja sızan vizyoner yönetmen.",
               "detail": "45 yaşında. Her kelimesini prova eder gibi seçiyor; basın karşısındaki sakinliği, öfkesini ne kadar iyi sakladığını belirsiz bırakıyor."
             },
             {
               "id": "s2",
               "name": "Yapımcı Marcus Gold",
-              "icon": "👤",
+              "icon": "pa:hw_001_s2",
               "description": "Vale'in son filmini finanse eden stüdyonun patronu. Sabahki fesih gerçekleşirse şirketini ağır bir tazminat yükünün beklediği bilinen, etkili yapımcı.",
               "detail": "58 yaşında. Herkesle ilk isim üzerinden konuşuyor, fakat gecenin hiçbir anında ceketini çıkarmıyor; kontrolü kaybetmeye tahammülü yok gibi."
             },
             {
               "id": "s3",
               "name": "Genç Oyuncu Jade Lin",
-              "icon": "🌟",
+              "icon": "pa:hw_001_s3",
               "description": "Vale'in son filminde başrolü üstlenen; yönetmenin sert eleştirileriyle sık sık gölgede kaldığı konuşulan, yükselişteki oyuncu.",
               "detail": "26 yaşında. Kırmızı halının onayıyla değil, performansıyla hatırlanmak istiyor; dikkatle dinliyor, kolay kolay ne düşündüğünü göstermiyor."
             }
@@ -1037,21 +1037,21 @@
             {
               "id": "w1",
               "name": "Zehirli Şampanya",
-              "icon": "🥂",
+              "icon": "pa:hw_001_w1",
               "description": "Özel bir şişeden servis edildiğinde köpüğün rengini değiştirmeyen; alkolle birleşince kalbi yavaşlatan, pahalı ve izlenmesi güç sedatif karışım.",
               "detail": "Kadehte sıradan şampanyadan ayırt edilmez. Etkisini belirleyen, içeceğe karıştığı andaki hassas dozudur."
             },
             {
               "id": "w2",
               "name": "Yüksek Doz İlaç Kapsülleri",
-              "icon": "💊",
+              "icon": "pa:hw_001_w2",
               "description": "Yiyecek veya içeceğe karıştırıldığında kaza izlenimi verebilecek, birkaç kapsüllük yüksek dozda sakinleştirici kombinasyonu.",
               "detail": "Blister ambalajı, reçete ve seri numarası gibi kişisel eşya izleri bırakmaya elverişli bir yöntemdir."
             },
             {
               "id": "w3",
               "name": "Kadife Kordon",
-              "icon": "🪢",
+              "icon": "pa:hw_001_w3",
               "description": "VIP localarındaki dekoratif kordonlardan koparılarak kullanılabilecek; yakın fiziksel temas gerektiren mekanik araç.",
               "detail": "Beden üzerinde bağ, sürtünme ya da baskı izi bırakmadan kullanılması neredeyse imkânsızdır."
             }
@@ -1060,21 +1060,21 @@
             {
               "id": "l1",
               "name": "VIP Salonu",
-              "icon": "🛋️",
+              "icon": "pa:hw_001_l1",
               "description": "Yalnızca özel davetlilerin şifreli kartla girebildiği, kalın perdeli ve ana kameralardan uzak lüks salon.",
               "detail": "Kadife koltuklar, düşük ışık ve özel servis masaları dışarıdaki kutlamanın gürültüsünü burada boğuk bir uğultuya dönüştürür."
             },
             {
               "id": "l2",
               "name": "Teras Bar",
-              "icon": "🍸",
+              "icon": "pa:hw_001_l2",
               "description": "Los Angeles manzarasına açılan, rüzgârlı ve açık havadaki; basın fotoğrafçılarının uzaktan izleyebildiği kalabalık kutlama alanı.",
               "detail": "Gösterişli ama görünür bir alan. Işık kuleleri ve basın lensleri, gelen geçeni istemeden kayıt altına alır."
             },
             {
               "id": "l3",
               "name": "Tuvalet Koridoru",
-              "icon": "🚪",
+              "icon": "pa:hw_001_l3",
               "description": "VIP salonunun arkasında kalan, servis çalışanlarının ve konukların kısa süreli geçiş için kullandığı loş koridor.",
               "detail": "Yarı kapalı aynaları, servis kapısı ve dar dönüşüyle mekânın en sessiz ama en geçici alanıdır."
             }
@@ -1204,21 +1204,21 @@
             {
               "id": "s1",
               "name": "Baş Oyuncu Derek Stone",
-              "icon": "👨‍💼",
+              "icon": "pa:hw_002_s1",
               "description": "Filmin 188 cm boyundaki dev yıldızı. Senaryoda kendi sahnelerinin tasarımcı tarafından sabote edilip kısaltıldığını öğrenince öfke krizine giren, sürekli flaşların önünde olan aktör.",
               "detail": "35 yaşında, ego sorunu olan Hollywood starı."
             },
             {
               "id": "s2",
               "name": "Yardımcı Yönetmen Priya Shah",
-              "icon": "noun-teacher-1908918-avatar.png",
+              "icon": "pa:hw_002_s2",
               "description": "172 cm boyunda, rakip stüdyo ile gizli transfer görüşmeleri yürüten, kostüm odalarında sık sık köstebeklik şüphesiyle tasarımcının radarına giren hırslı sinemacı.",
               "detail": "38 yaşında, kararlı, hesaplı ve hırslı."
             },
             {
               "id": "s3",
               "name": "Set Güvenlik Görevlisi Tom Brady",
-              "icon": "noun-bricklaying-1574372-avatar.png",
+              "icon": "pa:hw_002_s3",
               "description": "183 cm boyunda, gece vardiyasında kostüm depolarının bulunduğu koridorların şifrelerinden sorumlu, fiziksel olarak oldukça güçlü ve sert mizaçlı eski polis.",
               "detail": "50 yaşında, emekli polis, sert görünümlü."
             }
@@ -1227,19 +1227,19 @@
             {
               "id": "w1",
               "name": "Ağır Kamera Tripodu",
-              "icon": "📷",
+              "icon": "pa:hw_002_w1",
               "description": "Profesyonel çekimler için kullanılan, alüminyumdan üretilmiş, kafaya yukarıdan bir açıyla indirildiğinde kemikleri ezen son derece ağır kamera tripodu."
             },
             {
               "id": "w2",
               "name": "Elektrik Kablosu",
-              "icon": "⚡",
+              "icon": "pa:hw_002_w2",
               "description": "Set ışıklarını besleyen, yüksek voltaj taşıyan ve boyna dolandığında ani elektrik şokuyla kalbi durdurup deride yanık izleri bırakan kalın sanayi kablosu."
             },
             {
               "id": "w3",
               "name": "Sahte Silah (Gerçek Mermi)",
-              "icon": "🔫",
+              "icon": "pa:hw_002_w3",
               "description": "Prop/aksesuar olarak kullanılan ancak içine gizlice gerçek mermi yerleştirilerek kurbanın göğsünde patlatılan ve seti kana bulayan sahne tabancası."
             }
           ],
@@ -1247,19 +1247,19 @@
             {
               "id": "l1",
               "name": "Kostüm Odası",
-              "icon": "👗",
+              "icon": "pa:hw_002_l1",
               "description": "Set arkasında yer alan, sadece güney koridorundaki özel yetkili personelin şifresiyle girilebilen, kıyafetlerin, aynaların ve kumaş tozlarının bulunduğu dar depo."
             },
             {
               "id": "l2",
               "name": "Ana Set",
-              "icon": "🎬",
+              "icon": "pa:hw_002_l2",
               "description": "Yüzlerce figüranın ve kameranın bulunduğu, flaşların sürekli patladığı, yüksek tavanlı ve herkesin sürekli gözü önünde olduğu aydınlık çekim meydanı."
             },
             {
               "id": "l3",
               "name": "Prodüksiyon Ofisi",
-              "icon": "📋",
+              "icon": "pa:hw_002_l3",
               "description": "Senaryoların kilit altında tutulduğu, bütçe kararlarının alındığı, güvenlik kameralarının 7/24 kesintisiz izlediği bilgisayarlarla dolu idari yönetim merkezi."
             }
           ],
