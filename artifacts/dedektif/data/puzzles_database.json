@@ -1361,7 +1361,7 @@
             {
               "id": "s1",
               "name": "Amerikalı Rakip Jake Mercer",
-              "icon": "🚗",
+              "icon": "pa:hw_003_s1",
               "description": "Vasseur'ün kendi senaryo fikirlerini çaldığını iddia eden; festivalde dağıtım anlaşmalarını sert pazarlıklarla yöneten Amerikalı yapımcı.",
               "detail": "50 yaşında. Gülümserken bile karşısındakinin zayıf noktasını hesaplıyor; Cannes'a her yıl kendi ekibiyle, kendi güvenlik kurallarıyla geliyor.",
               "parmakIziDeseni": "fp_lateral_pocket"
@@ -1369,7 +1369,7 @@
             {
               "id": "s2",
               "name": "Fransız Eleştirmen Isabelle Renard",
-              "icon": "noun-pazar-musteri-hanim.png",
+              "icon": "pa:hw_003_s2",
               "description": "Bir tek yazısıyla festivalin dengelerini değiştirebilen, Vasseur'ün son filmini kamuoyu önünde acımasızca eleştiren Fransız sinema yazarı.",
               "detail": "42 yaşında. Gördüğü her ayrıntıyı sesli notlara dönüştürüyor; zarafeti, sorularının keskinliğini hiç yumuşatmıyor.",
               "parmakIziDeseni": "fp_accidental"
@@ -1377,7 +1377,7 @@
             {
               "id": "s3",
               "name": "Yat Kaptanı Nikos",
-              "icon": "👨‍✈️",
+              "icon": "pa:hw_003_s3",
               "description": "L'Orage'ın rotasını ve fırtına kaprislerini ezbere bilen; Vasseur'ün aylardır ertelediği ücretler yüzünden sabrını yitirmiş deneyimli kaptan.",
               "detail": "55 yaşında. Konuklar onu sessiz bir hizmetkâr sanıyor; oysa bu yatın hangi kapısının ne zaman ses çıkardığını herkesten iyi biliyor.",
               "parmakIziDeseni": "fp_peacock"
@@ -1387,21 +1387,21 @@
             {
               "id": "w1",
               "name": "Boğulma (Deniz)",
-              "icon": "🌊",
+              "icon": "pa:hw_003_w1",
               "description": "Kurbanı açık denize sürükleyerek ciğerlerine tuzlu su dolmasına yol açan, kaza gibi gösterilebilen ölümcül yöntem.",
               "detail": "Darbe ya da bıçak izi bırakmadan da öldürür; deniz, doğru anda kullanıldığında en eski suç ortağına dönüşür."
             },
             {
               "id": "w2",
               "name": "Zehirli Kokteyl",
-              "icon": "🍹",
+              "icon": "pa:hw_003_w2",
               "description": "Şeffaf bir içeceğin tadını değiştirmeden etki eden, kasları zayıflatıp kazaya açık hâle getiren festival gecesi karışımı.",
               "detail": "Kokteyl kadehinde sıradan görünür; ancak servis zinciri ve şişe kapağındaki izler onu ele verebilir."
             },
             {
               "id": "w3",
               "name": "Bıçak",
-              "icon": "🗡️",
+              "icon": "pa:hw_003_w3",
               "description": "Yat mutfağındaki meyve ve peynir servisinde kullanılan, ince ama derin yara açabilecek keskin bıçak.",
               "detail": "Gala servisinde sıradan bir masa aleti gibi görünür; yanlış elde olduğu anda bütün zarafetini kaybeder."
             }
@@ -1410,21 +1410,21 @@
             {
               "id": "l1",
               "name": "Yat Güvertesi",
-              "icon": "🛥️",
+              "icon": "pa:hw_003_l1",
               "description": "Rüzgârın sertleştiği saatlerde halatların gerildiği, küpeşteleri tuzla kayganlaşan açık üst alan.",
               "detail": "Festivale ait ışıklar buradan kıyıda küçük görünür; birkaç adım sonrası yalnız koyun karanlığıdır."
             },
             {
               "id": "l2",
               "name": "Yat Salonu",
-              "icon": "🛋️",
+              "icon": "pa:hw_003_l2",
               "description": "Halılarla ve ses yalıtımlı perdelerle çevrili, misafirlerin yemekten sonra gizli görüşmeler yaptığı kapalı ana salon.",
               "detail": "Kıyıdaki müziğin duyulmadığı tek yer. İçeride konuşulanlar, çoğu zaman dışarıdakilerden daha tehlikelidir."
             },
             {
               "id": "l3",
               "name": "Kaptan Köşkü",
-              "icon": "🧭",
+              "icon": "pa:hw_003_l3",
               "description": "Dümen, rota ekranı ve telsizlerin bulunduğu; giriş çıkışları manyetik kilitle kayda geçen dar yönetim odası.",
               "detail": "Camları koyu denize bakar. Burada yalnız rota değil, yatın bütün sessiz anlaşmaları da tutulur."
             }
