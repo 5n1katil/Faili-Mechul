@@ -596,6 +596,18 @@ const PUZZLE_ASSET_MAP: Record<string, number> = {
   hw_004_l2: require("../assets/images/puzzle_assets/hw_004_l2.png"),
   hw_004_l3: require("../assets/images/puzzle_assets/hw_004_l3.png"),
   hw_004_l4: require("../assets/images/puzzle_assets/hw_004_l4.png"),
+  hw_005_s1: require("../assets/images/puzzle_assets/hw_005_s1.png"),
+  hw_005_s2: require("../assets/images/puzzle_assets/hw_005_s2.png"),
+  hw_005_s3: require("../assets/images/puzzle_assets/hw_005_s3.png"),
+  hw_005_s4: require("../assets/images/puzzle_assets/hw_005_s4.png"),
+  hw_005_w1: require("../assets/images/puzzle_assets/hw_005_w1.png"),
+  hw_005_w2: require("../assets/images/puzzle_assets/hw_005_w2.png"),
+  hw_005_w3: require("../assets/images/puzzle_assets/hw_005_w3.png"),
+  hw_005_w4: require("../assets/images/puzzle_assets/hw_005_w4.png"),
+  hw_005_l1: require("../assets/images/puzzle_assets/hw_005_l1.png"),
+  hw_005_l2: require("../assets/images/puzzle_assets/hw_005_l2.png"),
+  hw_005_l3: require("../assets/images/puzzle_assets/hw_005_l3.png"),
+  hw_005_l4: require("../assets/images/puzzle_assets/hw_005_l4.png"),
 };
 
 export function isPuzzleAsset(icon: string | undefined): boolean {
