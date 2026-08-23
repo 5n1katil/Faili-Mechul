@@ -1780,28 +1780,28 @@
             {
               "id": "s1",
               "name": "Yeğen Brandon Vale",
-              "icon": "🎲",
+              "icon": "pa:hw_005_s1",
               "description": "Eski vasiyetnamede tek mirasçı olan; yeni düzenlemede bütün haklarını kaybedeceğini bilen, gecenin çoğunu açık davet alanındaki konuklarla geçiren savruk yeğen.",
               "detail": "29 yaşında. Borçlarını saklamak için eski film replikleriyle şaka yapıyor; bileğinde çocukluğundan kalma, klora karşı hassas bir dövme var."
             },
             {
               "id": "s2",
               "name": "Yeni Sevgili Marco Silva",
-              "icon": "🌹",
+              "icon": "pa:hw_005_s2",
               "description": "Altı aylık ilişkiyle vasiyetin en büyük payına yaklaşan, malikanenin kameraları önünde görünmeyi seven ve kendi imajını kaybetmekten korkan yeni sevgili.",
               "detail": "31 yaşında. Açık alandaki antika objeleri oyuncak gibi kurcalıyor; ceketinin sol manşetinde deniz kabuğu biçimli bir kol düğmesi taşıyor."
             },
             {
               "id": "s3",
               "name": "Avukat Dana Price",
-              "icon": "⚖️",
+              "icon": "pa:hw_005_s3",
               "description": "Yeni vasiyet metnini hazırlayan, gecenin hukukî toplantılarını yöneten ve her imza öncesi belge akışını iki kez kontrol eden soğukkanlı avukat.",
               "detail": "55 yaşında. Lacivert mürekkepli kalemlerini renk koduna göre dizer; son taslakları servis ofisindeki güvenli yazıcıdan çıkarır."
             },
             {
               "id": "s4",
               "name": "Eski Asistan Grace Lee",
-              "icon": "👩",
+              "icon": "pa:hw_005_s4",
               "description": "Evelyn Marlowe'un on yıllık asistanı. İkona ait reçeteli saatleri, içki servisini ve kapalı odaların anahtarlarını herkesten iyi bilen sessiz çalışan.",
               "detail": "45 yaşında. Bergamotlu el kremi kullanır; sol işaret parmağındaki ince yanık izi, bar dolabının mandalını her açışında aynı noktada bıraktığı teması ayırt edici kılar."
             }
@@ -1810,28 +1810,28 @@
             {
               "id": "w1",
               "name": "Kurtarma Çengeli",
-              "icon": "🌊",
+              "icon": "pa:hw_005_w1",
               "description": "Su hattı yanında duvara sabitlenen, teleskopik saplı ve çengelli uçlu paslanmaz kurtarma aparatı.",
               "detail": "Kauçuk tutacağı, yalnız açık alandaki klor ve güneş yağı izlerini uzun süre tutar."
             },
             {
               "id": "w2",
               "name": "Eşik Dozu",
-              "icon": "💊",
+              "icon": "pa:hw_005_w2",
               "description": "Reçeteli yatıştırıcının sert içkiyle aynı kadehte buluşması sonucu, solunumu yavaşça baskılayan ölümcül doz eşiği.",
               "detail": "Sıvıya karıştığında rengini değiştirmez; doğru oran, kurbanın gece içki ritmini ve mevcut reçetelerini bilmeyi gerektirir."
             },
             {
               "id": "w3",
               "name": "Mermerden Düşme",
-              "icon": "🏗️",
+              "icon": "pa:hw_005_w3",
               "description": "Yüksek korkuluğun ardından gelişecek ağır bir düşüşle, kurbanı kemik kırıkları ve iç kanamayla öldürmeye dayalı kaba kuvvet yöntemi.",
               "detail": "Böyle bir düşüş, zeminde ağır kırıklar ve üst kattaki taş yüzeyde sürtünme kalıntıları bırakır."
             },
             {
               "id": "w4",
               "name": "Arsenikli Lokma",
-              "icon": "🍽️",
+              "icon": "pa:hw_005_w4",
               "description": "Tek kişilik ikrama karıştırılan ağır metal bazlı zehirle, ölümün yemek sonrası gelişen bir kriz gibi görünmesini amaçlayan yöntem.",
               "detail": "Porsiyon tepsisi, alerjen etiketi ve servis kapağı mutfağın hazırlık zincirinde ayrı ayrı kayıt altına alınır."
             }
@@ -1840,28 +1840,28 @@
             {
               "id": "l1",
               "name": "Mavi Avlu",
-              "icon": "🏊",
+              "icon": "pa:hw_005_l1",
               "description": "Malikanenin bahçesinde, şezlonglar ve aydınlatılmış su hattı boyunca uzanan açık davet alanı.",
               "detail": "Kameralar konuk girişini kaydeder; kurtarma istasyonu ise gölgeli taraftaki duvara sabitlenmiştir."
             },
             {
               "id": "l2",
               "name": "Kütüphane",
-              "icon": "📚",
+              "icon": "pa:hw_005_l2",
               "description": "Kalın perdelerle dış dünyadan ayrılan, Evelyn'in kişisel barı ve deri çalışma koltuğunun bulunduğu loş zemin kat odası.",
               "detail": "İçki dolabının cam kapağı, her açılışta yüzeydeki taze temas filmini koruyan ince bir toz tabakasıyla kaplanır."
             },
             {
               "id": "l3",
               "name": "Seyir Noktası",
-              "icon": "🌅",
+              "icon": "pa:hw_005_l3",
               "description": "Ana yatak odasının önünde, Los Angeles manzarasına açılan yüksek mermer korkuluklu açık teras hattı.",
               "detail": "Korkuluk altındaki yağmur oluğu, dış mekân lekelerini ve temas izlerini gece boyunca biriktirir."
             },
             {
               "id": "l4",
               "name": "Arka Hazne",
-              "icon": "🍳",
+              "icon": "pa:hw_005_l4",
               "description": "Servis ekibinin ikram hazırladığı, porsiyon tepsilerinin numaralandırıldığı büyük arka bölüm.",
               "detail": "Her tabağın alerjen etiketi ve kapak mührü, servis kapısından çıkmadan önce dijital listeye işlenir. Servis ofisinin güvenli yazıcısı, tepsi kontrol masasıyla aynı kapalı bölümde bulunur."
             }
