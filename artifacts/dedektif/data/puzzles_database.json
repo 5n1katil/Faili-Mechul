@@ -1551,7 +1551,7 @@
             {
               "id": "s1",
               "name": "Ajan Rachel Kim",
-              "icon": "🕵️",
+              "icon": "pa:hw_004_s1",
               "description": "Ward'ın temsilcisi. Senaristin sabah yeni bir ajansla imza atacağını bilen, toplantılara her zaman geniş evrak çantasıyla gelen etkili bir aracı.",
               "detail": "40 yaşında. Bergamot kokulu el kremi kullanıyor; sağ başparmağının yanında eski bir kâğıt kesiğinden kalma ince çizgi izi var. Baskı altında sesini hiç yükseltmiyor.",
               "parmakIziDeseni": "fp_loop_right"
@@ -1559,7 +1559,7 @@
             {
               "id": "s2",
               "name": "Yönetmen Brett Walsh",
-              "icon": "⚖️",
+              "icon": "pa:hw_004_s2",
               "description": "Ward'ın senaryosunu filme çekmek isteyen fakat son toplantıda reddedilen deneyimli yönetmen. Delege konuşmalarından çok çatıdaki bağlantı buluşmalarında görülüyor.",
               "detail": "48 yaşında. Her görüşmeye kendi çekim defteriyle gelir; ret cevabını kişisel bir başarısızlık gibi taşıdığı kolayca fark edilir.",
               "parmakIziDeseni": "fp_whorl"
@@ -1567,7 +1567,7 @@
             {
               "id": "s3",
               "name": "Stüdyo Hukuk Direktörü Amy Cross",
-              "icon": "👩‍💼",
+              "icon": "pa:hw_004_s3",
               "description": "Ward'ın telif iddialarını stüdyo adına yöneten hukuk direktörü. Tartışmalı dosyaları imza altına almadan binadan ayrılmayan, ölçülü ve keskin bir yönetici.",
               "detail": "52 yaşında. Parmaklarında mürekkep lekesi bırakmayan ince nitril eldivenler taşır; metinlerdeki en küçük tarih farkını bile yakalar.",
               "parmakIziDeseni": "fp_arch"
@@ -1575,7 +1575,7 @@
             {
               "id": "s4",
               "name": "Rakip Senarist Carlos Vega",
-              "icon": "🎨",
+              "icon": "pa:hw_004_s4",
               "description": "Ward'la aynı hikâye fikri üzerinde çalışan genç senarist. Özgün kopyanın kaybolması onu ilk bakışta suçlu gibi gösteriyor; ancak gecenin her anında bir yere yetişmeye çalıştığı biliniyor.",
               "detail": "33 yaşında. Her taslağına mavi kurşun kalemle not düşer; paniklediğinde kapalı alanlarda nefesi daralır, buna rağmen hiçbir ayrıntıyı unutmaz.",
               "parmakIziDeseni": "fp_loop_left"
@@ -1585,28 +1585,28 @@
             {
               "id": "w1",
               "name": "Ağır Kristal Kül Tablası",
-              "icon": "🪨",
+              "icon": "pa:hw_004_w1",
               "description": "Toplantı masalarında kullanılan, kalın kenarlı ve elde taşındığında beklenenden ağır gelen çok parçalı kristal dekor objesi.",
               "detail": "Şeffaf yüzeyinde ışığı prizma gibi kırar; köşelerindeki keskin fasetler darbede cam kırığı ve saydam toz bırakabilir."
             },
             {
               "id": "w2",
               "name": "Reçeteli Sedatif Ampul",
-              "icon": "💊",
+              "icon": "pa:hw_004_w2",
               "description": "Tıbbi kilitli dolapta tutulan, sıvıya karıştığında kısa süreli bilinç baskılanması yaratabilen tek kullanımlık sedatif ampul.",
               "detail": "Ampulün seri numarası ve taşıma zarfı, hangi departmandan çıktığını kayıt altına alan soğuk zincir etiketiyle izlenebilir."
             },
             {
               "id": "w3",
               "name": "Gösterim Güç Hattı",
-              "icon": "⚡",
+              "icon": "pa:hw_004_w3",
               "description": "Geçici gösterim düzeneklerini besleyen, rulo hâlinde taşınan ağır enerji hattı.",
               "detail": "Kırmızı kılıfı, döner kilidi ve X-19 zimmet etiketiyle teknik ekip tarafından kolay ayırt edilir."
             },
             {
               "id": "w4",
               "name": "Çelik Çekme Halatı",
-              "icon": "🪢",
+              "icon": "pa:hw_004_w4",
               "description": "Eski kabinlerin tavan panelinde bulunan, acil fren sistemini elle devreye almak için kullanılan ince ama dayanıklı çekme halatı.",
               "detail": "Yerinden çıkarılması tavan panelinde metal halka ve lif kopması bırakır; fiziksel mücadelede boğma aracı olarak da kullanılabilir."
             }
@@ -1615,28 +1615,28 @@
             {
               "id": "l1",
               "name": "Toplantı Odası",
-              "icon": "📋",
+              "icon": "pa:hw_004_l1",
               "description": "Delegelerin metinleri oyladığı; kristal servis takımlarının, dosyaların ve uzun ahşap masaların bulunduğu aydınlık üst kat odası.",
               "detail": "Çıkıştaki dijital pano, oda boşaldıktan sonra bile envanter fotoğrafını otomatik arşivler."
             },
             {
               "id": "l2",
               "name": "Otopark",
-              "icon": "🚗",
+              "icon": "pa:hw_004_l2",
               "description": "Binanın alt katında, kısmi kör kameralar ve araç sıraları arasında uzanan karanlık beton alan.",
               "detail": "Egzoz ve yağ kokusu havada kalır; şoför kapılarındaki dokunuşlar gece nemiyle daha uzun süre korunabilir."
             },
             {
               "id": "l3",
               "name": "Çatı Terası",
-              "icon": "🌆",
+              "icon": "pa:hw_004_l3",
               "description": "Delege kokteylinin sürdüğü, Los Angeles manzarasına bakan rüzgârlı açık alan.",
               "detail": "Geçici ışık düzenekleri ve jeneratör kabloları gece boyunca teknik ekibin zimmetindedir."
             },
             {
               "id": "l4",
               "name": "Asansör",
-              "icon": "🛗",
+              "icon": "pa:hw_004_l4",
               "description": "Katlar arasında çalışan, aynalı panelleri ve acil interkom sistemi olan eski kabin.",
               "detail": "Arıza moduna geçtiğinde kart okuyucu tek kişiyi son okutma anıyla birlikte kayıt altına alır; kapılar dışarıdan açılmaz."
             }
