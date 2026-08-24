@@ -2889,28 +2889,28 @@
             {
               "id": "s1",
               "name": "Kronolojist Dr. Noa Fischer",
-              "icon": "🧭",
+              "icon": "pa:sf_005_s1",
               "description": "Zaman fiziğinin güvenlik sınırlarını yazan, olaylara müdahale etmese de her olasılığı kaydettiğini söyleyen kronolojist.",
               "detail": "55 yaşında. Üç kadranlı mekanik kronometresini hep sol cebinde taşır; karar notlarını ters yönde başlayan kısa cümlelerle yazar ve kontrol ekranlarını üç kez kontrol eder."
             },
             {
               "id": "s2",
               "name": "Mühendis Yuki Tanaka",
-              "icon": "⚡",
+              "icon": "pa:sf_005_s2",
               "description": "Tünelin donanımını ve faz dengeleyicilerini kuran, cihazların insanlardan daha güvenilir olduğuna inanan mühendis.",
               "detail": "38 yaşında. Ellerindeki titremeyi lehim işiyle saklar; geçmiş yansıma projektörünün sol panelini her bakımda kendi kırmızı izolasyon bandıyla işaretler."
             },
             {
               "id": "s3",
               "name": "Güvenlik Şefi Marcus Webb",
-              "icon": "🛡️",
+              "icon": "pa:sf_005_s3",
               "description": "Projenin tehlikesi yüzünden hükümet adına kapatılmasını isteyen, erişim kapılarını ve acil hücreleri denetleyen eski asker.",
               "detail": "50 yaşında. Kapı kilitlerinde askeri bypass anahtarı kullanır; süresiz karantina emri yazarken sesini kaydetmeyi asla sevmez."
             },
             {
               "id": "s4",
               "name": "K-Prime",
-              "icon": "🪞",
+              "icon": "pa:sf_005_s4",
               "description": "Maktulün ileri zaman çizgisinden geldiği iddia edilen, patent dosyalarını kendi çıkarı için izleyen gelecekteki yansıma.",
               "detail": "Yaşını söylemez. İzole hücrelerin kapılarında kullanılan ışık kırıcı jel izlerini tanır; yüz yüze konuşmak yerine yansımaların arasından mesaj bırakır."
             }
@@ -2919,28 +2919,28 @@
             {
               "id": "w1",
               "name": "Zaman Döngüsü Tuzağı",
-              "icon": "⏱️",
+              "icon": "pa:sf_005_w1",
               "description": "Hedefi kapalı bir zaman çevrimine sıkıştırarak hücresel ritmini parçalayan parametre sabotajı.",
               "detail": "Kontrol ekranlarında aynı saniyenin üç kez yinelenmesine ve üçlü zaman damgasına yol açar."
             },
             {
               "id": "w2",
               "name": "Tachyon Kesiti",
-              "icon": "💠",
+              "icon": "pa:sf_005_w2",
               "description": "Kısa menzilde uzay-zaman dokusunu yararak hedefte ince enerji kesileri oluşturan yoğun parçacık darbesi.",
               "detail": "Koruyucu camda mor doğrusal saçaklar ve havada ozon kokusu bırakır."
             },
             {
               "id": "w3",
               "name": "Paradoks Bombası",
-              "icon": "💥",
+              "icon": "pa:sf_005_w3",
               "description": "Nedensellik katmanlarını anlık olarak çökerten, fiziksel şok izini yalıtılmış alanda bırakan deneysel patlayıcı.",
               "detail": "İzole duvarlarda ters yönlü çatlak ağı ve siyah zaman tozu oluşturur."
             },
             {
               "id": "w4",
               "name": "Gelecekten Gelen Zehir",
-              "icon": "☠️",
+              "icon": "pa:sf_005_w4",
               "description": "Bugünün moleküler kayıtlarında bulunmayan, sıvıya karıştığında vücudu içeriden durduran ileri zaman farmakolojik ajanı.",
               "detail": "Moleküler imzası tanımsızdır; doğru kullanım, kurbanın geçiş ritmini ve yansıma programını bilmeyi gerektirir."
             }
@@ -2949,28 +2949,28 @@
             {
               "id": "l1",
               "name": "Zaman Tüneli",
-              "icon": "🌀",
+              "icon": "pa:sf_005_l1",
               "description": "Manyetik halkaların çevrelediği, geçiş koordinatlarının yüklendiği ana zaman geçidi.",
               "detail": "Enerji alanının altındaki hava kanalı, dışarıdan getirilen sıvı için stabil bir taşıma yolu sağlamaz."
             },
             {
               "id": "l2",
               "name": "Kontrol Odası",
-              "icon": "🖥️",
+              "icon": "pa:sf_005_l2",
               "description": "Geçişin rota, faz ve geri dönüş parametrelerinin izlendiği yoğun ekranlı merkez.",
               "detail": "Üçlü zaman damgaları ve mekanik kronometre ritimleri bu odadaki karar masasına kaydedilir."
             },
             {
               "id": "l3",
               "name": "Geçmiş Yansıma Odası",
-              "icon": "🎭",
+              "icon": "pa:sf_005_l3",
               "description": "Önceki zaman kesitlerini aynalar ve projektörlerle yeniden oynatan karanlık simülasyon odası.",
               "detail": "Sol projektör paneli, bakım sonrası kırmızı izolasyon bandıyla işaretlenir; odanın cam zemini sıvı damlalarını saklar."
             },
             {
               "id": "l4",
               "name": "İzole Hücre",
-              "icon": "🔒",
+              "icon": "pa:sf_005_l4",
               "description": "Paradoks travması yaşayan personelin tutulduğu, yalıtımlı duvarlı ve kapalı karantina bölümü.",
               "detail": "Işık kırıcı jel, hücre kapılarının eşiklerinde ince parlak bir film bırakır."
             }
