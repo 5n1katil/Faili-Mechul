@@ -5142,21 +5142,21 @@
             {
               "id": "s1",
               "name": "Deniz Haritacısı Haldun",
-              "icon": "🧭",
+              "icon": "pa:pp_003_s1",
               "description": "Seferin rotalarını ve gizli kıyı ölçümlerini hazırlayan haritacı.",
               "detail": "Dalgaların yönünü ezbere bilir; notlarını deniz feneri kodlarıyla işaretler."
             },
             {
               "id": "s2",
               "name": "Fener Görevlisi Duru",
-              "icon": "🕯️",
+              "icon": "pa:pp_003_s2",
               "description": "Yalnız yaşayan, geceleri fenerin ateşini ve nöbet defterini tutan görevli.",
               "detail": "Lambanın yağını kendi hazırlar; her vardiyada saati iki kez kurar."
             },
             {
               "id": "s3",
               "name": "Telsiz Teknikeri Rauf",
-              "icon": "📡",
+              "icon": "pa:pp_003_s3",
               "description": "Aküleri, bobinleri ve mors anahtarını onaran teknik görevli.",
               "detail": "Arızaları renkli kablo bağlarıyla kodlar; her onarımdan sonra kısa bir test yayını yapar."
             }
@@ -5165,21 +5165,21 @@
             {
               "id": "w1",
               "name": "Fener Halatı Kancası",
-              "icon": "🪝",
+              "icon": "pa:pp_003_w1",
               "description": "Ağır cam hazneleri kaldırmak için kullanılan, bilemesi bakım defterine işlenen çelik uçlu kanca.",
               "detail": ""
             },
             {
               "id": "w2",
               "name": "Yüksek Gerilim Bobini",
-              "icon": "🔋",
+              "icon": "pa:pp_003_w2",
               "description": "Verici odasındaki ses aralığını düzenleyen açık metal bobin.",
               "detail": ""
             },
             {
               "id": "w3",
               "name": "Klorlu Sis Kartuşu",
-              "icon": "🌫️",
+              "icon": "pa:pp_003_w3",
               "description": "Fener camını temizlemekte kullanılan, kapalı yerde boğucu hâle gelen ve klorlu tuz tortusu bırakan kartuş.",
               "detail": ""
             }
@@ -5188,21 +5188,21 @@
             {
               "id": "l1",
               "name": "Fenerci Evi",
-              "icon": "🏠",
+              "icon": "pa:pp_003_l1",
               "description": "Kuleye bitişik, saat ve vardiya defterinin tutulduğu küçük taş ev; ocak filtresi bulunur.",
               "detail": ""
             },
             {
               "id": "l2",
               "name": "Akü Odası",
-              "icon": "🔌",
+              "icon": "pa:pp_003_l2",
               "description": "Akülerin ve devre kesicilerin sıralandığı, merdiven yanında askı bulunan alçak tavanlı oda.",
               "detail": ""
             },
             {
               "id": "l3",
               "name": "Yayın Kulesi",
-              "icon": "📻",
+              "icon": "pa:pp_003_l3",
               "description": "Kısa dalga cihazı ve anten makaralarının bulunduğu dar metal galeri.",
               "detail": ""
             }
