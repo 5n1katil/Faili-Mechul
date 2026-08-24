@@ -3500,21 +3500,21 @@
             {
               "id": "s1",
               "name": "Aşçı Yardımcısı Nevin Yalçın",
-              "icon": "🥣",
+              "icon": "pa:rc_002_s1",
               "description": "Çiftliğin kışlık mutfağında çalışan, gece vardiyasında hamuru ve ocağı tek başına yöneten genç yardımcı.",
               "detail": "Çatlak kenarlı bakır yüzüğünü hiç çıkarmaz; fırın saatini kendi eliyle kurar. Çam reçinesi buharına karşı kayıtlı solunum hassasiyeti olduğu için ince bir bez maske taşır."
             },
             {
               "id": "s2",
               "name": "Kâhya Halit Sarp",
-              "icon": "🗝️",
+              "icon": "pa:rc_002_s2",
               "description": "Erkin ailesinin erzak ve dış kapı düzeninden sorumlu, eski ambar memuru; sakinliğiyle güven veren kıdemli kâhya.",
               "detail": "Çuvalları her zaman iki kez sayar; dış sürgünün anahtar halkasını kemerinde taşır ve gece lambalarını kendisi kontrol eder."
             },
             {
               "id": "s3",
               "name": "Gezici Veteriner Selim Erten",
-              "icon": "🩺",
+              "icon": "pa:rc_002_s3",
               "description": "Hasta buzağı için çiftliğe çağrılmış, kar fırtınası yüzünden geceyi geçirmek zorunda kalan gezici veteriner.",
               "detail": "Yukarıdaki yataklığı kontrol etmek için kuru samanla çalışır; hayvan koşumlarını onarırken koyu örgülü yular lifleri kullanır."
             }
@@ -3523,21 +3523,21 @@
             {
               "id": "w1",
               "name": "Dökme Demir Maşa",
-              "icon": "🔥",
+              "icon": "pa:rc_002_w1",
               "description": "Soba yanında duran, sapına beyaz yün sarılmış eski dökme demir maşa.",
               "detail": "Sıcaklıkla kararır; sapındaki gevşek sarım zaman zaman kül ve un tutar."
             },
             {
               "id": "w2",
               "name": "Sakinleştirici Tentür",
-              "icon": "🧪",
+              "icon": "pa:rc_002_w2",
               "description": "Kış gecelerinde sütle karıştırılan, yoğun uçucu reçine bileşiği içeren koyu renkli yatıştırıcı tentür.",
               "detail": "Kapağı açıldığında keskin buhar bırakır; duyarlı kişilerde ani öksürük ve nefes darlığını tetikleyebilir."
             },
             {
               "id": "w3",
               "name": "Örme Yular Halatı",
-              "icon": "🪢",
+              "icon": "pa:rc_002_w3",
               "description": "Ahırda kullanılan, koyu hayvan derisi lifleri ve kuru saman parçacıkları bırakabilen kalın örgülü yular.",
               "detail": "Sürtünme olduğunda kireçli taşta kıvrımlı lif ve düğüm aşınması izleri bırakır."
             }
@@ -3546,21 +3546,21 @@
             {
               "id": "l1",
               "name": "Ev Mutfağı",
-              "icon": "🍽️",
+              "icon": "pa:rc_002_l1",
               "description": "Fırın aynası, unlu saat ve soba yanında çalışan sıcak mutfak bölümü.",
               "detail": "Eşiğinde kül, un ve fırın saati diş izleri kolayca kalır."
             },
             {
               "id": "l2",
               "name": "Ahır Geçidi",
-              "icon": "🕯️",
+              "icon": "pa:rc_002_l2",
               "description": "Evi ahıra bağlayan taş geçit; yağ lambası, iki yem çuvalı ve dış sürgü burada bulunur.",
               "detail": "Kireçli sürgü oluğu, nal tozu ve nemli taş yüzeyleri küçük lifleri bile koruyabilir."
             },
             {
               "id": "l3",
               "name": "Yukarı Samanlık",
-              "icon": "🌿",
+              "icon": "pa:rc_002_l3",
               "description": "Balyaların üstünde, hasta buzağının yataklığının ayrıldığı kapalı saman katı.",
               "detail": "Kuru saman ve hayvan koşumlarından kalan koyu örgülü lifler ahşap basamaklarda kolayca takılır."
             }
