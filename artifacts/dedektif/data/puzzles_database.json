@@ -2038,21 +2038,21 @@
             {
               "id": "s1",
               "name": "Komutan Lyra Chen",
-              "icon": "👩‍✈️",
+              "icon": "pa:sf_001_s1",
               "description": "İstasyonun uçuş ve yaşam destek disiplininden sorumlu, formülün askerî kullanımına karşı çıkan sert komutan.",
               "detail": "42 yaşında. Eski test pilotu; acil oksijen by-pass tatbikatlarını bizzat yürütür, ama vardiya bitiminde uyku kapsülüne kapanmayı alışkanlık haline getirmiş."
             },
             {
               "id": "s2",
               "name": "Yapay Zeka ARES-3",
-              "icon": "🤖",
+              "icon": "pa:sf_001_s2",
               "description": "İstasyon güvenliğini yöneten, yarı insan yarı makine arayüzlü siber güvenlik sorumlusu.",
               "detail": "Duygu bastırma modülleri kullanır. Karantina alarmında ilk komutu kişilere değil, tıbbi izolasyon bölmesine yönlendiren değişmez bir protokolü vardır."
             },
             {
               "id": "s3",
               "name": "Tıp Mühendisi Osman Demir",
-              "icon": "🔧",
+              "icon": "pa:sf_001_s3",
               "description": "Sağlık birimi sistemlerini kalibre eden, son dönemde Dünya'daki tröstlerle şifreli bağlantılar kurduğu iddia edilen tıp mühendisi.",
               "detail": "35 yaşında. Borç dosyaları yüzünden gergin; laboratuvar panellerini herkesten hızlı okur, ancak tıbbi sarf malzemelerini kayıt dışı çıkarma yetkisi yoktur."
             }
@@ -2061,21 +2061,21 @@
             {
               "id": "w1",
               "name": "Oksijen Kesimi",
-              "icon": "💨",
+              "icon": "pa:sf_001_w1",
               "description": "Yaşam destek akışını kısa süreliğine keserek kurbanı havasız bırakmaya dayanan uzaktan sabotaj yöntemi.",
               "detail": "By-pass hattı yalnız acil uçuş protokolünde kullanılabilir; filtrelerde kompozit oksijen tozu bırakır."
             },
             {
               "id": "w2",
               "name": "Nörotoksik Enjeksiyon",
-              "icon": "💉",
+              "icon": "pa:sf_001_w2",
               "description": "Mikro iğneyle verilen, sinir iletimini saniyeler içinde kilitleyen sentetik nörotoksin.",
               "detail": "Taşıyıcı sıvı, steril bölme filtrelerinde görünür kristal kalıntısı bırakır; doğru doz tıbbi çizelge bilgisi ister."
             },
             {
               "id": "w3",
               "name": "Yerçekimi Kapanı",
-              "icon": "🌀",
+              "icon": "pa:sf_001_w3",
               "description": "Yerçekimi modülünü ani tersleme ile bozarak çarpma travması yaratmayı amaçlayan sistemsel tuzak.",
               "detail": "Kabin duvarlarında eşmerkezli çarpma izleri ve kıyafette manyetik sürtünme bırakır."
             }
@@ -2084,21 +2084,21 @@
             {
               "id": "l1",
               "name": "Laboratuvar A",
-              "icon": "🔬",
+              "icon": "pa:sf_001_l1",
               "description": "Biyo-formülün işlendiği, retina kilitli ve DNA örnekleriyle dolu ana araştırma odası.",
               "detail": "Merkez paneli, bilim ekibi dışında yalnız acil teknik bakım sırasında açılır."
             },
             {
               "id": "l2",
               "name": "Kontrol Merkezi",
-              "icon": "🖥️",
+              "icon": "pa:sf_001_l2",
               "description": "İstasyon kameralarının, hava döngüsünün ve rota sistemlerinin izlendiği ekranlarla çevrili komuta alanı.",
               "detail": "Yaşam destek tatbikatlarının bütün izleri burada eşzamanlı kayda geçer."
             },
             {
               "id": "l3",
               "name": "Tıbbi Modül",
-              "icon": "🏥",
+              "icon": "pa:sf_001_l3",
               "description": "İlaç kasaları ve izolasyon kabinleri bulunan, biyometrik kapılı sağlık bölmesi.",
               "detail": "Karantina protokolünde güvenlik arayüzü bu modüle kilitlenir; steril filtreler giren her sıvı için iz tutar."
             }
