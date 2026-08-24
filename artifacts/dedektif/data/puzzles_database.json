@@ -4881,21 +4881,21 @@
             {
               "id": "s1",
               "name": "Kamera Tamircisi Belgin",
-              "icon": "📷",
+              "icon": "pa:pp_002_s1",
               "description": "Eski körüklü makineleri söküp yeniden çalıştıran titiz tamirci.",
               "detail": "Vidalara numara verir, parmaklarının ucunda gümüş nitrat lekeleri taşır."
             },
             {
               "id": "s2",
               "name": "Galeri Bekçisi Orhan",
-              "icon": "🛡️",
+              "icon": "pa:pp_002_s2",
               "description": "Bina kapandığında anahtarları devralan gece bekçisi.",
               "detail": "Cam çerçeveleri kendi onarır; kırık parçaları küçük kutularda saklar ve gece anahtarlarını devralır."
             },
             {
               "id": "s3",
               "name": "Arşiv Fotoğrafçısı Leyla",
-              "icon": "🎞️",
+              "icon": "pa:pp_002_s3",
               "description": "Eski baskıları kataloglayan, kaybolan kareleri yeniden basan arşivci.",
               "detail": "Her çekimin saatini ve banyosunu ayrı kurşun kalemle not eder; negatif dolaplarının düzenini ezbere bilir."
             }
@@ -4904,21 +4904,21 @@
             {
               "id": "w1",
               "name": "Çerçeve Kesici",
-              "icon": "🔪",
+              "icon": "pa:pp_002_w1",
               "description": "Sert karton ve cam kenarlarını kesmekte kullanılan ince uçlu bıçak.",
               "detail": ""
             },
             {
               "id": "w2",
               "name": "Siyanürlü Sabitleyici Banyo",
-              "icon": "🧫",
+              "icon": "pa:pp_002_w2",
               "description": "Eski baskı banyolarında kullanılan, yanlış oranlandığında ölümcül sıvı; gümüş tuzu bırakır.",
               "detail": ""
             },
             {
               "id": "w3",
               "name": "Açıkta Kalan Işık Kablosu",
-              "icon": "⚡",
+              "icon": "pa:pp_002_w3",
               "description": "Çatı projektörlerine enerji veren yalıtımı aşınmış kablo.",
               "detail": ""
             }
@@ -4927,21 +4927,21 @@
             {
               "id": "l1",
               "name": "Karanlık Oda",
-              "icon": "🚪",
+              "icon": "pa:pp_002_l1",
               "description": "Kırmızı lambalı, muslukları kimyasal tepsilere açılan ve ışık geçirmeyen yıkama hattı bulunan çalışma odası.",
               "detail": ""
             },
             {
               "id": "l2",
               "name": "Çatı Terası",
-              "icon": "🏙️",
+              "icon": "pa:pp_002_l2",
               "description": "Dönemin büyük projektörlerinin yer aldığı rüzgârlı çatı.",
               "detail": ""
             },
             {
               "id": "l3",
               "name": "Arşiv Koridoru",
-              "icon": "🗂️",
+              "icon": "pa:pp_002_l3",
               "description": "Negatif dolaplarının sıralandığı, dar ve penceresiz geçit.",
               "detail": ""
             }
