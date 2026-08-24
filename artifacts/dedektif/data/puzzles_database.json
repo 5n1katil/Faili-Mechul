@@ -3150,21 +3150,21 @@
             {
               "id": "s1",
               "name": "Leyla Aras",
-              "icon": "📰",
+              "icon": "pa:rc_001_s1",
               "description": "Kıyı Gazetesi'nin cinayet sütununu yazan, editörle açıkça tartışmış hırslı muhabir.",
               "detail": "Kayıp mektupları ilk kez yayımlamak isteyen kişidir; sahne arkasında değil, arşiv masasında kahve lekeli notlarla çalışır."
             },
             {
               "id": "s2",
               "name": "Kurye Cem Akın",
-              "icon": "📬",
+              "icon": "pa:rc_001_s2",
               "description": "Gazeteye şifreli zarfı teslim eden, sakin ve yardımsever görünümüyle herkesin güvenini kazanan genç kurye.",
               "detail": "Dağıtım çantasını hep sağ omzunda taşır; boş teslim fişlerini asla çöpe atmaz, pres odasına girdiğinde sol eldivenini çıkarır."
             },
             {
               "id": "s3",
               "name": "Dizgici Orhan Bilir",
-              "icon": "🖋️",
+              "icon": "pa:rc_001_s3",
               "description": "Kurşun harfleri ve gecenin son baskısını yöneten, editörün manşet değişikliklerinden yorulmuş kıdemli dizgici.",
               "detail": "Baskı kayışının gerginliğini kendi elleriyle ayarlar; sağ başparmağında yıllardır taşıdığı yarım ay biçimli mürekkep lekesi vardır."
             }
@@ -3173,21 +3173,21 @@
             {
               "id": "w1",
               "name": "Kurşun Harf Kalıbı",
-              "icon": "📋",
+              "icon": "pa:rc_001_w1",
               "description": "Eski matbaa presinden sökülen, ağır ve köşeli kurşun karakter bloğu.",
               "detail": "Temasta koyu mürekkep ve ezilme izi bırakır."
             },
             {
               "id": "w2",
               "name": "Mikro Mühür Düzeneği",
-              "icon": "✉️",
+              "icon": "pa:rc_001_w2",
               "description": "Mumla kapatılmış zarfın içinden açılırken deri altına küçük bir metal uç bırakan düzenek.",
               "detail": "Kırmızı mum kalıntısı ve çok küçük dairesel bir delik bırakır."
             },
             {
               "id": "w3",
               "name": "Baskı Presi Kayışı",
-              "icon": "🪢",
+              "icon": "pa:rc_001_w3",
               "description": "Ağır baskı silindirini çeviren, sert lifli deri kayış.",
               "detail": "Lif kopması ve bilekte sürtünme bırakır."
             }
@@ -3196,21 +3196,21 @@
             {
               "id": "l1",
               "name": "Gazete Arşivi",
-              "icon": "🗄️",
+              "icon": "pa:rc_001_l1",
               "description": "Eski sayılarla dolu, editörün kapalı dosyaları sakladığı tozlu alt arşiv.",
               "detail": "Raflarda basınçlı pres yağı ya da taze mum kullanılmaz."
             },
             {
               "id": "l2",
               "name": "Baskı Atölyesi",
-              "icon": "🏭",
+              "icon": "pa:rc_001_l2",
               "description": "Kurşun harflerin dizildiği ve gece sayısının basıldığı gürültülü bodrum atölyesi.",
               "detail": "Son baskıdan sonra zemin mum damlaları ve kurşun harf tozuyla kaplanır."
             },
             {
               "id": "l3",
               "name": "Posta Deposu",
-              "icon": "📦",
+              "icon": "pa:rc_001_l3",
               "description": "Teslim torbalarının tartıldığı, mühürlü zarfların ayrıldığı arka depo.",
               "detail": "Dış teslim fişleri burada numaralanır; her girişte tahta zeminde ıslak taban izi kalır."
             }
