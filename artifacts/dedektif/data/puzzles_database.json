@@ -4233,28 +4233,28 @@
             {
               "id": "s1",
               "name": "Meteorolog Nermin Akça",
-              "icon": "🌬️",
+              "icon": "pa:rc_005_s1",
               "description": "Seferin rüzgâr ölçümlerini ve kar yoğunluğu çizelgelerini tutan deneyimli meteorolog.",
               "detail": "Mavi bantlı alüminyum kar sondasını Rüzgâr Direği dışında kullanmaz; ölçüm defterine yeşil kurşunla yön oku çizer, kırmızı saplı dağ aletlerini çantasına koymaz."
             },
             {
               "id": "s2",
               "name": "Malzeme Sorumlusu Bora Sarp",
-              "icon": "🧰",
+              "icon": "pa:rc_005_s2",
               "description": "Yakıt, sığınak malzemesi ve telsiz yedeklerinin zimmetini tutan sefer görevlisi.",
               "detail": "İki pirinç perçinli ocak baca manşonunu bez torbasında taşır; yakıt mühürlerini tarih sırasıyla saklar, sayım bitmeden taş sığınağa uğramaz."
             },
             {
               "id": "s3",
               "name": "Sefer Fotoğrafçısı Elif Deren",
-              "icon": "📷",
+              "icon": "pa:rc_005_s3",
               "description": "Beyaz fırtınada rota fotoğraflarını ve buz çizgilerini kayda alan bağımsız fotoğrafçı.",
               "detail": "Kehribar film kutularını siyah kamera çantasında tutar; üç ayaklı tripodunu Buzul Eşiği’nde kurar, kırmızı saplı buz kazması yerine magnezyum işaret fişeği taşır."
             },
             {
               "id": "s4",
               "name": "Dağ Rehberi Cem Onat",
-              "icon": "🧭",
+              "icon": "pa:rc_005_s4",
               "description": "Geçidin güvenli rotasını belirleyen, sığınak anahtarına ve geçit işaretlerine erişimi olan kıdemli rehber.",
               "detail": "Kırmızı saplı buz kazmasını kemerine bağlar; Taş Sığınak’ın iç kapısının anahtarını siyah kordonla boynunda taşır, fırtınada ekibi kısa yol diye kuzey yarığına yönlendirmeyi savunur."
             }
@@ -4263,28 +4263,28 @@
             {
               "id": "w1",
               "name": "Mavi Bantlı Kar Sondası",
-              "icon": "📏",
+              "icon": "pa:rc_005_w1",
               "description": "Rüzgârla taşınan karın sertliğini ölçmek için kullanılan, ince alüminyum uçlu arazi sondası.",
               "detail": "Uç kısmında mavi izolasyon bandı ve dereceli kar işaretleri bulunur."
             },
             {
               "id": "w2",
               "name": "Pirinç Perçinli Ocak Manşonu",
-              "icon": "🔥",
+              "icon": "pa:rc_005_w2",
               "description": "Sefer ocağının baca bağlantısını sabitlemek için kullanılan, iki pirinç perçinli sıcaklık manşonu.",
               "detail": "Is ve yakıt mühürü izi tutar; bez torbada taşınır."
             },
             {
               "id": "w3",
               "name": "Kırmızı Saplı Buz Kazması",
-              "icon": "⛏️",
+              "icon": "pa:rc_005_w3",
               "description": "Dik buz yüzeylerinde denge almak ve sabitlenmek için kullanılan, dar kama uçlu dağ aleti.",
               "detail": "Sapındaki kırmızı emaye, taş yüzeyde ve kumaşta ince döküntü bırakabilir."
             },
             {
               "id": "w4",
               "name": "Magnezyum İşaret Fişeği",
-              "icon": "🚩",
+              "icon": "pa:rc_005_w4",
               "description": "Düşük görüşte rota noktasını işaretlemek için kullanılan parlak magnezyum işaret düzeneği.",
               "detail": "Siyah bir taşıma kılıfı ve kısa süreli beyaz yanık tortusu bırakır."
             }
@@ -4293,28 +4293,28 @@
             {
               "id": "l1",
               "name": "Rüzgâr Direği",
-              "icon": "🌫️",
+              "icon": "pa:rc_005_l1",
               "description": "Geçidin açık yamacında, rüzgâr ölçer ve kar derinliği çizelgesinin sabitlendiği metal direk.",
               "detail": "Mavi bantlı kar sondasının ölçüm ucu ve yön okları burada görülür."
             },
             {
               "id": "l2",
               "name": "Telsiz Kulübesi",
-              "icon": "📻",
+              "icon": "pa:rc_005_l2",
               "description": "Yedek batarya, yakıt fişi ve sefer saatinin tutulduğu küçük ahşap iletişim kulübesi.",
               "detail": "Yakıt fişleri ile bez torbalı bakım malzemeleri burada sayılır."
             },
             {
               "id": "l3",
               "name": "Taş Sığınak",
-              "icon": "🪨",
+              "icon": "pa:rc_005_l3",
               "description": "Geçidin alt kıvrımında, iç kapısı siyah kordonlu tek anahtarla açılan dar taş barınak.",
               "detail": "Kapalı bölümünde rüzgâr kesilir; kırmızı emaye döküntüsü taş zeminde kolay fark edilir."
             },
             {
               "id": "l4",
               "name": "Buzul Eşiği",
-              "icon": "🧊",
+              "icon": "pa:rc_005_l4",
               "description": "Fotoğraf için geniş görüş veren, buz yarığının üstündeki açık ve tehlikeli geçiş hattı.",
               "detail": "Tripod ayakları ve işaret fişeği tortusu kar kabuğunda belirgin iz bırakır."
             }
