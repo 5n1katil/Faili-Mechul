@@ -698,6 +698,18 @@ const PUZZLE_ASSET_MAP: Record<string, number> = {
   rc_004_l2: require("../assets/images/puzzle_assets/rc_004_l2.png"),
   rc_004_l3: require("../assets/images/puzzle_assets/rc_004_l3.png"),
   rc_004_l4: require("../assets/images/puzzle_assets/rc_004_l4.png"),
+  rc_005_s1: require("../assets/images/puzzle_assets/rc_005_s1.png"),
+  rc_005_s2: require("../assets/images/puzzle_assets/rc_005_s2.png"),
+  rc_005_s3: require("../assets/images/puzzle_assets/rc_005_s3.png"),
+  rc_005_s4: require("../assets/images/puzzle_assets/rc_005_s4.png"),
+  rc_005_w1: require("../assets/images/puzzle_assets/rc_005_w1.png"),
+  rc_005_w2: require("../assets/images/puzzle_assets/rc_005_w2.png"),
+  rc_005_w3: require("../assets/images/puzzle_assets/rc_005_w3.png"),
+  rc_005_w4: require("../assets/images/puzzle_assets/rc_005_w4.png"),
+  rc_005_l1: require("../assets/images/puzzle_assets/rc_005_l1.png"),
+  rc_005_l2: require("../assets/images/puzzle_assets/rc_005_l2.png"),
+  rc_005_l3: require("../assets/images/puzzle_assets/rc_005_l3.png"),
+  rc_005_l4: require("../assets/images/puzzle_assets/rc_005_l4.png"),
 };
 
 export function isPuzzleAsset(icon: string | undefined): boolean {
