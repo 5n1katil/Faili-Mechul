@@ -3740,21 +3740,21 @@
             {
               "id": "s1",
               "name": "Selma Acar",
-              "icon": "🧺",
+              "icon": "pa:rc_003_s1",
               "description": "Kıyı Bendi'ne bakan küçük pansiyonu işleten, Faruk'un son konaklama kaydını bizzat tutmuş ev sahibi.",
               "detail": "Gece servisinden sonra çay sepetini Eski Kayıkhane'ye bırakır; sağ bileğindeki eski kırık nedeniyle ağır halat çekmez ve ilaç şişelerini mavi balmumuyla mühürler."
             },
             {
               "id": "s2",
               "name": "İlyas Demir",
-              "icon": "🏮",
+              "icon": "pa:rc_003_s2",
               "description": "Kıyı fenerinin gece bakımını yapan, Faruk'un harita kopyalarındaki eski servis geçitlerini herkesten iyi bilen görevli.",
               "detail": "Fener Altı Geçidi'nin sürgüsünü her vardiyada kendi açar; gaz yağı şişelerini kehribar renkli tıpayla kapatır ve dışarıdan gelenleri ana kapı yerine taş geçitten geçirir."
             },
             {
               "id": "s3",
               "name": "Nihat Serin",
-              "icon": "📜",
+              "icon": "pa:rc_003_s3",
               "description": "Liman giriş kayıtlarını ve mühürlü eşya defterlerini tutan, Faruk'un bazı eski sevkiyatları kopyaladığını öğrenen yazman.",
               "detail": "Mor vernikli gümrük mühür telini kısa keser; bilet gişesinin arkasındaki karton arşivde çalışır ve her sayfanın köşesine üç köşeli tarih işareti koyar."
             }
@@ -3763,21 +3763,21 @@
             {
               "id": "w1",
               "name": "Kurşun Şamandıra",
-              "icon": "⚓",
+              "icon": "pa:rc_003_w1",
               "description": "Ağ hattını dengede tutan, avuç içine sığan ağır kurşun parça.",
               "detail": "Tuzlu suyla matlaştığında bile gri kurşun tozu bırakır."
             },
             {
               "id": "w2",
               "name": "Sessiz Şurup",
-              "icon": "🧪",
+              "icon": "pa:rc_003_w2",
               "description": "Zakkum alkaloidiyle düşük doz uyku damlasını birleştiren, acı tadı kolayca maskelenebilen sıvı karışım.",
               "detail": "Kehribar renkli tıpa reçinesi ve acı badem benzeri keskin bir koku bırakır."
             },
             {
               "id": "w3",
               "name": "Gümrük Mühür Teli",
-              "icon": "🪤",
+              "icon": "pa:rc_003_w3",
               "description": "Mühürlü sandıkları kapatmak için kullanılan, kesildiğinde mor vernik ve ince metal çapak bırakan sert tel.",
               "detail": "Kıvrıldığında parmakta ince çizgi ve mor vernik zerresi bırakır."
             }
@@ -3786,21 +3786,21 @@
             {
               "id": "l1",
               "name": "Liman Bilet Gişesi",
-              "icon": "🎟️",
+              "icon": "pa:rc_003_l1",
               "description": "Kıyı yolculuklarının yazıldığı, gümrük defterlerinin arka odada saklandığı dar taş gişe.",
               "detail": "Kartpostal, bilet koçanı ve mor vernikli mühür malzemeleri arka çekmecelerde tutulur."
             },
             {
               "id": "l2",
               "name": "Işıkaltı Menfezi",
-              "icon": "🏮",
+              "icon": "pa:rc_003_l2",
               "description": "Kıyı ışığının altında, bent ile servis kapısını birbirine bağlayan dar taş koridor.",
               "detail": "Kireçli sürgü oluğu, gaz yağı kokusu ve yağmurdan korunmuş kehribar tıpa kırıntılarıyla ayırt edilir."
             },
             {
               "id": "l3",
               "name": "Eski Kayıkhane",
-              "icon": "🛶",
+              "icon": "pa:rc_003_l3",
               "description": "Kullanılmayan ağların ve kurşun şamandıraların bırakıldığı, pansiyon arkasındaki alçak ahşap yapı.",
               "detail": "Çay sepetleri için küçük bir yan kapısı vardır; zeminde eski ağ lifleri ve kurşun tozu birikir."
             }
