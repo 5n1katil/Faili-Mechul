@@ -2434,21 +2434,21 @@
             {
               "id": "s1",
               "name": "Dr. Elena Voronova",
-              "icon": "👩‍⚕️",
+              "icon": "pa:sf_003_s1",
               "description": "Merkezin kurucusu, özgün genetik haritanın sahibi ve klonunun anı aktarımını denetleyen bilim insanı.",
               "detail": "50 yaşında. Resmî konferanslarını kendi nöral imzasıyla uzaktan yürütür; inkübasyon odasına girdiğinde tüm kayıtları iki kez doğrulayan titiz bir alışkanlığı vardır."
             },
             {
               "id": "s2",
               "name": "Elena-K",
-              "icon": "🧬",
+              "icon": "pa:sf_003_s2",
               "description": "Elena'nın iki yıl önce üretilen kopyası; geçmişe ait anıları taşısa da kendisine ait bir geleceği olup olmadığını bilmeyen klon.",
               "detail": "Kronolojik yaşı iki yıldır. Uzun koridorlarda eski hafızasının tersine sağa dönme eğilimi gösterir; soğuk taşıma termosunu kendi numarasıyla damgalar."
             },
             {
               "id": "s3",
               "name": "Lisans Direktörü Haruto Sato",
-              "icon": "📄",
+              "icon": "pa:sf_003_s3",
               "description": "Klon projesinin devam izinlerini imzalayan, bütçe kesintileriyle merkezi baskılayan idari direktör.",
               "detail": "55 yaşında. Genetik laboratuvardaki numune sayımlarına bizzat katılır; her girişte metal uçlu lisans kalemini masaya iki kez vurur."
             }
@@ -2457,21 +2457,21 @@
             {
               "id": "w1",
               "name": "Genetik Bozucu Madde",
-              "icon": "☢️",
+              "icon": "pa:sf_003_w1",
               "description": "Hücre dizilimini kimyasal olarak çözen, temas sonrası geri döndürülemez genetik hasar yaratan aşındırıcı madde.",
               "detail": "Cam tüplerde asidik kabarcık ve koruyucu yüzeyde sarı erime halkası bırakır."
             },
             {
               "id": "w2",
               "name": "Kriyojenik Sıvı",
-              "icon": "❄️",
+              "icon": "pa:sf_003_w2",
               "description": "Biyolojik dokuyu saniyeler içinde dondurabilen, taşınırken özel termos isteyen yoğun kriyojenik sıvı.",
               "detail": "Buz kristalleri ve ince metal termal toz üretir; sıradan kaplarda kararlı kalmaz."
             },
             {
               "id": "w3",
               "name": "Nöral Kesici",
-              "icon": "⚡",
+              "icon": "pa:sf_003_w3",
               "description": "Yakın mesafeden sinaps akışını kesen, kişisel nöral imzayla kalibre edilen kompakt frekans cihazı.",
               "detail": "Hedefin çevresinde mavi arklı yanık ve kişiye özgü kalibrasyon kaydı bırakır."
             }
@@ -2480,21 +2480,21 @@
             {
               "id": "l1",
               "name": "Klon Odası",
-              "icon": "🧫",
+              "icon": "pa:sf_003_l1",
               "description": "İnkübasyon tanklarının ve yaşam çizelgelerinin tutulduğu, sessiz ve izole biyolojik bakım odası.",
               "detail": "Nöral konferans bağlantısının kaynak konsolu bu odadaki biyometrik masaya bağlanır."
             },
             {
               "id": "l2",
               "name": "Genetik Lab",
-              "icon": "🧪",
+              "icon": "pa:sf_003_l2",
               "description": "Numune sayımlarının, robot kolların ve genom ekranlarının bulunduğu ana araştırma laboratuvarı.",
               "detail": "Lisans denetimleri sırasında metal uçlu kalem sesleri kayıt mikrofonlarında belirginleşir."
             },
             {
               "id": "l3",
               "name": "Lisans Ofisi",
-              "icon": "📋",
+              "icon": "pa:sf_003_l3",
               "description": "İptal kararlarının ve yaşam hakkı dosyalarının kilit altında tutulduğu resmî yönetim odası.",
               "detail": "Kriyojenik taşıma ekipmanı için masa altındaki damla oluğu, soğuk metal tozunu uzun süre saklar."
             }
