@@ -4636,21 +4636,21 @@
             {
               "id": "s1",
               "name": "Posta Kâtibi Arda",
-              "icon": "✉️",
+              "icon": "pa:pp_001_s1",
               "description": "Gece vardiyasında mühürlü torbaları teslim alan kâtip.",
               "detail": "Eski hat tarifelerini ezbere bilir; kaybolan paketlerin numarasını küçük bir deftere işaretler."
             },
             {
               "id": "s2",
               "name": "Biletçi Nihat",
-              "icon": "🎟️",
+              "icon": "pa:pp_001_s2",
               "description": "İstasyonun bilet penceresinde çalışan, düzen takıntılı görevli.",
               "detail": "Boş zamanında yıpranmış bagaj etiketlerini biriktirir; rengi solmuş damgaları ve bilet penceresinin düzenini ayırt edebilir."
             },
             {
               "id": "s3",
               "name": "Otel Tercümanı Feride",
-              "icon": "🧳",
+              "icon": "pa:pp_001_s3",
               "description": "Gecikmiş yolcular için otel ve gümrük işlerini yöneten serbest tercüman.",
               "detail": "Yanında her zaman ince deri bir valiz taşır; yabancı yolcuların yazışmalarını ve otel santralindeki çağrıları çevirir."
             }
@@ -4659,21 +4659,21 @@
             {
               "id": "w1",
               "name": "Siyanürlü Etiket Tutkalı",
-              "icon": "🧪",
+              "icon": "pa:pp_001_w1",
               "description": "Eski bagaj etiketlerinin arkasına sürülen, keskin badem kokulu yapıştırıcı.",
               "detail": ""
             },
             {
               "id": "w2",
               "name": "Kargo Makası",
-              "icon": "✂️",
+              "icon": "pa:pp_001_w2",
               "description": "Posta vagonundaki sicim ve mühür iplerini kesmek için kullanılan ağır makas.",
               "detail": ""
             },
             {
               "id": "w3",
               "name": "Fren Kolu Anahtarı",
-              "icon": "🔧",
+              "icon": "pa:pp_001_w3",
               "description": "Vagon fren kolunu açmak için kullanılan kısa, dökme demir anahtar.",
               "detail": ""
             }
@@ -4682,21 +4682,21 @@
             {
               "id": "l1",
               "name": "Posta Vagonu",
-              "icon": "🚃",
+              "icon": "pa:pp_001_l1",
               "description": "Mühürlü torbaların taşındığı dar servis vagonu.",
               "detail": ""
             },
             {
               "id": "l2",
               "name": "Emanet Dolapları",
-              "icon": "🗄️",
+              "icon": "pa:pp_001_l2",
               "description": "Garın kilitli bavul sıraları ve teslim penceresi; kapalı kutu serisi burada tutulur.",
               "detail": ""
             },
             {
               "id": "l3",
               "name": "Peron Alt Geçidi",
-              "icon": "🚇",
+              "icon": "pa:pp_001_l3",
               "description": "Rayların altından geçen, sesin boğuklaştığı taş koridor.",
               "detail": ""
             }
