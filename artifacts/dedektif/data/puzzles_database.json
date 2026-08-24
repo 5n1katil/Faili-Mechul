@@ -2237,21 +2237,21 @@
             {
               "id": "s1",
               "name": "YZ Avukat LEXIS",
-              "icon": "🧠",
+              "icon": "pa:sf_002_s1",
               "description": "YZ haklarını savunan, duruşmalarda holografik senaryolar kuran sentetik avukat.",
               "detail": "Şeffaf şakak soğutucusunun çevresinde mavi ışık halkası taşır; itirazlarını fiziksel notla değil, üç boyutlu simülasyonla kaydeder."
             },
             {
               "id": "s2",
               "name": "Savcı Amara Diallo",
-              "icon": "⚖️",
+              "icon": "pa:sf_002_s2",
               "description": "YZ'lerin köle statüsünde kalmasını isteyen, kamuoyu desteğini iyi kullanan insan savcı.",
               "detail": "38 yaşında. Her itiraz dosyasını bordo mühür mumu ve iki elle yazılmış kısa notla taşır; sol yakasında küçük bir meclis rozeti bulunur."
             },
             {
               "id": "s3",
               "name": "Lobici Viktor Crane",
-              "icon": "👔",
+              "icon": "pa:sf_002_s3",
               "description": "Maden tröstlerinin YZ işgücünden çıkarını koruyan, kapalı görüşmelerde şirket cihazları taşıyan lobici.",
               "detail": "55 yaşında. Kalın omuzlu ceketinin iç astarında şirket biyoseal kartuşu saklar; mahkeme odalarında asla kendi adına imza atmaz."
             }
@@ -2260,21 +2260,21 @@
             {
               "id": "w1",
               "name": "Nöro-Sinyal Silahı",
-              "icon": "⚡",
+              "icon": "pa:sf_002_w1",
               "description": "Ense yakınında çalıştırıldığında sinir iletimini bozacak kaçak mikroçip düzeni.",
               "detail": "Hedefte elektromanyetik sıcaklık halkası ve deri altı temas izi bırakır."
             },
             {
               "id": "w2",
               "name": "Nano-Zehir",
-              "icon": "🔬",
+              "icon": "pa:sf_002_w2",
               "description": "Solunumla kana karışan, hücreleri görünmez parçacıklarla bozan şirket üretimi nano-aerosol.",
               "detail": "Kararlı formu yalnız kurumsal biyoseal kartuşuyla güvenli biçimde taşınabilir."
             },
             {
               "id": "w3",
               "name": "Hologram Tuzağı",
-              "icon": "💠",
+              "icon": "pa:sf_002_w3",
               "description": "Panik ve yanlış yönlendirme yaratmak için mahkeme uzamını sahte görüntülerle dolduran simülasyon düzeni.",
               "detail": "Açıldığında duvarlarda mavi projeksiyon artığı ve faz kayması bırakır."
             }
@@ -2283,21 +2283,21 @@
             {
               "id": "l1",
               "name": "Hakim Odası",
-              "icon": "🏛️",
+              "icon": "pa:sf_002_l1",
               "description": "Davanın gizli taslaklarının tutulduğu, yalnız hâkimin kilidiyle açılan izole çalışma odası.",
               "detail": "Hava devri, koridordan bağımsız kapalı bir filtrasyon halkasıyla çalışır."
             },
             {
               "id": "l2",
               "name": "Mahkeme Salonu",
-              "icon": "🏢",
+              "icon": "pa:sf_002_l2",
               "description": "Holografik jürinin, avukatların ve basının aynı anda bulunduğu yüksek kubbeli ana duruşma alanı.",
               "detail": "Kürsü kenarındaki ahşap masalar, elde yazılmış kısa notları ve mühür mumunu kolayca tutar."
             },
             {
               "id": "l3",
               "name": "Sunucu Odası",
-              "icon": "🖥️",
+              "icon": "pa:sf_002_l3",
               "description": "Dijital hafızaların ve soğutma hatlarının kilit altında tutulduğu, yalnız teknik kartla girilebilen teknoloji bölmesi.",
               "detail": "Soğutma sıvısı dışarıyla karışmaz; havalandırma şaftları mahkeme katından yalıtılmıştır."
             }
