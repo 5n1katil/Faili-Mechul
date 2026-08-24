@@ -2625,28 +2625,28 @@
             {
               "id": "s1",
               "name": "Fizikçi Dr. Zara Okafor",
-              "icon": "🔬",
+              "icon": "pa:sf_004_s1",
               "description": "Rakip teorisini kabul ettirmek için baş fizikçiyle çatışan, deney verilerini her zaman ikinci kez kontrol eden araştırmacı.",
               "detail": "40 yaşında. Isı kontrollerini sayılara göre ezberler; dış yüzey görevlerinde buz tozu birikmesine tahammül edemez, koruyucu eldivenlerini sık sık değiştirir."
             },
             {
               "id": "s2",
               "name": "Mühendis Pavel Sorokin",
-              "icon": "🔧",
+              "icon": "pa:sf_004_s2",
               "description": "Üssün teknik şalterlerinden ve reaktör çekirdeğinin bakımından sorumlu, makinelerle insanlardan daha rahat konuşan mühendis.",
               "detail": "45 yaşında. Makine yağı kokar; ağır yük hücrelerini açmadan önce sarı emniyet mandalını iki kez çevirir ve loglarda kendi imzasını hiç bırakmaz."
             },
             {
               "id": "s3",
               "name": "Ajan Keiko Mori",
-              "icon": "🕵️",
+              "icon": "pa:sf_004_s3",
               "description": "Resmî görev tanımı belirsiz tutulan, üs çalışanlarını izleyen ve soğuk veri ağlarına sessizce girip çıkan saha görevlisi.",
               "detail": "33 yaşında. Antistatik eldiveninin bileğinde üçgen gümüş şerit taşır; kısa gözlem raporlarını ikili kod bloklarıyla düzenler."
             },
             {
               "id": "s4",
               "name": "Üs Komutanı Rex Torres",
-              "icon": "🎖",
+              "icon": "pa:sf_004_s4",
               "description": "Bütçe krizleri yüzünden şirketle sık sık çatışan, erişim kartlarının ve acil enerji planlarının sahibi üs komutanı.",
               "detail": "52 yaşında. Emir verirken analog pusulasını masaya bırakır; jeneratör koridorlarında askerî botlarının mıknatıslı tabanı iz bırakır."
             }
@@ -2655,28 +2655,28 @@
             {
               "id": "w1",
               "name": "Enerji Aşırı Yükü",
-              "icon": "☢️",
+              "icon": "pa:sf_004_w1",
               "description": "Reaktör çekirdeğini manuel olarak zorlayıp ölümcül radyasyon ve enerji dalgası salan teknik sabotaj.",
               "detail": "Kurşun kalkanlarda erimiş metal ve reaktör panellerinde ters faz çizgileri bırakır."
             },
             {
               "id": "w2",
               "name": "Buz Tuzağı",
-              "icon": "❄️",
+              "icon": "pa:sf_004_w2",
               "description": "Isıtmalı giysiyi dış yüzeyde devre dışı bırakarak kurbanı Europa soğuğuna bırakma yöntemi.",
               "detail": "Uzay giysisinin bağlantılarında kırağı çökmesi ve dış yüzey buz tozu görülür."
             },
             {
               "id": "w3",
               "name": "Zehirli Oksijen Karışımı",
-              "icon": "💨",
+              "icon": "pa:sf_004_w3",
               "description": "Kapalı hava devrine katılan toksik karışımla bilinci yavaşça kapatan gaz sabotajı.",
               "detail": "Filtre kasetinde koyu yeşil kimyasal halka ve solunum hortumunda reçinemsi iz bırakır."
             },
             {
               "id": "w4",
               "name": "Nöral Bomba",
-              "icon": "💣",
+              "icon": "pa:sf_004_w4",
               "description": "Yakın mesafede sinapsları yakmayı hedefleyen mini elektromanyetik düzenek.",
               "detail": "Hedef yüzeyde kısa, mor renkli akım çizgileri ve elektronik duman bırakır."
             }
@@ -2685,28 +2685,28 @@
             {
               "id": "l1",
               "name": "Deney Odası",
-              "icon": "⚗️",
+              "icon": "pa:sf_004_l1",
               "description": "Karanlık madde reaktörünün kurşun duvarlarla çevrili ana deney bölmesi.",
               "detail": "Çekirdek panellerindeki sarı emniyet mandalı yalnız teknik bakımdan önce açılır."
             },
             {
               "id": "l2",
               "name": "Enerji Merkezi",
-              "icon": "⚡",
+              "icon": "pa:sf_004_l2",
               "description": "Üssün jeneratörleri, şalterleri ve yük hücrelerinin bulunduğu dar güç koridoru.",
               "detail": "Mıknatıslı botlar, bakımlı metal zeminde sıra halinde kısa oval izler bırakır."
             },
             {
               "id": "l3",
               "name": "Dış Yüzey",
-              "icon": "🌑",
+              "icon": "pa:sf_004_l3",
               "description": "Europa buzuna açılan, yalnız uzay giysisiyle çıkılabilen ölümcül dış görev alanı.",
               "detail": "Hava kilidi dışındaki buz tozu, gelen kişinin manşet ve çizme contalarına yapışır."
             },
             {
               "id": "l4",
               "name": "Veri Merkezi",
-              "icon": "💾",
+              "icon": "pa:sf_004_l4",
               "description": "Deney kayıtlarını ve soğuk sunucuları barındıran, antistatik korumalı veri kasası bölümü.",
               "detail": "Kablo kanallarında antistatik şeritler ve ikili rapor bloklarının saklandığı bakım cepleri bulunur."
             }
