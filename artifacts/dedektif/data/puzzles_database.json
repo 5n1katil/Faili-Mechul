@@ -3984,28 +3984,28 @@
             {
               "id": "s1",
               "name": "Kayıt Sorumlusu Mina Karaca",
-              "icon": "📚",
+              "icon": "pa:rc_004_s1",
               "description": "Sergi sandıkları ile ziyaretçi defterlerini yöneten, kayıp etiketlerin kopyalarını arşivleyen titiz kayıt sorumlusu.",
               "detail": "Her gün sol omzunda metal tokalı ağır dosya çantası taşır; büyüteçli gözlüğü ince bir gümüş zincirdedir; giriş kayıtlarını mavi kopya kalemiyle işaretler ve arşiv kâğıtlarına eldivensiz dokunur."
             },
             {
               "id": "s2",
               "name": "Gezici Restoratör Leyla Sav",
-              "icon": "🖌️",
+              "icon": "pa:rc_004_s2",
               "description": "Yurt dışından gelen eserleri incelemek için çağrılan, sandık teslimlerinde kimlik denetiminden muaf tutulan gezici restoratör.",
               "detail": "Çalışırken sağ eline ince gri eldiven takar; terpentini ve taze mürekkebi aynı odada bulundurmaktan nefret eder; UV inceleme lambalarının besleme kablolarını kendi denetler."
             },
             {
               "id": "s3",
               "name": "Koleksiyon Danışmanı Faruk Mert",
-              "icon": "🪙",
+              "icon": "pa:rc_004_s3",
               "description": "Portreyi satın alan vakfın temsilcisi; depodaki eski çerçevelerin değerini tek tek incelemekte ısrarcı koleksiyon danışmanı.",
               "detail": "Antika ambalaj kilitlerini açmak için küçük bronz çerçeve kıskacını yanında taşır; takım çantasına düz balmumu tabletleri ve keten bez koyar."
             },
             {
               "id": "s4",
               "name": "Gece Bekçisi İhsan Doru",
-              "icon": "🔦",
+              "icon": "pa:rc_004_s4",
               "description": "Kapanıştan sonra Portre Salonu'nun raylı askılarını ve acil çıkışlarını denetleyen gece bekçisi.",
               "detail": "Her vardiyada siyah saplı ince tel kesicisini raylı askıların yanında taşır; salon ışıkları sönünce kontrol çizelgesine kurşun kalemle saat yazar."
             }
@@ -4014,28 +4014,28 @@
             {
               "id": "w1",
               "name": "Ray Kablo Makası",
-              "icon": "✂️",
+              "icon": "pa:rc_004_w1",
               "description": "Sergi raylarının içindeki kabloları ve küçük askı tellerini ayırmak için kullanılan siyah saplı kesme aleti.",
               "detail": "Taze tel çapakları ile siyah kauçuk izleri bırakır."
             },
             {
               "id": "w2",
               "name": "Frekans Ünitesi",
-              "icon": "⚡",
+              "icon": "pa:rc_004_w2",
               "description": "Pigment katmanlarını taramak için kullanılan, eski tip yüksek gerilimli aydınlatma düzeneği.",
               "detail": "Temasta bakır nokta yanıkları ve kısa süreli ark izi bırakır."
             },
             {
               "id": "w3",
               "name": "Pirinç Kilit Pensesi",
-              "icon": "🗜️",
+              "icon": "pa:rc_004_w3",
               "description": "Antika sandık ve çerçeve kilitlerini sökmekte kullanılan, ağır sarı metal gövdeli küçük pense.",
               "detail": "Keten lifleri ve balmumu izlerini kolayca tutar."
             },
             {
               "id": "w4",
               "name": "Renk Açıcı Kapsül",
-              "icon": "🧪",
+              "icon": "pa:rc_004_w4",
               "description": "Vernik lekelerini çözmek için kullanılan, kırıldığında yoğun uçucu buhar çıkaran cam kapsül.",
               "detail": "Cam kıymığı ve keskin çözücü kokusu bırakır."
             }
@@ -4044,28 +4044,28 @@
             {
               "id": "l1",
               "name": "Kayıt Odası",
-              "icon": "🗂️",
+              "icon": "pa:rc_004_l1",
               "description": "Ziyaretçi defterleri, gümrük kopyaları ve sandık etiketlerinin saklandığı dar arşiv bölümü.",
               "detail": "Mavi kopya kalemi tozu ve metal dosya tokaları bu odada sık görülür."
             },
             {
               "id": "l2",
               "name": "Portre Salonu",
-              "icon": "🖼️",
+              "icon": "pa:rc_004_l2",
               "description": "Kimliği belirsiz portrenin açılış öncesi sergilendiği, raylı askı sistemli ana salon.",
               "detail": "Sergi telleri ve siyah kauçuk sap izleri çoğunlukla buradaki raylarda kalır."
             },
             {
               "id": "l3",
               "name": "Boş Çerçeve Deposu",
-              "icon": "🪞",
+              "icon": "pa:rc_004_l3",
               "description": "Sökülmüş çerçevelerin, eski lambaların ve kullanılmayan yaldızlı pervazların tutulduğu kilitli alt depo.",
               "detail": "Eski yüksek gerilimli inceleme lambasının sabit yuvası yalnız bu depodaki metal raftadır."
             },
             {
               "id": "l4",
               "name": "Restorasyon Atölyesi",
-              "icon": "🧫",
+              "icon": "pa:rc_004_l4",
               "description": "Pigment, vernik ve çerçeve onarımının yapıldığı üst kat çalışma alanı.",
               "detail": "Balmumu tabletleri, keten bezler ve bronz kilit araçları burada sık kullanılır."
             }
