@@ -5693,28 +5693,28 @@
             {
               "id": "s1",
               "name": "Meteorit Uzmanı Nazan",
-              "icon": "☄️",
+              "icon": "pa:pp_005_s1",
               "description": "Göktaşı örneklerini sınıflandırmak için istasyona katılan mineral uzmanı.",
               "detail": "Örnek tüplerini renk sırasına göre dizer; gece gökyüzünü kayıt defterine ince çizgilerle işler."
             },
             {
               "id": "s2",
               "name": "Sefer Doktoru Cem",
-              "icon": "⚕️",
+              "icon": "pa:pp_005_s2",
               "description": "Yüksek irtifa hastalıkları için sefer ekibine eşlik eden hekim.",
               "detail": "İlaç karasını kendi kilitler; her dozun saatini beyaz ciltli deftere not eder."
             },
             {
               "id": "s3",
               "name": "Telsizci Arif",
-              "icon": "📻",
+              "icon": "pa:pp_005_s3",
               "description": "İstasyonun zaman sinyalini ve yardım çağrılarını yöneten telsiz operatörü.",
               "detail": "Kadranlı saatleri söküp takabilir; her akşam anten gerilimini ölçer."
             },
             {
               "id": "s4",
               "name": "Kutup Kılavuzu Bora",
-              "icon": "🧊",
+              "icon": "pa:pp_005_s4",
               "description": "Buz yarıklarında ekibe yol açan, kızak ve ikmal düzenini bilen kılavuz.",
               "detail": "Yük sandıklarını ağırlığa göre dizer; açık havada ip düğümlerini eldivensiz atabilir."
             }
@@ -5723,28 +5723,28 @@
             {
               "id": "w1",
               "name": "Buz Baltası",
-              "icon": "🪓",
+              "icon": "pa:pp_005_w1",
               "description": "Kızak yolunu açmak ve buz örneklerini kırmak için kullanılan kısa balta.",
               "detail": ""
             },
             {
               "id": "w2",
               "name": "Yakıt Vanası",
-              "icon": "🛢️",
+              "icon": "pa:pp_005_w2",
               "description": "ısıtıcı hattındaki basıncı ayarlayan pirinç vana.",
               "detail": ""
             },
             {
               "id": "w3",
               "name": "İşaret Fişeği",
-              "icon": "🧨",
+              "icon": "pa:pp_005_w3",
               "description": "Uzakta görünür sinyal vermek için kullanılan kısa menzilli fişek.",
               "detail": ""
             },
             {
               "id": "w4",
               "name": "Kükürtlü Isıtıcı Kartüuşu",
-              "icon": "♨️",
+              "icon": "pa:pp_005_w4",
               "description": "Kapalı kabinde yanlış kullanıldığında zehirli gaz çıkaran bakım kartüuşu; yanıkta ince yağ filmi bırakır.",
               "detail": ""
             }
@@ -5753,28 +5753,28 @@
             {
               "id": "l1",
               "name": "Gözlem Kubbesi",
-              "icon": "🔭",
+              "icon": "pa:pp_005_l1",
               "description": "Gökyüzü ölçümlerinin yapıldığı, kuru hava filtreli metal çerçeveli üst bölüm.",
               "detail": ""
             },
             {
               "id": "l2",
               "name": "Yakıt Bölmesi",
-              "icon": "🛢️",
+              "icon": "pa:pp_005_l2",
               "description": "Tüplerin ve vana anahtarlarının saklandığı kapalı servis odası.",
               "detail": ""
             },
             {
               "id": "l3",
               "name": "Telsiz Odası",
-              "icon": "📡",
+              "icon": "pa:pp_005_l3",
               "description": "Zaman sinyali alıcısı, kablo makaraları ve yardım çağrısı masası.",
               "detail": ""
             },
             {
               "id": "l4",
               "name": "Yalıtım Kabini",
-              "icon": "🛏️",
+              "icon": "pa:pp_005_l4",
               "description": "Hasta ekibin dinlendiği, çift kapılı küçük uyku ve bakım bölmesi.",
               "detail": ""
             }
