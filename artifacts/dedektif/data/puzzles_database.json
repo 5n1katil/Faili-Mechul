@@ -5413,28 +5413,28 @@
             {
               "id": "s1",
               "name": "Kazı Başkanı Mert",
-              "icon": "⛏️",
+              "icon": "pa:pp_004_s1",
               "description": "Kazının izinlerini ve günlük rota çizelgelerini yöneten baş arkeolog.",
               "detail": "Her sabah hendek ölçülerini kendi eliyle kontrol eder; raporlarda tek bir çizgiye bile toleransı yoktur."
             },
             {
               "id": "s2",
               "name": "Kervan Rehberi Harun",
-              "icon": "🐪",
+              "icon": "pa:pp_004_s2",
               "description": "Kampın su ve yol düzenini sağlayan yerel rehber.",
               "detail": "Eski sarnıç yollarını ezbere bilir; kurak havada bile yük hayvanlarının ritmini dinler."
             },
             {
               "id": "s3",
               "name": "Restoratör Sema",
-              "icon": "🏺",
+              "icon": "pa:pp_004_s3",
               "description": "Kırık tabletleri temizleyip kataloglayan uzman restoratör.",
               "detail": "Obsidyen uçları yalnız mineral örnekleri üzerinde kullanır; her parçayı kendi numarasıyla sarar."
             },
             {
               "id": "s4",
               "name": "Envanter Yazmanı Dicle",
-              "icon": "📜",
+              "icon": "pa:pp_004_s4",
               "description": "Kazı buluntularının giriş-çıkışını ve sandık kodlarını tutan yazman.",
               "detail": "Raf kodlarını yanlış yazmamak için renkli ayraçlar kullanır; eski belgelerin kenar notlarını asla atmaz."
             }
@@ -5443,28 +5443,28 @@
             {
               "id": "w1",
               "name": "Obsidyen Uç",
-              "icon": "🪨",
+              "icon": "pa:pp_004_w1",
               "description": "Sert yazı yüzeyindeki kabuğu kaldırmak için kullanılan, çalışırken siyah yonga bırakan koyu taş uç.",
               "detail": ""
             },
             {
               "id": "w2",
               "name": "Arsenikli Koruma Tozu",
-              "icon": "⚱️",
+              "icon": "pa:pp_004_w2",
               "description": "Eski yüzeyleri sabitlemek için kullanılan, solunduğunda öldürücü olabilen açık renkli ince koruma tozu.",
               "detail": ""
             },
             {
               "id": "w3",
               "name": "Kuyu Vinç Halatı",
-              "icon": "🪢",
+              "icon": "pa:pp_004_w3",
               "description": "Derin sarnıçtan sandık çekmekte kullanılan yağlı, ağır halat.",
               "detail": ""
             },
             {
               "id": "w4",
               "name": "Taş Levha Tokmağı",
-              "icon": "🔨",
+              "icon": "pa:pp_004_w4",
               "description": "Kırık blokları yerinden oynatmak için kullanılan kısa saplı tokmak.",
               "detail": ""
             }
@@ -5473,28 +5473,28 @@
             {
               "id": "l1",
               "name": "Kuzey Hendek",
-              "icon": "🏜️",
+              "icon": "pa:pp_004_l1",
               "description": "Ana kazı çizgisinin sert taş tabakasına açılan, gölgeli çalışma yarığı.",
               "detail": ""
             },
             {
               "id": "l2",
               "name": "Su Sarnıcı",
-              "icon": "💧",
+              "icon": "pa:pp_004_l2",
               "description": "Taş duvarlı, ip ve makara düzeneği bulunan derin su kuyusu.",
               "detail": ""
             },
             {
               "id": "l3",
               "name": "Kırık Yazıt Atölyesi",
-              "icon": "🧱",
+              "icon": "pa:pp_004_l3",
               "description": "Tablet parçalarının numaralandırıldığı, kumaş perdeli kapalı çalışma alanı.",
               "detail": ""
             },
             {
               "id": "l4",
               "name": "Yazıt Galerisi",
-              "icon": "🏛️",
+              "icon": "pa:pp_004_l4",
               "description": "Kazıdan çıkan büyük levhaların geçici olarak sergilendiği uzun tente.",
               "detail": ""
             }
