@@ -1,0 +1,116 @@
+name: Faili Mechul Case QA v3
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: audit, pilot veya full
+        required: true
+        default: audit
+        type: choice
+        options: [audit, pilot, full]
+      allow_ai:
+        description: OpenAI ile sinirli onarimi ac
+        required: true
+        default: false
+        type: boolean
+      case_limit:
+        description: 0=tumu; pilot icin 5 onerilir
+        required: true
+        default: "0"
+        type: string
+      case_ids:
+        description: Istege bagli, virgul ayrimli vaka ID listesi
+        required: false
+        default: ""
+        type: string
+      publish_draft_pr:
+        description: Yalniz 100/100 adaylari taslak PR'a yaz
+        required: true
+        default: false
+        type: boolean
+
+permissions:
+  contents: write
+  pull-requests: write
+  actions: read
+
+concurrency:
+  group: fm-case-qa-v3-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    env:
+      FM_QA_ROOT: ${{ github.workspace }}
+      FM_QA_MODE: ${{ inputs.mode }}
+      FM_QA_ALLOW_AI: ${{ inputs.allow_ai }}
+      FM_QA_CASE_LIMIT: ${{ inputs.case_limit }}
+      FM_QA_CASE_IDS: ${{ inputs.case_ids }}
+      FM_QA_APPLY_TO_WORKTREE: ${{ inputs.publish_draft_pr }}
+      FM_QA_OUTPUT_DIR: .case-qa-output
+      FM_QA_CACHE_DIR: .case-qa-cache
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      GH_TOKEN: ${{ github.token }}
+
+    steps:
+      - name: Checkout locked main revision
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Restore idempotent response cache
+        uses: actions/cache@v4
+        with:
+          path: .case-qa-cache
+          key: fm-case-qa-v3-${{ hashFiles('artifacts/dedektif/data/puzzles.ts', 'artifacts/dedektif/data/puzzles_database.json', '.case-qa/fm_case_qa_policy_v3_1.json') }}
+
+      - name: Run deterministic QA and bounded repair
+        run: node .case-qa/fm_case_qa_runner.mjs
+
+      - name: Upload complete QA report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fm-case-qa-${{ github.run_id }}
+          path: .case-qa-output
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Prepare accepted-case manifest
+        if: ${{ inputs.publish_draft_pr == true }}
+        id: publish_gate
+        shell: bash
+        run: |
+          accepted="$(jq '.summary.publishable_case_ids | length' .case-qa-output/fm_case_qa_run_report.json)"
+          echo "accepted=$accepted" >> "$GITHUB_OUTPUT"
+          if [ "$accepted" -gt 0 ]; then
+            mkdir -p artifacts/dedektif/qa/runs
+            cp .case-qa-output/fm_case_qa_run_report.json "artifacts/dedektif/qa/runs/run-${GITHUB_RUN_ID}.json"
+          fi
+
+      - name: Create staging branch and draft PR
+        if: ${{ inputs.publish_draft_pr == true && steps.publish_gate.outputs.accepted != '0' }}
+        shell: bash
+        run: |
+          branch="qa/105-case-refresh-${GITHUB_RUN_ID}"
+          git config user.name "faili-mechul-qa-bot"
+          git config user.email "qa-bot@users.noreply.github.com"
+          git switch -c "$branch"
+          git add artifacts/dedektif/data/puzzles.ts artifacts/dedektif/data/puzzles_database.json artifacts/dedektif/qa
+          if git diff --cached --quiet; then
+            echo "No publishable file change; draft PR skipped."
+            exit 0
+          fi
+          git commit -m "qa: stage simulator-approved case repairs"
+          git push --set-upstream origin "$branch"
+          gh pr create --draft --base main --head "$branch" --title "QA v3: simulator-approved case repairs (${GITHUB_RUN_ID})" --body-file .case-qa-output/draft_pr_body.md

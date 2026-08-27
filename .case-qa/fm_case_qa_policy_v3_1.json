@@ -1,0 +1,60 @@
+{
+  "schema_version": "fm_case_qa_automation_policy_v3_1",
+  "source": {
+    "repository": "5n1katil/Faili-Mechul",
+    "branch": "main",
+    "standard_path": "artifacts/dedektif/data/puzzles.ts",
+    "premium_path": "artifacts/dedektif/data/puzzles_database.json",
+    "sidecar_path": "artifacts/dedektif/qa/case_qa_sidecars_v29_5.json",
+    "expected_standard_cases": 45,
+    "expected_premium_cases": 60,
+    "expected_total_cases": 105
+  },
+  "simulator": {
+    "version": "29.4",
+    "minimum_score": 100,
+    "require_production_ready": true,
+    "require_core_necessity": true,
+    "require_identity_guard": true,
+    "require_preclue_guard_pass": true,
+    "require_avatar_prompt_risk_false": true
+  },
+  "repair": {
+    "preserve_case_ids": true,
+    "preserve_entity_ids": true,
+    "preserve_clue_ids": true,
+    "preserve_solution_ids": true,
+    "preserve_icons_and_asset_paths": true,
+    "max_luna_attempts_per_case": 1,
+    "max_terra_attempts_per_case": 1,
+    "quarantine_after_failed_escalation": true
+  },
+  "models": {
+    "first_pass": "gpt-5.6-luna",
+    "first_pass_reasoning_effort": "medium",
+    "escalation": "gpt-5.6-terra",
+    "escalation_reasoning_effort": "medium",
+    "max_output_tokens": 12000,
+    "structured_outputs_strict": true,
+    "pricing_usd_per_million_tokens": {
+      "gpt-5.6-luna": { "input": 0.2, "output": 1.2 },
+      "gpt-5.6-terra": { "input": 2, "output": 12 }
+    }
+  },
+  "budget": {
+    "currency": "USD",
+    "warning_budget": 12,
+    "hard_budget": 18,
+    "max_concurrent_calls": 4,
+    "stop_before_projected_overrun": true,
+    "record_actual_token_usage": true,
+    "repeat_same_idempotency_key": false
+  },
+  "publication": {
+    "target_branch_prefix": "qa/105-case-refresh-",
+    "draft_pull_request_only": true,
+    "auto_merge": false,
+    "main_branch_direct_write": false,
+    "exclude_failed_candidates": true
+  }
+}
