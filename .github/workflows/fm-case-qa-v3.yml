@@ -84,6 +84,7 @@ jobs:
           name: fm-case-qa-${{ github.run_id }}
           path: .case-qa-output
           if-no-files-found: error
+          include-hidden-files: true
           retention-days: 30
 
       - name: Prepare accepted-case manifest
