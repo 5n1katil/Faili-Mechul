@@ -7749,28 +7749,28 @@
             {
               "id": "s1",
               "name": "Juno",
-              "icon": "👑",
+              "icon": "pa:mit_003_s1",
               "description": "Aeneas’ın yolunu kesmek isteyen Roma tanrıçası.",
               "detail": "Meclis mühürlerini kişisel balmumuyla kapatır; hiçbir notu iki kez aynı cümleyle yazmaz."
             },
             {
               "id": "s2",
               "name": "Turnus",
-              "icon": "🛡️",
+              "icon": "pa:mit_003_s2",
               "description": "Latium’un savaşçı rakibi.",
               "detail": "Kalkanındaki çizikleri kayıt altına alır; savaş çadırından ayrıldığında nöbetçiye haber verir."
             },
             {
               "id": "s3",
               "name": "Sinon",
-              "icon": "🐴",
+              "icon": "pa:mit_003_s3",
               "description": "Truva’dan kalan Yunan casusu.",
               "detail": "Kemerinde defne düğümleri taşır; hançer kılıfındaki at mührünü asla sökmez."
             },
             {
               "id": "s4",
               "name": "Dido",
-              "icon": "🔥",
+              "icon": "pa:mit_003_s4",
               "description": "Kartaca kraliçesi.",
               "detail": "Liman konuşmalarında kullandığı koyu mor kumaşları kendisi seçer."
             }
@@ -7779,28 +7779,28 @@
             {
               "id": "w1",
               "name": "Truva Oku",
-              "icon": "🏹",
+              "icon": "pa:mit_003_w1",
               "description": "Hades geçit sandığında saklanan eski savaş oku.",
               "detail": ""
             },
             {
               "id": "w2",
               "name": "Kartaca Zehri",
-              "icon": "🌺",
+              "icon": "pa:mit_003_w2",
               "description": "Deniz yolculuğunda kullanılan yavaş etkili saray zehri.",
               "detail": ""
             },
             {
               "id": "w3",
               "name": "Juno’nun Laneti",
-              "icon": "✨",
+              "icon": "pa:mit_003_w3",
               "description": "Tapınak mühürleriyle bağlı, görünmeyen baskı büyüsü.",
               "detail": ""
             },
             {
               "id": "w4",
               "name": "Sinon’un Hançeri",
-              "icon": "🗡️",
+              "icon": "pa:mit_003_w4",
               "description": "At mührü taşıyan, Yunan çeliğinden kısa hançer.",
               "detail": ""
             }
@@ -7809,28 +7809,28 @@
             {
               "id": "l1",
               "name": "Kartaca Limanı",
-              "icon": "⚓",
+              "icon": "pa:mit_003_l1",
               "description": "Dido’nun konuşma yaptığı rıhtım ve ticaret kapısı.",
               "detail": ""
             },
             {
               "id": "l2",
               "name": "Hades’in Kapısı",
-              "icon": "🌑",
+              "icon": "pa:mit_003_l2",
               "description": "Geçit sandıkları ve eski savaş emanetlerinin bulunduğu taş eşik.",
               "detail": ""
             },
             {
               "id": "l3",
               "name": "Latium Ormanı",
-              "icon": "🌲",
+              "icon": "pa:mit_003_l3",
               "description": "Defne ağaçlarının altında gece buluşmalarının yapıldığı karanlık yol.",
               "detail": ""
             },
             {
               "id": "l4",
               "name": "Juno Tapınağı",
-              "icon": "🏛️",
+              "icon": "pa:mit_003_l4",
               "description": "Meclis mühürlerinin ve tanrıça kayıtlarının korunduğu yüksek yapı.",
               "detail": ""
             }
