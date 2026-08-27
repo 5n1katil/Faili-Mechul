@@ -8023,21 +8023,21 @@
             {
               "id": "s1",
               "name": "Thoth",
-              "icon": "🪶",
+              "icon": "pa:mit_004_s1",
               "description": "Bilgelik ve yazı tanrısı.",
               "detail": "Mürekkep şişelerinin mühürlerini gün gün saklar; papirüs liflerindeki farkı uzaktan tanır."
             },
             {
               "id": "s2",
               "name": "Set",
-              "icon": "🌪️",
+              "icon": "pa:mit_004_s2",
               "description": "Kaos ve çöl tanrısı.",
               "detail": "Siyah reçineli gölge tacı, kum girdabı ritüellerinde havaya ince bir koku bırakır."
             },
             {
               "id": "s3",
               "name": "Sekhmet",
-              "icon": "🦁",
+              "icon": "pa:mit_004_s3",
               "description": "Savaş ve şifa tanrıçası.",
               "detail": "Pençe kancasını törenlerde taşır; asla avlu kumuna yalın ayak basmaz."
             }
@@ -8046,21 +8046,21 @@
             {
               "id": "w1",
               "name": "Zehirli Papirüs Mürekkebi",
-              "icon": "🖋️",
+              "icon": "pa:mit_004_w1",
               "description": "Kobra özlü, iç odadaki yazı masasından alınan yoğun mürekkep.",
               "detail": ""
             },
             {
               "id": "w2",
               "name": "Çöl Kumu Fırtınası Tuzağı",
-              "icon": "🌪️",
+              "icon": "pa:mit_004_w2",
               "description": "Avlu rüzgârını dar bir hatta toplayan ölümcül kum düzeneği.",
               "detail": ""
             },
             {
               "id": "w3",
               "name": "Sekhmet’in Pençe Kancası",
-              "icon": "🗡️",
+              "icon": "pa:mit_004_w3",
               "description": "Aslan başlı tanrıçanın ritüel demir kancası.",
               "detail": ""
             }
@@ -8069,21 +8069,21 @@
             {
               "id": "l1",
               "name": "Kutsal İç Oda",
-              "icon": "☀️",
+              "icon": "pa:mit_004_l1",
               "description": "Ra heykelinin ve altın yazı masasının bulunduğu en iç bölüm.",
               "detail": ""
             },
             {
               "id": "l2",
               "name": "Papirüs Arşivi",
-              "icon": "📚",
+              "icon": "pa:mit_004_l2",
               "description": "Thoth’un mühürlü kehanetlerinin saklandığı sessiz oda.",
               "detail": ""
             },
             {
               "id": "l3",
               "name": "Çöl Kapısı Avlusu",
-              "icon": "🏜️",
+              "icon": "pa:mit_004_l3",
               "description": "Tapınağın çöle açılan, kum halkalarıyla dolu taş avlusu.",
               "detail": ""
             }
