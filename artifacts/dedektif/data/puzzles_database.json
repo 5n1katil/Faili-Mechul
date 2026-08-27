@@ -6248,21 +6248,21 @@
             {
               "id": "s1",
               "name": "Muhabir Mina Koral",
-              "icon": "📰",
+              "icon": "pa:fen_premium_002_s1",
               "description": "Hallowbridge Chronicle için gece dosyaları hazırlayan muhabir.",
               "detail": "Kayıt kâğıtlarının kenarına saat notu düşer; arşivdeki telgrafların tarihlerini ezbere bilir."
             },
             {
               "id": "s2",
               "name": "Müfettiş Rıza Merin",
-              "icon": "🕵️",
+              "icon": "pa:fen_premium_002_s2",
               "description": "Mahalle şikâyetlerini izleyen deneyimli gece müfettişi.",
               "detail": "Devriye fenerini ve tutanak kalemini yanından ayırmaz; kilitli emanet dolaplarını kendisi teslim alır."
             },
             {
               "id": "s3",
               "name": "Cerrah Dr. Haldun Vey",
-              "icon": "⚕️",
+              "icon": "pa:fen_premium_002_s3",
               "description": "Eski ordu cerrahı, dar mahallede gece kliniği işleten hekim.",
               "detail": "Neşterlerini bezlere ayrı ayrı sarar; uzun yürüyüşlerde sağ ayağını hafif sürüklediği bilinir."
             }
@@ -6271,21 +6271,21 @@
             {
               "id": "w1",
               "name": "Gaz Lambası Kolu",
-              "icon": "🪔",
+              "icon": "pa:fen_premium_002_w1",
               "description": "Sokak lambasının bakım kapağından sökülebilen kısa dökme demir kol.",
               "detail": ""
             },
             {
               "id": "w2",
               "name": "Cerrahi Sonda",
-              "icon": "🗡️",
+              "icon": "pa:fen_premium_002_w2",
               "description": "İnce, tek ağızlı cerrahi alet; maharetli elde derin ve dar iz bırakır.",
               "detail": ""
             },
             {
               "id": "w3",
               "name": "Morg Anahtarı",
-              "icon": "🗝️",
+              "icon": "pa:fen_premium_002_w3",
               "description": "Alt kattaki soğuk odaya ait, eski pirinç anahtar.",
               "detail": ""
             }
@@ -6294,21 +6294,21 @@
             {
               "id": "l1",
               "name": "Blackwell Sokağı",
-              "icon": "🌫️",
+              "icon": "pa:fen_premium_002_l1",
               "description": "Gaz lambaları ve dar arka kapılarıyla bilinen taş sokak.",
               "detail": ""
             },
             {
               "id": "l2",
               "name": "Saint Varo Morgu",
-              "icon": "🏥",
+              "icon": "pa:fen_premium_002_l2",
               "description": "Kayıt defterlerinin ve soğuk odaların bulunduğu hastane alt katı.",
               "detail": ""
             },
             {
               "id": "l3",
               "name": "Chronicle Arşivi",
-              "icon": "🗂️",
+              "icon": "pa:fen_premium_002_l3",
               "description": "Gazete kupürlerinin ve telgraf rulolarının tutulduğu bodrum arşivi.",
               "detail": ""
             }
