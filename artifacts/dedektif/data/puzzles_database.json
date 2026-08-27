@@ -5989,21 +5989,21 @@
             {
               "id": "s1",
               "name": "Editör Selin Aras",
-              "icon": "📰",
+              "icon": "pa:fen_premium_001_s1",
               "description": "Aster Gazetesi’nin gece baskısını yöneten editör.",
               "detail": "Kurşun harfleri elle dizmeyi bilir; prova sayfalarındaki en küçük kesim izini bile fark eder."
             },
             {
               "id": "s2",
               "name": "Kripto Tarihçisi Dr. Adnan Yel",
-              "icon": "✦",
+              "icon": "pa:fen_premium_001_s2",
               "description": "Eski alfabeler ve yıldız katalogları üzerine çalışan akademisyen.",
               "detail": "Kütüphane atlaslarının kenar notlarını yıllardır kataloglar; dairesel şifre dizilerini çözmesiyle tanınır."
             },
             {
               "id": "s3",
               "name": "Kent Müfettişi Tamer Sönmez",
-              "icon": "🕵️",
+              "icon": "pa:fen_premium_001_s3",
               "description": "Gazeteye gelen tehdit mektuplarını inceleyen belediye müfettişi.",
               "detail": "Mühürlü belgeleri zincir içinde taşır; baskı atölyelerindeki tipografi araçlarına yabancıdır."
             }
@@ -6012,21 +6012,21 @@
             {
               "id": "w1",
               "name": "Deri Kordon",
-              "icon": "🪢",
+              "icon": "pa:fen_premium_001_w1",
               "description": "Düzgün çekildiğinde dar iz bırakan, ince ama dayanıklı koyu deri şerit.",
               "detail": ""
             },
             {
               "id": "w2",
               "name": "Kurşun Harf Kesicisi",
-              "icon": "✂️",
+              "icon": "pa:fen_premium_001_w2",
               "description": "Matbaa kalıplarının kenarını kesmeye yarayan ağır, kısa ağızlı alet.",
               "detail": ""
             },
             {
               "id": "w3",
               "name": "Baskı Bloğu Bıçağı",
-              "icon": "🔪",
+              "icon": "pa:fen_premium_001_w3",
               "description": "Ahşap prova bloklarını inceltmek için kullanılan keskin ucu kısa bıçak.",
               "detail": ""
             }
@@ -6035,21 +6035,21 @@
             {
               "id": "l1",
               "name": "Aster Baskıhanesi",
-              "icon": "🖨️",
+              "icon": "pa:fen_premium_001_l1",
               "description": "Gece ekinin hazırlandığı, metal kalıp kokulu arka atölye.",
               "detail": ""
             },
             {
               "id": "l2",
               "name": "Gök Atlasları Salonu",
-              "icon": "📚",
+              "icon": "pa:fen_premium_001_l2",
               "description": "Üniversite kütüphanesinin nadir eserler bölümü; yıldız haritaları burada tutulur.",
               "detail": ""
             },
             {
               "id": "l3",
               "name": "Sisli Liman Geçidi",
-              "icon": "⚓",
+              "icon": "pa:fen_premium_001_l3",
               "description": "Gazete binasıyla rıhtım arasındaki, gece devriyesinin takip ettiği taş geçit.",
               "detail": ""
             }
