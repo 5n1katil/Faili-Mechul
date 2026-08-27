@@ -6700,28 +6700,28 @@
             {
               "id": "s1",
               "name": "Kontes Elara Vonn",
-              "icon": "👑",
+              "icon": "pa:fen_premium_004_s1",
               "description": "Balo gecesinin ev sahibi ve konuk listesinin tek sorumlusu.",
               "detail": "Davet defterini kendi eliyle işaretler; eski aile mühürlerini ve salon düzenini kusursuz bilir."
             },
             {
               "id": "s2",
               "name": "Başkahya Maksim Rehn",
-              "icon": "🗝️",
+              "icon": "pa:fen_premium_004_s2",
               "description": "Servis akışını yöneten, kış bahçesi anahtarlarını taşıyan saray başkahyası.",
               "detail": "Şampanya kasalarının hangi masaya gittiğini kayıt defterine yazar; konuklardan çok kapıları izler."
             },
             {
               "id": "s3",
               "name": "Dr. Marta Ilven",
-              "icon": "⚕️",
+              "icon": "pa:fen_premium_004_s3",
               "description": "Varda’nın eski araştırma ortağı olan rakip psikolog.",
               "detail": "Kış bahçesindeki not defterine eski vaka başlıkları karalar; kalabalıkta bile sessizce gözlemler."
             },
             {
               "id": "s4",
               "name": "Orkestra Şefi Viktor Saran",
-              "icon": "🎻",
+              "icon": "pa:fen_premium_004_s4",
               "description": "Balo orkestrasını yöneten, son valsin notalarını değiştiren müzisyen.",
               "detail": "Şarap mahzenindeki eski şişeleri müzik terimleriyle adlandırır; nota kâğıtlarını kırmızı mühürle bağlar."
             }
@@ -6730,28 +6730,28 @@
             {
               "id": "w1",
               "name": "Fildişi Baston",
-              "icon": "🦯",
+              "icon": "pa:fen_premium_004_w1",
               "description": "Ucu metal çivili, tören kıyafetinin parçası olan ağır baston.",
               "detail": ""
             },
             {
               "id": "w2",
               "name": "Arsenikli Şampanya",
-              "icon": "🥂",
+              "icon": "pa:fen_premium_004_w2",
               "description": "Özel şişeye önceden katılmış, kokusu bastırılmış köpüklü şarap.",
               "detail": ""
             },
             {
               "id": "w3",
               "name": "İpek Şal",
-              "icon": "🧣",
+              "icon": "pa:fen_premium_004_w3",
               "description": "Uzun, ince ve bir düğüm atıldığında iz bırakabilecek ipek şal.",
               "detail": ""
             },
             {
               "id": "w4",
               "name": "Nota Sehpası Ucu",
-              "icon": "🎼",
+              "icon": "pa:fen_premium_004_w4",
               "description": "Orkestra sehpasından sökülen, dar ve sivri metal tutucu.",
               "detail": ""
             }
@@ -6760,28 +6760,28 @@
             {
               "id": "l1",
               "name": "Büyük Balo Salonu",
-              "icon": "💃",
+              "icon": "pa:fen_premium_004_l1",
               "description": "Kristal avizelerin altında dans pistinin bulunduğu ana salon.",
               "detail": ""
             },
             {
               "id": "l2",
               "name": "Kış Bahçesi",
-              "icon": "🌿",
+              "icon": "pa:fen_premium_004_l2",
               "description": "Sarayın cam tavanlı, servis arabalarının geçtiği yeşil bölümü.",
               "detail": ""
             },
             {
               "id": "l3",
               "name": "Şarap Mahzeni",
-              "icon": "🍾",
+              "icon": "pa:fen_premium_004_l3",
               "description": "Alt kattaki soğuk taş mahzen; özel şişeler burada tutulur.",
               "detail": ""
             },
             {
               "id": "l4",
               "name": "Orkestra Locası",
-              "icon": "🎻",
+              "icon": "pa:fen_premium_004_l4",
               "description": "Notaların ve metronomun bulunduğu, salonu yukarıdan gören dar loca.",
               "detail": ""
             }
