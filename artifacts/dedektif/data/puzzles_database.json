@@ -7283,21 +7283,21 @@
             {
               "id": "s1",
               "name": "Ares",
-              "icon": "🛡️",
+              "icon": "pa:mit_001_s1",
               "description": "Savaş tanrısı; öfkesini saklamayı hiç öğrenememiştir.",
               "detail": "Silah sayımı sırasında bile zırhındaki çatlakları tek tek kontrol eder."
             },
             {
               "id": "s2",
               "name": "Hermes",
-              "icon": "🪽",
+              "icon": "pa:mit_001_s2",
               "description": "Haberci tanrı; geçitlerin ve yolcuların efendisi.",
               "detail": "Kanatlı sandaletlerindeki yıldız tozunu her seferden sonra temizler."
             },
             {
               "id": "s3",
               "name": "Hera",
-              "icon": "🦚",
+              "icon": "pa:mit_001_s3",
               "description": "Olimpos kraliçesi; hafızası uzun, sessizliği ağırdır.",
               "detail": "Tavus tüyü pelerininde altın bağlayıcı kullanır; koleksiyon odasındaki şişeleri yalnız kendisi açar."
             }
@@ -7306,21 +7306,21 @@
             {
               "id": "w1",
               "name": "Yıldırım Mızrağı",
-              "icon": "⚡",
+              "icon": "pa:mit_001_w1",
               "description": "Taht salonundan alınmadıkça gücünü kaybetmeyen küçük mızrak.",
               "detail": ""
             },
             {
               "id": "w2",
               "name": "Fildişi Kılıç",
-              "icon": "🗡️",
+              "icon": "pa:mit_001_w2",
               "description": "Ares’in törensel silah dolabında saklanan kısa savaş kılıcı.",
               "detail": ""
             },
             {
               "id": "w3",
               "name": "Medusa Tozu",
-              "icon": "🐍",
+              "icon": "pa:mit_001_w3",
               "description": "Temas ettiği tanrısal dokuyu kristalleştiren taşlaştırıcı toz.",
               "detail": ""
             }
@@ -7329,21 +7329,21 @@
             {
               "id": "l1",
               "name": "Zeus’un Taht Salonu",
-              "icon": "🏛️",
+              "icon": "pa:mit_001_l1",
               "description": "Yıldırımın bronz askılarda dinlendiği yüksek salon.",
               "detail": ""
             },
             {
               "id": "l2",
               "name": "Ambrosia Bahçesi",
-              "icon": "🌿",
+              "icon": "pa:mit_001_l2",
               "description": "Gece çiçeklerinin yalnız tanrısal özleri tuttuğu avlu.",
               "detail": ""
             },
             {
               "id": "l3",
               "name": "Hermes’in Geçit Odası",
-              "icon": "🌀",
+              "icon": "pa:mit_001_l3",
               "description": "Dünya ile Olimpos arasındaki rüzgârlı kapı dizisi.",
               "detail": ""
             }
