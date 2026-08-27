@@ -7526,21 +7526,21 @@
             {
               "id": "s1",
               "name": "Başdemirci Temür Usta",
-              "icon": "🔥",
+              "icon": "pa:mit_002_s1",
               "description": "Ergenekon’un demir eritme törenini yöneten usta.",
               "detail": "Körüklerin sesinden hangi damarın çatlayacağını bilir; her aleti sayıyla mühürler."
             },
             {
               "id": "s2",
               "name": "Şaman Albastı",
-              "icon": "🪶",
+              "icon": "pa:mit_002_s2",
               "description": "Ruh geçiş ritüellerini yöneten şaman.",
               "detail": "Kara Ot’u nasıl kurutacağını, hangi kabın önce ısınacağını yalnız o bilir."
             },
             {
               "id": "s3",
               "name": "Rum Elçi Konstantinos",
-              "icon": "🧭",
+              "icon": "pa:mit_002_s3",
               "description": "Vadinin sırrını öğrenmek isteyen yabancı temsilci.",
               "detail": "Eyerinin tozunu silmez; nöbet kayıtlarını Türkçe okuyacak kadar dil bilir."
             }
@@ -7549,21 +7549,21 @@
             {
               "id": "w1",
               "name": "Şaman Oku",
-              "icon": "🏹",
+              "icon": "pa:mit_002_w1",
               "description": "Ritüel anlatılarında kullanılan, demir uçlu kutsal ok.",
               "detail": ""
             },
             {
               "id": "w2",
               "name": "Fildişi Kılıç",
-              "icon": "🗡️",
+              "icon": "pa:mit_002_w2",
               "description": "Tören ustasının kontrolünde duran kısa savaş kılıcı.",
               "detail": ""
             },
             {
               "id": "w3",
               "name": "Dağ Bitkisi Zehri",
-              "icon": "🌿",
+              "icon": "pa:mit_002_w3",
               "description": "Kara Ot’tan hazırlanan, yavaş etkili bitkisel karışım.",
               "detail": ""
             }
@@ -7572,21 +7572,21 @@
             {
               "id": "l1",
               "name": "Demir Ocağı",
-              "icon": "🔥",
+              "icon": "pa:mit_002_l1",
               "description": "Dört körüğün kutsal demiri beyazlattığı taş ocak.",
               "detail": ""
             },
             {
               "id": "l2",
               "name": "Şaman Çadırı",
-              "icon": "⛺",
+              "icon": "pa:mit_002_l2",
               "description": "Dua ipleri ve bitki demetleriyle çevrili ritüel çadırı.",
               "detail": ""
             },
             {
               "id": "l3",
               "name": "Vadinin Girişi",
-              "icon": "⛰️",
+              "icon": "pa:mit_002_l3",
               "description": "Muhafızların gece boyunca gözlediği dar geçit.",
               "detail": ""
             }
