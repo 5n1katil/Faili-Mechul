@@ -174,6 +174,47 @@ function hasAuthoring(caseData) {
   );
 }
 
+function deterministicPatternRole(profile) {
+  if (!profile?.miniIndex) return null;
+  if (profile.miniIndex === profile.core.length) return 'climax';
+  if (profile.miniIndex === 1) return 'pivot';
+  return 'verification';
+}
+
+function buildPortfolioRegistry(engine, entries) {
+  return entries.map((entry) => {
+    const normalized = engine.normalize(clone(entry.raw));
+    const profile = engine.fmPatternProfile(normalized);
+    return {
+      puzzleId: caseId(entry.raw),
+      title: String(entry.raw.title || ''),
+      signature: clone(engine.fmProfileVector(profile))
+    };
+  });
+}
+
+function bootstrapAuthoring(engine, caseData, tier, registryEntries) {
+  const output = clone(caseData);
+  output.qaPolicy = { ...(output.qaPolicy || {}), caseTier: tier };
+  const normalized = engine.normalize(clone(output));
+  const profile = engine.fmPatternProfile(normalized);
+  const vector = clone(engine.fmProfileVector(profile));
+  const miniClue = profile.miniIndex ? profile.core[profile.miniIndex - 1] : null;
+  if (!output.qaPattern || typeof output.qaPattern !== 'object') {
+    output.qaPattern = {
+      anchorSource: String(profile.anchor?.source || 'none'),
+      ...(profile.anchor?.component && profile.anchor.component !== '?' ? { anchorComponent: profile.anchor.component } : {}),
+      ...(miniClue?.id ? { miniGameClueId: String(miniClue.id), miniGameRole: deterministicPatternRole(profile) } : {}),
+      designIntent: `Deterministik miras-vaka imzası: ${vector.anchorSig}; ${vector.firstSig}; ${vector.actions}; ${vector.axes}; ${vector.miniSig}.`
+    };
+  }
+  if (!output.qaPortfolioRegistry || !Array.isArray(output.qaPortfolioRegistry.entries) || !output.qaPortfolioRegistry.entries.length) {
+    output.qaPortfolioRegistry = { schema_version: 'fm_qa_portfolio_registry_v1', entries: clone(registryEntries) };
+  }
+  output.qaAuthoringVersion ||= 'fm_case_qa_authoring_v3_2_deterministic_bootstrap';
+  return output;
+}
+
 function decodePointer(pathValue) {
   if (!pathValue.startsWith('/')) throw new Error(`JSON Pointer '/' ile başlamalı: ${pathValue}`);
   return pathValue.slice(1).split('/').map((part) => part.replace(/~1/g, '/').replace(/~0/g, '~'));
@@ -185,7 +226,7 @@ function allowedPatchPath(pointer) {
   if (TOP_LEVEL_AUTHORING.has(parts[0])) return true;
   if (['story', 'atmosphere', 'subtitle', 'deductionSummary', 'assetManifest'].includes(parts[0])) return true;
   if (['suspects', 'weapons', 'locations'].includes(parts[0])) {
-    return /^\d+$/.test(parts[1] || '') && ['description', 'detail', 'info', 'profile', 'visualDefinition', 'visualProfile', 'generationPrompt', 'avatarPrompt'].includes(parts[2]);
+    return /^\d+$/.test(parts[1] || '') && ['name', 'description', 'detail', 'info', 'profile', 'visualDefinition', 'visualProfile', 'generationPrompt', 'avatarPrompt'].includes(parts[2]);
   }
   if (parts[0] === 'clues' && /^\d+$/.test(parts[1] || '')) return Boolean(parts[2]) && parts[2] !== 'id';
   return false;
@@ -337,7 +378,7 @@ const SYSTEM_PROMPT = `You are the bounded repair engine for Faili Meçhul, a Tu
 Return only the strict patch plan requested by the schema.
 Non-negotiable rules:
 - Keep puzzle ID, entity IDs, clue IDs, icons/assets, and the solution suspect/weapon/location IDs unchanged.
-- Never patch names or solution fields.
+- Preserve every solution ID. A suspect, weapon or location display name may change only when the deterministic report identifies a real language defect or a direct pre-clue identity leak. Keep the same entity ID, physical class, visual identity and gameplay role; never rename merely for style.
 - Every non-bonus clue must contain logicRules grounded in player-visible evidence.
 - All non-bonus clues together must produce one unique solution; removing any one must restore ambiguity. Bonus clues are never required.
 - qaSemanticFacts must document player-visible semantic deductions.
@@ -351,7 +392,7 @@ Non-negotiable rules:
 function compactReport(result, leakage) {
   return {
     score: result.score,
-    production_ready: result.productionReady,
+    simulator_production_ready: result.productionReady,
     blockers: result.blockers,
     fixes: result.fixes,
     advisories: result.advisories,
@@ -372,9 +413,9 @@ function buildPrompt({ caseData, baselineResult, leakage, phase }) {
 
 Allowed JSON Pointer paths:
 - /story, /atmosphere, /subtitle, /deductionSummary, /assetManifest
-- /suspects/<index>/(description|detail|info|profile|visualDefinition|visualProfile|generationPrompt|avatarPrompt)
-- /weapons/<index>/(description|detail|info|profile|visualDefinition|visualProfile|generationPrompt|avatarPrompt)
-- /locations/<index>/(description|detail|info|profile|visualDefinition|visualProfile|generationPrompt|avatarPrompt)
+- /suspects/<index>/(name|description|detail|info|profile|visualDefinition|visualProfile|generationPrompt|avatarPrompt)
+- /weapons/<index>/(name|description|detail|info|profile|visualDefinition|visualProfile|generationPrompt|avatarPrompt)
+- /locations/<index>/(name|description|detail|info|profile|visualDefinition|visualProfile|generationPrompt|avatarPrompt)
 - /clues/<index>/<any field except id>
 - /qaPattern, /qaPortfolioRegistry, /qaSemanticFacts, /qaPolicy, /qaNameRationales, /intentionalMononymIds, /qaAuthoringVersion, /qaDeductionGraph
 
@@ -388,8 +429,37 @@ ${JSON.stringify(compactReport(baselineResult, leakage))}`;
 function evaluate(engine, original, candidate) {
   const result = evaluateCase(engine, candidate, { baseline: original, includeFullQa: false });
   const leakage = evaluatePreclueLeakage(candidate);
-  const passed = result.score === 100 && result.productionReady === true && result.identityGuard?.passed === true && leakage.passed === true && leakage.avatar_prompt_risk === false;
-  return { result, leakage, passed };
+  const requiredGateNames = ['coreNecessity', 'patternGovernance', 'contentAndNames', 'semanticContract', 'visibleEvidence', 'mechanicContract', 'bonusFunctionality'];
+  const failedRequiredGates = requiredGateNames.filter((name) => result.gates?.[name]?.passed !== true);
+  const passed = result.score === 100 && failedRequiredGates.length === 0 && result.identityGuard?.passed === true && leakage.passed === true && leakage.avatar_prompt_risk === false;
+  return {
+    result,
+    leakage,
+    passed,
+    calibration: {
+      schema_version: 'fm_case_qa_calibration_v3_2',
+      automation_certified: passed,
+      failed_required_gates: failedRequiredGates,
+      advisory_count: Array.isArray(result.advisories) ? result.advisories.filter((item) => !/^✓|^ⓘ/.test(String(item))).length : 0,
+      raw_simulator_production_ready: result.productionReady === true
+    }
+  };
+}
+
+function classifyRepairEligibility(assessment) {
+  const leakage = assessment.leakage || {};
+  if (leakage.status === 'blocked_pending_content_repair') {
+    return {
+      eligible: true,
+      queue: leakage.solution_triple_exposed ? 'critical_solution_leak' : 'confirmed_preclue_leak',
+      priority: leakage.solution_triple_exposed ? 1 : 2,
+      reason: 'deterministic_preclue_guard_confirmed_content_repair'
+    };
+  }
+  if (leakage.status === 'manual_review_required') {
+    return { eligible: false, queue: 'deep_review', priority: 3, reason: 'semantic_overlap_requires_case_context_review' };
+  }
+  return { eligible: false, queue: 'deterministic_qa_review', priority: 4, reason: 'no_confirmed_preclue_leak' };
 }
 
 async function mapLimit(items, limit, worker) {
@@ -420,6 +490,7 @@ function restoreBaselineAuthoring(productionCandidate, original) {
 
 async function main() {
   if (!['audit', 'pilot', 'full'].includes(MODE)) throw new Error(`FM_QA_MODE geçersiz: ${MODE}`);
+  if (MODE === 'pilot' && AI_ENABLED && !CASE_IDS.size) throw new Error('GÜVENLİ PİLOT KİLİDİ: AI pilotu için FM_QA_CASE_IDS ile en az bir kesin vaka ID seçilmelidir.');
   const policy = readJson(POLICY_PATH);
   const standardSource = fs.readFileSync(STANDARD_PATH, 'utf8');
   const premiumSource = fs.readFileSync(PREMIUM_PATH, 'utf8');
@@ -438,6 +509,8 @@ async function main() {
   if (CASE_LIMIT) selected = selected.slice(0, CASE_LIMIT);
   const selectedIds = new Set(selected.map((entry) => caseId(entry.raw)));
   const engine = loadEngine(SIMULATOR_PATH);
+  const registryEntries = buildPortfolioRegistry(engine, entries);
+  const registryIndexByCaseId = new Map(registryEntries.map((item, index) => [String(item.puzzleId), index]));
   const budget = new Budget(policy);
   const sourceSha = { standard: sha(standardSource), premium: sha(premiumSource), combined: sha(`${sha(standardSource)}:${sha(premiumSource)}`) };
 
@@ -446,25 +519,41 @@ async function main() {
     const id = caseId(entry.raw);
     const original = clone(entry.raw);
     const merged = mergeSidecar(original, sidecar.cases[id]);
-    const baseline = evaluate(engine, original, merged.caseData);
+    const registryIndex = registryIndexByCaseId.get(id) ?? 0;
+    const bootstrapped = bootstrapAuthoring(engine, merged.caseData, entry.tier, [registryEntries[registryIndex]]);
+    const baseline = evaluate(engine, original, bootstrapped);
+    const repairEligibility = classifyRepairEligibility(baseline);
+    sidecar.cases[id] = {
+      schema_version: 'fm_case_qa_sidecar_entry_v1',
+      simulator_version: '29.4',
+      prompt_version: PROMPT_VERSION,
+      source_content_hash: stableHash(stripAuthoring(original)),
+      overlay: authoringOverlay(bootstrapped),
+      bootstrap_mode: 'deterministic_v3_2',
+      validated_at: new Date().toISOString()
+    };
     const row = {
       case_id: id,
       case_title: String(original.title || ''),
       case_tier: entry.tier,
       pack_id: entry.pack_id || null,
       source_index: entry.source_index,
-      sidecar_status: merged.status,
-      authoring_evidence_present: hasAuthoring(merged.caseData),
+      sidecar_status: merged.status === 'applied' ? 'applied' : 'deterministic_bootstrap_applied',
+      authoring_evidence_present: hasAuthoring(bootstrapped),
       baseline: compactReport(baseline.result, baseline.leakage),
-      status: baseline.passed ? 'preserved_100' : (AI_ENABLED ? 'repair_pending' : 'audit_only_needs_repair'),
+      calibration: baseline.calibration,
+      repair_eligibility: repairEligibility,
+      status: baseline.passed ? 'preserved_100' : repairEligibility.eligible ? 'confirmed_repair_required' : repairEligibility.queue,
       attempts: [],
       accepted_candidate: null,
       error: null
     };
     if (baseline.passed) return row;
     if (!AI_ENABLED || MODE === 'audit') return row;
+    if (!repairEligibility.eligible) return row;
+    row.status = 'repair_pending';
 
-    let current = merged.caseData;
+    let current = bootstrapped;
     let currentEval = baseline;
     const attempts = [
       { phase: 'luna_first_pass', model: policy.models.first_pass, effort: policy.models.first_pass_reasoning_effort },
@@ -485,7 +574,8 @@ async function main() {
           cost_usd: response.cost,
           operation_count: response.plan.operations.length,
           assessment: response.plan.assessment,
-          result: compactReport(assessed.result, assessed.leakage)
+          result: compactReport(assessed.result, assessed.leakage),
+          calibration: assessed.calibration
         });
         current = candidate;
         currentEval = assessed;
@@ -533,7 +623,7 @@ async function main() {
 
   const reportRows = rows.map(({ accepted_candidate, ...row }) => ({ ...row, candidate_hash: accepted_candidate ? stableHash(accepted_candidate) : null }));
   const report = {
-    schema_version: 'fm_case_qa_batch_run_v3_1',
+    schema_version: 'fm_case_qa_batch_run_v3_2',
     run_id: env.GITHUB_RUN_ID || `local-${Date.now()}`,
     mode: MODE,
     ai_enabled: AI_ENABLED,
@@ -546,6 +636,11 @@ async function main() {
       preserved_100: rows.filter((row) => row.status === 'preserved_100').length,
       accepted_100: rows.filter((row) => row.status === 'accepted_100').length,
       audit_only_needs_repair: rows.filter((row) => row.status === 'audit_only_needs_repair').length,
+      confirmed_repair_required: rows.filter((row) => row.status === 'confirmed_repair_required').length,
+      critical_solution_leak: rows.filter((row) => row.repair_eligibility?.queue === 'critical_solution_leak').length,
+      deep_review_queue: rows.filter((row) => row.status === 'deep_review').length,
+      deterministic_qa_review_queue: rows.filter((row) => row.status === 'deterministic_qa_review').length,
+      ai_repair_eligible_case_ids: rows.filter((row) => row.repair_eligibility?.eligible).sort((a, b) => a.repair_eligibility.priority - b.repair_eligibility.priority).map((row) => row.case_id),
       quarantined: rows.filter((row) => row.status.startsWith('quarantined')).length,
       budget_stopped: rows.filter((row) => row.status === 'budget_stopped').length,
       publishable_case_ids: [...accepted.keys()],
