@@ -1,7 +1,6 @@
 import React from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
-import { useColors } from "@/hooks/useColors";
 
 interface Props {
   selectedSuspect: string | null;
@@ -24,7 +23,6 @@ export default function StickyAccuseBar({
   onOpen,
   disabled,
 }: Props) {
-  const colors = useColors();
   const selectedCount = [selectedSuspect, selectedWeapon, selectedLocation].filter(Boolean).length;
   const allSelected = selectedCount === 3;
 
@@ -41,18 +39,23 @@ export default function StickyAccuseBar({
         styles.bar,
         {
           backgroundColor: "#1E2540",
-          borderColor: allSelected ? `${colors.primary}66` : "#D4A84330",
+          borderColor: allSelected ? "#D4A843AA" : "#D4A84355",
+          shadowColor: "#D4A843",
+          shadowOpacity: allSelected ? 0.28 : 0.12,
+          shadowRadius: allSelected ? 14 : 8,
+          shadowOffset: { width: 0, height: 3 },
+          elevation: allSelected ? 8 : 4,
           opacity: pressed && !disabled ? 0.85 : 1,
         },
         disabled && { opacity: 0.5 },
       ]}
     >
       <View style={styles.left}>
-        <View style={[styles.iconWrap, { backgroundColor: `${colors.primary}20` }]}>
-          <MaterialIcons name="gps-fixed" size={15} color={colors.primary} />
+        <View style={[styles.iconWrap, { backgroundColor: "#D4A84322", borderWidth: 1, borderColor: "#D4A84444" }]}>
+          <MaterialIcons name="gps-fixed" size={15} color="#D4A843" />
         </View>
         <View style={styles.info}>
-          <Text style={[styles.title, { color: colors.primary }]}>SON ÇIKARIM</Text>
+          <Text style={[styles.title, { color: "#D4A843" }]}>SON ÇIKARIM</Text>
           <View style={styles.chipRow}>
             {chips.map(({ key, name, icon }) => (
               <View
@@ -60,18 +63,18 @@ export default function StickyAccuseBar({
                 style={[
                   styles.chip,
                   {
-                    backgroundColor: name ? `${colors.primary}15` : colors.background,
-                    borderColor: name ? `${colors.primary}44` : colors.border,
+                    backgroundColor: name ? "#D4A84318" : "#FFFFFF08",
+                    borderColor: name ? "#D4A84355" : "#FFFFFF15",
                   },
                 ]}
               >
                 <MaterialIcons
                   name={icon}
                   size={10}
-                  color={name ? colors.primary : colors.mutedForeground}
+                  color={name ? "#D4A843" : "#666888"}
                 />
                 <Text
-                  style={[styles.chipText, { color: name ? colors.primary : colors.mutedForeground }]}
+                  style={[styles.chipText, { color: name ? "#D4A843" : "#666888" }]}
                   numberOfLines={1}
                 >
                   {name ?? "—"}
@@ -82,11 +85,11 @@ export default function StickyAccuseBar({
         </View>
       </View>
 
-      <View style={[styles.openBtn, { backgroundColor: allSelected ? colors.primary : `${colors.primary}22` }]}>
+      <View style={[styles.openBtn, { backgroundColor: allSelected ? "#D4A843" : "#D4A84322" }]}>
         <MaterialIcons
           name="keyboard-arrow-up"
           size={20}
-          color={allSelected ? colors.primaryForeground : colors.primary}
+          color={allSelected ? "#0F1117" : "#D4A843"}
         />
       </View>
     </Pressable>

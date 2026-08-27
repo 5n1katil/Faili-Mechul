@@ -2021,17 +2021,24 @@ export default function VakalarScreen() {
         </Animated.View>
 
         <Animated.View entering={FadeInDown.delay(80).springify()}>
-          <View style={[gameStyles.storyBox, { backgroundColor: "#1E2540", borderColor: "#D4A84330" }]}>
+          <View style={[gameStyles.storyBox, { backgroundColor: "#D4A8430A", borderColor: "#D4A84355", shadowColor: "#D4A843", shadowOpacity: 0.12, shadowRadius: 10, shadowOffset: { width: 0, height: 3 }, elevation: 4 }]}>
             <View style={gameStyles.storyHeader}>
-              <MaterialIcons name="auto-stories" size={16} color={colors.primary} />
-              <Text style={[gameStyles.storyLabel, { color: colors.primary }]}>OLAY</Text>
+              <View style={{ width: 28, height: 28, borderRadius: 8, backgroundColor: "#D4A84322", borderWidth: 1, borderColor: "#D4A84444", alignItems: "center", justifyContent: "center" }}>
+                <MaterialIcons name="auto-stories" size={16} color="#D4A843" />
+              </View>
+              <Text style={[gameStyles.storyLabel, { color: "#D4A843", fontSize: 12, letterSpacing: 1.5 }]}>OLAY</Text>
             </View>
+            <View style={{ height: StyleSheet.hairlineWidth, backgroundColor: "#D4A84333", marginHorizontal: -14, marginTop: 2 }} />
             <Text style={[gameStyles.storyText, { color: colors.foreground }]}>{puzzle.story}</Text>
           </View>
         </Animated.View>
 
         <Animated.View entering={FadeInDown.delay(160).springify()}>
-          <Text style={[gameStyles.sectionTitle, { color: colors.foreground }]}>Dedektif Izgarası</Text>
+          <View style={gameStyles.sectionTitleRow}>
+            <View style={gameStyles.sectionTitleAccent} />
+            <MaterialIcons name="grid-on" size={15} color="#D4A843" />
+            <Text style={[gameStyles.sectionTitle, { color: "#D4A843" }]}>Dedektif Izgarası</Text>
+          </View>
           <View
             style={[
               gameStyles.gridContainer,
@@ -2057,7 +2064,11 @@ export default function VakalarScreen() {
         </Animated.View>
 
         <Animated.View entering={FadeInDown.delay(240).springify()}>
-          <Text style={[gameStyles.sectionTitle, { color: colors.foreground }]}>İpuçları</Text>
+          <View style={gameStyles.sectionTitleRow}>
+            <View style={gameStyles.sectionTitleAccent} />
+            <MaterialIcons name="lightbulb-outline" size={15} color="#D4A843" />
+            <Text style={[gameStyles.sectionTitle, { color: "#D4A843" }]}>İpuçları</Text>
+          </View>
           {puzzle.clues.map((clue, i) => {
             const isBonus = isBonusClue(puzzle, i);
             const isRevealed = cluesRevealed.includes(i);
@@ -2088,8 +2099,8 @@ export default function VakalarScreen() {
             gameStyles.stickyBarWrapper,
             {
               paddingBottom: Platform.OS === "web" ? 34 + 64 : insets.bottom + 64,
-              backgroundColor: colors.background,
-              borderTopColor: colors.border,
+              backgroundColor: "#1E2540",
+              borderTopColor: "#D4A84333",
             },
           ]}
         >
@@ -2971,7 +2982,9 @@ const gameStyles = StyleSheet.create({
   storyHeader: { flexDirection: "row", alignItems: "center", gap: 8 },
   storyLabel: { fontFamily: "DroidSerifRegular", fontSize: 11, fontWeight: "700", letterSpacing: 1 },
   storyText: { fontFamily: "DroidSerifRegular", fontSize: 14, lineHeight: 22 },
-  sectionTitle: { fontSize: 21, fontFamily: "UnnaBold", fontWeight: "700", marginBottom: 10, letterSpacing: 0.2 },
+  sectionTitleRow: { flexDirection: "row", alignItems: "center", gap: 7, marginBottom: 10 },
+  sectionTitleAccent: { width: 3, height: 16, borderRadius: 2, backgroundColor: "#D4A843" },
+  sectionTitle: { fontSize: 21, fontFamily: "UnnaBold", fontWeight: "700", letterSpacing: 0.2 },
   gridContainer: { borderRadius: 14, borderWidth: 1, padding: 10, overflow: "hidden" },
   gridContainerWeb: {
     maxWidth: 560,
