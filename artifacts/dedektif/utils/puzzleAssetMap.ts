@@ -800,6 +800,18 @@ const PUZZLE_ASSET_MAP: Record<string, number> = {
   fen_premium_004_l2: require("../assets/images/puzzle_assets/fen_premium_004_l2.png"),
   fen_premium_004_l3: require("../assets/images/puzzle_assets/fen_premium_004_l3.png"),
   fen_premium_004_l4: require("../assets/images/puzzle_assets/fen_premium_004_l4.png"),
+  fen_premium_005_s1: require("../assets/images/puzzle_assets/fen_premium_005_s1.png"),
+  fen_premium_005_s2: require("../assets/images/puzzle_assets/fen_premium_005_s2.png"),
+  fen_premium_005_s3: require("../assets/images/puzzle_assets/fen_premium_005_s3.png"),
+  fen_premium_005_s4: require("../assets/images/puzzle_assets/fen_premium_005_s4.png"),
+  fen_premium_005_w1: require("../assets/images/puzzle_assets/fen_premium_005_w1.png"),
+  fen_premium_005_w2: require("../assets/images/puzzle_assets/fen_premium_005_w2.png"),
+  fen_premium_005_w3: require("../assets/images/puzzle_assets/fen_premium_005_w3.png"),
+  fen_premium_005_w4: require("../assets/images/puzzle_assets/fen_premium_005_w4.png"),
+  fen_premium_005_l1: require("../assets/images/puzzle_assets/fen_premium_005_l1.png"),
+  fen_premium_005_l2: require("../assets/images/puzzle_assets/fen_premium_005_l2.png"),
+  fen_premium_005_l3: require("../assets/images/puzzle_assets/fen_premium_005_l3.png"),
+  fen_premium_005_l4: require("../assets/images/puzzle_assets/fen_premium_005_l4.png"),
 };
 
 export function isPuzzleAsset(icon: string | undefined): boolean {

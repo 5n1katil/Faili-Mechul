@@ -7012,28 +7012,28 @@
             {
               "id": "s1",
               "name": "Hukukçu Haru Kamei",
-              "icon": "📑",
+              "icon": "pa:fen_premium_005_s1",
               "description": "Patent görüşmesinin hukuki çerçevesini yöneten şirket danışmanı.",
               "detail": "Toplantı notlarını renkli sekmelerle ayırır; konferans katındaki sözleşme odalarını ayrıntılı bilir."
             },
             {
               "id": "s2",
               "name": "Yabancı Danışman Emil Voren",
-              "icon": "👔",
+              "icon": "pa:fen_premium_005_s2",
               "description": "Teknoloji anlaşması için kente gelen, geçmişi belirsiz danışman.",
               "detail": "Mekanik tesisat şemalarını hızlı okur; pasaportunda ardışık olmayan giriş damgaları vardır."
             },
             {
               "id": "s3",
               "name": "Gazeteci Nao Kirin",
-              "icon": "🗞️",
+              "icon": "pa:fen_premium_005_s3",
               "description": "Şirketin çevre raporlarını inceleyen araştırmacı gazeteci.",
               "detail": "Oda servis fişlerini ve gizli röportaj notlarını toplar; otel kat planını tek başına çizmiştir."
             },
             {
               "id": "s4",
               "name": "Otel Mühendisi Ken Arai",
-              "icon": "⚙️",
+              "icon": "pa:fen_premium_005_s4",
               "description": "Gece bakım panellerinden ve asansör ara sahanlığından sorumlu mühendis.",
               "detail": "Tesisat anahtarlarını seri numarasıyla taşır; parazit kesicilerini bakım defterine not eder."
             }
@@ -7042,28 +7042,28 @@
             {
               "id": "w1",
               "name": "Bakır Hat Kesicisi",
-              "icon": "✂️",
+              "icon": "pa:fen_premium_005_w1",
               "description": "İnce sinyal kablolarını kesmek için kullanılan izole saplı alet.",
               "detail": ""
             },
             {
               "id": "w2",
               "name": "Servis Halatı",
-              "icon": "🪢",
+              "icon": "pa:fen_premium_005_w2",
               "description": "Ara sahanlıktaki bakım kapaklarını sabitlemekte kullanılan kısa halat.",
               "detail": ""
             },
             {
               "id": "w3",
               "name": "Parazit Kesici",
-              "icon": "📡",
+              "icon": "pa:fen_premium_005_w3",
               "description": "Telsiz ve kamera parazitini ayarlayan küçük güç modülü.",
               "detail": ""
             },
             {
               "id": "w4",
               "name": "Karbonmonoksit Bypass Kartuşu",
-              "icon": "💨",
+              "icon": "pa:fen_premium_005_w4",
               "description": "Havalandırma hattına bağlandığında gazı odaya yönlendiren mühürlü kartuş.",
               "detail": ""
             }
@@ -7072,28 +7072,28 @@
             {
               "id": "l1",
               "name": "Oda 1402",
-              "icon": "🛏️",
+              "icon": "pa:fen_premium_005_l1",
               "description": "Kilitli kapısı ve açık televizyonuyla kurbanın odası.",
               "detail": ""
             },
             {
               "id": "l2",
               "name": "Konferans Katı",
-              "icon": "🏢",
+              "icon": "pa:fen_premium_005_l2",
               "description": "Hukuk ekibinin patent metinlerini incelediği kapalı toplantı katı.",
               "detail": ""
             },
             {
               "id": "l3",
               "name": "Asansör Ara Sahanlığı",
-              "icon": "🔲",
+              "icon": "pa:fen_premium_005_l3",
               "description": "13 ile 14. kat arasında, bakım kapağı bulunan dar platform.",
               "detail": ""
             },
             {
               "id": "l4",
               "name": "Çatı Teknik Odası",
-              "icon": "⚙️",
+              "icon": "pa:fen_premium_005_l4",
               "description": "Havalandırma ana hattının ve vana panosunun bulunduğu üst bölüm.",
               "detail": ""
             }
