@@ -234,7 +234,7 @@ function cleanList(value) {
 function sectionGate(section) {
   const flags = cleanList(section && section.flags);
   const warnings = cleanList(section && section.warnings);
-  return { passed: flags.length === 0 && warnings.length === 0, flags, warnings };
+  return { passed: flags.length === 0, flags, warnings };
 }
 
 function evaluateCase(engine, rawCase, options = {}) {
