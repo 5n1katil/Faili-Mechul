@@ -761,6 +761,15 @@ const PUZZLE_ASSET_MAP: Record<string, number> = {
   pp_005_l2: require("../assets/images/puzzle_assets/pp_005_l2.png"),
   pp_005_l3: require("../assets/images/puzzle_assets/pp_005_l3.png"),
   pp_005_l4: require("../assets/images/puzzle_assets/pp_005_l4.png"),
+  fen_premium_001_s1: require("../assets/images/puzzle_assets/fen_premium_001_s1.png"),
+  fen_premium_001_s2: require("../assets/images/puzzle_assets/fen_premium_001_s2.png"),
+  fen_premium_001_s3: require("../assets/images/puzzle_assets/fen_premium_001_s3.png"),
+  fen_premium_001_w1: require("../assets/images/puzzle_assets/fen_premium_001_w1.png"),
+  fen_premium_001_w2: require("../assets/images/puzzle_assets/fen_premium_001_w2.png"),
+  fen_premium_001_w3: require("../assets/images/puzzle_assets/fen_premium_001_w3.png"),
+  fen_premium_001_l1: require("../assets/images/puzzle_assets/fen_premium_001_l1.png"),
+  fen_premium_001_l2: require("../assets/images/puzzle_assets/fen_premium_001_l2.png"),
+  fen_premium_001_l3: require("../assets/images/puzzle_assets/fen_premium_001_l3.png"),
 };
 
 export function isPuzzleAsset(icon: string | undefined): boolean {
