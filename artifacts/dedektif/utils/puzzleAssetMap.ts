@@ -842,6 +842,15 @@ const PUZZLE_ASSET_MAP: Record<string, number> = {
   mit_003_l2: require("../assets/images/puzzle_assets/mit_003_l2.png"),
   mit_003_l3: require("../assets/images/puzzle_assets/mit_003_l3.png"),
   mit_003_l4: require("../assets/images/puzzle_assets/mit_003_l4.png"),
+  mit_004_s1: require("../assets/images/puzzle_assets/mit_004_s1.png"),
+  mit_004_s2: require("../assets/images/puzzle_assets/mit_004_s2.png"),
+  mit_004_s3: require("../assets/images/puzzle_assets/mit_004_s3.png"),
+  mit_004_w1: require("../assets/images/puzzle_assets/mit_004_w1.png"),
+  mit_004_w2: require("../assets/images/puzzle_assets/mit_004_w2.png"),
+  mit_004_w3: require("../assets/images/puzzle_assets/mit_004_w3.png"),
+  mit_004_l1: require("../assets/images/puzzle_assets/mit_004_l1.png"),
+  mit_004_l2: require("../assets/images/puzzle_assets/mit_004_l2.png"),
+  mit_004_l3: require("../assets/images/puzzle_assets/mit_004_l3.png"),
 };
 
 export function isPuzzleAsset(icon: string | undefined): boolean {
