@@ -8276,21 +8276,21 @@
             {
               "id": "s1",
               "name": "Loki",
-              "icon": "🧩",
+              "icon": "pa:mit_005_s1",
               "description": "Hile ve rün tanrısı.",
               "detail": "Mavi kıvılcım bırakan rün külünü taşıdığı kesede saklar; kapıları konuşmadan açmayı sever."
             },
             {
               "id": "s2",
               "name": "Freya",
-              "icon": "🌺",
+              "icon": "pa:mit_005_s2",
               "description": "Aşk, savaş ve Valkyrie seçiminin tanrıçası.",
               "detail": "Gece çiçeklerinden uyku tozu hazırlar; seçki defterindeki isimleri yalnız kendi eliyle değiştirir."
             },
             {
               "id": "s3",
               "name": "Tyr",
-              "icon": "⚔️",
+              "icon": "pa:mit_005_s3",
               "description": "Adalet ve savaş tanrısı.",
               "detail": "Kapı kayıtlarını yalnız başparmağıyla mühürler; yargı kılıcını her nöbetten sonra sayar."
             }
@@ -8299,21 +8299,21 @@
             {
               "id": "w1",
               "name": "Loki’nin Zehirli Rünleri",
-              "icon": "🔮",
+              "icon": "pa:mit_005_w1",
               "description": "Taşa kazındığında içten çürüten, mavi kıvılcım bırakan lanet rünleri.",
               "detail": ""
             },
             {
               "id": "w2",
               "name": "Freya’nın Uyku Büyüsü Tozları",
-              "icon": "✨",
+              "icon": "pa:mit_005_w2",
               "description": "Gece çiçeği poleninden üretilen, yarasız ve sessiz ölüm getiren altın toz.",
               "detail": ""
             },
             {
               "id": "w3",
               "name": "Tyr’ın Yargı Kılıcı",
-              "icon": "🗡️",
+              "icon": "pa:mit_005_w3",
               "description": "Adalet törenlerinde kullanılan, ağır ve keskin savaş kılıcı.",
               "detail": ""
             }
@@ -8322,21 +8322,21 @@
             {
               "id": "l1",
               "name": "Valhalla Kapısı",
-              "icon": "🚪",
+              "icon": "pa:mit_005_l1",
               "description": "Bjorn’un nöbet tuttuğu dev meşe kapı ve kayıt taşı.",
               "detail": ""
             },
             {
               "id": "l2",
               "name": "Rün Odası",
-              "icon": "🪨",
+              "icon": "pa:mit_005_l2",
               "description": "Loki’nin mavi kıvılcımlı tılsımlarını sakladığı taş oda.",
               "detail": ""
             },
             {
               "id": "l3",
               "name": "Valkyrie Bahçesi",
-              "icon": "🌿",
+              "icon": "pa:mit_005_l3",
               "description": "Freya’nın seçki listelerini ve gece çiçeklerini tuttuğu kutsal bahçe.",
               "detail": ""
             }
