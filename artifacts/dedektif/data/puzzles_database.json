@@ -6459,21 +6459,21 @@
             {
               "id": "s1",
               "name": "Sistem Profesörü Arel Karan",
-              "icon": "🧠",
+              "icon": "pa:fen_premium_003_s1",
               "description": "Üniversiteden ayrıldıktan sonra taş kulübede yaşayan eski sistem kuramcısı.",
               "detail": "Eski mekanik paket çizimlerini arşivler; her düzenekte aynı kalın siyah çizim kalemini kullanır."
             },
             {
               "id": "s2",
               "name": "Posta Teknisyeni Dilan Er",
-              "icon": "📮",
+              "icon": "pa:fen_premium_003_s2",
               "description": "Kampüs içi teslimat hatlarını ve gönderi kasalarını denetleyen teknisyen.",
               "detail": "Barkod şeritlerinin istasyon sırasını ezbere bilir; vardiya kartını her geçitte okutmak zorundadır."
             },
             {
               "id": "s3",
               "name": "Kimyager Ozan Levent",
-              "icon": "⚗️",
+              "icon": "pa:fen_premium_003_s3",
               "description": "Karantina laboratuvarına güvenlik çözücüleri sağlayan bağımsız kimyager.",
               "detail": "Tozlu cam tüpleri ve reaktif şişeleri taşır; paket mekaniklerinden çok sıvı numunelerinde uzmandır."
             }
@@ -6482,21 +6482,21 @@
             {
               "id": "w1",
               "name": "Yaylı İğne Düzeneği",
-              "icon": "🪤",
+              "icon": "pa:fen_premium_003_w1",
               "description": "Kapağı zorlanınca devreye giren, yayla fırlatılan kısa metal iğne sistemi.",
               "detail": ""
             },
             {
               "id": "w2",
               "name": "Kızıl Şerit Patlatıcısı",
-              "icon": "🧨",
+              "icon": "pa:fen_premium_003_w2",
               "description": "Şerit gerildiğinde çalışan küçük basınç kapsülü.",
               "detail": ""
             },
             {
               "id": "w3",
               "name": "Basınçlı Aerosol Kartuşu",
-              "icon": "🫧",
+              "icon": "pa:fen_premium_003_w3",
               "description": "Açılma anında kapalı alana toksik sis veren metal kartuş.",
               "detail": ""
             }
@@ -6505,21 +6505,21 @@
             {
               "id": "l1",
               "name": "Üniversite Posta Odası",
-              "icon": "🏫",
+              "icon": "pa:fen_premium_003_l1",
               "description": "Kampüs içi paketlerin ayrıldığı, etiket tarayıcılarıyla dolu depo.",
               "detail": ""
             },
             {
               "id": "l2",
               "name": "Karantina İnceleme Odası",
-              "icon": "🔐",
+              "icon": "pa:fen_premium_003_l2",
               "description": "Şüpheli paketlerin açılmadan görüntülendiği güvenlik odası.",
               "detail": ""
             },
             {
               "id": "l3",
               "name": "Taş Kulübe Atölyesi",
-              "icon": "🌲",
+              "icon": "pa:fen_premium_003_l3",
               "description": "Şehir dışında, elektrik hattı zayıf eski bir bakım kulübesi.",
               "detail": ""
             }
