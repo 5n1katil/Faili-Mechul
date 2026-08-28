@@ -267,6 +267,61 @@ function validateNestedPatchParent(target, pointer) {
   }
 }
 
+function isPlainObject(value) {
+  return value !== null && typeof value === 'object' && !Array.isArray(value);
+}
+
+function canonicalizeKnownPatchValue(pointer, value) {
+  const parts = decodePointer(pointer);
+  const field = parts.at(-1);
+  if (['qaSemanticFacts', 'logicRules', 'assetManifest'].includes(field)) {
+    if (Array.isArray(value)) return value;
+    // A single structured record is an unambiguous shorthand for a one-item
+    // collection. Canonicalize it before the simulator can call `.map()`.
+    if (isPlainObject(value)) return [value];
+    throw new Error(`PATCH_CONTRACT: ${pointer} dizi veya tek nesne olmalıdır.`);
+  }
+  if (field === 'intentionalMononymIds' && !Array.isArray(value)) {
+    throw new Error(`PATCH_CONTRACT: ${pointer} dizi olmalıdır.`);
+  }
+  if (field === 'qaMechanicBoundary' && !isPlainObject(value)) {
+    throw new Error(`PATCH_CONTRACT: ${pointer} nesne olmalıdır.`);
+  }
+  return value;
+}
+
+function validateCandidateContract(candidate) {
+  for (const field of ['suspects', 'weapons', 'locations', 'clues']) {
+    if (!Array.isArray(candidate[field])) throw new Error(`PATCH_CONTRACT: /${field} dizi olmalıdır.`);
+  }
+  if (candidate.qaSemanticFacts !== undefined && !Array.isArray(candidate.qaSemanticFacts)) {
+    throw new Error('PATCH_CONTRACT: /qaSemanticFacts dizi olmalıdır.');
+  }
+  if (candidate.assetManifest !== undefined && !Array.isArray(candidate.assetManifest)) {
+    throw new Error('PATCH_CONTRACT: /assetManifest dizi olmalıdır.');
+  }
+  if (candidate.intentionalMononymIds !== undefined && !Array.isArray(candidate.intentionalMononymIds)) {
+    throw new Error('PATCH_CONTRACT: /intentionalMononymIds dizi olmalıdır.');
+  }
+  for (const field of ['qaPattern', 'qaPortfolioRegistry', 'qaPolicy', 'qaDeductionGraph']) {
+    if (candidate[field] !== undefined && !isPlainObject(candidate[field])) {
+      throw new Error(`PATCH_CONTRACT: /${field} nesne olmalıdır.`);
+    }
+  }
+  for (const [index, clue] of candidate.clues.entries()) {
+    if (!isPlainObject(clue)) throw new Error(`PATCH_CONTRACT: /clues/${index} nesne olmalıdır.`);
+    if (clue.logicRules !== undefined && !Array.isArray(clue.logicRules)) {
+      throw new Error(`PATCH_CONTRACT: /clues/${index}/logicRules dizi olmalıdır.`);
+    }
+    if (clue.qaSemanticFacts !== undefined && !Array.isArray(clue.qaSemanticFacts)) {
+      throw new Error(`PATCH_CONTRACT: /clues/${index}/qaSemanticFacts dizi olmalıdır.`);
+    }
+    if (clue.qaMechanicBoundary !== undefined && !isPlainObject(clue.qaMechanicBoundary)) {
+      throw new Error(`PATCH_CONTRACT: /clues/${index}/qaMechanicBoundary nesne olmalıdır.`);
+    }
+  }
+}
+
 function applyPatchPlan(baseCase, plan) {
   if (String(plan.case_id) !== caseId(baseCase)) throw new Error(`AI vaka ID uyuşmazlığı: ${plan.case_id}/${caseId(baseCase)}`);
   if (!Array.isArray(plan.operations) || plan.operations.length > 80) throw new Error('AI yama operasyon sayısı geçersiz veya 80 sınırını aşıyor.');
@@ -277,12 +332,14 @@ function applyPatchPlan(baseCase, plan) {
     validateNestedPatchParent(output, operation.path);
     let value;
     try { value = JSON.parse(operation.value_json); } catch { throw new Error(`value_json geçersiz: ${operation.path}`); }
+    value = canonicalizeKnownPatchValue(operation.path, value);
     // Structured-output models occasionally emit `replace` for an allowed field
     // that is absent in legacy cases. Canonicalize that single recoverable JSON
     // Patch mismatch to `add`; array/entity indexes must still already exist.
     const effectiveOp = operation.op === 'replace' && !patchTargetExists(output, operation.path) ? 'add' : operation.op;
     setPointer(output, operation.path, value, effectiveOp);
   }
+  validateCandidateContract(output);
   return output;
 }
 
@@ -612,8 +669,16 @@ async function main() {
           break;
         }
       } catch (error) {
-        row.attempts.push({ phase: attempt.phase, model: attempt.model, cache_key: key, error: String(error?.message || error) });
-        if (/BUDGET_CAP/.test(String(error?.message || error))) row.status = 'budget_stopped';
+        const message = String(error?.message || error);
+        row.attempts.push({ phase: attempt.phase, model: attempt.model, cache_key: key, error: message });
+        if (/BUDGET_CAP/.test(message)) {
+          row.status = 'budget_stopped';
+          break;
+        }
+        // A malformed bounded patch must never reach the simulator or the
+        // repository. The policy already budgets one escalation attempt, so
+        // only contract failures may proceed to that second model.
+        if (/^PATCH_CONTRACT:/.test(message)) continue;
         break;
       }
     }
