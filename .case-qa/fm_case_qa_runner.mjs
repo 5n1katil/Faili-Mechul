@@ -23,7 +23,7 @@ const AI_ENABLED = String(env.FM_QA_ALLOW_AI || 'false').toLowerCase() === 'true
 const APPLY_TO_WORKTREE = String(env.FM_QA_APPLY_TO_WORKTREE || 'false').toLowerCase() === 'true';
 const CASE_LIMIT = Math.max(0, Number(env.FM_QA_CASE_LIMIT || 0));
 const CASE_IDS = new Set(String(env.FM_QA_CASE_IDS || '').split(',').map((item) => item.trim()).filter(Boolean));
-const PROMPT_VERSION = 'fm-case-qa-patch-v3.3.0';
+const PROMPT_VERSION = 'fm-case-qa-patch-v3.5.0';
 
 function clone(value) { return value == null ? value : JSON.parse(JSON.stringify(value)); }
 function sha(value) { return crypto.createHash('sha256').update(typeof value === 'string' ? value : JSON.stringify(value)).digest('hex'); }
@@ -498,7 +498,12 @@ function compactReport(result, leakage) {
 }
 
 function buildPrompt({ caseData, baselineResult, leakage, phase }) {
-  return `${phase === 'luna_first_pass' ? 'Reconstruct missing authoring evidence and repair only verified playability failures.' : 'Repair only the remaining deterministic failures in the current candidate. Re-read every failed gate and do not repeat already-passed repairs.'}
+  const phaseInstruction = phase === 'luna_first_pass'
+    ? 'Reconstruct missing authoring evidence and repair only verified playability failures. Internally form a complete repair checklist before emitting operations.'
+    : phase === 'terra_final_verifier'
+      ? 'Final verifier pass: repair only the exact remaining deterministic failures. Preserve every currently passed gate, do not broaden edits, and do not reintroduce any earlier leakage or visible-evidence overflow.'
+      : 'Repair only the remaining deterministic failures in the current candidate. Re-read every failed gate, preserve every passed gate, and do not repeat already-passed repairs.';
+  return `${phaseInstruction}
 
 Allowed JSON Pointer paths:
 - /story, /atmosphere, /subtitle, /deductionSummary, /assetManifest
@@ -533,6 +538,25 @@ function evaluate(engine, original, candidate) {
       raw_simulator_production_ready: result.productionReady === true
     }
   };
+}
+
+function assessmentPenalty(assessment) {
+  const result = assessment?.result || {};
+  const leakage = assessment?.leakage || {};
+  const requiredGateNames = ['coreNecessity', 'patternGovernance', 'contentAndNames', 'semanticContract', 'visibleEvidence', 'mechanicContract', 'bonusFunctionality'];
+  const failedGateCount = requiredGateNames.filter((name) => result.gates?.[name]?.passed !== true).length;
+  const blockerCount = Array.isArray(result.blockers) ? result.blockers.length : 0;
+  const advisoryCount = Array.isArray(result.advisories)
+    ? result.advisories.filter((item) => !/^✓|^ⓘ/.test(String(item))).length
+    : 0;
+  const scorePenalty = Math.max(0, 100 - Number(result.score || 0));
+  const leakagePenalty =
+    (leakage.solution_triple_exposed ? 6000 : 0) +
+    (leakage.avatar_prompt_risk ? 4000 : 0) +
+    (leakage.status === 'blocked_pending_content_repair' ? 2000 : 0) +
+    (leakage.status === 'manual_review_required' ? 1000 : 0) +
+    (leakage.passed === true ? 0 : 500);
+  return leakagePenalty + (failedGateCount * 500) + (blockerCount * 20) + (advisoryCount * 2) + scorePenalty;
 }
 
 function classifyRepairEligibility(assessment) {
@@ -647,7 +671,11 @@ async function main() {
     const attempts = [
       { phase: 'luna_first_pass', model: policy.models.first_pass, effort: policy.models.first_pass_reasoning_effort },
       { phase: 'terra_escalation', model: policy.models.escalation, effort: policy.models.escalation_reasoning_effort },
-      { phase: 'luna_final_cleanup', model: policy.models.first_pass, effort: policy.models.first_pass_reasoning_effort }
+      {
+        phase: 'terra_final_verifier',
+        model: policy.models.final_cleanup || policy.models.escalation,
+        effort: policy.models.final_cleanup_reasoning_effort || policy.models.escalation_reasoning_effort
+      }
     ];
     for (const attempt of attempts) {
       const prompt = buildPrompt({ caseData: current, baselineResult: currentEval.result, leakage: currentEval.leakage, phase: attempt.phase });
@@ -656,6 +684,9 @@ async function main() {
         const response = await callModel({ policy, budget, model: attempt.model, effort: attempt.effort, prompt, key, maxOutputTokens: Number(policy.models.max_output_tokens || 12000) });
         const candidate = applyPatchPlan(current, response.plan);
         const assessed = evaluate(engine, original, candidate);
+        const previousPenalty = assessmentPenalty(currentEval);
+        const candidatePenalty = assessmentPenalty(assessed);
+        const retained = assessed.passed || candidatePenalty < previousPenalty;
         row.attempts.push({
           phase: attempt.phase,
           model: attempt.model,
@@ -665,14 +696,22 @@ async function main() {
           operation_count: response.plan.operations.length,
           assessment: response.plan.assessment,
           result: compactReport(assessed.result, assessed.leakage),
-          calibration: assessed.calibration
+          calibration: assessed.calibration,
+          previous_penalty: previousPenalty,
+          candidate_penalty: candidatePenalty,
+          retained_as_best: retained,
+          monotonic_guard: retained ? 'improved_or_accepted' : 'rejected_regression'
         });
-        current = candidate;
-        currentEval = assessed;
         if (assessed.passed) {
+          current = candidate;
+          currentEval = assessed;
           row.status = 'accepted_100';
           row.accepted_candidate = candidate;
           break;
+        }
+        if (retained) {
+          current = candidate;
+          currentEval = assessed;
         }
       } catch (error) {
         const message = String(error?.message || error);

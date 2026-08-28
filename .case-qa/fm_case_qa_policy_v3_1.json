@@ -1,5 +1,5 @@
 {
-  "schema_version": "fm_case_qa_automation_policy_v3_4",
+  "schema_version": "fm_case_qa_automation_policy_v3_5",
   "source": {
     "repository": "5n1katil/Faili-Mechul",
     "branch": "main",
@@ -29,9 +29,10 @@
     "preserve_clue_ids": true,
     "preserve_solution_ids": true,
     "preserve_icons_and_asset_paths": true,
-    "max_luna_attempts_per_case": 2,
-    "max_terra_attempts_per_case": 1,
-    "quarantine_after_failed_escalation": true
+    "max_luna_attempts_per_case": 1,
+    "max_terra_attempts_per_case": 2,
+    "quarantine_after_failed_escalation": true,
+    "require_monotonic_candidate_improvement": true
   },
   "models": {
     "first_pass": "gpt-5.6-luna",
@@ -49,7 +50,14 @@
         "input": 2,
         "output": 12
       }
-    }
+    },
+    "final_cleanup": "gpt-5.6-terra",
+    "final_cleanup_reasoning_effort": "high",
+    "attempt_sequence": [
+      "gpt-5.6-luna",
+      "gpt-5.6-terra",
+      "gpt-5.6-terra"
+    ]
   },
   "budget": {
     "currency": "USD",
