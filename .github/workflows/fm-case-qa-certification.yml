@@ -1,0 +1,48 @@
+name: Case QA certification
+
+on:
+  pull_request:
+    paths:
+      - ".case-qa/**"
+      - ".github/workflows/fm-case-qa-v3.yml"
+      - ".github/workflows/fm-case-qa-certification.yml"
+      - "artifacts/dedektif/data/puzzles.ts"
+      - "artifacts/dedektif/data/puzzles_database.json"
+      - "artifacts/dedektif/qa/**"
+
+permissions:
+  contents: read
+
+jobs:
+  certify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      FM_QA_ROOT: ${{ github.workspace }}
+      FM_QA_OUTPUT_DIR: .case-qa-output
+      FM_QA_CERT_PHASE: pre
+
+    steps:
+      - name: Checkout pull request
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Check certification script syntax
+        run: node --check .case-qa/fm_case_qa_certify.mjs
+
+      - name: Certify exact sources and HTML simulator
+        run: node .case-qa/fm_case_qa_certify.mjs
+
+      - name: Upload certification evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fm-case-qa-certification-${{ github.run_id }}
+          path: .case-qa-output
+          if-no-files-found: error
+          include-hidden-files: true
+          retention-days: 30

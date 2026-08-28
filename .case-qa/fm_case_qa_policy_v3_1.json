@@ -1,5 +1,5 @@
 {
-  "schema_version": "fm_case_qa_automation_policy_v3_2",
+  "schema_version": "fm_case_qa_automation_policy_v3_4",
   "source": {
     "repository": "5n1katil/Faili-Mechul",
     "branch": "main",
@@ -17,7 +17,9 @@
     "require_core_necessity": true,
     "require_identity_guard": true,
     "require_preclue_guard_pass": true,
-    "require_avatar_prompt_risk_false": true
+    "require_avatar_prompt_risk_false": true,
+    "path": ".case-qa/Faili_Mechul_Vaka_Simulatoru_v29_4_Otomasyon_Temeli.html",
+    "git_blob_sha": "f4bd5f5c30ccdf8cf552b7dc3377311afbcb0660"
   },
   "repair": {
     "confirmed_preclue_leakage_only": true,
@@ -39,8 +41,14 @@
     "max_output_tokens": 12000,
     "structured_outputs_strict": true,
     "pricing_usd_per_million_tokens": {
-      "gpt-5.6-luna": { "input": 0.2, "output": 1.2 },
-      "gpt-5.6-terra": { "input": 2, "output": 12 }
+      "gpt-5.6-luna": {
+        "input": 0.2,
+        "output": 1.2
+      },
+      "gpt-5.6-terra": {
+        "input": 2,
+        "output": 12
+      }
     }
   },
   "budget": {
@@ -58,5 +66,19 @@
     "auto_merge": false,
     "main_branch_direct_write": false,
     "exclude_failed_candidates": true
+  },
+  "certification": {
+    "require_exact_source_counts": true,
+    "require_unique_case_ids": true,
+    "evaluate_every_case_in_exact_html_engine": true,
+    "deterministic_repetitions_per_case": 2,
+    "require_direct_html_wrapper_parity": true,
+    "require_pre_post_identity_manifest_match": true,
+    "require_content_validation_before_draft_pr": true,
+    "allowed_changed_paths": [
+      "artifacts/dedektif/data/puzzles.ts",
+      "artifacts/dedektif/data/puzzles_database.json",
+      "artifacts/dedektif/qa/**"
+    ]
   }
 }

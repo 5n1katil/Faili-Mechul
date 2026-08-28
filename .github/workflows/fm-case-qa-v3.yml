@@ -68,6 +68,21 @@ jobs:
         with:
           node-version: "22"
 
+      - name: Certify exact sources and v29.4 HTML engine
+        env:
+          FM_QA_CERT_PHASE: pre
+        run: node .case-qa/fm_case_qa_certify.mjs
+
+      - name: Prepare app validation baseline
+        if: ${{ inputs.publish_draft_pr == true }}
+        shell: bash
+        run: |
+          corepack enable
+          pnpm install --frozen-lockfile
+          pnpm --filter @workspace/dedektif typecheck > .case-qa-output/typecheck-baseline.txt 2>&1 || true
+          grep -E 'error TS[0-9]+:' .case-qa-output/typecheck-baseline.txt | sed "s#${GITHUB_WORKSPACE}/##g" | sort -u > .case-qa-output/typecheck-baseline-errors.txt || true
+          pnpm --filter @workspace/dedektif validate:all
+
       - name: Restore idempotent response cache
         uses: actions/cache@v4
         with:
@@ -76,6 +91,40 @@ jobs:
 
       - name: Run deterministic QA and bounded repair
         run: node .case-qa/fm_case_qa_runner.mjs
+
+      - name: Certify post-repair identity and simulator parity
+        env:
+          FM_QA_CERT_PHASE: post
+        run: node .case-qa/fm_case_qa_certify.mjs
+
+      - name: Guard app compatibility and publishable diff
+        if: ${{ inputs.publish_draft_pr == true }}
+        shell: bash
+        run: |
+          accepted="$(jq '.summary.publishable_case_ids | length' .case-qa-output/fm_case_qa_run_report.json)"
+          if [ "$accepted" -eq 0 ]; then
+            echo "No accepted candidate; app/diff publication gate skipped."
+            exit 0
+          fi
+
+          unexpected="$(git diff --name-only | grep -Ev '^(artifacts/dedektif/data/puzzles\.ts|artifacts/dedektif/data/puzzles_database\.json|artifacts/dedektif/qa/)' || true)"
+          if [ -n "$unexpected" ]; then
+            echo "Unexpected changed paths:"
+            echo "$unexpected"
+            exit 1
+          fi
+
+          git diff --check
+          pnpm --filter @workspace/dedektif validate:all
+          pnpm --filter @workspace/dedektif typecheck > .case-qa-output/typecheck-candidate.txt 2>&1 || true
+          grep -E 'error TS[0-9]+:' .case-qa-output/typecheck-candidate.txt | sed "s#${GITHUB_WORKSPACE}/##g" | sort -u > .case-qa-output/typecheck-candidate-errors.txt || true
+          comm -13 .case-qa-output/typecheck-baseline-errors.txt .case-qa-output/typecheck-candidate-errors.txt > .case-qa-output/typecheck-new-errors.txt
+          if [ -s .case-qa-output/typecheck-new-errors.txt ]; then
+            echo "Candidate introduced new TypeScript errors:"
+            cat .case-qa-output/typecheck-new-errors.txt
+            exit 1
+          fi
+          pnpm --filter @workspace/dedektif build:web
 
       - name: Upload complete QA report
         if: always()
