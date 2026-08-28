@@ -1,5 +1,5 @@
 {
-  "schema_version": "fm_case_qa_automation_policy_v3_5",
+  "schema_version": "fm_case_qa_automation_policy_v3_6",
   "source": {
     "repository": "5n1katil/Faili-Mechul",
     "branch": "main",
@@ -40,6 +40,7 @@
     "escalation": "gpt-5.6-terra",
     "escalation_reasoning_effort": "medium",
     "max_output_tokens": 12000,
+    "final_cleanup_max_output_tokens": 18000,
     "structured_outputs_strict": true,
     "pricing_usd_per_million_tokens": {
       "gpt-5.6-luna": {
@@ -52,7 +53,7 @@
       }
     },
     "final_cleanup": "gpt-5.6-terra",
-    "final_cleanup_reasoning_effort": "high",
+    "final_cleanup_reasoning_effort": "medium",
     "attempt_sequence": [
       "gpt-5.6-luna",
       "gpt-5.6-terra",
