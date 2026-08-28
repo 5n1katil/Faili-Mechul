@@ -24,7 +24,8 @@ const AI_ENABLED = String(env.FM_QA_ALLOW_AI || 'false').toLowerCase() === 'true
 const APPLY_TO_WORKTREE = String(env.FM_QA_APPLY_TO_WORKTREE || 'false').toLowerCase() === 'true';
 const CASE_LIMIT = Math.max(0, Number(env.FM_QA_CASE_LIMIT || 0));
 const CASE_IDS = new Set(String(env.FM_QA_CASE_IDS || '').split(',').map((item) => item.trim()).filter(Boolean));
-const PROMPT_VERSION = 'fm-case-qa-patch-v3.6.1';
+const PROMPT_VERSION = 'fm-case-qa-patch-v3.7.0';
+const AUTHORING_PROMPT_VERSION = 'fm-case-qa-authoring-v3.7.0';
 
 function clone(value) { return value == null ? value : JSON.parse(JSON.stringify(value)); }
 function sha(value) { return crypto.createHash('sha256').update(typeof value === 'string' ? value : JSON.stringify(value)).digest('hex'); }
@@ -138,7 +139,7 @@ const TOP_LEVEL_AUTHORING = new Set([
   'qaPattern', 'qaPortfolioRegistry', 'qaSemanticFacts', 'qaPolicy', 'qaNameRationales',
   'intentionalMononymIds', 'qaAuthoringVersion', 'qaDeductionGraph'
 ]);
-const CLUE_AUTHORING = new Set(['logicRules', 'qaRationale', 'qaMechanicBoundary', 'qaSemanticFacts']);
+const CLUE_AUTHORING = new Set(['logicRules', 'qaRationale', 'qaMechanicBoundary', 'qaSemanticFacts', 'isCrimeAnchor']);
 
 function stripAuthoring(caseData) {
   const output = clone(caseData);
@@ -173,6 +174,74 @@ function hasAuthoring(caseData) {
     caseData.qaPattern || caseData.qaPortfolioRegistry || caseData.qaSemanticFacts ||
     (caseData.clues || []).some((clue) => (clue.logicRules || []).length || clue.qaRationale || clue.qaMechanicBoundary)
   );
+}
+
+function authoringCompleteness(caseData) {
+  const missing = [];
+  if (!isPlainObject(caseData?.qaPattern)) missing.push('/qaPattern');
+  if (!Array.isArray(caseData?.qaPortfolioRegistry?.entries) || !caseData.qaPortfolioRegistry.entries.length) {
+    missing.push('/qaPortfolioRegistry/entries');
+  }
+  if (!Array.isArray(caseData?.qaSemanticFacts)) missing.push('/qaSemanticFacts');
+  if (!String(caseData?.qaAuthoringVersion || '').trim()) missing.push('/qaAuthoringVersion');
+  const clues = Array.isArray(caseData?.clues) ? caseData.clues : [];
+  let crimeAnchors = 0;
+  clues.forEach((clue, index) => {
+    if (clue?.isBonus === true) return;
+    if (!Array.isArray(clue?.logicRules) || !clue.logicRules.length) missing.push(`/clues/${index}/logicRules`);
+    const rationale = clue?.qaRationale;
+    if (!isPlainObject(rationale) || !String(rationale.matrixEffect || '').trim() ||
+        !String(rationale.evidenceLink || '').trim() || !String(rationale.evidenceKind || '').trim()) {
+      missing.push(`/clues/${index}/qaRationale`);
+    }
+    if (!Array.isArray(clue?.qaSemanticFacts)) missing.push(`/clues/${index}/qaSemanticFacts`);
+    if (clue?.isCrimeAnchor === true) crimeAnchors += 1;
+  });
+  if (crimeAnchors < 1) missing.push('/clues/*/isCrimeAnchor');
+  return {
+    schema_version: 'fm_case_qa_authoring_completeness_v1',
+    complete: missing.length === 0,
+    missing,
+    non_bonus_clues: clues.filter((clue) => clue?.isBonus !== true).length,
+    crime_anchor_count: crimeAnchors
+  };
+}
+
+function authoringContract(caseData) {
+  const errors = [];
+  const categoryById = new Map();
+  for (const [field, category] of [['suspects', 'suspect'], ['weapons', 'weapon'], ['locations', 'location']]) {
+    for (const item of caseData?.[field] || []) categoryById.set(String(item.id), category);
+  }
+  const clues = Array.isArray(caseData?.clues) ? caseData.clues : [];
+  const anchors = [];
+  clues.forEach((clue, index) => {
+    if (clue?.isBonus !== true && clue?.isCrimeAnchor === true) anchors.push({ clue, index });
+    for (const [ruleIndex, rule] of (Array.isArray(clue?.logicRules) ? clue.logicRules : []).entries()) {
+      const action = String(rule?.action || '').toLowerCase().replace(/[\s-]/g, '_');
+      if (!['confirm', 'eliminate', 'eslesme', 'eşleşme', 'eslesme_yok', 'eşleşme_yok'].includes(action)) {
+        errors.push(`/clues/${index}/logicRules/${ruleIndex}: invalid_action`);
+      }
+      const pair = Array.isArray(rule?.pair) ? rule.pair.map(String) : [];
+      if (pair.length !== 2 || pair.some((id) => !categoryById.has(id))) {
+        errors.push(`/clues/${index}/logicRules/${ruleIndex}: invalid_pair`);
+      } else if (categoryById.get(pair[0]) === categoryById.get(pair[1])) {
+        errors.push(`/clues/${index}/logicRules/${ruleIndex}: same_axis_pair`);
+      }
+    }
+  });
+  if (anchors.length !== 1) errors.push(`crime_anchor_count:${anchors.length}`);
+  for (const { clue, index } of anchors) {
+    const facts = (Array.isArray(clue.qaSemanticFacts) ? clue.qaSemanticFacts : [])
+      .filter((fact) => fact?.kind === 'crime_component');
+    const components = new Set(facts.map((fact) => String(fact.component || '')));
+    if (facts.length !== 1 || components.size !== 1) errors.push(`/clues/${index}/qaSemanticFacts: anchor_requires_one_component`);
+  }
+  return {
+    schema_version: 'fm_case_qa_authoring_contract_v1',
+    passed: errors.length === 0,
+    errors
+  };
 }
 
 function deterministicPatternRole(profile) {
@@ -231,6 +300,13 @@ function allowedPatchPath(pointer) {
   }
   if (parts[0] === 'clues' && /^\d+$/.test(parts[1] || '')) return Boolean(parts[2]) && parts[2] !== 'id';
   return false;
+}
+
+function allowedAuthoringPatchPath(pointer) {
+  const parts = decodePointer(pointer);
+  if (parts.some((part) => ['__proto__', 'prototype', 'constructor'].includes(part))) return false;
+  if (parts.length === 1 && TOP_LEVEL_AUTHORING.has(parts[0])) return true;
+  return parts.length === 3 && parts[0] === 'clues' && /^\d+$/.test(parts[1] || '') && CLUE_AUTHORING.has(parts[2]);
 }
 
 function setPointer(target, pointer, value, op) {
@@ -353,6 +429,33 @@ function applyPatchPlanSafely(baseCase, plan) {
   }
 }
 
+function applyAuthoringPatchPlanSafely(baseCase, plan) {
+  try {
+    if (String(plan.case_id) !== caseId(baseCase)) throw new Error(`AI vaka ID uyuşmazlığı: ${plan.case_id}/${caseId(baseCase)}`);
+    if (!Array.isArray(plan.operations) || plan.operations.length > 80) throw new Error('AI authoring operasyon sayısı geçersiz veya 80 sınırını aşıyor.');
+    const productionHash = stableHash(stripAuthoring(baseCase));
+    const output = clone(baseCase);
+    for (const operation of plan.operations) {
+      if (!['add', 'replace'].includes(operation.op)) throw new Error(`Yasak authoring işlemi: ${operation.op}`);
+      if (!allowedAuthoringPatchPath(operation.path)) throw new Error(`AUTHORING_ONLY: Oyuncuya görünür/yasak yama yolu: ${operation.path}`);
+      validateNestedPatchParent(output, operation.path);
+      let value;
+      try { value = JSON.parse(operation.value_json); } catch { throw new Error(`value_json geçersiz: ${operation.path}`); }
+      value = canonicalizeKnownPatchValue(operation.path, value);
+      const effectiveOp = operation.op === 'replace' && !patchTargetExists(output, operation.path) ? 'add' : operation.op;
+      setPointer(output, operation.path, value, effectiveOp);
+    }
+    validateCandidateContract(output);
+    if (stableHash(stripAuthoring(output)) !== productionHash) {
+      throw new Error('AUTHORING_ONLY: Oyuncuya görünür vaka içeriği değişti.');
+    }
+    return output;
+  } catch (error) {
+    const message = String(error?.message || error);
+    throw new Error(message.startsWith('PATCH_CONTRACT:') ? message : `PATCH_CONTRACT: ${message}`);
+  }
+}
+
 function isRecoverablePatchContractError(message) {
   return /^PATCH_CONTRACT:/.test(String(message || ''));
 }
@@ -431,7 +534,7 @@ function projectedCost(policy, model, prompt, maxOutputTokens) {
   return ((estimatedInput * Number(rate.input)) + (maxOutputTokens * Number(rate.output))) / 1_000_000;
 }
 
-async function callModel({ policy, budget, model, effort, prompt, key, maxOutputTokens }) {
+async function callModel({ policy, budget, model, effort, prompt, key, maxOutputTokens, systemPrompt = SYSTEM_PROMPT }) {
   fs.mkdirSync(CACHE_DIR, { recursive: true });
   const cacheFile = path.join(CACHE_DIR, `${key}.json`);
   if (fs.existsSync(cacheFile)) {
@@ -457,7 +560,7 @@ async function callModel({ policy, budget, model, effort, prompt, key, maxOutput
         reasoning: { effort },
         max_output_tokens: maxOutputTokens,
         input: [
-          { role: 'system', content: [{ type: 'input_text', text: SYSTEM_PROMPT }] },
+          { role: 'system', content: [{ type: 'input_text', text: systemPrompt }] },
           { role: 'user', content: [{ type: 'input_text', text: prompt }] }
         ],
         text: { format: { type: 'json_schema', name: 'fm_case_patch', strict: true, schema: PATCH_SCHEMA } }
@@ -497,6 +600,44 @@ Non-negotiable rules:
 - Use only add/replace operations and only paths permitted by the user message.
 - Use add when the final field does not yet exist; use replace only when the final field already exists in the supplied case JSON.
 - value_json is a JSON-encoded string containing the exact replacement value.`;
+
+const AUTHORING_SYSTEM_PROMPT = `You are the QA-authoring compiler for Faili Meçhul, a Turkish detective grid game.
+Return only the strict patch plan requested by the schema.
+This phase must NEVER rewrite player-visible content. It only documents the deduction already present in the supplied case.
+Non-negotiable rules:
+- Allowed top-level fields are qaPattern, qaPortfolioRegistry, qaSemanticFacts, qaPolicy, qaNameRationales, intentionalMononymIds, qaAuthoringVersion and qaDeductionGraph.
+- Allowed clue fields are logicRules, qaRationale, qaMechanicBoundary, qaSemanticFacts and isCrimeAnchor.
+- Never change story, atmosphere, entity names/profiles, clue text/title/hints/mechanics, IDs, solution, assets or icons.
+- Use only existing suspect, weapon, location and clue IDs.
+- Derive every logicRules action strictly from concrete player-visible evidence in that same clue. Do not invent evidence or silently repair weak prose.
+- qaRationale must contain matrixEffect, evidenceLink and evidenceKind. matrixEffect must name the same entities as the declared rule pair.
+- qaSemanticFacts must be arrays and may document only definite player-visible crime-component facts.
+- Exactly one non-bonus clue should be isCrimeAnchor:true when the clue visibly links exactly one solution component to the crime; all other clues should be false or omit the flag.
+- If the visible case does not support a safe rule or anchor, leave it unresolved and explain that in assessment. Do not fabricate a passing score.
+- Use add for absent fields and replace for existing fields. value_json is a JSON-encoded string.`;
+
+function buildAuthoringPrompt({ caseData, completeness, tier }) {
+  const entityIds = {
+    suspects: (caseData.suspects || []).map((item) => String(item.id)),
+    weapons: (caseData.weapons || []).map((item) => String(item.id)),
+    locations: (caseData.locations || []).map((item) => String(item.id)),
+    clues: (caseData.clues || []).map((item) => String(item.id))
+  };
+  return `Compile ONLY the missing QA-only authoring metadata for this case.
+
+Allowed JSON Pointer paths:
+- /qaPattern, /qaPortfolioRegistry, /qaSemanticFacts, /qaPolicy, /qaNameRationales, /intentionalMononymIds, /qaAuthoringVersion, /qaDeductionGraph
+- /clues/<existing index>/(logicRules|qaRationale|qaMechanicBoundary|qaSemanticFacts|isCrimeAnchor)
+
+CASE TIER: ${tier}
+EXISTING IDS: ${JSON.stringify(entityIds)}
+MISSING AUTHORING CONTRACT: ${JSON.stringify(completeness.missing)}
+
+CASE (player-visible content is read-only):
+${JSON.stringify(caseData)}
+
+Return the smallest complete authoring-only patch. Do not touch any other path.`;
+}
 
 function compactReport(result, leakage) {
   return {
@@ -586,7 +727,7 @@ function assessmentPenalty(assessment) {
   return leakagePenalty + (failedGateCount * 500) + (blockerCount * 20) + (advisoryCount * 2) + scorePenalty;
 }
 
-function classifyRepairEligibility(assessment) {
+function classifyRepairEligibility(assessment, options = {}) {
   const leakage = assessment.leakage || {};
   if (leakage.status === 'blocked_pending_content_repair') {
     return {
@@ -597,7 +738,13 @@ function classifyRepairEligibility(assessment) {
     };
   }
   if (leakage.status === 'manual_review_required') {
+    if (options.allowCalibratedSimulatorRepair) {
+      return { eligible: true, queue: 'calibrated_simulator_repair', priority: 3, reason: 'gold_calibration_passed_and_exact_simulator_failed' };
+    }
     return { eligible: false, queue: 'deep_review', priority: 3, reason: 'semantic_overlap_requires_case_context_review' };
+  }
+  if (options.allowCalibratedSimulatorRepair && assessment.passed !== true) {
+    return { eligible: true, queue: 'calibrated_simulator_repair', priority: 4, reason: 'gold_calibration_passed_and_exact_simulator_failed' };
   }
   return { eligible: false, queue: 'deterministic_qa_review', priority: 4, reason: 'no_confirmed_preclue_leak' };
 }
@@ -650,45 +797,125 @@ async function main() {
   const selectedIds = new Set(selected.map((entry) => caseId(entry.raw)));
   const engine = loadEngine(SIMULATOR_PATH);
   const registryEntries = buildPortfolioRegistry(engine, entries);
-  const registryIndexByCaseId = new Map(registryEntries.map((item, index) => [String(item.puzzleId), index]));
   const budget = new Budget(policy);
   const sourceSha = { standard: sha(standardSource), premium: sha(premiumSource), combined: sha(`${sha(standardSource)}:${sha(premiumSource)}`) };
 
   const concurrency = Math.max(1, Number(policy.budget.max_concurrent_calls || 4));
-  const rows = await mapLimit(selected, concurrency, async (entry) => {
+  const stateById = new Map(entries.map((entry) => {
     const id = caseId(entry.raw);
-    const original = clone(entry.raw);
-    const merged = mergeSidecar(original, sidecar.cases[id]);
-    const registryIndex = registryIndexByCaseId.get(id) ?? 0;
-    const bootstrapped = bootstrapAuthoring(engine, merged.caseData, entry.tier, [registryEntries[registryIndex]]);
+    const merged = mergeSidecar(entry.raw, sidecar.cases[id]);
+    const candidate = bootstrapAuthoring(engine, merged.caseData, entry.tier, registryEntries);
+    return [id, {
+      entry,
+      original: clone(entry.raw),
+      candidate,
+      merged_status: merged.status,
+      authoring_attempt: null,
+      authoring_ai_accepted: false
+    }];
+  }));
+
+  async function compileAuthoring(state) {
+    const before = authoringCompleteness(state.candidate);
+    const beforeContract = authoringContract(state.candidate);
+    if (before.complete && beforeContract.passed) return state;
+    if (!AI_ENABLED || MODE === 'audit') return state;
+    const model = policy.authoring?.model || policy.models.first_pass;
+    const effort = policy.authoring?.reasoning_effort || policy.models.first_pass_reasoning_effort;
+    const prompt = buildAuthoringPrompt({ caseData: state.candidate, completeness: before, tier: state.entry.tier });
+    const key = sha(`${AUTHORING_PROMPT_VERSION}|${sourceSha.combined}|${caseId(state.original)}|${model}|${stableHash(state.candidate)}`);
+    try {
+      const response = await callModel({
+        policy,
+        budget,
+        model,
+        effort,
+        prompt,
+        key,
+        maxOutputTokens: Number(policy.authoring?.max_output_tokens || 9000),
+        systemPrompt: AUTHORING_SYSTEM_PROMPT
+      });
+      const candidate = applyAuthoringPatchPlanSafely(state.candidate, response.plan);
+      const completeness = authoringCompleteness(candidate);
+      const contract = authoringContract(candidate);
+      state.authoring_attempt = {
+        phase: 'authoring_only', model, cache_key: key, cached: response.cached,
+        cost_usd: response.cost, operation_count: response.plan.operations.length,
+        assessment: response.plan.assessment, completeness, contract,
+        production_content_unchanged: stableHash(stripAuthoring(candidate)) === stableHash(stripAuthoring(state.original))
+      };
+      if (completeness.complete && contract.passed && state.authoring_attempt.production_content_unchanged) {
+        state.candidate = candidate;
+        state.authoring_ai_accepted = true;
+      }
+    } catch (error) {
+      state.authoring_attempt = { phase: 'authoring_only', model, cache_key: key, error: String(error?.message || error) };
+    }
+    return state;
+  }
+
+  const selectedStates = selected.map((entry) => stateById.get(caseId(entry.raw)));
+  const goldIds = new Set(policy.authoring?.calibration_case_ids || []);
+  let campaignCalibrated = false;
+  if (AI_ENABLED && MODE === 'full' && goldIds.size) {
+    const goldStates = selectedStates.filter((state) => goldIds.has(caseId(state.original)));
+    if (goldStates.length !== goldIds.size) throw new Error('CALIBRATION_GATE: Altın-vaka kümesinin tamamı full seçimde bulunamadı.');
+    for (const state of goldStates) await compileAuthoring(state);
+    const goldRegistry = buildPortfolioRegistry(engine, goldStates.map((state) => ({ raw: state.candidate })));
+    const failures = [];
+    for (const state of goldStates) {
+      state.candidate.qaPortfolioRegistry = { schema_version: 'fm_qa_portfolio_registry_v1', entries: clone(goldRegistry) };
+      const completeness = authoringCompleteness(state.candidate);
+      const contract = authoringContract(state.candidate);
+      const assessed = evaluate(engine, state.original, state.candidate);
+      if (!completeness.complete || !contract.passed || !assessed.passed) {
+        failures.push({ case_id: caseId(state.original), completeness, contract, result: compactReport(assessed.result, assessed.leakage) });
+      }
+    }
+    if (failures.length) throw new Error(`CALIBRATION_GATE: Kullanıcı-onaylı altın vakalar metadata-only aşamada 100/100 olamadı; toplu onarım güvenle durduruldu. ${JSON.stringify(failures)}`);
+    campaignCalibrated = true;
+  }
+
+  await mapLimit(selectedStates.filter((state) => !state.authoring_ai_accepted), concurrency, compileAuthoring);
+
+  const globalRegistry = buildPortfolioRegistry(engine, entries.map((entry) => ({ raw: stateById.get(caseId(entry.raw)).candidate })));
+  for (const state of selectedStates) {
+    state.candidate.qaPortfolioRegistry = { schema_version: 'fm_qa_portfolio_registry_v1', entries: clone(globalRegistry) };
+  }
+
+  const rows = await mapLimit(selectedStates, concurrency, async (state) => {
+    const entry = state.entry;
+    const id = caseId(state.original);
+    const original = state.original;
+    const bootstrapped = state.candidate;
+    const completeness = authoringCompleteness(bootstrapped);
+    const contract = authoringContract(bootstrapped);
     const baseline = evaluate(engine, original, bootstrapped);
-    const repairEligibility = classifyRepairEligibility(baseline);
-    sidecar.cases[id] = {
-      schema_version: 'fm_case_qa_sidecar_entry_v1',
-      simulator_version: '29.4',
-      prompt_version: PROMPT_VERSION,
-      source_content_hash: stableHash(stripAuthoring(original)),
-      overlay: authoringOverlay(bootstrapped),
-      bootstrap_mode: 'deterministic_v3_2',
-      validated_at: new Date().toISOString()
-    };
+    const authoringReady = completeness.complete && contract.passed;
+    const repairEligibility = authoringReady
+      ? classifyRepairEligibility(baseline, { allowCalibratedSimulatorRepair: campaignCalibrated && policy.repair?.repair_all_exact_failures_after_gold_calibration === true })
+      : { eligible: false, queue: 'authoring_required', priority: 0, reason: 'qa_only_authoring_contract_incomplete' };
     const row = {
       case_id: id,
       case_title: String(original.title || ''),
       case_tier: entry.tier,
       pack_id: entry.pack_id || null,
       source_index: entry.source_index,
-      sidecar_status: merged.status === 'applied' ? 'applied' : 'deterministic_bootstrap_applied',
+      sidecar_status: state.merged_status,
       authoring_evidence_present: hasAuthoring(bootstrapped),
+      authoring_completeness: completeness,
+      authoring_contract: contract,
+      authoring_attempt: state.authoring_attempt,
       baseline: compactReport(baseline.result, baseline.leakage),
       calibration: baseline.calibration,
       repair_eligibility: repairEligibility,
-      status: baseline.passed ? 'preserved_100' : repairEligibility.eligible ? 'confirmed_repair_required' : repairEligibility.queue,
+      status: !authoringReady ? 'authoring_required' : baseline.passed ? 'preserved_100' : repairEligibility.eligible ? 'confirmed_repair_required' : repairEligibility.queue,
       attempts: [],
+      accepted_authoring_candidate: authoringReady && (state.authoring_ai_accepted || state.merged_status === 'applied') ? bootstrapped : null,
       accepted_candidate: null,
       error: null
     };
-    if (baseline.passed) return row;
+    if (!authoringReady || baseline.passed) return row;
     if (!AI_ENABLED || MODE === 'audit') return row;
     if (!repairEligibility.eligible) return row;
     row.status = 'repair_pending';
@@ -707,43 +934,21 @@ async function main() {
       }
     ];
     for (const attempt of attempts) {
-      const prompt = buildPrompt({
-        caseData: current,
-        baselineResult: currentEval.result,
-        leakage: currentEval.leakage,
-        phase: attempt.phase,
-        previousAttemptError
-      });
+      const prompt = buildPrompt({ caseData: current, baselineResult: currentEval.result, leakage: currentEval.leakage, phase: attempt.phase, previousAttemptError });
       const key = sha(`${PROMPT_VERSION}|${sourceSha.combined}|${id}|${attempt.phase}|${attempt.model}|${stableHash(current)}`);
       try {
-        const response = await callModel({
-          policy,
-          budget,
-          model: attempt.model,
-          effort: attempt.effort,
-          prompt,
-          key,
-          maxOutputTokens: Number(attempt.maxOutputTokens || policy.models.max_output_tokens || 12000)
-        });
+        const response = await callModel({ policy, budget, model: attempt.model, effort: attempt.effort, prompt, key, maxOutputTokens: Number(attempt.maxOutputTokens || policy.models.max_output_tokens || 12000) });
         const candidate = applyPatchPlanSafely(current, response.plan);
         const assessed = evaluate(engine, original, candidate);
         const previousPenalty = assessmentPenalty(currentEval);
         const candidatePenalty = assessmentPenalty(assessed);
         const retained = assessed.passed || candidatePenalty < previousPenalty;
         row.attempts.push({
-          phase: attempt.phase,
-          model: attempt.model,
-          cache_key: key,
-          cached: response.cached,
-          cost_usd: response.cost,
-          operation_count: response.plan.operations.length,
-          assessment: response.plan.assessment,
-          result: compactReport(assessed.result, assessed.leakage),
-          calibration: assessed.calibration,
-          previous_penalty: previousPenalty,
-          candidate_penalty: candidatePenalty,
-          retained_as_best: retained,
-          monotonic_guard: retained ? 'improved_or_accepted' : 'rejected_regression'
+          phase: attempt.phase, model: attempt.model, cache_key: key, cached: response.cached,
+          cost_usd: response.cost, operation_count: response.plan.operations.length,
+          assessment: response.plan.assessment, result: compactReport(assessed.result, assessed.leakage),
+          calibration: assessed.calibration, previous_penalty: previousPenalty, candidate_penalty: candidatePenalty,
+          retained_as_best: retained, monotonic_guard: retained ? 'improved_or_accepted' : 'rejected_regression'
         });
         if (assessed.passed) {
           current = candidate;
@@ -752,24 +957,12 @@ async function main() {
           row.accepted_candidate = candidate;
           break;
         }
-        if (retained) {
-          current = candidate;
-          currentEval = assessed;
-        }
+        if (retained) { current = candidate; currentEval = assessed; }
       } catch (error) {
         const message = String(error?.message || error);
         row.attempts.push({ phase: attempt.phase, model: attempt.model, cache_key: key, error: message });
-        if (/BUDGET_CAP/.test(message)) {
-          row.status = 'budget_stopped';
-          break;
-        }
-        // A malformed bounded patch must never reach the simulator or the
-        // repository. The policy already budgets one escalation attempt, so
-        // only contract failures may proceed to that second model.
-        if (isRecoverablePatchContractError(message)) {
-          previousAttemptError = message;
-          continue;
-        }
+        if (/BUDGET_CAP/.test(message)) { row.status = 'budget_stopped'; break; }
+        if (isRecoverablePatchContractError(message)) { previousAttemptError = message; continue; }
         break;
       }
     }
@@ -777,25 +970,69 @@ async function main() {
     return row;
   });
 
+  const rowById = new Map(rows.map((row) => [row.case_id, row]));
+  const finalCandidateById = new Map(entries.map((entry) => {
+    const id = caseId(entry.raw);
+    return [id, rowById.get(id)?.accepted_candidate || stateById.get(id).candidate];
+  }));
+  const finalRegistry = buildPortfolioRegistry(engine, entries.map((entry) => ({ raw: finalCandidateById.get(caseId(entry.raw)) })));
+  for (const row of rows) {
+    const candidate = finalCandidateById.get(row.case_id);
+    candidate.qaPortfolioRegistry = { schema_version: 'fm_qa_portfolio_registry_v1', entries: clone(finalRegistry) };
+    if (row.accepted_candidate) row.accepted_candidate.qaPortfolioRegistry = clone(candidate.qaPortfolioRegistry);
+    if (row.accepted_authoring_candidate) row.accepted_authoring_candidate.qaPortfolioRegistry = clone(candidate.qaPortfolioRegistry);
+    const assessed = evaluate(engine, stateById.get(row.case_id).original, candidate);
+    row.final_campaign = {
+      passed: assessed.passed,
+      result: compactReport(assessed.result, assessed.leakage),
+      calibration: assessed.calibration
+    };
+    if (row.status === 'accepted_100' && !assessed.passed) {
+      row.status = 'quarantined_final_campaign_regression';
+      row.accepted_candidate = null;
+    }
+    if (row.status === 'preserved_100' && !assessed.passed) row.status = 'final_campaign_regression';
+  }
+
   const accepted = new Map(rows.filter((row) => row.status === 'accepted_100').map((row) => [row.case_id, row.accepted_candidate]));
+  const acceptedAuthoring = new Map(rows
+    .filter((row) => row.accepted_authoring_candidate)
+    .map((row) => [row.case_id, row.accepted_authoring_candidate]));
   const standardReplacements = new Map();
   const premiumOutput = clone(premiumDb);
+  for (const [id, candidate] of acceptedAuthoring) {
+    const original = stateById.get(id).original;
+    sidecar.cases[id] = {
+      schema_version: 'fm_case_qa_sidecar_entry_v2',
+      simulator_version: '29.4',
+      prompt_version: AUTHORING_PROMPT_VERSION,
+      source_content_hash: stableHash(stripAuthoring(original)),
+      overlay: authoringOverlay(candidate),
+      authoring_contract: authoringContract(candidate),
+      production_content_unchanged: stableHash(stripAuthoring(candidate)) === stableHash(stripAuthoring(original)),
+      validated_at: new Date().toISOString()
+    };
+  }
   for (const entry of entries) {
     const id = caseId(entry.raw);
     if (!accepted.has(id)) continue;
     const candidate = accepted.get(id);
     const production = restoreBaselineAuthoring(candidate, entry.raw);
     sidecar.cases[id] = {
-      schema_version: 'fm_case_qa_sidecar_entry_v1',
+      schema_version: 'fm_case_qa_sidecar_entry_v2',
       simulator_version: '29.4',
       prompt_version: PROMPT_VERSION,
       source_content_hash: stableHash(stripAuthoring(production)),
       overlay: authoringOverlay(candidate),
+      authoring_contract: authoringContract(candidate),
+      production_content_unchanged: stableHash(stripAuthoring(candidate)) === stableHash(stripAuthoring(production)),
       validated_at: new Date().toISOString()
     };
     if (entry.tier === 'standard') standardReplacements.set(id, production);
     else premiumOutput.packs[entry.pack_index].puzzles[entry.source_index] = production;
   }
+  sidecar.schema_version = 'fm_case_qa_sidecars_v29_5';
+  sidecar.count = Object.keys(sidecar.cases).length;
 
   fs.mkdirSync(OUTPUT_DIR, { recursive: true });
   const patchedStandard = replaceStandardCases(standardSource, standardReplacements);
@@ -804,18 +1041,29 @@ async function main() {
   fs.writeFileSync(path.join(OUTPUT_DIR, 'puzzles_database.json'), patchedPremium);
   writeJson(path.join(OUTPUT_DIR, 'case_qa_sidecars_v29_5.json'), sidecar);
 
-  const reportRows = rows.map(({ accepted_candidate, ...row }) => ({ ...row, candidate_hash: accepted_candidate ? stableHash(accepted_candidate) : null }));
+  const reportRows = rows.map(({ accepted_candidate, accepted_authoring_candidate, ...row }) => ({
+    ...row,
+    candidate_hash: accepted_candidate ? stableHash(accepted_candidate) : null,
+    authoring_candidate_hash: accepted_authoring_candidate ? stableHash(authoringOverlay(accepted_authoring_candidate)) : null
+  }));
   const report = {
-    schema_version: 'fm_case_qa_batch_run_v3_2',
+    schema_version: 'fm_case_qa_batch_run_v3_7',
     run_id: env.GITHUB_RUN_ID || `local-${Date.now()}`,
     mode: MODE,
     ai_enabled: AI_ENABLED,
+    campaign_calibrated: campaignCalibrated,
     apply_to_worktree: APPLY_TO_WORKTREE,
     source: { standard_path: path.relative(ROOT, STANDARD_PATH), premium_path: path.relative(ROOT, PREMIUM_PATH), sidecar_path: path.relative(ROOT, SIDECAR_PATH), sha256: sourceSha },
     selection: { requested_case_ids: [...CASE_IDS], case_limit: CASE_LIMIT, selected_count: selected.length, selected_case_ids: [...selectedIds] },
     summary: {
       total_repository_cases: entries.length,
       selected_cases: rows.length,
+      scoring_trust: campaignCalibrated ? 'gold_calibrated_for_bulk_repair' : 'authoring_inventory_only',
+      final_campaign_passed: rows.filter((row) => row.final_campaign?.passed).length,
+      campaign_complete_105: rows.length === entries.length && rows.every((row) => row.final_campaign?.passed),
+      authoring_required: rows.filter((row) => row.status === 'authoring_required').length,
+      authoring_compiled: rows.filter((row) => row.authoring_attempt && row.accepted_authoring_candidate).length,
+      authoring_contract_rejected: rows.filter((row) => row.authoring_attempt && !row.accepted_authoring_candidate).length,
       preserved_100: rows.filter((row) => row.status === 'preserved_100').length,
       accepted_100: rows.filter((row) => row.status === 'accepted_100').length,
       audit_only_needs_repair: rows.filter((row) => row.status === 'audit_only_needs_repair').length,
@@ -826,7 +1074,9 @@ async function main() {
       ai_repair_eligible_case_ids: rows.filter((row) => row.repair_eligibility?.eligible).sort((a, b) => a.repair_eligibility.priority - b.repair_eligibility.priority).map((row) => row.case_id),
       quarantined: rows.filter((row) => row.status.startsWith('quarantined')).length,
       budget_stopped: rows.filter((row) => row.status === 'budget_stopped').length,
+      publishable_authoring_case_ids: [...acceptedAuthoring.keys()],
       publishable_case_ids: [...accepted.keys()],
+      publishable_change_count: new Set([...acceptedAuthoring.keys(), ...accepted.keys()]).size,
       api_calls: budget.calls.length,
       actual_or_conservative_cost_usd: Number(budget.spent.toFixed(6)),
       warning_budget_reached: budget.spent >= budget.warning,
@@ -844,6 +1094,7 @@ async function main() {
     `- Run: ${report.run_id}`,
     `- Kaynak SHA: \`${sourceSha.combined}\``,
     `- Seçilen vaka: ${rows.length}`,
+    `- QA metadata sözleşmesi tamamlanan: ${report.summary.publishable_authoring_case_ids.length}`,
     `- Korunan 100/100: ${report.summary.preserved_100}`,
     `- Yeni kabul edilen 100/100: ${report.summary.accepted_100}`,
     `- Karantina: ${report.summary.quarantined}`,
@@ -854,11 +1105,15 @@ async function main() {
     '',
     '## Kabul edilen vakalar',
     '',
-    ...(report.summary.publishable_case_ids.length ? report.summary.publishable_case_ids.map((id) => `- \`${id}\``) : ['- Yok'])
+    ...(report.summary.publishable_case_ids.length ? report.summary.publishable_case_ids.map((id) => `- \`${id}\``) : ['- Yok']),
+    '',
+    '## QA-only metadata katmanı',
+    '',
+    ...(report.summary.publishable_authoring_case_ids.length ? report.summary.publishable_authoring_case_ids.map((id) => `- \`${id}\``) : ['- Yok'])
   ].join('\n');
   fs.writeFileSync(path.join(OUTPUT_DIR, 'draft_pr_body.md'), `${prBody}\n`);
 
-  if (APPLY_TO_WORKTREE && accepted.size) {
+  if (APPLY_TO_WORKTREE && (accepted.size || acceptedAuthoring.size)) {
     fs.writeFileSync(STANDARD_PATH, patchedStandard);
     fs.writeFileSync(PREMIUM_PATH, patchedPremium);
     writeJson(SIDECAR_PATH, sidecar);
@@ -866,7 +1121,17 @@ async function main() {
   process.stdout.write(`${JSON.stringify(report.summary, null, 2)}\n`);
 }
 
-export { applyPatchPlanSafely, buildPrompt, isRecoverablePatchContractError };
+export {
+  applyAuthoringPatchPlanSafely,
+  applyPatchPlanSafely,
+  authoringCompleteness,
+  authoringContract,
+  authoringOverlay,
+  buildAuthoringPrompt,
+  buildPrompt,
+  isRecoverablePatchContractError,
+  stripAuthoring
+};
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   main().catch((error) => {
