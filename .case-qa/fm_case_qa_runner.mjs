@@ -23,7 +23,7 @@ const AI_ENABLED = String(env.FM_QA_ALLOW_AI || 'false').toLowerCase() === 'true
 const APPLY_TO_WORKTREE = String(env.FM_QA_APPLY_TO_WORKTREE || 'false').toLowerCase() === 'true';
 const CASE_LIMIT = Math.max(0, Number(env.FM_QA_CASE_LIMIT || 0));
 const CASE_IDS = new Set(String(env.FM_QA_CASE_IDS || '').split(',').map((item) => item.trim()).filter(Boolean));
-const PROMPT_VERSION = 'fm-case-qa-patch-v3.5.0';
+const PROMPT_VERSION = 'fm-case-qa-patch-v3.6.0';
 
 function clone(value) { return value == null ? value : JSON.parse(JSON.stringify(value)); }
 function sha(value) { return crypto.createHash('sha256').update(typeof value === 'string' ? value : JSON.stringify(value)).digest('hex'); }
@@ -346,7 +346,13 @@ function applyPatchPlan(baseCase, plan) {
 function extractOutputText(response) {
   if (typeof response.output_text === 'string') return response.output_text;
   for (const item of response.output || []) for (const content of item.content || []) if (content.type === 'output_text' && typeof content.text === 'string') return content.text;
-  throw new Error('OpenAI yanıtında output_text bulunamadı.');
+  const diagnostic = {
+    status: response?.status || null,
+    incomplete_details: response?.incomplete_details || null,
+    error: response?.error || null,
+    output_types: (response?.output || []).map((item) => item?.type || null)
+  };
+  throw new Error(`OpenAI yanıtında output_text bulunamadı: ${JSON.stringify(diagnostic)}`);
 }
 
 const PATCH_SCHEMA = {
@@ -498,10 +504,12 @@ function compactReport(result, leakage) {
 }
 
 function buildPrompt({ caseData, baselineResult, leakage, phase }) {
+  const requiredGateNames = ['coreNecessity', 'patternGovernance', 'contentAndNames', 'semanticContract', 'visibleEvidence', 'mechanicContract', 'bonusFunctionality'];
+  const failedRequiredGates = requiredGateNames.filter((name) => baselineResult.gates?.[name]?.passed !== true);
   const phaseInstruction = phase === 'luna_first_pass'
     ? 'Reconstruct missing authoring evidence and repair only verified playability failures. Internally form a complete repair checklist before emitting operations.'
     : phase === 'terra_final_verifier'
-      ? 'Final verifier pass: repair only the exact remaining deterministic failures. Preserve every currently passed gate, do not broaden edits, and do not reintroduce any earlier leakage or visible-evidence overflow.'
+      ? `Final convergence pass: produce the complete minimal patch that clears every remaining required gate (${failedRequiredGates.join(', ') || 'none'}). This is an active repair pass, not a review. Preserve every currently passed gate and do not reintroduce earlier leakage. If incremental edits cannot make the core deduction unique, replace the necessary clue fields as a coherent set. Before emitting operations, verify internally that: (1) at least four non-bonus clues are individually necessary and together force exactly one suspect|weapon|location solution without bonus clues; (2) every player-visible entity reference is represented by that same clue's logicRules; (3) every bonus clue has a useful matrix effect but is unnecessary; and (4) deductionHint never names its answer.`
       : 'Repair only the remaining deterministic failures in the current candidate. Re-read every failed gate, preserve every passed gate, and do not repeat already-passed repairs.';
   return `${phaseInstruction}
 
@@ -517,7 +525,10 @@ CASE:
 ${JSON.stringify(caseData)}
 
 DETERMINISTIC QA REPORT:
-${JSON.stringify(compactReport(baselineResult, leakage))}`;
+${JSON.stringify(compactReport(baselineResult, leakage))}
+
+FAILED REQUIRED GATES (all must pass after this patch):
+${JSON.stringify(failedRequiredGates)}`;
 }
 
 function evaluate(engine, original, candidate) {
@@ -674,14 +685,23 @@ async function main() {
       {
         phase: 'terra_final_verifier',
         model: policy.models.final_cleanup || policy.models.escalation,
-        effort: policy.models.final_cleanup_reasoning_effort || policy.models.escalation_reasoning_effort
+        effort: policy.models.final_cleanup_reasoning_effort || policy.models.escalation_reasoning_effort,
+        maxOutputTokens: Number(policy.models.final_cleanup_max_output_tokens || policy.models.max_output_tokens || 12000)
       }
     ];
     for (const attempt of attempts) {
       const prompt = buildPrompt({ caseData: current, baselineResult: currentEval.result, leakage: currentEval.leakage, phase: attempt.phase });
       const key = sha(`${PROMPT_VERSION}|${sourceSha.combined}|${id}|${attempt.phase}|${attempt.model}|${stableHash(current)}`);
       try {
-        const response = await callModel({ policy, budget, model: attempt.model, effort: attempt.effort, prompt, key, maxOutputTokens: Number(policy.models.max_output_tokens || 12000) });
+        const response = await callModel({
+          policy,
+          budget,
+          model: attempt.model,
+          effort: attempt.effort,
+          prompt,
+          key,
+          maxOutputTokens: Number(attempt.maxOutputTokens || policy.models.max_output_tokens || 12000)
+        });
         const candidate = applyPatchPlan(current, response.plan);
         const assessed = evaluate(engine, original, candidate);
         const previousPenalty = assessmentPenalty(currentEval);
