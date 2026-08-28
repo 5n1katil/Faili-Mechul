@@ -23,7 +23,7 @@ const AI_ENABLED = String(env.FM_QA_ALLOW_AI || 'false').toLowerCase() === 'true
 const APPLY_TO_WORKTREE = String(env.FM_QA_APPLY_TO_WORKTREE || 'false').toLowerCase() === 'true';
 const CASE_LIMIT = Math.max(0, Number(env.FM_QA_CASE_LIMIT || 0));
 const CASE_IDS = new Set(String(env.FM_QA_CASE_IDS || '').split(',').map((item) => item.trim()).filter(Boolean));
-const PROMPT_VERSION = 'fm-case-qa-patch-v3.1.0';
+const PROMPT_VERSION = 'fm-case-qa-patch-v3.2.1';
 
 function clone(value) { return value == null ? value : JSON.parse(JSON.stringify(value)); }
 function sha(value) { return crypto.createHash('sha256').update(typeof value === 'string' ? value : JSON.stringify(value)).digest('hex'); }
@@ -246,6 +246,27 @@ function setPointer(target, pointer, value, op) {
   cursor[finalKey] = value;
 }
 
+function patchTargetExists(target, pointer) {
+  const parts = decodePointer(pointer);
+  let cursor = target;
+  for (let index = 0; index < parts.length - 1; index += 1) {
+    const key = parts[index];
+    if (cursor == null || typeof cursor !== 'object' || !(key in cursor)) return false;
+    cursor = cursor[key];
+  }
+  return cursor != null && typeof cursor === 'object' && parts.at(-1) in cursor;
+}
+
+function validateNestedPatchParent(target, pointer) {
+  const parts = decodePointer(pointer);
+  if (!['suspects', 'weapons', 'locations', 'clues'].includes(parts[0])) return;
+  const collection = target[parts[0]];
+  const index = Number(parts[1]);
+  if (!Array.isArray(collection) || !Number.isInteger(index) || index < 0 || index >= collection.length) {
+    throw new Error(`Yama hedef dizin sınırı dışında: ${pointer}`);
+  }
+}
+
 function applyPatchPlan(baseCase, plan) {
   if (String(plan.case_id) !== caseId(baseCase)) throw new Error(`AI vaka ID uyuşmazlığı: ${plan.case_id}/${caseId(baseCase)}`);
   if (!Array.isArray(plan.operations) || plan.operations.length > 80) throw new Error('AI yama operasyon sayısı geçersiz veya 80 sınırını aşıyor.');
@@ -253,9 +274,14 @@ function applyPatchPlan(baseCase, plan) {
   for (const operation of plan.operations) {
     if (!['add', 'replace'].includes(operation.op)) throw new Error(`Yasak yama işlemi: ${operation.op}`);
     if (!allowedPatchPath(operation.path)) throw new Error(`Yasak yama yolu: ${operation.path}`);
+    validateNestedPatchParent(output, operation.path);
     let value;
     try { value = JSON.parse(operation.value_json); } catch { throw new Error(`value_json geçersiz: ${operation.path}`); }
-    setPointer(output, operation.path, value, operation.op);
+    // Structured-output models occasionally emit `replace` for an allowed field
+    // that is absent in legacy cases. Canonicalize that single recoverable JSON
+    // Patch mismatch to `add`; array/entity indexes must still already exist.
+    const effectiveOp = operation.op === 'replace' && !patchTargetExists(output, operation.path) ? 'add' : operation.op;
+    setPointer(output, operation.path, value, effectiveOp);
   }
   return output;
 }
@@ -387,6 +413,7 @@ Non-negotiable rules:
 - Remove pre-clue suspect↔weapon/location leakage from profiles and avatar prompt sources. Suspect visual descriptions may use role, era, clothing, age, posture and mood, but not a distinctive weapon/location mapping.
 - Preserve story identity, historical setting, tone and difficulty. Make the smallest sufficient patch.
 - Use only add/replace operations and only paths permitted by the user message.
+- Use add when the final field does not yet exist; use replace only when the final field already exists in the supplied case JSON.
 - value_json is a JSON-encoded string containing the exact replacement value.`;
 
 function compactReport(result, leakage) {
