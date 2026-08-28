@@ -3,6 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { createRequire } from 'node:module';
+import { pathToFileURL } from 'node:url';
 import { evaluatePreclueLeakage } from './case_qa_preclue_guard.mjs';
 
 const require = createRequire(import.meta.url);
@@ -341,6 +342,19 @@ function applyPatchPlan(baseCase, plan) {
   }
   validateCandidateContract(output);
   return output;
+}
+
+function applyPatchPlanSafely(baseCase, plan) {
+  try {
+    return applyPatchPlan(baseCase, plan);
+  } catch (error) {
+    const message = String(error?.message || error);
+    throw new Error(message.startsWith('PATCH_CONTRACT:') ? message : `PATCH_CONTRACT: ${message}`);
+  }
+}
+
+function isRecoverablePatchContractError(message) {
+  return /^PATCH_CONTRACT:/.test(String(message || ''));
 }
 
 function extractOutputText(response) {
@@ -711,12 +725,7 @@ async function main() {
           key,
           maxOutputTokens: Number(attempt.maxOutputTokens || policy.models.max_output_tokens || 12000)
         });
-        let candidate;
-        try {
-          candidate = applyPatchPlan(current, response.plan);
-        } catch (error) {
-          throw new Error(`PATCH_CONTRACT: ${String(error?.message || error)}`);
-        }
+        const candidate = applyPatchPlanSafely(current, response.plan);
         const assessed = evaluate(engine, original, candidate);
         const previousPenalty = assessmentPenalty(currentEval);
         const candidatePenalty = assessmentPenalty(assessed);
@@ -757,7 +766,7 @@ async function main() {
         // A malformed bounded patch must never reach the simulator or the
         // repository. The policy already budgets one escalation attempt, so
         // only contract failures may proceed to that second model.
-        if (/^PATCH_CONTRACT:/.test(message)) {
+        if (isRecoverablePatchContractError(message)) {
           previousAttemptError = message;
           continue;
         }
@@ -857,9 +866,13 @@ async function main() {
   process.stdout.write(`${JSON.stringify(report.summary, null, 2)}\n`);
 }
 
-main().catch((error) => {
-  fs.mkdirSync(OUTPUT_DIR, { recursive: true });
-  writeJson(path.join(OUTPUT_DIR, 'fatal_error.json'), { schema_version: 'fm_case_qa_fatal_error_v1', message: String(error?.message || error), stack: String(error?.stack || '') });
-  console.error(error);
-  process.exitCode = 1;
-});
+export { applyPatchPlanSafely, buildPrompt, isRecoverablePatchContractError };
+
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+  main().catch((error) => {
+    fs.mkdirSync(OUTPUT_DIR, { recursive: true });
+    writeJson(path.join(OUTPUT_DIR, 'fatal_error.json'), { schema_version: 'fm_case_qa_fatal_error_v1', message: String(error?.message || error), stack: String(error?.stack || '') });
+    console.error(error);
+    process.exitCode = 1;
+  });
+}
