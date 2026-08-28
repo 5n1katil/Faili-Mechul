@@ -23,7 +23,7 @@ const AI_ENABLED = String(env.FM_QA_ALLOW_AI || 'false').toLowerCase() === 'true
 const APPLY_TO_WORKTREE = String(env.FM_QA_APPLY_TO_WORKTREE || 'false').toLowerCase() === 'true';
 const CASE_LIMIT = Math.max(0, Number(env.FM_QA_CASE_LIMIT || 0));
 const CASE_IDS = new Set(String(env.FM_QA_CASE_IDS || '').split(',').map((item) => item.trim()).filter(Boolean));
-const PROMPT_VERSION = 'fm-case-qa-patch-v3.6.0';
+const PROMPT_VERSION = 'fm-case-qa-patch-v3.6.1';
 
 function clone(value) { return value == null ? value : JSON.parse(JSON.stringify(value)); }
 function sha(value) { return crypto.createHash('sha256').update(typeof value === 'string' ? value : JSON.stringify(value)).digest('hex'); }
@@ -503,7 +503,7 @@ function compactReport(result, leakage) {
   };
 }
 
-function buildPrompt({ caseData, baselineResult, leakage, phase }) {
+function buildPrompt({ caseData, baselineResult, leakage, phase, previousAttemptError = null }) {
   const requiredGateNames = ['coreNecessity', 'patternGovernance', 'contentAndNames', 'semanticContract', 'visibleEvidence', 'mechanicContract', 'bonusFunctionality'];
   const failedRequiredGates = requiredGateNames.filter((name) => baselineResult.gates?.[name]?.passed !== true);
   const phaseInstruction = phase === 'luna_first_pass'
@@ -528,7 +528,9 @@ DETERMINISTIC QA REPORT:
 ${JSON.stringify(compactReport(baselineResult, leakage))}
 
 FAILED REQUIRED GATES (all must pass after this patch):
-${JSON.stringify(failedRequiredGates)}`;
+${JSON.stringify(failedRequiredGates)}
+
+${previousAttemptError ? `PREVIOUS PATCH WAS REJECTED BEFORE EVALUATION:\n${previousAttemptError}\nDo not repeat that invalid path or contract violation. Use only indexes and fields that exist in CASE.` : ''}`;
 }
 
 function evaluate(engine, original, candidate) {
@@ -679,6 +681,7 @@ async function main() {
 
     let current = bootstrapped;
     let currentEval = baseline;
+    let previousAttemptError = null;
     const attempts = [
       { phase: 'luna_first_pass', model: policy.models.first_pass, effort: policy.models.first_pass_reasoning_effort },
       { phase: 'terra_escalation', model: policy.models.escalation, effort: policy.models.escalation_reasoning_effort },
@@ -690,7 +693,13 @@ async function main() {
       }
     ];
     for (const attempt of attempts) {
-      const prompt = buildPrompt({ caseData: current, baselineResult: currentEval.result, leakage: currentEval.leakage, phase: attempt.phase });
+      const prompt = buildPrompt({
+        caseData: current,
+        baselineResult: currentEval.result,
+        leakage: currentEval.leakage,
+        phase: attempt.phase,
+        previousAttemptError
+      });
       const key = sha(`${PROMPT_VERSION}|${sourceSha.combined}|${id}|${attempt.phase}|${attempt.model}|${stableHash(current)}`);
       try {
         const response = await callModel({
@@ -702,7 +711,12 @@ async function main() {
           key,
           maxOutputTokens: Number(attempt.maxOutputTokens || policy.models.max_output_tokens || 12000)
         });
-        const candidate = applyPatchPlan(current, response.plan);
+        let candidate;
+        try {
+          candidate = applyPatchPlan(current, response.plan);
+        } catch (error) {
+          throw new Error(`PATCH_CONTRACT: ${String(error?.message || error)}`);
+        }
         const assessed = evaluate(engine, original, candidate);
         const previousPenalty = assessmentPenalty(currentEval);
         const candidatePenalty = assessmentPenalty(assessed);
@@ -743,7 +757,10 @@ async function main() {
         // A malformed bounded patch must never reach the simulator or the
         // repository. The policy already budgets one escalation attempt, so
         // only contract failures may proceed to that second model.
-        if (/^PATCH_CONTRACT:/.test(message)) continue;
+        if (/^PATCH_CONTRACT:/.test(message)) {
+          previousAttemptError = message;
+          continue;
+        }
         break;
       }
     }
