@@ -78,6 +78,8 @@ jobs:
         shell: bash
         run: |
           corepack enable
+          corepack prepare pnpm@10.34.5 --activate
+          pnpm --version
           pnpm install --frozen-lockfile
           pnpm --filter @workspace/dedektif typecheck > .case-qa-output/typecheck-baseline.txt 2>&1 || true
           grep -E 'error TS[0-9]+:' .case-qa-output/typecheck-baseline.txt | sed "s#${GITHUB_WORKSPACE}/##g" | sort -u > .case-qa-output/typecheck-baseline-errors.txt || true
