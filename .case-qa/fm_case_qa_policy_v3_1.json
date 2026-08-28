@@ -27,7 +27,7 @@
     "preserve_clue_ids": true,
     "preserve_solution_ids": true,
     "preserve_icons_and_asset_paths": true,
-    "max_luna_attempts_per_case": 1,
+    "max_luna_attempts_per_case": 2,
     "max_terra_attempts_per_case": 1,
     "quarantine_after_failed_escalation": true
   },

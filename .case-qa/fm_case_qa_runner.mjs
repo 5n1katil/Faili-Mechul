@@ -23,7 +23,7 @@ const AI_ENABLED = String(env.FM_QA_ALLOW_AI || 'false').toLowerCase() === 'true
 const APPLY_TO_WORKTREE = String(env.FM_QA_APPLY_TO_WORKTREE || 'false').toLowerCase() === 'true';
 const CASE_LIMIT = Math.max(0, Number(env.FM_QA_CASE_LIMIT || 0));
 const CASE_IDS = new Set(String(env.FM_QA_CASE_IDS || '').split(',').map((item) => item.trim()).filter(Boolean));
-const PROMPT_VERSION = 'fm-case-qa-patch-v3.2.1';
+const PROMPT_VERSION = 'fm-case-qa-patch-v3.3.0';
 
 function clone(value) { return value == null ? value : JSON.parse(JSON.stringify(value)); }
 function sha(value) { return crypto.createHash('sha256').update(typeof value === 'string' ? value : JSON.stringify(value)).digest('hex'); }
@@ -464,9 +464,14 @@ Non-negotiable rules:
 - Preserve every solution ID. A suspect, weapon or location display name may change only when the deterministic report identifies a real language defect or a direct pre-clue identity leak. Keep the same entity ID, physical class, visual identity and gameplay role; never rename merely for style.
 - Every non-bonus clue must contain logicRules grounded in player-visible evidence.
 - All non-bonus clues together must produce one unique solution; removing any one must restore ambiguity. Bonus clues are never required.
-- qaSemanticFacts must document player-visible semantic deductions.
+- qaSemanticFacts must always be an array. Every item must use exactly the semantic fact contract {kind:"crime_component",component:"suspect"|"weapon"|"location",entityId:"existing matching-category ID",source:"story"|"clue:<existing clue ID>",evidence:"player-visible evidence"}. Never put qaRationale or arbitrary traceability records in qaSemanticFacts.
+- Every clue with logicRules must contain qaRationale {matrixEffect,evidenceLink,evidenceKind}. evidenceKind must be one of forensic, documentary, record, witness, mechanical, medical, physical or audio; motive alone cannot justify a matrix action.
 - deductionHint must be a clear Socratic question without leaking names or the solution.
 - Premium cases need one genuinely playable advanced mechanic that contributes to deduction.
+- For context_only encrypted mechanics, keep the visible wrapper text at or below the deterministic character limit in the QA report; the decoded mechanic must remain necessary.
+- Every bonus clue must have at least one useful logicRules matrix effect while remaining unnecessary for the unique core solution.
+- After changing clue text or logicRules, remove every suspect, weapon or location name/marker that is not represented by that same clue's declared rule pair.
+- Keep qaPattern aligned with the candidate's actual deterministic pattern profile reported by QA.
 - Remove pre-clue suspect↔weapon/location leakage from profiles and avatar prompt sources. Suspect visual descriptions may use role, era, clothing, age, posture and mood, but not a distinctive weapon/location mapping.
 - Preserve story identity, historical setting, tone and difficulty. Make the smallest sufficient patch.
 - Use only add/replace operations and only paths permitted by the user message.
@@ -493,7 +498,7 @@ function compactReport(result, leakage) {
 }
 
 function buildPrompt({ caseData, baselineResult, leakage, phase }) {
-  return `${phase === 'terra_escalation' ? 'Repair the remaining deterministic failures in the current candidate.' : 'Reconstruct missing authoring evidence and repair only verified playability failures.'}
+  return `${phase === 'luna_first_pass' ? 'Reconstruct missing authoring evidence and repair only verified playability failures.' : 'Repair only the remaining deterministic failures in the current candidate. Re-read every failed gate and do not repeat already-passed repairs.'}
 
 Allowed JSON Pointer paths:
 - /story, /atmosphere, /subtitle, /deductionSummary, /assetManifest
@@ -641,7 +646,8 @@ async function main() {
     let currentEval = baseline;
     const attempts = [
       { phase: 'luna_first_pass', model: policy.models.first_pass, effort: policy.models.first_pass_reasoning_effort },
-      { phase: 'terra_escalation', model: policy.models.escalation, effort: policy.models.escalation_reasoning_effort }
+      { phase: 'terra_escalation', model: policy.models.escalation, effort: policy.models.escalation_reasoning_effort },
+      { phase: 'luna_final_cleanup', model: policy.models.first_pass, effort: policy.models.first_pass_reasoning_effort }
     ];
     for (const attempt of attempts) {
       const prompt = buildPrompt({ caseData: current, baselineResult: currentEval.result, leakage: currentEval.leakage, phase: attempt.phase });
@@ -682,7 +688,7 @@ async function main() {
         break;
       }
     }
-    if (row.status === 'repair_pending') row.status = 'quarantined_after_two_attempts';
+    if (row.status === 'repair_pending') row.status = 'quarantined_after_bounded_attempts';
     return row;
   });
 
