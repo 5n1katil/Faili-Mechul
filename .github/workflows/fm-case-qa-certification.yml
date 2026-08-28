@@ -37,6 +37,9 @@ jobs:
       - name: Test bounded patch-contract recovery
         run: node .case-qa/fm_case_qa_contract_recovery_test.mjs
 
+      - name: Test behavioral calibration and authoring isolation
+        run: node .case-qa/fm_case_qa_behavioral_calibration_test.mjs
+
       - name: Certify exact sources and HTML simulator
         run: node .case-qa/fm_case_qa_certify.mjs
 
