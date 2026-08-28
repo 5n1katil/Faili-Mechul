@@ -34,6 +34,9 @@ jobs:
       - name: Check certification script syntax
         run: node --check .case-qa/fm_case_qa_certify.mjs
 
+      - name: Test bounded patch-contract recovery
+        run: node .case-qa/fm_case_qa_contract_recovery_test.mjs
+
       - name: Certify exact sources and HTML simulator
         run: node .case-qa/fm_case_qa_certify.mjs
 
