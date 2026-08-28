@@ -1,5 +1,5 @@
 {
-  "schema_version": "fm_case_qa_automation_policy_v3_6",
+  "schema_version": "fm_case_qa_automation_policy_v3_7",
   "source": {
     "repository": "5n1katil/Faili-Mechul",
     "branch": "main",
@@ -23,6 +23,7 @@
   },
   "repair": {
     "confirmed_preclue_leakage_only": true,
+    "repair_all_exact_failures_after_gold_calibration": true,
     "pilot_requires_explicit_case_ids": true,
     "preserve_case_ids": true,
     "preserve_entity_ids": true,
@@ -33,6 +34,21 @@
     "max_terra_attempts_per_case": 2,
     "quarantine_after_failed_escalation": true,
     "require_monotonic_candidate_improvement": true
+  },
+  "authoring": {
+    "enabled": true,
+    "qa_only_fields": true,
+    "production_content_hash_must_match": true,
+    "model": "gpt-5.6-luna",
+    "reasoning_effort": "medium",
+    "max_output_tokens": 9000,
+    "max_attempts_per_case": 1,
+    "calibration_case_ids": [
+      "rc_001",
+      "pp_001"
+    ],
+    "full_campaign_requires_gold_100": true,
+    "publish_sidecar_only_in_draft_pr": true
   },
   "models": {
     "first_pass": "gpt-5.6-luna",
