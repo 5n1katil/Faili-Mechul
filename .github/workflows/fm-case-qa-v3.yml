@@ -8,9 +8,9 @@ on:
   workflow_dispatch:
     inputs:
       mode:
-        description: audit, pilot veya full
+        description: Guvenli tek/kucuk vaka icin pilot; toplu kosu icin full
         required: true
-        default: audit
+        default: pilot
         type: choice
         options: [audit, pilot, full]
       allow_ai:
@@ -19,9 +19,9 @@ on:
         default: false
         type: boolean
       case_limit:
-        description: 0=tumu; pilot icin 5 onerilir
+        description: Pilot icin 1 onerilir; en fazla 5
         required: true
-        default: "0"
+        default: "1"
         type: string
       case_ids:
         description: Istege bagli, virgul ayrimli vaka ID listesi
@@ -34,9 +34,9 @@ on:
         default: true
         type: boolean
       auto_merge:
-        description: Tum uretim kapilari gecerse PR'i otomatik squash-merge et
+        description: Yalniz full 105/105 uretim kosusunda kullan; pilot daima taslaktir
         required: true
-        default: true
+        default: false
         type: boolean
       prepare_avatar_manifest:
         description: QA sonrasi avatar koru/dogrula/uret manifestini hazirla
@@ -161,6 +161,31 @@ jobs:
         if: ${{ github.event_name == 'push' || (inputs.mode == 'full' && inputs.allow_ai == true && inputs.publish_draft_pr == true) }}
         run: node .case-qa/fm_case_qa_production_gate.mjs
 
+      - name: Enforce selected-case 100/100 review gate
+        id: pilot_gate
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.mode == 'pilot' && inputs.allow_ai == true && inputs.publish_draft_pr == true }}
+        shell: bash
+        run: |
+          report=.case-qa-output/fm_case_qa_run_report.json
+          selected="$(jq -r '.summary.selected_cases' "$report")"
+          passed="$(jq -r '.summary.final_campaign_passed' "$report")"
+          quarantined="$(jq -r '.summary.quarantined' "$report")"
+          cost="$(jq -r '.summary.actual_or_conservative_cost_usd' "$report")"
+          if [ "$selected" -lt 1 ] || [ "$selected" -gt 5 ]; then
+            echo "Pilot must contain 1-5 explicit cases; got $selected."
+            exit 1
+          fi
+          if [ "$passed" -ne "$selected" ] || [ "$quarantined" -ne 0 ]; then
+            echo "Selected-case gate failed: $passed/$selected passed, $quarantined quarantined."
+            exit 1
+          fi
+          awk "BEGIN { exit !($cost <= 1.0) }" || {
+            echo "Pilot cost cap exceeded: \$$cost"
+            exit 1
+          }
+          echo "selected=$selected" >> "$GITHUB_OUTPUT"
+          echo "cost=$cost" >> "$GITHUB_OUTPUT"
+
       - name: Prepare release and avatar handoff manifests
         if: ${{ steps.production_gate.outcome == 'success' }}
         id: publish_gate
@@ -194,6 +219,27 @@ jobs:
           if-no-files-found: error
           include-hidden-files: true
           retention-days: 30
+
+      - name: Create selected-case draft review PR
+        id: pilot_review
+        if: ${{ steps.pilot_gate.outcome == 'success' }}
+        shell: bash
+        run: |
+          branch="qa/case-review-${GITHUB_RUN_ID}"
+          git config user.name "faili-mechul-qa-bot"
+          git config user.email "qa-bot@users.noreply.github.com"
+          git switch -c "$branch"
+          git add artifacts/dedektif/data/puzzles.ts artifacts/dedektif/data/puzzles_database.json artifacts/dedektif/qa/case_qa_sidecars_v29_5.json
+          if git diff --cached --quiet; then
+            echo "Selected case was already certified at 100/100; no PR is needed." >> "$GITHUB_STEP_SUMMARY"
+            echo "pr_url=" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git commit -m "qa: stage selected certified case review"
+          git push --set-upstream origin "$branch"
+          pr_url="$(gh pr create --draft --base main --head "$branch" --title "QA review: certified selected case(s) (${GITHUB_RUN_ID})" --body-file .case-qa-output/draft_pr_body.md)"
+          echo "pr_url=$pr_url" >> "$GITHUB_OUTPUT"
+          echo "Pilot PR is draft-only and was not merged automatically: $pr_url" >> "$GITHUB_STEP_SUMMARY"
 
       - name: Create certified staging PR and merge automatically
         id: merge_release
@@ -245,4 +291,5 @@ jobs:
             echo "- Auto merged: ${{ steps.merge_release.outputs.merged }}"
             echo "- Main SHA: ${{ steps.merge_release.outputs.main_sha }}"
             echo "- PR: ${{ steps.merge_release.outputs.pr_url }}"
+            echo "- Selected-case review PR: ${{ steps.pilot_review.outputs.pr_url }}"
           } >> "$GITHUB_STEP_SUMMARY"
