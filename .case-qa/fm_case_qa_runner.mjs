@@ -24,8 +24,8 @@ const AI_ENABLED = String(env.FM_QA_ALLOW_AI || 'false').toLowerCase() === 'true
 const APPLY_TO_WORKTREE = String(env.FM_QA_APPLY_TO_WORKTREE || 'false').toLowerCase() === 'true';
 const CASE_LIMIT = Math.max(0, Number(env.FM_QA_CASE_LIMIT || 0));
 const CASE_IDS = parseCaseIds(env.FM_QA_CASE_IDS);
-const PROMPT_VERSION = 'fm-case-qa-patch-v3.8.0';
-const AUTHORING_PROMPT_VERSION = 'fm-case-qa-authoring-v3.8.0';
+const PROMPT_VERSION = 'fm-case-qa-patch-v3.8.1';
+const AUTHORING_PROMPT_VERSION = 'fm-case-qa-authoring-v3.8.1';
 
 function clone(value) { return value == null ? value : JSON.parse(JSON.stringify(value)); }
 function sha(value) { return crypto.createHash('sha256').update(typeof value === 'string' ? value : JSON.stringify(value)).digest('hex'); }
@@ -646,14 +646,18 @@ Non-negotiable rules:
 - Allowed clue fields are logicRules, qaRationale, qaMechanicBoundary, qaSemanticFacts and isCrimeAnchor.
 - Never change story, atmosphere, entity names/profiles, clue text/title/hints/mechanics, IDs, solution, assets or icons.
 - Use only existing suspect, weapon, location and clue IDs.
+- Every logicRules value MUST use this exact canonical shape and no aliases:
+  [{"action":"confirm","pair":["s1","w1"]}]
+- action MUST be exactly "confirm" or "eliminate". Never use match, exclude, eşleşme, eslesme, doğrula, ele, type, relation or effect.
+- pair MUST be an array of exactly two existing entity ID strings from two different axes (suspect+weapon, suspect+location or weapon+location). Never use objects, labels, clue IDs, field names or a single ID.
 - Derive every logicRules action strictly from concrete player-visible evidence in that same clue. Do not invent evidence or silently repair weak prose.
 - qaRationale must contain matrixEffect, evidenceLink and evidenceKind. matrixEffect must name the same entities as the declared rule pair.
-- qaSemanticFacts must be arrays and may document only definite player-visible crime-component facts.
+- qaSemanticFacts must be arrays and may document only definite player-visible crime-component facts. The sole crime-anchor clue must contain exactly one fact with this exact shape: [{"kind":"crime_component","component":"weapon","entityId":"w1","source":"clue:c1","evidence":"visible evidence summary"}]. component must be suspect, weapon or location and entityId must belong to that axis.
 - Exactly one non-bonus clue should be isCrimeAnchor:true when the clue visibly links exactly one solution component to the crime; all other clues should be false or omit the flag.
 - If the visible case does not support a safe rule or anchor, leave it unresolved and explain that in assessment. Do not fabricate a passing score.
 - Use add for absent fields and replace for existing fields. value_json is a JSON-encoded string.`;
 
-function buildAuthoringPrompt({ caseData, completeness, tier }) {
+function buildAuthoringPrompt({ caseData, completeness, contract, tier }) {
   const entityIds = {
     suspects: (caseData.suspects || []).map((item) => String(item.id)),
     weapons: (caseData.weapons || []).map((item) => String(item.id)),
@@ -669,6 +673,14 @@ Allowed JSON Pointer paths:
 CASE TIER: ${tier}
 EXISTING IDS: ${JSON.stringify(entityIds)}
 MISSING AUTHORING CONTRACT: ${JSON.stringify(completeness.missing)}
+INVALID AUTHORING CONTRACT: ${JSON.stringify(contract?.errors || [])}
+
+CANONICAL CONTRACT REMINDER:
+- logicRules: [{"action":"confirm|eliminate","pair":["existing_id_axis_A","existing_id_axis_B"]}]
+- pair has exactly two string IDs from different axes.
+- Replace every invalid existing logicRules value named above; do not only fill missing paths.
+- The single isCrimeAnchor:true clue has exactly one qaSemanticFacts crime_component record whose component and entityId agree.
+- If MISSING or INVALID arrays are non-empty, zero operations is never a valid answer.
 
 CASE (player-visible content is read-only):
 ${JSON.stringify(caseData)}
@@ -721,6 +733,14 @@ ${JSON.stringify(compactReport(baselineResult, leakage))}
 
 FAILED REQUIRED GATES (all must pass after this patch):
 ${JSON.stringify(failedRequiredGates)}
+
+AUTHORING CONTRACT STATUS (must also be complete after repair):
+${JSON.stringify({
+    completeness: authoringCompleteness(caseData),
+    contract: authoringContract(caseData)
+  })}
+
+Canonical logicRules shape is [{"action":"confirm","pair":["s1","w1"]}] or [{"action":"eliminate","pair":["s1","l2"]}]. action has no other accepted value; pair is exactly two existing string IDs from different axes. If a clue cannot support a safe pair, minimally rewrite that clue's player-visible text/hint together with its QA-only fields so the resulting deduction is explicit, fair and consistent with the unchanged solution.
 
 ${previousAttemptError ? `PREVIOUS PATCH WAS REJECTED BEFORE EVALUATION:\n${previousAttemptError}\nDo not repeat that invalid path or contract violation. Use only indexes and fields that exist in CASE.` : ''}`;
 }
@@ -862,7 +882,12 @@ async function main() {
     const phase = options.phase || 'authoring_only';
     const model = options.model || policy.authoring?.model || policy.models.first_pass;
     const effort = options.effort || policy.authoring?.reasoning_effort || policy.models.first_pass_reasoning_effort;
-    const prompt = buildAuthoringPrompt({ caseData: state.candidate, completeness: before, tier: state.entry.tier });
+    const prompt = buildAuthoringPrompt({
+      caseData: state.candidate,
+      completeness: before,
+      contract: beforeContract,
+      tier: state.entry.tier
+    });
     const key = sha(`${AUTHORING_PROMPT_VERSION}|${sourceSha.combined}|${caseId(state.original)}|${phase}|${model}|${stableHash(state.candidate)}`);
     try {
       const response = await callModel({
@@ -911,6 +936,16 @@ async function main() {
     let previousAttemptError = null;
     let terminalStatus = 'quarantined_after_bounded_attempts';
     const recordedAttempts = [];
+    const readiness = (candidate, assessed) => {
+      const completeness = authoringCompleteness(candidate);
+      const contract = authoringContract(candidate);
+      return {
+        completeness,
+        contract,
+        passed: completeness.complete && contract.passed && assessed.passed === true,
+        penalty: assessmentPenalty(assessed) + (completeness.missing.length * 1200) + (contract.errors.length * 1200)
+      };
+    };
     const attempts = [
       { phase: 'luna_first_pass', model: policy.models.first_pass, effort: policy.models.first_pass_reasoning_effort },
       { phase: 'terra_escalation', model: policy.models.escalation, effort: policy.models.escalation_reasoning_effort },
@@ -936,17 +971,21 @@ async function main() {
         });
         const candidate = applyPatchPlanSafely(current, response.plan);
         const assessed = evaluate(engine, state.original, candidate);
-        const previousPenalty = assessmentPenalty(currentEval);
-        const candidatePenalty = assessmentPenalty(assessed);
-        const retained = assessed.passed || candidatePenalty < previousPenalty;
+        const previousReadiness = readiness(current, currentEval);
+        const candidateReadiness = readiness(candidate, assessed);
+        const previousPenalty = previousReadiness.penalty;
+        const candidatePenalty = candidateReadiness.penalty;
+        const retained = candidateReadiness.passed || candidatePenalty < previousPenalty;
         recordedAttempts.push({
           phase: `${scope}:${attempt.phase}`, model: attempt.model, cache_key: key, cached: response.cached,
           cost_usd: response.cost, operation_count: response.plan.operations.length,
           assessment: response.plan.assessment, result: compactReport(assessed.result, assessed.leakage),
+          authoring_completeness: candidateReadiness.completeness,
+          authoring_contract: candidateReadiness.contract,
           calibration: assessed.calibration, previous_penalty: previousPenalty, candidate_penalty: candidatePenalty,
           retained_as_best: retained, monotonic_guard: retained ? 'improved_or_accepted' : 'rejected_regression'
         });
-        if (assessed.passed) {
+        if (candidateReadiness.passed) {
           current = candidate;
           currentEval = assessed;
           terminalStatus = 'accepted_100';
@@ -961,7 +1000,16 @@ async function main() {
         break;
       }
     }
-    return { candidate: current, assessment: currentEval, attempts: recordedAttempts, status: terminalStatus, passed: currentEval.passed === true };
+    const finalReadiness = readiness(current, currentEval);
+    return {
+      candidate: current,
+      assessment: currentEval,
+      attempts: recordedAttempts,
+      status: terminalStatus,
+      passed: finalReadiness.passed,
+      completeness: finalReadiness.completeness,
+      contract: finalReadiness.contract
+    };
   }
 
   const selectedStates = selected.map((entry) => stateById.get(caseId(entry.raw)));
@@ -990,15 +1038,8 @@ async function main() {
       state.candidate.qaPortfolioRegistry = { schema_version: 'fm_qa_portfolio_registry_v1', entries: clone(calibrationRegistry) };
       const completeness = authoringCompleteness(state.candidate);
       const contract = authoringContract(state.candidate);
-      if (!completeness.complete || !contract.passed) {
-        failures.push({
-          case_id: caseId(state.original), stage: 'authoring_contract', completeness, contract,
-          authoring_attempts: state.authoring_attempts
-        });
-        continue;
-      }
       const assessed = evaluate(engine, state.original, state.candidate);
-      if (assessed.passed) continue;
+      if (completeness.complete && contract.passed && assessed.passed) continue;
       const repaired = await runBoundedRepair(state, {
         scope: 'gold_calibration', current: state.candidate, assessment: assessed
       });
@@ -1008,7 +1049,10 @@ async function main() {
         state.calibration_repair_accepted = true;
       } else {
         failures.push({
-          case_id: caseId(state.original), stage: 'bounded_gold_repair', completeness, contract,
+          case_id: caseId(state.original),
+          stage: (!completeness.complete || !contract.passed) ? 'authoring_contract_and_bounded_gold_repair' : 'bounded_gold_repair',
+          completeness: repaired.completeness,
+          contract: repaired.contract,
           authoring_attempts: state.authoring_attempts,
           repair_attempts: repaired.attempts,
           result: compactReport(repaired.assessment.result, repaired.assessment.leakage)
@@ -1022,9 +1066,13 @@ async function main() {
       for (const state of goldStates) {
         state.candidate.qaPortfolioRegistry = { schema_version: 'fm_qa_portfolio_registry_v1', entries: clone(finalCalibrationRegistry) };
         const finalAssessment = evaluate(engine, state.original, state.candidate);
-        if (!finalAssessment.passed) {
+        const finalCompleteness = authoringCompleteness(state.candidate);
+        const finalContract = authoringContract(state.candidate);
+        if (!finalCompleteness.complete || !finalContract.passed || !finalAssessment.passed) {
           failures.push({
             case_id: caseId(state.original), stage: 'final_gold_registry',
+            completeness: finalCompleteness,
+            contract: finalContract,
             authoring_attempts: state.authoring_attempts,
             repair_attempts: state.calibration_repair_attempts,
             result: compactReport(finalAssessment.result, finalAssessment.leakage)
@@ -1052,9 +1100,13 @@ async function main() {
     const contract = authoringContract(bootstrapped);
     const baseline = evaluate(engine, original, bootstrapped);
     const authoringReady = completeness.complete && contract.passed;
+    const bulkRepairUnlocked = campaignCalibrated && policy.repair?.repair_all_exact_failures_after_gold_calibration === true;
+    const authoringRecoveryUnlocked = bulkRepairUnlocked && policy.repair?.repair_incomplete_authoring_after_gold_calibration === true;
     const repairEligibility = authoringReady
-      ? classifyRepairEligibility(baseline, { allowCalibratedSimulatorRepair: campaignCalibrated && policy.repair?.repair_all_exact_failures_after_gold_calibration === true })
-      : { eligible: false, queue: 'authoring_required', priority: 0, reason: 'qa_only_authoring_contract_incomplete' };
+      ? classifyRepairEligibility(baseline, { allowCalibratedSimulatorRepair: bulkRepairUnlocked })
+      : authoringRecoveryUnlocked
+        ? { eligible: true, queue: 'authoring_and_content_repair', priority: 0, reason: 'gold_calibrated_recovery_for_incomplete_authoring_contract' }
+        : { eligible: false, queue: 'authoring_required', priority: 0, reason: 'qa_only_authoring_contract_incomplete' };
     const row = {
       case_id: id,
       case_title: String(original.title || ''),
@@ -1070,20 +1122,24 @@ async function main() {
       baseline: compactReport(baseline.result, baseline.leakage),
       calibration: baseline.calibration,
       repair_eligibility: repairEligibility,
-      status: !authoringReady ? 'authoring_required' : state.calibration_repair_accepted ? 'accepted_100' : baseline.passed ? 'preserved_100' : repairEligibility.eligible ? 'confirmed_repair_required' : repairEligibility.queue,
+      status: state.calibration_repair_accepted ? 'accepted_100' : !authoringReady ? repairEligibility.queue : baseline.passed ? 'preserved_100' : repairEligibility.eligible ? 'confirmed_repair_required' : repairEligibility.queue,
       attempts: clone(state.calibration_repair_attempts),
       accepted_authoring_candidate: authoringReady && (state.authoring_ai_accepted || state.merged_status === 'applied') ? (state.authoring_candidate || bootstrapped) : null,
       accepted_candidate: state.calibration_repair_accepted ? bootstrapped : null,
       error: null
     };
-    if (!authoringReady || baseline.passed) return row;
+    if (authoringReady && baseline.passed) return row;
     if (!AI_ENABLED || MODE === 'audit') return row;
     if (!repairEligibility.eligible) return row;
     row.status = 'repair_pending';
     const repaired = await runBoundedRepair(state, { scope: 'bulk', current: bootstrapped, assessment: baseline });
     row.attempts.push(...repaired.attempts);
     row.status = repaired.status;
-    if (repaired.passed) row.accepted_candidate = repaired.candidate;
+    if (repaired.passed) {
+      row.accepted_candidate = repaired.candidate;
+      row.authoring_completeness = repaired.completeness;
+      row.authoring_contract = repaired.contract;
+    }
     return row;
   });
 
@@ -1164,7 +1220,7 @@ async function main() {
     authoring_candidate_hash: accepted_authoring_candidate ? stableHash(authoringOverlay(accepted_authoring_candidate)) : null
   }));
   const report = {
-    schema_version: 'fm_case_qa_batch_run_v3_8',
+    schema_version: 'fm_case_qa_batch_run_v3_8_1',
     run_id: env.GITHUB_RUN_ID || `local-${Date.now()}`,
     mode: MODE,
     ai_enabled: AI_ENABLED,
