@@ -85,7 +85,9 @@ jobs:
       - name: Certify exact sources and v29.4 HTML engine
         env:
           FM_QA_CERT_PHASE: pre
-        run: node .case-qa/fm_case_qa_certify.mjs
+        run: |
+          node .case-qa/fm_case_qa_contract_recovery_test.mjs
+          node .case-qa/fm_case_qa_certify.mjs
 
       - name: Install locked app dependencies
         if: ${{ github.event_name == 'push' || inputs.publish_draft_pr == true }}

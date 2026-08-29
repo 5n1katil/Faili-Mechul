@@ -371,6 +371,32 @@ function patchTargetExists(target, pointer) {
   return cursor != null && typeof cursor === 'object' && parts.at(-1) in cursor;
 }
 
+function getPointerValue(target, pointer) {
+  const parts = decodePointer(pointer);
+  let cursor = target;
+  for (const part of parts) {
+    if (cursor == null || typeof cursor !== 'object' || !(part in cursor)) return undefined;
+    cursor = cursor[part];
+  }
+  return cursor;
+}
+
+function parsePatchValue(target, pointer, valueJson) {
+  try {
+    return JSON.parse(valueJson);
+  } catch {
+    // Strict structured output guarantees that value_json itself is a string,
+    // but models can still place the desired replacement text in that string
+    // without JSON-encoding it a second time. Accept that one unambiguous case
+    // only when the existing target is already a string. Objects, arrays,
+    // booleans, numbers, IDs and new fields keep the strict JSON contract.
+    if (typeof getPointerValue(target, pointer) === 'string' && typeof valueJson === 'string') {
+      return valueJson;
+    }
+    throw new Error(`value_json geçersiz: ${pointer}`);
+  }
+}
+
 function validateNestedPatchParent(target, pointer) {
   const parts = decodePointer(pointer);
   if (!['suspects', 'weapons', 'locations', 'clues'].includes(parts[0])) return;
@@ -509,8 +535,7 @@ function applyPatchPlan(baseCase, plan) {
     if (!['add', 'replace'].includes(operation.op)) throw new Error(`Yasak yama işlemi: ${operation.op}`);
     if (!allowedPatchPath(operation.path)) throw new Error(`Yasak yama yolu: ${operation.path}`);
     validateNestedPatchParent(output, operation.path);
-    let value;
-    try { value = JSON.parse(operation.value_json); } catch { throw new Error(`value_json geçersiz: ${operation.path}`); }
+    let value = parsePatchValue(output, operation.path, operation.value_json);
     value = canonicalizeKnownPatchValue(operation.path, value);
     // Structured-output models occasionally emit `replace` for an allowed field
     // that is absent in legacy cases. Canonicalize that single recoverable JSON
@@ -542,8 +567,7 @@ function applyAuthoringPatchPlanSafely(baseCase, plan) {
       if (!['add', 'replace'].includes(operation.op)) throw new Error(`Yasak authoring işlemi: ${operation.op}`);
       if (!allowedAuthoringPatchPath(operation.path)) throw new Error(`AUTHORING_ONLY: Oyuncuya görünür/yasak yama yolu: ${operation.path}`);
       validateNestedPatchParent(output, operation.path);
-      let value;
-      try { value = JSON.parse(operation.value_json); } catch { throw new Error(`value_json geçersiz: ${operation.path}`); }
+      let value = parsePatchValue(output, operation.path, operation.value_json);
       value = canonicalizeKnownPatchValue(operation.path, value);
       const effectiveOp = operation.op === 'replace' && !patchTargetExists(output, operation.path) ? 'add' : operation.op;
       setPointer(output, operation.path, value, effectiveOp);

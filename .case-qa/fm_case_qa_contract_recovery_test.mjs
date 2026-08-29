@@ -11,7 +11,7 @@ const caseData = {
   suspects: [{ id: 's1', name: 'Loki' }],
   weapons: [{ id: 'w1', name: 'Rün' }],
   locations: [{ id: 'l1', name: 'Salon' }],
-  clues: [{ id: 'c1', title: 'İpucu', logicRules: [] }]
+  clues: [{ id: 'c1', title: 'İpucu', text: 'Eski ipucu', logicRules: [] }]
 };
 
 const invalidPlan = {
@@ -83,4 +83,29 @@ const validPlan = {
 const recovered = applyPatchPlanSafely(caseData, validPlan);
 assert.deepEqual(recovered.clues[0].logicRules, []);
 
-console.log('✓ Invalid patch paths are rejected, classified as recoverable, and fed into the next bounded prompt.');
+const rawTextPlan = {
+  case_id: 'mit_005',
+  assessment: 'structured output omitted the second JSON encoding for a string',
+  operations: [{
+    op: 'replace',
+    path: '/clues/0/text',
+    value_json: 'Tırnaksız fakat hedef türü açıkça metin olan güvenli değer',
+    reason: 'regression fixture for cached convergence response'
+  }]
+};
+const normalizedText = applyPatchPlanSafely(caseData, rawTextPlan);
+assert.equal(normalizedText.clues[0].text, 'Tırnaksız fakat hedef türü açıkça metin olan güvenli değer');
+
+const malformedArrayPlan = {
+  case_id: 'mit_005',
+  assessment: 'non-string targets must remain strict',
+  operations: [{
+    op: 'replace',
+    path: '/clues/0/logicRules',
+    value_json: 'JSON olmayan dizi',
+    reason: 'negative regression fixture'
+  }]
+};
+assert.throws(() => applyPatchPlanSafely(caseData, malformedArrayPlan), /value_json geçersiz/);
+
+console.log('✓ Invalid patch paths recover safely; raw text normalizes only for existing string targets.');
