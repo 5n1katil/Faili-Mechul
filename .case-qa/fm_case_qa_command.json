@@ -1,0 +1,12 @@
+{
+  "schema_version": "fm_case_qa_command_v1",
+  "request_id": "production-bootstrap-20260829-01",
+  "mode": "full",
+  "allow_ai": true,
+  "case_limit": 0,
+  "case_ids": [],
+  "publish": true,
+  "auto_merge": true,
+  "prepare_avatar_manifest": true,
+  "note": "Changing request_id through a reviewed PR triggers one full locked production campaign."
+}

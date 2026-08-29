@@ -1,6 +1,10 @@
 name: Faili Mechul Case QA v3
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - ".case-qa/fm_case_qa_command.json"
   workflow_dispatch:
     inputs:
       mode:
@@ -55,11 +59,11 @@ jobs:
     timeout-minutes: 180
     env:
       FM_QA_ROOT: ${{ github.workspace }}
-      FM_QA_MODE: ${{ inputs.mode }}
-      FM_QA_ALLOW_AI: ${{ inputs.allow_ai }}
-      FM_QA_CASE_LIMIT: ${{ inputs.case_limit }}
-      FM_QA_CASE_IDS: ${{ inputs.case_ids }}
-      FM_QA_APPLY_TO_WORKTREE: ${{ inputs.publish_draft_pr }}
+      FM_QA_MODE: ${{ github.event_name == 'push' && 'full' || inputs.mode }}
+      FM_QA_ALLOW_AI: ${{ github.event_name == 'push' && 'true' || inputs.allow_ai }}
+      FM_QA_CASE_LIMIT: ${{ github.event_name == 'push' && '0' || inputs.case_limit }}
+      FM_QA_CASE_IDS: ${{ github.event_name == 'push' && '' || inputs.case_ids }}
+      FM_QA_APPLY_TO_WORKTREE: ${{ github.event_name == 'push' && 'true' || inputs.publish_draft_pr }}
       FM_QA_OUTPUT_DIR: .case-qa-output
       FM_QA_CACHE_DIR: .case-qa-cache
       OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
@@ -84,7 +88,7 @@ jobs:
         run: node .case-qa/fm_case_qa_certify.mjs
 
       - name: Install locked app dependencies
-        if: ${{ inputs.publish_draft_pr == true }}
+        if: ${{ github.event_name == 'push' || inputs.publish_draft_pr == true }}
         shell: bash
         run: |
           corepack enable
@@ -118,7 +122,7 @@ jobs:
         run: node .case-qa/fm_case_qa_certify.mjs
 
       - name: Guard app compatibility and publishable diff
-        if: ${{ inputs.publish_draft_pr == true }}
+        if: ${{ github.event_name == 'push' || inputs.publish_draft_pr == true }}
         shell: bash
         run: |
           unexpected="$(git diff --name-only | grep -Ev '^(artifacts/dedektif/data/puzzles\.ts|artifacts/dedektif/data/puzzles_database\.json|artifacts/dedektif/qa/)' || true)"
@@ -150,7 +154,7 @@ jobs:
 
       - name: Enforce 105/105 production release gate
         id: production_gate
-        if: ${{ inputs.mode == 'full' && inputs.allow_ai == true && inputs.publish_draft_pr == true }}
+        if: ${{ github.event_name == 'push' || (inputs.mode == 'full' && inputs.allow_ai == true && inputs.publish_draft_pr == true) }}
         run: node .case-qa/fm_case_qa_production_gate.mjs
 
       - name: Prepare release and avatar handoff manifests
@@ -164,7 +168,7 @@ jobs:
           cp .case-qa-output/fm_case_qa_run_report.json "artifacts/dedektif/qa/runs/run-${GITHUB_RUN_ID}.json"
           cp .case-qa-output/fm_case_qa_release_manifest.json "artifacts/dedektif/qa/runs/release-${GITHUB_RUN_ID}.json"
 
-          if [ "${{ inputs.prepare_avatar_manifest }}" = "true" ]; then
+          if [ "${{ github.event_name == 'push' || inputs.prepare_avatar_manifest == true }}" = "true" ]; then
             set +e
             node .case-qa/fm_avatar_inventory.mjs
             inventory_status="$?"
@@ -207,7 +211,7 @@ jobs:
           git push --set-upstream origin "$branch"
           pr_url="$(gh pr create --base main --head "$branch" --title "QA production: 105/105 certified cases (${GITHUB_RUN_ID})" --body-file .case-qa-output/draft_pr_body.md)"
           echo "pr_url=$pr_url" >> "$GITHUB_OUTPUT"
-          if [ "${{ inputs.auto_merge }}" = "true" ]; then
+          if [ "${{ github.event_name == 'push' || inputs.auto_merge == true }}" = "true" ]; then
             gh pr merge "$pr_url" --squash --delete-branch
             git fetch origin main
             echo "merged=true" >> "$GITHUB_OUTPUT"
