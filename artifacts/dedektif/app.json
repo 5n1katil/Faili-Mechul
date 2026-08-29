@@ -17,7 +17,6 @@
       "supportsTablet": false,
       "bundleIdentifier": "com.failimechul.dedektif",
       "buildNumber": "4",
-      "minimumOsVersion": "13.4",
       "infoPlist": {
         "NSCameraUsageDescription": "Profil fotoğrafınızı çekmek için kamera erişimi gerekiyor.",
         "NSUserNotificationUsageDescription": "Günlük bulmaca hatırlatmaları için bildirim göndermek istiyoruz.",

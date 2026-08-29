@@ -39,6 +39,17 @@ const cert = {
   evaluation: { direct_html_wrapper_parity_failures: 0 },
   identity_manifest_sha256: 'identity-sha'
 };
+const appGate = {
+  schema_version: 'fm_case_qa_app_gate_v1',
+  certified: true,
+  checks: {
+    icons: 'pass',
+    fingerprints: 'pass',
+    solvability: 'pass',
+    typecheck: 'pass',
+    web_build: 'pass'
+  }
+};
 
 function write(name, value) {
   fs.writeFileSync(path.join(outputDir, name), `${JSON.stringify(value, null, 2)}\n`);
@@ -55,11 +66,13 @@ function run() {
 write('fm_case_qa_run_report.json', report);
 write('fm_case_qa_certification_pre.json', { ...cert, phase: 'pre' });
 write('fm_case_qa_certification_post.json', { ...cert, phase: 'post' });
+write('fm_case_qa_app_gate.json', appGate);
 const green = run();
 assert.equal(green.status, 0, green.stderr);
 const manifest = JSON.parse(fs.readFileSync(path.join(outputDir, 'fm_case_qa_release_manifest.json'), 'utf8'));
 assert.equal(manifest.production_ready, true);
 assert.deepEqual(manifest.changed_case_ids, ['case_001', 'case_002']);
+assert.equal(manifest.gate.application_certified, true);
 
 report.summary.final_campaign_passed = 104;
 report.summary.campaign_complete_105 = false;

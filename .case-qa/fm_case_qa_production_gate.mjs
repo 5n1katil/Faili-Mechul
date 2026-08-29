@@ -7,6 +7,7 @@ const outputDir = path.resolve(root, process.env.FM_QA_OUTPUT_DIR || '.case-qa-o
 const reportPath = path.join(outputDir, 'fm_case_qa_run_report.json');
 const prePath = path.join(outputDir, 'fm_case_qa_certification_pre.json');
 const postPath = path.join(outputDir, 'fm_case_qa_certification_post.json');
+const appGatePath = path.join(outputDir, 'fm_case_qa_app_gate.json');
 const releasePath = path.join(outputDir, 'fm_case_qa_release_manifest.json');
 
 function readJson(file) {
@@ -21,6 +22,7 @@ function requireGate(condition, message, failures) {
 const report = readJson(reportPath);
 const pre = readJson(prePath);
 const post = readJson(postPath);
+const appGate = readJson(appGatePath);
 const summary = report.summary || {};
 const failures = [];
 
@@ -40,6 +42,10 @@ requireGate(pre.certified === true && post.certified === true, 'pre/post exact H
 requireGate(Number(pre.sources?.total_cases) === 105 && Number(post.sources?.total_cases) === 105, 'pre/post certification did not evaluate 105 cases', failures);
 requireGate(pre.identity_manifest_sha256 === post.identity_manifest_sha256, 'case/entity/clue/solution/asset identity changed', failures);
 requireGate(Number(post.evaluation?.direct_html_wrapper_parity_failures) === 0, 'HTML/wrapper parity failed', failures);
+requireGate(appGate.certified === true, 'application compatibility gate is not certified', failures);
+for (const check of ['icons', 'fingerprints', 'solvability', 'typecheck', 'web_build']) {
+  requireGate(appGate.checks?.[check] === 'pass', `application check ${check} did not pass`, failures);
+}
 
 const manifest = {
   schema_version: 'fm_case_qa_release_manifest_v1',
@@ -60,7 +66,9 @@ const manifest = {
     budget_stopped: Number(summary.budget_stopped || 0),
     pre_certified: pre.certified === true,
     post_certified: post.certified === true,
-    html_wrapper_parity_failures: Number(post.evaluation?.direct_html_wrapper_parity_failures || 0)
+    html_wrapper_parity_failures: Number(post.evaluation?.direct_html_wrapper_parity_failures || 0),
+    application_certified: appGate.certified === true,
+    application_checks: appGate.checks || null
   },
   failures
 };
