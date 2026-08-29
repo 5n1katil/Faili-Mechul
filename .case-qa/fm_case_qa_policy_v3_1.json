@@ -90,7 +90,7 @@
     "currency": "USD",
     "warning_budget": 50,
     "hard_budget": 100,
-    "max_concurrent_calls": 4,
+    "max_concurrent_calls": 8,
     "stop_before_projected_overrun": true,
     "record_actual_token_usage": true,
     "repeat_same_idempotency_key": false

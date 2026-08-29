@@ -87,6 +87,7 @@ jobs:
           FM_QA_CERT_PHASE: pre
         run: |
           node .case-qa/fm_case_qa_contract_recovery_test.mjs
+          node .case-qa/fm_case_qa_gold_fixture_test.mjs
           node .case-qa/fm_case_qa_certify.mjs
 
       - name: Install locked app dependencies

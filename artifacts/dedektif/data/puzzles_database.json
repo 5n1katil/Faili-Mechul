@@ -3144,29 +3144,29 @@
           "difficulty": 1,
           "difficultyLevel": 1,
           "specialMechanic": "sifreli_mesaj",
-          "story": "1969 yazının son gecesinde, San Rivo Kıyı Gazetesi'nin ön sayfasına yine imzasız bir zarf bırakıldı. Mektubun altında, çevresine dört küçük çentik atılmış siyah bir daire vardı; şehir bu işareti artık korkuyla tanıyordu. Ancak bu kez zarfın iç kapağına, matbaa provasını andıran kare bir eşleme tahtası çizilmiş; kenarına da aynı sembollerden oluşan kısa bir dizi iliştirilmişti. Editör Cemil Vardar, mektubu yayımlamaya değil çözmeye karar verdi. Sabah 06.14'te bodrum atölyesinde hareketsiz bulundu.",
+          "story": "1969 yazının son gecesinde, San Rivo Kıyı Gazetesi'nin ön sayfasına yine imzasız bir zarf bırakıldı. Mektubun altında, çevresine dört küçük çentik atılmış siyah bir daire vardı; şehir bu işareti artık korkuyla tanıyordu. Ancak bu kez zarfın iç kapağına, matbaa provasını andıran kare bir eşleme tahtası çizilmiş; kenarına da aynı sembollerden oluşan kısa bir dizi iliştirilmişti. Editör Cemil Vardar, mektubu yayımlamaya değil çözmeye karar verdi. Sabah 06.14'te bodrum atölyesinde hareketsiz bulundu. Gece bekçisi, son baskıdan sonra üç çalışma bölümünün kapılarını ayrı ayrı mühürlediğini söyledi. Polis; teslim fişlerini, vardiya kartlarını, mum parçalarını ve pres çevresindeki lifleri aynı masada karşılaştırdı. Eşleme tahtası tek başına failin adını vermiyor, yalnız diğer fiziksel kayıtlarla birlikte anlam kazanıyordu. Bu nedenle soruşturma, mektubun gösterişli imzasından çok binanın içindeki kesin hareket zincirine odaklandı.",
           "atmosphere": "Kurşun harfler soğuduktan sonra bile matbaanın duvarları tıkırdar. Dışarıda okyanus sisi gaz lambalarını yutar; içeride mürekkep, mum ve ıslak tahta kokusu birbirine karışır. Eşleme tahtasının soluk cetvel çizgileri, sanki her yeni baskıyla biraz daha belirginleşir.",
           "suspects": [
             {
               "id": "s1",
               "name": "Leyla Aras",
               "icon": "pa:rc_001_s1",
-              "description": "Kıyı Gazetesi'nin cinayet sütununu yazan, editörle açıkça tartışmış hırslı muhabir.",
-              "detail": "Kayıp mektupları ilk kez yayımlamak isteyen kişidir; sahne arkasında değil, arşiv masasında kahve lekeli notlarla çalışır."
+              "description": "Keskin bakışlı, kısa dalgalı saçlı ve koyu renk trençkotlu; editörle açıkça tartışmış hırslı bir araştırmacı muhabir.",
+              "detail": "Kahve fincanını sol eliyle tutar, konuşurken hızlı not alır ve uzun gecelerde omzundan çıkarmadığı deri çantasıyla dolaşır."
             },
             {
               "id": "s2",
               "name": "Kurye Cem Akın",
               "icon": "pa:rc_001_s2",
-              "description": "Gazeteye şifreli zarfı teslim eden, sakin ve yardımsever görünümüyle herkesin güvenini kazanan genç kurye.",
-              "detail": "Dağıtım çantasını hep sağ omzunda taşır; boş teslim fişlerini asla çöpe atmaz, pres odasına girdiğinde sol eldivenini çıkarır."
+              "description": "Sakin, yardımsever görünümüyle herkesin güvenini kazanan; ince yapılı, düzgün taranmış saçlı ve ölçülü konuşan genç kurye.",
+              "detail": "Dağıtım çantasını hep sağ omzunda taşır, boş teslim fişlerini asla çöpe atmaz ve kapalı mekânlarda sol eldivenini çıkarır."
             },
             {
               "id": "s3",
               "name": "Dizgici Orhan Bilir",
               "icon": "pa:rc_001_s3",
-              "description": "Kurşun harfleri ve gecenin son baskısını yöneten, editörün manşet değişikliklerinden yorulmuş kıdemli dizgici.",
-              "detail": "Baskı kayışının gerginliğini kendi elleriyle ayarlar; sağ başparmağında yıllardır taşıdığı yarım ay biçimli mürekkep lekesi vardır."
+              "description": "Gecenin son işlerini yöneten, editörün bitmeyen değişikliklerinden yorulmuş; kalın kaşlı, geniş omuzlu ve kıdemli bir dizgici.",
+              "detail": "Keten iş önlüğünü hiç çıkarmaz; sağ başparmağında yıllardır taşıdığı yarım ay biçimli soluk bir leke ve çatlamış nasırlar vardır."
             }
           ],
           "weapons": [
@@ -3231,7 +3231,7 @@
             {
               "id": "c2",
               "title": "Pres Yağı Testi",
-              "type": "kanit",
+              "type": "adli",
               "mechanicType": "text",
               "text": "Alt arşivdeki kitap ciltlerinin arasında yalnız eski toz vardı; ağır deri lifine ya da yeni pres yağına rastlanmadı. Editörün ceketinde ise hiçbir ezilme lekesi görülmedi.",
               "deductionHint": "Ağır, lifli bir aracın bu bölümde kullanılmadığını gösteren iki fiziksel bulgu hangisidir?",
@@ -3245,7 +3245,7 @@
               "title": "Siyah Dairenin Eşleme Tahtası",
               "type": "sifreli",
               "mechanicType": "sifreli_mesaj",
-              "text": "Zarfın iç kapağında, siyah dairenin altına dokuz satır ve dokuz sütundan oluşan kare bir cetvel çizilmişti. Sol ve üst kenardaki işaretler aynı kümeye aitti; sıraları farklıydı. Hücrelerin tamamı tek tek harflerle doldurulmuştu.",
+              "text": "Zarfın iç kapağında dokuz satır ve dokuz sütunlu kare bir cetvel vardı. Kenarlara aynı dokuz sembol farklı sırayla basılmış, hücrelere tek tek harfler yerleştirilmişti.",
               "deductionHint": "Her sembolde aynı işaretin satırı ile sütunu kesiştiğinde hangi karakter beliriyor?",
               "isBonus": false,
               "revealOrder": 3,
@@ -3452,11 +3452,11 @@
             },
             {
               "id": "c6",
-              "title": "Arşivdeki Kurşun Tozu",
+              "title": "Depodaki Vardiya Kartı",
               "type": "kanit",
               "mechanicType": "text",
-              "text": "Arşiv raflarının altındaki iş çizelgesinde, dizgi vardiyasına ait yarım ay mühür ve kurşun harf tozu bulunan bir giriş kartı bulundu.",
-              "deductionHint": "Yarım ay mühürlü giriş kartı, hangi çalışma alışkanlığını hangi arşiv bölümüne bağlar?",
+              "text": "Dağıtım çizelgesinin altında, kıdemli dizgicinin yarım ay damgasını ve koyu parmak izini taşıyan bir posta deposu giriş kartı bulundu.",
+              "deductionHint": "Yarım ay damgalı giriş kartı, kıdemli çalışanı hangi dağıtım bölümüne bağlar?",
               "isBonus": true,
               "revealOrder": 6,
               "isRevealed": false,
@@ -3464,11 +3464,11 @@
             },
             {
               "id": "c7",
-              "title": "Son Teslim Rotası",
+              "title": "Muhabirin Çalışma Masası",
               "type": "kanit",
               "mechanicType": "text",
-              "text": "Gece bekçisi, şehir dışı muhabir notlarının teslim torbalarının tartıldığı arka depoda bulunduğunu; sıralama masasının altında aynı açık kahve lekesinden iz kaldığını yazdı.",
-              "deductionHint": "Teslim torbaları arasındaki çalışma notları ve aynı kahve lekesi, hangi muhabiri arka dağıtım hattına yerleştirir?",
+              "text": "Gece bekçisi, araştırmacı muhabirin kahve lekeli çalışma notlarını eski sayıların tutulduğu alt arşiv masasından topladığını kayıt altına aldı.",
+              "deductionHint": "Kahve lekeli çalışma notları, araştırmacı muhabiri hangi kayıt bölümüne yerleştirir?",
               "isBonus": true,
               "revealOrder": 7,
               "isRevealed": false,
@@ -4630,7 +4630,7 @@
           "difficulty": 1,
           "difficultyLevel": 1,
           "specialMechanic": "sifreli_mesaj",
-          "story": "1938’in son haftasında Meridyen Garı, kış yağmurunun altında kapanış seferine yetişen yolcularla doluydu. Saat 22.10 treni perondan ayrılırken emanet holünün camlarını buhar kapladı; iki dakika sonra ana salonun bütün saatleri aynı dakikada durdu.\n\nTicaret kuryesi Cemil Erkan, kayıp bir kumaş sevkiyatının teslim kaydını araştırmak için emanet holüne girmişti. Kısa süre sonra kilitli bavul sıralarının önünde ölü bulundu. Yanında yalnızca mavi mürekkepli, kırık köşeli 17 numaralı bir etiket parçası vardı.",
+          "story": "1938’in son haftasında Meridyen Garı, kış yağmurunun altında kapanış seferine yetişen yolcularla doluydu. Saat 22.10 treni perondan ayrılırken emanet holünün camlarını buhar kapladı; iki dakika sonra ana salonun bütün saatleri aynı dakikada durdu.\n\nTicaret kuryesi Cemil Erkan, kayıp bir kumaş sevkiyatının teslim kaydını araştırmak için emanet holüne girmişti. Kısa süre sonra kilitli bavul sıralarının önünde ölü bulundu. Yanında yalnızca mavi mürekkepli, kırık köşeli 17 numaralı bir etiket parçası vardı. Gar polisi, kapanış zilinden sonra kullanılan geçitleri mühürledi ve üç görevlinin vardiya kayıtlarını birbirinden bağımsız topladı. Posta vagonundaki zimmet fişi, otel santralinin görüşme dökümü ve emanet penceresindeki reçine izi aynı zaman aralığını gösteriyordu. Fakat hiçbir kayıt tek başına katili açıklamıyordu; etiketlerin rotası doğru eşleştirilmeden kimin hangi araç ve bölümle bağlantılı olduğu anlaşılamıyordu.",
           "atmosphere": "Islak kömür, sıcak metal ve eski kâğıt kokusu. Yıldızlı cam tavanın altında emanet holünü yalnız yeşil banko lambası aydınlatıyor; bütün saatler 22.10’u gösterse de gar artık o dakikadan sonra hiçbir şeye güvenmiyor.",
           "suspects": [
             {
@@ -4638,14 +4638,14 @@
               "name": "Posta Kâtibi Arda",
               "icon": "pa:pp_001_s1",
               "description": "Gece vardiyasında mühürlü torbaları teslim alan kâtip.",
-              "detail": "Eski hat tarifelerini ezbere bilir; kaybolan paketlerin numarasını küçük bir deftere işaretler."
+              "detail": "Eski hat tarifelerini ezbere bilir; kaybolan paketlerin numarasını küçük bir deftere işaretler ve her teslimi vardiya mührüyle doğrular."
             },
             {
               "id": "s2",
               "name": "Biletçi Nihat",
               "icon": "pa:pp_001_s2",
               "description": "İstasyonun bilet penceresinde çalışan, düzen takıntılı görevli.",
-              "detail": "Boş zamanında yıpranmış bagaj etiketlerini biriktirir; rengi solmuş damgaları ve bilet penceresinin düzenini ayırt edebilir."
+              "detail": "Boş zamanında eski yolculuk pullarını biriktirir; soluk renkleri ayırt eder, pirinç düğmeli üniformasını kusursuz taşır ve masasını simetrik düzenler."
             },
             {
               "id": "s3",
@@ -4661,21 +4661,21 @@
               "name": "Siyanürlü Etiket Tutkalı",
               "icon": "pa:pp_001_w1",
               "description": "Eski bagaj etiketlerinin arkasına sürülen, keskin badem kokulu yapıştırıcı.",
-              "detail": ""
+              "detail": "Etiket kuruduğunda saydamlaşır; taze sürüldüğünde mavi reçine izi ve belirgin badem kokusu bırakır."
             },
             {
               "id": "w2",
               "name": "Kargo Makası",
               "icon": "pa:pp_001_w2",
               "description": "Posta vagonundaki sicim ve mühür iplerini kesmek için kullanılan ağır makas.",
-              "detail": ""
+              "detail": "Makasın iki ağzında servis rafının siyah gresi, sapında ise zimmet numarası bulunur."
             },
             {
               "id": "w3",
               "name": "Fren Kolu Anahtarı",
               "icon": "pa:pp_001_w3",
               "description": "Vagon fren kolunu açmak için kullanılan kısa, dökme demir anahtar.",
-              "detail": ""
+              "detail": "Anahtarın döküm yüzeyinde fren deposuna ait siyah boya ve seri damgası bulunur."
             }
           ],
           "locations": [
@@ -4684,21 +4684,21 @@
               "name": "Posta Vagonu",
               "icon": "pa:pp_001_l1",
               "description": "Mühürlü torbaların taşındığı dar servis vagonu.",
-              "detail": ""
+              "detail": "Vagon kapısındaki zimmet panosu, alınan her aleti görevli ve saat bilgisiyle kaydeder."
             },
             {
               "id": "l2",
               "name": "Emanet Dolapları",
               "icon": "pa:pp_001_l2",
               "description": "Garın kilitli bavul sıraları ve teslim penceresi; kapalı kutu serisi burada tutulur.",
-              "detail": ""
+              "detail": "Teslim penceresi ile dolap sıraları aynı kapalı bölümde bulunur; mavi reçine yalnız burada kullanılır."
             },
             {
               "id": "l3",
               "name": "Peron Alt Geçidi",
               "icon": "pa:pp_001_l3",
               "description": "Rayların altından geçen, sesin boğuklaştığı taş koridor.",
-              "detail": ""
+              "detail": "Geçidin iki ucundaki nöbet çizelgesi, vardiya boyunca içeri giren görevlileri ayrı ayrı gösterir."
             }
           ],
           "clues": [
@@ -4743,7 +4743,7 @@
               "title": "Otel Telefonu",
               "type": "tanik",
               "mechanicType": "text",
-              "text": "Otel santralinin pulsa kaydı, yabancı yolcu yazışmalarıyla ilgilenen kadının kilitli bavul sıralarına uğramadan önce uzun bir dış hat görüşmesi yaptığını doğruluyor.",
+              "text": "Gar santralinin pulsa kaydı, yabancı yolcu yazışmalarını yöneten kadının kilitli bavul sıralarına uğramadan önce uzun bir dış hat görüşmesi yaptığını doğruluyor.",
               "deductionHint": "Bir telefon kaydı, hangi teslim noktasını onun için kapatır?",
               "isBonus": false,
               "revealOrder": 4,
@@ -4755,7 +4755,7 @@
               "title": "Etiketlerin Sessiz Rotası",
               "type": "sifreli",
               "mechanicType": "sifreli_mesaj",
-              "text": "Mühür odasının çekmecesinde üç, birbirini tutmayan bavul etiketi bulundu.",
+              "text": "Mühür odasının çekmecesinde üç, birbirini tutmayan kâğıt parçası bulundu.",
               "deductionHint": "Damga rengi değil; aynı yolun üç ayrı aşamada bıraktığı izler karar verdirir.",
               "isBonus": false,
               "revealOrder": 5,
@@ -4820,7 +4820,7 @@
                       "answerId": "r3"
                     }
                   ],
-                  "resultText": "Fren kolu anahtarının kaydı, otel bagajına değil posta torbasına aittir: Feride × Fren Kolu Anahtarı.",
+                  "resultText": "Eşlenen rota, otel bagajı ile fren deposu damgasının aynı zincirde bulunamayacağını gösterir.",
                   "interaction": {
                     "mode": "select_match",
                     "submitLabel": "Etiketleri Doğrula",
