@@ -54,12 +54,66 @@ jobs:
           corepack prepare pnpm@10.34.5 --activate
           pnpm install --frozen-lockfile
 
-      - name: Validate icons, references and solvability
+      - name: Capture existing main validation baseline
+        shell: bash
+        run: |
+          git fetch origin main --depth=1
+          git checkout origin/main -- artifacts/dedektif/data/puzzles.ts artifacts/dedektif/data/puzzles_database.json
+
+          run_validation() {
+            name="$1"
+            shift
+            set +e
+            "$@" > ".case-qa-output/${name}-baseline.txt" 2>&1
+            status="$?"
+            set -e
+            echo "$status" > ".case-qa-output/${name}-baseline-status.txt"
+            grep -E '^(ERROR:|HATA:|  ✗|  •|  - )' ".case-qa-output/${name}-baseline.txt" | sort -u \
+              > ".case-qa-output/${name}-baseline-errors.txt" || true
+          }
+
+          run_validation fingerprints pnpm --filter @workspace/dedektif validate:parmak-izi
+          run_validation solvability pnpm --filter @workspace/scripts exec node --import tsx \
+            "$GITHUB_WORKSPACE/artifacts/dedektif/scripts/check-solvability.js"
+          git checkout HEAD -- artifacts/dedektif/data/puzzles.ts artifacts/dedektif/data/puzzles_database.json
+
+      - name: Reject new icon, fingerprint or solvability regressions
         shell: bash
         run: |
           pnpm --filter @workspace/dedektif validate
-          pnpm --filter @workspace/dedektif validate:parmak-izi
-          pnpm --filter @workspace/scripts exec node --import tsx "$GITHUB_WORKSPACE/artifacts/dedektif/scripts/check-solvability.js"
+
+          run_validation() {
+            name="$1"
+            shift
+            set +e
+            "$@" > ".case-qa-output/${name}-candidate.txt" 2>&1
+            status="$?"
+            set -e
+            echo "$status" > ".case-qa-output/${name}-candidate-status.txt"
+            grep -E '^(ERROR:|HATA:|  ✗|  •|  - )' ".case-qa-output/${name}-candidate.txt" | sort -u \
+              > ".case-qa-output/${name}-candidate-errors.txt" || true
+          }
+
+          run_validation fingerprints pnpm --filter @workspace/dedektif validate:parmak-izi
+          run_validation solvability pnpm --filter @workspace/scripts exec node --import tsx \
+            "$GITHUB_WORKSPACE/artifacts/dedektif/scripts/check-solvability.js"
+
+          regression=0
+          for check in fingerprints solvability; do
+            baseline_status="$(cat ".case-qa-output/${check}-baseline-status.txt")"
+            candidate_status="$(cat ".case-qa-output/${check}-candidate-status.txt")"
+            comm -13 ".case-qa-output/${check}-baseline-errors.txt" \
+              ".case-qa-output/${check}-candidate-errors.txt" \
+              > ".case-qa-output/${check}-new-errors.txt"
+            if [ "$baseline_status" -eq 0 ] && [ "$candidate_status" -ne 0 ]; then regression=1; fi
+            if [ "$candidate_status" -ne 0 ] && [ ! -s ".case-qa-output/${check}-candidate-errors.txt" ]; then regression=1; fi
+            if [ -s ".case-qa-output/${check}-new-errors.txt" ]; then
+              echo "$check introduced new deterministic validation errors:"
+              cat ".case-qa-output/${check}-new-errors.txt"
+              regression=1
+            fi
+          done
+          if [ "$regression" -ne 0 ]; then exit 1; fi
 
       - name: Build web application
         run: pnpm --filter @workspace/dedektif build:web
