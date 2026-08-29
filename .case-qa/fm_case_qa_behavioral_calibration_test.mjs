@@ -6,6 +6,8 @@ import {
   applyAuthoringPatchPlanSafely,
   authoringCompleteness,
   authoringContract,
+  parseCaseIds,
+  selectEntriesForMode,
   stripAuthoring
 } from './fm_case_qa_runner.mjs';
 
@@ -35,6 +37,22 @@ const standardSource = fs.readFileSync('artifacts/dedektif/data/puzzles.ts', 'ut
 const standard = Function(`"use strict"; return (${locateStandardArray(standardSource)});`)();
 const premiumDb = JSON.parse(fs.readFileSync('artifacts/dedektif/data/puzzles_database.json', 'utf8'));
 const allCases = [...standard, ...(premiumDb.packs || []).flatMap((pack) => pack.puzzles || [])];
+
+assert.equal(parseCaseIds('').size, 0);
+assert.equal(parseCaseIds('""').size, 0, 'n8n iki-tırnak boş değeri sahte vaka kimliğine dönüştü.');
+assert.deepEqual([...parseCaseIds('["rc_001","pp_001"]')], ['rc_001', 'pp_001']);
+assert.deepEqual([...parseCaseIds('rc_001, pp_001')], ['rc_001', 'pp_001']);
+const sourceEntries = allCases.map((raw) => ({ raw }));
+assert.equal(
+  selectEntriesForMode(sourceEntries, { mode: 'full', caseIds: new Set(['nonexistent']), caseLimit: 1 }).length,
+  105,
+  'Full mod vaka filtreleri yüzünden 105-vaka kampanyasını daralttı.'
+);
+assert.equal(
+  selectEntriesForMode(sourceEntries, { mode: 'pilot', caseIds: new Set(['rc_001']), caseLimit: 1 }).length,
+  1,
+  'Pilot mod kesin vaka filtresini uygulamadı.'
+);
 
 for (const goldId of ['rc_001', 'pp_001']) {
   const gold = allCases.find((item) => String(item.puzzleId || item.id) === goldId);
@@ -90,4 +108,4 @@ const brokenResult = evaluateCase(engine, broken, { baseline: base });
 assert.equal(brokenResult.productionReady, false, 'Exact v29.4 motoru bozuk aynı-eksen kuralını kabul etti.');
 assert.ok(brokenResult.score < 100, 'Exact v29.4 motoru bilinen bozuk fixture için 100 verdi.');
 
-console.log('✓ Gold cases require QA-only authoring; metadata cannot rewrite content; anchor and rule contracts are enforced.');
+console.log('✓ Full-mode selection, gold authoring, metadata isolation, anchor and rule contracts are enforced.');
