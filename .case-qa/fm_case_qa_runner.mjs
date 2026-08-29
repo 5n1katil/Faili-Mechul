@@ -776,8 +776,11 @@ function compactReport(result, leakage) {
 function buildPrompt({ caseData, baselineResult, leakage, phase, previousAttemptError = null }) {
   const requiredGateNames = ['coreNecessity', 'patternGovernance', 'contentAndNames', 'semanticContract', 'visibleEvidence', 'mechanicContract', 'bonusFunctionality'];
   const failedRequiredGates = requiredGateNames.filter((name) => baselineResult.gates?.[name]?.passed !== true);
+  const scoreConvergence = /^terra_final_verifier_(?:5|6)$/.test(phase);
   const phaseInstruction = phase === 'luna_first_pass'
     ? 'Reconstruct missing authoring evidence and repair only verified playability failures. Internally form a complete repair checklist before emitting operations.'
+    : scoreConvergence
+      ? `Exact-score convergence pass: the required gate list may already be empty, but this candidate is still NOT certified until the exact HTML simulator returns score=100 and productionReady=true. Every item in fixes and every advisory that does not begin with ✓ or ⓘ is mandatory in this pass. Do not return zero operations while score is below 100 or simulator_production_ready is false. In particular: (1) a 1-star case must retain at least 2 direct confirm rules while every non-bonus clue remains individually necessary; (2) names flagged for missing a recognizable semantic type must be minimally naturalized without changing the entity ID, physical class, visual identity, icon or gameplay role; (3) mini-game explanations may state the kind of deduction gained but must not name any suspect, weapon or location; and (4) remove monotony and other remaining exact-score advisories without reintroducing leakage. Re-evaluate the entire visible evidence chain internally before emitting one coherent patch.`
     : phase.startsWith('terra_final_verifier')
       ? `Final convergence pass: produce the complete minimal patch that clears every remaining required gate (${failedRequiredGates.join(', ') || 'none'}). This is an active repair pass, not a review. Preserve every currently passed gate and do not reintroduce earlier leakage. If incremental edits cannot make the core deduction unique, replace the necessary clue fields as a coherent set. Before emitting operations, verify internally that: (1) at least four non-bonus clues are individually necessary and together force exactly one suspect|weapon|location solution without bonus clues; (2) every player-visible entity reference is represented by that same clue's logicRules; (3) every bonus clue has a useful matrix effect but is unnecessary; and (4) deductionHint never names its answer.`
       : 'Repair only the remaining deterministic failures in the current candidate. Re-read every failed gate, preserve every passed gate, and do not repeat already-passed repairs.';
@@ -1012,7 +1015,10 @@ async function main() {
         penalty: assessmentPenalty(assessed) + (completeness.missing.length * 1200) + (contract.errors.length * 1200)
       };
     };
-    const goldAttemptLimit = Math.max(3, Number(policy.repair?.gold_max_attempts_per_case || 6));
+    // Keep the original six attempts/cache keys intact, then add two narrowly
+    // targeted exact-score passes. This reuses prior idempotent responses while
+    // allowing a 90/100, all-required-gates-passed candidate to converge.
+    const goldAttemptLimit = Math.max(8, Number(policy.repair?.gold_max_attempts_per_case || 6));
     const baseAttempts = [
       { phase: 'luna_first_pass', model: policy.models.first_pass, effort: policy.models.first_pass_reasoning_effort },
       { phase: 'terra_escalation', model: policy.models.escalation, effort: policy.models.escalation_reasoning_effort },

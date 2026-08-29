@@ -1,6 +1,6 @@
 {
   "schema_version": "fm_case_qa_command_v1",
-  "request_id": "production-bootstrap-20260829-01",
+  "request_id": "production-score-convergence-20260829-02",
   "mode": "full",
   "allow_ai": true,
   "case_limit": 0,
@@ -8,5 +8,5 @@
   "publish": true,
   "auto_merge": true,
   "prepare_avatar_manifest": true,
-  "note": "Changing request_id through a reviewed PR triggers one full locked production campaign."
+  "note": "Second locked campaign adds exact-score convergence after the first run safely stopped at rc_001 90/100."
 }
