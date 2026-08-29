@@ -24,8 +24,8 @@ const AI_ENABLED = String(env.FM_QA_ALLOW_AI || 'false').toLowerCase() === 'true
 const APPLY_TO_WORKTREE = String(env.FM_QA_APPLY_TO_WORKTREE || 'false').toLowerCase() === 'true';
 const CASE_LIMIT = Math.max(0, Number(env.FM_QA_CASE_LIMIT || 0));
 const CASE_IDS = parseCaseIds(env.FM_QA_CASE_IDS);
-const PROMPT_VERSION = 'fm-case-qa-patch-v4.0.0';
-const AUTHORING_PROMPT_VERSION = 'fm-case-qa-authoring-v4.0.0';
+const PROMPT_VERSION = 'fm-case-qa-patch-v4.6.0';
+const AUTHORING_PROMPT_VERSION = 'fm-case-qa-authoring-v4.6.0';
 
 function clone(value) { return value == null ? value : JSON.parse(JSON.stringify(value)); }
 function sha(value) { return crypto.createHash('sha256').update(typeof value === 'string' ? value : JSON.stringify(value)).digest('hex'); }
@@ -626,8 +626,8 @@ const PATCH_SCHEMA = {
 
 class Budget {
   constructor(policy) {
-    this.hard = Number(policy.budget.hard_budget);
-    this.warning = Number(policy.budget.warning_budget);
+    this.hard = Number(MODE === 'pilot' ? policy.budget.pilot_hard_budget : policy.budget.hard_budget);
+    this.warning = Number(MODE === 'pilot' ? policy.budget.pilot_warning_budget : policy.budget.warning_budget);
     this.spent = 0;
     this.reserved = 0;
     this.calls = [];
@@ -661,6 +661,10 @@ function projectedCost(policy, model, prompt, maxOutputTokens) {
   return ((estimatedInput * Number(rate.input)) + (maxOutputTokens * Number(rate.output))) / 1_000_000;
 }
 
+function wait(milliseconds) {
+  return new Promise((resolve) => setTimeout(resolve, milliseconds));
+}
+
 async function callModel({ policy, budget, model, effort, prompt, key, maxOutputTokens, systemPrompt = SYSTEM_PROMPT }) {
   fs.mkdirSync(CACHE_DIR, { recursive: true });
   const cacheFile = path.join(CACHE_DIR, `${key}.json`);
@@ -672,36 +676,54 @@ async function callModel({ policy, budget, model, effort, prompt, key, maxOutput
   const projected = projectedCost(policy, model, prompt, maxOutputTokens);
   if (!budget.reserve(projected)) throw new Error(`BUDGET_CAP: ${model} çağrısı hard budget sınırını aşacaktı.`);
   let response;
+  let lastStatus = null;
   let requestSent = false;
   try {
-    requestSent = true;
-    const http = await fetch('https://api.openai.com/v1/responses', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${env.OPENAI_API_KEY}`,
-        'Content-Type': 'application/json',
-        'Idempotency-Key': key
-      },
-      body: JSON.stringify({
-        model,
-        reasoning: { effort },
-        max_output_tokens: maxOutputTokens,
-        input: [
-          { role: 'system', content: [{ type: 'input_text', text: systemPrompt }] },
-          { role: 'user', content: [{ type: 'input_text', text: prompt }] }
-        ],
-        text: { format: { type: 'json_schema', name: 'fm_case_patch', strict: true, schema: PATCH_SCHEMA } }
-      })
-    });
-    response = await http.json();
-    if (!http.ok) throw new Error(`OpenAI HTTP ${http.status}: ${JSON.stringify(response).slice(0, 1200)}`);
+    const maxTransportAttempts = Math.max(1, Number(policy.budget.http_retry_attempts || 4));
+    for (let transportAttempt = 1; transportAttempt <= maxTransportAttempts; transportAttempt += 1) {
+      requestSent = true;
+      const http = await fetch('https://api.openai.com/v1/responses', {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${env.OPENAI_API_KEY}`,
+          'Content-Type': 'application/json',
+          'Idempotency-Key': key
+        },
+        body: JSON.stringify({
+          model,
+          reasoning: { effort },
+          max_output_tokens: maxOutputTokens,
+          input: [
+            { role: 'system', content: [{ type: 'input_text', text: systemPrompt }] },
+            { role: 'user', content: [{ type: 'input_text', text: prompt }] }
+          ],
+          text: { format: { type: 'json_schema', name: 'fm_case_patch', strict: true, schema: PATCH_SCHEMA } }
+        })
+      });
+      lastStatus = http.status;
+      response = await http.json().catch(() => ({}));
+      if (http.ok) break;
+      if (http.status === 429 && transportAttempt < maxTransportAttempts) {
+        const retryAfterSeconds = Number(http.headers.get('retry-after') || 0);
+        const minimum = Number(policy.budget.http_retry_base_seconds || 15);
+        const maximum = Number(policy.budget.http_retry_max_seconds || 120);
+        const backoffSeconds = Math.min(maximum, Math.max(retryAfterSeconds, minimum * (2 ** (transportAttempt - 1))));
+        process.stderr.write(`OpenAI 429; ${backoffSeconds}s sonra ayni idempotency key ile yeniden deneniyor (${transportAttempt}/${maxTransportAttempts}).\n`);
+        await wait(backoffSeconds * 1000);
+        continue;
+      }
+      throw new Error(`OpenAI HTTP ${http.status}: ${JSON.stringify(response).slice(0, 1200)}`);
+    }
+    if (lastStatus !== 200) throw new Error(`OpenAI HTTP ${lastStatus}: ${JSON.stringify(response).slice(0, 1200)}`);
     const plan = JSON.parse(extractOutputText(response));
     const actual = usageCost(policy, model, response.usage);
     budget.settle(projected, actual, { model, cached: false, input_tokens: response.usage?.input_tokens || 0, output_tokens: response.usage?.output_tokens || 0 });
     writeJson(cacheFile, { schema_version: 'fm_case_qa_ai_cache_v1', key, model, usage: response.usage || {}, plan });
     return { plan, cached: false, usage: response.usage || {}, cost: actual };
   } catch (error) {
-    const conservativeCharge = requestSent && response?.usage ? usageCost(policy, model, response.usage) : (requestSent ? projected : 0);
+    const conservativeCharge = requestSent && response?.usage
+      ? usageCost(policy, model, response.usage)
+      : (requestSent && lastStatus !== 429 ? projected : 0);
     budget.settle(projected, conservativeCharge, { model, cached: false, failed: true });
     throw error;
   }
@@ -936,6 +958,7 @@ function restoreBaselineAuthoring(productionCandidate, original) {
 async function main() {
   if (!['audit', 'pilot', 'full'].includes(MODE)) throw new Error(`FM_QA_MODE geçersiz: ${MODE}`);
   if (MODE === 'pilot' && AI_ENABLED && !CASE_IDS.size) throw new Error('GÜVENLİ PİLOT KİLİDİ: AI pilotu için FM_QA_CASE_IDS ile en az bir kesin vaka ID seçilmelidir.');
+  if (MODE === 'pilot' && CASE_IDS.size > 5) throw new Error('GÜVENLİ PİLOT KİLİDİ: Tek çalıştırmada en fazla 5 kesin vaka ID seçilebilir.');
   const policy = readJson(POLICY_PATH);
   const standardSource = fs.readFileSync(STANDARD_PATH, 'utf8');
   const premiumSource = fs.readFileSync(PREMIUM_PATH, 'utf8');
@@ -1133,6 +1156,28 @@ async function main() {
   const selectedStates = selected.map((entry) => stateById.get(caseId(entry.raw)));
   const goldIds = new Set(policy.authoring?.calibration_case_ids || []);
   let campaignCalibrated = false;
+  if (AI_ENABLED && MODE === 'pilot' && goldIds.size) {
+    const calibrationRegistry = buildPortfolioRegistry(engine, entries.map((entry) => ({
+      raw: stateById.get(caseId(entry.raw)).candidate
+    })));
+    const failures = [];
+    for (const id of goldIds) {
+      const state = stateById.get(id);
+      if (!state) {
+        failures.push({ case_id: id, reason: 'missing_gold_fixture' });
+        continue;
+      }
+      state.candidate.qaPortfolioRegistry = { schema_version: 'fm_qa_portfolio_registry_v1', entries: clone(calibrationRegistry) };
+      const completeness = authoringCompleteness(state.candidate);
+      const contract = authoringContract(state.candidate);
+      const assessed = evaluate(engine, state.original, state.candidate);
+      if (!completeness.complete || !contract.passed || !assessed.passed) {
+        failures.push({ case_id: id, completeness, contract, result: compactReport(assessed.result, assessed.leakage) });
+      }
+    }
+    if (failures.length) throw new Error(`PILOT_CALIBRATION_GATE: Kayitli altin fixture 100/100 degil; secilen vakaya ucretli cagri yapilmadi. ${JSON.stringify(failures)}`);
+    campaignCalibrated = true;
+  }
   if (AI_ENABLED && MODE === 'full' && goldIds.size) {
     const goldStates = selectedStates.filter((state) => goldIds.has(caseId(state.original)));
     if (goldStates.length !== goldIds.size) throw new Error('CALIBRATION_GATE: Altın-vaka kümesinin tamamı full seçimde bulunamadı.');
@@ -1386,7 +1431,7 @@ async function main() {
   };
   writeJson(path.join(OUTPUT_DIR, 'fm_case_qa_run_report.json'), report);
   const prBody = [
-    '# Faili Meçhul Case QA production campaign',
+    MODE === 'pilot' ? '# Faili Meçhul tek-vaka QA inceleme kartı' : '# Faili Meçhul Case QA production campaign',
     '',
     `- Run: ${report.run_id}`,
     `- Kaynak SHA: \`${sourceSha.combined}\``,
@@ -1398,7 +1443,13 @@ async function main() {
     `- API çağrısı: ${report.summary.api_calls}`,
     `- Hesaplanan maliyet: $${report.summary.actual_or_conservative_cost_usd}`,
     '',
-    'Bu değişiklik yalnız 105/105 tam HTML simülatörü, kimlik, ipucu-öncesi sızıntı, uygulama regresyonu ve web build kapılarının tamamı geçerse otomatik birleştirilir. Doğrudan `main` yazımı yapılmaz.',
+    MODE === 'pilot'
+      ? 'Bu küçük parti otomatik birleşmez. Yalnız seçilen vakaların exact HTML simülatörü, kimlik, ipucu-öncesi sızıntı, uygulama regresyonu ve web build kapıları geçerse taslak inceleme PR’ı açılır.'
+      : 'Bu değişiklik yalnız 105/105 tam HTML simülatörü, kimlik, ipucu-öncesi sızıntı, uygulama regresyonu ve web build kapılarının tamamı geçerse otomatik birleştirilir. Doğrudan `main` yazımı yapılmaz.',
+    '',
+    '## Vaka sonuç kartı',
+    '',
+    ...rows.map((row) => `- \`${row.case_id}\` — ${row.case_title}: ${row.baseline?.score ?? 0}/100 → ${row.final_campaign?.result?.score ?? 0}/100; durum=\`${row.status}\``),
     '',
     '## Kabul edilen vakalar',
     '',
