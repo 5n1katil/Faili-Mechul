@@ -24,7 +24,7 @@ const AI_ENABLED = String(env.FM_QA_ALLOW_AI || 'false').toLowerCase() === 'true
 const APPLY_TO_WORKTREE = String(env.FM_QA_APPLY_TO_WORKTREE || 'false').toLowerCase() === 'true';
 const CASE_LIMIT = Math.max(0, Number(env.FM_QA_CASE_LIMIT || 0));
 const CASE_IDS = parseCaseIds(env.FM_QA_CASE_IDS);
-const PROMPT_VERSION = 'fm-case-qa-patch-v4.6.0';
+const PROMPT_VERSION = 'fm-case-qa-patch-v4.7.0';
 const AUTHORING_PROMPT_VERSION = 'fm-case-qa-authoring-v4.6.0';
 
 function clone(value) { return value == null ? value : JSON.parse(JSON.stringify(value)); }
@@ -1091,6 +1091,14 @@ async function main() {
         maxOutputTokens: Number(policy.models.final_cleanup_max_output_tokens || policy.models.max_output_tokens || 12000)
       }
     ];
+    const pilotExactScoreAttempts = MODE === 'pilot'
+      ? [5, 6].map((number) => ({
+          phase: `terra_final_verifier_${number}`,
+          model: policy.models.final_cleanup || policy.models.escalation,
+          effort: policy.models.final_cleanup_reasoning_effort || policy.models.escalation_reasoning_effort,
+          maxOutputTokens: Number(policy.models.final_cleanup_max_output_tokens || policy.models.max_output_tokens || 12000)
+        }))
+      : [];
     const attempts = scope === 'gold_calibration'
       ? [
           ...baseAttempts,
@@ -1101,7 +1109,7 @@ async function main() {
             maxOutputTokens: Number(policy.models.final_cleanup_max_output_tokens || policy.models.max_output_tokens || 12000)
           }))
         ]
-      : baseAttempts;
+      : [...baseAttempts, ...pilotExactScoreAttempts];
     for (const attempt of attempts) {
       const prompt = buildPrompt({ caseData: current, baselineResult: currentEval.result, leakage: currentEval.leakage, phase: attempt.phase, previousAttemptError });
       const key = sha(`${PROMPT_VERSION}|${sourceSha.combined}|${id}|${scope}|${attempt.phase}|${attempt.model}|${stableHash(current)}`);
