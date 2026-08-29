@@ -776,8 +776,11 @@ function compactReport(result, leakage) {
 function buildPrompt({ caseData, baselineResult, leakage, phase, previousAttemptError = null }) {
   const requiredGateNames = ['coreNecessity', 'patternGovernance', 'contentAndNames', 'semanticContract', 'visibleEvidence', 'mechanicContract', 'bonusFunctionality'];
   const failedRequiredGates = requiredGateNames.filter((name) => baselineResult.gates?.[name]?.passed !== true);
+  const scoreConvergence = /^terra_final_verifier_(?:5|6)$/.test(phase);
   const phaseInstruction = phase === 'luna_first_pass'
     ? 'Reconstruct missing authoring evidence and repair only verified playability failures. Internally form a complete repair checklist before emitting operations.'
+    : scoreConvergence
+      ? `Exact-score convergence pass: the required gate list may already be empty, but this candidate is still NOT certified until the exact HTML simulator returns score=100 and productionReady=true. Every item in fixes and every advisory that does not begin with ✓ or ⓘ is mandatory in this pass. Do not return zero operations while score is below 100 or simulator_production_ready is false. In particular: (1) a 1-star case must retain at least 2 direct confirm rules while every non-bonus clue remains individually necessary; (2) names flagged for missing a recognizable semantic type must be minimally naturalized without changing the entity ID, physical class, visual identity, icon or gameplay role; (3) mini-game explanations may state the kind of deduction gained but must not name any suspect, weapon or location; and (4) remove monotony and other remaining exact-score advisories without reintroducing leakage. Re-evaluate the entire visible evidence chain internally before emitting one coherent patch.`
     : phase.startsWith('terra_final_verifier')
       ? `Final convergence pass: produce the complete minimal patch that clears every remaining required gate (${failedRequiredGates.join(', ') || 'none'}). This is an active repair pass, not a review. Preserve every currently passed gate and do not reintroduce earlier leakage. If incremental edits cannot make the core deduction unique, replace the necessary clue fields as a coherent set. Before emitting operations, verify internally that: (1) at least four non-bonus clues are individually necessary and together force exactly one suspect|weapon|location solution without bonus clues; (2) every player-visible entity reference is represented by that same clue's logicRules; (3) every bonus clue has a useful matrix effect but is unnecessary; and (4) deductionHint never names its answer.`
       : 'Repair only the remaining deterministic failures in the current candidate. Re-read every failed gate, preserve every passed gate, and do not repeat already-passed repairs.';
@@ -1012,7 +1015,10 @@ async function main() {
         penalty: assessmentPenalty(assessed) + (completeness.missing.length * 1200) + (contract.errors.length * 1200)
       };
     };
-    const goldAttemptLimit = Math.max(3, Number(policy.repair?.gold_max_attempts_per_case || 6));
+    // Keep the original six attempts/cache keys intact, then add two narrowly
+    // targeted exact-score passes. This reuses prior idempotent responses while
+    // allowing a 90/100, all-required-gates-passed candidate to converge.
+    const goldAttemptLimit = Math.max(8, Number(policy.repair?.gold_max_attempts_per_case || 6));
     const baseAttempts = [
       { phase: 'luna_first_pass', model: policy.models.first_pass, effort: policy.models.first_pass_reasoning_effort },
       { phase: 'terra_escalation', model: policy.models.escalation, effort: policy.models.escalation_reasoning_effort },
@@ -1292,116 +1298,3 @@ async function main() {
   const patchedPremium = `${JSON.stringify(premiumOutput, null, 2)}\n`;
   fs.writeFileSync(path.join(OUTPUT_DIR, 'puzzles.ts'), patchedStandard);
   fs.writeFileSync(path.join(OUTPUT_DIR, 'puzzles_database.json'), patchedPremium);
-  writeJson(path.join(OUTPUT_DIR, 'case_qa_sidecars_v29_5.json'), sidecar);
-
-  const reportRows = rows.map(({ accepted_candidate, accepted_authoring_candidate, ...row }) => ({
-    ...row,
-    candidate_hash: accepted_candidate ? stableHash(accepted_candidate) : null,
-    authoring_candidate_hash: accepted_authoring_candidate ? stableHash(authoringOverlay(accepted_authoring_candidate)) : null
-  }));
-  const report = {
-    schema_version: 'fm_case_qa_batch_run_v4_0',
-    run_id: env.GITHUB_RUN_ID || `local-${Date.now()}`,
-    mode: MODE,
-    ai_enabled: AI_ENABLED,
-    campaign_calibrated: campaignCalibrated,
-    apply_to_worktree: APPLY_TO_WORKTREE,
-    source: { standard_path: path.relative(ROOT, STANDARD_PATH), premium_path: path.relative(ROOT, PREMIUM_PATH), sidecar_path: path.relative(ROOT, SIDECAR_PATH), sha256: sourceSha },
-    selection: {
-      requested_case_ids: [...CASE_IDS],
-      case_limit: CASE_LIMIT,
-      full_mode_filters_ignored: MODE === 'full' && (CASE_IDS.size > 0 || CASE_LIMIT > 0),
-      selected_count: selected.length,
-      selected_case_ids: [...selectedIds]
-    },
-    summary: {
-      total_repository_cases: entries.length,
-      selected_cases: rows.length,
-      scoring_trust: campaignCalibrated ? 'gold_calibrated_for_bulk_repair' : 'authoring_inventory_only',
-      final_campaign_passed: rows.filter((row) => row.final_campaign?.passed).length,
-      campaign_complete_105: rows.length === entries.length && rows.every((row) => row.final_campaign?.passed),
-      authoring_required: rows.filter((row) => row.status === 'authoring_required').length,
-      authoring_compiled: rows.filter((row) => row.authoring_attempt && row.accepted_authoring_candidate).length,
-      authoring_contract_rejected: rows.filter((row) => row.authoring_attempt && !row.accepted_authoring_candidate).length,
-      preserved_100: rows.filter((row) => row.status === 'preserved_100').length,
-      accepted_100: rows.filter((row) => row.status === 'accepted_100').length,
-      audit_only_needs_repair: rows.filter((row) => row.status === 'audit_only_needs_repair').length,
-      confirmed_repair_required: rows.filter((row) => row.status === 'confirmed_repair_required').length,
-      critical_solution_leak: rows.filter((row) => row.repair_eligibility?.queue === 'critical_solution_leak').length,
-      deep_review_queue: rows.filter((row) => row.status === 'deep_review').length,
-      deterministic_qa_review_queue: rows.filter((row) => row.status === 'deterministic_qa_review').length,
-      ai_repair_eligible_case_ids: rows.filter((row) => row.repair_eligibility?.eligible).sort((a, b) => a.repair_eligibility.priority - b.repair_eligibility.priority).map((row) => row.case_id),
-      quarantined: rows.filter((row) => row.status.startsWith('quarantined')).length,
-      budget_stopped: rows.filter((row) => row.status === 'budget_stopped').length,
-      publishable_authoring_case_ids: [...acceptedAuthoring.keys()],
-      publishable_case_ids: [...accepted.keys()],
-      publishable_change_count: new Set([...acceptedAuthoring.keys(), ...accepted.keys()]).size,
-      api_calls: budget.calls.length,
-      actual_or_conservative_cost_usd: Number(budget.spent.toFixed(6)),
-      warning_budget_reached: budget.spent >= budget.warning,
-      hard_budget_usd: budget.hard,
-      main_branch_changed: false,
-      direct_main_write_permitted: false
-    },
-    api_usage: budget.calls,
-    cases: reportRows
-  };
-  writeJson(path.join(OUTPUT_DIR, 'fm_case_qa_run_report.json'), report);
-  const prBody = [
-    '# Faili Meçhul Case QA production campaign',
-    '',
-    `- Run: ${report.run_id}`,
-    `- Kaynak SHA: \`${sourceSha.combined}\``,
-    `- Seçilen vaka: ${rows.length}`,
-    `- QA metadata sözleşmesi tamamlanan: ${report.summary.publishable_authoring_case_ids.length}`,
-    `- Korunan 100/100: ${report.summary.preserved_100}`,
-    `- Yeni kabul edilen 100/100: ${report.summary.accepted_100}`,
-    `- Karantina: ${report.summary.quarantined}`,
-    `- API çağrısı: ${report.summary.api_calls}`,
-    `- Hesaplanan maliyet: $${report.summary.actual_or_conservative_cost_usd}`,
-    '',
-    'Bu değişiklik yalnız 105/105 tam HTML simülatörü, kimlik, ipucu-öncesi sızıntı, uygulama regresyonu ve web build kapılarının tamamı geçerse otomatik birleştirilir. Doğrudan `main` yazımı yapılmaz.',
-    '',
-    '## Kabul edilen vakalar',
-    '',
-    ...(report.summary.publishable_case_ids.length ? report.summary.publishable_case_ids.map((id) => `- \`${id}\``) : ['- Yok']),
-    '',
-    '## QA-only metadata katmanı',
-    '',
-    ...(report.summary.publishable_authoring_case_ids.length ? report.summary.publishable_authoring_case_ids.map((id) => `- \`${id}\``) : ['- Yok'])
-  ].join('\n');
-  fs.writeFileSync(path.join(OUTPUT_DIR, 'draft_pr_body.md'), `${prBody}\n`);
-
-  if (APPLY_TO_WORKTREE && (accepted.size || acceptedAuthoring.size)) {
-    fs.writeFileSync(STANDARD_PATH, patchedStandard);
-    fs.writeFileSync(PREMIUM_PATH, patchedPremium);
-    writeJson(SIDECAR_PATH, sidecar);
-  }
-  process.stdout.write(`${JSON.stringify(report.summary, null, 2)}\n`);
-}
-
-export {
-  applyAuthoringPatchPlanSafely,
-  applyPatchPlanSafely,
-  authoringCandidateDisposition,
-  authoringCompleteness,
-  authoringContract,
-  authoringOverlay,
-  buildAuthoringPrompt,
-  buildPrompt,
-  canonicalizeSingleCrimeAnchor,
-  expandSafeContainerOperations,
-  isRecoverablePatchContractError,
-  parseCaseIds,
-  selectEntriesForMode,
-  stripAuthoring
-};
-
-if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
-  main().catch((error) => {
-    fs.mkdirSync(OUTPUT_DIR, { recursive: true });
-    writeJson(path.join(OUTPUT_DIR, 'fatal_error.json'), { schema_version: 'fm_case_qa_fatal_error_v1', message: String(error?.message || error), stack: String(error?.stack || '') });
-    console.error(error);
-    process.exitCode = 1;
-  });
-}
