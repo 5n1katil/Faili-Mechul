@@ -4,6 +4,7 @@ import fs from 'node:fs';
 import { createRequire } from 'node:module';
 import {
   applyAuthoringPatchPlanSafely,
+  authoringCandidateDisposition,
   authoringCompleteness,
   authoringContract,
   parseCaseIds,
@@ -93,6 +94,16 @@ assert.equal(authoringCompleteness(authored).complete, true);
 assert.equal(authoringContract(authored).passed, true);
 assert.equal(Object.hasOwn(stripAuthoring(authored).clues[0], 'isCrimeAnchor'), false, 'isCrimeAnchor üretim içeriğine sızdı.');
 
+const partialPlan = {
+  case_id: 'fixture_001', assessment: 'safe partial authoring',
+  operations: [{ op: 'add', path: '/qaSemanticFacts', value_json: '[]', reason: 'partial recovery fixture' }]
+};
+const partial = applyAuthoringPatchPlanSafely(base, partialPlan);
+const partialDisposition = authoringCandidateDisposition(base, partial);
+assert.equal(partialDisposition.retain_safe_partial, true, 'Güvenli kısmi QA metadata sonucu recovery için korunmadı.');
+assert.equal(partialDisposition.accepted, false, 'Eksik QA metadata sonucu yanlışlıkla tamamlanmış kabul edildi.');
+assert.deepEqual(stripAuthoring(partial), stripAuthoring(base), 'Kısmi QA metadata oyuncu içeriğini değiştirdi.');
+
 const forbidden = {
   case_id: 'fixture_001', assessment: 'forbidden content rewrite',
   operations: [{ op: 'replace', path: '/story', value_json: '"Değiştirildi"', reason: 'must fail' }]
@@ -108,4 +119,14 @@ const brokenResult = evaluateCase(engine, broken, { baseline: base });
 assert.equal(brokenResult.productionReady, false, 'Exact v29.4 motoru bozuk aynı-eksen kuralını kabul etti.');
 assert.ok(brokenResult.score < 100, 'Exact v29.4 motoru bilinen bozuk fixture için 100 verdi.');
 
-console.log('✓ Full-mode selection, gold authoring, metadata isolation, anchor and rule contracts are enforced.');
+const runnerSource = fs.readFileSync('.case-qa/fm_case_qa_runner.mjs', 'utf8');
+assert.match(runnerSource, /scope: 'gold_calibration'/, 'Full kampanya altın vakalarda bounded repair sertifikasyonu çalıştırmıyor.');
+assert.match(runnerSource, /stage: 'authoring_contract'/, 'Altın-vaka authoring sözleşme aşaması ayrı raporlanmıyor.');
+assert.match(runnerSource, /stage: 'bounded_gold_repair'/, 'Altın-vaka bounded repair aşaması ayrı raporlanmıyor.');
+
+const workflowSource = fs.readFileSync('.github/workflows/fm-case-qa-v3.yml', 'utf8');
+assert.match(workflowSource, /actions\/cache\/restore@v4/, 'AI cache restore açıkça tanımlı değil.');
+assert.match(workflowSource, /actions\/cache\/save@v4/, 'Başarısız QA sonrası AI cache kaydı tanımlı değil.');
+assert.match(workflowSource, /Save idempotent response cache even when QA stops safely[\s\S]*if: always\(\)/, 'AI cache hata halinde korunmuyor.');
+
+console.log('✓ Full selection, two-stage gold calibration, safe authoring recovery, cache persistence and metadata isolation are enforced.');

@@ -1,5 +1,5 @@
 {
-  "schema_version": "fm_case_qa_automation_policy_v3_7",
+  "schema_version": "fm_case_qa_automation_policy_v3_8",
   "source": {
     "repository": "5n1katil/Faili-Mechul",
     "branch": "main",
@@ -43,11 +43,18 @@
     "reasoning_effort": "medium",
     "max_output_tokens": 9000,
     "max_attempts_per_case": 1,
+    "gold_recovery_attempts": 1,
+    "gold_recovery_model": "gpt-5.6-terra",
+    "gold_recovery_reasoning_effort": "medium",
     "calibration_case_ids": [
       "rc_001",
       "pp_001"
     ],
     "full_campaign_requires_gold_100": true,
+    "gold_gate_stages": [
+      "qa_only_authoring_contract",
+      "bounded_exact_simulator_repair"
+    ],
     "publish_sidecar_only_in_draft_pr": true
   },
   "models": {
