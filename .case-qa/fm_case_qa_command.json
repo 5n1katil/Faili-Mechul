@@ -1,6 +1,6 @@
 {
   "schema_version": "fm_case_qa_command_v1",
-  "request_id": "production-surgical-convergence-20260829-03",
+  "request_id": "production-simulator-lexical-fix-20260829-04",
   "mode": "full",
   "allow_ai": true,
   "case_limit": 0,
@@ -8,5 +8,5 @@
   "publish": true,
   "auto_merge": true,
   "prepare_avatar_manifest": true,
-  "note": "Third locked campaign reuses prior results and applies two surgical passes only to the remaining rc_001 name and hint findings."
+  "note": "Fourth locked campaign fixes the simulator false positive that treated unknown but valid creative entity names as production blockers."
 }

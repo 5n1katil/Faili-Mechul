@@ -1,5 +1,5 @@
 {
-  "schema_version": "fm_case_qa_automation_policy_v4_0",
+  "schema_version": "fm_case_qa_automation_policy_v4_1",
   "source": {
     "repository": "5n1katil/Faili-Mechul",
     "branch": "main",
@@ -19,7 +19,7 @@
     "require_preclue_guard_pass": true,
     "require_avatar_prompt_risk_false": true,
     "path": ".case-qa/Faili_Mechul_Vaka_Simulatoru_v29_4_Otomasyon_Temeli.html",
-    "git_blob_sha": "f4bd5f5c30ccdf8cf552b7dc3377311afbcb0660"
+    "git_blob_sha": "cb53e6613d6379de097599634de26524f4510fbc"
   },
   "repair": {
     "confirmed_preclue_leakage_only": true,

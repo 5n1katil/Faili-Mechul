@@ -105,6 +105,7 @@ jobs:
           restore-keys: |
             fm-case-qa-v3-${{ hashFiles('artifacts/dedektif/data/puzzles.ts', 'artifacts/dedektif/data/puzzles_database.json', '.case-qa/fm_case_qa_policy_v3_1.json') }}-
             fm-case-qa-v3-${{ hashFiles('artifacts/dedektif/data/puzzles.ts', 'artifacts/dedektif/data/puzzles_database.json', '.case-qa/fm_case_qa_policy_v3_1.json') }}
+            fm-case-qa-v3-
 
       - name: Run deterministic QA and bounded repair
         run: node .case-qa/fm_case_qa_runner.mjs
