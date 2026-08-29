@@ -24,8 +24,8 @@ const AI_ENABLED = String(env.FM_QA_ALLOW_AI || 'false').toLowerCase() === 'true
 const APPLY_TO_WORKTREE = String(env.FM_QA_APPLY_TO_WORKTREE || 'false').toLowerCase() === 'true';
 const CASE_LIMIT = Math.max(0, Number(env.FM_QA_CASE_LIMIT || 0));
 const CASE_IDS = parseCaseIds(env.FM_QA_CASE_IDS);
-const PROMPT_VERSION = 'fm-case-qa-patch-v3.8.1';
-const AUTHORING_PROMPT_VERSION = 'fm-case-qa-authoring-v3.8.1';
+const PROMPT_VERSION = 'fm-case-qa-patch-v3.9.0';
+const AUTHORING_PROMPT_VERSION = 'fm-case-qa-authoring-v3.9.0';
 
 function clone(value) { return value == null ? value : JSON.parse(JSON.stringify(value)); }
 function sha(value) { return crypto.createHash('sha256').update(typeof value === 'string' ? value : JSON.stringify(value)).digest('hex'); }
@@ -404,6 +404,70 @@ function canonicalizeKnownPatchValue(pointer, value) {
   return value;
 }
 
+function expandSafeContainerOperations(baseCase, plan) {
+  const expanded = [];
+  for (const operation of plan.operations || []) {
+    const parts = decodePointer(operation.path);
+    if (parts.length !== 2 || parts[0] !== 'clues' || !/^\d+$/.test(parts[1] || '')) {
+      expanded.push(operation);
+      continue;
+    }
+    const index = Number(parts[1]);
+    const existing = baseCase.clues?.[index];
+    let replacement;
+    try { replacement = JSON.parse(operation.value_json); } catch { throw new Error(`value_json geçersiz: ${operation.path}`); }
+    if (!isPlainObject(existing) || !isPlainObject(replacement)) throw new Error(`Yasak yama yolu: ${operation.path}`);
+    if (replacement.id !== undefined && String(replacement.id) !== String(existing.id)) {
+      throw new Error(`CLUE_ID_GUARD: ${operation.path} id değiştiremez.`);
+    }
+    for (const [field, value] of Object.entries(replacement)) {
+      if (field === 'id') continue;
+      const childPath = `/clues/${index}/${field}`;
+      if (!allowedPatchPath(childPath)) throw new Error(`Yasak yama yolu: ${childPath}`);
+      expanded.push({
+        ...operation,
+        op: Object.hasOwn(existing, field) ? 'replace' : 'add',
+        path: childPath,
+        value_json: JSON.stringify(value),
+        reason: `${operation.reason} [safe container expansion]`
+      });
+    }
+  }
+  if (expanded.length > 160) throw new Error('AI yama operasyonları güvenli açılım sonrası 160 sınırını aşıyor.');
+  return { ...plan, operations: expanded };
+}
+
+function canonicalizeSingleCrimeAnchor(candidate) {
+  const anchors = (candidate.clues || []).filter((clue) => clue?.isBonus !== true && clue?.isCrimeAnchor === true);
+  if (anchors.length !== 1) return candidate;
+  const anchor = anchors[0];
+  const categoryById = new Map();
+  for (const [field, category] of [['suspects', 'suspect'], ['weapons', 'weapon'], ['locations', 'location']]) {
+    for (const item of candidate[field] || []) categoryById.set(String(item.id), category);
+  }
+  const solution = candidate.solution || {};
+  const solutionByComponent = {
+    suspect: String(solution.suspectId || ''),
+    weapon: String(solution.weaponId || ''),
+    location: String(solution.locationId || '')
+  };
+  const valid = (Array.isArray(anchor.qaSemanticFacts) ? anchor.qaSemanticFacts : []).filter((fact) => {
+    const component = String(fact?.component || '');
+    const entityId = String(fact?.entityId || '');
+    return fact?.kind === 'crime_component' && categoryById.get(entityId) === component && String(fact?.evidence || '').trim();
+  });
+  const chosen = valid.find((fact) => solutionByComponent[String(fact.component)] === String(fact.entityId)) || valid[0];
+  if (!chosen) return candidate;
+  anchor.qaSemanticFacts = [{
+    kind: 'crime_component',
+    component: String(chosen.component),
+    entityId: String(chosen.entityId),
+    source: `clue:${anchor.id}`,
+    evidence: String(chosen.evidence).trim()
+  }];
+  return candidate;
+}
+
 function validateCandidateContract(candidate) {
   for (const field of ['suspects', 'weapons', 'locations', 'clues']) {
     if (!Array.isArray(candidate[field])) throw new Error(`PATCH_CONTRACT: /${field} dizi olmalıdır.`);
@@ -439,6 +503,7 @@ function validateCandidateContract(candidate) {
 function applyPatchPlan(baseCase, plan) {
   if (String(plan.case_id) !== caseId(baseCase)) throw new Error(`AI vaka ID uyuşmazlığı: ${plan.case_id}/${caseId(baseCase)}`);
   if (!Array.isArray(plan.operations) || plan.operations.length > 80) throw new Error('AI yama operasyon sayısı geçersiz veya 80 sınırını aşıyor.');
+  plan = expandSafeContainerOperations(baseCase, plan);
   const output = clone(baseCase);
   for (const operation of plan.operations) {
     if (!['add', 'replace'].includes(operation.op)) throw new Error(`Yasak yama işlemi: ${operation.op}`);
@@ -453,6 +518,7 @@ function applyPatchPlan(baseCase, plan) {
     const effectiveOp = operation.op === 'replace' && !patchTargetExists(output, operation.path) ? 'add' : operation.op;
     setPointer(output, operation.path, value, effectiveOp);
   }
+  canonicalizeSingleCrimeAnchor(output);
   validateCandidateContract(output);
   return output;
 }
@@ -712,7 +778,7 @@ function buildPrompt({ caseData, baselineResult, leakage, phase, previousAttempt
   const failedRequiredGates = requiredGateNames.filter((name) => baselineResult.gates?.[name]?.passed !== true);
   const phaseInstruction = phase === 'luna_first_pass'
     ? 'Reconstruct missing authoring evidence and repair only verified playability failures. Internally form a complete repair checklist before emitting operations.'
-    : phase === 'terra_final_verifier'
+    : phase.startsWith('terra_final_verifier')
       ? `Final convergence pass: produce the complete minimal patch that clears every remaining required gate (${failedRequiredGates.join(', ') || 'none'}). This is an active repair pass, not a review. Preserve every currently passed gate and do not reintroduce earlier leakage. If incremental edits cannot make the core deduction unique, replace the necessary clue fields as a coherent set. Before emitting operations, verify internally that: (1) at least four non-bonus clues are individually necessary and together force exactly one suspect|weapon|location solution without bonus clues; (2) every player-visible entity reference is represented by that same clue's logicRules; (3) every bonus clue has a useful matrix effect but is unnecessary; and (4) deductionHint never names its answer.`
       : 'Repair only the remaining deterministic failures in the current candidate. Re-read every failed gate, preserve every passed gate, and do not repeat already-passed repairs.';
   return `${phaseInstruction}
@@ -946,16 +1012,30 @@ async function main() {
         penalty: assessmentPenalty(assessed) + (completeness.missing.length * 1200) + (contract.errors.length * 1200)
       };
     };
-    const attempts = [
+    const goldAttemptLimit = Math.max(3, Number(policy.repair?.gold_max_attempts_per_case || 6));
+    const baseAttempts = [
       { phase: 'luna_first_pass', model: policy.models.first_pass, effort: policy.models.first_pass_reasoning_effort },
       { phase: 'terra_escalation', model: policy.models.escalation, effort: policy.models.escalation_reasoning_effort },
       {
         phase: 'terra_final_verifier',
         model: policy.models.final_cleanup || policy.models.escalation,
-        effort: policy.models.final_cleanup_reasoning_effort || policy.models.escalation_reasoning_effort,
+        effort: scope === 'gold_calibration'
+          ? (policy.repair?.gold_final_reasoning_effort || policy.models.final_cleanup_reasoning_effort || policy.models.escalation_reasoning_effort)
+          : (policy.models.final_cleanup_reasoning_effort || policy.models.escalation_reasoning_effort),
         maxOutputTokens: Number(policy.models.final_cleanup_max_output_tokens || policy.models.max_output_tokens || 12000)
       }
     ];
+    const attempts = scope === 'gold_calibration'
+      ? [
+          ...baseAttempts,
+          ...Array.from({ length: Math.max(0, goldAttemptLimit - baseAttempts.length) }, (_, index) => ({
+            phase: `terra_final_verifier_${index + 2}`,
+            model: policy.models.final_cleanup || policy.models.escalation,
+            effort: policy.repair?.gold_final_reasoning_effort || 'high',
+            maxOutputTokens: Number(policy.models.final_cleanup_max_output_tokens || policy.models.max_output_tokens || 12000)
+          }))
+        ]
+      : baseAttempts;
     for (const attempt of attempts) {
       const prompt = buildPrompt({ caseData: current, baselineResult: currentEval.result, leakage: currentEval.leakage, phase: attempt.phase, previousAttemptError });
       const key = sha(`${PROMPT_VERSION}|${sourceSha.combined}|${id}|${scope}|${attempt.phase}|${attempt.model}|${stableHash(current)}`);
@@ -1309,6 +1389,8 @@ export {
   authoringOverlay,
   buildAuthoringPrompt,
   buildPrompt,
+  canonicalizeSingleCrimeAnchor,
+  expandSafeContainerOperations,
   isRecoverablePatchContractError,
   parseCaseIds,
   selectEntriesForMode,
