@@ -849,7 +849,9 @@ function evaluate(engine, original, candidate) {
   const leakage = evaluatePreclueLeakage(candidate);
   const requiredGateNames = ['coreNecessity', 'patternGovernance', 'contentAndNames', 'semanticContract', 'visibleEvidence', 'mechanicContract', 'bonusFunctionality'];
   const failedRequiredGates = requiredGateNames.filter((name) => result.gates?.[name]?.passed !== true);
-  const passed = result.score === 100 && failedRequiredGates.length === 0 && result.identityGuard?.passed === true && leakage.passed === true && leakage.avatar_prompt_risk === false;
+  const passed = result.score === 100 && result.simulatorProductionReady === true &&
+    failedRequiredGates.length === 0 && result.identityGuard?.passed === true &&
+    leakage.passed === true && leakage.avatar_prompt_risk === false;
   return {
     result,
     leakage,

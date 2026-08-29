@@ -1,4 +1,291 @@
 {
   "schema_version": "fm_case_qa_sidecars_v29_5",
-  "cases": {}
+  "cases": {
+    "rc_001": {
+      "source_content_hash": "fe17c8f161a985b72cc6b25dc7699b04d998b716f1aa5f9c14600fd99f0bec32",
+      "overlay": {
+        "top_level": {
+          "qaPattern": {
+            "anchorSource": "clue:c1",
+            "anchorComponent": "weapon",
+            "miniGameClueId": "c3",
+            "miniGameRole": "verification",
+            "designIntent": "Adli silah çapasıyla başlayan zincir, iki fiziksel mekân elemesini iki doğrudan masum eşleşmeyle kesiştirir; sembol tahtası üçüncü adımda doğrulama görevi görür."
+          },
+          "qaSemanticFacts": [],
+          "qaPolicy": {
+            "caseTier": "premium",
+            "strictCoreNecessity": true,
+            "requireTraceability": true,
+            "enforceSemanticContract": true,
+            "enforceVisibleEvidenceScope": true,
+            "requireMechanicEvidenceBoundary": true
+          },
+          "qaAuthoringVersion": "fm_case_qa_gold_fixture_v1"
+        },
+        "clues": {
+          "c1": {
+            "logicRules": [
+              {
+                "action": "eliminate",
+                "pair": ["w2", "l1"]
+              }
+            ],
+            "qaRationale": {
+              "matrixEffect": "Mikro Mühür Düzeneği ≠ Gazete Arşivi elenir.",
+              "evidenceLink": "Adli inceleme ölümcül küçük metal deliği ve Gazete Arşivi çevresinde kırmızı mum bulunmadığını birlikte kaydeder.",
+              "evidenceKind": "forensic"
+            },
+            "qaSemanticFacts": [
+              {
+                "kind": "crime_component",
+                "component": "weapon",
+                "entityId": "w2",
+                "source": "clue:c1",
+                "evidence": "Düzenli küçük metal delik, ölümcül aracın mikro mühür düzeneği olduğunu kesinleştirir."
+              }
+            ],
+            "isCrimeAnchor": true
+          },
+          "c2": {
+            "logicRules": [
+              {
+                "action": "eliminate",
+                "pair": ["w3", "l1"]
+              }
+            ],
+            "qaRationale": {
+              "matrixEffect": "Baskı Presi Kayışı ≠ Gazete Arşivi elenir.",
+              "evidenceLink": "Gazete Arşivi ciltlerinde ve zeminde ağır deri lifi ile yeni pres yağı bulunmadığı fiziksel testte doğrulanır.",
+              "evidenceKind": "forensic"
+            },
+            "qaSemanticFacts": [],
+            "isCrimeAnchor": false
+          },
+          "c3": {
+            "logicRules": [
+              {
+                "action": "confirm",
+                "pair": ["s3", "w3"]
+              }
+            ],
+            "qaRationale": {
+              "matrixEffect": "Dizgici Orhan Bilir ↔ Baskı Presi Kayışı doğrulanır.",
+              "evidenceLink": "Sembol eşleme tahtasının oyuncu tarafından çözülen ORHAN / KAYIŞ iletisi bu kişi–araç bağını doğrudan verir.",
+              "evidenceKind": "documentary"
+            },
+            "qaMechanicBoundary": {
+              "primaryEvidence": "sifre",
+              "wrapperTextRole": "context_only"
+            },
+            "qaSemanticFacts": [],
+            "isCrimeAnchor": false
+          },
+          "c4": {
+            "logicRules": [
+              {
+                "action": "confirm",
+                "pair": ["s1", "w1"]
+              }
+            ],
+            "qaRationale": {
+              "matrixEffect": "Leyla Aras ↔ Kurşun Harf Kalıbı doğrulanır.",
+              "evidenceLink": "Kahve lekeli çalışma notları ile prova üzerindeki düzenli ağır metal basınç izi aynı arşiv masasındaki fiziksel kayıtta birleşir.",
+              "evidenceKind": "physical"
+            },
+            "qaSemanticFacts": [],
+            "isCrimeAnchor": false
+          },
+          "c5": {
+            "logicRules": [
+              {
+                "action": "eliminate",
+                "pair": ["w3", "l2"]
+              }
+            ],
+            "qaRationale": {
+              "matrixEffect": "Baskı Presi Kayışı ≠ Baskı Atölyesi elenir.",
+              "evidenceLink": "Baskı Atölyesi çalışma kapısında koyu deri lifi bulunmaması, ağır kayışın bu bölümde kullanılmadığını gösterir.",
+              "evidenceKind": "physical"
+            },
+            "qaSemanticFacts": [],
+            "isCrimeAnchor": false
+          },
+          "c6": {
+            "logicRules": [
+              {
+                "action": "confirm",
+                "pair": ["s3", "l3"]
+              }
+            ],
+            "qaRationale": {
+              "matrixEffect": "Dizgici Orhan Bilir ↔ Posta Deposu doğrulanır.",
+              "evidenceLink": "Yarım ay damgalı vardiya giriş kartı ve koyu parmak izi, dizgicinin Posta Deposu ziyaretini belgeler.",
+              "evidenceKind": "record"
+            },
+            "qaSemanticFacts": [],
+            "isCrimeAnchor": false
+          },
+          "c7": {
+            "logicRules": [
+              {
+                "action": "confirm",
+                "pair": ["s1", "l1"]
+              }
+            ],
+            "qaRationale": {
+              "matrixEffect": "Leyla Aras ↔ Gazete Arşivi doğrulanır.",
+              "evidenceLink": "Muhabirin kahve lekeli çalışma notlarının eski sayıların tutulduğu Gazete Arşivi masasından toplanması rotayı doğrular.",
+              "evidenceKind": "record"
+            },
+            "qaSemanticFacts": [],
+            "isCrimeAnchor": false
+          }
+        }
+      }
+    },
+    "pp_001": {
+      "source_content_hash": "a6fb00b0174438b89ea816aaee65efac63752c3c85bc208ebc094acf100c6e9e",
+      "overlay": {
+        "top_level": {
+          "qaPattern": {
+            "anchorSource": "clue:c1",
+            "anchorComponent": "weapon",
+            "miniGameClueId": "c5",
+            "miniGameRole": "climax",
+            "designIntent": "Adli araç–mekân doğrulamasıyla açılan zincir; tanık elemeleri, zimmet kaydı ve sonda çözülen etiket rotasını dönüşümlü kullanarak dönem garı vakasına özgü bir ritim kurar."
+          },
+          "qaSemanticFacts": [],
+          "qaPolicy": {
+            "caseTier": "premium",
+            "strictCoreNecessity": true,
+            "requireTraceability": true,
+            "enforceSemanticContract": true,
+            "enforceVisibleEvidenceScope": true,
+            "requireMechanicEvidenceBoundary": true
+          },
+          "qaAuthoringVersion": "fm_case_qa_gold_fixture_v1"
+        },
+        "clues": {
+          "c1": {
+            "logicRules": [
+              {
+                "action": "confirm",
+                "pair": ["w1", "l2"]
+              }
+            ],
+            "qaRationale": {
+              "matrixEffect": "Siyanürlü Etiket Tutkalı ↔ Emanet Dolapları doğrulanır.",
+              "evidenceLink": "Adli laboratuvarın ölümcül tutkaldaki mavi reçineyi Emanet Dolapları kapalı kutu koduyla eşleştiren raporu fiziksel bağı kurar.",
+              "evidenceKind": "forensic"
+            },
+            "qaSemanticFacts": [
+              {
+                "kind": "crime_component",
+                "component": "weapon",
+                "entityId": "w1",
+                "source": "clue:c1",
+                "evidence": "Adli laboratuvar, ölümcül maddenin siyanürlü etiket tutkalı olduğunu kesinleştirir."
+              }
+            ],
+            "isCrimeAnchor": true
+          },
+          "c2": {
+            "logicRules": [
+              {
+                "action": "eliminate",
+                "pair": ["s2", "l3"]
+              }
+            ],
+            "qaRationale": {
+              "matrixEffect": "Biletçi Nihat ≠ Peron Alt Geçidi elenir.",
+              "evidenceLink": "Nöbetçinin saatli vardiya kaydı, bilet penceresindeki görevlinin son tren kalkana dek yerinden ayrılmadığını belgeler.",
+              "evidenceKind": "record"
+            },
+            "qaSemanticFacts": [],
+            "isCrimeAnchor": false
+          },
+          "c3": {
+            "logicRules": [
+              {
+                "action": "confirm",
+                "pair": ["w2", "l1"]
+              }
+            ],
+            "qaRationale": {
+              "matrixEffect": "Kargo Makası ↔ Posta Vagonu doğrulanır.",
+              "evidenceLink": "Zimmet fişi, sicim kesen ağır makasın kalkış öncesinde yalnız Posta Vagonu servis rafında kayıtlı olduğunu gösterir.",
+              "evidenceKind": "inventory"
+            },
+            "qaSemanticFacts": [],
+            "isCrimeAnchor": false
+          },
+          "c4": {
+            "logicRules": [
+              {
+                "action": "eliminate",
+                "pair": ["s3", "l2"]
+              }
+            ],
+            "qaRationale": {
+              "matrixEffect": "Otel Tercümanı Feride ≠ Emanet Dolapları elenir.",
+              "evidenceLink": "Otel santralinin saatli dış hat kaydı, tercümanın Emanet Dolapları bölümüne ilgili zaman aralığında uğramadığını doğrular.",
+              "evidenceKind": "record"
+            },
+            "qaSemanticFacts": [],
+            "isCrimeAnchor": false
+          },
+          "c5": {
+            "logicRules": [
+              {
+                "action": "eliminate",
+                "pair": ["s3", "w3"]
+              }
+            ],
+            "qaRationale": {
+              "matrixEffect": "Otel Tercümanı Feride ≠ Fren Kolu Anahtarı elenir.",
+              "evidenceLink": "Oyuncunun tamamladığı üç etiket rotası, otel bagajı ile fren deposu damgasının aynı teslim zincirinde bulunmadığını gösterir.",
+              "evidenceKind": "documentary"
+            },
+            "qaMechanicBoundary": {
+              "primaryEvidence": "sifre",
+              "wrapperTextRole": "context_only"
+            },
+            "qaSemanticFacts": [],
+            "isCrimeAnchor": false
+          },
+          "b1": {
+            "logicRules": [
+              {
+                "action": "confirm",
+                "pair": ["s2", "l2"]
+              }
+            ],
+            "qaRationale": {
+              "matrixEffect": "Biletçi Nihat ↔ Emanet Dolapları doğrulanır.",
+              "evidenceLink": "Teslim penceresinin iç yüzündeki Nihat'ın kullandığı kırmızı mum izi, görevliyi Emanet Dolapları bölümüne bağlar.",
+              "evidenceKind": "physical"
+            },
+            "qaSemanticFacts": [],
+            "isCrimeAnchor": false
+          },
+          "b2": {
+            "logicRules": [
+              {
+                "action": "confirm",
+                "pair": ["s1", "w3"]
+              }
+            ],
+            "qaRationale": {
+              "matrixEffect": "Posta Kâtibi Arda ↔ Fren Kolu Anahtarı doğrulanır.",
+              "evidenceLink": "İki hamalın bağımsız tanıklığı, posta görevlisinin fren anahtarını servis vagonundan aldığını doğrular.",
+              "evidenceKind": "witness"
+            },
+            "qaSemanticFacts": [],
+            "isCrimeAnchor": false
+          }
+        }
+      }
+    }
+  }
 }
