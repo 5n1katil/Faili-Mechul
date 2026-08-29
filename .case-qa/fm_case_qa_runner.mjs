@@ -23,7 +23,7 @@ const MODE = String(env.FM_QA_MODE || 'audit').toLowerCase();
 const AI_ENABLED = String(env.FM_QA_ALLOW_AI || 'false').toLowerCase() === 'true';
 const APPLY_TO_WORKTREE = String(env.FM_QA_APPLY_TO_WORKTREE || 'false').toLowerCase() === 'true';
 const CASE_LIMIT = Math.max(0, Number(env.FM_QA_CASE_LIMIT || 0));
-const CASE_IDS = new Set(String(env.FM_QA_CASE_IDS || '').split(',').map((item) => item.trim()).filter(Boolean));
+const CASE_IDS = parseCaseIds(env.FM_QA_CASE_IDS);
 const PROMPT_VERSION = 'fm-case-qa-patch-v3.7.0';
 const AUTHORING_PROMPT_VERSION = 'fm-case-qa-authoring-v3.7.0';
 
@@ -38,6 +38,30 @@ function stableHash(value) { return sha(JSON.stringify(stable(value))); }
 function readJson(file) { return JSON.parse(fs.readFileSync(file, 'utf8')); }
 function writeJson(file, value) { fs.mkdirSync(path.dirname(file), { recursive: true }); fs.writeFileSync(file, `${JSON.stringify(value, null, 2)}\n`); }
 function caseId(caseData) { return String(caseData?.puzzleId || caseData?.id || ''); }
+
+function parseCaseIds(value) {
+  let raw = String(value ?? '').trim();
+  if (!raw || ['""', "''", '[]', 'null', 'undefined'].includes(raw.toLowerCase())) return new Set();
+  try {
+    const decoded = JSON.parse(raw);
+    if (Array.isArray(decoded)) return new Set(decoded.map((item) => String(item).trim()).filter(Boolean));
+    if (typeof decoded === 'string') raw = decoded.trim();
+  } catch {
+    if ((raw.startsWith('"') && raw.endsWith('"')) || (raw.startsWith("'") && raw.endsWith("'"))) {
+      raw = raw.slice(1, -1).trim();
+    }
+  }
+  if (!raw) return new Set();
+  return new Set(raw.split(',').map((item) => item.trim().replace(/^['"]|['"]$/g, '')).filter(Boolean));
+}
+
+function selectEntriesForMode(entries, { mode, caseIds, caseLimit }) {
+  if (mode === 'full') return entries;
+  let selected = entries;
+  if (caseIds.size) selected = selected.filter((entry) => caseIds.has(caseId(entry.raw)));
+  if (caseLimit) selected = selected.slice(0, caseLimit);
+  return selected;
+}
 
 function locateStandardArray(source) {
   const marker = source.indexOf('export const PUZZLES');
@@ -791,9 +815,7 @@ async function main() {
   ];
   if (entries.length !== Number(policy.source.expected_total_cases)) throw new Error(`Vaka sayısı kaydı: ${entries.length}/${policy.source.expected_total_cases}`);
 
-  let selected = entries;
-  if (CASE_IDS.size) selected = selected.filter((entry) => CASE_IDS.has(caseId(entry.raw)));
-  if (CASE_LIMIT) selected = selected.slice(0, CASE_LIMIT);
+  const selected = selectEntriesForMode(entries, { mode: MODE, caseIds: CASE_IDS, caseLimit: CASE_LIMIT });
   const selectedIds = new Set(selected.map((entry) => caseId(entry.raw)));
   const engine = loadEngine(SIMULATOR_PATH);
   const registryEntries = buildPortfolioRegistry(engine, entries);
@@ -1054,7 +1076,13 @@ async function main() {
     campaign_calibrated: campaignCalibrated,
     apply_to_worktree: APPLY_TO_WORKTREE,
     source: { standard_path: path.relative(ROOT, STANDARD_PATH), premium_path: path.relative(ROOT, PREMIUM_PATH), sidecar_path: path.relative(ROOT, SIDECAR_PATH), sha256: sourceSha },
-    selection: { requested_case_ids: [...CASE_IDS], case_limit: CASE_LIMIT, selected_count: selected.length, selected_case_ids: [...selectedIds] },
+    selection: {
+      requested_case_ids: [...CASE_IDS],
+      case_limit: CASE_LIMIT,
+      full_mode_filters_ignored: MODE === 'full' && (CASE_IDS.size > 0 || CASE_LIMIT > 0),
+      selected_count: selected.length,
+      selected_case_ids: [...selectedIds]
+    },
     summary: {
       total_repository_cases: entries.length,
       selected_cases: rows.length,
@@ -1130,6 +1158,8 @@ export {
   buildAuthoringPrompt,
   buildPrompt,
   isRecoverablePatchContractError,
+  parseCaseIds,
+  selectEntriesForMode,
   stripAuthoring
 };
 
