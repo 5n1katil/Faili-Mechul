@@ -4,6 +4,7 @@ import fs from 'node:fs';
 import { createRequire } from 'node:module';
 import {
   applyAuthoringPatchPlanSafely,
+  applyPatchPlanSafely,
   authoringCandidateDisposition,
   authoringCompleteness,
   authoringContract,
@@ -105,6 +106,26 @@ assert.equal(partialDisposition.retain_safe_partial, true, 'Güvenli kısmi QA m
 assert.equal(partialDisposition.accepted, false, 'Eksik QA metadata sonucu yanlışlıkla tamamlanmış kabul edildi.');
 assert.deepEqual(stripAuthoring(partial), stripAuthoring(base), 'Kısmi QA metadata oyuncu içeriğini değiştirdi.');
 
+const wholeCluePlan = {
+  case_id: 'fixture_001', assessment: 'safe whole-clue recovery',
+  operations: [{
+    op: 'replace', path: '/clues/0', reason: 'model returned a complete clue object',
+    value_json: JSON.stringify({
+      ...authored.clues[0],
+      text: 'Kayıt, Ada ile bıçağı açıkça eşleştirir.',
+      qaSemanticFacts: [
+        { kind: 'crime_component', component: 'weapon', entityId: 'w1', source: 'clue:c1', evidence: 'Bıçak ölüm aracı olarak kayıtlıdır.' },
+        { kind: 'crime_component', component: 'location', entityId: 'l1', source: 'clue:c1', evidence: 'Arşiv olay yeri olarak kayıtlıdır.' }
+      ]
+    })
+  }]
+};
+const wholeClueRecovered = applyPatchPlanSafely(authored, wholeCluePlan);
+assert.equal(wholeClueRecovered.clues[0].id, 'c1', 'Tam-ipucu güvenli açılımı clue ID değerini bozdu.');
+assert.equal(wholeClueRecovered.clues[0].qaSemanticFacts.length, 1, 'Suç çapası birden çok bileşenle bırakıldı.');
+assert.equal(wholeClueRecovered.clues[0].qaSemanticFacts[0].entityId, 'w1', 'Çözümle eşleşen suç bileşeni korunmadı.');
+assert.equal(authoringContract(wholeClueRecovered).passed, true, 'Kanonik suç çapası authoring sözleşmesini geçmedi.');
+
 const forbidden = {
   case_id: 'fixture_001', assessment: 'forbidden content rewrite',
   operations: [{ op: 'replace', path: '/story', value_json: '"Değiştirildi"', reason: 'must fail' }]
@@ -143,6 +164,9 @@ assert.match(runnerSource, /scope: 'gold_calibration'/, 'Full kampanya altın va
 assert.match(runnerSource, /authoring_contract_and_bounded_gold_repair/, 'Eksik authoring sözleşmesi bounded gold repair aşamasına aktarılmıyor.');
 assert.match(runnerSource, /\? 'authoring_contract_and_bounded_gold_repair' : 'bounded_gold_repair'/, 'Altın-vaka bounded repair aşaması ayrı raporlanmıyor.');
 assert.match(runnerSource, /repair_incomplete_authoring_after_gold_calibration/, 'Altın kapıdan sonra eksik authoring vakaları otomatik repair kuyruğuna alınmıyor.');
+assert.match(runnerSource, /expandSafeContainerOperations/, 'Güvenli tam-ipucu yaması alan bazında açılmıyor.');
+assert.match(runnerSource, /canonicalizeSingleCrimeAnchor/, 'Tek suç çapası semantik kaydı deterministik kanonikleştirilmiyor.');
+assert.match(runnerSource, /gold_max_attempts_per_case/, 'Altın-vaka yakınsama döngüsü policy ile sınırlandırılmıyor.');
 
 const workflowSource = fs.readFileSync('.github/workflows/fm-case-qa-v3.yml', 'utf8');
 assert.match(workflowSource, /actions\/cache\/restore@v4/, 'AI cache restore açıkça tanımlı değil.');
