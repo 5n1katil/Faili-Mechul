@@ -776,9 +776,12 @@ function compactReport(result, leakage) {
 function buildPrompt({ caseData, baselineResult, leakage, phase, previousAttemptError = null }) {
   const requiredGateNames = ['coreNecessity', 'patternGovernance', 'contentAndNames', 'semanticContract', 'visibleEvidence', 'mechanicContract', 'bonusFunctionality'];
   const failedRequiredGates = requiredGateNames.filter((name) => baselineResult.gates?.[name]?.passed !== true);
+  const surgicalConvergence = /^terra_final_verifier_(?:7|8)$/.test(phase);
   const scoreConvergence = /^terra_final_verifier_(?:5|6)$/.test(phase);
   const phaseInstruction = phase === 'luna_first_pass'
     ? 'Reconstruct missing authoring evidence and repair only verified playability failures. Internally form a complete repair checklist before emitting operations.'
+    : surgicalConvergence
+      ? `Surgical exact-score cleanup: preserve all logicRules, qaSemanticFacts, qaPattern, clue ordering, solution IDs and every currently passed gate. Change only the smallest player-visible fields named by the current blockers. If a weapon or location name lacks a recognizable type noun, minimally naturalize that name so its physical class, visual identity, icon and gameplay role stay unchanged. If a standard deductionHint exposes an entity name, replace only that hint with a short nameless Socratic question that points to the same evidence. Do not rewrite clue text, mini-game payloads, profiles, story or unrelated names. The result must return score=100 and productionReady=true; zero operations is invalid while either condition is false.`
     : scoreConvergence
       ? `Exact-score convergence pass: the required gate list may already be empty, but this candidate is still NOT certified until the exact HTML simulator returns score=100 and productionReady=true. Every item in fixes and every advisory that does not begin with ✓ or ⓘ is mandatory in this pass. Do not return zero operations while score is below 100 or simulator_production_ready is false. In particular: (1) a 1-star case must retain at least 2 direct confirm rules while every non-bonus clue remains individually necessary; (2) names flagged for missing a recognizable semantic type must be minimally naturalized without changing the entity ID, physical class, visual identity, icon or gameplay role; (3) mini-game explanations may state the kind of deduction gained but must not name any suspect, weapon or location; and (4) remove monotony and other remaining exact-score advisories without reintroducing leakage. Re-evaluate the entire visible evidence chain internally before emitting one coherent patch.`
     : phase.startsWith('terra_final_verifier')
@@ -1018,7 +1021,7 @@ async function main() {
     // Keep the original six attempts/cache keys intact, then add two narrowly
     // targeted exact-score passes. This reuses prior idempotent responses while
     // allowing a 90/100, all-required-gates-passed candidate to converge.
-    const goldAttemptLimit = Math.max(8, Number(policy.repair?.gold_max_attempts_per_case || 6));
+    const goldAttemptLimit = Math.max(10, Number(policy.repair?.gold_max_attempts_per_case || 6));
     const baseAttempts = [
       { phase: 'luna_first_pass', model: policy.models.first_pass, effort: policy.models.first_pass_reasoning_effort },
       { phase: 'terra_escalation', model: policy.models.escalation, effort: policy.models.escalation_reasoning_effort },
