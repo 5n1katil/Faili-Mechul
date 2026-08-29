@@ -24,8 +24,8 @@ const AI_ENABLED = String(env.FM_QA_ALLOW_AI || 'false').toLowerCase() === 'true
 const APPLY_TO_WORKTREE = String(env.FM_QA_APPLY_TO_WORKTREE || 'false').toLowerCase() === 'true';
 const CASE_LIMIT = Math.max(0, Number(env.FM_QA_CASE_LIMIT || 0));
 const CASE_IDS = parseCaseIds(env.FM_QA_CASE_IDS);
-const PROMPT_VERSION = 'fm-case-qa-patch-v3.9.0';
-const AUTHORING_PROMPT_VERSION = 'fm-case-qa-authoring-v3.9.0';
+const PROMPT_VERSION = 'fm-case-qa-patch-v4.0.0';
+const AUTHORING_PROMPT_VERSION = 'fm-case-qa-authoring-v4.0.0';
 
 function clone(value) { return value == null ? value : JSON.parse(JSON.stringify(value)); }
 function sha(value) { return crypto.createHash('sha256').update(typeof value === 'string' ? value : JSON.stringify(value)).digest('hex'); }
@@ -1300,7 +1300,7 @@ async function main() {
     authoring_candidate_hash: accepted_authoring_candidate ? stableHash(authoringOverlay(accepted_authoring_candidate)) : null
   }));
   const report = {
-    schema_version: 'fm_case_qa_batch_run_v3_8_1',
+    schema_version: 'fm_case_qa_batch_run_v4_0',
     run_id: env.GITHUB_RUN_ID || `local-${Date.now()}`,
     mode: MODE,
     ai_enabled: AI_ENABLED,
@@ -1348,7 +1348,7 @@ async function main() {
   };
   writeJson(path.join(OUTPUT_DIR, 'fm_case_qa_run_report.json'), report);
   const prBody = [
-    '# Faili Meçhul Case QA v3',
+    '# Faili Meçhul Case QA production campaign',
     '',
     `- Run: ${report.run_id}`,
     `- Kaynak SHA: \`${sourceSha.combined}\``,
@@ -1360,7 +1360,7 @@ async function main() {
     `- API çağrısı: ${report.summary.api_calls}`,
     `- Hesaplanan maliyet: $${report.summary.actual_or_conservative_cost_usd}`,
     '',
-    'Bu PR taslaktır. `main` otomatik birleştirilmez. Yalnız deterministik simülatör, kimlik ve ipucu-öncesi sızıntı kapılarının tamamını geçen adaylar dahildir.',
+    'Bu değişiklik yalnız 105/105 tam HTML simülatörü, kimlik, ipucu-öncesi sızıntı, uygulama regresyonu ve web build kapılarının tamamı geçerse otomatik birleştirilir. Doğrudan `main` yazımı yapılmaz.',
     '',
     '## Kabul edilen vakalar',
     '',

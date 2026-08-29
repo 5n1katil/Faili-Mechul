@@ -1,0 +1,53 @@
+{
+  "schema_version": "fm_avatar_pipeline_contract_v1",
+  "repository": "5n1katil/Faili-Mechul",
+  "case_count": 105,
+  "input_manifest": "artifacts/dedektif/qa/avatar-refresh/run-<case_qa_run_id>.json",
+  "registry": ".case-qa/fm_avatar_asset_registry_v1.json",
+  "decision_order": [
+    "preserve_native_icon",
+    "preserve",
+    "vision_validate_changed_case",
+    "vision_validate",
+    "generate",
+    "regenerate"
+  ],
+  "visual_validation": {
+    "must_compare": [
+      "case story",
+      "entity name",
+      "entity description",
+      "entity category",
+      "premium 2D game style",
+      "no embedded text",
+      "square game framing"
+    ],
+    "pass_behavior": "write a certified registry entry and preserve the existing file",
+    "fail_behavior": "generate one bounded replacement, validate it again, and quarantine on a second failure"
+  },
+  "suspect_generation": {
+    "model": "Nano Banana 2",
+    "resolution": "1K",
+    "aspect_ratio": "1:1",
+    "reference_media_count": 3,
+    "reference_media": {
+      "type": "image",
+      "role": "image_references",
+      "value": "<media_id>"
+    },
+    "style": "premium 2D, thick black contours, flat color blocks, limited cel shading, no text",
+    "framing": "readable head, shoulders and upper torso; no diamond or triangular lower-body crop"
+  },
+  "weapons_and_locations": {
+    "preserve_verified_recovery_assets": true,
+    "regenerate_only_after_visual_or_structural_rejection": true
+  },
+  "publication": {
+    "direct_main_write": false,
+    "candidate_registry_status": "production_candidate",
+    "require_all_assets_certified": true,
+    "require_app_validation": true,
+    "require_web_build": true,
+    "auto_merge_after_green_workflow": "Avatar production certification"
+  }
+}

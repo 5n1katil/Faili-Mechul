@@ -6,6 +6,8 @@ on:
       - ".case-qa/**"
       - ".github/workflows/fm-case-qa-v3.yml"
       - ".github/workflows/fm-case-qa-certification.yml"
+      - ".github/workflows/fm-avatar-certification.yml"
+      - ".github/workflows/fm-avatar-auto-merge.yml"
       - "artifacts/dedektif/data/puzzles.ts"
       - "artifacts/dedektif/data/puzzles_database.json"
       - "artifacts/dedektif/qa/**"
@@ -39,6 +41,18 @@ jobs:
 
       - name: Test behavioral calibration and authoring isolation
         run: node .case-qa/fm_case_qa_behavioral_calibration_test.mjs
+
+      - name: Test strict production release gate
+        run: node .case-qa/fm_case_qa_production_gate_test.mjs
+
+      - name: Inventory exact case avatar assets
+        shell: bash
+        run: |
+          set +e
+          node .case-qa/fm_avatar_inventory.mjs
+          status="$?"
+          set -e
+          if [ "$status" -gt 2 ]; then exit "$status"; fi
 
       - name: Certify exact sources and HTML simulator
         run: node .case-qa/fm_case_qa_certify.mjs

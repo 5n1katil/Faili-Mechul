@@ -25,9 +25,19 @@ on:
         default: ""
         type: string
       publish_draft_pr:
-        description: Yalniz 100/100 adaylari taslak PR'a yaz
+        description: Tam 105/105 kampanyayi izlenebilir PR uzerinden yayinla
         required: true
-        default: false
+        default: true
+        type: boolean
+      auto_merge:
+        description: Tum uretim kapilari gecerse PR'i otomatik squash-merge et
+        required: true
+        default: true
+        type: boolean
+      prepare_avatar_manifest:
+        description: QA sonrasi avatar koru/dogrula/uret manifestini hazirla
+        required: true
+        default: true
         type: boolean
 
 permissions:
@@ -200,7 +210,36 @@ jobs:
           fi
           pnpm --filter @workspace/dedektif build:web
 
-      - name: Upload complete QA report
+      - name: Enforce 105/105 production release gate
+        id: production_gate
+        if: ${{ inputs.mode == 'full' && inputs.allow_ai == true && inputs.publish_draft_pr == true }}
+        run: node .case-qa/fm_case_qa_production_gate.mjs
+
+      - name: Prepare release and avatar handoff manifests
+        if: ${{ steps.production_gate.outcome == 'success' }}
+        id: publish_gate
+        shell: bash
+        run: |
+          accepted="$(jq '.summary.publishable_change_count' .case-qa-output/fm_case_qa_run_report.json)"
+          echo "accepted=$accepted" >> "$GITHUB_OUTPUT"
+          mkdir -p artifacts/dedektif/qa/runs artifacts/dedektif/qa/avatar-refresh
+          cp .case-qa-output/fm_case_qa_run_report.json "artifacts/dedektif/qa/runs/run-${GITHUB_RUN_ID}.json"
+          cp .case-qa-output/fm_case_qa_release_manifest.json "artifacts/dedektif/qa/runs/release-${GITHUB_RUN_ID}.json"
+
+          if [ "${{ inputs.prepare_avatar_manifest }}" = "true" ]; then
+            set +e
+            node .case-qa/fm_avatar_inventory.mjs
+            inventory_status="$?"
+            set -e
+            if [ "$inventory_status" -gt 2 ]; then
+              echo "Avatar inventory crashed with status $inventory_status."
+              exit "$inventory_status"
+            fi
+            cp .case-qa-output/fm_avatar_refresh_manifest.json "artifacts/dedektif/qa/avatar-refresh/run-${GITHUB_RUN_ID}.json"
+            echo "avatar_manifest=artifacts/dedektif/qa/avatar-refresh/run-${GITHUB_RUN_ID}.json" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Upload complete QA and avatar handoff evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
@@ -210,20 +249,9 @@ jobs:
           include-hidden-files: true
           retention-days: 30
 
-      - name: Prepare accepted-case manifest
-        if: ${{ inputs.publish_draft_pr == true }}
-        id: publish_gate
-        shell: bash
-        run: |
-          accepted="$(jq '.summary.publishable_change_count' .case-qa-output/fm_case_qa_run_report.json)"
-          echo "accepted=$accepted" >> "$GITHUB_OUTPUT"
-          if [ "$accepted" -gt 0 ]; then
-            mkdir -p artifacts/dedektif/qa/runs
-            cp .case-qa-output/fm_case_qa_run_report.json "artifacts/dedektif/qa/runs/run-${GITHUB_RUN_ID}.json"
-          fi
-
-      - name: Create staging branch and draft PR
-        if: ${{ inputs.publish_draft_pr == true && steps.publish_gate.outputs.accepted != '0' }}
+      - name: Create certified staging PR and merge automatically
+        id: merge_release
+        if: ${{ steps.production_gate.outcome == 'success' }}
         shell: bash
         run: |
           branch="qa/105-case-refresh-${GITHUB_RUN_ID}"
@@ -232,9 +260,43 @@ jobs:
           git switch -c "$branch"
           git add artifacts/dedektif/data/puzzles.ts artifacts/dedektif/data/puzzles_database.json artifacts/dedektif/qa
           if git diff --cached --quiet; then
-            echo "No publishable file change; draft PR skipped."
+            echo "No publishable content or manifest change; PR skipped."
+            echo "merged=false" >> "$GITHUB_OUTPUT"
+            echo "main_sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
             exit 0
           fi
           git commit -m "qa: stage certified authoring metadata and case repairs"
           git push --set-upstream origin "$branch"
-          gh pr create --draft --base main --head "$branch" --title "QA v3: certified metadata and simulator-approved repairs (${GITHUB_RUN_ID})" --body-file .case-qa-output/draft_pr_body.md
+          pr_url="$(gh pr create --base main --head "$branch" --title "QA production: 105/105 certified cases (${GITHUB_RUN_ID})" --body-file .case-qa-output/draft_pr_body.md)"
+          echo "pr_url=$pr_url" >> "$GITHUB_OUTPUT"
+          if [ "${{ inputs.auto_merge }}" = "true" ]; then
+            gh pr merge "$pr_url" --squash --delete-branch
+            git fetch origin main
+            echo "merged=true" >> "$GITHUB_OUTPUT"
+            echo "main_sha=$(git rev-parse origin/main)" >> "$GITHUB_OUTPUT"
+          else
+            echo "merged=false" >> "$GITHUB_OUTPUT"
+            echo "main_sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Publish campaign summary
+        if: always()
+        shell: bash
+        run: |
+          {
+            echo "# Faili Meçhul production campaign"
+            echo
+            if [ -f .case-qa-output/fm_case_qa_release_manifest.json ]; then
+              echo "- Production gate: $(jq -r '.production_ready' .case-qa-output/fm_case_qa_release_manifest.json)"
+              echo "- Exact simulator: $(jq -r '.exact_pass_count' .case-qa-output/fm_case_qa_release_manifest.json)/$(jq -r '.exact_case_count' .case-qa-output/fm_case_qa_release_manifest.json)"
+              echo "- Changed cases: $(jq -r '.changed_case_ids | length' .case-qa-output/fm_case_qa_release_manifest.json)"
+            fi
+            if [ -f .case-qa-output/fm_avatar_refresh_manifest.json ]; then
+              echo "- Avatar assets inventoried: $(jq -r '.counts.total_assets' .case-qa-output/fm_avatar_refresh_manifest.json)"
+              echo "- Structurally invalid avatar assets: $(jq -r '.counts.structurally_invalid' .case-qa-output/fm_avatar_refresh_manifest.json)"
+              echo "- Avatar manifest: ${{ steps.publish_gate.outputs.avatar_manifest }}"
+            fi
+            echo "- Auto merged: ${{ steps.merge_release.outputs.merged }}"
+            echo "- Main SHA: ${{ steps.merge_release.outputs.main_sha }}"
+            echo "- PR: ${{ steps.merge_release.outputs.pr_url }}"
+          } >> "$GITHUB_STEP_SUMMARY"
