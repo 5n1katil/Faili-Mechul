@@ -42,6 +42,9 @@ jobs:
       - name: Test behavioral calibration and authoring isolation
         run: node .case-qa/fm_case_qa_behavioral_calibration_test.mjs
 
+      - name: Test deterministic gold calibration fixtures
+        run: node .case-qa/fm_case_qa_gold_fixture_test.mjs
+
       - name: Test strict production release gate
         run: node .case-qa/fm_case_qa_production_gate_test.mjs
 

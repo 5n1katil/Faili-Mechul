@@ -1,6 +1,6 @@
 {
   "schema_version": "fm_case_qa_command_v1",
-  "request_id": "production-value-json-normalization-20260829-06",
+  "request_id": "production-gold-fixture-full-campaign-20260829-07",
   "mode": "full",
   "allow_ai": true,
   "case_limit": 0,
@@ -8,5 +8,5 @@
   "publish": true,
   "auto_merge": true,
   "prepare_avatar_manifest": true,
-  "note": "Fifth locked campaign adds two bounded low-difficulty chain passes for the remaining rc_001 directness score loss."
+  "note": "Deterministic gold fixtures pass the exact HTML simulator at 100/100 without API calls; run the single complete 105-case repair, certification, app gate, release, and avatar inventory handoff campaign."
 }
