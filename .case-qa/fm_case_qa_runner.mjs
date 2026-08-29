@@ -24,8 +24,8 @@ const AI_ENABLED = String(env.FM_QA_ALLOW_AI || 'false').toLowerCase() === 'true
 const APPLY_TO_WORKTREE = String(env.FM_QA_APPLY_TO_WORKTREE || 'false').toLowerCase() === 'true';
 const CASE_LIMIT = Math.max(0, Number(env.FM_QA_CASE_LIMIT || 0));
 const CASE_IDS = parseCaseIds(env.FM_QA_CASE_IDS);
-const PROMPT_VERSION = 'fm-case-qa-patch-v3.7.0';
-const AUTHORING_PROMPT_VERSION = 'fm-case-qa-authoring-v3.7.0';
+const PROMPT_VERSION = 'fm-case-qa-patch-v3.8.0';
+const AUTHORING_PROMPT_VERSION = 'fm-case-qa-authoring-v3.8.0';
 
 function clone(value) { return value == null ? value : JSON.parse(JSON.stringify(value)); }
 function sha(value) { return crypto.createHash('sha256').update(typeof value === 'string' ? value : JSON.stringify(value)).digest('hex'); }
@@ -265,6 +265,19 @@ function authoringContract(caseData) {
     schema_version: 'fm_case_qa_authoring_contract_v1',
     passed: errors.length === 0,
     errors
+  };
+}
+
+function authoringCandidateDisposition(original, candidate) {
+  const completeness = authoringCompleteness(candidate);
+  const contract = authoringContract(candidate);
+  const production_content_unchanged = stableHash(stripAuthoring(candidate)) === stableHash(stripAuthoring(original));
+  return {
+    completeness,
+    contract,
+    production_content_unchanged,
+    retain_safe_partial: production_content_unchanged,
+    accepted: completeness.complete && contract.passed && production_content_unchanged
   };
 }
 
@@ -833,19 +846,24 @@ async function main() {
       candidate,
       merged_status: merged.status,
       authoring_attempt: null,
-      authoring_ai_accepted: false
+      authoring_attempts: [],
+      authoring_ai_accepted: false,
+      authoring_candidate: null,
+      calibration_repair_attempts: [],
+      calibration_repair_accepted: false
     }];
   }));
 
-  async function compileAuthoring(state) {
+  async function compileAuthoring(state, options = {}) {
     const before = authoringCompleteness(state.candidate);
     const beforeContract = authoringContract(state.candidate);
     if (before.complete && beforeContract.passed) return state;
     if (!AI_ENABLED || MODE === 'audit') return state;
-    const model = policy.authoring?.model || policy.models.first_pass;
-    const effort = policy.authoring?.reasoning_effort || policy.models.first_pass_reasoning_effort;
+    const phase = options.phase || 'authoring_only';
+    const model = options.model || policy.authoring?.model || policy.models.first_pass;
+    const effort = options.effort || policy.authoring?.reasoning_effort || policy.models.first_pass_reasoning_effort;
     const prompt = buildAuthoringPrompt({ caseData: state.candidate, completeness: before, tier: state.entry.tier });
-    const key = sha(`${AUTHORING_PROMPT_VERSION}|${sourceSha.combined}|${caseId(state.original)}|${model}|${stableHash(state.candidate)}`);
+    const key = sha(`${AUTHORING_PROMPT_VERSION}|${sourceSha.combined}|${caseId(state.original)}|${phase}|${model}|${stableHash(state.candidate)}`);
     try {
       const response = await callModel({
         policy,
@@ -858,22 +876,92 @@ async function main() {
         systemPrompt: AUTHORING_SYSTEM_PROMPT
       });
       const candidate = applyAuthoringPatchPlanSafely(state.candidate, response.plan);
-      const completeness = authoringCompleteness(candidate);
-      const contract = authoringContract(candidate);
-      state.authoring_attempt = {
-        phase: 'authoring_only', model, cache_key: key, cached: response.cached,
+      const disposition = authoringCandidateDisposition(state.original, candidate);
+      const attempt = {
+        phase, model, cache_key: key, cached: response.cached,
         cost_usd: response.cost, operation_count: response.plan.operations.length,
-        assessment: response.plan.assessment, completeness, contract,
-        production_content_unchanged: stableHash(stripAuthoring(candidate)) === stableHash(stripAuthoring(state.original))
+        assessment: response.plan.assessment,
+        completeness: disposition.completeness,
+        contract: disposition.contract,
+        production_content_unchanged: disposition.production_content_unchanged
       };
-      if (completeness.complete && contract.passed && state.authoring_attempt.production_content_unchanged) {
+      state.authoring_attempt = attempt;
+      state.authoring_attempts.push(attempt);
+      if (disposition.retain_safe_partial) {
+        // Keep every safe partial result. A targeted recovery pass can then fill
+        // only the still-missing contract instead of paying to regenerate it.
         state.candidate = candidate;
+      }
+      if (disposition.accepted) {
         state.authoring_ai_accepted = true;
+        state.authoring_candidate = clone(candidate);
       }
     } catch (error) {
-      state.authoring_attempt = { phase: 'authoring_only', model, cache_key: key, error: String(error?.message || error) };
+      const attempt = { phase, model, cache_key: key, error: String(error?.message || error) };
+      state.authoring_attempt = attempt;
+      state.authoring_attempts.push(attempt);
     }
     return state;
+  }
+
+  async function runBoundedRepair(state, { scope, current: initialCandidate, assessment: initialAssessment }) {
+    const id = caseId(state.original);
+    let current = initialCandidate;
+    let currentEval = initialAssessment;
+    let previousAttemptError = null;
+    let terminalStatus = 'quarantined_after_bounded_attempts';
+    const recordedAttempts = [];
+    const attempts = [
+      { phase: 'luna_first_pass', model: policy.models.first_pass, effort: policy.models.first_pass_reasoning_effort },
+      { phase: 'terra_escalation', model: policy.models.escalation, effort: policy.models.escalation_reasoning_effort },
+      {
+        phase: 'terra_final_verifier',
+        model: policy.models.final_cleanup || policy.models.escalation,
+        effort: policy.models.final_cleanup_reasoning_effort || policy.models.escalation_reasoning_effort,
+        maxOutputTokens: Number(policy.models.final_cleanup_max_output_tokens || policy.models.max_output_tokens || 12000)
+      }
+    ];
+    for (const attempt of attempts) {
+      const prompt = buildPrompt({ caseData: current, baselineResult: currentEval.result, leakage: currentEval.leakage, phase: attempt.phase, previousAttemptError });
+      const key = sha(`${PROMPT_VERSION}|${sourceSha.combined}|${id}|${scope}|${attempt.phase}|${attempt.model}|${stableHash(current)}`);
+      try {
+        const response = await callModel({
+          policy,
+          budget,
+          model: attempt.model,
+          effort: attempt.effort,
+          prompt,
+          key,
+          maxOutputTokens: Number(attempt.maxOutputTokens || policy.models.max_output_tokens || 12000)
+        });
+        const candidate = applyPatchPlanSafely(current, response.plan);
+        const assessed = evaluate(engine, state.original, candidate);
+        const previousPenalty = assessmentPenalty(currentEval);
+        const candidatePenalty = assessmentPenalty(assessed);
+        const retained = assessed.passed || candidatePenalty < previousPenalty;
+        recordedAttempts.push({
+          phase: `${scope}:${attempt.phase}`, model: attempt.model, cache_key: key, cached: response.cached,
+          cost_usd: response.cost, operation_count: response.plan.operations.length,
+          assessment: response.plan.assessment, result: compactReport(assessed.result, assessed.leakage),
+          calibration: assessed.calibration, previous_penalty: previousPenalty, candidate_penalty: candidatePenalty,
+          retained_as_best: retained, monotonic_guard: retained ? 'improved_or_accepted' : 'rejected_regression'
+        });
+        if (assessed.passed) {
+          current = candidate;
+          currentEval = assessed;
+          terminalStatus = 'accepted_100';
+          break;
+        }
+        if (retained) { current = candidate; currentEval = assessed; }
+      } catch (error) {
+        const message = String(error?.message || error);
+        recordedAttempts.push({ phase: `${scope}:${attempt.phase}`, model: attempt.model, cache_key: key, error: message });
+        if (/BUDGET_CAP/.test(message)) { terminalStatus = 'budget_stopped'; break; }
+        if (isRecoverablePatchContractError(message)) { previousAttemptError = message; continue; }
+        break;
+      }
+    }
+    return { candidate: current, assessment: currentEval, attempts: recordedAttempts, status: terminalStatus, passed: currentEval.passed === true };
   }
 
   const selectedStates = selected.map((entry) => stateById.get(caseId(entry.raw)));
@@ -882,19 +970,69 @@ async function main() {
   if (AI_ENABLED && MODE === 'full' && goldIds.size) {
     const goldStates = selectedStates.filter((state) => goldIds.has(caseId(state.original)));
     if (goldStates.length !== goldIds.size) throw new Error('CALIBRATION_GATE: Altın-vaka kümesinin tamamı full seçimde bulunamadı.');
-    for (const state of goldStates) await compileAuthoring(state);
-    const goldRegistry = buildPortfolioRegistry(engine, goldStates.map((state) => ({ raw: state.candidate })));
-    const failures = [];
     for (const state of goldStates) {
-      state.candidate.qaPortfolioRegistry = { schema_version: 'fm_qa_portfolio_registry_v1', entries: clone(goldRegistry) };
+      await compileAuthoring(state, { phase: 'gold_authoring_luna' });
       const completeness = authoringCompleteness(state.candidate);
       const contract = authoringContract(state.candidate);
-      const assessed = evaluate(engine, state.original, state.candidate);
-      if (!completeness.complete || !contract.passed || !assessed.passed) {
-        failures.push({ case_id: caseId(state.original), completeness, contract, result: compactReport(assessed.result, assessed.leakage) });
+      if (!completeness.complete || !contract.passed) {
+        await compileAuthoring(state, {
+          phase: 'gold_authoring_recovery',
+          model: policy.authoring?.gold_recovery_model || policy.models.escalation,
+          effort: policy.authoring?.gold_recovery_reasoning_effort || policy.models.escalation_reasoning_effort
+        });
       }
     }
-    if (failures.length) throw new Error(`CALIBRATION_GATE: Kullanıcı-onaylı altın vakalar metadata-only aşamada 100/100 olamadı; toplu onarım güvenle durduruldu. ${JSON.stringify(failures)}`);
+    const calibrationRegistry = buildPortfolioRegistry(engine, entries.map((entry) => ({
+      raw: stateById.get(caseId(entry.raw)).candidate
+    })));
+    const failures = [];
+    for (const state of goldStates) {
+      state.candidate.qaPortfolioRegistry = { schema_version: 'fm_qa_portfolio_registry_v1', entries: clone(calibrationRegistry) };
+      const completeness = authoringCompleteness(state.candidate);
+      const contract = authoringContract(state.candidate);
+      if (!completeness.complete || !contract.passed) {
+        failures.push({
+          case_id: caseId(state.original), stage: 'authoring_contract', completeness, contract,
+          authoring_attempts: state.authoring_attempts
+        });
+        continue;
+      }
+      const assessed = evaluate(engine, state.original, state.candidate);
+      if (assessed.passed) continue;
+      const repaired = await runBoundedRepair(state, {
+        scope: 'gold_calibration', current: state.candidate, assessment: assessed
+      });
+      state.calibration_repair_attempts = repaired.attempts;
+      if (repaired.passed) {
+        state.candidate = repaired.candidate;
+        state.calibration_repair_accepted = true;
+      } else {
+        failures.push({
+          case_id: caseId(state.original), stage: 'bounded_gold_repair', completeness, contract,
+          authoring_attempts: state.authoring_attempts,
+          repair_attempts: repaired.attempts,
+          result: compactReport(repaired.assessment.result, repaired.assessment.leakage)
+        });
+      }
+    }
+    if (!failures.length) {
+      const finalCalibrationRegistry = buildPortfolioRegistry(engine, entries.map((entry) => ({
+        raw: stateById.get(caseId(entry.raw)).candidate
+      })));
+      for (const state of goldStates) {
+        state.candidate.qaPortfolioRegistry = { schema_version: 'fm_qa_portfolio_registry_v1', entries: clone(finalCalibrationRegistry) };
+        const finalAssessment = evaluate(engine, state.original, state.candidate);
+        if (!finalAssessment.passed) {
+          failures.push({
+            case_id: caseId(state.original), stage: 'final_gold_registry',
+            authoring_attempts: state.authoring_attempts,
+            repair_attempts: state.calibration_repair_attempts,
+            result: compactReport(finalAssessment.result, finalAssessment.leakage)
+          });
+        }
+      }
+    }
+    if (failures.length) throw new Error(`CALIBRATION_GATE: Altın-vaka authoring + bounded repair sertifikasyonu tamamlanamadı; kalan vakalara geçilmedi. ${JSON.stringify(failures)}`);
     campaignCalibrated = true;
   }
 
@@ -928,67 +1066,24 @@ async function main() {
       authoring_completeness: completeness,
       authoring_contract: contract,
       authoring_attempt: state.authoring_attempt,
+      authoring_attempts: state.authoring_attempts,
       baseline: compactReport(baseline.result, baseline.leakage),
       calibration: baseline.calibration,
       repair_eligibility: repairEligibility,
-      status: !authoringReady ? 'authoring_required' : baseline.passed ? 'preserved_100' : repairEligibility.eligible ? 'confirmed_repair_required' : repairEligibility.queue,
-      attempts: [],
-      accepted_authoring_candidate: authoringReady && (state.authoring_ai_accepted || state.merged_status === 'applied') ? bootstrapped : null,
-      accepted_candidate: null,
+      status: !authoringReady ? 'authoring_required' : state.calibration_repair_accepted ? 'accepted_100' : baseline.passed ? 'preserved_100' : repairEligibility.eligible ? 'confirmed_repair_required' : repairEligibility.queue,
+      attempts: clone(state.calibration_repair_attempts),
+      accepted_authoring_candidate: authoringReady && (state.authoring_ai_accepted || state.merged_status === 'applied') ? (state.authoring_candidate || bootstrapped) : null,
+      accepted_candidate: state.calibration_repair_accepted ? bootstrapped : null,
       error: null
     };
     if (!authoringReady || baseline.passed) return row;
     if (!AI_ENABLED || MODE === 'audit') return row;
     if (!repairEligibility.eligible) return row;
     row.status = 'repair_pending';
-
-    let current = bootstrapped;
-    let currentEval = baseline;
-    let previousAttemptError = null;
-    const attempts = [
-      { phase: 'luna_first_pass', model: policy.models.first_pass, effort: policy.models.first_pass_reasoning_effort },
-      { phase: 'terra_escalation', model: policy.models.escalation, effort: policy.models.escalation_reasoning_effort },
-      {
-        phase: 'terra_final_verifier',
-        model: policy.models.final_cleanup || policy.models.escalation,
-        effort: policy.models.final_cleanup_reasoning_effort || policy.models.escalation_reasoning_effort,
-        maxOutputTokens: Number(policy.models.final_cleanup_max_output_tokens || policy.models.max_output_tokens || 12000)
-      }
-    ];
-    for (const attempt of attempts) {
-      const prompt = buildPrompt({ caseData: current, baselineResult: currentEval.result, leakage: currentEval.leakage, phase: attempt.phase, previousAttemptError });
-      const key = sha(`${PROMPT_VERSION}|${sourceSha.combined}|${id}|${attempt.phase}|${attempt.model}|${stableHash(current)}`);
-      try {
-        const response = await callModel({ policy, budget, model: attempt.model, effort: attempt.effort, prompt, key, maxOutputTokens: Number(attempt.maxOutputTokens || policy.models.max_output_tokens || 12000) });
-        const candidate = applyPatchPlanSafely(current, response.plan);
-        const assessed = evaluate(engine, original, candidate);
-        const previousPenalty = assessmentPenalty(currentEval);
-        const candidatePenalty = assessmentPenalty(assessed);
-        const retained = assessed.passed || candidatePenalty < previousPenalty;
-        row.attempts.push({
-          phase: attempt.phase, model: attempt.model, cache_key: key, cached: response.cached,
-          cost_usd: response.cost, operation_count: response.plan.operations.length,
-          assessment: response.plan.assessment, result: compactReport(assessed.result, assessed.leakage),
-          calibration: assessed.calibration, previous_penalty: previousPenalty, candidate_penalty: candidatePenalty,
-          retained_as_best: retained, monotonic_guard: retained ? 'improved_or_accepted' : 'rejected_regression'
-        });
-        if (assessed.passed) {
-          current = candidate;
-          currentEval = assessed;
-          row.status = 'accepted_100';
-          row.accepted_candidate = candidate;
-          break;
-        }
-        if (retained) { current = candidate; currentEval = assessed; }
-      } catch (error) {
-        const message = String(error?.message || error);
-        row.attempts.push({ phase: attempt.phase, model: attempt.model, cache_key: key, error: message });
-        if (/BUDGET_CAP/.test(message)) { row.status = 'budget_stopped'; break; }
-        if (isRecoverablePatchContractError(message)) { previousAttemptError = message; continue; }
-        break;
-      }
-    }
-    if (row.status === 'repair_pending') row.status = 'quarantined_after_bounded_attempts';
+    const repaired = await runBoundedRepair(state, { scope: 'bulk', current: bootstrapped, assessment: baseline });
+    row.attempts.push(...repaired.attempts);
+    row.status = repaired.status;
+    if (repaired.passed) row.accepted_candidate = repaired.candidate;
     return row;
   });
 
@@ -1069,7 +1164,7 @@ async function main() {
     authoring_candidate_hash: accepted_authoring_candidate ? stableHash(authoringOverlay(accepted_authoring_candidate)) : null
   }));
   const report = {
-    schema_version: 'fm_case_qa_batch_run_v3_7',
+    schema_version: 'fm_case_qa_batch_run_v3_8',
     run_id: env.GITHUB_RUN_ID || `local-${Date.now()}`,
     mode: MODE,
     ai_enabled: AI_ENABLED,
@@ -1152,6 +1247,7 @@ async function main() {
 export {
   applyAuthoringPatchPlanSafely,
   applyPatchPlanSafely,
+  authoringCandidateDisposition,
   authoringCompleteness,
   authoringContract,
   authoringOverlay,
