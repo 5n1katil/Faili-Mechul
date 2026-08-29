@@ -1,0 +1,35 @@
+name: Avatar certified auto merge
+
+on:
+  workflow_run:
+    workflows: ["Avatar production certification"]
+    types: [completed]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  merge:
+    if: ${{ github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'pull_request' && github.event.workflow_run.pull_requests[0] != null }}
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+
+    steps:
+      - name: Verify production candidate and merge
+        shell: bash
+        run: |
+          pr_number="${{ github.event.workflow_run.pull_requests[0].number }}"
+          head_repo="$(gh api "repos/${GITHUB_REPOSITORY}/pulls/${pr_number}" --jq '.head.repo.full_name')"
+          head_ref="$(gh api "repos/${GITHUB_REPOSITORY}/pulls/${pr_number}" --jq '.head.ref')"
+          if [ "$head_repo" != "$GITHUB_REPOSITORY" ]; then
+            echo "External fork PRs are never auto-merged."
+            exit 1
+          fi
+          registry="$(gh api -H 'Accept: application/vnd.github.raw+json' "repos/${GITHUB_REPOSITORY}/contents/.case-qa/fm_avatar_asset_registry_v1.json?ref=${head_ref}")"
+          if [ "$(jq -r '.campaign_status' <<<"$registry")" != "production_candidate" ]; then
+            echo "Registry is not a production candidate; auto-merge skipped."
+            exit 0
+          fi
+          gh pr merge "$pr_number" --repo "$GITHUB_REPOSITORY" --squash --delete-branch

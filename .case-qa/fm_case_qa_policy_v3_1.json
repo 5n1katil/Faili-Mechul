@@ -1,5 +1,5 @@
 {
-  "schema_version": "fm_case_qa_automation_policy_v3_9",
+  "schema_version": "fm_case_qa_automation_policy_v4_0",
   "source": {
     "repository": "5n1katil/Faili-Mechul",
     "branch": "main",
@@ -88,8 +88,8 @@
   },
   "budget": {
     "currency": "USD",
-    "warning_budget": 12,
-    "hard_budget": 18,
+    "warning_budget": 50,
+    "hard_budget": 100,
     "max_concurrent_calls": 4,
     "stop_before_projected_overrun": true,
     "record_actual_token_usage": true,
@@ -97,10 +97,13 @@
   },
   "publication": {
     "target_branch_prefix": "qa/105-case-refresh-",
-    "draft_pull_request_only": true,
-    "auto_merge": false,
+    "draft_pull_request_only": false,
+    "auto_merge": true,
     "main_branch_direct_write": false,
-    "exclude_failed_candidates": true
+    "exclude_failed_candidates": true,
+    "require_complete_105_before_publication": true,
+    "require_pre_post_html_certification": true,
+    "require_app_regression_and_web_build_gates": true
   },
   "certification": {
     "require_exact_source_counts": true,

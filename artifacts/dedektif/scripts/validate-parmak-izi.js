@@ -8,8 +8,9 @@
  *   1. Gerekli alanları içerdiğini (izler, sonuc, aciklama)
  *   2. En az bir iz tanımladığını
  *   3. Her izin geçerli izId, konum, ipucu ve eslesme alanlarına sahip olduğunu
- *   4. Doğru iz(lerin) eslesme değerinin sonuc stringinde yer aldığını
- *      (handleConfirm içindeki `sonuc.includes(iz.eslesme)` mantığıyla uyumlu)
+ *   4. Görsel desenli oyunda eslesme şüphelisinin deseninin sahne deseniyle
+ *      aynı olduğunu; eski metin tabanlı oyunda eslesme değerinin sonuc
+ *      stringinde yer aldığını (handleConfirm ile bire bir uyumlu)
  *   5. Çift eşleşme vakalarında (rc_002 gibi) her iki eşleşmenin de sonuçta geçtiğini
  *
  * Çıkış kodları:
@@ -87,6 +88,22 @@ for (const { packId, puzzle } of allPuzzles) {
     }
 
     const sonuc = v.sonuc ?? "";
+    const scenePattern = v.sahneGorseli ?? null;
+    const suspectPatterns = new Map(
+      (puzzle.suspects ?? []).map((suspect) => [suspect.id, suspect.parmakIziDeseni ?? null])
+    );
+
+    if (scenePattern) {
+      const matchingSuspects = [...suspectPatterns.entries()]
+        .filter(([, pattern]) => pattern === scenePattern)
+        .map(([suspectId]) => suspectId);
+      if (matchingSuspects.length !== 1) {
+        errors.push(
+          `${loc}: sahneGorseli="${scenePattern}" tam olarak bir şüpheliyle eşleşmeli; ` +
+          `${matchingSuspects.length} eşleşme bulundu (${matchingSuspects.join(", ") || "yok"})`
+        );
+      }
+    }
     let correctInThisClue = 0;
 
     let decoyCount = 0;
@@ -112,7 +129,11 @@ for (const { packId, puzzle } of allPuzzles) {
       }
 
       // --- Eşleşme kontrolü (handleConfirm mantığı) ---
-      const matches = sonuc.includes(iz.eslesme);
+      // Yeni görsel oyunda seçilen şüphelinin parmakIziDeseni sahneGorseli ile
+      // karşılaştırılır. Eski metin tabanlı oyunda sonuc.includes kullanılır.
+      const matches = scenePattern
+        ? suspectPatterns.get(iz.eslesme) === scenePattern
+        : sonuc.includes(iz.eslesme);
 
       if (iz.isDecoy === true) {
         // Yanlış iz (decoy): eslesme sonuçta OLMAMALI
@@ -121,7 +142,9 @@ for (const { packId, puzzle } of allPuzzles) {
           errors.push(
             `${izLoc}: isDecoy=true ama eslesme="${iz.eslesme}" sonuçta bulundu!\n` +
             `  Bu bir çelişki — gerçek iz ile decoy iz karıştırılmış.\n` +
-            `  sonuc: "${sonuc}"`
+            (scenePattern
+              ? `  sahneGorseli: "${scenePattern}"`
+              : `  sonuc: "${sonuc}"`)
           );
         }
       } else {
@@ -129,7 +152,9 @@ for (const { packId, puzzle } of allPuzzles) {
         if (!matches) {
           errors.push(
             `${izLoc}: eslesme="${iz.eslesme}" sonuçta bulunamadı!\n` +
-            `  sonuc: "${sonuc}"`
+            (scenePattern
+              ? `  şüpheli deseni: "${suspectPatterns.get(iz.eslesme) ?? "yok"}", sahneGorseli: "${scenePattern}"`
+              : `  sonuc: "${sonuc}"`)
           );
         } else {
           correctInThisClue++;

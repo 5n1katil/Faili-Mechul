@@ -1,0 +1,84 @@
+name: Avatar production certification
+
+on:
+  pull_request:
+    paths:
+      - ".case-qa/fm_avatar_asset_registry_v1.json"
+      - ".case-qa/fm_avatar_inventory.mjs"
+      - ".case-qa/fm_avatar_pipeline_contract_v1.json"
+      - ".github/workflows/fm-avatar-*.yml"
+      - "artifacts/dedektif/assets/images/puzzle_assets/**"
+      - "artifacts/dedektif/utils/puzzleAssetMap.ts"
+      - "artifacts/dedektif/data/puzzles.ts"
+      - "artifacts/dedektif/data/puzzles_database.json"
+      - "artifacts/dedektif/app.config.ts"
+      - "artifacts/dedektif/app.json"
+      - "artifacts/dedektif/package.json"
+      - "artifacts/dedektif/components/AvatarPicker.tsx"
+      - "artifacts/dedektif/context/GameContext.tsx"
+      - "artifacts/dedektif/scripts/validate-parmak-izi.js"
+      - "pnpm-lock.yaml"
+
+permissions:
+  contents: read
+
+jobs:
+  certify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      FM_QA_ROOT: ${{ github.workspace }}
+      FM_QA_OUTPUT_DIR: .case-qa-output
+
+    steps:
+      - name: Checkout avatar candidate
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Certify exact 105 case sources and simulator identity
+        env:
+          FM_QA_CERT_PHASE: pre
+        run: node .case-qa/fm_case_qa_certify.mjs
+
+      - name: Enforce avatar registry and asset integrity
+        shell: bash
+        run: |
+          campaign_status="$(jq -r '.campaign_status // "bootstrap"' .case-qa/fm_avatar_asset_registry_v1.json)"
+          if [ "$campaign_status" = "production_candidate" ]; then
+            FM_AVATAR_REQUIRE_CERTIFIED=true node .case-qa/fm_avatar_inventory.mjs
+          else
+            node .case-qa/fm_avatar_inventory.mjs
+          fi
+
+      - name: Install app dependencies
+        shell: bash
+        run: |
+          corepack enable
+          corepack prepare pnpm@10.34.5 --activate
+          pnpm install --frozen-lockfile
+
+      - name: Enforce absolute app and puzzle safety
+        shell: bash
+        run: |
+          pnpm --filter @workspace/dedektif validate
+          pnpm --filter @workspace/dedektif validate:parmak-izi
+          pnpm --filter @workspace/scripts exec node --import tsx \
+            "$GITHUB_WORKSPACE/artifacts/dedektif/scripts/check-solvability.js"
+          pnpm --filter @workspace/dedektif typecheck
+
+      - name: Build web application
+        run: pnpm --filter @workspace/dedektif build:web
+
+      - name: Upload avatar certification evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fm-avatar-certification-${{ github.run_id }}
+          path: .case-qa-output
+          if-no-files-found: error
+          include-hidden-files: true
+          retention-days: 30
