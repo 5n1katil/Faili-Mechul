@@ -703,6 +703,10 @@ async function callModel({ policy, budget, model, effort, prompt, key, maxOutput
       lastStatus = http.status;
       response = await http.json().catch(() => ({}));
       if (http.ok) break;
+      const apiErrorCode = String(response?.error?.code || response?.error?.type || '');
+      if (http.status === 429 && /credit_balance_exhausted|insufficient_quota/i.test(apiErrorCode)) {
+        throw new Error(`OPENAI_CREDIT_EXHAUSTED: Ucretli cagri yapilamadi; API bakiyesi yuklenmeden yeniden calistirmayin. ${JSON.stringify(response).slice(0, 800)}`);
+      }
       if (http.status === 429 && transportAttempt < maxTransportAttempts) {
         const retryAfterSeconds = Number(http.headers.get('retry-after') || 0);
         const minimum = Number(policy.budget.http_retry_base_seconds || 15);
@@ -721,9 +725,10 @@ async function callModel({ policy, budget, model, effort, prompt, key, maxOutput
     writeJson(cacheFile, { schema_version: 'fm_case_qa_ai_cache_v1', key, model, usage: response.usage || {}, plan });
     return { plan, cached: false, usage: response.usage || {}, cost: actual };
   } catch (error) {
+    const quotaExhausted = /credit_balance_exhausted|insufficient_quota/i.test(String(response?.error?.code || response?.error?.type || ''));
     const conservativeCharge = requestSent && response?.usage
       ? usageCost(policy, model, response.usage)
-      : (requestSent && lastStatus !== 429 ? projected : 0);
+      : (requestSent && lastStatus !== 429 && !quotaExhausted ? projected : 0);
     budget.settle(projected, conservativeCharge, { model, cached: false, failed: true });
     throw error;
   }
