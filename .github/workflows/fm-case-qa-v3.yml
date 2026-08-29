@@ -103,13 +103,24 @@ jobs:
             "$GITHUB_WORKSPACE/artifacts/dedektif/scripts/check-solvability.js"
 
       - name: Restore idempotent response cache
-        uses: actions/cache@v4
+        id: ai_cache_restore
+        uses: actions/cache/restore@v4
         with:
           path: .case-qa-cache
-          key: fm-case-qa-v3-${{ hashFiles('artifacts/dedektif/data/puzzles.ts', 'artifacts/dedektif/data/puzzles_database.json', '.case-qa/fm_case_qa_policy_v3_1.json') }}
+          key: fm-case-qa-v3-${{ hashFiles('artifacts/dedektif/data/puzzles.ts', 'artifacts/dedektif/data/puzzles_database.json', '.case-qa/fm_case_qa_policy_v3_1.json') }}-${{ github.run_id }}
+          restore-keys: |
+            fm-case-qa-v3-${{ hashFiles('artifacts/dedektif/data/puzzles.ts', 'artifacts/dedektif/data/puzzles_database.json', '.case-qa/fm_case_qa_policy_v3_1.json') }}-
+            fm-case-qa-v3-${{ hashFiles('artifacts/dedektif/data/puzzles.ts', 'artifacts/dedektif/data/puzzles_database.json', '.case-qa/fm_case_qa_policy_v3_1.json') }}
 
       - name: Run deterministic QA and bounded repair
         run: node .case-qa/fm_case_qa_runner.mjs
+
+      - name: Save idempotent response cache even when QA stops safely
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: .case-qa-cache
+          key: fm-case-qa-v3-${{ hashFiles('artifacts/dedektif/data/puzzles.ts', 'artifacts/dedektif/data/puzzles_database.json', '.case-qa/fm_case_qa_policy_v3_1.json') }}-${{ github.run_id }}
 
       - name: Certify post-repair identity and simulator parity
         env:
