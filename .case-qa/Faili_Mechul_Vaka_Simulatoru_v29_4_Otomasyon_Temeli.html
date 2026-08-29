@@ -3888,7 +3888,7 @@ function contentDepthAndNameCheck(c){
           flags.push(`HATA: ${label} ${i+1} adı "${name}" kod/koordinat gibi görünüyor. Oyuncunun anlayacağı vaka-içi doğal adı kullan.`);
         }
         if((label==='Silah'||label==='Mekân')&&!semanticNouns[label].test(fmNorm(name))){
-          warnings.push(`${label} ${i+1} adı "${name}" yaygın bir tür sözcüğüyle doğrulanamadı. Yaratıcı/özel ad olabilir; dilsel anlamı ve vaka bağlamını AI editör incelemesinde doğrula, yalnız gerçekten bozuksa aynı görsel ve semantik kimliği koruyarak düzelt.`);
+          findings.push(`ⓘ ${label} ${i+1} adı "${name}" sözlükteki yaygın tür sözcüklerinden biriyle eşleşmedi. Bu tek başına kusur değildir; yaratıcı/özel adlar yalnız bağlamda gerçekten bozuksa aynı görsel ve semantik kimlik korunarak düzeltilmelidir.`);
         }
         if(words.some((w,j)=>j>0&&fmNorm(w)===fmNorm(words[j-1]))) flags.push(`HATA: ${label} ${i+1} adında yinelenen sözcük var: "${name}".`);
         if(seen.has(key)) flags.push(`HATA: ${label} adları yineleniyor: "${name}".`); else seen.set(key,i);
