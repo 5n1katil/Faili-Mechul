@@ -1,6 +1,6 @@
 {
   "schema_version": "fm_case_qa_command_v1",
-  "request_id": "production-simulator-lexical-fix-20260829-04",
+  "request_id": "production-directness-convergence-20260829-05",
   "mode": "full",
   "allow_ai": true,
   "case_limit": 0,
@@ -8,5 +8,5 @@
   "publish": true,
   "auto_merge": true,
   "prepare_avatar_manifest": true,
-  "note": "Fourth locked campaign fixes the simulator false positive that treated unknown but valid creative entity names as production blockers."
+  "note": "Fifth locked campaign adds two bounded low-difficulty chain passes for the remaining rc_001 directness score loss."
 }

@@ -776,10 +776,13 @@ function compactReport(result, leakage) {
 function buildPrompt({ caseData, baselineResult, leakage, phase, previousAttemptError = null }) {
   const requiredGateNames = ['coreNecessity', 'patternGovernance', 'contentAndNames', 'semanticContract', 'visibleEvidence', 'mechanicContract', 'bonusFunctionality'];
   const failedRequiredGates = requiredGateNames.filter((name) => baselineResult.gates?.[name]?.passed !== true);
+  const directnessConvergence = /^terra_final_verifier_(?:9|10)$/.test(phase);
   const surgicalConvergence = /^terra_final_verifier_(?:7|8)$/.test(phase);
   const scoreConvergence = /^terra_final_verifier_(?:5|6)$/.test(phase);
   const phaseInstruction = phase === 'luna_first_pass'
     ? 'Reconstruct missing authoring evidence and repair only verified playability failures. Internally form a complete repair checklist before emitting operations.'
+    : directnessConvergence
+      ? `Low-difficulty exact-score convergence: preserve solution IDs, entity IDs, clue IDs, icons, visual identity, case identity and every passed safety gate. The remaining score loss is the 1-star directness rule. Rebuild only the necessary core clue text, deductionHint, logicRules and their matching QA-only evidence as one coherent chain with at least two direct confirm rules, a varied confirm/eliminate rhythm, at least four individually necessary non-bonus clues, and exactly one final suspect|weapon|location solution without bonuses. Keep every bonus useful but unnecessary. Make the mini-game explanation functionally describe the kind of deduction gained without naming any suspect, weapon or location. Do not touch story, profiles or unrelated names. Internally simulate removal of each core clue and the full visible-evidence chain before emitting the patch. The result must be score=100 and productionReady=true.`
     : surgicalConvergence
       ? `Surgical exact-score cleanup: preserve all logicRules, qaSemanticFacts, qaPattern, clue ordering, solution IDs and every currently passed gate. Change only the smallest player-visible fields named by the current blockers. If a weapon or location name lacks a recognizable type noun, minimally naturalize that name so its physical class, visual identity, icon and gameplay role stay unchanged. If a standard deductionHint exposes an entity name, replace only that hint with a short nameless Socratic question that points to the same evidence. Do not rewrite clue text, mini-game payloads, profiles, story or unrelated names. The result must return score=100 and productionReady=true; zero operations is invalid while either condition is false.`
     : scoreConvergence
@@ -1021,7 +1024,7 @@ async function main() {
     // Keep the original six attempts/cache keys intact, then add two narrowly
     // targeted exact-score passes. This reuses prior idempotent responses while
     // allowing a 90/100, all-required-gates-passed candidate to converge.
-    const goldAttemptLimit = Math.max(10, Number(policy.repair?.gold_max_attempts_per_case || 6));
+    const goldAttemptLimit = Math.max(12, Number(policy.repair?.gold_max_attempts_per_case || 6));
     const baseAttempts = [
       { phase: 'luna_first_pass', model: policy.models.first_pass, effort: policy.models.first_pass_reasoning_effort },
       { phase: 'terra_escalation', model: policy.models.escalation, effort: policy.models.escalation_reasoning_effort },
