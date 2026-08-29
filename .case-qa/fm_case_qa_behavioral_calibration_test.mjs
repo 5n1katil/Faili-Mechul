@@ -7,6 +7,7 @@ import {
   authoringCandidateDisposition,
   authoringCompleteness,
   authoringContract,
+  buildAuthoringPrompt,
   parseCaseIds,
   selectEntriesForMode,
   stripAuthoring
@@ -119,14 +120,33 @@ const brokenResult = evaluateCase(engine, broken, { baseline: base });
 assert.equal(brokenResult.productionReady, false, 'Exact v29.4 motoru bozuk aynı-eksen kuralını kabul etti.');
 assert.ok(brokenResult.score < 100, 'Exact v29.4 motoru bilinen bozuk fixture için 100 verdi.');
 
+const malformed = structuredClone(authored);
+malformed.clues[0].logicRules = [{ action: 'match', pair: { left: 's1', right: 'w1' } }];
+const malformedContract = authoringContract(malformed);
+assert.equal(malformedContract.passed, false);
+assert.ok(malformedContract.errors.some((item) => item.includes('invalid_action')));
+assert.ok(malformedContract.errors.some((item) => item.includes('invalid_pair')));
+const recoveryPrompt = buildAuthoringPrompt({
+  caseData: malformed,
+  completeness: authoringCompleteness(malformed),
+  contract: malformedContract,
+  tier: 'premium'
+});
+assert.match(recoveryPrompt, /INVALID AUTHORING CONTRACT/);
+assert.match(recoveryPrompt, /invalid_action/);
+assert.match(recoveryPrompt, /invalid_pair/);
+assert.match(recoveryPrompt, /"action":"confirm\|eliminate"/);
+assert.match(recoveryPrompt, /zero operations is never a valid answer/);
+
 const runnerSource = fs.readFileSync('.case-qa/fm_case_qa_runner.mjs', 'utf8');
 assert.match(runnerSource, /scope: 'gold_calibration'/, 'Full kampanya altın vakalarda bounded repair sertifikasyonu çalıştırmıyor.');
-assert.match(runnerSource, /stage: 'authoring_contract'/, 'Altın-vaka authoring sözleşme aşaması ayrı raporlanmıyor.');
-assert.match(runnerSource, /stage: 'bounded_gold_repair'/, 'Altın-vaka bounded repair aşaması ayrı raporlanmıyor.');
+assert.match(runnerSource, /authoring_contract_and_bounded_gold_repair/, 'Eksik authoring sözleşmesi bounded gold repair aşamasına aktarılmıyor.');
+assert.match(runnerSource, /\? 'authoring_contract_and_bounded_gold_repair' : 'bounded_gold_repair'/, 'Altın-vaka bounded repair aşaması ayrı raporlanmıyor.');
+assert.match(runnerSource, /repair_incomplete_authoring_after_gold_calibration/, 'Altın kapıdan sonra eksik authoring vakaları otomatik repair kuyruğuna alınmıyor.');
 
 const workflowSource = fs.readFileSync('.github/workflows/fm-case-qa-v3.yml', 'utf8');
 assert.match(workflowSource, /actions\/cache\/restore@v4/, 'AI cache restore açıkça tanımlı değil.');
 assert.match(workflowSource, /actions\/cache\/save@v4/, 'Başarısız QA sonrası AI cache kaydı tanımlı değil.');
 assert.match(workflowSource, /Save idempotent response cache even when QA stops safely[\s\S]*if: always\(\)/, 'AI cache hata halinde korunmuyor.');
 
-console.log('✓ Full selection, two-stage gold calibration, safe authoring recovery, cache persistence and metadata isolation are enforced.');
+console.log('✓ Full selection, canonical authoring recovery, two-stage gold repair, cache persistence and metadata isolation are enforced.');

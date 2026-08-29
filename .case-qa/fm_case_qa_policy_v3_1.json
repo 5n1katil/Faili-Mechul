@@ -1,5 +1,5 @@
 {
-  "schema_version": "fm_case_qa_automation_policy_v3_8",
+  "schema_version": "fm_case_qa_automation_policy_v3_8_1",
   "source": {
     "repository": "5n1katil/Faili-Mechul",
     "branch": "main",
@@ -24,6 +24,7 @@
   "repair": {
     "confirmed_preclue_leakage_only": true,
     "repair_all_exact_failures_after_gold_calibration": true,
+    "repair_incomplete_authoring_after_gold_calibration": true,
     "pilot_requires_explicit_case_ids": true,
     "preserve_case_ids": true,
     "preserve_entity_ids": true,
