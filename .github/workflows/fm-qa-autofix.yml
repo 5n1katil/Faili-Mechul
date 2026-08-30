@@ -66,9 +66,62 @@ jobs:
 
       - name: API anahtarini dogrula
         if: ${{ inputs.dry_run != 'true' }}
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
-          if [ -z "${{ secrets.GEMINI_API_KEY }}" ]; then
+          if [ -z "$GEMINI_API_KEY" ]; then
             echo "::error::GEMINI_API_KEY secret tanimli degil. Settings > Secrets and variables > Actions altindan ekleyin."
+            exit 1
+          fi
+
+      - name: Calistirma girdilerini dogrula
+        env:
+          INPUT_LIMIT: ${{ inputs.limit }}
+          INPUT_START: ${{ inputs.start }}
+          INPUT_ONLY: ${{ inputs.only }}
+          INPUT_MAX_ATTEMPTS: ${{ inputs.max_attempts }}
+          INPUT_ACCEPTANCE: ${{ inputs.acceptance }}
+          INPUT_MODEL: ${{ inputs.model }}
+          INPUT_THINKING_BUDGET: ${{ inputs.thinking_budget }}
+          INPUT_DRY_RUN: ${{ inputs.dry_run }}
+          INPUT_OPEN_PR: ${{ inputs.open_pr }}
+        run: |
+          set -euo pipefail
+
+          require_uint() {
+            local name="$1"
+            local value="$2"
+            local min="$3"
+            local max="$4"
+            if [[ ! "$value" =~ ^[0-9]+$ ]] || (( 10#$value < min || 10#$value > max )); then
+              echo "::error::$name, $min ile $max arasinda bir tam sayi olmali."
+              exit 1
+            fi
+          }
+
+          require_bool() {
+            local name="$1"
+            local value="$2"
+            if [[ "$value" != "true" && "$value" != "false" ]]; then
+              echo "::error::$name yalnizca true veya false olabilir."
+              exit 1
+            fi
+          }
+
+          require_uint "limit" "$INPUT_LIMIT" 0 105
+          require_uint "start" "$INPUT_START" 0 104
+          require_uint "max_attempts" "$INPUT_MAX_ATTEMPTS" 1 20
+          require_uint "acceptance" "$INPUT_ACCEPTANCE" 1 100
+          require_uint "thinking_budget" "$INPUT_THINKING_BUDGET" 0 32768
+          require_bool "dry_run" "$INPUT_DRY_RUN"
+          require_bool "open_pr" "$INPUT_OPEN_PR"
+
+          if [[ ! "$INPUT_ONLY" =~ ^[A-Za-z0-9_-]*$ ]]; then
+            echo "::error::only yalnizca harf, rakam, alt cizgi ve tire icerebilir."
+            exit 1
+          fi
+          if [[ ! "$INPUT_MODEL" =~ ^[A-Za-z0-9._-]+$ ]]; then
+            echo "::error::model kimligi gecersiz karakter iceriyor."
             exit 1
           fi
 
@@ -86,15 +139,26 @@ jobs:
           FM_MODEL: ${{ inputs.model }}
           FM_THINKING_BUDGET: ${{ inputs.thinking_budget }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          INPUT_LIMIT: ${{ inputs.limit }}
+          INPUT_START: ${{ inputs.start }}
+          INPUT_ONLY: ${{ inputs.only }}
+          INPUT_MAX_ATTEMPTS: ${{ inputs.max_attempts }}
+          INPUT_ACCEPTANCE: ${{ inputs.acceptance }}
+          INPUT_DRY_RUN: ${{ inputs.dry_run }}
         run: |
+          set -o pipefail
+          DRY_RUN_ARGS=()
+          if [ "$INPUT_DRY_RUN" = "true" ]; then
+            DRY_RUN_ARGS+=(--dry-run=true)
+          fi
           node tools/fm-qa/run.js \
             --repo="$GITHUB_WORKSPACE" \
-            --limit=${{ inputs.limit }} \
-            --start=${{ inputs.start }} \
-            --only="${{ inputs.only }}" \
-            --max-attempts=${{ inputs.max_attempts }} \
-            --acceptance=${{ inputs.acceptance }} \
-            ${{ inputs.dry_run == 'true' && '--dry-run=true' || '' }} \
+            --limit="$INPUT_LIMIT" \
+            --start="$INPUT_START" \
+            --only="$INPUT_ONLY" \
+            --max-attempts="$INPUT_MAX_ATTEMPTS" \
+            --acceptance="$INPUT_ACCEPTANCE" \
+            "${DRY_RUN_ARGS[@]}" \
             2>&1 | tee qa-run.log
         continue-on-error: true
 
@@ -120,8 +184,12 @@ jobs:
 
       # Kosu yarida kesilse bile o ana kadarki ilerleme commit edilir.
       - name: Degisiklikleri commit et
-        if: always() && inputs.dry_run != 'true'
+        if: always() && !cancelled() && steps.dal.outcome == 'success' && inputs.dry_run != 'true'
         id: commit
+        env:
+          INPUT_ONLY: ${{ inputs.only }}
+          INPUT_LIMIT: ${{ inputs.limit }}
+          TARGET_BRANCH: ${{ steps.dal.outputs.branch }}
         run: |
           git config user.name "fm-qa-bot"
           git config user.email "fm-qa-bot@users.noreply.github.com"
@@ -130,8 +198,13 @@ jobs:
             echo "degisti=false" >> "$GITHUB_OUTPUT"
             echo "Degisiklik yok."
           else
-            git commit -m "QA otomatik onarim: ${{ inputs.only != '' && inputs.only || format('{0} vaka', inputs.limit) }}"
-            git push origin "${{ steps.dal.outputs.branch }}"
+            if [ -n "$INPUT_ONLY" ]; then
+              SCOPE_LABEL="$INPUT_ONLY"
+            else
+              SCOPE_LABEL="$INPUT_LIMIT vaka"
+            fi
+            git commit -m "QA otomatik onarim: $SCOPE_LABEL"
+            git push origin "$TARGET_BRANCH"
             echo "degisti=true" >> "$GITHUB_OUTPUT"
           fi
 
@@ -141,7 +214,15 @@ jobs:
         continue-on-error: true
         env:
           GH_TOKEN: ${{ github.token }}
+          INPUT_ONLY: ${{ inputs.only }}
+          INPUT_LIMIT: ${{ inputs.limit }}
+          TARGET_BRANCH: ${{ steps.dal.outputs.branch }}
         run: |
+          if [ -n "$INPUT_ONLY" ]; then
+            SCOPE_LABEL="$INPUT_ONLY"
+          else
+            SCOPE_LABEL="$INPUT_LIMIT vaka"
+          fi
           BODY="Bu PR **taslak** olarak acildi ve otomatik merge EDILMEZ.
 
           Vakalar projenin kendi v29.4 QA simulatorunden gecirildi. Yalnizca **100/100** alan
@@ -151,8 +232,8 @@ jobs:
           gh pr create \
             --draft \
             --base main \
-            --head "${{ steps.dal.outputs.branch }}" \
-            --title "QA otomatik onarim (${{ inputs.only != '' && inputs.only || format('{0} vaka', inputs.limit) }})" \
+            --head "$TARGET_BRANCH" \
+            --title "QA otomatik onarim ($SCOPE_LABEL)" \
             --body "$BODY" || {
-              echo "::warning::PR acilamadi (muhtemelen Settings > Actions > General > Workflow permissions altinda 'Allow GitHub Actions to create and approve pull requests' kapali). Dal push edildi: ${{ steps.dal.outputs.branch }} — PR'i elle acabilirsiniz."
+              echo "::warning::PR acilamadi (muhtemelen Settings > Actions > General > Workflow permissions altinda 'Allow GitHub Actions to create and approve pull requests' kapali). Dal push edildi: $TARGET_BRANCH — PR'i elle acabilirsiniz."
             }
