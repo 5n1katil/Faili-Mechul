@@ -1,0 +1,93 @@
+{
+  "generated_at": "2026-08-30T14:04:39.096Z",
+  "provider": "gemini",
+  "model": "gemini-flash-lite-latest",
+  "dry_run": false,
+  "acceptance_score": 95,
+  "max_attempts": 4,
+  "processed": 5,
+  "already_passing": 0,
+  "repaired": 0,
+  "quarantined": 5,
+  "quarantined_soft_gap_only": 0,
+  "errors": 0,
+  "token_usage": {
+    "input": 79021,
+    "output": 30553,
+    "thinking": 34758,
+    "calls": 16
+  },
+  "results": [
+    {
+      "case_id": "konakta-gece-yarisi-cinayeti",
+      "tier": "standard",
+      "status": "quarantined",
+      "score": 0,
+      "attempts": 4,
+      "blocking_flag_count": 3,
+      "soft_gap_only": false,
+      "remaining_flags": [
+        "[coreNecessity] HATA: Oyuncu-Görünür Çözüm Başarısız. Tüm standart ipuçları ve belgelenen/anlaşılan anlatı bilgileri birlikteyken cevap tek kalmıyor (9 olası cevap). Bonus açmadan s3|w1|l3 üçlüsüne zorunlu olarak ulaşılmalı.",
+        "[patternGovernance] HATA: Patern Yönetişimi Eksik — qaPattern nesnesi yok. Her üretim vakası; çapa kaynağını, ilk ipucu rolünü, varsa mini oyun konumunu ve benzersiz tasarım niyetini beyan etmelidir.",
+        "[patternGovernance] HATA: Portföy İmza Defteri Eksik — qaPortfolioRegistry.entries olmadan bu vakanın önceki kabul edilmiş vakalara göre benzersizliği doğrulanamaz. 100/100 ve üretim export’u için kayıt defteri zorunludur."
+      ]
+    },
+    {
+      "case_id": "bogazda-kayip-elmas",
+      "tier": "standard",
+      "status": "quarantined",
+      "score": 0,
+      "attempts": 4,
+      "blocking_flag_count": 2,
+      "soft_gap_only": false,
+      "remaining_flags": [
+        "[traceabilityPolicy] HATA: QA İzlenebilirlik Sözleşmesi Eksik — bu zorlukta logicRules taşıyan her ipucu qaRationale {matrixEffect, evidenceLink, evidenceKind} ile belgelenmelidir. 4 ipucuda eksik/yetersiz köprü var.",
+        "[coreNecessity] HATA: Oyuncu-Görünür Çözüm Başarısız. Tüm standart ipuçları ve belgelenen/anlaşılan anlatı bilgileri birlikteyken cevap tek kalmıyor (8 olası cevap). Bonus açmadan s3|w1|l1 üçlüsüne zorunlu olarak ulaşılmalı."
+      ]
+    },
+    {
+      "case_id": "kapalicarsida-gizem",
+      "tier": "standard",
+      "status": "quarantined",
+      "score": 0,
+      "attempts": 4,
+      "blocking_flag_count": 3,
+      "soft_gap_only": false,
+      "remaining_flags": [
+        "[visibleEvidenceScope] HATA: Oyuncu-Görünür Kural Taşkını — İpucu 4 metni şüpheli olarak “Selma Teyze” sonucunu da adı doğrudan geçiyor; ancak logicRules yalnız tanımlı kural yok etkisini tanımlıyor. Oyuncu bu ek hücreyi işaretlerse sonraki temel ipucu tekrara düşebilir.",
+        "[coreNecessity] HATA: Oyuncu-Görünür Çözüm Başarısız. Tüm standart ipuçları ve belgelenen/anlaşılan anlatı bilgileri birlikteyken cevap tek kalmıyor (9 olası cevap). Bonus açmadan s3|w3|l2 üçlüsüne zorunlu olarak ulaşılmalı.",
+        "[patternGovernance] HATA: Patern Yönetişimi Eksik — qaPattern nesnesi yok. Her üretim vakası; çapa kaynağını, ilk ipucu rolünü, varsa mini oyun konumunu ve benzersiz tasarım niyetini beyan etmelidir."
+      ]
+    },
+    {
+      "case_id": "universitede-karanlik-sir",
+      "tier": "standard",
+      "status": "quarantined",
+      "score": 0,
+      "attempts": 4,
+      "blocking_flag_count": 5,
+      "soft_gap_only": false,
+      "remaining_flags": [
+        "[traceabilityPolicy] HATA: QA İzlenebilirlik Sözleşmesi Eksik — bu zorlukta logicRules taşıyan her ipucu qaRationale {matrixEffect, evidenceLink, evidenceKind} ile belgelenmelidir. 4 ipucuda eksik/yetersiz köprü var.",
+        "[visibleEvidenceScope] HATA: Oyuncu-Görünür Kural Taşkını — İpucu 2 metni mekân olarak “Koridorlar” sonucunu da adı doğrudan geçiyor; ancak logicRules yalnız Asistan Elif ↔ Kimyasal Gaz etkisini tanımlıyor. Oyuncu bu ek hücreyi işaretlerse sonraki temel ipucu tekrara düşebilir.",
+        "[coreNecessity] HATA: Oyuncu-Görünür Çözüm Başarısız. Tüm standart ipuçları ve belgelenen/anlaşılan anlatı bilgileri birlikteyken cevap tek kalmıyor (4 olası cevap). Bonus açmadan s2|w1|l1 üçlüsüne zorunlu olarak ulaşılmalı.",
+        "[patternGovernance] HATA: qaPattern çapa kaynağı \"c1\" diyor; gerçek profil \"none\" üretiyor. Beyan ile görünür vaka yapısı aynı olmalı.",
+        "[patternGovernance] HATA: qaPattern çapa bileşeni \"weapon\" diyor; gerçek profil \"?\" üretiyor."
+      ]
+    },
+    {
+      "case_id": "pazar-yerinde-supheli-olum",
+      "tier": "standard",
+      "status": "quarantined",
+      "score": 0,
+      "attempts": 4,
+      "blocking_flag_count": 3,
+      "soft_gap_only": false,
+      "remaining_flags": [
+        "[coreNecessity] HATA: Oyuncu-Görünür Çözüm Başarısız. Tüm standart ipuçları ve belgelenen/anlaşılan anlatı bilgileri birlikteyken cevap tek kalmıyor (6 olası cevap). Bonus açmadan s3|w1|l1 üçlüsüne zorunlu olarak ulaşılmalı.",
+        "[patternGovernance] HATA: Patern Yönetişimi Eksik — qaPattern nesnesi yok. Her üretim vakası; çapa kaynağını, ilk ipucu rolünü, varsa mini oyun konumunu ve benzersiz tasarım niyetini beyan etmelidir.",
+        "[patternGovernance] HATA: Portföy İmza Defteri Eksik — qaPortfolioRegistry.entries olmadan bu vakanın önceki kabul edilmiş vakalara göre benzersizliği doğrulanamaz. 100/100 ve üretim export’u için kayıt defteri zorunludur."
+      ]
+    }
+  ]
+}
