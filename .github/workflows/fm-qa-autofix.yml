@@ -135,8 +135,10 @@ jobs:
             echo "degisti=true" >> "$GITHUB_OUTPUT"
           fi
 
+      # PR acma izni kapaliysa kosu BASARISIZ SAYILMAZ; dal zaten push edilmistir.
       - name: Taslak PR ac
         if: always() && inputs.dry_run != 'true' && inputs.open_pr == 'true' && steps.commit.outputs.degisti == 'true'
+        continue-on-error: true
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -151,4 +153,6 @@ jobs:
             --base main \
             --head "${{ steps.dal.outputs.branch }}" \
             --title "QA otomatik onarim (${{ inputs.only != '' && inputs.only || format('{0} vaka', inputs.limit) }})" \
-            --body "$BODY"
+            --body "$BODY" || {
+              echo "::warning::PR acilamadi (muhtemelen Settings > Actions > General > Workflow permissions altinda 'Allow GitHub Actions to create and approve pull requests' kapali). Dal push edildi: ${{ steps.dal.outputs.branch }} — PR'i elle acabilirsiniz."
+            }
