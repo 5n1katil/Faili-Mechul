@@ -317,7 +317,12 @@ MUTLAK KURALLAR:
 4. deductionHint kisi/nesne adi vermeden izgara iliskisine yonlendiren Sokratik bir soru olmali.
 5. Turkce dogal, akici ve edebi olmali. Kuru/robotik liste cumleleri kurma.
 6. Oyuncuya gorunen metinler ipuclari acilmadan cozum ucgenini ele vermemeli.
-7. Yalnizca DEGISTIRDIGIN alanlari dondur. Degismeyen alanlari yazma.`;
+7. Yalnizca DEGISTIRDIGIN alanlari dondur. Degismeyen alanlari yazma.
+8. COK ONEMLI: Brifing "Mantik iskeleti gecerli" diyorsa, logicRules alanini HIC DONDURME.
+   Kurallar zaten dogrulanmistir; onlara dokunursan vakayi bozarsin. O durumda isin
+   SADECE metin yazmaktir: ipucu metinleri, deductionHint, profiller ve hikaye.
+9. Her ipucunun metni, kendi logicRules kuralinda gecen varliklari (supheli/silah/mekan)
+   dogal biçimde ANMALIDIR; aksi halde kanit koprusu kurulmus sayilmaz.`;
 
 function buildUserText({ fullCase, report, briefing, flags, attempt, previousProblem }) {
   const parts = [];
@@ -417,6 +422,30 @@ async function processCase(entry, position) {
   }
 
   log(`  [${position}] ${id.padEnd(28)} baslangic ${q.total}/100, ${flags.length} engelleyici bulgu`);
+
+  /* ---- ADIM 0: UCRETSIZ DETERMINISTIK ISKELE --------------------------------
+     Mantik kurallarini LLM'e YAZDIRMIYORUZ. Motor tarafindan onaylanan gecerli
+     bir kural setini burada, para harcamadan buluyoruz. LLM'e yalnizca metin
+     yazma isi kaliyor. (Bu adim onceki surumde yanlislikla devre disiydi.) */
+  const scaffold = findEngineApprovedScaffold(current, entry.tier, { seeds: 24 });
+  if (scaffold) {
+    const sc = score(scaffold.candidate, entry.tier);
+    const scFlags = blockingFlags(sc.q);
+    if (sc.q.total > q.total || scFlags.length < flags.length) {
+      current = scaffold.candidate; q = sc.q; report = sc.report; flags = scFlags;
+      log(`      ucretsiz iskele: ${q.total}/100, ${flags.length} bulgu (API maliyeti 0)`);
+    }
+  } else {
+    log('      ucretsiz iskele: gecerli kural seti bulunamadi');
+  }
+
+  /* Iskele tek basina yeterliyse LLM'e hic gitmeyiz. */
+  if (q.total >= ACCEPT && !flags.length) {
+    return {
+      case_id: id, tier: entry.tier, status: 'repaired', score: q.total,
+      attempts: 0, fixed_without_ai: true, repaired_case: current
+    };
+  }
 
   let previousProblem = null;
   let lastSignature = null;      /* ayni sonucu tekrar tekrar uretmeyi engeller */
