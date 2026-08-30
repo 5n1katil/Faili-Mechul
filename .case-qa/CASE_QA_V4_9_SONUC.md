@@ -20,6 +20,7 @@ Model eksik teşhisle geniş yamalar üretiyor; zorunlu ipuçlarını veya bonus
 - K1–K4 puanları, azami puanları ve tam bulguları artık rapora/model girdisine taşınır.
 - Gömülü kalite uyarıları ret geri bildiriminde ve insan-okunur özette gösterilir.
 - İlk CI denemesi uygulamanın `Puzzle` tipinde bulunmayan `deductionSummary` alanını yakaladı. Bu yazar notu runtime çıktısından çıkarıldı; standart vaka aktarımına alan sözleşmesi ve aktarım sonrası yeniden QA kontrolü eklendi. Kanıt testinde bu uyumsuzluk tekrar denetlenir.
+- Standart vaka yazıcısı mevcut TypeScript alan biçimini (`id:`, `icon:`) korur; uygulamanın eski metin tarayıcıları onarılan vakayı atlamaz.
 - Güvenlik kapıları geçen 90+ adayda kodla uygulanan dar onarım sınırı vardır: en fazla bir ipucunun mantık kuralı değişebilir.
 - Diğer ipuçlarının metin/kanıt açıklamaları düzeltilebilir; kimlikler, sıra, bonus/çapa rolleri, hikâye, varlıklar, mini oyun yükleri ve QA politikası kilitlidir.
 - Değişen ipucunun yerel ve üst-seviye semantik kayıtları birlikte tutarlı tutulmalıdır. İlgisiz kaynakların kayıtları değiştirilemez.

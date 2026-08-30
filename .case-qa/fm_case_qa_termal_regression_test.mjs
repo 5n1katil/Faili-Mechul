@@ -81,7 +81,9 @@ if (process.env.FM_QA_TEST_NO_NETWORK === 'true') {
   assert.equal(report.summary.final_campaign_passed,1,JSON.stringify(report.cases));
   assert.equal(report.summary.api_calls,0);
   assert.equal(report.summary.actual_or_conservative_cost_usd,0);
-  const sourceCases=parseStandard(fs.readFileSync('artifacts/dedektif/data/puzzles.ts','utf8')).cases;
+  const sourceText=fs.readFileSync('artifacts/dedektif/data/puzzles.ts','utf8');
+  assert.match(sourceText,/\bid: "termal-otelde-supheli-vaka"/); // Legacy app scanners must see it too.
+  const sourceCases=parseStandard(sourceText).cases;
   const outputCases=parseStandard(fs.readFileSync(path.join(temp,'puzzles.ts'),'utf8')).cases;
   assert.deepEqual(outputCases,sourceCases);
   assert.deepEqual(JSON.parse(fs.readFileSync(path.join(temp,'puzzles_database.json'),'utf8')),JSON.parse(fs.readFileSync('artifacts/dedektif/data/puzzles_database.json','utf8')));

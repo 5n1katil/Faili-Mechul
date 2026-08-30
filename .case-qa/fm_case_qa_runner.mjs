@@ -153,7 +153,11 @@ function replaceStandardCases(source, replacements) {
     if (!replacements.has(id)) return;
     const indentMatch = source.slice(0, ranges[index].start).match(/(^|\n)([ \t]*)[^\n]*$/);
     const indent = indentMatch?.[2] || '  ';
-    const rendered = JSON.stringify(replacements.get(id), null, 2).split('\n').map((line, lineIndex) => lineIndex ? `${indent}${line}` : line).join('\n');
+    // Existing app validators scan TS identifier keys (id:, icon:), not quoted
+    // JSON keys. Preserve that source convention so repaired cases are counted.
+    const rendered = JSON.stringify(replacements.get(id), null, 2)
+      .replace(/^(\s*)"([A-Za-z_$][A-Za-z0-9_$]*)":/gm, '$1$2:')
+      .split('\n').map((line, lineIndex) => lineIndex ? `${indent}${line}` : line).join('\n');
     edits.push({ ...ranges[index], rendered });
   });
   let output = source;
