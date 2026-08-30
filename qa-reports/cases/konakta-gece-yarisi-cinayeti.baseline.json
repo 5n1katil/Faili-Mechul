@@ -1,0 +1,204 @@
+{
+  "id": "konakta-gece-yarisi-cinayeti",
+  "title": "Konakta Gece Yarısı Cinayeti",
+  "difficulty": "caylak",
+  "dayIndex": 1,
+  "story": "Tarihi konaktaki gece davetinin ardından ev sahibinin sadık yardımcısı Selma, kan içinde bulundu. Adli tıp, cinayetin 23:30 ile 00:00 arasında işlendiğini tahmin ediyor. Fırtına nedeniyle kimsenin ayrılamadığı bu konakta, katil hala aramızda.",
+  "suspects": [
+    {
+      "id": "s1",
+      "name": "Nazik Hanım",
+      "description": "Konağın en yaşlı misafiri. Fiziksel olarak güçsüz olsa da etrafında olan bitene karşı son derece dikkatli ve gözlemci.",
+      "icon": "pa:konakta_s1"
+    },
+    {
+      "id": "s2",
+      "name": "Cem Bey",
+      "description": "Ev sahibinin uzaktan akrabası. Boylu poslu, ağır fiziksel işleri kolayca yapabilecek kuvvette bir yapıya sahip.",
+      "icon": "pa:konakta_s2"
+    },
+    {
+      "id": "s3",
+      "name": "Zeynep Hanım",
+      "description": "Genç ve hırslı bir davetli. Atik yapısıyla dikkat çekiyor, stres altında çok hızlı ve fevri hareket edebiliyor.",
+      "icon": "pa:konakta_s3"
+    }
+  ],
+  "weapons": [
+    {
+      "id": "w1",
+      "name": "Makas",
+      "description": "Et ve kemik parçalamak için tasarlanmış, tek hamlede derin yara açabilen ağır ve keskin mutfak aleti.",
+      "icon": "pa:konakta_w1"
+    },
+    {
+      "id": "w2",
+      "name": "Kimyasal",
+      "description": "Renksiz ve kokusuz bir endüstriyel çözücü. Yiyecek veya içeceklere karıştırıldığında fark edilmesi imkansız.",
+      "icon": "pa:konakta_w2"
+    },
+    {
+      "id": "w3",
+      "name": "İp",
+      "description": "Ağır perdeleri ve dekorasyonları asmak için kullanılan, kalın ve oldukça sağlam kenevir halat.",
+      "icon": "pa:konakta_w3"
+    }
+  ],
+  "locations": [
+    {
+      "id": "l1",
+      "name": "Kütüphane",
+      "description": "Kalın duvarları ve ağır meşe kapısı sayesinde dışarıya veya içeriye hiçbir sesin sızmadığı izole çalışma alanı.",
+      "icon": "pa:konakta_l1"
+    },
+    {
+      "id": "l2",
+      "name": "Bahçe",
+      "description": "Konağın etrafını saran açık alan. Loş aydınlatması sayesinde kuytu köşelerde rahatça gizlenme imkanı sunuyor.",
+      "icon": "pa:konakta_l2"
+    },
+    {
+      "id": "l3",
+      "name": "Mutfak",
+      "description": "Yerleri genellikle nemli ve kaygan olan, içinde onlarca tehlikeli aletin bulunduğu arka cephedeki hazırlık alanı.",
+      "icon": "pa:konakta_l3"
+    }
+  ],
+  "clues": [
+    {
+      "id": "c1",
+      "text": "Kurban zehirlenmemiş veya iple boğulmamış; derin bir kesici alet darbesiyle hayatını kaybetmiş.",
+      "type": "forensic",
+      "isBonus": false,
+      "logicRules": [
+        {
+          "action": "eliminate",
+          "pair": [
+            "w3",
+            "l3"
+          ]
+        }
+      ],
+      "qaRationale": {
+        "matrixEffect": "İp ≠ Mutfak elenir",
+        "evidenceLink": "ipucu metnindeki dogrudan gozlem",
+        "evidenceKind": "physical"
+      },
+      "qaSemanticFacts": [
+        {
+          "kind": "crime_component",
+          "component": "weapon",
+          "entityId": "w1",
+          "evidence": "Kurban zehirlenmemiş veya iple boğulmamış; derin bir kesici alet darbesiyle hayatını kaybetmiş."
+        }
+      ],
+      "isCrimeAnchor": true
+    },
+    {
+      "id": "c2",
+      "text": "Nazik Hanım gece boyunca Bahçe'de çayını yudumlayarak kitap okuduğunu belirtti ve bu durum doğrulandı.",
+      "type": "witness",
+      "isBonus": false,
+      "logicRules": [
+        {
+          "action": "eliminate",
+          "pair": [
+            "s3",
+            "l1"
+          ]
+        }
+      ],
+      "qaRationale": {
+        "matrixEffect": "Zeynep Hanım ≠ Kütüphane elenir",
+        "evidenceLink": "ipucu metnindeki dogrudan gozlem",
+        "evidenceKind": "physical"
+      }
+    },
+    {
+      "id": "c3",
+      "text": "Cem Bey'in gece boyunca Kütüphane'den çıkmadığı ve dekorasyonlarla uğraştığı rapor edildi.",
+      "type": "witness",
+      "isBonus": false,
+      "logicRules": [
+        {
+          "action": "eliminate",
+          "pair": [
+            "w3",
+            "l1"
+          ]
+        }
+      ],
+      "qaRationale": {
+        "matrixEffect": "İp ≠ Kütüphane elenir",
+        "evidenceLink": "ipucu metnindeki dogrudan gozlem",
+        "evidenceKind": "physical"
+      }
+    },
+    {
+      "id": "c4",
+      "text": "Kan izleri ve boğuşma kanıtları yalnızca arkadaki hazırlık alanında bulunuyor.",
+      "type": "evidence",
+      "isBonus": false,
+      "logicRules": [
+        {
+          "action": "confirm",
+          "pair": [
+            "s3",
+            "w1"
+          ]
+        }
+      ],
+      "qaRationale": {
+        "matrixEffect": "Zeynep Hanım ↔ Makas dogrulanir",
+        "evidenceLink": "kan",
+        "evidenceKind": "forensic"
+      }
+    },
+    {
+      "id": "c5",
+      "text": "Koridor kameraları, Zeynep Hanım'ın 23:38'de Mutfağa giriş yaptığını ve 00:15'te telaşla çıktığını gösteriyor.",
+      "type": "record",
+      "isBonus": true
+    },
+    {
+      "id": "c6",
+      "text": "Ağır mutfak makasının sap kısmında, Zeynep Hanım'a ait net parmak izleri tespit edildi.",
+      "type": "forensic",
+      "isBonus": true
+    }
+  ],
+  "solvabilityMeta": {
+    "freeEliminations": [
+      "s1",
+      "s2",
+      "w2",
+      "w3",
+      "l1",
+      "l2"
+    ],
+    "bonusEliminations": []
+  },
+  "solution": {
+    "suspectId": "s3",
+    "weaponId": "w1",
+    "locationId": "l3"
+  },
+  "qaPattern": {
+    "anchorSource": "clue:c1",
+    "anchorComponent": "weapon",
+    "miniGameClueId": "",
+    "miniGameRole": "pivot",
+    "designIntent": "Bu vaka, kanit zincirini adim adim daraltarak tek cozume goturur; her temel ipucu ayri bir izgara iliskisini kapatir."
+  },
+  "qaPortfolioRegistry": {
+    "entries": [
+      {
+        "puzzleId": "konakta-gece-yarisi-cinayeti",
+        "note": "self"
+      }
+    ]
+  },
+  "caseTier": "standard",
+  "isPremium": false,
+  "difficultyLevel": 1
+}

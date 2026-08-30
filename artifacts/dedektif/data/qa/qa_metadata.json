@@ -1,0 +1,97 @@
+{
+  "version": 1,
+  "cases": {
+    "konakta-gece-yarisi-cinayeti": {
+      "clues": {
+        "c1": {
+          "logicRules": [
+            {
+              "action": "eliminate",
+              "pair": [
+                "w3",
+                "l3"
+              ]
+            }
+          ],
+          "qaRationale": {
+            "matrixEffect": "İp ≠ Mutfak elenir",
+            "evidenceLink": "ipucu metnindeki dogrudan gozlem",
+            "evidenceKind": "physical"
+          },
+          "qaSemanticFacts": [
+            {
+              "kind": "crime_component",
+              "component": "weapon",
+              "entityId": "w1",
+              "evidence": "Kurban zehirlenmemiş veya iple boğulmamış; derin bir kesici alet darbesiyle hayatını kaybetmiş."
+            }
+          ],
+          "isCrimeAnchor": true
+        },
+        "c2": {
+          "logicRules": [
+            {
+              "action": "eliminate",
+              "pair": [
+                "s3",
+                "l1"
+              ]
+            }
+          ],
+          "qaRationale": {
+            "matrixEffect": "Zeynep Hanım ≠ Kütüphane elenir",
+            "evidenceLink": "ipucu metnindeki dogrudan gozlem",
+            "evidenceKind": "physical"
+          }
+        },
+        "c3": {
+          "logicRules": [
+            {
+              "action": "eliminate",
+              "pair": [
+                "w3",
+                "l1"
+              ]
+            }
+          ],
+          "qaRationale": {
+            "matrixEffect": "İp ≠ Kütüphane elenir",
+            "evidenceLink": "ipucu metnindeki dogrudan gozlem",
+            "evidenceKind": "physical"
+          }
+        },
+        "c4": {
+          "logicRules": [
+            {
+              "action": "confirm",
+              "pair": [
+                "s3",
+                "w1"
+              ]
+            }
+          ],
+          "qaRationale": {
+            "matrixEffect": "Zeynep Hanım ↔ Makas dogrulanir",
+            "evidenceLink": "kan",
+            "evidenceKind": "forensic"
+          }
+        }
+      },
+      "qaPattern": {
+        "anchorSource": "clue:c1",
+        "anchorComponent": "weapon",
+        "miniGameClueId": "",
+        "miniGameRole": "pivot",
+        "designIntent": "Bu vaka, kanit zincirini adim adim daraltarak tek cozume goturur; her temel ipucu ayri bir izgara iliskisini kapatir."
+      },
+      "qaPortfolioRegistry": {
+        "entries": [
+          {
+            "puzzleId": "konakta-gece-yarisi-cinayeti",
+            "note": "self"
+          }
+        ]
+      }
+    }
+  }
+}
