@@ -6,9 +6,10 @@ import {
   StyleSheet,
   Text,
   View,
+  type ImageSourcePropType,
 } from "react-native";
 
-const BADGE_IMAGES: Record<string, ReturnType<typeof require>> = {
+const BADGE_IMAGES: Record<string, ImageSourcePropType> = {
   caylak: require("../assets/images/badge_caylak.png"),
   dedektif: require("../assets/images/badge_dedektif.png"),
   baskomiser: require("../assets/images/badge_bas_komiser.png"),

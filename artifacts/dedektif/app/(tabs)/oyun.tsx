@@ -73,12 +73,12 @@ import Animated, {
   Easing,
 } from "react-native-reanimated";
 
-const DIFF_IMAGES: Record<string, ReturnType<typeof require>> = {
+const DIFF_IMAGES: Record<string, ImageSourcePropType> = {
   caylak: require("@/assets/images/diff_caylak.png"),
   dedektif: require("@/assets/images/diff_dedektif.png"),
   baskomiser: require("@/assets/images/diff_bas_komiser.png"),
 };
-const BADGE_IMAGES: Record<string, ReturnType<typeof require>> = {
+const BADGE_IMAGES: Record<string, ImageSourcePropType> = {
   caylak: require("@/assets/images/badge_caylak.png"),
   dedektif: require("@/assets/images/badge_dedektif.png"),
   baskomiser: require("@/assets/images/badge_bas_komiser.png"),

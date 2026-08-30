@@ -1,4 +1,6 @@
-const PUZZLE_ASSET_MAP: Record<string, number> = {
+import type { ImageSourcePropType } from "react-native";
+
+const PUZZLE_ASSET_MAP: Record<string, ImageSourcePropType> = {
   konakta_s1: require("../assets/images/puzzle_assets/konakta_s1.png"),
   konakta_s2: require("../assets/images/puzzle_assets/konakta_s2.png"),
   konakta_s3: require("../assets/images/puzzle_assets/konakta_s3.png"),
@@ -866,7 +868,7 @@ export function isPuzzleAsset(icon: string | undefined): boolean {
   return typeof icon === "string" && icon.startsWith("pa:");
 }
 
-export function getPuzzleAsset(icon: string): number | undefined {
+export function getPuzzleAsset(icon: string): ImageSourcePropType | undefined {
   const key = icon.slice(3);
   return PUZZLE_ASSET_MAP[key];
 }
