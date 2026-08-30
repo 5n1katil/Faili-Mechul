@@ -42,6 +42,9 @@ jobs:
       - name: Test checkpoint recovery and rejected-candidate feedback without API calls
         run: node .case-qa/fm_case_qa_repair_state_test.mjs
 
+      - name: Test real Termal repair and offline single-case pilot
+        run: node .case-qa/fm_case_qa_termal_regression_test.mjs
+
       - name: Test behavioral calibration and authoring isolation
         run: node .case-qa/fm_case_qa_behavioral_calibration_test.mjs
 
@@ -62,6 +65,18 @@ jobs:
 
       - name: Certify exact sources and HTML simulator
         run: node .case-qa/fm_case_qa_certify.mjs
+
+      - name: Validate application compatibility for reviewed case delivery
+        shell: bash
+        run: |
+          corepack enable
+          corepack prepare pnpm@10.34.5 --activate
+          pnpm install --frozen-lockfile
+          pnpm --filter @workspace/dedektif validate
+          pnpm --filter @workspace/dedektif validate:parmak-izi
+          pnpm --filter @workspace/scripts exec node --import tsx "$GITHUB_WORKSPACE/artifacts/dedektif/scripts/check-solvability.js"
+          pnpm --filter @workspace/dedektif typecheck
+          pnpm --filter @workspace/dedektif build:web
 
       - name: Upload certification evidence
         if: always()

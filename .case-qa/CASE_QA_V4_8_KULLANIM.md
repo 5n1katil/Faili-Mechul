@@ -1,5 +1,7 @@
 # Case QA v4.8 — güvenli, kaldığı yerden devam eden onarım
 
+Güncel teslim ve gerçek vaka kanıtı: [Case QA v4.9](CASE_QA_V4_9_SONUC.md). Bu belge v4.8 geçmişini açıklar.
+
 ## Ne değişti?
 
 - v4.6/v4.7 yanıt önbellekleri varsa eski yama zincirleri **ücret ödenmeden** yeniden uygulanır ve gerçek HTML motorunda ölçülür. Önbelleğin hâlâ bulunması gerekir; bulunmuyorsa geçmiş 97 puanlık adayın kurtarıldığı iddia edilmez.

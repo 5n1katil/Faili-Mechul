@@ -5,6 +5,7 @@ import crypto from 'node:crypto';
 import { createRequire } from 'node:module';
 import { pathToFileURL } from 'node:url';
 import { evaluatePreclueLeakage } from './case_qa_preclue_guard.mjs';
+import { assertNearReadyCleanup } from './fm_case_qa_cleanup_guard.mjs';
 import { normalizeRuleLabels, readCheckpoint, saveCheckpoint, replayCachedRepairs, rejectionFeedback, formatRunSummary } from './fm_case_qa_repair_state.mjs';
 
 const require = createRequire(import.meta.url);
@@ -25,7 +26,7 @@ const AI_ENABLED = String(env.FM_QA_ALLOW_AI || 'false').toLowerCase() === 'true
 const APPLY_TO_WORKTREE = String(env.FM_QA_APPLY_TO_WORKTREE || 'false').toLowerCase() === 'true';
 const CASE_LIMIT = Math.max(0, Number(env.FM_QA_CASE_LIMIT || 0));
 const CASE_IDS = parseCaseIds(env.FM_QA_CASE_IDS);
-const PROMPT_VERSION = 'fm-case-qa-patch-v4.8.0';
+const PROMPT_VERSION = 'fm-case-qa-patch-v4.9.0';
 const AUTHORING_PROMPT_VERSION = 'fm-case-qa-authoring-v4.6.0';
 
 function clone(value) { return value == null ? value : JSON.parse(JSON.stringify(value)); }
@@ -813,6 +814,8 @@ function compactReport(result, leakage) {
     blockers: result.blockers,
     fixes: result.fixes,
     advisories: result.advisories,
+    score_breakdown: result.scoreBreakdown,
+    quality_findings: result.qualityFindings,
     gates: result.gates,
     leakage: {
       status: leakage.status,
@@ -831,7 +834,8 @@ function buildPrompt({ caseData, baselineResult, leakage, phase, previousAttempt
   const directnessConvergence = /^terra_final_verifier_(?:9|10)$/.test(phase);
   const surgicalConvergence = /^terra_final_verifier_(?:7|8)$/.test(phase);
   const scoreConvergence = phase === 'exact_score_cleanup' || /^terra_final_verifier_(?:5|6)$/.test(phase);
-  const phaseInstruction = phase === 'luna_first_pass' && !scoreConvergence
+  const nearReadyInstruction = `Bounded near-ready cleanup. Read score_breakdown and quality_findings as well as fixes and advisories: a missing top-level fix does NOT mean no score deficit. Preserve all passed gates. Correct types to match real evidence, never relabel for points. Use profile-grounded prose where literal-name advice remains. Do not infer a mandatory number of confirm rules from difficulty alone; follow the actual HTML findings. At most ONE clue's logicRules may change, together with truthful matching text and semantic evidence. Other clue prose may be refined without changing its deduction. Preserve clue count, IDs, order, bonus/anchor roles, every entity, story, qaPolicy and qaPattern. No suppression flags. Synchronize any changed clue's qaSemanticFacts in BOTH clue-local and top-level lists. Do not delete facts still stated in the text. A broader reconstruction will be rejected in code, even if the model claims success.`;
+  const phaseInstruction = phase === 'exact_score_cleanup' ? nearReadyInstruction : phase === 'luna_first_pass' && !scoreConvergence
     ? 'Reconstruct missing authoring evidence and repair only verified playability failures. Internally form a complete repair checklist before emitting operations.'
     : directnessConvergence
       ? `Low-difficulty exact-score convergence: preserve solution IDs, entity IDs, clue IDs, icons, visual identity, case identity and every passed safety gate. The remaining score loss is the 1-star directness rule. Rebuild only the necessary core clue text, deductionHint, logicRules and their matching QA-only evidence as one coherent chain with at least two direct confirm rules, a varied confirm/eliminate rhythm, at least four individually necessary non-bonus clues, and exactly one final suspect|weapon|location solution without bonuses. Keep every bonus useful but unnecessary. Make the mini-game explanation functionally describe the kind of deduction gained without naming any suspect, weapon or location. Do not touch story, profiles or unrelated names. Internally simulate removal of each core clue and the full visible-evidence chain before emitting the patch. The result must be score=100 and productionReady=true.`
@@ -842,15 +846,18 @@ function buildPrompt({ caseData, baselineResult, leakage, phase, previousAttempt
     : phase.startsWith('terra_final_verifier')
       ? `Final convergence pass: produce the complete minimal patch that clears every remaining required gate (${failedRequiredGates.join(', ') || 'none'}). This is an active repair pass, not a review. Preserve every currently passed gate and do not reintroduce earlier leakage. If incremental edits cannot make the core deduction unique, replace the necessary clue fields as a coherent set. Before emitting operations, verify internally that: (1) at least four non-bonus clues are individually necessary and together force exactly one suspect|weapon|location solution without bonus clues; (2) every player-visible entity reference is represented by that same clue's logicRules; (3) every bonus clue has a useful matrix effect but is unnecessary; and (4) deductionHint never names its answer.`
       : 'Repair only the remaining deterministic failures in the current candidate. Re-read every failed gate, preserve every passed gate, and do not repeat already-passed repairs.';
-  return `${phaseInstruction}
-
-Allowed JSON Pointer paths:
-- /story, /atmosphere, /subtitle, /deductionSummary, /assetManifest
+  const allowedPaths = phase === 'exact_score_cleanup'
+    ? '- /clues/<index>/(text|type|deductionHint|qaRationale|qaSemanticFacts)\n- /clues/<ONE index>/logicRules\n- /qaSemanticFacts ONLY for sources of edited clues; preserve unrelated facts\n- /qaPattern/designIntent ONLY to describe the actual revised chain'
+    : `- /story, /atmosphere, /subtitle, /deductionSummary, /assetManifest
 - /suspects/<index>/(name|description|detail|info|profile|visualDefinition|visualProfile|generationPrompt|avatarPrompt)
 - /weapons/<index>/(name|description|detail|info|profile|visualDefinition|visualProfile|generationPrompt|avatarPrompt)
 - /locations/<index>/(name|description|detail|info|profile|visualDefinition|visualProfile|generationPrompt|avatarPrompt)
 - /clues/<index>/<any field except id>
-- /qaPattern, /qaPortfolioRegistry, /qaSemanticFacts, /qaPolicy, /qaNameRationales, /intentionalMononymIds, /qaAuthoringVersion, /qaDeductionGraph
+- /qaPattern, /qaPortfolioRegistry, /qaSemanticFacts, /qaPolicy, /qaNameRationales, /intentionalMononymIds, /qaAuthoringVersion, /qaDeductionGraph`;
+  return `${phaseInstruction}
+
+Allowed JSON Pointer paths:
+${allowedPaths}
 
 CASE:
 ${JSON.stringify(caseData)}
@@ -911,6 +918,12 @@ function protectedIdentity(caseData) {
 function normalizeCandidateMetadata(engine, candidate) {
   const output = normalizeRuleLabels(candidate);
   const profile = engine.fmPatternProfile(engine.normalize(clone(output)));
+  if (output.qaPattern) {
+    const signature = engine.fmProfileVector(profile);
+    for (const key of ['anchorSig', 'firstSig', 'actions', 'axes', 'miniSig']) {
+      if (Object.hasOwn(output.qaPattern, key)) output.qaPattern[key] = signature[key];
+    }
+  }
   if (isPlainObject(output.qaPattern) && typeof profile.anchor?.source === 'string') {
     // Reflect the actual existing anchor; never invent its semantic evidence.
     output.qaPattern.anchorSource = profile.anchor.source;
@@ -1198,7 +1211,9 @@ async function main() {
           key,
           maxOutputTokens: Number(attempt.maxOutputTokens || policy.models.max_output_tokens || 12000)
         });
-        const candidate = normalizeCandidateMetadata(engine, applyPatchPlanSafely(current, response.plan));
+        const patched = applyPatchPlanSafely(current, response.plan);
+        if (nearReady) assertNearReadyCleanup(current, patched);
+        const candidate = normalizeCandidateMetadata(engine, patched);
         const assessed = evaluate(engine, state.original, candidate);
         const previousReadiness = readiness(current, currentEval);
         const candidateReadiness = readiness(candidate, assessed);
@@ -1591,6 +1606,9 @@ export {
   parseCaseIds,
   normalizeCandidateMetadata,
   protectedIdentity,
+  parseStandard,
+  replaceStandardCases,
+  restoreBaselineAuthoring,
   selectEntriesForMode,
   stripAuthoring
 };
