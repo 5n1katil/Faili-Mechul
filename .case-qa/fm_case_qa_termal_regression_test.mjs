@@ -6,7 +6,7 @@ import crypto from 'node:crypto';
 import {spawnSync} from 'node:child_process';
 import {fileURLToPath} from 'node:url';
 import {loadEngine, evaluateCase} from './fm_case_qa_core.cjs';
-import {normalizeCandidateMetadata, authoringContract, authoringCompleteness, buildPrompt, stripAuthoring, parseStandard} from './fm_case_qa_runner.mjs';
+import {normalizeCandidateMetadata, authoringContract, authoringCompleteness, buildPrompt, stripAuthoring, parseStandard, restoreBaselineAuthoring} from './fm_case_qa_runner.mjs';
 import {assertNearReadyCleanup} from './fm_case_qa_cleanup_guard.mjs';
 import {evaluatePreclueLeakage} from './case_qa_preclue_guard.mjs';
 import {repairTermal} from './fixtures/termal_reviewed_repair.mjs';
@@ -85,7 +85,12 @@ if (process.env.FM_QA_TEST_NO_NETWORK === 'true') {
   const outputCases=parseStandard(fs.readFileSync(path.join(temp,'puzzles.ts'),'utf8')).cases;
   assert.deepEqual(outputCases,sourceCases);
   assert.deepEqual(JSON.parse(fs.readFileSync(path.join(temp,'puzzles_database.json'),'utf8')),JSON.parse(fs.readFileSync('artifacts/dedektif/data/puzzles_database.json','utf8')));
-  assert.deepEqual(stripAuthoring(sourceCases.find(c=>c.id===fixture.identity.case_id)),stripAuthoring(candidate));
+  const currentSource=sourceCases.find(c=>c.id===fixture.identity.case_id);
+  assert.deepEqual(stripAuthoring(currentSource),restoreBaselineAuthoring(candidate,currentSource));
+  assert.equal(Object.hasOwn(currentSource,'deductionSummary'),false);
+  const projected=structuredClone(candidate);delete projected.deductionSummary;
+  assert.equal(evaluateCase(engine,projected).productionReady,true);
+  assert.throws(()=>restoreBaselineAuthoring({...candidate,unsupportedField:'not an app field'},currentSource),/STANDARD_APP_CONTRACT/);
   const evidence={schema_version:'fm_termal_regression_v4_9',source_run:33305310409,simulator_sha256:fixture.identity.simulator_hash,
     baseline:97,final:100,production_ready:true,score_breakdown:evaluated.scoreBreakdown,quality_findings:evaluated.qualityFindings,
     gates:evaluated.gates,independent_solver:{answer:solve(core),ablations},api_calls:0,api_cost_usd:0,

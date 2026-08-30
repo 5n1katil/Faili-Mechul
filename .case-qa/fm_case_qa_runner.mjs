@@ -995,6 +995,14 @@ function restoreBaselineAuthoring(productionCandidate, original) {
     if (!old) continue;
     for (const key of CLUE_AUTHORING) if (old[key] !== undefined) clue[key] = clone(old[key]);
   }
+  if (original.id && !original.puzzleId) {
+    // Puzzle's actual TS contract has no deductionSummary. It is a model's
+    // authoring note, retained in report/checkpoint evidence, not an app field.
+    delete output.deductionSummary;
+    const fields = new Set(['id', 'title', 'story', 'suspects', 'weapons', 'locations', 'clues', 'solution', 'difficulty', 'dayIndex', 'solvabilityMeta']);
+    const unknown = Object.keys(output).filter(key => !fields.has(key));
+    if (unknown.length) throw new Error(`STANDARD_APP_CONTRACT: Unsupported Puzzle fields: ${unknown.join(', ')}`);
+  }
   return output;
 }
 
@@ -1475,6 +1483,13 @@ async function main() {
     if (!accepted.has(id)) continue;
     const candidate = accepted.get(id);
     const production = restoreBaselineAuthoring(candidate, entry.raw);
+    if (entry.tier === 'standard') {
+      const projected = clone(candidate);
+      delete projected.deductionSummary;
+      if (!evaluate(engine, entry.raw, projected).passed || !authoringContract(projected).passed || !authoringCompleteness(projected).complete) {
+        throw new Error(`STANDARD_APP_CONTRACT: ${id} failed QA after runtime projection`);
+      }
+    }
     sidecar.cases[id] = {
       schema_version: 'fm_case_qa_sidecar_entry_v2',
       simulator_version: '29.4',

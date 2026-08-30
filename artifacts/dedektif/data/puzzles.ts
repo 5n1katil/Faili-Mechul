@@ -1086,8 +1086,7 @@ export const PUZZLES: Puzzle[] = [
       "suspectId": "s2",
       "weaponId": "w1",
       "locationId": "l3"
-    },
-    "deductionSummary": "Sauna bankındaki biyolojik transfer önce olay yerini sabitler. Kart kayıtları iki şüphelinin bu odaya erişemediğini gösterir. Toksikoloji ve giysi incelemesi ise bu odada iki yöntemi dışarıda bırakır; geriye tek şüpheli ve tek yöntem kalır. Hangi kayıt ya da adli bulgu kaldırılırsa birden fazla seçenek yeniden mümkün olur?"
+    }
   },
   {
     id: "sehrin-kalbi-kadikoy",

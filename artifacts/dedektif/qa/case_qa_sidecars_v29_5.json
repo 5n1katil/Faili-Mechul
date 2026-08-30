@@ -333,7 +333,7 @@
       "schema_version": "fm_case_qa_sidecar_entry_v2",
       "simulator_version": "29.4",
       "prompt_version": "reviewed-local-v4.9",
-      "source_content_hash": "d1cd492604708c5fc140d84f8e4c2b3cef2643dfa79c9c82517c875c3c86dc1a",
+      "source_content_hash": "8ebc3728be4ebedeb080892eab81589f446e23e6813a941239f9c88484feea3a",
       "overlay": {
         "top_level": {
           "qaPattern": {
