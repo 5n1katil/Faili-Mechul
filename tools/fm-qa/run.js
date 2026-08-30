@@ -418,7 +418,7 @@ async function processCase(entry, position) {
 
   if (q.total >= ACCEPT && !flags.length) {
     log(`  [${position}] ${id.padEnd(28)} ZATEN ${q.total}/100 — atlandi (maliyet 0)`);
-    return { case_id: id, tier: entry.tier, status: 'already_passing', score: q.total, attempts: 0 };
+    return { case_id: id, tier: entry.tier, status: 'already_passing', score: q.total, attempts: 0, best_case_kept: current };
   }
 
   log(`  [${position}] ${id.padEnd(28)} baslangic ${q.total}/100, ${flags.length} engelleyici bulgu`);
@@ -438,6 +438,13 @@ async function processCase(entry, position) {
   } else {
     log('      ucretsiz iskele: gecerli kural seti bulunamadi');
   }
+
+  /* Iskele sifir engelleyici bulguya ulastiysa vaka yapisal olarak SAGLAMDIR.
+     Bu durumda AI'nin isi yalnizca yumusak puani yukseltmektir; bir denemede
+     iyilestiremezse elimizdekini korur ve dururuz. AI'nin saglam bir vakayi
+     bozmasina izin verilmez. */
+  const polishOnly = flags.length === 0;
+  if (polishOnly) log('      (cila modu: yapisal olarak saglam, AI yalnizca iyilestirebilir)');
 
   /* Iskele tek basina yeterliyse LLM'e hic gitmeyiz. */
   if (q.total >= ACCEPT && !flags.length) {
@@ -498,18 +505,34 @@ async function processCase(entry, position) {
     if (signature === lastSignature) {
       log(`      deneme ${attempt}: onceki denemeyle ayni sonuc, tekrar denemek anlamsiz — duruluyor`);
       return {
-        case_id: id, tier: entry.tier, status: 'quarantined', score: scored.q.total,
+        case_id: id, tier: entry.tier, status: 'quarantined', score: q.total,
         attempts: attempt, stopped_early: true,
-        blocking_flag_count: newFlags.length,
-        soft_gap_only: newFlags.length === 0,
-        remaining_flags: newFlags.slice(0, 10)
+        blocking_flag_count: flags.length,
+        soft_gap_only: flags.length === 0,
+        remaining_flags: flags.slice(0, 10),
+        best_case_kept: current
       };
     }
     lastSignature = signature;
 
     /* Ilerleme varsa yeni haliyle devam et; yoksa ayni tabandan tekrar dene. */
-    if (scored.q.total > q.total || newFlags.length < flags.length) {
+    const improved = scored.q.total > q.total || newFlags.length < flags.length;
+    if (improved) {
       current = candidate; q = scored.q; report = scored.report; flags = newFlags;
+    }
+
+    /* Cila modunda AI iyilestiremediyse israr etmeyiz: elimizdeki saglam
+       surumu koruyup dururuz. Boylece hem para hem kalite korunur. */
+    if (polishOnly && !improved) {
+      log(`      deneme ${attempt}: iyilestirme yok — saglam surum korunuyor, duruluyor`);
+      return {
+        case_id: id, tier: entry.tier,
+        status: q.total >= ACCEPT ? 'repaired' : 'quarantined',
+        score: q.total, attempts: attempt, stopped_early: true,
+        blocking_flag_count: flags.length, soft_gap_only: flags.length === 0,
+        repaired_case: q.total >= ACCEPT ? current : undefined,
+        best_case_kept: current
+      };
     }
     previousProblem = [
       'Puan hala ' + scored.q.total + '/100.',
@@ -523,7 +546,8 @@ async function processCase(entry, position) {
     case_id: id, tier: entry.tier, status: 'quarantined', score: q.total, attempts: MAX_ATTEMPTS,
     blocking_flag_count: flags.length,
     soft_gap_only: flags.length === 0,
-    remaining_flags: flags.slice(0, 10)
+    remaining_flags: flags.slice(0, 10),
+    best_case_kept: current
   };
 }
 
@@ -557,7 +581,22 @@ async function processCase(entry, position) {
         log(`      YAZIM HATASI: ${e.message}`);
       }
     }
+    /* Elle dogrulama icin: motora verilen TAM vaka JSON'unu diske yaz.
+       Bu dosyayi kendi HTML simulatorunuze yapistirip ayni puani gormelisiniz. */
+    try {
+      const dumpDir = p('qa-reports/cases');
+      fs.mkdirSync(dumpDir, { recursive: true });
+      const best = r.repaired_case || r.best_case_kept;
+      if (best) {
+        fs.writeFileSync(path.join(dumpDir, r.case_id + '.simulator-input.json'),
+          JSON.stringify(C.prepareForEngine(best, entry.tier), null, 2), 'utf8');
+      }
+      fs.writeFileSync(path.join(dumpDir, r.case_id + '.baseline.json'),
+        JSON.stringify(C.prepareForEngine(C.applyQaMetadata(entry.raw, qaStore), entry.tier), null, 2), 'utf8');
+    } catch (e) { /* dokum basarisiz olsa da kosu devam eder */ }
+
     delete r.repaired_case;
+    delete r.best_case_kept;
     results.push(r);
   }
 
