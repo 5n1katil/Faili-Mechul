@@ -5,6 +5,7 @@ on:
     paths:
       - ".case-qa/**"
       - ".github/workflows/fm-case-qa-v3.yml"
+      - ".github/workflows/fm-case-qa-v5*.yml"
       - ".github/workflows/fm-case-qa-certification.yml"
       - ".github/workflows/fm-avatar-certification.yml"
       - ".github/workflows/fm-avatar-auto-merge.yml"
@@ -17,6 +18,7 @@ permissions:
 
 jobs:
   certify:
+    name: Case QA v5 production gates
     runs-on: ubuntu-latest
     timeout-minutes: 30
     env:
@@ -38,6 +40,11 @@ jobs:
 
       - name: Test bounded patch-contract recovery
         run: node .case-qa/fm_case_qa_contract_recovery_test.mjs
+
+      - name: Test sequential selection, durable budget and safe publication
+        run: |
+          node .case-qa/v5/test.mjs
+          node .case-qa/v5/control-tower-test.mjs
 
       - name: Test checkpoint recovery and rejected-candidate feedback without API calls
         run: node .case-qa/fm_case_qa_repair_state_test.mjs

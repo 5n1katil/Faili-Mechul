@@ -1,0 +1,434 @@
+{
+  "name": "Faili Mechul — Case QA v5 One Click",
+  "nodes": [
+    {
+      "id": "M01",
+      "name": "M01 Execute",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        400
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "M02",
+      "name": "M02 Prepare",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        230,
+        400
+      ],
+      "parameters": {
+        "jsCode": "const request_id='n8n-'+String($execution.id)+'-'+Date.now();return [{json:{repository:'5n1katil/Faili-Mechul',workflow:'fm-case-qa-v5.yml',request_id,started:Date.now(),deadline:Date.now()+90*60*1000,dispatch_body:JSON.stringify({ref:'main',inputs:{request_id,audit_only:'false'}})}}];"
+      }
+    },
+    {
+      "id": "M03",
+      "name": "M03 Dispatch",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        460,
+        400
+      ],
+      "parameters": {
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "githubOAuth2Api",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/vnd.github+json"
+            },
+            {
+              "name": "X-GitHub-Api-Version",
+              "value": "2022-11-28"
+            }
+          ]
+        },
+        "method": "POST",
+        "url": "={{ 'https://api.github.com/repos/' + $json.repository + '/actions/workflows/' + $json.workflow + '/dispatches' }}",
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ $json.dispatch_body }}",
+        "options": {}
+      }
+    },
+    {
+      "id": "M04",
+      "name": "M04 Wait",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        690,
+        400
+      ],
+      "parameters": {
+        "amount": 20,
+        "unit": "seconds"
+      }
+    },
+    {
+      "id": "M05",
+      "name": "M05 Find Exact Run",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        920,
+        400
+      ],
+      "parameters": {
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "githubOAuth2Api",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/vnd.github+json"
+            },
+            {
+              "name": "X-GitHub-Api-Version",
+              "value": "2022-11-28"
+            }
+          ]
+        },
+        "url": "={{ 'https://api.github.com/repos/' + $('M02 Prepare').first().json.repository + '/actions/workflows/fm-case-qa-v5.yml/runs?event=workflow_dispatch&branch=main&per_page=100' }}",
+        "options": {}
+      }
+    },
+    {
+      "id": "M06",
+      "name": "M06 Correlate",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1150,
+        400
+      ],
+      "parameters": {
+        "jsCode": "const cfg=$('M02 Prepare').first().json;const body=$json.body??$json;const matches=(body.workflow_runs||[]).filter(r=>r.display_title==='v5-'+cfg.request_id&&r.event==='workflow_dispatch'&&r.head_branch==='main');if(matches.length>1)throw new Error('Ambiguous run correlation; no redispatch.');const r=matches[0];if(Date.now()>cfg.deadline&&r?.status!=='completed')throw new Error('POLL_TIMEOUT: GitHub may still be running. Do not redispatch automatically. '+(r?.html_url||''));return [{json:{run_id:r?.id||null,run_url:r?.html_url||null,conclusion:r?.conclusion||null,terminal:r?.status==='completed'}}];"
+      }
+    },
+    {
+      "id": "M07",
+      "name": "M07 Completed",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1380,
+        400
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "terminal",
+              "leftValue": "={{ $json.terminal ? 'finished' : 'waiting' }}",
+              "rightValue": "finished",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "M08",
+      "name": "M08 Evidence",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1610,
+        270
+      ],
+      "parameters": {
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "githubOAuth2Api",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/vnd.github+json"
+            },
+            {
+              "name": "X-GitHub-Api-Version",
+              "value": "2022-11-28"
+            }
+          ]
+        },
+        "url": "={{ 'https://api.github.com/repos/5n1katil/Faili-Mechul/actions/runs/' + $json.run_id + '/artifacts?per_page=100' }}",
+        "options": {}
+      }
+    },
+    {
+      "id": "M09",
+      "name": "M09 Select Evidence",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1840,
+        270
+      ],
+      "parameters": {
+        "jsCode": "const r=$('M06 Correlate').last().json;const a=($json.artifacts||$json.body?.artifacts||[]).filter(a=>a.name==='fm-case-qa-v5-'+r.run_id&&!a.expired);if(a.length!==1)throw new Error('No unique execution evidence; status is NOT complete. '+r.run_url);return [{json:{artifact_id:a[0].id}}];"
+      }
+    },
+    {
+      "id": "M10",
+      "name": "M10 Download Evidence",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2070,
+        270
+      ],
+      "parameters": {
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "githubOAuth2Api",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/vnd.github+json"
+            },
+            {
+              "name": "X-GitHub-Api-Version",
+              "value": "2022-11-28"
+            }
+          ]
+        },
+        "url": "={{ 'https://api.github.com/repos/5n1katil/Faili-Mechul/actions/artifacts/' + $json.artifact_id + '/zip' }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file",
+              "outputPropertyName": "data"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "M11",
+      "name": "M11 Archive Metadata",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2300,
+        270
+      ],
+      "parameters": {
+        "jsCode": "const item=$input.first();if(!item.binary?.data)throw new Error('Evidence ZIP missing');item.binary.data.fileName='evidence.zip';item.binary.data.fileExtension='zip';item.binary.data.mimeType='application/zip';return [item];"
+      }
+    },
+    {
+      "id": "M12",
+      "name": "M12 Unzip",
+      "type": "n8n-nodes-base.compression",
+      "typeVersion": 1.1,
+      "position": [
+        2530,
+        270
+      ],
+      "parameters": {
+        "operation": "decompress",
+        "binaryPropertyName": "data",
+        "outputPrefix": "file_"
+      }
+    },
+    {
+      "id": "M13",
+      "name": "M13 Verified Result",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2760,
+        270
+      ],
+      "parameters": {
+        "jsCode": "const r=$('M06 Correlate').last().json;let result=null;const items=$input.all();for(let i=0;i<items.length;i++){for(const [key,b] of Object.entries(items[i].binary||{})){if(String(b.fileName||'').replace(/\\\\/g,'/').endsWith('result.json')){const data=await this.helpers.getBinaryDataBuffer(i,key);const parsed=JSON.parse(data.toString('utf8'));if(parsed.schema==='fm_case_qa_v5_result'){if(result)throw new Error('Multiple v5 result files');result=parsed;}}}}if(!result)throw new Error('Verified v5 result missing. '+r.run_url);if(r.conclusion!=='success'||!['CASE_COMPLETED','COMPLETE'].includes(result.status)||result.main_synchronized!==true)throw new Error(JSON.stringify({status:result.status,case_id:result.selected_id,best_score:result.best_score,error:result.error||null,run_url:r.run_url,next:'Same unfinished case remains active; no completion claimed.'}));return [{json:{...result,run_id:r.run_id,run_url:r.run_url}}];"
+      }
+    },
+    {
+      "id": "NOTE",
+      "name": "NOTE v5 Setup",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        100,
+        40
+      ],
+      "parameters": {
+        "content": "## Case QA v5 — One Click\n\nImport only AFTER v5 GitHub deployment and protection/token preflight are complete. Bind your existing GitHub OAuth credential once to HTTP nodes. No case ID, case limit or branch input.\n\nEach Execute: main audit → active/next incomplete → bounded repair → independent CI → squash → main verification.\n\nGreen requires verified CASE_COMPLETED or COMPLETE, never merely a green HTTP request. No avatar generation. Cloud import/execution still requires live acceptance testing.",
+        "width": 1000,
+        "height": 280
+      }
+    }
+  ],
+  "connections": {
+    "M01 Execute": {
+      "main": [
+        [
+          {
+            "node": "M02 Prepare",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "M02 Prepare": {
+      "main": [
+        [
+          {
+            "node": "M03 Dispatch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "M03 Dispatch": {
+      "main": [
+        [
+          {
+            "node": "M04 Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "M04 Wait": {
+      "main": [
+        [
+          {
+            "node": "M05 Find Exact Run",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "M05 Find Exact Run": {
+      "main": [
+        [
+          {
+            "node": "M06 Correlate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "M06 Correlate": {
+      "main": [
+        [
+          {
+            "node": "M07 Completed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "M07 Completed": {
+      "main": [
+        [
+          {
+            "node": "M08 Evidence",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "M04 Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "M08 Evidence": {
+      "main": [
+        [
+          {
+            "node": "M09 Select Evidence",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "M09 Select Evidence": {
+      "main": [
+        [
+          {
+            "node": "M10 Download Evidence",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "M10 Download Evidence": {
+      "main": [
+        [
+          {
+            "node": "M11 Archive Metadata",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "M11 Archive Metadata": {
+      "main": [
+        [
+          {
+            "node": "M12 Unzip",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "M12 Unzip": {
+      "main": [
+        [
+          {
+            "node": "M13 Verified Result",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "executionTimeout": 5700
+  },
+  "tags": []
+}

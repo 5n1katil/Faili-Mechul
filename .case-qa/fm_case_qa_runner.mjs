@@ -1611,6 +1611,17 @@ async function main() {
 }
 
 export {
+  PATCH_SCHEMA,
+  SYSTEM_PROMPT,
+  bootstrapAuthoring,
+  buildPortfolioRegistry,
+  compactReport,
+  evaluate,
+  extractOutputText,
+  mergeSidecar,
+  stableHash,
+  validateCandidateContract,
+  assessmentPenalty,
   applyAuthoringPatchPlanSafely,
   applyPatchPlanSafely,
   authoringCandidateDisposition,

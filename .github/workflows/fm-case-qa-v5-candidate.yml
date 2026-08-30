@@ -1,0 +1,69 @@
+name: Case QA v5 Candidate CI
+run-name: v5-cert-${{ inputs.nonce }}
+on:
+  workflow_dispatch:
+    inputs:
+      base_sha:
+        required: true
+        type: string
+      head_sha:
+        required: true
+        type: string
+      case_id:
+        required: true
+        type: string
+      nonce:
+        required: true
+        type: string
+permissions:
+  contents: read
+jobs:
+  production-gates:
+    name: Case QA v5 production gates
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.head_sha }}
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Bind workflow run to exact candidate and unchanged main
+        env:
+          HEAD_INPUT: ${{ inputs.head_sha }}
+          BASE_INPUT: ${{ inputs.base_sha }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          test "$GITHUB_SHA" = "$HEAD_INPUT"
+          test "$(gh api repos/$GITHUB_REPOSITORY/git/ref/heads/main --jq .object.sha)" = "$BASE_INPUT"
+      - name: Verify exact single-case diff and all completed cases
+        env:
+          FM_QA_V5_BASE_SHA: ${{ inputs.base_sha }}
+          FM_QA_V5_HEAD_SHA: ${{ inputs.head_sha }}
+          FM_QA_V5_SELECTED_ID: ${{ inputs.case_id }}
+        run: node .case-qa/v5/certify-diff.mjs
+      - name: Independent exact HTML parity and regression suites
+        run: |
+          node .case-qa/fm_case_qa_certify.mjs
+          node .case-qa/v5/test.mjs
+          node .case-qa/fm_case_qa_repair_state_test.mjs
+          node .case-qa/fm_case_qa_termal_regression_test.mjs
+      - name: App validator, fingerprints, solvability, types and web build
+        run: |
+          corepack enable
+          corepack prepare pnpm@10.34.5 --activate
+          pnpm install --frozen-lockfile
+          pnpm --filter @workspace/dedektif validate
+          pnpm --filter @workspace/dedektif validate:parmak-izi
+          pnpm --filter @workspace/scripts exec node --import tsx "$GITHUB_WORKSPACE/artifacts/dedektif/scripts/check-solvability.js"
+          pnpm --filter @workspace/dedektif typecheck
+          pnpm --filter @workspace/dedektif build:web
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: fm-case-qa-v5-candidate-${{ github.run_id }}
+          path: .case-qa-output
+          include-hidden-files: true
+          retention-days: 30

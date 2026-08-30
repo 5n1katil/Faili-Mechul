@@ -1,0 +1,86 @@
+name: Case QA v5 One Click
+run-name: v5-${{ inputs.request_id || github.run_id }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      request_id:
+        description: Control Tower correlation ID (automatic)
+        required: false
+        type: string
+      audit_only:
+        description: Free read-only audit; normal Execute leaves this false
+        default: false
+        type: boolean
+
+permissions:
+  contents: write
+  pull-requests: write
+  actions: write
+
+concurrency:
+  group: fm-case-qa-production
+  cancel-in-progress: false
+
+jobs:
+  sequential:
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    env:
+      # Fine-grained token needs Administration:read to inspect strict protection.
+      # Never grant Administration:write to the automation.
+      GH_TOKEN: ${{ secrets.CASE_QA_GITHUB_TOKEN || github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check production configuration before paid work
+        if: ${{ !inputs.audit_only }}
+        run: node --input-type=module -e "import {read} from './.case-qa/v5/core.mjs'; import {preflight} from './.case-qa/v5/github.mjs'; preflight(read('.case-qa/v5/policy.json'));"
+      - name: Certify exact HTML and deterministic contract tests
+        env:
+          FM_QA_CERT_PHASE: pre
+        run: |
+          node .case-qa/v5/test.mjs
+          node .case-qa/v5/control-tower-test.mjs
+          node .case-qa/fm_case_qa_certify.mjs
+      - name: Select next incomplete case and resume bounded repair
+        id: repair
+        env:
+          OPENAI_API_KEY: ${{ inputs.audit_only && '' || secrets.OPENAI_API_KEY }}
+          FM_QA_V5_ALLOW_AI: ${{ !inputs.audit_only }}
+          FM_QA_V5_AUDIT: ${{ inputs.audit_only }}
+        run: node .case-qa/v5/run.mjs
+      - name: Install pinned app dependencies
+        if: ${{ !inputs.audit_only && (steps.repair.outputs.status == 'ready_for_gates' || steps.repair.outputs.status == 'all_cases_qa_ready') }}
+        run: |
+          corepack enable
+          corepack prepare pnpm@10.34.5 --activate
+          pnpm install --frozen-lockfile
+      - name: Validate application before creating a PR
+        if: ${{ !inputs.audit_only && (steps.repair.outputs.status == 'ready_for_gates' || steps.repair.outputs.status == 'all_cases_qa_ready') }}
+        run: |
+          git diff --check
+          pnpm --filter @workspace/dedektif validate
+          pnpm --filter @workspace/dedektif validate:parmak-izi
+          pnpm --filter @workspace/scripts exec node --import tsx "$GITHUB_WORKSPACE/artifacts/dedektif/scripts/check-solvability.js"
+          pnpm --filter @workspace/dedektif typecheck
+          pnpm --filter @workspace/dedektif build:web
+      - name: Publish PR, explicitly trigger CI, squash and verify main
+        if: ${{ !inputs.audit_only && (steps.repair.outputs.status == 'ready_for_gates' || steps.repair.outputs.status == 'all_cases_qa_ready') }}
+        run: node .case-qa/v5/publish.mjs
+      - name: Preserve true result even when execution stops
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fm-case-qa-v5-${{ github.run_id }}
+          path: .case-qa-output
+          include-hidden-files: true
+          retention-days: 30
+      - name: Fail workflow when a case is still unresolved
+        if: ${{ !inputs.audit_only }}
+        run: node --input-type=module -e "import {read} from './.case-qa/v5/core.mjs'; const r=read('.case-qa-output/v5/result.json'); if(!['CASE_COMPLETED','COMPLETE'].includes(r.status)||!r.main_synchronized) process.exit(1);"

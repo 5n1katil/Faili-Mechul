@@ -1,0 +1,54 @@
+{
+  "schema_version": "fm_case_qa_sequential_policy_v5",
+  "source": {
+    "repository": "5n1katil/Faili-Mechul",
+    "branch": "main",
+    "standard_path": "artifacts/dedektif/data/puzzles.ts",
+    "premium_path": "artifacts/dedektif/data/puzzles_database.json",
+    "sidecar_path": "artifacts/dedektif/qa/case_qa_sidecars_v29_5.json",
+    "expected_standard_cases": 45,
+    "expected_premium_cases": 60,
+    "expected_total_cases": 105
+  },
+  "simulator": {
+    "version": "29.4",
+    "minimum_score": 100,
+    "require_production_ready": true,
+    "require_core_necessity": true,
+    "require_identity_guard": true,
+    "require_preclue_guard_pass": true,
+    "require_avatar_prompt_risk_false": true,
+    "path": ".case-qa/Faili_Mechul_Vaka_Simulatoru_v29_4_Otomasyon_Temeli.html",
+    "git_blob_sha": "cb53e6613d6379de097599634de26524f4510fbc"
+  },
+  "authoring": {
+    "calibration_case_ids": [
+      "rc_001",
+      "pp_001"
+    ]
+  },
+  "models": {
+    "first_pass": "gpt-5.6-luna",
+    "escalation": "gpt-5.6-terra",
+    "pricing_usd_per_million_tokens": {
+      "gpt-5.6-luna": {
+        "input": 0.2,
+        "output": 1.2
+      },
+      "gpt-5.6-terra": {
+        "input": 2,
+        "output": 12
+      }
+    }
+  },
+  "sequential": {
+    "max_calls_per_execute": 3,
+    "execute_budget_usd": 0.25,
+    "case_budget_usd": 2.0,
+    "campaign_budget_usd": 10.0,
+    "max_output_tokens": 6000,
+    "http_timeout_ms": 120000,
+    "required_ci_context": "Case QA v5 production gates",
+    "state_branch": "automation/case-qa-v5-state"
+  }
+}
