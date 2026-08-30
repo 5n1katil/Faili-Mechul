@@ -29,7 +29,7 @@ on:
         default: ""
         type: string
       publish_draft_pr:
-        description: Tam 105/105 kampanyayi izlenebilir PR uzerinden yayinla
+        description: Pilot secimini taslak PR olarak sun; full icin 105/105 kosulu zorunlu
         required: true
         default: true
         type: boolean
@@ -278,6 +278,9 @@ jobs:
           {
             echo "# Faili Meçhul production campaign"
             echo
+            if [ -f .case-qa-output/case_qa_summary.md ]; then
+              cat .case-qa-output/case_qa_summary.md
+            fi
             if [ -f .case-qa-output/fm_case_qa_release_manifest.json ]; then
               echo "- Production gate: $(jq -r '.production_ready' .case-qa-output/fm_case_qa_release_manifest.json)"
               echo "- Exact simulator: $(jq -r '.exact_pass_count' .case-qa-output/fm_case_qa_release_manifest.json)/$(jq -r '.exact_case_count' .case-qa-output/fm_case_qa_release_manifest.json)"
