@@ -8556,21 +8556,21 @@
             {
               "id": "s1",
               "name": "CEO Marcus Vault",
-              "icon": "👨‍💼",
+              "icon": "pa:dij_001_s1",
               "description": "Axiom’un kurucusu; çöküşten önce nakit çıkışı hazırladığı görülüyor.",
               "detail": "V-11 kartı yalnız CEO Ofisi iç kamera sistemiyle eşleşir. Finansal kaçış planı kurmuş olabilir; teknik erişimi sınırlıdır."
             },
             {
               "id": "s2",
               "name": "Baş Hacker 'GhostKey'",
-              "icon": "🧑‍💻",
+              "icon": "pa:dij_001_s2",
               "description": "Kimliği bilinmeyen, borsanın imza doğrulama katmanına sızan anonim aktör.",
               "detail": "G-17 oturum etiketiyle iz bırakır. Zincir içi sözleşmeleri manipüle edebilecek kadar yetkin, fiziksel kimliği belirsiz."
             },
             {
               "id": "s3",
               "name": "Risk Direktörü Priya Sen",
-              "icon": "📊",
+              "icon": "pa:dij_001_s3",
               "description": "Yönetimin görmezden geldiği risk raporlarını hazırlayan matematikçi.",
               "detail": "On dört uyarı raporu hazırladı. Sistem açığını herkesten önce gördü; işini ve itibarını aynı gecede kaybetti."
             }
@@ -8579,21 +8579,21 @@
             {
               "id": "w1",
               "name": "Smart Contract Tuzağı",
-              "icon": "📜",
+              "icon": "pa:dij_001_w1",
               "description": "Transferi donduran, dijital kayba yol açan kötü amaçlı koşul dizisi.",
               "detail": "Biyolojik bir ölüm mekanizması değildir; parayı kilitler, insanı değil."
             },
             {
               "id": "w2",
               "name": "Fiziksel Saldırı",
-              "icon": "👊",
+              "icon": "pa:dij_001_w2",
               "description": "Yakın temas, darbe veya zor kullanmaya dayanan klasik yöntem.",
               "detail": "Olay yerindeki sessizlik ve düzen bu yöntemi tartışmalı bırakır."
             },
             {
               "id": "w3",
               "name": "Zehirli Enerji İçeceği",
-              "icon": "🥤",
+              "icon": "pa:dij_001_w3",
               "description": "Soğuk odadaki içeceğe karıştırılan hızlı etkili madde.",
               "detail": "Kutunun iç yüzeyinde görünmeyen doz çizgisi ve kapak contasında farklı bir basınç izi var."
             }
@@ -8602,21 +8602,21 @@
             {
               "id": "l1",
               "name": "Sunucu Odası",
-              "icon": "💽",
+              "icon": "pa:dij_001_l1",
               "description": "Borsanın fiziksel çekirdeği; erişim kartıyla açılan, kameraları sınırlı soğuk bölüm.",
               "detail": "Kapı okuyucusu fiziksel sertifika ister; salt uzaktan oturum burada yetmez."
             },
             {
               "id": "l2",
               "name": "CEO Ofisi",
-              "icon": "🏢",
+              "icon": "pa:dij_001_l2",
               "description": "Kırk beşinci kattaki camla çevrili karar odası.",
               "detail": "İç kamera mührü, çalışan kartlarını saniye hassasiyetinde doğrular."
             },
             {
               "id": "l3",
               "name": "Dark Web Buluşma Noktası",
-              "icon": "🕸️",
+              "icon": "pa:dij_001_l3",
               "description": "Şifreli kimliklerin yalnızca rumuzla konuştuğu kapalı kanal.",
               "detail": "Fiziksel oda değil, gizli anlaşmaların dijital buluşma alanı."
             }
