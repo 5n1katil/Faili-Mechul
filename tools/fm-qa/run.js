@@ -419,6 +419,7 @@ async function processCase(entry, position) {
   log(`  [${position}] ${id.padEnd(28)} baslangic ${q.total}/100, ${flags.length} engelleyici bulgu`);
 
   let previousProblem = null;
+  let lastSignature = null;      /* ayni sonucu tekrar tekrar uretmeyi engeller */
   for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
     const briefing = SOLVER.buildLogicBriefing(current);
     let patch;
@@ -462,6 +463,21 @@ async function processCase(entry, position) {
       return { case_id: id, tier: entry.tier, status: 'repaired', score: scored.q.total, attempts: attempt, repaired_case: candidate };
     }
 
+    /* Ayni puan + ayni bulgular tekrar geldiyse model tikanmistir; bos yere
+       para harcamayalim. */
+    const signature = scored.q.total + '|' + newFlags.join('~');
+    if (signature === lastSignature) {
+      log(`      deneme ${attempt}: onceki denemeyle ayni sonuc, tekrar denemek anlamsiz — duruluyor`);
+      return {
+        case_id: id, tier: entry.tier, status: 'quarantined', score: scored.q.total,
+        attempts: attempt, stopped_early: true,
+        blocking_flag_count: newFlags.length,
+        soft_gap_only: newFlags.length === 0,
+        remaining_flags: newFlags.slice(0, 10)
+      };
+    }
+    lastSignature = signature;
+
     /* Ilerleme varsa yeni haliyle devam et; yoksa ayni tabandan tekrar dene. */
     if (scored.q.total > q.total || newFlags.length < flags.length) {
       current = candidate; q = scored.q; report = scored.report; flags = newFlags;
@@ -474,7 +490,12 @@ async function processCase(entry, position) {
     ].filter(Boolean).join('\n');
   }
 
-  return { case_id: id, tier: entry.tier, status: 'quarantined', score: q.total, attempts: MAX_ATTEMPTS, remaining_flags: flags.slice(0, 10) };
+  return {
+    case_id: id, tier: entry.tier, status: 'quarantined', score: q.total, attempts: MAX_ATTEMPTS,
+    blocking_flag_count: flags.length,
+    soft_gap_only: flags.length === 0,
+    remaining_flags: flags.slice(0, 10)
+  };
 }
 
 (async () => {
@@ -523,6 +544,9 @@ async function processCase(entry, position) {
     already_passing: by('already_passing'),
     repaired: by('repaired'),
     quarantined: by('quarantined'),
+    /* Engelleyici bulgusu SIFIR olan ama esigin altinda kalanlar: bunlar
+       icerik olarak saglam, yalnizca motorun yumusak tavsiyeleri eksik. */
+    quarantined_soft_gap_only: results.filter(r => r.status === 'quarantined' && r.soft_gap_only).length,
     errors: by('error') + by('persist_failed'),
     token_usage: usageTotal,
     results
@@ -539,6 +563,7 @@ async function processCase(entry, position) {
     `- Zaten 100 olan: **${summary.already_passing}**`,
     `- Onarilan: **${summary.repaired}**`,
     `- Karantinaya alinan: **${summary.quarantined}**`,
+    `  - bunlardan engelleyici bulgusu SIFIR olanlar (yalnizca yumusak tavsiye eksik): **${summary.quarantined_soft_gap_only}**`,
     `- Hata: **${summary.errors}**`,
     `- Token: girdi ${usageTotal.input}, cikti ${usageTotal.output}, dusunme ${usageTotal.thinking}, cagri ${usageTotal.calls}`,
     '',
@@ -550,7 +575,7 @@ async function processCase(entry, position) {
 
   log('');
   log('================ OZET ================');
-  log(`islenen=${summary.processed} zaten100=${summary.already_passing} onarilan=${summary.repaired} karantina=${summary.quarantined} hata=${summary.errors}`);
+  log(`islenen=${summary.processed} zaten100=${summary.already_passing} onarilan=${summary.repaired} karantina=${summary.quarantined} (bunlardan yalnizca-yumusak-fark=${summary.quarantined_soft_gap_only}) hata=${summary.errors}`);
   log(`token: girdi=${usageTotal.input} cikti=${usageTotal.output} dusunme=${usageTotal.thinking} cagri=${usageTotal.calls}`);
   log('======================================');
 
