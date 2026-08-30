@@ -17,13 +17,13 @@ const DEFAULTS = {
   gemini: {
     model: process.env.FM_MODEL || 'gemini-flash-lite-latest',
     endpoint: m => `https://generativelanguage.googleapis.com/v1beta/models/${m}:generateContent`,
-    maxOutputTokens: 16384,
-    thinkingBudget: Number(process.env.FM_THINKING_BUDGET || 2048)
+    maxOutputTokens: 32768,
+    thinkingBudget: Number(process.env.FM_THINKING_BUDGET || 1024)
   },
   openai: {
     model: process.env.FM_MODEL || 'gpt-5-mini',
     endpoint: process.env.FM_OPENAI_BASE || 'https://api.openai.com/v1/chat/completions',
-    maxOutputTokens: 16384
+    maxOutputTokens: 32768
   }
 };
 
