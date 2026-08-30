@@ -1,0 +1,299 @@
+{
+  "schemaVersion": 1,
+  "policy": "Şüpheli kartı tek başına çözülen şüpheli, silah veya mekânı benzersiz biçimde ele vermemeli. Karakter tanımı ve kasıtlı ipucu zincirleri korunur.",
+  "premiumPackIds": [
+    "pack_001",
+    "pack_002",
+    "pack_003",
+    "pack_004",
+    "pack_005",
+    "pack_fenomen",
+    "pack_mitoloji",
+    "pack_dijital",
+    "pack_edebi"
+  ],
+  "catalogOnlyProducts": [
+    {
+      "packId": "pack_vaka_arsivi",
+      "reason": "Tekil veritabanı paketi değil; mevcut vaka paketlerini bir arada sunan toplu satış ürünüdür."
+    }
+  ],
+  "reviewedCases": {
+    "ott_001": "safe",
+    "ott_002": "updated",
+    "ott_003": "updated",
+    "ott_004": "safe",
+    "ott_005": "safe",
+    "hw_001": "safe",
+    "hw_002": "updated",
+    "hw_003": "safe",
+    "hw_004": "safe",
+    "hw_005": "updated",
+    "sf_001": "intentional-clue",
+    "sf_002": "intentional-clue",
+    "sf_003": "intentional-clue",
+    "sf_004": "intentional-clue",
+    "sf_005": "intentional-clue",
+    "rc_001": "safe",
+    "rc_002": "safe",
+    "rc_003": "intentional-clue",
+    "rc_004": "intentional-clue",
+    "rc_005": "intentional-clue",
+    "pp_001": "safe",
+    "pp_002": "safe",
+    "pp_003": "safe",
+    "pp_004": "safe",
+    "pp_005": "safe",
+    "fen_premium_001": "intentional-clue",
+    "fen_premium_002": "safe",
+    "fen_premium_003": "safe",
+    "fen_premium_004": "intentional-clue",
+    "fen_premium_005": "safe",
+    "mit_001": "intentional-clue",
+    "mit_002": "updated",
+    "mit_003": "intentional-clue",
+    "mit_004": "intentional-clue",
+    "mit_005": "updated",
+    "dij_001": "safe",
+    "dij_002": "safe",
+    "dij_003": "updated",
+    "dij_004": "updated",
+    "dij_005": "safe",
+    "ede_001": "updated",
+    "ede_002": "safe",
+    "ede_003": "safe",
+    "ede_004": "safe",
+    "ede_005": "safe"
+  },
+  "updatedFields": [
+    {
+      "puzzleId": "ott_002",
+      "suspectId": "s2",
+      "fields": ["description"],
+      "reason": "Çözüm mekânının anahtarına sahip olduğunu ipuçlarından önce açıklıyordu."
+    },
+    {
+      "puzzleId": "ott_003",
+      "suspectId": "s3",
+      "fields": ["description"],
+      "reason": "Mürekkep izi ve kimyasal bilgisi birlikte çözülen Zehirli Mürekkep'i doğrudan çağrıştırıyordu."
+    },
+    {
+      "puzzleId": "hw_002",
+      "suspectId": "s2",
+      "fields": ["description"],
+      "reason": "Çözüm mekânı Kostüm Odası'nı şüpheli kartında açıkça adlandırıyordu."
+    },
+    {
+      "puzzleId": "hw_005",
+      "suspectId": "s4",
+      "fields": ["description", "detail"],
+      "reason": "Reçete, içki servisi, anahtar ve bar mandalı birlikte çözüm yönteminin operasyon yolunu açığa çıkarıyordu."
+    },
+    {
+      "puzzleId": "mit_002",
+      "suspectId": "s2",
+      "fields": ["detail"],
+      "reason": "Çözülen bitkisel zehrin vaka içindeki özel adını ipuçlarından önce veriyordu."
+    },
+    {
+      "puzzleId": "mit_005",
+      "suspectId": "s2",
+      "fields": ["detail"],
+      "reason": "Şüphelinin çözülen uyku tozunu hazırladığını doğrudan söylüyordu."
+    },
+    {
+      "puzzleId": "dij_003",
+      "suspectId": "s3",
+      "fields": ["detail"],
+      "reason": "Şüpheliyi çözülen kablo yöntemiyle doğrudan eşleştiriyordu."
+    },
+    {
+      "puzzleId": "dij_004",
+      "suspectId": "s2",
+      "fields": ["description", "detail"],
+      "reason": "UPS ve akü anahtarını çözüm şüphelisine ipuçlarından önce tahsis ediyordu."
+    },
+    {
+      "puzzleId": "ede_001",
+      "suspectId": "s2",
+      "fields": ["description"],
+      "reason": "Çözülen zehre erişimi gereksiz biçimde doğrudan açıklıyordu."
+    }
+  ],
+  "intentionalReferences": [
+    {
+      "puzzleId": "ott_002",
+      "suspectId": "s1",
+      "kind": "location",
+      "reason": "Arka odalara hiç girmediği bilgisi çözüm şüphelisini değil, alternatif şüpheliyi mekândan eleyen kasıtlı karakter bilgisidir."
+    },
+    {
+      "puzzleId": "hw_002",
+      "suspectId": "s3",
+      "kind": "location",
+      "reason": "Kostüm odası kayıtlarını inceleme görevi set güvenliğinin doğal sorumluluğudur ve çözüm şüphelisini göstermez."
+    },
+    {
+      "puzzleId": "sf_001",
+      "suspectId": "s3",
+      "kind": "location",
+      "reason": "Laboratuvar panellerini okuma bilgisi mesleki karakter tanımıdır; belirli Laboratuvar A eşleşmesini tek başına vermez."
+    },
+    {
+      "puzzleId": "sf_002",
+      "suspectId": "s3",
+      "kind": "semantic",
+      "fragments": ["biyoseal kartuşu"],
+      "reason": "Biyoseal kartuş, c5 ve c6 içindeki kasıtlı Nano-Zehir/Hakim Odası kanıt zinciridir."
+    },
+    {
+      "puzzleId": "sf_003",
+      "suspectId": "s2",
+      "kind": "semantic",
+      "fragments": ["soğuk taşıma termosunu"],
+      "reason": "Numaralı soğuk taşıma termosu, c6 içindeki kasıtlı kriyojenik sıvı kanıtıdır."
+    },
+    {
+      "puzzleId": "sf_004",
+      "suspectId": "s1",
+      "kind": "location",
+      "reason": "Deney odası düzeneklerini denetleme görevi fizikçinin doğal mesleki sorumluluğudur ve çözüm şüphelisini göstermez."
+    },
+    {
+      "puzzleId": "sf_004",
+      "suspectId": "s2",
+      "kind": "semantic",
+      "fragments": ["sarı emniyet mandalını"],
+      "reason": "Sarı mandal rutini, c5 içindeki kasıtlı profil ve sabotaj kanıtıdır."
+    },
+    {
+      "puzzleId": "sf_005",
+      "suspectId": "s2",
+      "kind": "location",
+      "reason": "Projektörün sol paneli ve kırmızı bant, vakadaki kasıtlı bakım/ipucu zinciridir."
+    },
+    {
+      "puzzleId": "rc_003",
+      "suspectId": "s2",
+      "kind": "semantic",
+      "fragments": ["kehribar renkli tıpayla"],
+      "reason": "Kehribar tıpa, c1 ve c5 içindeki kasıtlı şerbet/geçit kanıt zinciridir."
+    },
+    {
+      "puzzleId": "rc_004",
+      "suspectId": "s3",
+      "kind": "location",
+      "reason": "Boş çerçeve deposuna erişim, danışman rolü ve profil sentezi mekaniği için kasıtlı fırsat bilgisidir."
+    },
+    {
+      "puzzleId": "rc_005",
+      "suspectId": "s2",
+      "kind": "location",
+      "reason": "Sığınak envanterine erişim, alternatif şüphelinin lojistik rolünü tanımlayan kasıtlı fırsat bilgisidir."
+    },
+    {
+      "puzzleId": "rc_005",
+      "suspectId": "s3",
+      "kind": "weapon",
+      "reason": "Fotoğraftaki buz kazması, çözüm şüphelisini değil alternatif şüpheliyi karşılaştırmaya yarayan kasıtlı görsel kanıttır."
+    },
+    {
+      "puzzleId": "rc_005",
+      "suspectId": "s4",
+      "kind": "weapon",
+      "reason": "Kırmızı saplı kazma, c8 ipucunun bilinçli profil sinyalidir."
+    },
+    {
+      "puzzleId": "rc_005",
+      "suspectId": "s4",
+      "kind": "location",
+      "reason": "Sığınak anahtarı, c8 ipucunun bilinçli profil sinyalidir."
+    },
+    {
+      "puzzleId": "fen_premium_001",
+      "suspectId": "s2",
+      "kind": "location",
+      "reason": "Atlas kataloglama bilgisi akademisyenin mesleki kimliğidir; belirli salon eşleşmesini tek başına vermez."
+    },
+    {
+      "puzzleId": "fen_premium_004",
+      "suspectId": "s4",
+      "kind": "location",
+      "reason": "Mahzen, şişe ve kırmızı mühür ilişkisi c4 içindeki kasıtlı vals dikişi kanıtıdır."
+    },
+    {
+      "puzzleId": "mit_001",
+      "suspectId": "s3",
+      "kind": "semantic",
+      "fragments": ["altın bağlayıcı", "koleksiyon odasındaki şişeleri"],
+      "reason": "Tavus pelerini bağlayıcısı ve koleksiyon şişeleri, b1 içindeki kasıtlı adak/iz kanıtıdır."
+    },
+    {
+      "puzzleId": "mit_003",
+      "suspectId": "s3",
+      "kind": "weapon",
+      "reason": "Hançer kılıfındaki at mührü, c4 içindeki kasıtlı Sinon-hançer eşleştirme kanıtıdır."
+    },
+    {
+      "puzzleId": "mit_004",
+      "suspectId": "s2",
+      "kind": "semantic",
+      "fragments": ["kum girdabı ritüellerinde"],
+      "reason": "Kum girdabı ve siyah reçine, c5 içindeki kasıtlı Set-tuzak kanıt zinciridir."
+    },
+    {
+      "puzzleId": "dij_004",
+      "suspectId": "s1",
+      "kind": "location",
+      "reason": "Sunucu odası erişimi alternatif şüphelinin ürün yöneticisi rolüne ait fırsat bilgisidir; çözüm şüphelisini göstermez."
+    }
+  ],
+  "forbiddenRegressions": [
+    {
+      "puzzleId": "ott_002",
+      "suspectId": "s2",
+      "fragments": ["gizli değerleme odasının anahtar"]
+    },
+    {
+      "puzzleId": "ott_003",
+      "suspectId": "s3",
+      "fragments": ["hokka mürekkebi", "kimyevi maddelere"]
+    },
+    {
+      "puzzleId": "hw_002",
+      "suspectId": "s2",
+      "fragments": ["kostüm odalarında"]
+    },
+    {
+      "puzzleId": "hw_005",
+      "suspectId": "s4",
+      "fragments": ["reçeteli saatleri", "içki servisini", "bar dolabının mandal"]
+    },
+    {
+      "puzzleId": "mit_002",
+      "suspectId": "s2",
+      "fragments": ["kara ot"]
+    },
+    {
+      "puzzleId": "mit_005",
+      "suspectId": "s2",
+      "fragments": ["uyku tozu hazırlar"]
+    },
+    {
+      "puzzleId": "dij_003",
+      "suspectId": "s3",
+      "fragments": ["kablo altyapısını"]
+    },
+    {
+      "puzzleId": "dij_004",
+      "suspectId": "s2",
+      "fragments": ["ups bakım anahtar", "akü anahtarı"]
+    },
+    {
+      "puzzleId": "ede_001",
+      "suspectId": "s2",
+      "fragments": ["tüm zehirlere erişimi"]
+    }
+  ]
+}

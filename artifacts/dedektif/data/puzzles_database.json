@@ -216,7 +216,7 @@
             {
               "id": "s2",
               "name": "Genç Çırak Mehmet",
-              "description": "Maktulün kumar borçları yüzünden sıkışmış, dükkanın her kuytusunu, gizli değerleme odasının anahtarını ve eşyaların yerini avucunun içi gibi bilen 3 yıllık çırağı.",
+              "description": "Maktulün kumar borçları yüzünden sıkışmış, dükkânın envanterini ve eşyaların yerini iyi bilen üç yıllık çırağı.",
               "detail": "19 yaşında, zeki, ama son ay borçlandığı söyleniyor.",
               "parmakIziDeseni": "fp_loop_left",
               "icon": "pa:ott_002_s2"
@@ -405,7 +405,7 @@
               "id": "s3",
               "name": "Nermin Hanım",
               "icon": "pa:ott_003_s3",
-              "description": "Parmaklarında hokka mürekkebi izleri taşıyan; yabancı dillere, kimyevi maddelere ve sarayın gizli tarihine hakim olan sessiz entelektüel."
+              "description": "Yabancı dillere ve sarayın gizli tarihine hâkim, sessiz entelektüel."
             }
           ],
           "weapons": [
@@ -1212,7 +1212,7 @@
               "id": "s2",
               "name": "Yardımcı Yönetmen Priya Shah",
               "icon": "pa:hw_002_s2",
-              "description": "172 cm boyunda, rakip stüdyo ile gizli transfer görüşmeleri yürüten, kostüm odalarında sık sık köstebeklik şüphesiyle tasarımcının radarına giren hırslı sinemacı.",
+              "description": "172 cm boyunda, rakip stüdyo ile gizli transfer görüşmeleri yürüten, tasarımcının radarına giren hırslı sinemacı.",
               "detail": "38 yaşında, kararlı, hesaplı ve hırslı."
             },
             {
@@ -1802,8 +1802,8 @@
               "id": "s4",
               "name": "Eski Asistan Grace Lee",
               "icon": "pa:hw_005_s4",
-              "description": "Evelyn Marlowe'un on yıllık asistanı. İkona ait reçeteli saatleri, içki servisini ve kapalı odaların anahtarlarını herkesten iyi bilen sessiz çalışan.",
-              "detail": "45 yaşında. Bergamotlu el kremi kullanır; sol işaret parmağındaki ince yanık izi, bar dolabının mandalını her açışında aynı noktada bıraktığı teması ayırt edici kılar."
+              "description": "Evelyn Marlowe’un on yıllık asistanı; malikanedeki günlük düzeni herkesten iyi bilen sessiz çalışan.",
+              "detail": "45 yaşında. Bergamotlu el kremi kullanır; sol işaret parmağında ince bir yanık izi vardır."
             }
           ],
           "weapons": [
@@ -7535,7 +7535,7 @@
               "name": "Şaman Albastı",
               "icon": "pa:mit_002_s2",
               "description": "Ruh geçiş ritüellerini yöneten şaman.",
-              "detail": "Kara Ot’u nasıl kurutacağını, hangi kabın önce ısınacağını yalnız o bilir."
+              "detail": "Ritüel bitkilerini kurutmayı ve hazırlık kaplarının sırasını yalnız o bilir."
             },
             {
               "id": "s3",
@@ -8285,7 +8285,7 @@
               "name": "Freya",
               "icon": "pa:mit_005_s2",
               "description": "Aşk, savaş ve Valkyrie seçiminin tanrıçası.",
-              "detail": "Gece çiçeklerinden uyku tozu hazırlar; seçki defterindeki isimleri yalnız kendi eliyle değiştirir."
+              "detail": "Seçki defterindeki isimleri yalnız kendi eliyle değiştirir."
             },
             {
               "id": "s3",
@@ -9079,7 +9079,7 @@
               "name": "Eski Ortak 'Nexus'",
               "icon": "🔗",
               "description": "Pazarın erken dönem ortağı; imza değişikliğiyle payı sıfıra düşürüldü.",
-              "detail": "N-31 kimlik etiketi yıllar önce çiftlik bakım sözleşmelerinde görünür. Kablo altyapısını en iyi bilen eski ortaktır."
+              "detail": "N-31 kimlik etiketi yıllar önceki ortaklık kayıtlarında görünür. Pazarın ilk dönem işleyişini en iyi bilen eski ortaktır."
             },
             {
               "id": "s4",
@@ -9377,8 +9377,8 @@
               "id": "s2",
               "name": "Tarık Demirbaş",
               "icon": "💾",
-              "description": "Veri mühendisi; kullanıcı dışa aktarımlarına ve UPS bakım anahtarlarına erişir. Veri mühendisi erişim kodu T-7; bakım anahtarı ve servis geçidi günlüklerine bağlıdır.",
-              "detail": "T-17 bakım kartı ve T-7 akü anahtarı ona tahsisli. Veri sızıntısı dosyasını ilk gören çalışanlardan biridir."
+              "description": "Veri mühendisi; kullanıcı dışa aktarımlarına ve altyapı bakım süreçlerine erişir.",
+              "detail": "T-17 bakım kartı ona tahsisli. Veri sızıntısı dosyasını ilk gören çalışanlardan biridir."
             },
             {
               "id": "s3",
@@ -9904,7 +9904,7 @@
               "id": "s2",
               "name": "Kimyager Mrs. Alderton",
               "icon": "noun-teacher-1908918-avatar.png",
-              "description": "Mahalle eczanesi sahibi. Tüm zehirlere erişimi var.",
+              "description": "Mahalle eczanesini işleten, soğukkanlı kimyager.",
               "detail": "55 yaşında, gözlüklü, soğukkanlı."
             },
             {

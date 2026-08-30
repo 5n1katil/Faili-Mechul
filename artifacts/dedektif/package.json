@@ -11,8 +11,10 @@
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "validate": "node scripts/validate-puzzles.js",
     "validate:parmak-izi": "node scripts/validate-parmak-izi.js",
+    "validate:premium-info": "node scripts/validate-premium-suspect-info.js",
+    "test:premium-info-validator": "node scripts/test-premium-suspect-info-validator.js",
     "check:solvability": "pnpm exec tsx scripts/check-solvability.js",
-    "validate:all": "npm run validate && npm run validate:parmak-izi && npm run check:solvability",
+    "validate:all": "npm run validate && npm run validate:parmak-izi && npm run validate:premium-info && npm run test:premium-info-validator && npm run check:solvability",
     "test:e2e": "playwright test --config=playwright.config.ts",
     "test:parmak-izi": "playwright test --config=playwright.config.ts e2e/parmak-izi.test.ts"
   },
