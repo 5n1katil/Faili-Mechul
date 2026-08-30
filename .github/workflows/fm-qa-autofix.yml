@@ -1,0 +1,150 @@
+name: Faili Mechul - QA Otomatik Onarim
+
+# Tek tikla calisir, arka planda ilerler, bilgisayarinizin acik olmasi gerekmez.
+# Islem bitince sonuclari bir dala yazar ve TASLAK PR acar.
+on:
+  workflow_dispatch:
+    inputs:
+      limit:
+        description: "Kac vaka islensin? (0 = hepsi / 105)"
+        required: false
+        default: "5"
+      start:
+        description: "Kacinci vakadan baslasin? (0 = bastan)"
+        required: false
+        default: "0"
+      only:
+        description: "Yalnizca tek bir vaka (ornek: mit_005). Bos birakilirsa yok sayilir."
+        required: false
+        default: ""
+      max_attempts:
+        description: "Vaka basina en fazla kac AI denemesi?"
+        required: false
+        default: "4"
+      model:
+        description: "Model kimligi"
+        required: false
+        default: "gemini-flash-lite-latest"
+      thinking_budget:
+        description: "Dusunme butcesi (token). Dusunme tokenlari CIKTI fiyatindan faturalanir."
+        required: false
+        default: "2048"
+      dry_run:
+        description: "true = hicbir dosya degistirilmez, yalnizca rapor uretilir"
+        required: false
+        default: "false"
+      open_pr:
+        description: "true = sonuclar icin taslak PR acilsin"
+        required: false
+        default: "true"
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: fm-qa-autofix
+  cancel-in-progress: false
+
+jobs:
+  onar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 330          # GitHub siniri 360 dk; altinda kaliyoruz
+
+    steps:
+      - name: Depoyu al
+        uses: actions/checkout@v4
+
+      - name: Node kur
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: API anahtarini dogrula
+        if: ${{ inputs.dry_run != 'true' }}
+        run: |
+          if [ -z "${{ secrets.GEMINI_API_KEY }}" ]; then
+            echo "::error::GEMINI_API_KEY secret tanimli degil. Settings > Secrets and variables > Actions altindan ekleyin."
+            exit 1
+          fi
+
+      - name: Calistirma dali olustur
+        id: dal
+        run: |
+          BRANCH="qa/autofix-$(date -u +%Y%m%d-%H%M%S)"
+          git checkout -b "$BRANCH"
+          echo "branch=$BRANCH" >> "$GITHUB_OUTPUT"
+
+      - name: QA onarim kosucusunu calistir
+        id: kosu
+        env:
+          FM_PROVIDER: ${{ inputs.dry_run == 'true' && 'mock' || 'gemini' }}
+          FM_MODEL: ${{ inputs.model }}
+          FM_THINKING_BUDGET: ${{ inputs.thinking_budget }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          node tools/fm-qa/run.js \
+            --repo="$GITHUB_WORKSPACE" \
+            --limit=${{ inputs.limit }} \
+            --start=${{ inputs.start }} \
+            --only="${{ inputs.only }}" \
+            --max-attempts=${{ inputs.max_attempts }} \
+            --acceptance=100 \
+            ${{ inputs.dry_run == 'true' && '--dry-run=true' || '' }} \
+            2>&1 | tee qa-run.log
+        continue-on-error: true
+
+      - name: Raporu is ozetine yaz
+        if: always()
+        run: |
+          if [ -f qa-reports/last-run.md ]; then
+            cat qa-reports/last-run.md >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "Rapor uretilemedi. Kayitlar:" >> "$GITHUB_STEP_SUMMARY"
+            tail -50 qa-run.log >> "$GITHUB_STEP_SUMMARY" || true
+          fi
+
+      - name: Raporlari eser olarak yukle
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: qa-raporlari
+          path: |
+            qa-reports/
+            qa-run.log
+          retention-days: 30
+
+      # Kosu yarida kesilse bile o ana kadarki ilerleme commit edilir.
+      - name: Degisiklikleri commit et
+        if: always() && inputs.dry_run != 'true'
+        id: commit
+        run: |
+          git config user.name "fm-qa-bot"
+          git config user.email "fm-qa-bot@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "degisti=false" >> "$GITHUB_OUTPUT"
+            echo "Degisiklik yok."
+          else
+            git commit -m "QA otomatik onarim: ${{ inputs.only != '' && inputs.only || format('{0} vaka', inputs.limit) }}"
+            git push origin "${{ steps.dal.outputs.branch }}"
+            echo "degisti=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Taslak PR ac
+        if: always() && inputs.dry_run != 'true' && inputs.open_pr == 'true' && steps.commit.outputs.degisti == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          BODY="Bu PR **taslak** olarak acildi ve otomatik merge EDILMEZ.
+
+          Vakalar projenin kendi v29.4 QA simulatorunden gecirildi. Yalnizca **100/100** alan
+          ve kimlik/cozum muhru bozulmayan vakalar yazildi.
+
+          Ayrintili rapor: calistirma ozetine ve \`qa-reports/\` eserlerine bakin."
+          gh pr create \
+            --draft \
+            --base main \
+            --head "${{ steps.dal.outputs.branch }}" \
+            --title "QA otomatik onarim (${{ inputs.only != '' && inputs.only || format('{0} vaka', inputs.limit) }})" \
+            --body "$BODY"
