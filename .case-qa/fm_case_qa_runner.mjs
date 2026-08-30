@@ -5,6 +5,7 @@ import crypto from 'node:crypto';
 import { createRequire } from 'node:module';
 import { pathToFileURL } from 'node:url';
 import { evaluatePreclueLeakage } from './case_qa_preclue_guard.mjs';
+import { normalizeRuleLabels, readCheckpoint, saveCheckpoint, replayCachedRepairs, rejectionFeedback, formatRunSummary } from './fm_case_qa_repair_state.mjs';
 
 const require = createRequire(import.meta.url);
 const { loadEngine, evaluateCase } = require('./fm_case_qa_core.cjs');
@@ -24,7 +25,7 @@ const AI_ENABLED = String(env.FM_QA_ALLOW_AI || 'false').toLowerCase() === 'true
 const APPLY_TO_WORKTREE = String(env.FM_QA_APPLY_TO_WORKTREE || 'false').toLowerCase() === 'true';
 const CASE_LIMIT = Math.max(0, Number(env.FM_QA_CASE_LIMIT || 0));
 const CASE_IDS = parseCaseIds(env.FM_QA_CASE_IDS);
-const PROMPT_VERSION = 'fm-case-qa-patch-v4.7.0';
+const PROMPT_VERSION = 'fm-case-qa-patch-v4.8.0';
 const AUTHORING_PROMPT_VERSION = 'fm-case-qa-authoring-v4.6.0';
 
 function clone(value) { return value == null ? value : JSON.parse(JSON.stringify(value)); }
@@ -824,13 +825,13 @@ function compactReport(result, leakage) {
   };
 }
 
-function buildPrompt({ caseData, baselineResult, leakage, phase, previousAttemptError = null }) {
+function buildPrompt({ caseData, baselineResult, leakage, phase, previousAttemptError = null, previousRejectedCandidates = [] }) {
   const requiredGateNames = ['coreNecessity', 'patternGovernance', 'contentAndNames', 'semanticContract', 'visibleEvidence', 'mechanicContract', 'bonusFunctionality'];
   const failedRequiredGates = requiredGateNames.filter((name) => baselineResult.gates?.[name]?.passed !== true);
   const directnessConvergence = /^terra_final_verifier_(?:9|10)$/.test(phase);
   const surgicalConvergence = /^terra_final_verifier_(?:7|8)$/.test(phase);
-  const scoreConvergence = /^terra_final_verifier_(?:5|6)$/.test(phase);
-  const phaseInstruction = phase === 'luna_first_pass'
+  const scoreConvergence = phase === 'exact_score_cleanup' || /^terra_final_verifier_(?:5|6)$/.test(phase);
+  const phaseInstruction = phase === 'luna_first_pass' && !scoreConvergence
     ? 'Reconstruct missing authoring evidence and repair only verified playability failures. Internally form a complete repair checklist before emitting operations.'
     : directnessConvergence
       ? `Low-difficulty exact-score convergence: preserve solution IDs, entity IDs, clue IDs, icons, visual identity, case identity and every passed safety gate. The remaining score loss is the 1-star directness rule. Rebuild only the necessary core clue text, deductionHint, logicRules and their matching QA-only evidence as one coherent chain with at least two direct confirm rules, a varied confirm/eliminate rhythm, at least four individually necessary non-bonus clues, and exactly one final suspect|weapon|location solution without bonuses. Keep every bonus useful but unnecessary. Make the mini-game explanation functionally describe the kind of deduction gained without naming any suspect, weapon or location. Do not touch story, profiles or unrelated names. Internally simulate removal of each core clue and the full visible-evidence chain before emitting the patch. The result must be score=100 and productionReady=true.`
@@ -868,6 +869,10 @@ ${JSON.stringify({
 
 Canonical logicRules shape is [{"action":"confirm","pair":["s1","w1"]}] or [{"action":"eliminate","pair":["s1","l2"]}]. action has no other accepted value; pair is exactly two existing string IDs from different axes. If a clue cannot support a safe pair, minimally rewrite that clue's player-visible text/hint together with its QA-only fields so the resulting deduction is explicit, fair and consistent with the unchanged solution.
 
+qaRationale.evidenceLink must quote or precisely explain the SAME clue's visible evidence (at least 18 characters). Do not invent evidence to satisfy metadata. matrixEffect is mechanically rendered using entity display names, not bare IDs. The one crime anchor must contain exactly one documented crime_component fact in that clue's qaSemanticFacts; do not remove a real player-visible fact to hide a leak.
+
+${previousRejectedCandidates.length ? `PREVIOUS CANDIDATES REJECTED BY THE EXACT SIMULATOR (these patches were NOT applied to CASE):\n${JSON.stringify(previousRejectedCandidates.slice(-2))}\nCorrect these concrete failures in your next patch against CASE. Do not repeat these rejected structures or treat the model's earlier self-assessment as a test result.` : ''}
+
 ${previousAttemptError ? `PREVIOUS PATCH WAS REJECTED BEFORE EVALUATION:\n${previousAttemptError}\nDo not repeat that invalid path or contract violation. Use only indexes and fields that exist in CASE.` : ''}`;
 }
 
@@ -891,6 +896,26 @@ function evaluate(engine, original, candidate) {
       raw_simulator_production_ready: result.productionReady === true
     }
   };
+}
+
+function protectedIdentity(caseData) {
+  const output = stripAuthoring(clone(caseData));
+  for (const field of ['story', 'atmosphere', 'subtitle', 'deductionSummary', 'assetManifest']) delete output[field];
+  for (const field of ['suspects', 'weapons', 'locations']) for (const entity of output[field] || []) {
+    for (const key of ['name', 'description', 'detail', 'info', 'profile', 'visualDefinition', 'visualProfile', 'generationPrompt', 'avatarPrompt']) delete entity[key];
+  }
+  output.clues = (output.clues || []).map((clue) => ({ id: clue.id }));
+  return stableHash(output);
+}
+
+function normalizeCandidateMetadata(engine, candidate) {
+  const output = normalizeRuleLabels(candidate);
+  const profile = engine.fmPatternProfile(engine.normalize(clone(output)));
+  if (isPlainObject(output.qaPattern) && typeof profile.anchor?.source === 'string') {
+    // Reflect the actual existing anchor; never invent its semantic evidence.
+    output.qaPattern.anchorSource = profile.anchor.source;
+  }
+  return output;
 }
 
 function assessmentPenalty(assessment) {
@@ -983,6 +1008,7 @@ async function main() {
   const registryEntries = buildPortfolioRegistry(engine, entries);
   const budget = new Budget(policy);
   const sourceSha = { standard: sha(standardSource), premium: sha(premiumSource), combined: sha(`${sha(standardSource)}:${sha(premiumSource)}`) };
+  const simulatorHash = sha(fs.readFileSync(SIMULATOR_PATH, 'utf8'));
 
   const concurrency = Math.max(1, Number(policy.budget.max_concurrent_calls || 4));
   const stateById = new Map(entries.map((entry) => {
@@ -1063,6 +1089,7 @@ async function main() {
     let current = initialCandidate;
     let currentEval = initialAssessment;
     let previousAttemptError = null;
+    const previousRejectedCandidates = [];
     let terminalStatus = 'quarantined_after_bounded_attempts';
     const recordedAttempts = [];
     const readiness = (candidate, assessed) => {
@@ -1071,7 +1098,7 @@ async function main() {
       return {
         completeness,
         contract,
-        passed: completeness.complete && contract.passed && assessed.passed === true,
+        passed: protectedIdentity(candidate) === protectedIdentity(state.original) && completeness.complete && contract.passed && assessed.passed === true,
         penalty: assessmentPenalty(assessed) + (completeness.missing.length * 1200) + (contract.errors.length * 1200)
       };
     };
@@ -1110,28 +1137,76 @@ async function main() {
           }))
         ]
       : [...baseAttempts, ...pilotExactScoreAttempts];
-    for (const attempt of attempts) {
-      const prompt = buildPrompt({ caseData: current, baselineResult: currentEval.result, leakage: currentEval.leakage, phase: attempt.phase, previousAttemptError });
-      const key = sha(`${PROMPT_VERSION}|${sourceSha.combined}|${id}|${scope}|${attempt.phase}|${attempt.model}|${stableHash(current)}`);
+    const safe = (candidate, assessed) => protectedIdentity(candidate) === protectedIdentity(state.original) && assessed.result.identityGuard?.passed === true;
+    const better = (candidate, assessed, baseline, baselineAssessment) => safe(candidate, assessed) &&
+      (readiness(candidate, assessed).passed || readiness(candidate, assessed).penalty < readiness(baseline, baselineAssessment).penalty);
+    const identity = { case_id: id, scope, source_case_hash: stableHash(state.original), simulator_hash: simulatorHash };
+    const recovered = replayCachedRepairs({
+      directory: CACHE_DIR, initial: initialCandidate,
+      versions: ['fm-case-qa-patch-v4.6.0', 'fm-case-qa-patch-v4.7.0'], attempts,
+      keyFor: (version, attempt, candidate) => sha(`${version}|${sourceSha.combined}|${id}|${scope}|${attempt.phase}|${attempt.model}|${stableHash(candidate)}`),
+      apply: applyPatchPlanSafely, assess: (candidate) => evaluate(engine, state.original, candidate), better
+    });
+    if (better(recovered.candidate, recovered.assessment, current, currentEval)) {
+      current = recovered.candidate;
+      currentEval = recovered.assessment;
+    }
+    const checkpoint = readCheckpoint(CACHE_DIR, identity);
+    if (checkpoint) {
       try {
+        validateCandidateContract(checkpoint);
+        checkpoint.qaPortfolioRegistry = clone(initialCandidate.qaPortfolioRegistry);
+        const assessed = evaluate(engine, state.original, checkpoint);
+        if (better(checkpoint, assessed, current, currentEval)) { current = checkpoint; currentEval = assessed; }
+      } catch { /* Invalid/stale checkpoints never bypass the live gates. */ }
+    }
+    const resumedScore = currentEval.result.score;
+    const normalized = normalizeCandidateMetadata(engine, current);
+    const normalizedAssessment = evaluate(engine, state.original, normalized);
+    if (better(normalized, normalizedAssessment, current, currentEval)) { current = normalized; currentEval = normalizedAssessment; }
+    const persist = () => {
+      if (safe(current, currentEval)) saveCheckpoint(CACHE_DIR, identity, current);
+    };
+    persist();
+    // A strategy's paid-call allowance survives manual reruns. Changing source
+    // content or shipping a new repair strategy is required to unlock more calls.
+    const allowanceFile = path.join(CACHE_DIR, `allowance-${sha(JSON.stringify(identity) + PROMPT_VERSION)}.json`);
+    let paidAttempts = 0;
+    if (fs.existsSync(allowanceFile)) {
+      try { paidAttempts = readJson(allowanceFile).paid_attempts; } catch { paidAttempts = attempts.length; }
+      if (!Number.isInteger(paidAttempts) || paidAttempts < 0) paidAttempts = attempts.length;
+    }
+    for (const attempt of attempts) {
+      if (readiness(current, currentEval).passed) { terminalStatus = 'accepted_100'; break; }
+      const nearReady = currentEval.calibration.failed_required_gates.length === 0 && currentEval.result.score >= 90;
+      const prompt = buildPrompt({ caseData: current, baselineResult: currentEval.result, leakage: currentEval.leakage,
+        phase: nearReady ? 'exact_score_cleanup' : attempt.phase, previousAttemptError, previousRejectedCandidates });
+      const model = nearReady ? (policy.models.final_cleanup || policy.models.escalation) : attempt.model;
+      const key = sha(`${PROMPT_VERSION}|${sourceSha.combined}|${id}|${scope}|${attempt.phase}|${model}|${sha(prompt)}`);
+      try {
+        if (!fs.existsSync(path.join(CACHE_DIR, `${key}.json`))) {
+          if (paidAttempts >= attempts.length) { terminalStatus = 'quarantined_attempt_limit'; break; }
+          paidAttempts++;
+          writeJson(allowanceFile, { paid_attempts: paidAttempts, limit: attempts.length, prompt_version: PROMPT_VERSION });
+        }
         const response = await callModel({
           policy,
           budget,
-          model: attempt.model,
+          model,
           effort: attempt.effort,
           prompt,
           key,
           maxOutputTokens: Number(attempt.maxOutputTokens || policy.models.max_output_tokens || 12000)
         });
-        const candidate = applyPatchPlanSafely(current, response.plan);
+        const candidate = normalizeCandidateMetadata(engine, applyPatchPlanSafely(current, response.plan));
         const assessed = evaluate(engine, state.original, candidate);
         const previousReadiness = readiness(current, currentEval);
         const candidateReadiness = readiness(candidate, assessed);
         const previousPenalty = previousReadiness.penalty;
         const candidatePenalty = candidateReadiness.penalty;
-        const retained = candidateReadiness.passed || candidatePenalty < previousPenalty;
+        const retained = safe(candidate, assessed) && (candidateReadiness.passed || candidatePenalty < previousPenalty);
         recordedAttempts.push({
-          phase: `${scope}:${attempt.phase}`, model: attempt.model, cache_key: key, cached: response.cached,
+          phase: `${scope}:${attempt.phase}`, model, cache_key: key, cached: response.cached,
           cost_usd: response.cost, operation_count: response.plan.operations.length,
           assessment: response.plan.assessment, result: compactReport(assessed.result, assessed.leakage),
           authoring_completeness: candidateReadiness.completeness,
@@ -1142,10 +1217,16 @@ async function main() {
         if (candidateReadiness.passed) {
           current = candidate;
           currentEval = assessed;
+          persist();
           terminalStatus = 'accepted_100';
           break;
         }
-        if (retained) { current = candidate; currentEval = assessed; }
+        if (retained) { current = candidate; currentEval = assessed; persist(); previousAttemptError = null; }
+        else {
+          previousRejectedCandidates.push(rejectionFeedback({ phase: attempt.phase, plan: response.plan,
+            assessment: assessed, completeness: candidateReadiness.completeness, contract: candidateReadiness.contract,
+            unsafe: !safe(candidate, assessed) }));
+        }
       } catch (error) {
         const message = String(error?.message || error);
         recordedAttempts.push({ phase: `${scope}:${attempt.phase}`, model: attempt.model, cache_key: key, error: message });
@@ -1155,6 +1236,15 @@ async function main() {
       }
     }
     const finalReadiness = readiness(current, currentEval);
+    if (finalReadiness.passed) terminalStatus = 'accepted_100';
+    const recovery = { legacy_patches_replayed: recovered.recovered, checkpoint_found: Boolean(checkpoint),
+      resumed_score: resumedScore, best_score: currentEval.result.score, paid_attempts_for_strategy: paidAttempts,
+      paid_attempt_limit: attempts.length, simulator_rechecked: true };
+    // Unpublished candidates are evidence only; publication still uses accepted_candidate.
+    writeJson(path.join(OUTPUT_DIR, 'repair-checkpoints', `${sha(id)}.json`), {
+      identity, candidate: current, result: compactReport(currentEval.result, currentEval.leakage), recovery,
+      publishable: finalReadiness.passed
+    });
     return {
       candidate: current,
       assessment: currentEval,
@@ -1162,7 +1252,8 @@ async function main() {
       status: terminalStatus,
       passed: finalReadiness.passed,
       completeness: finalReadiness.completeness,
-      contract: finalReadiness.contract
+      contract: finalReadiness.contract,
+      recovery
     };
   }
 
@@ -1311,6 +1402,8 @@ async function main() {
     const repaired = await runBoundedRepair(state, { scope: 'bulk', current: bootstrapped, assessment: baseline });
     row.attempts.push(...repaired.attempts);
     row.status = repaired.status;
+    row.recovery = repaired.recovery;
+    row.best_candidate_result = compactReport(repaired.assessment.result, repaired.assessment.leakage);
     if (repaired.passed) {
       row.accepted_candidate = repaired.candidate;
       row.authoring_completeness = repaired.completeness;
@@ -1443,6 +1536,7 @@ async function main() {
     cases: reportRows
   };
   writeJson(path.join(OUTPUT_DIR, 'fm_case_qa_run_report.json'), report);
+  fs.writeFileSync(path.join(OUTPUT_DIR, 'case_qa_summary.md'), formatRunSummary(report));
   const prBody = [
     MODE === 'pilot' ? '# Faili Meçhul tek-vaka QA inceleme kartı' : '# Faili Meçhul Case QA production campaign',
     '',
@@ -1495,6 +1589,8 @@ export {
   expandSafeContainerOperations,
   isRecoverablePatchContractError,
   parseCaseIds,
+  normalizeCandidateMetadata,
+  protectedIdentity,
   selectEntriesForMode,
   stripAuthoring
 };
