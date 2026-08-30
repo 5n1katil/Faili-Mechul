@@ -21,6 +21,10 @@ on:
         description: "Vaka basina en fazla kac AI denemesi?"
         required: false
         default: "4"
+      acceptance:
+        description: "Kabul esigi. 100 = tam puan sarti. 95 = engelleyici bulgu YOKSA 95+ da kabul edilir."
+        required: false
+        default: "100"
       model:
         description: "Model kimligi"
         required: false
@@ -89,7 +93,7 @@ jobs:
             --start=${{ inputs.start }} \
             --only="${{ inputs.only }}" \
             --max-attempts=${{ inputs.max_attempts }} \
-            --acceptance=100 \
+            --acceptance=${{ inputs.acceptance }} \
             ${{ inputs.dry_run == 'true' && '--dry-run=true' || '' }} \
             2>&1 | tee qa-run.log
         continue-on-error: true
