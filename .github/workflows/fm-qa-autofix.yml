@@ -32,7 +32,7 @@ on:
       thinking_budget:
         description: "Dusunme butcesi (token). Dusunme tokenlari CIKTI fiyatindan faturalanir."
         required: false
-        default: "2048"
+        default: "1024"
       dry_run:
         description: "true = hicbir dosya degistirilmez, yalnizca rapor uretilir"
         required: false
