@@ -1,0 +1,116 @@
+=== FAİLİ MEÇHUL VAKA QA RAPORU ===
+Vaka: Konakta Gece Yarısı Cinayeti
+Vaka İmzası: puzzleId: konakta-gece-yarisi-cinayeti · ana mekanik: tanımsız · standart: 4 · bonus: 2 · ses: yok · parmak izi: yok
+Vaka Tipi: Standart / Ücretsiz · Gelişmiş Mekanik Zorunluluğu: hayır
+Genel Puan: 0/100  ·  Durum: REDDEDİLDİ
+==================================================
+
+📋 GEMINI İÇİN KARAR ÖZETİ — Bu vaka 0/100. Aşağıdakiler düzeltilince 100 alır.
+
+🔴 ÖNCE BUNLAR (puanı en çok düşürenler):
+  1. [Mantık] İHLAL: Çaylak (1★) Doğrudanlık. Bu zorlukta oyuncu karmaşık çapraz çıkarım yapmaya zorlanmamalı; temel ipuçlarında şu an 1 doğrudan eşleşme (confirm) var. En az 2-3 'confirm' (Şüpheli=Mekan / Silah=Mekan gibi) ekleyerek ızgaranın akıcı çözülmesini sağla.
+  2. [Temel Zincir] HATA: Zorunlu Olmayan Temel İpucu — İpucu 1 (Adli Rapor) çıkarıldığında oyuncu hâlâ aynı tek cevaba ulaşır. Bu ipucu ızgarayı dolduruyor olabilir ama cevap zincirinde gerekli değil; bonusa dönüştürülmeli veya diğer temel ipuçlarıyla kesişen yeni bir bilgi vermeli.
+  3. [Temel Zincir] HATA: Zorunlu Olmayan Temel İpucu — İpucu 2 (Nazik Hanım'ın Alibisi) çıkarıldığında oyuncu hâlâ aynı tek cevaba ulaşır. Bu ipucu ızgarayı dolduruyor olabilir ama cevap zincirinde gerekli değil; bonusa dönüştürülmeli veya diğer temel ipuçlarıyla kesişen yeni bir bilgi vermeli.
+  4. [Temel Zincir] HATA: Zorunlu Olmayan Temel İpucu — İpucu 3 (Cem Bey'in Alibisi) çıkarıldığında oyuncu hâlâ aynı tek cevaba ulaşır. Bu ipucu ızgarayı dolduruyor olabilir ama cevap zincirinde gerekli değil; bonusa dönüştürülmeli veya diğer temel ipuçlarıyla kesişen yeni bir bilgi vermeli.
+
+🟡 SONRA BUNLAR (küçük puan kırıcılar):
+  1. [Mantık] UYARI: Olası İpucu Fazlalığı. Standart ipucu c2 çıkarıldığında ızgaradaki kesinleşmiş hücre sayısı azalmıyor gibi görünüyor — diğer ipuçları onun bilgisini çapraz elemeyle veriyor olabilir. Vaka yine de çözülüyor; istersen bu ipucunu farklı bir eksene yönelt veya "isBonus: true" yaparak doğrulayıcı/derinlik ipucuna çevir (zorunlu değil).
+  2. [Semantik] UYARI: İpucu 1 isCrimeAnchor taşıyor ama hangi cevap bileşenini (silah/mekan/katil) kesinleştirdiği qaSemanticFacts ile açıkça kayıtlı değil.
+  3. [Görünür Kanıt] UYARI: İpucu 2 · Nazik Hanım'ın Alibisi metni mekân olarak “Bahçe” sonucunu da adı doğrudan geçiyor; ancak logicRules yalnız Nazik Hanım ↔ Mutfak etkisini tanımlıyor. Oyuncu bu ek hücreyi işaretlerse sonraki temel ipucu tekrara düşebilir.
+  4. [Görünür Kanıt] UYARI: İpucu 3 · Cem Bey'in Alibisi metni mekân olarak “Kütüphane” sonucunu da adı doğrudan geçiyor; ancak logicRules yalnız Cem Bey ↔ Mutfak etkisini tanımlıyor. Oyuncu bu ek hücreyi işaretlerse sonraki temel ipucu tekrara düşebilir.
+
+==================================================
+
+PUAN DÖKÜMÜ
+🔍 Mantık: 34/40   🚫 Spoiler: 20/20   🧩 Kalite: 12/20   ⭐ Bonus: 20/20
+(Solver: 36 senaryodan 4'i kurala uyuyor; katil üçlüsü TEK ✓)
+
+🔍 MANTIK VE ÇÖZÜLEBİLİRLİK — 34/40
+  • ⓘ NOT (Kolay Vaka): Çapa ipucu (İpucu 1) cinayet triadının iki öğesini (Zeynep Hanım + Makas) birden veriyor. Bu, zorluk 1★ bir vakada kabul edilebilir (kolay vakalar daha doğrudan olabilir). Daha zor/premium bir vaka hedefliyorsan, çapayı tek öğeye indirip kalan bağı diğer ipuçlara yayman dedüksiyonu derinleştirir — ama bu zorunlu değil.
+  • UYARI: Olası İpucu Fazlalığı. Standart ipucu c2 çıkarıldığında ızgaradaki kesinleşmiş hücre sayısı azalmıyor gibi görünüyor — diğer ipuçları onun bilgisini çapraz elemeyle veriyor olabilir. Vaka yine de çözülüyor; istersen bu ipucunu farklı bir eksene yönelt veya "isBonus: true" yaparak doğrulayıcı/derinlik ipucuna çevir (zorunlu değil).
+  • ⓘ ÇÖZÜME KATKI (bilgi): c2, c3, c4 ipucu(su) çıkarılsa da katil üçlüsü (Zeynep Hanım · Makas · Mutfak) DEĞİŞMEDEN tek çözüm kalıyor — yani yalnızca masum/yan hücreleri netleştiriyor, cevabı bulmaya doğrudan katkı yapmıyor olabilir. İlke: standart ipuçları cevabı bulmak için gerekli ve yeterli olmalı (ızgarayı doldurmak için değil). İstersen c2, c3, c4 ipucunu (a) katil üçlüsünü daraltan farklı bir eksene yönelt, VEYA (b) "isBonus": true yaparak ek/derinlik ipucuna çevir. NOT: Bu puan KIRMAZ — bazen masum-eleme yoluyla dolaylı katkı meşrudur; vaka-bazlı değerlendir.
+  • TEMEL ÇÖZÜLEBİLİRLİK ✓: Temel ipuçlarıyla (5 kural) cinayet üçlüsü TEK çözüme iniyor → Zeynep Hanım · Makas · Mutfak (matriste 4 olası tam-düzen var ama hepsi aynı katil üçlüsünü veriyor — masum dağılımı oyuncuya bırakılmış, sorun değil). Bonuslar gerekmeden katil/silah/mekan kesinleşiyor.
+  • BONUS DOĞRULAMASI ✓: bonuslar katil üçlüsünü bozmuyor, sadece doğruluyor/derinlik katıyor.
+  • ✓ Dinamik tam-ızgara (Murdle) solver: özel mekanik climax testi + masum eşleşmeler dahil.
+  • İHLAL: Çaylak (1★) Doğrudanlık. Bu zorlukta oyuncu karmaşık çapraz çıkarım yapmaya zorlanmamalı; temel ipuçlarında şu an 1 doğrudan eşleşme (confirm) var. En az 2-3 'confirm' (Şüpheli=Mekan / Silah=Mekan gibi) ekleyerek ızgaranın akıcı çözülmesini sağla.
+
+🧠 OYUNCU-GÖRÜNÜR ANLAM KATMANI
+  • UYARI: İpucu 1 isCrimeAnchor taşıyor ama hangi cevap bileşenini (silah/mekan/katil) kesinleştirdiği qaSemanticFacts ile açıkça kayıtlı değil.
+
+👁️ OYUNCU-GÖRÜNÜR İPUCU KAPSAMI
+  • UYARI: İpucu 2 · Nazik Hanım'ın Alibisi metni mekân olarak “Bahçe” sonucunu da adı doğrudan geçiyor; ancak logicRules yalnız Nazik Hanım ↔ Mutfak etkisini tanımlıyor. Oyuncu bu ek hücreyi işaretlerse sonraki temel ipucu tekrara düşebilir.
+  • UYARI: İpucu 3 · Cem Bey'in Alibisi metni mekân olarak “Kütüphane” sonucunu da adı doğrudan geçiyor; ancak logicRules yalnız Cem Bey ↔ Mutfak etkisini tanımlıyor. Oyuncu bu ek hücreyi işaretlerse sonraki temel ipucu tekrara düşebilir.
+
+🔗 SIKI TEMEL İPUCU ZORUNLULUK TESTİ
+  • ✓ Oyuncu-görünür cevap modeli (grid) tek sonuca ulaşıyor: Zeynep Hanım · Makas · Mutfak.
+  • HATA: Zorunlu Olmayan Temel İpucu — İpucu 1 (Adli Rapor) çıkarıldığında oyuncu hâlâ aynı tek cevaba ulaşır. Bu ipucu ızgarayı dolduruyor olabilir ama cevap zincirinde gerekli değil; bonusa dönüştürülmeli veya diğer temel ipuçlarıyla kesişen yeni bir bilgi vermeli.
+  • HATA: Zorunlu Olmayan Temel İpucu — İpucu 2 (Nazik Hanım'ın Alibisi) çıkarıldığında oyuncu hâlâ aynı tek cevaba ulaşır. Bu ipucu ızgarayı dolduruyor olabilir ama cevap zincirinde gerekli değil; bonusa dönüştürülmeli veya diğer temel ipuçlarıyla kesişen yeni bir bilgi vermeli.
+  • HATA: Zorunlu Olmayan Temel İpucu — İpucu 3 (Cem Bey'in Alibisi) çıkarıldığında oyuncu hâlâ aynı tek cevaba ulaşır. Bu ipucu ızgarayı dolduruyor olabilir ama cevap zincirinde gerekli değil; bonusa dönüştürülmeli veya diğer temel ipuçlarıyla kesişen yeni bir bilgi vermeli.
+  • HATA: Zorunlu Olmayan Temel İpucu — İpucu 4 (Olay Yeri İncelemesi) çıkarıldığında oyuncu hâlâ aynı tek cevaba ulaşır. Bu ipucu ızgarayı dolduruyor olabilir ama cevap zincirinde gerekli değil; bonusa dönüştürülmeli veya diğer temel ipuçlarıyla kesişen yeni bir bilgi vermeli.
+
+🧷 SUÇ BİLGİSİ BÜTÇESİ
+  • HATA: Çapa Kapsamı Belirsiz — İpucu 1 · Adli Rapor isCrimeAnchor taşıyor ancak qaSemanticFacts içinde tam olarak BİR suç bileşeni (katil, silah veya mekan) beyan etmiyor. Çapa yalnız tek ekseni açmalıdır.
+
+🧬 PORTFÖY PATERNİ VE BENZERSİZLİK
+  • ⓘ Standart mod: gelişmiş mini mekanik zorunlu değil; vaka yalnız metin tabanlı ipuçlarıyla da tam puan alabilir.
+  • ⓘ V25.2 patern profili: çapa=clue:? · açılış=adli:E:S-W · ritim=[EEEC] · eksenler=[S-W|L-S|L-S|L-W] · mini=none.
+  • HATA: Patern Yönetişimi Eksik — qaPattern nesnesi yok. Her üretim vakası; çapa kaynağını, ilk ipucu rolünü, varsa mini oyun konumunu ve benzersiz tasarım niyetini beyan etmelidir.
+  • HATA: Portföy İmza Defteri Eksik — qaPortfolioRegistry.entries olmadan bu vakanın önceki kabul edilmiş vakalara göre benzersizliği doğrulanamaz. 100/100 ve üretim export’u için kayıt defteri zorunludur.
+
+✍️ İSİM VE İÇERİK DERİNLİĞİ
+  • Silah 2 adı "Kimyasal" yaygın bir tür sözcüğüyle doğrulanamadı. Yaratıcı/özel ad olabilir; dilsel anlamı ve vaka bağlamını AI editör incelemesinde doğrula, yalnız gerçekten bozuksa aynı görsel ve semantik kimliği koruyarak düzelt.
+  • Mekân 1 adı "Kütüphane" yaygın bir tür sözcüğüyle doğrulanamadı. Yaratıcı/özel ad olabilir; dilsel anlamı ve vaka bağlamını AI editör incelemesinde doğrula, yalnız gerçekten bozuksa aynı görsel ve semantik kimliği koruyarak düzelt.
+  • Standart / Ücretsiz hikâyesi 32 kelime; hedef derinlik yaklaşık 60-220 kelime. Kimlikleri değiştirmeden olay ve atmosfer bağını güçlendir.
+
+🚫 SPOILER — 20/20
+  • Mini oyun alanlarında çözümü erken ele veren ifade bulunamadı. Temiz.
+
+🧩 İPUCU ÇEŞİTLİLİĞİ VE KALİTE — 12/20
+  • Tip dağılımı: adli×2, tanik×2, kanit×1, dogrudan×1
+  • İpucu 2: deductionHint cevabı ele veriyor — "Bahçe, Mutfak" adı açıkça geçiyor. Yeni kural: çıkarım, ismi söylemek yerine oyuncuyu düşündüren Sokratik soru olmalı (örn. "Listedeki silahlardan hangisi bu kadar ağır olabilir?"). (Not: bu kural yalnızca STANDART ipuçları için; bonus ipuçları doğrudan isim verebilir.)
+  • İpucu 3: deductionHint cevabı ele veriyor — "Kütüphane, Mutfak" adı açıkça geçiyor. Yeni kural: çıkarım, ismi söylemek yerine oyuncuyu düşündüren Sokratik soru olmalı (örn. "Listedeki silahlardan hangisi bu kadar ağır olabilir?"). (Not: bu kural yalnızca STANDART ipuçları için; bonus ipuçları doğrudan isim verebilir.)
+  • 💡 TAVSİYE (opsiyonel): İpucu 2: "Nazik Hanım", İpucu 3: "Cem Bey" adı doğrudan veriyor. Oyuncu eforunu ve atmosferi artırmak için ismi doğrudan yazmak yerine profil kartındaki betimlemelere atıfta bulunan dolaylı ifadeler tercih edilebilir (örn. "Hazinedar Hüseyin" yerine "kayıp altın meselesinin gölgesindeki adam"). Bu bir kalite önerisidir; çözülebilirliği etkilemez.
+  • ✓ İLERİ DEDÜKSİYON (PREMIUM): 2 ipucu, bir öğenin adını/ayırt edici çekirdeğini doğrudan vermek yerine soyut bir KATEGORİ ("ağır cisim", "yüksek yer" vb.) kullanıp oyuncuyu profilleri okuyup eşleştirmeye yönlendiriyor. Bu, çok katmanlı bir dedüksiyon zinciri yaratır — özellikle zor vakalarda aranan premium kalite. Tam not.
+
+⭐ EK İPUÇLARI (BONUS) — 20/20
+  • 2 bonus ipucu var — sayı uygundur; tam puanı işlevsellik belirler.
+  • ✓ Matris yardımı: her ek ipucu, ana çözümü zorunlu kılmadan oyuncunun ızgarasında kullanılabilir yeni bir çıkarım veriyor.
+
+🧭 İPUCU → MATRİS İZLENEBİLİRLİĞİ
+  • ⓘ İpucu→matris izlenebilirliği: 0 kurallı ipucu belgelendi, 6 ipucu için yazar denetim notu eksik.
+  • İpucu 1: logicRules var ancak qaRationale yok. Bu ipucunun metniyle matristeki etkisi arasındaki köprü insan denetiminde izlenemiyor. Eklenmeli: { matrixEffect, evidenceLink }.
+  • İpucu 2: logicRules var ancak qaRationale yok. Bu ipucunun metniyle matristeki etkisi arasındaki köprü insan denetiminde izlenemiyor. Eklenmeli: { matrixEffect, evidenceLink }.
+  • İpucu 3: logicRules var ancak qaRationale yok. Bu ipucunun metniyle matristeki etkisi arasındaki köprü insan denetiminde izlenemiyor. Eklenmeli: { matrixEffect, evidenceLink }.
+  • İpucu 4: logicRules var ancak qaRationale yok. Bu ipucunun metniyle matristeki etkisi arasındaki köprü insan denetiminde izlenemiyor. Eklenmeli: { matrixEffect, evidenceLink }.
+  • İpucu 5: logicRules var ancak qaRationale yok. Bu ipucunun metniyle matristeki etkisi arasındaki köprü insan denetiminde izlenemiyor. Eklenmeli: { matrixEffect, evidenceLink }.
+  • İpucu 6: logicRules var ancak qaRationale yok. Bu ipucunun metniyle matristeki etkisi arasındaki köprü insan denetiminde izlenemiyor. Eklenmeli: { matrixEffect, evidenceLink }.
+
+💡 TAVSİYELER (puan kırmaz — opsiyonel)
+  • TAVSİYE (Monotonluk): Aynı işlem ("eliminate") art arda 3 kez kullanılmış (ipucu dizilimi tekdüze). Matrisi kırma stratejisini çeşitlendir: confirm ve eliminate adımlarını harmanla.
+  • TAVSİYE (İpucu→Matris İzlenebilirliği): İpucu 1: logicRules var ancak qaRationale yok. Bu ipucunun metniyle matristeki etkisi arasındaki köprü insan denetiminde izlenemiyor. Eklenmeli: { matrixEffect, evidenceLink }.
+  • TAVSİYE (İpucu→Matris İzlenebilirliği): İpucu 2: logicRules var ancak qaRationale yok. Bu ipucunun metniyle matristeki etkisi arasındaki köprü insan denetiminde izlenemiyor. Eklenmeli: { matrixEffect, evidenceLink }.
+  • TAVSİYE (İpucu→Matris İzlenebilirliği): İpucu 3: logicRules var ancak qaRationale yok. Bu ipucunun metniyle matristeki etkisi arasındaki köprü insan denetiminde izlenemiyor. Eklenmeli: { matrixEffect, evidenceLink }.
+  • TAVSİYE (İpucu→Matris İzlenebilirliği): İpucu 4: logicRules var ancak qaRationale yok. Bu ipucunun metniyle matristeki etkisi arasındaki köprü insan denetiminde izlenemiyor. Eklenmeli: { matrixEffect, evidenceLink }.
+  • TAVSİYE (İpucu→Matris İzlenebilirliği): İpucu 5: logicRules var ancak qaRationale yok. Bu ipucunun metniyle matristeki etkisi arasındaki köprü insan denetiminde izlenemiyor. Eklenmeli: { matrixEffect, evidenceLink }.
+  • TAVSİYE (İpucu→Matris İzlenebilirliği): İpucu 6: logicRules var ancak qaRationale yok. Bu ipucunun metniyle matristeki etkisi arasındaki köprü insan denetiminde izlenemiyor. Eklenmeli: { matrixEffect, evidenceLink }.
+  • ⓘ qaPolicy.requireTraceability=false olduğu için 6 izlenebilirlik eksiği export'u engellemedi; premium vakalarda true önerilir.
+  • UYARI: İpucu 1 isCrimeAnchor taşıyor ama hangi cevap bileşenini (silah/mekan/katil) kesinleştirdiği qaSemanticFacts ile açıkça kayıtlı değil.
+  • TAVSİYE (Oyuncu-Görünür Kanıt): UYARI: İpucu 2 · Nazik Hanım'ın Alibisi metni mekân olarak “Bahçe” sonucunu da adı doğrudan geçiyor; ancak logicRules yalnız Nazik Hanım ↔ Mutfak etkisini tanımlıyor. Oyuncu bu ek hücreyi işaretlerse sonraki temel ipucu tekrara düşebilir.
+  • TAVSİYE (Oyuncu-Görünür Kanıt): UYARI: İpucu 3 · Cem Bey'in Alibisi metni mekân olarak “Kütüphane” sonucunu da adı doğrudan geçiyor; ancak logicRules yalnız Cem Bey ↔ Mutfak etkisini tanımlıyor. Oyuncu bu ek hücreyi işaretlerse sonraki temel ipucu tekrara düşebilir.
+  • TAVSİYE (İsim/İçerik Derinliği): Silah 2 adı "Kimyasal" yaygın bir tür sözcüğüyle doğrulanamadı. Yaratıcı/özel ad olabilir; dilsel anlamı ve vaka bağlamını AI editör incelemesinde doğrula, yalnız gerçekten bozuksa aynı görsel ve semantik kimliği koruyarak düzelt.
+  • TAVSİYE (İsim/İçerik Derinliği): Mekân 1 adı "Kütüphane" yaygın bir tür sözcüğüyle doğrulanamadı. Yaratıcı/özel ad olabilir; dilsel anlamı ve vaka bağlamını AI editör incelemesinde doğrula, yalnız gerçekten bozuksa aynı görsel ve semantik kimliği koruyarak düzelt.
+  • TAVSİYE (İsim/İçerik Derinliği): Standart / Ücretsiz hikâyesi 32 kelime; hedef derinlik yaklaşık 60-220 kelime. Kimlikleri değiştirmeden olay ve atmosfer bağını güçlendir.
+  • TAVSİYE (İpucu Uyumu): Bir temel ipucu, diğer ipuçlarının zaten verdiği bilgiyi tekrarlıyor olabilir (çıkarıldığında çözüm değişmiyor). Her temel ipucu ızgaraya yeni bir şey katmalı; aksi halde oyuncu onu gereksiz bulur. İlgili ipucunu farklı bir eksene yönelt ya da bonusa çevir. (Vaka-bazlı değerlendir — bazen tematik tekrar kabul edilebilir.)
+  • ⓘ Standart mod: Bu vaka metin tabanlı ilerliyor; ücretsiz/standart vakalarda gelişmiş mini oyun zorunlu değildir. Mantık zinciri ve oynanabilirlik güçlüyse 100/100 alabilir.
+
+==================================================
+🛠️ GEMINI İÇİN NET DÜZELTME TALİMATLARI
+Şu adımları uygula, sonra vakayı tekrar gönder:
+  1. SIKI TEMEL İPUCU EKONOMİSİ: Her isBonus:false ipucu çıkarıldığında katil+silah+mekan cevabı belirsiz kalmalıdır. Cevabı değiştirmeyen temel ipuçlarını bonusa taşıyın ya da onları eksik olan cevap bileşenini daraltacak biçimde yeniden yazın.
+  2. ÇAYLAK DOĞRUDANLIK: 1★ vaka için temel ipuçlarına en az 2-3 doğrudan "confirm" ekle (örn. katili mekanıyla, silahı mekanıyla eşleştir). Çaylak oyuncu karmaşık çapraz çıkarıma değil, akıcı pozitif eşleşmelere ihtiyaç duyar.
+  3. İpucu tiplerini çeşitlendir (adli + tanık + kanıt + mini oyun harmanı; hiçbir tip toplamın %70'ini geçmesin).
+  4. Tembel/doğrudan eleme cümlelerini ("X orada değildi") çevresel/adli/dolaylı anlatıma çevir ("X'in ayakkabısında o bölgeye ait kil yoktu").
+  5. SPOILER RİSKİ: deductionHint alanlarında geçen isimleri kaldır, Sokratik soruya çevir. Soru, oyuncuyu ızgarada belirli bir X/✓ işaretine yönlendirmeli. Örn. "Listedeki silahlardan hangisi bir kafatasını bu kütleyle parçalayabilir?"
+  6. SUÇ BİLGİSİ BÜTÇESİ: Ölüm mahallini ve ölüm yöntemine dair pozitif/negatif adli bilgiyi aynı görünür metinden ayır. Cinayet sahnesi hikâyede ya da tek bir çapada kurulabilir; silah/yöntem bulgusu ise başka bir temel ipucunda gelmeli.
+  7. PORTFÖY BENZERSİZLİĞİ: qaPattern beyanını ve qaPortfolioRegistry.entries defterini ekle; çakışan ritimde açılışı, action dizisini, eksen sırasını, çapa biçimini veya mini oyun slotunu değiştir. 100/100 için bu kontrol artık zorunlu.
+==================================================

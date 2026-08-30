@@ -1,0 +1,219 @@
+{
+  "puzzleId": "konakta-gece-yarisi-cinayeti",
+  "title": "Konakta Gece Yarısı Cinayeti",
+  "subtitle": "İstanbul · Fırtınalı Bir Konak Gecesi",
+  "difficulty": "Çaylak",
+  "difficultyLevel": 1,
+  "stars": "★☆☆☆☆",
+  "gridSize": "3x3",
+  "timeLimit": 600,
+  "caseTier": "standard",
+  "isPremium": false,
+  "story": "Tarihî konaktaki yardım gecesi, gece yarısına yaklaşırken fırtına yüzünden yarıda kesildi. Elektrikler kısa süreliğine söndüğünde ev sahibinin yardımcısı Selma, servis koridoruna açılan hazırlık bölümünde ağır yaralı bulundu ve kurtarılamadı. Dış kapılar güvenlik nedeniyle kilitliydi; konakta yalnız üç davetli kalmıştı. Nazik Hanım akşam boyunca çevresini sessizce gözlemlemiş, Cem Bey dekorasyon işlerine yardım etmiş, Zeynep Hanım ise servis düzenindeki aksaklıklara müdahale etmişti. Olay yeri ekibi, kişilerin hareket kayıtları ile konağın araç ve mekân izlerini ayrı ayrı karşılaştırdı. Fırtına sürerken her kayıt, gecenin başka bir parçasını yerine oturtuyordu.",
+  "atmosphere": "Pencereleri döven yağmur, kesik kesik yanan aplikler ve servis koridorundan gelen metal sürtünme sesi konağın sessizliğini ağırlaştırıyor.",
+  "suspects": [
+    {
+      "id": "s1",
+      "name": "Nazik Hanım",
+      "icon": "👵",
+      "description": "Konağın yaşlı ve dikkatli misafiri; gece boyunca yanında taşıdığı ciltli romanı ve bahçe kapısındaki kayıtlı çay servisiyle hatırlanıyor.",
+      "detail": "Fiziksel olarak güçsüz, ayrıntıları kaçırmayan sakin bir gözlemci."
+    },
+    {
+      "id": "s2",
+      "name": "Cem Bey",
+      "icon": "👨",
+      "description": "Ev sahibinin uzaktan akrabası; davet öncesinde ağır süslemeleri taşıyan, gece ilerlerken kütüphanedeki dekorasyon listesini tamamlayan güçlü yapılı misafir.",
+      "detail": "Düzenli çalışır; kullandığı malzemeleri zimmet defterine işler."
+    },
+    {
+      "id": "s3",
+      "name": "Zeynep Hanım",
+      "icon": "👩",
+      "description": "Genç ve hırslı davetli; servis akışındaki aksaklıklara müdahale eden, hızlı hareket eden ve mutfak ekibinin yedek eldivenlerini kullanan atik bir kadın.",
+      "detail": "Baskı altında fevri davranır; arka hazırlık geçitlerini iyi bilir."
+    }
+  ],
+  "weapons": [
+    {
+      "id": "w1",
+      "name": "Ağır Mutfak Makası",
+      "icon": "✂️",
+      "description": "Kalın et ve sert ambalajları kesmek için kullanılan, sapında servis eldivenlerinden iz tutabilen ağır ve sivri uçlu mutfak makası.",
+      "detail": ""
+    },
+    {
+      "id": "w2",
+      "name": "Bakım Kimyasalı Şişesi",
+      "icon": "🧪",
+      "description": "Konağın bakım dolabında saklanan, renksiz ve keskin etkili temizlik çözücüsü; temas ettiği yüzeyde özel testle saptanabilen kalıntı bırakır.",
+      "detail": ""
+    },
+    {
+      "id": "w3",
+      "name": "Kenevir Halat",
+      "icon": "🪢",
+      "description": "Ağır perdeleri ve bahçe süslemelerini sabitlemekte kullanılan, lifleri kolayca yüzeylere geçen kalın ve dayanıklı kenevir halat.",
+      "detail": ""
+    }
+  ],
+  "locations": [
+    {
+      "id": "l1",
+      "name": "Konak Kütüphanesi",
+      "icon": "📚",
+      "description": "Ağır meşe kapılı, katalog ve dekorasyon zimmetlerinin tutulduğu, ses yalıtımı güçlü çalışma odası.",
+      "detail": ""
+    },
+    {
+      "id": "l2",
+      "name": "Konak Bahçesi",
+      "icon": "🌳",
+      "description": "Fırtına öncesi çay servisinin yapıldığı, kapı sensörü ve ıslak taş zemini hareketleri kaydeden loş dış alan.",
+      "detail": ""
+    },
+    {
+      "id": "l3",
+      "name": "Mutfak Hazırlık Alanı",
+      "icon": "🍽️",
+      "description": "Servis koridoruna açılan, kesici araçların numaralı panoda tutulduğu ve tezgâh yüzeylerinin vardiya sonunda test edildiği arka hazırlık alanı.",
+      "detail": ""
+    }
+  ],
+  "clues": [
+    {
+      "id": "c1",
+      "title": "Sapta Kalan Eldiven İzi",
+      "type": "adli",
+      "mechanicType": "text",
+      "text": "Selma'nın ölümcül yarasındaki metal mikroçentikler Ağır Mutfak Makasıyla uyuştu; araç sapındaki polimer iz de Zeynep Hanım adına teslim edilen yedek servis eldiveninin iç kaplamasıyla aynıydı.",
+      "deductionHint": "Aynı polimer kaplama hangi şüpheli–araç hücresini doğrular?",
+      "isBonus": false,
+      "pointCost": 0,
+      "revealOrder": 1,
+      "isRevealed": true,
+      "logicRules": [
+        {
+          "action": "confirm",
+          "pair": [
+            "s3",
+            "w1"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "title": "Fincandaki Negatif Test",
+      "type": "kanit",
+      "mechanicType": "text",
+      "text": "Nazik Hanım'ın bahçe servisine ayrılan fincan ve termos numunelerinde Bakım Kimyasalı Şişesine özgü çözücü kalıntısına rastlanmadı; mühürlü örnekler iki ayrı teknisyen tarafından doğrulandı.",
+      "deductionHint": "Negatif kimyasal analiz hangi şüpheli–araç olasılığını eler?",
+      "isBonus": false,
+      "pointCost": 0,
+      "revealOrder": 2,
+      "isRevealed": false,
+      "logicRules": [
+        {
+          "action": "eliminate",
+          "pair": [
+            "s1",
+            "w2"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "title": "Bahçe Kapısı Kaydı",
+      "type": "tanik",
+      "mechanicType": "text",
+      "text": "Konak Bahçesi kapı sensörü, çay tepsisi etiketi ve iki tanığın zaman çizelgesi Nazik Hanım'ın olay aralığı boyunca bu dış alanda kaldığını doğruladı.",
+      "deductionHint": "Birbiriyle uyuşan kayıtlar hangi şüpheli–mekân eşleşmesini kurar?",
+      "isBonus": false,
+      "pointCost": 0,
+      "revealOrder": 3,
+      "isRevealed": false,
+      "logicRules": [
+        {
+          "action": "confirm",
+          "pair": [
+            "s1",
+            "l2"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "title": "Tezgâh Yüzey Taraması",
+      "type": "eleme",
+      "mechanicType": "text",
+      "text": "Mutfak Hazırlık Alanı tezgâhları ile zemin giderinden alınan kontrollü örneklerin hiçbirinde Bakım Kimyasalı Şişesine özgü floresan kalıntı saptanmadı.",
+      "deductionHint": "Temiz yüzey taraması hangi araç–mekân bağını dışarıda bırakır?",
+      "isBonus": false,
+      "pointCost": 0,
+      "revealOrder": 4,
+      "isRevealed": false,
+      "logicRules": [
+        {
+          "action": "eliminate",
+          "pair": [
+            "w2",
+            "l3"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "title": "Bakım Dolabı Zimmeti",
+      "type": "kayit",
+      "mechanicType": "text",
+      "text": "Bakım dolabı defteri, Bakım Kimyasalı Şişesinin o gece yalnız Konak Kütüphanesindeki vernik onarımı için çıkarıldığını gösteriyor.",
+      "deductionHint": "Bu cezalı kayıt hangi araç–mekân hücresini doğrudan doldurur?",
+      "isBonus": true,
+      "pointCost": 40,
+      "revealOrder": 5,
+      "isRevealed": false,
+      "logicRules": [
+        {
+          "action": "confirm",
+          "pair": [
+            "w2",
+            "l1"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "c6",
+      "title": "Dekorasyon İmza Çizelgesi",
+      "type": "dogrudan",
+      "mechanicType": "text",
+      "text": "Dakikalı dekorasyon çizelgesindeki kesintisiz imzalar, Cem Bey'in gece boyunca Konak Kütüphanesinde çalıştığını gösteriyor.",
+      "deductionHint": "İmza zinciri hangi şüpheli–mekân hücresini doğrular?",
+      "isBonus": true,
+      "pointCost": 40,
+      "revealOrder": 6,
+      "isRevealed": false,
+      "logicRules": [
+        {
+          "action": "confirm",
+          "pair": [
+            "s2",
+            "l1"
+          ]
+        }
+      ]
+    }
+  ],
+  "solution": {
+    "suspectId": "s3",
+    "weaponId": "w1",
+    "locationId": "l3"
+  },
+  "solutionNarrative": "Zeynep Hanım, servis karmaşasını kullanarak Mutfak Hazırlık Alanına girdi ve Selma'yı Ağır Mutfak Makasıyla öldürdü. Ölümcül yaradaki mikroçentikler ile sapta kalan eldiven polimeri fail–araç bağını kurdu; bağımsız hareket ve yüzey kayıtları kalan mekân eşleşmelerini tek olası üçlüde topladı.",
+  "specialMechanic": "none",
+  "assetManifest": []
+}
