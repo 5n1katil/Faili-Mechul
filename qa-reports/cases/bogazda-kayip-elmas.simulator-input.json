@@ -1,0 +1,224 @@
+{
+  "id": "bogazda-kayip-elmas",
+  "title": "Boğaz'da Kayıp Elmas",
+  "difficulty": "dedektif",
+  "dayIndex": 2,
+  "story": "Istanbul Bogazi'nin serin sularinda suzulen luks yatta duzenlenen o gorkemli sergi, kanli bir geceyle son buldu. Paha bicilemez 'Bogaz Elmasi'nin calindigi anlasildiginda, geminin guvenlik sefi Orhan cansiz yatiyordu. Dalgalarin sesi yati doverken, katil ve caldigi elmas hala bu luks kafesin icinde saklaniyor. Geceye katilan seckin konuklar ve murettebat simdi sorgu altinda; her birinin karanlik sirlari Bogazin karanlik sularina gomulmeyi bekliyor.",
+  "suspects": [
+    {
+      "id": "s1",
+      "name": "Kaptan Levent",
+      "description": "Geminin deneyimli kaptanı. Fiziksel olarak oldukça yapılı ve ağır nesneleri kolayca savurabilecek kuvvette.",
+      "icon": "pa:bogaz_s1"
+    },
+    {
+      "id": "s2",
+      "name": "Sponsor Murat",
+      "description": "Partinin zengin finansörü. İnce yapılı; ağır fiziksel güç gerektiren işlere ve kirli ortamlara hiç alışkın değil.",
+      "icon": "pa:bogaz_s2"
+    },
+    {
+      "id": "s3",
+      "name": "Organizatör Eda",
+      "description": "Serginin sorumlusu. Çevik, esnek ve geminin en dar, gizli alanlarında bile rahatça hareket edebilecek fiziksel yapıda.",
+      "icon": "pa:bogaz_s3"
+    }
+  ],
+  "weapons": [
+    {
+      "id": "w1",
+      "name": "Gemi Halatı",
+      "description": "Gemiyi iskeleye bağlamak için kullanılan kalın sentetik ip. Çok sağlam ve kıvrılabilen esnek bir yapıya sahip.",
+      "icon": "pa:bogaz_w1"
+    },
+    {
+      "id": "w2",
+      "name": "Demir Çekiç",
+      "description": "Ağır bakım ve onarım aleti. Ciddi bir fiziksel kütleye sahip, tek vuruşta kemik kırabilen paslanmaz çelik donanım.",
+      "icon": "pa:bogaz_w2"
+    },
+    {
+      "id": "w3",
+      "name": "Gaz Tüpü",
+      "description": "Basınçlı endüstriyel tüp. Kapalı bir alanda sızıntı yapması durumunda ortamdaki oksijeni tüketerek zehirleyici olabilir.",
+      "icon": "pa:bogaz_w3"
+    }
+  ],
+  "locations": [
+    {
+      "id": "l1",
+      "name": "Makine Dairesi",
+      "description": "Geminin en alt katında yer alan, zemini makine yağıyla kaplı, gürültülü, dar ve gözden uzak teknik alan.",
+      "icon": "pa:bogaz_l1"
+    },
+    {
+      "id": "l2",
+      "name": "Seyir Köprüsü",
+      "description": "En üst katta yer alan, geminin yönlendirildiği sürekli kameralarla izlenen aydınlık ve güvenli yönetim merkezi.",
+      "icon": "pa:bogaz_l2"
+    },
+    {
+      "id": "l3",
+      "name": "VIP Salon",
+      "description": "Misafirlerin ağırlandığı, beyaz halılarla kaplı, aydınlık, temiz ve oldukça geniş eğlence alanı.",
+      "icon": "pa:bogaz_l3"
+    }
+  ],
+  "clues": [
+    {
+      "id": "c1",
+      "text": "Olay yerinde bulunan incelemelerde, belirli bir donanim unsurunun alt katlardaki calisma alanlariyla dogrudan iliskili oldugu tespit edildi.",
+      "type": "evidence",
+      "isBonus": false,
+      "logicRules": [
+        {
+          "action": "confirm",
+          "pair": [
+            "w1",
+            "l1"
+          ]
+        }
+      ],
+      "qaRationale": {
+        "matrixEffect": "Gemi Halati ↔ Makine Dairesi dogrulanir",
+        "evidenceLink": "kan",
+        "evidenceKind": "forensic"
+      },
+      "isCrimeAnchor": true,
+      "qaSemanticFacts": [
+        {
+          "kind": "crime_component",
+          "component": "weapon",
+          "entityId": "w1",
+          "evidence": "Gemi donanimi"
+        }
+      ],
+      "deductionHint": "Bu bulguyu ilgili mekan ve nesne ekseninde degerlendirin.",
+      "qaMechanicBoundary": {
+        "primaryEvidence": "Makine bagi izleri",
+        "wrapperTextRole": "anchor"
+      }
+    },
+    {
+      "id": "c2",
+      "text": "Guvenlik kayitlari incelendiginde, bazi kisilerin belirli yonetim alanlarinda bulunmadigi netlik kazandi.",
+      "type": "witness",
+      "isBonus": false,
+      "logicRules": [
+        {
+          "action": "eliminate",
+          "pair": [
+            "w2",
+            "l2"
+          ]
+        }
+      ],
+      "qaRationale": {
+        "matrixEffect": "Seyir Koprusu iliskisi elenir",
+        "evidenceLink": "iz",
+        "evidenceKind": "physical"
+      },
+      "deductionHint": "Supheli ve mekan ikilisini izgarada capraz sorgulayin.",
+      "qaMechanicBoundary": {
+        "primaryEvidence": "Kamera kaydi",
+        "wrapperTextRole": "elimination"
+      }
+    },
+    {
+      "id": "c3",
+      "text": "Otopsi raporunda, kurban uzerindeki izlerin belirli mekan kosullariyla uyusmadigi rapor edildi.",
+      "type": "forensic",
+      "isBonus": false,
+      "logicRules": [
+        {
+          "action": "eliminate",
+          "pair": [
+            "s3",
+            "l3"
+          ]
+        }
+      ],
+      "qaRationale": {
+        "matrixEffect": "Mekan iliskisi elenir",
+        "evidenceLink": "otopsi",
+        "evidenceKind": "medical"
+      },
+      "deductionHint": "Adli tip verilerini mekanlar ile eslestirin.",
+      "qaMechanicBoundary": {
+        "primaryEvidence": "Otopsi bulgusu",
+        "wrapperTextRole": "elimination"
+      }
+    },
+    {
+      "id": "c4",
+      "text": "Tanik ifadeleri ve fiziksel incelemeler, bazi suphelilerin belirli ekipmanlarla temas etmedigini gosteriyor.",
+      "type": "evidence",
+      "isBonus": false,
+      "logicRules": [
+        {
+          "action": "eliminate",
+          "pair": [
+            "s3",
+            "w3"
+          ]
+        }
+      ],
+      "qaRationale": {
+        "matrixEffect": "Supheli-silah iliskisi elenir",
+        "evidenceLink": "ses",
+        "evidenceKind": "audio"
+      },
+      "deductionHint": "Supheli ve nesne iliskisini gozden gecirin.",
+      "qaMechanicBoundary": {
+        "primaryEvidence": "Tanik beyani",
+        "wrapperTextRole": "elimination"
+      }
+    },
+    {
+      "id": "c5",
+      "text": "Sergi hazırlıkları sırasında esnek gemi ekipmanlarını taşıyan tek kişinin, dar alanlarda rahatça hareket edebilen Eda olduğu lojistik defterine işlenmişti.",
+      "type": "record",
+      "isBonus": true
+    },
+    {
+      "id": "c6",
+      "text": "Kurbanın elleri arasında sıkışıp kopan kalın sentetik lifler, Eda'nın erişiminde olan bağlama ekipmanlarıyla birebir aynı kimyasal yapıdaydı.",
+      "type": "forensic",
+      "isBonus": true
+    }
+  ],
+  "solvabilityMeta": {
+    "freeEliminations": [
+      "s1",
+      "s2",
+      "w2",
+      "w3",
+      "l2",
+      "l3"
+    ],
+    "bonusEliminations": []
+  },
+  "solution": {
+    "suspectId": "s3",
+    "weaponId": "w1",
+    "locationId": "l1"
+  },
+  "qaPattern": {
+    "anchorSource": "clue:c1",
+    "anchorComponent": "weapon",
+    "miniGameClueId": "",
+    "miniGameRole": "pivot",
+    "designIntent": "Bu vaka, kanit zincirini adim adim daraltarak tek cozume goturur; her temel ipucu ayri bir izgara iliskisini kapatir."
+  },
+  "qaPortfolioRegistry": {
+    "entries": [
+      {
+        "puzzleId": "bogazda-kayip-elmas",
+        "note": "self"
+      }
+    ]
+  },
+  "caseTier": "standard",
+  "isPremium": false,
+  "difficultyLevel": 3
+}

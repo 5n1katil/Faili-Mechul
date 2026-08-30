@@ -1,0 +1,125 @@
+{
+  "id": "kapalicarsida-gizem",
+  "title": "Kapalıçarşı'da Gizem",
+  "difficulty": "dedektif",
+  "dayIndex": 3,
+  "story": "Kapalıçarşı'nın yüzlerce yıllık labirent gibi sokaklarına çöken akşam karanlığı, bir cinayeti örtbas etmeye yetmedi. Çarşının en eski kuyumcularından biri, kepenkler indikten hemen sonra dükkanında vahşice katledildi. Katil, çarşının tanıdık simalarından birisiydi.",
+  "suspects": [
+    {
+      "id": "s1",
+      "name": "Ahmet Usta",
+      "description": "Komşu bakırcı esnaf. Otuz yıllık tecrübesiyle çarşının her köşesini ezbere bilen, kendi dükkanından çıkmayan geleneksel usta.",
+      "icon": "pa:kcarsi_s1"
+    },
+    {
+      "id": "s2",
+      "name": "Selma Teyze",
+      "description": "Çarşının saygın ve yaşlı muhasebecisi. Rakamlar konusunda hata yapmaz ancak teknolojik cihazlar ve şifrelerle arası hiç iyi değildir.",
+      "icon": "pa:kcarsi_s2"
+    },
+    {
+      "id": "s3",
+      "name": "Kerem Genç",
+      "description": "Stajyer olarak son ay işe başlayan, dijital şifreleme ve kilit teknolojilerine son derece yatkın, meraklı genç çalışan.",
+      "icon": "pa:kcarsi_s3"
+    }
+  ],
+  "weapons": [
+    {
+      "id": "w1",
+      "name": "Ağır Terazi",
+      "description": "Kuyumcu terazisinin tunç kefesi, hassas ölçümler için kullanılan ancak birkaç kilogram ağırlığında katı bir cisim.",
+      "icon": "pa:kcarsi_w1"
+    },
+    {
+      "id": "w2",
+      "name": "Kimyasal Madde",
+      "description": "Altın eritme sürecinde kullanılan, deriyle temas halinde ölümcül yanıklara yol açan asit bazlı aşındırıcı çözelti.",
+      "icon": "pa:kcarsi_w2"
+    },
+    {
+      "id": "w3",
+      "name": "Pençe Anahtar",
+      "description": "Kalın çelik kapıları ve kilitleri zorlamak, bükmek için kullanılan, kilit mekanizmalarında derin izler bırakan ağır alet.",
+      "icon": "pa:kcarsi_w3"
+    }
+  ],
+  "locations": [
+    {
+      "id": "l1",
+      "name": "Dükkan İçi",
+      "description": "Vitrinlerin ve kasanın bulunduğu, doğrudan sokağı ve dışarıdan geçenleri gören geniş aydınlık müşteri alanı.",
+      "icon": "pa:kcarsi_l1"
+    },
+    {
+      "id": "l2",
+      "name": "Arka Depo",
+      "description": "Sadece karmaşık elektronik bir şifreyle girilebilen, altınların saklandığı penceresiz, yalıtımlı güvenlik odası.",
+      "icon": "pa:kcarsi_l2"
+    },
+    {
+      "id": "l3",
+      "name": "Çarşı Koridoru",
+      "description": "Kepenkler kapandıktan sonra sadece gece bekçilerinin devriye gezdiği, yüzlerce yıllık kıvrımlı taş yürüyüş yolları.",
+      "icon": "pa:kcarsi_l3"
+    }
+  ],
+  "clues": [
+    {
+      "id": "c1",
+      "text": "Çarşı kapısındaki gece bekçisi kayıtları, Ahmet Usta'nın dükkanını erkenden kilitleyip ana cadde tarafındaki aydınlık vitrinlerle uğraştığını gösteriyor.",
+      "type": "record",
+      "isBonus": false
+    },
+    {
+      "id": "c2",
+      "text": "Kafatasındaki derin travma izinin çapı, hassas bir terazinin bırakabileceğinden çok daha geniş ve kilitleri zorlayacak kadar kaba bir metale aitti.",
+      "type": "forensic",
+      "isBonus": false
+    },
+    {
+      "id": "c3",
+      "text": "Kan izleri, dışarıdan geçenlerin rahatça görebileceği müşteri alanında değil, elektronik şifreyle korunan arka bölmeye doğru yoğunlaşıyordu.",
+      "type": "evidence",
+      "isBonus": false
+    },
+    {
+      "id": "c4",
+      "text": "Selma Teyze, olay saatinde muhasebe defterlerini çarşının öbür ucundaki çay ocağında incelediğini iki esnafa doğrulattı.",
+      "type": "witness",
+      "isBonus": false
+    },
+    {
+      "id": "c5",
+      "text": "Penceresiz güvenlik odasının dijital şifre paneli, çarşıda teknolojiyle arası en iyi olan genç çalışanın sık kullandığı kombinasyonla açılmıştı.",
+      "type": "evidence",
+      "isBonus": true
+    },
+    {
+      "id": "c6",
+      "text": "Stajyer Kerem'in önlüğünün astarında, cinayette kullanılan ağır çelik aletten sıçrayan ve maktule ait olan taze kan damlaları bulundu.",
+      "type": "forensic",
+      "isBonus": true
+    }
+  ],
+  "solvabilityMeta": {
+    "freeEliminations": [
+      "l1",
+      "l3",
+      "s2",
+      "w2",
+      "s1"
+    ],
+    "bonusEliminations": [
+      "w1"
+    ]
+  },
+  "solution": {
+    "suspectId": "s3",
+    "weaponId": "w3",
+    "locationId": "l2"
+  },
+  "caseTier": "standard",
+  "isPremium": false,
+  "difficultyLevel": 3
+}

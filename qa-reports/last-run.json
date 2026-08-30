@@ -1,0 +1,57 @@
+{
+  "generated_at": "2026-08-30T14:32:15.278Z",
+  "provider": "gemini",
+  "model": "gemini-flash-lite-latest",
+  "dry_run": false,
+  "acceptance_score": 80,
+  "max_attempts": 2,
+  "processed": 3,
+  "already_passing": 0,
+  "repaired": 1,
+  "quarantined": 2,
+  "quarantined_soft_gap_only": 0,
+  "errors": 0,
+  "token_usage": {
+    "input": 16433,
+    "output": 10978,
+    "thinking": 6917,
+    "calls": 3
+  },
+  "results": [
+    {
+      "case_id": "konakta-gece-yarisi-cinayeti",
+      "tier": "standard",
+      "status": "repaired",
+      "score": 84,
+      "attempts": 0,
+      "fixed_without_ai": true,
+      "persisted": true
+    },
+    {
+      "case_id": "bogazda-kayip-elmas",
+      "tier": "standard",
+      "status": "quarantined",
+      "score": 0,
+      "attempts": 2,
+      "blocking_flag_count": 1,
+      "soft_gap_only": false,
+      "remaining_flags": [
+        "[traceabilityPolicy] HATA: QA İzlenebilirlik Sözleşmesi Eksik — bu zorlukta logicRules taşıyan her ipucu qaRationale {matrixEffect, evidenceLink, evidenceKind} ile belgelenmelidir. 4 ipucuda eksik/yetersiz köprü var."
+      ]
+    },
+    {
+      "case_id": "kapalicarsida-gizem",
+      "tier": "standard",
+      "status": "quarantined",
+      "score": 0,
+      "attempts": 2,
+      "blocking_flag_count": 3,
+      "soft_gap_only": false,
+      "remaining_flags": [
+        "[traceabilityPolicy] HATA: QA İzlenebilirlik Sözleşmesi Eksik — bu zorlukta logicRules taşıyan her ipucu qaRationale {matrixEffect, evidenceLink, evidenceKind} ile belgelenmelidir. 4 ipucuda eksik/yetersiz köprü var.",
+        "[visibleEvidenceScope] HATA: Oyuncu-Görünür Kural Taşkını — İpucu 1 metni şüpheli olarak “Ahmet Usta” sonucunu da adı doğrudan geçiyor; ancak logicRules yalnız Ağır Terazi ↔ Dükkan İçi etkisini tanımlıyor. Oyuncu bu ek hücreyi işaretlerse sonraki temel ipucu tekrara düşebilir.",
+        "[visibleEvidenceScope] HATA: Oyuncu-Görünür Kural Taşkını — İpucu 4 metni şüpheli olarak “Selma Teyze” sonucunu da adı doğrudan geçiyor; ancak logicRules yalnız Kerem Genç ↔ Ağır Terazi etkisini tanımlıyor. Oyuncu bu ek hücreyi işaretlerse sonraki temel ipucu tekrara düşebilir."
+      ]
+    }
+  ]
+}
