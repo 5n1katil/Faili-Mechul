@@ -1,2 +1,3 @@
 - [Parmak izi e2e navigation](parmak-izi-e2e.md) — bonus clue reveal, pack tab click patterns, decoy fingerprint setup for wrong-selection test
 - [Şüpheli avatar üretim politikası](suspect-avatar-generation-policy.md) — karakteri tanımlayan nesneleri koru; görseli değil üretim girdisini düzelt
+- [Expo dependency hizalama](expo-dependency-alignment.md) — dinamik config ile otomatik fix kısmi kalabilir; diff ve gerçek kurulu sürümleri doğrula
