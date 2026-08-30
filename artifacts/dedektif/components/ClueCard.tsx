@@ -1,7 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import type { ComponentProps } from "react";
 import { Alert, Image, Platform, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
-import { Audio } from "expo-av";
+import {
+  setAudioModeAsync,
+  useAudioPlayer,
+  useAudioPlayerStatus,
+  type AudioSource,
+} from "expo-audio";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useGame } from "@/context/GameContext";
 import Animated, {
@@ -24,7 +29,7 @@ import type {
 
 type MaterialIconName = ComponentProps<typeof MaterialIcons>["name"];
 
-const AUDIO_ASSETS: Record<string, ReturnType<typeof require>> = {
+const AUDIO_ASSETS: Record<string, AudioSource> = {
   audio_ott_004_c6_rihtim_nobet_silindiri: require("../assets/audio/cases/ott_004/ott_004_c6_rihtim_nobet_silindiri.mp3"),
   audio_hw_001_c3_kulaklik_fisilti: require("../assets/audio/cases/hw_001/hw_001_c3_kulaklik_fisilti.mp3"),
   audio_hw_004_c5_acil_interkom: require("../assets/audio/cases/hw_004/hw_004_c5_acil_interkom.mp3"),
@@ -155,50 +160,83 @@ function TelephoneSwitchboardBlock({
   const segments = puzzle.segments ?? [];
   const options = puzzle.options ?? [];
 
-  const [sound, setSound] = useState<Audio.Sound | null>(null);
+  const player = useAudioPlayer(null, {
+    updateInterval: 100,
+    keepAudioSessionActive: true,
+  });
+  const status = useAudioPlayerStatus(player);
   const [activeSegId, setActiveSegId] = useState<string | null>(null);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [wrong, setWrong] = useState(false);
   const [hintRevealed, setHintRevealed] = useState(false);
   const [transcriptOpen, setTranscriptOpen] = useState(false);
-  const stopAtEndMsRef = useRef<number | null>(null);
+  const activeSegIdRef = useRef<string | null>(null);
+  const stopAtEndSecRef = useRef<number | null>(null);
+  const playbackRequestRef = useRef(0);
 
   useEffect(() => {
-    return () => { sound?.unloadAsync(); };
-  }, [sound]);
+    const activeSegment = activeSegIdRef.current;
+    if (!activeSegment || (!status.playing && !status.didJustFinish)) return;
+
+    const stopAt = stopAtEndSecRef.current;
+    if (status.didJustFinish || (stopAt !== null && status.currentTime >= stopAt)) {
+      player.pause();
+      activeSegIdRef.current = null;
+      stopAtEndSecRef.current = null;
+      setActiveSegId(null);
+    }
+  }, [player, status.currentTime, status.didJustFinish, status.playing]);
+
+  useEffect(() => {
+    return () => {
+      playbackRequestRef.current += 1;
+      activeSegIdRef.current = null;
+      stopAtEndSecRef.current = null;
+    };
+  }, []);
 
   const playSegment = async (seg: { id: string; label?: string; audioAssetId?: string; startSec?: number; endSec?: number }) => {
+    const requestId = ++playbackRequestRef.current;
     try {
-      if (sound) { await sound.stopAsync().catch(() => {}); await sound.unloadAsync(); setSound(null); }
+      player.pause();
       setActiveSegId(seg.id);
+      activeSegIdRef.current = seg.id;
       const usesMainAsset = !seg.audioAssetId && !!clue.audioAssetId && typeof seg.startSec === "number";
       const assetKey = seg.audioAssetId ?? (usesMainAsset ? clue.audioAssetId! : undefined);
-      const assetSource = assetKey ? AUDIO_ASSETS[assetKey] as import("expo-av").AVPlaybackSource : null;
-      if (!assetSource) { setActiveSegId(null); return; }
-      stopAtEndMsRef.current = (usesMainAsset && typeof seg.endSec === "number") ? seg.endSec * 1000 : null;
-      const startMs = usesMainAsset ? (seg.startSec! * 1000) : 0;
-      await Audio.setAudioModeAsync({ playsInSilentModeIOS: true });
-      const { sound: newSound } = await Audio.Sound.createAsync(
-        assetSource,
-        { shouldPlay: false, positionMillis: startMs },
-        (status) => {
-          if (!status.isLoaded) return;
-          if (status.didJustFinish) { setActiveSegId(null); stopAtEndMsRef.current = null; return; }
-          const stopAt = stopAtEndMsRef.current;
-          if (stopAt !== null && status.positionMillis >= stopAt) {
-            newSound.pauseAsync().catch(() => {});
-            setActiveSegId(null);
-            stopAtEndMsRef.current = null;
-          }
-        }
-      );
-      setSound(newSound);
-      await newSound.playAsync();
-    } catch { setActiveSegId(null); }
+      const assetSource = assetKey ? AUDIO_ASSETS[assetKey] : null;
+      if (!assetSource) {
+        activeSegIdRef.current = null;
+        setActiveSegId(null);
+        return;
+      }
+
+      stopAtEndSecRef.current =
+        usesMainAsset && typeof seg.endSec === "number" ? seg.endSec : null;
+      const startSec = usesMainAsset ? seg.startSec! : 0;
+      await setAudioModeAsync({
+        playsInSilentMode: true,
+        interruptionMode: "mixWithOthers",
+      });
+      if (requestId !== playbackRequestRef.current) return;
+
+      player.replace(assetSource);
+      await player.seekTo(startSec);
+      if (requestId !== playbackRequestRef.current) return;
+      player.play();
+    } catch {
+      if (requestId === playbackRequestRef.current) {
+        activeSegIdRef.current = null;
+        stopAtEndSecRef.current = null;
+        setActiveSegId(null);
+      }
+    }
   };
 
   const stopPlayback = async () => {
-    if (sound) { await sound.pauseAsync(); }
+    playbackRequestRef.current += 1;
+    player.pause();
+    activeSegIdRef.current = null;
+    stopAtEndSecRef.current = null;
     setActiveSegId(null);
   };
 
@@ -322,60 +360,37 @@ function TelephoneSwitchboardBlock({
 }
 
 function SesKaydiBlock({ audioAssetId }: { audioAssetId?: string }) {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [progress, setProgress] = useState(0);
-  const soundRef = useRef<Audio.Sound | null>(null);
-
-  useEffect(() => {
-    return () => {
-      if (soundRef.current) {
-        soundRef.current.unloadAsync();
-      }
-    };
-  }, []);
-
-  const assetSource = audioAssetId ? AUDIO_ASSETS[audioAssetId] as import("expo-av").AVPlaybackSource : null;
+  const assetSource = audioAssetId ? AUDIO_ASSETS[audioAssetId] ?? null : null;
+  const player = useAudioPlayer(assetSource, {
+    updateInterval: 100,
+    keepAudioSessionActive: true,
+  });
+  const status = useAudioPlayerStatus(player);
+  const isPlaying = status.playing;
+  const isLoading = !!assetSource && !status.isLoaded;
+  const progress =
+    status.didJustFinish || status.duration <= 0
+      ? 0
+      : Math.min(1, status.currentTime / status.duration);
 
   const handlePlayPause = async () => {
     if (!assetSource) return;
     try {
-      if (soundRef.current) {
-        const status = await soundRef.current.getStatusAsync();
-        if (status.isLoaded) {
-          if (status.isPlaying) {
-            await soundRef.current.pauseAsync();
-            setIsPlaying(false);
-          } else {
-            await soundRef.current.playAsync();
-            setIsPlaying(true);
-          }
-          return;
-        }
+      if (!status.isLoaded) return;
+      if (player.playing) {
+        player.pause();
+        return;
       }
-      setIsLoading(true);
-      await Audio.setAudioModeAsync({ playsInSilentModeIOS: true });
-      const { sound } = await Audio.Sound.createAsync(
-        assetSource,
-        { shouldPlay: true },
-        (status) => {
-          if (status.isLoaded) {
-            if (status.durationMillis && status.durationMillis > 0) {
-              setProgress(status.positionMillis / status.durationMillis);
-            }
-            if (status.didJustFinish) {
-              setIsPlaying(false);
-              setProgress(0);
-            }
-          }
-        }
-      );
-      soundRef.current = sound;
-      setIsPlaying(true);
-      setIsLoading(false);
+      await setAudioModeAsync({
+        playsInSilentMode: true,
+        interruptionMode: "mixWithOthers",
+      });
+      if (player.duration > 0 && player.currentTime >= player.duration - 0.05) {
+        await player.seekTo(0);
+      }
+      player.play();
     } catch {
-      setIsLoading(false);
-      setIsPlaying(false);
+      // Playback failures leave the player paused; the next press can retry.
     }
   };
 
