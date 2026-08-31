@@ -972,66 +972,121 @@ export const PUZZLES: Puzzle[] = [
     title: "Termal Otelde Şüpheli Vaka",
     difficulty: "caylak",
     dayIndex: 16,
-    story:
-      "Bursa'nın ormanlarla çevrili lüks termal otelinde, suların huzur veren şırıltısı ünlü bir şarkıcının son çığlığıyla kesildi. Yoğun buharın göz gözü görmez ettiği spa alanında, ihtişamlı bir hayat karanlık bir sırla son buldu.",
+    story: "Bursa'nın ormanlarla çevrili lüks termal otelinde, suların huzur veren şırıltısı ünlü bir şarkıcının son çığlığıyla kesildi. Yoğun buharın göz gözü görmez ettiği spa alanında, ihtişamlı bir hayat karanlık bir sırla son buldu. O gece otelin üç ayrı bölümünde farklı güvenlik kayıtları tutuluyor, sahne ekibi konser telaşıyla koridorları dolduruyordu. Cinayet saatinde bazı odalar içeriden kilitliydi; bir geçitte ince bir toz tabakası, başka bir odada ise yarım kalmış bir masaj hazırlığı bulundu. Resepsiyon, kart geçişleri ve personel defterleri birbirini doğrulasa da bu kayıtların hangi ayrıntıyı sakladığı ancak dikkatli bir karşılaştırmayla anlaşılabilirdi.",
     suspects: [
-      { id: "s1", name: "Otel Müdürü", description: "Otelin biriken borçları yüzünden köşeye sıkışan ve ünlü misafirlerin skandallarından korkan, sürekli güvenlik kameralarını izleyen gergin otel müdürü.", icon: "pa:termal_s1" },
-      { id: "s2", name: "Eski Hayranı", description: "Maktulün her adımını gölgelerden takip eden, reddedilmeyi asla hazmedemeyen ve gözlerini ondan ayırmayan takıntılı eski hayran.", icon: "pa:termal_s2" },
-      { id: "s3", name: "Rakip Şarkıcı", description: "Aynı gece otelin devasa açık hava sahnesinde performans sergileyen, kurbanın gölgesinde kalmaktan nefret eden hırslı rakip şarkıcı.", icon: "pa:termal_s3" },
+      {
+        id: "s1",
+        name: "Otel Müdürü",
+        description: "Otelin biriken borçları yüzünden köşeye sıkışan ve ünlü misafirlerin skandallarından korkan, sürekli güvenlik kameralarını izleyen gergin otel müdürü.",
+        icon: "pa:termal_s1"
+      },
+      {
+        id: "s2",
+        name: "Eski Hayranı",
+        description: "Maktulün her adımını gölgelerden takip eden, reddedilmeyi asla hazmedemeyen ve gözlerini ondan ayırmayan takıntılı eski hayran.",
+        icon: "pa:termal_s2"
+      },
+      {
+        id: "s3",
+        name: "Rakip Şarkıcı",
+        description: "Aynı gece otelin devasa açık hava sahnesinde performans sergileyen, kurbanın gölgesinde kalmaktan nefret eden hırslı rakip şarkıcı.",
+        icon: "pa:termal_s3"
+      }
     ],
     weapons: [
-      { id: "w1", name: "Boğma", description: "Kurbanı yoğun buhar ve sıcaklığın olduğu ıslak bir zeminde, savunmasız bir anında çıplak ellerle nefessiz bırakan vahşi bir güç.", icon: "pa:termal_w1" },
-      { id: "w2", name: "Uyku Hapı", description: "Kişisel içeceklere karıştırıldığında bedeni saniyeler içinde uyuşturan ve kalbi yavaşlatan ağır reçeteli uyku ilacı.", icon: "pa:termal_w2" },
-      { id: "w3", name: "Bıçak", description: "Havlu ve spa malzemeleri arasına ustaca saklanmış, tek bir pürüzsüz hamleyle hayati organları delebilecek küçük katlanır bıçak.", icon: "pa:termal_w3" },
+      {
+        id: "w1",
+        name: "Boğma",
+        description: "Kurbanı yoğun buhar ve sıcaklığın olduğu ıslak bir zeminde, savunmasız bir anında çıplak ellerle nefessiz bırakan vahşi bir güç.",
+        icon: "pa:termal_w1"
+      },
+      {
+        id: "w2",
+        name: "Uyku Hapı",
+        description: "Kişisel içeceklere karıştırıldığında bedeni saniyeler içinde uyuşturan ve kalbi yavaşlatan ağır reçeteli uyku ilacı.",
+        icon: "pa:termal_w2"
+      },
+      {
+        id: "w3",
+        name: "Bıçak",
+        description: "Havlu ve spa malzemeleri arasına ustaca saklanmış, tek bir pürüzsüz hamleyle hayati organları delebilecek küçük katlanır bıçak.",
+        icon: "pa:termal_w3"
+      }
     ],
     locations: [
-      { id: "l1", name: "Havuz Başı", description: "Termal suyun devir daim yaptığı, etrafı şezlonglarla çevrili, açık havada bulunan aydınlık ve geniş yüzme havuzu kenarı.", icon: "pa:termal_l1" },
-      { id: "l2", name: "Spa Odası", description: "Kokulu yağların ve masaj yataklarının bulunduğu, yumuşak müziklerin çaldığı, dışarıdan rahatça girilebilen aromaterapi kabini.", icon: "pa:termal_l2" },
-      { id: "l3", name: "Sauna", description: "Ahşap duvarlı, içeriden kilitlenebilen, nefes almayı zorlaştıran yoğun buhar ve yüksek sıcaklıkta tutulan izole terleme odası.", icon: "pa:termal_l3" },
+      {
+        id: "l1",
+        name: "Havuz Başı",
+        description: "Termal suyun devir daim yaptığı, etrafı şezlonglarla çevrili, açık havada bulunan aydınlık ve geniş yüzme havuzu kenarı.",
+        icon: "pa:termal_l1"
+      },
+      {
+        id: "l2",
+        name: "Spa Odası",
+        description: "Kokulu yağların ve masaj yataklarının bulunduğu, yumuşak müziklerin çaldığı, dışarıdan rahatça girilebilen aromaterapi kabini.",
+        icon: "pa:termal_l2"
+      },
+      {
+        id: "l3",
+        name: "Sauna",
+        description: "Ahşap duvarlı, içeriden kilitlenebilen, nefes almayı zorlaştıran yoğun buhar ve yüksek sıcaklıkta tutulan izole terleme odası.",
+        icon: "pa:termal_l3"
+      }
     ],
     clues: [
       {
         id: "c1",
-        text: "İçeriden kilitlenmiş yoğun buharlı ahşap odanın duvarlarında tespit edilen çırpınış ve el baskısı izleri, kurbanın o dar ve cehennem gibi sıcak alanda nefessiz bırakıldığını kanıtlıyordu.",
+        text: "Ahşap terleme kabininin bankındaki taze deri ve kan transferi, saldırının burada gerçekleştiğini gösteriyordu. Aynı saate ait kart kaydı, tesisin idaresinden sorumlu kişinin bu bölümün kapısından geçmediğini doğruladı.",
         type: "evidence",
-        isBonus: false,
+        isBonus: false
       },
       {
         id: "c2",
-        text: "Açık yüzme havuzunun ıslak kenarlarında suya karışmadan kalmış mikroskobik sedatif tozları, bu sinsi planın kimyasal bir eylemden mekanik bir cinayete dönüştüğünü gösterdi.",
+        text: "Dijital geçiş kaydında, kurbanla müzik listelerinde rekabet eden kişinin kartı buharlı terleme bölümünün kapısını hiç açmamıştı. Güvenlik görevlisi, ilgili saat aralığında bu kapıdan kartsız giriş yapılmadığını da ifadesinde doğruladı.",
         type: "evidence",
-        isBonus: false,
+        isBonus: false
       },
       {
         id: "c3",
-        text: "Otel müdürünün olay gecesi boyunca ön bürodaki operasyonları yönettiği ve POS cihazlarından alınan kesintisiz işlem kayıtlarıyla resepsiyondan hiç ayrılmadığı saptandı.",
-        type: "witness",
-        isBonus: false,
+        text: "Aromaterapi kabinindeki masaj hazırlığı tepsisinden alınan bardakta, laboratuvar reçeteli sedatif kalıntısı saptadı. Mühürlü teslim kaydı, incelenen bardağın kokulu yağların kullanıldığı bu bölüme ait olduğunu doğruluyordu.",
+        type: "forensic",
+        isBonus: false
       },
       {
         id: "c4",
-        text: "Otel sistemindeki dijital kart logları, rakip şarkıcının cinayet saatinden çok önce aromaterapi kabinine girdiğini ve sadece o alanda kaldığını teyit etti.",
+        text: "Ahşap terleme bölümündeki kurbanın giysilerinde kesik, delik ya da metal izine rastlanmadı. Adli muayene, kesici bir aletin bu odada kullanılmış olamayacağını gösterdi.",
         type: "evidence",
-        isBonus: false,
+        isBonus: false
       },
       {
         id: "c5",
-        text: "Lobideki güvenlik kameraları, gözleri kurbanı arayan takıntılı hayranın doğrudan en sıcak ve kilitlenebilir ahşap kabine yöneldiğini saniye saniye kaydetmişti.",
+        text: "Lobideki güvenlik kameraları, Eski Hayran'ın gözlerini kurbandan ayırmadan doğrudan kilitlenebilir sauna kabinine yöneldiğini gösteriyordu; havuz başına uğradığına dair hiçbir görüntü yoktu.",
         type: "evidence",
-        isBonus: true,
+        isBonus: true
       },
       {
         id: "c6",
-        text: "Rakip şarkıcının o akşam binlerce kişinin izlediği açık hava konserinde sahne aldığı magazin basınının canlı yayınlarıyla belgelenerek şüpheleri ondan tamamen uzaklaştırdı.",
+        text: "Rakip Şarkıcı'nın o akşam binlerce kişinin izlediği açık hava konserinde sahne aldığına ilişkin canlı yayın görüntüleri, cinayet saatinde havuz başında olmadığını belgeliyordu.",
         type: "witness",
-        isBonus: true,
-      },
+        isBonus: true
+      }
     ],
     solvabilityMeta: {
-      freeEliminations: ["l1", "l2", "s1", "s3", "w2", "w3"],
-      bonusEliminations: [],
+      freeEliminations: [
+        "l1",
+        "l2",
+        "s1",
+        "s3",
+        "w2",
+        "w3"
+      ],
+      bonusEliminations: []
     },
-    solution: { suspectId: "s2", weaponId: "w1", locationId: "l3" },
+    solution: {
+      suspectId: "s2",
+      weaponId: "w1",
+      locationId: "l3"
+    }
   },
   {
     id: "sehrin-kalbi-kadikoy",

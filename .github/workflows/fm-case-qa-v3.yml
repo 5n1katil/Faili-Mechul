@@ -50,7 +50,7 @@ permissions:
   actions: read
 
 concurrency:
-  group: fm-case-qa-v3-${{ github.ref }}
+  group: fm-case-qa-production
   cancel-in-progress: false
 
 jobs:
