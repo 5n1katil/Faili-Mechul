@@ -264,6 +264,17 @@ function evaluateCase(engine, rawCase, options = {}) {
     blockers,
     fixes: cleanList(qa.fixes),
     advisories: cleanList(qa.advisories),
+    // These sections contribute to total and productionReady independently of
+    // top-level fixes/advisories. Never hide them from the repair model.
+    scoreBreakdown: Object.fromEntries(['k1', 'k2', 'k3', 'k4'].map((key, index) => [key, {
+      score: Number(qa[key]?.score || 0), maximum: index === 0 ? 40 : 20,
+      findings: cleanList(qa[key]?.findings)
+    }])),
+    qualityFindings: [...new Set([
+      ...['k1', 'k2', 'k3', 'k4'].flatMap(key => cleanList(qa[key]?.findings))
+        .filter(finding => /^(?:💡\s*)?TAVSİYE|^UYARI/i.test(finding)),
+      ...cleanList(qa.literary?.warnings), ...cleanList(qa.consistency?.flags)
+    ])],
     gates: {
       coreNecessity: sectionGate(qa.coreNecessity),
       patternGovernance: sectionGate(qa.patternGovernance),
