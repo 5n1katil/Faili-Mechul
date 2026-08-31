@@ -8801,21 +8801,21 @@
             {
               "id": "s1",
               "name": "YZ Araştırmacısı Dr. Zhao",
-              "icon": "🧪",
+              "icon": "pa:dij_002_s1",
               "description": "Helix’in yüz sentezi ekibinin baş araştırmacısı. Araştırma kimliği Z-22.",
               "detail": "Z-22 kimliği, optik sensör kalibrasyonunu yürütür. Patent dosyası nedeniyle CEO ile açık çatışma yaşamıştı."
             },
             {
               "id": "s2",
               "name": "Yatırımcı Felix Hartmann",
-              "icon": "💼",
+              "icon": "pa:dij_002_s2",
               "description": "Şirketin acil satışını isteyen uluslararası yatırımcı.",
               "detail": "H-19 otel yayın anahtarıyla uzaktan toplantı yapar. Donanım denemelerini sunmayı sever; şirket içi fiziksel erişimi sınırlıdır."
             },
             {
               "id": "s3",
               "name": "Eski Ortak Sofia Neves",
-              "icon": "👩‍💻",
+              "icon": "pa:dij_002_s3",
               "description": "Deepfake altyapısının ilk tasarımcısı olduğunu iddia eden eski ortak.",
               "detail": "Yüz sentezi modellerinin erken sürümlerini ve hangi artefaktların sahte üretimde kaldığını çok iyi bilir."
             }
@@ -8824,21 +8824,21 @@
             {
               "id": "w1",
               "name": "Elektrikli Nesne (Modifiye)",
-              "icon": "⚡",
+              "icon": "pa:dij_002_w1",
               "description": "Kısa devre görünümlü, kontrollü elektriksel müdahale aracı.",
               "detail": "Taşınabilir test cihazı gibi görünür; biyolojik toksin izleri bırakmaz."
             },
             {
               "id": "w2",
               "name": "Nörotoksik Sprey",
-              "icon": "🧴",
+              "icon": "pa:dij_002_w2",
               "description": "Havaya yayılan, kısa mesafede etkili nörolojik ajan.",
               "detail": "Kahve fincanına bırakılan çözeltiyle aynı kimyasal imzayı taşımaz."
             },
             {
               "id": "w3",
               "name": "Zehirli Kahve",
-              "icon": "☕",
+              "icon": "pa:dij_002_w3",
               "description": "Kahve makinesinden son anda bardağa taşınmış yavaş etkili toksik karışım.",
               "detail": "Fincanın iç çeperinde ikinci demleme sonrası oluşan ince kahverengi halka bulunur."
             }
@@ -8847,21 +8847,21 @@
             {
               "id": "l1",
               "name": "Ar-Ge Laboratuvarı",
-              "icon": "🔬",
+              "icon": "pa:dij_002_l1",
               "description": "Optik kamera, lens testleri ve model eğitiminin yapıldığı kapalı laboratuvar.",
               "detail": "Cam panellerindeki ışık yansıması, görüntü analizinde referans olarak kullanılır."
             },
             {
               "id": "l2",
               "name": "Yönetim Kurulu Odası",
-              "icon": "🪑",
+              "icon": "pa:dij_002_l2",
               "description": "Yatırımcı görüşmelerinin yapıldığı ekranlı toplantı odası.",
               "detail": "Dış bağlantı kioskları ve sunum cihazları burada tutulur."
             },
             {
               "id": "l3",
               "name": "CEO'nun Özel Ofisi",
-              "icon": "🏢",
+              "icon": "pa:dij_002_l3",
               "description": "Kurucu CEO’nun kilitli çalışma alanı.",
               "detail": "Koridor kamerası ofis kapısını çapraz açıyla görür; cam yansımaları içerideki ışığı taşır."
             }
