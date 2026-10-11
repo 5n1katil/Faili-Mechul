@@ -1309,7 +1309,7 @@
       }
     },
     "provider-diagnostic-v1": {
-      "spent": 0
+      "spent": 0.0038659
     }
   },
   "requests": {
@@ -1344,7 +1344,15 @@
         "status": "INVALID_ARGUMENT",
         "message": "Request contains an invalid argument."
       }
+    },
+    "2a369af385decc142e66385d0b0f3f88c0c73ee9ba248c4cdccee18f950b1267": {
+      "case_id": "provider-diagnostic-v1",
+      "model": "gemini-3.5-flash-lite",
+      "purpose": "player",
+      "day": "2026-10-11",
+      "status": "reserved",
+      "charged": 0.0038659
     }
   },
-  "campaign_spent": 0
+  "campaign_spent": 0.0038659
 }
