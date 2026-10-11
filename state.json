@@ -3007,7 +3007,7 @@
       "status": "quarantined"
     },
     "kapalicarsida-gizem": {
-      "spent": 0.008572700000000003,
+      "spent": 0.04938245,
       "feedback": [],
       "source_hash": "516640a853bd2653f5c4ca18e4737220f3139eeeae527578b334bf2003243009",
       "simulator_hash": "cb53e6613d6379de097599634de26524f4510fbc",
@@ -5410,7 +5410,15 @@
           }
         ]
       }
+    },
+    "f889719a7abe8c2044423cc7da549a4a0d448e8250361a10cd1c4702aaa627d7": {
+      "case_id": "kapalicarsida-gizem",
+      "model": "gemini-3.8-flash",
+      "purpose": "repair",
+      "day": "2026-10-11",
+      "status": "reserved",
+      "charged": 0.04080975
     }
   },
-  "campaign_spent": 0.07512930000000001
+  "campaign_spent": 0.11593905000000002
 }
