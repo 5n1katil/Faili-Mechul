@@ -122,6 +122,12 @@ try {
     assert.equal(result.status, 'quarantined'); assert.equal(result.run.calls, 0);
     assert.match(result.failures[0], /MEDIA_REVIEW_REQUIRED/);
   });
+  await test('failed gold calibration blocks the pilot before any provider call', async () => {
+    const bad = { ...snapshot, entries: snapshot.entries.map(e => e.id === 'rc_001'
+      ? { ...e, candidate: { ...clone(e.candidate), story: 'Kısa öykü.' } } : e) };
+    await assert.rejects(repairOne(bad, entry, storeFor(entry.id), { allowAI: true,
+      caller: () => { throw new Error('UNEXPECTED_CALL'); } }), /GOLD_CALIBRATION_FAILED/);
+  });
   await test('rejected repair feeds the next attempt and accepted checkpoint resumes offline', async () => {
     const store = storeFor(entry.id), calls = [];
     const result = await repairOne(snapshot, entry, store, { allowAI: true, caller: async args => {

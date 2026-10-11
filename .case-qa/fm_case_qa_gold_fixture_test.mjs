@@ -45,10 +45,10 @@ try {
     encoding: 'utf8',
     env: {
       ...process.env,
-      OPENAI_API_KEY: 'must-not-be-used',
+      OPENAI_API_KEY: '',
       FM_QA_ROOT: root,
       FM_QA_MODE: 'pilot',
-      FM_QA_ALLOW_AI: 'true',
+      FM_QA_ALLOW_AI: 'false',
       FM_QA_CASE_IDS: 'rc_001',
       FM_QA_CASE_LIMIT: '1',
       FM_QA_APPLY_TO_WORKTREE: 'false',
@@ -57,7 +57,9 @@ try {
   });
   assert.equal(pilot.status, 0, `Single-case pilot fixture failed:\n${pilot.stdout}\n${pilot.stderr}`);
   const pilotReport = JSON.parse(fs.readFileSync(path.join(pilotOutputDir, 'fm_case_qa_run_report.json'), 'utf8'));
-  assert.equal(pilotReport.campaign_calibrated, true);
+  // Legacy CLI is audit-only; paid calibration is owned by the unified pipeline.
+  assert.equal(pilotReport.ai_enabled, false);
+  assert.equal(pilotReport.campaign_calibrated, false);
   assert.equal(pilotReport.summary.selected_cases, 1);
   assert.equal(pilotReport.summary.final_campaign_passed, 1);
   assert.equal(pilotReport.summary.quarantined, 0);
@@ -65,7 +67,7 @@ try {
   assert.equal(pilotReport.summary.actual_or_conservative_cost_usd, 0);
   assert.equal(pilotReport.summary.hard_budget_usd, 1);
 
-  process.stdout.write('Gold fixtures and zero-cost single-case pilot calibration: PASS.\n');
+  process.stdout.write('Gold fixtures and zero-cost single-case audit: PASS.\n');
 } finally {
   fs.rmSync(outputDir, { recursive: true, force: true });
   fs.rmSync(pilotOutputDir, { recursive: true, force: true });
