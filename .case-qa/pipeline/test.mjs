@@ -13,6 +13,7 @@ import { playerView, playerPass, judgePass, reviewCandidate, mediaPreflight, cer
 import { repairOne, campaignRows } from './run.mjs';
 import { validateNewCase, previewNewCase } from './intake.mjs';
 import { repairTermal } from '../fixtures/termal_reviewed_repair.mjs';
+import { repairKonak } from '../fixtures/konak_reviewed_repair.mjs';
 import { stableHash, parseStandard, PATCH_SCHEMA } from '../fm_case_qa_runner.mjs';
 import { api } from './github.mjs';
 import { diagnose, diagnosticStages } from './diagnose.mjs';
@@ -53,6 +54,48 @@ try {
     assert.equal(a97.result.score, 97);
     const next = guardedPatch(snapshot, entry, fixture, plan, a97);
     assert.equal(next.assessment.passed, true); assert.equal(better(next.assessment, a97), true);
+  });
+  await test('offline Konak candidate reaches 100 and its four core clues are independently necessary', () => {
+    const original = snapshot.entries.find(e => e.id === 'konakta-gece-yarisi-cinayeti');
+    const candidate = repairKonak(original.candidate), before = assess(snapshot, original, original.candidate);
+    const operations = ['story', 'qaSemanticFacts', 'qaPattern', 'qaAuthoringVersion'].map(field =>
+      ({ op: Object.hasOwn(original.candidate, field) ? 'replace' : 'add', path: '/' + field,
+        value_json: JSON.stringify(candidate[field]), reason: 'offline editorial repair' }));
+    for (const [i, clue] of candidate.clues.entries()) for (const field of Object.keys(clue))
+      if (stableHash(clue[field]) !== stableHash(original.candidate.clues[i][field] ?? null))
+        operations.push({ op: Object.hasOwn(original.candidate.clues[i], field) ? 'replace' : 'add',
+          path: '/clues/' + i + '/' + field, value_json: JSON.stringify(clue[field]), reason: 'align visible evidence and rule' });
+    operations.push({ op: 'replace', path: '/weapons/2/name', value_json: JSON.stringify(candidate.weapons[2].name), reason: 'clarify existing hemp-rope profile' });
+    const next = guardedPatch(snapshot, original, original.candidate, { case_id: original.id, operations }, before);
+    assert.equal(next.assessment.passed, true);
+    assert.equal(next.assessment.result.score, 100);
+    assert.equal(next.assessment.result.simulatorProductionReady, true);
+    assert.deepEqual(candidate.solution, original.candidate.solution);
+    for (const axis of ['suspects', 'weapons', 'locations'])
+      assert.deepEqual(candidate[axis].map(e => [e.id, e.icon]), original.candidate[axis].map(e => [e.id, e.icon]));
+    // Separate exhaustive enumeration, independent of the HTML solver. The
+    // anchor identifies w1; pair rules alone must locate its carrier and place.
+    const perms = [[0,1,2],[0,2,1],[1,0,2],[1,2,0],[2,0,1],[2,1,0]];
+    const enumerate = clues => {
+      const rows = [];
+      for (const weapons of perms) for (const locations of perms) {
+        const owner = id => id[0] === 's' ? Number(id[1])-1 :
+          (id[0] === 'w' ? weapons : locations).indexOf(Number(id[1])-1);
+        if (clues.every(c => c.logicRules.every(r =>
+          (owner(r.pair[0]) === owner(r.pair[1])) === (r.action === 'confirm')))) {
+          const culprit = weapons.indexOf(0);
+          rows.push('s'+(culprit+1)+'|w1|l'+(locations[culprit]+1));
+        }
+      }
+      return rows;
+    };
+    const core = candidate.clues.filter(c => !c.isBonus);
+    assert.deepEqual([...new Set(enumerate(core))], ['s3|w1|l3']);
+    assert.equal(enumerate(core).length, 2);
+    for (const removed of core)
+      assert.ok(new Set(enumerate(core.filter(c => c.id !== removed.id))).size > 1, removed.id);
+    assert.equal(enumerate(candidate.clues).length, 1);
+    assert.equal(certificateValid(snapshot, original, candidate, null), false);
   });
   await test('grading policy and identity cannot be patched', () => {
     assert.throws(() => guardedPatch(snapshot, entry, fixture, { ...plan, operations: [

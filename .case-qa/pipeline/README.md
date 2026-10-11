@@ -90,6 +90,28 @@ Kayıt dalını silmeyin veya force-push yapmayın; kayıp kayıt bütçe güven
 
 ## Sıralı uygulama planı
 
+### Konak çevrimdışı adayının durumu
+
+Pilot 38140789134 iki gerçek repair çağrısı yaptı ($0.0182071) ve karantinaya
+alındı; aynı vaka yeniden ücretli repair için başlatılmamalıdır. Harcama kaydı
+korunur. `.case-qa/fixtures/konak_reviewed_repair.mjs` bağımsız inceleme bekleyen
+editoryal bir aday üretir; runner bunu otomatik kullanmaz ve oyun verisi değişmez.
+Tam HTML 100/100, productionReady=true ve bütün gerekli kapılar geçer.
+HTML'den ayrı 36 olası tam eşleşmenin taranması, ana ipuçlarında aynı cinayet
+üçlüsünü veren iki düzen, bonuslarla bir düzen kaldığını doğrular. Her temel
+ipucu çıkarıldığında cinayet üçlüsü belirsizleşir.
+
+İki harfli `İp` etiketi HTML mentionsAny tarafından tanınmadığı için, mevcut
+profilindeki malzemeyi belirten `Kenevir İpi` adı kullanılır. ID, ikon, fiziksel
+kimlik ve çözüm değişmez; identity guard bu metin netleştirmesini kabul eder.
+Bu, kısa ad algılayıcısının düzeltildiği anlamına gelmez; HTML değiştirilmemiştir.
+
+Bu adayın oyuncu/editör sertifikası **yoktur**. Testte üretilmiş sahte inceleme
+üretim sertifikası yerine geçmez. Beş eski vaka isteği kalıcı kayıttadır; altı
+toplam istek sınırında iki yeni bağımsız incelemeye yeterli alan yoktur. İnceleme
+akışı için açıkça kayıtlı, sınırlı bir kurtarma yolu hazırlanıp test edilmeden
+pilotla yeniden deneme veya maliyet kaydını sıfırlama yapılmamalıdır.
+
 Üretimden önce açıklamasız HTTP 400 tekrar ederse yeni vaka pilotu başlatmayın.
 `diagnose` modu yalnızca kısa bir bağlantı metni gönderir: Lite temel istek → JSON
 biçimi → thinking ayarı → reviewer tam ayarı → repair sözleşmesi. İlk hatada durur; aynı başarısız veya
