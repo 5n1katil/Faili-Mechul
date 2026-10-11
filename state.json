@@ -6502,7 +6502,7 @@
       "status": "quarantined"
     },
     "pazar-yerinde-supheli-olum": {
-      "spent": 0.049866499999999994,
+      "spent": 0.022315249999999995,
       "feedback": [],
       "source_hash": "d4a6a5003e9f00e091ed0db4768d29393539ba914af388dd06d6aca3f1fdcad2",
       "simulator_hash": "0e27218c7817862f371febb6b7bb865821d9e5da",
@@ -9889,9 +9889,45 @@
       "model": "gemini-3.8-flash",
       "purpose": "player",
       "day": "2026-10-11",
-      "status": "reserved",
-      "charged": 0.02938725
+      "status": "completed",
+      "charged": 0.001836,
+      "usage": {
+        "promptTokenCount": 1063,
+        "candidatesTokenCount": 277,
+        "totalTokenCount": 1340,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 1063
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "plan": {
+        "unique_solution": true,
+        "solution": {
+          "suspectId": "s3",
+          "weaponId": "w1",
+          "locationId": "l1"
+        },
+        "confidence": 100,
+        "evidence": [
+          {
+            "clue_id": "c3",
+            "quote": "Adli tabibin resmî raporu, Halit Usta'nın can verdiği asıl ölüm noktasının tepsilerin dizildiği ve damlaların aktığı ana satış noktası olduğunu kesinleştirdi."
+          },
+          {
+            "clue_id": "c1",
+            "quote": "zemin temizliğinde yararlanılan keskin kokulu endüstriyel çözücünün yalnızca sabah erken saatlerde yük indirmeye yarayan bu açık ağaçlık alanda bekletildiğini kesinleştirdi."
+          },
+          {
+            "clue_id": "c4",
+            "quote": "Bakır güğümde kaynatılmış berrak ve yoğun şekerli geleneksel sıvının, tam da bu kestirme ara hatta bırakıldığı resmî tutanakla tespit edildi."
+          }
+        ],
+        "issues": []
+      }
     }
   },
-  "campaign_spent": 0.18122615000000003
+  "campaign_spent": 0.15367490000000003
 }
