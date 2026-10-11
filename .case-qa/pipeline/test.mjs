@@ -13,7 +13,7 @@ import { playerView, playerPass, judgePass, reviewCandidate, mediaPreflight, cer
 import { repairOne, campaignRows } from './run.mjs';
 import { validateNewCase, previewNewCase } from './intake.mjs';
 import { repairTermal } from '../fixtures/termal_reviewed_repair.mjs';
-import { stableHash, parseStandard } from '../fm_case_qa_runner.mjs';
+import { stableHash, parseStandard, PATCH_SCHEMA } from '../fm_case_qa_runner.mjs';
 import { api } from './github.mjs';
 import { diagnose, diagnosticStages } from './diagnose.mjs';
 
@@ -60,6 +60,12 @@ try {
     assert.throws(() => guardedPatch(snapshot, entry, fixture, { ...plan, case_id: 'wrong' }, a97), /CASE_ID/);
     const unsafe = clone(policy); unsafe.simulator.minimum_score = 80;
     assert.throws(() => loadSnapshot(root, unsafe), /UNSAFE_PIPELINE_POLICY/);
+    assert.throws(() => guardedPatch(snapshot, entry, fixture, { ...plan,
+      operations: Array.from({ length: 81 }, () => plan.operations[0]) }, a97), /80/);
+    assert.equal(PATCH_SCHEMA.properties.operations.maxItems, 80);
+    const wire = requestBody(policy, policy.models.first_pass, 'test').generationConfig.responseFormat.text.schema;
+    assert.equal(wire.properties.operations.maxItems, undefined);
+    assert.deepEqual(wire.properties.operations.items, PATCH_SCHEMA.properties.operations.items);
   });
   await test('regressed score or safety gate cannot replace the best candidate', () => {
     const bad = clone(a97); bad.result.score = 96; bad.penalty = 0;
@@ -312,16 +318,21 @@ try {
     assert.equal(stages[0].body.generationConfig.responseFormat, undefined);
     assert.equal(stages[1].body.generationConfig.thinkingConfig, undefined);
     assert.equal(stages[2].body.generationConfig.thinkingConfig.thinkingLevel, 'LOW');
-    assert.ok(stages.every(s => s.body.generationConfig.maxOutputTokens === 1024));
+    assert.ok(stages.slice(0, 4).every(s => s.body.generationConfig.maxOutputTokens === 1024));
+    assert.equal(stages[4].name, 'repair_contract');
+    assert.equal(stages[4].body.generationConfig.maxOutputTokens, policy.sequential.max_output_tokens);
     const args = { preflight: async () => ({ checked: ['offline'] }), transport: async (url, options) => {
       calls++; assert.ok(!options.body.includes(entry.id));
-      return response('{"answer":"ok"}');
+      return response(calls === 5 ? '{"case_id":"provider-diagnostic-v1","assessment":"test","operations":[]}' : '{"answer":"ok"}');
     } };
     const result = await diagnose(store, policy, args);
-    assert.equal(result.status, 'provider_verified'); assert.equal(calls, 4);
+    assert.equal(result.status, 'diagnostic_checkpoint'); assert.equal(calls, 4);
     assert.ok(result.execute_cost_usd <= 0.03); assert.equal(result.stages.length, 4);
+    const continued = await diagnose(store, policy, args);
+    assert.equal(continued.status, 'provider_verified'); assert.equal(continued.api_calls, 1);
+    assert.equal(continued.stages.length, 5); assert.equal(calls, 5);
     const cached = await diagnose(store, policy, args);
-    assert.equal(cached.api_calls, 0); assert.equal(cached.execute_cost_usd, 0); assert.equal(calls, 4);
+    assert.equal(cached.api_calls, 0); assert.equal(cached.execute_cost_usd, 0); assert.equal(calls, 5);
     assert.deepEqual(before, [policy.source.standard_path, policy.source.premium_path, policy.source.sidecar_path]
       .map(p => stableHash(fs.readFileSync(p, 'utf8'))));
   });

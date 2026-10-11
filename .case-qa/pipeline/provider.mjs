@@ -48,12 +48,16 @@ export async function modelPreflight(policy, { transport = fetch } = {}) {
 export function requestBody(policy, model, prompt, { schema = PATCH_SCHEMA, system = SYSTEM_PROMPT } = {}) {
   if (!policy.models.pricing_usd_per_million_tokens[model] || !/^gemini-[a-z0-9.-]+$/.test(model))
     throw new Stop('MODEL_NOT_ALLOWED');
+  const wireSchema = structuredClone(schema);
+  // Keep the 80-operation limit in the local patch validator; avoid expanding
+  // a bounded nested array in the provider's constrained-decoding grammar.
+  if (schema === PATCH_SCHEMA) delete wireSchema.properties.operations.maxItems;
   return {
     systemInstruction: { parts: [{ text: system }] },
     contents: [{ role: 'user', parts: [{ text: prompt }] }],
     generationConfig: {
       temperature: 1, maxOutputTokens: policy.sequential.max_output_tokens,
-      responseFormat: { text: { mimeType: 'APPLICATION_JSON', schema } },
+      responseFormat: { text: { mimeType: 'APPLICATION_JSON', schema: wireSchema } },
       thinkingConfig: { thinkingLevel: policy.sequential.thinking_level }
     }
   };

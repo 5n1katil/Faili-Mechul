@@ -92,12 +92,22 @@ Kayıt dalını silmeyin veya force-push yapmayın; kayıp kayıt bütçe güven
 
 Üretimden önce açıklamasız HTTP 400 tekrar ederse yeni vaka pilotu başlatmayın.
 `diagnose` modu yalnızca kısa bir bağlantı metni gönderir: Lite temel istek → JSON
-biçimi → thinking ayarı → reviewer tam ayarı. İlk hatada durur; aynı başarısız veya
+biçimi → thinking ayarı → reviewer tam ayarı → repair sözleşmesi. İlk hatada durur; aynı başarısız veya
 belirsiz istek tekrarlanmaz. Başarılı aşamalar kalıcı kayıttan kullanılır. En fazla
-4 üretim isteği, istek başına 1024 output token ve teşhis kaydı/çalıştırma başına
+çalıştırma başına 4 yeni üretim isteği, ilk dört aşamada istek başına 1024 output token ve teşhis kaydı/çalıştırma başına
 $0.03 sınırı vardır; kampanya ve UTC günlük bütçeden düşer. Oyun vakası göndermez,
 oyun dosyası veya PR oluşturmaz. Yalnızca maliyet dalına checkpoint yazar.
 `provider_verified` vaka kalitesini veya tam vaka payload uyumunu kanıtlamaz.
+İlk dört aşama canlı olarak run 38138945007'de geçti; kayıtlı maliyet $0.00009255.
+Yeni beşinci `repair_contract` aşaması gerçek repair sistem talimatı, patch şeması
+ve 6000 output sınırını gerçek vaka göndermeden, boş yama cevabıyla kontrol eder.
+Patch şemasındaki `maxItems:80` yalnızca sağlayıcıya gönderilen kopyadan çıkarılır;
+yerel uygulama 81+ operasyonu reddetmeye devam eder. Bu şema uyarlaması olası bir
+uyumsuzluğu azaltır; 400'ün kesin sebebi olarak henüz doğrulanmamıştır.
+Yeni kayıtta dört çağrı sınırına gelince `diagnostic_checkpoint` yazılır; sonraki
+manuel diagnose başarılı dört aşamayı cache'den alıp beşinci aşamaya devam eder.
+Mevcut başarılı dört aşama için yeni harcama yoktur. Toplam teşhis kaydı/çalıştırma
+$0.03 sınırı, vaka başına 6 toplam istek ve tüm kampanya/günlük sınırlar korunur.
 `case_id`, base/head SHA bu modda kullanılmaz. Sonuç artifact/log'da
 `fm_provider_diagnostic_v1` raporudur. Sağlayıcının fieldViolations alanları da
 anahtarları temizlenmiş biçimde saklanır.
