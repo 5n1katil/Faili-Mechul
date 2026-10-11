@@ -6502,7 +6502,7 @@
       "status": "quarantined"
     },
     "pazar-yerinde-supheli-olum": {
-      "spent": 0.047320249999999994,
+      "spent": 0.015019999999999992,
       "feedback": [],
       "source_hash": "d4a6a5003e9f00e091ed0db4768d29393539ba914af388dd06d6aca3f1fdcad2",
       "simulator_hash": "04352c0a4ce07097cb752a1980b144fa00722e78",
@@ -9902,9 +9902,35 @@
       "model": "gemini-3.8-flash",
       "purpose": "judge",
       "day": "2026-10-11",
-      "status": "reserved",
-      "charged": 0.035475
+      "status": "completed",
+      "charged": 0.00317475,
+      "usage": {
+        "promptTokenCount": 3108,
+        "candidatesTokenCount": 225,
+        "totalTokenCount": 3333,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 3108
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "plan": {
+        "scores": {
+          "fairness": 5,
+          "clarity": 4,
+          "consistency": 4,
+          "originality": 3,
+          "engagement": 3
+        },
+        "issues": [
+          "Cinayet aleti olarak belirlenen 'Baklava'nın nasıl bir ölümcül silaha dönüştüğü (zehir, boğulma, alerji vb.) kurgusal olarak açıklanmamış; 'silah' tanımı havada kalmaktadır.",
+          "İpuçları saf eleme mantığıyla yazıldığından anlatı polis tutanağı kuruluğunda kalmakta ve dedektiflik hissi zayıflamaktadır."
+        ],
+        "summary": "Mantık örgüsü ve ipucu zinciri adil ve kusursuz bir şekilde tekil çözüme ulaşıyor. Ancak tatlının nasıl ölümcül hale geldiğine dair dramatik ve adli detaylar eklenerek anlatı zenginleştirilmelidir."
+      }
     }
   },
-  "campaign_spent": 0.17867990000000003
+  "campaign_spent": 0.14637965000000003
 }
