@@ -146,11 +146,12 @@ export function restoreBest(snapshot, entry, record) {
   return { candidate: current, assessment };
 }
 export function assertScope(before, after, selectedId) {
+  const selected = new Set(Array.isArray(selectedId) ? selectedId : [selectedId]);
   if (before.entries.length !== after.entries.length) throw new Error('DIFF_CASE_COUNT');
   for (const [i, entry] of before.entries.entries()) {
     const next = after.entries[i];
     if (entry.id !== next.id || entry.tier !== next.tier) throw new Error('DIFF_ORDER');
-    if (entry.id !== selectedId && (stableHash(entry.raw) !== stableHash(next.raw) ||
+    if (!selected.has(entry.id) && (stableHash(entry.raw) !== stableHash(next.raw) ||
         stableHash(before.sidecar.cases[entry.id] ?? null) !== stableHash(after.sidecar.cases[entry.id] ?? null)))
       throw new Error(`DIFF_UNSELECTED_CASE:${entry.id}`);
     if (protectedIdentity(entry.raw) !== protectedIdentity(next.raw)) throw new Error(`DIFF_IDENTITY:${entry.id}`);
@@ -167,7 +168,8 @@ export function assertScope(before, after, selectedId) {
 }
 export function assertNoRegression(beforeRows, afterRows, selectedId) {
   const after = new Map(afterRows.map(r => [r.id, r]));
-  if (!after.get(selectedId)?.passed) throw new Error('SELECTED_NOT_100');
+  for (const id of Array.isArray(selectedId) ? selectedId : [selectedId])
+    if (!after.get(id)?.passed) throw new Error('SELECTED_NOT_100');
   for (const row of beforeRows) if (row.passed && !after.get(row.id)?.passed) throw new Error(`PORTFOLIO_REGRESSION:${row.id}`);
 }
 export function stageCandidate(snapshot, entry, candidate, reviewCertificate) {

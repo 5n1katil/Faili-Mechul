@@ -7,7 +7,7 @@ import { stableHash, compactReport } from '../fm_case_qa_runner.mjs';
 import { read, write, clone, loadSnapshot, scan, selectNext, counts, assess, restoreBest,
   guardedPatch, better, repairPrompt, stageCandidate } from './core.mjs';
 import { openStore } from './state.mjs';
-import { callPaid, Stop, modelPreflight } from './provider.mjs';
+import { callPaid, Stop, modelPreflight, countsAsRepair } from './provider.mjs';
 import { mediaPreflight, reviewCandidate, certificateValid } from './review.mjs';
 
 export async function repairOne(snapshot, entry, store, { allowAI = false, caller = callPaid } = {}) {
@@ -37,7 +37,8 @@ export async function repairOne(snapshot, entry, store, { allowAI = false, calle
       }
       persist();
       for (let index = 0; index < snapshot.policy.sequential.max_repairs_per_case && !assessment.passed; index++) {
-        const model = snapshot.policy.models.first_pass;
+        const used = Object.values(store.state.requests || {}).filter(r => r.case_id === entry.id && countsAsRepair(r)).length;
+        const model = index > 0 || used > 0 ? (snapshot.policy.models.repair || snapshot.policy.models.first_pass) : snapshot.policy.models.first_pass;
         const response = await caller({ store, policy: snapshot.policy, run, caseId: entry.id, model,
           purpose: 'repair', prompt: repairPrompt(entry, current, assessment, record.feedback),
           validate: p => p?.case_id === entry.id && Array.isArray(p.operations) });
