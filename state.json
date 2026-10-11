@@ -4652,7 +4652,7 @@
       "status": "method_upgrade_pending"
     },
     "universitede-karanlik-sir": {
-      "spent": 0.057924649999999994,
+      "spent": 0.027037399999999993,
       "feedback": [
         {
           "score": 0,
@@ -7640,10 +7640,58 @@
       "model": "gemini-3.8-flash",
       "purpose": "repair",
       "day": "2026-10-11",
-      "status": "reserved",
-      "charged": 0.036366,
-      "repair_method": "verified_text_v1"
+      "status": "completed",
+      "charged": 0.00547875,
+      "repair_method": "verified_text_v1",
+      "usage": {
+        "promptTokenCount": 2980,
+        "candidatesTokenCount": 865,
+        "totalTokenCount": 3845,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 2980
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "plan": {
+        "case_id": "universitede-karanlik-sir",
+        "assessment": "cinayet",
+        "story": "İstanbul'daki köklü üniversite kampüsünde sessiz gece, stratejik bir araştırma projesinin merkezindeki laboratuvar yöneticisinin cansız bedeninin bulunmasıyla gölgelendi. Olay anında şüphelilerin her birinin farklı bir mekânda bulunduğu ve farklı bir vasıtaya erişim sağladığı tespit edildi. Dedektifler, sunucu odasından silinen verilerin ardındaki sır perdesini aralamak için kesin ölüm yöntemini, bu yöntemi kullanan faili ve ilgili mahalli tespit etmek üzere kanıtları inceliyor.",
+        "suspect_descriptions": {
+          "s1": "Fakültede uzun yıllardır görev yapan, sert mizaçlı ve hırslı kıdemli araştırmacı.",
+          "s2": "Tez projesini tamamlamak için gece gündüz çalışan genç doktora öğrencisi.",
+          "s3": "Binaların gece güvenliğinden sorumlu, üniformalı nöbetçi personel."
+        },
+        "clues": {
+          "c1": {
+            "text": "Olay yeri inceleme ekipleri, masanın cam bölmesinden koparılmış olan Keskin Nesne parçasını Ofis dahilindeki çalışma masasının çekmecesinde muhafaza edilmiş halde buldu.",
+            "deductionHint": "Belirtilen sivri nesne hangi mekânda emniyete alınmış?"
+          },
+          "c2": {
+            "text": "Adli tıp raporu, maktulün maruz kaldığı Elektrik Çarpması sonucu kalbinin durarak can verdiğini kesinleştirdi. Ancak kıdemli araştırmacı Prof. Kahraman'ın ellerinde ve giysilerinde yapılan iletkenlik testleri ile güç kaynağı sayaç kayıtları, kendisinin Elektrik Çarpması düzeneğine temas etmediğini ve bu vasıtayı kullanmadığını kanıtladı.",
+            "deductionHint": "Ölümcül elektrik düzeneğini kullanmadığı testlerle doğrulanan kişi kimdir?"
+          },
+          "c3": {
+            "text": "Fiziksel delil taramasında, sızdırmaz tüp içerisinde saklanan Kimyasal Gaz kabı Koridorlar boyunca uzanan havalandırma kapağının hemen ardında yerleşik olarak bulundu.",
+            "deductionHint": "Söz konusu gaz bileşiği hangi mahalde konuşlandırılmış?"
+          },
+          "c4": {
+            "text": "Teknik kontrol amirinin denetiminde incelenen jeneratör izleme logları ve tanık teyitli vardiya kartı dökümü, Güvenlik Görevlisi adlı personelin olay aralığında Elektrik Çarpması ünitesiyle veya ilgili ana şalterle hiçbir şekilde temas kurmadığını gösterdi.",
+            "deductionHint": "Elektrik tertibatına erişmediği belgelerle doğrulanan personel kimdir?"
+          },
+          "c5": {
+            "text": "Depo teslim protokolü ve kimyasal malzeme imza defteri kayıtları, Prof. Kahraman isimli şüphelinin o gece Kimyasal Gaz tüpünü zimmetine alarak bizzat taşıdığını onaylamaktadır.",
+            "deductionHint": "Kayıtlara göre söz konusu gazı teslim alan akademisyen kimdir?"
+          },
+          "c6": {
+            "text": "Bina giriş kartı okuyucusu ve kapı gözetleme paneli teyitlerine göre, Güvenlik Görevlisi inceleme aralığı boyunca Ofis alanında bulunmaktaydı.",
+            "deductionHint": "Görevlinin o zaman diliminde bulunduğu yer neresidir?"
+          }
+        }
+      }
     }
   },
-  "campaign_spent": 0.14466395000000004
+  "campaign_spent": 0.11377670000000004
 }
