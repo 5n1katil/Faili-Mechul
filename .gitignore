@@ -53,3 +53,8 @@ Thumbs.db
 # Accidental Expo/EAS at monorepo root (canonical: artifacts/dedektif/)
 /app.json
 /eas.json
+
+# Local case pipeline reports, draft intake and durable-journal worktrees
+/.case-qa-output/
+/.case-qa/intake/
+/.case-pipeline-journal-*/

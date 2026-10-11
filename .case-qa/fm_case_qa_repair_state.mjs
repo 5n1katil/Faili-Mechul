@@ -95,6 +95,8 @@ export function rejectionFeedback({ phase, plan, assessment, completeness, contr
     failed_gates: Object.fromEntries(Object.entries(result.gates || {}).filter(([, gate]) => gate.passed !== true)),
     fixes: result.fixes,
     advisories: result.advisories,
+    score_breakdown: result.scoreBreakdown,
+    quality_findings: result.qualityFindings,
     missing_authoring: completeness.missing,
     authoring_errors: contract.errors,
     leakage: assessment.leakage.required_actions || []
@@ -114,7 +116,9 @@ export function formatRunSummary(report) {
     lines.push('', 'Başarısız vakalar yayınlanmadı. Yeniden ücretli çalıştırmadan önce aşağıdaki kalan bulguları inceleyin.');
     for (const row of report.cases.filter((item) => !item.final_campaign?.passed)) {
       const result = row.best_candidate_result || row.baseline || {};
-      const findings = [...(result.blockers || []),
+      const findings = [...(result.blockers || []), ...(result.fixes || []),
+        ...Object.values(result.score_breakdown || {}).filter(section => section.score < section.maximum).flatMap(section => section.findings || []),
+        ...(result.quality_findings || []),
         ...Object.values(result.gates || {}).filter((gate) => !gate.passed).flatMap((gate) => gate.flags || gate.findings || []),
         ...(result.advisories || []).filter((item) => !/^[✓ⓘ]/.test(item))];
       lines.push('', `### ${cell(row.case_id)}`, '', ...[...new Set(findings)].slice(0, 8).map((item) => `- ${cell(item)}`));
