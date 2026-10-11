@@ -7974,6 +7974,9 @@
       "feedback": [
         {
           "error": "PATCH_CONTRACT: NEAR_READY_SCOPE: identity, roles, order, policy, profiles, story or unrelated facts changed"
+        },
+        {
+          "error": "EDITORIAL_GATES_FAILED:{\"blockers\":[\"İpucu 1: deductionHint cevabı ele veriyor — \\\"Sergi Kaidesi, Sergi Salonu\\\" adı açıkça geçiyor. Yeni kural: çıkarım, ismi söylemek yerine oyuncuyu düşündüren Sokratik soru olmalı (örn. \\\"Listedeki silahlardan hangisi bu kadar ağır olabilir?\\\"). (Not: bu kural yalnızca STANDART ipuçları için; bonus ipuçları doğrudan isim verebilir.)\",\"İpucu 2: deductionHint cevabı ele veriyor — \\\"Ziyaretçi Rehberi\\\" adı açıkça geçiyor. Yeni kural: çıkarım, ismi söylemek yerine oyuncuyu düşündüren Sokratik soru olmalı (örn. \\\"Listedeki silahlardan hangisi bu kadar ağır olabilir?\\\"). (Not: bu kural yalnızca STANDART ipuçları için; bonus ipuçları doğrudan isim verebilir.)\"],\"quality_findings\":[\"💡 TAVSİYE (opsiyonel): İpucu 1: \\\"Kimyasal Sprey\\\", İpucu 2: \\\"Depolama Odası\\\", İpucu 3: \\\"Depolama Odası\\\" adı doğrudan veriyor. Oyuncu eforunu ve atmosferi artırmak için ismi doğrudan yazmak yerine profil kartındaki betimlemelere atıfta bulunan dolaylı ifadeler tercih edilebilir (örn. \\\"Hazinedar Hüseyin\\\" yerine \\\"kayıp altın meselesinin gölgesindeki adam\\\"). Bu bir kalite önerisidir; çözülebilirliği etkilemez.\"],\"leakage\":[{\"case_id\":\"muzede-kayip-eser\",\"suspect_id\":\"s3\",\"suspect_name\":\"Ziyaretçi Rehberi\",\"axis_kind\":\"weapon\",\"axis_id\":\"w2\",\"axis_name\":\"Sergi Kaidesi\",\"strength\":\"strong_semantic\",\"direct_owner_binding\":false,\"profile_exact_axis_name\":false,\"distinctive_overlap_tokens\":[\"serg\"],\"axis_name_overlap_tokens\":[\"serg\"],\"avatar_prompt_risk\":true,\"reasons\":[\"axis_name_profile_overlap:serg\",\"distinctive_profile_overlap:serg\"]},{\"case_id\":\"muzede-kayip-eser\",\"suspect_id\":\"s3\",\"suspect_name\":\"Ziyaretçi Rehberi\",\"axis_kind\":\"location\",\"axis_id\":\"l1\",\"axis_name\":\"Sergi Salonu\",\"strength\":\"strong_semantic\",\"direct_owner_binding\":false,\"profile_exact_axis_name\":false,\"distinctive_overlap_tokens\":[\"serg\"],\"axis_name_overlap_tokens\":[\"serg\"],\"avatar_prompt_risk\":true,\"reasons\":[\"axis_name_profile_overlap:serg\",\"distinctive_profile_overlap:serg\"]}]}"
         }
       ],
       "source_hash": "339b16518cbc76d096025f3d0f682b78a07277c2db96a9f341eb404df2a960ca",
@@ -9389,9 +9392,9 @@
       "candidate_hash": "c730374dea1c26efb4856a423e75a4227bcafd0531142ddadf9dc88359492a77",
       "best_score": 100,
       "failures": [
-        "Command failed: git push origin b5eafec94ecccc1c3efe1fe783ae23190249ebe0:refs/heads/automation/case-pipeline-state\nTo https://github.com/5n1katil/Faili-Mechul\n ! [remote rejected] b5eafec94ecccc1c3efe1fe783ae23190249ebe0 -> automation/case-pipeline-state (failed)\nerror: failed to push some refs to 'https://github.com/5n1katil/Faili-Mechul'\n"
+        "EDITORIAL_REVIEW_FAILED"
       ],
-      "status": "infrastructure_error",
+      "status": "quarantined",
       "failed_review": {
         "passed": false,
         "failures": [
