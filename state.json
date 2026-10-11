@@ -6196,7 +6196,144 @@
         ]
       },
       "candidate_hash": "c9e0b3c590ab3bd8f22e66b7c3895006dee7e9038055b86afab80ad09a811c5d",
-      "best_score": 0
+      "best_score": 0,
+      "failures": [
+        {
+          "score": 0,
+          "simulator_production_ready": false,
+          "blockers": [
+            "YAPISAL HATA: İpucu 1'de bir kural aynı eksenden iki öğeyi (l1, l2) eşleştiriyor. confirm/eliminate yalnızca FARKLI eksenler arası olur (şüpheli↔silah, şüpheli↔mekan, silah↔mekan).",
+            "YAPISAL HATA: İpucu 3'de bir kural aynı eksenden iki öğeyi (w2, w3) eşleştiriyor. confirm/eliminate yalnızca FARKLI eksenler arası olur (şüpheli↔silah, şüpheli↔mekan, silah↔mekan).",
+            "HATA: QA İzlenebilirlik Sözleşmesi Eksik — bu zorlukta logicRules taşıyan her ipucu qaRationale {matrixEffect, evidenceLink, evidenceKind} ile belgelenmelidir. 2 ipucuda eksik/yetersiz köprü var.",
+            "Standart / Ücretsiz hikâyesi 30 kelime; hedef derinlik yaklaşık 60-220 kelime. Kimlikleri değiştirmeden olay ve atmosfer bağını güçlendir."
+          ],
+          "fixes": [
+            "YAPISAL HATALAR (önce bunlar): İpucu 1'de bir kural aynı eksenden iki öğeyi (l1, l2) eşleştiriyor. confirm/eliminate yalnızca FARKLI eksenler arası olur (şüpheli↔silah, şüpheli↔mekan, silah↔mekan). || İpucu 3'de bir kural aynı eksenden iki öğeyi (w2, w3) eşleştiriyor. confirm/eliminate yalnızca FARKLI eksenler arası olur (şüpheli↔silah, şüpheli↔mekan, silah↔mekan). — Bu teknik hatalar vakayı oyunda çökertir; logicRules id'lerini, solution alanını, icon'ları ve revealOrder'ı düzelt.",
+            "İZLENEBİLİRLİK SÖZLEŞMESİ: Her logicRules taşıyan ipucuya QA-only qaRationale ekle: {\"matrixEffect\":\"A ↔ B doğrulanır / A ≠ B elenir\",\"evidenceLink\":\"metindeki somut dayanak\",\"evidenceKind\":\"forensic|documentary|record|witness|mechanical|medical|physical|audio\"}. Bu alan exportta temizlenir; oyuncuya görünmez.",
+            "OYUNCU-GÖRÜNÜR SEMANTİK: Hikâye ve her standart ipucunun oyuncuya kesin olarak verdiği katil/silah/mekan bilgisini qaSemanticFacts ile kaynak bazında belgeleyin. Ardından metinden doğan erken çözüm yolunu kapatın veya bulmaca zincirini yeniden dağıtın.",
+            "SIKI TEMEL İPUCU EKONOMİSİ: Her isBonus:false ipucu çıkarıldığında katil+silah+mekan cevabı belirsiz kalmalıdır. Cevabı değiştirmeyen temel ipuçlarını bonusa taşıyın ya da onları eksik olan cevap bileşenini daraltacak biçimde yeniden yazın.",
+            "CİNAYET ÇAPASI: Temel ipuçlarından en az birine \"isCrimeAnchor\": true ekle ve o ipucu cinayet üçlüsünden birini (silah/mekan/katil) doğrudan suça bağlasın. Örn: \"Maktul yatak odasında afyonla zehirlenmişti\" — bu, oyuncunun ızgaradaki eşleşmelerden hangisinin CİNAYET olduğunu bilmesini sağlar. Çapa doğrudan ifade de olabilir, bir mini oyun/şifre sonucu da."
+          ],
+          "advisories": [
+            "TAVSİYE (Monotonluk): Aynı işlem (\"eliminate\") art arda 3 kez kullanılmış (ipucu dizilimi tekdüze). Matrisi kırma stratejisini çeşitlendir: confirm ve eliminate adımlarını harmanla.",
+            "TAVSİYE (İpucu→Matris İzlenebilirliği): İpucu 1: qaRationale.matrixEffect, kuralın taraflarını açıkça adlandırmıyor (Laboratuvar, Ofis). QA izlenebilirliği için etkiyi 'A ↔ B doğrulanır' ya da 'A ≠ B elenir' biçiminde yaz.",
+            "TAVSİYE (İpucu→Matris İzlenebilirliği): İpucu 3: qaRationale.matrixEffect, kuralın taraflarını açıkça adlandırmıyor (Kimyasal Gaz, Keskin Nesne). QA izlenebilirliği için etkiyi 'A ↔ B doğrulanır' ya da 'A ≠ B elenir' biçiminde yaz.",
+            "TAVSİYE (İsim/İçerik Derinliği): Standart / Ücretsiz hikâyesi 30 kelime; hedef derinlik yaklaşık 60-220 kelime. Kimlikleri değiştirmeden olay ve atmosfer bağını güçlendir.",
+            "ⓘ Standart mod: Bu vaka metin tabanlı ilerliyor; ücretsiz/standart vakalarda gelişmiş mini oyun zorunlu değildir. Mantık zinciri ve oynanabilirlik güçlüyse 100/100 alabilir."
+          ],
+          "score_breakdown": {
+            "k1": {
+              "score": 0,
+              "maximum": 40,
+              "findings": [
+                "HATA: Cinayet Çapası Eksik! Oyuncunun hangi üçlünün katile ait olduğunu bilmesi için cinayet öğesi (silah/mekan/şüpheli) suça bağlanmalı. Bunu YA bir temel ipucuda \"isCrimeAnchor\": true ile YA da hikaye (story) metninde cinayeti somut bir çözüm öğesine bağlayarak yap. Şu an ne ipuçlarında çapa var ne de hikaye cinayeti bir çözüm öğesine net bağlıyor."
+              ]
+            },
+            "k2": {
+              "score": 20,
+              "maximum": 20,
+              "findings": [
+                "Mini oyun alanlarında çözümü erken ele veren ifade bulunamadı. Temiz."
+              ]
+            },
+            "k3": {
+              "score": 20,
+              "maximum": 20,
+              "findings": [
+                "Tip dağılımı: evidence×2, witness×1, forensic×2, record×1",
+                "💡 TAVSİYE (opsiyonel): İpucu 1: \"Ofis\", İpucu 2: \"Güvenlik Görevlisi\", İpucu 4: \"Prof. Kahraman\" adı doğrudan veriyor. Oyuncu eforunu ve atmosferi artırmak için ismi doğrudan yazmak yerine profil kartındaki betimlemelere atıfta bulunan dolaylı ifadeler tercih edilebilir (örn. \"Hazinedar Hüseyin\" yerine \"kayıp altın meselesinin gölgesindeki adam\"). Bu bir kalite önerisidir; çözülebilirliği etkilemez."
+              ]
+            },
+            "k4": {
+              "score": 20,
+              "maximum": 20,
+              "findings": [
+                "2 bonus ipucu var — sayı uygundur; tam puanı işlevsellik belirler.",
+                "✓ Matris yardımı: her ek ipucu, ana çözümü zorunlu kılmadan oyuncunun ızgarasında kullanılabilir yeni bir çıkarım veriyor."
+              ]
+            }
+          },
+          "quality_findings": [
+            "💡 TAVSİYE (opsiyonel): İpucu 1: \"Ofis\", İpucu 2: \"Güvenlik Görevlisi\", İpucu 4: \"Prof. Kahraman\" adı doğrudan veriyor. Oyuncu eforunu ve atmosferi artırmak için ismi doğrudan yazmak yerine profil kartındaki betimlemelere atıfta bulunan dolaylı ifadeler tercih edilebilir (örn. \"Hazinedar Hüseyin\" yerine \"kayıp altın meselesinin gölgesindeki adam\"). Bu bir kalite önerisidir; çözülebilirliği etkilemez."
+          ],
+          "gates": {
+            "coreNecessity": {
+              "passed": false,
+              "flags": [
+                "HATA: Oyuncu-Görünür Çözüm Başarısız. Tüm standart ipuçları ve belgelenen/anlaşılan anlatı bilgileri birlikteyken cevap tek kalmıyor (6 olası cevap). Bonus açmadan s2|w1|l1 üçlüsüne zorunlu olarak ulaşılmalı."
+              ],
+              "warnings": []
+            },
+            "patternGovernance": {
+              "passed": true,
+              "flags": [],
+              "warnings": []
+            },
+            "contentAndNames": {
+              "passed": true,
+              "flags": [],
+              "warnings": [
+                "Standart / Ücretsiz hikâyesi 30 kelime; hedef derinlik yaklaşık 60-220 kelime. Kimlikleri değiştirmeden olay ve atmosfer bağını güçlendir."
+              ]
+            },
+            "semanticContract": {
+              "passed": false,
+              "flags": [
+                "HATA: Semantik Sözleşme Eksik — İpucu 1 metni, oyuncuya suç mahalli olarak “Ofis” sonucunu çağrıştırıyor. Bu bilgi qaSemanticFacts ile belgelenmemiş; grid dışı erken çözüm/sızıntı denetlenemiyor."
+              ],
+              "warnings": []
+            },
+            "visibleEvidence": {
+              "passed": true,
+              "flags": [],
+              "warnings": []
+            },
+            "mechanicContract": {
+              "passed": true,
+              "flags": [],
+              "warnings": []
+            },
+            "bonusFunctionality": {
+              "passed": true,
+              "score": 20,
+              "findings": [
+                "2 bonus ipucu var — sayı uygundur; tam puanı işlevsellik belirler.",
+                "✓ Matris yardımı: her ek ipucu, ana çözümü zorunlu kılmadan oyuncunun ızgarasında kullanılabilir yeni bir çıkarım veriyor."
+              ]
+            }
+          },
+          "leakage": {
+            "status": "manual_review_required",
+            "severity": "review",
+            "avatar_prompt_risk": false,
+            "solution_triple_exposed": false,
+            "findings": [
+              {
+                "case_id": "universitede-karanlik-sir",
+                "suspect_id": "s1",
+                "suspect_name": "Prof. Kahraman",
+                "axis_kind": "location",
+                "axis_id": "l2",
+                "axis_name": "Ofis",
+                "strength": "review_semantic",
+                "direct_owner_binding": false,
+                "profile_exact_axis_name": false,
+                "distinctive_overlap_tokens": [
+                  "evrak",
+                  "akademisyen"
+                ],
+                "axis_name_overlap_tokens": [],
+                "avatar_prompt_risk": false,
+                "reasons": [
+                  "distinctive_profile_overlap:evrak,akademisyen"
+                ]
+              }
+            ],
+            "required_actions": []
+          }
+        }
+      ],
+      "status": "quarantined"
     }
   },
   "requests": {
