@@ -7971,7 +7971,11 @@
     },
     "muzede-kayip-eser": {
       "spent": 0.010274600000000002,
-      "feedback": [],
+      "feedback": [
+        {
+          "error": "PATCH_CONTRACT: NEAR_READY_SCOPE: identity, roles, order, policy, profiles, story or unrelated facts changed"
+        }
+      ],
       "source_hash": "339b16518cbc76d096025f3d0f682b78a07277c2db96a9f341eb404df2a960ca",
       "simulator_hash": "0e27218c7817862f371febb6b7bb865821d9e5da",
       "candidate": {
