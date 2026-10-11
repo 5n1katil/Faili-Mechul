@@ -1301,12 +1301,7 @@
       "failures": [
         "GEMINI_HTTP_400"
       ],
-      "status": "GEMINI_HTTP_400",
-      "provider_error": {
-        "http_status": 400,
-        "status": "INVALID_ARGUMENT",
-        "message": "Request contains an invalid argument."
-      }
+      "status": "GEMINI_HTTP_400"
     },
     "provider-diagnostic-v1": {
       "spent": 0.0003565500000000006
