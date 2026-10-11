@@ -6503,19 +6503,15 @@
     },
     "pazar-yerinde-supheli-olum": {
       "spent": 0.02047924999999999,
-      "feedback": [
-        {
-          "error": "EDITORIAL_GATES_FAILED:{\"blockers\":[],\"quality_findings\":[\"💡 TAVSİYE (opsiyonel): İpucu 4: \\\"Ara Sokak\\\" adı doğrudan veriyor. Oyuncu eforunu ve atmosferi artırmak için ismi doğrudan yazmak yerine profil kartındaki betimlemelere atıfta bulunan dolaylı ifadeler tercih edilebilir (örn. \\\"Hazinedar Hüseyin\\\" yerine \\\"kayıp altın meselesinin gölgesindeki adam\\\"). Bu bir kalite önerisidir; çözülebilirliği etkilemez.\"],\"leakage\":[]}"
-        }
-      ],
+      "feedback": [],
       "source_hash": "d4a6a5003e9f00e091ed0db4768d29393539ba914af388dd06d6aca3f1fdcad2",
-      "simulator_hash": "04352c0a4ce07097cb752a1980b144fa00722e78",
+      "simulator_hash": "0e27218c7817862f371febb6b7bb865821d9e5da",
       "candidate": {
         "id": "pazar-yerinde-supheli-olum",
         "title": "Pazar Yerinde Şüpheli Ölüm",
         "difficulty": "caylak",
         "dayIndex": 5,
-        "story": "İstanbul'un kadim sokaklarında sabahın erken telaşı yaşanırken tatlıcı Halit Usta birdenbire yere yığılarak hayatını kaybetti. Çevredeki telaşlı kalabalık arasından yükselen fısıltılar, bu ani ve sarsıcı kaybın doğal bir krizden kaynaklanmadığını fısıldıyordu. Olay yerine hızla intikal eden asayiş memurları meydandaki tüm çıkışları tutarak şüpheli kişileri gözlem altına aldı. İnceleme boyunca şüphelilerin her birinin farklı bir bölgede bulunduğu ve tek bir araç ya da maddeyle temasta olduğu kesinleşti. Dedektifler şimdi ölümcül yöntemi, bu yöntemi kullanan faili ve ölümcül eylemin gerçekleştiği kesin noktayı arıyor.",
+        "story": "İstanbul'un kadim çarşısında sabah serinliği sürerken tatlıcı Halit Usta, boğazını tutarak aniden yere yığılıp can verdi. Olay yerine koşan tabip, ustanın soluk borusunu tıkayıp dakikalar içinde kalbini durduran ölümcül, renksiz ve yapay bir toksinin pazar mallarından birine kasten zerk edildiğini belirledi. Çarşı kapıları anında mühürlendi; o an çevrede bulunan üç şüphelinin her birinin yalnızca tek bir maddeyle temas ettiği ve farklı bir alanda durduğu saptandı. Zehirlenmiş nesneyi ustaya sunan faili ve dehşetin merkezini aydınlatmak dedektiflere kaldı.",
         "suspects": [
           {
             "id": "s1",
@@ -6579,7 +6575,7 @@
         "clues": [
           {
             "id": "c1",
-            "text": "Olay yeri inceleme ekiplerinin sabah erken saatlerde yük indirme maksadıyla kullanılan ağaçlık açık alanda yürüttüğü kimyasal testler, zemin temizliğinde yararlanılan keskin kokulu endüstriyel çözücünün o alana döküldüğünü ve orada bulundurulduğunu kesin olarak belirledi.",
+            "text": "Ağaçların altındaki lojistik boşaltma sahasında inceleme yapan adli heyet, toprağa sızmış aşındırıcı kalıntılar buldu. Bu kimyasal testler, zemin temizliğinde yararlanılan keskin kokulu endüstriyel çözücünün yalnızca sabah erken saatlerde yük indirmeye yarayan bu açık ağaçlık alanda bekletildiğini kesinleştirdi.",
             "type": "forensic",
             "isBonus": false,
             "deductionHint": "Ağaçlık lojistik noktada hangi temizlik maddesinin izleri tespit edildi?",
@@ -6596,13 +6592,13 @@
             "qaSemanticFacts": [],
             "qaRationale": {
               "matrixEffect": "Kimyasal Madde ↔ Park doğrulanır",
-              "evidenceLink": "Olay yeri inceleme ekiplerinin sabah erken saatlerde yük indirme maksadıyla kullanılan ağaçlık açık alanda yürüttüğü kimyasal testler, zemin temizliğinde yararlanılan keskin kokulu endüstriyel çözücünün o alana döküldüğünü ve orada bulundurulduğunu kesin olarak belirledi.",
+              "evidenceLink": "Ağaçların altındaki lojistik boşaltma sahasında inceleme yapan adli heyet, toprağa sızmış aşındırıcı kalıntılar buldu. Bu kimyasal testler, zemin temizliğinde yararlanılan keskin kokulu endüstriyel çözücünün yalnızca sabah erken saatlerde yük indirmeye yarayan bu açık ağaçlık alanda bekletildiğini kesinleştirdi.",
               "evidenceKind": "forensic"
             }
           },
           {
             "id": "c2",
-            "text": "Merkez zabıta bürosuna ait güvenlik kamerası dökümleri, ağır yükleri taşımaktan yorgun düşmüş uykusuz gencin, tatlı tepsilerinin dizildiği ana satış noktasında kritik zaman dilimi içinde hiç bulunmadığını ve oraya yaklaşmadığını mühürlü raporla kanıtladı.",
+            "text": "Çarşı merkezindeki güvenlik kamerası dökümleri dedektiflerce tek tek tarandı. Ağır çuvalları taşımaktan omuzları çökmüş uykusuz gencin, tepsilerin dizildiği ve alışverişin döndüğü ana satış noktasına o sabah hiç adım atmadığı, oradan tamamen uzakta kaldığı görüntülerle kanıtlandı.",
             "type": "record",
             "isBonus": false,
             "deductionHint": "Kamera kayıtları yorgun taşıyıcının ana satış noktasından uzak olduğunu nasıl gösteriyor?",
@@ -6619,7 +6615,7 @@
             "qaSemanticFacts": [],
             "qaRationale": {
               "matrixEffect": "Tedarikçi Genç ≠ Tezgah elenir",
-              "evidenceLink": "Merkez zabıta bürosuna ait güvenlik kamerası dökümleri, ağır yükleri taşımaktan yorgun düşmüş uykusuz gencin, tatlı tepsilerinin dizildiği ana satış noktasında kritik zaman dilimi içinde hiç bulunmadığını ve oraya yaklaşmadığını mühürlü raporla kanıtladı.",
+              "evidenceLink": "Çarşı merkezindeki güvenlik kamerası dökümleri dedektiflerce tek tek tarandı. Ağır çuvalları taşımaktan omuzları çökmüş uykusuz gencin, tepsilerin dizildiği ve alışverişin döndüğü ana satış noktasına o sabah hiç adım atmadığı, oradan tamamen uzakta kaldığı görüntülerle kanıtlandı.",
               "evidenceKind": "record"
             }
           },
@@ -6656,7 +6652,7 @@
           },
           {
             "id": "c4",
-            "text": "Kestirme geçiş için yararlanılan dükkan arkasındaki loş yaya geçidinde denetime çıkan zabıta memuru, bakır güğümde kaynatılmış berrak ve yoğun şekerli geleneksel sıvının kritik saatlerde bu geçitte bekletildiğini tutanak altına alarak durumu bildirdi.",
+            "text": "Dükkanların arka kapılarına açılan loş yaya geçidinde keşif yapan nöbetçi memur, duvar dibine gizlenmiş bir kazan fark etti. Bakır güğümde kaynatılmış berrak ve yoğun şekerli geleneksel sıvının, tam da bu kestirme ara hatta bırakıldığı resmî tutanakla tespit edildi.",
             "type": "witness",
             "isBonus": false,
             "deductionHint": "Dükkanların arka geçidinde hangi şekerli sıvının tutulduğu tutanaklara geçti?",
@@ -6673,7 +6669,7 @@
             "qaSemanticFacts": [],
             "qaRationale": {
               "matrixEffect": "Şerbet ↔ Ara Sokak doğrulanır",
-              "evidenceLink": "Kestirme geçiş için yararlanılan dükkan arkasındaki loş yaya geçidinde denetime çıkan zabıta memuru, bakır güğümde kaynatılmış berrak ve yoğun şekerli geleneksel sıvının kritik saatlerde bu geçitte bekletildiğini tutanak altına alarak durumu bildirdi.",
+              "evidenceLink": "Dükkanların arka kapılarına açılan loş yaya geçidinde keşif yapan nöbetçi memur, duvar dibine gizlenmiş bir kazan fark etti. Bakır güğümde kaynatılmış berrak ve yoğun şekerli geleneksel sıvının, tam da bu kestirme ara hatta bırakıldığı resmî tutanakla tespit edildi.",
               "evidenceKind": "witness"
             }
           },
@@ -7918,64 +7914,12 @@
           }
         ]
       },
-      "candidate_hash": "1f529e81593f6910f328fba1a33695f4a1fae282aa03d3c2b5570abbf7237b28",
+      "candidate_hash": "a271ef04d8b1e85e9c7b3bf5e3a6f9f262c5c887c11fab27b4356969fa3d0083",
       "best_score": 100,
       "failures": [
         "EDITORIAL_REVIEW_FAILED"
       ],
-      "status": "quarantined",
-      "failed_review": {
-        "passed": false,
-        "failures": [
-          "EDITORIAL_REVIEW_FAILED"
-        ],
-        "certificate": {
-          "schema": "fm_case_review_v1",
-          "review_hash": "de4d4b2e5c2ae75fe00bc53ce468453fdc5e90ea31520a668f42611bfce897e9",
-          "player": {
-            "unique_solution": true,
-            "solution": {
-              "suspectId": "s3",
-              "weaponId": "w1",
-              "locationId": "l1"
-            },
-            "confidence": 100,
-            "evidence": [
-              {
-                "clue_id": "c3",
-                "quote": "Halit Usta'nın can verdiği asıl ölüm noktasının tepsilerin dizildiği ve damlaların aktığı ana satış noktası olduğunu kesinleştirdi. Eşzamanlı zabıta kayıtları ise bastonlu yaşlı kadının o esnada bu ölüm noktasında bulunmadığını doğruladı."
-              },
-              {
-                "clue_id": "c2",
-                "quote": "ağır yükleri taşımaktan yorgun düşmüş uykusuz gencin, tatlı tepsilerinin dizildiği ana satış noktasında kritik zaman dilimi içinde hiç bulunmadığını ve oraya yaklaşmadığını mühürlü raporla kanıtladı."
-              },
-              {
-                "clue_id": "c1",
-                "quote": "sabah erken saatlerde yük indirme maksadıyla kullanılan ağaçlık açık alanda yürüttüğü kimyasal testler, zemin temizliğinde yararlanılan keskin kokulu endüstriyel çözücünün o alana döküldüğünü ve orada bulundurulduğunu kesin olarak belirledi."
-              },
-              {
-                "clue_id": "c4",
-                "quote": "bakır güğümde kaynatılmış berrak ve yoğun şekerli geleneksel sıvının kritik saatlerde bu geçitte bekletildiğini tutanak altına alarak durumu bildirdi."
-              }
-            ],
-            "issues": []
-          },
-          "judge": {
-            "scores": {
-              "fairness": 5,
-              "clarity": 4,
-              "consistency": 4,
-              "originality": 3,
-              "engagement": 3
-            },
-            "issues": [
-              "Cinayet aleti olarak belirlenen 'Baklava'nın nasıl bir ölümcül silaha dönüştüğü (zehir, boğulma, alerji vb.) kurgusal olarak açıklanmamış; 'silah' tanımı havada kalmaktadır.",
-              "İpuçları saf eleme mantığıyla yazıldığından anlatı polis tutanağı kuruluğunda kalmakta ve dedektiflik hissi zayıflamaktadır."
-            ],
-            "summary": "Mantık örgüsü ve ipucu zinciri adil ve kusursuz bir şekilde tekil çözüme ulaşıyor. Ancak tatlının nasıl ölümcül hale geldiğine dair dramatik ve adli detaylar eklenerek anlatı zenginleştirilmelidir."
-          }
-        }
-      }
+      "status": "quarantined"
     }
   },
   "requests": {
