@@ -7,7 +7,7 @@ import { stableHash, compactReport } from '../fm_case_qa_runner.mjs';
 import { read, write, clone, loadSnapshot, scan, selectNext, counts, assess, restoreBest,
   guardedPatch, better, repairPrompt, stageCandidate } from './core.mjs';
 import { openStore } from './state.mjs';
-import { callPaid, Stop } from './provider.mjs';
+import { callPaid, Stop, modelPreflight } from './provider.mjs';
 import { mediaPreflight, reviewCandidate, certificateValid } from './review.mjs';
 
 export async function repairOne(snapshot, entry, store, { allowAI = false, caller = callPaid } = {}) {
@@ -106,6 +106,7 @@ export async function main() {
     main_sha: execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim() };
   try {
     if (selected && !auditOnly) {
+      report.model_preflight = await modelPreflight(policy);
       const entry = snapshot.entries.find(e => e.id === selected.id);
       const result = await repairOne(snapshot, entry, store, { allowAI: true });
       Object.assign(report, { status: result.status, best_score: result.assessment.result.score,

@@ -1,6 +1,28 @@
 import { PATCH_SCHEMA, SYSTEM_PROMPT, stableHash } from '../fm_case_qa_runner.mjs';
 
 export class Stop extends Error {}
+export async function modelPreflight(policy, { transport = fetch } = {}) {
+  if (!process.env.GEMINI_API_KEY) throw new Stop('GEMINI_API_KEY_MISSING');
+  const checked = [];
+  for (const model of new Set([policy.models.first_pass, policy.models.reviewer])) {
+    requestBody(policy, model, ''); // Validate the allowlist before constructing a URL.
+    let http, metadata;
+    try {
+      http = await transport('https://generativelanguage.googleapis.com/v1beta/models/' + model, {
+        method: 'GET', signal: AbortSignal.timeout(policy.sequential.http_timeout_ms),
+        headers: { 'x-goog-api-key': process.env.GEMINI_API_KEY }
+      });
+      metadata = await http.json();
+    } catch { throw new Stop('MODEL_PREFLIGHT_UNAVAILABLE:' + model); }
+    if (!http.ok) throw new Stop('MODEL_PREFLIGHT_HTTP_' + http.status + ':' + model);
+    if (metadata.name !== 'models/' + model ||
+        !metadata.supportedGenerationMethods?.includes('generateContent') ||
+        !(metadata.outputTokenLimit >= policy.sequential.max_output_tokens))
+      throw new Stop('MODEL_PREFLIGHT_UNSUPPORTED:' + model);
+    checked.push(model);
+  }
+  return { checked, generation_calls: 0 };
+}
 export function requestBody(policy, model, prompt, { schema = PATCH_SCHEMA, system = SYSTEM_PROMPT } = {}) {
   if (!policy.models.pricing_usd_per_million_tokens[model] || !/^gemini-[a-z0-9.-]+$/.test(model))
     throw new Stop('MODEL_NOT_ALLOWED');
@@ -8,9 +30,9 @@ export function requestBody(policy, model, prompt, { schema = PATCH_SCHEMA, syst
     systemInstruction: { parts: [{ text: system }] },
     contents: [{ role: 'user', parts: [{ text: prompt }] }],
     generationConfig: {
-      temperature: 0.2, maxOutputTokens: policy.sequential.max_output_tokens,
+      temperature: 1, maxOutputTokens: policy.sequential.max_output_tokens,
       responseMimeType: 'application/json', responseJsonSchema: schema,
-      thinkingConfig: { thinkingBudget: policy.sequential.thinking_budget }
+      thinkingConfig: { thinkingLevel: policy.sequential.thinking_level }
     }
   };
 }
@@ -32,6 +54,8 @@ export function reserveRequest(store, policy, run, caseId, model, body, purpose 
   const config = policy.sequential, record = store.state.cases[caseId];
   if (!record) throw new Stop('CASE_LEDGER_MISSING');
   const day = now.toISOString().slice(0, 10);
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(policy.models.pricing_valid_through || '') ||
+      day > policy.models.pricing_valid_through) throw new Stop('PRICING_REVIEW_REQUIRED');
   const daily = Object.values(store.state.requests).filter(r => r.day === day).reduce((s, r) => s + r.charged, 0);
   const projected = reserveCost(policy, model, body);
   const repairs = Object.values(store.state.requests).filter(r => r.case_id === caseId && r.purpose === 'repair').length;

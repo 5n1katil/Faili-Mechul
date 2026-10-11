@@ -49,9 +49,20 @@ Merge sonrası güncel main yeniden tarandığında geçerli içerik sertifikas�
 
 `policy.json`: en fazla 4 çağrı/çalıştırma; vaka ömrü boyunca 2 repair denemesi;
 çalıştırma ve vaka başına $0.25, UTC gün başına $2, kampanya toplamı $10.
-Repair Gemini 2.5 Flash-Lite; oyuncu/editör Gemini 2.5 Flash kullanır. Fiyatlar
-2026-10-11 Google resmi sayfasından kontrol edilmiştir; hesapta model erişimi ve
-gerçek çağrı henüz doğrulanmamıştır. Değişiklikler gözden geçirilen politika PR'ı ister.
+Repair Gemini 3.5 Flash-Lite; oyuncu/editör Gemini 3.8 Flash kullanır. Fiyatlar
+2026-10-11 Google resmi sayfasından kontrol edilmiştir: milyon token başına
+repair input/output $0.30/$2.50; reviewer $0.75/$3.75. Reviewer kampanya fiyatı
+2026-12-31 sonuna kadar geçerlidir; sonrasında politika güncellenmeden yeni ücretli
+istek yapılmaz. Gemini 3 için `thinkingLevel: LOW` ve varsayılan sıcaklık 1 kullanılır.
+Model değişikliği gözden geçirilen politika PR'ı ister; otomatik model fallback yoktur.
+
+İlk pilotta Gemini 2.5 Flash-Lite HTTP 404 döndürdü: bir reddedilmiş istek,
+kayıtlı token maliyeti $0, oyun değişikliği yok. Google 2.5 erişimini geçmişte
+kullanan hesaplarla sınırlandırıyor (https://ai.google.dev/gemini-api/docs/deprecations).
+Yeni pilot, vaka içeriği göndermeden önce iki modelin metadata'sını GET ile kontrol
+eder; `generateContent` desteği veya çıkış kapasitesi eksikse üretim başlamaz.
+Bu kontrol başarılı üretim veya kota garantisi değildir. Eski 404 kaydı korunur;
+deneme/bütçe sayacı sıfırlanmaz. Hesapta yeni modellerin canlı üretimi henüz doğrulanmadı.
 
 Maliyet sağlayıcı faturası değildir: yapılandırılmış oranlarla token kullanımı
 (thinking dahil), kullanım bilinmiyorsa muhafazakâr rezervasyon hesaplanır. GitHub
