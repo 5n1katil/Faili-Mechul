@@ -3082,37 +3082,149 @@
             "id": "c1",
             "text": "Çarşı kapısındaki gece bekçisi kayıtları, Ahmet Usta'nın dükkanını erkenden kilitleyip ana cadde tarafındaki aydınlık vitrinlerle uğraştığını gösteriyor.",
             "type": "record",
-            "isBonus": false
+            "isBonus": false,
+            "isCrimeAnchor": true,
+            "logicRules": [
+              {
+                "action": "confirm",
+                "pair": [
+                  "s3",
+                  "l2"
+                ]
+              }
+            ],
+            "qaRationale": {
+              "matrixEffect": "Kerem Genç ↔ Arka Depo doğrulanır",
+              "evidenceLink": "Çarşı kapısındaki gece bekçisi kayıtları, stajyerin dükkanında olduğunu gösteriyor.",
+              "evidenceKind": "record"
+            },
+            "qaSemanticFacts": [
+              {
+                "kind": "crime_component",
+                "component": "suspect",
+                "entityId": "s3",
+                "source": "clue:c1",
+                "evidence": "Çarşı kapısındaki gece bekçisi kayıtları."
+              }
+            ]
           },
           {
             "id": "c2",
             "text": "Kafatasındaki derin travma izinin çapı, hassas bir terazinin bırakabileceğinden çok daha geniş ve kilitleri zorlayacak kadar kaba bir metale aitti.",
             "type": "forensic",
-            "isBonus": false
+            "isBonus": false,
+            "isCrimeAnchor": false,
+            "logicRules": [
+              {
+                "action": "confirm",
+                "pair": [
+                  "w3",
+                  "l2"
+                ]
+              }
+            ],
+            "qaRationale": {
+              "matrixEffect": "Pençe Anahtar ↔ Arka Depo doğrulanır",
+              "evidenceLink": "Kafatasındaki derin travma izinin çapı, hassas bir terazinin bırakabileceğinden çok daha geniş ve kilitleri zorlayacak kadar kaba bir metale aitti.",
+              "evidenceKind": "forensic"
+            },
+            "qaSemanticFacts": [
+              {
+                "kind": "crime_component",
+                "component": "weapon",
+                "entityId": "w3",
+                "source": "clue:c2",
+                "evidence": "Kafatasındaki derin travma izinin çapı."
+              }
+            ]
           },
           {
             "id": "c3",
             "text": "Kan izleri, dışarıdan geçenlerin rahatça görebileceği müşteri alanında değil, elektronik şifreyle korunan arka bölmeye doğru yoğunlaşıyordu.",
             "type": "evidence",
-            "isBonus": false
+            "isBonus": false,
+            "isCrimeAnchor": false,
+            "logicRules": [
+              {
+                "action": "eliminate",
+                "pair": [
+                  "s1",
+                  "l1"
+                ]
+              }
+            ],
+            "qaRationale": {
+              "matrixEffect": "Ahmet Usta ≠ Dükkan İçi elenir",
+              "evidenceLink": "Kan izleri, dışarıdan geçenlerin rahatça görebileceği müşteri alanında değil, elektronik şifreyle korunan arka bölmeye doğru yoğunlaşıyordu.",
+              "evidenceKind": "evidence"
+            },
+            "qaSemanticFacts": []
           },
           {
             "id": "c4",
             "text": "Selma Teyze, olay saatinde muhasebe defterlerini çarşının öbür ucundaki çay ocağında incelediğini iki esnafa doğrulattı.",
             "type": "witness",
-            "isBonus": false
+            "isBonus": false,
+            "isCrimeAnchor": false,
+            "logicRules": [
+              {
+                "action": "eliminate",
+                "pair": [
+                  "s2",
+                  "l1"
+                ]
+              }
+            ],
+            "qaRationale": {
+              "matrixEffect": "Selma Teyze ≠ Dükkan İçi elenir",
+              "evidenceLink": "Selma Teyze, olay saatinde muhasebe defterlerini çarşının öbür ucundaki çay ocağında incelediğini iki esnafa doğrulattı.",
+              "evidenceKind": "witness"
+            },
+            "qaSemanticFacts": []
           },
           {
             "id": "c5",
             "text": "Penceresiz güvenlik odasının dijital şifre paneli, çarşıda teknolojiyle arası en iyi olan genç çalışanın sık kullandığı kombinasyonla açılmıştı.",
             "type": "evidence",
-            "isBonus": true
+            "isBonus": true,
+            "isCrimeAnchor": false,
+            "logicRules": [
+              {
+                "action": "confirm",
+                "pair": [
+                  "s3",
+                  "l2"
+                ]
+              }
+            ],
+            "qaRationale": {
+              "matrixEffect": "Kerem Genç ↔ Arka Depo doğrulanır",
+              "evidenceLink": "Penceresiz güvenlik odasının dijital şifre paneli, çarşıda teknolojiyle arası en iyi olan genç çalışanın sık kullandığı kombinasyonla açılmıştı.",
+              "evidenceKind": "evidence"
+            },
+            "qaSemanticFacts": []
           },
           {
             "id": "c6",
             "text": "Stajyer Kerem'in önlüğünün astarında, cinayette kullanılan ağır çelik aletten sıçrayan ve maktule ait olan taze kan damlaları bulundu.",
             "type": "forensic",
-            "isBonus": true
+            "isBonus": true,
+            "isCrimeAnchor": false,
+            "logicRules": [
+              {
+                "action": "confirm",
+                "pair": [
+                  "s3",
+                  "w3"
+                ]
+              }
+            ],
+            "qaRationale": {
+              "matrixEffect": "Kerem Genç ↔ Pençe Anahtar doğrulanır",
+              "evidenceLink": "Stajyer Kerem'in önlüğünün astarında, cinayette kullanılan ağır çelik aletten sıçrayan ve maktule ait olan taze kan damlaları bulundu.",
+              "evidenceKind": "forensic"
+            },
+            "qaSemanticFacts": []
           }
         ],
         "solvabilityMeta": {
@@ -3136,8 +3248,8 @@
           "caseTier": "standard"
         },
         "qaPattern": {
-          "anchorSource": "none",
-          "designIntent": "Deterministik miras-vaka imzası: none:?; record:?:?; ????; ?|?|?|?; none."
+          "anchorSource": "clue:c1",
+          "designIntent": "kapalicarsida-gizem-unique-pattern-sig"
         },
         "qaPortfolioRegistry": {
           "schema_version": "fm_qa_portfolio_registry_v1",
@@ -4299,9 +4411,18 @@
             }
           ]
         },
-        "qaAuthoringVersion": "fm_case_qa_authoring_v3_2_deterministic_bootstrap"
+        "qaAuthoringVersion": "fm_case_qa_authoring_v3_2_deterministic_bootstrap",
+        "qaSemanticFacts": [
+          {
+            "kind": "crime_component",
+            "component": "suspect",
+            "entityId": "s3",
+            "source": "clue:c1",
+            "evidence": "Stajyer Kerem'in önlüğünün astarında taze kan damlaları bulundu."
+          }
+        ]
       },
-      "candidate_hash": "196579cc2ebbb160a9ca615b474b35dc273cd3b0af399838f9b2649fb32f2556",
+      "candidate_hash": "ea9c0c5c7c041c8ed60da4c800e6cc60272b5d6498394b9f3bc071e155fae7de",
       "best_score": 0
     }
   },
