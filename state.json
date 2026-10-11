@@ -4945,7 +4945,7 @@
           }
         }
       ],
-      "status": "method_upgrade_pending"
+      "status": "quarantined"
     },
     "universitede-karanlik-sir": {
       "spent": 0.027037399999999993,
