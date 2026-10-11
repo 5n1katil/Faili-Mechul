@@ -2883,7 +2883,17 @@
         "qaAuthoringVersion": "fm_case_qa_authoring_v3_2_deterministic_bootstrap"
       },
       "candidate_hash": "42ed2cadc52aa51644d660e5a9d80bbf8aecc8c1fd5a0db49f2920e9aa344e52",
-      "best_score": 0
+      "best_score": 0,
+      "failures": [
+        "GEMINI_HTTP_402"
+      ],
+      "provider_error": {
+        "http_status": 402,
+        "status": "RESOURCE_EXHAUSTED",
+        "message": "Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ",
+        "field_violations": []
+      },
+      "status": "GEMINI_HTTP_402"
     }
   },
   "requests": {
