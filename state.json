@@ -8050,7 +8050,7 @@
             "text": "Olay gecesi geniş ve aydınlık ana alanda yapılan incelemede, nefes borusunu yakan yoğun gaz kokusuna ve havaya sıkılmış tahriş edici maddelere rastlanmıştır. Yapılan ortak kontroller, bu yakıcı maddenin ilgili ortak alanda kullanıldığını kesin olarak doğrulamaktadır.",
             "type": "forensic",
             "isBonus": false,
-            "deductionHint": "Gaz karışımının bulunduğu geniş salonu inceleyin.",
+            "deductionHint": "Tespit edilen kimyasal gaz kalıntıları hangi sergileme alanının havasına karışmış olabilir?",
             "logicRules": [
               {
                 "action": "confirm",
@@ -8073,7 +8073,7 @@
             "text": "Özel kilitli ve penceretsiz muhafaza biriminin geçiş kayıtları, sosyal alan görevlisinin o gece bu kilitli alana hiçbir şekilde erişim sağlamadığını ve içeride bulunmadığını açıkça kanıtlamaktadır.",
             "type": "record",
             "isBonus": false,
-            "deductionHint": "Sosyal alan görevlisinin kilitli birimle bağını inceleyin.",
+            "deductionHint": "Geçiş kartı hareketleri, tanıtım personelinin hangi kilitli birimden tamamen uzak kaldığını gösteriyor?",
             "logicRules": [
               {
                 "action": "eliminate",
@@ -8096,7 +8096,7 @@
             "text": "Müze yönetiminin arşiv defterleri ve dijital turnike logları, yöneticinin o gece sadece dış bölümlerde olduğunu, kilitli muhafaza birimine girmesinin imkansız olduğunu gösterir. Bu kilitli oda, suçun işlendiği tek yer olarak tespit edilmiştir.",
             "type": "record",
             "isBonus": false,
-            "deductionHint": "Yöneticinin kilitli oda ile ilişkisini kontrol edin.",
+            "deductionHint": "Cinayetin işlendiği kilitli muhafaza alanına idari yöneticinin hiç girmediği nasıl anlaşılıyor?",
             "logicRules": [
               {
                 "action": "eliminate",
@@ -8127,7 +8127,7 @@
             "text": "Kontrol merkezindeki görevliler, ağır destek ünitesinin devrilme sesinin doğrudan izleme ve monitörlerin bulunduğu odadan geldiğini, bu ağır mermer parçasının oradaki olayla bağlantılı olduğunu bildirmiştir.",
             "type": "witness",
             "isBonus": false,
-            "deductionHint": "Ağır mermer desteğin kontrol odasındaki varlığına bakın.",
+            "deductionHint": "Kameraların izlendiği kontrol merkezinde bulunan ağır mermer blok listedeki hangi araca işaret ediyor?",
             "logicRules": [
               {
                 "action": "confirm",
@@ -9386,8 +9386,8 @@
           }
         ]
       },
-      "candidate_hash": "977a281a171e99a7d3a25ed2dace8b3c8a169655e175ce5ae3591a2bea0a4d03",
-      "best_score": 96,
+      "candidate_hash": "c730374dea1c26efb4856a423e75a4227bcafd0531142ddadf9dc88359492a77",
+      "best_score": 100,
       "failures": [
         {
           "score": 96,
