@@ -10,7 +10,7 @@ import { emptyState, validateState, openStore } from './state.mjs';
 import { reserveRequest, requestBody, callPaid, Stop, modelPreflight, providerErrorDetails } from './provider.mjs';
 import { assertDraftPolicy } from './publish-draft.mjs';
 import { playerView, playerPass, judgePass, reviewCandidate, mediaPreflight, certificateValid } from './review.mjs';
-import { repairOne, campaignRows } from './run.mjs';
+import { repairOne, campaignRows, reopenTextQuarantine } from './run.mjs';
 import { validateNewCase, previewNewCase } from './intake.mjs';
 import { repairTermal } from '../fixtures/termal_reviewed_repair.mjs';
 import { repairKonak } from '../fixtures/konak_reviewed_repair.mjs';
@@ -18,6 +18,9 @@ import { stableHash, parseStandard, PATCH_SCHEMA } from '../fm_case_qa_runner.mj
 import { api } from './github.mjs';
 import { diagnose, diagnosticStages } from './diagnose.mjs';
 import { campaign } from './campaign.mjs';
+import { TEXT_METHOD, TEXT_SYSTEM, supportsTextRepair, textRepairPlan, verifyTextPlan, enumerateTextGrid,
+  compileTextPatch, textResponseSchema, validTextResponse, textRepairPrompt } from './text-repair.mjs';
+import { verifiedTextResponses } from '../fixtures/verified-text-responses.mjs';
 
 globalThis.fetch = async () => { throw new Error('TEST_NETWORK_FORBIDDEN'); };
 const policy = read('.case-qa/pipeline/policy.json'), root = process.cwd();
@@ -33,6 +36,7 @@ const playerFor = c => ({ unique_solution: true, solution: c.solution, confidenc
 const response = (text, extra = {}) => ({ ok: true, status: 200, json: async () => ({
   usageMetadata: { promptTokenCount: 100, candidatesTokenCount: 50, thoughtsTokenCount: 10 },
   candidates: [{ finishReason: 'STOP', content: { parts: [{ text }] } }], ...extra }) });
+const responseForFixture = value => response(JSON.stringify(value));
 try {
   const snapshot = loadSnapshot(root, policy), rows = scan(snapshot);
   await test('exact engine and inventory cover the current repository without hardcoded total', () => {
@@ -41,6 +45,90 @@ try {
     assert.ok(campaignRows(snapshot).every(r => !r.content_locked || r.passed));
   });
   const original = snapshot.entries.find(e => e.id === 'termal-otelde-supheli-vaka');
+  const failedCampaign = read('.case-qa/fixtures/failed-text-campaign-38151436437.json');
+  await test('actual failed live text plans reproduce rejection offline; no provider content is published', () => {
+    for (const id of Object.keys(verifiedTextResponses)) {
+      const entry = snapshot.entries.find(e => e.id === id);
+      let candidate = clone(entry.candidate), assessment = assess(snapshot, entry, candidate);
+      for (const request of failedCampaign.requests.filter(r => r.case_id === id && r.plan)) {
+        const next = guardedPatch(snapshot, entry, candidate, request.plan, assessment);
+        assert.equal(next.assessment.passed, false);
+        if (better(next.assessment, assessment)) { candidate = next.candidate; assessment = next.assessment; }
+      }
+      assert.equal(assessment.passed, false);
+    }
+  });
+  await test('verified textual compiler reaches exact 100 on all three failed case contracts without changing identity', () => {
+    const vectors = [];
+    for (const [id, response] of Object.entries(verifiedTextResponses)) {
+      const entry = snapshot.entries.find(e => e.id === id), current = entry.candidate;
+      const plan = textRepairPlan(snapshot, entry, current), proof = verifyTextPlan(current, plan);
+      assert.equal(proof.coreNecessary, true); assert.equal(proof.assignments, 2); assert.equal(proof.finalAssignments, 1);
+      const next = guardedPatch(snapshot, entry, current, compileTextPatch(current, plan, response), assess(snapshot, entry, current));
+      assert.equal(next.assessment.passed, true, id); assert.equal(next.assessment.result.score, 100);
+      assert.deepEqual(next.candidate.solution, current.solution);
+      for (const axis of ['suspects','weapons','locations'])
+        assert.deepEqual(next.candidate[axis].map(e => [e.id,e.name,e.icon]), current[axis].map(e => [e.id,e.name,e.icon]));
+      assert.deepEqual(next.candidate.clues.map(c => [c.id,c.isBonus]), current.clues.map(c => [c.id,c.isBonus]));
+      assert.equal(next.assessment.result.qualityFindings.length, 0);
+      assert.equal(certificateValid(snapshot, entry, next.candidate, null), false);
+      const vector = next.assessment.result.patternSignature;
+      for (const previous of vectors) assert.ok(Object.keys(vector).filter(k => vector[k] === previous[k]).length < 4);
+      vectors.push(vector);
+    }
+  });
+  await test('text planner is ID-independent; compiler rejects partial/extra outputs and keeps other formats on the existing path', () => {
+    const entry = snapshot.entries.find(e => e.id === 'bogazda-kayip-elmas'), candidate = clone(entry.candidate);
+    const plan = textRepairPlan(snapshot, entry, candidate), response = clone(verifiedTextResponses[entry.id]);
+    assert.equal(validTextResponse(candidate, plan, response), true);
+    assert.equal(validTextResponse(candidate, plan, { ...response, operations: [] }), false);
+    delete response.clues.c6; assert.throws(() => compileTextPatch(candidate, plan, response), /TEXT_RESPONSE_INVALID/);
+    assert.equal(supportsTextRepair({ ...entry, tier: 'premium' }, candidate), false);
+    const media = clone(candidate); media.clues[0].mechanicType = 'audio'; assert.equal(supportsTextRepair(entry, media), false);
+    const malformed = clone(candidate); malformed.weapons[0].id = malformed.suspects[0].id;
+    assert.equal(supportsTextRepair(entry, malformed), false);
+    const rename = Object.fromEntries(['suspects','weapons','locations'].flatMap(a => candidate[a].map(e => [e.id, 'entity_' + a + '_' + e.id])));
+    for (const a of ['suspects','weapons','locations']) for (const entity of candidate[a]) entity.id = rename[entity.id];
+    for (const f of ['suspectId','weaponId','locationId']) candidate.solution[f] = rename[candidate.solution[f]];
+    assert.equal(verifyTextPlan(candidate, textRepairPlan(snapshot, entry, candidate)).coreNecessary, true);
+  });
+  await test('new-method recovery preserves money/history and gives exactly two versioned repairs within six total requests', async () => {
+    const entry = snapshot.entries.find(e => e.id === 'kapalicarsida-gizem'), store = storeFor(entry.id);
+    const record = store.state.cases[entry.id];
+    Object.assign(record, { status: 'quarantined', source_hash: entry.sourceHash, simulator_hash: snapshot.simulatorHash });
+    for (const r of failedCampaign.requests.filter(r => r.case_id === entry.id)) {
+      store.state.requests[stableHash(r)] = clone(r); record.spent += r.charged; store.state.campaign_spent += r.charged;
+    }
+    const spent = store.state.campaign_spent, history = clone(store.state.requests);
+    assert.deepEqual(reopenTextQuarantine(snapshot, store), [entry.id]);
+    assert.equal(store.state.campaign_spent, spent); assert.deepEqual(store.state.requests, history);
+    const plan = textRepairPlan(snapshot, entry, entry.candidate), response = verifiedTextResponses[entry.id];
+    const p = textRepairPrompt(entry, entry.candidate, plan, assess(snapshot, entry, entry.candidate), []);
+    assert.ok(p.length < 14000); assert.doesNotMatch(p, /qaPortfolioRegistry|Allowed JSON Pointer/);
+    const calls = [];
+    const oldKey = process.env.GEMINI_API_KEY; process.env.GEMINI_API_KEY = 'offline-test-only';
+    const result = await repairOne(snapshot, entry, store, { allowAI: true, caller: async args => {
+      calls.push(args);
+      const candidate = guardedPatch(snapshot, entry, entry.candidate,
+        compileTextPatch(entry.candidate, plan, response), assess(snapshot, entry, entry.candidate)).candidate;
+      return callPaid({ ...args, transport: async () => responseForFixture(args.purpose === 'repair' ? response :
+        args.purpose === 'player' ? playerFor(candidate) : validJudge()) });
+    } });
+    assert.equal(result.status, 'ready_for_gates'); assert.equal(result.run.calls, 3);
+    assert.deepEqual(calls.map(c => c.purpose), ['repair','player','judge']);
+    assert.equal(calls[0].repairMethod, TEXT_METHOD); assert.equal(calls[0].system, TEXT_SYSTEM);
+    assert.deepEqual(Object.keys(calls[0].schema.properties).sort(), ['assessment','case_id','clues','story','suspect_descriptions']);
+    const run = runFor();
+    reserveRequest(store, policy, run, entry.id, policy.models.first_pass,
+      requestBody(policy, policy.models.first_pass, 'second verified request'), 'repair', new Date(), TEXT_METHOD);
+    assert.throws(() => reserveRequest(store, policy, run, entry.id, policy.models.first_pass,
+      requestBody(policy, policy.models.first_pass, 'third verified request'), 'repair', new Date(), TEXT_METHOD), /REPAIR_LIMIT|CASE_REQUEST_LIMIT/);
+    assert.throws(() => reserveRequest(store, policy, run, entry.id, policy.models.first_pass,
+      requestBody(policy, policy.models.first_pass, 'legacy retry'), 'repair'), /REPAIR_LIMIT|CASE_REQUEST_LIMIT/);
+    record.status = 'quarantined'; assert.deepEqual(reopenTextQuarantine(snapshot, store), []);
+    assert.equal(Object.keys(store.state.requests).length, 6);
+    if (oldKey === undefined) delete process.env.GEMINI_API_KEY; else process.env.GEMINI_API_KEY = oldKey;
+  });
   const fixture = read('.case-qa/fixtures/termal-97-run-33305310409.json').candidate;
   fixture.qaPortfolioRegistry = clone(original.candidate.qaPortfolioRegistry);
   const entry = { ...original, candidate: fixture }, a97 = assess(snapshot, entry, fixture);
@@ -280,7 +368,7 @@ try {
         requestBody(limited, limited.models.first_pass, 'bounded')), /BUDGET_STOP/);
     }
   });
-  await test('two repair attempts remain a lifetime limit across executions', () => {
+  await test('two legacy repair attempts remain a lifetime limit across executions', () => {
     const store = storeFor();
     for (let i = 0; i < 2; i++) reserveRequest(store, policy, runFor(), 'test', policy.models.first_pass,
       requestBody(policy, policy.models.first_pass, 'attempt-' + i));

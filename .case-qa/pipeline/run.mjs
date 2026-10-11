@@ -5,10 +5,31 @@ import { execFileSync } from 'node:child_process';
 import { pathToFileURL } from 'node:url';
 import { stableHash, compactReport } from '../fm_case_qa_runner.mjs';
 import { read, write, clone, loadSnapshot, scan, selectNext, counts, assess, restoreBest,
-  guardedPatch, better, repairPrompt, stageCandidate } from './core.mjs';
+  guardedPatch, better, repairPrompt, stageCandidate, nearReady, logicalFailure } from './core.mjs';
 import { openStore } from './state.mjs';
 import { callPaid, Stop, modelPreflight, countsAsRepair } from './provider.mjs';
 import { mediaPreflight, reviewCandidate, certificateValid } from './review.mjs';
+import { TEXT_METHOD, TEXT_SYSTEM, textRepairPlan, textResponseSchema, textRepairPrompt,
+  validTextResponse, compileTextPatch, supportsTextRepair } from './text-repair.mjs';
+
+export function reopenTextQuarantine(snapshot, store) {
+  if (snapshot.policy.sequential.verified_text_repair_limit !== 2) return [];
+  const reopened = [];
+  for (const entry of snapshot.entries) {
+    const record = store.state.cases[entry.id];
+    if (record?.status !== 'quarantined' || record.source_hash !== entry.sourceHash ||
+        !supportsTextRepair(entry, entry.candidate) || !logicalFailure(assess(snapshot, entry, entry.candidate))) continue;
+    const requests = Object.values(store.state.requests).filter(r => r.case_id === entry.id);
+    // Preserve the entire history. No uncertain transport, review failure,
+    // request-cap exhaustion or previously attempted method is reopened.
+    if (!requests.length || requests.length > snapshot.policy.sequential.max_requests_per_case - 4 ||
+        requests.some(r => r.purpose !== 'repair' || r.repair_method === TEXT_METHOD ||
+          !['completed','failed'].includes(r.status) || (r.status === 'failed' && ![400,402,404].includes(r.http_status)))) continue;
+    record.status = 'method_upgrade_pending'; reopened.push(entry.id);
+  }
+  if (reopened.length) store.save();
+  return reopened;
+}
 
 export async function repairOne(snapshot, entry, store, { allowAI = false, caller = callPaid } = {}) {
   const state = store.state, existing = state.cases[entry.id];
@@ -26,6 +47,10 @@ export async function repairOne(snapshot, entry, store, { allowAI = false, calle
   };
   const run = { calls: 0, spent: 0, attempts: [], resumed_score: assessment.result.score };
   let status = 'audit_only', review;
+  // A verified plan stays stable across attempts even if prose becomes nearly
+  // ready. Otherwise a second call would silently return to the old patch path.
+  const textPlan = snapshot.policy.sequential.verified_text_repair_limit === 2 &&
+    !nearReady(assessment) && logicalFailure(assessment) ? textRepairPlan(snapshot, entry, current) : null;
   try {
     const pre = mediaPreflight(snapshot, entry, current);
     if (!pre.passed) {
@@ -37,21 +62,28 @@ export async function repairOne(snapshot, entry, store, { allowAI = false, calle
       }
       persist();
       for (let index = 0; index < snapshot.policy.sequential.max_repairs_per_case && !assessment.passed; index++) {
-        const used = Object.values(store.state.requests || {}).filter(r => r.case_id === entry.id && countsAsRepair(r)).length;
+        const method = textPlan ? TEXT_METHOD : 'legacy_patch';
+        const used = Object.values(store.state.requests || {}).filter(r => r.case_id === entry.id && countsAsRepair(r) &&
+          (r.repair_method || 'legacy_patch') === method).length;
         const model = index > 0 || used > 0 ? (snapshot.policy.models.repair || snapshot.policy.models.first_pass) : snapshot.policy.models.first_pass;
         const response = await caller({ store, policy: snapshot.policy, run, caseId: entry.id, model,
-          purpose: 'repair', prompt: repairPrompt(entry, current, assessment, record.feedback),
-          validate: p => p?.case_id === entry.id && Array.isArray(p.operations) });
+          purpose: 'repair', repairMethod: method,
+          ...(textPlan ? { schema: textResponseSchema(current, textPlan), system: TEXT_SYSTEM,
+            prompt: textRepairPrompt(entry, current, textPlan, assessment, record.feedback),
+            validate: p => validTextResponse(current, textPlan, p) } : {
+            prompt: repairPrompt(entry, current, assessment, record.feedback),
+            validate: p => p?.case_id === entry.id && Array.isArray(p.operations) }) });
         try {
-          const next = guardedPatch(snapshot, entry, current, response.plan, assessment);
+          const patch = textPlan ? compileTextPatch(current, textPlan, response.plan) : response.plan;
+          const next = guardedPatch(snapshot, entry, current, patch, assessment);
           const retained = better(next.assessment, assessment);
-          run.attempts.push({ model, cached: response.cached, score: next.assessment.result.score, retained });
+          run.attempts.push({ model, repair_method: method, cached: response.cached, score: next.assessment.result.score, retained });
           if (retained) { current = next.candidate; assessment = next.assessment; }
           else record.feedback.push({ score: next.assessment.result.score,
             result: compactReport(next.assessment.result, next.assessment.leakage),
             reason: 'No improvement or passed gate regressed' });
         } catch (error) {
-          if (!/PATCH|LOCKED_FIELD|IMMUTABLE|NEAR_READY|CONTRACT/.test(error.message)) throw error;
+          if (!/PATCH|LOCKED_FIELD|IMMUTABLE|NEAR_READY|CONTRACT|TEXT_RESPONSE/.test(error.message)) throw error;
           run.attempts.push({ model, error: error.message });
           record.feedback.push({ error: error.message });
         }
@@ -98,6 +130,7 @@ export async function main() {
       const record = store.state.cases[entry.id];
       if (record && record.source_hash !== entry.sourceHash) record.status = 'source_changed';
     }
+    reopenTextQuarantine(snapshot, store);
   }
   const rows = baseline.map(r => ({ ...r, passed: r.content_locked }));
   const requested = process.env.FM_PIPELINE_CASE_ID || '';

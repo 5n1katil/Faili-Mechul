@@ -72,7 +72,7 @@ export function reserveCost(policy, model, body) {
 export function requestKey(caseId, model, body, purpose) {
   return stableHash({ version: 1, provider: 'gemini', caseId, model, purpose, body });
 }
-export function reserveRequest(store, policy, run, caseId, model, body, purpose = 'repair', now = new Date()) {
+export function reserveRequest(store, policy, run, caseId, model, body, purpose = 'repair', now = new Date(), repairMethod = 'legacy_patch') {
   const key = requestKey(caseId, model, body, purpose);
   const previous = store.state.requests[key];
   if (previous?.status === 'completed' && previous.plan) return { key, cached: previous.plan };
@@ -89,11 +89,19 @@ export function reserveRequest(store, policy, run, caseId, model, body, purpose 
     throw new Stop('REQUEST_LIMIT_MISSING');
   if (caseRequests.length >= config.max_requests_per_case) throw new Stop('CASE_REQUEST_LIMIT');
   const repairs = caseRequests.filter(countsAsRepair).length;
-  if (purpose === 'repair' && repairs >= config.max_repairs_per_case) throw new Stop('REPAIR_LIMIT');
+  if (!['legacy_patch', 'verified_text_v1'].includes(repairMethod)) throw new Stop('REPAIR_METHOD_NOT_ALLOWED');
+  if (purpose === 'repair') {
+    const scoped = caseRequests.filter(r => countsAsRepair(r) && (r.repair_method || 'legacy_patch') === repairMethod).length;
+    const limit = repairMethod === 'verified_text_v1' ? config.verified_text_repair_limit : config.max_repairs_per_case;
+    if (repairMethod === 'verified_text_v1' && limit !== 2) throw new Stop('REPAIR_METHOD_NOT_ENABLED');
+    if (scoped >= limit || repairs >= config.max_repairs_per_case + (config.verified_text_repair_limit || 0))
+      throw new Stop('REPAIR_LIMIT');
+  }
   if (run.calls >= config.max_calls_per_execute || run.spent + projected > config.execute_budget_usd ||
       record.spent + projected > config.case_budget_usd || daily + projected > config.daily_budget_usd ||
       store.state.campaign_spent + projected > config.campaign_budget_usd) throw new Stop('BUDGET_STOP');
-  store.state.requests[key] = { case_id: caseId, model, purpose, day, status: 'reserved', charged: projected };
+  store.state.requests[key] = { case_id: caseId, model, purpose, day, status: 'reserved', charged: projected,
+    ...(purpose === 'repair' ? { repair_method: repairMethod } : {}) };
   record.spent += projected; store.state.campaign_spent += projected;
   run.spent += projected; run.calls++;
   store.save(); // A failed durable reservation prevents transport.
@@ -107,7 +115,7 @@ export function settleRequest(store, run, request, amount, extra) {
   Object.assign(ledger, extra, { charged: amount }); store.save();
 }
 export async function callPaid({ store, policy, run, caseId, model, prompt, purpose = 'repair',
-  schema, system, validate = value => value && typeof value === 'object',
+  schema, system, repairMethod = 'legacy_patch', validate = value => value && typeof value === 'object',
   transport = fetch, now = new Date() }) {
   const body = requestBody(policy, model, prompt, { schema, system });
   const key = requestKey(caseId, model, body, purpose);
@@ -118,7 +126,7 @@ export async function callPaid({ store, policy, run, caseId, model, prompt, purp
   }
   if (previous) throw new Stop('REPEATED_OR_UNCERTAIN_REQUEST');
   if (!process.env.GEMINI_API_KEY) throw new Stop('GEMINI_API_KEY_MISSING');
-  const request = reserveRequest(store, policy, run, caseId, model, body, purpose, now);
+  const request = reserveRequest(store, policy, run, caseId, model, body, purpose, now, repairMethod);
   let payload, http;
   try {
     http = await transport('https://generativelanguage.googleapis.com/v1beta/models/' + model + ':generateContent', {

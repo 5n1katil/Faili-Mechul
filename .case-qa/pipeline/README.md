@@ -47,8 +47,9 @@ Merge sonrası güncel main yeniden tarandığında geçerli içerik sertifikas�
 
 ## Harcama ve devam etme
 
-`policy.json`: en fazla 4 üretim isteği/çalıştırma; vaka ömrü boyunca 2 repair denemesi
-ve toplam 6 üretim isteği (repair + review + HTTP reddi dahil);
+`policy.json`: en fazla 4 üretim isteği/tek-vaka çalıştırması; eski patch yöntemi için
+vaka ömrü boyunca 2 repair, `verified_text_v1` için ayrıca en fazla 2 repair ve
+her iki yöntem birlikte toplam 6 üretim isteği (repair + review + HTTP reddi dahil);
 çalıştırma ve vaka başına $0.25, UTC gün başına $2, kampanya toplamı $10.
 Repair Gemini 3.5 Flash-Lite; oyuncu/editör Gemini 3.8 Flash kullanır. Fiyatlar
 2026-10-11 Google resmi sayfasından kontrol edilmiştir: milyon token başına
@@ -56,6 +57,48 @@ repair input/output $0.30/$2.50; reviewer $0.75/$3.75. Reviewer kampanya fiyatı
 2026-12-31 sonuna kadar geçerlidir; sonrasında politika güncellenmeden yeni ücretli
 istek yapılmaz. Gemini 3 için `thinkingLevel: LOW` ve varsayılan sıcaklık 1 kullanılır.
 Model değişikliği gözden geçirilen politika PR'ı ister; otomatik model fallback yoktur.
+
+## Doğrulanmış metin onarımı — verified_text_v1
+
+Tamamen metinsel, standart 3 şüpheli × 3 eşya/yöntem × 3 mekân, dört temel ve
+iki bonus ipuculu vakalarda ciddi mantık hataları için yeni yol kullanılır.
+Premium, medya/etkileşim, farklı boyutlar ve neredeyse hazır dar düzeltmeler
+önceki yolda kalır. Model matematik veya JSON patch üretmez:
+
+1. Kod 36 olası tam eşleşmeyi tarar. Değişmez cevap tek kalmalı; dört temel
+   ipucundan herhangi biri çıkarıldığında cevap belirsizleşmelidir.
+2. Çapa bileşeni, açılış, ipucu sırası ve eşleşme ritmi için alternatifler mevcut
+   portföy imzalarıyla karşılaştırılır. Aynı/yakın imza kabul edilmez. Bu kontrol
+   hikâyelerin benzersizliği ve eğlencesinin garantisi değildir.
+3. Modele doğrulanmış ilişkiler, her ipucunun yalnız iki öğesi, özgün kurgu ve
+   somut kanıt örnekleri verilir. Dar çıktı sözleşmesi hikâye, üç karakter
+   açıklaması ve altı ipucunun metin/soru alanlarından oluşur.
+4. Kod logicRules, tek çapa, eşleşen QA kanıtı ve imzayı derler. Metnin ilişkiyi
+   gerçekten desteklemesi yine mevcut HTML ve bağımsız oyuncu/editör kapılarına
+   tabidir; otomatik metadata derlemek bir onay sertifikası değildir.
+5. Birinci yazım Flash-Lite, ikinci düzeltme Flash'tır. Eski istek ve maliyetler
+   silinmez. Eski yöntemle karantinaya alınmış uyumlu vakalar yalnız dört yeni
+   istek için toplam altı istek sınırında yer varsa ve yeni yöntem denenmemişse
+   yeniden kuyruğa girer. Belirsiz transport, erişim/kota hataları, inceleme
+   başarısızlığı ve daha önce denenmiş yeni yöntem tekrar açılmaz.
+
+Canlı başarısız kampanya `38151436437` çıktıları regresyon fixture'ında tutulur.
+Üç vakada elle hazırlanmış yeni anlatı fixture'ları değişmeyen HTML'de 100/100,
+productionReady ve kimlik kontrollerini geçer. Bunlar **canlı Gemini çıktısı,
+oyuncu/editör sertifikası veya üretim vakası değildir**. Canlı kabul oranı ayrıca
+ölçülmelidir. Ücretli çağrı yapmadan test: `node .case-qa/pipeline/test.mjs`.
+
+### Simülatörde doğrulanan sınırlar
+
+Sabit v29.4 HTML, doğrudan isim kullanımını bazı zorluklarda “opsiyonel” tavsiye
+olarak yazsa da bu bulgu `hasImprovements` üzerinden productionReady'yi engeller.
+`mentionsAny` çok sözcüklü isimlerin bazı tek sözcüklerini de isim eşleşmesi
+sayar; örneğin “Gemi Halatı” için “gemi”, “Makine Dairesi” için “makine”.
+Bu davranış kalite raporunun açıklamasıyla tutarsızdır. Ayrıca suç kapsamı
+regex'i genel “olay yeri incelemesi” ve “bağlantılı” gibi sözleri iki suç bileşeni
+ifşası sanabilir. Bu PR sabit simülatörü veya eşikleri değiştirmez; rapor,
+adlandırma ve suç kapsamı semantiği sonraki sürümde karşı-örneklerle düzeltilmelidir.
+Yeni onarımın matematik ve anlatı sözleşmesi bu kusurlardan bağımsız test edilir.
 
 İlk pilotta Gemini 2.5 Flash-Lite HTTP 404 döndürdü: bir reddedilmiş istek,
 kayıtlı token maliyeti $0, oyun değişikliği yok. Google 2.5 erişimini geçmişte
