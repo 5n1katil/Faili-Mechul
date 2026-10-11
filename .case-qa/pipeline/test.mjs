@@ -5,7 +5,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { read, write, clone, loadSnapshot, scan, selectNext, assess, guardedPatch, better,
-  restoreBest, stageCandidate } from './core.mjs';
+  restoreBest, stageCandidate, repairPrompt } from './core.mjs';
 import { emptyState, validateState, openStore } from './state.mjs';
 import { reserveRequest, requestBody, callPaid, Stop, modelPreflight, providerErrorDetails } from './provider.mjs';
 import { assertDraftPolicy } from './publish-draft.mjs';
@@ -66,6 +66,19 @@ try {
     const wire = requestBody(policy, policy.models.first_pass, 'test').generationConfig.responseFormat.text.schema;
     assert.equal(wire.properties.operations.maxItems, undefined);
     assert.deepEqual(wire.properties.operations.items, PATCH_SCHEMA.properties.operations.items);
+  });
+  await test('repair transport omission never becomes a missing authoring field or allowed locked path', () => {
+    const konak = snapshot.entries.find(e => e.id === 'konakta-gece-yarisi-cinayeti');
+    const prompt = repairPrompt(konak, konak.candidate, assess(snapshot, konak, konak.candidate), []);
+    const allowed = prompt.split('Allowed JSON Pointer paths:\n')[1].split('\n\nCASE:')[0];
+    for (const field of ['qaPolicy', 'qaPortfolioRegistry', 'intentionalMononymIds'])
+      assert.ok(!allowed.includes('/' + field));
+    const status = JSON.parse(prompt.split('AUTHORING CONTRACT STATUS (must also be complete after repair):\n')[1].split('\n\nCanonical')[0]);
+    assert.ok(!status.completeness.missing.includes('/qaPortfolioRegistry/entries'));
+    const projected = JSON.parse(prompt.split('\n\nCASE:\n')[1].split('\n\nDETERMINISTIC')[0]);
+    assert.equal(projected.qaPortfolioRegistry, undefined);
+    assert.ok(prompt.startsWith('PIPELINE CODE LOCK:'));
+    assert.ok(prompt.includes('supports confirm, not eliminate'));
   });
   await test('regressed score or safety gate cannot replace the best candidate', () => {
     const bad = clone(a97); bad.result.score = 96; bad.penalty = 0;

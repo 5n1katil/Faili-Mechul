@@ -113,7 +113,16 @@ export function repairPrompt(entry, candidate, assessment, rejected) {
     for (const key of ['icon', 'avatar', 'image', 'asset', 'fingerprint', 'fp', 'parmakIziDeseni']) delete entity[key];
   let prompt = buildPrompt({ caseData: small, baselineResult: assessment.result, leakage: assessment.leakage,
     phase: nearReady(assessment) ? 'exact_score_cleanup' : 'luna_first_pass', previousRejectedCandidates: rejected.slice(-2) });
-  prompt += '\nPIPELINE CODE LOCK: qaPolicy, qaPortfolioRegistry, intentionalMononymIds and all IDs/assets/solution are immutable, even if an earlier allowed-path list mentions them. Never suppress a gate. Return the smallest repair for the reported deficit. Removed asset fields still exist in the real case and must not be changed.';
+  // Projection is for transport only: omitted registry data is present in the
+  // actual candidate, not an authoring defect for the model to reconstruct.
+  const projectedStatus = JSON.stringify({ completeness: authoringCompleteness(small), contract: authoringContract(small) });
+  const actualStatus = JSON.stringify({ completeness: authoringCompleteness(candidate), contract: authoringContract(candidate) });
+  prompt = prompt.replace('AUTHORING CONTRACT STATUS (must also be complete after repair):\n' + projectedStatus,
+    'AUTHORING CONTRACT STATUS (must also be complete after repair):\n' + actualStatus);
+  prompt = prompt.replace('- /qaPattern, /qaPortfolioRegistry, /qaSemanticFacts, /qaPolicy, /qaNameRationales, /intentionalMononymIds, /qaAuthoringVersion, /qaDeductionGraph',
+    '- /qaPattern, /qaSemanticFacts, /qaNameRationales, /qaAuthoringVersion, /qaDeductionGraph');
+  prompt = 'PIPELINE CODE LOCK: qaPolicy, qaPortfolioRegistry, intentionalMononymIds and all IDs/assets/solution are immutable. The portfolio registry is intentionally omitted from CASE and remains available to the evaluator. Never add or replace these locked fields.\n\n' + prompt;
+  prompt += '\nNever suppress a gate. Return the smallest coherent repair for the reported deficit. Removed asset fields still exist in the real case and must not be changed. A positive witness statement that an entity was at a location supports confirm, not eliminate. Evidence about the crime weapon or location does not by itself identify the culprit. qaSemanticFacts must not turn an unsupported culprit identity into evidence. Repair visible prose and rules together; metadata alone cannot make an ambiguous core solvable.';
   return prompt;
 }
 export function restoreBest(snapshot, entry, record) {
