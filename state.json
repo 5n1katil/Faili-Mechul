@@ -1589,7 +1589,7 @@
       "spent": 0.0003565500000000006
     },
     "bogazda-kayip-elmas": {
-      "spent": 0.08245469999999999,
+      "spent": 0.04799294999999999,
       "feedback": [],
       "source_hash": "d1f5a999f2b7cca4c1345be1ef12368f9bd95112608a4fc2fa7558bf41ecb498",
       "simulator_hash": "cb53e6613d6379de097599634de26524f4510fbc",
@@ -3462,9 +3462,237 @@
       "model": "gemini-3.8-flash",
       "purpose": "repair",
       "day": "2026-10-11",
-      "status": "reserved",
-      "charged": 0.0546105
+      "status": "completed",
+      "charged": 0.02014875,
+      "usage": {
+        "promptTokenCount": 10520,
+        "candidatesTokenCount": 3269,
+        "totalTokenCount": 13789,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 10520
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "plan": {
+        "case_id": "bogazda-kayip-elmas",
+        "assessment": "Case bogazda-kayip-elmas failed coreNecessity, patternGovernance, visibleEvidence, and bonusFunctionality gates due to missing logicRules, missing qaSemanticFacts, lack of crime anchor, rule overflow/leakage in clue texts and suspect descriptions, and unfunctional bonus clues. We rewrite suspect descriptions to eliminate pre-clue weapon/location token leakage, lengthen the story to meet word count expectations, establish a valid crime anchor in clue 1, provide rigorous paired logicRules and qaRationale across all clues (c1-c4 forming a unique core deduction, c5-c6 providing functional bonus eliminations), update qaPattern to an unambiguous signature, and supply root and clue-level qaSemanticFacts.",
+        "operations": [
+          {
+            "op": "replace",
+            "path": "/story",
+            "value_json": "\"İstanbul Boğazı'nın karanlık sularında seyreden lüks bir yatta düzenlenen mücevher sergisi, gece yarısı kan donduran bir cinayetle gölgelendi. Paha biçilemez 'Boğaz Elması'nın sergilendiği cam vitrinin parçalandığı ve geminin kıdemli güvenlik şefi Orhan'ın cansız bedeninin bulunduğu ihbarı üzerine dedektifler güverteye intikal etti. Dışarıdan kimsenin binip inmediği açık denizde, katil çaldığı nadide taşla birlikte yattaki davetlilerin ve mürettebatın arasında gizleniyor. Olay yerindeki mekanik izler, kurbanın üzerindeki boğulma bulguları ve davetlilerin güvertedeki hareket kayıtları adım adım incelenerek sır perdesi aralanmak zorunda.\"",
+            "reason": "Expand story length to exceed the 60-word depth threshold while preserving setting, tone, and character roles."
+          },
+          {
+            "op": "replace",
+            "path": "/suspects/0/description",
+            "value_json": "\"Yatın kıdemli süvarisi. Güverte disiplinine aşırı önem veren, soğukkanlı ve koyu mavi üniformasıyla dikkat çeken bir denizci.\"",
+            "reason": "Remove distinctive token overlap ('gemi', physical power hints) that leaked weapon w1."
+          },
+          {
+            "op": "replace",
+            "path": "/suspects/2/description",
+            "value_json": "\"Sanat organizasyonlarını yürüten halkla ilişkiler danışmanı. Davet boyunca zarif siyah gece elbisesiyle konukları yönlendirdi.\"",
+            "reason": "Remove leaked tokens ('esnek', 'dar', 'gemi') connecting suspect to w1 and l1."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/0/text",
+            "value_json": "\"Olay yeri inceleme tutanağına göre cinayet kesin olarak Makine Dairesi'nde işlenmiş; kurbanın yanında bulunan kanlı eldivenin ise Seyir Köprüsü'ne ait olmadığı tespit edilmiştir.\"",
+            "reason": "Establish clue 1 as the designated crime anchor confirming l1 as crime location and eliminating Seyir Köprüsü (l2)."
+          },
+          {
+            "op": "add",
+            "path": "/clues/0/isCrimeAnchor",
+            "value_json": "true",
+            "reason": "Mark clue 1 as the single crime anchor required by authoring contract."
+          },
+          {
+            "op": "add",
+            "path": "/clues/0/logicRules",
+            "value_json": "[{\"action\":\"eliminate\",\"pair\":[\"w1\",\"l2\"]}]",
+            "reason": "Add grid logic rule eliminating Gemi Halatı from Seyir Köprüsü based on crime location grounding."
+          },
+          {
+            "op": "add",
+            "path": "/clues/0/qaRationale",
+            "value_json": "{\"matrixEffect\":\"Gemi Halatı ile Seyir Köprüsü elenir.\",\"evidenceLink\":\"Olay yeri inceleme tutanağına göre cinayet kesin olarak Makine Dairesi'nde işlenmiş\",\"evidenceKind\":\"record\"}",
+            "reason": "Provide valid qaRationale referencing visible clue text evidence."
+          },
+          {
+            "op": "add",
+            "path": "/clues/0/qaSemanticFacts",
+            "value_json": "[{\"kind\":\"crime_component\",\"component\":\"location\",\"entityId\":\"l1\",\"source\":\"clue:c1\",\"evidence\":\"Olay yeri inceleme tutanağına göre cinayet kesin olarak Makine Dairesi'nde işlenmiş\"}]",
+            "reason": "Document crime location fact for the crime anchor."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/1/text",
+            "value_json": "\"Kaptan Levent'in kamaradaki seyir defterine göre, kendisinin cinayet anında VIP Salon bünyesindeki konukların güvenliğiyle ilgilendiği kesinleşti.\"",
+            "reason": "Fix player-visible rule overflow by tying Kaptan Levent (s1) directly to VIP Salon (l3) via eliminate/confirm rule."
+          },
+          {
+            "op": "add",
+            "path": "/clues/1/isCrimeAnchor",
+            "value_json": "false",
+            "reason": "Clue 1 is not the crime anchor."
+          },
+          {
+            "op": "add",
+            "path": "/clues/1/logicRules",
+            "value_json": "[{\"action\":\"eliminate\",\"pair\":[\"s1\",\"l1\"]}]",
+            "reason": "Kaptan Levent was at VIP Salon, eliminating him from Makine Dairesi."
+          },
+          {
+            "op": "add",
+            "path": "/clues/1/qaRationale",
+            "value_json": "{\"matrixEffect\":\"Kaptan Levent ile Makine Dairesi elenir.\",\"evidenceLink\":\"Kaptan Levent'in kamaradaki seyir defterine göre, kendisinin cinayet anında VIP Salon bünyesindeki konukların güvenliğiyle ilgilendiği kesinleşti.\",\"evidenceKind\":\"documentary\"}",
+            "reason": "Provide qaRationale grounded in documentary evidence."
+          },
+          {
+            "op": "add",
+            "path": "/clues/1/qaSemanticFacts",
+            "value_json": "[]",
+            "reason": "Semantic facts array for non-anchor clue."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/2/text",
+            "value_json": "\"Adli tıp otopsi raporuna göre ölüm boğulma sonucu gerçekleşmiş olup, Demir Çekiç cinayet aleti olmaktan kesin olarak çıkarılmıştır.\"",
+            "reason": "Clear explicit text eliminating Demir Çekiç (w2) from Makine Dairesi (l1)."
+          },
+          {
+            "op": "add",
+            "path": "/clues/2/isCrimeAnchor",
+            "value_json": "false",
+            "reason": "Clue 2 is not the crime anchor."
+          },
+          {
+            "op": "add",
+            "path": "/clues/2/logicRules",
+            "value_json": "[{\"action\":\"eliminate\",\"pair\":[\"w2\",\"l1\"]}]",
+            "reason": "Eliminate Demir Çekiç from Makine Dairesi."
+          },
+          {
+            "op": "add",
+            "path": "/clues/2/qaRationale",
+            "value_json": "{\"matrixEffect\":\"Demir Çekiç ile Makine Dairesi elenir.\",\"evidenceLink\":\"ölüm boğulma sonucu gerçekleşmiş olup, Demir Çekiç cinayet aleti olmaktan kesin olarak çıkarılmıştır\",\"evidenceKind\":\"medical\"}",
+            "reason": "Provide qaRationale grounded in medical evidence."
+          },
+          {
+            "op": "add",
+            "path": "/clues/2/qaSemanticFacts",
+            "value_json": "[]",
+            "reason": "Semantic facts array for clue 2."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/3/text",
+            "value_json": "\"Güvenlik kameralarının incelenmesi sonucunda, Sponsor Murat'ın cinayet esnasında Seyir Köprüsü yönündeki güvertede bulunduğu kanıtlandı; Makine Dairesi'nde değildi.\"",
+            "reason": "Rewrite clue 3 to align text and logicRule without overflowing untracked entities."
+          },
+          {
+            "op": "add",
+            "path": "/clues/3/isCrimeAnchor",
+            "value_json": "false",
+            "reason": "Clue 3 is not the crime anchor."
+          },
+          {
+            "op": "add",
+            "path": "/clues/3/logicRules",
+            "value_json": "[{\"action\":\"eliminate\",\"pair\":[\"s2\",\"l1\"]}]",
+            "reason": "Eliminate Sponsor Murat from Makine Dairesi."
+          },
+          {
+            "op": "add",
+            "path": "/clues/3/qaRationale",
+            "value_json": "{\"matrixEffect\":\"Sponsor Murat ile Makine Dairesi elenir.\",\"evidenceLink\":\"Sponsor Murat'ın cinayet esnasında Seyir Köprüsü yönündeki güvertede bulunduğu kanıtlandı; Makine Dairesi'nde değildi.\",\"evidenceKind\":\"witness\"}",
+            "reason": "Provide qaRationale grounded in witness/camera recording evidence."
+          },
+          {
+            "op": "add",
+            "path": "/clues/3/qaSemanticFacts",
+            "value_json": "[]",
+            "reason": "Semantic facts array for clue 3."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/4/text",
+            "value_json": "\"Teknik bakım envanterine göre, Gaz Tüpü olay saatinde sadece Seyir Köprüsü havalandırmasında kilitli tutuluyordu.\"",
+            "reason": "Make bonus clue c5 functional by giving it an eliminate rule."
+          },
+          {
+            "op": "add",
+            "path": "/clues/4/isCrimeAnchor",
+            "value_json": "false",
+            "reason": "Bonus clue is not the crime anchor."
+          },
+          {
+            "op": "add",
+            "path": "/clues/4/logicRules",
+            "value_json": "[{\"action\":\"eliminate\",\"pair\":[\"w3\",\"l1\"]}]",
+            "reason": "Eliminate Gaz Tüpü from Makine Dairesi."
+          },
+          {
+            "op": "add",
+            "path": "/clues/4/qaRationale",
+            "value_json": "{\"matrixEffect\":\"Gaz Tüpü ile Makine Dairesi elenir.\",\"evidenceLink\":\"Gaz Tüpü olay saatinde sadece Seyir Köprüsü havalandırmasında kilitli tutuluyordu\",\"evidenceKind\":\"documentary\"}",
+            "reason": "Provide qaRationale for bonus clue c5."
+          },
+          {
+            "op": "add",
+            "path": "/clues/4/qaSemanticFacts",
+            "value_json": "[]",
+            "reason": "Semantic facts array for bonus clue c5."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/5/text",
+            "value_json": "\"Güverte dolapları incelemesinde, Sponsor Murat'ın Demir Çekiç ile hiçbir temasının bulunmadığı teyit edildi.\"",
+            "reason": "Make bonus clue c6 functional with a valid matrix elimination."
+          },
+          {
+            "op": "add",
+            "path": "/clues/5/isCrimeAnchor",
+            "value_json": "false",
+            "reason": "Bonus clue is not the crime anchor."
+          },
+          {
+            "op": "add",
+            "path": "/clues/5/logicRules",
+            "value_json": "[{\"action\":\"eliminate\",\"pair\":[\"s2\",\"w2\"]}]",
+            "reason": "Eliminate Sponsor Murat with Demir Çekiç."
+          },
+          {
+            "op": "add",
+            "path": "/clues/5/qaRationale",
+            "value_json": "{\"matrixEffect\":\"Sponsor Murat ile Demir Çekiç elenir.\",\"evidenceLink\":\"Sponsor Murat'ın Demir Çekiç ile hiçbir temasının bulunmadığı teyit edildi\",\"evidenceKind\":\"forensic\"}",
+            "reason": "Provide qaRationale for bonus clue c6."
+          },
+          {
+            "op": "add",
+            "path": "/clues/5/qaSemanticFacts",
+            "value_json": "[]",
+            "reason": "Semantic facts array for bonus clue c6."
+          },
+          {
+            "op": "add",
+            "path": "/qaSemanticFacts",
+            "value_json": "[{\"kind\":\"crime_component\",\"component\":\"location\",\"entityId\":\"l1\",\"source\":\"clue:c1\",\"evidence\":\"Olay yeri inceleme tutanağına göre cinayet kesin olarak Makine Dairesi'nde işlenmiş\"}]",
+            "reason": "Add root qaSemanticFacts array satisfying the semantic contract."
+          },
+          {
+            "op": "replace",
+            "path": "/qaPattern",
+            "value_json": "{\"anchorSource\":\"clue:c1\",\"designIntent\":\"Standart vaka dedüksiyon akışı: c1 mekan çapası (l1), c2 kaptan eleme (s1-l1), c3 silah eleme (w2-l1), c4 sponsor eleme (s2-l1); tekil çözüm s3-w1-l1.\"}",
+            "reason": "Update qaPattern signature away from collided template into unique authoring pattern."
+          }
+        ]
+      }
     }
   },
-  "campaign_spent": 0.10101835
+  "campaign_spent": 0.06655660000000001
 }
