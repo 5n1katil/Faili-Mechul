@@ -4652,7 +4652,7 @@
       "status": "method_upgrade_pending"
     },
     "universitede-karanlik-sir": {
-      "spent": 0.021558649999999995,
+      "spent": 0.057924649999999994,
       "feedback": [
         {
           "score": 0,
@@ -7634,7 +7634,16 @@
         ],
         "serviceTier": "standard"
       }
+    },
+    "5a720cf9ae4c52415bdf87e6acff5b96d1a211bc638f8f6b469aa9a4901bd752": {
+      "case_id": "universitede-karanlik-sir",
+      "model": "gemini-3.8-flash",
+      "purpose": "repair",
+      "day": "2026-10-11",
+      "status": "reserved",
+      "charged": 0.036366,
+      "repair_method": "verified_text_v1"
     }
   },
-  "campaign_spent": 0.10829795000000003
+  "campaign_spent": 0.14466395000000004
 }
