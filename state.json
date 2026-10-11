@@ -6502,7 +6502,7 @@
       "status": "quarantined"
     },
     "pazar-yerinde-supheli-olum": {
-      "spent": 0.0032914999999999993,
+      "spent": 0.039723499999999995,
       "feedback": [
         {
           "error": "TEXT_CONTENT:story:MIN_60_WORDS"
@@ -9576,7 +9576,16 @@
           }
         }
       }
+    },
+    "6d7af552af7e540aef70a9913f528ea631b651ea00024ee7c968e0a8338b4b07": {
+      "case_id": "pazar-yerinde-supheli-olum",
+      "model": "gemini-3.8-flash",
+      "purpose": "repair",
+      "day": "2026-10-11",
+      "status": "reserved",
+      "charged": 0.036432,
+      "repair_method": "verified_text_v1"
     }
   },
-  "campaign_spent": 0.13465115000000002
+  "campaign_spent": 0.17108315000000002
 }
