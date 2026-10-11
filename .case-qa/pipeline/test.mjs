@@ -25,9 +25,14 @@ import { verifiedTextResponses } from '../fixtures/verified-text-responses.mjs';
 import { evaluatePreclueLeakage, n8nGuardSource } from '../case_qa_preclue_guard.mjs';
 import { compileEditorial, editorialPrompt, editorialFailure, validEditorial, recoverEditorial } from './editorial.mjs';
 import { reviewHash } from './review.mjs';
+import { qualityContract, REVIEW_VERSION } from './quality-contract.mjs';
+import { compileEditorialRevision, editorialRevisionPrompt, editorialRevisionSchema, validEditorialRevision } from './editorial.mjs';
 
 globalThis.fetch = async () => { throw new Error('TEST_NETWORK_FORBIDDEN'); };
-const policy = read('.case-qa/pipeline/policy.json'), root = process.cwd();
+const currentPolicy = read('.case-qa/pipeline/policy.json'), policy = clone(currentPolicy), root = process.cwd();
+// Historical paid-cache fixtures must replay their original v1 wire contract.
+// The v2 production contract and orchestration are exercised explicitly below.
+policy.review.prompt_version = 'fm-player-review-v1';
 const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'fm-pipeline-'));
 let passed = 0;
 const test = async (name, fn) => { await fn(); passed++; console.log('ok ' + passed + ' - ' + name); };
@@ -49,6 +54,102 @@ try {
     assert.ok(campaignRows(snapshot).every(r => !r.content_locked || r.passed));
   });
   const original = snapshot.entries.find(e => e.id === 'termal-otelde-supheli-vaka');
+  const currentSnapshot = { ...snapshot, policy: currentPolicy };
+  const narrativeFixture = read('.case-qa/fixtures/pazar-editorial-rejection-38159952807.json');
+  const latestNarrativeReview = read('.case-qa/fixtures/pazar-editorial-review-38165586423.json');
+  const narrativeEntry = snapshot.entries.find(e => e.id === narrativeFixture.candidate.id);
+  const narrativeCandidate = clone(narrativeFixture.candidate);
+  narrativeCandidate.qaPortfolioRegistry = clone(narrativeEntry.candidate.qaPortfolioRegistry);
+  const narrativeValue = { story: narrativeCandidate.story,
+    clues: Object.fromEntries(narrativeCandidate.clues.map(c => [c.id, { text: c.text, deductionHint: c.deductionHint }])),
+    profile_additions: Object.fromEntries(narrativeCandidate.suspects.map(s => [s.id,
+      'Bugün ailesine verdiği sözü tutmak istiyor, yaşanan belirsizlik yüzünden duyduğu kaygıyı gizlemeye çalışıyor.'])) };
+  await test('v2 writer and independent editor share criteria; blind player receives no criteria or answer', async () => {
+    assert.equal(currentPolicy.review.prompt_version, REVIEW_VERSION);
+    assert.equal(currentPolicy.review.minimum_dimension_score, 4);
+    for (const entry of snapshot.entries) assert.equal(qualityContract(entry.candidate).tier, entry.tier);
+    const contract = qualityContract(narrativeCandidate, narrativeEntry.tier);
+    const failed = { certificate: { judge: narrativeFixture.judge } };
+    assert.deepEqual(JSON.parse(editorialRevisionPrompt(narrativeCandidate, failed)).quality_contract, contract);
+    const a = assess(currentSnapshot, narrativeEntry, narrativeCandidate);
+    assert.ok(repairPrompt(narrativeEntry, narrativeCandidate, a, []).includes(JSON.stringify(contract)));
+    const plan = textRepairPlan(currentSnapshot, narrativeEntry, narrativeCandidate);
+    assert.ok(textRepairPrompt(narrativeEntry, narrativeCandidate, plan, a, []).includes(JSON.stringify(contract)));
+    const seen = [];
+    const result = await reviewCandidate(currentSnapshot, narrativeEntry, narrativeCandidate, storeFor(narrativeEntry.id), runFor(), async args => {
+      seen.push(JSON.parse(args.prompt));
+      return { plan: args.purpose === 'player' ? playerFor(narrativeCandidate) : latestNarrativeReview.judge };
+    });
+    assert.deepEqual(Object.keys(seen[0]).sort(), ['player_case','version']);
+    assert.equal(seen[0].player_case.solution, undefined);
+    assert.deepEqual(seen[1].quality_contract, contract);
+    assert.equal(result.passed, false);
+    assert.deepEqual(result.certificate.judge, latestNarrativeReview.judge);
+    assert.notEqual(reviewHash(snapshot, narrativeCandidate, {}), reviewHash(currentSnapshot, narrativeCandidate, {}));
+    const oldCertificate = { schema: 'fm_case_review_v1', review_hash: reviewHash(snapshot, narrativeCandidate, {}),
+      player: playerFor(narrativeCandidate), judge: validJudge() };
+    assert.equal(certificateValid(snapshot, narrativeEntry, narrativeCandidate, oldCertificate), true);
+    assert.equal(certificateValid(currentSnapshot, narrativeEntry, narrativeCandidate, oldCertificate), false);
+    const changed = clone(narrativeCandidate); changed.difficulty = 'a different difficulty';
+    assert.equal(stableHash(playerView(changed)), stableHash(playerView(narrativeCandidate)));
+    assert.notEqual(reviewHash(currentSnapshot, changed, {}), reviewHash(currentSnapshot, narrativeCandidate, {}));
+  });
+  await test('v2 neutral motivations preserve original visual text and all deductions; exact schema and leakage gates fail closed', () => {
+    assert.equal(validEditorialRevision(narrativeCandidate, narrativeValue), true);
+    assert.deepEqual(editorialRevisionSchema(narrativeCandidate).properties.profile_additions.required, narrativeCandidate.suspects.map(s => s.id));
+    const revised = compileEditorialRevision(currentSnapshot, narrativeEntry, narrativeCandidate, narrativeValue).candidate;
+    assert.equal(assess(currentSnapshot, narrativeEntry, revised).passed, true);
+    narrativeCandidate.suspects.forEach((s, i) => {
+      assert.equal(revised.suspects[i].description, s.description + ' ' + narrativeValue.profile_additions[s.id]);
+      assert.deepEqual({ ...revised.suspects[i], description: s.description }, s);
+    });
+    for (const field of ['weapons','locations','solution','clues']) assert.deepEqual(revised[field], narrativeCandidate[field]);
+    assert.equal(validEditorialRevision(narrativeCandidate, { ...narrativeValue, solution: narrativeCandidate.solution }), false);
+    const extra = clone(narrativeValue); extra.profile_additions.other = ''; assert.equal(validEditorialRevision(narrativeCandidate, extra), false);
+    const empty = clone(narrativeValue); for (const id of Object.keys(empty.profile_additions)) empty.profile_additions[id] = '';
+    assert.throws(() => compileEditorialRevision(currentSnapshot, narrativeEntry, narrativeCandidate, empty), /EDITORIAL_NO_CHANGE/);
+    const short = clone(narrativeValue); short.profile_additions.s1 = 'Kaygılı görünüyor.';
+    assert.throws(() => compileEditorialRevision(currentSnapshot, narrativeEntry, narrativeCandidate, short), /EDITORIAL_PROFILE_LENGTH/);
+    const long = clone(narrativeValue); long.profile_additions.s1 = Array(21).fill('kaygı').join(' ');
+    assert.throws(() => compileEditorialRevision(currentSnapshot, narrativeEntry, narrativeCandidate, long), /EDITORIAL_PROFILE_LENGTH/);
+    const leak = clone(narrativeValue); leak.profile_additions.s1 = 'Baklava ve Tezgah yalnızca onun kontrolündeydi, başka hiç kimsenin bunlara erişimi yoktu.';
+    assert.throws(() => compileEditorialRevision(currentSnapshot, narrativeEntry, narrativeCandidate, leak), /EDITORIAL_GATES_FAILED/);
+  });
+  await test('production v2 orchestration performs one motivation revision and entirely fresh reviews within seven lifetime requests', async () => {
+    process.env.GEMINI_API_KEY = 'offline-v2-test';
+    const store = storeFor(narrativeEntry.id), candidate = narrativeCandidate;
+    Object.assign(store.state.cases[narrativeEntry.id], { candidate: clone(candidate), candidate_hash: stableHash(candidate),
+      source_hash: narrativeEntry.sourceHash, simulator_hash: snapshot.simulatorHash, status: 'quarantined',
+      failed_review: { passed: false, failures: ['EDITORIAL_REVIEW_FAILED'], certificate: {
+        schema: 'fm_case_review_v1', review_hash: reviewHash(currentSnapshot, candidate, {}),
+        player: playerFor(candidate), judge: narrativeFixture.judge } } });
+    for (const [i, purpose] of ['repair','repair','player','judge'].entries()) store.state.requests['v2-prior-' + i] = {
+      case_id: narrativeEntry.id, purpose, status: 'completed', charged: 0, day: '2026-10-11',
+      ...(purpose === 'repair' ? { repair_method: TEXT_METHOD } : {}) };
+    const revised = compileEditorialRevision(currentSnapshot, narrativeEntry, candidate, narrativeValue).candidate;
+    const calls = [];
+    const result = await repairOne(currentSnapshot, narrativeEntry, store, { allowAI: true, caller: args => {
+      calls.push(args.purpose);
+      return callPaid({ ...args, transport: async () => responseForFixture(args.purpose === 'editorial' ? narrativeValue :
+        args.purpose === 'player' ? playerFor(revised) : validJudge()) });
+    } });
+    assert.deepEqual(calls, ['editorial','player','judge']);
+    assert.equal(result.status, 'ready_for_gates');
+    assert.equal(Object.keys(store.state.requests).length, 7);
+    assert.equal(certificateValid(currentSnapshot, narrativeEntry, revised, result.review.certificate), true);
+    assert.throws(() => reserveRequest(store, currentPolicy, runFor(), narrativeEntry.id, currentPolicy.models.repair,
+      requestBody(currentPolicy, currentPolicy.models.repair, 'another revision'), 'editorial'), /CASE_REQUEST_LIMIT|EDITORIAL_LIMIT/);
+    const exhausted = storeFor(narrativeEntry.id);
+    exhausted.state.requests = clone(store.state.requests);
+    exhausted.state.cases[narrativeEntry.id] = { ...clone(store.state.cases[narrativeEntry.id]), review: undefined };
+    const before = stableHash(exhausted.state.requests);
+    const run = runFor(); let transports = 0;
+    await assert.rejects(() => callPaid({ store: exhausted, policy: currentPolicy, run, caseId: narrativeEntry.id,
+      model: currentPolicy.models.reviewer, purpose: 'player', prompt: 'uncached v2 review',
+      transport: async () => { transports++; return responseForFixture(playerFor(revised)); } }), /CASE_REQUEST_LIMIT/);
+    assert.equal(transports, 0); assert.equal(stableHash(exhausted.state.requests), before);
+    assert.deepEqual(reopenTextQuarantine(currentSnapshot, exhausted), []);
+  });
   await test('live editorial rejection is actionable; one bounded prose revision requires entirely fresh player and judge calls', async () => {
     const oldKey = process.env.GEMINI_API_KEY; process.env.GEMINI_API_KEY = 'offline-editorial-test';
     const fixture = read('.case-qa/fixtures/pazar-editorial-rejection-38159952807.json');
@@ -346,7 +447,8 @@ try {
     assert.equal(store.state.campaign_spent, spent); assert.deepEqual(store.state.requests, history);
     const plan = textRepairPlan(snapshot, entry, entry.candidate), response = verifiedTextResponses[entry.id];
     const p = textRepairPrompt(entry, entry.candidate, plan, assess(snapshot, entry, entry.candidate), []);
-    assert.ok(p.length < 14000); assert.doesNotMatch(p, /qaPortfolioRegistry|Allowed JSON Pointer/);
+    // Shared narrative criteria add ~3k characters to the previously bounded prompt.
+    assert.ok(p.length < 17000); assert.doesNotMatch(p, /qaPortfolioRegistry|Allowed JSON Pointer/);
     const calls = [];
     const oldKey = process.env.GEMINI_API_KEY; process.env.GEMINI_API_KEY = 'offline-test-only';
     const result = await repairOne(snapshot, entry, store, { allowAI: true, caller: async args => {

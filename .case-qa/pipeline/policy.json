@@ -71,7 +71,7 @@
     "budget_usd": 0.75
   },
   "review": {
-    "prompt_version": "fm-player-review-v1",
+    "prompt_version": "fm-player-review-v2",
     "minimum_confidence": 80,
     "minimum_dimension_score": 4,
     "dimensions": [

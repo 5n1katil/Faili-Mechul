@@ -10,6 +10,9 @@ import { openStore } from './state.mjs';
 import { callPaid, Stop, modelPreflight, countsAsRepair } from './provider.mjs';
 import { mediaPreflight, reviewCandidate, certificateValid } from './review.mjs';
 import { EDITORIAL_VERSION, EDITORIAL_SYSTEM, editorialSchema, validEditorial, editorialPrompt, editorialFailure, compileEditorial, recoverEditorial } from './editorial.mjs';
+import { EDITORIAL_REVISION_VERSION, EDITORIAL_REVISION_SYSTEM, editorialRevisionSchema, validEditorialRevision,
+  editorialRevisionPrompt, compileEditorialRevision } from './editorial.mjs';
+import { REVIEW_VERSION } from './quality-contract.mjs';
 import { TEXT_METHOD, TEXT_SYSTEM, textRepairPlan, textResponseSchema, textRepairPrompt,
   validTextResponse, explainTextResponse, compileTextPatch, supportsTextRepair } from './text-repair.mjs';
 
@@ -108,16 +111,20 @@ export async function repairOne(snapshot, entry, store, { allowAI = false, calle
           const used = Object.values(state.requests).filter(r => r.case_id === entry.id).length;
           if (used + 3 <= snapshot.policy.sequential.max_requests_per_case &&
               run.calls + 3 <= snapshot.policy.sequential.max_calls_per_execute) {
+            const revisedContract = snapshot.policy.review.prompt_version === REVIEW_VERSION;
             const response = await caller({ store, policy: snapshot.policy, run, caseId: entry.id,
               model: snapshot.policy.models.repair, purpose: 'editorial',
-              system: EDITORIAL_SYSTEM,
-              prompt: editorialPrompt(current, review), schema: editorialSchema(current),
-              validate: value => validEditorial(current, value) });
+              system: revisedContract ? EDITORIAL_REVISION_SYSTEM : EDITORIAL_SYSTEM,
+              prompt: revisedContract ? editorialRevisionPrompt(current, review) : editorialPrompt(current, review),
+              schema: revisedContract ? editorialRevisionSchema(current) : editorialSchema(current),
+              validate: value => revisedContract ? validEditorialRevision(current, value) : validEditorial(current, value) });
             try {
-              const next = compileEditorial(snapshot, entry, current, response.plan);
+              const next = revisedContract ? compileEditorialRevision(snapshot, entry, current, response.plan) :
+                compileEditorial(snapshot, entry, current, response.plan);
               current = next.candidate; assessment = next.assessment;
               delete record.review; delete record.failed_review; persist();
-              run.attempts.push({ purpose: 'editorial', version: EDITORIAL_VERSION, score: assessment.result.score, retained: true });
+              run.attempts.push({ purpose: 'editorial', version: revisedContract ? EDITORIAL_REVISION_VERSION : EDITORIAL_VERSION,
+                score: assessment.result.score, retained: true });
               review = await reviewCandidate(snapshot, entry, current, store, run, caller);
               if (!review.passed) record.failed_review = clone(review);
             } catch (error) {

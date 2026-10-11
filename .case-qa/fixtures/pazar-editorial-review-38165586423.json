@@ -1,0 +1,20 @@
+{
+  "run_id": 38165586423,
+  "case_id": "pazar-yerinde-supheli-olum",
+  "judge": {
+    "scores": {
+      "fairness": 4,
+      "clarity": 4,
+      "consistency": 4,
+      "originality": 3,
+      "engagement": 3
+    },
+    "issues": [
+      "c5 ipucu 'Müşteri Hanım'ın tezgaha yakın noktada şerbet aldığı' bilgisini vererek c3'teki 'bastonlu yaşlı kadının tezgahta bulunmadığı' ifadesiyle hafif bir mekânsal sürtünme/belirsizlik yaratıyor; mesafeler daha net ayrıştırılmalı.",
+      "Baklava cinayet aleti olarak doğrudan bir ipucunda geçmek yerine sadece eleme yöntemiyle (şerbet ara sokakta, kimyasal parkta) çözülüyor; tatlıya doğrudan dair pozitif bir adli bulgu kurguyu güçlendirirdi."
+    ],
+    "summary": "Mantık örgüsü tıkır tıkır işleyen, mekanik açıdan adil ve net bir eleme bulmacası. Karakter motivasyonları ve anlatı derinliği artırılırsa çok daha etkileyici bir seviyeye ulaşır."
+  },
+  "request_count": 7,
+  "case_spent": 0.025732999999999992
+}

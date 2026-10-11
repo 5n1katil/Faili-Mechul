@@ -1,4 +1,5 @@
 import { stableHash } from '../fm_case_qa_runner.mjs';
+import { qualityContract } from './quality-contract.mjs';
 
 export const TEXT_METHOD = 'verified_text_v1';
 const axes = ['suspects', 'weapons', 'locations'];
@@ -153,6 +154,7 @@ export function textRepairPrompt(entry, candidate, plan, assessment, rejected) {
   const named = id => entities.find(e => e.id === id);
   return `Rewrite this legacy text case as one coherent playable mystery in Turkish.
 METHOD: ${TEXT_METHOD}
+SHARED QUALITY CONTRACT: ${JSON.stringify(qualityContract(candidate, entry.tier))}
 CASE: ${JSON.stringify({ id: entry.id, title: candidate.title, story: candidate.story, difficulty: candidate.difficulty, entities })}
 VERIFIED PLAN (do not improvise new relations): ${JSON.stringify(plan.clues.map(c => ({ ...c,
     entities: c.rule.pair.map(named), crimeAnchor: plan.anchor.source === 'clue:' + c.id ? plan.anchor : null })))}
