@@ -4652,7 +4652,7 @@
       "status": "quarantined"
     },
     "universitede-karanlik-sir": {
-      "spent": 0.0080409,
+      "spent": 0.0492084,
       "feedback": [],
       "source_hash": "ba12e30c0656dba5f0243d514547a5052cf7a7b5360a33d6b5fa725f0ed13326",
       "simulator_hash": "cb53e6613d6379de097599634de26524f4510fbc",
@@ -7349,7 +7349,15 @@
           }
         ]
       }
+    },
+    "024a8639855b1963bbd9301c8915ae067b6c7bc8cfae7fdc21c7eff4be3a623b": {
+      "case_id": "universitede-karanlik-sir",
+      "model": "gemini-3.8-flash",
+      "purpose": "repair",
+      "day": "2026-10-11",
+      "status": "reserved",
+      "charged": 0.0411675
     }
   },
-  "campaign_spent": 0.09478020000000002
+  "campaign_spent": 0.13594770000000003
 }
