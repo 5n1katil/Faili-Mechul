@@ -4534,7 +4534,122 @@
         ]
       },
       "candidate_hash": "ea9c0c5c7c041c8ed60da4c800e6cc60272b5d6498394b9f3bc071e155fae7de",
-      "best_score": 0
+      "best_score": 0,
+      "failures": [
+        {
+          "score": 0,
+          "simulator_production_ready": false,
+          "blockers": [
+            "HATA: Oyuncu-Görünür Kural Taşkını — İpucu 1 metni şüpheli olarak “Ahmet Usta” sonucunu da adı doğrudan geçiyor; ancak logicRules yalnız Kerem Genç ↔ Arka Depo etkisini tanımlıyor. Oyuncu bu ek hücreyi işaretlerse sonraki temel ipucu tekrara düşebilir.",
+            "Standart / Ücretsiz hikâyesi 31 kelime; hedef derinlik yaklaşık 60-220 kelime. Kimlikleri değiştirmeden olay ve atmosfer bağını güçlendir."
+          ],
+          "fixes": [
+            "OYUNCU-GÖRÜNÜR KURAL KAPSAMI: Her standart ipucunun metni, deductionHint’i ve varsa ses transkripti yalnızca kendi logicRules hücresini desteklemeli. Metinde başka bir şüpheli/silah/mekânı güçlü biçimde çağrıştıran ama rule’a yazılmamış ifadeleri kaldır; aksi hâlde sonraki temel ipucu oyuncu açısından tekrara düşer.",
+            "SIKI TEMEL İPUCU EKONOMİSİ: Her isBonus:false ipucu çıkarıldığında katil+silah+mekan cevabı belirsiz kalmalıdır. Cevabı değiştirmeyen temel ipuçlarını bonusa taşıyın ya da onları eksik olan cevap bileşenini daraltacak biçimde yeniden yazın.",
+            "ZAYIF ÇAPA: isCrimeAnchor ipucusunun metnine, eşleşmenin bizzat cinayet/ölüm olayı olduğunu söyleyen vurucu bir ifade ekle. Örn. \"Yatak odasında afyonla zehirlenen maktul son nefesini verdi\" — sadece \"afyon yatak odasındaydı\" yetmez; oyuncu bunun cinayet anı olduğunu net anlamalı.",
+            "En az 1 işlevsel isBonus:true ipucu kullan; cezasının karşılığında standart zinciri zorunlu kılmadan yeni ve doğrudan bir ✓/✕ matris yardımı versin. Sayıyı doldurmak için gereksiz bonus ekleme."
+          ],
+          "advisories": [
+            "TAVSİYE (Kanıt→Kural): İpucu 3: qaRationale.evidenceKind=\"evidence\" tanınmıyor. Standart sınıflardan birini kullan (forensic, documentary, record, witness, mechanical, medical, physical, audio, digital, transaction, inventory, chain_of_custody).",
+            "TAVSİYE (Kanıt→Kural): İpucu 5: qaRationale.evidenceKind=\"evidence\" tanınmıyor. Standart sınıflardan birini kullan (forensic, documentary, record, witness, mechanical, medical, physical, audio, digital, transaction, inventory, chain_of_custody).",
+            "TAVSİYE (İsim/İçerik Derinliği): Standart / Ücretsiz hikâyesi 31 kelime; hedef derinlik yaklaşık 60-220 kelime. Kimlikleri değiştirmeden olay ve atmosfer bağını güçlendir.",
+            "ⓘ Standart mod: Bu vaka metin tabanlı ilerliyor; ücretsiz/standart vakalarda gelişmiş mini oyun zorunlu değildir. Mantık zinciri ve oynanabilirlik güçlüyse 100/100 alabilir."
+          ],
+          "score_breakdown": {
+            "k1": {
+              "score": 0,
+              "maximum": 40,
+              "findings": [
+                "HATA: Zayıf Çapa Metni! \"isCrimeAnchor\" ipucusu (İpucu 1), oyuncuya bu eşleşmenin cinayet eylemi olduğunu şüpheye yer bırakmayacak şekilde bildirmek zorundadır. Şu an metin yalnızca iki objeyi bağlıyor ama bunun BİZZAT ölüm/cinayet sebebi olduğunu söylemiyor. Metne olayı suça bağlayan vurucu bir ifade ekle (örn. \"maktulün can verdiği\", \"ölümcül darbenin vurulduğu\", \"zehirin içirildiği\", \"cinayetin işlendiği\")."
+              ]
+            },
+            "k2": {
+              "score": 20,
+              "maximum": 20,
+              "findings": [
+                "Mini oyun alanlarında çözümü erken ele veren ifade bulunamadı. Temiz."
+              ]
+            },
+            "k3": {
+              "score": 20,
+              "maximum": 20,
+              "findings": [
+                "Tip dağılımı: record×1, forensic×2, evidence×2, witness×1",
+                "💡 TAVSİYE (opsiyonel): İpucu 1: \"Ahmet Usta\", İpucu 2: \"Ağır Terazi\", İpucu 4: \"Selma Teyze\" adı doğrudan veriyor. Oyuncu eforunu ve atmosferi artırmak için ismi doğrudan yazmak yerine profil kartındaki betimlemelere atıfta bulunan dolaylı ifadeler tercih edilebilir (örn. \"Hazinedar Hüseyin\" yerine \"kayıp altın meselesinin gölgesindeki adam\"). Bu bir kalite önerisidir; çözülebilirliği etkilemez."
+              ]
+            },
+            "k4": {
+              "score": 14,
+              "maximum": 20,
+              "findings": [
+                "2 bonus ipucu var — sayı uygundur; tam puanı işlevsellik belirler.",
+                "UYARI: Tekrarlayan Ek İpucu — İpucu 5 yalnızca standart ipuçlarında zaten bulunan aynı hücreyi tekrar ediyor. Ek ipucu farklı bir masum eşleşme, silah–mekân bağı veya ek eleme vermelidir."
+              ]
+            }
+          },
+          "quality_findings": [
+            "💡 TAVSİYE (opsiyonel): İpucu 1: \"Ahmet Usta\", İpucu 2: \"Ağır Terazi\", İpucu 4: \"Selma Teyze\" adı doğrudan veriyor. Oyuncu eforunu ve atmosferi artırmak için ismi doğrudan yazmak yerine profil kartındaki betimlemelere atıfta bulunan dolaylı ifadeler tercih edilebilir (örn. \"Hazinedar Hüseyin\" yerine \"kayıp altın meselesinin gölgesindeki adam\"). Bu bir kalite önerisidir; çözülebilirliği etkilemez.",
+            "UYARI: Tekrarlayan Ek İpucu — İpucu 5 yalnızca standart ipuçlarında zaten bulunan aynı hücreyi tekrar ediyor. Ek ipucu farklı bir masum eşleşme, silah–mekân bağı veya ek eleme vermelidir."
+          ],
+          "gates": {
+            "coreNecessity": {
+              "passed": false,
+              "flags": [
+                "HATA: Oyuncu-Görünür Çözüm Başarısız. Tüm standart ipuçları ve belgelenen/anlaşılan anlatı bilgileri birlikteyken cevap tek kalmıyor (0 olası cevap). Bonus açmadan s3|w3|l2 üçlüsüne zorunlu olarak ulaşılmalı.",
+                "HATA: Zorunlu Olmayan Temel İpucu — İpucu 3 çıkarıldığında oyuncu hâlâ aynı tek cevaba ulaşır. Bu ipucu ızgarayı dolduruyor olabilir ama cevap zincirinde gerekli değil; bonusa dönüştürülmeli veya diğer temel ipuçlarıyla kesişen yeni bir bilgi vermeli.",
+                "HATA: Zorunlu Olmayan Temel İpucu — İpucu 4 çıkarıldığında oyuncu hâlâ aynı tek cevaba ulaşır. Bu ipucu ızgarayı dolduruyor olabilir ama cevap zincirinde gerekli değil; bonusa dönüştürülmeli veya diğer temel ipuçlarıyla kesişen yeni bir bilgi vermeli."
+              ],
+              "warnings": []
+            },
+            "patternGovernance": {
+              "passed": true,
+              "flags": [],
+              "warnings": []
+            },
+            "contentAndNames": {
+              "passed": true,
+              "flags": [],
+              "warnings": [
+                "Standart / Ücretsiz hikâyesi 31 kelime; hedef derinlik yaklaşık 60-220 kelime. Kimlikleri değiştirmeden olay ve atmosfer bağını güçlendir."
+              ]
+            },
+            "semanticContract": {
+              "passed": true,
+              "flags": [],
+              "warnings": []
+            },
+            "visibleEvidence": {
+              "passed": false,
+              "flags": [
+                "HATA: Oyuncu-Görünür Kural Taşkını — İpucu 1 metni şüpheli olarak “Ahmet Usta” sonucunu da adı doğrudan geçiyor; ancak logicRules yalnız Kerem Genç ↔ Arka Depo etkisini tanımlıyor. Oyuncu bu ek hücreyi işaretlerse sonraki temel ipucu tekrara düşebilir."
+              ],
+              "warnings": []
+            },
+            "mechanicContract": {
+              "passed": true,
+              "flags": [],
+              "warnings": []
+            },
+            "bonusFunctionality": {
+              "passed": false,
+              "score": 14,
+              "findings": [
+                "2 bonus ipucu var — sayı uygundur; tam puanı işlevsellik belirler.",
+                "UYARI: Tekrarlayan Ek İpucu — İpucu 5 yalnızca standart ipuçlarında zaten bulunan aynı hücreyi tekrar ediyor. Ek ipucu farklı bir masum eşleşme, silah–mekân bağı veya ek eleme vermelidir."
+              ]
+            }
+          },
+          "leakage": {
+            "status": "passed",
+            "severity": "none",
+            "avatar_prompt_risk": false,
+            "solution_triple_exposed": false,
+            "findings": [],
+            "required_actions": []
+          }
+        }
+      ],
+      "status": "quarantined"
     }
   },
   "requests": {
