@@ -3,7 +3,7 @@
   "active_id": "konakta-gece-yarisi-cinayeti",
   "cases": {
     "konakta-gece-yarisi-cinayeti": {
-      "spent": 0.0373232,
+      "spent": 0.018207100000000004,
       "feedback": [
         {
           "error": "LOCKED_FIELD:qaPortfolioRegistry"
@@ -1679,9 +1679,190 @@
       "model": "gemini-3.5-flash-lite",
       "purpose": "repair",
       "day": "2026-10-11",
-      "status": "reserved",
-      "charged": 0.027949199999999997
+      "status": "completed",
+      "charged": 0.0088331,
+      "usage": {
+        "promptTokenCount": 10602,
+        "candidatesTokenCount": 2261,
+        "totalTokenCount": 12863,
+        "cachedContentTokenCount": 7992,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 10602
+          }
+        ],
+        "cacheTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 7992
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "plan": {
+        "case_id": "konakta-gece-yarisi-cinayeti",
+        "assessment": "Added logicRules, qaRationale, qaSemanticFacts, isCrimeAnchor, and expanded story to fulfill the completeness and playability gates without altering any solution IDs or protected fields.",
+        "operations": [
+          {
+            "op": "replace",
+            "path": "/story",
+            "value_json": "\"Tarihi konaktaki görkemli gece davetinin hemen ardından ev sahibinin sadık yardımcısı Selma, kilitli odaların ve fırtınanın gölgesinde kan içinde ölü bulundu. Adli tıp incelemeleri, vahşi saldırının gece yarısına doğru gerçekleştiğini doğrularken, dışarıla kopan şiddetli fırtına kimsenin dışarı çıkmasına izin vermiyor. Konaktaki her misafir şüpheli konumdayken, gerçek katil adaletin tecelli etmesini bekliyor.\"",
+            "reason": "Expand story length to meet the minimum depth requirement."
+          },
+          {
+            "op": "add",
+            "path": "/qaSemanticFacts",
+            "value_json": "[{\"kind\":\"crime_component\",\"component\":\"suspect\",\"entityId\":\"s3\",\"source\":\"clue:c1\",\"evidence\":\"Kurban derin bir kesici alet darbesiyle hayatını kaybetmiştir.\"},{\"kind\":\"crime_component\",\"component\":\"weapon\",\"entityId\":\"w1\",\"source\":\"clue:c1\",\"evidence\":\"Kurban derin bir kesici alet darbesiyle hayatını kaybetmiştir.\"},{\"kind\":\"crime_component\",\"component\":\"location\",\"entityId\":\"l3\",\"source\":\"clue:c4\",\"evidence\":\"Boğuşma kanıtları yalnızca arkadaki hazırlık alanında bulunuyor.\"}]",
+            "reason": "Provide mandatory semantic facts."
+          },
+          {
+            "op": "add",
+            "path": "/clues/0/isCrimeAnchor",
+            "value_json": "true",
+            "reason": "Designate the first forensic clue as the crime anchor."
+          },
+          {
+            "op": "add",
+            "path": "/clues/0/logicRules",
+            "value_json": "[{\"action\":\"eliminate\",\"pair\":[\"s3\",\"w2\"]}]",
+            "reason": "Add valid logic rule for clue 0."
+          },
+          {
+            "op": "add",
+            "path": "/clues/0/qaRationale",
+            "value_json": "{\"matrixEffect\":\"eliminate\",\"evidenceLink\":\"Kurban zehirlenmemiş veya iple boğulmamış; derin bir kesici alet darbesiyle hayatını kaybetmiştir.\",\"evidenceKind\":\"forensic\"}",
+            "reason": "Add required qaRationale for clue 0."
+          },
+          {
+            "op": "add",
+            "path": "/clues/0/qaSemanticFacts",
+            "value_json": "[{\"kind\":\"crime_component\",\"component\":\"weapon\",\"entityId\":\"w1\",\"source\":\"clue:c1\",\"evidence\":\"derin bir kesici alet darbesiyle\"}]",
+            "reason": "Add semantic facts for clue 0."
+          },
+          {
+            "op": "add",
+            "path": "/clues/1/isCrimeAnchor",
+            "value_json": "false",
+            "reason": "Set isCrimeAnchor for clue 1."
+          },
+          {
+            "op": "add",
+            "path": "/clues/1/logicRules",
+            "value_json": "[{\"action\":\"eliminate\",\"pair\":[\"s1\",\"l2\"]}]",
+            "reason": "Add logic rule for clue 1."
+          },
+          {
+            "op": "add",
+            "path": "/clues/1/qaRationale",
+            "value_json": "{\"matrixEffect\":\"eliminate\",\"evidenceLink\":\"gece boyunca Bahçe'de çayını yudumlayarak kitap okuduğunu belirtti\",\"evidenceKind\":\"witness\"}",
+            "reason": "Add qaRationale for clue 1."
+          },
+          {
+            "op": "add",
+            "path": "/clues/1/qaSemanticFacts",
+            "value_json": "[{\"kind\":\"crime_component\",\"component\":\"location\",\"entityId\":\"l2\",\"source\":\"clue:c2\",\"evidence\":\"Bahçe'de çayını yudumlayarak\"}]",
+            "reason": "Add semantic facts for clue 1."
+          },
+          {
+            "op": "add",
+            "path": "/clues/2/isCrimeAnchor",
+            "value_json": "false",
+            "reason": "Set isCrimeAnchor for clue 2."
+          },
+          {
+            "op": "add",
+            "path": "/clues/2/logicRules",
+            "value_json": "[{\"action\":\"eliminate\",\"pair\":[\"s2\",\"l1\"]}]",
+            "reason": "Add logic rule for clue 2."
+          },
+          {
+            "op": "add",
+            "path": "/clues/2/qaRationale",
+            "value_json": "{\"matrixEffect\":\"eliminate\",\"evidenceLink\":\"gece boyunca Kütüphane'den çıkmadığı ve dekorasyonlarla uğraştığı\",\"evidenceKind\":\"witness\"}",
+            "reason": "Add qaRationale for clue 2."
+          },
+          {
+            "op": "add",
+            "path": "/clues/2/qaSemanticFacts",
+            "value_json": "[{\"kind\":\"crime_component\",\"component\":\"location\",\"entityId\":\"l1\",\"source\":\"clue:c3\",\"evidence\":\"Kütüphane'den çıkmadığı\"}]",
+            "reason": "Add semantic facts for clue 2."
+          },
+          {
+            "op": "add",
+            "path": "/clues/3/isCrimeAnchor",
+            "value_json": "false",
+            "reason": "Set isCrimeAnchor for clue 3."
+          },
+          {
+            "op": "add",
+            "path": "/clues/3/logicRules",
+            "value_json": "[{\"action\":\"confirm\",\"pair\":[\"s3\",\"l3\"]}]",
+            "reason": "Add logic rule for clue 3."
+          },
+          {
+            "op": "add",
+            "path": "/clues/3/qaRationale",
+            "value_json": "{\"matrixEffect\":\"confirm\",\"evidenceLink\":\"Kan izleri ve boğuşma kanıtları yalnızca arkadaki hazırlık alanında bulunuyor.\",\"evidenceKind\":\"physical\"}",
+            "reason": "Add qaRationale for clue 3."
+          },
+          {
+            "op": "add",
+            "path": "/clues/3/qaSemanticFacts",
+            "value_json": "[{\"kind\":\"crime_component\",\"component\":\"location\",\"entityId\":\"l3\",\"source\":\"clue:c4\",\"evidence\":\"arkadaki hazırlık alanında bulunuyor\"}]",
+            "reason": "Add semantic facts for clue 3."
+          },
+          {
+            "op": "add",
+            "path": "/clues/4/isCrimeAnchor",
+            "value_json": "false",
+            "reason": "Set isCrimeAnchor for clue 4."
+          },
+          {
+            "op": "add",
+            "path": "/clues/4/logicRules",
+            "value_json": "[{\"action\":\"confirm\",\"pair\":[\"s3\",\"w1\"]}]",
+            "reason": "Add logic rule for bonus clue 4."
+          },
+          {
+            "op": "add",
+            "path": "/clues/4/qaRationale",
+            "value_json": "{\"matrixEffect\":\"confirm\",\"evidenceLink\":\"Koridor kameraları, Zeynep Hanım'ın 23:38'de Mutfağa giriş yaptığını gösteriyor.\",\"evidenceKind\":\"record\"}",
+            "reason": "Add qaRationale for clue 4."
+          },
+          {
+            "op": "add",
+            "path": "/clues/4/qaSemanticFacts",
+            "value_json": "[{\"kind\":\"crime_component\",\"component\":\"suspect\",\"entityId\":\"s3\",\"source\":\"clue:c5\",\"evidence\":\"Zeynep Hanım'ın 23:38'de Mutfağa giriş yaptığı\"}]",
+            "reason": "Add semantic facts for clue 4."
+          },
+          {
+            "op": "add",
+            "path": "/clues/5/isCrimeAnchor",
+            "value_json": "false",
+            "reason": "Set isCrimeAnchor for clue 5."
+          },
+          {
+            "op": "add",
+            "path": "/clues/5/logicRules",
+            "value_json": "[{\"action\":\"confirm\",\"pair\":[\"s3\",\"w1\"]}]",
+            "reason": "Add logic rule for bonus clue 5."
+          },
+          {
+            "op": "add",
+            "path": "/clues/5/qaRationale",
+            "value_json": "{\"matrixEffect\":\"confirm\",\"evidenceLink\":\"Ağır mutfak makasının sap kısmında, Zeynep Hanım'a ait net parmak izleri tespit edildi.\",\"evidenceKind\":\"forensic\"}",
+            "reason": "Add qaRationale for clue 5."
+          },
+          {
+            "op": "add",
+            "path": "/clues/5/qaSemanticFacts",
+            "value_json": "[{\"kind\":\"crime_component\",\"component\":\"weapon\",\"entityId\":\"w1\",\"source\":\"clue:c6\",\"evidence\":\"Ağır mutfak makasının sap kısmında\"}]",
+            "reason": "Add semantic facts for clue 5."
+          }
+        ]
+      }
     }
   },
-  "campaign_spent": 0.03767975
+  "campaign_spent": 0.01856365
 }
