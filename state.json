@@ -7970,7 +7970,7 @@
       }
     },
     "muzede-kayip-eser": {
-      "spent": 0.0220734,
+      "spent": 0.0034345999999999995,
       "feedback": [],
       "source_hash": "339b16518cbc76d096025f3d0f682b78a07277c2db96a9f341eb404df2a960ca",
       "simulator_hash": "0e27218c7817862f371febb6b7bb865821d9e5da",
@@ -11312,10 +11312,58 @@
       "model": "gemini-3.5-flash-lite",
       "purpose": "repair",
       "day": "2026-10-11",
-      "status": "reserved",
-      "charged": 0.0220734,
-      "repair_method": "verified_text_v1"
+      "status": "completed",
+      "charged": 0.0034346,
+      "repair_method": "verified_text_v1",
+      "usage": {
+        "promptTokenCount": 3932,
+        "candidatesTokenCount": 902,
+        "totalTokenCount": 4834,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 3932
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "plan": {
+        "case_id": "muzede-kayip-eser",
+        "assessment": "Müzenin tarihi dokusunu ve insan unsurlarını dengeleyen, matematiksel olarak doğrulanmış, çelişkisiz bir dedektiflik vakasıdır.",
+        "story": "Ankara'nın asırlık müzesinde, fırtınalı bir gece yarısı tarihin sessizliği ağır bir darbeyle bozuldu. Bizans dönemine ait eşsiz broşun sergilendiği saatlerde, gece bekçisi görev yerinde kanlar içinde yere yığıldı. Müzenin karanlık koridorlarında dolaşan üç yetkili, bu gizemli olayın ardından birbirini suçlayan çelişkili ifadeler vermeye başladı. Soruşturma ekibi, olay gecesi yaşananları aydınlatmak ve gerçeği ortaya çıkarmak için tüm kanıtları titizlikle incelemek zorundadır.",
+        "suspect_descriptions": {
+          "s1": "Müzenin yöneticisi. Antik dönemler konusunda derin bilgiye sahip, resmi ceket giyen ve sürekli telkinlerde bulunan ciddi bir yöneticidir.",
+          "s2": "Eserleri inceleyen uzman. Titiz hareketleri, laboratuvar önlüğü ve ellerindeki ince hassas aletlerle dikkat çeken deneyimli bir meslektaştır.",
+          "s3": "Sosyal alan görevlisi. Ziyaretçi gruplarına eşlik eden, salonlarda dolaşan, dinamik ve konuşkan tavırlarıyla bilinen bir görevlidir."
+        },
+        "clues": {
+          "c1": {
+            "text": "Olay gecesi geniş ve aydınlık ana alanda yapılan incelemede, nefes borusunu yakan yoğun gaz kokusuna ve havaya sıkılmış tahriş edici maddelere rastlanmıştır. Yapılan ortak kontroller, bu yakıcı maddenin ilgili ortak alanda kullanıldığını kesin olarak doğrulamaktadır.",
+            "deductionHint": "Gaz karışımının bulunduğu geniş salonu inceleyin."
+          },
+          "c2": {
+            "text": "Özel kilitli ve penceretsiz muhafaza biriminin geçiş kayıtları, sosyal alan görevlisinin o gece bu kilitli alana hiçbir şekilde erişim sağlamadığını ve içeride bulunmadığını açıkça kanıtlamaktadır.",
+            "deductionHint": "Sosyal alan görevlisinin kilitli birimle bağını inceleyin."
+          },
+          "c3": {
+            "text": "Müze yönetiminin arşiv defterleri ve dijital turnike logları, yöneticinin o gece sadece dış bölümlerde olduğunu, kilitli muhafaza birimine girmesinin imkansız olduğunu gösterir. Bu kilitli oda, suçun işlendiği tek yer olarak tespit edilmiştir.",
+            "deductionHint": "Yöneticinin kilitli oda ile ilişkisini kontrol edin."
+          },
+          "c4": {
+            "text": "Kontrol merkezindeki görevliler, ağır destek ünitesinin devrilme sesinin doğrudan izleme ve monitörlerin bulunduğu odadan geldiğini, bu ağır mermer parçasının oradaki olayla bağlantılı olduğunu bildirmiştir.",
+            "deductionHint": "Ağır mermer desteğin kontrol odasındaki varlığına bakın."
+          },
+          "c5": {
+            "text": "Bonus Kayıt: Yöneticinin olay gecesi sergi alanındaki ağır mermer destekle yakın temasta bulunduğu ve bu nesneyi taşıdığı loglarda yer almaktadır.",
+            "deductionHint": "Yönetici ile ağır destek arasındaki bağı inceleyin."
+          },
+          "c6": {
+            "text": "Bonus Tanık: Sosyal alan görevlisinin fırtınalı gece boyunca geniş ve aydınlık ana salonda gezindiği ve turlar düzenlediği doğrulanmıştır.",
+            "deductionHint": "Rehberin ana salondaki konumunu değerlendirin."
+          }
+        }
+      }
     }
   },
-  "campaign_spent": 0.17916605000000002
+  "campaign_spent": 0.16052725
 }
