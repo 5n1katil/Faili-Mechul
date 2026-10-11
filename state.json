@@ -6503,7 +6503,11 @@
     },
     "pazar-yerinde-supheli-olum": {
       "spent": 0.0032914999999999993,
-      "feedback": [],
+      "feedback": [
+        {
+          "error": "TEXT_CONTENT:story:MIN_60_WORDS"
+        }
+      ],
       "source_hash": "d4a6a5003e9f00e091ed0db4768d29393539ba914af388dd06d6aca3f1fdcad2",
       "simulator_hash": "cb53e6613d6379de097599634de26524f4510fbc",
       "candidate": {
