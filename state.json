@@ -6502,7 +6502,7 @@
       "status": "quarantined"
     },
     "pazar-yerinde-supheli-olum": {
-      "spent": 0.011845249999999998,
+      "spent": 0.047320249999999994,
       "feedback": [],
       "source_hash": "d4a6a5003e9f00e091ed0db4768d29393539ba914af388dd06d6aca3f1fdcad2",
       "simulator_hash": "04352c0a4ce07097cb752a1980b144fa00722e78",
@@ -9896,7 +9896,15 @@
         ],
         "issues": []
       }
+    },
+    "a92758979754a147f02a9f2a82b670fb340178e9bf8bf1ab8e8cebe6401611e2": {
+      "case_id": "pazar-yerinde-supheli-olum",
+      "model": "gemini-3.8-flash",
+      "purpose": "judge",
+      "day": "2026-10-11",
+      "status": "reserved",
+      "charged": 0.035475
     }
   },
-  "campaign_spent": 0.14320490000000002
+  "campaign_spent": 0.17867990000000003
 }
