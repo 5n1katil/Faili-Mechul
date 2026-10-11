@@ -1590,7 +1590,124 @@
     },
     "bogazda-kayip-elmas": {
       "spent": 0.04799294999999999,
-      "feedback": [],
+      "feedback": [
+        {
+          "score": 0,
+          "result": {
+            "score": 0,
+            "simulator_production_ready": false,
+            "blockers": [
+              "HATA: Oyuncu-Görünür Kural Taşkını — İpucu 1 metni mekân olarak “Makine Dairesi” sonucunu da adı doğrudan geçiyor; ancak logicRules yalnız Gemi Halatı ↔ Seyir Köprüsü etkisini tanımlıyor. Oyuncu bu ek hücreyi işaretlerse sonraki temel ipucu tekrara düşebilir.",
+              "HATA: Oyuncu-Görünür Kural Taşkını — İpucu 2 metni mekân olarak “VIP Salon” sonucunu da adı doğrudan geçiyor; ancak logicRules yalnız Kaptan Levent ↔ Makine Dairesi etkisini tanımlıyor. Oyuncu bu ek hücreyi işaretlerse sonraki temel ipucu tekrara düşebilir.",
+              "HATA: Oyuncu-Görünür Kural Taşkını — İpucu 4 metni mekân olarak “Seyir Köprüsü” sonucunu da adı doğrudan geçiyor; ancak logicRules yalnız Sponsor Murat ↔ Makine Dairesi etkisini tanımlıyor. Oyuncu bu ek hücreyi işaretlerse sonraki temel ipucu tekrara düşebilir."
+            ],
+            "fixes": [
+              "OYUNCU-GÖRÜNÜR SEMANTİK: Hikâye ve her standart ipucunun oyuncuya kesin olarak verdiği katil/silah/mekan bilgisini qaSemanticFacts ile kaynak bazında belgeleyin. Ardından metinden doğan erken çözüm yolunu kapatın veya bulmaca zincirini yeniden dağıtın.",
+              "OYUNCU-GÖRÜNÜR KURAL KAPSAMI: Her standart ipucunun metni, deductionHint’i ve varsa ses transkripti yalnızca kendi logicRules hücresini desteklemeli. Metinde başka bir şüpheli/silah/mekânı güçlü biçimde çağrıştıran ama rule’a yazılmamış ifadeleri kaldır; aksi hâlde sonraki temel ipucu oyuncu açısından tekrara düşer.",
+              "SIKI TEMEL İPUCU EKONOMİSİ: Her isBonus:false ipucu çıkarıldığında katil+silah+mekan cevabı belirsiz kalmalıdır. Cevabı değiştirmeyen temel ipuçlarını bonusa taşıyın ya da onları eksik olan cevap bileşenini daraltacak biçimde yeniden yazın."
+            ],
+            "advisories": [
+              "TAVSİYE (Monotonluk): Aynı işlem (\"eliminate\") art arda 3 kez kullanılmış (ipucu dizilimi tekdüze). Matrisi kırma stratejisini çeşitlendir: confirm ve eliminate adımlarını harmanla.",
+              "ⓘ Standart mod: Bu vaka metin tabanlı ilerliyor; ücretsiz/standart vakalarda gelişmiş mini oyun zorunlu değildir. Mantık zinciri ve oynanabilirlik güçlüyse 100/100 alabilir."
+            ],
+            "score_breakdown": {
+              "k1": {
+                "score": 20,
+                "maximum": 40,
+                "findings": [
+                  "ⓘ NİHAİ BAĞ UYARISI: Temel ipuçları katili cinayet silahı ile kesin izole etmiyor (2 silah olasılığı açık). İpuçları masumların yerini bulmanın ötesinde, katili silahı ve mekanıyla kilitlemeli.",
+                  "İHLAL: Bonus Bağımlılığı! Temel ipuçları cinayet üçlüsünü (katil+silah+mekan) tek çözüme indirmiyor — 2 farklı katil üçlüsü mümkün. Oyuncu cinayeti ancak CEZALI bonus açarak çözebilir; bu yasak. Bonus kurallarından en az birini standart (isBonus:false) ipucuna taşı ki temel iskelet katili tek başına bulsun.",
+                  "✓ Dinamik tam-ızgara (Murdle) solver: özel mekanik climax testi + masum eşleşmeler dahil."
+                ]
+              },
+              "k2": {
+                "score": 20,
+                "maximum": 20,
+                "findings": [
+                  "Mini oyun alanlarında çözümü erken ele veren ifade bulunamadı. Temiz."
+                ]
+              },
+              "k3": {
+                "score": 20,
+                "maximum": 20,
+                "findings": [
+                  "Tip dağılımı: evidence×2, witness×1, forensic×2, record×1",
+                  "💡 TAVSİYE (opsiyonel): İpucu 1: \"Makine Dairesi\", İpucu 2: \"Kaptan Levent\", İpucu 3: \"Demir Çekiç\" ve 1 ipucu daha adı doğrudan veriyor. Oyuncu eforunu ve atmosferi artırmak için ismi doğrudan yazmak yerine profil kartındaki betimlemelere atıfta bulunan dolaylı ifadeler tercih edilebilir (örn. \"Hazinedar Hüseyin\" yerine \"kayıp altın meselesinin gölgesindeki adam\"). Bu bir kalite önerisidir; çözülebilirliği etkilemez."
+                ]
+              },
+              "k4": {
+                "score": 20,
+                "maximum": 20,
+                "findings": [
+                  "2 bonus ipucu var — sayı uygundur; tam puanı işlevsellik belirler.",
+                  "✓ Matris yardımı: her ek ipucu, ana çözümü zorunlu kılmadan oyuncunun ızgarasında kullanılabilir yeni bir çıkarım veriyor."
+                ]
+              }
+            },
+            "quality_findings": [
+              "💡 TAVSİYE (opsiyonel): İpucu 1: \"Makine Dairesi\", İpucu 2: \"Kaptan Levent\", İpucu 3: \"Demir Çekiç\" ve 1 ipucu daha adı doğrudan veriyor. Oyuncu eforunu ve atmosferi artırmak için ismi doğrudan yazmak yerine profil kartındaki betimlemelere atıfta bulunan dolaylı ifadeler tercih edilebilir (örn. \"Hazinedar Hüseyin\" yerine \"kayıp altın meselesinin gölgesindeki adam\"). Bu bir kalite önerisidir; çözülebilirliği etkilemez."
+            ],
+            "gates": {
+              "coreNecessity": {
+                "passed": false,
+                "flags": [
+                  "HATA: Oyuncu-Görünür Çözüm Başarısız. Tüm standart ipuçları ve belgelenen/anlaşılan anlatı bilgileri birlikteyken cevap tek kalmıyor (4 olası cevap). Bonus açmadan s3|w1|l1 üçlüsüne zorunlu olarak ulaşılmalı."
+                ],
+                "warnings": []
+              },
+              "patternGovernance": {
+                "passed": true,
+                "flags": [],
+                "warnings": []
+              },
+              "contentAndNames": {
+                "passed": true,
+                "flags": [],
+                "warnings": []
+              },
+              "semanticContract": {
+                "passed": false,
+                "flags": [
+                  "HATA: Semantik Sözleşme Eksik — İpucu 2 metni, oyuncuya suç mahalli olarak “VIP Salon” sonucunu çağrıştırıyor. Bu bilgi qaSemanticFacts ile belgelenmemiş; grid dışı erken çözüm/sızıntı denetlenemiyor.",
+                  "HATA: Semantik Sözleşme Eksik — İpucu 3 metni, oyuncuya cinayet silahı olarak “Demir Çekiç” sonucunu çağrıştırıyor. Bu bilgi qaSemanticFacts ile belgelenmemiş; grid dışı erken çözüm/sızıntı denetlenemiyor."
+                ],
+                "warnings": []
+              },
+              "visibleEvidence": {
+                "passed": false,
+                "flags": [
+                  "HATA: Oyuncu-Görünür Kural Taşkını — İpucu 1 metni mekân olarak “Makine Dairesi” sonucunu da adı doğrudan geçiyor; ancak logicRules yalnız Gemi Halatı ↔ Seyir Köprüsü etkisini tanımlıyor. Oyuncu bu ek hücreyi işaretlerse sonraki temel ipucu tekrara düşebilir.",
+                  "HATA: Oyuncu-Görünür Kural Taşkını — İpucu 2 metni mekân olarak “VIP Salon” sonucunu da adı doğrudan geçiyor; ancak logicRules yalnız Kaptan Levent ↔ Makine Dairesi etkisini tanımlıyor. Oyuncu bu ek hücreyi işaretlerse sonraki temel ipucu tekrara düşebilir.",
+                  "HATA: Oyuncu-Görünür Kural Taşkını — İpucu 4 metni mekân olarak “Seyir Köprüsü” sonucunu da adı doğrudan geçiyor; ancak logicRules yalnız Sponsor Murat ↔ Makine Dairesi etkisini tanımlıyor. Oyuncu bu ek hücreyi işaretlerse sonraki temel ipucu tekrara düşebilir."
+                ],
+                "warnings": []
+              },
+              "mechanicContract": {
+                "passed": true,
+                "flags": [],
+                "warnings": []
+              },
+              "bonusFunctionality": {
+                "passed": true,
+                "score": 20,
+                "findings": [
+                  "2 bonus ipucu var — sayı uygundur; tam puanı işlevsellik belirler.",
+                  "✓ Matris yardımı: her ek ipucu, ana çözümü zorunlu kılmadan oyuncunun ızgarasında kullanılabilir yeni bir çıkarım veriyor."
+                ]
+              }
+            },
+            "leakage": {
+              "status": "passed",
+              "severity": "none",
+              "avatar_prompt_risk": false,
+              "solution_triple_exposed": false,
+              "findings": [],
+              "required_actions": []
+            }
+          },
+          "reason": "No improvement or passed gate regressed"
+        }
+      ],
       "source_hash": "d1f5a999f2b7cca4c1345be1ef12368f9bd95112608a4fc2fa7558bf41ecb498",
       "simulator_hash": "cb53e6613d6379de097599634de26524f4510fbc",
       "candidate": {
