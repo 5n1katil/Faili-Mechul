@@ -1470,9 +1470,120 @@
       "candidate_hash": "a75a405751732e919aa8df4613b902a245832ba17e9708cba9f296dd99d2d3f2",
       "best_score": 0,
       "failures": [
-        "GEMINI_HTTP_400"
+        {
+          "score": 0,
+          "simulator_production_ready": false,
+          "blockers": [
+            "HATA: Oyuncu-Görünür Kural Taşkını — İpucu 1 metni silah olarak “İp” sonucunu da adı doğrudan geçiyor; ancak logicRules yalnız Zeynep Hanım ↔ Kimyasal etkisini tanımlıyor. Oyuncu bu ek hücreyi işaretlerse sonraki temel ipucu tekrara düşebilir.",
+            "Standart / Ücretsiz hikâyesi 51 kelime; hedef derinlik yaklaşık 60-220 kelime. Kimlikleri değiştirmeden olay ve atmosfer bağını güçlendir."
+          ],
+          "fixes": [
+            "OYUNCU-GÖRÜNÜR KURAL KAPSAMI: Her standart ipucunun metni, deductionHint’i ve varsa ses transkripti yalnızca kendi logicRules hücresini desteklemeli. Metinde başka bir şüpheli/silah/mekânı güçlü biçimde çağrıştıran ama rule’a yazılmamış ifadeleri kaldır; aksi hâlde sonraki temel ipucu oyuncu açısından tekrara düşer.",
+            "SIKI TEMEL İPUCU EKONOMİSİ: Her isBonus:false ipucu çıkarıldığında katil+silah+mekan cevabı belirsiz kalmalıdır. Cevabı değiştirmeyen temel ipuçlarını bonusa taşıyın ya da onları eksik olan cevap bileşenini daraltacak biçimde yeniden yazın."
+          ],
+          "advisories": [
+            "TAVSİYE (Monotonluk): Aynı işlem (\"eliminate\") art arda 3 kez kullanılmış (ipucu dizilimi tekdüze). Matrisi kırma stratejisini çeşitlendir: confirm ve eliminate adımlarını harmanla.",
+            "TAVSİYE (İsim/İçerik Derinliği): Standart / Ücretsiz hikâyesi 51 kelime; hedef derinlik yaklaşık 60-220 kelime. Kimlikleri değiştirmeden olay ve atmosfer bağını güçlendir.",
+            "TAVSİYE (İpucu Uyumu): Bir temel ipucu, diğer ipuçlarının zaten verdiği bilgiyi tekrarlıyor olabilir (çıkarıldığında çözüm değişmiyor). Her temel ipucu ızgaraya yeni bir şey katmalı; aksi halde oyuncu onu gereksiz bulur. İlgili ipucunu farklı bir eksene yönelt ya da bonusa çevir. (Vaka-bazlı değerlendir — bazen tematik tekrar kabul edilebilir.)",
+            "ⓘ Standart mod: Bu vaka metin tabanlı ilerliyor; ücretsiz/standart vakalarda gelişmiş mini oyun zorunlu değildir. Mantık zinciri ve oynanabilirlik güçlüyse 100/100 alabilir."
+          ],
+          "score_breakdown": {
+            "k1": {
+              "score": 20,
+              "maximum": 40,
+              "findings": [
+                "UYARI: Olası İpucu Fazlalığı. Standart ipucu c2 çıkarıldığında ızgaradaki kesinleşmiş hücre sayısı azalmıyor gibi görünüyor — diğer ipuçları onun bilgisini çapraz elemeyle veriyor olabilir. Vaka yine de çözülüyor; istersen bu ipucunu farklı bir eksene yönelt veya \"isBonus: true\" yaparak doğrulayıcı/derinlik ipucuna çevir (zorunlu değil).",
+                "ⓘ NİHAİ BAĞ UYARISI: Temel ipuçları katili cinayet silahı ile kesin izole etmiyor (2 silah olasılığı açık). İpuçları masumların yerini bulmanın ötesinde, katili silahı ve mekanıyla kilitlemeli.",
+                "İHLAL: Bonus Bağımlılığı! Temel ipuçları cinayet üçlüsünü (katil+silah+mekan) tek çözüme indirmiyor — 2 farklı katil üçlüsü mümkün. Oyuncu cinayeti ancak CEZALI bonus açarak çözebilir; bu yasak. Bonus kurallarından en az birini standart (isBonus:false) ipucuna taşı ki temel iskelet katili tek başına bulsun.",
+                "✓ Dinamik tam-ızgara (Murdle) solver: özel mekanik climax testi + masum eşleşmeler dahil."
+              ]
+            },
+            "k2": {
+              "score": 20,
+              "maximum": 20,
+              "findings": [
+                "Mini oyun alanlarında çözümü erken ele veren ifade bulunamadı. Temiz."
+              ]
+            },
+            "k3": {
+              "score": 20,
+              "maximum": 20,
+              "findings": [
+                "Tip dağılımı: forensic×2, witness×2, evidence×1, record×1",
+                "💡 TAVSİYE (opsiyonel): İpucu 2: \"Nazik Hanım\", İpucu 3: \"Cem Bey\" adı doğrudan veriyor. Oyuncu eforunu ve atmosferi artırmak için ismi doğrudan yazmak yerine profil kartındaki betimlemelere atıfta bulunan dolaylı ifadeler tercih edilebilir (örn. \"Hazinedar Hüseyin\" yerine \"kayıp altın meselesinin gölgesindeki adam\"). Bu bir kalite önerisidir; çözülebilirliği etkilemez.",
+                "✓ İLERİ DEDÜKSİYON (PREMIUM): 2 ipucu, bir öğenin adını/ayırt edici çekirdeğini doğrudan vermek yerine soyut bir KATEGORİ (\"ağır cisim\", \"yüksek yer\" vb.) kullanıp oyuncuyu profilleri okuyup eşleştirmeye yönlendiriyor. Bu, çok katmanlı bir dedüksiyon zinciri yaratır — özellikle zor vakalarda aranan premium kalite. Tam not."
+              ]
+            },
+            "k4": {
+              "score": 20,
+              "maximum": 20,
+              "findings": [
+                "2 bonus ipucu var — sayı uygundur; tam puanı işlevsellik belirler.",
+                "✓ Matris yardımı: her ek ipucu, ana çözümü zorunlu kılmadan oyuncunun ızgarasında kullanılabilir yeni bir çıkarım veriyor."
+              ]
+            }
+          },
+          "quality_findings": [
+            "UYARI: Olası İpucu Fazlalığı. Standart ipucu c2 çıkarıldığında ızgaradaki kesinleşmiş hücre sayısı azalmıyor gibi görünüyor — diğer ipuçları onun bilgisini çapraz elemeyle veriyor olabilir. Vaka yine de çözülüyor; istersen bu ipucunu farklı bir eksene yönelt veya \"isBonus: true\" yaparak doğrulayıcı/derinlik ipucuna çevir (zorunlu değil).",
+            "💡 TAVSİYE (opsiyonel): İpucu 2: \"Nazik Hanım\", İpucu 3: \"Cem Bey\" adı doğrudan veriyor. Oyuncu eforunu ve atmosferi artırmak için ismi doğrudan yazmak yerine profil kartındaki betimlemelere atıfta bulunan dolaylı ifadeler tercih edilebilir (örn. \"Hazinedar Hüseyin\" yerine \"kayıp altın meselesinin gölgesindeki adam\"). Bu bir kalite önerisidir; çözülebilirliği etkilemez."
+          ],
+          "gates": {
+            "coreNecessity": {
+              "passed": false,
+              "flags": [
+                "HATA: Oyuncu-Görünür Çözüm Başarısız. Tüm standart ipuçları ve belgelenen/anlaşılan anlatı bilgileri birlikteyken cevap tek kalmıyor (3 olası cevap). Bonus açmadan s3|w1|l3 üçlüsüne zorunlu olarak ulaşılmalı."
+              ],
+              "warnings": []
+            },
+            "patternGovernance": {
+              "passed": true,
+              "flags": [],
+              "warnings": []
+            },
+            "contentAndNames": {
+              "passed": true,
+              "flags": [],
+              "warnings": [
+                "Standart / Ücretsiz hikâyesi 51 kelime; hedef derinlik yaklaşık 60-220 kelime. Kimlikleri değiştirmeden olay ve atmosfer bağını güçlendir."
+              ]
+            },
+            "semanticContract": {
+              "passed": true,
+              "flags": [],
+              "warnings": []
+            },
+            "visibleEvidence": {
+              "passed": false,
+              "flags": [
+                "HATA: Oyuncu-Görünür Kural Taşkını — İpucu 1 metni silah olarak “İp” sonucunu da adı doğrudan geçiyor; ancak logicRules yalnız Zeynep Hanım ↔ Kimyasal etkisini tanımlıyor. Oyuncu bu ek hücreyi işaretlerse sonraki temel ipucu tekrara düşebilir."
+              ],
+              "warnings": []
+            },
+            "mechanicContract": {
+              "passed": true,
+              "flags": [],
+              "warnings": []
+            },
+            "bonusFunctionality": {
+              "passed": true,
+              "score": 20,
+              "findings": [
+                "2 bonus ipucu var — sayı uygundur; tam puanı işlevsellik belirler.",
+                "✓ Matris yardımı: her ek ipucu, ana çözümü zorunlu kılmadan oyuncunun ızgarasında kullanılabilir yeni bir çıkarım veriyor."
+              ]
+            }
+          },
+          "leakage": {
+            "status": "passed",
+            "severity": "none",
+            "avatar_prompt_risk": false,
+            "solution_triple_exposed": false,
+            "findings": [],
+            "required_actions": []
+          }
+        }
       ],
-      "status": "GEMINI_HTTP_400"
+      "status": "quarantined"
     },
     "provider-diagnostic-v1": {
       "spent": 0.0003565500000000006
