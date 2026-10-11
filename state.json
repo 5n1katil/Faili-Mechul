@@ -6502,7 +6502,7 @@
       "status": "quarantined"
     },
     "pazar-yerinde-supheli-olum": {
-      "spent": 0.057916249999999996,
+      "spent": 0.025732999999999992,
       "feedback": [],
       "source_hash": "d4a6a5003e9f00e091ed0db4768d29393539ba914af388dd06d6aca3f1fdcad2",
       "simulator_hash": "0e27218c7817862f371febb6b7bb865821d9e5da",
@@ -9933,9 +9933,35 @@
       "model": "gemini-3.8-flash",
       "purpose": "judge",
       "day": "2026-10-11",
-      "status": "reserved",
-      "charged": 0.035601
+      "status": "completed",
+      "charged": 0.00341775,
+      "usage": {
+        "promptTokenCount": 3247,
+        "candidatesTokenCount": 262,
+        "totalTokenCount": 3509,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 3247
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "plan": {
+        "scores": {
+          "fairness": 4,
+          "clarity": 4,
+          "consistency": 4,
+          "originality": 3,
+          "engagement": 3
+        },
+        "issues": [
+          "c5 ipucu 'Müşteri Hanım'ın tezgaha yakın noktada şerbet aldığı' bilgisini vererek c3'teki 'bastonlu yaşlı kadının tezgahta bulunmadığı' ifadesiyle hafif bir mekânsal sürtünme/belirsizlik yaratıyor; mesafeler daha net ayrıştırılmalı.",
+          "Baklava cinayet aleti olarak doğrudan bir ipucunda geçmek yerine sadece eleme yöntemiyle (şerbet ara sokakta, kimyasal parkta) çözülüyor; tatlıya doğrudan dair pozitif bir adli bulgu kurguyu güçlendirirdi."
+        ],
+        "summary": "Mantık örgüsü tıkır tıkır işleyen, mekanik açıdan adil ve net bir eleme bulmacası. Karakter motivasyonları ve anlatı derinliği artırılırsa çok daha etkileyici bir seviyeye ulaşır."
+      }
     }
   },
-  "campaign_spent": 0.18927590000000002
+  "campaign_spent": 0.15709265000000003
 }
