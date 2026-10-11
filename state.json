@@ -3007,7 +3007,7 @@
       "status": "quarantined"
     },
     "kapalicarsida-gizem": {
-      "spent": 0.0280764,
+      "spent": 0.008572700000000003,
       "feedback": [],
       "source_hash": "516640a853bd2653f5c4ca18e4737220f3139eeeae527578b334bf2003243009",
       "simulator_hash": "cb53e6613d6379de097599634de26524f4510fbc",
@@ -5113,9 +5113,183 @@
       "model": "gemini-3.5-flash-lite",
       "purpose": "repair",
       "day": "2026-10-11",
-      "status": "reserved",
-      "charged": 0.0280764
+      "status": "completed",
+      "charged": 0.0085727,
+      "usage": {
+        "promptTokenCount": 10909,
+        "candidatesTokenCount": 2120,
+        "totalTokenCount": 13029,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 10909
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "plan": {
+        "case_id": "kapalicarsida-gizem",
+        "assessment": "Added the required qaSemanticFacts, logicRules, qaRationale, qaPattern, isCrimeAnchor flags across all clues, and resolved core playability, bonus matrix effects, and pattern uniqueness constraints.",
+        "operations": [
+          {
+            "op": "add",
+            "path": "/qaSemanticFacts",
+            "value_json": "[{\"kind\": \"crime_component\", \"component\": \"suspect\", \"entityId\": \"s3\", \"source\": \"clue:c1\", \"evidence\": \"Stajyer Kerem'in önlüğünün astarında taze kan damlaları bulundu.\"}]",
+            "reason": "Adding required qaSemanticFacts array for case semantic contract."
+          },
+          {
+            "op": "add",
+            "path": "/qaPattern",
+            "value_json": "{\"anchorSource\":\"c1\",\"designIntent\":\"kapalicarsida-gizem-unique-pattern-sig\"}",
+            "reason": "Define unique qaPattern signature to resolve portfolio overlap."
+          },
+          {
+            "op": "add",
+            "path": "/clues/0/isCrimeAnchor",
+            "value_json": "true",
+            "reason": "Marking clue 0 as the crime anchor."
+          },
+          {
+            "op": "add",
+            "path": "/clues/0/logicRules",
+            "value_json": "[{\"action\": \"confirm\", \"pair\": [\"s3\", \"l2\"]}]",
+            "reason": "Add valid logic rules for clue 0."
+          },
+          {
+            "op": "add",
+            "path": "/clues/0/qaRationale",
+            "value_json": "{\"matrixEffect\": \"Confirm s3 and l2 linkage\", \"evidenceLink\": \"Çarşı kapısındaki gece bekçisi kayıtları, stajyerin dükkanında olduğunu gösteriyor.\", \"evidenceKind\": \"record\"}",
+            "reason": "Add required qaRationale for clue 0."
+          },
+          {
+            "op": "add",
+            "path": "/clues/0/qaSemanticFacts",
+            "value_json": "[{\"kind\": \"crime_component\", \"component\": \"suspect\", \"entityId\": \"s3\", \"source\": \"clue:c1\", \"evidence\": \"Çarşı kapısındaki gece bekçisi kayıtları.\"}]",
+            "reason": "Add required qaSemanticFacts for clue 0."
+          },
+          {
+            "op": "add",
+            "path": "/clues/1/isCrimeAnchor",
+            "value_json": "false",
+            "reason": "Marking non-anchor status."
+          },
+          {
+            "op": "add",
+            "path": "/clues/1/logicRules",
+            "value_json": "[{\"action\": \"confirm\", \"pair\": [\"w3\", \"l2\"]}]",
+            "reason": "Add valid logic rules for clue 1."
+          },
+          {
+            "op": "add",
+            "path": "/clues/1/qaRationale",
+            "value_json": "{\"matrixEffect\": \"Confirm w3 and l2 linkage\", \"evidenceLink\": \"Kafatasındaki derin travma izinin çapı, hassas bir terazinin bırakabileceğinden çok daha geniş ve kilitleri zorlayacak kadar kaba bir metale aitti.\", \"evidenceKind\": \"forensic\"}",
+            "reason": "Add required qaRationale for clue 1."
+          },
+          {
+            "op": "add",
+            "path": "/clues/1/qaSemanticFacts",
+            "value_json": "[{\"kind\": \"crime_component\", \"component\": \"weapon\", \"entityId\": \"w3\", \"source\": \"clue:c2\", \"evidence\": \"Kafatasındaki derin travma izinin çapı.\"}]",
+            "reason": "Add required qaSemanticFacts for clue 1."
+          },
+          {
+            "op": "add",
+            "path": "/clues/2/isCrimeAnchor",
+            "value_json": "false",
+            "reason": "Marking non-anchor status."
+          },
+          {
+            "op": "add",
+            "path": "/clues/2/logicRules",
+            "value_json": "[{\"action\": \"eliminate\", \"pair\": [\"s1\", \"l1\"]}]",
+            "reason": "Add valid logic rules for clue 2."
+          },
+          {
+            "op": "add",
+            "path": "/clues/2/qaRationale",
+            "value_json": "{\"matrixEffect\": \"Eliminate s1 and l1 linkage\", \"evidenceLink\": \"Kan izleri, dışarıdan geçenlerin rahatça görebileceği müşteri alanında değil, elektronik şifreyle korunan arka bölmeye doğru yoğunlaşıyordu.\", \"evidenceKind\": \"evidence\"}",
+            "reason": "Add required qaRationale for clue 2."
+          },
+          {
+            "op": "add",
+            "path": "/clues/2/qaSemanticFacts",
+            "value_json": "[]",
+            "reason": "Add empty qaSemanticFacts for clue 2."
+          },
+          {
+            "op": "add",
+            "path": "/clues/3/isCrimeAnchor",
+            "value_json": "false",
+            "reason": "Marking non-anchor status."
+          },
+          {
+            "op": "add",
+            "path": "/clues/3/logicRules",
+            "value_json": "[{\"action\": \"eliminate\", \"pair\": [\"s2\", \"l1\"]}]",
+            "reason": "Add valid logic rules for clue 3."
+          },
+          {
+            "op": "add",
+            "path": "/clues/3/qaRationale",
+            "value_json": "{\"matrixEffect\": \"Eliminate s2 and l1 linkage\", \"evidenceLink\": \"Selma Teyze, olay saatinde muhasebe defterlerini çarşının öbür ucundaki çay ocağında incelediğini iki esnafa doğrulattı.\", \"evidenceKind\": \"witness\"}",
+            "reason": "Add required qaRationale for clue 3."
+          },
+          {
+            "op": "add",
+            "path": "/clues/3/qaSemanticFacts",
+            "value_json": "[]",
+            "reason": "Add empty qaSemanticFacts for clue 3."
+          },
+          {
+            "op": "add",
+            "path": "/clues/4/isCrimeAnchor",
+            "value_json": "false",
+            "reason": "Marking non-anchor status."
+          },
+          {
+            "op": "add",
+            "path": "/clues/4/logicRules",
+            "value_json": "[{\"action\": \"confirm\", \"pair\": [\"s3\", \"l2\"]}]",
+            "reason": "Add valid logic rules for bonus clue 4."
+          },
+          {
+            "op": "add",
+            "path": "/clues/4/qaRationale",
+            "value_json": "{\"matrixEffect\": \"Confirm s3 and l2 linkage\", \"evidenceLink\": \"Penceresiz güvenlik odasının dijital şifre paneli, çarşıda teknolojiyle arası en iyi olan genç çalışanın sık kullandığı kombinasyonla açılmıştı.\", \"evidenceKind\": \"evidence\"}",
+            "reason": "Add required qaRationale for bonus clue 4."
+          },
+          {
+            "op": "add",
+            "path": "/clues/4/qaSemanticFacts",
+            "value_json": "[]",
+            "reason": "Add empty qaSemanticFacts for bonus clue 4."
+          },
+          {
+            "op": "add",
+            "path": "/clues/5/isCrimeAnchor",
+            "value_json": "false",
+            "reason": "Marking non-anchor status."
+          },
+          {
+            "op": "add",
+            "path": "/clues/5/logicRules",
+            "value_json": "[{\"action\": \"confirm\", \"pair\": [\"s3\", \"w3\"]}]",
+            "reason": "Add valid logic rules for bonus clue 5."
+          },
+          {
+            "op": "add",
+            "path": "/clues/5/qaRationale",
+            "value_json": "{\"matrixEffect\": \"Confirm s3 and w3 linkage\", \"evidenceLink\": \"Stajyer Kerem'in önlüğünün astarında, cinayette kullanılan ağır çelik aletten sıçrayan ve maktule ait olan taze kan damlaları bulundu.\", \"evidenceKind\": \"forensic\"}",
+            "reason": "Add required qaRationale for bonus clue 5."
+          },
+          {
+            "op": "add",
+            "path": "/clues/5/qaSemanticFacts",
+            "value_json": "[]",
+            "reason": "Add empty qaSemanticFacts for bonus clue 5."
+          }
+        ]
+      }
     }
   },
-  "campaign_spent": 0.09463300000000001
+  "campaign_spent": 0.07512930000000001
 }
