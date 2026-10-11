@@ -3,7 +3,7 @@
   "active_id": "konakta-gece-yarisi-cinayeti",
   "cases": {
     "konakta-gece-yarisi-cinayeti": {
-      "spent": 0.027859199999999997,
+      "spent": 0,
       "feedback": [],
       "source_hash": "30cfce8ec8ac7979613373b254d613cbaf5394e9fcb1c6f68b08393ca68d7d9a",
       "simulator_hash": "cb53e6613d6379de097599634de26524f4510fbc",
@@ -1328,9 +1328,15 @@
       "model": "gemini-3.5-flash-lite",
       "purpose": "repair",
       "day": "2026-10-11",
-      "status": "reserved",
-      "charged": 0.027859199999999997
+      "status": "failed",
+      "charged": 0,
+      "http_status": 400,
+      "provider_error": {
+        "http_status": 400,
+        "status": "INVALID_ARGUMENT",
+        "message": "Request contains an invalid argument."
+      }
     }
   },
-  "campaign_spent": 0.027859199999999997
+  "campaign_spent": 0
 }
