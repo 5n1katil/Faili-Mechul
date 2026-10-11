@@ -3266,25 +3266,26 @@
       "spent": 0.02886335,
       "feedback": [
         {
-          "score": 0,
+          "error": "TEXT_CONTENT:story:MIN_60_WORDS"
+        },
+        {
+          "score": 100,
           "result": {
-            "score": 0,
+            "score": 100,
             "simulator_production_ready": false,
             "blockers": [],
-            "fixes": [
-              "OYUNCU-GÖRÜNÜR SEMANTİK: Hikâye ve her standart ipucunun oyuncuya kesin olarak verdiği katil/silah/mekan bilgisini qaSemanticFacts ile kaynak bazında belgeleyin. Ardından metinden doğan erken çözüm yolunu kapatın veya bulmaca zincirini yeniden dağıtın.",
-              "SIKI TEMEL İPUCU EKONOMİSİ: Her isBonus:false ipucu çıkarıldığında katil+silah+mekan cevabı belirsiz kalmalıdır. Cevabı değiştirmeyen temel ipuçlarını bonusa taşıyın ya da onları eksik olan cevap bileşenini daraltacak biçimde yeniden yazın.",
-              "ÇİFT İFŞA (Çapa): Çapa ipucunun logicRules'u tek başına cinayet triadının iki öğesini bağlamamalı — ne tek confirm'le ne de bir mekandan/şüpheliden birden çok öğeyi eleyip tek seçenek bırakarak. Çapa SADECE cinayetle ilişkili tek bir öğeyi sabitlesin (örn. yalnızca cinayet mekanını: tek bir confirm ya da o mekana dair tek bir bilgi). Silah-mekan/katil-silah bağını ayrı ipuçlara, mümkünse ters-çapraz çıkarıma bırak."
-            ],
+            "fixes": [],
             "advisories": [
               "ⓘ Standart mod: Bu vaka metin tabanlı ilerliyor; ücretsiz/standart vakalarda gelişmiş mini oyun zorunlu değildir. Mantık zinciri ve oynanabilirlik güçlüyse 100/100 alabilir."
             ],
             "score_breakdown": {
               "k1": {
-                "score": 0,
+                "score": 40,
                 "maximum": 40,
                 "findings": [
-                  "HATA: Çift İfşa Sızıntısı! Çapa ipucunuz (İpucu 1), tek başına cinayet triadının iki öğesini (Kerem Genç + Arka Depo) kesin olarak birbirine bağlıyor — ister doğrudan confirm'le, ister birden çok elemenin tek seçenek bırakmasıyla. (zorluk belirtilmemiş — premium varsayıldı) Bu, bulmaca örüntüsünü yok eder: cinayeti tek hamlede çözer. Çapa SADECE cinayetle ilişkili TEK bir öğeyi versin (ya mekanı, ya silahı, ya şüpheliyi); o öğeyi başka bir eksene bağlama işini diğer ipuçlara, tercihen ters-çapraz çıkarıma bırak. NOT: Bu vaka gerçekten kolaysa (Çaylak), JSON'a \"difficulty\": 1 veya 2 ekle — kolay vakalarda çapanın iki öğe vermesi serbesttir."
+                  "TEMEL ÇÖZÜLEBİLİRLİK ✓: Temel ipuçlarıyla (4 kural) cinayet üçlüsü TEK çözüme iniyor → Kerem Genç · Pençe Anahtar · Arka Depo (matriste 2 olası tam-düzen var ama hepsi aynı katil üçlüsünü veriyor — masum dağılımı oyuncuya bırakılmış, sorun değil). Bonuslar gerekmeden katil/silah/mekan kesinleşiyor.",
+                  "BONUS DOĞRULAMASI ✓: bonuslar katil üçlüsünü bozmuyor, sadece doğruluyor/derinlik katıyor.",
+                  "✓ Dinamik tam-ızgara (Murdle) solver: özel mekanik climax testi + masum eşleşmeler dahil."
                 ]
               },
               "k2": {
@@ -3298,8 +3299,10 @@
                 "score": 20,
                 "maximum": 20,
                 "findings": [
-                  "Tip dağılımı: record×1, forensic×2, evidence×2, witness×1",
-                  "💡 TAVSİYE (opsiyonel): İpucu 1: \"Kerem Genç\", İpucu 2: \"Pençe Anahtar\", İpucu 3: \"Ahmet Usta\" ve 1 ipucu daha adı doğrudan veriyor. Oyuncu eforunu ve atmosferi artırmak için ismi doğrudan yazmak yerine profil kartındaki betimlemelere atıfta bulunan dolaylı ifadeler tercih edilebilir (örn. \"Hazinedar Hüseyin\" yerine \"kayıp altın meselesinin gölgesindeki adam\"). Bu bir kalite önerisidir; çözülebilirliği etkilemez."
+                  "Tip dağılımı: witness×2, record×3, evidence×1",
+                  "✓ Tüm deductionHint alanları isim sızdırmıyor (Sokratik kurala uygun), 4'i doğrudan soru biçiminde.",
+                  "💡 TAVSİYE (opsiyonel): İpucu 1: \"Çarşı Koridoru\", İpucu 2: \"Arka Depo\", İpucu 3: \"Arka Depo\" ve 1 ipucu daha adı doğrudan veriyor. Oyuncu eforunu ve atmosferi artırmak için ismi doğrudan yazmak yerine profil kartındaki betimlemelere atıfta bulunan dolaylı ifadeler tercih edilebilir (örn. \"Hazinedar Hüseyin\" yerine \"kayıp altın meselesinin gölgesindeki adam\"). Bu bir kalite önerisidir; çözülebilirliği etkilemez.",
+                  "✓ İLERİ DEDÜKSİYON (PREMIUM): 1 ipucu, bir öğenin adını/ayırt edici çekirdeğini doğrudan vermek yerine soyut bir KATEGORİ (\"ağır cisim\", \"yüksek yer\" vb.) kullanıp oyuncuyu profilleri okuyup eşleştirmeye yönlendiriyor. Bu, çok katmanlı bir dedüksiyon zinciri yaratır — özellikle zor vakalarda aranan premium kalite. Tam not."
                 ]
               },
               "k4": {
@@ -3312,17 +3315,12 @@
               }
             },
             "quality_findings": [
-              "💡 TAVSİYE (opsiyonel): İpucu 1: \"Kerem Genç\", İpucu 2: \"Pençe Anahtar\", İpucu 3: \"Ahmet Usta\" ve 1 ipucu daha adı doğrudan veriyor. Oyuncu eforunu ve atmosferi artırmak için ismi doğrudan yazmak yerine profil kartındaki betimlemelere atıfta bulunan dolaylı ifadeler tercih edilebilir (örn. \"Hazinedar Hüseyin\" yerine \"kayıp altın meselesinin gölgesindeki adam\"). Bu bir kalite önerisidir; çözülebilirliği etkilemez."
+              "💡 TAVSİYE (opsiyonel): İpucu 1: \"Çarşı Koridoru\", İpucu 2: \"Arka Depo\", İpucu 3: \"Arka Depo\" ve 1 ipucu daha adı doğrudan veriyor. Oyuncu eforunu ve atmosferi artırmak için ismi doğrudan yazmak yerine profil kartındaki betimlemelere atıfta bulunan dolaylı ifadeler tercih edilebilir (örn. \"Hazinedar Hüseyin\" yerine \"kayıp altın meselesinin gölgesindeki adam\"). Bu bir kalite önerisidir; çözülebilirliği etkilemez."
             ],
             "gates": {
               "coreNecessity": {
-                "passed": false,
-                "flags": [
-                  "HATA: Zorunlu Olmayan Temel İpucu — İpucu 1 çıkarıldığında oyuncu hâlâ aynı tek cevaba ulaşır. Bu ipucu ızgarayı dolduruyor olabilir ama cevap zincirinde gerekli değil; bonusa dönüştürülmeli veya diğer temel ipuçlarıyla kesişen yeni bir bilgi vermeli.",
-                  "HATA: Zorunlu Olmayan Temel İpucu — İpucu 2 çıkarıldığında oyuncu hâlâ aynı tek cevaba ulaşır. Bu ipucu ızgarayı dolduruyor olabilir ama cevap zincirinde gerekli değil; bonusa dönüştürülmeli veya diğer temel ipuçlarıyla kesişen yeni bir bilgi vermeli.",
-                  "HATA: Zorunlu Olmayan Temel İpucu — İpucu 3 çıkarıldığında oyuncu hâlâ aynı tek cevaba ulaşır. Bu ipucu ızgarayı dolduruyor olabilir ama cevap zincirinde gerekli değil; bonusa dönüştürülmeli veya diğer temel ipuçlarıyla kesişen yeni bir bilgi vermeli.",
-                  "HATA: Zorunlu Olmayan Temel İpucu — İpucu 4 çıkarıldığında oyuncu hâlâ aynı tek cevaba ulaşır. Bu ipucu ızgarayı dolduruyor olabilir ama cevap zincirinde gerekli değil; bonusa dönüştürülmeli veya diğer temel ipuçlarıyla kesişen yeni bir bilgi vermeli."
-                ],
+                "passed": true,
+                "flags": [],
                 "warnings": []
               },
               "patternGovernance": {
@@ -3336,13 +3334,8 @@
                 "warnings": []
               },
               "semanticContract": {
-                "passed": false,
-                "flags": [
-                  "HATA: Semantik Sözleşme Eksik — İpucu 1 metni, oyuncuya suç mahalli olarak “Arka Depo” sonucunu çağrıştırıyor. Bu bilgi qaSemanticFacts ile belgelenmemiş; grid dışı erken çözüm/sızıntı denetlenemiyor.",
-                  "HATA: Semantik Sözleşme Eksik — İpucu 2 metni, oyuncuya suç mahalli olarak “Arka Depo” sonucunu çağrıştırıyor. Bu bilgi qaSemanticFacts ile belgelenmemiş; grid dışı erken çözüm/sızıntı denetlenemiyor.",
-                  "HATA: Semantik Sözleşme Eksik — İpucu 3 metni, oyuncuya cinayet silahı olarak “Pençe Anahtar” sonucunu çağrıştırıyor. Bu bilgi qaSemanticFacts ile belgelenmemiş; grid dışı erken çözüm/sızıntı denetlenemiyor.",
-                  "HATA: Semantik Sözleşme Eksik — İpucu 4 metni, oyuncuya cinayet silahı olarak “Pençe Anahtar” sonucunu çağrıştırıyor. Bu bilgi qaSemanticFacts ile belgelenmemiş; grid dışı erken çözüm/sızıntı denetlenemiyor."
-                ],
+                "passed": true,
+                "flags": [],
                 "warnings": []
               },
               "visibleEvidence": {
@@ -3365,18 +3358,62 @@
               }
             },
             "leakage": {
-              "status": "passed",
-              "severity": "none",
-              "avatar_prompt_risk": false,
+              "status": "manual_review_required",
+              "severity": "review",
+              "avatar_prompt_risk": true,
               "solution_triple_exposed": false,
-              "findings": [],
-              "required_actions": []
+              "findings": [
+                {
+                  "case_id": "kapalicarsida-gizem",
+                  "suspect_id": "s2",
+                  "suspect_name": "Selma Teyze",
+                  "axis_kind": "location",
+                  "axis_id": "l1",
+                  "axis_name": "Dükkan İçi",
+                  "strength": "strong_semantic",
+                  "direct_owner_binding": false,
+                  "profile_exact_axis_name": false,
+                  "distinctive_overlap_tokens": [
+                    "dukkan"
+                  ],
+                  "axis_name_overlap_tokens": [
+                    "dukkan"
+                  ],
+                  "avatar_prompt_risk": true,
+                  "reasons": [
+                    "axis_name_profile_overlap:dukkan",
+                    "distinctive_profile_overlap:dukkan"
+                  ]
+                },
+                {
+                  "case_id": "kapalicarsida-gizem",
+                  "suspect_id": "s2",
+                  "suspect_name": "Selma Teyze",
+                  "axis_kind": "location",
+                  "axis_id": "l3",
+                  "axis_name": "Çarşı Koridoru",
+                  "strength": "strong_semantic",
+                  "direct_owner_binding": false,
+                  "profile_exact_axis_name": false,
+                  "distinctive_overlap_tokens": [
+                    "cars"
+                  ],
+                  "axis_name_overlap_tokens": [
+                    "cars"
+                  ],
+                  "avatar_prompt_risk": true,
+                  "reasons": [
+                    "axis_name_profile_overlap:cars",
+                    "distinctive_profile_overlap:cars"
+                  ]
+                }
+              ],
+              "required_actions": [
+                "rewrite_avatar_source_profiles_to_non_grid_visual_traits"
+              ]
             }
           },
           "reason": "No improvement or passed gate regressed"
-        },
-        {
-          "error": "TEXT_CONTENT:story:MIN_60_WORDS"
         }
       ],
       "source_hash": "516640a853bd2653f5c4ca18e4737220f3139eeeae527578b334bf2003243009",
