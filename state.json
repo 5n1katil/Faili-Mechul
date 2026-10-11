@@ -3,7 +3,7 @@
   "active_id": "konakta-gece-yarisi-cinayeti",
   "cases": {
     "konakta-gece-yarisi-cinayeti": {
-      "spent": 0.027855,
+      "spent": 0.009374,
       "feedback": [],
       "source_hash": "30cfce8ec8ac7979613373b254d613cbaf5394e9fcb1c6f68b08393ca68d7d9a",
       "simulator_hash": "cb53e6613d6379de097599634de26524f4510fbc",
@@ -1475,9 +1475,201 @@
       "model": "gemini-3.5-flash-lite",
       "purpose": "repair",
       "day": "2026-10-11",
-      "status": "reserved",
-      "charged": 0.027855
+      "status": "completed",
+      "charged": 0.009374,
+      "usage": {
+        "promptTokenCount": 10530,
+        "candidatesTokenCount": 2486,
+        "totalTokenCount": 13016,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 10530
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "plan": {
+        "case_id": "konakta-gece-yarisi-cinayeti",
+        "assessment": "Added valid logicRules, qaRationale, qaSemanticFacts, isCrimeAnchor flags, and updated story for full playability, compliance, and contract alignment.",
+        "operations": [
+          {
+            "op": "replace",
+            "path": "/story",
+            "value_json": "\"Tarihi konaktaki görkemli gece davetinin hemen ardından ev sahibinin sadık yardımcısı Selma, kilitli odaların ve fırtınanın gölgesinde kanlar içinde bulundu. Adli tıp, cinayetin 23:30 ile 00:00 arasında işlendiğini tahmin ediyor. Fırtına nedeniyle dış dünya ile bağı kopan ve kimsenin ayrılamadığı bu tarihi konakta, korkunç sırlarıyla katil hala aramızda dolaşmaktadır; herkes birbirini suçlarken gerçeği aramak size kalmıştır.\"",
+            "reason": "Expand story length to meet the 60-220 word target depth."
+          },
+          {
+            "op": "add",
+            "path": "/qaSemanticFacts",
+            "value_json": "[{\"kind\":\"crime_component\",\"component\":\"suspect\",\"entityId\":\"s3\",\"source\":\"clue:c1\",\"evidence\":\"derin bir kesici alet darbesi\"},{\"kind\":\"crime_component\",\"component\":\"weapon\",\"entityId\":\"w1\",\"source\":\"clue:c1\",\"evidence\":\"kesici alet darbesi\"},{\"kind\":\"crime_component\",\"component\":\"location\",\"entityId\":\"l3\",\"source\":\"clue:c4\",\"evidence\":\"arkadaki hazırlık alanında\"}]",
+            "reason": "Provide required global qaSemanticFacts array."
+          },
+          {
+            "op": "add",
+            "path": "/qaPortfolioRegistry",
+            "value_json": "{\"entries\":[]}",
+            "reason": "Satisfy portfolio registry contract."
+          },
+          {
+            "op": "add",
+            "path": "/qaPattern",
+            "value_json": "{\"anchorSource\":\"c1\",\"designIntent\":\"Unique custom deductive pattern for Konakta Gece Yarısı Cinayeti\"}",
+            "reason": "Define unique qaPattern anchor and metadata."
+          },
+          {
+            "op": "add",
+            "path": "/clues/0/logicRules",
+            "value_json": "[{\"action\":\"eliminate\",\"pair\":[\"s3\",\"w2\"]},{\"action\":\"eliminate\",\"pair\":[\"s3\",\"w3\"]}]",
+            "reason": "Provide valid deductive logic rules for clue 0."
+          },
+          {
+            "op": "add",
+            "path": "/clues/0/qaRationale",
+            "value_json": "{\"matrixEffect\":\"eliminate\",\"evidenceLink\":\"Kurban zehirlenmemiş veya iple boğulmamış; derin bir kesici alet darbesiyle hayatını kaybetmiştir.\",\"evidenceKind\":\"forensic\"}",
+            "reason": "Provide qaRationale for clue 0."
+          },
+          {
+            "op": "add",
+            "path": "/clues/0/qaSemanticFacts",
+            "value_json": "[{\"kind\":\"crime_component\",\"component\":\"weapon\",\"entityId\":\"w1\",\"source\":\"clue:c1\",\"evidence\":\"kesici alet darbesi\"}]",
+            "reason": "Provide qaSemanticFacts for clue 0."
+          },
+          {
+            "op": "add",
+            "path": "/clues/0/isCrimeAnchor",
+            "value_json": "true",
+            "reason": "Designate clue 0 as crime anchor."
+          },
+          {
+            "op": "add",
+            "path": "/clues/1/logicRules",
+            "value_json": "[{\"action\":\"eliminate\",\"pair\":[\"s1\",\"l2\"]}]",
+            "reason": "Provide valid deductive logic rules for clue 1."
+          },
+          {
+            "op": "add",
+            "path": "/clues/1/qaRationale",
+            "value_json": "{\"matrixEffect\":\"eliminate\",\"evidenceLink\":\"En yaşlı misafirin gece boyunca açık alanda kitap okuduğu ve olayla ilgisi olmadığı doğrulandı.\",\"evidenceKind\":\"witness\"}",
+            "reason": "Provide qaRationale for clue 1."
+          },
+          {
+            "op": "add",
+            "path": "/clues/1/qaSemanticFacts",
+            "value_json": "[{\"kind\":\"crime_component\",\"component\":\"suspect\",\"entityId\":\"s1\",\"source\":\"clue:c2\",\"evidence\":\"en yaşlı misafir\"}]",
+            "reason": "Provide qaSemanticFacts for clue 1."
+          },
+          {
+            "op": "add",
+            "path": "/clues/1/isCrimeAnchor",
+            "value_json": "false",
+            "reason": "Mark clue 1 as non-anchor."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/1/text",
+            "value_json": "En yaşlı misafir gece boyunca Bahçe'de çayını yudumlayarak kitap okuduğunu belirtti ve bu durum tanıklarca doğrulandı.",
+            "reason": "Refine text to avoid direct name leak if needed."
+          },
+          {
+            "op": "add",
+            "path": "/clues/2/logicRules",
+            "value_json": "[{\"action\":\"eliminate\",\"pair\":[\"s2\",\"l1\"]}]",
+            "reason": "Provide valid deductive logic rules for clue 2."
+          },
+          {
+            "op": "add",
+            "path": "/clues/2/qaRationale",
+            "value_json": "{\"matrixEffect\":\"eliminate\",\"evidenceLink\":\"Akredite raporlara göre akraba olan misafir gece boyunca kütüphaneden hiç ayrılmamıştır.\",\"evidenceKind\":\"witness\"}",
+            "reason": "Provide qaRationale for clue 2."
+          },
+          {
+            "op": "add",
+            "path": "/clues/2/qaSemanticFacts",
+            "value_json": "[{\"kind\":\"crime_component\",\"component\":\"suspect\",\"entityId\":\"s2\",\"source\":\"clue:c3\",\"evidence\":\"uzaktan akraba\"}]",
+            "reason": "Provide qaSemanticFacts for clue 2."
+          },
+          {
+            "op": "add",
+            "path": "/clues/2/isCrimeAnchor",
+            "value_json": "false",
+            "reason": "Mark clue 2 as non-anchor."
+          },
+          {
+            "op": "add",
+            "path": "/clues/3/logicRules",
+            "value_json": "[{\"action\":\"eliminate\",\"pair\":[\"s3\",\"l1\"]},{\"action\":\"eliminate\",\"pair\":[\"s3\",\"l2\"]}]",
+            "reason": "Provide valid deductive logic rules for clue 3."
+          },
+          {
+            "op": "add",
+            "path": "/clues/3/qaRationale",
+            "value_json": "{\"matrixEffect\":\"eliminate\",\"evidenceLink\":\"Kan izleri ve boğuşma kanıtları yalnızca arkadaki hazırlık alanında yoğunlaşmaktadır.\",\"evidenceKind\":\"physical\"}",
+            "reason": "Provide qaRationale for clue 3."
+          },
+          {
+            "op": "add",
+            "path": "/clues/3/qaSemanticFacts",
+            "value_json": "[{\"kind\":\"crime_component\",\"component\":\"location\",\"entityId\":\"l3\",\"source\":\"clue:c4\",\"evidence\":\"arkadaki hazırlık alanında\"}]",
+            "reason": "Provide qaSemanticFacts for clue 3."
+          },
+          {
+            "op": "add",
+            "path": "/clues/3/isCrimeAnchor",
+            "value_json": "false",
+            "reason": "Mark clue 3 as non-anchor."
+          },
+          {
+            "op": "add",
+            "path": "/clues/4/logicRules",
+            "value_json": "[{\"action\":\"confirm\",\"pair\":[\"s3\",\"l3\"]}]",
+            "reason": "Provide valid bonus logic rules for clue 4."
+          },
+          {
+            "op": "add",
+            "path": "/clues/4/qaRationale",
+            "value_json": "{\"matrixEffect\":\"confirm\",\"evidenceLink\":\"Koridor kameraları, genç davetlinin 23:38'de hazırlık alanına giriş yaptığını ve 00:15'te çıktığını gösteriyor.\",\"evidenceKind\":\"record\"}",
+            "reason": "Provide qaRationale for clue 4."
+          },
+          {
+            "op": "add",
+            "path": "/clues/4/qaSemanticFacts",
+            "value_json": "[{\"kind\":\"crime_component\",\"component\":\"suspect\",\"entityId\":\"s3\",\"source\":\"clue:c5\",\"evidence\":\"genç davetli\"}]",
+            "reason": "Provide qaSemanticFacts for clue 4."
+          },
+          {
+            "op": "add",
+            "path": "/clues/4/isCrimeAnchor",
+            "value_json": "false",
+            "reason": "Mark clue 4 as non-anchor."
+          },
+          {
+            "op": "add",
+            "path": "/clues/5/logicRules",
+            "value_json": "[{\"action\":\"confirm\",\"pair\":[\"s3\",\"w1\"]}]",
+            "reason": "Provide valid bonus logic rules for clue 5."
+          },
+          {
+            "op": "add",
+            "path": "/clues/5/qaRationale",
+            "value_json": "{\"matrixEffect\":\"confirm\",\"evidenceLink\":\"Ağır mutfak makasının sap kısmında, genç davetliye ait net parmak izleri tespit edilmiştir.\",\"evidenceKind\":\"forensic\"}",
+            "reason": "Provide qaRationale for clue 5."
+          },
+          {
+            "op": "add",
+            "path": "/clues/5/qaSemanticFacts",
+            "value_json": "[{\"kind\":\"crime_component\",\"component\":\"weapon\",\"entityId\":\"w1\",\"source\":\"clue:c6\",\"evidence\":\"Ağır mutfak makası\"}]",
+            "reason": "Provide qaSemanticFacts for clue 5."
+          },
+          {
+            "op": "add",
+            "path": "/clues/5/isCrimeAnchor",
+            "value_json": "false",
+            "reason": "Mark clue 5 as non-anchor."
+          }
+        ]
+      }
     }
   },
-  "campaign_spent": 0.028211550000000002
+  "campaign_spent": 0.009730550000000001
 }
