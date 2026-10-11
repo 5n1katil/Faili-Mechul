@@ -27,6 +27,7 @@ import { compileEditorial, editorialPrompt, editorialFailure, validEditorial, re
 import { reviewHash } from './review.mjs';
 import { qualityContract, REVIEW_VERSION } from './quality-contract.mjs';
 import { compileEditorialRevision, editorialRevisionPrompt, editorialRevisionSchema, validEditorialRevision } from './editorial.mjs';
+import { hintOnly, compileHints, recoverHintCleanup, validHints } from './hint-cleanup.mjs';
 
 globalThis.fetch = async () => { throw new Error('TEST_NETWORK_FORBIDDEN'); };
 const currentPolicy = read('.case-qa/pipeline/policy.json'), policy = clone(currentPolicy), root = process.cwd();
@@ -55,6 +56,68 @@ try {
   });
   const original = snapshot.entries.find(e => e.id === 'termal-otelde-supheli-vaka');
   const currentSnapshot = { ...snapshot, policy: currentPolicy };
+  const hintFixture = read('.case-qa/fixtures/muze-hint-scope-38167302955.json');
+  const hintEntry = snapshot.entries.find(e => e.id === hintFixture.case_id);
+  const hintCandidate = clone(hintFixture.record.candidate);
+  hintCandidate.qaPortfolioRegistry = clone(hintEntry.candidate.qaPortfolioRegistry);
+  const hintResponse = Object.values(hintFixture.requests).find(r => r.model === currentPolicy.models.repair).plan;
+  const hintValue = { case_id: hintEntry.id, hints: Object.fromEntries(hintCandidate.clues.filter(c => !c.isBonus)
+    .map(c => [c.id, hintResponse.clues[c.id].deductionHint])) };
+  await test('actual Muze 96-point hint-only rejection recovers the exact paid response without admitting rejected rewrites', async () => {
+    assert.equal(stableHash(hintCandidate), hintFixture.record.candidate_hash);
+    const before = assess(currentSnapshot, hintEntry, hintCandidate);
+    assert.equal(before.result.score, 96); assert.equal(hintOnly(before), true);
+    const recovered = recoverHintCleanup(currentSnapshot, hintEntry, hintCandidate, hintFixture.record, hintFixture.requests);
+    assert.equal(recovered.request_key, 'f2a90a77fdb082820616a6d17c34cedaf735fa628f393755102e3e6a26b88095');
+    assert.equal(recovered.assessment.passed, true); assert.equal(recovered.assessment.result.score, 100);
+    const withoutHints = c => { const x = clone(c); for (const clue of x.clues) if (!clue.isBonus) delete clue.deductionHint; return x; };
+    assert.deepEqual(withoutHints(recovered.candidate), withoutHints(hintCandidate));
+    assert.notEqual(hintResponse.story, recovered.candidate.story);
+    assert.equal(validHints(hintCandidate, { ...hintValue, story: hintResponse.story }), false);
+    assert.throws(() => compileHints(currentSnapshot, hintEntry, hintCandidate, { ...hintValue, story: hintResponse.story }), /PATCH_HINT/);
+    const bad = clone(hintValue); bad.hints.c1 = 'Sergi Salonu nerede?';
+    assert.equal(compileHints(currentSnapshot, hintEntry, hintCandidate, bad).assessment.passed, false);
+    for (const field of ['source_hash','simulator_hash','candidate_hash']) {
+      const record = clone(hintFixture.record); record[field] = 'wrong';
+      assert.equal(recoverHintCleanup(currentSnapshot, hintEntry, hintCandidate, record, hintFixture.requests), null);
+    }
+    assert.equal(recoverHintCleanup(currentSnapshot, hintEntry, hintCandidate, hintFixture.record, {}), null);
+    const pending = clone(hintFixture.requests); pending[recovered.request_key].status = 'uncertain';
+    assert.equal(recoverHintCleanup(currentSnapshot, hintEntry, hintCandidate, hintFixture.record, pending), null);
+    process.env.GEMINI_API_KEY = 'offline-hint-test';
+    const store = storeFor(hintEntry.id); store.state.cases[hintEntry.id] = { ...clone(hintFixture.record), candidate: clone(hintCandidate) };
+    store.state.requests = clone(hintFixture.requests); store.state.campaign_spent = hintFixture.record.spent;
+    const history = stableHash(store.state.requests), calls = [];
+    const result = await repairOne(currentSnapshot, hintEntry, store, { allowAI: true, caller: args => {
+      calls.push(args.purpose); return callPaid({ ...args, transport: async () => responseForFixture(
+        args.purpose === 'player' ? playerFor(recovered.candidate) : validJudge()) });
+    } });
+    assert.deepEqual(calls, ['player','judge']); assert.equal(result.status, 'ready_for_gates');
+    assert.equal(stableHash(Object.fromEntries(Object.entries(store.state.requests).filter(([k]) => k in hintFixture.requests))), history);
+    assert.equal(result.run.attempts[0].purpose, 'hint_cleanup'); assert.equal(result.run.attempts[0].cached, true);
+  });
+  await test('a first full repair at 96 switches to a strictly hint-only second request without renewing repair rights', async () => {
+    process.env.GEMINI_API_KEY = 'offline-hint-test';
+    const store = storeFor(hintEntry.id), calls = [];
+    const first = Object.values(hintFixture.requests).find(r => r.model === currentPolicy.models.first_pass).plan;
+    const revised = compileHints(currentSnapshot, hintEntry, hintCandidate, hintValue).candidate;
+    const result = await repairOne(currentSnapshot, hintEntry, store, { allowAI: true, caller: args => {
+      calls.push(args);
+      if (calls.length === 2) {
+        assert.deepEqual(args.schema.required, ['case_id','hints']);
+        assert.match(args.prompt, /Only deductionHint may change/);
+        assert.equal(args.repairMethod, TEXT_METHOD);
+        assert.equal(args.validate(hintResponse), false);
+      }
+      return callPaid({ ...args, transport: async () => responseForFixture(args.purpose === 'repair' ?
+        (calls.length === 1 ? first : hintValue) : args.purpose === 'player' ? playerFor(revised) : validJudge()) });
+    } });
+    assert.deepEqual(calls.map(c => c.purpose), ['repair','repair','player','judge']);
+    assert.equal(result.status, 'ready_for_gates');
+    assert.equal(Object.values(store.state.requests).filter(r => r.purpose === 'repair').length, 2);
+    assert.throws(() => reserveRequest(store, currentPolicy, runFor(), hintEntry.id, currentPolicy.models.repair,
+      requestBody(currentPolicy, currentPolicy.models.repair, 'third repair'), 'repair', new Date(), TEXT_METHOD), /REPAIR_LIMIT/);
+  });
   const narrativeFixture = read('.case-qa/fixtures/pazar-editorial-rejection-38159952807.json');
   const latestNarrativeReview = read('.case-qa/fixtures/pazar-editorial-review-38165586423.json');
   const narrativeEntry = snapshot.entries.find(e => e.id === narrativeFixture.candidate.id);

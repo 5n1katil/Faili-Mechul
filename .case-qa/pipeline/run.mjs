@@ -13,6 +13,7 @@ import { EDITORIAL_VERSION, EDITORIAL_SYSTEM, editorialSchema, validEditorial, e
 import { EDITORIAL_REVISION_VERSION, EDITORIAL_REVISION_SYSTEM, editorialRevisionSchema, validEditorialRevision,
   editorialRevisionPrompt, compileEditorialRevision } from './editorial.mjs';
 import { REVIEW_VERSION } from './quality-contract.mjs';
+import { HINT_SYSTEM, hintOnly, hintSchema, hintPrompt, validHints, compileHints, recoverHintCleanup } from './hint-cleanup.mjs';
 import { TEXT_METHOD, TEXT_SYSTEM, textRepairPlan, textResponseSchema, textRepairPrompt,
   validTextResponse, explainTextResponse, compileTextPatch, supportsTextRepair } from './text-repair.mjs';
 
@@ -42,6 +43,8 @@ export async function repairOne(snapshot, entry, store, { allowAI = false, calle
   delete record.provider_error;
   const resumed = restoreBest(snapshot, entry, record);
   let current = resumed.candidate, assessment = resumed.assessment;
+  const recoveredHints = recoverHintCleanup(snapshot, entry, current, record, state.requests);
+  if (recoveredHints) { current = recoveredHints.candidate; assessment = recoveredHints.assessment; }
   const recoveredEditorial = recoverEditorial(snapshot, entry, current, record, state.requests);
   if (recoveredEditorial) { current = recoveredEditorial.candidate; assessment = recoveredEditorial.assessment; }
   if (changed) { record.feedback = []; delete record.review; delete record.failed_review; }
@@ -52,6 +55,8 @@ export async function repairOne(snapshot, entry, store, { allowAI = false, calle
     store.save();
   };
   const run = { calls: 0, spent: 0, attempts: [], resumed_score: assessment.result.score };
+  if (recoveredHints) run.attempts.push({ purpose: 'hint_cleanup', cached: true, score: assessment.result.score,
+    retained: true, request_key: recoveredHints.request_key });
   if (recoveredEditorial) run.attempts.push({ purpose: 'editorial', cached: true, score: assessment.result.score,
     retained: true, request_key: recoveredEditorial.request_key });
   let status = 'audit_only', review;
@@ -74,16 +79,19 @@ export async function repairOne(snapshot, entry, store, { allowAI = false, calle
         const used = Object.values(store.state.requests || {}).filter(r => r.case_id === entry.id && countsAsRepair(r) &&
           (r.repair_method || 'legacy_patch') === method).length;
         const model = index > 0 || used > 0 ? (snapshot.policy.models.repair || snapshot.policy.models.first_pass) : snapshot.policy.models.first_pass;
+        const cleanup = hintOnly(assessment);
         const response = await caller({ store, policy: snapshot.policy, run, caseId: entry.id, model,
           purpose: 'repair', repairMethod: method,
-          ...(textPlan ? { schema: textResponseSchema(current, textPlan), system: TEXT_SYSTEM,
+          ...(cleanup ? { schema: hintSchema(current), system: HINT_SYSTEM, prompt: hintPrompt(current, assessment),
+            validate: value => validHints(current, value) } : textPlan ? { schema: textResponseSchema(current, textPlan), system: TEXT_SYSTEM,
             prompt: textRepairPrompt(entry, current, textPlan, assessment, record.feedback),
             validate: p => validTextResponse(current, textPlan, p), diagnose: p => explainTextResponse(current, textPlan, p) } : {
             prompt: repairPrompt(entry, current, assessment, record.feedback),
             validate: p => p?.case_id === entry.id && Array.isArray(p.operations) }) });
         try {
-          const patch = textPlan ? compileTextPatch(current, textPlan, response.plan) : response.plan;
-          const next = guardedPatch(snapshot, entry, current, patch, assessment);
+          const patch = !cleanup && textPlan ? compileTextPatch(current, textPlan, response.plan) : response.plan;
+          const next = cleanup ? compileHints(snapshot, entry, current, response.plan, assessment) :
+            guardedPatch(snapshot, entry, current, patch, assessment);
           const retained = better(next.assessment, assessment);
           run.attempts.push({ model, repair_method: method, cached: response.cached, score: next.assessment.result.score, retained });
           if (retained) { current = next.candidate; assessment = next.assessment; }
