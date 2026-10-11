@@ -45,10 +45,11 @@
     }
   },
   "sequential": {
-    "max_calls_per_execute": 4,
+    "max_calls_per_execute": 7,
     "max_repairs_per_case": 2,
     "verified_text_repair_limit": 2,
-    "max_requests_per_case": 6,
+    "max_requests_per_case": 7,
+    "editorial_revision_limit": 1,
     "execute_budget_usd": 0.25,
     "case_budget_usd": 0.25,
     "daily_budget_usd": 2,

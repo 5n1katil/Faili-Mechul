@@ -23,6 +23,8 @@ import { TEXT_METHOD, TEXT_SYSTEM, supportsTextRepair, textRepairPlan, verifyTex
   compileTextPatch, textResponseSchema, validTextResponse, explainTextResponse, textRepairPrompt } from './text-repair.mjs';
 import { verifiedTextResponses } from '../fixtures/verified-text-responses.mjs';
 import { evaluatePreclueLeakage, n8nGuardSource } from '../case_qa_preclue_guard.mjs';
+import { compileEditorial, editorialPrompt, editorialFailure, validEditorial } from './editorial.mjs';
+import { reviewHash } from './review.mjs';
 
 globalThis.fetch = async () => { throw new Error('TEST_NETWORK_FORBIDDEN'); };
 const policy = read('.case-qa/pipeline/policy.json'), root = process.cwd();
@@ -47,6 +49,98 @@ try {
     assert.ok(campaignRows(snapshot).every(r => !r.content_locked || r.passed));
   });
   const original = snapshot.entries.find(e => e.id === 'termal-otelde-supheli-vaka');
+  await test('live editorial rejection is actionable; one bounded prose revision requires entirely fresh player and judge calls', async () => {
+    const oldKey = process.env.GEMINI_API_KEY; process.env.GEMINI_API_KEY = 'offline-editorial-test';
+    const fixture = read('.case-qa/fixtures/pazar-editorial-rejection-38159952807.json');
+    const entry = snapshot.entries.find(e => e.id === fixture.candidate.id), candidate = clone(fixture.candidate);
+    candidate.qaPortfolioRegistry = clone(entry.candidate.qaPortfolioRegistry);
+    assert.equal(stableHash(candidate), fixture.candidate_hash);
+    assert.equal(assess(snapshot, entry, candidate).passed, true);
+    assert.equal(playerPass(policy, candidate, playerView(candidate), fixture.player), true);
+    assert.equal(judgePass(policy, fixture.judge), false);
+    const failed = { passed: false, failures: ['EDITORIAL_REVIEW_FAILED'], certificate: {
+      schema: 'fm_case_review_v1', review_hash: reviewHash(snapshot, candidate, {}), player: fixture.player, judge: fixture.judge } };
+    assert.equal(editorialFailure(snapshot, candidate, failed), true);
+    assert.match(editorialPrompt(candidate, failed), /Baklava/);
+    assert.match(editorialPrompt(candidate, failed), /tutanağı/);
+    const value = { story: candidate.story + ' Kepenkler yarıya inerken mahallede yıllardır süren güven duygusu da sarsılmıştı. Halit’in akşam evine dönmesini bekleyen ailesine henüz kimse haber veremiyordu.',
+      clues: Object.fromEntries(candidate.clues.map(c => [c.id, { text: c.text, deductionHint: c.deductionHint }])) };
+    const revised = compileEditorial(snapshot, entry, candidate, value).candidate;
+    assert.equal(assess(snapshot, entry, revised).passed, true);
+    for (const axis of ['suspects','weapons','locations']) assert.equal(stableHash(revised[axis]), stableHash(candidate[axis]));
+    assert.equal(stableHash(revised.solution), stableHash(candidate.solution));
+    assert.equal(stableHash(revised.clues.map(c => c.logicRules)), stableHash(candidate.clues.map(c => c.logicRules)));
+    assert.equal(validEditorial(candidate, { ...value, solution: candidate.solution }), false);
+    assert.throws(() => compileEditorial(snapshot, entry, candidate, { ...value, story: candidate.story }), /EDITORIAL_NO_CHANGE/);
+    assert.throws(() => compileEditorial(snapshot, entry, candidate, { ...value, story: 'Eksik.' }), /EDITORIAL_CONTENT/);
+    const leaking = clone(value); leaking.story += ' Katil Komşu Satıcı idi; Baklava ile Tezgah üzerinde öldürdü.';
+    assert.throws(() => compileEditorial(snapshot, entry, candidate, leaking), /EDITORIAL_GATES_FAILED/);
+    const changed = clone(candidate); changed.story += ' Farklı.';
+    assert.equal(editorialFailure(snapshot, changed, failed), false);
+    const store = storeFor(entry.id);
+    Object.assign(store.state.cases[entry.id], { candidate, candidate_hash: stableHash(candidate),
+      source_hash: entry.sourceHash, simulator_hash: snapshot.simulatorHash, failed_review: failed,
+      spent: 0.01502, status: 'quarantined' });
+    store.state.campaign_spent = 0.01502;
+    for (const [i,purpose] of ['repair','repair','player','judge'].entries()) store.state.requests['prior-' + i] = {
+      case_id: entry.id, purpose, status: 'completed', charged: 0.01502 / 4, day: '2026-10-11',
+      ...(purpose === 'repair' ? { repair_method: TEXT_METHOD } : {}) };
+    const prior = stableHash(store.state.requests), calls = [];
+    const result = await repairOne(snapshot, entry, store, { allowAI: true, caller: args => {
+      calls.push(args.purpose);
+      return callPaid({ ...args, transport: async () => responseForFixture(args.purpose === 'editorial' ? value :
+        args.purpose === 'player' ? playerFor(revised) : validJudge()) });
+    } });
+    assert.deepEqual(calls, ['editorial','player','judge'], JSON.stringify({ failures: result.failures, attempts: result.run.attempts, status: result.status }));
+    assert.equal(result.status, 'ready_for_gates');
+    assert.equal(Object.keys(store.state.requests).length, 7);
+    assert.equal(stableHash(Object.fromEntries(Object.entries(store.state.requests).filter(([k]) => k.startsWith('prior-')))), prior);
+    assert.ok(store.state.campaign_spent > 0.01502);
+    assert.equal(certificateValid(snapshot, entry, revised, result.review.certificate), true);
+    assert.throws(() => reserveRequest(store, policy, runFor(), entry.id, policy.models.repair,
+      requestBody(policy, policy.models.repair, 'another editorial request'), 'editorial'), /CASE_REQUEST_LIMIT|EDITORIAL_LIMIT/);
+    const limited = { ...snapshot, policy: clone(policy) }; limited.policy.sequential.max_calls_per_execute = 2;
+    const pendingStore = storeFor(entry.id);
+    Object.assign(pendingStore.state.cases[entry.id], { candidate, candidate_hash: stableHash(candidate),
+      source_hash: entry.sourceHash, simulator_hash: snapshot.simulatorHash, failed_review: failed });
+    const pending = await repairOne(limited, entry, pendingStore, { allowAI: true,
+      caller: () => { throw new Error('NO_PARTIAL_REVISION_CALLS'); } });
+    assert.equal(pending.status, 'editorial_pending');
+    const once = storeFor(entry.id);
+    reserveRequest(once, policy, runFor(), entry.id, policy.models.repair,
+      requestBody(policy, policy.models.repair, 'first editorial'), 'editorial');
+    assert.throws(() => reserveRequest(once, policy, runFor(), entry.id, policy.models.repair,
+      requestBody(policy, policy.models.repair, 'second editorial'), 'editorial'), /EDITORIAL_LIMIT/);
+    const blindStore = storeFor(entry.id);
+    Object.assign(blindStore.state.cases[entry.id], { candidate, candidate_hash: stableHash(candidate),
+      source_hash: entry.sourceHash, simulator_hash: snapshot.simulatorHash, failed_review: failed });
+    const blindCalls = [];
+    const rejected = await repairOne(snapshot, entry, blindStore, { allowAI: true, caller: args => {
+      blindCalls.push(args.purpose);
+      return callPaid({ ...args, transport: async () => responseForFixture(args.purpose === 'editorial' ? value :
+        { ...playerFor(revised), confidence: 20, unique_solution: false }) });
+    } });
+    assert.deepEqual(blindCalls, ['editorial','player']);
+    assert.equal(rejected.status, 'quarantined'); assert.deepEqual(rejected.failures, ['BLIND_PLAYER_FAILED']);
+    assert.equal(blindStore.state.cases[entry.id].review, undefined);
+    // Reproduce the deployed run: rejection existed only in the request cache.
+    const coldStore = storeFor(entry.id), reviewCost = Object.values(fixture.review_requests).reduce((s,r) => s + r.charged, 0);
+    Object.assign(coldStore.state.cases[entry.id], { candidate, candidate_hash: stableHash(candidate),
+      source_hash: entry.sourceHash, simulator_hash: snapshot.simulatorHash, spent: fixture.historical_spent });
+    coldStore.state.campaign_spent = fixture.historical_spent;
+    coldStore.state.requests = clone(fixture.review_requests);
+    for (let i = 0; i < 2; i++) coldStore.state.requests['historical-repair-' + i] = {
+      case_id: entry.id, purpose: 'repair', repair_method: TEXT_METHOD, status: 'completed', day: '2026-10-11',
+      charged: (fixture.historical_spent - reviewCost) / 2 };
+    const actualTransports = [];
+    const recovered = await repairOne(snapshot, entry, coldStore, { allowAI: true, caller: args => callPaid({ ...args,
+      transport: async () => { actualTransports.push(args.purpose); return responseForFixture(args.purpose === 'editorial' ? value :
+        args.purpose === 'player' ? playerFor(revised) : validJudge()); } }) });
+    assert.deepEqual(actualTransports, ['editorial','player','judge']);
+    assert.equal(recovered.status, 'ready_for_gates'); assert.equal(recovered.run.calls, 3);
+    assert.equal(Object.keys(coldStore.state.requests).length, 7);
+    if (oldKey === undefined) delete process.env.GEMINI_API_KEY; else process.env.GEMINI_API_KEY = oldKey;
+  });
   await test('actual Pazar response failed only on an investigator title; corrected exact HTML still blocks true double disclosures', () => {
     const fixture = read('.case-qa/fixtures/pazar-live-candidate-38158353700.json');
     const entry = snapshot.entries.find(e => e.id === fixture.candidate.id), candidate = clone(fixture.candidate);
@@ -195,7 +289,7 @@ try {
     for (const f of ['suspectId','weaponId','locationId']) candidate.solution[f] = rename[candidate.solution[f]];
     assert.equal(verifyTextPlan(candidate, textRepairPlan(snapshot, entry, candidate)).coreNecessary, true);
   });
-  await test('new-method recovery preserves money/history and gives exactly two versioned repairs within six total requests', async () => {
+  await test('new-method recovery preserves money/history and keeps both versioned repair limits within the lifetime request cap', async () => {
     const entry = snapshot.entries.find(e => e.id === 'kapalicarsida-gizem'), store = storeFor(entry.id);
     const record = store.state.cases[entry.id];
     Object.assign(record, { status: 'quarantined', source_hash: entry.sourceHash, simulator_hash: snapshot.simulatorHash });
@@ -581,11 +675,12 @@ try {
     await assert.rejects(call('third'), /REPAIR_LIMIT/);
     await call('blind-player', 'player'); await call('editor', 'judge');
     assert.equal(Object.keys(store.state.requests).length, 6);
+    await call('last-allowed', 'judge');
     await assert.rejects(call('extra', 'judge'), /CASE_REQUEST_LIMIT/);
     assert.equal(store.state.requests['historical-400'].charged, 0);
     assert.equal(store.state.requests['historical-404'].http_status, 404);
     const blocked = storeFor(entry.id);
-    for (let i = 0; i < 6; i++) blocked.state.requests['rejected-' + i] = {
+    for (let i = 0; i < policy.sequential.max_requests_per_case; i++) blocked.state.requests['rejected-' + i] = {
       case_id: entry.id, purpose: 'repair', day: '2026-10-11', status: 'failed', charged: 0, http_status: 400
     };
     const result = await repairOne(snapshot, entry, blocked, { allowAI: true,
