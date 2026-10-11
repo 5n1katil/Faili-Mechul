@@ -4727,37 +4727,133 @@
             "id": "c1",
             "text": "Olay yerindeki gelişmiş analiz cihazlarının kasıtlı olarak devreden çıkarılması, cinayetin sıradan evrakların bulunduğu bir ofiste işlenmediğini açıkça gösteriyordu.",
             "type": "evidence",
-            "isBonus": false
+            "isBonus": false,
+            "logicRules": [
+              {
+                "action": "eliminate",
+                "pair": [
+                  "l1",
+                  "l2"
+                ]
+              }
+            ],
+            "qaRationale": {
+              "matrixEffect": "eliminate",
+              "evidenceLink": "kasıtlı olarak devreden çıkarılması, cinayetin sıradan evrakların bulunduğu bir ofiste işlenmediğini",
+              "evidenceKind": "forensic"
+            },
+            "qaSemanticFacts": [],
+            "isCrimeAnchor": false
           },
           {
             "id": "c2",
             "text": "Gece vardiyasındaki güvenlik görevlisi, uzun geçitlerde devriye atarken kilitli kapıları hiç zorlamadığını ve sadece dış koridorları kontrol ettiğini kamera kayıtlarıyla kanıtladı.",
             "type": "witness",
-            "isBonus": false
+            "isBonus": false,
+            "logicRules": [
+              {
+                "action": "eliminate",
+                "pair": [
+                  "s3",
+                  "l3"
+                ]
+              }
+            ],
+            "qaRationale": {
+              "matrixEffect": "Güvenlik Görevlisi ≠ Koridorlar elenir",
+              "evidenceLink": "güvenlik görevlisi, uzun geçitlerde devriye atarken kilitli kapıları hiç zorlamadığını",
+              "evidenceKind": "witness"
+            },
+            "qaSemanticFacts": [],
+            "isCrimeAnchor": false
           },
           {
             "id": "c3",
             "text": "Maktulün üzerinde hiçbir cam kesiği veya solunum yolunu tahrip eden boğucu madde kalıntısı bulunmadı; ölüm ani bir şokla, dışarıdan bir müdahale olmadan gerçekleşmiş gibi görünüyordu.",
             "type": "forensic",
-            "isBonus": false
+            "isBonus": false,
+            "logicRules": [
+              {
+                "action": "eliminate",
+                "pair": [
+                  "w2",
+                  "w3"
+                ]
+              }
+            ],
+            "qaRationale": {
+              "matrixEffect": "eliminate",
+              "evidenceLink": "hiçbir cam kesiği veya solunum yolunu tahrip eden boğucu madde kalıntısı bulunmadı",
+              "evidenceKind": "medical"
+            },
+            "qaSemanticFacts": [],
+            "isCrimeAnchor": false
           },
           {
             "id": "c4",
             "text": "Prof. Kahraman'ın bilgisayarından, olay saatinde kesintisiz olarak üniversite sunucusuna makale verisi yüklendiği ve ofisinden çıkmadığı anlaşıldı.",
             "type": "record",
-            "isBonus": false
+            "isBonus": false,
+            "logicRules": [
+              {
+                "action": "eliminate",
+                "pair": [
+                  "s1",
+                  "l2"
+                ]
+              }
+            ],
+            "qaRationale": {
+              "matrixEffect": "Prof. Kahraman ≠ Ofis elenir",
+              "evidenceLink": "olay saatinde kesintisiz olarak üniversite sunucusuna makale verisi yüklendiği ve ofisinden çıkmadığı",
+              "evidenceKind": "record"
+            },
+            "qaSemanticFacts": [],
+            "isCrimeAnchor": false
           },
           {
             "id": "c5",
             "text": "Yüksek voltajlı cihazların sigorta kutusunda, sadece teknik altyapıya hakim doktora öğrencisinin bildiği gizli bir baypas işlemi yapılmıştı.",
             "type": "evidence",
-            "isBonus": true
+            "isBonus": true,
+            "logicRules": [
+              {
+                "action": "confirm",
+                "pair": [
+                  "s2",
+                  "w1"
+                ]
+              }
+            ],
+            "qaRationale": {
+              "matrixEffect": "Asistan Elif ↔ Elektrik Çarpması doğrulanır",
+              "evidenceLink": "Yüksek voltajlı cihazların sigorta kutusunda, sadece teknik altyapıya hakim doktora öğrencisinin bildiği gizli bir baypas işlemi yapılmıştı",
+              "evidenceKind": "forensic"
+            },
+            "qaSemanticFacts": [],
+            "isCrimeAnchor": true
           },
           {
             "id": "c6",
             "text": "Asistan Elif'in laboratuvar eldivenlerinin uçlarındaki yanık izleri, kasıtlı olarak yaratılan o ölümcül kısa devrenin kıvılcımlarıyla tamamen eşleşiyordu.",
             "type": "forensic",
-            "isBonus": true
+            "isBonus": true,
+            "logicRules": [
+              {
+                "action": "confirm",
+                "pair": [
+                  "s2",
+                  "l1"
+                ]
+              }
+            ],
+            "qaRationale": {
+              "matrixEffect": "Asistan Elif ↔ Laboratuvar doğrulanır",
+              "evidenceLink": "laboratuvar eldivenlerinin uçlarındaki yanık izleri, kasıtlı olarak yaratılan o ölümcül kısa devrenin kıvılcımlarıyla tamamen eşleşiyordu",
+              "evidenceKind": "forensic"
+            },
+            "qaSemanticFacts": [],
+            "isCrimeAnchor": false
           }
         ],
         "solvabilityMeta": {
@@ -4781,7 +4877,7 @@
         },
         "qaPattern": {
           "anchorSource": "none",
-          "designIntent": "Deterministik miras-vaka imzası: none:?; evidence:?:?; ????; ?|?|?|?; none."
+          "designIntent": "Standard deterministic university research sabotage deduction pattern with complete grid rules."
         },
         "qaPortfolioRegistry": {
           "schema_version": "fm_qa_portfolio_registry_v1",
@@ -5943,9 +6039,25 @@
             }
           ]
         },
-        "qaAuthoringVersion": "fm_case_qa_authoring_v3_2_deterministic_bootstrap"
+        "qaAuthoringVersion": "fm_case_qa_authoring_v3_2_deterministic_bootstrap",
+        "qaSemanticFacts": [
+          {
+            "kind": "crime_component",
+            "component": "suspect",
+            "entityId": "s2",
+            "source": "clue:c4",
+            "evidence": "ofisinden çıkmadığı anlaşıldı"
+          },
+          {
+            "kind": "crime_component",
+            "component": "location",
+            "entityId": "l1",
+            "source": "clue:c1",
+            "evidence": "laboratuvar"
+          }
+        ]
       },
-      "candidate_hash": "36e182839f7fe0758f075dcb78cb21355de057948dcbce62f240d90f51a6e02f",
+      "candidate_hash": "c9e0b3c590ab3bd8f22e66b7c3895006dee7e9038055b86afab80ad09a811c5d",
       "best_score": 0
     }
   },
