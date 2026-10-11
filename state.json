@@ -4,7 +4,11 @@
   "cases": {
     "konakta-gece-yarisi-cinayeti": {
       "spent": 0.009374,
-      "feedback": [],
+      "feedback": [
+        {
+          "error": "LOCKED_FIELD:qaPortfolioRegistry"
+        }
+      ],
       "source_hash": "30cfce8ec8ac7979613373b254d613cbaf5394e9fcb1c6f68b08393ca68d7d9a",
       "simulator_hash": "cb53e6613d6379de097599634de26524f4510fbc",
       "candidate": {
