@@ -3002,9 +3002,9 @@
       "candidate_hash": "42ed2cadc52aa51644d660e5a9d80bbf8aecc8c1fd5a0db49f2920e9aa344e52",
       "best_score": 0,
       "failures": [
-        "GEMINI_HTTP_402"
+        "REPAIR_LIMIT"
       ],
-      "status": "GEMINI_HTTP_402"
+      "status": "quarantined"
     }
   },
   "requests": {
