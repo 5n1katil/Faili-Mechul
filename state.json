@@ -3004,7 +3004,7 @@
       "failures": [
         "REPAIR_LIMIT"
       ],
-      "status": "quarantined"
+      "status": "method_upgrade_pending"
     },
     "kapalicarsida-gizem": {
       "spent": 0.020182700000000005,
@@ -4649,7 +4649,7 @@
           }
         }
       ],
-      "status": "quarantined"
+      "status": "method_upgrade_pending"
     },
     "universitede-karanlik-sir": {
       "spent": 0.01858215,
@@ -6333,7 +6333,7 @@
           }
         }
       ],
-      "status": "quarantined"
+      "status": "method_upgrade_pending"
     }
   },
   "requests": {
