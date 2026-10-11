@@ -1589,7 +1589,7 @@
       "spent": 0.0003565500000000006
     },
     "bogazda-kayip-elmas": {
-      "spent": 0.04799294999999999,
+      "spent": 0.06908144999999999,
       "feedback": [
         {
           "score": 0,
@@ -7694,7 +7694,16 @@
           }
         }
       }
+    },
+    "17db72c4a9963ce2113457fb48cb23e431cf26f5fbd26b63ab4e41ac470221dd": {
+      "case_id": "bogazda-kayip-elmas",
+      "model": "gemini-3.5-flash-lite",
+      "purpose": "repair",
+      "day": "2026-10-11",
+      "status": "reserved",
+      "charged": 0.0210885,
+      "repair_method": "verified_text_v1"
     }
   },
-  "campaign_spent": 0.11377670000000004
+  "campaign_spent": 0.13486520000000005
 }
