@@ -7,7 +7,7 @@ import { execFileSync } from 'node:child_process';
 import { read, write, clone, loadSnapshot, scan, selectNext, assess, guardedPatch, better,
   restoreBest, stageCandidate } from './core.mjs';
 import { emptyState, validateState, openStore } from './state.mjs';
-import { reserveRequest, requestBody, callPaid, Stop } from './provider.mjs';
+import { reserveRequest, requestBody, callPaid, Stop, modelPreflight } from './provider.mjs';
 import { assertDraftPolicy } from './publish-draft.mjs';
 import { playerView, playerPass, judgePass, reviewCandidate, mediaPreflight, certificateValid } from './review.mjs';
 import { repairOne, campaignRows } from './run.mjs';
@@ -203,6 +203,41 @@ try {
     await assert.rejects(callPaid({ store, policy, run: runFor(), caseId: 'test', model: policy.models.first_pass,
       prompt: 'reject', transport: async () => { calls++; return { ok: false, status: 404, json: async () => ({}) }; } }), /GEMINI_HTTP_404/);
     assert.equal(calls, 1); assert.equal(store.state.campaign_spent, 0);
+  });
+  await test('model preflight checks both exact models using GET without case content', async () => {
+    const urls = [];
+    const result = await modelPreflight(policy, { transport: async (url, options) => {
+      urls.push(url); assert.equal(options.method, 'GET'); assert.equal(options.body, undefined);
+      assert.ok(!url.includes('key='));
+      const name = 'models/' + url.split('/').at(-1);
+      return { ok: true, json: async () => ({ name, supportedGenerationMethods: ['generateContent'], outputTokenLimit: 65536 }) };
+    } });
+    assert.deepEqual(result.checked, [policy.models.first_pass, policy.models.reviewer]);
+    assert.equal(result.generation_calls, 0); assert.equal(urls.length, 2);
+  });
+  await test('missing or incompatible model stops preflight without retry or fallback', async () => {
+    for (const metadata of [null, { name: 'models/' + policy.models.first_pass,
+      supportedGenerationMethods: ['embedContent'], outputTokenLimit: 65536 }]) {
+      let calls = 0;
+      await assert.rejects(modelPreflight(policy, { transport: async () => {
+        calls++; return { ok: !!metadata, status: 404, json: async () => metadata };
+      } }), /MODEL_PREFLIGHT_(HTTP_404|UNSUPPORTED)/);
+      assert.equal(calls, 1);
+    }
+    let calls = 0;
+    await assert.rejects(modelPreflight(policy, { transport: async () => {
+      calls++; throw new Error('do not leak raw transport data');
+    } }), /MODEL_PREFLIGHT_UNAVAILABLE/);
+    assert.equal(calls, 1);
+  });
+  await test('Gemini 3 uses one thinking setting; expired pricing stops before reservation', () => {
+    const body = requestBody(policy, policy.models.first_pass, 'bounded');
+    assert.deepEqual(body.generationConfig.thinkingConfig, { thinkingLevel: 'LOW' });
+    const store = storeFor(), run = runFor();
+    assert.throws(() => reserveRequest(store, policy, run, 'test', policy.models.first_pass,
+      body, 'repair', new Date('2027-01-01T00:00:00Z')), /PRICING_REVIEW_REQUIRED/);
+    assert.equal(run.calls, 0); assert.equal(store.state.campaign_spent, 0);
+    assert.equal(Object.keys(store.state.requests).length, 0);
   });
   await test('corrupt/reset spending ledger is rejected', () => {
     assert.throws(() => validateState({ ...emptyState(), campaign_spent: 1 }), /LEDGER/);
