@@ -1307,6 +1307,9 @@
         "status": "INVALID_ARGUMENT",
         "message": "Request contains an invalid argument."
       }
+    },
+    "provider-diagnostic-v1": {
+      "spent": 0
     }
   },
   "requests": {
