@@ -1589,7 +1589,7 @@
       "spent": 0.0003565500000000006
     },
     "bogazda-kayip-elmas": {
-      "spent": 0.06908144999999999,
+      "spent": 0.05094324999999999,
       "feedback": [
         {
           "score": 0,
@@ -7700,10 +7700,58 @@
       "model": "gemini-3.5-flash-lite",
       "purpose": "repair",
       "day": "2026-10-11",
-      "status": "reserved",
-      "charged": 0.0210885,
-      "repair_method": "verified_text_v1"
+      "status": "completed",
+      "charged": 0.0029503000000000003,
+      "repair_method": "verified_text_v1",
+      "usage": {
+        "promptTokenCount": 3526,
+        "candidatesTokenCount": 757,
+        "totalTokenCount": 4283,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 3526
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "plan": {
+        "case_id": "bogazda-kayip-elmas",
+        "assessment": "Boğaz'ın serin sularında yankılanan bu gizem, matematiksel olarak doğrulanan ipuçları ve katil zinciriyle çözülmüştür.",
+        "story": "İstanbul Boğazı'nın karanlık sularında demirli lüks yatta paha biçilemez mücevherin sergilendiği gece, güvenlik şefi Orhan'ın cansız bedeniyle kabusa döndü. Yatın sakinleri farklı bölümlere dağılmışken, geride kalan izler katilin ve çalınan elmasın kimliğini gün yüzüne çıkarıyor. Araştırmacılar, her bir şüphelinin o gece farklı bir alanda bulunduğunu ve farklı yöntemler izlediğini doğruluyor.",
+        "suspect_descriptions": {
+          "s1": "Geminin deneyimli kaptanı. Fiziksel olarak oldukça yapılı ve ağır nesneleri kolayca savurabilecek kuvvette.",
+          "s2": "Partinin zengin finansörü. İnce yapılı; ağır fiziksel güç gerektiren işlere ve kirli ortamlara hiç alışkın değil.",
+          "s3": "Serginin sorumlusu. Çevik, esnek ve geminin en dar, gizli alanlarında bile rahatça hareket edebilecek fiziksel yapıda."
+        },
+        "clues": {
+          "c1": {
+            "text": "Olay yeri inceleme raporu ve vardiya çizelgeleri, bahsi geçen finansörün o gece en alt teknik bölümde bulunmadığını kesin olarak kanıtlamaktadır.",
+            "deductionHint": "Zengin finansörün bu teknik alanda bulunmadığı nasıl doğrulanmıştır?"
+          },
+          "c2": {
+            "text": "Misafirlerin ağırlandığı geniş eğlence alanında yapılan detaylı aramada, paslanmaz çelik bakım aletinin izlerine rastlanmıştır.",
+            "deductionHint": "Geniş eğlence alanında hangi bakım aleti bulunmuştur?"
+          },
+          "c3": {
+            "text": "Yönetim merkezindeki güvenlik kameraları ve basınç ölçümleri, endüstriyel tüpün bu alanda aktif olarak bulunduğunu kaydetmiştir.",
+            "deductionHint": "Yönetim merkezinde hangi endüstriyel nesne tespit edilmiştir?"
+          },
+          "c4": {
+            "text": "Geminin en alt katındaki zemin analizleri ve personel takip günlüğü, deneyimli kaptanın bu teknik alanda bulunmadığını doğrulamaktadır. Ayrıca bu makine dairesi, suçun işlendiği tek ana mekân olarak saptanmıştır.",
+            "deductionHint": "Kaptanın bulunmadığı ve suçun gerçekleştiği bu teknik alan neresidir?"
+          },
+          "c5": {
+            "text": "Şahit ifadeleri ve demir çelik envanteri, kaptanın el aletini kullandığını göstermektedir.",
+            "deductionHint": "Kaptan hangi aletle ilişkilendirilmiştir?"
+          },
+          "c6": {
+            "text": "Güvenlik kayıtları, finansörün yönetim merkezinde bulunduğunu doğrulamaktadır.",
+            "deductionHint": "Finansör hangi konumda görülmüştür?"
+          }
+        }
+      }
     }
   },
-  "campaign_spent": 0.13486520000000005
+  "campaign_spent": 0.11672700000000005
 }
