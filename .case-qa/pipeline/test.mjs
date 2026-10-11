@@ -122,6 +122,24 @@ try {
     assert.equal(result.status, 'quarantined'); assert.equal(result.run.calls, 0);
     assert.match(result.failures[0], /MEDIA_REVIEW_REQUIRED/);
   });
+  await test('rejected repair feeds the next attempt and accepted checkpoint resumes offline', async () => {
+    const store = storeFor(entry.id), calls = [];
+    const result = await repairOne(snapshot, entry, store, { allowAI: true, caller: async args => {
+      calls.push(args);
+      if (args.purpose === 'repair') {
+        if (calls.length === 1) return { plan: { case_id: entry.id, operations: [] } };
+        assert.match(args.prompt, /PREVIOUS CANDIDATES REJECTED BY THE EXACT SIMULATOR/);
+        return { plan };
+      }
+      return { plan: args.purpose === 'player' ? playerFor(repaired) : validJudge() };
+    } });
+    assert.equal(result.status, 'ready_for_gates');
+    assert.deepEqual(calls.map(c => c.purpose), ['repair', 'repair', 'player', 'judge']);
+    assert.equal(result.run.attempts[0].retained, false);
+    const resumed = await repairOne(snapshot, entry, store, { allowAI: true,
+      caller: () => { throw new Error('UNEXPECTED_CALL'); } });
+    assert.equal(resumed.status, 'ready_for_gates'); assert.equal(resumed.run.calls, 0);
+  });
   await test('quarantine and pending PR do not stall the queue', () => {
     const rows = [{ id: 'a', passed: false }, { id: 'b', passed: false }, { id: 'c', passed: false }];
     assert.equal(selectNext(rows, 'a', { a: { status: 'quarantined' }, b: { status: 'awaiting_review' } }).id, 'c');
