@@ -6502,7 +6502,7 @@
       "status": "quarantined"
     },
     "pazar-yerinde-supheli-olum": {
-      "spent": 0.05056399999999999,
+      "spent": 0.02047924999999999,
       "feedback": [],
       "source_hash": "d4a6a5003e9f00e091ed0db4768d29393539ba914af388dd06d6aca3f1fdcad2",
       "simulator_hash": "04352c0a4ce07097cb752a1980b144fa00722e78",
@@ -9892,9 +9892,50 @@
       "model": "gemini-3.8-flash",
       "purpose": "editorial",
       "day": "2026-10-11",
-      "status": "reserved",
-      "charged": 0.035544
+      "status": "completed",
+      "charged": 0.00545925,
+      "usage": {
+        "promptTokenCount": 2909,
+        "candidatesTokenCount": 874,
+        "totalTokenCount": 3783,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 2909
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "plan": {
+        "story": "İstanbul'un kadim çarşısında sabah serinliği sürerken tatlıcı Halit Usta, boğazını tutarak aniden yere yığılıp can verdi. Olay yerine koşan tabip, ustanın soluk borusunu tıkayıp dakikalar içinde kalbini durduran ölümcül, renksiz ve yapay bir toksinin pazar mallarından birine kasten zerk edildiğini belirledi. Çarşı kapıları anında mühürlendi; o an çevrede bulunan üç şüphelinin her birinin yalnızca tek bir maddeyle temas ettiği ve farklı bir alanda durduğu saptandı. Zehirlenmiş nesneyi ustaya sunan faili ve dehşetin merkezini aydınlatmak dedektiflere kaldı.",
+        "clues": {
+          "c1": {
+            "text": "Ağaçların altındaki lojistik boşaltma sahasında inceleme yapan adli heyet, toprağa sızmış aşındırıcı kalıntılar buldu. Bu kimyasal testler, zemin temizliğinde yararlanılan keskin kokulu endüstriyel çözücünün yalnızca sabah erken saatlerde yük indirmeye yarayan bu açık ağaçlık alanda bekletildiğini kesinleştirdi.",
+            "deductionHint": "Ağaçlık lojistik noktada hangi temizlik maddesinin izleri tespit edildi?"
+          },
+          "c2": {
+            "text": "Çarşı merkezindeki güvenlik kamerası dökümleri dedektiflerce tek tek tarandı. Ağır çuvalları taşımaktan omuzları çökmüş uykusuz gencin, tepsilerin dizildiği ve alışverişin döndüğü ana satış noktasına o sabah hiç adım atmadığı, oradan tamamen uzakta kaldığı görüntülerle kanıtlandı.",
+            "deductionHint": "Kamera kayıtları yorgun taşıyıcının ana satış noktasından uzak olduğunu nasıl gösteriyor?"
+          },
+          "c3": {
+            "text": "Adli tabibin resmî raporu, Halit Usta'nın can verdiği asıl ölüm noktasının tepsilerin dizildiği ve damlaların aktığı ana satış noktası olduğunu kesinleştirdi. Eşzamanlı zabıta kayıtları ise bastonlu yaşlı kadının o esnada bu ölüm noktasında bulunmadığını doğruladı.",
+            "deductionHint": "Ölümcül mahalde yaşlı kadının bulunmadığı belgelenirken cinayet yeri nasıl belirlendi?"
+          },
+          "c4": {
+            "text": "Dükkanların arka kapılarına açılan loş yaya geçidinde keşif yapan nöbetçi memur, duvar dibine gizlenmiş bir kazan fark etti. Bakır güğümde kaynatılmış berrak ve yoğun şekerli geleneksel sıvının, tam da bu kestirme ara hatta bırakıldığı resmî tutanakla tespit edildi.",
+            "deductionHint": "Dükkanların arka geçidinde hangi şekerli sıvının tutulduğu tutanaklara geçti?"
+          },
+          "c5": {
+            "text": "Tezgaha yakın noktada bulunan teslim fişi ve sipariş kaydı, Müşteri Hanım isimli kişinin o esnada Şerbet ile doğrudan temas kurduğunu ve bu geleneksel sıvıyı aldığını açıkça listelemektedir.",
+            "deductionHint": "Müşteri Hanım'ın elindeki makbuz hangi içecekle ilgilidir?"
+          },
+          "c6": {
+            "text": "Çarşı bekçisinin ifadesi ve nöbet defteri, Tedarikçi Genç adlı çalışanın kritik zaman diliminde Park alanında olduğunu ve orada beklediğini açıkça doğrulamaktadır.",
+            "deductionHint": "Bekçi defteri Tedarikçi Genç'in hangi alanda bulunduğunu doğrular?"
+          }
+        }
+      }
     }
   },
-  "campaign_spent": 0.18192365000000002
+  "campaign_spent": 0.15183890000000003
 }
