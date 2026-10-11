@@ -7970,7 +7970,7 @@
       }
     },
     "muzede-kayip-eser": {
-      "spent": 0.03952535,
+      "spent": 0.01217435,
       "feedback": [
         {
           "error": "PATCH_CONTRACT: NEAR_READY_SCOPE: identity, roles, order, policy, profiles, story or unrelated facts changed"
@@ -11649,9 +11649,49 @@
       "model": "gemini-3.8-flash",
       "purpose": "player",
       "day": "2026-10-11",
-      "status": "reserved",
-      "charged": 0.02925075
+      "status": "completed",
+      "charged": 0.00189975,
+      "usage": {
+        "promptTokenCount": 973,
+        "candidatesTokenCount": 312,
+        "totalTokenCount": 1285,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 973
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "plan": {
+        "unique_solution": true,
+        "solution": {
+          "suspectId": "s2",
+          "weaponId": "w1",
+          "locationId": "l2"
+        },
+        "confidence": 100,
+        "evidence": [
+          {
+            "clue_id": "c3",
+            "quote": "Bu kilitli oda, suçun işlendiği tek yer olarak tespit edilmiştir."
+          },
+          {
+            "clue_id": "c2",
+            "quote": "Özel kilitli ve penceretsiz muhafaza biriminin geçiş kayıtları, sosyal alan görevlisinin o gece bu kilitli alana hiçbir şekilde erişim sağlamadığını ve içeride bulunmadığını açıkça kanıtlamaktadır."
+          },
+          {
+            "clue_id": "c1",
+            "quote": "geniş ve aydınlık ana alanda yapılan incelemede, nefes borusunu yakan yoğun gaz kokusuna ve havaya sıkılmış tahriş edici maddelere rastlanmıştır."
+          },
+          {
+            "clue_id": "c4",
+            "quote": "ağır destek ünitesinin devrilme sesinin doğrudan izleme ve monitörlerin bulunduğu odadan geldiğini"
+          }
+        ],
+        "issues": []
+      }
     }
   },
-  "campaign_spent": 0.19661800000000001
+  "campaign_spent": 0.169267
 }
