@@ -1309,7 +1309,7 @@
       }
     },
     "provider-diagnostic-v1": {
-      "spent": 0.003933900000000001
+      "spent": 0.000038200000000000386
     }
   },
   "requests": {
@@ -1376,9 +1376,27 @@
       "model": "gemini-3.5-flash-lite",
       "purpose": "player",
       "day": "2026-10-11",
-      "status": "reserved",
-      "charged": 0.0039148
+      "status": "completed",
+      "charged": 0.0000191,
+      "usage": {
+        "promptTokenCount": 22,
+        "candidatesTokenCount": 5,
+        "totalTokenCount": 27,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 22
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "plan": {
+        "stage": "lite_json",
+        "model": "gemini-3.5-flash-lite",
+        "accepted": true,
+        "finish_reason": "STOP"
+      }
     }
   },
-  "campaign_spent": 0.003933900000000001
+  "campaign_spent": 0.000038200000000000386
 }
