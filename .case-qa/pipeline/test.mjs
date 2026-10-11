@@ -80,6 +80,9 @@ try {
   await test('text planner is ID-independent; compiler rejects partial/extra outputs and keeps other formats on the existing path', () => {
     const entry = snapshot.entries.find(e => e.id === 'bogazda-kayip-elmas'), candidate = clone(entry.candidate);
     const plan = textRepairPlan(snapshot, entry, candidate), response = clone(verifiedTextResponses[entry.id]);
+    const reordered = clone(candidate);
+    reordered.solution = { locationId: candidate.solution.locationId, suspectId: candidate.solution.suspectId, weaponId: candidate.solution.weaponId };
+    assert.equal(verifyTextPlan(reordered, textRepairPlan(snapshot, entry, reordered)).coreNecessary, true);
     assert.equal(validTextResponse(candidate, plan, response), true);
     assert.equal(validTextResponse(candidate, plan, { ...response, operations: [] }), false);
     delete response.clues.c6; assert.throws(() => compileTextPatch(candidate, plan, response), /TEXT_RESPONSE_INVALID/);

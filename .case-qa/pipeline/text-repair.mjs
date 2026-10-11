@@ -5,14 +5,16 @@ const axes = ['suspects', 'weapons', 'locations'];
 const solutionFields = ['suspectId', 'weaponId', 'locationId'];
 const types = ['forensic', 'record', 'evidence', 'witness'];
 const perms = [[0,1,2],[0,2,1],[1,0,2],[1,2,0],[2,0,1],[2,1,0]];
-const equal = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+const equal = (a, b) => stableHash(a) === stableHash(b);
 
 // This compiler only handles the legacy, entirely textual 3x3 format. Other
 // sizes, clue roles, premium cases and interactive clues keep their existing path.
 export function supportsTextRepair(entry, candidate) {
   return entry.tier === 'standard' && axes.every(a => candidate[a]?.length === 3) &&
     new Set(axes.flatMap(a => candidate[a].map(e => e.id))).size === 9 &&
+    axes.every(a => candidate[a].every(e => typeof e.id === 'string' && e.id.length > 0)) &&
     candidate.clues?.length === 6 && candidate.clues.filter(c => !c.isBonus).length === 4 &&
+    new Set(candidate.clues.map(c => c.id)).size === 6 &&
     candidate.clues.every(c => types.includes(c.type) && (!c.mechanicType || c.mechanicType === 'text') &&
       !['miniGame','miniGameData','audio','image','cipher','encryptedMessage'].some(k => c[k])) &&
     solutionFields.every((f, i) => candidate[axes[i]].some(e => e.id === candidate.solution?.[f]));
@@ -40,6 +42,8 @@ export function enumerateTextGrid(candidate, rules, anchor) {
 export function verifyTextPlan(candidate, plan) {
   const core = plan.clues.filter(c => !c.isBonus), anchor = plan.anchor;
   const unique = rows => new Set(rows.map(r => JSON.stringify(r)));
+  if (core.length !== 4 || plan.clues.filter(c => c.isBonus).length !== 2 ||
+      plan.clues.some(c => !['confirm','eliminate'].includes(c.rule.action))) throw new Error('TEXT_PLAN_INVALID_SHAPE');
   const solutions = enumerateTextGrid(candidate, core.map(c => c.rule), anchor);
   if (!solutions.length || solutions.some(s => !equal(s, candidate.solution))) throw new Error('TEXT_PLAN_NOT_UNIQUE');
   for (const removed of core) {
