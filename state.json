@@ -3007,7 +3007,7 @@
       "status": "quarantined"
     },
     "kapalicarsida-gizem": {
-      "spent": 0.04938245,
+      "spent": 0.020182700000000005,
       "feedback": [],
       "source_hash": "516640a853bd2653f5c4ca18e4737220f3139eeeae527578b334bf2003243009",
       "simulator_hash": "cb53e6613d6379de097599634de26524f4510fbc",
@@ -5416,9 +5416,123 @@
       "model": "gemini-3.8-flash",
       "purpose": "repair",
       "day": "2026-10-11",
-      "status": "reserved",
-      "charged": 0.04080975
+      "status": "completed",
+      "charged": 0.01161,
+      "usage": {
+        "promptTokenCount": 4850,
+        "candidatesTokenCount": 2126,
+        "totalTokenCount": 6976,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 4850
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "plan": {
+        "case_id": "kapalicarsida-gizem",
+        "assessment": "Tamir planı: Hikaye kelime derinliği artırıldı. İpucu 1'deki metin kural taşkını ve zayıf çapa sorunu giderildi; cinayetin Arka Depo'da işlendiği ve Kerem Genç ile olan doğrudan bağı ('s3','l2') cinayet çapası olarak bağlandı. Temel ipuçları s3|w3|l2 üçlüsünü tekil kılacak ve her biri çıkarıldığında belirsizlik doğuracak şekilde yeniden kurgulandı (c1: confirm s3,l2; c2: confirm w3,l2; c3: eliminate s1,w3; c4: eliminate s2,w3). Bonus ipucu c5'in yinelenen kuralı işlevsel bir ek eleme (eliminate s1,l2) ile değiştirildi ve evidenceKind alanları standartlaştırıldı.",
+        "operations": [
+          {
+            "op": "replace",
+            "path": "/story",
+            "value_json": "\"Kapalıçarşı'nın yüzlerce yıllık labirent gibi kıvrılan sokaklarına çöken akşam karanlığı, ardında kanlı bir gizem bıraktı. Çarşının en köklü kuyumcularından biri, kepenkler indikten hemen sonra kilitli dükkanında vahşice katledildi. Etrafta değerli takılar dururken yalnızca gizli kasaya erişilmeye çalışılmış olması, katilin çarşının iç dinamiklerini ve dükkanın şifreli yapısını çok iyi bilen tanıdık bir sima olduğunu gösteriyor. Olay yerine intikal eden emniyet güçleri, çarşı esnafının ifadeleri ve olay yerindeki teknik izler ışığında katili, kullanılan aleti ve cinayetin bizzat işlendiği odayı belirlemek üzere harekete geçti.\"",
+            "reason": "Hikaye kelime sayısı ve atmosfer derinliği 60-220 kelime hedefine yükseltildi."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/0/text",
+            "value_json": "\"Gece bekçisinin dijital turnike ve güvenlik kayıtları, maktulün can verdiği cinayet saatinde yalnızca stajyer Kerem'in şifreli Arka Depo'da bulunduğunu kesinleştirdi.\"",
+            "reason": "Kural taşkını yaratan ilgisiz isimler temizlendi ve güçlü bir suç çapası (isCrimeAnchor) ifadesi eklendi."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/0/qaRationale",
+            "value_json": "{\"matrixEffect\":\"Kerem Genç ↔ Arka Depo doğrulanır\",\"evidenceLink\":\"Gece bekçisinin dijital turnike ve güvenlik kayıtları, maktulün can verdiği cinayet saatinde yalnızca stajyer Kerem'in şifreli Arka Depo'da bulunduğunu kesinleştirdi.\",\"evidenceKind\":\"record\"}",
+            "reason": "qaRationale metinle uyumlu hale getirildi."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/0/qaSemanticFacts",
+            "value_json": "[{\"kind\":\"crime_component\",\"component\":\"suspect\",\"entityId\":\"s3\",\"source\":\"clue:c1\",\"evidence\":\"Gece bekçisinin dijital turnike ve güvenlik kayıtları cinayet anında stajyer Kerem'i işaret etti.\"}]",
+            "reason": "Çapa anlamsal gerçeği güncellendi."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/1/text",
+            "value_json": "\"Kafatasındaki ölümcül çökme kırığı ve Arka Depo'daki kasa çevresinde bulunan metal çapaklar, cinayetin Pençe Anahtar ile işlendiğini kanıtladı.\"",
+            "reason": "Metin gereksiz isimlerden arındırılarak Arka Depo ve Pençe Anahtar cinayet bağına odaklandı."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/1/qaRationale",
+            "value_json": "{\"matrixEffect\":\"Pençe Anahtar ↔ Arka Depo doğrulanır\",\"evidenceLink\":\"Kafatasındaki ölümcül çökme kırığı ve Arka Depo'daki kasa çevresinde bulunan metal çapaklar, cinayetin Pençe Anahtar ile işlendiğini kanıtladı.\",\"evidenceKind\":\"forensic\"}",
+            "reason": "qaRationale kanıt metniyle tam uyumlu hale getirildi."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/2/text",
+            "value_json": "\"Olay yeri kriminal incelemesinde, Ahmet Usta'nın dükkanındaki hiçbir alette veya elinde Pençe Anahtar kullanımına dair temas izi bulunmadı.\"",
+            "reason": "Core necessity gereksinimi için c3 Ahmet Usta ile Pençe Anahtar ilişkisini eler."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/2/logicRules",
+            "value_json": "[{\"action\":\"eliminate\",\"pair\":[\"s1\",\"w3\"]}]",
+            "reason": "Ahmet Usta - Pençe Anahtar elemesi yapılarak zorunlu temel ipucu zinciri sağlandı."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/2/qaRationale",
+            "value_json": "{\"matrixEffect\":\"Ahmet Usta ≠ Pençe Anahtar elenir\",\"evidenceLink\":\"Ahmet Usta'nın dükkanındaki hiçbir alette veya elinde Pençe Anahtar kullanımına dair temas izi bulunmadı.\",\"evidenceKind\":\"forensic\"}",
+            "reason": "evidenceKind 'forensic' olarak standartlaştırıldı ve matrixEffect güncellendi."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/3/text",
+            "value_json": "\"Selma Teyze'nin romatizmalı ellerinin incelenmesi sonucunda, cinayette kullanılan ağır Pençe Anahtar'ı kavrayamayacağı adli tıp raporuyla belgelendi.\"",
+            "reason": "Core necessity için Selma Teyze ile Pençe Anahtar ilişkisini eler."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/3/logicRules",
+            "value_json": "[{\"action\":\"eliminate\",\"pair\":[\"s2\",\"w3\"]}]",
+            "reason": "Selma Teyze - Pençe Anahtar elemesi ile katil tekilleştirildi."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/3/qaRationale",
+            "value_json": "{\"matrixEffect\":\"Selma Teyze ≠ Pençe Anahtar elenir\",\"evidenceLink\":\"Selma Teyze'nin romatizmalı ellerinin incelenmesi sonucunda, cinayette kullanılan ağır Pençe Anahtar'ı kavrayamayacağı adli tıp raporuyla belgelendi.\",\"evidenceKind\":\"medical\"}",
+            "reason": "matrixEffect ve evidenceKind tıbbi rapora uygun güncellendi."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/4/text",
+            "value_json": "\"Ahmet Usta'nın tüm akşam boyunca kendi dükkanının önündeki Çarşı Koridoru'nda oturduğu tanık ifadeleriyle kesinleşti; şifreli Arka Depo'ya hiç yaklaşmadı.\"",
+            "reason": "Tekrarlayan kural kaldırıldı; işlevsel masum elemesi eklendi."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/4/logicRules",
+            "value_json": "[{\"action\":\"eliminate\",\"pair\":[\"s1\",\"l2\"]}]",
+            "reason": "Ek ipucu tekrarı önlendi, faydalı bir bonus elemesi sağlandı."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/4/qaRationale",
+            "value_json": "{\"matrixEffect\":\"Ahmet Usta ≠ Arka Depo elenir\",\"evidenceLink\":\"Ahmet Usta'nın tüm akşam boyunca kendi dükkanının önündeki Çarşı Koridoru'nda oturduğu tanık ifadeleriyle kesinleşti; şifreli Arka Depo'ya hiç yaklaşmadı.\",\"evidenceKind\":\"witness\"}",
+            "reason": "qaRationale bonus ipucu için kural ve türüyle uyumlu kılındı."
+          },
+          {
+            "op": "replace",
+            "path": "/qaSemanticFacts",
+            "value_json": "[{\"kind\":\"crime_component\",\"component\":\"suspect\",\"entityId\":\"s3\",\"source\":\"clue:c1\",\"evidence\":\"Gece bekçisinin dijital turnike ve güvenlik kayıtları cinayet anında stajyer Kerem'i işaret etti.\"}]",
+            "reason": "Kasa genelindeki qaSemanticFacts çapa ipucuyla senkronize edildi."
+          }
+        ]
+      }
     }
   },
-  "campaign_spent": 0.11593905000000002
+  "campaign_spent": 0.08673930000000002
 }
