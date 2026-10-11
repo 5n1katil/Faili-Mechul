@@ -6502,7 +6502,7 @@
       "status": "quarantined"
     },
     "pazar-yerinde-supheli-olum": {
-      "spent": 0.0205587,
+      "spent": 0.0032914999999999993,
       "feedback": [],
       "source_hash": "d4a6a5003e9f00e091ed0db4768d29393539ba914af388dd06d6aca3f1fdcad2",
       "simulator_hash": "cb53e6613d6379de097599634de26524f4510fbc",
@@ -9521,10 +9521,58 @@
       "model": "gemini-3.5-flash-lite",
       "purpose": "repair",
       "day": "2026-10-11",
-      "status": "reserved",
-      "charged": 0.0205587,
-      "repair_method": "verified_text_v1"
+      "status": "completed",
+      "charged": 0.0032915,
+      "repair_method": "verified_text_v1",
+      "usage": {
+        "promptTokenCount": 2905,
+        "candidatesTokenCount": 968,
+        "totalTokenCount": 3873,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 2905
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "plan": {
+        "case_id": "pazar-yerinde-supheli-olum",
+        "assessment": "Vaka İstanbul'un kalabalık ve gürültülü çarşısında geçmektedir. Müfettişler her bir şüphelinin konumunu, eşya erişimini ve olay anındaki faaliyetlerini titizlikle incelemiştir. Toplanan deliller, tanık ifadeleri ve adli raporlar sonucunda gerçeğin perdesi aralanmaktadır.",
+        "story": "İstanbul'un kalabalık ve gürültülü çarşısında, sabahın ilk ışıklarıyla birlikte herkes kendi işine koyulmuştu. Ünlü tatlıcı tezgahının başında hareketsiz şekilde yatarken bulundu. Olay yerindeki kalabalık şaşkınlık içindeydi ve herkes birbirine bakıyordu. Güvenlik güçleri hemen bölgeyi sararak inceleme başlattı. Geriye üç şüpheli ve aydınlatılması gereken karanlık bir sır kaldı. Çarşı esnafı ve müşteriler endişeyle soruşturmanın sonucunu beklemektedir.",
+        "suspect_descriptions": {
+          "s1": "Yıllardır her hafta sonu alışverişe gelen, elindeki ahşap bastonuyla kalabalığı yavaşça adımlayan yaşlı müdavim; çevresine mesafeli ve dikkatli bir gözle bakar.",
+          "s2": "Ağır yükleri sırtlayarak koşturan, yorgunluktan gözleri kızarmış, günün her saati aceleci adımlarla koşturan genç çalışan; sürekli bir telve telaş içindedir.",
+          "s3": "Kendi tezgahının başında müşteri beklerken gözlerini bir an olsun yan taraftan ayırmayan, rakip esnafın hareketlerini yakından izleyen hırslı satıcı."
+        },
+        "clues": {
+          "c1": {
+            "text": "Sabah erken saatlerde mal indirme faaliyetlerinin yürütüldüğü satış alanına uzak noktada yapılan incelemede, zemin temizliğinde kullanılan keskin kokulu endüstriyel çözücü kalıntılarına rastlanmıştır.",
+            "deductionHint": "Uzak noktadaki çözücü kalıntıları hangi bulguyla örtüşmektedir?"
+          },
+          "c2": {
+            "text": "Ana satış noktasındaki vardiya kayıtları ve giriş çıkış çizelgeleri incelendiğinde, ağır tepsileri taşıyan depo görevlisinin o saatte bu ana alanda bulunmadığı kesin olarak doğrulanmıştır.",
+            "deductionHint": "Depo görevlisi o sırada ana satış noktasında mıydı?"
+          },
+          "c3": {
+            "text": "Tescilli ana satış noktası, bu trajik olayın gerçekleştiği tek mekân olarak saptanmıştır. Aynı resmi denetim kayıtları ve müşteri defterleri, yaşlı müdavimin o saatte bu ana satış noktasında asla bulunmadığını kanıtlamaktadır.",
+            "deductionHint": "Olay yerindeki kayıtlar yaşlı müdavimin konumunu nasıl dışlamaktadır?"
+          },
+          "c4": {
+            "text": "Dükkanların arka kapılarına açılan loş yaya geçidinde yapılan tanık dinlemelerinde, büyük bakır güğümlerde kaynatılan berrak ve yoğun şekerli geleneksel sıvının kokusunun yoğun biçimde duyulduğu rapor edilmiştir.",
+            "deductionHint": "Loş geçitteki tanıklar hangi geleneksel sıvıyı rapor etmiştir?"
+          },
+          "c5": {
+            "text": "Ziyaretçi defterleri ve pazar giriş kayıtları, bastonlu yaşlı müdavimin büyük bakır güğümlerde kaynatılan berrak sıvı ile doğrudan temasını ve bu maddeyi taşıdığını doğrulamaktadır.",
+            "deductionHint": "Yaşlı müdavim hangi sıvı maddeyle ilişkilendirilmektedir?"
+          },
+          "c6": {
+            "text": "Sabah erken saatlerde araçların mal indirdiği uzak noktadaki güvenlik kameraları, yorgun depo görevlisinin o bölgede bulunduğunu net bir şekilde kaydetmiştir.",
+            "deductionHint": "Depo görevlisi hangi uzak noktada görülmüştür?"
+          }
+        }
+      }
     }
   },
-  "campaign_spent": 0.15191835000000004
+  "campaign_spent": 0.13465115000000002
 }
