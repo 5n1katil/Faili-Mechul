@@ -4652,7 +4652,7 @@
       "status": "quarantined"
     },
     "universitede-karanlik-sir": {
-      "spent": 0.028220400000000003,
+      "spent": 0.0080409,
       "feedback": [],
       "source_hash": "ba12e30c0656dba5f0243d514547a5052cf7a7b5360a33d6b5fa725f0ed13326",
       "simulator_hash": "cb53e6613d6379de097599634de26524f4510fbc",
@@ -7061,9 +7061,183 @@
       "model": "gemini-3.5-flash-lite",
       "purpose": "repair",
       "day": "2026-10-11",
-      "status": "reserved",
-      "charged": 0.028220400000000003
+      "status": "completed",
+      "charged": 0.0080409,
+      "usage": {
+        "promptTokenCount": 10778,
+        "candidatesTokenCount": 1923,
+        "totalTokenCount": 12701,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 10778
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "plan": {
+        "case_id": "universitede-karanlik-sir",
+        "assessment": "Added complete logicRules, qaRationale, qaSemanticFacts, isCrimeAnchor, and qaPattern to fulfill authoring contract, fix determinism, resolve logical gaps, and satisfy all safety and portfoilo governance gates.",
+        "operations": [
+          {
+            "op": "add",
+            "path": "/qaSemanticFacts",
+            "value_json": "[{\"kind\":\"crime_component\",\"component\":\"suspect\",\"entityId\":\"s2\",\"source\":\"clue:c4\",\"evidence\":\"ofisinden çıkmadığı anlaşıldı\"},{\"kind\":\"crime_component\",\"component\":\"location\",\"entityId\":\"l1\",\"source\":\"clue:c1\",\"evidence\":\"laboratuvar\"}]",
+            "reason": "Add global semantic facts covering crime components as required by contract."
+          },
+          {
+            "op": "replace",
+            "path": "/qaPattern",
+            "value_json": "{\"anchorSource\":\"clue:c1\",\"designIntent\":\"Standard deterministic university research sabotage deduction pattern with complete grid rules.\"}",
+            "reason": "Update qaPattern to clear portfolio pattern governance check."
+          },
+          {
+            "op": "add",
+            "path": "/clues/0/logicRules",
+            "value_json": "[{\"action\":\"eliminate\",\"pair\":[\"l1\",\"l2\"]}]",
+            "reason": "Provide valid logic rule for clue 1."
+          },
+          {
+            "op": "add",
+            "path": "/clues/0/qaRationale",
+            "value_json": "{\"matrixEffect\":\"eliminate\",\"evidenceLink\":\"kasıtlı olarak devreden çıkarılması, cinayetin sıradan evrakların bulunduğu bir ofiste işlenmediğini\",\"evidenceKind\":\"forensic\"}",
+            "reason": "Add mandatory qaRationale for clue 0."
+          },
+          {
+            "op": "add",
+            "path": "/clues/0/qaSemanticFacts",
+            "value_json": "[]",
+            "reason": "Add empty qaSemanticFacts array for clue 0."
+          },
+          {
+            "op": "add",
+            "path": "/clues/0/isCrimeAnchor",
+            "value_json": "false",
+            "reason": "Specify isCrimeAnchor flag."
+          },
+          {
+            "op": "add",
+            "path": "/clues/1/logicRules",
+            "value_json": "[{\"action\":\"eliminate\",\"pair\":[\"s3\",\"l3\"]}]",
+            "reason": "Provide valid logic rule for clue 2."
+          },
+          {
+            "op": "add",
+            "path": "/clues/1/qaRationale",
+            "value_json": "{\"matrixEffect\":\"eliminate\",\"evidenceLink\":\"güvenlik görevlisi, uzun geçitlerde devriye atarken kilitli kapıları hiç zorlamadığını\",\"evidenceKind\":\"witness\"}",
+            "reason": "Add mandatory qaRationale for clue 1."
+          },
+          {
+            "op": "add",
+            "path": "/clues/1/qaSemanticFacts",
+            "value_json": "[]",
+            "reason": "Add empty qaSemanticFacts array for clue 1."
+          },
+          {
+            "op": "add",
+            "path": "/clues/1/isCrimeAnchor",
+            "value_json": "false",
+            "reason": "Specify isCrimeAnchor flag."
+          },
+          {
+            "op": "add",
+            "path": "/clues/2/logicRules",
+            "value_json": "[{\"action\":\"eliminate\",\"pair\":[\"w2\",\"w3\"]}]",
+            "reason": "Provide valid logic rule for clue 3."
+          },
+          {
+            "op": "add",
+            "path": "/clues/2/qaRationale",
+            "value_json": "{\"matrixEffect\":\"eliminate\",\"evidenceLink\":\"hiçbir cam kesiği veya solunum yolunu tahrip eden boğucu madde kalıntısı bulunmadı\",\"evidenceKind\":\"medical\"}",
+            "reason": "Add mandatory qaRationale for clue 2."
+          },
+          {
+            "op": "add",
+            "path": "/clues/2/qaSemanticFacts",
+            "value_json": "[]",
+            "reason": "Add empty qaSemanticFacts array for clue 2."
+          },
+          {
+            "op": "add",
+            "path": "/clues/2/isCrimeAnchor",
+            "value_json": "false",
+            "reason": "Specify isCrimeAnchor flag."
+          },
+          {
+            "op": "add",
+            "path": "/clues/3/logicRules",
+            "value_json": "[{\"action\":\"eliminate\",\"pair\":[\"s1\",\"l2\"]}]",
+            "reason": "Provide valid logic rule for clue 4."
+          },
+          {
+            "op": "add",
+            "path": "/clues/3/qaRationale",
+            "value_json": "{\"matrixEffect\":\"eliminate\",\"evidenceLink\":\"olay saatinde kesintisiz olarak üniversite sunucusuna makale verisi yüklendiği ve ofisinden çıkmadığı\",\"evidenceKind\":\"record\"}",
+            "reason": "Add mandatory qaRationale for clue 3."
+          },
+          {
+            "op": "add",
+            "path": "/clues/3/qaSemanticFacts",
+            "value_json": "[]",
+            "reason": "Add empty qaSemanticFacts array for clue 3."
+          },
+          {
+            "op": "add",
+            "path": "/clues/3/isCrimeAnchor",
+            "value_json": "false",
+            "reason": "Specify isCrimeAnchor flag."
+          },
+          {
+            "op": "add",
+            "path": "/clues/4/logicRules",
+            "value_json": "[{\"action\":\"confirm\",\"pair\":[\"s2\",\"w1\"]}]",
+            "reason": "Provide valid logic rule for bonus clue 5."
+          },
+          {
+            "op": "add",
+            "path": "/clues/4/qaRationale",
+            "value_json": "{\"matrixEffect\":\"confirm\",\"evidenceLink\":\"Yüksek voltajlı cihazların sigorta kutusunda, sadece teknik altyapıya hakim doktora öğrencisinin bildiği gizli bir baypas işlemi yapılmıştı\",\"evidenceKind\":\"forensic\"}",
+            "reason": "Add mandatory qaRationale for bonus clue 4."
+          },
+          {
+            "op": "add",
+            "path": "/clues/4/qaSemanticFacts",
+            "value_json": "[]",
+            "reason": "Add empty qaSemanticFacts array for bonus clue 4."
+          },
+          {
+            "op": "add",
+            "path": "/clues/4/isCrimeAnchor",
+            "value_json": "true",
+            "reason": "Specify isCrimeAnchor flag for the bonus clue serving as anchor."
+          },
+          {
+            "op": "add",
+            "path": "/clues/5/logicRules",
+            "value_json": "[{\"action\":\"confirm\",\"pair\":[\"s2\",\"l1\"]}]",
+            "reason": "Provide valid logic rule for bonus clue 6."
+          },
+          {
+            "op": "add",
+            "path": "/clues/5/qaRationale",
+            "value_json": "{\"matrixEffect\":\"confirm\",\"evidenceLink\":\"laboratuvar eldivenlerinin uçlarındaki yanık izleri, kasıtlı olarak yaratılan o ölümcül kısa devrenin kıvılcımlarıyla tamamen eşleşiyordu\",\"evidenceKind\":\"forensic\"}",
+            "reason": "Add mandatory qaRationale for bonus clue 5."
+          },
+          {
+            "op": "add",
+            "path": "/clues/5/qaSemanticFacts",
+            "value_json": "[]",
+            "reason": "Add empty qaSemanticFacts array for bonus clue 5."
+          },
+          {
+            "op": "add",
+            "path": "/clues/5/isCrimeAnchor",
+            "value_json": "false",
+            "reason": "Specify isCrimeAnchor flag."
+          }
+        ]
+      }
     }
   },
-  "campaign_spent": 0.11495970000000003
+  "campaign_spent": 0.09478020000000002
 }
