@@ -7970,7 +7970,7 @@
       }
     },
     "muzede-kayip-eser": {
-      "spent": 0.0422801,
+      "spent": 0.010274600000000002,
       "feedback": [],
       "source_hash": "339b16518cbc76d096025f3d0f682b78a07277c2db96a9f341eb404df2a960ca",
       "simulator_hash": "0e27218c7817862f371febb6b7bb865821d9e5da",
@@ -11488,10 +11488,58 @@
       "model": "gemini-3.8-flash",
       "purpose": "repair",
       "day": "2026-10-11",
-      "status": "reserved",
-      "charged": 0.0388455,
-      "repair_method": "verified_text_v1"
+      "status": "completed",
+      "charged": 0.00684,
+      "repair_method": "verified_text_v1",
+      "usage": {
+        "promptTokenCount": 3435,
+        "candidatesTokenCount": 1137,
+        "totalTokenCount": 4572,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 3435
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "plan": {
+        "case_id": "muzede-kayip-eser",
+        "assessment": "Müzedeki cinayet ve kayıp eser vakası titizlikle yeniden kurgulandı. Planlanan çıkarım mantığı, kanıt tipleri ve ipucu hedefleri tam olarak korundu. Çekirdek ipuçlarında kesin isimler yerine kart tanımlarına dayalı betimlemeler kullanıldı, bonus ipuçlarında ise açık isimlere yer verildi. İpucu çıkarım soruları Sokratik üsluba uyarlandı ve doğrudan isim sızdırmayacak şekilde yazıldı.",
+        "story": "Ankara'nın köklü müzesinde fırtınalı bir gece yarısı, paha biçilmez Bizans broşunun bulunduğu vitrinin yakınlarında görevli gece bekçisi hareketsiz halde bulundu. Olay anında müzede bulunan üç personelin her birinin belirlenen zaman aralığında farklı bir listedeki alanda bulunduğu ve yine farklı bir şüpheli nesne veya yönteme eriştiği kesinleşti. Bekçinin hayatına mal olan ölümcül yöntemin sorumlusunu ve eylemin gerçekleştiği kesin noktayı belirlemek üzere olay yeri inceleme ekipleri tüm binayı kordon altına aldı. Yetkililer, kayıp eserin izini sürerken yalnızca doğrulanan kanıtların işaret ettiği tekil şüphelinin, ölümcül aracın ve suç mahallinin peşindedir.",
+        "suspect_descriptions": {
+          "s1": "Müzenin idari amiri. Üzerindeki resmi koyu renk ceketi, gergin yüz ifadesi ve sürekli saatini kontrol eden telaşlı tavırlarıyla dikkat çeken deneyimli bir yöneticidir.",
+          "s2": "Laboratuvarda çalışan uzman. Üzerindeki beyaz önlüğü, cebinden eksik etmediği büyüteci ve yorgun bakışlarıyla tanınan, mesleğinde fazlasıyla titiz bir inceleme uzmanıdır.",
+          "s3": "Sosyal alanlarda tanıtım yapan görevli. Canlı ve dinamik konuşma tarzı, dikkat çekici fuları ve misafirlerle kurduğu samimi diyaloglarla tanınan genç bir müze personelidir."
+        },
+        "clues": {
+          "c1": {
+            "text": "Olay yeri uzmanlarının yaptığı kimyasal incelemede, genze dolan ve havaya sıkıldığında nefes borusunu yakan yoğun gaz karışımının zerrecikleri, Bizans ve Osmanlı eserlerinin sergilendiği o aydınlık ve geniş mahalde tespit edildi.",
+            "deductionHint": "Tespit edilen kimyasal gaz kalıntıları hangi sergileme alanının havasına karışmış olabilir?"
+          },
+          "c2": {
+            "text": "Elektronik geçiş turnikesinin kayıt dökümleri incelendiğinde, dinamik tavırlarıyla bilinen tanıtım personelinin ilgili zaman aralığında sadece yetkili personelin şifreyle girebildiği pencereleri kapalı kilitli alana hiç uğramadığı kesinleşti.",
+            "deductionHint": "Geçiş kartı hareketleri, tanıtım personelinin hangi kilitli birimden tamamen uzak kaldığını gösteriyor?"
+          },
+          "c3": {
+            "text": "Bekçinin son nefesini verdiği yerin restorasyon bekleyen parçaların tutulduğu penceresiz kilitli oda olduğu olay yeri raporuyla kesinleşti. Giriş logları, resmi ceket giyen yöneticinin kritik zaman aralığında bu odaya adım atmadığını kanıtladı.",
+            "deductionHint": "Cinayetin işlendiği kilitli muhafaza alanına idari yöneticinin hiç girmediği nasıl anlaşılıyor?"
+          },
+          "c4": {
+            "text": "Güvenlik amirinin onaylı ifadesine göre, vitrinlerin altında duran ve yerinden oynatılması son derece güç olan ağır mermer destek, kritik dakikalarda monitörlerin ve telsizlerin bulunduğu kontrol merkezinin zemininde durmaktaydı.",
+            "deductionHint": "Kameraların izlendiği kontrol merkezinde bulunan ağır mermer blok listedeki hangi araca işaret ediyor?"
+          },
+          "c5": {
+            "text": "Eşya zimmet tutanağındaki parmak izi incelemesi, Sergi Kaidesi ile Küratör Bey arasında temas olduğunu ve bu ağır nesneye sadece onun eriştirildiğini belgelerle kanıtlamaktadır.",
+            "deductionHint": "Zimmet tutanağı Küratör Bey ile hangi ağır sergi unsuru arasındaki bağlantıyı kesinleştiriyor?"
+          },
+          "c6": {
+            "text": "Nöbetçi amirinin imzaladığı devriye tutanağına göre, Ziyaretçi Rehberi o gece yarısı tam olarak Sergi Salonu içerisinde görülmüş ve orada bulunduğu teyit edilmiştir.",
+            "deductionHint": "Devriye tutanağı Ziyaretçi Rehberi'nin hangi salonda olduğunu netleştiriyor?"
+          }
+        }
+      }
     }
   },
-  "campaign_spent": 0.19937275000000002
+  "campaign_spent": 0.16736725000000002
 }
