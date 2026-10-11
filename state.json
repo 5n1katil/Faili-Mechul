@@ -3,7 +3,7 @@
   "active_id": "konakta-gece-yarisi-cinayeti",
   "cases": {
     "konakta-gece-yarisi-cinayeti": {
-      "spent": 0,
+      "spent": 0.0278568,
       "feedback": [],
       "source_hash": "30cfce8ec8ac7979613373b254d613cbaf5394e9fcb1c6f68b08393ca68d7d9a",
       "simulator_hash": "cb53e6613d6379de097599634de26524f4510fbc",
@@ -1313,7 +1313,15 @@
       "status": "failed",
       "charged": 0,
       "http_status": 404
+    },
+    "8f0bcf9e342bc2219d776e33afb724eff1f9c30658488c11e0caa00ac4873f0f": {
+      "case_id": "konakta-gece-yarisi-cinayeti",
+      "model": "gemini-3.5-flash-lite",
+      "purpose": "repair",
+      "day": "2026-10-11",
+      "status": "reserved",
+      "charged": 0.0278568
     }
   },
-  "campaign_spent": 0
+  "campaign_spent": 0.0278568
 }
