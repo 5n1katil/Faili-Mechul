@@ -35,8 +35,26 @@ doğrulama, önce ücretsiz audit ardından henüz çağrı yapılmamış tek va
 
 ## Kalite kapıları
 
+Pazar canlı pilotu `38158353700`, $0.009551 / iki onarım çağrısından sonra
+karantinaya alındı. Son adayın tek engeli, simülatörün “olay yeri inceleme
+ekipleri” unvanını ölüm mahalli beyanı olarak yorumlamasıydı. Kaydedilmiş gerçek
+aday eski HTML'de 0, yalnız bu unvan ayrımının düzeltildiği HTML'de 100 ve
+productionReady verir. Sayısal eşik veya çift suç bileşeni yasağı değişmez;
+ceset/gerçek suç mahalli ile pozitif veya negatif yöntem bilgisi karşı örnekleri
+engellenmeye devam eder. Her iki sertifikasyon politikası yeni HTML blob'una
+kilitlenir; wrapper ile doğrudan HTML yine karşılaştırılır.
+
+Yalnız eski `cb53e6613d6379de097599634de26524f4510fbc` → yeni
+`04352c0a4ce07097cb752a1980b144fa00722e78` geçişinde, kaynak ve aday hash'leri
+aynı kalan bir checkpoint bütün yeni kontrolleri geçiyorsa yeniden kullanılabilir.
+Kimlik/politika kontrolü ve güncel portföy korunur. Eski inceleme sertifikası
+taşınmaz: oyuncu ve editör yeniden bağımsız inceleme yapmalıdır. Harcamalar,
+istekler, yöntem numarası ve onarım hakları sıfırlanmaz. Pazar için bir sonraki
+main/pilot aynı case_id ile mevcut metni yeniden üretmeden incelemeleri çalıştırır.
+Bu çevrimdışı 100 sonucu bağımsız canlı incelemenin veya yayın kabulünün yerine geçmez.
+
 1. Kaynaklar `inventory.json` ile birebir eşleşir; tekrar eden/kayıtsız ID durdurur.
-2. Gerçek v29.4 HTML Git blob'u sabittir: `cb53e6613d6379de097599634de26524f4510fbc`.
+2. Gerçek v29.4 HTML Git blob'u sabittir: `04352c0a4ce07097cb752a1980b144fa00722e78`.
 3. Puan 100, productionReady, zorunlu kapılar, kimlik, ön-ipucu güvenliği ve
    authoring sözleşmesi geçmelidir. Eşik düşürülmez; politika model tarafından değiştirilemez.
 4. Medya/etkileşimli ipuçları, insan tarafından doğrulanmış oyuncu metni ve dosya

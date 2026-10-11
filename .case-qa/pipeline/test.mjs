@@ -4,6 +4,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
+import { createRequire } from 'node:module';
 import { read, write, clone, loadSnapshot, scan, selectNext, assess, guardedPatch, better,
   restoreBest, stageCandidate, repairPrompt, assertNoRegression, assertScope } from './core.mjs';
 import { emptyState, validateState, openStore } from './state.mjs';
@@ -46,6 +47,60 @@ try {
     assert.ok(campaignRows(snapshot).every(r => !r.content_locked || r.passed));
   });
   const original = snapshot.entries.find(e => e.id === 'termal-otelde-supheli-vaka');
+  await test('actual Pazar response failed only on an investigator title; corrected exact HTML still blocks true double disclosures', () => {
+    const fixture = read('.case-qa/fixtures/pazar-live-candidate-38158353700.json');
+    const entry = snapshot.entries.find(e => e.id === fixture.candidate.id), candidate = clone(fixture.candidate);
+    candidate.qaPortfolioRegistry = clone(entry.candidate.qaPortfolioRegistry);
+    assert.equal(stableHash(candidate), fixture.candidate_hash);
+    const oldPath = path.join(temporary, 'original-html.html');
+    fs.writeFileSync(oldPath, execFileSync('git', ['show', fixture.simulator_hash]));
+    const { loadEngine } = createRequire(import.meta.url)('../fm_case_qa_core.cjs');
+    const before = assess({ ...snapshot, engine: loadEngine(oldPath) }, entry, candidate);
+    assert.equal(before.result.score, 0); assert.match(before.result.blockers.join('\n'), /Çift Suç Bileşeni/);
+    const after = assess(snapshot, entry, candidate);
+    assert.equal(after.passed, true); assert.equal(after.result.score, 100);
+    for (const text of [
+      'Olay yeri inceleme ekipleri cinayet mahallinde kimyasal zehirlenme izlerini tespit etti.',
+      'Olay yeri inceleme ekiplerinin raporunda maktulün cesedinde kimyasal zehirlenme bulunmadı.',
+      'Maktulün cesedi burada bulundu; kimyasal zehirlenme dışlandı.',
+      'Olay yerinde kimyasal zehirlenme tespit edildi.'
+    ]) {
+      const bad = clone(candidate); bad.clues[0].text = text;
+      assert.match(assess(snapshot, entry, bad).result.blockers.join('\n'), /Çift Suç Bileşeni/);
+    }
+  });
+  await test('only fully passing checkpoints survive this exact simulator correction; reviews, spend and repair counts are preserved', async () => {
+    const fixture = read('.case-qa/fixtures/pazar-live-candidate-38158353700.json');
+    const entry = snapshot.entries.find(e => e.id === fixture.candidate.id), store = storeFor(entry.id);
+    const candidate = clone(fixture.candidate); candidate.qaPortfolioRegistry = clone(entry.candidate.qaPortfolioRegistry);
+    Object.assign(store.state.cases[entry.id], { ...fixture, candidate, spent: 0.009551, source_hash: entry.sourceHash,
+      review: { passed: true, candidate_hash: 'old-certificate' }, status: 'quarantined' });
+    store.state.requests = Object.fromEntries([1,2].map(i => ['existing-' + i, {
+      case_id: entry.id, charged: 0.009551 / 2, day: '2026-10-11', purpose: 'repair',
+      status: 'completed', repair_method: TEXT_METHOD }]));
+    store.state.campaign_spent = 0.009551;
+    const priorRequests = stableHash(store.state.requests);
+    const restored = restoreBest(snapshot, entry, store.state.cases[entry.id]);
+    assert.equal(restored.assessment.passed, true);
+    assert.equal(certificateValid(snapshot, entry, restored.candidate, store.state.cases[entry.id].review), false);
+    let calls = 0;
+    const result = await repairOne(snapshot, entry, store, { allowAI: true, caller: async args => {
+      assert.notEqual(args.purpose, 'repair'); calls++;
+      return { plan: args.purpose === 'player' ? playerFor(candidate) : validJudge() };
+    } });
+    assert.equal(calls, 2); assert.equal(result.status, 'ready_for_gates');
+    assert.equal(store.state.cases[entry.id].spent, 0.009551);
+    assert.equal(stableHash(store.state.requests), priorRequests);
+    assert.equal(store.state.campaign_spent, 0.009551);
+    assert.equal(store.state.cases[entry.id].simulator_hash, snapshot.simulatorHash);
+    const corrupt = { ...fixture, candidate, source_hash: entry.sourceHash, candidate_hash: 'tampered' };
+    assert.equal(restoreBest(snapshot, entry, corrupt).assessment.passed, false);
+    const stale = { ...fixture, candidate, source_hash: entry.sourceHash, simulator_hash: 'unrelated-engine' };
+    assert.equal(restoreBest(snapshot, entry, stale).assessment.passed, false);
+    const failing = clone(candidate); failing.story = 'Eksik.';
+    assert.equal(restoreBest(snapshot, entry, { ...fixture, candidate: failing, source_hash: entry.sourceHash,
+      candidate_hash: stableHash(failing) }).assessment.passed, false);
+  });
   await test('live verified-text failures expose actual length and every rejected quality/profile finding to the next writer', () => {
     const live = read('.case-qa/fixtures/failed-text-campaign-38156344466.json');
     assert.equal(live.requests.length, 5);

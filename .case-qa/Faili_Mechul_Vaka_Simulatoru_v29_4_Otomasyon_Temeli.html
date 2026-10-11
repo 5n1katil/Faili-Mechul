@@ -2806,8 +2806,10 @@ function crimeScopeCheck(c){
   const core=(c.clues||[]).filter(cl=>!cl.isBonus);
   const checkVisible=(source,label,text)=>{
     const t=String(text||'');
-    // Olay mahallini olumlu kuran cümleler.
-    const scene=/(cinayet mahall|olay (yeri|mahall)|maktul(?:ün)? (?:bedeni|cesedi)|cansız beden|ceset|bedeni.{0,45}(bulundu|yatıyordu|keşfedildi)|burada (öldürül|can ver|katledil)|son nefesini.{0,35}(verdi|vermiş))/i.test(t);
+    // Ekip unvanı bir ölüm mahalli beyanı değildir. Gerçek mahalli/cesedi
+    // kuran kalan metin yine denetlenir; yöntem bulgusu aynen korunur.
+    const sceneText=t.replace(/olay (?:yeri|mahalli) inceleme ekip[\p{L}]*/giu,'inceleme ekibi');
+    const scene=/(cinayet mahall|olay (yeri|mahall)|maktul(?:ün)? (?:bedeni|cesedi)|cansız beden|ceset|bedeni.{0,45}(bulundu|yatıyordu|keşfedildi)|burada (öldürül|can ver|katledil)|son nefesini.{0,35}(verdi|vermiş))/i.test(sceneText);
     // Pozitif YA DA negatif yöntem bilgisi: "boyunda iz yoktu", "boğulma dışlandı",
     // "zehirlenme tespit edildi" vb. Bir mahallin yanında bu eksen aynı ipucuda verilmemeli.
     const method=/(boynunda.{0,70}(iz|baskı|sürtünme|morluk|ezilme|travma)|(?:bağ|kordon|boğulma|mekanik (?:araç|saldırı)|ateşli silah|kesici|delici|bıçak|ilaç|kapsül|farmakolojik|kimyasal|zehirlenme|zehirli).{0,80}(yok|bulunmadı|saptanmadı|görülmedi|dışlandı|tespit|iz|neden|sebep|araç|yöntem|kullan)|(?:ölüm|öldürül).{0,80}(bağ|kordon|boğulma|ateşli|kesici|ilaç|farmakolojik|kimyasal|zehir))/i.test(t);

@@ -128,7 +128,12 @@ export function repairPrompt(entry, candidate, assessment, rejected) {
 export function restoreBest(snapshot, entry, record) {
   let current = clone(entry.candidate);
   let assessment = assess(snapshot, entry, current);
-  if (record?.source_hash === entry.sourceHash && record?.simulator_hash === snapshot.simulatorHash &&
+  const sameSimulator = record?.simulator_hash === snapshot.simulatorHash;
+  // Only this audited team-title correction can re-evaluate an old checkpoint.
+  // It must pass EVERY current gate; old review certificates are not migrated.
+  const correctedSimulator = record?.simulator_hash === 'cb53e6613d6379de097599634de26524f4510fbc' &&
+    snapshot.simulatorHash === '04352c0a4ce07097cb752a1980b144fa00722e78';
+  if (record?.source_hash === entry.sourceHash && (sameSimulator || correctedSimulator) &&
       record.candidate && record.candidate_hash === stableHash(record.candidate)) {
     try {
       const restored = clone(record.candidate);
@@ -137,7 +142,7 @@ export function restoreBest(snapshot, entry, record) {
       if (protectedIdentity(restored) !== protectedIdentity(entry.raw) ||
           stableHash(restored.qaPolicy) !== stableHash(current.qaPolicy)) throw new Error('STALE_POLICY');
       const a = assess(snapshot, entry, restored);
-      if (better(a, assessment)) { current = restored; assessment = a; }
+      if (better(a, assessment) && (sameSimulator || a.passed)) { current = restored; assessment = a; }
     } catch { /* Keep today's main source on invalid checkpoint. */ }
   }
   const normalized = normalizeCandidateMetadata(snapshot.engine, current);
