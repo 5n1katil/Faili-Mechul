@@ -5,6 +5,24 @@ v3 kampanya ve avatar otomatik birleştirme workflow'ları emekliye ayrılmışt
 Uyumluluk için eski motor yardımcıları ve ücretsiz regresyon testleri korunur.
 Bu teslim altyapıdır; 105 vakanın tamamlandığı veya canlı pilotun geçtiği anlamına gelmez.
 
+### Ortak ara sözcüğü yanlış eşleşmesi (38164243995)
+
+Canlı editoryal çağrı $0.00545925 harcadı. Yeni metinde “Ara Sokak” adı yoktu;
+“kestirme ara hat” ifadesindeki tek “ara” sözcüğü doğrudan isim sayıldı. HTML'nin
+mevcut çok kelimeli ad/ortak sözcük listesine yalnız “ara” eklenmiştir. Tam ad,
+Türkçe ekli tam ad ve ayırt edici “sokak” kökü yakalanmaya devam eder. Sayısal
+eşikler, doğrudan ad kalite kapısı, anlamsal veya bağımsız inceleme kapıları değişmez.
+
+Yeni HTML blob: `0e27218c7817862f371febb6b7bb865821d9e5da`.
+Eski `04352c0a4ce07097cb752a1980b144fa00722e78` checkpoint yalnız değişmemiş
+kaynak/aday kimliği ve bütün güncel kapılar doğrulanarak taşınabilir. Bu tek
+geçişte, eski başarısız editör incelemesi ve adayından orijinal editoryal prompt,
+şema ve system yeniden kurulur; tam request hash ile bulunan tamamlanmış yanıt
+yeniden derlenir ve bütün yeni kapılardan geçerse ücretsiz kullanılır. Başka
+hash, kaynak, model veya belirsiz/başarısız yanıtlar kullanılamaz. Eski onaylar
+taşınmaz: yalnız iki yeni oyuncu/editör çağrısı yapılır. Yedi istek sınırı ve
+önceki tüm harcamalar korunur. Canlı editör kabulü henüz doğrulanmış değildir.
+
 ### Editör geri beslemesi (38159952807)
 
 Pazar adayı gerçek HTML'de 100 aldı; bağımsız oyuncu doğru cevabı %100 güvenle

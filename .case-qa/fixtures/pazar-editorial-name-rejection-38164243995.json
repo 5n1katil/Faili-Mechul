@@ -1,0 +1,204 @@
+{
+  "run_id": "38164243995",
+  "record": {
+    "spent": 0.02047924999999999,
+    "feedback": [
+      {
+        "error": "EDITORIAL_GATES_FAILED:{\"blockers\":[],\"quality_findings\":[\"💡 TAVSİYE (opsiyonel): İpucu 4: \\\"Ara Sokak\\\" adı doğrudan veriyor. Oyuncu eforunu ve atmosferi artırmak için ismi doğrudan yazmak yerine profil kartındaki betimlemelere atıfta bulunan dolaylı ifadeler tercih edilebilir (örn. \\\"Hazinedar Hüseyin\\\" yerine \\\"kayıp altın meselesinin gölgesindeki adam\\\"). Bu bir kalite önerisidir; çözülebilirliği etkilemez.\"],\"leakage\":[]}"
+      }
+    ],
+    "source_hash": "d4a6a5003e9f00e091ed0db4768d29393539ba914af388dd06d6aca3f1fdcad2",
+    "simulator_hash": "04352c0a4ce07097cb752a1980b144fa00722e78",
+    "candidate_hash": "1f529e81593f6910f328fba1a33695f4a1fae282aa03d3c2b5570abbf7237b28",
+    "best_score": 100,
+    "failures": [
+      "EDITORIAL_REVIEW_FAILED"
+    ],
+    "status": "quarantined",
+    "failed_review": {
+      "passed": false,
+      "failures": [
+        "EDITORIAL_REVIEW_FAILED"
+      ],
+      "certificate": {
+        "schema": "fm_case_review_v1",
+        "review_hash": "de4d4b2e5c2ae75fe00bc53ce468453fdc5e90ea31520a668f42611bfce897e9",
+        "player": {
+          "unique_solution": true,
+          "solution": {
+            "suspectId": "s3",
+            "weaponId": "w1",
+            "locationId": "l1"
+          },
+          "confidence": 100,
+          "evidence": [
+            {
+              "clue_id": "c3",
+              "quote": "Halit Usta'nın can verdiği asıl ölüm noktasının tepsilerin dizildiği ve damlaların aktığı ana satış noktası olduğunu kesinleştirdi. Eşzamanlı zabıta kayıtları ise bastonlu yaşlı kadının o esnada bu ölüm noktasında bulunmadığını doğruladı."
+            },
+            {
+              "clue_id": "c2",
+              "quote": "ağır yükleri taşımaktan yorgun düşmüş uykusuz gencin, tatlı tepsilerinin dizildiği ana satış noktasında kritik zaman dilimi içinde hiç bulunmadığını ve oraya yaklaşmadığını mühürlü raporla kanıtladı."
+            },
+            {
+              "clue_id": "c1",
+              "quote": "sabah erken saatlerde yük indirme maksadıyla kullanılan ağaçlık açık alanda yürüttüğü kimyasal testler, zemin temizliğinde yararlanılan keskin kokulu endüstriyel çözücünün o alana döküldüğünü ve orada bulundurulduğunu kesin olarak belirledi."
+            },
+            {
+              "clue_id": "c4",
+              "quote": "bakır güğümde kaynatılmış berrak ve yoğun şekerli geleneksel sıvının kritik saatlerde bu geçitte bekletildiğini tutanak altına alarak durumu bildirdi."
+            }
+          ],
+          "issues": []
+        },
+        "judge": {
+          "scores": {
+            "fairness": 5,
+            "clarity": 4,
+            "consistency": 4,
+            "originality": 3,
+            "engagement": 3
+          },
+          "issues": [
+            "Cinayet aleti olarak belirlenen 'Baklava'nın nasıl bir ölümcül silaha dönüştüğü (zehir, boğulma, alerji vb.) kurgusal olarak açıklanmamış; 'silah' tanımı havada kalmaktadır.",
+            "İpuçları saf eleme mantığıyla yazıldığından anlatı polis tutanağı kuruluğunda kalmakta ve dedektiflik hissi zayıflamaktadır."
+          ],
+          "summary": "Mantık örgüsü ve ipucu zinciri adil ve kusursuz bir şekilde tekil çözüme ulaşıyor. Ancak tatlının nasıl ölümcül hale geldiğine dair dramatik ve adli detaylar eklenerek anlatı zenginleştirilmelidir."
+        }
+      }
+    }
+  },
+  "requests": {
+    "16c60a7010c50544f4759f91d99b038a1867b762a51fa6a137e05afa09550018": {
+      "case_id": "pazar-yerinde-supheli-olum",
+      "model": "gemini-3.5-flash-lite",
+      "purpose": "repair",
+      "day": "2026-10-11",
+      "status": "completed",
+      "charged": 0.0032915,
+      "repair_method": "verified_text_v1",
+      "usage": {
+        "promptTokenCount": 2905,
+        "candidatesTokenCount": 968,
+        "totalTokenCount": 3873,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 2905
+          }
+        ],
+        "serviceTier": "standard"
+      }
+    },
+    "6d7af552af7e540aef70a9913f528ea631b651ea00024ee7c968e0a8338b4b07": {
+      "case_id": "pazar-yerinde-supheli-olum",
+      "model": "gemini-3.8-flash",
+      "purpose": "repair",
+      "day": "2026-10-11",
+      "status": "completed",
+      "charged": 0.0062595,
+      "repair_method": "verified_text_v1",
+      "usage": {
+        "promptTokenCount": 2921,
+        "candidatesTokenCount": 1085,
+        "totalTokenCount": 4006,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 2921
+          }
+        ],
+        "serviceTier": "standard"
+      }
+    },
+    "f2d02f7a3fbdc39fe1abadb27695a3969593ca6e08643a68bd34a42fad74f6a3": {
+      "case_id": "pazar-yerinde-supheli-olum",
+      "model": "gemini-3.8-flash",
+      "purpose": "player",
+      "day": "2026-10-11",
+      "status": "completed",
+      "charged": 0.00229425,
+      "usage": {
+        "promptTokenCount": 1039,
+        "candidatesTokenCount": 404,
+        "totalTokenCount": 1443,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 1039
+          }
+        ],
+        "serviceTier": "standard"
+      }
+    },
+    "a92758979754a147f02a9f2a82b670fb340178e9bf8bf1ab8e8cebe6401611e2": {
+      "case_id": "pazar-yerinde-supheli-olum",
+      "model": "gemini-3.8-flash",
+      "purpose": "judge",
+      "day": "2026-10-11",
+      "status": "completed",
+      "charged": 0.00317475,
+      "usage": {
+        "promptTokenCount": 3108,
+        "candidatesTokenCount": 225,
+        "totalTokenCount": 3333,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 3108
+          }
+        ],
+        "serviceTier": "standard"
+      }
+    },
+    "cb0469e1e677d2f4d117bd0609ec202db2963d791cfab3cb5c504e0d1b66f4ff": {
+      "case_id": "pazar-yerinde-supheli-olum",
+      "model": "gemini-3.8-flash",
+      "purpose": "editorial",
+      "day": "2026-10-11",
+      "status": "completed",
+      "charged": 0.00545925,
+      "usage": {
+        "promptTokenCount": 2909,
+        "candidatesTokenCount": 874,
+        "totalTokenCount": 3783,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 2909
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "plan": {
+        "story": "İstanbul'un kadim çarşısında sabah serinliği sürerken tatlıcı Halit Usta, boğazını tutarak aniden yere yığılıp can verdi. Olay yerine koşan tabip, ustanın soluk borusunu tıkayıp dakikalar içinde kalbini durduran ölümcül, renksiz ve yapay bir toksinin pazar mallarından birine kasten zerk edildiğini belirledi. Çarşı kapıları anında mühürlendi; o an çevrede bulunan üç şüphelinin her birinin yalnızca tek bir maddeyle temas ettiği ve farklı bir alanda durduğu saptandı. Zehirlenmiş nesneyi ustaya sunan faili ve dehşetin merkezini aydınlatmak dedektiflere kaldı.",
+        "clues": {
+          "c1": {
+            "text": "Ağaçların altındaki lojistik boşaltma sahasında inceleme yapan adli heyet, toprağa sızmış aşındırıcı kalıntılar buldu. Bu kimyasal testler, zemin temizliğinde yararlanılan keskin kokulu endüstriyel çözücünün yalnızca sabah erken saatlerde yük indirmeye yarayan bu açık ağaçlık alanda bekletildiğini kesinleştirdi.",
+            "deductionHint": "Ağaçlık lojistik noktada hangi temizlik maddesinin izleri tespit edildi?"
+          },
+          "c2": {
+            "text": "Çarşı merkezindeki güvenlik kamerası dökümleri dedektiflerce tek tek tarandı. Ağır çuvalları taşımaktan omuzları çökmüş uykusuz gencin, tepsilerin dizildiği ve alışverişin döndüğü ana satış noktasına o sabah hiç adım atmadığı, oradan tamamen uzakta kaldığı görüntülerle kanıtlandı.",
+            "deductionHint": "Kamera kayıtları yorgun taşıyıcının ana satış noktasından uzak olduğunu nasıl gösteriyor?"
+          },
+          "c3": {
+            "text": "Adli tabibin resmî raporu, Halit Usta'nın can verdiği asıl ölüm noktasının tepsilerin dizildiği ve damlaların aktığı ana satış noktası olduğunu kesinleştirdi. Eşzamanlı zabıta kayıtları ise bastonlu yaşlı kadının o esnada bu ölüm noktasında bulunmadığını doğruladı.",
+            "deductionHint": "Ölümcül mahalde yaşlı kadının bulunmadığı belgelenirken cinayet yeri nasıl belirlendi?"
+          },
+          "c4": {
+            "text": "Dükkanların arka kapılarına açılan loş yaya geçidinde keşif yapan nöbetçi memur, duvar dibine gizlenmiş bir kazan fark etti. Bakır güğümde kaynatılmış berrak ve yoğun şekerli geleneksel sıvının, tam da bu kestirme ara hatta bırakıldığı resmî tutanakla tespit edildi.",
+            "deductionHint": "Dükkanların arka geçidinde hangi şekerli sıvının tutulduğu tutanaklara geçti?"
+          },
+          "c5": {
+            "text": "Tezgaha yakın noktada bulunan teslim fişi ve sipariş kaydı, Müşteri Hanım isimli kişinin o esnada Şerbet ile doğrudan temas kurduğunu ve bu geleneksel sıvıyı aldığını açıkça listelemektedir.",
+            "deductionHint": "Müşteri Hanım'ın elindeki makbuz hangi içecekle ilgilidir?"
+          },
+          "c6": {
+            "text": "Çarşı bekçisinin ifadesi ve nöbet defteri, Tedarikçi Genç adlı çalışanın kritik zaman diliminde Park alanında olduğunu ve orada beklediğini açıkça doğrulamaktadır.",
+            "deductionHint": "Bekçi defteri Tedarikçi Genç'in hangi alanda bulunduğunu doğrular?"
+          }
+        }
+      }
+    }
+  }
+}
