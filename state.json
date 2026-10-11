@@ -7970,7 +7970,7 @@
       }
     },
     "muzede-kayip-eser": {
-      "spent": 0.016160600000000004,
+      "spent": 0.05466410000000001,
       "feedback": [
         {
           "error": "PATCH_CONTRACT: NEAR_READY_SCOPE: identity, roles, order, policy, profiles, story or unrelated facts changed"
@@ -11701,7 +11701,15 @@
         ],
         "summary": "Vaka dedüksiyon mekaniği açısından adil ve tek çözüme (s2 - w1 - l2) net bir şekilde ulaşılabiliyor. Ancak giriş hikayesindeki 'kanlar içinde yere yığılma' tasviri ile çözümdeki 'uyutucu iğne' arasındaki tıbbi/fiziksel tutarsızlık giderilmeli, c2'deki yazım hatası düzeltilmeli ve şüphelilere generic ifadeler yerine daha somut kişisel motivasyonlar eklenmelidir."
       }
+    },
+    "b49ba6d8b0887a363c9f8e53405201447c87d0d42a369bba8e57e8fc73cae0a8": {
+      "case_id": "muzede-kayip-eser",
+      "model": "gemini-3.8-flash",
+      "purpose": "editorial",
+      "day": "2026-10-11",
+      "status": "reserved",
+      "charged": 0.0385035
     }
   },
-  "campaign_spent": 0.17325325000000003
+  "campaign_spent": 0.21175675000000002
 }
