@@ -103,7 +103,7 @@ jobs:
           test "$(git rev-parse HEAD)" = "$(gh api "repos/$GITHUB_REPOSITORY/git/ref/heads/main" --jq '.object.sha')"
       - name: Offline safety before provider diagnosis
         run: node .case-qa/pipeline/test.mjs
-      - name: Four tiny staged checks; no game data; maximum USD 0.03
+      - name: Staged provider and repair contract checks; maximum USD 0.03
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: node .case-qa/pipeline/diagnose.mjs

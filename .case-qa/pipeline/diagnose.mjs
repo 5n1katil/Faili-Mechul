@@ -19,7 +19,10 @@ export function diagnosticStages(policy) {
     { name: 'lite_basic', model: policy.models.first_pass, body: basic, structured: false },
     { name: 'lite_json', model: policy.models.first_pass, body: structured, structured: true },
     { name: 'lite_thinking', model: policy.models.first_pass, body: full, structured: true },
-    { name: 'reviewer_full', model: policy.models.reviewer, body: make(policy.models.reviewer), structured: true }
+    { name: 'reviewer_full', model: policy.models.reviewer, body: make(policy.models.reviewer), structured: true },
+    { name: 'repair_contract', model: policy.models.first_pass, structured: 'patch',
+      body: requestBody(policy, policy.models.first_pass,
+        'This is a connection test, not a real case. Return exactly {"case_id":"provider-diagnostic-v1","assessment":"connection test","operations":[]}.') }
   ];
 }
 export async function diagnosticCall(store, policy, run, stage, transport) {
@@ -50,7 +53,14 @@ export async function diagnosticCall(store, policy, run, stage, transport) {
   const candidate = payload.candidates?.[0];
   const text = (candidate?.content?.parts || []).filter(p => p.thought !== true).map(p => p.text || '').join('');
   let accepted = candidate?.finishReason === 'STOP' && !!text.trim();
-  if (accepted && stage.structured) { try { accepted = JSON.parse(text).answer === 'ok'; } catch { accepted = false; } }
+  if (accepted && stage.structured) {
+    try {
+      const parsed = JSON.parse(text);
+      accepted = stage.structured === 'patch' ? parsed.case_id === caseId &&
+        typeof parsed.assessment === 'string' && Array.isArray(parsed.operations) && parsed.operations.length === 0
+        : parsed.answer === 'ok';
+    } catch { accepted = false; }
+  }
   const plan = { stage: stage.name, model: stage.model, accepted, finish_reason: candidate?.finishReason || null };
   settleRequest(store, run, request, amount, { status: accepted ? 'completed' : 'invalid_response', usage,
     ...(accepted ? { plan } : {}) });
@@ -70,6 +80,11 @@ export async function diagnose(store, policy, { transport = fetch, preflight = m
     store.state.cases[caseId] ||= { spent: 0 }; store.save();
     for (const stage of diagnosticStages(bounded)) {
       report.active_stage = stage.name;
+      const prior = store.state.requests[requestKey(caseId, stage.model, stage.body, 'player')];
+      if (run.calls >= bounded.sequential.max_calls_per_execute && !prior) {
+        report.status = 'diagnostic_checkpoint';
+        return { ...report, api_calls: run.calls, execute_cost_usd: run.spent, campaign_cost_usd: store.state.campaign_spent };
+      }
       stages.push(await diagnosticCall(store, bounded, run, stage, transport));
     }
     report.status = 'provider_verified';
@@ -82,7 +97,7 @@ async function main() {
   const report = await diagnose(store, policy);
   write('.case-qa-output/provider-diagnostic/result.json', report);
   console.log(JSON.stringify(report, null, 2));
-  if (report.status !== 'provider_verified') process.exitCode = 1;
+  if (!['provider_verified', 'diagnostic_checkpoint'].includes(report.status)) process.exitCode = 1;
 }
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href)
   main().catch(error => { console.error(error.message); process.exitCode = 1; });
