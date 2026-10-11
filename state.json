@@ -7970,7 +7970,7 @@
       }
     },
     "muzede-kayip-eser": {
-      "spent": 0.010274600000000002,
+      "spent": 0.03952535,
       "feedback": [
         {
           "error": "PATCH_CONTRACT: NEAR_READY_SCOPE: identity, roles, order, policy, profiles, story or unrelated facts changed"
@@ -11643,7 +11643,15 @@
           }
         }
       }
+    },
+    "de7c9e713179e0b881b54b6b90edccdb85e75621d515122b180bb2a0900d5a6c": {
+      "case_id": "muzede-kayip-eser",
+      "model": "gemini-3.8-flash",
+      "purpose": "player",
+      "day": "2026-10-11",
+      "status": "reserved",
+      "charged": 0.02925075
     }
   },
-  "campaign_spent": 0.16736725000000002
+  "campaign_spent": 0.19661800000000001
 }
