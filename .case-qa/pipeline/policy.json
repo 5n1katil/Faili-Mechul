@@ -28,6 +28,7 @@
   "models": {
     "provider": "gemini",
     "first_pass": "gemini-3.5-flash-lite",
+    "repair": "gemini-3.8-flash",
     "reviewer": "gemini-3.8-flash",
     "pricing_verified_on": "2026-10-11",
     "pricing_valid_through": "2026-12-31",
@@ -60,6 +61,12 @@
     "draft_only": true,
     "auto_merge": false,
     "content_write_paths_only": true
+  },
+  "batch": {
+    "default_case_limit": 3,
+    "max_case_limit": 5,
+    "max_calls": 12,
+    "budget_usd": 0.75
   },
   "review": {
     "prompt_version": "fm-player-review-v1",

@@ -18,7 +18,7 @@ Bu teslim altyapıdır; 105 vakanın tamamlandığı veya canlı pilotun geçti�
    mechanic cevapları ve QA alanları gönderilmez. Doğru tek çözüm, yüksek güven ve
    en az iki gerçek ipucundan alıntı gerekir. Ayrı editör çağrısı adalet, açıklık,
    tutarlılık, özgünlük ve eğlence boyutlarının her birinde en az 4/5 ister.
-6. Yalnızca seçilen vaka ve kanonik sidecar değişebilir. Yeniden içe aktarma,
+6. Yalnızca raporda seçilen vaka/vakalar ve kanonik sidecar değişebilir. Yeniden içe aktarma,
    diğer vakaların korunması, ikon, parmak izi, çözülebilirlik, TypeScript ve web
    derlemesi kontrol edilir. Sonuç yalnızca **taslak PR** olur; otomatik merge yoktur.
 
@@ -89,6 +89,36 @@ HTTP, bütçe veya belirsiz istek hatasında art arda pilot başlatmayın; rapor
 Kayıt dalını silmeyin veya force-push yapmayın; kayıp kayıt bütçe güvenliğini bozar.
 
 ## Sıralı uygulama planı
+
+### Otomatik küçük kampanya
+
+Actions → **Faili Mechul — Reviewed Case Pipeline**, branch `main`, mode
+`campaign`, `case_limit=3`; case_id/base_sha/head_sha boş. Tek başlatma sıradaki
+üç tamamlanmamış vakayı sırayla işler. Üst sınır beş vaka, 12 yeni çağrı ve
+$0.75/çalıştırmadır; çağrı/bütçe sınırında kalan vakalar sonraki çalıştırmaya kalır.
+Vaka başına iki gerçek repair, dört çağrı, $0.25 ve altı toplam istek sınırları;
+UTC günlük $2 ve kalıcı kampanya $10 sınırları değişmez.
+
+İlk repair Lite, ikinci gerçek repair gerektiğinde Flash kullanır. Yeniden
+başlatılan vakada daha önce yapılmış gerçek repair sayısı da dikkate alınır.
+Onarım yanıtı puan ve kapılarla değerlendirilir; iyileşmeyen yama uygulanmaz.
+100/productionReady sonrası ayrı bağlamlarda kör oyuncu ve editör incelemesi
+zorunludur. Her kabul edilen aday dosyaya yansıtılıp yeniden içeri alınarak
+önceden geçen vakalara zarar vermediği doğrulanır. Kabul edilen vakalar tek
+taslak PR'da toplanır; CI seçilen **her** vakayı ve seçilmeyen dosya kapsamını
+denetler. İnsan PR'ı inceledikten sonra merge eder; otomatik merge yoktur.
+
+İçerik/medya sorunu olan vaka karantinaya alınır, sıra ilerler. HTTP, anahtar,
+kota, belirsiz taşıma, bütçe veya altyapı hatası kalan çağrıları durdurur.
+Kısmi kabul raporda görünür. Bekleyen, henüz main'e birleşmemiş kampanya PR'ı
+varken yeni kampanya sıfır üretim çağrısıyla bekler; rakip dosya değişiklikleri
+oluşturmaz. Merge sonrası sertifikası geçerli vakalar atlanır ve sıradakiler
+seçilir. Başarısız adaylar ve harcama kayıtları korunur; PR bazında maliyet,
+vaka sonuçları ve durma nedeni artifact/result.json içinde bulunur.
+
+Bu akış canlı kampanyada henüz doğrulanmamıştır; ilk üç vakalık çalışma kabul
+testidir. Mode=campaign mevcut karantinadaki Konak'ı kendiliğinden açmaz veya
+çevrimdışı fixture'ı kullanmaz. Her vaka için elle onarım normal akış değildir.
 
 ### Konak çevrimdışı adayının durumu
 

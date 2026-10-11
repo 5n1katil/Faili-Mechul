@@ -5,7 +5,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { read, write, clone, loadSnapshot, scan, selectNext, assess, guardedPatch, better,
-  restoreBest, stageCandidate, repairPrompt } from './core.mjs';
+  restoreBest, stageCandidate, repairPrompt, assertNoRegression, assertScope } from './core.mjs';
 import { emptyState, validateState, openStore } from './state.mjs';
 import { reserveRequest, requestBody, callPaid, Stop, modelPreflight, providerErrorDetails } from './provider.mjs';
 import { assertDraftPolicy } from './publish-draft.mjs';
@@ -17,6 +17,7 @@ import { repairKonak } from '../fixtures/konak_reviewed_repair.mjs';
 import { stableHash, parseStandard, PATCH_SCHEMA } from '../fm_case_qa_runner.mjs';
 import { api } from './github.mjs';
 import { diagnose, diagnosticStages } from './diagnose.mjs';
+import { campaign } from './campaign.mjs';
 
 globalThis.fetch = async () => { throw new Error('TEST_NETWORK_FORBIDDEN'); };
 const policy = read('.case-qa/pipeline/policy.json'), root = process.cwd();
@@ -204,6 +205,7 @@ try {
     } });
     assert.equal(result.status, 'ready_for_gates');
     assert.deepEqual(calls.map(c => c.purpose), ['repair', 'repair', 'player', 'judge']);
+    assert.deepEqual(calls.slice(0, 2).map(c => c.model), [policy.models.first_pass, policy.models.repair]);
     assert.equal(result.run.attempts[0].retained, false);
     const resumed = await repairOne(snapshot, entry, store, { allowAI: true,
       caller: () => { throw new Error('UNEXPECTED_CALL'); } });
@@ -212,6 +214,51 @@ try {
   await test('quarantine and pending PR do not stall the queue', () => {
     const rows = [{ id: 'a', passed: false }, { id: 'b', passed: false }, { id: 'c', passed: false }];
     assert.equal(selectNext(rows, 'a', { a: { status: 'quarantined' }, b: { status: 'awaiting_review' } }).id, 'c');
+  });
+  const batchSnapshot = () => ({ policy: clone(policy), entries: ['a','b','c'].map(id => ({ id, sourceHash: id })) });
+  const batchRows = s => s.entries.map(e => ({ id: e.id, passed: false, content_locked: false }));
+  const batchResult = status => ({ status, assessment: { result: { score: status === 'ready_for_gates' ? 100 : 0 } },
+    run: { calls: 2, spent: 0.02, attempts: [] }, review: { passed: status === 'ready_for_gates', certificate: {} }, failures: [] });
+  await test('campaign skips quarantine, stages accepted cases once and blocks an unmerged batch', async () => {
+    const s = batchSnapshot(), store = storeFor('a'), seen = [], staged = [];
+    store.state.cases.a = { spent: 0, status: 'quarantined' };
+    const r = await campaign(s, store, { rows: batchRows, worker: async (bounded, e) => {
+      seen.push(e.id); return batchResult('ready_for_gates');
+    }, stage: (s, e) => { staged.push(e.id); return s; } });
+    assert.deepEqual(seen, ['b','c']); assert.deepEqual(staged, seen);
+    assert.deepEqual(r.selected_ids, ['b','c']); assert.equal(r.api_calls, 4);
+    store.state.cases.b = { spent: 0, status: 'awaiting_review', source_hash: 'b' };
+    const blocked = await campaign(s, store, { rows: batchRows, worker: () => { throw new Error('UNEXPECTED_CALL'); } });
+    assert.equal(blocked.status, 'awaiting_existing_review'); assert.equal(blocked.api_calls, 0);
+  });
+  await test('campaign content failure advances but provider failure stops the remaining cases', async () => {
+    const store = storeFor('a'), seen = [];
+    const r = await campaign(batchSnapshot(), store, { rows: batchRows, worker: async (s,e) => {
+      seen.push(e.id); return batchResult(e.id === 'a' ? 'quarantined' : 'GEMINI_HTTP_429');
+    } });
+    assert.deepEqual(seen, ['a','b']); assert.equal(r.stop_reason, 'GEMINI_HTTP_429');
+    assert.equal(r.selected_ids.length, 0);
+  });
+  await test('campaign bounds the remaining calls and money before the next worker and rejects bad inputs', async () => {
+    const s = batchSnapshot(); s.policy.batch.max_calls = 3; s.policy.batch.budget_usd = 0.03;
+    const limits = [];
+    const r = await campaign(s, storeFor('a'), { rows: batchRows, worker: async (s,e) => {
+      limits.push(clone(s.policy.sequential));
+      const result = batchResult('quarantined');
+      if (e.id === 'b') { result.run.calls = 1; result.run.spent = 0.01; }
+      return result;
+    } });
+    assert.equal(limits.length, 2); assert.equal(limits[1].max_calls_per_execute, 1);
+    assert.ok(limits[1].execute_budget_usd <= 0.010000001);
+    assert.equal(r.api_calls, 3); assert.equal(r.stop_reason, 'CAMPAIGN_BUDGET_CHECKPOINT');
+    for (const caseLimit of [0,6,1.5,NaN]) await assert.rejects(campaign(s, storeFor(), { caseLimit }), /LIMIT_INVALID/);
+  });
+  await test('batch publication requires every selected case at 100 and preserves prior passing cases', () => {
+    const before = [{id:'a',passed:false},{id:'b',passed:false},{id:'gold',passed:true}];
+    const after = before.map(r=>({...r,passed:true}));
+    assertNoRegression(before, after, ['a','b']);
+    assert.throws(()=>assertNoRegression(before, after.map(r=>r.id==='b'?{...r,passed:false}:r), ['a','b']), /SELECTED_NOT_100/);
+    assert.throws(()=>assertNoRegression(before, after.map(r=>r.id==='gold'?{...r,passed:false}:r), ['a','b']), /PORTFOLIO_REGRESSION/);
   });
   process.env.GEMINI_API_KEY = 'offline-test-not-a-secret';
   await test('reservation persists before transport; uncertain call is never repeated', async () => {
@@ -434,6 +481,18 @@ try {
     const next = stageCandidate(s, e, repaired, certificate);
     assert.equal(scan(next).find(r => r.id === entry.id).passed, true);
     assert.equal(campaignRows(next).find(r => r.id === entry.id).content_locked, true);
+  });
+  await test('two accepted cases re-import together and batch scope still rejects any unselected change', async () => {
+    const dir = path.join(temporary, 'projection'), before = loadSnapshot(dir, policy);
+    const e = before.entries.find(e => e.id === 'konakta-gece-yarisi-cinayeti'), c = repairKonak(e.candidate);
+    const reviewed = await reviewCandidate(before, e, c, storeFor(e.id), runFor(), async args =>
+      ({ plan: args.purpose === 'player' ? playerFor(c) : validJudge() }));
+    assert.equal(reviewed.passed, true);
+    const after = stageCandidate(before, e, c, reviewed.certificate);
+    assertScope(snapshot, after, [entry.id,e.id]);
+    assertNoRegression(scan(snapshot), scan(after), [entry.id,e.id]);
+    assert.equal(campaignRows(after).filter(r=>[entry.id,e.id].includes(r.id)&&r.content_locked).length, 2);
+    assert.throws(()=>assertScope(snapshot, after, entry.id), /DIFF_UNSELECTED_CASE/);
   });
   await test('new intake rejects duplicate case/entity IDs and invalid solution', () => {
     assert.throws(() => validateNewCase(snapshot, original.raw, 'standard'), /DUPLICATE_CASE/);
