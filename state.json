@@ -3374,6 +3374,9 @@
             }
           },
           "reason": "No improvement or passed gate regressed"
+        },
+        {
+          "error": "TEXT_CONTENT:story:MIN_60_WORDS"
         }
       ],
       "source_hash": "516640a853bd2653f5c4ca18e4737220f3139eeeae527578b334bf2003243009",
