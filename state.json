@@ -6502,7 +6502,7 @@
       "status": "quarantined"
     },
     "pazar-yerinde-supheli-olum": {
-      "spent": 0.039723499999999995,
+      "spent": 0.009550999999999997,
       "feedback": [
         {
           "error": "TEXT_CONTENT:story:MIN_60_WORDS"
@@ -9582,10 +9582,58 @@
       "model": "gemini-3.8-flash",
       "purpose": "repair",
       "day": "2026-10-11",
-      "status": "reserved",
-      "charged": 0.036432,
-      "repair_method": "verified_text_v1"
+      "status": "completed",
+      "charged": 0.0062595,
+      "repair_method": "verified_text_v1",
+      "usage": {
+        "promptTokenCount": 2921,
+        "candidatesTokenCount": 1085,
+        "totalTokenCount": 4006,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 2921
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "plan": {
+        "case_id": "pazar-yerinde-supheli-olum",
+        "assessment": "Halit Usta'nın ani ölümü sonrası toplanan kayıtlar, tanık beyanları ve adli tahliller tek tek incelenerek olay aydınlatılmıştır.",
+        "story": "İstanbul'un kadim sokaklarında sabahın erken telaşı yaşanırken tatlıcı Halit Usta birdenbire yere yığılarak hayatını kaybetti. Çevredeki telaşlı kalabalık arasından yükselen fısıltılar, bu ani ve sarsıcı kaybın doğal bir krizden kaynaklanmadığını fısıldıyordu. Olay yerine hızla intikal eden asayiş memurları meydandaki tüm çıkışları tutarak şüpheli kişileri gözlem altına aldı. İnceleme boyunca şüphelilerin her birinin farklı bir bölgede bulunduğu ve tek bir araç ya da maddeyle temasta olduğu kesinleşti. Dedektifler şimdi ölümcül yöntemi, bu yöntemi kullanan faili ve ölümcül eylemin gerçekleştiği kesin noktayı arıyor.",
+        "suspect_descriptions": {
+          "s1": "Hırkasının etekleri yerlere değen, elinde oymalı ahşap bir değnek taşıyan yaşlı kadın. Çevredeki telaşı mesafeli ve dikkatli bakışlarla süzer.",
+          "s2": "Omuzları ağır yük taşımaktan çökmüş, uykusuzluktan göz kenarları kızarmış genç amele. Telaşlı adımlarla sağa sola bakınırken sürekli ellerini ovuşturur.",
+          "s3": "Kolları sıvalı gömleği ve çizgili önlüğüyle etrafını gözleyen esnaf. Yan taraftaki gelişmeleri çatık kaşlarla izlerken dudaklarını kemirir."
+        },
+        "clues": {
+          "c1": {
+            "text": "Olay yeri inceleme ekiplerinin sabah erken saatlerde yük indirme maksadıyla kullanılan ağaçlık açık alanda yürüttüğü kimyasal testler, zemin temizliğinde yararlanılan keskin kokulu endüstriyel çözücünün o alana döküldüğünü ve orada bulundurulduğunu kesin olarak belirledi.",
+            "deductionHint": "Ağaçlık lojistik noktada hangi temizlik maddesinin izleri tespit edildi?"
+          },
+          "c2": {
+            "text": "Merkez zabıta bürosuna ait güvenlik kamerası dökümleri, ağır yükleri taşımaktan yorgun düşmüş uykusuz gencin, tatlı tepsilerinin dizildiği ana satış noktasında kritik zaman dilimi içinde hiç bulunmadığını ve oraya yaklaşmadığını mühürlü raporla kanıtladı.",
+            "deductionHint": "Kamera kayıtları yorgun taşıyıcının ana satış noktasından uzak olduğunu nasıl gösteriyor?"
+          },
+          "c3": {
+            "text": "Adli tabibin resmî raporu, Halit Usta'nın can verdiği asıl ölüm noktasının tepsilerin dizildiği ve damlaların aktığı ana satış noktası olduğunu kesinleştirdi. Eşzamanlı zabıta kayıtları ise bastonlu yaşlı kadının o esnada bu ölüm noktasında bulunmadığını doğruladı.",
+            "deductionHint": "Ölümcül mahalde yaşlı kadının bulunmadığı belgelenirken cinayet yeri nasıl belirlendi?"
+          },
+          "c4": {
+            "text": "Kestirme geçiş için yararlanılan dükkan arkasındaki loş yaya geçidinde denetime çıkan zabıta memuru, bakır güğümde kaynatılmış berrak ve yoğun şekerli geleneksel sıvının kritik saatlerde bu geçitte bekletildiğini tutanak altına alarak durumu bildirdi.",
+            "deductionHint": "Dükkanların arka geçidinde hangi şekerli sıvının tutulduğu tutanaklara geçti?"
+          },
+          "c5": {
+            "text": "Tezgaha yakın noktada bulunan teslim fişi ve sipariş kaydı, Müşteri Hanım isimli kişinin o esnada Şerbet ile doğrudan temas kurduğunu ve bu geleneksel sıvıyı aldığını açıkça listelemektedir.",
+            "deductionHint": "Müşteri Hanım'ın elindeki makbuz hangi içecekle ilgilidir?"
+          },
+          "c6": {
+            "text": "Çarşı bekçisinin ifadesi ve nöbet defteri, Tedarikçi Genç adlı çalışanın kritik zaman diliminde Park alanında olduğunu ve orada beklediğini açıkça doğrulamaktadır.",
+            "deductionHint": "Bekçi defteri Tedarikçi Genç'in hangi alanda bulunduğunu doğrular?"
+          }
+        }
+      }
     }
   },
-  "campaign_spent": 0.17108315000000002
+  "campaign_spent": 0.14091065000000003
 }
