@@ -315,7 +315,7 @@ anahtarları temizlenmiş biçimde saklanır.
    Bu değişiklik üretim vakası/avatar dosyası değiştirmez.
 2. **Tek vaka canlı kabul:** altyapı main'deyken Actions'ın PR açma izni ve
    `GEMINI_API_KEY` secret'ı gerekir. Secret sohbet/kod içine yazılmaz. Pilot ayrıca
-   açıkça başlatılmalıdır. Bir sonraki taze pilot `muzede-kayip-eser`; başarısızlığa
+   açıkça başlatılmalıdır. Doğrulama pilotu `muzede-kayip-eser`; başarısızlığa
    göre prompt/authoring iyileştirilir, sayısal kapılar gevşetilmez.
 3. **Gerçek oyun kontrolü:** taslak vaka PR'ının kesin commit'inde CI, mobil oyun
    testi, tüm ipuçları, bonuslar ve son çözüm kontrol edilir. Ancak sonra içerik kilitlenir.
@@ -368,3 +368,32 @@ Onarım yöntemi `verified_text_v1`, tek editoryal hak, yedi yaşam boyu istek v
 tüm dolar sınırları değişmez. Testlerdeki editör cevapları mock'tur; gerçek
 içerik kabulü değildir. Sonraki adım main'de `pilot`, `case_id=muzede-kayip-eser`
 ile tek canlı doğrulamadır. Bu başarılı olmadan toplu kampanya başlatılmaz.
+
+### 96 puandan sonra yalnız yönlendirme metni onarımı
+
+Run 38167302955'te Müze ilk tam metin onarımında 96 aldı. Tek engel çekirdek
+`deductionHint` isim sızıntısıydı. İkinci çağrı tam metin yazımı istediği için
+model hikâye ve profilleri de değiştirdi; mevcut near-ready kapsam kontrolü
+bunu doğru olarak reddetti. Modelin kalan küçük hataya uygun bir şema alması
+gerekiyordu; kontrol gevşetilmez.
+
+`hint-cleanup.mjs` yalnız mevcut motor kapıları ve sızıntı kontrolü geçerken,
+kalite bulgusu yokken ve bütün engeller `deductionHint` kaynaklıyken devreye
+girer. İkinci istek yalnız çekirdek hint metinlerini kabul eden kesin bir şema
+kullanır. Hikâye, profiller, kanıt metinleri, kurallar, bonuslar ve tüm diğer
+alanlar derleyici tarafından korunur. Sonuç tam değerlendirmeden tekrar geçer.
+İstek mevcut onarım yöntemi ve iki onarım hakkından sayılır; yeni hak açılmaz.
+
+Ödenmiş eski ikinci cevaptan yalnız hint metinleri kurtarılabilir. Bunun için
+değişmemiş kaynak, motor ve aday hash'iyle orijinal prompt/şema/sistem/model
+birlikte yeniden oluşturulup birebir istek anahtarı aranır. Yalnız tamamlanmış
+`verified_text_v1` cevabı kullanılabilir; yanlış/eksik/belirsiz kayıt reddedilir.
+Tam metin cevabındaki reddedilmiş hikâye, profil ve kanıt değişiklikleri alınmaz.
+Kurtarma ancak mevcut kesin kapılarda 100/100 üretirse tutulur. Önceki maliyet
+ve istekler aynen kalır; kurtarma yeni ücretli onarım çağrısı yapmaz.
+
+Gerçek Müze fixture'ındaki iki çağrı maliyeti $0.0102746'dır. Kayıtlı ikinci
+cevabın hintleri çevrimdışı 96 → 100 sonucu verdi; bu editoryal kabul değildir.
+Bir sonraki manuel pilot aynı Müze kaydını kullanıp yeni kör oyuncu/editör
+kontrolüne ilerler. Gerekirse kalan tek editoryal hak ve toplam yedi istek
+sınırı içinde anlatı düzeltilir. Bu PR oyun içeriği yayımlamaz.
