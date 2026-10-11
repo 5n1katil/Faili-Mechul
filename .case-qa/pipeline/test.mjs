@@ -7,7 +7,7 @@ import { execFileSync } from 'node:child_process';
 import { createRequire } from 'node:module';
 import { read, write, clone, loadSnapshot, scan, selectNext, assess, guardedPatch, better,
   restoreBest, stageCandidate, repairPrompt, assertNoRegression, assertScope } from './core.mjs';
-import { emptyState, validateState, openStore } from './state.mjs';
+import { emptyState, validateState, openStore, pushCheckpoint } from './state.mjs';
 import { reserveRequest, requestBody, callPaid, Stop, modelPreflight, providerErrorDetails } from './provider.mjs';
 import { assertDraftPolicy } from './publish-draft.mjs';
 import { playerView, playerPass, judgePass, reviewCandidate, mediaPreflight, certificateValid } from './review.mjs';
@@ -28,6 +28,7 @@ import { reviewHash } from './review.mjs';
 import { qualityContract, REVIEW_VERSION } from './quality-contract.mjs';
 import { compileEditorialRevision, editorialRevisionPrompt, editorialRevisionSchema, validEditorialRevision } from './editorial.mjs';
 import { hintOnly, compileHints, recoverHintCleanup, validHints } from './hint-cleanup.mjs';
+import { reconcileKnownUnsent } from './reservation-recovery.mjs';
 
 globalThis.fetch = async () => { throw new Error('TEST_NETWORK_FORBIDDEN'); };
 const currentPolicy = read('.case-qa/pipeline/policy.json'), policy = clone(currentPolicy), root = process.cwd();
@@ -56,6 +57,53 @@ try {
   });
   const original = snapshot.entries.find(e => e.id === 'termal-otelde-supheli-vaka');
   const currentSnapshot = { ...snapshot, policy: currentPolicy };
+  await test('durable pushes verify lost acknowledgements, retry only the same commit twice and never overwrite another writer', () => {
+    const old = '1'.repeat(40), next = '2'.repeat(40), other = '3'.repeat(40), branch = 'automation/test';
+    const exercise = mode => {
+      let head = old, pushes = 0;
+      const git = (...args) => {
+        if (args[0] === 'ls-remote') return head + '\trefs/heads/' + branch;
+        assert.deepEqual(args, ['push','origin',next + ':refs/heads/' + branch]); pushes++;
+        if (mode === 'ack') { head = next; throw new Error('lost acknowledgement'); }
+        if (mode === 'conflict') { head = other; throw new Error('other writer'); }
+        if (mode === 'permanent' || pushes === 1) throw new Error('temporary push failure');
+        head = next; return '';
+      };
+      if (mode === 'conflict') assert.throws(() => pushCheckpoint(git, branch, old, next), /STATE_STALE_WRITER/);
+      else if (mode === 'permanent') assert.throws(() => pushCheckpoint(git, branch, old, next), /push failure/);
+      else pushCheckpoint(git, branch, old, next);
+      assert.equal(pushes, ['ack','conflict'].includes(mode) ? 1 : 2);
+    };
+    for (const mode of ['ack','temporary','conflict','permanent']) exercise(mode);
+    assert.throws(() => pushCheckpoint(() => { throw new Error('remote unavailable'); }, branch, old, next), /remote unavailable/);
+  });
+  await test('the exact live never-sent judge reservation resumes once; uncertain records and actual charges are retained', async () => {
+    const fixture = read('.case-qa/fixtures/muze-unsent-judge-38168144752.json');
+    const entry = snapshot.entries.find(e => e.id === 'muzede-kayip-eser');
+    const make = () => {
+      const store = storeFor(entry.id); store.state.cases[entry.id] = clone(fixture.record);
+      store.state.cases[entry.id].candidate.qaPortfolioRegistry = clone(entry.candidate.qaPortfolioRegistry);
+      store.state.requests = clone(fixture.requests); store.state.campaign_spent = fixture.record.spent;
+      return store;
+    };
+    const forged = make(); forged.state.requests[fixture.key].charged += 0.000001;
+    assert.equal(reconcileKnownUnsent(currentSnapshot, entry, forged), false);
+    const uncertain = make(); uncertain.state.cases[entry.id].failures = ['TRANSPORT_UNCERTAIN'];
+    assert.equal(reconcileKnownUnsent(currentSnapshot, entry, uncertain), false);
+    const store = make(), initial = clone(store.state.requests);
+    assert.equal(reconcileKnownUnsent(currentSnapshot, entry, store), true);
+    validateState(store.state);
+    assert.ok(Math.abs(store.state.campaign_spent - 0.01217435) < 0.00000001);
+    assert.equal(reconcileKnownUnsent(currentSnapshot, entry, store), false);
+    for (const key of Object.keys(initial).filter(k => k !== fixture.key)) assert.deepEqual(store.state.requests[key], initial[key]);
+    process.env.GEMINI_API_KEY = 'offline-unsent-test'; let transports = 0;
+    const result = await repairOne(currentSnapshot, entry, store, { allowAI: true, caller: args => callPaid({ ...args,
+      transport: async () => { transports++; assert.equal(args.purpose, 'judge'); return responseForFixture(validJudge()); } }) });
+    assert.equal(transports, 1); assert.equal(result.status, 'ready_for_gates');
+    assert.equal(Object.keys(store.state.requests).length, 4);
+    assert.equal(store.state.requests[fixture.key].reservation_failures.length, 1);
+    assert.equal(store.state.requests[fixture.key].reservation_failures[0].transport_not_started, true);
+  });
   const hintFixture = read('.case-qa/fixtures/muze-hint-scope-38167302955.json');
   const hintEntry = snapshot.entries.find(e => e.id === hintFixture.case_id);
   const hintCandidate = clone(hintFixture.record.candidate);
@@ -809,7 +857,27 @@ try {
   await test('durable save failure prevents transport', async () => {
     const store = storeFor(); store.save = () => { throw new Error('disk failed'); };
     await assert.rejects(callPaid({ store, policy, run: runFor(), caseId: 'test', model: policy.models.first_pass,
-      prompt: 'disk', transport: () => { throw new Error('UNEXPECTED_CALL'); } }), /disk failed/);
+      prompt: 'disk', transport: () => { throw new Error('UNEXPECTED_CALL'); } }), /RESERVATION_NOT_DURABLE/);
+    assert.equal(Object.values(store.state.requests)[0].transport_not_started, true);
+    assert.equal(store.state.campaign_spent, 0);
+  });
+  await test('a proven unsent reservation can start once after storage recovers; settlement failures never refund provider work', async () => {
+    const store = storeFor(), run = runFor(); let transports = 0;
+    const args = { store, policy, run, caseId: 'test', model: policy.models.first_pass, prompt: 'unsent-resume',
+      transport: async () => { transports++; return response('{}'); } };
+    store.save = () => { throw new Error('storage unavailable'); };
+    await assert.rejects(callPaid(args), /RESERVATION_NOT_DURABLE/);
+    assert.equal(transports, 0); assert.equal(run.calls, 1);
+    store.save = () => validateState(store.state);
+    await callPaid(args); await callPaid(args);
+    assert.equal(transports, 1); assert.equal(run.calls, 2);
+    assert.equal(Object.values(store.state.requests)[0].reservation_failures.length, 1);
+    const charged = storeFor(); let saves = 0;
+    charged.save = () => { saves++; if (saves === 2) throw new Error('settlement save failed'); };
+    await assert.rejects(callPaid({ ...args, store: charged, run: runFor(), prompt: 'actual-charge' }), /settlement save failed/);
+    const ledger = Object.values(charged.state.requests)[0];
+    assert.equal(ledger.status, 'completed'); assert.ok(ledger.charged > 0);
+    assert.equal(ledger.transport_not_started, undefined);
   });
   await test('case, daily, campaign and execute limits block before transport', () => {
     for (const field of ['case_budget_usd', 'daily_budget_usd', 'campaign_budget_usd', 'execute_budget_usd']) {

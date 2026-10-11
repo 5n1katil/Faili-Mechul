@@ -397,3 +397,32 @@ cevabın hintleri çevrimdışı 96 → 100 sonucu verdi; bu editoryal kabul de�
 Bir sonraki manuel pilot aynı Müze kaydını kullanıp yeni kör oyuncu/editör
 kontrolüne ilerler. Gerekirse kalan tek editoryal hak ve toplam yedi istek
 sınırı içinde anlatı düzeltilir. Bu PR oyun içeriği yayımlamaz.
+
+### Kalıcı maliyet kaydı ve gönderilmemiş rezervasyon
+
+Run 38168144752'de Müze canlı motor kontrolünde 100 aldı; kör oyuncu doğru
+üçlüyü %100 güvenle buldu. Editör isteğinin rezervasyon commit'i push sırasında
+hata verdi. `callPaid` bu save tamamlanmadan sağlayıcıya gitmediği için editör
+çağrısı yapılmadı; $0.03724125 yalnız muhafazakâr rezervasyondur. Fiilen
+tamamlanmış Müze çağrılarının toplamı $0.01217435'tır; editoryal kabul yoktur.
+
+Journal yazımı aynı commit için uzak ref'i doğrular. Kaybolmuş onayda ref zaten
+o commit ise işlem tamamlanmıştır. Ref eski beklenen commit'teyse aynı commit
+en fazla iki push denemesiyle yazılır. Başka yazar, okunamayan ref veya kalıcı
+hata durumunda durur; force push veya eski kaydı ezme yoktur. Başarısız push
+sonrası yerelde değişiklik olmaması artık kaydedilmemiş commit'i atlamaz.
+
+Rezervasyon save hatası sağlayıcı transport'u başlamadan oluşursa bu durum
+`transport_not_started` olarak kaydedilir. Yalnız projeksiyon serbest bırakılır;
+gerçek API harcaması, belirsiz transport ve tamamlanmış cevaplar değiştirilmez.
+Sonraki manuel execute aynı hiç gönderilmemiş isteği başlatabilir; önceki
+rezervasyon denemeleri `reservation_failures` içinde korunur. Aynı execute'da
+model otomatik tekrar çağrılmaz, deneme execute sınırından sayılmaya devam eder.
+
+Eski run'daki eksik işaret yalnız `reservation-recovery.mjs` içindeki denetlenmiş
+vaka/kaynak/motor ve tam kayıt+istek hash eşleşmesiyle tamamlanır. Diğer reserved
+kayıtlar hâlâ belirsiz sayılır ve tekrar gönderilmez. Kanıt: run'ın tam push
+hatası, reserved kayıt ve transport öncesi save çağrısı; commit
+`b5eafec94ecccc1c3efe1fe783ae23190249ebe0`. Para/istek geçmişi silinmez ve
+yaşam boyu sınırlar artırılmaz. Sonraki Müze pilotu önceki oyuncu cevabını
+cache'den alıp henüz yapılmamış editör kontrolüne ilerler.

@@ -4,6 +4,28 @@ import { execFileSync } from 'node:child_process';
 import { read, write } from './core.mjs';
 
 export const emptyState = () => ({ schema: 'fm_case_pipeline_state_v1', active_id: null, cases: {}, requests: {}, campaign_spent: 0 });
+export function pushCheckpoint(git, branch, expected, proposed) {
+  const ref = `refs/heads/${branch}`;
+  const head = () => {
+    const value = git('ls-remote', '--heads', 'origin', ref);
+    if (!value) return '';
+    const [sha, returnedRef] = value.split(/\s+/);
+    if (!/^[a-f0-9]{40}$/.test(sha) || returnedRef !== ref) throw new Error('STATE_REMOTE_INVALID');
+    return sha;
+  };
+  for (let attempt = 0; attempt < 2; attempt++) {
+    const remoteHead = head();
+    if (remoteHead === proposed) return;
+    if (remoteHead !== expected) throw new Error('STATE_STALE_WRITER');
+    try { git('push', 'origin', `${proposed}:${ref}`); return; }
+    catch (error) {
+      const observed = head();
+      if (observed === proposed) return;
+      if (observed !== expected) throw new Error('STATE_STALE_WRITER');
+      if (attempt === 1) throw error;
+    }
+  }
+}
 export function validateState(state) {
   if (state?.schema !== 'fm_case_pipeline_state_v1' || !state.cases || !state.requests ||
       !Number.isFinite(state.campaign_spent) || state.campaign_spent < 0) throw new Error('STATE_INVALID');
@@ -53,14 +75,15 @@ export function openStore(root, policy, { localFile } = {}) {
     validateState(state);
     write(file, state);
     journalGit('add', 'state.json');
-    if (!journalGit('diff', '--cached', '--name-only')) return;
-    journalGit('commit', '-m', 'qa: persist bounded sequential checkpoint');
+    const changed = journalGit('diff', '--cached', '--name-only');
+    if (changed) journalGit('commit', '-m', 'qa: persist bounded sequential checkpoint');
     const newHead = journalGit('rev-parse', 'HEAD');
+    if (!changed && newHead === oldHead) return;
     if (!remote) {
       // Import the new orphan commit into the credential-bearing repository.
       git('fetch', directory, branch);
     }
-    git('push', 'origin', `${newHead}:refs/heads/${branch}`);
+    pushCheckpoint(git, branch, oldHead, newHead);
     oldHead = newHead;
   } };
 }
