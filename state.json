@@ -16,7 +16,7 @@
         "title": "Konakta Gece Yarısı Cinayeti",
         "difficulty": "caylak",
         "dayIndex": 1,
-        "story": "Tarihi konaktaki gece davetinin ardından ev sahibinin sadık yardımcısı Selma, kan içinde bulundu. Adli tıp, cinayetin 23:30 ile 00:00 arasında işlendiğini tahmin ediyor. Fırtına nedeniyle kimsenin ayrılamadığı bu konakta, katil hala aramızda.",
+        "story": "Tarihi konaktaki görkemli gece davetinin hemen ardından ev sahibinin sadık yardımcısı Selma, kilitli odaların ve fırtınanın gölgesinde kan içinde ölü bulundu. Adli tıp incelemeleri, vahşi saldırının gece yarısına doğru gerçekleştiğini doğrularken, dışarıla kopan şiddetli fırtına kimsenin dışarı çıkmasına izin vermiyor. Konaktaki her misafir şüpheli konumdayken, gerçek katil adaletin tecelli etmesini bekliyor.",
         "suspects": [
           {
             "id": "s1",
@@ -82,37 +82,181 @@
             "id": "c1",
             "text": "Kurban zehirlenmemiş veya iple boğulmamış; derin bir kesici alet darbesiyle hayatını kaybetmiş.",
             "type": "forensic",
-            "isBonus": false
+            "isBonus": false,
+            "isCrimeAnchor": true,
+            "logicRules": [
+              {
+                "action": "eliminate",
+                "pair": [
+                  "s3",
+                  "w2"
+                ]
+              }
+            ],
+            "qaRationale": {
+              "matrixEffect": "Zeynep Hanım ≠ Kimyasal elenir",
+              "evidenceLink": "Kurban zehirlenmemiş veya iple boğulmamış; derin bir kesici alet darbesiyle hayatını kaybetmiştir.",
+              "evidenceKind": "forensic"
+            },
+            "qaSemanticFacts": [
+              {
+                "kind": "crime_component",
+                "component": "weapon",
+                "entityId": "w1",
+                "source": "clue:c1",
+                "evidence": "derin bir kesici alet darbesiyle"
+              }
+            ]
           },
           {
             "id": "c2",
             "text": "Nazik Hanım gece boyunca Bahçe'de çayını yudumlayarak kitap okuduğunu belirtti ve bu durum doğrulandı.",
             "type": "witness",
-            "isBonus": false
+            "isBonus": false,
+            "isCrimeAnchor": false,
+            "logicRules": [
+              {
+                "action": "eliminate",
+                "pair": [
+                  "s1",
+                  "l2"
+                ]
+              }
+            ],
+            "qaRationale": {
+              "matrixEffect": "Nazik Hanım ≠ Bahçe elenir",
+              "evidenceLink": "gece boyunca Bahçe'de çayını yudumlayarak kitap okuduğunu belirtti",
+              "evidenceKind": "witness"
+            },
+            "qaSemanticFacts": [
+              {
+                "kind": "crime_component",
+                "component": "location",
+                "entityId": "l2",
+                "source": "clue:c2",
+                "evidence": "Bahçe'de çayını yudumlayarak"
+              }
+            ]
           },
           {
             "id": "c3",
             "text": "Cem Bey'in gece boyunca Kütüphane'den çıkmadığı ve dekorasyonlarla uğraştığı rapor edildi.",
             "type": "witness",
-            "isBonus": false
+            "isBonus": false,
+            "isCrimeAnchor": false,
+            "logicRules": [
+              {
+                "action": "eliminate",
+                "pair": [
+                  "s2",
+                  "l1"
+                ]
+              }
+            ],
+            "qaRationale": {
+              "matrixEffect": "Cem Bey ≠ Kütüphane elenir",
+              "evidenceLink": "gece boyunca Kütüphane'den çıkmadığı ve dekorasyonlarla uğraştığı",
+              "evidenceKind": "witness"
+            },
+            "qaSemanticFacts": [
+              {
+                "kind": "crime_component",
+                "component": "location",
+                "entityId": "l1",
+                "source": "clue:c3",
+                "evidence": "Kütüphane'den çıkmadığı"
+              }
+            ]
           },
           {
             "id": "c4",
             "text": "Kan izleri ve boğuşma kanıtları yalnızca arkadaki hazırlık alanında bulunuyor.",
             "type": "evidence",
-            "isBonus": false
+            "isBonus": false,
+            "isCrimeAnchor": false,
+            "logicRules": [
+              {
+                "action": "confirm",
+                "pair": [
+                  "s3",
+                  "l3"
+                ]
+              }
+            ],
+            "qaRationale": {
+              "matrixEffect": "Zeynep Hanım ↔ Mutfak doğrulanır",
+              "evidenceLink": "Kan izleri ve boğuşma kanıtları yalnızca arkadaki hazırlık alanında bulunuyor.",
+              "evidenceKind": "physical"
+            },
+            "qaSemanticFacts": [
+              {
+                "kind": "crime_component",
+                "component": "location",
+                "entityId": "l3",
+                "source": "clue:c4",
+                "evidence": "arkadaki hazırlık alanında bulunuyor"
+              }
+            ]
           },
           {
             "id": "c5",
             "text": "Koridor kameraları, Zeynep Hanım'ın 23:38'de Mutfağa giriş yaptığını ve 00:15'te telaşla çıktığını gösteriyor.",
             "type": "record",
-            "isBonus": true
+            "isBonus": true,
+            "isCrimeAnchor": false,
+            "logicRules": [
+              {
+                "action": "confirm",
+                "pair": [
+                  "s3",
+                  "w1"
+                ]
+              }
+            ],
+            "qaRationale": {
+              "matrixEffect": "Zeynep Hanım ↔ Makas doğrulanır",
+              "evidenceLink": "Koridor kameraları, Zeynep Hanım'ın 23:38'de Mutfağa giriş yaptığını gösteriyor.",
+              "evidenceKind": "record"
+            },
+            "qaSemanticFacts": [
+              {
+                "kind": "crime_component",
+                "component": "suspect",
+                "entityId": "s3",
+                "source": "clue:c5",
+                "evidence": "Zeynep Hanım'ın 23:38'de Mutfağa giriş yaptığı"
+              }
+            ]
           },
           {
             "id": "c6",
             "text": "Ağır mutfak makasının sap kısmında, Zeynep Hanım'a ait net parmak izleri tespit edildi.",
             "type": "forensic",
-            "isBonus": true
+            "isBonus": true,
+            "isCrimeAnchor": false,
+            "logicRules": [
+              {
+                "action": "confirm",
+                "pair": [
+                  "s3",
+                  "w1"
+                ]
+              }
+            ],
+            "qaRationale": {
+              "matrixEffect": "Zeynep Hanım ↔ Makas doğrulanır",
+              "evidenceLink": "Ağır mutfak makasının sap kısmında, Zeynep Hanım'a ait net parmak izleri tespit edildi.",
+              "evidenceKind": "forensic"
+            },
+            "qaSemanticFacts": [
+              {
+                "kind": "crime_component",
+                "component": "weapon",
+                "entityId": "w1",
+                "source": "clue:c6",
+                "evidence": "Ağır mutfak makasının sap kısmında"
+              }
+            ]
           }
         ],
         "solvabilityMeta": {
@@ -135,7 +279,7 @@
           "caseTier": "standard"
         },
         "qaPattern": {
-          "anchorSource": "none",
+          "anchorSource": "clue:c1",
           "designIntent": "Deterministik miras-vaka imzası: none:?; forensic:?:?; ????; ?|?|?|?; none."
         },
         "qaPortfolioRegistry": {
@@ -1298,9 +1442,32 @@
             }
           ]
         },
-        "qaAuthoringVersion": "fm_case_qa_authoring_v3_2_deterministic_bootstrap"
+        "qaAuthoringVersion": "fm_case_qa_authoring_v3_2_deterministic_bootstrap",
+        "qaSemanticFacts": [
+          {
+            "kind": "crime_component",
+            "component": "suspect",
+            "entityId": "s3",
+            "source": "clue:c1",
+            "evidence": "Kurban derin bir kesici alet darbesiyle hayatını kaybetmiştir."
+          },
+          {
+            "kind": "crime_component",
+            "component": "weapon",
+            "entityId": "w1",
+            "source": "clue:c1",
+            "evidence": "Kurban derin bir kesici alet darbesiyle hayatını kaybetmiştir."
+          },
+          {
+            "kind": "crime_component",
+            "component": "location",
+            "entityId": "l3",
+            "source": "clue:c4",
+            "evidence": "Boğuşma kanıtları yalnızca arkadaki hazırlık alanında bulunuyor."
+          }
+        ]
       },
-      "candidate_hash": "f027c3608366d7b722f7e6111b75726e717ad3d388a9b208ba1b75ff1c639cf2",
+      "candidate_hash": "a75a405751732e919aa8df4613b902a245832ba17e9708cba9f296dd99d2d3f2",
       "best_score": 0,
       "failures": [
         "GEMINI_HTTP_400"
