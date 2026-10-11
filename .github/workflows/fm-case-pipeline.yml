@@ -1,0 +1,140 @@
+name: Faili Mechul — Reviewed Case Pipeline
+run-name: case-${{ inputs.mode || 'safety' }}-${{ github.run_id }}
+
+on:
+  pull_request:
+    paths:
+      - '.case-qa/**'
+      - '.github/workflows/fm-case*'
+      - '.github/workflows/fm-qa-autofix.yml'
+      - '.github/workflows/fm-avatar-auto-merge.yml'
+      - 'artifacts/dedektif/data/puzzles*'
+      - 'artifacts/dedektif/qa/**'
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: audit = free; pilot = one paid case + draft PR; certify = candidate CI
+        type: choice
+        options: [audit, pilot, certify]
+        default: audit
+      case_id:
+        description: Optional explicit case; empty resumes the queue
+        type: string
+      base_sha:
+        description: Internal candidate certification base
+        type: string
+      head_sha:
+        description: Internal candidate certification head
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: case-pipeline-${{ inputs.mode == 'pilot' && 'paid' || github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  safety:
+    if: ${{ github.event_name == 'pull_request' || inputs.mode != 'pilot' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.mode == 'certify' && inputs.head_sha || github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Offline pipeline regressions
+        run: node .case-qa/pipeline/test.mjs
+      - name: Free inventory and exact QA audit
+        run: |
+          node .case-qa/fm_case_qa_certify.mjs
+          node .case-qa/pipeline/run.mjs
+      - name: Certify selected candidate against its recorded base
+        if: ${{ inputs.mode == 'certify' }}
+        env:
+          FM_PIPELINE_BASE_SHA: ${{ inputs.base_sha }}
+          FM_PIPELINE_HEAD_SHA: ${{ inputs.head_sha }}
+          FM_PIPELINE_CASE_ID: ${{ inputs.case_id }}
+        run: node .case-qa/pipeline/certify-candidate.mjs
+      - name: Install locked application dependencies
+        run: |
+          corepack enable
+          corepack prepare pnpm@10.34.5 --activate
+          pnpm install --frozen-lockfile
+      - name: Application safety and web build
+        run: |
+          pnpm --filter @workspace/dedektif validate
+          pnpm --filter @workspace/dedektif validate:parmak-izi
+          pnpm --filter @workspace/scripts exec node --import tsx "$GITHUB_WORKSPACE/artifacts/dedektif/scripts/check-solvability.js"
+          pnpm --filter @workspace/dedektif typecheck
+          pnpm --filter @workspace/dedektif build:web
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: case-pipeline-safety-${{ github.run_id }}
+          path: .case-qa-output
+          include-hidden-files: true
+
+  pilot:
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.mode == 'pilot' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    permissions:
+      contents: write
+      pull-requests: write
+      actions: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Require deployed main and an available key before paid work
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          test -n "$GEMINI_API_KEY" || { echo 'GEMINI_API_KEY missing; zero calls'; exit 1; }
+          test "$(git rev-parse HEAD)" = "$(gh api "repos/$GITHUB_REPOSITORY/git/ref/heads/main" --jq '.object.sha')"
+      - name: Offline safety before spending
+        run: node .case-qa/pipeline/test.mjs
+      - name: One bounded repair and two independent reviews
+        env:
+          FM_PIPELINE_MODE: pilot
+          FM_PIPELINE_CASE_ID: ${{ inputs.case_id }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: node .case-qa/pipeline/run.mjs
+      - name: Install app dependencies for an accepted candidate
+        run: |
+          node --input-type=module -e "import fs from 'node:fs'; const r=JSON.parse(fs.readFileSync('.case-qa-output/pipeline/result.json')); if(r.status!=='ready_for_gates') {console.error(r.status, r.failures); process.exit(1);}"
+          corepack enable
+          corepack prepare pnpm@10.34.5 --activate
+          pnpm install --frozen-lockfile
+      - name: Application checks before draft PR
+        run: |
+          git diff --check
+          pnpm --filter @workspace/dedektif validate
+          pnpm --filter @workspace/dedektif validate:parmak-izi
+          pnpm --filter @workspace/scripts exec node --import tsx "$GITHUB_WORKSPACE/artifacts/dedektif/scripts/check-solvability.js"
+          pnpm --filter @workspace/dedektif typecheck
+          pnpm --filter @workspace/dedektif build:web
+      - name: Create or reuse draft PR; dispatch read-only candidate CI
+        run: node .case-qa/pipeline/publish-draft.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: case-pipeline-pilot-${{ github.run_id }}
+          path: .case-qa-output
+          include-hidden-files: true
+      - name: Show the actual outcome
+        if: always()
+        run: |
+          node --input-type=module -e "import fs from 'node:fs'; const p='.case-qa-output/pipeline/result.json'; if(fs.existsSync(p))fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,'## Case pipeline\n\n'+fs.readFileSync(p,'utf8'));"

@@ -11,7 +11,8 @@ const { loadEngine, evaluateCase } = require('./fm_case_qa_core.cjs');
 
 const ROOT = path.resolve(process.env.FM_QA_ROOT || process.cwd());
 const OUTPUT_DIR = path.resolve(ROOT, process.env.FM_QA_OUTPUT_DIR || '.case-qa-output');
-const POLICY_PATH = path.resolve(ROOT, process.env.FM_QA_POLICY_PATH || '.case-qa/fm_case_qa_policy_v3_1.json');
+const POLICY_PATH = path.resolve(ROOT, process.env.FM_QA_POLICY_PATH ||
+  (fs.existsSync(path.join(ROOT, '.case-qa/pipeline/policy.json')) ? '.case-qa/pipeline/policy.json' : '.case-qa/fm_case_qa_policy_v3_1.json'));
 const PHASE = String(process.env.FM_QA_CERT_PHASE || 'pre').toLowerCase();
 
 function readJson(file) { return JSON.parse(fs.readFileSync(file, 'utf8')); }
@@ -118,12 +119,24 @@ function assert(condition, message, failures) {
 
 function certify() {
   const policy = readJson(POLICY_PATH);
+  let inventory;
+  if (policy.source.inventory_path) {
+    inventory = readJson(path.resolve(ROOT, policy.source.inventory_path));
+    if (inventory.schema !== 'fm_case_inventory_v1' || !Array.isArray(inventory.cases) ||
+        !inventory.cases.length || inventory.cases.some(e => !e.id || !['standard', 'premium'].includes(e.tier)) ||
+        new Set(inventory.cases.map(e => e.id)).size !== inventory.cases.length) throw new Error('INVENTORY_INVALID');
+    policy.source.expected_standard_cases = inventory.cases.filter(e => e.tier === 'standard').length;
+    policy.source.expected_premium_cases = inventory.cases.filter(e => e.tier === 'premium').length;
+    policy.source.expected_total_cases = inventory.cases.length;
+  }
   const simulatorPath = path.resolve(ROOT, policy.simulator.path);
   const simulatorHtml = fs.readFileSync(simulatorPath, 'utf8');
   const parsed = parseSources(policy);
   const failures = [];
   const warnings = [];
   const ids = parsed.entries.map((entry) => caseId(entry.raw));
+  if (inventory) assert(stableHash(parsed.entries.map(e => ({ id: caseId(e.raw), tier: e.tier }))) === stableHash(inventory.cases),
+    'Vaka envanteri kaynak kimlikleri veya sırasıyla uyuşmuyor.', failures);
 
   assert(parsed.standard.length === Number(policy.source.expected_standard_cases),
     `Standart vaka sayısı ${parsed.standard.length}/${policy.source.expected_standard_cases}`, failures);

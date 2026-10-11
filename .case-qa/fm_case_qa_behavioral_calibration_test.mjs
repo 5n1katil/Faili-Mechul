@@ -169,8 +169,7 @@ assert.match(runnerSource, /canonicalizeSingleCrimeAnchor/, 'Tek suç çapası s
 assert.match(runnerSource, /gold_max_attempts_per_case/, 'Altın-vaka yakınsama döngüsü policy ile sınırlandırılmıyor.');
 
 const workflowSource = fs.readFileSync('.github/workflows/fm-case-qa-v3.yml', 'utf8');
-assert.match(workflowSource, /actions\/cache\/restore@v4/, 'AI cache restore açıkça tanımlı değil.');
-assert.match(workflowSource, /actions\/cache\/save@v4/, 'Başarısız QA sonrası AI cache kaydı tanımlı değil.');
-assert.match(workflowSource, /Save idempotent response cache even when QA stops safely[\s\S]*if: always\(\)/, 'AI cache hata halinde korunmuyor.');
+assert.match(workflowSource, /legacy execution path is retired/, 'Eski ücretli yol emekliye ayrılmamış.');
+assert.doesNotMatch(workflowSource, /secrets\.|actions\/cache/, 'Emekli workflow ücretli yol veya cache açmamalı.');
 
-console.log('✓ Full selection, canonical authoring recovery, two-stage gold repair, cache persistence and metadata isolation are enforced.');
+console.log('✓ Full selection, canonical authoring recovery, gold repair, metadata isolation and legacy retirement are enforced.');

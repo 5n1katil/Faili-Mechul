@@ -1,0 +1,75 @@
+{
+  "schema_version": "fm_case_pipeline_policy_v1",
+  "source": {
+    "repository": "5n1katil/Faili-Mechul",
+    "branch": "main",
+    "standard_path": "artifacts/dedektif/data/puzzles.ts",
+    "premium_path": "artifacts/dedektif/data/puzzles_database.json",
+    "sidecar_path": "artifacts/dedektif/qa/case_qa_sidecars_v29_5.json",
+    "inventory_path": ".case-qa/pipeline/inventory.json"
+  },
+  "simulator": {
+    "version": "29.4",
+    "minimum_score": 100,
+    "require_production_ready": true,
+    "require_core_necessity": true,
+    "require_identity_guard": true,
+    "require_preclue_guard_pass": true,
+    "require_avatar_prompt_risk_false": true,
+    "path": ".case-qa/Faili_Mechul_Vaka_Simulatoru_v29_4_Otomasyon_Temeli.html",
+    "git_blob_sha": "cb53e6613d6379de097599634de26524f4510fbc"
+  },
+  "authoring": {
+    "calibration_case_ids": [
+      "rc_001",
+      "pp_001"
+    ]
+  },
+  "models": {
+    "provider": "gemini",
+    "first_pass": "gemini-2.5-flash-lite",
+    "reviewer": "gemini-2.5-flash",
+    "pricing_verified_on": "2026-10-11",
+    "pricing_source": "https://ai.google.dev/gemini-api/docs/pricing",
+    "pricing_usd_per_million_tokens": {
+      "gemini-2.5-flash-lite": {
+        "input": 0.1,
+        "output": 0.4
+      },
+      "gemini-2.5-flash": {
+        "input": 0.3,
+        "output": 2.5
+      }
+    }
+  },
+  "sequential": {
+    "max_calls_per_execute": 4,
+    "max_repairs_per_case": 2,
+    "execute_budget_usd": 0.25,
+    "case_budget_usd": 0.25,
+    "daily_budget_usd": 2,
+    "campaign_budget_usd": 10,
+    "max_output_tokens": 6000,
+    "thinking_budget": 1024,
+    "http_timeout_ms": 120000,
+    "state_branch": "automation/case-pipeline-state"
+  },
+  "publication": {
+    "draft_only": true,
+    "auto_merge": false,
+    "content_write_paths_only": true
+  },
+  "review": {
+    "prompt_version": "fm-player-review-v1",
+    "minimum_confidence": 80,
+    "minimum_dimension_score": 4,
+    "dimensions": [
+      "fairness",
+      "clarity",
+      "consistency",
+      "originality",
+      "engagement"
+    ],
+    "media_evidence_path": ".case-qa/pipeline/media-evidence.json"
+  }
+}

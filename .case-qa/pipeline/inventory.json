@@ -1,0 +1,425 @@
+{
+  "schema": "fm_case_inventory_v1",
+  "cases": [
+    {
+      "id": "konakta-gece-yarisi-cinayeti",
+      "tier": "standard"
+    },
+    {
+      "id": "bogazda-kayip-elmas",
+      "tier": "standard"
+    },
+    {
+      "id": "kapalicarsida-gizem",
+      "tier": "standard"
+    },
+    {
+      "id": "universitede-karanlik-sir",
+      "tier": "standard"
+    },
+    {
+      "id": "pazar-yerinde-supheli-olum",
+      "tier": "standard"
+    },
+    {
+      "id": "muzede-kayip-eser",
+      "tier": "standard"
+    },
+    {
+      "id": "adada-buyuk-gizem",
+      "tier": "standard"
+    },
+    {
+      "id": "tren-yolculugunda-cinayet",
+      "tier": "standard"
+    },
+    {
+      "id": "tarihi-hamamda-cinayet",
+      "tier": "standard"
+    },
+    {
+      "id": "sabanci-muzesi-gasp",
+      "tier": "standard"
+    },
+    {
+      "id": "carsamba-suikasti",
+      "tier": "standard"
+    },
+    {
+      "id": "folklor-festivalinde-olum",
+      "tier": "standard"
+    },
+    {
+      "id": "kutuphanede-sessiz-suc",
+      "tier": "standard"
+    },
+    {
+      "id": "sahil-kasabasinda-gece",
+      "tier": "standard"
+    },
+    {
+      "id": "saat-fabrikasinda-gizem",
+      "tier": "standard"
+    },
+    {
+      "id": "termal-otelde-supheli-vaka",
+      "tier": "standard"
+    },
+    {
+      "id": "sehrin-kalbi-kadikoy",
+      "tier": "standard"
+    },
+    {
+      "id": "beyin-takimi-sirri",
+      "tier": "standard"
+    },
+    {
+      "id": "sarayli-seref-daveti",
+      "tier": "standard"
+    },
+    {
+      "id": "koy-dugununde-trajedi",
+      "tier": "standard"
+    },
+    {
+      "id": "galata-kulesinde-son-gece",
+      "tier": "standard"
+    },
+    {
+      "id": "dolmabahcede-protokol-cinayeti",
+      "tier": "standard"
+    },
+    {
+      "id": "uskudarda-kayip-vapur",
+      "tier": "standard"
+    },
+    {
+      "id": "beyoglu-pasajinda-santaj",
+      "tier": "standard"
+    },
+    {
+      "id": "ciragan-sarayinda-maskeli-balo",
+      "tier": "standard"
+    },
+    {
+      "id": "sultanahmette-turist-tuzagi",
+      "tier": "standard"
+    },
+    {
+      "id": "adalarda-yalniz-fayton",
+      "tier": "standard"
+    },
+    {
+      "id": "arnavutkoyde-balikci-sirri",
+      "tier": "standard"
+    },
+    {
+      "id": "topkapida-kayip-hancer",
+      "tier": "standard"
+    },
+    {
+      "id": "karakoyde-neon-gece",
+      "tier": "standard"
+    },
+    {
+      "id": "konakta-gece-vakti",
+      "tier": "standard"
+    },
+    {
+      "id": "pazar-sabahi-baskini",
+      "tier": "standard"
+    },
+    {
+      "id": "aksam-vapurunda-gizem",
+      "tier": "standard"
+    },
+    {
+      "id": "bagda-kanli-bicak",
+      "tier": "standard"
+    },
+    {
+      "id": "kervansarayda-son-gece",
+      "tier": "standard"
+    },
+    {
+      "id": "fotografcinin-son-karesi",
+      "tier": "standard"
+    },
+    {
+      "id": "termal-otelde-olum",
+      "tier": "standard"
+    },
+    {
+      "id": "mektup-gelmedi",
+      "tier": "standard"
+    },
+    {
+      "id": "zeytinyagi-fabrikasinda-kabus",
+      "tier": "standard"
+    },
+    {
+      "id": "dag-yolunda-pusu",
+      "tier": "standard"
+    },
+    {
+      "id": "ramazan-gecesi-cinayeti",
+      "tier": "standard"
+    },
+    {
+      "id": "karanlik-senfoni",
+      "tier": "standard"
+    },
+    {
+      "id": "kanli-rota",
+      "tier": "standard"
+    },
+    {
+      "id": "derinlerdeki-sir",
+      "tier": "standard"
+    },
+    {
+      "id": "zehirli-tuval",
+      "tier": "standard"
+    },
+    {
+      "id": "ott_001",
+      "tier": "premium"
+    },
+    {
+      "id": "ott_002",
+      "tier": "premium"
+    },
+    {
+      "id": "ott_003",
+      "tier": "premium"
+    },
+    {
+      "id": "ott_005",
+      "tier": "premium"
+    },
+    {
+      "id": "ott_004",
+      "tier": "premium"
+    },
+    {
+      "id": "hw_001",
+      "tier": "premium"
+    },
+    {
+      "id": "hw_002",
+      "tier": "premium"
+    },
+    {
+      "id": "hw_003",
+      "tier": "premium"
+    },
+    {
+      "id": "hw_004",
+      "tier": "premium"
+    },
+    {
+      "id": "hw_005",
+      "tier": "premium"
+    },
+    {
+      "id": "sf_001",
+      "tier": "premium"
+    },
+    {
+      "id": "sf_002",
+      "tier": "premium"
+    },
+    {
+      "id": "sf_003",
+      "tier": "premium"
+    },
+    {
+      "id": "sf_004",
+      "tier": "premium"
+    },
+    {
+      "id": "sf_005",
+      "tier": "premium"
+    },
+    {
+      "id": "rc_001",
+      "tier": "premium"
+    },
+    {
+      "id": "rc_002",
+      "tier": "premium"
+    },
+    {
+      "id": "rc_003",
+      "tier": "premium"
+    },
+    {
+      "id": "rc_004",
+      "tier": "premium"
+    },
+    {
+      "id": "rc_005",
+      "tier": "premium"
+    },
+    {
+      "id": "pp_001",
+      "tier": "premium"
+    },
+    {
+      "id": "pp_002",
+      "tier": "premium"
+    },
+    {
+      "id": "pp_003",
+      "tier": "premium"
+    },
+    {
+      "id": "pp_004",
+      "tier": "premium"
+    },
+    {
+      "id": "pp_005",
+      "tier": "premium"
+    },
+    {
+      "id": "fen_premium_001",
+      "tier": "premium"
+    },
+    {
+      "id": "fen_premium_002",
+      "tier": "premium"
+    },
+    {
+      "id": "fen_premium_003",
+      "tier": "premium"
+    },
+    {
+      "id": "fen_premium_004",
+      "tier": "premium"
+    },
+    {
+      "id": "fen_premium_005",
+      "tier": "premium"
+    },
+    {
+      "id": "mit_001",
+      "tier": "premium"
+    },
+    {
+      "id": "mit_002",
+      "tier": "premium"
+    },
+    {
+      "id": "mit_003",
+      "tier": "premium"
+    },
+    {
+      "id": "mit_004",
+      "tier": "premium"
+    },
+    {
+      "id": "mit_005",
+      "tier": "premium"
+    },
+    {
+      "id": "dij_001",
+      "tier": "premium"
+    },
+    {
+      "id": "dij_002",
+      "tier": "premium"
+    },
+    {
+      "id": "dij_003",
+      "tier": "premium"
+    },
+    {
+      "id": "dij_004",
+      "tier": "premium"
+    },
+    {
+      "id": "dij_005",
+      "tier": "premium"
+    },
+    {
+      "id": "ede_001",
+      "tier": "premium"
+    },
+    {
+      "id": "ede_002",
+      "tier": "premium"
+    },
+    {
+      "id": "ede_003",
+      "tier": "premium"
+    },
+    {
+      "id": "ede_004",
+      "tier": "premium"
+    },
+    {
+      "id": "ede_005",
+      "tier": "premium"
+    },
+    {
+      "id": "yeni_c01",
+      "tier": "premium"
+    },
+    {
+      "id": "yeni_c02",
+      "tier": "premium"
+    },
+    {
+      "id": "yeni_c03",
+      "tier": "premium"
+    },
+    {
+      "id": "yeni_c04",
+      "tier": "premium"
+    },
+    {
+      "id": "yeni_c05",
+      "tier": "premium"
+    },
+    {
+      "id": "yeni_d01",
+      "tier": "premium"
+    },
+    {
+      "id": "yeni_d02",
+      "tier": "premium"
+    },
+    {
+      "id": "yeni_d03",
+      "tier": "premium"
+    },
+    {
+      "id": "yeni_d04",
+      "tier": "premium"
+    },
+    {
+      "id": "yeni_d05",
+      "tier": "premium"
+    },
+    {
+      "id": "yeni_b01",
+      "tier": "premium"
+    },
+    {
+      "id": "yeni_b02",
+      "tier": "premium"
+    },
+    {
+      "id": "yeni_b03",
+      "tier": "premium"
+    },
+    {
+      "id": "yeni_b04",
+      "tier": "premium"
+    },
+    {
+      "id": "yeni_b05",
+      "tier": "premium"
+    }
+  ]
+}
