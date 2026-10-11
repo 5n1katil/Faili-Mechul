@@ -1,6 +1,6 @@
 {
   "schema": "fm_case_pipeline_state_v1",
-  "active_id": "kapalicarsida-gizem",
+  "active_id": "universitede-karanlik-sir",
   "cases": {
     "konakta-gece-yarisi-cinayeti": {
       "spent": 0.018207100000000004,
@@ -4650,6 +4650,1303 @@
         }
       ],
       "status": "quarantined"
+    },
+    "universitede-karanlik-sir": {
+      "spent": 0,
+      "feedback": [],
+      "source_hash": "ba12e30c0656dba5f0243d514547a5052cf7a7b5360a33d6b5fa725f0ed13326",
+      "simulator_hash": "cb53e6613d6379de097599634de26524f4510fbc",
+      "candidate": {
+        "id": "universitede-karanlik-sir",
+        "title": "Üniversitede Karanlık Sır",
+        "difficulty": "dedektif",
+        "dayIndex": 4,
+        "story": "İstanbul'un köklü üniversitesindeki sessiz gece, çığır açacak bir araştırma projesinin kana bulanmasıyla yırtıldı. Laboratuvar yöneticisi, masasının başında ölü bulundu ve paha biçilemez kritik araştırma verileri şifreli sunuculardan kalıcı olarak silindi.",
+        "suspects": [
+          {
+            "id": "s1",
+            "name": "Prof. Kahraman",
+            "description": "Son derece rekabetçi ve sert mizaçlı, tüm gününü sadece evrak dolu odasında makale yazarak geçiren kıdemli akademisyen.",
+            "icon": "pa:uni_s1"
+          },
+          {
+            "id": "s2",
+            "name": "Asistan Elif",
+            "description": "Gecelerini araştırmalara adayan, projenin tüm teknik altyapısına ve voltaj düzeneklerine hakim hırslı doktora öğrencisi.",
+            "icon": "pa:uni_s2"
+          },
+          {
+            "id": "s3",
+            "name": "Güvenlik Görevlisi",
+            "description": "Sadece gece vardiyasında çalışan, teknik bilgisi olmayan, binaların fiziksel devriye kontrollerini yapan personel.",
+            "icon": "pa:uni_s3"
+          }
+        ],
+        "weapons": [
+          {
+            "id": "w1",
+            "name": "Elektrik Çarpması",
+            "description": "Deney cihazlarının yüksek voltajlı kablolarının kasıtlı olarak birleştirilmesiyle oluşturulan ani ve ölümcül kısa devre.",
+            "icon": "pa:uni_w1"
+          },
+          {
+            "id": "w2",
+            "name": "Kimyasal Gaz",
+            "description": "Tüplerden sızdırıldığında kapalı ortamda birikebilen, solunum yollarını tahrip eden tehlikeli ve boğucu bileşik.",
+            "icon": "pa:uni_w2"
+          },
+          {
+            "id": "w3",
+            "name": "Keskin Nesne",
+            "description": "Masanın üzerindeki cam bölmelerden koparılmış, damarları tek hamlede kesebilecek kadar sivri kırık bir parça.",
+            "icon": "pa:uni_w3"
+          }
+        ],
+        "locations": [
+          {
+            "id": "l1",
+            "name": "Laboratuvar",
+            "description": "Çeşitli deney düzeneklerinin, yüksek voltajlı prizlerin ve kimyasal tüplerin bulunduğu tam donanımlı araştırma odası.",
+            "icon": "pa:uni_l1"
+          },
+          {
+            "id": "l2",
+            "name": "Ofis",
+            "description": "Yığınla dosya, basılı evrak ve standart bilgisayar ekranlarıyla dolu olan klasik, tehlikesiz akademisyen çalışma odası.",
+            "icon": "pa:uni_l2"
+          },
+          {
+            "id": "l3",
+            "name": "Koridorlar",
+            "description": "Gece yarısı tamamen ıssızlaşan, sadece devriye personelinin geçtiği, güvenlik kameralarıyla izlenen uzun geçitler.",
+            "icon": "pa:uni_l3"
+          }
+        ],
+        "clues": [
+          {
+            "id": "c1",
+            "text": "Olay yerindeki gelişmiş analiz cihazlarının kasıtlı olarak devreden çıkarılması, cinayetin sıradan evrakların bulunduğu bir ofiste işlenmediğini açıkça gösteriyordu.",
+            "type": "evidence",
+            "isBonus": false
+          },
+          {
+            "id": "c2",
+            "text": "Gece vardiyasındaki güvenlik görevlisi, uzun geçitlerde devriye atarken kilitli kapıları hiç zorlamadığını ve sadece dış koridorları kontrol ettiğini kamera kayıtlarıyla kanıtladı.",
+            "type": "witness",
+            "isBonus": false
+          },
+          {
+            "id": "c3",
+            "text": "Maktulün üzerinde hiçbir cam kesiği veya solunum yolunu tahrip eden boğucu madde kalıntısı bulunmadı; ölüm ani bir şokla, dışarıdan bir müdahale olmadan gerçekleşmiş gibi görünüyordu.",
+            "type": "forensic",
+            "isBonus": false
+          },
+          {
+            "id": "c4",
+            "text": "Prof. Kahraman'ın bilgisayarından, olay saatinde kesintisiz olarak üniversite sunucusuna makale verisi yüklendiği ve ofisinden çıkmadığı anlaşıldı.",
+            "type": "record",
+            "isBonus": false
+          },
+          {
+            "id": "c5",
+            "text": "Yüksek voltajlı cihazların sigorta kutusunda, sadece teknik altyapıya hakim doktora öğrencisinin bildiği gizli bir baypas işlemi yapılmıştı.",
+            "type": "evidence",
+            "isBonus": true
+          },
+          {
+            "id": "c6",
+            "text": "Asistan Elif'in laboratuvar eldivenlerinin uçlarındaki yanık izleri, kasıtlı olarak yaratılan o ölümcül kısa devrenin kıvılcımlarıyla tamamen eşleşiyordu.",
+            "type": "forensic",
+            "isBonus": true
+          }
+        ],
+        "solvabilityMeta": {
+          "freeEliminations": [
+            "l2",
+            "l3",
+            "s3",
+            "w2",
+            "w3",
+            "s1"
+          ],
+          "bonusEliminations": []
+        },
+        "solution": {
+          "suspectId": "s2",
+          "weaponId": "w1",
+          "locationId": "l1"
+        },
+        "qaPolicy": {
+          "caseTier": "standard"
+        },
+        "qaPattern": {
+          "anchorSource": "none",
+          "designIntent": "Deterministik miras-vaka imzası: none:?; evidence:?:?; ????; ?|?|?|?; none."
+        },
+        "qaPortfolioRegistry": {
+          "schema_version": "fm_qa_portfolio_registry_v1",
+          "entries": [
+            {
+              "puzzleId": "konakta-gece-yarisi-cinayeti",
+              "title": "Konakta Gece Yarısı Cinayeti",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "forensic:?:?",
+                "actions": "????",
+                "axes": "?|?|?|?",
+                "miniSig": "none"
+              }
+            },
+            {
+              "puzzleId": "bogazda-kayip-elmas",
+              "title": "Boğaz'da Kayıp Elmas",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "evidence:?:?",
+                "actions": "????",
+                "axes": "?|?|?|?",
+                "miniSig": "none"
+              }
+            },
+            {
+              "puzzleId": "kapalicarsida-gizem",
+              "title": "Kapalıçarşı'da Gizem",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "record:?:?",
+                "actions": "????",
+                "axes": "?|?|?|?",
+                "miniSig": "none"
+              }
+            },
+            {
+              "puzzleId": "universitede-karanlik-sir",
+              "title": "Üniversitede Karanlık Sır",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "evidence:?:?",
+                "actions": "????",
+                "axes": "?|?|?|?",
+                "miniSig": "none"
+              }
+            },
+            {
+              "puzzleId": "pazar-yerinde-supheli-olum",
+              "title": "Pazar Yerinde Şüpheli Ölüm",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "forensic:?:?",
+                "actions": "????",
+                "axes": "?|?|?|?",
+                "miniSig": "none"
+              }
+            },
+            {
+              "puzzleId": "muzede-kayip-eser",
+              "title": "Müzede Kayıp Eser",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "record:?:?",
+                "actions": "????",
+                "axes": "?|?|?|?",
+                "miniSig": "none"
+              }
+            },
+            {
+              "puzzleId": "adada-buyuk-gizem",
+              "title": "Adada Büyük Gizem",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "evidence:?:?",
+                "actions": "????",
+                "axes": "?|?|?|?",
+                "miniSig": "none"
+              }
+            },
+            {
+              "puzzleId": "tren-yolculugunda-cinayet",
+              "title": "Tren Yolculuğunda Cinayet",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "witness:?:?",
+                "actions": "????",
+                "axes": "?|?|?|?",
+                "miniSig": "none"
+              }
+            },
+            {
+              "puzzleId": "tarihi-hamamda-cinayet",
+              "title": "Tarihi Hamamda Cinayet",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "witness:?:?",
+                "actions": "????",
+                "axes": "?|?|?|?",
+                "miniSig": "none"
+              }
+            },
+            {
+              "puzzleId": "sabanci-muzesi-gasp",
+              "title": "Sabancı Müzesi Gasp",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "forensic:?:?",
+                "actions": "????",
+                "axes": "?|?|?|?",
+                "miniSig": "none"
+              }
+            },
+            {
+              "puzzleId": "carsamba-suikasti",
+              "title": "Çarşamba Suikastı",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "forensic:?:?",
+                "actions": "????",
+                "axes": "?|?|?|?",
+                "miniSig": "none"
+              }
+            },
+            {
+              "puzzleId": "folklor-festivalinde-olum",
+              "title": "Folklor Festivalinde Ölüm",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "forensic:?:?",
+                "actions": "????",
+                "axes": "?|?|?|?",
+                "miniSig": "none"
+              }
+            },
+            {
+              "puzzleId": "kutuphanede-sessiz-suc",
+              "title": "Kütüphanede Sessiz Suç",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "evidence:?:?",
+                "actions": "????",
+                "axes": "?|?|?|?",
+                "miniSig": "none"
+              }
+            },
+            {
+              "puzzleId": "sahil-kasabasinda-gece",
+              "title": "Sahil Kasabasında Gece",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "evidence:?:?",
+                "actions": "?????",
+                "axes": "?|?|?|?|?",
+                "miniSig": "none"
+              }
+            },
+            {
+              "puzzleId": "saat-fabrikasinda-gizem",
+              "title": "Saat Fabrikasında Gizem",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "evidence:?:?",
+                "actions": "????",
+                "axes": "?|?|?|?",
+                "miniSig": "none"
+              }
+            },
+            {
+              "puzzleId": "termal-otelde-supheli-vaka",
+              "title": "Termal Otelde Şüpheli Vaka",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "evidence:?:?",
+                "actions": "????",
+                "axes": "?|?|?|?",
+                "miniSig": "none"
+              }
+            },
+            {
+              "puzzleId": "sehrin-kalbi-kadikoy",
+              "title": "Şehrin Kalbi Kadıköy",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "forensic:?:?",
+                "actions": "????",
+                "axes": "?|?|?|?",
+                "miniSig": "none"
+              }
+            },
+            {
+              "puzzleId": "beyin-takimi-sirri",
+              "title": "Beyin Takımı Sırrı",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "evidence:?:?",
+                "actions": "??????",
+                "axes": "?|?|?|?|?|?",
+                "miniSig": "none"
+              }
+            },
+            {
+              "puzzleId": "sarayli-seref-daveti",
+              "title": "Saraylı Şeref Daveti",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "forensic:?:?",
+                "actions": "??????",
+                "axes": "?|?|?|?|?|?",
+                "miniSig": "none"
+              }
+            },
+            {
+              "puzzleId": "koy-dugununde-trajedi",
+              "title": "Köy Düğününde Trajedi",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "forensic:?:?",
+                "actions": "????",
+                "axes": "?|?|?|?",
+                "miniSig": "none"
+              }
+            },
+            {
+              "puzzleId": "galata-kulesinde-son-gece",
+              "title": "Galata Kulesi'nde Son Gece",
+              "signature": {
+                "anchorSig": "story:location",
+                "firstSig": "forensic:?:?",
+                "actions": "????",
+                "axes": "?|?|?|?",
+                "miniSig": "none"
+              }
+            },
+            {
+              "puzzleId": "dolmabahcede-protokol-cinayeti",
+              "title": "Dolmabahçe'de Protokol Cinayeti",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "forensic:?:?",
+                "actions": "????",
+                "axes": "?|?|?|?",
+                "miniSig": "none"
+              }
+            },
+            {
+              "puzzleId": "uskudarda-kayip-vapur",
+              "title": "Üsküdar'da Kayıp Vapur",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "evidence:?:?",
+                "actions": "????",
+                "axes": "?|?|?|?",
+                "miniSig": "none"
+              }
+            },
+            {
+              "puzzleId": "beyoglu-pasajinda-santaj",
+              "title": "Beyoğlu Pasajında Şantaj",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "evidence:?:?",
+                "actions": "????",
+                "axes": "?|?|?|?",
+                "miniSig": "none"
+              }
+            },
+            {
+              "puzzleId": "ciragan-sarayinda-maskeli-balo",
+              "title": "Çırağan Sarayı'nda Maskeli Balo",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "forensic:?:?",
+                "actions": "????",
+                "axes": "?|?|?|?",
+                "miniSig": "none"
+              }
+            },
+            {
+              "puzzleId": "sultanahmette-turist-tuzagi",
+              "title": "Sultanahmet'te Turist Tuzağı",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "evidence:?:?",
+                "actions": "????",
+                "axes": "?|?|?|?",
+                "miniSig": "none"
+              }
+            },
+            {
+              "puzzleId": "adalarda-yalniz-fayton",
+              "title": "Adalar'da Yalnız Fayton",
+              "signature": {
+                "anchorSig": "story:location",
+                "firstSig": "forensic:?:?",
+                "actions": "????",
+                "axes": "?|?|?|?",
+                "miniSig": "none"
+              }
+            },
+            {
+              "puzzleId": "arnavutkoyde-balikci-sirri",
+              "title": "Arnavutköy'de Balıkçı Sırrı",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "forensic:?:?",
+                "actions": "????",
+                "axes": "?|?|?|?",
+                "miniSig": "none"
+              }
+            },
+            {
+              "puzzleId": "topkapida-kayip-hancer",
+              "title": "Topkapı'da Kayıp Hançer",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "forensic:?:?",
+                "actions": "????",
+                "axes": "?|?|?|?",
+                "miniSig": "none"
+              }
+            },
+            {
+              "puzzleId": "karakoyde-neon-gece",
+              "title": "Karaköy'de Neon Gece",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "forensic:?:?",
+                "actions": "????",
+                "axes": "?|?|?|?",
+                "miniSig": "none"
+              }
+            },
+            {
+              "puzzleId": "konakta-gece-vakti",
+              "title": "Konakta Gece Vakti",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "evidence:?:?",
+                "actions": "????",
+                "axes": "?|?|?|?",
+                "miniSig": "none"
+              }
+            },
+            {
+              "puzzleId": "pazar-sabahi-baskini",
+              "title": "Pazar Sabahı Baskını",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "witness:?:?",
+                "actions": "????",
+                "axes": "?|?|?|?",
+                "miniSig": "none"
+              }
+            },
+            {
+              "puzzleId": "aksam-vapurunda-gizem",
+              "title": "Akşam Vapurunda Gizem",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "witness:?:?",
+                "actions": "????",
+                "axes": "?|?|?|?",
+                "miniSig": "none"
+              }
+            },
+            {
+              "puzzleId": "bagda-kanli-bicak",
+              "title": "Bağda Kanlı Bıçak",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "forensic:?:?",
+                "actions": "????",
+                "axes": "?|?|?|?",
+                "miniSig": "none"
+              }
+            },
+            {
+              "puzzleId": "kervansarayda-son-gece",
+              "title": "Kervansarayda Son Gece",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "evidence:?:?",
+                "actions": "????",
+                "axes": "?|?|?|?",
+                "miniSig": "none"
+              }
+            },
+            {
+              "puzzleId": "fotografcinin-son-karesi",
+              "title": "Fotoğrafçının Son Karesi",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "forensic:?:?",
+                "actions": "????",
+                "axes": "?|?|?|?",
+                "miniSig": "none"
+              }
+            },
+            {
+              "puzzleId": "termal-otelde-olum",
+              "title": "Termal Otelde Ölüm",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "evidence:?:?",
+                "actions": "????",
+                "axes": "?|?|?|?",
+                "miniSig": "none"
+              }
+            },
+            {
+              "puzzleId": "mektup-gelmedi",
+              "title": "Mektup Gelmedi",
+              "signature": {
+                "anchorSig": "story:location",
+                "firstSig": "record:?:?",
+                "actions": "????",
+                "axes": "?|?|?|?",
+                "miniSig": "none"
+              }
+            },
+            {
+              "puzzleId": "zeytinyagi-fabrikasinda-kabus",
+              "title": "Zeytinyağı Fabrikasında Kâbus",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "forensic:?:?",
+                "actions": "????",
+                "axes": "?|?|?|?",
+                "miniSig": "none"
+              }
+            },
+            {
+              "puzzleId": "dag-yolunda-pusu",
+              "title": "Dağ Yolunda Pusu",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "evidence:?:?",
+                "actions": "????",
+                "axes": "?|?|?|?",
+                "miniSig": "none"
+              }
+            },
+            {
+              "puzzleId": "ramazan-gecesi-cinayeti",
+              "title": "Ramazan Gecesi Cinayeti",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "evidence:?:?",
+                "actions": "????",
+                "axes": "?|?|?|?",
+                "miniSig": "none"
+              }
+            },
+            {
+              "puzzleId": "karanlik-senfoni",
+              "title": "Karanlık Senfoni",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "forensic:?:?",
+                "actions": "????",
+                "axes": "?|?|?|?",
+                "miniSig": "none"
+              }
+            },
+            {
+              "puzzleId": "kanli-rota",
+              "title": "Kanlı Rota",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "forensic:?:?",
+                "actions": "????",
+                "axes": "?|?|?|?",
+                "miniSig": "none"
+              }
+            },
+            {
+              "puzzleId": "derinlerdeki-sir",
+              "title": "Derinlerdeki Sır",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "forensic:?:?",
+                "actions": "????",
+                "axes": "?|?|?|?",
+                "miniSig": "none"
+              }
+            },
+            {
+              "puzzleId": "zehirli-tuval",
+              "title": "Zehirli Tuval",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "forensic:?:?",
+                "actions": "????",
+                "axes": "?|?|?|?",
+                "miniSig": "none"
+              }
+            },
+            {
+              "puzzleId": "ott_001",
+              "title": "Haremdeki Zehir",
+              "signature": {
+                "anchorSig": "clue:?",
+                "firstSig": "adli:?:?",
+                "actions": "????",
+                "axes": "?|?|?|?",
+                "miniSig": "sifreli_mesaj@4"
+              }
+            },
+            {
+              "puzzleId": "ott_002",
+              "title": "Büyük Çarşı'da Kayıp Mühür",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "adli:?:?",
+                "actions": "?????",
+                "axes": "?|?|?|?|?",
+                "miniSig": "parmak_izi@4"
+              }
+            },
+            {
+              "puzzleId": "ott_003",
+              "title": "Yıldız Sarayı'nda Hain",
+              "signature": {
+                "anchorSig": "clue:?",
+                "firstSig": "adli:E:L-W",
+                "actions": "ECEC",
+                "axes": "L-W|L-S|L-W|L-S",
+                "miniSig": "sifreli_mesaj@4"
+              }
+            },
+            {
+              "puzzleId": "ott_005",
+              "title": "Ayasofya'nın Son Sırrı",
+              "signature": {
+                "anchorSig": "story:location",
+                "firstSig": "parmak_izi:?:?",
+                "actions": "????",
+                "axes": "?|?|?|?",
+                "miniSig": "parmak_izi@1"
+              }
+            },
+            {
+              "puzzleId": "ott_004",
+              "title": "Tersane Komutanının Sonu",
+              "signature": {
+                "anchorSig": "story:location",
+                "firstSig": "adli:?:?",
+                "actions": "??????",
+                "axes": "?|?|?|?|?|?",
+                "miniSig": "ses_kaydi@6"
+              }
+            },
+            {
+              "puzzleId": "hw_001",
+              "title": "Oscar Gecesi Zehiri",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "tanik:?:?",
+                "actions": "?????",
+                "axes": "?|?|?|?|?",
+                "miniSig": "ses_kaydi@3"
+              }
+            },
+            {
+              "puzzleId": "hw_002",
+              "title": "Kamera Arkasında Kan",
+              "signature": {
+                "anchorSig": "story:location",
+                "firstSig": "kanit:?:?",
+                "actions": "??????",
+                "axes": "?|?|?|?|?|?",
+                "miniSig": "sifreli_mesaj@5"
+              }
+            },
+            {
+              "puzzleId": "hw_003",
+              "title": "Cannes'da Kırmızı",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "kanit:?:?",
+                "actions": "?????",
+                "axes": "?|?|?|?|?",
+                "miniSig": "parmak_izi@4"
+              }
+            },
+            {
+              "puzzleId": "hw_004",
+              "title": "Senaryo Hırsızı",
+              "signature": {
+                "anchorSig": "story:location",
+                "firstSig": "kanit:?:?",
+                "actions": "?????",
+                "axes": "?|?|?|?|?",
+                "miniSig": "parmak_izi@4"
+              }
+            },
+            {
+              "puzzleId": "hw_005",
+              "title": "Efsanenin Sonu",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "adli:?:?",
+                "actions": "??????",
+                "axes": "?|?|?|?|?|?",
+                "miniSig": "profil_sentezi@5"
+              }
+            },
+            {
+              "puzzleId": "sf_001",
+              "title": "Uzay İstasyonu Omega-7",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "kanit:?:?",
+                "actions": "????",
+                "axes": "?|?|?|?",
+                "miniSig": "sifreli_mesaj@4"
+              }
+            },
+            {
+              "puzzleId": "sf_002",
+              "title": "Yapay Zeka Mahkemesi",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "adli:?:?",
+                "actions": "????",
+                "axes": "?|?|?|?",
+                "miniSig": "profil_sentezi@3"
+              }
+            },
+            {
+              "puzzleId": "sf_003",
+              "title": "Klonun Suçu",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "kanit:?:?",
+                "actions": "?????",
+                "axes": "?|?|?|?|?",
+                "miniSig": "ses_kaydi@2"
+              }
+            },
+            {
+              "puzzleId": "sf_004",
+              "title": "Karanlık Madde Hırsızı",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "kanit:?:?",
+                "actions": "?????",
+                "axes": "?|?|?|?|?",
+                "miniSig": "sifreli_mesaj@2"
+              }
+            },
+            {
+              "puzzleId": "sf_005",
+              "title": "Zaman Tünelinin Sırrı",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "kanit:?:?",
+                "actions": "?????",
+                "axes": "?|?|?|?|?",
+                "miniSig": "profil_sentezi@2"
+              }
+            },
+            {
+              "puzzleId": "rc_001",
+              "title": "Siyah Dairenin Mektubu",
+              "signature": {
+                "anchorSig": "clue:weapon",
+                "firstSig": "adli:E:L-W",
+                "actions": "EECCE",
+                "axes": "L-W|L-W|S-W|S-W|L-W",
+                "miniSig": "symbol_crossgrid@3"
+              }
+            },
+            {
+              "puzzleId": "rc_002",
+              "title": "Karlı Çiftlikte Son Işık",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "adli:?:?",
+                "actions": "?????",
+                "axes": "?|?|?|?|?",
+                "miniSig": "ses_kaydi@3"
+              }
+            },
+            {
+              "puzzleId": "rc_003",
+              "title": "Son Söz: Kıyıdaki Adam",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "adli:?:?",
+                "actions": "?????",
+                "axes": "?|?|?|?|?",
+                "miniSig": "torn_route_reconstruction@3"
+              }
+            },
+            {
+              "puzzleId": "rc_004",
+              "title": "Boş Çerçevenin Gölgesi",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "adli:?:?",
+                "actions": "??????",
+                "axes": "?|?|?|?|?|?",
+                "miniSig": "profil_sentezi@2"
+              }
+            },
+            {
+              "puzzleId": "rc_005",
+              "title": "Kuzey Geçidindeki Kırık Pusula",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "adli:?:?",
+                "actions": "??????",
+                "axes": "?|?|?|?|?|?",
+                "miniSig": "broken_compass_calibration@3"
+              }
+            },
+            {
+              "puzzleId": "pp_001",
+              "title": "Mavi Etiketin Son Durağı",
+              "signature": {
+                "anchorSig": "clue:weapon",
+                "firstSig": "adli:C:L-W",
+                "actions": "CECEE",
+                "axes": "L-W|L-S|L-W|L-S|S-W",
+                "miniSig": "luggage_label_match@5"
+              }
+            },
+            {
+              "puzzleId": "pp_002",
+              "title": "Negatifte Kalan Saat",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "adli:?:?",
+                "actions": "????",
+                "axes": "?|?|?|?",
+                "miniSig": "negative_contact_sheet@2"
+              }
+            },
+            {
+              "puzzleId": "pp_003",
+              "title": "Son Yayının Mors Kıyısı",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "adli:?:?",
+                "actions": "????",
+                "axes": "?|?|?|?",
+                "miniSig": "morse_transceiver@3"
+              }
+            },
+            {
+              "puzzleId": "pp_004",
+              "title": "Küllerin Altındaki Envanter",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "adli:?:?",
+                "actions": "?????",
+                "axes": "?|?|?|?|?",
+                "miniSig": "archive_index_reconstruction@4"
+              }
+            },
+            {
+              "puzzleId": "pp_005",
+              "title": "Sıfırın Altındaki Dördüncü Kilit",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "adli:?:?",
+                "actions": "?????",
+                "axes": "?|?|?|?|?",
+                "miniSig": "mechanical_lock_sequence@4"
+              }
+            },
+            {
+              "puzzleId": "fen_premium_001",
+              "title": "Kül Takımyıldızı",
+              "signature": {
+                "anchorSig": "story:suspect",
+                "firstSig": "kanit:?:?",
+                "actions": "?????",
+                "axes": "?|?|?|?|?",
+                "miniSig": "cipher_disc_alignment@5"
+              }
+            },
+            {
+              "puzzleId": "fen_premium_002",
+              "title": "Gaz Lambasının Altındaki Kesik",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "kanit:?:?",
+                "actions": "????",
+                "axes": "?|?|?|?",
+                "miniSig": "timeline_board@2"
+              }
+            },
+            {
+              "puzzleId": "fen_premium_003",
+              "title": "Kızıl Şeritli Sandık",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "kanit:?:?",
+                "actions": "????",
+                "axes": "?|?|?|?",
+                "miniSig": "parcel_xray_layers@3"
+              }
+            },
+            {
+              "puzzleId": "fen_premium_004",
+              "title": "Son Valsin Dördüncü Ölçüsü",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "kanit:?:?",
+                "actions": "?????",
+                "axes": "?|?|?|?|?",
+                "miniSig": "waltz_score_stitch@4"
+              }
+            },
+            {
+              "puzzleId": "fen_premium_005",
+              "title": "On Dördüncü Katın Sessizliği",
+              "signature": {
+                "anchorSig": "story:location",
+                "firstSig": "kanit:?:?",
+                "actions": "?????",
+                "axes": "?|?|?|?|?",
+                "miniSig": "ventilation_valve_network@4"
+              }
+            },
+            {
+              "puzzleId": "mit_001",
+              "title": "Olimpos’ta İhanet",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "tanik:?:?",
+                "actions": "?????",
+                "axes": "?|?|?|?|?",
+                "miniSig": "olympian_offering_scale@5"
+              }
+            },
+            {
+              "puzzleId": "mit_002",
+              "title": "Ergenekon’da Gizem",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "tanik:?:?",
+                "actions": "?????",
+                "axes": "?|?|?|?|?",
+                "miniSig": "forge_bellows_cycle@5"
+              }
+            },
+            {
+              "puzzleId": "mit_003",
+              "title": "Aeneas’ın Laneti",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "tanik:?:?",
+                "actions": "?????",
+                "axes": "?|?|?|?|?",
+                "miniSig": "laurel_knot_decoder@4"
+              }
+            },
+            {
+              "puzzleId": "mit_004",
+              "title": "Ra’nın Gözü",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "tanik:?:?",
+                "actions": "????",
+                "axes": "?|?|?|?",
+                "miniSig": "sunstone_reflection_array@3"
+              }
+            },
+            {
+              "puzzleId": "mit_005",
+              "title": "Odin’in Bedeli",
+              "signature": {
+                "anchorSig": "story:suspect",
+                "firstSig": "tanik:?:?",
+                "actions": "????",
+                "axes": "?|?|?|?",
+                "miniSig": "raven_feather_lattice@3"
+              }
+            },
+            {
+              "puzzleId": "dij_001",
+              "title": "Son Blok",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "adli:?:?",
+                "actions": "????",
+                "axes": "?|?|?|?",
+                "miniSig": "blockchain_transaction_fork@4"
+              }
+            },
+            {
+              "puzzleId": "dij_002",
+              "title": "Deepfake Tanık",
+              "signature": {
+                "anchorSig": "story:suspect",
+                "firstSig": "tanik:?:?",
+                "actions": "????",
+                "axes": "?|?|?|?",
+                "miniSig": "deepfake_frame_artifact_analysis@4"
+              }
+            },
+            {
+              "puzzleId": "dij_003",
+              "title": "Karanlık Ağın Son Adresi",
+              "signature": {
+                "anchorSig": "story:suspect",
+                "firstSig": "evidence:?:?",
+                "actions": "????",
+                "axes": "?|?|?|?",
+                "miniSig": "tor_node_route@4"
+              }
+            },
+            {
+              "puzzleId": "dij_004",
+              "title": "Beğeni Tuzağı",
+              "signature": {
+                "anchorSig": "story:suspect",
+                "firstSig": "eleme:?:?",
+                "actions": "????",
+                "axes": "?|?|?|?",
+                "miniSig": "badge_ups_correlation@4"
+              }
+            },
+            {
+              "puzzleId": "dij_005",
+              "title": "Son Token",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "dogrudan:?:?",
+                "actions": "????",
+                "axes": "?|?|?|?",
+                "miniSig": "iot_command_chain@4"
+              }
+            },
+            {
+              "puzzleId": "ede_001",
+              "title": "Baker Street'in Bilinmeyeni",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "kanit:?:?",
+                "actions": "????????",
+                "axes": "?|?|?|?|?|?|?|?",
+                "miniSig": "sifreli_mesaj@2"
+              }
+            },
+            {
+              "puzzleId": "ede_002",
+              "title": "Orient Ekspresi'nin Kayıp Vagonu",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "adli:?:?",
+                "actions": "????",
+                "axes": "?|?|?|?",
+                "miniSig": "morse_transceiver@4"
+              }
+            },
+            {
+              "puzzleId": "ede_003",
+              "title": "Kütüphanenin Kilitli Sırrı",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "kanit:?:?",
+                "actions": "??????",
+                "axes": "?|?|?|?|?|?",
+                "miniSig": "mechanical_lock_sequence@6"
+              }
+            },
+            {
+              "puzzleId": "ede_004",
+              "title": "St. Mary Mead'in Gizli Defteri",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "kanit:?:?",
+                "actions": "????",
+                "axes": "?|?|?|?",
+                "miniSig": "negative_contact_sheet@4"
+              }
+            },
+            {
+              "puzzleId": "ede_005",
+              "title": "Boğaz'ın Şahidi",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "kanit:?:?",
+                "actions": "????",
+                "axes": "?|?|?|?",
+                "miniSig": "ses_kaydi@4"
+              }
+            },
+            {
+              "puzzleId": "yeni_c01",
+              "title": "Büyükada'da Kan İzleri",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "kanit:?:?",
+                "actions": "????????",
+                "axes": "?|?|?|?|?|?|?|?",
+                "miniSig": "parmak_izi@4"
+              }
+            },
+            {
+              "puzzleId": "yeni_c02",
+              "title": "Çarşı Hamamında Sessiz Ölüm",
+              "signature": {
+                "anchorSig": "story:location",
+                "firstSig": "kanit:?:?",
+                "actions": "????????",
+                "axes": "?|?|?|?|?|?|?|?",
+                "miniSig": "gorsel_ipucu@3"
+              }
+            },
+            {
+              "puzzleId": "yeni_c03",
+              "title": "Kuyumcunun Altın Sırrı",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "kanit:?:?",
+                "actions": "????????",
+                "axes": "?|?|?|?|?|?|?|?",
+                "miniSig": "parmak_izi@3"
+              }
+            },
+            {
+              "puzzleId": "yeni_c04",
+              "title": "Moda Tasarımcısının Son Koleksiyonu",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "kanit:?:?",
+                "actions": "????????",
+                "axes": "?|?|?|?|?|?|?|?",
+                "miniSig": "parmak_izi@4"
+              }
+            },
+            {
+              "puzzleId": "yeni_c05",
+              "title": "Dağ Evi Kar Altında",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "kanit:?:?",
+                "actions": "????????",
+                "axes": "?|?|?|?|?|?|?|?",
+                "miniSig": "gorsel_ipucu@3"
+              }
+            },
+            {
+              "puzzleId": "yeni_d01",
+              "title": "Boğaz Köprüsü Altında",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "kanit:?:?",
+                "actions": "??????????",
+                "axes": "?|?|?|?|?|?|?|?|?|?",
+                "miniSig": "parmak_izi@4"
+              }
+            },
+            {
+              "puzzleId": "yeni_d02",
+              "title": "Ankara'da Seçim Gecesi",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "kanit:?:?",
+                "actions": "??????????",
+                "axes": "?|?|?|?|?|?|?|?|?|?",
+                "miniSig": "parmak_izi@4"
+              }
+            },
+            {
+              "puzzleId": "yeni_d03",
+              "title": "Pazar Sabahı Antika",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "kanit:?:?",
+                "actions": "??????????",
+                "axes": "?|?|?|?|?|?|?|?|?|?",
+                "miniSig": "parmak_izi@4"
+              }
+            },
+            {
+              "puzzleId": "yeni_d04",
+              "title": "Tıp Fakültesinde Anatomi Dersi",
+              "signature": {
+                "anchorSig": "story:location",
+                "firstSig": "kanit:?:?",
+                "actions": "??????????",
+                "axes": "?|?|?|?|?|?|?|?|?|?",
+                "miniSig": "parmak_izi@5"
+              }
+            },
+            {
+              "puzzleId": "yeni_d05",
+              "title": "Festival Sahnesinin Arkası",
+              "signature": {
+                "anchorSig": "story:location",
+                "firstSig": "kanit:?:?",
+                "actions": "??????????",
+                "axes": "?|?|?|?|?|?|?|?|?|?",
+                "miniSig": "parmak_izi@3"
+              }
+            },
+            {
+              "puzzleId": "yeni_b01",
+              "title": "Cumhuriyet Arşivinin Son Sayfası",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "kanit:?:?",
+                "actions": "???????????",
+                "axes": "?|?|?|?|?|?|?|?|?|?|?",
+                "miniSig": "parmak_izi@3"
+              }
+            },
+            {
+              "puzzleId": "yeni_b02",
+              "title": "Kıbrıs'ta Müzakere Masası",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "kanit:?:?",
+                "actions": "???????????",
+                "axes": "?|?|?|?|?|?|?|?|?|?|?",
+                "miniSig": "parmak_izi@5"
+              }
+            },
+            {
+              "puzzleId": "yeni_b03",
+              "title": "Tersane Sabahı",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "kanit:?:?",
+                "actions": "???????????",
+                "axes": "?|?|?|?|?|?|?|?|?|?|?",
+                "miniSig": "parmak_izi@5"
+              }
+            },
+            {
+              "puzzleId": "yeni_b04",
+              "title": "Hukuk Bürosunun Karanlık Dosyası",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "kanit:?:?",
+                "actions": "???????????",
+                "axes": "?|?|?|?|?|?|?|?|?|?|?",
+                "miniSig": "parmak_izi@5"
+              }
+            },
+            {
+              "puzzleId": "yeni_b05",
+              "title": "Fuar Kulesinin Son Katı",
+              "signature": {
+                "anchorSig": "none:?",
+                "firstSig": "kanit:?:?",
+                "actions": "???????????",
+                "axes": "?|?|?|?|?|?|?|?|?|?|?",
+                "miniSig": "parmak_izi@5"
+              }
+            }
+          ]
+        },
+        "qaAuthoringVersion": "fm_case_qa_authoring_v3_2_deterministic_bootstrap"
+      },
+      "candidate_hash": "36e182839f7fe0758f075dcb78cb21355de057948dcbce62f240d90f51a6e02f",
+      "best_score": 0
     }
   },
   "requests": {
