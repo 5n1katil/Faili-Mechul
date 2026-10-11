@@ -1299,9 +1299,9 @@
       "candidate_hash": "f027c3608366d7b722f7e6111b75726e717ad3d388a9b208ba1b75ff1c639cf2",
       "best_score": 0,
       "failures": [
-        "GEMINI_HTTP_404"
+        "GEMINI_HTTP_400"
       ],
-      "status": "GEMINI_HTTP_404"
+      "status": "GEMINI_HTTP_400"
     }
   },
   "requests": {
