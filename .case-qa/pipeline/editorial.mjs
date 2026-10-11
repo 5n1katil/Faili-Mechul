@@ -75,6 +75,15 @@ export function editorialRevisionPrompt(candidate, review) {
   prompt.instructions += ' Profile additions: use an empty string if no addition is needed; otherwise one 8-20 word Turkish sentence giving a neutral personal concern or motivation. Do not alter age, clothing, physical appearance, occupation or relationships. Do not add a specific listed item/place association, alibi, unique skill or access. Refer to original traits indirectly in clues rather than inventing new identifying traits. Resolve spatial and time ambiguity in bonuses as well as core clues. All minimum lengths and quality gates remain required.';
   return JSON.stringify(prompt);
 }
+export function editorialRevisionRequestPrompt(candidate, review) {
+  const prompt = JSON.parse(editorialRevisionPrompt(candidate, review));
+  prompt.revision_constraints = {
+    preserved_core_hints: Object.fromEntries(candidate.clues.filter(c => !c.isBonus).map(c => [c.id, c.deductionHint])),
+    entity_labels: [...candidate.suspects, ...candidate.weapons, ...candidate.locations].map(e => e.name),
+    instructions: 'Copy preserved_core_hints verbatim. They already passed the exact spoiler check; changing them is unnecessary. For CORE clue text avoid both full entity labels and their identifying noun fragments, including inflected forms. Use the original card descriptions instead: for example a chemical cloud rather than sprey, a locked storage unit rather than depolama odası. Bonuses may name entities. Keep profile_additions empty whenever a motivation would reuse any weapon/place label or noun fragment; personal deadlines and reputation concerns need no object/place association. Fix the editor issues through story and evidence wording. Do not infer a new location for the victim, add a second crime anchor or change the exact same-interval relations.'
+  };
+  return JSON.stringify(prompt);
+}
 export function compileEditorial(snapshot, entry, candidate, value) {
   return compileNarrative(snapshot, entry, candidate, value, null);
 }
@@ -103,13 +112,59 @@ function compileNarrative(snapshot, entry, candidate, value, profileAdditions) {
   if (stableHash(next) === stableHash(candidate)) throw new Error('EDITORIAL_NO_CHANGE');
   if (protectedIdentity(next) !== protectedIdentity(entry.raw)) throw new Error('EDITORIAL_IDENTITY_CHANGED');
   const assessment = assess(snapshot, entry, next);
-  if (!assessment.passed) throw new Error('EDITORIAL_GATES_FAILED:' + JSON.stringify({
-    blockers: assessment.result.blockers, quality_findings: assessment.result.qualityFindings,
-    leakage: assessment.leakage.findings }));
+  if (!assessment.passed) {
+    const error = new Error('EDITORIAL_GATES_FAILED:' + JSON.stringify({
+      blockers: assessment.result.blockers, quality_findings: assessment.result.qualityFindings,
+      leakage: assessment.leakage.findings }));
+    error.assessment = assessment;
+    throw error;
+  }
   return { candidate: next, assessment };
 }
 export function compileEditorialRevision(snapshot, entry, candidate, value) {
   if (!validEditorialRevision(candidate, value)) throw new Error('EDITORIAL_RESPONSE_INVALID');
   const { profile_additions, ...narrative } = value;
   return compileNarrative(snapshot, entry, candidate, narrative, profile_additions);
+}
+
+// Omit optional generated fields; never rewrite narrative to force a pass.
+// Re-run the entire strict compiler after preserving passing core hints and
+// removing only additions flagged by the unchanged pre-clue leakage guard.
+export function compileBoundedEditorial(snapshot, entry, candidate, value) {
+  try { return compileEditorialRevision(snapshot, entry, candidate, value); }
+  catch (error) {
+    if (!error.message.startsWith('EDITORIAL_GATES_FAILED:') || !error.assessment ||
+        !assess(snapshot, entry, candidate).passed) throw error;
+    const normalized = clone(value), omitted = [];
+    for (const clue of candidate.clues.filter(c => !c.isBonus)) {
+      if (normalized.clues[clue.id].deductionHint !== clue.deductionHint) {
+        normalized.clues[clue.id].deductionHint = clue.deductionHint;
+        omitted.push('clues.' + clue.id + '.deductionHint');
+      }
+    }
+    const suspectIds = new Set(error.assessment.leakage.findings.map(f => f.suspect_id));
+    for (const id of suspectIds) if (normalized.profile_additions[id]) {
+      normalized.profile_additions[id] = ''; omitted.push('profile_additions.' + id);
+    }
+    if (!omitted.length) throw error;
+    return { ...compileEditorialRevision(snapshot, entry, candidate, normalized), omitted_fields: omitted };
+  }
+}
+
+export function recoverBoundedEditorial(snapshot, entry, candidate, record, requests) {
+  if (snapshot.policy.review.prompt_version !== 'fm-player-review-v2' ||
+      record?.source_hash !== entry.sourceHash || record.simulator_hash !== snapshot.simulatorHash ||
+      record.candidate_hash !== stableHash(candidate) ||
+      !editorialFailure(snapshot, candidate, record.failed_review)) return null;
+  for (const makePrompt of [editorialRevisionPrompt, editorialRevisionRequestPrompt]) {
+    const body = requestBody(snapshot.policy, snapshot.policy.models.repair,
+      makePrompt(candidate, record.failed_review), {
+        schema: editorialRevisionSchema(candidate), system: EDITORIAL_REVISION_SYSTEM });
+    const key = requestKey(entry.id, snapshot.policy.models.repair, body, 'editorial'), request = requests[key];
+    if (request?.status !== 'completed' || request.case_id !== entry.id ||
+        request.purpose !== 'editorial' || request.model !== snapshot.policy.models.repair) continue;
+    try { return { ...compileBoundedEditorial(snapshot, entry, candidate, request.plan), request_key: key }; }
+    catch { return null; }
+  }
+  return null;
 }

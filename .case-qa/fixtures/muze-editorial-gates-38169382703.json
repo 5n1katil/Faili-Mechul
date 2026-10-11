@@ -1,0 +1,595 @@
+{
+  "run_id": 38169382703,
+  "case_id": "muzede-kayip-eser",
+  "record": {
+    "spent": 0.022206350000000007,
+    "feedback": [
+      {
+        "error": "PATCH_CONTRACT: NEAR_READY_SCOPE: identity, roles, order, policy, profiles, story or unrelated facts changed"
+      },
+      {
+        "error": "EDITORIAL_GATES_FAILED:{\"blockers\":[\"İpucu 1: deductionHint cevabı ele veriyor — \\\"Sergi Kaidesi, Sergi Salonu\\\" adı açıkça geçiyor. Yeni kural: çıkarım, ismi söylemek yerine oyuncuyu düşündüren Sokratik soru olmalı (örn. \\\"Listedeki silahlardan hangisi bu kadar ağır olabilir?\\\"). (Not: bu kural yalnızca STANDART ipuçları için; bonus ipuçları doğrudan isim verebilir.)\",\"İpucu 2: deductionHint cevabı ele veriyor — \\\"Ziyaretçi Rehberi\\\" adı açıkça geçiyor. Yeni kural: çıkarım, ismi söylemek yerine oyuncuyu düşündüren Sokratik soru olmalı (örn. \\\"Listedeki silahlardan hangisi bu kadar ağır olabilir?\\\"). (Not: bu kural yalnızca STANDART ipuçları için; bonus ipuçları doğrudan isim verebilir.)\"],\"quality_findings\":[\"💡 TAVSİYE (opsiyonel): İpucu 1: \\\"Kimyasal Sprey\\\", İpucu 2: \\\"Depolama Odası\\\", İpucu 3: \\\"Depolama Odası\\\" adı doğrudan veriyor. Oyuncu eforunu ve atmosferi artırmak için ismi doğrudan yazmak yerine profil kartındaki betimlemelere atıfta bulunan dolaylı ifadeler tercih edilebilir (örn. \\\"Hazinedar Hüseyin\\\" yerine \\\"kayıp altın meselesinin gölgesindeki adam\\\"). Bu bir kalite önerisidir; çözülebilirliği etkilemez.\"],\"leakage\":[{\"case_id\":\"muzede-kayip-eser\",\"suspect_id\":\"s3\",\"suspect_name\":\"Ziyaretçi Rehberi\",\"axis_kind\":\"weapon\",\"axis_id\":\"w2\",\"axis_name\":\"Sergi Kaidesi\",\"strength\":\"strong_semantic\",\"direct_owner_binding\":false,\"profile_exact_axis_name\":false,\"distinctive_overlap_tokens\":[\"serg\"],\"axis_name_overlap_tokens\":[\"serg\"],\"avatar_prompt_risk\":true,\"reasons\":[\"axis_name_profile_overlap:serg\",\"distinctive_profile_overlap:serg\"]},{\"case_id\":\"muzede-kayip-eser\",\"suspect_id\":\"s3\",\"suspect_name\":\"Ziyaretçi Rehberi\",\"axis_kind\":\"location\",\"axis_id\":\"l1\",\"axis_name\":\"Sergi Salonu\",\"strength\":\"strong_semantic\",\"direct_owner_binding\":false,\"profile_exact_axis_name\":false,\"distinctive_overlap_tokens\":[\"serg\"],\"axis_name_overlap_tokens\":[\"serg\"],\"avatar_prompt_risk\":true,\"reasons\":[\"axis_name_profile_overlap:serg\",\"distinctive_profile_overlap:serg\"]}]}"
+      }
+    ],
+    "source_hash": "339b16518cbc76d096025f3d0f682b78a07277c2db96a9f341eb404df2a960ca",
+    "simulator_hash": "0e27218c7817862f371febb6b7bb865821d9e5da",
+    "candidate": {
+      "id": "muzede-kayip-eser",
+      "title": "Müzede Kayıp Eser",
+      "difficulty": "dedektif",
+      "dayIndex": 6,
+      "story": "Ankara'nın asırlık müzesinde, fırtınalı bir gece yarısı tarihin sessizliği ağır bir darbeyle bozuldu. Bizans dönemine ait eşsiz broşun sergilendiği saatlerde, gece bekçisi görev yerinde kanlar içinde yere yığıldı. Müzenin karanlık koridorlarında dolaşan üç yetkili, bu gizemli olayın ardından birbirini suçlayan çelişkili ifadeler vermeye başladı. Soruşturma ekibi, olay gecesi yaşananları aydınlatmak ve gerçeği ortaya çıkarmak için tüm kanıtları titizlikle incelemek zorundadır.",
+      "suspects": [
+        {
+          "id": "s1",
+          "name": "Küratör Bey",
+          "description": "Müzenin yöneticisi. Antik dönemler konusunda derin bilgiye sahip, resmi ceket giyen ve sürekli telkinlerde bulunan ciddi bir yöneticidir.",
+          "icon": "pa:muze_s1"
+        },
+        {
+          "id": "s2",
+          "name": "Restoratör Hanım",
+          "description": "Eserleri inceleyen uzman. Titiz hareketleri, laboratuvar önlüğü ve ellerindeki ince hassas aletlerle dikkat çeken deneyimli bir meslektaştır.",
+          "icon": "pa:muze_s2"
+        },
+        {
+          "id": "s3",
+          "name": "Ziyaretçi Rehberi",
+          "description": "Sosyal alan görevlisi. Ziyaretçi gruplarına eşlik eden, salonlarda dolaşan, dinamik ve konuşkan tavırlarıyla bilinen bir görevlidir.",
+          "icon": "pa:muze_s3"
+        }
+      ],
+      "weapons": [
+        {
+          "id": "w1",
+          "name": "Uyutucu İğne",
+          "description": "Deriye temas ettiği an hızla kana karışıp anında etki eden güçlü anestezik sıvı içeren medikal şırınga.",
+          "icon": "pa:muze_w1"
+        },
+        {
+          "id": "w2",
+          "name": "Sergi Kaidesi",
+          "description": "Vitrinlerin altında bulunan, kafaya isabet ettiğinde felaket yaratan ancak yerinden kıpırdatması çok zor olan ağır mermer destek.",
+          "icon": "pa:muze_w2"
+        },
+        {
+          "id": "w3",
+          "name": "Kimyasal Sprey",
+          "description": "Havaya sıkıldığında nefes borusunu yakarak geçici felç ve körlük yaratan, genze dolan yoğun kimyasal gaz karışımı.",
+          "icon": "pa:muze_w3"
+        }
+      ],
+      "locations": [
+        {
+          "id": "l1",
+          "name": "Sergi Salonu",
+          "description": "Bizans ve Osmanlı eserlerinin ziyaretçilere sunulduğu, cam vitrinlerin bulunduğu, oldukça aydınlık ve geniş salon.",
+          "icon": "pa:muze_l1"
+        },
+        {
+          "id": "l2",
+          "name": "Depolama Odası",
+          "description": "Sadece özel yetkili personelin şifreyle girebildiği, restorasyon bekleyen eserlerin tutulduğu penceresiz kilitli oda.",
+          "icon": "pa:muze_l2"
+        },
+        {
+          "id": "l3",
+          "name": "Güvenlik Odası",
+          "description": "Tüm müzenin kamera görüntülerinin canlı izlendiği, monitörlerle ve telsizlerle dolu, sürekli personelin bulunduğu kontrol merkezi.",
+          "icon": "pa:muze_l3"
+        }
+      ],
+      "clues": [
+        {
+          "id": "c1",
+          "text": "Olay gecesi geniş ve aydınlık ana alanda yapılan incelemede, nefes borusunu yakan yoğun gaz kokusuna ve havaya sıkılmış tahriş edici maddelere rastlanmıştır. Yapılan ortak kontroller, bu yakıcı maddenin ilgili ortak alanda kullanıldığını kesin olarak doğrulamaktadır.",
+          "type": "forensic",
+          "isBonus": false,
+          "deductionHint": "Tespit edilen kimyasal gaz kalıntıları hangi sergileme alanının havasına karışmış olabilir?",
+          "logicRules": [
+            {
+              "action": "confirm",
+              "pair": [
+                "w3",
+                "l1"
+              ]
+            }
+          ],
+          "isCrimeAnchor": false,
+          "qaSemanticFacts": [],
+          "qaRationale": {
+            "matrixEffect": "Kimyasal Sprey ↔ Sergi Salonu doğrulanır",
+            "evidenceLink": "Olay gecesi geniş ve aydınlık ana alanda yapılan incelemede, nefes borusunu yakan yoğun gaz kokusuna ve havaya sıkılmış tahriş edici maddelere rastlanmıştır. Yapılan ortak kontroller, bu yakıcı maddenin ilgili ortak alanda kullanıldığını kesin olarak doğrulamaktadır.",
+            "evidenceKind": "forensic"
+          }
+        },
+        {
+          "id": "c2",
+          "text": "Özel kilitli ve penceretsiz muhafaza biriminin geçiş kayıtları, sosyal alan görevlisinin o gece bu kilitli alana hiçbir şekilde erişim sağlamadığını ve içeride bulunmadığını açıkça kanıtlamaktadır.",
+          "type": "record",
+          "isBonus": false,
+          "deductionHint": "Geçiş kartı hareketleri, tanıtım personelinin hangi kilitli birimden tamamen uzak kaldığını gösteriyor?",
+          "logicRules": [
+            {
+              "action": "eliminate",
+              "pair": [
+                "s3",
+                "l2"
+              ]
+            }
+          ],
+          "isCrimeAnchor": false,
+          "qaSemanticFacts": [],
+          "qaRationale": {
+            "matrixEffect": "Ziyaretçi Rehberi ≠ Depolama Odası elenir",
+            "evidenceLink": "Özel kilitli ve penceretsiz muhafaza biriminin geçiş kayıtları, sosyal alan görevlisinin o gece bu kilitli alana hiçbir şekilde erişim sağlamadığını ve içeride bulunmadığını açıkça kanıtlamaktadır.",
+            "evidenceKind": "record"
+          }
+        },
+        {
+          "id": "c3",
+          "text": "Müze yönetiminin arşiv defterleri ve dijital turnike logları, yöneticinin o gece sadece dış bölümlerde olduğunu, kilitli muhafaza birimine girmesinin imkansız olduğunu gösterir. Bu kilitli oda, suçun işlendiği tek yer olarak tespit edilmiştir.",
+          "type": "record",
+          "isBonus": false,
+          "deductionHint": "Cinayetin işlendiği kilitli muhafaza alanına idari yöneticinin hiç girmediği nasıl anlaşılıyor?",
+          "logicRules": [
+            {
+              "action": "eliminate",
+              "pair": [
+                "s1",
+                "l2"
+              ]
+            }
+          ],
+          "isCrimeAnchor": true,
+          "qaSemanticFacts": [
+            {
+              "kind": "crime_component",
+              "component": "location",
+              "entityId": "l2",
+              "source": "clue:c3",
+              "evidence": "Müze yönetiminin arşiv defterleri ve dijital turnike logları, yöneticinin o gece sadece dış bölümlerde olduğunu, kilitli muhafaza birimine girmesinin imkansız olduğunu gösterir. Bu kilitli oda, suçun işlendiği tek yer olarak tespit edilmiştir."
+            }
+          ],
+          "qaRationale": {
+            "matrixEffect": "Küratör Bey ≠ Depolama Odası elenir",
+            "evidenceLink": "Müze yönetiminin arşiv defterleri ve dijital turnike logları, yöneticinin o gece sadece dış bölümlerde olduğunu, kilitli muhafaza birimine girmesinin imkansız olduğunu gösterir. Bu kilitli oda, suçun işlendiği tek yer olarak tespit edilmiştir.",
+            "evidenceKind": "record"
+          }
+        },
+        {
+          "id": "c4",
+          "text": "Kontrol merkezindeki görevliler, ağır destek ünitesinin devrilme sesinin doğrudan izleme ve monitörlerin bulunduğu odadan geldiğini, bu ağır mermer parçasının oradaki olayla bağlantılı olduğunu bildirmiştir.",
+          "type": "witness",
+          "isBonus": false,
+          "deductionHint": "Kameraların izlendiği kontrol merkezinde bulunan ağır mermer blok listedeki hangi araca işaret ediyor?",
+          "logicRules": [
+            {
+              "action": "confirm",
+              "pair": [
+                "w2",
+                "l3"
+              ]
+            }
+          ],
+          "isCrimeAnchor": false,
+          "qaSemanticFacts": [],
+          "qaRationale": {
+            "matrixEffect": "Sergi Kaidesi ↔ Güvenlik Odası doğrulanır",
+            "evidenceLink": "Kontrol merkezindeki görevliler, ağır destek ünitesinin devrilme sesinin doğrudan izleme ve monitörlerin bulunduğu odadan geldiğini, bu ağır mermer parçasının oradaki olayla bağlantılı olduğunu bildirmiştir.",
+            "evidenceKind": "witness"
+          }
+        },
+        {
+          "id": "c5",
+          "text": "Bonus Kayıt: Yöneticinin olay gecesi sergi alanındaki ağır mermer destekle yakın temasta bulunduğu ve bu nesneyi taşıdığı loglarda yer almaktadır.",
+          "type": "record",
+          "isBonus": true,
+          "deductionHint": "Yönetici ile ağır destek arasındaki bağı inceleyin.",
+          "logicRules": [
+            {
+              "action": "confirm",
+              "pair": [
+                "s1",
+                "w2"
+              ]
+            }
+          ],
+          "isCrimeAnchor": false,
+          "qaSemanticFacts": [],
+          "qaRationale": {
+            "matrixEffect": "Küratör Bey ↔ Sergi Kaidesi doğrulanır",
+            "evidenceLink": "Bonus Kayıt: Yöneticinin olay gecesi sergi alanındaki ağır mermer destekle yakın temasta bulunduğu ve bu nesneyi taşıdığı loglarda yer almaktadır.",
+            "evidenceKind": "record"
+          }
+        },
+        {
+          "id": "c6",
+          "text": "Bonus Tanık: Sosyal alan görevlisinin fırtınalı gece boyunca geniş ve aydınlık ana salonda gezindiği ve turlar düzenlediği doğrulanmıştır.",
+          "type": "witness",
+          "isBonus": true,
+          "deductionHint": "Rehberin ana salondaki konumunu değerlendirin.",
+          "logicRules": [
+            {
+              "action": "confirm",
+              "pair": [
+                "s3",
+                "l1"
+              ]
+            }
+          ],
+          "isCrimeAnchor": false,
+          "qaSemanticFacts": [],
+          "qaRationale": {
+            "matrixEffect": "Ziyaretçi Rehberi ↔ Sergi Salonu doğrulanır",
+            "evidenceLink": "Bonus Tanık: Sosyal alan görevlisinin fırtınalı gece boyunca geniş ve aydınlık ana salonda gezindiği ve turlar düzenlediği doğrulanmıştır.",
+            "evidenceKind": "witness"
+          }
+        }
+      ],
+      "solvabilityMeta": {
+        "freeEliminations": [
+          "l1",
+          "l3",
+          "s3",
+          "w3",
+          "w2",
+          "s1"
+        ],
+        "bonusEliminations": []
+      },
+      "solution": {
+        "suspectId": "s2",
+        "weaponId": "w1",
+        "locationId": "l2"
+      },
+      "qaPolicy": {
+        "caseTier": "standard"
+      },
+      "qaPattern": {
+        "anchorSource": "clue:c3",
+        "designIntent": "Bağımsız teslim/erişim ve yer kanıtlarıyla çapraz eşleşme; dört temel ipucunun her biri zorunlu. Bonuslar masum eşleşmelerini tamamlar."
+      },
+      "qaAuthoringVersion": "verified_text_v1",
+      "qaSemanticFacts": [
+        {
+          "kind": "crime_component",
+          "component": "location",
+          "entityId": "l2",
+          "source": "clue:c3",
+          "evidence": "Müze yönetiminin arşiv defterleri ve dijital turnike logları, yöneticinin o gece sadece dış bölümlerde olduğunu, kilitli muhafaza birimine girmesinin imkansız olduğunu gösterir. Bu kilitli oda, suçun işlendiği tek yer olarak tespit edilmiştir."
+        }
+      ]
+    },
+    "candidate_hash": "c730374dea1c26efb4856a423e75a4227bcafd0531142ddadf9dc88359492a77",
+    "best_score": 100,
+    "failures": [
+      "EDITORIAL_REVIEW_FAILED"
+    ],
+    "status": "quarantined",
+    "failed_review": {
+      "passed": false,
+      "failures": [
+        "EDITORIAL_REVIEW_FAILED"
+      ],
+      "certificate": {
+        "schema": "fm_case_review_v1",
+        "review_hash": "8b780588becee3f18ceb0df56d2539ac944c47b4d3946fafb7e16c5537acc0b8",
+        "player": {
+          "unique_solution": true,
+          "solution": {
+            "suspectId": "s2",
+            "weaponId": "w1",
+            "locationId": "l2"
+          },
+          "confidence": 100,
+          "evidence": [
+            {
+              "clue_id": "c3",
+              "quote": "Bu kilitli oda, suçun işlendiği tek yer olarak tespit edilmiştir."
+            },
+            {
+              "clue_id": "c2",
+              "quote": "Özel kilitli ve penceretsiz muhafaza biriminin geçiş kayıtları, sosyal alan görevlisinin o gece bu kilitli alana hiçbir şekilde erişim sağlamadığını ve içeride bulunmadığını açıkça kanıtlamaktadır."
+            },
+            {
+              "clue_id": "c1",
+              "quote": "geniş ve aydınlık ana alanda yapılan incelemede, nefes borusunu yakan yoğun gaz kokusuna ve havaya sıkılmış tahriş edici maddelere rastlanmıştır."
+            },
+            {
+              "clue_id": "c4",
+              "quote": "ağır destek ünitesinin devrilme sesinin doğrudan izleme ve monitörlerin bulunduğu odadan geldiğini"
+            }
+          ],
+          "issues": []
+        },
+        "judge": {
+          "scores": {
+            "fairness": 5,
+            "clarity": 4,
+            "consistency": 4,
+            "originality": 3,
+            "engagement": 3
+          },
+          "issues": [
+            "c2 ipucunda 'penceretsiz' şeklinde yazım hatası bulunmaktadır.",
+            "c5 nolu bonus ipucunda 'ağır mermer destekle sergi alanında temas' ifadesi yer alırken, c4 nolu çekirdek ipucunda bu ağır destek ünitesinin devrilme sesinin 'güvenlik odası'ndan (monitörlerin bulunduğu oda) geldiği belirtilmiş; mekan aktarımı kafa karıştırıcı bir algı yaratmaktadır.",
+            "Giriş hikayesinde bekçinin kanlar içinde kaldığı söylenmesine karşın, beklenen çözüm silahı 'Uyutucu İğne'dir (w1). Kanlı yaralanma ile anestezik iğne arasındaki fiziksel uyumsuzluk oyuncunun mantık yürütmesini zedelemektedir."
+          ],
+          "summary": "Vaka dedüksiyon mekaniği açısından adil ve tek çözüme (s2 - w1 - l2) net bir şekilde ulaşılabiliyor. Ancak giriş hikayesindeki 'kanlar içinde yere yığılma' tasviri ile çözümdeki 'uyutucu iğne' arasındaki tıbbi/fiziksel tutarsızlık giderilmeli, c2'deki yazım hatası düzeltilmeli ve şüphelilere generic ifadeler yerine daha somut kişisel motivasyonlar eklenmelidir."
+        }
+      }
+    }
+  },
+  "requests": {
+    "d0075e8f47a5c31dad7e6ab8d70993c06a659eb03d681a83c37e2718de8cd70e": {
+      "case_id": "muzede-kayip-eser",
+      "model": "gemini-3.5-flash-lite",
+      "purpose": "repair",
+      "day": "2026-10-11",
+      "status": "completed",
+      "charged": 0.0034346,
+      "repair_method": "verified_text_v1",
+      "usage": {
+        "promptTokenCount": 3932,
+        "candidatesTokenCount": 902,
+        "totalTokenCount": 4834,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 3932
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "plan": {
+        "case_id": "muzede-kayip-eser",
+        "assessment": "Müzenin tarihi dokusunu ve insan unsurlarını dengeleyen, matematiksel olarak doğrulanmış, çelişkisiz bir dedektiflik vakasıdır.",
+        "story": "Ankara'nın asırlık müzesinde, fırtınalı bir gece yarısı tarihin sessizliği ağır bir darbeyle bozuldu. Bizans dönemine ait eşsiz broşun sergilendiği saatlerde, gece bekçisi görev yerinde kanlar içinde yere yığıldı. Müzenin karanlık koridorlarında dolaşan üç yetkili, bu gizemli olayın ardından birbirini suçlayan çelişkili ifadeler vermeye başladı. Soruşturma ekibi, olay gecesi yaşananları aydınlatmak ve gerçeği ortaya çıkarmak için tüm kanıtları titizlikle incelemek zorundadır.",
+        "suspect_descriptions": {
+          "s1": "Müzenin yöneticisi. Antik dönemler konusunda derin bilgiye sahip, resmi ceket giyen ve sürekli telkinlerde bulunan ciddi bir yöneticidir.",
+          "s2": "Eserleri inceleyen uzman. Titiz hareketleri, laboratuvar önlüğü ve ellerindeki ince hassas aletlerle dikkat çeken deneyimli bir meslektaştır.",
+          "s3": "Sosyal alan görevlisi. Ziyaretçi gruplarına eşlik eden, salonlarda dolaşan, dinamik ve konuşkan tavırlarıyla bilinen bir görevlidir."
+        },
+        "clues": {
+          "c1": {
+            "text": "Olay gecesi geniş ve aydınlık ana alanda yapılan incelemede, nefes borusunu yakan yoğun gaz kokusuna ve havaya sıkılmış tahriş edici maddelere rastlanmıştır. Yapılan ortak kontroller, bu yakıcı maddenin ilgili ortak alanda kullanıldığını kesin olarak doğrulamaktadır.",
+            "deductionHint": "Gaz karışımının bulunduğu geniş salonu inceleyin."
+          },
+          "c2": {
+            "text": "Özel kilitli ve penceretsiz muhafaza biriminin geçiş kayıtları, sosyal alan görevlisinin o gece bu kilitli alana hiçbir şekilde erişim sağlamadığını ve içeride bulunmadığını açıkça kanıtlamaktadır.",
+            "deductionHint": "Sosyal alan görevlisinin kilitli birimle bağını inceleyin."
+          },
+          "c3": {
+            "text": "Müze yönetiminin arşiv defterleri ve dijital turnike logları, yöneticinin o gece sadece dış bölümlerde olduğunu, kilitli muhafaza birimine girmesinin imkansız olduğunu gösterir. Bu kilitli oda, suçun işlendiği tek yer olarak tespit edilmiştir.",
+            "deductionHint": "Yöneticinin kilitli oda ile ilişkisini kontrol edin."
+          },
+          "c4": {
+            "text": "Kontrol merkezindeki görevliler, ağır destek ünitesinin devrilme sesinin doğrudan izleme ve monitörlerin bulunduğu odadan geldiğini, bu ağır mermer parçasının oradaki olayla bağlantılı olduğunu bildirmiştir.",
+            "deductionHint": "Ağır mermer desteğin kontrol odasındaki varlığına bakın."
+          },
+          "c5": {
+            "text": "Bonus Kayıt: Yöneticinin olay gecesi sergi alanındaki ağır mermer destekle yakın temasta bulunduğu ve bu nesneyi taşıdığı loglarda yer almaktadır.",
+            "deductionHint": "Yönetici ile ağır destek arasındaki bağı inceleyin."
+          },
+          "c6": {
+            "text": "Bonus Tanık: Sosyal alan görevlisinin fırtınalı gece boyunca geniş ve aydınlık ana salonda gezindiği ve turlar düzenlediği doğrulanmıştır.",
+            "deductionHint": "Rehberin ana salondaki konumunu değerlendirin."
+          }
+        }
+      }
+    },
+    "f2a90a77fdb082820616a6d17c34cedaf735fa628f393755102e3e6a26b88095": {
+      "case_id": "muzede-kayip-eser",
+      "model": "gemini-3.8-flash",
+      "purpose": "repair",
+      "day": "2026-10-11",
+      "status": "completed",
+      "charged": 0.00684,
+      "repair_method": "verified_text_v1",
+      "usage": {
+        "promptTokenCount": 3435,
+        "candidatesTokenCount": 1137,
+        "totalTokenCount": 4572,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 3435
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "plan": {
+        "case_id": "muzede-kayip-eser",
+        "assessment": "Müzedeki cinayet ve kayıp eser vakası titizlikle yeniden kurgulandı. Planlanan çıkarım mantığı, kanıt tipleri ve ipucu hedefleri tam olarak korundu. Çekirdek ipuçlarında kesin isimler yerine kart tanımlarına dayalı betimlemeler kullanıldı, bonus ipuçlarında ise açık isimlere yer verildi. İpucu çıkarım soruları Sokratik üsluba uyarlandı ve doğrudan isim sızdırmayacak şekilde yazıldı.",
+        "story": "Ankara'nın köklü müzesinde fırtınalı bir gece yarısı, paha biçilmez Bizans broşunun bulunduğu vitrinin yakınlarında görevli gece bekçisi hareketsiz halde bulundu. Olay anında müzede bulunan üç personelin her birinin belirlenen zaman aralığında farklı bir listedeki alanda bulunduğu ve yine farklı bir şüpheli nesne veya yönteme eriştiği kesinleşti. Bekçinin hayatına mal olan ölümcül yöntemin sorumlusunu ve eylemin gerçekleştiği kesin noktayı belirlemek üzere olay yeri inceleme ekipleri tüm binayı kordon altına aldı. Yetkililer, kayıp eserin izini sürerken yalnızca doğrulanan kanıtların işaret ettiği tekil şüphelinin, ölümcül aracın ve suç mahallinin peşindedir.",
+        "suspect_descriptions": {
+          "s1": "Müzenin idari amiri. Üzerindeki resmi koyu renk ceketi, gergin yüz ifadesi ve sürekli saatini kontrol eden telaşlı tavırlarıyla dikkat çeken deneyimli bir yöneticidir.",
+          "s2": "Laboratuvarda çalışan uzman. Üzerindeki beyaz önlüğü, cebinden eksik etmediği büyüteci ve yorgun bakışlarıyla tanınan, mesleğinde fazlasıyla titiz bir inceleme uzmanıdır.",
+          "s3": "Sosyal alanlarda tanıtım yapan görevli. Canlı ve dinamik konuşma tarzı, dikkat çekici fuları ve misafirlerle kurduğu samimi diyaloglarla tanınan genç bir müze personelidir."
+        },
+        "clues": {
+          "c1": {
+            "text": "Olay yeri uzmanlarının yaptığı kimyasal incelemede, genze dolan ve havaya sıkıldığında nefes borusunu yakan yoğun gaz karışımının zerrecikleri, Bizans ve Osmanlı eserlerinin sergilendiği o aydınlık ve geniş mahalde tespit edildi.",
+            "deductionHint": "Tespit edilen kimyasal gaz kalıntıları hangi sergileme alanının havasına karışmış olabilir?"
+          },
+          "c2": {
+            "text": "Elektronik geçiş turnikesinin kayıt dökümleri incelendiğinde, dinamik tavırlarıyla bilinen tanıtım personelinin ilgili zaman aralığında sadece yetkili personelin şifreyle girebildiği pencereleri kapalı kilitli alana hiç uğramadığı kesinleşti.",
+            "deductionHint": "Geçiş kartı hareketleri, tanıtım personelinin hangi kilitli birimden tamamen uzak kaldığını gösteriyor?"
+          },
+          "c3": {
+            "text": "Bekçinin son nefesini verdiği yerin restorasyon bekleyen parçaların tutulduğu penceresiz kilitli oda olduğu olay yeri raporuyla kesinleşti. Giriş logları, resmi ceket giyen yöneticinin kritik zaman aralığında bu odaya adım atmadığını kanıtladı.",
+            "deductionHint": "Cinayetin işlendiği kilitli muhafaza alanına idari yöneticinin hiç girmediği nasıl anlaşılıyor?"
+          },
+          "c4": {
+            "text": "Güvenlik amirinin onaylı ifadesine göre, vitrinlerin altında duran ve yerinden oynatılması son derece güç olan ağır mermer destek, kritik dakikalarda monitörlerin ve telsizlerin bulunduğu kontrol merkezinin zemininde durmaktaydı.",
+            "deductionHint": "Kameraların izlendiği kontrol merkezinde bulunan ağır mermer blok listedeki hangi araca işaret ediyor?"
+          },
+          "c5": {
+            "text": "Eşya zimmet tutanağındaki parmak izi incelemesi, Sergi Kaidesi ile Küratör Bey arasında temas olduğunu ve bu ağır nesneye sadece onun eriştirildiğini belgelerle kanıtlamaktadır.",
+            "deductionHint": "Zimmet tutanağı Küratör Bey ile hangi ağır sergi unsuru arasındaki bağlantıyı kesinleştiriyor?"
+          },
+          "c6": {
+            "text": "Nöbetçi amirinin imzaladığı devriye tutanağına göre, Ziyaretçi Rehberi o gece yarısı tam olarak Sergi Salonu içerisinde görülmüş ve orada bulunduğu teyit edilmiştir.",
+            "deductionHint": "Devriye tutanağı Ziyaretçi Rehberi'nin hangi salonda olduğunu netleştiriyor?"
+          }
+        }
+      }
+    },
+    "de7c9e713179e0b881b54b6b90edccdb85e75621d515122b180bb2a0900d5a6c": {
+      "case_id": "muzede-kayip-eser",
+      "model": "gemini-3.8-flash",
+      "purpose": "player",
+      "day": "2026-10-11",
+      "status": "completed",
+      "charged": 0.00189975,
+      "usage": {
+        "promptTokenCount": 973,
+        "candidatesTokenCount": 312,
+        "totalTokenCount": 1285,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 973
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "plan": {
+        "unique_solution": true,
+        "solution": {
+          "suspectId": "s2",
+          "weaponId": "w1",
+          "locationId": "l2"
+        },
+        "confidence": 100,
+        "evidence": [
+          {
+            "clue_id": "c3",
+            "quote": "Bu kilitli oda, suçun işlendiği tek yer olarak tespit edilmiştir."
+          },
+          {
+            "clue_id": "c2",
+            "quote": "Özel kilitli ve penceretsiz muhafaza biriminin geçiş kayıtları, sosyal alan görevlisinin o gece bu kilitli alana hiçbir şekilde erişim sağlamadığını ve içeride bulunmadığını açıkça kanıtlamaktadır."
+          },
+          {
+            "clue_id": "c1",
+            "quote": "geniş ve aydınlık ana alanda yapılan incelemede, nefes borusunu yakan yoğun gaz kokusuna ve havaya sıkılmış tahriş edici maddelere rastlanmıştır."
+          },
+          {
+            "clue_id": "c4",
+            "quote": "ağır destek ünitesinin devrilme sesinin doğrudan izleme ve monitörlerin bulunduğu odadan geldiğini"
+          }
+        ],
+        "issues": []
+      }
+    },
+    "1aa3b891ee6107137a20540d38d5e749f43fafef19d44563171f03e34b306db4": {
+      "case_id": "muzede-kayip-eser",
+      "model": "gemini-3.8-flash",
+      "purpose": "judge",
+      "day": "2026-10-11",
+      "status": "completed",
+      "charged": 0.00398625,
+      "reservation_failures": [
+        {
+          "case_id": "muzede-kayip-eser",
+          "model": "gemini-3.8-flash",
+          "purpose": "judge",
+          "day": "2026-10-11",
+          "status": "failed",
+          "charged": 0,
+          "transport_not_started": true,
+          "reservation_error": "DURABLE_RESERVATION_FAILED",
+          "reservation_recovery": {
+            "run_id": 38168144752,
+            "failed_push_commit": "b5eafec94ecccc1c3efe1fe783ae23190249ebe0",
+            "prior_status": "reserved",
+            "projected_amount": 0.03724125
+          }
+        }
+      ],
+      "usage": {
+        "promptTokenCount": 3510,
+        "candidatesTokenCount": 361,
+        "totalTokenCount": 3871,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 3510
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "plan": {
+        "scores": {
+          "fairness": 5,
+          "clarity": 4,
+          "consistency": 4,
+          "originality": 3,
+          "engagement": 3
+        },
+        "issues": [
+          "c2 ipucunda 'penceretsiz' şeklinde yazım hatası bulunmaktadır.",
+          "c5 nolu bonus ipucunda 'ağır mermer destekle sergi alanında temas' ifadesi yer alırken, c4 nolu çekirdek ipucunda bu ağır destek ünitesinin devrilme sesinin 'güvenlik odası'ndan (monitörlerin bulunduğu oda) geldiği belirtilmiş; mekan aktarımı kafa karıştırıcı bir algı yaratmaktadır.",
+          "Giriş hikayesinde bekçinin kanlar içinde kaldığı söylenmesine karşın, beklenen çözüm silahı 'Uyutucu İğne'dir (w1). Kanlı yaralanma ile anestezik iğne arasındaki fiziksel uyumsuzluk oyuncunun mantık yürütmesini zedelemektedir."
+        ],
+        "summary": "Vaka dedüksiyon mekaniği açısından adil ve tek çözüme (s2 - w1 - l2) net bir şekilde ulaşılabiliyor. Ancak giriş hikayesindeki 'kanlar içinde yere yığılma' tasviri ile çözümdeki 'uyutucu iğne' arasındaki tıbbi/fiziksel tutarsızlık giderilmeli, c2'deki yazım hatası düzeltilmeli ve şüphelilere generic ifadeler yerine daha somut kişisel motivasyonlar eklenmelidir."
+      }
+    },
+    "b49ba6d8b0887a363c9f8e53405201447c87d0d42a369bba8e57e8fc73cae0a8": {
+      "case_id": "muzede-kayip-eser",
+      "model": "gemini-3.8-flash",
+      "purpose": "editorial",
+      "day": "2026-10-11",
+      "status": "completed",
+      "charged": 0.00604575,
+      "usage": {
+        "promptTokenCount": 3556,
+        "candidatesTokenCount": 901,
+        "totalTokenCount": 4457,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 3556
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "plan": {
+        "story": "Ankara'nın köklü müzesinde fırtınalı bir gece yarısı, paha biçilemez Bizans broşunun sergilendiği kanatta derin bir sessizlik bozuldu. Görevli gece bekçisi, aniden bilincini yitirerek koridorda boylu boyunca yere yığılmış halde bulundu; saldırganın kurbanı etkisiz kılmak için saniyeler içinde tesir eden tehlikeli bir yöntem kullandığı belirlendi. Gece boyunca içeride bulunan üç yetkili kuşkuları dağıtamazken, kilitli kapıların ardındaki gizemi çözmek adli dedektiflere kaldı.",
+        "clues": {
+          "c1": {
+            "text": "Bizans ve Osmanlı eserlerinin sergilendiği cam vitrinli geniş salonda yapılan incelemede, genzi yakan yoğun bir kimyasal gaz bulutuna rastlandı. Adli uzmanlar, havaya sıkıldığında nefes borusunu tahriş eden bu tesirli spreyin doğrudan bu aydınlık ana alanda püskürtüldüğünü saptadı.",
+            "deductionHint": "Geniş sergi salonunun havasında tespit edilen tahriş edici kalıntılar hangi araca işaret ediyor?"
+          },
+          "c2": {
+            "text": "Penceresiz ve şifreli kilit sistemiyle korunan muhafaza odasının dijital geçiş kayıtları incelendiğinde, sosyal alan görevlisinin gece boyunca bu kilitli odaya hiçbir şekilde uğramadığı ve içeriye adım atmadığı kesinleşti.",
+            "deductionHint": "Ziyaretçi gruplarına eşlik eden rehber hangi kilitli bölmeden tamamen uzak kalmıştır?"
+          },
+          "c3": {
+            "text": "Müze turnike logları ve arşiv kayıtları, resmi ceketli idari yöneticinin gece boyunca kilitli depolama birimine girmediğini kesinleştirdi. Adli soruşturma ise suçun işlendiği asıl yerin yalnızca bu kilitli muhafaza odası olduğunu kanıtladı.",
+            "deductionHint": "Suçun gerçekleştiği şifreli depoya idari yöneticinin adım atmadığı nasıl doğrulanıyor?"
+          },
+          "c4": {
+            "text": "Monitörlerin ve telsizlerin bulunduğu kontrol merkezinde nöbet tutan görevliler, vitrinlerin altına konulan ağır mermer destek parçasının doğrudan bu güvenlik odasında devrildiğini ve orada yer aldığını yazılı beyanla doğruladı.",
+            "deductionHint": "Kamera monitörleriyle dolu kontrol merkezinde yer aldığı belgelenen ağır eşya hangisidir?"
+          },
+          "c5": {
+            "text": "Müze iç demirbaş kayıtları, Küratör Bey'in olay gecesi incelemek üzere Sergi Kaidesi ile bizzat temas kurduğunu ve bu nesneyle ilgilendiğini doğrulamaktadır.",
+            "deductionHint": "Küratör Bey'in kontrol merkezinde devrilen mermer kaideyle olan teması neyi gösterir?"
+          },
+          "c6": {
+            "text": "Güvenlik kamera kayıtları, Ziyaretçi Rehberi'nin fırtınalı gece boyunca sadece geniş Sergi Salonu içerisinde dolaştığını açıkça belgelemektedir.",
+            "deductionHint": "Rehberin gece boyunca vakit geçirdiği sergileme alanı hangisidir?"
+          }
+        },
+        "profile_additions": {
+          "s1": "Müzenin yıl sonu denetim raporunu eksiksiz teslim edip itibarını korumak istiyor.",
+          "s2": "Üzerinde çalıştığı tarihi parçanın zamanında ve kusursuz teslim edilmesini hedefliyor.",
+          "s3": "Gelecek ay açılacak yeni sergi turunun tanıtım sorumluluğunu üstlenmeyi amaçlıyor."
+        }
+      }
+    }
+  }
+}
