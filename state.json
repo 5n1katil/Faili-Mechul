@@ -7970,7 +7970,7 @@
       }
     },
     "muzede-kayip-eser": {
-      "spent": 0,
+      "spent": 0.0220734,
       "feedback": [],
       "source_hash": "339b16518cbc76d096025f3d0f682b78a07277c2db96a9f341eb404df2a960ca",
       "simulator_hash": "0e27218c7817862f371febb6b7bb865821d9e5da",
@@ -11306,7 +11306,16 @@
         ],
         "summary": "Mantık örgüsü tıkır tıkır işleyen, mekanik açıdan adil ve net bir eleme bulmacası. Karakter motivasyonları ve anlatı derinliği artırılırsa çok daha etkileyici bir seviyeye ulaşır."
       }
+    },
+    "d0075e8f47a5c31dad7e6ab8d70993c06a659eb03d681a83c37e2718de8cd70e": {
+      "case_id": "muzede-kayip-eser",
+      "model": "gemini-3.5-flash-lite",
+      "purpose": "repair",
+      "day": "2026-10-11",
+      "status": "reserved",
+      "charged": 0.0220734,
+      "repair_method": "verified_text_v1"
     }
   },
-  "campaign_spent": 0.15709265000000003
+  "campaign_spent": 0.17916605000000002
 }
