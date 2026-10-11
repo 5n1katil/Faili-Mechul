@@ -7970,7 +7970,7 @@
       }
     },
     "muzede-kayip-eser": {
-      "spent": 0.01217435,
+      "spent": 0.0494156,
       "feedback": [
         {
           "error": "PATCH_CONTRACT: NEAR_READY_SCOPE: identity, roles, order, policy, profiles, story or unrelated facts changed"
@@ -11601,17 +11601,27 @@
       "model": "gemini-3.8-flash",
       "purpose": "judge",
       "day": "2026-10-11",
-      "status": "failed",
-      "charged": 0,
-      "transport_not_started": true,
-      "reservation_error": "DURABLE_RESERVATION_FAILED",
-      "reservation_recovery": {
-        "run_id": 38168144752,
-        "failed_push_commit": "b5eafec94ecccc1c3efe1fe783ae23190249ebe0",
-        "prior_status": "reserved",
-        "projected_amount": 0.03724125
-      }
+      "status": "reserved",
+      "charged": 0.03724125,
+      "reservation_failures": [
+        {
+          "case_id": "muzede-kayip-eser",
+          "model": "gemini-3.8-flash",
+          "purpose": "judge",
+          "day": "2026-10-11",
+          "status": "failed",
+          "charged": 0,
+          "transport_not_started": true,
+          "reservation_error": "DURABLE_RESERVATION_FAILED",
+          "reservation_recovery": {
+            "run_id": 38168144752,
+            "failed_push_commit": "b5eafec94ecccc1c3efe1fe783ae23190249ebe0",
+            "prior_status": "reserved",
+            "projected_amount": 0.03724125
+          }
+        }
+      ]
     }
   },
-  "campaign_spent": 0.169267
+  "campaign_spent": 0.20650825
 }
