@@ -7919,7 +7919,59 @@
       "failures": [
         "EDITORIAL_REVIEW_FAILED"
       ],
-      "status": "quarantined"
+      "status": "quarantined",
+      "failed_review": {
+        "passed": false,
+        "failures": [
+          "EDITORIAL_REVIEW_FAILED"
+        ],
+        "certificate": {
+          "schema": "fm_case_review_v1",
+          "review_hash": "de4d4b2e5c2ae75fe00bc53ce468453fdc5e90ea31520a668f42611bfce897e9",
+          "player": {
+            "unique_solution": true,
+            "solution": {
+              "suspectId": "s3",
+              "weaponId": "w1",
+              "locationId": "l1"
+            },
+            "confidence": 100,
+            "evidence": [
+              {
+                "clue_id": "c3",
+                "quote": "Halit Usta'nın can verdiği asıl ölüm noktasının tepsilerin dizildiği ve damlaların aktığı ana satış noktası olduğunu kesinleştirdi. Eşzamanlı zabıta kayıtları ise bastonlu yaşlı kadının o esnada bu ölüm noktasında bulunmadığını doğruladı."
+              },
+              {
+                "clue_id": "c2",
+                "quote": "ağır yükleri taşımaktan yorgun düşmüş uykusuz gencin, tatlı tepsilerinin dizildiği ana satış noktasında kritik zaman dilimi içinde hiç bulunmadığını ve oraya yaklaşmadığını mühürlü raporla kanıtladı."
+              },
+              {
+                "clue_id": "c1",
+                "quote": "sabah erken saatlerde yük indirme maksadıyla kullanılan ağaçlık açık alanda yürüttüğü kimyasal testler, zemin temizliğinde yararlanılan keskin kokulu endüstriyel çözücünün o alana döküldüğünü ve orada bulundurulduğunu kesin olarak belirledi."
+              },
+              {
+                "clue_id": "c4",
+                "quote": "bakır güğümde kaynatılmış berrak ve yoğun şekerli geleneksel sıvının kritik saatlerde bu geçitte bekletildiğini tutanak altına alarak durumu bildirdi."
+              }
+            ],
+            "issues": []
+          },
+          "judge": {
+            "scores": {
+              "fairness": 5,
+              "clarity": 4,
+              "consistency": 4,
+              "originality": 3,
+              "engagement": 3
+            },
+            "issues": [
+              "Cinayet aleti olarak belirlenen 'Baklava'nın nasıl bir ölümcül silaha dönüştüğü (zehir, boğulma, alerji vb.) kurgusal olarak açıklanmamış; 'silah' tanımı havada kalmaktadır.",
+              "İpuçları saf eleme mantığıyla yazıldığından anlatı polis tutanağı kuruluğunda kalmakta ve dedektiflik hissi zayıflamaktadır."
+            ],
+            "summary": "Mantık örgüsü ve ipucu zinciri adil ve kusursuz bir şekilde tekil çözüme ulaşıyor. Ancak tatlının nasıl ölümcül hale geldiğine dair dramatik ve adli detaylar eklenerek anlatı zenginleştirilmelidir."
+          }
+        }
+      }
     }
   },
   "requests": {
