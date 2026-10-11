@@ -6503,7 +6503,11 @@
     },
     "pazar-yerinde-supheli-olum": {
       "spent": 0.02047924999999999,
-      "feedback": [],
+      "feedback": [
+        {
+          "error": "EDITORIAL_GATES_FAILED:{\"blockers\":[],\"quality_findings\":[\"💡 TAVSİYE (opsiyonel): İpucu 4: \\\"Ara Sokak\\\" adı doğrudan veriyor. Oyuncu eforunu ve atmosferi artırmak için ismi doğrudan yazmak yerine profil kartındaki betimlemelere atıfta bulunan dolaylı ifadeler tercih edilebilir (örn. \\\"Hazinedar Hüseyin\\\" yerine \\\"kayıp altın meselesinin gölgesindeki adam\\\"). Bu bir kalite önerisidir; çözülebilirliği etkilemez.\"],\"leakage\":[]}"
+        }
+      ],
       "source_hash": "d4a6a5003e9f00e091ed0db4768d29393539ba914af388dd06d6aca3f1fdcad2",
       "simulator_hash": "04352c0a4ce07097cb752a1980b144fa00722e78",
       "candidate": {
