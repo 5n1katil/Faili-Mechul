@@ -5,6 +5,34 @@ v3 kampanya ve avatar otomatik birleştirme workflow'ları emekliye ayrılmışt
 Uyumluluk için eski motor yardımcıları ve ücretsiz regresyon testleri korunur.
 Bu teslim altyapıdır; 105 vakanın tamamlandığı veya canlı pilotun geçtiği anlamına gelmez.
 
+### Canlı metin geri bildirimi ve bağlam kalibrasyonu (38156344466)
+
+Son canlı tur 5 çağrı / yaklaşık $0.023062 ile üç vakayı karantinaya aldı.
+Kapalıçarşı adayı tam HTML'de 100 ve bütün zorunlu kapıları gördü; doğrudan isim
+kalite önerisi ve profil sözcük eşleşmeleri yüzünden kabul edilmedi. Bu gerçek
+yanıtlar `failed-text-campaign-38156344466.json` ile çevrimdışı yeniden oynatılır;
+oyuna veya bağımsız değerlendirme sertifikasına dönüştürülmez.
+
+Yazar artık önceki retlerin kalite önerilerini, kapı ayrıntılarını ve profil
+bulgularını da görür. Hikâye hedefi 95–130, profil hedefi 20–30 kelimedir;
+profilin simülatördeki 12 kelimelik minimumu derleyicide de ölçülür. Temel
+ipuçlarında bütün varlıkların doğrudan adları yerine karttan doğrulanabilir
+betimler istenir. Bonuslar açık isim kullanabilir. Bu prompt iyileştirmesi canlı
+üretimin başarılı olacağının kanıtı değildir; canlı kabul ve iki bağımsız inceleme
+hâlâ zorunludur.
+
+Ön-ipucu denetimi, birden çok kişinin profilindeki ortak sözcüğü tek kişiye özgü
+bağ gibi değerlendirmez. “Dükkanlar arasında” gibi çoğul bir geçiş ifadesi de
+tek yer ataması değildir. Tam varlık adı, açık sahiplik ve kalan ayırt edici
+eşleşmeler korunur. Aynı uygulama oluşturulan n8n kaynağında da kullanılır.
+Gerçek Kapalıçarşı profili ve açık mekân/sahiplik karşı örnekleri test edilir.
+HTML'nin doğrudan isim kalite önerisi değiştirilmez veya bastırılmaz.
+
+Bu değişiklik yöntem numarasını, harcama geçmişini veya vaka başına deneme
+haklarını yenilemez. Eski üç vaka onarım sınırına ulaşmıştır. Bir sonraki canlı
+doğrulama, önce ücretsiz audit ardından henüz çağrı yapılmamış tek vaka üzerinde
+`pilot` olmalıdır; üçlü kampanya başarı kanıtından sonra genişletilir.
+
 ## Kalite kapıları
 
 1. Kaynaklar `inventory.json` ile birebir eşleşir; tekrar eden/kayıtsız ID durdurur.

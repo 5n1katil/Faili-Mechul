@@ -1,0 +1,206 @@
+{
+  "run_id": 38156344466,
+  "production_updates": 0,
+  "requests": [
+    {
+      "case_id": "universitede-karanlik-sir",
+      "model": "gemini-3.8-flash",
+      "plan": {
+        "case_id": "universitede-karanlik-sir",
+        "assessment": "cinayet",
+        "story": "İstanbul'daki köklü üniversite kampüsünde sessiz gece, stratejik bir araştırma projesinin merkezindeki laboratuvar yöneticisinin cansız bedeninin bulunmasıyla gölgelendi. Olay anında şüphelilerin her birinin farklı bir mekânda bulunduğu ve farklı bir vasıtaya erişim sağladığı tespit edildi. Dedektifler, sunucu odasından silinen verilerin ardındaki sır perdesini aralamak için kesin ölüm yöntemini, bu yöntemi kullanan faili ve ilgili mahalli tespit etmek üzere kanıtları inceliyor.",
+        "suspect_descriptions": {
+          "s1": "Fakültede uzun yıllardır görev yapan, sert mizaçlı ve hırslı kıdemli araştırmacı.",
+          "s2": "Tez projesini tamamlamak için gece gündüz çalışan genç doktora öğrencisi.",
+          "s3": "Binaların gece güvenliğinden sorumlu, üniformalı nöbetçi personel."
+        },
+        "clues": {
+          "c1": {
+            "text": "Olay yeri inceleme ekipleri, masanın cam bölmesinden koparılmış olan Keskin Nesne parçasını Ofis dahilindeki çalışma masasının çekmecesinde muhafaza edilmiş halde buldu.",
+            "deductionHint": "Belirtilen sivri nesne hangi mekânda emniyete alınmış?"
+          },
+          "c2": {
+            "text": "Adli tıp raporu, maktulün maruz kaldığı Elektrik Çarpması sonucu kalbinin durarak can verdiğini kesinleştirdi. Ancak kıdemli araştırmacı Prof. Kahraman'ın ellerinde ve giysilerinde yapılan iletkenlik testleri ile güç kaynağı sayaç kayıtları, kendisinin Elektrik Çarpması düzeneğine temas etmediğini ve bu vasıtayı kullanmadığını kanıtladı.",
+            "deductionHint": "Ölümcül elektrik düzeneğini kullanmadığı testlerle doğrulanan kişi kimdir?"
+          },
+          "c3": {
+            "text": "Fiziksel delil taramasında, sızdırmaz tüp içerisinde saklanan Kimyasal Gaz kabı Koridorlar boyunca uzanan havalandırma kapağının hemen ardında yerleşik olarak bulundu.",
+            "deductionHint": "Söz konusu gaz bileşiği hangi mahalde konuşlandırılmış?"
+          },
+          "c4": {
+            "text": "Teknik kontrol amirinin denetiminde incelenen jeneratör izleme logları ve tanık teyitli vardiya kartı dökümü, Güvenlik Görevlisi adlı personelin olay aralığında Elektrik Çarpması ünitesiyle veya ilgili ana şalterle hiçbir şekilde temas kurmadığını gösterdi.",
+            "deductionHint": "Elektrik tertibatına erişmediği belgelerle doğrulanan personel kimdir?"
+          },
+          "c5": {
+            "text": "Depo teslim protokolü ve kimyasal malzeme imza defteri kayıtları, Prof. Kahraman isimli şüphelinin o gece Kimyasal Gaz tüpünü zimmetine alarak bizzat taşıdığını onaylamaktadır.",
+            "deductionHint": "Kayıtlara göre söz konusu gazı teslim alan akademisyen kimdir?"
+          },
+          "c6": {
+            "text": "Bina giriş kartı okuyucusu ve kapı gözetleme paneli teyitlerine göre, Güvenlik Görevlisi inceleme aralığı boyunca Ofis alanında bulunmaktaydı.",
+            "deductionHint": "Görevlinin o zaman diliminde bulunduğu yer neresidir?"
+          }
+        }
+      }
+    },
+    {
+      "case_id": "bogazda-kayip-elmas",
+      "model": "gemini-3.5-flash-lite",
+      "plan": {
+        "case_id": "bogazda-kayip-elmas",
+        "assessment": "Boğaz'ın serin sularında yankılanan bu gizem, matematiksel olarak doğrulanan ipuçları ve katil zinciriyle çözülmüştür.",
+        "story": "İstanbul Boğazı'nın karanlık sularında demirli lüks yatta paha biçilemez mücevherin sergilendiği gece, güvenlik şefi Orhan'ın cansız bedeniyle kabusa döndü. Yatın sakinleri farklı bölümlere dağılmışken, geride kalan izler katilin ve çalınan elmasın kimliğini gün yüzüne çıkarıyor. Araştırmacılar, her bir şüphelinin o gece farklı bir alanda bulunduğunu ve farklı yöntemler izlediğini doğruluyor.",
+        "suspect_descriptions": {
+          "s1": "Geminin deneyimli kaptanı. Fiziksel olarak oldukça yapılı ve ağır nesneleri kolayca savurabilecek kuvvette.",
+          "s2": "Partinin zengin finansörü. İnce yapılı; ağır fiziksel güç gerektiren işlere ve kirli ortamlara hiç alışkın değil.",
+          "s3": "Serginin sorumlusu. Çevik, esnek ve geminin en dar, gizli alanlarında bile rahatça hareket edebilecek fiziksel yapıda."
+        },
+        "clues": {
+          "c1": {
+            "text": "Olay yeri inceleme raporu ve vardiya çizelgeleri, bahsi geçen finansörün o gece en alt teknik bölümde bulunmadığını kesin olarak kanıtlamaktadır.",
+            "deductionHint": "Zengin finansörün bu teknik alanda bulunmadığı nasıl doğrulanmıştır?"
+          },
+          "c2": {
+            "text": "Misafirlerin ağırlandığı geniş eğlence alanında yapılan detaylı aramada, paslanmaz çelik bakım aletinin izlerine rastlanmıştır.",
+            "deductionHint": "Geniş eğlence alanında hangi bakım aleti bulunmuştur?"
+          },
+          "c3": {
+            "text": "Yönetim merkezindeki güvenlik kameraları ve basınç ölçümleri, endüstriyel tüpün bu alanda aktif olarak bulunduğunu kaydetmiştir.",
+            "deductionHint": "Yönetim merkezinde hangi endüstriyel nesne tespit edilmiştir?"
+          },
+          "c4": {
+            "text": "Geminin en alt katındaki zemin analizleri ve personel takip günlüğü, deneyimli kaptanın bu teknik alanda bulunmadığını doğrulamaktadır. Ayrıca bu makine dairesi, suçun işlendiği tek ana mekân olarak saptanmıştır.",
+            "deductionHint": "Kaptanın bulunmadığı ve suçun gerçekleştiği bu teknik alan neresidir?"
+          },
+          "c5": {
+            "text": "Şahit ifadeleri ve demir çelik envanteri, kaptanın el aletini kullandığını göstermektedir.",
+            "deductionHint": "Kaptan hangi aletle ilişkilendirilmiştir?"
+          },
+          "c6": {
+            "text": "Güvenlik kayıtları, finansörün yönetim merkezinde bulunduğunu doğrulamaktadır.",
+            "deductionHint": "Finansör hangi konumda görülmüştür?"
+          }
+        }
+      }
+    },
+    {
+      "case_id": "bogazda-kayip-elmas",
+      "model": "gemini-3.8-flash",
+      "plan": {
+        "case_id": "bogazda-kayip-elmas",
+        "assessment": "Gemi zabitlerinin vardiya kayıtları, adli tıp raporu ve kamera görüntüleri karşılaştırıldığında; cinayetin işlendiği Makine Dairesi'nde olay anında yalnızca Organizatör Eda'nın bulunduğu ve oradaki ölümcül yöntem olan Gemi Halatı'nı kullandığı kesinleşmektedir.",
+        "story": "İstanbul Boğazı'nda demirleyen lüks yattaki sergide güvenlik şefi Orhan öldürülmüş, sergilenen paha biçilmez elmas ise kayıplara karışmıştır. Polis soruşturması, yirmi dakikalık kritik zaman diliminde üç şüphelinin her birinin listelenen farklı bir mahalde bulunduğunu ve her birinin farklı bir nesneye eriştiğini belirlemiştir. Yetkililer, Orhan'ın hayatını kaybetmesine yol açan ölümcül nesnenin ve cinayet mahallinin izini sürerek, bu aracı kullanan faili ve ilgili konumu tespit etmeye çalışmaktadır.",
+        "suspect_descriptions": {
+          "s1": "Yatın seyrinden sorumlu, üniformalı ve sert mizaçlı kıdemli denizci.",
+          "s2": "Davetin finansmanını üstlenen, şık kruvaze takım elbiseli varlıklı koleksiyoncu.",
+          "s3": "Serginin planlamasını yürüten, siyah kokteyl elbiseli ve telsizli halkla ilişkiler sorumlusu."
+        },
+        "clues": {
+          "c1": {
+            "text": "Olay anındaki yirmi dakikalık aralıkta Makine Dairesi girişindeki manyetik kapı turnikesi ve basınç sensörleri incelendiğinde; şık kruvaze takım elbiseli varlıklı koleksiyoncunun bu teknik bölüme hiç giriş yapmadığı kesin verilerle kanıtlanmıştır.",
+            "deductionHint": "Koleksiyoncunun kapalı tutulan teknik alana girmediği nasıl doğrulanır?"
+          },
+          "c2": {
+            "text": "VIP Salon servisinde görevli garsonun teyit edilen yeminli ifadesine göre, kritik yirmi dakikalık aralık boyunca ağır bakım aleti olan Demir Çekiç, cam vitrinin yanındaki sehpada durmaktaydı.",
+            "deductionHint": "Ağır bakım aletinin ilgili zaman diliminde nerede bulunduğu kim tarafından görüldü?"
+          },
+          "c3": {
+            "text": "Seyir Köprüsü zemininde ve panolarında yapılan kimyasal yüzey taramasında, kritik yirmi dakikalık zaman diliminde basınçlı Gaz Tüpü gövdesinden sızan yoğun azot ve koku izleri tespit edilmiştir.",
+            "deductionHint": "Seyir kumanda alanında kimyasal kalıntı bırakan cisim hangisidir?"
+          },
+          "c4": {
+            "text": "Adli tıp raporu, kurban Orhan'ın cinayete kurban gittiği yerin Makine Dairesi olduğunu kesinleştirmiştir. Aynı yirmi dakikalık zaman dilimine ait vardiya kayıt defteri, kıdemli denizcinin bu alanda bulunmadığını açıkça belgelemektedir.",
+            "deductionHint": "Cinayetin işlendiği doğrulanmış konumda kıdemli denizcinin bulunmadığı hangi resmi kayıtla anlaşılır?"
+          },
+          "c5": {
+            "text": "Teknik ekipman zimmet takip kütüğündeki imzalı teslim tutanağı, Kaptan Levent'in kritik yirmi dakikalık aralıkta Demir Çekiç donanımını zimmetine alıp kullandığını göstermektedir.",
+            "deductionHint": "Kaptan Levent hangi bakım donanımını zimmetine geçirmiştir?"
+          },
+          "c6": {
+            "text": "Güvenlik kameralarını izleyen başçarkçının onaylanan ifadesine göre, kritik yirmi dakikalık süre boyunca Sponsor Murat sadece Seyir Köprüsü alanında bulunmaktaydı.",
+            "deductionHint": "Sponsor Murat'ın bulunduğu alan görgü tanığı tarafından nasıl doğrulanmıştır?"
+          }
+        }
+      }
+    },
+    {
+      "case_id": "kapalicarsida-gizem",
+      "model": "gemini-3.5-flash-lite",
+      "plan": {
+        "case_id": "kapalicarsida-gizem",
+        "assessment": "Kapalıçarşı'da işlenen karanlık cinayet, matematiksel olarak doğrulanan delil zinciri ve şüpheli ifadeleriyle çözülmeyi bekliyor.",
+        "story": "Kapalıçarşı'nın yüzlerce yıllık labirent gibi sokaklarına çöken akşam karanlığı, dükkanında işlenen gizemli bir cinayeti örtbas etmeye yetmedi. Kepenkler indikten hemen sonra dükkanında vahşice katledilen kuyumcunun ardında bıraktığı soru işaretleri, çarşının entrikalarla dolu esnafını ve çalışanlarını karşı karşıya getirdi. Polisin titizlikle yürüttüğü soruşturmada, her şüpheli farklı bir alanda ve farklı imkanlarla incelenirken, gerçeği aydınlatacak deliller karanlıkta aydınlanmayı bekliyor.",
+        "suspect_descriptions": {
+          "s1": "Komşu bakırcı esnaf. Çarşının her köşesini ezbere bilen, kendi dükkanında geleneksel işleriyle bilinen deneyimli usta.",
+          "s2": "Çarşının saygın ve yaşlı muhasebecisi. Rakamlar konusunda kusursuz ancak teknolojik cihazlar ve dijital sistemlerle arası hiç olmayan bir çalışan.",
+          "s3": "Stajyer olarak son ay işe başlayan, dijital şifreleme ve kilit teknolojilerine son derece yatkın, meraklı genç çalışan."
+        },
+        "clues": {
+          "c1": {
+            "text": "Çarşı koridorunda yapılan olay yeri incelemesinde, ağır terazi adlı demirbaş nesnenin o bölgede bulunduğu tanık ifadeleriyle doğrulanmıştır. İnceleme aynı zaman aralığını kapsar.",
+            "deductionHint": "Nesnenin bulunduğu konum ile tanık beyanları uyuşuyor mu?"
+          },
+          "c2": {
+            "text": "Arka depo kayıtları ve elektronik geçiş logları incelenmiş, Ahmet Usta'nın belirtilen zaman aralığında arka depo sistemine hiç giriş yapmadığı kesin olarak belgelenmiştir. (Not: Arka Depo, bu dizedeki ölümcül mekan bileşenidir.)",
+            "deductionHint": "Şüphelinin bu güvenli bölgeye erişim kaydı var mı?"
+          },
+          "c3": {
+            "text": "Günlük mesai ve güvenlik kayıtları incelendiğinde, Selma Teyze'nin belirtilen zaman aralığında arka depo bölgesinde bulunmadığı ve o alana girmediği resmi kayıtlarla kanıtlanmıştır.",
+            "deductionHint": "Muhasebecinin bu kilitli alandaki kayıtları ne söylüyor?"
+          },
+          "c4": {
+            "text": "Dükkan içi incelemesinde elde edilen adli deliller, kimyasal madde kalıntılarının doğrudan dükkan içi bölgesinde kullanıldığını ve yayıldığını doğrulamaktadır.",
+            "deductionHint": "Bu aşındırıcı madde hangi alanda tespit edilmiştir?"
+          },
+          "c5": {
+            "text": "Depolardan alınan parmak izi ve envanter raporları, Ahmet Usta'nın ağır terazi adlı nesneyi kullandığını ve elinde bulundurduğunu doğrulamaktadır.",
+            "deductionHint": "Usta ile bu tartı aleti arasında nasıl bir ilişki var?"
+          },
+          "c6": {
+            "text": "Görgü tanıklarının ifadeleri ve güvenlik kameraları, Selma Teyze'nin dükkan içi bölgesinde bulunduğunu açıkça doğrulamaktadır.",
+            "deductionHint": "Yaşlı muhasebeci hangi alanda görülmüştür?"
+          }
+        }
+      }
+    },
+    {
+      "case_id": "kapalicarsida-gizem",
+      "model": "gemini-3.8-flash",
+      "plan": {
+        "case_id": "kapalicarsida-gizem",
+        "assessment": "Kapalıçarşı'daki cinayet dosyasında her şüphelinin kritik zaman aralığında farklı bir mekanda bulunduğu ve farklı bir nesneyle temas ettiği netleştirilmiştir. Eldeki kayıtlar ve deliller çaprazlandığında, cinayetin gerçekleştiği kesinleşen mekan ile şüphelilerin konumları arasındaki tezat tek bir faili işaret eder.",
+        "story": "Kapalıçarşı'nın kepenkleri kapandıktan sonra dükkanında cansız bulunan kuyumcunun ölümü tarihi çarşıda büyük yankı uyandırdı. Soruşturmayı yürüten polis ekipleri, cinayetin işlendiği kritik zaman aralığında listedeki üç şüphelinin her birinin farklı bir mahalde bulunduğunu ve her birinin yalnızca tek bir şüpheli nesneye erişim sağladığını belirledi. Müfettişler, doğrulanmış ölümcül nesneyi kullanan faili ve eylemin gerçekleştiği kesinleşmiş olay yerini açığa çıkarmak için delilleri bir araya getiriyor.",
+        "suspect_descriptions": {
+          "s1": "Otuz yıllık tecrübeye sahip, önlüğü daima metal talaşı ve kömür tozuyla kaplı, çarşının kıdemli bakırcı esnafı.",
+          "s2": "Gözlüklerini boynundaki zincirde taşıyan, evrak çantasıyla dükkanlar arasında mekik dokuyan tecrübeli çarşı muhasebecisi.",
+          "s3": "Kuyumcu atölyesinde stajyer olarak çalışan, kollukları sıvalı ve genç yaşta mesleğe adım atmış istekli çırak."
+        },
+        "clues": {
+          "c1": {
+            "text": "Gece bekçisinin onaylanmış devriye tutanağına göre, kuyumcu terazisinin ağır tunç kefesi kritik zaman aralığı boyunca Çarşı Koridoru zemininde, taş döşemelerin üzerinde açıkça görülmüştür.",
+            "deductionHint": "Gece devriyesinin taş yolda bulduğu ölçüm aleti neyi işaret ediyor?"
+          },
+          "c2": {
+            "text": "Olay yeri inceleme raporu, maktulün doğrudan Arka Depo içerisinde can verdiğini ve cinayetin kesinlikle bu mekanda işlendiğini kanıtlamıştır. Aynı odanın kesintisiz dijital giriş kayıtları, kıdemli bakırcı esnafının bu aralıkta içeriye hiç adım atmadığını doğrulamaktadır.",
+            "deductionHint": "Cinayetin işlendiği kesinleşen odaya kıdemli ustanın girmediği belgelerle nasıl doğrulanır?"
+          },
+          "c3": {
+            "text": "Güvenlik konsolundaki elektronik kilit kütüğü ve biyometrik kart okuma dökümleri, tecrübeli çarşı muhasebecisinin kritik zaman aralığında Arka Depo kapısından kesinlikle geçmediğini ortaya koymaktadır.",
+            "deductionHint": "Giriş çıkış sistemindeki kayıtlar deneyimli muhasebecinin hangi alanda bulunmadığını gösteriyor?"
+          },
+          "c4": {
+            "text": "Tezgah üstü kimyasal tespit kiti analizleri, altın eritmede kullanılan asit bazlı kimyasal maddenin söz konusu zaman aralığında Dükkan İçi vitrin alanındaki tezgahta muhafaza edildiğini kanıtlamıştır.",
+            "deductionHint": "Müşteri alanındaki tezgahta varlığı tespit edilen kimyasal solüsyon hangi eşleşmeyi kurar?"
+          },
+          "c5": {
+            "text": "Dükkan zimmet defterindeki imza sirküleri, Ahmet Usta'nın inceleme aralığında Ağır Terazi ekipmanını bizzat teslim aldığını ve üzerinde tuttuğunu doğrulamaktadır.",
+            "deductionHint": "Zimmet kayıtları bakırcı esnafı ile ağır kefeli nesneyi nasıl ilişkilendirir?"
+          },
+          "c6": {
+            "text": "Komşu çay ocağı işletmecisinin saatli kamera kaydıyla teyit edilen ifadesi, Selma Teyze'nin kritik zaman aralığı süresince yalnızca Dükkan İçi alanında oturduğunu teyit etmiştir.",
+            "deductionHint": "Doğrulanmış tanıklık muhasebecinin vaktini nerede geçirdiğini gösterir?"
+          }
+        }
+      }
+    }
+  ]
+}
