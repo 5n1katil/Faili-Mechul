@@ -7970,7 +7970,7 @@
       }
     },
     "muzede-kayip-eser": {
-      "spent": 0.0034345999999999995,
+      "spent": 0.0422801,
       "feedback": [],
       "source_hash": "339b16518cbc76d096025f3d0f682b78a07277c2db96a9f341eb404df2a960ca",
       "simulator_hash": "0e27218c7817862f371febb6b7bb865821d9e5da",
@@ -11482,7 +11482,16 @@
           }
         }
       }
+    },
+    "f2a90a77fdb082820616a6d17c34cedaf735fa628f393755102e3e6a26b88095": {
+      "case_id": "muzede-kayip-eser",
+      "model": "gemini-3.8-flash",
+      "purpose": "repair",
+      "day": "2026-10-11",
+      "status": "reserved",
+      "charged": 0.0388455,
+      "repair_method": "verified_text_v1"
     }
   },
-  "campaign_spent": 0.16052725
+  "campaign_spent": 0.19937275000000002
 }
