@@ -4653,7 +4653,145 @@
     },
     "universitede-karanlik-sir": {
       "spent": 0.01858215,
-      "feedback": [],
+      "feedback": [
+        {
+          "score": 0,
+          "result": {
+            "score": 0,
+            "simulator_production_ready": false,
+            "blockers": [
+              "HATA: Oyuncu-Görünür Kural Taşkını — İpucu 2 metni mekân olarak “Koridorlar” sonucunu da adı doğrudan geçiyor; ancak logicRules yalnız Güvenlik Görevlisi ↔ Laboratuvar etkisini tanımlıyor. Oyuncu bu ek hücreyi işaretlerse sonraki temel ipucu tekrara düşebilir.",
+              "HATA: Oyuncu-Görünür Kural Taşkını — İpucu 4 metni mekân olarak “Ofis” sonucunu da adı doğrudan geçiyor; ancak logicRules yalnız Prof. Kahraman ↔ Laboratuvar etkisini tanımlıyor. Oyuncu bu ek hücreyi işaretlerse sonraki temel ipucu tekrara düşebilir."
+            ],
+            "fixes": [
+              "OYUNCU-GÖRÜNÜR SEMANTİK: Hikâye ve her standart ipucunun oyuncuya kesin olarak verdiği katil/silah/mekan bilgisini qaSemanticFacts ile kaynak bazında belgeleyin. Ardından metinden doğan erken çözüm yolunu kapatın veya bulmaca zincirini yeniden dağıtın.",
+              "OYUNCU-GÖRÜNÜR KURAL KAPSAMI: Her standart ipucunun metni, deductionHint’i ve varsa ses transkripti yalnızca kendi logicRules hücresini desteklemeli. Metinde başka bir şüpheli/silah/mekânı güçlü biçimde çağrıştıran ama rule’a yazılmamış ifadeleri kaldır; aksi hâlde sonraki temel ipucu oyuncu açısından tekrara düşer.",
+              "SIKI TEMEL İPUCU EKONOMİSİ: Her isBonus:false ipucu çıkarıldığında katil+silah+mekan cevabı belirsiz kalmalıdır. Cevabı değiştirmeyen temel ipuçlarını bonusa taşıyın ya da onları eksik olan cevap bileşenini daraltacak biçimde yeniden yazın."
+            ],
+            "advisories": [
+              "TAVSİYE (Monotonluk): Aynı işlem (\"eliminate\") art arda 3 kez kullanılmış (ipucu dizilimi tekdüze). Matrisi kırma stratejisini çeşitlendir: confirm ve eliminate adımlarını harmanla.",
+              "ⓘ Standart mod: Bu vaka metin tabanlı ilerliyor; ücretsiz/standart vakalarda gelişmiş mini oyun zorunlu değildir. Mantık zinciri ve oynanabilirlik güçlüyse 100/100 alabilir."
+            ],
+            "score_breakdown": {
+              "k1": {
+                "score": 20,
+                "maximum": 40,
+                "findings": [
+                  "ⓘ NİHAİ BAĞ UYARISI: Temel ipuçları katili cinayet silahı ile kesin izole etmiyor (3 silah olasılığı açık). İpuçları masumların yerini bulmanın ötesinde, katili silahı ve mekanıyla kilitlemeli.",
+                  "İHLAL: Bonus Bağımlılığı! Temel ipuçları cinayet üçlüsünü (katil+silah+mekan) tek çözüme indirmiyor — 3 farklı katil üçlüsü mümkün. Oyuncu cinayeti ancak CEZALI bonus açarak çözebilir; bu yasak. Bonus kurallarından en az birini standart (isBonus:false) ipucuna taşı ki temel iskelet katili tek başına bulsun.",
+                  "✓ Dinamik tam-ızgara (Murdle) solver: özel mekanik climax testi + masum eşleşmeler dahil."
+                ]
+              },
+              "k2": {
+                "score": 20,
+                "maximum": 20,
+                "findings": [
+                  "Mini oyun alanlarında çözümü erken ele veren ifade bulunamadı. Temiz."
+                ]
+              },
+              "k3": {
+                "score": 20,
+                "maximum": 20,
+                "findings": [
+                  "Tip dağılımı: evidence×2, witness×1, forensic×2, record×1",
+                  "💡 TAVSİYE (opsiyonel): İpucu 1: \"Elektrik Çarpması\", İpucu 2: \"Güvenlik Görevlisi\", İpucu 3: \"Prof. Kahraman\" ve 1 ipucu daha adı doğrudan veriyor. Oyuncu eforunu ve atmosferi artırmak için ismi doğrudan yazmak yerine profil kartındaki betimlemelere atıfta bulunan dolaylı ifadeler tercih edilebilir (örn. \"Hazinedar Hüseyin\" yerine \"kayıp altın meselesinin gölgesindeki adam\"). Bu bir kalite önerisidir; çözülebilirliği etkilemez."
+                ]
+              },
+              "k4": {
+                "score": 20,
+                "maximum": 20,
+                "findings": [
+                  "2 bonus ipucu var — sayı uygundur; tam puanı işlevsellik belirler.",
+                  "✓ Matris yardımı: her ek ipucu, ana çözümü zorunlu kılmadan oyuncunun ızgarasında kullanılabilir yeni bir çıkarım veriyor."
+                ]
+              }
+            },
+            "quality_findings": [
+              "💡 TAVSİYE (opsiyonel): İpucu 1: \"Elektrik Çarpması\", İpucu 2: \"Güvenlik Görevlisi\", İpucu 3: \"Prof. Kahraman\" ve 1 ipucu daha adı doğrudan veriyor. Oyuncu eforunu ve atmosferi artırmak için ismi doğrudan yazmak yerine profil kartındaki betimlemelere atıfta bulunan dolaylı ifadeler tercih edilebilir (örn. \"Hazinedar Hüseyin\" yerine \"kayıp altın meselesinin gölgesindeki adam\"). Bu bir kalite önerisidir; çözülebilirliği etkilemez."
+            ],
+            "gates": {
+              "coreNecessity": {
+                "passed": false,
+                "flags": [
+                  "HATA: Oyuncu-Görünür Çözüm Başarısız. Tüm standart ipuçları ve belgelenen/anlaşılan anlatı bilgileri birlikteyken cevap tek kalmıyor (4 olası cevap). Bonus açmadan s2|w1|l1 üçlüsüne zorunlu olarak ulaşılmalı."
+                ],
+                "warnings": []
+              },
+              "patternGovernance": {
+                "passed": true,
+                "flags": [],
+                "warnings": []
+              },
+              "contentAndNames": {
+                "passed": true,
+                "flags": [],
+                "warnings": []
+              },
+              "semanticContract": {
+                "passed": false,
+                "flags": [
+                  "HATA: Semantik Sözleşme Eksik — Hikâye / atmosfer metni, oyuncuya suç mahalli olarak “Laboratuvar” sonucunu çağrıştırıyor. Bu bilgi qaSemanticFacts ile belgelenmemiş; grid dışı erken çözüm/sızıntı denetlenemiyor.",
+                  "HATA: Semantik Sözleşme Eksik — İpucu 1 metni, oyuncuya suç mahalli olarak “Ofis” sonucunu çağrıştırıyor. Bu bilgi qaSemanticFacts ile belgelenmemiş; grid dışı erken çözüm/sızıntı denetlenemiyor.",
+                  "HATA: Semantik Sözleşme Eksik — İpucu 3 metni, oyuncuya cinayet silahı olarak “Elektrik Çarpması” sonucunu çağrıştırıyor. Bu bilgi qaSemanticFacts ile belgelenmemiş; grid dışı erken çözüm/sızıntı denetlenemiyor.",
+                  "HATA: Semantik Sözleşme Eksik — İpucu 4 metni, oyuncuya suç mahalli olarak “Laboratuvar” sonucunu çağrıştırıyor. Bu bilgi qaSemanticFacts ile belgelenmemiş; grid dışı erken çözüm/sızıntı denetlenemiyor."
+                ],
+                "warnings": []
+              },
+              "visibleEvidence": {
+                "passed": false,
+                "flags": [
+                  "HATA: Oyuncu-Görünür Kural Taşkını — İpucu 2 metni mekân olarak “Koridorlar” sonucunu da adı doğrudan geçiyor; ancak logicRules yalnız Güvenlik Görevlisi ↔ Laboratuvar etkisini tanımlıyor. Oyuncu bu ek hücreyi işaretlerse sonraki temel ipucu tekrara düşebilir.",
+                  "HATA: Oyuncu-Görünür Kural Taşkını — İpucu 4 metni mekân olarak “Ofis” sonucunu da adı doğrudan geçiyor; ancak logicRules yalnız Prof. Kahraman ↔ Laboratuvar etkisini tanımlıyor. Oyuncu bu ek hücreyi işaretlerse sonraki temel ipucu tekrara düşebilir."
+                ],
+                "warnings": []
+              },
+              "mechanicContract": {
+                "passed": true,
+                "flags": [],
+                "warnings": []
+              },
+              "bonusFunctionality": {
+                "passed": true,
+                "score": 20,
+                "findings": [
+                  "2 bonus ipucu var — sayı uygundur; tam puanı işlevsellik belirler.",
+                  "✓ Matris yardımı: her ek ipucu, ana çözümü zorunlu kılmadan oyuncunun ızgarasında kullanılabilir yeni bir çıkarım veriyor."
+                ]
+              }
+            },
+            "leakage": {
+              "status": "manual_review_required",
+              "severity": "review",
+              "avatar_prompt_risk": false,
+              "solution_triple_exposed": false,
+              "findings": [
+                {
+                  "case_id": "universitede-karanlik-sir",
+                  "suspect_id": "s1",
+                  "suspect_name": "Prof. Kahraman",
+                  "axis_kind": "location",
+                  "axis_id": "l2",
+                  "axis_name": "Ofis",
+                  "strength": "review_semantic",
+                  "direct_owner_binding": false,
+                  "profile_exact_axis_name": false,
+                  "distinctive_overlap_tokens": [
+                    "evrak",
+                    "akademisyen"
+                  ],
+                  "axis_name_overlap_tokens": [],
+                  "avatar_prompt_risk": false,
+                  "reasons": [
+                    "distinctive_profile_overlap:evrak,akademisyen"
+                  ]
+                }
+              ],
+              "required_actions": []
+            }
+          },
+          "reason": "No improvement or passed gate regressed"
+        }
+      ],
       "source_hash": "ba12e30c0656dba5f0243d514547a5052cf7a7b5360a33d6b5fa725f0ed13326",
       "simulator_hash": "cb53e6613d6379de097599634de26524f4510fbc",
       "candidate": {
