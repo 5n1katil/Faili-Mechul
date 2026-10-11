@@ -3263,7 +3263,7 @@
       "status": "quarantined"
     },
     "kapalicarsida-gizem": {
-      "spent": 0.0403907,
+      "spent": 0.0231641,
       "feedback": [
         {
           "score": 0,
@@ -8070,10 +8070,58 @@
       "model": "gemini-3.5-flash-lite",
       "purpose": "repair",
       "day": "2026-10-11",
-      "status": "reserved",
-      "charged": 0.020208,
-      "repair_method": "verified_text_v1"
+      "status": "completed",
+      "charged": 0.0029814,
+      "repair_method": "verified_text_v1",
+      "usage": {
+        "promptTokenCount": 2688,
+        "candidatesTokenCount": 870,
+        "totalTokenCount": 3558,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 2688
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "plan": {
+        "case_id": "kapalicarsida-gizem",
+        "assessment": "Kapalıçarşı'da işlenen karanlık cinayet, matematiksel olarak doğrulanan delil zinciri ve şüpheli ifadeleriyle çözülmeyi bekliyor.",
+        "story": "Kapalıçarşı'nın yüzlerce yıllık labirent gibi sokaklarına çöken akşam karanlığı, dükkanında işlenen gizemli bir cinayeti örtbas etmeye yetmedi. Kepenkler indikten hemen sonra dükkanında vahşice katledilen kuyumcunun ardında bıraktığı soru işaretleri, çarşının entrikalarla dolu esnafını ve çalışanlarını karşı karşıya getirdi. Polisin titizlikle yürüttüğü soruşturmada, her şüpheli farklı bir alanda ve farklı imkanlarla incelenirken, gerçeği aydınlatacak deliller karanlıkta aydınlanmayı bekliyor.",
+        "suspect_descriptions": {
+          "s1": "Komşu bakırcı esnaf. Çarşının her köşesini ezbere bilen, kendi dükkanında geleneksel işleriyle bilinen deneyimli usta.",
+          "s2": "Çarşının saygın ve yaşlı muhasebecisi. Rakamlar konusunda kusursuz ancak teknolojik cihazlar ve dijital sistemlerle arası hiç olmayan bir çalışan.",
+          "s3": "Stajyer olarak son ay işe başlayan, dijital şifreleme ve kilit teknolojilerine son derece yatkın, meraklı genç çalışan."
+        },
+        "clues": {
+          "c1": {
+            "text": "Çarşı koridorunda yapılan olay yeri incelemesinde, ağır terazi adlı demirbaş nesnenin o bölgede bulunduğu tanık ifadeleriyle doğrulanmıştır. İnceleme aynı zaman aralığını kapsar.",
+            "deductionHint": "Nesnenin bulunduğu konum ile tanık beyanları uyuşuyor mu?"
+          },
+          "c2": {
+            "text": "Arka depo kayıtları ve elektronik geçiş logları incelenmiş, Ahmet Usta'nın belirtilen zaman aralığında arka depo sistemine hiç giriş yapmadığı kesin olarak belgelenmiştir. (Not: Arka Depo, bu dizedeki ölümcül mekan bileşenidir.)",
+            "deductionHint": "Şüphelinin bu güvenli bölgeye erişim kaydı var mı?"
+          },
+          "c3": {
+            "text": "Günlük mesai ve güvenlik kayıtları incelendiğinde, Selma Teyze'nin belirtilen zaman aralığında arka depo bölgesinde bulunmadığı ve o alana girmediği resmi kayıtlarla kanıtlanmıştır.",
+            "deductionHint": "Muhasebecinin bu kilitli alandaki kayıtları ne söylüyor?"
+          },
+          "c4": {
+            "text": "Dükkan içi incelemesinde elde edilen adli deliller, kimyasal madde kalıntılarının doğrudan dükkan içi bölgesinde kullanıldığını ve yayıldığını doğrulamaktadır.",
+            "deductionHint": "Bu aşındırıcı madde hangi alanda tespit edilmiştir?"
+          },
+          "c5": {
+            "text": "Depolardan alınan parmak izi ve envanter raporları, Ahmet Usta'nın ağır terazi adlı nesneyi kullandığını ve elinde bulundurduğunu doğrulamaktadır.",
+            "deductionHint": "Usta ile bu tartı aleti arasında nasıl bir ilişki var?"
+          },
+          "c6": {
+            "text": "Görgü tanıklarının ifadeleri ve güvenlik kameraları, Selma Teyze'nin dükkan içi bölgesinde bulunduğunu açıkça doğrulamaktadır.",
+            "deductionHint": "Yaşlı muhasebeci hangi alanda görülmüştür?"
+          }
+        }
+      }
     }
   },
-  "campaign_spent": 0.14288700000000004
+  "campaign_spent": 0.12566040000000003
 }
