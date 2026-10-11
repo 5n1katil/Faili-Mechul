@@ -23,7 +23,7 @@ import { TEXT_METHOD, TEXT_SYSTEM, supportsTextRepair, textRepairPlan, verifyTex
   compileTextPatch, textResponseSchema, validTextResponse, explainTextResponse, textRepairPrompt } from './text-repair.mjs';
 import { verifiedTextResponses } from '../fixtures/verified-text-responses.mjs';
 import { evaluatePreclueLeakage, n8nGuardSource } from '../case_qa_preclue_guard.mjs';
-import { compileEditorial, editorialPrompt, editorialFailure, validEditorial } from './editorial.mjs';
+import { compileEditorial, editorialPrompt, editorialFailure, validEditorial, recoverEditorial } from './editorial.mjs';
 import { reviewHash } from './review.mjs';
 
 globalThis.fetch = async () => { throw new Error('TEST_NETWORK_FORBIDDEN'); };
@@ -125,21 +125,66 @@ try {
     assert.equal(blindStore.state.cases[entry.id].review, undefined);
     // Reproduce the deployed run: rejection existed only in the request cache.
     const coldStore = storeFor(entry.id), reviewCost = Object.values(fixture.review_requests).reduce((s,r) => s + r.charged, 0);
+    const deployedSnapshot = { ...snapshot, simulatorHash: '04352c0a4ce07097cb752a1980b144fa00722e78' };
     Object.assign(coldStore.state.cases[entry.id], { candidate, candidate_hash: stableHash(candidate),
-      source_hash: entry.sourceHash, simulator_hash: snapshot.simulatorHash, spent: fixture.historical_spent });
+      source_hash: entry.sourceHash, simulator_hash: deployedSnapshot.simulatorHash, spent: fixture.historical_spent });
     coldStore.state.campaign_spent = fixture.historical_spent;
     coldStore.state.requests = clone(fixture.review_requests);
     for (let i = 0; i < 2; i++) coldStore.state.requests['historical-repair-' + i] = {
       case_id: entry.id, purpose: 'repair', repair_method: TEXT_METHOD, status: 'completed', day: '2026-10-11',
       charged: (fixture.historical_spent - reviewCost) / 2 };
     const actualTransports = [];
-    const recovered = await repairOne(snapshot, entry, coldStore, { allowAI: true, caller: args => callPaid({ ...args,
+    const recovered = await repairOne(deployedSnapshot, entry, coldStore, { allowAI: true, caller: args => callPaid({ ...args,
       transport: async () => { actualTransports.push(args.purpose); return responseForFixture(args.purpose === 'editorial' ? value :
         args.purpose === 'player' ? playerFor(revised) : validJudge()); } }) });
     assert.deepEqual(actualTransports, ['editorial','player','judge']);
     assert.equal(recovered.status, 'ready_for_gates'); assert.equal(recovered.run.calls, 3);
     assert.equal(Object.keys(coldStore.state.requests).length, 7);
     if (oldKey === undefined) delete process.env.GEMINI_API_KEY; else process.env.GEMINI_API_KEY = oldKey;
+  });
+  await test('actual ara-hat false positive is corrected; the exact paid editorial request recovers with only two fresh reviews', async () => {
+    const fixture = read('.case-qa/fixtures/pazar-editorial-name-rejection-38164243995.json');
+    const base = read('.case-qa/fixtures/pazar-editorial-rejection-38159952807.json');
+    const entry = snapshot.entries.find(e => e.id === base.candidate.id), candidate = clone(base.candidate);
+    candidate.qaPortfolioRegistry = clone(entry.candidate.qaPortfolioRegistry);
+    const request = Object.values(fixture.requests).find(r => r.purpose === 'editorial');
+    const oldPath = path.join(temporary, 'pre-ara-html.html');
+    fs.writeFileSync(oldPath, execFileSync('git', ['show', fixture.record.simulator_hash]));
+    const { loadEngine } = createRequire(import.meta.url)('../fm_case_qa_core.cjs');
+    const old = { ...snapshot, simulatorHash: fixture.record.simulator_hash, engine: loadEngine(oldPath) };
+    assert.throws(() => compileEditorial(old, entry, candidate, request.plan), /Ara Sokak/);
+    const repaired = compileEditorial(snapshot, entry, candidate, request.plan);
+    assert.equal(repaired.assessment.passed, true);
+    for (const text of ['Ara Sokak', 'Ara Sokakta', 'Ara Sokağa', 'sokakta']) {
+      const named = clone(request.plan); named.clues.c4.text += ' Kayıtlarda ' + text + ' ifadesi yer alıyor.';
+      assert.throws(() => compileEditorial(snapshot, entry, candidate, named), /Ara Sokak/);
+    }
+    const record = { ...clone(fixture.record), candidate };
+    assert.equal(recoverEditorial(snapshot, entry, candidate, record, fixture.requests).assessment.passed, true);
+    for (const status of ['reserved','failed','invalid_response']) {
+      const bad = clone(fixture.requests); Object.values(bad).find(r => r.purpose === 'editorial').status = status;
+      assert.equal(recoverEditorial(snapshot, entry, candidate, record, bad), null);
+    }
+    assert.equal(recoverEditorial(snapshot, entry, candidate, { ...record, source_hash: 'stale' }, fixture.requests), null);
+    assert.equal(recoverEditorial({ ...snapshot, simulatorHash: 'unrelated' }, entry, candidate, record, fixture.requests), null);
+    const wrongKey = Object.fromEntries(Object.values(fixture.requests).map((r,i) => ['wrong-' + i, r]));
+    assert.equal(recoverEditorial(snapshot, entry, candidate, record, wrongKey), null);
+    const store = storeFor(entry.id); store.state.cases[entry.id] = record;
+    store.state.requests = clone(fixture.requests); store.state.campaign_spent = record.spent;
+    const history = stableHash(store.state.requests), oldKey = process.env.GEMINI_API_KEY;
+    process.env.GEMINI_API_KEY = 'offline-editorial-recovery';
+    try {
+      const calls = [];
+      const result = await repairOne(snapshot, entry, store, { allowAI: true, caller: args => {
+        calls.push(args.purpose); return callPaid({ ...args, transport: async () => responseForFixture(
+          args.purpose === 'player' ? playerFor(repaired.candidate) : validJudge()) });
+      } });
+      assert.deepEqual(calls, ['player','judge']); assert.equal(result.run.calls, 2);
+      assert.equal(result.status, 'ready_for_gates'); assert.equal(result.run.attempts[0].cached, true);
+      assert.equal(Object.keys(store.state.requests).length, 7);
+      assert.equal(stableHash(Object.fromEntries(Object.entries(store.state.requests).filter(([k]) => fixture.requests[k]))), history);
+      assert.equal(certificateValid(snapshot, entry, repaired.candidate, result.review.certificate), true);
+    } finally { if (oldKey === undefined) delete process.env.GEMINI_API_KEY; else process.env.GEMINI_API_KEY = oldKey; }
   });
   await test('actual Pazar response failed only on an investigator title; corrected exact HTML still blocks true double disclosures', () => {
     const fixture = read('.case-qa/fixtures/pazar-live-candidate-38158353700.json');

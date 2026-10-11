@@ -129,10 +129,12 @@ export function restoreBest(snapshot, entry, record) {
   let current = clone(entry.candidate);
   let assessment = assess(snapshot, entry, current);
   const sameSimulator = record?.simulator_hash === snapshot.simulatorHash;
-  // Only this audited team-title correction can re-evaluate an old checkpoint.
+  // Only the audited team-title and generic ara-token corrections may migrate.
   // It must pass EVERY current gate; old review certificates are not migrated.
   const correctedSimulator = record?.simulator_hash === 'cb53e6613d6379de097599634de26524f4510fbc' &&
-    snapshot.simulatorHash === '04352c0a4ce07097cb752a1980b144fa00722e78';
+    ['04352c0a4ce07097cb752a1980b144fa00722e78','0e27218c7817862f371febb6b7bb865821d9e5da'].includes(snapshot.simulatorHash) ||
+    record?.simulator_hash === '04352c0a4ce07097cb752a1980b144fa00722e78' &&
+    snapshot.simulatorHash === '0e27218c7817862f371febb6b7bb865821d9e5da';
   if (record?.source_hash === entry.sourceHash && (sameSimulator || correctedSimulator) &&
       record.candidate && record.candidate_hash === stableHash(record.candidate)) {
     try {
