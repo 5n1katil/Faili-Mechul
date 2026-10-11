@@ -3008,7 +3008,118 @@
     },
     "kapalicarsida-gizem": {
       "spent": 0.020182700000000005,
-      "feedback": [],
+      "feedback": [
+        {
+          "score": 0,
+          "result": {
+            "score": 0,
+            "simulator_production_ready": false,
+            "blockers": [],
+            "fixes": [
+              "OYUNCU-GÖRÜNÜR SEMANTİK: Hikâye ve her standart ipucunun oyuncuya kesin olarak verdiği katil/silah/mekan bilgisini qaSemanticFacts ile kaynak bazında belgeleyin. Ardından metinden doğan erken çözüm yolunu kapatın veya bulmaca zincirini yeniden dağıtın.",
+              "SIKI TEMEL İPUCU EKONOMİSİ: Her isBonus:false ipucu çıkarıldığında katil+silah+mekan cevabı belirsiz kalmalıdır. Cevabı değiştirmeyen temel ipuçlarını bonusa taşıyın ya da onları eksik olan cevap bileşenini daraltacak biçimde yeniden yazın.",
+              "ÇİFT İFŞA (Çapa): Çapa ipucunun logicRules'u tek başına cinayet triadının iki öğesini bağlamamalı — ne tek confirm'le ne de bir mekandan/şüpheliden birden çok öğeyi eleyip tek seçenek bırakarak. Çapa SADECE cinayetle ilişkili tek bir öğeyi sabitlesin (örn. yalnızca cinayet mekanını: tek bir confirm ya da o mekana dair tek bir bilgi). Silah-mekan/katil-silah bağını ayrı ipuçlara, mümkünse ters-çapraz çıkarıma bırak."
+            ],
+            "advisories": [
+              "ⓘ Standart mod: Bu vaka metin tabanlı ilerliyor; ücretsiz/standart vakalarda gelişmiş mini oyun zorunlu değildir. Mantık zinciri ve oynanabilirlik güçlüyse 100/100 alabilir."
+            ],
+            "score_breakdown": {
+              "k1": {
+                "score": 0,
+                "maximum": 40,
+                "findings": [
+                  "HATA: Çift İfşa Sızıntısı! Çapa ipucunuz (İpucu 1), tek başına cinayet triadının iki öğesini (Kerem Genç + Arka Depo) kesin olarak birbirine bağlıyor — ister doğrudan confirm'le, ister birden çok elemenin tek seçenek bırakmasıyla. (zorluk belirtilmemiş — premium varsayıldı) Bu, bulmaca örüntüsünü yok eder: cinayeti tek hamlede çözer. Çapa SADECE cinayetle ilişkili TEK bir öğeyi versin (ya mekanı, ya silahı, ya şüpheliyi); o öğeyi başka bir eksene bağlama işini diğer ipuçlara, tercihen ters-çapraz çıkarıma bırak. NOT: Bu vaka gerçekten kolaysa (Çaylak), JSON'a \"difficulty\": 1 veya 2 ekle — kolay vakalarda çapanın iki öğe vermesi serbesttir."
+                ]
+              },
+              "k2": {
+                "score": 20,
+                "maximum": 20,
+                "findings": [
+                  "Mini oyun alanlarında çözümü erken ele veren ifade bulunamadı. Temiz."
+                ]
+              },
+              "k3": {
+                "score": 20,
+                "maximum": 20,
+                "findings": [
+                  "Tip dağılımı: record×1, forensic×2, evidence×2, witness×1",
+                  "💡 TAVSİYE (opsiyonel): İpucu 1: \"Kerem Genç\", İpucu 2: \"Pençe Anahtar\", İpucu 3: \"Ahmet Usta\" ve 1 ipucu daha adı doğrudan veriyor. Oyuncu eforunu ve atmosferi artırmak için ismi doğrudan yazmak yerine profil kartındaki betimlemelere atıfta bulunan dolaylı ifadeler tercih edilebilir (örn. \"Hazinedar Hüseyin\" yerine \"kayıp altın meselesinin gölgesindeki adam\"). Bu bir kalite önerisidir; çözülebilirliği etkilemez."
+                ]
+              },
+              "k4": {
+                "score": 20,
+                "maximum": 20,
+                "findings": [
+                  "2 bonus ipucu var — sayı uygundur; tam puanı işlevsellik belirler.",
+                  "✓ Matris yardımı: her ek ipucu, ana çözümü zorunlu kılmadan oyuncunun ızgarasında kullanılabilir yeni bir çıkarım veriyor."
+                ]
+              }
+            },
+            "quality_findings": [
+              "💡 TAVSİYE (opsiyonel): İpucu 1: \"Kerem Genç\", İpucu 2: \"Pençe Anahtar\", İpucu 3: \"Ahmet Usta\" ve 1 ipucu daha adı doğrudan veriyor. Oyuncu eforunu ve atmosferi artırmak için ismi doğrudan yazmak yerine profil kartındaki betimlemelere atıfta bulunan dolaylı ifadeler tercih edilebilir (örn. \"Hazinedar Hüseyin\" yerine \"kayıp altın meselesinin gölgesindeki adam\"). Bu bir kalite önerisidir; çözülebilirliği etkilemez."
+            ],
+            "gates": {
+              "coreNecessity": {
+                "passed": false,
+                "flags": [
+                  "HATA: Zorunlu Olmayan Temel İpucu — İpucu 1 çıkarıldığında oyuncu hâlâ aynı tek cevaba ulaşır. Bu ipucu ızgarayı dolduruyor olabilir ama cevap zincirinde gerekli değil; bonusa dönüştürülmeli veya diğer temel ipuçlarıyla kesişen yeni bir bilgi vermeli.",
+                  "HATA: Zorunlu Olmayan Temel İpucu — İpucu 2 çıkarıldığında oyuncu hâlâ aynı tek cevaba ulaşır. Bu ipucu ızgarayı dolduruyor olabilir ama cevap zincirinde gerekli değil; bonusa dönüştürülmeli veya diğer temel ipuçlarıyla kesişen yeni bir bilgi vermeli.",
+                  "HATA: Zorunlu Olmayan Temel İpucu — İpucu 3 çıkarıldığında oyuncu hâlâ aynı tek cevaba ulaşır. Bu ipucu ızgarayı dolduruyor olabilir ama cevap zincirinde gerekli değil; bonusa dönüştürülmeli veya diğer temel ipuçlarıyla kesişen yeni bir bilgi vermeli.",
+                  "HATA: Zorunlu Olmayan Temel İpucu — İpucu 4 çıkarıldığında oyuncu hâlâ aynı tek cevaba ulaşır. Bu ipucu ızgarayı dolduruyor olabilir ama cevap zincirinde gerekli değil; bonusa dönüştürülmeli veya diğer temel ipuçlarıyla kesişen yeni bir bilgi vermeli."
+                ],
+                "warnings": []
+              },
+              "patternGovernance": {
+                "passed": true,
+                "flags": [],
+                "warnings": []
+              },
+              "contentAndNames": {
+                "passed": true,
+                "flags": [],
+                "warnings": []
+              },
+              "semanticContract": {
+                "passed": false,
+                "flags": [
+                  "HATA: Semantik Sözleşme Eksik — İpucu 1 metni, oyuncuya suç mahalli olarak “Arka Depo” sonucunu çağrıştırıyor. Bu bilgi qaSemanticFacts ile belgelenmemiş; grid dışı erken çözüm/sızıntı denetlenemiyor.",
+                  "HATA: Semantik Sözleşme Eksik — İpucu 2 metni, oyuncuya suç mahalli olarak “Arka Depo” sonucunu çağrıştırıyor. Bu bilgi qaSemanticFacts ile belgelenmemiş; grid dışı erken çözüm/sızıntı denetlenemiyor.",
+                  "HATA: Semantik Sözleşme Eksik — İpucu 3 metni, oyuncuya cinayet silahı olarak “Pençe Anahtar” sonucunu çağrıştırıyor. Bu bilgi qaSemanticFacts ile belgelenmemiş; grid dışı erken çözüm/sızıntı denetlenemiyor.",
+                  "HATA: Semantik Sözleşme Eksik — İpucu 4 metni, oyuncuya cinayet silahı olarak “Pençe Anahtar” sonucunu çağrıştırıyor. Bu bilgi qaSemanticFacts ile belgelenmemiş; grid dışı erken çözüm/sızıntı denetlenemiyor."
+                ],
+                "warnings": []
+              },
+              "visibleEvidence": {
+                "passed": true,
+                "flags": [],
+                "warnings": []
+              },
+              "mechanicContract": {
+                "passed": true,
+                "flags": [],
+                "warnings": []
+              },
+              "bonusFunctionality": {
+                "passed": true,
+                "score": 20,
+                "findings": [
+                  "2 bonus ipucu var — sayı uygundur; tam puanı işlevsellik belirler.",
+                  "✓ Matris yardımı: her ek ipucu, ana çözümü zorunlu kılmadan oyuncunun ızgarasında kullanılabilir yeni bir çıkarım veriyor."
+                ]
+              }
+            },
+            "leakage": {
+              "status": "passed",
+              "severity": "none",
+              "avatar_prompt_risk": false,
+              "solution_triple_exposed": false,
+              "findings": [],
+              "required_actions": []
+            }
+          },
+          "reason": "No improvement or passed gate regressed"
+        }
+      ],
       "source_hash": "516640a853bd2653f5c4ca18e4737220f3139eeeae527578b334bf2003243009",
       "simulator_hash": "cb53e6613d6379de097599634de26524f4510fbc",
       "candidate": {
