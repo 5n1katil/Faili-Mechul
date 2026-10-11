@@ -7970,7 +7970,7 @@
       }
     },
     "muzede-kayip-eser": {
-      "spent": 0.01217435,
+      "spent": 0.0494156,
       "feedback": [
         {
           "error": "PATCH_CONTRACT: NEAR_READY_SCOPE: identity, roles, order, policy, profiles, story or unrelated facts changed"
@@ -11691,7 +11691,15 @@
         ],
         "issues": []
       }
+    },
+    "1aa3b891ee6107137a20540d38d5e749f43fafef19d44563171f03e34b306db4": {
+      "case_id": "muzede-kayip-eser",
+      "model": "gemini-3.8-flash",
+      "purpose": "judge",
+      "day": "2026-10-11",
+      "status": "reserved",
+      "charged": 0.03724125
     }
   },
-  "campaign_spent": 0.169267
+  "campaign_spent": 0.20650825
 }
