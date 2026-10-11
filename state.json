@@ -7970,7 +7970,7 @@
       }
     },
     "muzede-kayip-eser": {
-      "spent": 0.05466410000000001,
+      "spent": 0.022206350000000007,
       "feedback": [
         {
           "error": "PATCH_CONTRACT: NEAR_READY_SCOPE: identity, roles, order, policy, profiles, story or unrelated facts changed"
@@ -11707,9 +11707,55 @@
       "model": "gemini-3.8-flash",
       "purpose": "editorial",
       "day": "2026-10-11",
-      "status": "reserved",
-      "charged": 0.0385035
+      "status": "completed",
+      "charged": 0.00604575,
+      "usage": {
+        "promptTokenCount": 3556,
+        "candidatesTokenCount": 901,
+        "totalTokenCount": 4457,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 3556
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "plan": {
+        "story": "Ankara'nın köklü müzesinde fırtınalı bir gece yarısı, paha biçilemez Bizans broşunun sergilendiği kanatta derin bir sessizlik bozuldu. Görevli gece bekçisi, aniden bilincini yitirerek koridorda boylu boyunca yere yığılmış halde bulundu; saldırganın kurbanı etkisiz kılmak için saniyeler içinde tesir eden tehlikeli bir yöntem kullandığı belirlendi. Gece boyunca içeride bulunan üç yetkili kuşkuları dağıtamazken, kilitli kapıların ardındaki gizemi çözmek adli dedektiflere kaldı.",
+        "clues": {
+          "c1": {
+            "text": "Bizans ve Osmanlı eserlerinin sergilendiği cam vitrinli geniş salonda yapılan incelemede, genzi yakan yoğun bir kimyasal gaz bulutuna rastlandı. Adli uzmanlar, havaya sıkıldığında nefes borusunu tahriş eden bu tesirli spreyin doğrudan bu aydınlık ana alanda püskürtüldüğünü saptadı.",
+            "deductionHint": "Geniş sergi salonunun havasında tespit edilen tahriş edici kalıntılar hangi araca işaret ediyor?"
+          },
+          "c2": {
+            "text": "Penceresiz ve şifreli kilit sistemiyle korunan muhafaza odasının dijital geçiş kayıtları incelendiğinde, sosyal alan görevlisinin gece boyunca bu kilitli odaya hiçbir şekilde uğramadığı ve içeriye adım atmadığı kesinleşti.",
+            "deductionHint": "Ziyaretçi gruplarına eşlik eden rehber hangi kilitli bölmeden tamamen uzak kalmıştır?"
+          },
+          "c3": {
+            "text": "Müze turnike logları ve arşiv kayıtları, resmi ceketli idari yöneticinin gece boyunca kilitli depolama birimine girmediğini kesinleştirdi. Adli soruşturma ise suçun işlendiği asıl yerin yalnızca bu kilitli muhafaza odası olduğunu kanıtladı.",
+            "deductionHint": "Suçun gerçekleştiği şifreli depoya idari yöneticinin adım atmadığı nasıl doğrulanıyor?"
+          },
+          "c4": {
+            "text": "Monitörlerin ve telsizlerin bulunduğu kontrol merkezinde nöbet tutan görevliler, vitrinlerin altına konulan ağır mermer destek parçasının doğrudan bu güvenlik odasında devrildiğini ve orada yer aldığını yazılı beyanla doğruladı.",
+            "deductionHint": "Kamera monitörleriyle dolu kontrol merkezinde yer aldığı belgelenen ağır eşya hangisidir?"
+          },
+          "c5": {
+            "text": "Müze iç demirbaş kayıtları, Küratör Bey'in olay gecesi incelemek üzere Sergi Kaidesi ile bizzat temas kurduğunu ve bu nesneyle ilgilendiğini doğrulamaktadır.",
+            "deductionHint": "Küratör Bey'in kontrol merkezinde devrilen mermer kaideyle olan teması neyi gösterir?"
+          },
+          "c6": {
+            "text": "Güvenlik kamera kayıtları, Ziyaretçi Rehberi'nin fırtınalı gece boyunca sadece geniş Sergi Salonu içerisinde dolaştığını açıkça belgelemektedir.",
+            "deductionHint": "Rehberin gece boyunca vakit geçirdiği sergileme alanı hangisidir?"
+          }
+        },
+        "profile_additions": {
+          "s1": "Müzenin yıl sonu denetim raporunu eksiksiz teslim edip itibarını korumak istiyor.",
+          "s2": "Üzerinde çalıştığı tarihi parçanın zamanında ve kusursuz teslim edilmesini hedefliyor.",
+          "s3": "Gelecek ay açılacak yeni sergi turunun tanıtım sorumluluğunu üstlenmeyi amaçlıyor."
+        }
+      }
     }
   },
-  "campaign_spent": 0.21175675000000002
+  "campaign_spent": 0.17929900000000001
 }
