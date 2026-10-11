@@ -7970,7 +7970,7 @@
       }
     },
     "muzede-kayip-eser": {
-      "spent": 0.0494156,
+      "spent": 0.016160600000000004,
       "feedback": [
         {
           "error": "PATCH_CONTRACT: NEAR_READY_SCOPE: identity, roles, order, policy, profiles, story or unrelated facts changed"
@@ -11601,8 +11601,8 @@
       "model": "gemini-3.8-flash",
       "purpose": "judge",
       "day": "2026-10-11",
-      "status": "reserved",
-      "charged": 0.03724125,
+      "status": "completed",
+      "charged": 0.00398625,
       "reservation_failures": [
         {
           "case_id": "muzede-kayip-eser",
@@ -11620,8 +11620,35 @@
             "projected_amount": 0.03724125
           }
         }
-      ]
+      ],
+      "usage": {
+        "promptTokenCount": 3510,
+        "candidatesTokenCount": 361,
+        "totalTokenCount": 3871,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 3510
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "plan": {
+        "scores": {
+          "fairness": 5,
+          "clarity": 4,
+          "consistency": 4,
+          "originality": 3,
+          "engagement": 3
+        },
+        "issues": [
+          "c2 ipucunda 'penceretsiz' şeklinde yazım hatası bulunmaktadır.",
+          "c5 nolu bonus ipucunda 'ağır mermer destekle sergi alanında temas' ifadesi yer alırken, c4 nolu çekirdek ipucunda bu ağır destek ünitesinin devrilme sesinin 'güvenlik odası'ndan (monitörlerin bulunduğu oda) geldiği belirtilmiş; mekan aktarımı kafa karıştırıcı bir algı yaratmaktadır.",
+          "Giriş hikayesinde bekçinin kanlar içinde kaldığı söylenmesine karşın, beklenen çözüm silahı 'Uyutucu İğne'dir (w1). Kanlı yaralanma ile anestezik iğne arasındaki fiziksel uyumsuzluk oyuncunun mantık yürütmesini zedelemektedir."
+        ],
+        "summary": "Vaka dedüksiyon mekaniği açısından adil ve tek çözüme (s2 - w1 - l2) net bir şekilde ulaşılabiliyor. Ancak giriş hikayesindeki 'kanlar içinde yere yığılma' tasviri ile çözümdeki 'uyutucu iğne' arasındaki tıbbi/fiziksel tutarsızlık giderilmeli, c2'deki yazım hatası düzeltilmeli ve şüphelilere generic ifadeler yerine daha somut kişisel motivasyonlar eklenmelidir."
+      }
     }
   },
-  "campaign_spent": 0.20650825
+  "campaign_spent": 0.17325325000000003
 }
