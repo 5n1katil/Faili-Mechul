@@ -1,6 +1,23 @@
 import { PATCH_SCHEMA, SYSTEM_PROMPT, stableHash } from '../fm_case_qa_runner.mjs';
 
-export class Stop extends Error {}
+export class Stop extends Error {
+  constructor(message, providerError) { super(message); this.provider_error = providerError; }
+}
+export function providerErrorDetails(payload, httpStatus) {
+  let message = String(payload?.error?.message || '').replace(/[\x00-\x1f\x7f]/g, ' ');
+  const key = process.env.GEMINI_API_KEY;
+  if (key) message = message.split(key).join('[REDACTED]');
+  message = message.replace(/AIza[A-Za-z0-9_-]{20,}/g, '[REDACTED]')
+    .replace(/Bearer\s+\S+/gi, 'Bearer [REDACTED]')
+    .replace(/([?&](?:key|api_key)=)[^\s&"']+/gi, '$1[REDACTED]');
+  return { http_status: httpStatus,
+    status: /^[A-Z_]{1,64}$/.test(payload?.error?.status || '') ? payload.error.status : null,
+    message: message.slice(0, 1000) };
+}
+export function countsAsRepair(request) {
+  return request.purpose === 'repair' && !(request.status === 'failed' &&
+    request.charged === 0 && [400, 404].includes(request.http_status));
+}
 export async function modelPreflight(policy, { transport = fetch } = {}) {
   if (!process.env.GEMINI_API_KEY) throw new Stop('GEMINI_API_KEY_MISSING');
   const checked = [];
@@ -31,7 +48,7 @@ export function requestBody(policy, model, prompt, { schema = PATCH_SCHEMA, syst
     contents: [{ role: 'user', parts: [{ text: prompt }] }],
     generationConfig: {
       temperature: 1, maxOutputTokens: policy.sequential.max_output_tokens,
-      responseMimeType: 'application/json', responseJsonSchema: schema,
+      responseFormat: { text: { mimeType: 'APPLICATION_JSON', schema } },
       thinkingConfig: { thinkingLevel: policy.sequential.thinking_level }
     }
   };
@@ -58,7 +75,11 @@ export function reserveRequest(store, policy, run, caseId, model, body, purpose 
       day > policy.models.pricing_valid_through) throw new Stop('PRICING_REVIEW_REQUIRED');
   const daily = Object.values(store.state.requests).filter(r => r.day === day).reduce((s, r) => s + r.charged, 0);
   const projected = reserveCost(policy, model, body);
-  const repairs = Object.values(store.state.requests).filter(r => r.case_id === caseId && r.purpose === 'repair').length;
+  const caseRequests = Object.values(store.state.requests).filter(r => r.case_id === caseId);
+  if (!Number.isInteger(config.max_requests_per_case) || config.max_requests_per_case < 1)
+    throw new Stop('REQUEST_LIMIT_MISSING');
+  if (caseRequests.length >= config.max_requests_per_case) throw new Stop('CASE_REQUEST_LIMIT');
+  const repairs = caseRequests.filter(countsAsRepair).length;
   if (purpose === 'repair' && repairs >= config.max_repairs_per_case) throw new Stop('REPAIR_LIMIT');
   if (run.calls >= config.max_calls_per_execute || run.spent + projected > config.execute_budget_usd ||
       record.spent + projected > config.case_budget_usd || daily + projected > config.daily_budget_usd ||
@@ -102,9 +123,10 @@ export async function callPaid({ store, policy, run, caseId, model, prompt, purp
   }
   if (!http.ok) {
     const definitive = [400, 401, 403, 404, 429].includes(http.status);
+    const details = providerErrorDetails(payload, http.status);
     settleRequest(store, run, request, definitive ? 0 : request.projected,
-      { status: 'failed', http_status: http.status });
-    throw new Stop('GEMINI_HTTP_' + http.status);
+      { status: 'failed', http_status: http.status, provider_error: details });
+    throw new Stop('GEMINI_HTTP_' + http.status, details);
   }
   const usage = payload.usageMetadata;
   const validUsage = [usage?.promptTokenCount, usage?.candidatesTokenCount, usage?.thoughtsTokenCount ?? 0]
