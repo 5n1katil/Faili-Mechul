@@ -10,7 +10,7 @@ import { openStore } from './state.mjs';
 import { callPaid, Stop, modelPreflight, countsAsRepair } from './provider.mjs';
 import { mediaPreflight, reviewCandidate, certificateValid } from './review.mjs';
 import { TEXT_METHOD, TEXT_SYSTEM, textRepairPlan, textResponseSchema, textRepairPrompt,
-  validTextResponse, compileTextPatch, supportsTextRepair } from './text-repair.mjs';
+  validTextResponse, explainTextResponse, compileTextPatch, supportsTextRepair } from './text-repair.mjs';
 
 export function reopenTextQuarantine(snapshot, store) {
   if (snapshot.policy.sequential.verified_text_repair_limit !== 2) return [];
@@ -70,7 +70,7 @@ export async function repairOne(snapshot, entry, store, { allowAI = false, calle
           purpose: 'repair', repairMethod: method,
           ...(textPlan ? { schema: textResponseSchema(current, textPlan), system: TEXT_SYSTEM,
             prompt: textRepairPrompt(entry, current, textPlan, assessment, record.feedback),
-            validate: p => validTextResponse(current, textPlan, p) } : {
+            validate: p => validTextResponse(current, textPlan, p), diagnose: p => explainTextResponse(current, textPlan, p) } : {
             prompt: repairPrompt(entry, current, assessment, record.feedback),
             validate: p => p?.case_id === entry.id && Array.isArray(p.operations) }) });
         try {
@@ -83,7 +83,7 @@ export async function repairOne(snapshot, entry, store, { allowAI = false, calle
             result: compactReport(next.assessment.result, next.assessment.leakage),
             reason: 'No improvement or passed gate regressed' });
         } catch (error) {
-          if (!/PATCH|LOCKED_FIELD|IMMUTABLE|NEAR_READY|CONTRACT|TEXT_RESPONSE/.test(error.message)) throw error;
+          if (!/PATCH|LOCKED_FIELD|IMMUTABLE|NEAR_READY|CONTRACT|TEXT_RESPONSE|TEXT_CONTENT/.test(error.message)) throw error;
           run.attempts.push({ model, error: error.message });
           record.feedback.push({ error: error.message });
         }

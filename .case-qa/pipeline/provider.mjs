@@ -115,7 +115,7 @@ export function settleRequest(store, run, request, amount, extra) {
   Object.assign(ledger, extra, { charged: amount }); store.save();
 }
 export async function callPaid({ store, policy, run, caseId, model, prompt, purpose = 'repair',
-  schema, system, repairMethod = 'legacy_patch', validate = value => value && typeof value === 'object',
+  schema, system, repairMethod = 'legacy_patch', validate = value => value && typeof value === 'object', diagnose = () => [],
   transport = fetch, now = new Date() }) {
   const body = requestBody(policy, model, prompt, { schema, system });
   const key = requestKey(caseId, model, body, purpose);
@@ -156,11 +156,20 @@ export async function callPaid({ store, policy, run, caseId, model, prompt, purp
   try {
     if (candidate?.finishReason !== 'STOP') throw new Error('INCOMPLETE');
     const text = (candidate.content?.parts || []).filter(p => p.thought !== true).map(p => p.text || '').join('');
-    plan = JSON.parse(text);
+    try { plan = JSON.parse(text); } catch { throw new Error('INVALID_JSON'); }
     if (!validate(plan)) throw new Error('SCHEMA');
-  } catch {
-    settleRequest(store, run, request, actual, { status: 'invalid_response', usage });
-    throw new Stop('INVALID_MODEL_RESPONSE');
+  } catch (error) {
+    let fields = [];
+    if (error.message === 'SCHEMA') {
+      try { fields = diagnose(plan); } catch { fields = ['DIAGNOSTIC_UNAVAILABLE']; }
+    }
+    const details = { kind: ['SCHEMA','INCOMPLETE','INVALID_JSON'].includes(error.message) ? error.message : 'VALIDATOR_ERROR',
+      finish_reason: /^[A-Z_]{1,40}$/.test(candidate?.finishReason || '') ? candidate.finishReason : null,
+      validation_errors: (Array.isArray(fields) ? fields : []).slice(0, 12).map(value =>
+        providerErrorDetails({ error: { message: value } }, 0).message.slice(0, 160)),
+      story_word_count: typeof plan?.story === 'string' ? (plan.story.trim().match(/\S+/g) || []).length : null };
+    settleRequest(store, run, request, actual, { status: 'invalid_response', usage, response_error: details });
+    throw new Stop('INVALID_MODEL_RESPONSE', details);
   }
   settleRequest(store, run, request, actual, { status: 'completed', usage, plan });
   if (actual > request.projected) throw new Stop('COST_ESTIMATE_EXCEEDED');
