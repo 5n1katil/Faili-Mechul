@@ -6201,9 +6201,9 @@
       "candidate_hash": "c9e0b3c590ab3bd8f22e66b7c3895006dee7e9038055b86afab80ad09a811c5d",
       "best_score": 0,
       "failures": [
-        "INVALID_MODEL_RESPONSE"
+        "REPAIR_LIMIT"
       ],
-      "status": "INVALID_MODEL_RESPONSE"
+      "status": "quarantined"
     }
   },
   "requests": {
