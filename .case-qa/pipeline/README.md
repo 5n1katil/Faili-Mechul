@@ -47,7 +47,8 @@ Merge sonrası güncel main yeniden tarandığında geçerli içerik sertifikas�
 
 ## Harcama ve devam etme
 
-`policy.json`: en fazla 4 çağrı/çalıştırma; vaka ömrü boyunca 2 repair denemesi;
+`policy.json`: en fazla 4 üretim isteği/çalıştırma; vaka ömrü boyunca 2 repair denemesi
+ve toplam 6 üretim isteği (repair + review + HTTP reddi dahil);
 çalıştırma ve vaka başına $0.25, UTC gün başına $2, kampanya toplamı $10.
 Repair Gemini 3.5 Flash-Lite; oyuncu/editör Gemini 3.8 Flash kullanır. Fiyatlar
 2026-10-11 Google resmi sayfasından kontrol edilmiştir: milyon token başına
@@ -62,7 +63,18 @@ kullanan hesaplarla sınırlandırıyor (https://ai.google.dev/gemini-api/docs/d
 Yeni pilot, vaka içeriği göndermeden önce iki modelin metadata'sını GET ile kontrol
 eder; `generateContent` desteği veya çıkış kapasitesi eksikse üretim başlamaz.
 Bu kontrol başarılı üretim veya kota garantisi değildir. Eski 404 kaydı korunur;
-deneme/bütçe sayacı sıfırlanmaz. Hesapta yeni modellerin canlı üretimi henüz doğrulanmadı.
+deneme/bütçe sayacı sıfırlanmaz. Hesapta yeni modellerin metadata erişimi ikinci pilotta
+doğrulandı; üretim isteği HTTP 400 döndü ve içerik üretilmedi. Bu ikinci reddin kesin
+nedeni eski raporda hata açıklaması saklanmadığı için bilinmiyor. Güncel generateContent
+sözleşmesindeki `responseFormat.text` kullanılır (https://ai.google.dev/api/generate-content).
+Bu uyarlama tek başına canlı başarının kanıtı değildir. Yeni HTTP retlerinde sağlayıcı
+durumu ve anahtarları temizlenmiş, 1000 karakterle sınırlı hata açıklaması rapora ve
+kalıcı kayda eklenir; otomatik tekrar yapılmaz.
+
+Yalnızca `failed`, HTTP 400/404 ve kayıtlı maliyet $0 koşullarının tamamını taşıyan
+istekler gerçek repair sayısına dahil edilmez. Geçmiş kayıtlar silinmez: bu retler
+vaka başına toplam 6 istek sınırına dahildir ve aynı request hash tekrar gönderilemez.
+Belirsiz istek, geçersiz yanıt, auth/kota ve diğer HTTP hataları repair sınırını tüketir.
 
 Maliyet sağlayıcı faturası değildir: yapılandırılmış oranlarla token kullanımı
 (thinking dahil), kullanım bilinmiyorsa muhafazakâr rezervasyon hesaplanır. GitHub

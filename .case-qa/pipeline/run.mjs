@@ -14,6 +14,7 @@ export async function repairOne(snapshot, entry, store, { allowAI = false, calle
   const state = store.state, existing = state.cases[entry.id];
   const changed = existing?.source_hash !== entry.sourceHash || existing?.simulator_hash !== snapshot.simulatorHash;
   const record = state.cases[entry.id] ||= { spent: 0 };
+  delete record.provider_error;
   const resumed = restoreBest(snapshot, entry, record);
   let current = resumed.candidate, assessment = resumed.assessment;
   if (changed) { record.feedback = []; delete record.review; }
@@ -66,11 +67,13 @@ export async function repairOne(snapshot, entry, store, { allowAI = false, calle
     }
   } catch (error) {
     record.failures = [error.message];
-    if (error instanceof Stop) status = error.message === 'REPAIR_LIMIT' ? 'quarantined' : error.message;
+    if (error.provider_error) record.provider_error = error.provider_error;
+    if (error instanceof Stop) status = ['REPAIR_LIMIT', 'CASE_REQUEST_LIMIT'].includes(error.message) ? 'quarantined' : error.message;
     else { record.status = 'infrastructure_error'; error.pipeline_run = run; persist(); throw error; }
   }
   record.status = status; persist();
-  return { candidate: current, assessment, run, status, review, failures: record.failures || [] };
+  return { candidate: current, assessment, run, status, review, failures: record.failures || [],
+    provider_error: record.provider_error || null };
 }
 export function campaignRows(snapshot) {
   return scan(snapshot).map(row => {
@@ -112,7 +115,7 @@ export async function main() {
       Object.assign(report, { status: result.status, best_score: result.assessment.result.score,
         api_calls: result.run.calls, execute_cost_usd: result.run.spent,
         campaign_cost_usd: store.state.campaign_spent, attempts: result.run.attempts,
-        failures: result.failures, resumed_score: result.run.resumed_score });
+        failures: result.failures, provider_error: result.provider_error, resumed_score: result.run.resumed_score });
       // Rejected candidates are retained for diagnosis but never staged.
       write(path.join(output, 'candidate.json'), result.candidate);
       if (result.status === 'ready_for_gates' && result.review?.passed) {

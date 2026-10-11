@@ -7,7 +7,7 @@ import { execFileSync } from 'node:child_process';
 import { read, write, clone, loadSnapshot, scan, selectNext, assess, guardedPatch, better,
   restoreBest, stageCandidate } from './core.mjs';
 import { emptyState, validateState, openStore } from './state.mjs';
-import { reserveRequest, requestBody, callPaid, Stop, modelPreflight } from './provider.mjs';
+import { reserveRequest, requestBody, callPaid, Stop, modelPreflight, providerErrorDetails } from './provider.mjs';
 import { assertDraftPolicy } from './publish-draft.mjs';
 import { playerView, playerPass, judgePass, reviewCandidate, mediaPreflight, certificateValid } from './review.mjs';
 import { repairOne, campaignRows } from './run.mjs';
@@ -204,6 +204,62 @@ try {
       prompt: 'reject', transport: async () => { calls++; return { ok: false, status: 404, json: async () => ({}) }; } }), /GEMINI_HTTP_404/);
     assert.equal(calls, 1); assert.equal(store.state.campaign_spent, 0);
   });
+  await test('HTTP rejection retains a redacted diagnosis and blocks the identical request', async () => {
+    const store = storeFor(); let calls = 0;
+    const args = { store, policy, run: runFor(), caseId: 'test', model: policy.models.first_pass,
+      prompt: 'diagnosis', transport: async () => {
+        calls++; return { ok: false, status: 400, json: async () => ({ error: {
+          status: 'INVALID_ARGUMENT', message: 'Unknown field; key=' + process.env.GEMINI_API_KEY
+        } }) };
+      } };
+    await assert.rejects(callPaid(args), error => error.provider_error.status === 'INVALID_ARGUMENT' &&
+      !error.provider_error.message.includes(process.env.GEMINI_API_KEY));
+    const record = Object.values(store.state.requests)[0];
+    assert.equal(record.provider_error.http_status, 400); assert.equal(record.charged, 0);
+    await assert.rejects(callPaid(args), /REPEATED_OR_UNCERTAIN_REQUEST/);
+    assert.equal(calls, 1);
+    const result = await repairOne(snapshot, entry, storeFor(entry.id), { allowAI: true,
+      caller: async () => { throw new Stop('GEMINI_HTTP_400', record.provider_error); } });
+    assert.deepEqual(result.provider_error, record.provider_error);
+    const details = providerErrorDetails({ error: { message: 'Bearer token ?key=other-secret ' + 'x'.repeat(2000) } }, 400);
+    assert.ok(!details.message.includes('token')); assert.ok(!details.message.includes('other-secret'));
+    assert.ok(details.message.length <= 1000);
+  });
+  await test('zero-cost 400/404 rejections preserve history while two actual repairs remain bounded', async () => {
+    const store = storeFor();
+    for (const status of [400, 404]) store.state.requests['historical-' + status] = {
+      case_id: 'test', purpose: 'repair', day: '2026-10-11', status: 'failed', charged: 0, http_status: status
+    };
+    validateState(store.state);
+    const call = (prompt, purpose = 'repair') => callPaid({ store, policy, run: runFor(), caseId: 'test',
+      model: policy.models.first_pass, prompt, purpose, transport: async () => response('{"answer":"ok"}') });
+    await call('first'); await call('second');
+    await assert.rejects(call('third'), /REPAIR_LIMIT/);
+    await call('blind-player', 'player'); await call('editor', 'judge');
+    assert.equal(Object.keys(store.state.requests).length, 6);
+    await assert.rejects(call('extra', 'judge'), /CASE_REQUEST_LIMIT/);
+    assert.equal(store.state.requests['historical-400'].charged, 0);
+    assert.equal(store.state.requests['historical-404'].http_status, 404);
+    const blocked = storeFor(entry.id);
+    for (let i = 0; i < 6; i++) blocked.state.requests['rejected-' + i] = {
+      case_id: entry.id, purpose: 'repair', day: '2026-10-11', status: 'failed', charged: 0, http_status: 400
+    };
+    const result = await repairOne(snapshot, entry, blocked, { allowAI: true,
+      caller: args => callPaid({ ...args, transport: () => { throw new Error('UNEXPECTED_TRANSPORT'); } }) });
+    assert.equal(result.status, 'quarantined'); assert.deepEqual(result.failures, ['CASE_REQUEST_LIMIT']);
+    assert.equal(result.run.calls, 0);
+  });
+  await test('uncertain, invalid, auth and quota failures still consume repair allowance', () => {
+    for (const failure of [{ status: 'reserved', charged: 0 }, { status: 'invalid_response', charged: 0 },
+      ...[401, 403, 429, 500].map(http_status => ({ status: 'failed', charged: 0, http_status }))]) {
+      const store = storeFor();
+      for (let i = 0; i < 2; i++) store.state.requests['previous-' + i] = {
+        case_id: 'test', purpose: 'repair', day: '2026-10-11', ...failure
+      };
+      assert.throws(() => reserveRequest(store, policy, runFor(), 'test', policy.models.first_pass,
+        requestBody(policy, policy.models.first_pass, 'next')), /REPAIR_LIMIT/);
+    }
+  });
   await test('model preflight checks both exact models using GET without case content', async () => {
     const urls = [];
     const result = await modelPreflight(policy, { transport: async (url, options) => {
@@ -233,6 +289,10 @@ try {
   await test('Gemini 3 uses one thinking setting; expired pricing stops before reservation', () => {
     const body = requestBody(policy, policy.models.first_pass, 'bounded');
     assert.deepEqual(body.generationConfig.thinkingConfig, { thinkingLevel: 'LOW' });
+    assert.equal(body.generationConfig.responseFormat.text.mimeType, 'APPLICATION_JSON');
+    assert.equal(body.generationConfig.responseFormat.text.schema.type, 'object');
+    assert.equal(body.generationConfig.responseMimeType, undefined);
+    assert.equal(body.generationConfig.responseJsonSchema, undefined);
     const store = storeFor(), run = runFor();
     assert.throws(() => reserveRequest(store, policy, run, 'test', policy.models.first_pass,
       body, 'repair', new Date('2027-01-01T00:00:00Z')), /PRICING_REVIEW_REQUIRED/);
