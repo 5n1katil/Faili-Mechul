@@ -6502,7 +6502,7 @@
       "status": "quarantined"
     },
     "pazar-yerinde-supheli-olum": {
-      "spent": 0.0389285,
+      "spent": 0.011845249999999998,
       "feedback": [],
       "source_hash": "d4a6a5003e9f00e091ed0db4768d29393539ba914af388dd06d6aca3f1fdcad2",
       "simulator_hash": "04352c0a4ce07097cb752a1980b144fa00722e78",
@@ -9854,9 +9854,49 @@
       "model": "gemini-3.8-flash",
       "purpose": "player",
       "day": "2026-10-11",
-      "status": "reserved",
-      "charged": 0.0293775
+      "status": "completed",
+      "charged": 0.00229425,
+      "usage": {
+        "promptTokenCount": 1039,
+        "candidatesTokenCount": 404,
+        "totalTokenCount": 1443,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 1039
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "plan": {
+        "unique_solution": true,
+        "solution": {
+          "suspectId": "s3",
+          "weaponId": "w1",
+          "locationId": "l1"
+        },
+        "confidence": 100,
+        "evidence": [
+          {
+            "clue_id": "c3",
+            "quote": "Halit Usta'nın can verdiği asıl ölüm noktasının tepsilerin dizildiği ve damlaların aktığı ana satış noktası olduğunu kesinleştirdi. Eşzamanlı zabıta kayıtları ise bastonlu yaşlı kadının o esnada bu ölüm noktasında bulunmadığını doğruladı."
+          },
+          {
+            "clue_id": "c2",
+            "quote": "ağır yükleri taşımaktan yorgun düşmüş uykusuz gencin, tatlı tepsilerinin dizildiği ana satış noktasında kritik zaman dilimi içinde hiç bulunmadığını ve oraya yaklaşmadığını mühürlü raporla kanıtladı."
+          },
+          {
+            "clue_id": "c1",
+            "quote": "sabah erken saatlerde yük indirme maksadıyla kullanılan ağaçlık açık alanda yürüttüğü kimyasal testler, zemin temizliğinde yararlanılan keskin kokulu endüstriyel çözücünün o alana döküldüğünü ve orada bulundurulduğunu kesin olarak belirledi."
+          },
+          {
+            "clue_id": "c4",
+            "quote": "bakır güğümde kaynatılmış berrak ve yoğun şekerli geleneksel sıvının kritik saatlerde bu geçitte bekletildiğini tutanak altına alarak durumu bildirdi."
+          }
+        ],
+        "issues": []
+      }
     }
   },
-  "campaign_spent": 0.17028815000000003
+  "campaign_spent": 0.14320490000000002
 }
