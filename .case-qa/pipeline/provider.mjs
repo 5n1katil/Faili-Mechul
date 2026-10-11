@@ -12,7 +12,12 @@ export function providerErrorDetails(payload, httpStatus) {
     .replace(/([?&](?:key|api_key)=)[^\s&"']+/gi, '$1[REDACTED]');
   return { http_status: httpStatus,
     status: /^[A-Z_]{1,64}$/.test(payload?.error?.status || '') ? payload.error.status : null,
-    message: message.slice(0, 1000) };
+    message: message.slice(0, 1000),
+    field_violations: (payload?.error?.details || []).slice(0, 5).flatMap(d =>
+      (Array.isArray(d.fieldViolations) ? d.fieldViolations : []).slice(0, 5).map(v => ({
+        field: /^[a-zA-Z0-9_.\[\]-]{1,200}$/.test(v.field || '') ? v.field : null,
+        description: providerErrorDetails({ error: { message: v.description } }, httpStatus).message
+      }))) };
 }
 export function countsAsRepair(request) {
   return request.purpose === 'repair' && !(request.status === 'failed' &&

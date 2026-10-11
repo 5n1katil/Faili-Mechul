@@ -15,7 +15,7 @@ on:
       mode:
         description: audit = free; pilot = one paid case + draft PR; certify = candidate CI
         type: choice
-        options: [audit, pilot, certify]
+        options: [audit, pilot, certify, diagnose]
         default: audit
       case_id:
         description: Optional explicit case; empty resumes the queue
@@ -31,12 +31,12 @@ permissions:
   contents: read
 
 concurrency:
-  group: case-pipeline-${{ inputs.mode == 'pilot' && 'paid' || github.ref }}
+  group: case-pipeline-${{ (inputs.mode == 'pilot' || inputs.mode == 'diagnose') && 'paid' || github.ref }}
   cancel-in-progress: false
 
 jobs:
   safety:
-    if: ${{ github.event_name == 'pull_request' || inputs.mode != 'pilot' }}
+    if: ${{ github.event_name == 'pull_request' || (inputs.mode != 'pilot' && inputs.mode != 'diagnose') }}
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:
@@ -78,6 +78,40 @@ jobs:
         with:
           name: case-pipeline-safety-${{ github.run_id }}
           path: .case-qa-output
+          include-hidden-files: true
+
+  diagnose:
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.mode == 'diagnose' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Require deployed main before provider diagnosis
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          test -n "$GEMINI_API_KEY"
+          test "$(git rev-parse HEAD)" = "$(gh api "repos/$GITHUB_REPOSITORY/git/ref/heads/main" --jq '.object.sha')"
+      - name: Offline safety before provider diagnosis
+        run: node .case-qa/pipeline/test.mjs
+      - name: Four tiny staged checks; no game data; maximum USD 0.03
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: node .case-qa/pipeline/diagnose.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: provider-diagnostic-${{ github.run_id }}
+          path: .case-qa-output/provider-diagnostic
           include-hidden-files: true
 
   pilot:
