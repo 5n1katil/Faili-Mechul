@@ -21,6 +21,7 @@ import { campaign } from './campaign.mjs';
 import { TEXT_METHOD, TEXT_SYSTEM, supportsTextRepair, textRepairPlan, verifyTextPlan, enumerateTextGrid,
   compileTextPatch, textResponseSchema, validTextResponse, explainTextResponse, textRepairPrompt } from './text-repair.mjs';
 import { verifiedTextResponses } from '../fixtures/verified-text-responses.mjs';
+import { evaluatePreclueLeakage, n8nGuardSource } from '../case_qa_preclue_guard.mjs';
 
 globalThis.fetch = async () => { throw new Error('TEST_NETWORK_FORBIDDEN'); };
 const policy = read('.case-qa/pipeline/policy.json'), root = process.cwd();
@@ -45,6 +46,50 @@ try {
     assert.ok(campaignRows(snapshot).every(r => !r.content_locked || r.passed));
   });
   const original = snapshot.entries.find(e => e.id === 'termal-otelde-supheli-vaka');
+  await test('live verified-text failures expose actual length and every rejected quality/profile finding to the next writer', () => {
+    const live = read('.case-qa/fixtures/failed-text-campaign-38156344466.json');
+    assert.equal(live.requests.length, 5);
+    for (const request of live.requests) {
+      const entry = snapshot.entries.find(e => e.id === request.case_id), candidate = entry.candidate;
+      const plan = textRepairPlan(snapshot, entry, candidate), baseline = assess(snapshot, entry, candidate);
+      if (request.model === policy.models.first_pass || request.case_id === 'universitede-karanlik-sir') {
+        assert.throws(() => compileTextPatch(candidate, plan, request.plan), /TEXT_CONTENT:story:MIN_60_WORDS/);
+      } else if (request.case_id === 'bogazda-kayip-elmas') {
+        assert.throws(() => compileTextPatch(candidate, plan, request.plan), /MIN_12_WORDS:ACTUAL_9/);
+      } else {
+        const next = guardedPatch(snapshot, entry, candidate, compileTextPatch(candidate, plan, request.plan), baseline);
+        assert.equal(next.assessment.result.score, 100);
+        assert.equal(next.assessment.passed, false); assert.equal(next.assessment.leakage.passed, true);
+        const quality = next.assessment.result.qualityFindings;
+        assert.ok(quality.length > 0);
+        const feedback = { score: 100, result: { blockers: [], quality_findings: quality,
+          leakage: { findings: [{ reasons: ['axis_name_profile_overlap:dukkan'] }], required_actions: ['rewrite_profiles'] }, gates: next.assessment.result.gates } };
+        const prompt = textRepairPrompt(entry, candidate, plan, baseline, [feedback]);
+        assert.ok(prompt.includes(JSON.stringify(quality[0]).slice(1, -1)));
+        assert.match(prompt, /axis_name_profile_overlap:dukkan/);
+        assert.match(prompt, /20-30 Turkish words/);
+        assert.match(prompt, /not ANY exact listed entity name/);
+        assert.equal(certificateValid(snapshot, entry, next.candidate, null), false);
+      }
+    }
+  });
+  await test('context overlap is not a unique profile assignment; exact ownership, names and distinctive single-owner cues stay blocked', () => {
+    const live = read('.case-qa/fixtures/failed-text-campaign-38156344466.json');
+    const response = live.requests.find(r => r.case_id === 'kapalicarsida-gizem' && r.model === policy.models.repair).plan;
+    const entry = snapshot.entries.find(e => e.id === response.case_id), candidate = clone(entry.candidate);
+    candidate.suspects.forEach(s => s.description = response.suspect_descriptions[s.id]);
+    assert.equal(evaluatePreclueLeakage(candidate).passed, true);
+    const generated = new Function(n8nGuardSource + '\nreturn fmPreclueLeakage;')();
+    assert.deepEqual(generated(candidate), evaluatePreclueLeakage(candidate));
+    candidate.suspects[1].description += ' Yalnız Dükkan İçi alanında bulunur.';
+    assert.equal(evaluatePreclueLeakage(candidate).passed, false);
+    candidate.locations[0].name = 'Selma Teyze Odası';
+    assert.ok(evaluatePreclueLeakage(candidate).findings.some(f => f.direct_owner_binding));
+    const distinctive = { suspects: [{ id: 's', name: 'Ada', description: 'Özgün burgulu gümüş zemberek ustası.' },
+      { id: 't', name: 'Bora', description: 'Kırmızı ceketli sessiz konuk.' }], weapons: [{ id: 'w', name: 'Burgulu Zemberek', description: 'Gümüş zemberek.' }], locations: [] };
+    assert.equal(evaluatePreclueLeakage(distinctive).passed, false);
+    assert.deepEqual(generated(distinctive), evaluatePreclueLeakage(distinctive));
+  });
   const failedCampaign = read('.case-qa/fixtures/failed-text-campaign-38151436437.json');
   await test('actual failed live text plans reproduce rejection offline; no provider content is published', () => {
     for (const id of Object.keys(verifiedTextResponses)) {

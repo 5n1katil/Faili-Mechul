@@ -97,11 +97,27 @@ function nameOwnsAxis(suspect, axisEntity) {
   return aliases.identityTokens.some((alias) => axisName.split(' ').slice(0, 2).includes(alias));
 }
 
-function buildPairFinding(caseId, suspect, axisKind, axisEntity) {
+// A token shared by multiple people's profiles is not a distinctive identity
+// cue. Keep full axis names and explicit ownership checks independent of this.
+function sharedProfileContext(suspects) {
+  const counts = new Map();
+  const profiles = suspects.map(suspect => tokenSet(visibleEntityText(suspect), suspectAliases(suspect).roots));
+  // A possessive plus a case suffix can leave one inflection after rootToken's
+  // single pass (çarşının -> çarşı, while çarşı -> çarş).
+  for (const profile of profiles) for (const token of new Set([...profile].map(rootToken)))
+    counts.set(token, (counts.get(token) || 0) + 1);
+  return new Set(profiles.flatMap(profile => [...profile]).filter(token => counts.get(rootToken(token)) >= 2));
+}
+
+function buildPairFinding(caseId, suspect, axisKind, axisEntity, context = new Set()) {
   const aliases = suspectAliases(suspect);
   const suspectProfile = visibleEntityText(suspect);
   const targetText = axisText(axisEntity);
-  const profileTokens = tokenSet(suspectProfile, aliases.roots);
+  const excluded = new Set([...aliases.roots, ...context]);
+  // "Between shops" describes multiple places, not an assignment to one card.
+  // Do not suppress an exact full name or other distinctive matching evidence.
+  for (const match of norm(suspectProfile).matchAll(/\b([a-zçğıöşü]+(?:lar|ler)) aras[iı]nda\b/g)) excluded.add(rootToken(match[1]));
+  const profileTokens = tokenSet(suspectProfile, excluded);
   const targetTokens = tokenSet(targetText, aliases.roots);
   const axisNameTokens = tokenSet(axisEntity?.name, aliases.roots);
   const overlap = intersection(profileTokens, targetTokens);
@@ -169,14 +185,15 @@ export function evaluatePreclueLeakage(caseData) {
   const suspects = Array.isArray(caseData?.suspects) ? caseData.suspects : [];
   const weapons = Array.isArray(caseData?.weapons) ? caseData.weapons : [];
   const locations = Array.isArray(caseData?.locations) ? caseData.locations : [];
+  const context = sharedProfileContext(suspects);
   const findings = [];
   for (const suspect of suspects) {
     for (const weapon of weapons) {
-      const finding = buildPairFinding(caseId, suspect, 'weapon', weapon);
+      const finding = buildPairFinding(caseId, suspect, 'weapon', weapon, context);
       if (finding) findings.push(finding);
     }
     for (const location of locations) {
-      const finding = buildPairFinding(caseId, suspect, 'location', location);
+      const finding = buildPairFinding(caseId, suspect, 'location', location, context);
       if (finding) findings.push(finding);
     }
   }
@@ -256,6 +273,7 @@ export const n8nGuardSource = [
   axisText.toString(),
   suspectAliases.toString(),
   nameOwnsAxis.toString(),
+  sharedProfileContext.toString(),
   buildPairFinding.toString(),
   uniqueDirectMapping.toString(),
   evaluatePreclueLeakage.toString().replace('function evaluatePreclueLeakage', 'function fmPreclueLeakage')
