@@ -15,6 +15,7 @@ import { validateNewCase, previewNewCase } from './intake.mjs';
 import { repairTermal } from '../fixtures/termal_reviewed_repair.mjs';
 import { stableHash, parseStandard } from '../fm_case_qa_runner.mjs';
 import { api } from './github.mjs';
+import { diagnose, diagnosticStages } from './diagnose.mjs';
 
 globalThis.fetch = async () => { throw new Error('TEST_NETWORK_FORBIDDEN'); };
 const policy = read('.case-qa/pipeline/policy.json'), root = process.cwd();
@@ -302,6 +303,59 @@ try {
   await test('corrupt/reset spending ledger is rejected', () => {
     assert.throws(() => validateState({ ...emptyState(), campaign_spent: 1 }), /LEDGER/);
     assert.throws(() => validateState({ ...emptyState(), requests: { bad: { charged: 1, case_id: 'unknown' } } }), /LEDGER/);
+  });
+  await test('diagnosis isolates four tiny stages and cached success adds no generation cost', async () => {
+    const before = [policy.source.standard_path, policy.source.premium_path, policy.source.sidecar_path]
+      .map(p => stableHash(fs.readFileSync(p, 'utf8')));
+    const store = { state: emptyState(), save() { validateState(this.state); } }; let calls = 0;
+    const stages = diagnosticStages(policy);
+    assert.equal(stages[0].body.generationConfig.responseFormat, undefined);
+    assert.equal(stages[1].body.generationConfig.thinkingConfig, undefined);
+    assert.equal(stages[2].body.generationConfig.thinkingConfig.thinkingLevel, 'LOW');
+    assert.ok(stages.every(s => s.body.generationConfig.maxOutputTokens === 1024));
+    const args = { preflight: async () => ({ checked: ['offline'] }), transport: async (url, options) => {
+      calls++; assert.ok(!options.body.includes(entry.id));
+      return response('{"answer":"ok"}');
+    } };
+    const result = await diagnose(store, policy, args);
+    assert.equal(result.status, 'provider_verified'); assert.equal(calls, 4);
+    assert.ok(result.execute_cost_usd <= 0.03); assert.equal(result.stages.length, 4);
+    const cached = await diagnose(store, policy, args);
+    assert.equal(cached.api_calls, 0); assert.equal(cached.execute_cost_usd, 0); assert.equal(calls, 4);
+    assert.deepEqual(before, [policy.source.standard_path, policy.source.premium_path, policy.source.sidecar_path]
+      .map(p => stableHash(fs.readFileSync(p, 'utf8'))));
+  });
+  await test('diagnosis stops at the first failing feature, preserving billed work and no automatic retry', async () => {
+    const store = { state: emptyState(), save() { validateState(this.state); } }; let calls = 0;
+    const options = { preflight: async () => ({}), transport: async () => {
+      calls++;
+      return calls === 1 ? response('basic answer') : { ok: false, status: 400, json: async () => ({ error: {
+        status: 'INVALID_ARGUMENT', message: 'bad schema', details: [{ fieldViolations: [{
+          field: 'generationConfig.responseFormat', description: 'Unknown field ' + process.env.GEMINI_API_KEY
+        }] }]
+      } }) };
+    } };
+    const result = await diagnose(store, policy, options);
+    assert.equal(result.status, 'GEMINI_HTTP_400'); assert.equal(result.active_stage, 'lite_json');
+    assert.equal(calls, 2); assert.ok(result.execute_cost_usd > 0);
+    assert.equal(result.provider_error.field_violations[0].field, 'generationConfig.responseFormat');
+    assert.ok(!JSON.stringify(result).includes(process.env.GEMINI_API_KEY));
+    const resumed = await diagnose(store, policy, options);
+    assert.equal(resumed.status, 'REPEATED_OR_UNCERTAIN_REQUEST'); assert.equal(calls, 2);
+    assert.equal(resumed.api_calls, 0);
+  });
+  await test('diagnosis respects campaign budget and preserves uncertain reservations', async () => {
+    const blocked = clone(policy); blocked.sequential.campaign_budget_usd = 0;
+    const makeStore = () => ({ state: emptyState(), save() { validateState(this.state); } });
+    const zero = await diagnose(makeStore(), blocked, { preflight: async () => ({}),
+      transport: async () => { throw new Error('UNEXPECTED_TRANSPORT'); } });
+    assert.equal(zero.status, 'BUDGET_STOP'); assert.equal(zero.api_calls, 0);
+    const store = makeStore(); let calls = 0;
+    const options = { preflight: async () => ({}), transport: async () => { calls++; throw new Error('timeout'); } };
+    const uncertain = await diagnose(store, policy, options);
+    assert.equal(uncertain.status, 'TRANSPORT_UNCERTAIN'); assert.ok(uncertain.execute_cost_usd > 0);
+    const resumed = await diagnose(store, policy, options);
+    assert.equal(resumed.status, 'REPEATED_OR_UNCERTAIN_REQUEST'); assert.equal(calls, 1);
   });
   await test('source projection changes only one reviewed case and survives re-import', () => {
     const dir = path.join(temporary, 'projection');

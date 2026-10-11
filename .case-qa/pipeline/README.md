@@ -90,6 +90,18 @@ Kayıt dalını silmeyin veya force-push yapmayın; kayıp kayıt bütçe güven
 
 ## Sıralı uygulama planı
 
+Üretimden önce açıklamasız HTTP 400 tekrar ederse yeni vaka pilotu başlatmayın.
+`diagnose` modu yalnızca kısa bir bağlantı metni gönderir: Lite temel istek → JSON
+biçimi → thinking ayarı → reviewer tam ayarı. İlk hatada durur; aynı başarısız veya
+belirsiz istek tekrarlanmaz. Başarılı aşamalar kalıcı kayıttan kullanılır. En fazla
+4 üretim isteği, istek başına 1024 output token ve teşhis kaydı/çalıştırma başına
+$0.03 sınırı vardır; kampanya ve UTC günlük bütçeden düşer. Oyun vakası göndermez,
+oyun dosyası veya PR oluşturmaz. Yalnızca maliyet dalına checkpoint yazar.
+`provider_verified` vaka kalitesini veya tam vaka payload uyumunu kanıtlamaz.
+`case_id`, base/head SHA bu modda kullanılmaz. Sonuç artifact/log'da
+`fm_provider_diagnostic_v1` raporudur. Sağlayıcının fieldViolations alanları da
+anahtarları temizlenmiş biçimde saklanır.
+
 1. **Altyapı PR'ı:** ücretsiz CI ve kod incelemesi; main'e birleştirme ayrı karardır.
    Bu değişiklik üretim vakası/avatar dosyası değiştirmez.
 2. **Tek vaka canlı kabul:** altyapı main'deyken Actions'ın PR açma izni ve
