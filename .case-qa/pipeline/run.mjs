@@ -14,6 +14,7 @@ import { EDITORIAL_REVISION_VERSION, EDITORIAL_REVISION_SYSTEM, editorialRevisio
   editorialRevisionPrompt, compileEditorialRevision } from './editorial.mjs';
 import { REVIEW_VERSION } from './quality-contract.mjs';
 import { HINT_SYSTEM, hintOnly, hintSchema, hintPrompt, validHints, compileHints, recoverHintCleanup } from './hint-cleanup.mjs';
+import { reconcileKnownUnsent } from './reservation-recovery.mjs';
 import { TEXT_METHOD, TEXT_SYSTEM, textRepairPlan, textResponseSchema, textRepairPrompt,
   validTextResponse, explainTextResponse, compileTextPatch, supportsTextRepair } from './text-repair.mjs';
 
@@ -37,6 +38,7 @@ export function reopenTextQuarantine(snapshot, store) {
 }
 
 export async function repairOne(snapshot, entry, store, { allowAI = false, caller = callPaid } = {}) {
+  const recoveredReservation = allowAI && reconcileKnownUnsent(snapshot, entry, store);
   const state = store.state, existing = state.cases[entry.id];
   const changed = existing?.source_hash !== entry.sourceHash || existing?.simulator_hash !== snapshot.simulatorHash;
   const record = state.cases[entry.id] ||= { spent: 0 };
@@ -55,6 +57,8 @@ export async function repairOne(snapshot, entry, store, { allowAI = false, calle
     store.save();
   };
   const run = { calls: 0, spent: 0, attempts: [], resumed_score: assessment.result.score };
+  if (recoveredReservation) run.attempts.push({ purpose: 'reservation_recovery', transport_not_started: true,
+    source_run: 38168144752 });
   if (recoveredHints) run.attempts.push({ purpose: 'hint_cleanup', cached: true, score: assessment.result.score,
     retained: true, request_key: recoveredHints.request_key });
   if (recoveredEditorial) run.attempts.push({ purpose: 'editorial', cached: true, score: assessment.result.score,

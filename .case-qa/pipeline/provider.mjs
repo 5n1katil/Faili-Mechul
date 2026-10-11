@@ -72,11 +72,12 @@ export function reserveCost(policy, model, body) {
 export function requestKey(caseId, model, body, purpose) {
   return stableHash({ version: 1, provider: 'gemini', caseId, model, purpose, body });
 }
+const unsent = request => request?.status === 'failed' && request.transport_not_started === true && request.charged === 0;
 export function reserveRequest(store, policy, run, caseId, model, body, purpose = 'repair', now = new Date(), repairMethod = 'legacy_patch') {
   const key = requestKey(caseId, model, body, purpose);
   const previous = store.state.requests[key];
   if (previous?.status === 'completed' && previous.plan) return { key, cached: previous.plan };
-  if (previous) throw new Stop('REPEATED_OR_UNCERTAIN_REQUEST');
+  if (previous && !unsent(previous)) throw new Stop('REPEATED_OR_UNCERTAIN_REQUEST');
   const config = policy.sequential, record = store.state.cases[caseId];
   if (!record) throw new Stop('CASE_LEDGER_MISSING');
   const day = now.toISOString().slice(0, 10);
@@ -84,7 +85,8 @@ export function reserveRequest(store, policy, run, caseId, model, body, purpose 
       day > policy.models.pricing_valid_through) throw new Stop('PRICING_REVIEW_REQUIRED');
   const daily = Object.values(store.state.requests).filter(r => r.day === day).reduce((s, r) => s + r.charged, 0);
   const projected = reserveCost(policy, model, body);
-  const caseRequests = Object.values(store.state.requests).filter(r => r.case_id === caseId);
+  const caseRequests = Object.entries(store.state.requests).filter(([k,r]) => r.case_id === caseId &&
+    !(k === key && unsent(r))).map(([,r]) => r);
   if (!Number.isInteger(config.max_requests_per_case) || config.max_requests_per_case < 1)
     throw new Stop('REQUEST_LIMIT_MISSING');
   if (caseRequests.length >= config.max_requests_per_case) throw new Stop('CASE_REQUEST_LIMIT');
@@ -103,10 +105,21 @@ export function reserveRequest(store, policy, run, caseId, model, body, purpose 
       record.spent + projected > config.case_budget_usd || daily + projected > config.daily_budget_usd ||
       store.state.campaign_spent + projected > config.campaign_budget_usd) throw new Stop('BUDGET_STOP');
   store.state.requests[key] = { case_id: caseId, model, purpose, day, status: 'reserved', charged: projected,
+    ...(previous ? { reservation_failures: [...(previous.reservation_failures || []),
+      Object.fromEntries(Object.entries(previous).filter(([k]) => k !== 'reservation_failures'))] } : {}),
     ...(purpose === 'repair' ? { repair_method: repairMethod } : {}) };
   record.spent += projected; store.state.campaign_spent += projected;
   run.spent += projected; run.calls++;
-  store.save(); // A failed durable reservation prevents transport.
+  try { store.save(); } // A failed durable reservation prevents transport.
+  catch (error) {
+    // Provider transport has not started. Release only the projected reserve;
+    // keep the failure history. Actual or uncertain API charges are untouched.
+    record.spent -= projected; store.state.campaign_spent -= projected; run.spent -= projected;
+    Object.assign(store.state.requests[key], { status: 'failed', charged: 0,
+      transport_not_started: true, reservation_error: 'DURABLE_RESERVATION_FAILED' });
+    try { store.save(); } catch {}
+    throw new Stop('RESERVATION_NOT_DURABLE');
+  }
   return { key, projected };
 }
 export function settleRequest(store, run, request, amount, extra) {
@@ -126,7 +139,7 @@ export async function callPaid({ store, policy, run, caseId, model, prompt, purp
     if (!validate(previous.plan)) throw new Stop('INVALID_CACHED_RESPONSE');
     return { plan: previous.plan, cached: true };
   }
-  if (previous) throw new Stop('REPEATED_OR_UNCERTAIN_REQUEST');
+  if (previous && !unsent(previous)) throw new Stop('REPEATED_OR_UNCERTAIN_REQUEST');
   if (!process.env.GEMINI_API_KEY) throw new Stop('GEMINI_API_KEY_MISSING');
   const request = reserveRequest(store, policy, run, caseId, model, body, purpose, now, repairMethod);
   let payload, http;
