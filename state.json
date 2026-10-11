@@ -3263,7 +3263,7 @@
       "status": "quarantined"
     },
     "kapalicarsida-gizem": {
-      "spent": 0.0578906,
+      "spent": 0.02886335,
       "feedback": [
         {
           "score": 0,
@@ -8130,10 +8130,58 @@
       "model": "gemini-3.8-flash",
       "purpose": "repair",
       "day": "2026-10-11",
-      "status": "reserved",
-      "charged": 0.0347265,
-      "repair_method": "verified_text_v1"
+      "status": "completed",
+      "charged": 0.00569925,
+      "repair_method": "verified_text_v1",
+      "usage": {
+        "promptTokenCount": 2409,
+        "candidatesTokenCount": 1038,
+        "totalTokenCount": 3447,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 2409
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "plan": {
+        "case_id": "kapalicarsida-gizem",
+        "assessment": "Kapalıçarşı'daki cinayet dosyasında her şüphelinin kritik zaman aralığında farklı bir mekanda bulunduğu ve farklı bir nesneyle temas ettiği netleştirilmiştir. Eldeki kayıtlar ve deliller çaprazlandığında, cinayetin gerçekleştiği kesinleşen mekan ile şüphelilerin konumları arasındaki tezat tek bir faili işaret eder.",
+        "story": "Kapalıçarşı'nın kepenkleri kapandıktan sonra dükkanında cansız bulunan kuyumcunun ölümü tarihi çarşıda büyük yankı uyandırdı. Soruşturmayı yürüten polis ekipleri, cinayetin işlendiği kritik zaman aralığında listedeki üç şüphelinin her birinin farklı bir mahalde bulunduğunu ve her birinin yalnızca tek bir şüpheli nesneye erişim sağladığını belirledi. Müfettişler, doğrulanmış ölümcül nesneyi kullanan faili ve eylemin gerçekleştiği kesinleşmiş olay yerini açığa çıkarmak için delilleri bir araya getiriyor.",
+        "suspect_descriptions": {
+          "s1": "Otuz yıllık tecrübeye sahip, önlüğü daima metal talaşı ve kömür tozuyla kaplı, çarşının kıdemli bakırcı esnafı.",
+          "s2": "Gözlüklerini boynundaki zincirde taşıyan, evrak çantasıyla dükkanlar arasında mekik dokuyan tecrübeli çarşı muhasebecisi.",
+          "s3": "Kuyumcu atölyesinde stajyer olarak çalışan, kollukları sıvalı ve genç yaşta mesleğe adım atmış istekli çırak."
+        },
+        "clues": {
+          "c1": {
+            "text": "Gece bekçisinin onaylanmış devriye tutanağına göre, kuyumcu terazisinin ağır tunç kefesi kritik zaman aralığı boyunca Çarşı Koridoru zemininde, taş döşemelerin üzerinde açıkça görülmüştür.",
+            "deductionHint": "Gece devriyesinin taş yolda bulduğu ölçüm aleti neyi işaret ediyor?"
+          },
+          "c2": {
+            "text": "Olay yeri inceleme raporu, maktulün doğrudan Arka Depo içerisinde can verdiğini ve cinayetin kesinlikle bu mekanda işlendiğini kanıtlamıştır. Aynı odanın kesintisiz dijital giriş kayıtları, kıdemli bakırcı esnafının bu aralıkta içeriye hiç adım atmadığını doğrulamaktadır.",
+            "deductionHint": "Cinayetin işlendiği kesinleşen odaya kıdemli ustanın girmediği belgelerle nasıl doğrulanır?"
+          },
+          "c3": {
+            "text": "Güvenlik konsolundaki elektronik kilit kütüğü ve biyometrik kart okuma dökümleri, tecrübeli çarşı muhasebecisinin kritik zaman aralığında Arka Depo kapısından kesinlikle geçmediğini ortaya koymaktadır.",
+            "deductionHint": "Giriş çıkış sistemindeki kayıtlar deneyimli muhasebecinin hangi alanda bulunmadığını gösteriyor?"
+          },
+          "c4": {
+            "text": "Tezgah üstü kimyasal tespit kiti analizleri, altın eritmede kullanılan asit bazlı kimyasal maddenin söz konusu zaman aralığında Dükkan İçi vitrin alanındaki tezgahta muhafaza edildiğini kanıtlamıştır.",
+            "deductionHint": "Müşteri alanındaki tezgahta varlığı tespit edilen kimyasal solüsyon hangi eşleşmeyi kurar?"
+          },
+          "c5": {
+            "text": "Dükkan zimmet defterindeki imza sirküleri, Ahmet Usta'nın inceleme aralığında Ağır Terazi ekipmanını bizzat teslim aldığını ve üzerinde tuttuğunu doğrulamaktadır.",
+            "deductionHint": "Zimmet kayıtları bakırcı esnafı ile ağır kefeli nesneyi nasıl ilişkilendirir?"
+          },
+          "c6": {
+            "text": "Komşu çay ocağı işletmecisinin saatli kamera kaydıyla teyit edilen ifadesi, Selma Teyze'nin kritik zaman aralığı süresince yalnızca Dükkan İçi alanında oturduğunu teyit etmiştir.",
+            "deductionHint": "Doğrulanmış tanıklık muhasebecinin vaktini nerede geçirdiğini gösterir?"
+          }
+        }
+      }
     }
   },
-  "campaign_spent": 0.16038690000000003
+  "campaign_spent": 0.13135965000000002
 }
