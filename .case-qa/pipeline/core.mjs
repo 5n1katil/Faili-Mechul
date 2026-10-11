@@ -8,6 +8,7 @@ import { parseStandard, mergeSidecar, bootstrapAuthoring, buildPortfolioRegistry
   assessmentPenalty, buildPrompt, restoreBaselineAuthoring, stripAuthoring, authoringOverlay,
   replaceStandardCases } from '../fm_case_qa_runner.mjs';
 import { assertNearReadyCleanup } from '../fm_case_qa_cleanup_guard.mjs';
+import { qualityContract } from './quality-contract.mjs';
 
 const { loadEngine } = createRequire(import.meta.url)('../fm_case_qa_core.cjs');
 export const clone = value => JSON.parse(JSON.stringify(value));
@@ -123,6 +124,7 @@ export function repairPrompt(entry, candidate, assessment, rejected) {
     '- /qaPattern, /qaSemanticFacts, /qaNameRationales, /qaAuthoringVersion, /qaDeductionGraph');
   prompt = 'PIPELINE CODE LOCK: qaPolicy, qaPortfolioRegistry, intentionalMononymIds and all IDs/assets/solution are immutable. The portfolio registry is intentionally omitted from CASE and remains available to the evaluator. Never add or replace these locked fields.\n\n' + prompt;
   prompt += '\nNever suppress a gate. Return the smallest coherent repair for the reported deficit. Removed asset fields still exist in the real case and must not be changed. A positive witness statement that an entity was at a location supports confirm, not eliminate. Evidence about the crime weapon or location does not by itself identify the culprit. qaSemanticFacts must not turn an unsupported culprit identity into evidence. Repair visible prose and rules together; metadata alone cannot make an ambiguous core solvable.';
+  prompt += '\nSHARED QUALITY CONTRACT: ' + JSON.stringify(qualityContract(candidate, entry.tier));
   return prompt;
 }
 export function restoreBest(snapshot, entry, record) {

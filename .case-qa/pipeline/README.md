@@ -315,7 +315,7 @@ anahtarları temizlenmiş biçimde saklanır.
    Bu değişiklik üretim vakası/avatar dosyası değiştirmez.
 2. **Tek vaka canlı kabul:** altyapı main'deyken Actions'ın PR açma izni ve
    `GEMINI_API_KEY` secret'ı gerekir. Secret sohbet/kod içine yazılmaz. Pilot ayrıca
-   açıkça başlatılmalıdır. İlk vaka `konakta-gece-yarisi-cinayeti`; başarısızlığa
+   açıkça başlatılmalıdır. Bir sonraki taze pilot `muzede-kayip-eser`; başarısızlığa
    göre prompt/authoring iyileştirilir, sayısal kapılar gevşetilmez.
 3. **Gerçek oyun kontrolü:** taslak vaka PR'ının kesin commit'inde CI, mobil oyun
    testi, tüm ipuçları, bonuslar ve son çözüm kontrol edilir. Ancak sonra içerik kilitlenir.
@@ -334,3 +334,37 @@ anahtarları temizlenmiş biçimde saklanır.
 Eski #70/#71'den yalnız güvenli kod/fixture parçaları alınmıştır; #72/#73 vaka
 çıktıları içeri aktarılmamıştır. Eski n8n kontrol paneli yeni backend'e henüz bağlı
 değildir. Canlı kabul geçmeden toplu kampanya veya görsel üretimi başlatılmaz.
+
+### Ortak anlatı ölçütleri ve sınırlı profil eklemeleri
+
+Run 38165586423'te Pazar vakası kesin motor ve kör oyuncudan geçti; editör
+özgünlük/eğlenceyi 3/5 vererek reddetti. Toplam yedi isteği kullanılmıştır.
+Pazar yeniden çalıştırılmaz ve hiçbir prompt sürümü çağrı hakkını yenilemez.
+
+`quality-contract.mjs` ilk yazar, editoryal yazar ve bağımsız editör için aynı
+beş boyutu, vaka seviyesi ve zorluk beklentisini tanımlar. Eleme geçerli bir
+çözüm yöntemidir; ekstra pozitif suç ilişkisi zorunlu değildir. Gerçek anlatı
+zayıflığı, belirsizlik ve çelişkiler yine reddedilir. Editörden düşük puanın
+somut pasajını, oyuncuya etkisini ve uygulanabilir düzeltmesini belirtmesi
+istenir; değerlendirme çıktısı kodla silinmez veya puanları yükseltilmez.
+
+`fm-player-review-v2` yeni ölçütleri değerlendirme hash'ine bağlar; eski
+sertifikalar yeni akışa kabul olarak taşınmaz. Kör oyuncuya hâlâ yalnız
+oyuncunun gördüğü çekirdek içerik gider, ölçütler ve cevap anahtarı gitmez.
+Geçmiş v1 ücretli cache fixture testleri orijinal wire sürümünü açıkça kullanır;
+üretim v2 akışı ayrı testlerle doğrulanır.
+
+Tek izinli editoryal onarım `fm-editorial-revision-v2` ile `profile_additions`
+alabilir: her şüpheli için boş metin veya 8–20 kelimelik tarafsız motivasyon.
+Mevcut profil metni aynen korunur; ekleme görünüş/meslek/ilişki değiştirmemeli,
+özel erişim, alibi ya da nesne/mekân bağlantısı vermemelidir. Derleyici kesin
+şemayı, uzunluğu, değişmez kimlikleri ve tüm mevcut motor/sızıntı kapılarını
+yeniden kontrol eder. Eklenen anlamın tutarlılığını bağımsız editör değerlendirir;
+eski profilin aynen tutulması tek başına anlamsal doğruluğun kanıtı değildir.
+Her görünür değişiklikten sonra yeni kör oyuncu ve editör gerekir.
+
+Kabul eşiği her boyutta en az 4/5 ve boş sorun listesi; motor eşiği 100'dür.
+Onarım yöntemi `verified_text_v1`, tek editoryal hak, yedi yaşam boyu istek ve
+tüm dolar sınırları değişmez. Testlerdeki editör cevapları mock'tur; gerçek
+içerik kabulü değildir. Sonraki adım main'de `pilot`, `case_id=muzede-kayip-eser`
+ile tek canlı doğrulamadır. Bu başarılı olmadan toplu kampanya başlatılmaz.
