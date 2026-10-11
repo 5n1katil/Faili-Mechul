@@ -3005,9 +3005,262 @@
       "candidate_hash": "42ed2cadc52aa51644d660e5a9d80bbf8aecc8c1fd5a0db49f2920e9aa344e52",
       "best_score": 0,
       "failures": [
-        "REPAIR_LIMIT"
+        {
+          "score": 0,
+          "simulator_production_ready": false,
+          "blockers": [
+            "HATA: Oyuncu-Görünür Kural Taşkını — İpucu 2 metni şüpheli olarak “Kaptan Levent” sonucunu da adı doğrudan geçiyor; ancak logicRules yalnız tanımlı kural yok etkisini tanımlıyor. Oyuncu bu ek hücreyi işaretlerse sonraki temel ipucu tekrara düşebilir.",
+            "HATA: Oyuncu-Görünür Kural Taşkını — İpucu 4 metni şüpheli olarak “Sponsor Murat” sonucunu da adı doğrudan geçiyor; ancak logicRules yalnız tanımlı kural yok etkisini tanımlıyor. Oyuncu bu ek hücreyi işaretlerse sonraki temel ipucu tekrara düşebilir.",
+            "HATA: Portföy Yakın-Çakışma — \"Konakta Gece Yarısı Cinayeti\" ile 5 ana patern ekseninin 4/5’i aynı (anchorSig, actions, axes, miniSig). Oyuncu bunu aynı şablonun yeniden giydirilmiş hâli olarak algılar; açılış, ritim, mini oyun slotu veya çapa biçimini değiştir.",
+            "HATA: Portföy Yakın-Çakışma — \"Kapalıçarşı'da Gizem\" ile 5 ana patern ekseninin 4/5’i aynı (anchorSig, actions, axes, miniSig). Oyuncu bunu aynı şablonun yeniden giydirilmiş hâli olarak algılar; açılış, ritim, mini oyun slotu veya çapa biçimini değiştir.",
+            "HATA: Portföy Patern Çakışması — \"Üniversitede Karanlık Sır\" ile çapa, açılış, action ritmi, eksen sırası ve mini oyun konumu tamamen aynı. Yeni vaka farklı bir dedüksiyon mimarisi kurmalıdır.",
+            "HATA: Portföy Yakın-Çakışma — \"Pazar Yerinde Şüpheli Ölüm\" ile 5 ana patern ekseninin 4/5’i aynı (anchorSig, actions, axes, miniSig). Oyuncu bunu aynı şablonun yeniden giydirilmiş hâli olarak algılar; açılış, ritim, mini oyun slotu veya çapa biçimini değiştir.",
+            "HATA: Portföy Yakın-Çakışma — \"Müzede Kayıp Eser\" ile 5 ana patern ekseninin 4/5’i aynı (anchorSig, actions, axes, miniSig). Oyuncu bunu aynı şablonun yeniden giydirilmiş hâli olarak algılar; açılış, ritim, mini oyun slotu veya çapa biçimini değiştir.",
+            "HATA: Portföy Patern Çakışması — \"Adada Büyük Gizem\" ile çapa, açılış, action ritmi, eksen sırası ve mini oyun konumu tamamen aynı. Yeni vaka farklı bir dedüksiyon mimarisi kurmalıdır.",
+            "HATA: Portföy Yakın-Çakışma — \"Tren Yolculuğunda Cinayet\" ile 5 ana patern ekseninin 4/5’i aynı (anchorSig, actions, axes, miniSig). Oyuncu bunu aynı şablonun yeniden giydirilmiş hâli olarak algılar; açılış, ritim, mini oyun slotu veya çapa biçimini değiştir.",
+            "HATA: Portföy Yakın-Çakışma — \"Tarihi Hamamda Cinayet\" ile 5 ana patern ekseninin 4/5’i aynı (anchorSig, actions, axes, miniSig). Oyuncu bunu aynı şablonun yeniden giydirilmiş hâli olarak algılar; açılış, ritim, mini oyun slotu veya çapa biçimini değiştir.",
+            "HATA: Portföy Yakın-Çakışma — \"Sabancı Müzesi Gasp\" ile 5 ana patern ekseninin 4/5’i aynı (anchorSig, actions, axes, miniSig). Oyuncu bunu aynı şablonun yeniden giydirilmiş hâli olarak algılar; açılış, ritim, mini oyun slotu veya çapa biçimini değiştir.",
+            "HATA: Portföy Yakın-Çakışma — \"Çarşamba Suikastı\" ile 5 ana patern ekseninin 4/5’i aynı (anchorSig, actions, axes, miniSig). Oyuncu bunu aynı şablonun yeniden giydirilmiş hâli olarak algılar; açılış, ritim, mini oyun slotu veya çapa biçimini değiştir.",
+            "HATA: Portföy Yakın-Çakışma — \"Folklor Festivalinde Ölüm\" ile 5 ana patern ekseninin 4/5’i aynı (anchorSig, actions, axes, miniSig). Oyuncu bunu aynı şablonun yeniden giydirilmiş hâli olarak algılar; açılış, ritim, mini oyun slotu veya çapa biçimini değiştir.",
+            "HATA: Portföy Patern Çakışması — \"Kütüphanede Sessiz Suç\" ile çapa, açılış, action ritmi, eksen sırası ve mini oyun konumu tamamen aynı. Yeni vaka farklı bir dedüksiyon mimarisi kurmalıdır.",
+            "HATA: Portföy Patern Çakışması — \"Saat Fabrikasında Gizem\" ile çapa, açılış, action ritmi, eksen sırası ve mini oyun konumu tamamen aynı. Yeni vaka farklı bir dedüksiyon mimarisi kurmalıdır.",
+            "HATA: Portföy Patern Çakışması — \"Termal Otelde Şüpheli Vaka\" ile çapa, açılış, action ritmi, eksen sırası ve mini oyun konumu tamamen aynı. Yeni vaka farklı bir dedüksiyon mimarisi kurmalıdır.",
+            "HATA: Portföy Yakın-Çakışma — \"Şehrin Kalbi Kadıköy\" ile 5 ana patern ekseninin 4/5’i aynı (anchorSig, actions, axes, miniSig). Oyuncu bunu aynı şablonun yeniden giydirilmiş hâli olarak algılar; açılış, ritim, mini oyun slotu veya çapa biçimini değiştir.",
+            "HATA: Portföy Yakın-Çakışma — \"Köy Düğününde Trajedi\" ile 5 ana patern ekseninin 4/5’i aynı (anchorSig, actions, axes, miniSig). Oyuncu bunu aynı şablonun yeniden giydirilmiş hâli olarak algılar; açılış, ritim, mini oyun slotu veya çapa biçimini değiştir.",
+            "HATA: Portföy Yakın-Çakışma — \"Dolmabahçe'de Protokol Cinayeti\" ile 5 ana patern ekseninin 4/5’i aynı (anchorSig, actions, axes, miniSig). Oyuncu bunu aynı şablonun yeniden giydirilmiş hâli olarak algılar; açılış, ritim, mini oyun slotu veya çapa biçimini değiştir.",
+            "HATA: Portföy Patern Çakışması — \"Üsküdar'da Kayıp Vapur\" ile çapa, açılış, action ritmi, eksen sırası ve mini oyun konumu tamamen aynı. Yeni vaka farklı bir dedüksiyon mimarisi kurmalıdır.",
+            "HATA: Portföy Patern Çakışması — \"Beyoğlu Pasajında Şantaj\" ile çapa, açılış, action ritmi, eksen sırası ve mini oyun konumu tamamen aynı. Yeni vaka farklı bir dedüksiyon mimarisi kurmalıdır.",
+            "HATA: Portföy Yakın-Çakışma — \"Çırağan Sarayı'nda Maskeli Balo\" ile 5 ana patern ekseninin 4/5’i aynı (anchorSig, actions, axes, miniSig). Oyuncu bunu aynı şablonun yeniden giydirilmiş hâli olarak algılar; açılış, ritim, mini oyun slotu veya çapa biçimini değiştir.",
+            "HATA: Portföy Patern Çakışması — \"Sultanahmet'te Turist Tuzağı\" ile çapa, açılış, action ritmi, eksen sırası ve mini oyun konumu tamamen aynı. Yeni vaka farklı bir dedüksiyon mimarisi kurmalıdır.",
+            "HATA: Portföy Yakın-Çakışma — \"Arnavutköy'de Balıkçı Sırrı\" ile 5 ana patern ekseninin 4/5’i aynı (anchorSig, actions, axes, miniSig). Oyuncu bunu aynı şablonun yeniden giydirilmiş hâli olarak algılar; açılış, ritim, mini oyun slotu veya çapa biçimini değiştir.",
+            "HATA: Portföy Yakın-Çakışma — \"Topkapı'da Kayıp Hançer\" ile 5 ana patern ekseninin 4/5’i aynı (anchorSig, actions, axes, miniSig). Oyuncu bunu aynı şablonun yeniden giydirilmiş hâli olarak algılar; açılış, ritim, mini oyun slotu veya çapa biçimini değiştir.",
+            "HATA: Portföy Yakın-Çakışma — \"Karaköy'de Neon Gece\" ile 5 ana patern ekseninin 4/5’i aynı (anchorSig, actions, axes, miniSig). Oyuncu bunu aynı şablonun yeniden giydirilmiş hâli olarak algılar; açılış, ritim, mini oyun slotu veya çapa biçimini değiştir.",
+            "HATA: Portföy Patern Çakışması — \"Konakta Gece Vakti\" ile çapa, açılış, action ritmi, eksen sırası ve mini oyun konumu tamamen aynı. Yeni vaka farklı bir dedüksiyon mimarisi kurmalıdır.",
+            "HATA: Portföy Yakın-Çakışma — \"Pazar Sabahı Baskını\" ile 5 ana patern ekseninin 4/5’i aynı (anchorSig, actions, axes, miniSig). Oyuncu bunu aynı şablonun yeniden giydirilmiş hâli olarak algılar; açılış, ritim, mini oyun slotu veya çapa biçimini değiştir.",
+            "HATA: Portföy Yakın-Çakışma — \"Akşam Vapurunda Gizem\" ile 5 ana patern ekseninin 4/5’i aynı (anchorSig, actions, axes, miniSig). Oyuncu bunu aynı şablonun yeniden giydirilmiş hâli olarak algılar; açılış, ritim, mini oyun slotu veya çapa biçimini değiştir.",
+            "HATA: Portföy Yakın-Çakışma — \"Bağda Kanlı Bıçak\" ile 5 ana patern ekseninin 4/5’i aynı (anchorSig, actions, axes, miniSig). Oyuncu bunu aynı şablonun yeniden giydirilmiş hâli olarak algılar; açılış, ritim, mini oyun slotu veya çapa biçimini değiştir.",
+            "HATA: Portföy Patern Çakışması — \"Kervansarayda Son Gece\" ile çapa, açılış, action ritmi, eksen sırası ve mini oyun konumu tamamen aynı. Yeni vaka farklı bir dedüksiyon mimarisi kurmalıdır.",
+            "HATA: Portföy Yakın-Çakışma — \"Fotoğrafçının Son Karesi\" ile 5 ana patern ekseninin 4/5’i aynı (anchorSig, actions, axes, miniSig). Oyuncu bunu aynı şablonun yeniden giydirilmiş hâli olarak algılar; açılış, ritim, mini oyun slotu veya çapa biçimini değiştir.",
+            "HATA: Portföy Patern Çakışması — \"Termal Otelde Ölüm\" ile çapa, açılış, action ritmi, eksen sırası ve mini oyun konumu tamamen aynı. Yeni vaka farklı bir dedüksiyon mimarisi kurmalıdır.",
+            "HATA: Portföy Yakın-Çakışma — \"Zeytinyağı Fabrikasında Kâbus\" ile 5 ana patern ekseninin 4/5’i aynı (anchorSig, actions, axes, miniSig). Oyuncu bunu aynı şablonun yeniden giydirilmiş hâli olarak algılar; açılış, ritim, mini oyun slotu veya çapa biçimini değiştir.",
+            "HATA: Portföy Patern Çakışması — \"Dağ Yolunda Pusu\" ile çapa, açılış, action ritmi, eksen sırası ve mini oyun konumu tamamen aynı. Yeni vaka farklı bir dedüksiyon mimarisi kurmalıdır.",
+            "HATA: Portföy Patern Çakışması — \"Ramazan Gecesi Cinayeti\" ile çapa, açılış, action ritmi, eksen sırası ve mini oyun konumu tamamen aynı. Yeni vaka farklı bir dedüksiyon mimarisi kurmalıdır.",
+            "HATA: Portföy Yakın-Çakışma — \"Karanlık Senfoni\" ile 5 ana patern ekseninin 4/5’i aynı (anchorSig, actions, axes, miniSig). Oyuncu bunu aynı şablonun yeniden giydirilmiş hâli olarak algılar; açılış, ritim, mini oyun slotu veya çapa biçimini değiştir.",
+            "HATA: Portföy Yakın-Çakışma — \"Kanlı Rota\" ile 5 ana patern ekseninin 4/5’i aynı (anchorSig, actions, axes, miniSig). Oyuncu bunu aynı şablonun yeniden giydirilmiş hâli olarak algılar; açılış, ritim, mini oyun slotu veya çapa biçimini değiştir.",
+            "HATA: Portföy Yakın-Çakışma — \"Derinlerdeki Sır\" ile 5 ana patern ekseninin 4/5’i aynı (anchorSig, actions, axes, miniSig). Oyuncu bunu aynı şablonun yeniden giydirilmiş hâli olarak algılar; açılış, ritim, mini oyun slotu veya çapa biçimini değiştir.",
+            "HATA: Portföy Yakın-Çakışma — \"Zehirli Tuval\" ile 5 ana patern ekseninin 4/5’i aynı (anchorSig, actions, axes, miniSig). Oyuncu bunu aynı şablonun yeniden giydirilmiş hâli olarak algılar; açılış, ritim, mini oyun slotu veya çapa biçimini değiştir.",
+            "Standart / Ücretsiz hikâyesi 42 kelime; hedef derinlik yaklaşık 60-220 kelime. Kimlikleri değiştirmeden olay ve atmosfer bağını güçlendir."
+          ],
+          "fixes": [
+            "OYUNCU-GÖRÜNÜR KURAL KAPSAMI: Her standart ipucunun metni, deductionHint’i ve varsa ses transkripti yalnızca kendi logicRules hücresini desteklemeli. Metinde başka bir şüpheli/silah/mekânı güçlü biçimde çağrıştıran ama rule’a yazılmamış ifadeleri kaldır; aksi hâlde sonraki temel ipucu oyuncu açısından tekrara düşer.",
+            "SIKI TEMEL İPUCU EKONOMİSİ: Her isBonus:false ipucu çıkarıldığında katil+silah+mekan cevabı belirsiz kalmalıdır. Cevabı değiştirmeyen temel ipuçlarını bonusa taşıyın ya da onları eksik olan cevap bileşenini daraltacak biçimde yeniden yazın.",
+            "En az 1 işlevsel isBonus:true ipucu kullan; cezasının karşılığında standart zinciri zorunlu kılmadan yeni ve doğrudan bir ✓/✕ matris yardımı versin. Sayıyı doldurmak için gereksiz bonus ekleme.",
+            "PORTFÖY BENZERSİZLİĞİ: qaPattern beyanını ve qaPortfolioRegistry.entries defterini ekle; çakışan ritimde açılışı, action dizisini, eksen sırasını, çapa biçimini veya mini oyun slotunu değiştir. 100/100 için bu kontrol artık zorunlu."
+          ],
+          "advisories": [
+            "TAVSİYE (İsim/İçerik Derinliği): Standart / Ücretsiz hikâyesi 42 kelime; hedef derinlik yaklaşık 60-220 kelime. Kimlikleri değiştirmeden olay ve atmosfer bağını güçlendir.",
+            "ⓘ Standart mod: Bu vaka metin tabanlı ilerliyor; ücretsiz/standart vakalarda gelişmiş mini oyun zorunlu değildir. Mantık zinciri ve oynanabilirlik güçlüyse 100/100 alabilir."
+          ],
+          "score_breakdown": {
+            "k1": {
+              "score": 40,
+              "maximum": 40,
+              "findings": [
+                "⚠ Hiçbir ipucunda \"logicRules\" yok; tam-ızgara solver çalışamadı. Çözülebilirlik manuel playtest onayına bağlı (40/40 ön-kabul)."
+              ]
+            },
+            "k2": {
+              "score": 20,
+              "maximum": 20,
+              "findings": [
+                "Mini oyun alanlarında çözümü erken ele veren ifade bulunamadı. Temiz."
+              ]
+            },
+            "k3": {
+              "score": 20,
+              "maximum": 20,
+              "findings": [
+                "Tip dağılımı: evidence×2, witness×1, forensic×2, record×1",
+                "💡 TAVSİYE (opsiyonel): İpucu 1: \"Gemi Halatı\", İpucu 2: \"Kaptan Levent\", İpucu 3: \"Gaz Tüpü\" ve 1 ipucu daha adı doğrudan veriyor. Oyuncu eforunu ve atmosferi artırmak için ismi doğrudan yazmak yerine profil kartındaki betimlemelere atıfta bulunan dolaylı ifadeler tercih edilebilir (örn. \"Hazinedar Hüseyin\" yerine \"kayıp altın meselesinin gölgesindeki adam\"). Bu bir kalite önerisidir; çözülebilirliği etkilemez."
+              ]
+            },
+            "k4": {
+              "score": 10,
+              "maximum": 20,
+              "findings": [
+                "2 bonus ipucu var — sayı uygundur; tam puanı işlevsellik belirler.",
+                "İHLAL: Matris Etkisi Olmayan Ek İpucu — İpucu 5, İpucu 6 yalnız saik/atmosfer anlatıyor; oyuncuya yeni bir ✓ veya ✕ hücresi vermiyor. Her ek ipucu, ana zinciri zorunlu kılmadan çözümü kolaylaştıran en az bir logicRules bağlantısı taşımalıdır."
+              ]
+            }
+          },
+          "quality_findings": [
+            "💡 TAVSİYE (opsiyonel): İpucu 1: \"Gemi Halatı\", İpucu 2: \"Kaptan Levent\", İpucu 3: \"Gaz Tüpü\" ve 1 ipucu daha adı doğrudan veriyor. Oyuncu eforunu ve atmosferi artırmak için ismi doğrudan yazmak yerine profil kartındaki betimlemelere atıfta bulunan dolaylı ifadeler tercih edilebilir (örn. \"Hazinedar Hüseyin\" yerine \"kayıp altın meselesinin gölgesindeki adam\"). Bu bir kalite önerisidir; çözülebilirliği etkilemez."
+          ],
+          "gates": {
+            "coreNecessity": {
+              "passed": false,
+              "flags": [
+                "HATA: Oyuncu-Görünür Çözüm Başarısız. Tüm standart ipuçları ve belgelenen/anlaşılan anlatı bilgileri birlikteyken cevap tek kalmıyor (9 olası cevap). Bonus açmadan s3|w1|l1 üçlüsüne zorunlu olarak ulaşılmalı."
+              ],
+              "warnings": []
+            },
+            "patternGovernance": {
+              "passed": false,
+              "flags": [
+                "HATA: Portföy Yakın-Çakışma — \"Konakta Gece Yarısı Cinayeti\" ile 5 ana patern ekseninin 4/5’i aynı (anchorSig, actions, axes, miniSig). Oyuncu bunu aynı şablonun yeniden giydirilmiş hâli olarak algılar; açılış, ritim, mini oyun slotu veya çapa biçimini değiştir.",
+                "HATA: Portföy Yakın-Çakışma — \"Kapalıçarşı'da Gizem\" ile 5 ana patern ekseninin 4/5’i aynı (anchorSig, actions, axes, miniSig). Oyuncu bunu aynı şablonun yeniden giydirilmiş hâli olarak algılar; açılış, ritim, mini oyun slotu veya çapa biçimini değiştir.",
+                "HATA: Portföy Patern Çakışması — \"Üniversitede Karanlık Sır\" ile çapa, açılış, action ritmi, eksen sırası ve mini oyun konumu tamamen aynı. Yeni vaka farklı bir dedüksiyon mimarisi kurmalıdır.",
+                "HATA: Portföy Yakın-Çakışma — \"Pazar Yerinde Şüpheli Ölüm\" ile 5 ana patern ekseninin 4/5’i aynı (anchorSig, actions, axes, miniSig). Oyuncu bunu aynı şablonun yeniden giydirilmiş hâli olarak algılar; açılış, ritim, mini oyun slotu veya çapa biçimini değiştir.",
+                "HATA: Portföy Yakın-Çakışma — \"Müzede Kayıp Eser\" ile 5 ana patern ekseninin 4/5’i aynı (anchorSig, actions, axes, miniSig). Oyuncu bunu aynı şablonun yeniden giydirilmiş hâli olarak algılar; açılış, ritim, mini oyun slotu veya çapa biçimini değiştir.",
+                "HATA: Portföy Patern Çakışması — \"Adada Büyük Gizem\" ile çapa, açılış, action ritmi, eksen sırası ve mini oyun konumu tamamen aynı. Yeni vaka farklı bir dedüksiyon mimarisi kurmalıdır.",
+                "HATA: Portföy Yakın-Çakışma — \"Tren Yolculuğunda Cinayet\" ile 5 ana patern ekseninin 4/5’i aynı (anchorSig, actions, axes, miniSig). Oyuncu bunu aynı şablonun yeniden giydirilmiş hâli olarak algılar; açılış, ritim, mini oyun slotu veya çapa biçimini değiştir.",
+                "HATA: Portföy Yakın-Çakışma — \"Tarihi Hamamda Cinayet\" ile 5 ana patern ekseninin 4/5’i aynı (anchorSig, actions, axes, miniSig). Oyuncu bunu aynı şablonun yeniden giydirilmiş hâli olarak algılar; açılış, ritim, mini oyun slotu veya çapa biçimini değiştir.",
+                "HATA: Portföy Yakın-Çakışma — \"Sabancı Müzesi Gasp\" ile 5 ana patern ekseninin 4/5’i aynı (anchorSig, actions, axes, miniSig). Oyuncu bunu aynı şablonun yeniden giydirilmiş hâli olarak algılar; açılış, ritim, mini oyun slotu veya çapa biçimini değiştir.",
+                "HATA: Portföy Yakın-Çakışma — \"Çarşamba Suikastı\" ile 5 ana patern ekseninin 4/5’i aynı (anchorSig, actions, axes, miniSig). Oyuncu bunu aynı şablonun yeniden giydirilmiş hâli olarak algılar; açılış, ritim, mini oyun slotu veya çapa biçimini değiştir.",
+                "HATA: Portföy Yakın-Çakışma — \"Folklor Festivalinde Ölüm\" ile 5 ana patern ekseninin 4/5’i aynı (anchorSig, actions, axes, miniSig). Oyuncu bunu aynı şablonun yeniden giydirilmiş hâli olarak algılar; açılış, ritim, mini oyun slotu veya çapa biçimini değiştir.",
+                "HATA: Portföy Patern Çakışması — \"Kütüphanede Sessiz Suç\" ile çapa, açılış, action ritmi, eksen sırası ve mini oyun konumu tamamen aynı. Yeni vaka farklı bir dedüksiyon mimarisi kurmalıdır.",
+                "HATA: Portföy Patern Çakışması — \"Saat Fabrikasında Gizem\" ile çapa, açılış, action ritmi, eksen sırası ve mini oyun konumu tamamen aynı. Yeni vaka farklı bir dedüksiyon mimarisi kurmalıdır.",
+                "HATA: Portföy Patern Çakışması — \"Termal Otelde Şüpheli Vaka\" ile çapa, açılış, action ritmi, eksen sırası ve mini oyun konumu tamamen aynı. Yeni vaka farklı bir dedüksiyon mimarisi kurmalıdır.",
+                "HATA: Portföy Yakın-Çakışma — \"Şehrin Kalbi Kadıköy\" ile 5 ana patern ekseninin 4/5’i aynı (anchorSig, actions, axes, miniSig). Oyuncu bunu aynı şablonun yeniden giydirilmiş hâli olarak algılar; açılış, ritim, mini oyun slotu veya çapa biçimini değiştir.",
+                "HATA: Portföy Yakın-Çakışma — \"Köy Düğününde Trajedi\" ile 5 ana patern ekseninin 4/5’i aynı (anchorSig, actions, axes, miniSig). Oyuncu bunu aynı şablonun yeniden giydirilmiş hâli olarak algılar; açılış, ritim, mini oyun slotu veya çapa biçimini değiştir.",
+                "HATA: Portföy Yakın-Çakışma — \"Dolmabahçe'de Protokol Cinayeti\" ile 5 ana patern ekseninin 4/5’i aynı (anchorSig, actions, axes, miniSig). Oyuncu bunu aynı şablonun yeniden giydirilmiş hâli olarak algılar; açılış, ritim, mini oyun slotu veya çapa biçimini değiştir.",
+                "HATA: Portföy Patern Çakışması — \"Üsküdar'da Kayıp Vapur\" ile çapa, açılış, action ritmi, eksen sırası ve mini oyun konumu tamamen aynı. Yeni vaka farklı bir dedüksiyon mimarisi kurmalıdır.",
+                "HATA: Portföy Patern Çakışması — \"Beyoğlu Pasajında Şantaj\" ile çapa, açılış, action ritmi, eksen sırası ve mini oyun konumu tamamen aynı. Yeni vaka farklı bir dedüksiyon mimarisi kurmalıdır.",
+                "HATA: Portföy Yakın-Çakışma — \"Çırağan Sarayı'nda Maskeli Balo\" ile 5 ana patern ekseninin 4/5’i aynı (anchorSig, actions, axes, miniSig). Oyuncu bunu aynı şablonun yeniden giydirilmiş hâli olarak algılar; açılış, ritim, mini oyun slotu veya çapa biçimini değiştir.",
+                "HATA: Portföy Patern Çakışması — \"Sultanahmet'te Turist Tuzağı\" ile çapa, açılış, action ritmi, eksen sırası ve mini oyun konumu tamamen aynı. Yeni vaka farklı bir dedüksiyon mimarisi kurmalıdır.",
+                "HATA: Portföy Yakın-Çakışma — \"Arnavutköy'de Balıkçı Sırrı\" ile 5 ana patern ekseninin 4/5’i aynı (anchorSig, actions, axes, miniSig). Oyuncu bunu aynı şablonun yeniden giydirilmiş hâli olarak algılar; açılış, ritim, mini oyun slotu veya çapa biçimini değiştir.",
+                "HATA: Portföy Yakın-Çakışma — \"Topkapı'da Kayıp Hançer\" ile 5 ana patern ekseninin 4/5’i aynı (anchorSig, actions, axes, miniSig). Oyuncu bunu aynı şablonun yeniden giydirilmiş hâli olarak algılar; açılış, ritim, mini oyun slotu veya çapa biçimini değiştir.",
+                "HATA: Portföy Yakın-Çakışma — \"Karaköy'de Neon Gece\" ile 5 ana patern ekseninin 4/5’i aynı (anchorSig, actions, axes, miniSig). Oyuncu bunu aynı şablonun yeniden giydirilmiş hâli olarak algılar; açılış, ritim, mini oyun slotu veya çapa biçimini değiştir.",
+                "HATA: Portföy Patern Çakışması — \"Konakta Gece Vakti\" ile çapa, açılış, action ritmi, eksen sırası ve mini oyun konumu tamamen aynı. Yeni vaka farklı bir dedüksiyon mimarisi kurmalıdır.",
+                "HATA: Portföy Yakın-Çakışma — \"Pazar Sabahı Baskını\" ile 5 ana patern ekseninin 4/5’i aynı (anchorSig, actions, axes, miniSig). Oyuncu bunu aynı şablonun yeniden giydirilmiş hâli olarak algılar; açılış, ritim, mini oyun slotu veya çapa biçimini değiştir.",
+                "HATA: Portföy Yakın-Çakışma — \"Akşam Vapurunda Gizem\" ile 5 ana patern ekseninin 4/5’i aynı (anchorSig, actions, axes, miniSig). Oyuncu bunu aynı şablonun yeniden giydirilmiş hâli olarak algılar; açılış, ritim, mini oyun slotu veya çapa biçimini değiştir.",
+                "HATA: Portföy Yakın-Çakışma — \"Bağda Kanlı Bıçak\" ile 5 ana patern ekseninin 4/5’i aynı (anchorSig, actions, axes, miniSig). Oyuncu bunu aynı şablonun yeniden giydirilmiş hâli olarak algılar; açılış, ritim, mini oyun slotu veya çapa biçimini değiştir.",
+                "HATA: Portföy Patern Çakışması — \"Kervansarayda Son Gece\" ile çapa, açılış, action ritmi, eksen sırası ve mini oyun konumu tamamen aynı. Yeni vaka farklı bir dedüksiyon mimarisi kurmalıdır.",
+                "HATA: Portföy Yakın-Çakışma — \"Fotoğrafçının Son Karesi\" ile 5 ana patern ekseninin 4/5’i aynı (anchorSig, actions, axes, miniSig). Oyuncu bunu aynı şablonun yeniden giydirilmiş hâli olarak algılar; açılış, ritim, mini oyun slotu veya çapa biçimini değiştir.",
+                "HATA: Portföy Patern Çakışması — \"Termal Otelde Ölüm\" ile çapa, açılış, action ritmi, eksen sırası ve mini oyun konumu tamamen aynı. Yeni vaka farklı bir dedüksiyon mimarisi kurmalıdır.",
+                "HATA: Portföy Yakın-Çakışma — \"Zeytinyağı Fabrikasında Kâbus\" ile 5 ana patern ekseninin 4/5’i aynı (anchorSig, actions, axes, miniSig). Oyuncu bunu aynı şablonun yeniden giydirilmiş hâli olarak algılar; açılış, ritim, mini oyun slotu veya çapa biçimini değiştir.",
+                "HATA: Portföy Patern Çakışması — \"Dağ Yolunda Pusu\" ile çapa, açılış, action ritmi, eksen sırası ve mini oyun konumu tamamen aynı. Yeni vaka farklı bir dedüksiyon mimarisi kurmalıdır.",
+                "HATA: Portföy Patern Çakışması — \"Ramazan Gecesi Cinayeti\" ile çapa, açılış, action ritmi, eksen sırası ve mini oyun konumu tamamen aynı. Yeni vaka farklı bir dedüksiyon mimarisi kurmalıdır.",
+                "HATA: Portföy Yakın-Çakışma — \"Karanlık Senfoni\" ile 5 ana patern ekseninin 4/5’i aynı (anchorSig, actions, axes, miniSig). Oyuncu bunu aynı şablonun yeniden giydirilmiş hâli olarak algılar; açılış, ritim, mini oyun slotu veya çapa biçimini değiştir.",
+                "HATA: Portföy Yakın-Çakışma — \"Kanlı Rota\" ile 5 ana patern ekseninin 4/5’i aynı (anchorSig, actions, axes, miniSig). Oyuncu bunu aynı şablonun yeniden giydirilmiş hâli olarak algılar; açılış, ritim, mini oyun slotu veya çapa biçimini değiştir.",
+                "HATA: Portföy Yakın-Çakışma — \"Derinlerdeki Sır\" ile 5 ana patern ekseninin 4/5’i aynı (anchorSig, actions, axes, miniSig). Oyuncu bunu aynı şablonun yeniden giydirilmiş hâli olarak algılar; açılış, ritim, mini oyun slotu veya çapa biçimini değiştir.",
+                "HATA: Portföy Yakın-Çakışma — \"Zehirli Tuval\" ile 5 ana patern ekseninin 4/5’i aynı (anchorSig, actions, axes, miniSig). Oyuncu bunu aynı şablonun yeniden giydirilmiş hâli olarak algılar; açılış, ritim, mini oyun slotu veya çapa biçimini değiştir."
+              ],
+              "warnings": []
+            },
+            "contentAndNames": {
+              "passed": true,
+              "flags": [],
+              "warnings": [
+                "Standart / Ücretsiz hikâyesi 42 kelime; hedef derinlik yaklaşık 60-220 kelime. Kimlikleri değiştirmeden olay ve atmosfer bağını güçlendir."
+              ]
+            },
+            "semanticContract": {
+              "passed": true,
+              "flags": [],
+              "warnings": []
+            },
+            "visibleEvidence": {
+              "passed": false,
+              "flags": [
+                "HATA: Oyuncu-Görünür Kural Taşkını — İpucu 2 metni şüpheli olarak “Kaptan Levent” sonucunu da adı doğrudan geçiyor; ancak logicRules yalnız tanımlı kural yok etkisini tanımlıyor. Oyuncu bu ek hücreyi işaretlerse sonraki temel ipucu tekrara düşebilir.",
+                "HATA: Oyuncu-Görünür Kural Taşkını — İpucu 4 metni şüpheli olarak “Sponsor Murat” sonucunu da adı doğrudan geçiyor; ancak logicRules yalnız tanımlı kural yok etkisini tanımlıyor. Oyuncu bu ek hücreyi işaretlerse sonraki temel ipucu tekrara düşebilir."
+              ],
+              "warnings": []
+            },
+            "mechanicContract": {
+              "passed": true,
+              "flags": [],
+              "warnings": []
+            },
+            "bonusFunctionality": {
+              "passed": false,
+              "score": 10,
+              "findings": [
+                "2 bonus ipucu var — sayı uygundur; tam puanı işlevsellik belirler.",
+                "İHLAL: Matris Etkisi Olmayan Ek İpucu — İpucu 5, İpucu 6 yalnız saik/atmosfer anlatıyor; oyuncuya yeni bir ✓ veya ✕ hücresi vermiyor. Her ek ipucu, ana zinciri zorunlu kılmadan çözümü kolaylaştıran en az bir logicRules bağlantısı taşımalıdır."
+              ]
+            }
+          },
+          "leakage": {
+            "status": "manual_review_required",
+            "severity": "review",
+            "avatar_prompt_risk": true,
+            "solution_triple_exposed": false,
+            "findings": [
+              {
+                "case_id": "bogazda-kayip-elmas",
+                "suspect_id": "s1",
+                "suspect_name": "Kaptan Levent",
+                "axis_kind": "weapon",
+                "axis_id": "w1",
+                "axis_name": "Gemi Halatı",
+                "strength": "strong_semantic",
+                "direct_owner_binding": false,
+                "profile_exact_axis_name": false,
+                "distinctive_overlap_tokens": [
+                  "gemi"
+                ],
+                "axis_name_overlap_tokens": [
+                  "gemi"
+                ],
+                "avatar_prompt_risk": true,
+                "reasons": [
+                  "axis_name_profile_overlap:gemi",
+                  "distinctive_profile_overlap:gemi"
+                ]
+              },
+              {
+                "case_id": "bogazda-kayip-elmas",
+                "suspect_id": "s3",
+                "suspect_name": "Organizatör Eda",
+                "axis_kind": "weapon",
+                "axis_id": "w1",
+                "axis_name": "Gemi Halatı",
+                "strength": "strong_semantic",
+                "direct_owner_binding": false,
+                "profile_exact_axis_name": false,
+                "distinctive_overlap_tokens": [
+                  "esnek",
+                  "gemi"
+                ],
+                "axis_name_overlap_tokens": [
+                  "gemi"
+                ],
+                "avatar_prompt_risk": true,
+                "reasons": [
+                  "axis_name_profile_overlap:gemi",
+                  "distinctive_profile_overlap:esnek,gemi"
+                ]
+              },
+              {
+                "case_id": "bogazda-kayip-elmas",
+                "suspect_id": "s3",
+                "suspect_name": "Organizatör Eda",
+                "axis_kind": "location",
+                "axis_id": "l1",
+                "axis_name": "Makine Dairesi",
+                "strength": "review_semantic",
+                "direct_owner_binding": false,
+                "profile_exact_axis_name": false,
+                "distinctive_overlap_tokens": [
+                  "gemi",
+                  "dar"
+                ],
+                "axis_name_overlap_tokens": [],
+                "avatar_prompt_risk": false,
+                "reasons": [
+                  "distinctive_profile_overlap:gemi,dar"
+                ]
+              }
+            ],
+            "required_actions": [
+              "rewrite_avatar_source_profiles_to_non_grid_visual_traits"
+            ]
+          }
+        }
       ],
-      "status": "method_upgrade_pending"
+      "status": "quarantined"
     },
     "kapalicarsida-gizem": {
       "spent": 0.020182700000000005,
