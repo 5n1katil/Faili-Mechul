@@ -4652,7 +4652,7 @@
       "status": "quarantined"
     },
     "universitede-karanlik-sir": {
-      "spent": 0.0492084,
+      "spent": 0.01858215,
       "feedback": [],
       "source_hash": "ba12e30c0656dba5f0243d514547a5052cf7a7b5360a33d6b5fa725f0ed13326",
       "simulator_hash": "cb53e6613d6379de097599634de26524f4510fbc",
@@ -7355,9 +7355,123 @@
       "model": "gemini-3.8-flash",
       "purpose": "repair",
       "day": "2026-10-11",
-      "status": "reserved",
-      "charged": 0.0411675
+      "status": "completed",
+      "charged": 0.01054125,
+      "usage": {
+        "promptTokenCount": 4995,
+        "candidatesTokenCount": 1812,
+        "totalTokenCount": 6807,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 4995
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "plan": {
+        "case_id": "universitede-karanlik-sir",
+        "assessment": "The case failed validation due to same-axis logic rules in c1 (['l1','l2']) and c3 (['w2','w3']), an insufficient story length, missing crime anchor, and incomplete deduction logic causing the core clues to fail uniqueness. We repair the story to standard word depth while explicitly establishing the electrical sabotage anchor. We rewrite clues c1, c2, c3, and c4 with valid cross-axis rules linking suspects, weapons, and locations to form an airtight, strictly solvable deduction leading uniquely to s2-w1-l1, document full qaRationale and qaSemanticFacts, and designate the crime anchor.",
+        "operations": [
+          {
+            "op": "replace",
+            "path": "/story",
+            "value_json": "\"İstanbul'un köklü üniversitesindeki sessiz gece, çığır açacak biyomühendislik projesinin yürütüldüğü araştırma merkezinde yaşanan feci bir sabotajla sarsıldı. Laboratuvar yöneticisi, ana deney tezgahının yanı başında yüksek gerilim arkıyla can vermiş halde bulundu ve kritik araştırma verileri ana sunuculardan kalıcı olarak silindi. Olay yeri inceleme ekipleri, kurbanın doğrudan yüksek voltajlı elektrik akımına maruz bırakılarak öldürüldüğünü ve cinayetin tam olarak bu laboratuvar ortamında gerçekleştirildiğini kesinleştirdi.\"",
+            "reason": "Expands story to appropriate depth (60-220 words) and anchors the crime weapon and location without pre-leaking the culprit."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/0/text",
+            "value_json": "\"Ofis katındaki güvenlik tutanakları ve erişim logları incelendiğinde, bu alana giren personelin yalnızca evrak düzenlediği, deney düzeneklerinde kullanılan ölümcül elektrik çarpması mekanizmasının ofis ile hiçbir şekilde bağlantılı olmadığı kesinleşti.\"",
+            "reason": "Replaces invalid same-axis pair [l1, l2] with valid cross-axis rule eliminate [w1, l2] and aligns visible text."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/0/logicRules",
+            "value_json": "[{\"action\":\"eliminate\",\"pair\":[\"w1\",\"l2\"]}]",
+            "reason": "Eliminates Elektrik Çarpması from Ofis across axes."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/0/qaRationale",
+            "value_json": "{\"matrixEffect\":\"Elektrik Çarpması ≠ Ofis elenir\",\"evidenceLink\":\"ölümcül elektrik çarpması mekanizmasının ofis ile hiçbir şekilde bağlantılı olmadığı kesinleşti\",\"evidenceKind\":\"forensic\"}",
+            "reason": "Supplies required matrixEffect and valid evidenceLink."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/0/isCrimeAnchor",
+            "value_json": "true",
+            "reason": "Designates c1 as the crime anchor."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/0/qaSemanticFacts",
+            "value_json": "[{\"kind\":\"crime_component\",\"component\":\"weapon\",\"entityId\":\"w1\",\"source\":\"clue:c1\",\"evidence\":\"ölümcül elektrik çarpması mekanizmasının ofis ile hiçbir şekilde bağlantılı olmadığı\"}]",
+            "reason": "Registers valid semantic fact contract for the crime anchor clue."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/1/text",
+            "value_json": "\"Gece devriyesindeki güvenlik görevlisinin telsiz ve kart okuma kayıtları, olay esnasında kendisinin yalnızca dış koridorlarda bulunduğunu ve laboratuvar kapısını hiç açmadığını kanıtladı.\"",
+            "reason": "Clarifies text for eliminating Güvenlik Görevlisi from Laboratuvar."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/1/logicRules",
+            "value_json": "[{\"action\":\"eliminate\",\"pair\":[\"s3\",\"l1\"]}]",
+            "reason": "Changes rule to eliminate s3 from l1 (Laboratuvar) so s3 is excluded from the crime location."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/1/qaRationale",
+            "value_json": "{\"matrixEffect\":\"Güvenlik Görevlisi ≠ Laboratuvar elenir\",\"evidenceLink\":\"kendisinin yalnızca dış koridorlarda bulunduğunu ve laboratuvar kapısını hiç açmadığını kanıtladı\",\"evidenceKind\":\"record\"}",
+            "reason": "Accurately documents the matrix effect for s3 ≠ l1."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/2/text",
+            "value_json": "\"Olay yeri balistik ve adli tıp raporu, Prof. Kahraman'ın uzmanlık alanındaki hiçbir kimyasal veya mekanik aracın olayda yer almadığını, profesörün ölümcül elektrik çarpması düzeneğiyle hiçbir temasının bulunmadığını ortaya koydu.\"",
+            "reason": "Replaces invalid same-axis pair [w2, w3] with valid cross-axis rule eliminate [s1, w1]."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/2/logicRules",
+            "value_json": "[{\"action\":\"eliminate\",\"pair\":[\"s1\",\"w1\"]}]",
+            "reason": "Eliminates Prof. Kahraman from Elektrik Çarpması across axes."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/2/qaRationale",
+            "value_json": "{\"matrixEffect\":\"Prof. Kahraman ≠ Elektrik Çarpması elenir\",\"evidenceLink\":\"profesörün ölümcül elektrik çarpması düzeneğiyle hiçbir temasının bulunmadığını ortaya koydu\",\"evidenceKind\":\"forensic\"}",
+            "reason": "Supplies required matrixEffect and valid evidenceLink."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/3/text",
+            "value_json": "\"Bina sunucu logları ve dijital kamera dökümleri, Prof. Kahraman'ın cinayet saatinde ofisinden hiç ayrılmadığını ve laboratuvara adım atmadığını teyit etti.\"",
+            "reason": "Clarifies clue text for eliminating Prof. Kahraman from Laboratuvar."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/3/logicRules",
+            "value_json": "[{\"action\":\"eliminate\",\"pair\":[\"s1\",\"l1\"]}]",
+            "reason": "Eliminates s1 from l1."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/3/qaRationale",
+            "value_json": "{\"matrixEffect\":\"Prof. Kahraman ≠ Laboratuvar elenir\",\"evidenceLink\":\"cinayet saatinde ofisinden hiç ayrılmadığını ve laboratuvara adım atmadığını teyit etti\",\"evidenceKind\":\"record\"}",
+            "reason": "Supplies required matrixEffect and valid evidenceLink."
+          },
+          {
+            "op": "replace",
+            "path": "/qaSemanticFacts",
+            "value_json": "[{\"kind\":\"crime_component\",\"component\":\"weapon\",\"entityId\":\"w1\",\"source\":\"clue:c1\",\"evidence\":\"ölümcül elektrik çarpması mekanizmasının ofis ile hiçbir şekilde bağlantılı olmadığı\"}]",
+            "reason": "Aligns top-level qaSemanticFacts with the documented crime anchor fact."
+          }
+        ]
+      }
     }
   },
-  "campaign_spent": 0.13594770000000003
+  "campaign_spent": 0.10532145000000004
 }
