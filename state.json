@@ -6503,13 +6503,9 @@
     },
     "pazar-yerinde-supheli-olum": {
       "spent": 0.009550999999999997,
-      "feedback": [
-        {
-          "error": "TEXT_CONTENT:story:MIN_60_WORDS"
-        }
-      ],
+      "feedback": [],
       "source_hash": "d4a6a5003e9f00e091ed0db4768d29393539ba914af388dd06d6aca3f1fdcad2",
-      "simulator_hash": "cb53e6613d6379de097599634de26524f4510fbc",
+      "simulator_hash": "04352c0a4ce07097cb752a1980b144fa00722e78",
       "candidate": {
         "id": "pazar-yerinde-supheli-olum",
         "title": "Pazar Yerinde Şüpheli Ölüm",
@@ -7919,7 +7915,7 @@
         ]
       },
       "candidate_hash": "1f529e81593f6910f328fba1a33695f4a1fae282aa03d3c2b5570abbf7237b28",
-      "best_score": 0,
+      "best_score": 100,
       "failures": [
         {
           "score": 0,
