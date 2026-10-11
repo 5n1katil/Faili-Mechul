@@ -1589,7 +1589,7 @@
       "spent": 0.0003565500000000006
     },
     "bogazda-kayip-elmas": {
-      "spent": 0.027844199999999996,
+      "spent": 0.08245469999999999,
       "feedback": [],
       "source_hash": "d1f5a999f2b7cca4c1345be1ef12368f9bd95112608a4fc2fa7558bf41ecb498",
       "simulator_hash": "cb53e6613d6379de097599634de26524f4510fbc",
@@ -3456,7 +3456,15 @@
         "message": "Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ",
         "field_violations": []
       }
+    },
+    "a1a01bb30aa3368ccb7f6fff5b77541d874392cde8b19e0c571dfd5b0b1dcc46": {
+      "case_id": "bogazda-kayip-elmas",
+      "model": "gemini-3.8-flash",
+      "purpose": "repair",
+      "day": "2026-10-11",
+      "status": "reserved",
+      "charged": 0.0546105
     }
   },
-  "campaign_spent": 0.04640785
+  "campaign_spent": 0.10101835
 }
