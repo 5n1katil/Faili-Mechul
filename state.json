@@ -1309,7 +1309,7 @@
       }
     },
     "provider-diagnostic-v1": {
-      "spent": 0.00005730000000000058
+      "spent": 0.007315050000000001
     }
   },
   "requests": {
@@ -1422,7 +1422,15 @@
         "accepted": true,
         "finish_reason": "STOP"
       }
+    },
+    "91e6bef563ed084e479302b6b97c45838b40680b05e617f7ec66abb50d270e05": {
+      "case_id": "provider-diagnostic-v1",
+      "model": "gemini-3.8-flash",
+      "purpose": "player",
+      "day": "2026-10-11",
+      "status": "reserved",
+      "charged": 0.00725775
     }
   },
-  "campaign_spent": 0.00005730000000000058
+  "campaign_spent": 0.007315050000000001
 }
