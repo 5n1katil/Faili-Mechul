@@ -4790,6 +4790,9 @@
             }
           },
           "reason": "No improvement or passed gate regressed"
+        },
+        {
+          "error": "TEXT_CONTENT:story:MIN_60_WORDS"
         }
       ],
       "source_hash": "ba12e30c0656dba5f0243d514547a5052cf7a7b5360a33d6b5fa725f0ed13326",
