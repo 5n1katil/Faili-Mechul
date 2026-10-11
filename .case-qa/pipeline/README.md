@@ -100,6 +100,21 @@ ifşası sanabilir. Bu PR sabit simülatörü veya eşikleri değiştirmez; rapo
 adlandırma ve suç kapsamı semantiği sonraki sürümde karşı-örneklerle düzeltilmelidir.
 Yeni onarımın matematik ve anlatı sözleşmesi bu kusurlardan bağımsız test edilir.
 
+### Yanıt yapısı ve metin kalitesi ayrı kontrollerdir
+
+Kampanya `38154743650`, tek yeni-yöntem çağrısından sonra `INVALID_MODEL_RESPONSE`
+ile durdu (yaklaşık $0.0029765). O sürüm kesin ret alanını kaydetmediği için
+yanıtın hangi kontrolde başarısız olduğu geriye dönük kesinleştirilemez.
+Doğrulayıcıda ayrıca hikâye/alan uzunluklarının JSON yapısı gibi ele alınması
+hatası bulundu: bu kalite eksikleri ikinci onarıma gidemiyordu.
+
+Yapı doğrulaması yalnız alanlar, türler ve kimlikleri kontrol eder. Kısa hikâye,
+profil, ipucu veya soru `TEXT_CONTENT` geri bildirimi olur; aday tutulmadan aynı
+vaka üzerinde mevcut ikinci-model hakkıyla düzeltilebilir. Eşikler ve bütçeler
+değişmez. Gerçek yapısal hata, kesik yanıt veya bozuk JSON kampanyayı yine durdurur;
+bu kez hata türü, finishReason, güvenli alan yolları ve hikâye kelime sayısı
+kalıcı kayda/rapora yazılır. Keyfi model metni ve anahtar kayda eklenmez.
+
 İlk pilotta Gemini 2.5 Flash-Lite HTTP 404 döndürdü: bir reddedilmiş istek,
 kayıtlı token maliyeti $0, oyun değişikliği yok. Google 2.5 erişimini geçmişte
 kullanan hesaplarla sınırlandırıyor (https://ai.google.dev/gemini-api/docs/deprecations).

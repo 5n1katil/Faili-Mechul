@@ -19,7 +19,7 @@ import { api } from './github.mjs';
 import { diagnose, diagnosticStages } from './diagnose.mjs';
 import { campaign } from './campaign.mjs';
 import { TEXT_METHOD, TEXT_SYSTEM, supportsTextRepair, textRepairPlan, verifyTextPlan, enumerateTextGrid,
-  compileTextPatch, textResponseSchema, validTextResponse, textRepairPrompt } from './text-repair.mjs';
+  compileTextPatch, textResponseSchema, validTextResponse, explainTextResponse, textRepairPrompt } from './text-repair.mjs';
 import { verifiedTextResponses } from '../fixtures/verified-text-responses.mjs';
 
 globalThis.fetch = async () => { throw new Error('TEST_NETWORK_FORBIDDEN'); };
@@ -131,6 +131,49 @@ try {
     record.status = 'quarantined'; assert.deepEqual(reopenTextQuarantine(snapshot, store), []);
     assert.equal(Object.keys(store.state.requests).length, 6);
     if (oldKey === undefined) delete process.env.GEMINI_API_KEY; else process.env.GEMINI_API_KEY = oldKey;
+  });
+  await test('short narrative is content feedback and reaches the stronger repair instead of pausing the campaign', async () => {
+    const entry = snapshot.entries.find(e => e.id === 'universitede-karanlik-sir');
+    const full = verifiedTextResponses[entry.id], short = clone(full); short.story = 'Kısa hikâye.';
+    const plan = textRepairPlan(snapshot, entry, entry.candidate);
+    assert.equal(validTextResponse(entry.candidate, plan, short), true);
+    assert.deepEqual(explainTextResponse(entry.candidate, plan, short), []);
+    assert.throws(() => compileTextPatch(entry.candidate, plan, short), /TEXT_CONTENT:story:MIN_60_WORDS/);
+    const store = storeFor(entry.id), calls = [];
+    const oldKey = process.env.GEMINI_API_KEY; process.env.GEMINI_API_KEY = 'offline-test-only';
+    try {
+      const repaired = guardedPatch(snapshot, entry, entry.candidate, compileTextPatch(entry.candidate, plan, full), assess(snapshot, entry, entry.candidate)).candidate;
+      const result = await repairOne(snapshot, entry, store, { allowAI: true, caller: async args => {
+        calls.push(args); const repairCalls = calls.filter(c => c.purpose === 'repair').length;
+        if (args.purpose === 'repair' && repairCalls === 2) assert.match(args.prompt, /TEXT_CONTENT:story:MIN_60_WORDS/);
+        return callPaid({ ...args, transport: async () => responseForFixture(args.purpose === 'repair' ?
+          (repairCalls === 1 ? short : full) : args.purpose === 'player' ? playerFor(repaired) : validJudge()) });
+      } });
+      assert.equal(result.status, 'ready_for_gates'); assert.equal(result.run.calls, 4);
+      assert.match(result.run.attempts[0].error, /TEXT_CONTENT/);
+      assert.deepEqual(calls.slice(0, 2).map(c => c.model), [policy.models.first_pass, policy.models.repair]);
+    } finally { if (oldKey === undefined) delete process.env.GEMINI_API_KEY; else process.env.GEMINI_API_KEY = oldKey; }
+  });
+  await test('invalid provider output records structural reason without retry or exposing narrative/credentials', async () => {
+    const entry = snapshot.entries.find(e => e.id === 'universitede-karanlik-sir'), plan = textRepairPlan(snapshot, entry, entry.candidate);
+    const invalid = clone(verifiedTextResponses[entry.id]); delete invalid.clues.c6;
+    invalid.story = 'A story with a deliberately secret-like value';
+    const store = storeFor(entry.id), run = runFor(), oldKey = process.env.GEMINI_API_KEY;
+    process.env.GEMINI_API_KEY = 'offline-diagnostic-secret'; let calls = 0;
+    try {
+      await assert.rejects(callPaid({ store, policy, run, caseId: entry.id, model: policy.models.first_pass,
+        prompt: 'invalid output probe', repairMethod: TEXT_METHOD, schema: textResponseSchema(entry.candidate, plan),
+        validate: p => validTextResponse(entry.candidate, plan, p), diagnose: p => explainTextResponse(entry.candidate, plan, p),
+        transport: async () => { calls++; return responseForFixture(invalid); } }), error => {
+          assert.equal(error.message, 'INVALID_MODEL_RESPONSE'); assert.equal(error.provider_error.kind, 'SCHEMA');
+          assert.ok(error.provider_error.validation_errors.includes('CLUE_KEYS_MISMATCH')); return true;
+        });
+      assert.equal(calls, 1); const request = Object.values(store.state.requests)[0];
+      assert.equal(request.response_error.finish_reason, 'STOP'); assert.equal(request.status, 'invalid_response');
+      assert.equal(request.response_error.story_word_count, 7);
+      assert.ok(!JSON.stringify(request.response_error).includes('secret-like'));
+      assert.ok(!JSON.stringify(request).includes(process.env.GEMINI_API_KEY));
+    } finally { if (oldKey === undefined) delete process.env.GEMINI_API_KEY; else process.env.GEMINI_API_KEY = oldKey; }
   });
   const fixture = read('.case-qa/fixtures/termal-97-run-33305310409.json').candidate;
   fixture.qaPortfolioRegistry = clone(original.candidate.qaPortfolioRegistry);
