@@ -1,0 +1,380 @@
+{
+"historical_spent": 0.015019999999999992,
+"review_requests": {
+  "f2d02f7a3fbdc39fe1abadb27695a3969593ca6e08643a68bd34a42fad74f6a3": {
+    "case_id": "pazar-yerinde-supheli-olum",
+    "model": "gemini-3.8-flash",
+    "purpose": "player",
+    "day": "2026-10-11",
+    "status": "completed",
+    "charged": 0.00229425,
+    "usage": {
+      "promptTokenCount": 1039,
+      "candidatesTokenCount": 404,
+      "totalTokenCount": 1443,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 1039
+        }
+      ],
+      "serviceTier": "standard"
+    },
+    "plan": {
+      "unique_solution": true,
+      "solution": {
+        "suspectId": "s3",
+        "weaponId": "w1",
+        "locationId": "l1"
+      },
+      "confidence": 100,
+      "evidence": [
+        {
+          "clue_id": "c3",
+          "quote": "Halit Usta'nın can verdiği asıl ölüm noktasının tepsilerin dizildiği ve damlaların aktığı ana satış noktası olduğunu kesinleştirdi. Eşzamanlı zabıta kayıtları ise bastonlu yaşlı kadının o esnada bu ölüm noktasında bulunmadığını doğruladı."
+        },
+        {
+          "clue_id": "c2",
+          "quote": "ağır yükleri taşımaktan yorgun düşmüş uykusuz gencin, tatlı tepsilerinin dizildiği ana satış noktasında kritik zaman dilimi içinde hiç bulunmadığını ve oraya yaklaşmadığını mühürlü raporla kanıtladı."
+        },
+        {
+          "clue_id": "c1",
+          "quote": "sabah erken saatlerde yük indirme maksadıyla kullanılan ağaçlık açık alanda yürüttüğü kimyasal testler, zemin temizliğinde yararlanılan keskin kokulu endüstriyel çözücünün o alana döküldüğünü ve orada bulundurulduğunu kesin olarak belirledi."
+        },
+        {
+          "clue_id": "c4",
+          "quote": "bakır güğümde kaynatılmış berrak ve yoğun şekerli geleneksel sıvının kritik saatlerde bu geçitte bekletildiğini tutanak altına alarak durumu bildirdi."
+        }
+      ],
+      "issues": []
+    }
+  },
+  "a92758979754a147f02a9f2a82b670fb340178e9bf8bf1ab8e8cebe6401611e2": {
+    "case_id": "pazar-yerinde-supheli-olum",
+    "model": "gemini-3.8-flash",
+    "purpose": "judge",
+    "day": "2026-10-11",
+    "status": "completed",
+    "charged": 0.00317475,
+    "usage": {
+      "promptTokenCount": 3108,
+      "candidatesTokenCount": 225,
+      "totalTokenCount": 3333,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 3108
+        }
+      ],
+      "serviceTier": "standard"
+    },
+    "plan": {
+      "scores": {
+        "fairness": 5,
+        "clarity": 4,
+        "consistency": 4,
+        "originality": 3,
+        "engagement": 3
+      },
+      "issues": [
+        "Cinayet aleti olarak belirlenen 'Baklava'nın nasıl bir ölümcül silaha dönüştüğü (zehir, boğulma, alerji vb.) kurgusal olarak açıklanmamış; 'silah' tanımı havada kalmaktadır.",
+        "İpuçları saf eleme mantığıyla yazıldığından anlatı polis tutanağı kuruluğunda kalmakta ve dedektiflik hissi zayıflamaktadır."
+      ],
+      "summary": "Mantık örgüsü ve ipucu zinciri adil ve kusursuz bir şekilde tekil çözüme ulaşıyor. Ancak tatlının nasıl ölümcül hale geldiğine dair dramatik ve adli detaylar eklenerek anlatı zenginleştirilmelidir."
+    }
+  }
+},
+  "run_id": "38159952807",
+  "source_hash": "d4a6a5003e9f00e091ed0db4768d29393539ba914af388dd06d6aca3f1fdcad2",
+  "candidate_hash": "1f529e81593f6910f328fba1a33695f4a1fae282aa03d3c2b5570abbf7237b28",
+  "candidate": {
+    "id": "pazar-yerinde-supheli-olum",
+    "title": "Pazar Yerinde Şüpheli Ölüm",
+    "difficulty": "caylak",
+    "dayIndex": 5,
+    "story": "İstanbul'un kadim sokaklarında sabahın erken telaşı yaşanırken tatlıcı Halit Usta birdenbire yere yığılarak hayatını kaybetti. Çevredeki telaşlı kalabalık arasından yükselen fısıltılar, bu ani ve sarsıcı kaybın doğal bir krizden kaynaklanmadığını fısıldıyordu. Olay yerine hızla intikal eden asayiş memurları meydandaki tüm çıkışları tutarak şüpheli kişileri gözlem altına aldı. İnceleme boyunca şüphelilerin her birinin farklı bir bölgede bulunduğu ve tek bir araç ya da maddeyle temasta olduğu kesinleşti. Dedektifler şimdi ölümcül yöntemi, bu yöntemi kullanan faili ve ölümcül eylemin gerçekleştiği kesin noktayı arıyor.",
+    "suspects": [
+      {
+        "id": "s1",
+        "name": "Müşteri Hanım",
+        "description": "Hırkasının etekleri yerlere değen, elinde oymalı ahşap bir değnek taşıyan yaşlı kadın. Çevredeki telaşı mesafeli ve dikkatli bakışlarla süzer.",
+        "icon": "pa:pazar_s1"
+      },
+      {
+        "id": "s2",
+        "name": "Tedarikçi Genç",
+        "description": "Omuzları ağır yük taşımaktan çökmüş, uykusuzluktan göz kenarları kızarmış genç amele. Telaşlı adımlarla sağa sola bakınırken sürekli ellerini ovuşturur.",
+        "icon": "pa:pazar_s2"
+      },
+      {
+        "id": "s3",
+        "name": "Komşu Satıcı",
+        "description": "Kolları sıvalı gömleği ve çizgili önlüğüyle etrafını gözleyen esnaf. Yan taraftaki gelişmeleri çatık kaşlarla izlerken dudaklarını kemirir.",
+        "icon": "pa:pazar_s3"
+      }
+    ],
+    "weapons": [
+      {
+        "id": "w1",
+        "name": "Baklava",
+        "description": "Üzeri fıstıklarla süslenmiş, taze görünümüyle iştah açan ünlü pazar tatlısı.",
+        "icon": "pa:pazar_w1"
+      },
+      {
+        "id": "w2",
+        "name": "Şerbet",
+        "description": "Büyük bakır güğümde kaynatılmış, berrak ve yoğun şekerli geleneksel sıvı.",
+        "icon": "pa:pazar_w2"
+      },
+      {
+        "id": "w3",
+        "name": "Kimyasal Madde",
+        "description": "Zemin temizliğinde kullanılan, keskin kokulu endüstriyel çözücü.",
+        "icon": "pa:pazar_w3"
+      }
+    ],
+    "locations": [
+      {
+        "id": "l1",
+        "name": "Tezgah",
+        "description": "Tepsilerin dizildiği, şerbetin damladığı ve müşterilerin alışveriş yaptığı ana satış noktası.",
+        "icon": "pa:pazar_l1"
+      },
+      {
+        "id": "l2",
+        "name": "Ara Sokak",
+        "description": "Müşterilerin kestirme olarak kullandığı, dükkanların arka kapılarına açılan loş yaya geçidi.",
+        "icon": "pa:pazar_l2"
+      },
+      {
+        "id": "l3",
+        "name": "Park",
+        "description": "Sabah erken saatlerde araçların mal indirdiği, satış alanlarına oldukça uzak nokta.",
+        "icon": "pa:pazar_l3"
+      }
+    ],
+    "clues": [
+      {
+        "id": "c1",
+        "text": "Olay yeri inceleme ekiplerinin sabah erken saatlerde yük indirme maksadıyla kullanılan ağaçlık açık alanda yürüttüğü kimyasal testler, zemin temizliğinde yararlanılan keskin kokulu endüstriyel çözücünün o alana döküldüğünü ve orada bulundurulduğunu kesin olarak belirledi.",
+        "type": "forensic",
+        "isBonus": false,
+        "deductionHint": "Ağaçlık lojistik noktada hangi temizlik maddesinin izleri tespit edildi?",
+        "logicRules": [
+          {
+            "action": "confirm",
+            "pair": [
+              "w3",
+              "l3"
+            ]
+          }
+        ],
+        "isCrimeAnchor": false,
+        "qaSemanticFacts": [],
+        "qaRationale": {
+          "matrixEffect": "Kimyasal Madde ↔ Park doğrulanır",
+          "evidenceLink": "Olay yeri inceleme ekiplerinin sabah erken saatlerde yük indirme maksadıyla kullanılan ağaçlık açık alanda yürüttüğü kimyasal testler, zemin temizliğinde yararlanılan keskin kokulu endüstriyel çözücünün o alana döküldüğünü ve orada bulundurulduğunu kesin olarak belirledi.",
+          "evidenceKind": "forensic"
+        }
+      },
+      {
+        "id": "c2",
+        "text": "Merkez zabıta bürosuna ait güvenlik kamerası dökümleri, ağır yükleri taşımaktan yorgun düşmüş uykusuz gencin, tatlı tepsilerinin dizildiği ana satış noktasında kritik zaman dilimi içinde hiç bulunmadığını ve oraya yaklaşmadığını mühürlü raporla kanıtladı.",
+        "type": "record",
+        "isBonus": false,
+        "deductionHint": "Kamera kayıtları yorgun taşıyıcının ana satış noktasından uzak olduğunu nasıl gösteriyor?",
+        "logicRules": [
+          {
+            "action": "eliminate",
+            "pair": [
+              "s2",
+              "l1"
+            ]
+          }
+        ],
+        "isCrimeAnchor": false,
+        "qaSemanticFacts": [],
+        "qaRationale": {
+          "matrixEffect": "Tedarikçi Genç ≠ Tezgah elenir",
+          "evidenceLink": "Merkez zabıta bürosuna ait güvenlik kamerası dökümleri, ağır yükleri taşımaktan yorgun düşmüş uykusuz gencin, tatlı tepsilerinin dizildiği ana satış noktasında kritik zaman dilimi içinde hiç bulunmadığını ve oraya yaklaşmadığını mühürlü raporla kanıtladı.",
+          "evidenceKind": "record"
+        }
+      },
+      {
+        "id": "c3",
+        "text": "Adli tabibin resmî raporu, Halit Usta'nın can verdiği asıl ölüm noktasının tepsilerin dizildiği ve damlaların aktığı ana satış noktası olduğunu kesinleştirdi. Eşzamanlı zabıta kayıtları ise bastonlu yaşlı kadının o esnada bu ölüm noktasında bulunmadığını doğruladı.",
+        "type": "record",
+        "isBonus": false,
+        "deductionHint": "Ölümcül mahalde yaşlı kadının bulunmadığı belgelenirken cinayet yeri nasıl belirlendi?",
+        "logicRules": [
+          {
+            "action": "eliminate",
+            "pair": [
+              "s1",
+              "l1"
+            ]
+          }
+        ],
+        "isCrimeAnchor": true,
+        "qaSemanticFacts": [
+          {
+            "kind": "crime_component",
+            "component": "location",
+            "entityId": "l1",
+            "source": "clue:c3",
+            "evidence": "Adli tabibin resmî raporu, Halit Usta'nın can verdiği asıl ölüm noktasının tepsilerin dizildiği ve damlaların aktığı ana satış noktası olduğunu kesinleştirdi. Eşzamanlı zabıta kayıtları ise bastonlu yaşlı kadının o esnada bu ölüm noktasında bulunmadığını doğruladı."
+          }
+        ],
+        "qaRationale": {
+          "matrixEffect": "Müşteri Hanım ≠ Tezgah elenir",
+          "evidenceLink": "Adli tabibin resmî raporu, Halit Usta'nın can verdiği asıl ölüm noktasının tepsilerin dizildiği ve damlaların aktığı ana satış noktası olduğunu kesinleştirdi. Eşzamanlı zabıta kayıtları ise bastonlu yaşlı kadının o esnada bu ölüm noktasında bulunmadığını doğruladı.",
+          "evidenceKind": "record"
+        }
+      },
+      {
+        "id": "c4",
+        "text": "Kestirme geçiş için yararlanılan dükkan arkasındaki loş yaya geçidinde denetime çıkan zabıta memuru, bakır güğümde kaynatılmış berrak ve yoğun şekerli geleneksel sıvının kritik saatlerde bu geçitte bekletildiğini tutanak altına alarak durumu bildirdi.",
+        "type": "witness",
+        "isBonus": false,
+        "deductionHint": "Dükkanların arka geçidinde hangi şekerli sıvının tutulduğu tutanaklara geçti?",
+        "logicRules": [
+          {
+            "action": "confirm",
+            "pair": [
+              "w2",
+              "l2"
+            ]
+          }
+        ],
+        "isCrimeAnchor": false,
+        "qaSemanticFacts": [],
+        "qaRationale": {
+          "matrixEffect": "Şerbet ↔ Ara Sokak doğrulanır",
+          "evidenceLink": "Kestirme geçiş için yararlanılan dükkan arkasındaki loş yaya geçidinde denetime çıkan zabıta memuru, bakır güğümde kaynatılmış berrak ve yoğun şekerli geleneksel sıvının kritik saatlerde bu geçitte bekletildiğini tutanak altına alarak durumu bildirdi.",
+          "evidenceKind": "witness"
+        }
+      },
+      {
+        "id": "c5",
+        "text": "Tezgaha yakın noktada bulunan teslim fişi ve sipariş kaydı, Müşteri Hanım isimli kişinin o esnada Şerbet ile doğrudan temas kurduğunu ve bu geleneksel sıvıyı aldığını açıkça listelemektedir.",
+        "type": "record",
+        "isBonus": true,
+        "deductionHint": "Müşteri Hanım'ın elindeki makbuz hangi içecekle ilgilidir?",
+        "logicRules": [
+          {
+            "action": "confirm",
+            "pair": [
+              "s1",
+              "w2"
+            ]
+          }
+        ],
+        "isCrimeAnchor": false,
+        "qaSemanticFacts": [],
+        "qaRationale": {
+          "matrixEffect": "Müşteri Hanım ↔ Şerbet doğrulanır",
+          "evidenceLink": "Tezgaha yakın noktada bulunan teslim fişi ve sipariş kaydı, Müşteri Hanım isimli kişinin o esnada Şerbet ile doğrudan temas kurduğunu ve bu geleneksel sıvıyı aldığını açıkça listelemektedir.",
+          "evidenceKind": "record"
+        }
+      },
+      {
+        "id": "c6",
+        "text": "Çarşı bekçisinin ifadesi ve nöbet defteri, Tedarikçi Genç adlı çalışanın kritik zaman diliminde Park alanında olduğunu ve orada beklediğini açıkça doğrulamaktadır.",
+        "type": "witness",
+        "isBonus": true,
+        "deductionHint": "Bekçi defteri Tedarikçi Genç'in hangi alanda bulunduğunu doğrular?",
+        "logicRules": [
+          {
+            "action": "confirm",
+            "pair": [
+              "s2",
+              "l3"
+            ]
+          }
+        ],
+        "isCrimeAnchor": false,
+        "qaSemanticFacts": [],
+        "qaRationale": {
+          "matrixEffect": "Tedarikçi Genç ↔ Park doğrulanır",
+          "evidenceLink": "Çarşı bekçisinin ifadesi ve nöbet defteri, Tedarikçi Genç adlı çalışanın kritik zaman diliminde Park alanında olduğunu ve orada beklediğini açıkça doğrulamaktadır.",
+          "evidenceKind": "witness"
+        }
+      }
+    ],
+    "solvabilityMeta": {
+      "freeEliminations": [
+        "s1",
+        "s2",
+        "w2",
+        "w3",
+        "l2",
+        "l3"
+      ],
+      "bonusEliminations": []
+    },
+    "solution": {
+      "suspectId": "s3",
+      "weaponId": "w1",
+      "locationId": "l1"
+    },
+    "qaPolicy": {
+      "caseTier": "standard"
+    },
+    "qaPattern": {
+      "anchorSource": "clue:c3",
+      "designIntent": "Bağımsız teslim/erişim ve yer kanıtlarıyla çapraz eşleşme; dört temel ipucunun her biri zorunlu. Bonuslar masum eşleşmelerini tamamlar."
+    },
+    "qaAuthoringVersion": "verified_text_v1",
+    "qaSemanticFacts": [
+      {
+        "kind": "crime_component",
+        "component": "location",
+        "entityId": "l1",
+        "source": "clue:c3",
+        "evidence": "Adli tabibin resmî raporu, Halit Usta'nın can verdiği asıl ölüm noktasının tepsilerin dizildiği ve damlaların aktığı ana satış noktası olduğunu kesinleştirdi. Eşzamanlı zabıta kayıtları ise bastonlu yaşlı kadının o esnada bu ölüm noktasında bulunmadığını doğruladı."
+      }
+    ]
+  },
+  "player": {
+    "unique_solution": true,
+    "solution": {
+      "suspectId": "s3",
+      "weaponId": "w1",
+      "locationId": "l1"
+    },
+    "confidence": 100,
+    "evidence": [
+      {
+        "clue_id": "c3",
+        "quote": "Halit Usta'nın can verdiği asıl ölüm noktasının tepsilerin dizildiği ve damlaların aktığı ana satış noktası olduğunu kesinleştirdi. Eşzamanlı zabıta kayıtları ise bastonlu yaşlı kadının o esnada bu ölüm noktasında bulunmadığını doğruladı."
+      },
+      {
+        "clue_id": "c2",
+        "quote": "ağır yükleri taşımaktan yorgun düşmüş uykusuz gencin, tatlı tepsilerinin dizildiği ana satış noktasında kritik zaman dilimi içinde hiç bulunmadığını ve oraya yaklaşmadığını mühürlü raporla kanıtladı."
+      },
+      {
+        "clue_id": "c1",
+        "quote": "sabah erken saatlerde yük indirme maksadıyla kullanılan ağaçlık açık alanda yürüttüğü kimyasal testler, zemin temizliğinde yararlanılan keskin kokulu endüstriyel çözücünün o alana döküldüğünü ve orada bulundurulduğunu kesin olarak belirledi."
+      },
+      {
+        "clue_id": "c4",
+        "quote": "bakır güğümde kaynatılmış berrak ve yoğun şekerli geleneksel sıvının kritik saatlerde bu geçitte bekletildiğini tutanak altına alarak durumu bildirdi."
+      }
+    ],
+    "issues": []
+  },
+  "judge": {
+    "scores": {
+      "fairness": 5,
+      "clarity": 4,
+      "consistency": 4,
+      "originality": 3,
+      "engagement": 3
+    },
+    "issues": [
+      "Cinayet aleti olarak belirlenen 'Baklava'nın nasıl bir ölümcül silaha dönüştüğü (zehir, boğulma, alerji vb.) kurgusal olarak açıklanmamış; 'silah' tanımı havada kalmaktadır.",
+      "İpuçları saf eleme mantığıyla yazıldığından anlatı polis tutanağı kuruluğunda kalmakta ve dedektiflik hissi zayıflamaktadır."
+    ],
+    "summary": "Mantık örgüsü ve ipucu zinciri adil ve kusursuz bir şekilde tekil çözüme ulaşıyor. Ancak tatlının nasıl ölümcül hale geldiğine dair dramatik ve adli detaylar eklenerek anlatı zenginleştirilmelidir."
+  }
+}

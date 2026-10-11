@@ -70,6 +70,8 @@ export async function diagnosticCall(store, policy, run, stage, transport) {
 }
 export async function diagnose(store, policy, { transport = fetch, preflight = modelPreflight } = {}) {
   const bounded = clone(policy);
+  bounded.sequential.max_calls_per_execute = Math.min(4, policy.sequential.max_calls_per_execute);
+  bounded.sequential.max_requests_per_case = Math.min(6, policy.sequential.max_requests_per_case);
   bounded.sequential.execute_budget_usd = Math.min(0.03, policy.sequential.execute_budget_usd);
   bounded.sequential.case_budget_usd = Math.min(0.03, policy.sequential.case_budget_usd);
   const run = { calls: 0, spent: 0 }, stages = [];

@@ -44,6 +44,7 @@ export async function campaign(snapshot, store, { caseLimit = snapshot.policy.ba
     const row = { id: entry.id, status: result.status, score: result.assessment.result.score,
       api_calls: result.run.calls, execute_cost_usd: result.run.spent, attempts: result.run.attempts,
       failures: result.failures, provider_error: result.provider_error };
+    if (result.review) row.review = result.review;
     if (result.status === 'ready_for_gates' && result.review?.passed) {
       try {
         snapshot = stage(snapshot, entry, result.candidate, result.review.certificate);

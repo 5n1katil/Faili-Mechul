@@ -5,6 +5,28 @@ v3 kampanya ve avatar otomatik birleştirme workflow'ları emekliye ayrılmışt
 Uyumluluk için eski motor yardımcıları ve ücretsiz regresyon testleri korunur.
 Bu teslim altyapıdır; 105 vakanın tamamlandığı veya canlı pilotun geçtiği anlamına gelmez.
 
+### Editör geri beslemesi (38159952807)
+
+Pazar adayı gerçek HTML'de 100 aldı; bağımsız oyuncu doğru cevabı %100 güvenle
+buldu. Editör adalet/açıklık/tutarlılık için 5/4/4, özgünlük/eğlence için 3/3
+verdi: gündelik tatlının ölümcül mekanizması açıklanmıyor, anlatı tutanak gibi.
+Bu gerçek ret `pazar-editorial-rejection-38159952807.json` ile test edilir.
+Fixture ve testteki sahte değerlendirme cevapları canlı kabul kanıtı değildir.
+
+Başarısız inceleme artık state ve raporda saklanır. Tam HTML'yi ve kör oyuncuyu
+geçen desteklenen metin vakasına, bu eleştirilerle en fazla bir editoryal çağrı
+verilir. AI yalnız hikâye ve altı ipucunun metin/ipuçlarını döndürür; kod kuralları,
+çapayı, kartları, profilleri, çözümü ve varlık kimliklerini değiştiremez. Kod
+yalnız mevcut birebir kanıt alıntılarını yeniler. Aday tekrar tüm kapılardan
+geçer ve yeni metin için oyuncu ve editör yeniden çalışır. İkinci editör reddi,
+kalite kapısı reddi veya tek editoryal hakkın tüketilmesi karantinada bırakır.
+Üç çağrı için çalışma kotası kalmamışsa `editorial_pending` kaydedilir; kampanya
+sonraki çalışmada devam eder. Para veya belirsiz istekler sıfırlanmaz.
+
+Eski Pazar incelemesi state'te yalnız istek önbelleğinde olduğundan, ilk yeni
+pilot aynı iki inceleme sonucunu ücretsiz geri okur; ardından en fazla üç yeni
+çağrı yapar. Bu özellik inceleme prompt sürümü ve aday içeriği eşleştiğinde geçerlidir.
+
 ### Canlı metin geri bildirimi ve bağlam kalibrasyonu (38156344466)
 
 Son canlı tur 5 çağrı / yaklaşık $0.023062 ile üç vakayı karantinaya aldı.
@@ -93,10 +115,13 @@ Merge sonrası güncel main yeniden tarandığında geçerli içerik sertifikas�
 
 ## Harcama ve devam etme
 
-`policy.json`: en fazla 4 üretim isteği/tek-vaka çalıştırması; eski patch yöntemi için
+`policy.json`: en fazla 7 üretim isteği/tek-vaka çalıştırması; eski patch yöntemi için
 vaka ömrü boyunca 2 repair, `verified_text_v1` için ayrıca en fazla 2 repair ve
-her iki yöntem birlikte toplam 6 üretim isteği (repair + review + HTTP reddi dahil);
+vaka ömrü boyunca toplam 7 üretim isteği (repair + review + editoryal düzeltme + HTTP reddi dahil);
 çalıştırma ve vaka başına $0.25, UTC gün başına $2, kampanya toplamı $10.
+En fazla bir editoryal düzeltme yapılır; amaçlanan yol 2 repair + oyuncu/editör +
+1 düzeltme + tamamen yeni oyuncu/editör = 7 çağrıdır. Geçmiş istekler veya
+harcamalar sıfırlanmaz. Kampanya hâlâ toplam 12 çağrı / $0.75 ile sınırlıdır.
 Repair Gemini 3.5 Flash-Lite; oyuncu/editör Gemini 3.8 Flash kullanır. Fiyatlar
 2026-10-11 Google resmi sayfasından kontrol edilmiştir: milyon token başına
 repair input/output $0.30/$2.50; reviewer $0.75/$3.75. Reviewer kampanya fiyatı
@@ -177,7 +202,7 @@ kalıcı kayda eklenir; otomatik tekrar yapılmaz.
 
 Yalnızca `failed`, HTTP 400/404 ve kayıtlı maliyet $0 koşullarının tamamını taşıyan
 istekler gerçek repair sayısına dahil edilmez. Geçmiş kayıtlar silinmez: bu retler
-vaka başına toplam 6 istek sınırına dahildir ve aynı request hash tekrar gönderilemez.
+vaka başına toplam 7 istek sınırına dahildir ve aynı request hash tekrar gönderilemez.
 Belirsiz istek, geçersiz yanıt, auth/kota ve diğer HTTP hataları repair sınırını tüketir.
 
 Maliyet sağlayıcı faturası değildir: yapılandırılmış oranlarla token kullanımı

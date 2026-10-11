@@ -89,6 +89,8 @@ export function reserveRequest(store, policy, run, caseId, model, body, purpose 
     throw new Stop('REQUEST_LIMIT_MISSING');
   if (caseRequests.length >= config.max_requests_per_case) throw new Stop('CASE_REQUEST_LIMIT');
   const repairs = caseRequests.filter(countsAsRepair).length;
+  if (purpose === 'editorial' && (config.editorial_revision_limit !== 1 ||
+      caseRequests.some(r => r.purpose === 'editorial'))) throw new Stop('EDITORIAL_LIMIT');
   if (!['legacy_patch', 'verified_text_v1'].includes(repairMethod)) throw new Stop('REPAIR_METHOD_NOT_ALLOWED');
   if (purpose === 'repair') {
     const scoped = caseRequests.filter(r => countsAsRepair(r) && (r.repair_method || 'legacy_patch') === repairMethod).length;
