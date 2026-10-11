@@ -4,7 +4,7 @@ import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { pathToFileURL } from 'node:url';
 import { read, write, clone, loadSnapshot, selectNext, stageCandidate, counts } from './core.mjs';
-import { campaignRows, repairOne } from './run.mjs';
+import { campaignRows, repairOne, reopenTextQuarantine } from './run.mjs';
 import { openStore } from './state.mjs';
 import { modelPreflight } from './provider.mjs';
 
@@ -81,6 +81,7 @@ async function main() {
     const record = store.state.cases[entry.id];
     if (record && record.source_hash !== entry.sourceHash) record.status = 'source_changed';
   }
+  reopenTextQuarantine(snapshot, store);
   const preflight = await modelPreflight(policy);
   const report = await campaign(snapshot, store, {
     caseLimit: process.env.FM_PIPELINE_CASE_LIMIT ? Number(process.env.FM_PIPELINE_CASE_LIMIT) : policy.batch.default_case_limit,

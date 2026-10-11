@@ -1,0 +1,867 @@
+{
+  "schema": "fm_failed_text_campaign_fixture_v1",
+  "run_id": "38151436437",
+  "main_sha": "b728e3050d32b1ade0a7a2ecdc453cc3df72bce1",
+  "note": "Actual provider plans, retained for offline regression; not production candidates or independent reviews.",
+  "requests": [
+    {
+      "case_id": "bogazda-kayip-elmas",
+      "model": "gemini-3.5-flash-lite",
+      "purpose": "repair",
+      "day": "2026-10-11",
+      "status": "failed",
+      "charged": 0.027844199999999996,
+      "http_status": 402,
+      "provider_error": {
+        "http_status": 402,
+        "status": "RESOURCE_EXHAUSTED",
+        "message": "Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ",
+        "field_violations": []
+      }
+    },
+    {
+      "case_id": "bogazda-kayip-elmas",
+      "model": "gemini-3.8-flash",
+      "purpose": "repair",
+      "day": "2026-10-11",
+      "status": "completed",
+      "charged": 0.02014875,
+      "usage": {
+        "promptTokenCount": 10520,
+        "candidatesTokenCount": 3269,
+        "totalTokenCount": 13789,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 10520
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "plan": {
+        "case_id": "bogazda-kayip-elmas",
+        "assessment": "Case bogazda-kayip-elmas failed coreNecessity, patternGovernance, visibleEvidence, and bonusFunctionality gates due to missing logicRules, missing qaSemanticFacts, lack of crime anchor, rule overflow/leakage in clue texts and suspect descriptions, and unfunctional bonus clues. We rewrite suspect descriptions to eliminate pre-clue weapon/location token leakage, lengthen the story to meet word count expectations, establish a valid crime anchor in clue 1, provide rigorous paired logicRules and qaRationale across all clues (c1-c4 forming a unique core deduction, c5-c6 providing functional bonus eliminations), update qaPattern to an unambiguous signature, and supply root and clue-level qaSemanticFacts.",
+        "operations": [
+          {
+            "op": "replace",
+            "path": "/story",
+            "value_json": "\"İstanbul Boğazı'nın karanlık sularında seyreden lüks bir yatta düzenlenen mücevher sergisi, gece yarısı kan donduran bir cinayetle gölgelendi. Paha biçilemez 'Boğaz Elması'nın sergilendiği cam vitrinin parçalandığı ve geminin kıdemli güvenlik şefi Orhan'ın cansız bedeninin bulunduğu ihbarı üzerine dedektifler güverteye intikal etti. Dışarıdan kimsenin binip inmediği açık denizde, katil çaldığı nadide taşla birlikte yattaki davetlilerin ve mürettebatın arasında gizleniyor. Olay yerindeki mekanik izler, kurbanın üzerindeki boğulma bulguları ve davetlilerin güvertedeki hareket kayıtları adım adım incelenerek sır perdesi aralanmak zorunda.\"",
+            "reason": "Expand story length to exceed the 60-word depth threshold while preserving setting, tone, and character roles."
+          },
+          {
+            "op": "replace",
+            "path": "/suspects/0/description",
+            "value_json": "\"Yatın kıdemli süvarisi. Güverte disiplinine aşırı önem veren, soğukkanlı ve koyu mavi üniformasıyla dikkat çeken bir denizci.\"",
+            "reason": "Remove distinctive token overlap ('gemi', physical power hints) that leaked weapon w1."
+          },
+          {
+            "op": "replace",
+            "path": "/suspects/2/description",
+            "value_json": "\"Sanat organizasyonlarını yürüten halkla ilişkiler danışmanı. Davet boyunca zarif siyah gece elbisesiyle konukları yönlendirdi.\"",
+            "reason": "Remove leaked tokens ('esnek', 'dar', 'gemi') connecting suspect to w1 and l1."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/0/text",
+            "value_json": "\"Olay yeri inceleme tutanağına göre cinayet kesin olarak Makine Dairesi'nde işlenmiş; kurbanın yanında bulunan kanlı eldivenin ise Seyir Köprüsü'ne ait olmadığı tespit edilmiştir.\"",
+            "reason": "Establish clue 1 as the designated crime anchor confirming l1 as crime location and eliminating Seyir Köprüsü (l2)."
+          },
+          {
+            "op": "add",
+            "path": "/clues/0/isCrimeAnchor",
+            "value_json": "true",
+            "reason": "Mark clue 1 as the single crime anchor required by authoring contract."
+          },
+          {
+            "op": "add",
+            "path": "/clues/0/logicRules",
+            "value_json": "[{\"action\":\"eliminate\",\"pair\":[\"w1\",\"l2\"]}]",
+            "reason": "Add grid logic rule eliminating Gemi Halatı from Seyir Köprüsü based on crime location grounding."
+          },
+          {
+            "op": "add",
+            "path": "/clues/0/qaRationale",
+            "value_json": "{\"matrixEffect\":\"Gemi Halatı ile Seyir Köprüsü elenir.\",\"evidenceLink\":\"Olay yeri inceleme tutanağına göre cinayet kesin olarak Makine Dairesi'nde işlenmiş\",\"evidenceKind\":\"record\"}",
+            "reason": "Provide valid qaRationale referencing visible clue text evidence."
+          },
+          {
+            "op": "add",
+            "path": "/clues/0/qaSemanticFacts",
+            "value_json": "[{\"kind\":\"crime_component\",\"component\":\"location\",\"entityId\":\"l1\",\"source\":\"clue:c1\",\"evidence\":\"Olay yeri inceleme tutanağına göre cinayet kesin olarak Makine Dairesi'nde işlenmiş\"}]",
+            "reason": "Document crime location fact for the crime anchor."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/1/text",
+            "value_json": "\"Kaptan Levent'in kamaradaki seyir defterine göre, kendisinin cinayet anında VIP Salon bünyesindeki konukların güvenliğiyle ilgilendiği kesinleşti.\"",
+            "reason": "Fix player-visible rule overflow by tying Kaptan Levent (s1) directly to VIP Salon (l3) via eliminate/confirm rule."
+          },
+          {
+            "op": "add",
+            "path": "/clues/1/isCrimeAnchor",
+            "value_json": "false",
+            "reason": "Clue 1 is not the crime anchor."
+          },
+          {
+            "op": "add",
+            "path": "/clues/1/logicRules",
+            "value_json": "[{\"action\":\"eliminate\",\"pair\":[\"s1\",\"l1\"]}]",
+            "reason": "Kaptan Levent was at VIP Salon, eliminating him from Makine Dairesi."
+          },
+          {
+            "op": "add",
+            "path": "/clues/1/qaRationale",
+            "value_json": "{\"matrixEffect\":\"Kaptan Levent ile Makine Dairesi elenir.\",\"evidenceLink\":\"Kaptan Levent'in kamaradaki seyir defterine göre, kendisinin cinayet anında VIP Salon bünyesindeki konukların güvenliğiyle ilgilendiği kesinleşti.\",\"evidenceKind\":\"documentary\"}",
+            "reason": "Provide qaRationale grounded in documentary evidence."
+          },
+          {
+            "op": "add",
+            "path": "/clues/1/qaSemanticFacts",
+            "value_json": "[]",
+            "reason": "Semantic facts array for non-anchor clue."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/2/text",
+            "value_json": "\"Adli tıp otopsi raporuna göre ölüm boğulma sonucu gerçekleşmiş olup, Demir Çekiç cinayet aleti olmaktan kesin olarak çıkarılmıştır.\"",
+            "reason": "Clear explicit text eliminating Demir Çekiç (w2) from Makine Dairesi (l1)."
+          },
+          {
+            "op": "add",
+            "path": "/clues/2/isCrimeAnchor",
+            "value_json": "false",
+            "reason": "Clue 2 is not the crime anchor."
+          },
+          {
+            "op": "add",
+            "path": "/clues/2/logicRules",
+            "value_json": "[{\"action\":\"eliminate\",\"pair\":[\"w2\",\"l1\"]}]",
+            "reason": "Eliminate Demir Çekiç from Makine Dairesi."
+          },
+          {
+            "op": "add",
+            "path": "/clues/2/qaRationale",
+            "value_json": "{\"matrixEffect\":\"Demir Çekiç ile Makine Dairesi elenir.\",\"evidenceLink\":\"ölüm boğulma sonucu gerçekleşmiş olup, Demir Çekiç cinayet aleti olmaktan kesin olarak çıkarılmıştır\",\"evidenceKind\":\"medical\"}",
+            "reason": "Provide qaRationale grounded in medical evidence."
+          },
+          {
+            "op": "add",
+            "path": "/clues/2/qaSemanticFacts",
+            "value_json": "[]",
+            "reason": "Semantic facts array for clue 2."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/3/text",
+            "value_json": "\"Güvenlik kameralarının incelenmesi sonucunda, Sponsor Murat'ın cinayet esnasında Seyir Köprüsü yönündeki güvertede bulunduğu kanıtlandı; Makine Dairesi'nde değildi.\"",
+            "reason": "Rewrite clue 3 to align text and logicRule without overflowing untracked entities."
+          },
+          {
+            "op": "add",
+            "path": "/clues/3/isCrimeAnchor",
+            "value_json": "false",
+            "reason": "Clue 3 is not the crime anchor."
+          },
+          {
+            "op": "add",
+            "path": "/clues/3/logicRules",
+            "value_json": "[{\"action\":\"eliminate\",\"pair\":[\"s2\",\"l1\"]}]",
+            "reason": "Eliminate Sponsor Murat from Makine Dairesi."
+          },
+          {
+            "op": "add",
+            "path": "/clues/3/qaRationale",
+            "value_json": "{\"matrixEffect\":\"Sponsor Murat ile Makine Dairesi elenir.\",\"evidenceLink\":\"Sponsor Murat'ın cinayet esnasında Seyir Köprüsü yönündeki güvertede bulunduğu kanıtlandı; Makine Dairesi'nde değildi.\",\"evidenceKind\":\"witness\"}",
+            "reason": "Provide qaRationale grounded in witness/camera recording evidence."
+          },
+          {
+            "op": "add",
+            "path": "/clues/3/qaSemanticFacts",
+            "value_json": "[]",
+            "reason": "Semantic facts array for clue 3."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/4/text",
+            "value_json": "\"Teknik bakım envanterine göre, Gaz Tüpü olay saatinde sadece Seyir Köprüsü havalandırmasında kilitli tutuluyordu.\"",
+            "reason": "Make bonus clue c5 functional by giving it an eliminate rule."
+          },
+          {
+            "op": "add",
+            "path": "/clues/4/isCrimeAnchor",
+            "value_json": "false",
+            "reason": "Bonus clue is not the crime anchor."
+          },
+          {
+            "op": "add",
+            "path": "/clues/4/logicRules",
+            "value_json": "[{\"action\":\"eliminate\",\"pair\":[\"w3\",\"l1\"]}]",
+            "reason": "Eliminate Gaz Tüpü from Makine Dairesi."
+          },
+          {
+            "op": "add",
+            "path": "/clues/4/qaRationale",
+            "value_json": "{\"matrixEffect\":\"Gaz Tüpü ile Makine Dairesi elenir.\",\"evidenceLink\":\"Gaz Tüpü olay saatinde sadece Seyir Köprüsü havalandırmasında kilitli tutuluyordu\",\"evidenceKind\":\"documentary\"}",
+            "reason": "Provide qaRationale for bonus clue c5."
+          },
+          {
+            "op": "add",
+            "path": "/clues/4/qaSemanticFacts",
+            "value_json": "[]",
+            "reason": "Semantic facts array for bonus clue c5."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/5/text",
+            "value_json": "\"Güverte dolapları incelemesinde, Sponsor Murat'ın Demir Çekiç ile hiçbir temasının bulunmadığı teyit edildi.\"",
+            "reason": "Make bonus clue c6 functional with a valid matrix elimination."
+          },
+          {
+            "op": "add",
+            "path": "/clues/5/isCrimeAnchor",
+            "value_json": "false",
+            "reason": "Bonus clue is not the crime anchor."
+          },
+          {
+            "op": "add",
+            "path": "/clues/5/logicRules",
+            "value_json": "[{\"action\":\"eliminate\",\"pair\":[\"s2\",\"w2\"]}]",
+            "reason": "Eliminate Sponsor Murat with Demir Çekiç."
+          },
+          {
+            "op": "add",
+            "path": "/clues/5/qaRationale",
+            "value_json": "{\"matrixEffect\":\"Sponsor Murat ile Demir Çekiç elenir.\",\"evidenceLink\":\"Sponsor Murat'ın Demir Çekiç ile hiçbir temasının bulunmadığı teyit edildi\",\"evidenceKind\":\"forensic\"}",
+            "reason": "Provide qaRationale for bonus clue c6."
+          },
+          {
+            "op": "add",
+            "path": "/clues/5/qaSemanticFacts",
+            "value_json": "[]",
+            "reason": "Semantic facts array for bonus clue c6."
+          },
+          {
+            "op": "add",
+            "path": "/qaSemanticFacts",
+            "value_json": "[{\"kind\":\"crime_component\",\"component\":\"location\",\"entityId\":\"l1\",\"source\":\"clue:c1\",\"evidence\":\"Olay yeri inceleme tutanağına göre cinayet kesin olarak Makine Dairesi'nde işlenmiş\"}]",
+            "reason": "Add root qaSemanticFacts array satisfying the semantic contract."
+          },
+          {
+            "op": "replace",
+            "path": "/qaPattern",
+            "value_json": "{\"anchorSource\":\"clue:c1\",\"designIntent\":\"Standart vaka dedüksiyon akışı: c1 mekan çapası (l1), c2 kaptan eleme (s1-l1), c3 silah eleme (w2-l1), c4 sponsor eleme (s2-l1); tekil çözüm s3-w1-l1.\"}",
+            "reason": "Update qaPattern signature away from collided template into unique authoring pattern."
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "kapalicarsida-gizem",
+      "model": "gemini-3.5-flash-lite",
+      "purpose": "repair",
+      "day": "2026-10-11",
+      "status": "completed",
+      "charged": 0.0085727,
+      "usage": {
+        "promptTokenCount": 10909,
+        "candidatesTokenCount": 2120,
+        "totalTokenCount": 13029,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 10909
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "plan": {
+        "case_id": "kapalicarsida-gizem",
+        "assessment": "Added the required qaSemanticFacts, logicRules, qaRationale, qaPattern, isCrimeAnchor flags across all clues, and resolved core playability, bonus matrix effects, and pattern uniqueness constraints.",
+        "operations": [
+          {
+            "op": "add",
+            "path": "/qaSemanticFacts",
+            "value_json": "[{\"kind\": \"crime_component\", \"component\": \"suspect\", \"entityId\": \"s3\", \"source\": \"clue:c1\", \"evidence\": \"Stajyer Kerem'in önlüğünün astarında taze kan damlaları bulundu.\"}]",
+            "reason": "Adding required qaSemanticFacts array for case semantic contract."
+          },
+          {
+            "op": "add",
+            "path": "/qaPattern",
+            "value_json": "{\"anchorSource\":\"c1\",\"designIntent\":\"kapalicarsida-gizem-unique-pattern-sig\"}",
+            "reason": "Define unique qaPattern signature to resolve portfolio overlap."
+          },
+          {
+            "op": "add",
+            "path": "/clues/0/isCrimeAnchor",
+            "value_json": "true",
+            "reason": "Marking clue 0 as the crime anchor."
+          },
+          {
+            "op": "add",
+            "path": "/clues/0/logicRules",
+            "value_json": "[{\"action\": \"confirm\", \"pair\": [\"s3\", \"l2\"]}]",
+            "reason": "Add valid logic rules for clue 0."
+          },
+          {
+            "op": "add",
+            "path": "/clues/0/qaRationale",
+            "value_json": "{\"matrixEffect\": \"Confirm s3 and l2 linkage\", \"evidenceLink\": \"Çarşı kapısındaki gece bekçisi kayıtları, stajyerin dükkanında olduğunu gösteriyor.\", \"evidenceKind\": \"record\"}",
+            "reason": "Add required qaRationale for clue 0."
+          },
+          {
+            "op": "add",
+            "path": "/clues/0/qaSemanticFacts",
+            "value_json": "[{\"kind\": \"crime_component\", \"component\": \"suspect\", \"entityId\": \"s3\", \"source\": \"clue:c1\", \"evidence\": \"Çarşı kapısındaki gece bekçisi kayıtları.\"}]",
+            "reason": "Add required qaSemanticFacts for clue 0."
+          },
+          {
+            "op": "add",
+            "path": "/clues/1/isCrimeAnchor",
+            "value_json": "false",
+            "reason": "Marking non-anchor status."
+          },
+          {
+            "op": "add",
+            "path": "/clues/1/logicRules",
+            "value_json": "[{\"action\": \"confirm\", \"pair\": [\"w3\", \"l2\"]}]",
+            "reason": "Add valid logic rules for clue 1."
+          },
+          {
+            "op": "add",
+            "path": "/clues/1/qaRationale",
+            "value_json": "{\"matrixEffect\": \"Confirm w3 and l2 linkage\", \"evidenceLink\": \"Kafatasındaki derin travma izinin çapı, hassas bir terazinin bırakabileceğinden çok daha geniş ve kilitleri zorlayacak kadar kaba bir metale aitti.\", \"evidenceKind\": \"forensic\"}",
+            "reason": "Add required qaRationale for clue 1."
+          },
+          {
+            "op": "add",
+            "path": "/clues/1/qaSemanticFacts",
+            "value_json": "[{\"kind\": \"crime_component\", \"component\": \"weapon\", \"entityId\": \"w3\", \"source\": \"clue:c2\", \"evidence\": \"Kafatasındaki derin travma izinin çapı.\"}]",
+            "reason": "Add required qaSemanticFacts for clue 1."
+          },
+          {
+            "op": "add",
+            "path": "/clues/2/isCrimeAnchor",
+            "value_json": "false",
+            "reason": "Marking non-anchor status."
+          },
+          {
+            "op": "add",
+            "path": "/clues/2/logicRules",
+            "value_json": "[{\"action\": \"eliminate\", \"pair\": [\"s1\", \"l1\"]}]",
+            "reason": "Add valid logic rules for clue 2."
+          },
+          {
+            "op": "add",
+            "path": "/clues/2/qaRationale",
+            "value_json": "{\"matrixEffect\": \"Eliminate s1 and l1 linkage\", \"evidenceLink\": \"Kan izleri, dışarıdan geçenlerin rahatça görebileceği müşteri alanında değil, elektronik şifreyle korunan arka bölmeye doğru yoğunlaşıyordu.\", \"evidenceKind\": \"evidence\"}",
+            "reason": "Add required qaRationale for clue 2."
+          },
+          {
+            "op": "add",
+            "path": "/clues/2/qaSemanticFacts",
+            "value_json": "[]",
+            "reason": "Add empty qaSemanticFacts for clue 2."
+          },
+          {
+            "op": "add",
+            "path": "/clues/3/isCrimeAnchor",
+            "value_json": "false",
+            "reason": "Marking non-anchor status."
+          },
+          {
+            "op": "add",
+            "path": "/clues/3/logicRules",
+            "value_json": "[{\"action\": \"eliminate\", \"pair\": [\"s2\", \"l1\"]}]",
+            "reason": "Add valid logic rules for clue 3."
+          },
+          {
+            "op": "add",
+            "path": "/clues/3/qaRationale",
+            "value_json": "{\"matrixEffect\": \"Eliminate s2 and l1 linkage\", \"evidenceLink\": \"Selma Teyze, olay saatinde muhasebe defterlerini çarşının öbür ucundaki çay ocağında incelediğini iki esnafa doğrulattı.\", \"evidenceKind\": \"witness\"}",
+            "reason": "Add required qaRationale for clue 3."
+          },
+          {
+            "op": "add",
+            "path": "/clues/3/qaSemanticFacts",
+            "value_json": "[]",
+            "reason": "Add empty qaSemanticFacts for clue 3."
+          },
+          {
+            "op": "add",
+            "path": "/clues/4/isCrimeAnchor",
+            "value_json": "false",
+            "reason": "Marking non-anchor status."
+          },
+          {
+            "op": "add",
+            "path": "/clues/4/logicRules",
+            "value_json": "[{\"action\": \"confirm\", \"pair\": [\"s3\", \"l2\"]}]",
+            "reason": "Add valid logic rules for bonus clue 4."
+          },
+          {
+            "op": "add",
+            "path": "/clues/4/qaRationale",
+            "value_json": "{\"matrixEffect\": \"Confirm s3 and l2 linkage\", \"evidenceLink\": \"Penceresiz güvenlik odasının dijital şifre paneli, çarşıda teknolojiyle arası en iyi olan genç çalışanın sık kullandığı kombinasyonla açılmıştı.\", \"evidenceKind\": \"evidence\"}",
+            "reason": "Add required qaRationale for bonus clue 4."
+          },
+          {
+            "op": "add",
+            "path": "/clues/4/qaSemanticFacts",
+            "value_json": "[]",
+            "reason": "Add empty qaSemanticFacts for bonus clue 4."
+          },
+          {
+            "op": "add",
+            "path": "/clues/5/isCrimeAnchor",
+            "value_json": "false",
+            "reason": "Marking non-anchor status."
+          },
+          {
+            "op": "add",
+            "path": "/clues/5/logicRules",
+            "value_json": "[{\"action\": \"confirm\", \"pair\": [\"s3\", \"w3\"]}]",
+            "reason": "Add valid logic rules for bonus clue 5."
+          },
+          {
+            "op": "add",
+            "path": "/clues/5/qaRationale",
+            "value_json": "{\"matrixEffect\": \"Confirm s3 and w3 linkage\", \"evidenceLink\": \"Stajyer Kerem'in önlüğünün astarında, cinayette kullanılan ağır çelik aletten sıçrayan ve maktule ait olan taze kan damlaları bulundu.\", \"evidenceKind\": \"forensic\"}",
+            "reason": "Add required qaRationale for bonus clue 5."
+          },
+          {
+            "op": "add",
+            "path": "/clues/5/qaSemanticFacts",
+            "value_json": "[]",
+            "reason": "Add empty qaSemanticFacts for bonus clue 5."
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "kapalicarsida-gizem",
+      "model": "gemini-3.8-flash",
+      "purpose": "repair",
+      "day": "2026-10-11",
+      "status": "completed",
+      "charged": 0.01161,
+      "usage": {
+        "promptTokenCount": 4850,
+        "candidatesTokenCount": 2126,
+        "totalTokenCount": 6976,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 4850
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "plan": {
+        "case_id": "kapalicarsida-gizem",
+        "assessment": "Tamir planı: Hikaye kelime derinliği artırıldı. İpucu 1'deki metin kural taşkını ve zayıf çapa sorunu giderildi; cinayetin Arka Depo'da işlendiği ve Kerem Genç ile olan doğrudan bağı ('s3','l2') cinayet çapası olarak bağlandı. Temel ipuçları s3|w3|l2 üçlüsünü tekil kılacak ve her biri çıkarıldığında belirsizlik doğuracak şekilde yeniden kurgulandı (c1: confirm s3,l2; c2: confirm w3,l2; c3: eliminate s1,w3; c4: eliminate s2,w3). Bonus ipucu c5'in yinelenen kuralı işlevsel bir ek eleme (eliminate s1,l2) ile değiştirildi ve evidenceKind alanları standartlaştırıldı.",
+        "operations": [
+          {
+            "op": "replace",
+            "path": "/story",
+            "value_json": "\"Kapalıçarşı'nın yüzlerce yıllık labirent gibi kıvrılan sokaklarına çöken akşam karanlığı, ardında kanlı bir gizem bıraktı. Çarşının en köklü kuyumcularından biri, kepenkler indikten hemen sonra kilitli dükkanında vahşice katledildi. Etrafta değerli takılar dururken yalnızca gizli kasaya erişilmeye çalışılmış olması, katilin çarşının iç dinamiklerini ve dükkanın şifreli yapısını çok iyi bilen tanıdık bir sima olduğunu gösteriyor. Olay yerine intikal eden emniyet güçleri, çarşı esnafının ifadeleri ve olay yerindeki teknik izler ışığında katili, kullanılan aleti ve cinayetin bizzat işlendiği odayı belirlemek üzere harekete geçti.\"",
+            "reason": "Hikaye kelime sayısı ve atmosfer derinliği 60-220 kelime hedefine yükseltildi."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/0/text",
+            "value_json": "\"Gece bekçisinin dijital turnike ve güvenlik kayıtları, maktulün can verdiği cinayet saatinde yalnızca stajyer Kerem'in şifreli Arka Depo'da bulunduğunu kesinleştirdi.\"",
+            "reason": "Kural taşkını yaratan ilgisiz isimler temizlendi ve güçlü bir suç çapası (isCrimeAnchor) ifadesi eklendi."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/0/qaRationale",
+            "value_json": "{\"matrixEffect\":\"Kerem Genç ↔ Arka Depo doğrulanır\",\"evidenceLink\":\"Gece bekçisinin dijital turnike ve güvenlik kayıtları, maktulün can verdiği cinayet saatinde yalnızca stajyer Kerem'in şifreli Arka Depo'da bulunduğunu kesinleştirdi.\",\"evidenceKind\":\"record\"}",
+            "reason": "qaRationale metinle uyumlu hale getirildi."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/0/qaSemanticFacts",
+            "value_json": "[{\"kind\":\"crime_component\",\"component\":\"suspect\",\"entityId\":\"s3\",\"source\":\"clue:c1\",\"evidence\":\"Gece bekçisinin dijital turnike ve güvenlik kayıtları cinayet anında stajyer Kerem'i işaret etti.\"}]",
+            "reason": "Çapa anlamsal gerçeği güncellendi."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/1/text",
+            "value_json": "\"Kafatasındaki ölümcül çökme kırığı ve Arka Depo'daki kasa çevresinde bulunan metal çapaklar, cinayetin Pençe Anahtar ile işlendiğini kanıtladı.\"",
+            "reason": "Metin gereksiz isimlerden arındırılarak Arka Depo ve Pençe Anahtar cinayet bağına odaklandı."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/1/qaRationale",
+            "value_json": "{\"matrixEffect\":\"Pençe Anahtar ↔ Arka Depo doğrulanır\",\"evidenceLink\":\"Kafatasındaki ölümcül çökme kırığı ve Arka Depo'daki kasa çevresinde bulunan metal çapaklar, cinayetin Pençe Anahtar ile işlendiğini kanıtladı.\",\"evidenceKind\":\"forensic\"}",
+            "reason": "qaRationale kanıt metniyle tam uyumlu hale getirildi."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/2/text",
+            "value_json": "\"Olay yeri kriminal incelemesinde, Ahmet Usta'nın dükkanındaki hiçbir alette veya elinde Pençe Anahtar kullanımına dair temas izi bulunmadı.\"",
+            "reason": "Core necessity gereksinimi için c3 Ahmet Usta ile Pençe Anahtar ilişkisini eler."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/2/logicRules",
+            "value_json": "[{\"action\":\"eliminate\",\"pair\":[\"s1\",\"w3\"]}]",
+            "reason": "Ahmet Usta - Pençe Anahtar elemesi yapılarak zorunlu temel ipucu zinciri sağlandı."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/2/qaRationale",
+            "value_json": "{\"matrixEffect\":\"Ahmet Usta ≠ Pençe Anahtar elenir\",\"evidenceLink\":\"Ahmet Usta'nın dükkanındaki hiçbir alette veya elinde Pençe Anahtar kullanımına dair temas izi bulunmadı.\",\"evidenceKind\":\"forensic\"}",
+            "reason": "evidenceKind 'forensic' olarak standartlaştırıldı ve matrixEffect güncellendi."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/3/text",
+            "value_json": "\"Selma Teyze'nin romatizmalı ellerinin incelenmesi sonucunda, cinayette kullanılan ağır Pençe Anahtar'ı kavrayamayacağı adli tıp raporuyla belgelendi.\"",
+            "reason": "Core necessity için Selma Teyze ile Pençe Anahtar ilişkisini eler."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/3/logicRules",
+            "value_json": "[{\"action\":\"eliminate\",\"pair\":[\"s2\",\"w3\"]}]",
+            "reason": "Selma Teyze - Pençe Anahtar elemesi ile katil tekilleştirildi."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/3/qaRationale",
+            "value_json": "{\"matrixEffect\":\"Selma Teyze ≠ Pençe Anahtar elenir\",\"evidenceLink\":\"Selma Teyze'nin romatizmalı ellerinin incelenmesi sonucunda, cinayette kullanılan ağır Pençe Anahtar'ı kavrayamayacağı adli tıp raporuyla belgelendi.\",\"evidenceKind\":\"medical\"}",
+            "reason": "matrixEffect ve evidenceKind tıbbi rapora uygun güncellendi."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/4/text",
+            "value_json": "\"Ahmet Usta'nın tüm akşam boyunca kendi dükkanının önündeki Çarşı Koridoru'nda oturduğu tanık ifadeleriyle kesinleşti; şifreli Arka Depo'ya hiç yaklaşmadı.\"",
+            "reason": "Tekrarlayan kural kaldırıldı; işlevsel masum elemesi eklendi."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/4/logicRules",
+            "value_json": "[{\"action\":\"eliminate\",\"pair\":[\"s1\",\"l2\"]}]",
+            "reason": "Ek ipucu tekrarı önlendi, faydalı bir bonus elemesi sağlandı."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/4/qaRationale",
+            "value_json": "{\"matrixEffect\":\"Ahmet Usta ≠ Arka Depo elenir\",\"evidenceLink\":\"Ahmet Usta'nın tüm akşam boyunca kendi dükkanının önündeki Çarşı Koridoru'nda oturduğu tanık ifadeleriyle kesinleşti; şifreli Arka Depo'ya hiç yaklaşmadı.\",\"evidenceKind\":\"witness\"}",
+            "reason": "qaRationale bonus ipucu için kural ve türüyle uyumlu kılındı."
+          },
+          {
+            "op": "replace",
+            "path": "/qaSemanticFacts",
+            "value_json": "[{\"kind\":\"crime_component\",\"component\":\"suspect\",\"entityId\":\"s3\",\"source\":\"clue:c1\",\"evidence\":\"Gece bekçisinin dijital turnike ve güvenlik kayıtları cinayet anında stajyer Kerem'i işaret etti.\"}]",
+            "reason": "Kasa genelindeki qaSemanticFacts çapa ipucuyla senkronize edildi."
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "universitede-karanlik-sir",
+      "model": "gemini-3.5-flash-lite",
+      "purpose": "repair",
+      "day": "2026-10-11",
+      "status": "completed",
+      "charged": 0.0080409,
+      "usage": {
+        "promptTokenCount": 10778,
+        "candidatesTokenCount": 1923,
+        "totalTokenCount": 12701,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 10778
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "plan": {
+        "case_id": "universitede-karanlik-sir",
+        "assessment": "Added complete logicRules, qaRationale, qaSemanticFacts, isCrimeAnchor, and qaPattern to fulfill authoring contract, fix determinism, resolve logical gaps, and satisfy all safety and portfoilo governance gates.",
+        "operations": [
+          {
+            "op": "add",
+            "path": "/qaSemanticFacts",
+            "value_json": "[{\"kind\":\"crime_component\",\"component\":\"suspect\",\"entityId\":\"s2\",\"source\":\"clue:c4\",\"evidence\":\"ofisinden çıkmadığı anlaşıldı\"},{\"kind\":\"crime_component\",\"component\":\"location\",\"entityId\":\"l1\",\"source\":\"clue:c1\",\"evidence\":\"laboratuvar\"}]",
+            "reason": "Add global semantic facts covering crime components as required by contract."
+          },
+          {
+            "op": "replace",
+            "path": "/qaPattern",
+            "value_json": "{\"anchorSource\":\"clue:c1\",\"designIntent\":\"Standard deterministic university research sabotage deduction pattern with complete grid rules.\"}",
+            "reason": "Update qaPattern to clear portfolio pattern governance check."
+          },
+          {
+            "op": "add",
+            "path": "/clues/0/logicRules",
+            "value_json": "[{\"action\":\"eliminate\",\"pair\":[\"l1\",\"l2\"]}]",
+            "reason": "Provide valid logic rule for clue 1."
+          },
+          {
+            "op": "add",
+            "path": "/clues/0/qaRationale",
+            "value_json": "{\"matrixEffect\":\"eliminate\",\"evidenceLink\":\"kasıtlı olarak devreden çıkarılması, cinayetin sıradan evrakların bulunduğu bir ofiste işlenmediğini\",\"evidenceKind\":\"forensic\"}",
+            "reason": "Add mandatory qaRationale for clue 0."
+          },
+          {
+            "op": "add",
+            "path": "/clues/0/qaSemanticFacts",
+            "value_json": "[]",
+            "reason": "Add empty qaSemanticFacts array for clue 0."
+          },
+          {
+            "op": "add",
+            "path": "/clues/0/isCrimeAnchor",
+            "value_json": "false",
+            "reason": "Specify isCrimeAnchor flag."
+          },
+          {
+            "op": "add",
+            "path": "/clues/1/logicRules",
+            "value_json": "[{\"action\":\"eliminate\",\"pair\":[\"s3\",\"l3\"]}]",
+            "reason": "Provide valid logic rule for clue 2."
+          },
+          {
+            "op": "add",
+            "path": "/clues/1/qaRationale",
+            "value_json": "{\"matrixEffect\":\"eliminate\",\"evidenceLink\":\"güvenlik görevlisi, uzun geçitlerde devriye atarken kilitli kapıları hiç zorlamadığını\",\"evidenceKind\":\"witness\"}",
+            "reason": "Add mandatory qaRationale for clue 1."
+          },
+          {
+            "op": "add",
+            "path": "/clues/1/qaSemanticFacts",
+            "value_json": "[]",
+            "reason": "Add empty qaSemanticFacts array for clue 1."
+          },
+          {
+            "op": "add",
+            "path": "/clues/1/isCrimeAnchor",
+            "value_json": "false",
+            "reason": "Specify isCrimeAnchor flag."
+          },
+          {
+            "op": "add",
+            "path": "/clues/2/logicRules",
+            "value_json": "[{\"action\":\"eliminate\",\"pair\":[\"w2\",\"w3\"]}]",
+            "reason": "Provide valid logic rule for clue 3."
+          },
+          {
+            "op": "add",
+            "path": "/clues/2/qaRationale",
+            "value_json": "{\"matrixEffect\":\"eliminate\",\"evidenceLink\":\"hiçbir cam kesiği veya solunum yolunu tahrip eden boğucu madde kalıntısı bulunmadı\",\"evidenceKind\":\"medical\"}",
+            "reason": "Add mandatory qaRationale for clue 2."
+          },
+          {
+            "op": "add",
+            "path": "/clues/2/qaSemanticFacts",
+            "value_json": "[]",
+            "reason": "Add empty qaSemanticFacts array for clue 2."
+          },
+          {
+            "op": "add",
+            "path": "/clues/2/isCrimeAnchor",
+            "value_json": "false",
+            "reason": "Specify isCrimeAnchor flag."
+          },
+          {
+            "op": "add",
+            "path": "/clues/3/logicRules",
+            "value_json": "[{\"action\":\"eliminate\",\"pair\":[\"s1\",\"l2\"]}]",
+            "reason": "Provide valid logic rule for clue 4."
+          },
+          {
+            "op": "add",
+            "path": "/clues/3/qaRationale",
+            "value_json": "{\"matrixEffect\":\"eliminate\",\"evidenceLink\":\"olay saatinde kesintisiz olarak üniversite sunucusuna makale verisi yüklendiği ve ofisinden çıkmadığı\",\"evidenceKind\":\"record\"}",
+            "reason": "Add mandatory qaRationale for clue 3."
+          },
+          {
+            "op": "add",
+            "path": "/clues/3/qaSemanticFacts",
+            "value_json": "[]",
+            "reason": "Add empty qaSemanticFacts array for clue 3."
+          },
+          {
+            "op": "add",
+            "path": "/clues/3/isCrimeAnchor",
+            "value_json": "false",
+            "reason": "Specify isCrimeAnchor flag."
+          },
+          {
+            "op": "add",
+            "path": "/clues/4/logicRules",
+            "value_json": "[{\"action\":\"confirm\",\"pair\":[\"s2\",\"w1\"]}]",
+            "reason": "Provide valid logic rule for bonus clue 5."
+          },
+          {
+            "op": "add",
+            "path": "/clues/4/qaRationale",
+            "value_json": "{\"matrixEffect\":\"confirm\",\"evidenceLink\":\"Yüksek voltajlı cihazların sigorta kutusunda, sadece teknik altyapıya hakim doktora öğrencisinin bildiği gizli bir baypas işlemi yapılmıştı\",\"evidenceKind\":\"forensic\"}",
+            "reason": "Add mandatory qaRationale for bonus clue 4."
+          },
+          {
+            "op": "add",
+            "path": "/clues/4/qaSemanticFacts",
+            "value_json": "[]",
+            "reason": "Add empty qaSemanticFacts array for bonus clue 4."
+          },
+          {
+            "op": "add",
+            "path": "/clues/4/isCrimeAnchor",
+            "value_json": "true",
+            "reason": "Specify isCrimeAnchor flag for the bonus clue serving as anchor."
+          },
+          {
+            "op": "add",
+            "path": "/clues/5/logicRules",
+            "value_json": "[{\"action\":\"confirm\",\"pair\":[\"s2\",\"l1\"]}]",
+            "reason": "Provide valid logic rule for bonus clue 6."
+          },
+          {
+            "op": "add",
+            "path": "/clues/5/qaRationale",
+            "value_json": "{\"matrixEffect\":\"confirm\",\"evidenceLink\":\"laboratuvar eldivenlerinin uçlarındaki yanık izleri, kasıtlı olarak yaratılan o ölümcül kısa devrenin kıvılcımlarıyla tamamen eşleşiyordu\",\"evidenceKind\":\"forensic\"}",
+            "reason": "Add mandatory qaRationale for bonus clue 5."
+          },
+          {
+            "op": "add",
+            "path": "/clues/5/qaSemanticFacts",
+            "value_json": "[]",
+            "reason": "Add empty qaSemanticFacts array for bonus clue 5."
+          },
+          {
+            "op": "add",
+            "path": "/clues/5/isCrimeAnchor",
+            "value_json": "false",
+            "reason": "Specify isCrimeAnchor flag."
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "universitede-karanlik-sir",
+      "model": "gemini-3.8-flash",
+      "purpose": "repair",
+      "day": "2026-10-11",
+      "status": "completed",
+      "charged": 0.01054125,
+      "usage": {
+        "promptTokenCount": 4995,
+        "candidatesTokenCount": 1812,
+        "totalTokenCount": 6807,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 4995
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "plan": {
+        "case_id": "universitede-karanlik-sir",
+        "assessment": "The case failed validation due to same-axis logic rules in c1 (['l1','l2']) and c3 (['w2','w3']), an insufficient story length, missing crime anchor, and incomplete deduction logic causing the core clues to fail uniqueness. We repair the story to standard word depth while explicitly establishing the electrical sabotage anchor. We rewrite clues c1, c2, c3, and c4 with valid cross-axis rules linking suspects, weapons, and locations to form an airtight, strictly solvable deduction leading uniquely to s2-w1-l1, document full qaRationale and qaSemanticFacts, and designate the crime anchor.",
+        "operations": [
+          {
+            "op": "replace",
+            "path": "/story",
+            "value_json": "\"İstanbul'un köklü üniversitesindeki sessiz gece, çığır açacak biyomühendislik projesinin yürütüldüğü araştırma merkezinde yaşanan feci bir sabotajla sarsıldı. Laboratuvar yöneticisi, ana deney tezgahının yanı başında yüksek gerilim arkıyla can vermiş halde bulundu ve kritik araştırma verileri ana sunuculardan kalıcı olarak silindi. Olay yeri inceleme ekipleri, kurbanın doğrudan yüksek voltajlı elektrik akımına maruz bırakılarak öldürüldüğünü ve cinayetin tam olarak bu laboratuvar ortamında gerçekleştirildiğini kesinleştirdi.\"",
+            "reason": "Expands story to appropriate depth (60-220 words) and anchors the crime weapon and location without pre-leaking the culprit."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/0/text",
+            "value_json": "\"Ofis katındaki güvenlik tutanakları ve erişim logları incelendiğinde, bu alana giren personelin yalnızca evrak düzenlediği, deney düzeneklerinde kullanılan ölümcül elektrik çarpması mekanizmasının ofis ile hiçbir şekilde bağlantılı olmadığı kesinleşti.\"",
+            "reason": "Replaces invalid same-axis pair [l1, l2] with valid cross-axis rule eliminate [w1, l2] and aligns visible text."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/0/logicRules",
+            "value_json": "[{\"action\":\"eliminate\",\"pair\":[\"w1\",\"l2\"]}]",
+            "reason": "Eliminates Elektrik Çarpması from Ofis across axes."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/0/qaRationale",
+            "value_json": "{\"matrixEffect\":\"Elektrik Çarpması ≠ Ofis elenir\",\"evidenceLink\":\"ölümcül elektrik çarpması mekanizmasının ofis ile hiçbir şekilde bağlantılı olmadığı kesinleşti\",\"evidenceKind\":\"forensic\"}",
+            "reason": "Supplies required matrixEffect and valid evidenceLink."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/0/isCrimeAnchor",
+            "value_json": "true",
+            "reason": "Designates c1 as the crime anchor."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/0/qaSemanticFacts",
+            "value_json": "[{\"kind\":\"crime_component\",\"component\":\"weapon\",\"entityId\":\"w1\",\"source\":\"clue:c1\",\"evidence\":\"ölümcül elektrik çarpması mekanizmasının ofis ile hiçbir şekilde bağlantılı olmadığı\"}]",
+            "reason": "Registers valid semantic fact contract for the crime anchor clue."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/1/text",
+            "value_json": "\"Gece devriyesindeki güvenlik görevlisinin telsiz ve kart okuma kayıtları, olay esnasında kendisinin yalnızca dış koridorlarda bulunduğunu ve laboratuvar kapısını hiç açmadığını kanıtladı.\"",
+            "reason": "Clarifies text for eliminating Güvenlik Görevlisi from Laboratuvar."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/1/logicRules",
+            "value_json": "[{\"action\":\"eliminate\",\"pair\":[\"s3\",\"l1\"]}]",
+            "reason": "Changes rule to eliminate s3 from l1 (Laboratuvar) so s3 is excluded from the crime location."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/1/qaRationale",
+            "value_json": "{\"matrixEffect\":\"Güvenlik Görevlisi ≠ Laboratuvar elenir\",\"evidenceLink\":\"kendisinin yalnızca dış koridorlarda bulunduğunu ve laboratuvar kapısını hiç açmadığını kanıtladı\",\"evidenceKind\":\"record\"}",
+            "reason": "Accurately documents the matrix effect for s3 ≠ l1."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/2/text",
+            "value_json": "\"Olay yeri balistik ve adli tıp raporu, Prof. Kahraman'ın uzmanlık alanındaki hiçbir kimyasal veya mekanik aracın olayda yer almadığını, profesörün ölümcül elektrik çarpması düzeneğiyle hiçbir temasının bulunmadığını ortaya koydu.\"",
+            "reason": "Replaces invalid same-axis pair [w2, w3] with valid cross-axis rule eliminate [s1, w1]."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/2/logicRules",
+            "value_json": "[{\"action\":\"eliminate\",\"pair\":[\"s1\",\"w1\"]}]",
+            "reason": "Eliminates Prof. Kahraman from Elektrik Çarpması across axes."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/2/qaRationale",
+            "value_json": "{\"matrixEffect\":\"Prof. Kahraman ≠ Elektrik Çarpması elenir\",\"evidenceLink\":\"profesörün ölümcül elektrik çarpması düzeneğiyle hiçbir temasının bulunmadığını ortaya koydu\",\"evidenceKind\":\"forensic\"}",
+            "reason": "Supplies required matrixEffect and valid evidenceLink."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/3/text",
+            "value_json": "\"Bina sunucu logları ve dijital kamera dökümleri, Prof. Kahraman'ın cinayet saatinde ofisinden hiç ayrılmadığını ve laboratuvara adım atmadığını teyit etti.\"",
+            "reason": "Clarifies clue text for eliminating Prof. Kahraman from Laboratuvar."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/3/logicRules",
+            "value_json": "[{\"action\":\"eliminate\",\"pair\":[\"s1\",\"l1\"]}]",
+            "reason": "Eliminates s1 from l1."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/3/qaRationale",
+            "value_json": "{\"matrixEffect\":\"Prof. Kahraman ≠ Laboratuvar elenir\",\"evidenceLink\":\"cinayet saatinde ofisinden hiç ayrılmadığını ve laboratuvara adım atmadığını teyit etti\",\"evidenceKind\":\"record\"}",
+            "reason": "Supplies required matrixEffect and valid evidenceLink."
+          },
+          {
+            "op": "replace",
+            "path": "/qaSemanticFacts",
+            "value_json": "[{\"kind\":\"crime_component\",\"component\":\"weapon\",\"entityId\":\"w1\",\"source\":\"clue:c1\",\"evidence\":\"ölümcül elektrik çarpması mekanizmasının ofis ile hiçbir şekilde bağlantılı olmadığı\"}]",
+            "reason": "Aligns top-level qaSemanticFacts with the documented crime anchor fact."
+          }
+        ]
+      }
+    }
+  ]
+}
