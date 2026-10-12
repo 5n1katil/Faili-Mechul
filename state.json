@@ -9450,7 +9450,7 @@
       }
     },
     "adada-buyuk-gizem": {
-      "spent": 0.0217614,
+      "spent": 0.003502700000000001,
       "feedback": [],
       "source_hash": "89a454678038224ff04b0ebd9f6ecfd17d77fe7531ccc274b452ea203942b823",
       "simulator_hash": "0e27218c7817862f371febb6b7bb865821d9e5da",
@@ -13061,10 +13061,58 @@
       "model": "gemini-3.5-flash-lite",
       "purpose": "repair",
       "day": "2026-10-12",
-      "status": "reserved",
-      "charged": 0.0217614,
-      "repair_method": "verified_text_v1"
+      "status": "completed",
+      "charged": 0.0035026999999999997,
+      "repair_method": "verified_text_v1",
+      "usage": {
+        "promptTokenCount": 3684,
+        "candidatesTokenCount": 959,
+        "totalTokenCount": 4643,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 3684
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "plan": {
+        "case_id": "adada-buyuk-gizem",
+        "assessment": "Validdeductionmystery.",
+        "story": "Büyükada'da yaz tatilinin huzuru, lüks bir villada işlenen esrarengiz bir cinayetle paramparça oldu. Adayı anakaraya bağlayan tüm feribot seferleri olumsuz hava koşulları nedeniyle iptal edilince, katil kurbanıyla aynı adada mahsur kaldı. Savcılık, soruşturmayı derinleştirmek ve adadaki herkesin konumunu netleştirmek için kapsamlı bir inceleme başlatırken, her şüphelinin aynı zaman aralığında farklı bir noktada bulunduğunu ve farklı yöntemlere eriştiğini tespit etti. Soruşturma ekibi, ölümcül aracın ve suçlunun kimliğini bulmak için delilleri titizlikle inceliyor.",
+        "suspect_descriptions": {
+          "s1": "Sabahları erken uyanıp yürüyüş yapan, disiplinli ve sert mizaçlı villa komşusu. Çevresindekilere mesafeli durur, kurallara son derece bağlı bir yaşam sürer.",
+          "s2": "Bütün yazını adada manzara resimleri çizerek geçiren, sessiz ve içine kapanık sanatçı. Günlerini genellikle atölyesinde veya dışarıda boya yaparak geçirir.",
+          "s3": "Özel sürat teknesiyle adaya yeni gelen, fevri hareketleri olan gizemli misafir. Hızlı kararlar alan ve kimseye hesap vermeyen yapısıyla dikkat çeker."
+        },
+        "clues": {
+          "c1": {
+            "text": "Olay gecesi yapılan detaylı eşya envanteri incelemesinde, sessiz sanatçının adadaki bu ortak zaman aralığında, kalın denizci ipine hiçbir şekilde dokunmadığı, onu depodan almadığı veya kullanmadığı kayıtlara geçmiştir.",
+            "deductionHint": "Sanatçının kalın denizci ipiyle bağı olmadığını gösteren bu kaydı nasıl değerlendirirsiniz?"
+          },
+          "c2": {
+            "text": "Görgü tanıklarının ifadeleri ve akşam saatlerindeki sahil denetim raporları, doğal bitkilerden elde edilen sinsi bitki toksininin, dalgaların vurduğu uzun sahil yolunda bulunduğunu doğrulamaktadır.",
+            "deductionHint": "Zehir ile sahil şeridi arasındaki bu tanık doğrulaması neye işaret ediyor?"
+          },
+          "c3": {
+            "text": "Adadaki resmi mühürlü kilitli dolap kayıtları ve adli tıp raporu, ölümcül kompresyona ve boğulmaya neden olan suç unsurunun kesinlikle listedeki kalın denizci ipi olduğunu, ayrıca disiplinli villa komşusunun bu zaman aralığında bu ipi kesinlikle kullanmadığını kanıtlar.",
+            "deductionHint": "Ölümcül aracın ip olduğu ve komşunun buna erişmediği nasıl kanıtlanıyor?"
+          },
+          "c4": {
+            "text": "Güvenlik birimlerinin tuttuğu resmi olay yeri kayıtları, yakından ateşlendiğinde korkunç ses çıkaran çift namlulu ateşli silahın, uçurum kenarındaki sarp alanda bulunduğunu doğrulamaktadır.",
+            "deductionHint": "Ateşli silah ile kayalık arasındaki bu resmi kayıt neyi kanıtlar?"
+          },
+          "c5": {
+            "text": "Resmi arşiv kayıtları, disiplinli villa komşusunun dolapta saklanan çift namlulu ateşli silahı olay zaman aralığında yanında bulundurduğunu ve eriştiğini doğrulamaktadır.",
+            "deductionHint": "Albay ile av tüfeği arasındaki bu eşleşme nasıl bir yön gösteriyor?"
+          },
+          "c6": {
+            "text": "Güvenilir görgü tanıkları, sessiz sanatçının belirtilen kritik zaman aralığında dalgaların vurduğu uzun sahil yolunda vakit geçirdiğini açıkça doğrulamaktadır.",
+            "deductionHint": "Leyla'nın sahil şeridindeki konumu soruşturmayı nasıl etkiler?"
+          }
+        }
+      }
     }
   },
-  "campaign_spent": 0.20106040000000003
+  "campaign_spent": 0.18280170000000004
 }
