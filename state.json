@@ -9450,7 +9450,7 @@
       }
     },
     "adada-buyuk-gizem": {
-      "spent": 0.003502700000000001,
+      "spent": 0.04313645000000001,
       "feedback": [],
       "source_hash": "89a454678038224ff04b0ebd9f6ecfd17d77fe7531ccc274b452ea203942b823",
       "simulator_hash": "0e27218c7817862f371febb6b7bb865821d9e5da",
@@ -13231,7 +13231,16 @@
           }
         }
       }
+    },
+    "94c52e225e8704c7ebbda5cb570fdebbdf422ab2f80a12db58fd485b0bd47137": {
+      "case_id": "adada-buyuk-gizem",
+      "model": "gemini-3.8-flash",
+      "purpose": "repair",
+      "day": "2026-10-12",
+      "status": "reserved",
+      "charged": 0.03963375,
+      "repair_method": "verified_text_v1"
     }
   },
-  "campaign_spent": 0.18280170000000004
+  "campaign_spent": 0.22243545000000003
 }
