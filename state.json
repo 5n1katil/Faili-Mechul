@@ -9450,7 +9450,7 @@
       }
     },
     "adada-buyuk-gizem": {
-      "spent": 0,
+      "spent": 0.0217614,
       "feedback": [],
       "source_hash": "89a454678038224ff04b0ebd9f6ecfd17d77fe7531ccc274b452ea203942b823",
       "simulator_hash": "0e27218c7817862f371febb6b7bb865821d9e5da",
@@ -13055,7 +13055,16 @@
           "s3": "Gelecek ay açılacak yeni sergi turunun tanıtım sorumluluğunu üstlenmeyi amaçlıyor."
         }
       }
+    },
+    "4a9771308081948241eec7d85702c5e59a657ed39c51460cba091e0a02cc2257": {
+      "case_id": "adada-buyuk-gizem",
+      "model": "gemini-3.5-flash-lite",
+      "purpose": "repair",
+      "day": "2026-10-12",
+      "status": "reserved",
+      "charged": 0.0217614,
+      "repair_method": "verified_text_v1"
     }
   },
-  "campaign_spent": 0.17929900000000001
+  "campaign_spent": 0.20106040000000003
 }
