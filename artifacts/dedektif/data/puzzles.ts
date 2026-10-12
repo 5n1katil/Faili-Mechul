@@ -514,36 +514,127 @@ export const PUZZLES: Puzzle[] = [
     title: "Adada Büyük Gizem",
     difficulty: "caylak",
     dayIndex: 7,
-    story:
-      "Büyükada'da yaz tatilinin huzuru, lüks bir villada işlenen cinayetle paramparça oldu. Adayı anakaraya bağlayan feribot seferleri iptal edilince, katil kurbanıyla aynı adada mahsur kaldı.",
+    story: "Büyükada'da yaz sezonunun en sakin gününde, adanın tanınmış simalarından birinin ani ve şüpheli ölümü ada halkını dehşete düşürdü. Fırtına sebebiyle ana karaya yapılan tüm deniz seferleri durdurulunca, cinayetin sorumlusunun halen adada mahsur kaldığı kesinleşti. Savcılık olayla ilgili titiz bir soruşturma başlattı. Elde edilen ilk bulgulara göre, cinayetin işlendiği kritik zaman diliminde şüphelilerin her birinin listede yer alan farklı bir noktada bulunduğu ve farklı bir vasıtaya erişim sağladığı tespit edildi. Dedektifler şimdi ölümcül yöntemin kesinleştiği bu tabloda, kullanılan aracın taşıyıcısını ve ait olduğu alanı kanıtlarla bir araya getirmeye çalışıyor.",
     suspects: [
-      { id: "s1", name: "Emekli Albay", description: "Sabahları erken uyanıp yürüyüş yapan, disiplinli ve sert mizaçlı villa komşusu.", icon: "pa:adada_s1" },
-      { id: "s2", name: "Ressam Leyla", description: "Bütün yazını adada manzara resimleri çizerek geçiren, sessiz ve içine kapanık sanatçı.", icon: "pa:adada_s2" },
-      { id: "s3", name: "Genç Yatçı", description: "Özel sürat teknesiyle adaya yeni gelen, fevri hareketleri olan gizemli misafir.", icon: "pa:adada_s3" },
+      {
+        id: "s1",
+        name: "Emekli Albay",
+        description: "Günün ilk ışıklarıyla yürüyüşe çıkan, dik duruşlu ve mesafeli eski asker. Gri bıyıkları, muntazam ütülü kıyafetleri ve nizamı önceleyen soğukkanlı tavırlarıyla çevresindekileri dikkatle süzer.",
+        icon: "pa:adada_s1"
+      },
+      {
+        id: "s2",
+        name: "Ressam Leyla",
+        description: "Mevsimi açık havada tual başında geçiren, sessiz ve gözlemci sanatçı. Üzerindeki keten önlüğü, lekeli parmakları ve etrafındaki olaylara karşı dalgın ama dikkatli bakışlarıyla tanınır.",
+        icon: "pa:adada_s2"
+      },
+      {
+        id: "s3",
+        name: "Genç Yatçı",
+        description: "Hızlı deniz araçlarıyla yeni gelmiş, sabırsız ve hareketli genç konuk. Güneşten yanmış teni, sportif kıyafetleri ve kurallara aldırış etmeyen fevri mizacıyla dikkatleri üzerine çeker.",
+        icon: "pa:adada_s3"
+      }
     ],
     weapons: [
-      { id: "w1", name: "Av Tüfeği", description: "Dolapta saklanan, yakından ateşlendiğinde korkunç ses çıkaran çift namlulu ateşli silah.", icon: "pa:adada_w1" },
-      { id: "w2", name: "Zehir", description: "Doğal bitkilerden elde edilen, yiyeceklere karıştırılan sinsi bitki toksini.", icon: "pa:adada_w2" },
-      { id: "w3", name: "Gemi Halatı", description: "Tekneleri iskeleye bağlamak için kullanılan, son derece sağlam ve kalın denizci ipi.", icon: "pa:adada_w3" },
+      {
+        id: "w1",
+        name: "Av Tüfeği",
+        description: "Dolapta saklanan, yakından ateşlendiğinde korkunç ses çıkaran çift namlulu ateşli silah.",
+        icon: "pa:adada_w1"
+      },
+      {
+        id: "w2",
+        name: "Zehir",
+        description: "Doğal bitkilerden elde edilen, yiyeceklere karıştırılan sinsi bitki toksini.",
+        icon: "pa:adada_w2"
+      },
+      {
+        id: "w3",
+        name: "Gemi Halatı",
+        description: "Tekneleri iskeleye bağlamak için kullanılan, son derece sağlam ve kalın denizci ipi.",
+        icon: "pa:adada_w3"
+      }
     ],
     locations: [
-      { id: "l1", name: "Villa Bahçesi", description: "Akdeniz bitkileri ve yüzme havuzuyla süslü, dışarıdan izole edilmiş geniş peyzaj alanı.", icon: "pa:adada_l1" },
-      { id: "l2", name: "Sahil Şeridi", description: "Deniz dalgalarının vurduğu, insanların yürüyüş yaptığı uzun sahil yolu.", icon: "pa:adada_l2" },
-      { id: "l3", name: "Kayalık", description: "Adanın güney ucundaki, manzarası güzel ancak uçurum kenarında yer alan sarp alan.", icon: "pa:adada_l3" },
+      {
+        id: "l1",
+        name: "Villa Bahçesi",
+        description: "Akdeniz bitkileri ve yüzme havuzuyla süslü, dışarıdan izole edilmiş geniş peyzaj alanı.",
+        icon: "pa:adada_l1"
+      },
+      {
+        id: "l2",
+        name: "Sahil Şeridi",
+        description: "Deniz dalgalarının vurduğu, insanların yürüyüş yaptığı uzun sahil yolu.",
+        icon: "pa:adada_l2"
+      },
+      {
+        id: "l3",
+        name: "Kayalık",
+        description: "Adanın güney ucundaki, manzarası güzel ancak uçurum kenarında yer alan sarp alan.",
+        icon: "pa:adada_l3"
+      }
     ],
     clues: [
-      { id: "c1", text: "Cinayet sahil şeridinde veya sarp kayalıklarda işlenmedi; kurbanın bedeni villanın dışa kapalı peyzaj alanında bulundu.", type: "evidence", isBonus: false },
-      { id: "c2", text: "Emekli Albay'ın sabah yürüyüşünü deniz dalgalarının vurduğu sahil yolunda yaptığı ve villaya hiç yaklaşmadığı anlaşıldı.", type: "witness", isBonus: false },
-      { id: "c3", text: "Ressam Leyla, tüm sabahı uçurum kenarındaki sarp kayalıklarda resim çizerek geçirdiğini taslaklarıyla kanıtladı.", type: "witness", isBonus: false },
-      { id: "c4", text: "Otopsi raporu, kurbanın bir ateşli silahla vurulmadığını veya bitkisel bir toksinle zehirlenmediğini açıkça ortaya koydu.", type: "forensic", isBonus: false },
-      { id: "c5", text: "Olay yerindeki kalın denizci ipinin, adaya yeni gelen gizemli misafirin teknesinden söküldüğü tespit edildi.", type: "evidence", isBonus: true },
-      { id: "c6", text: "Villa havuzunun kenarındaki çamurlu izler, Genç Yatçı'nın özel tasarım ayakkabılarıyla kusursuz bir eşleşme sağladı.", type: "forensic", isBonus: true },
+      {
+        id: "c1",
+        text: "Atölye girişindeki güvenlik kamerası bantları ve malzeme dolabı mühür kayıtları incelendi. İlgili zaman aralığında, tual başında çalışan sessiz sanatçının tekneleri iskeleye bağlamakta kullanılan kalın denizci ipine hiçbir temasının bulunmadığı teyit edildi.",
+        type: "evidence",
+        isBonus: false,
+        deductionHint: "Kayıtlar, atölyesinde boya yapan sanatçının hangi aracı elinde bulundurmadığını gösteriyor olabilir mi?"
+      },
+      {
+        id: "c2",
+        text: "Kritik zaman aralığında devriye gezen güvenlik görevlisinin tuttuğu kontrol tutanağına göre, doğal bitkilerden elde edilen sinsi toksin şişesi, dalgaların vurduğu uzun yürüyüş yolundaki bir bankın üzerinde tespit edilmiştir.",
+        type: "witness",
+        isBonus: false,
+        deductionHint: "Denetim raporu, bitkisel maddenin tam olarak hangi yürüyüş güzergâhında bulunduğunu ortaya koyuyor olabilir mi?"
+      },
+      {
+        id: "c3",
+        text: "Adli tıp raporu, kurbandaki ölümcül boğulma izlerinin doğrudan tekneleri iskeleye bağlamak için kullanılan kalın denizci ipiyle oluştuğunu kesinleştirdi. Eş zamanlı parmak izi analizleri ve nöbet kütüğü, nizamına düşkün eski askerin bu ipe kesinlikle erişmediğini kanıtladı.",
+        type: "forensic",
+        isBonus: false,
+        deductionHint: "Cinayette kullanılan ölümcül aracın kesinleşmesi, eski askeri hangi yöntemden tamamen muaf tutar?"
+      },
+      {
+        id: "c4",
+        text: "Bölge gözetleme istasyonunun kayıt kütüğüne göre, çift namlulu ateşli silahın cinayet anında adanın güney ucundaki uçurum kenarında yer alan sarp alanda korunaklı bir çantada durduğu belgelendi.",
+        type: "record",
+        isBonus: false,
+        deductionHint: "Gözetleme kütüğü, çift namlulu ateşli silah ile sarp manzara noktası arasında nasıl bir bağ kuruyor?"
+      },
+      {
+        id: "c5",
+        text: "Emekli Albay'ın odasındaki malzeme zimmet tutanağı, ilgili zaman aralığında kendisinin Av Tüfeği ile birlikte olduğunu ve bu silahın sorumluluğunu taşıdığını kesinleştirmiştir.",
+        type: "record",
+        isBonus: true,
+        deductionHint: "Bu kayıt Emekli Albay ile Av Tüfeği arasındaki doğrudan ilişkiyi doğrular mı?"
+      },
+      {
+        id: "c6",
+        text: "Yürüyüş yolundaki çay bahçesi işletmecisinin ifadesine göre Ressam Leyla, cinayetin işlendiği saatlerde Sahil Şeridi üzerinde otururken görülmüştür.",
+        type: "witness",
+        isBonus: true,
+        deductionHint: "Tanık ifadesi Ressam Leyla'nın Sahil Şeridi'nde bulunduğunu gösteriyor mu?"
+      }
     ],
     solvabilityMeta: {
-      freeEliminations: ["w1", "w2", "s1", "l2", "s2", "l3"],
-      bonusEliminations: [],
+      freeEliminations: [
+        "w1",
+        "w2",
+        "s1",
+        "l2",
+        "s2",
+        "l3"
+      ],
+      bonusEliminations: []
     },
-    solution: { suspectId: "s3", weaponId: "w3", locationId: "l1" },
+    solution: {
+      suspectId: "s3",
+      weaponId: "w3",
+      locationId: "l1"
+    }
   },
   {
     id: "tren-yolculugunda-cinayet",
