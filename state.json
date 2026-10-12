@@ -9450,7 +9450,7 @@
       }
     },
     "adada-buyuk-gizem": {
-      "spent": 0.050420450000000006,
+      "spent": 0.01580345000000001,
       "feedback": [],
       "source_hash": "89a454678038224ff04b0ebd9f6ecfd17d77fe7531ccc274b452ea203942b823",
       "simulator_hash": "0e27218c7817862f371febb6b7bb865821d9e5da",
@@ -13334,9 +13334,32 @@
       "model": "gemini-3.8-flash",
       "purpose": "judge",
       "day": "2026-10-12",
-      "status": "reserved",
-      "charged": 0.038067
+      "status": "completed",
+      "charged": 0.00345,
+      "usage": {
+        "promptTokenCount": 3785,
+        "candidatesTokenCount": 163,
+        "totalTokenCount": 3948,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 3785
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "plan": {
+        "scores": {
+          "fairness": 5,
+          "clarity": 5,
+          "consistency": 5,
+          "originality": 4,
+          "engagement": 4
+        },
+        "issues": [],
+        "summary": "Vaka çaylak seviyesi için kusursuz bir mantıksal kurguya sahip. İpuçları (c1-c4) doğrudan kart metinlerindeki tanımlayıcı ifadeleri kullanarak hiçbir varsayıma gerek bırakmadan tekil çözümü (Genç Yatçı - Gemi Halatı - Villa Bahçesi) net bir şekilde kanıtlıyor. Anlatım açık, çelişkisiz ve amaca uygun şekilde dengeli."
+      }
     }
   },
-  "campaign_spent": 0.22971945000000005
+  "campaign_spent": 0.19510245000000004
 }
