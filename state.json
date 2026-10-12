@@ -9450,7 +9450,7 @@
       }
     },
     "adada-buyuk-gizem": {
-      "spent": 0.010818200000000007,
+      "spent": 0.040215200000000006,
       "feedback": [],
       "source_hash": "89a454678038224ff04b0ebd9f6ecfd17d77fe7531ccc274b452ea203942b823",
       "simulator_hash": "0e27218c7817862f371febb6b7bb865821d9e5da",
@@ -13288,7 +13288,15 @@
           }
         }
       }
+    },
+    "cd8736d346c0e3a2ca385c4f9d3e6f591fbaaad4ee6a2487f1faef90e6bad7a4": {
+      "case_id": "adada-buyuk-gizem",
+      "model": "gemini-3.8-flash",
+      "purpose": "player",
+      "day": "2026-10-12",
+      "status": "reserved",
+      "charged": 0.029397
     }
   },
-  "campaign_spent": 0.19011720000000004
+  "campaign_spent": 0.21951420000000005
 }
