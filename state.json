@@ -9450,7 +9450,7 @@
       }
     },
     "adada-buyuk-gizem": {
-      "spent": 0.040215200000000006,
+      "spent": 0.012353450000000005,
       "feedback": [],
       "source_hash": "89a454678038224ff04b0ebd9f6ecfd17d77fe7531ccc274b452ea203942b823",
       "simulator_hash": "0e27218c7817862f371febb6b7bb865821d9e5da",
@@ -13294,9 +13294,41 @@
       "model": "gemini-3.8-flash",
       "purpose": "player",
       "day": "2026-10-12",
-      "status": "reserved",
-      "charged": 0.029397
+      "status": "completed",
+      "charged": 0.00153525,
+      "usage": {
+        "promptTokenCount": 1037,
+        "candidatesTokenCount": 202,
+        "totalTokenCount": 1239,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 1037
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "plan": {
+        "unique_solution": true,
+        "solution": {
+          "suspectId": "s3",
+          "weaponId": "w3",
+          "locationId": "l1"
+        },
+        "confidence": 100,
+        "evidence": [
+          {
+            "clue_id": "c3",
+            "quote": "Adli tıp raporu, kurbandaki ölümcül boğulma izlerinin doğrudan tekneleri iskeleye bağlamak için kullanılan kalın denizci ipiyle oluştuğunu kesinleştirdi."
+          },
+          {
+            "clue_id": "c1",
+            "quote": "tual başında çalışan sessiz sanatçının tekneleri iskeleye bağlamakta kullanılan kalın denizci ipine hiçbir temasının bulunmadığı teyit edildi."
+          }
+        ],
+        "issues": []
+      }
     }
   },
-  "campaign_spent": 0.21951420000000005
+  "campaign_spent": 0.19165245000000006
 }
