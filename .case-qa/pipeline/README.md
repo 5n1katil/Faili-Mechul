@@ -427,6 +427,27 @@ hatası, reserved kayıt ve transport öncesi save çağrısı; commit
 yaşam boyu sınırlar artırılmaz. Sonraki Müze pilotu önceki oyuncu cevabını
 cache'den alıp henüz yapılmamış editör kontrolüne ilerler.
 
+### Geçmiş testlerin sabit bağlamı
+
+İlk gerçek kabul run 38294256290: Adada Büyük Gizem 100, kör oyuncu %100 güvenle
+doğru çözüm, editör 5/5/5/4/4 ve issues boş. Dört gerçek çağrı $0.01580345 tuttu;
+uygulama kontrolleri geçti ve PR #94 açıldı. Ardındaki salt-okunur certifier,
+eski Müze fixture'ına güncel portfolio enjekte eden regression testinde durdu.
+
+Geçmiş ücretli istek hash'leri üretildikleri envanter ve karşılaştırma hikâyelerine
+bağlıdır. `historical-portfolio-20261011.json` bunları immutable commit
+03f4b073e335712b1a40a5281fec646d05aeaf4f üzerinden saklar. Regression replays
+bu sabit bağlamı kullanır; güncel gerçek envanter/QA/certificate kontrolü önce
+çalışır ve projection/scope testleri güncel dosyalardan yeniden import eder.
+Yeni kabul veya yeni intake geçmiş cache testlerinin girdisini değiştirmemelidir.
+Canlı recovery, provider, simulator, eşik ve harcama kuralları değişmemiştir.
+
+Test düzeltmesi main'e birleşince aynı Adada pilotu kayıtlı 100 adayını ve geçerli
+review sertifikasını yeniden kullanabilir; yeniden yazım/değerlendirme çağrısı
+gerekmez. Yeni main base SHA'sı için yeni oyun PR'ı ve ücretsiz certifier açılır.
+Eski PR #94 yeni PR yerine birleştirilmemelidir. Tamamlanmış vaka için yeni
+ücretli hak açmak veya geçmişi temizlemek gerekmez.
+
 ### Canlı editoryal ret ve alan koruma
 
 Run 38169382703'te rezervasyon kurtarma çalıştı. Müze için oyuncu doğru üçlüyü
