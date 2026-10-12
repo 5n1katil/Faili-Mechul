@@ -10863,7 +10863,44 @@
         ]
       },
       "candidate_hash": "44eb31f6981e5f75a8310210415fde9c824b397e7a7d4b850c186f7650af81ae",
-      "best_score": 100
+      "best_score": 100,
+      "failures": [],
+      "review": {
+        "schema": "fm_case_review_v1",
+        "review_hash": "531f8973ddc1317aa7de8dedc91921f94aa62a1bd1225c37d4fe829796a48143",
+        "player": {
+          "unique_solution": true,
+          "solution": {
+            "suspectId": "s3",
+            "weaponId": "w3",
+            "locationId": "l1"
+          },
+          "confidence": 100,
+          "evidence": [
+            {
+              "clue_id": "c3",
+              "quote": "Adli tıp raporu, kurbandaki ölümcül boğulma izlerinin doğrudan tekneleri iskeleye bağlamak için kullanılan kalın denizci ipiyle oluştuğunu kesinleştirdi."
+            },
+            {
+              "clue_id": "c1",
+              "quote": "tual başında çalışan sessiz sanatçının tekneleri iskeleye bağlamakta kullanılan kalın denizci ipine hiçbir temasının bulunmadığı teyit edildi."
+            }
+          ],
+          "issues": []
+        },
+        "judge": {
+          "scores": {
+            "fairness": 5,
+            "clarity": 5,
+            "consistency": 5,
+            "originality": 4,
+            "engagement": 4
+          },
+          "issues": [],
+          "summary": "Vaka çaylak seviyesi için kusursuz bir mantıksal kurguya sahip. İpuçları (c1-c4) doğrudan kart metinlerindeki tanımlayıcı ifadeleri kullanarak hiçbir varsayıma gerek bırakmadan tekil çözümü (Genç Yatçı - Gemi Halatı - Villa Bahçesi) net bir şekilde kanıtlıyor. Anlatım açık, çelişkisiz ve amaca uygun şekilde dengeli."
+        }
+      },
+      "status": "ready_for_gates"
     }
   },
   "requests": {
