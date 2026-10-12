@@ -36,6 +36,9 @@ const currentPolicy = read('.case-qa/pipeline/policy.json'), policy = clone(curr
 // Historical paid-cache fixtures must replay their original v1 wire contract.
 // The v2 production contract and orchestration are exercised explicitly below.
 policy.review.prompt_version = 'fm-player-review-v1';
+// Replays must use the recorded portfolio, not newly accepted production cases.
+const historicalContext = read('.case-qa/fixtures/historical-portfolio-20261011.json');
+const historicalRegistry = historicalContext.registry;
 const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'fm-pipeline-'));
 let passed = 0;
 const test = async (name, fn) => { await fn(); passed++; console.log('ok ' + passed + ' - ' + name); };
@@ -55,7 +58,19 @@ try {
     assert.equal(rows.length, snapshot.inventory.cases.length);
     for (const id of ['rc_001', 'pp_001']) assert.equal(rows.find(r => r.id === id).passed, true);
     assert.ok(campaignRows(snapshot).every(r => !r.content_locked || r.passed));
+    // Check actual production certificates before freezing historical replays.
+    for (const entry of snapshot.entries) {
+      const saved = snapshot.sidecar.cases?.[entry.id]?.pipeline_review;
+      if (saved) {
+        assert.equal(assess(snapshot, entry, entry.candidate).passed, true);
+        assert.equal(certificateValid({ ...snapshot, policy: currentPolicy }, entry, entry.candidate, saved), true);
+      }
+    }
   });
+  // Paid request hashes include the portfolio. Historical scenario tests must
+  // use the same inventory context at checkpoint restoration as at transport.
+  // The current source/QA/certificates above and projection checks below remain live.
+  for (const entry of snapshot.entries) entry.candidate.qaPortfolioRegistry = clone(historicalRegistry);
   const original = snapshot.entries.find(e => e.id === 'termal-otelde-supheli-vaka');
   const currentSnapshot = { ...snapshot, policy: currentPolicy };
   await test('durable pushes verify lost acknowledgements, retry only the same commit twice and never overwrite another writer', () => {
@@ -83,7 +98,7 @@ try {
     const entry = snapshot.entries.find(e => e.id === 'muzede-kayip-eser');
     const make = () => {
       const store = storeFor(entry.id); store.state.cases[entry.id] = clone(fixture.record);
-      store.state.cases[entry.id].candidate.qaPortfolioRegistry = clone(entry.candidate.qaPortfolioRegistry);
+      store.state.cases[entry.id].candidate.qaPortfolioRegistry = clone(historicalRegistry);
       store.state.requests = clone(fixture.requests); store.state.campaign_spent = fixture.record.spent;
       return store;
     };
@@ -108,7 +123,7 @@ try {
   await test('live museum revision remains rejected after optional omissions; no hidden quality exception or renewed revision right', async () => {
     const fixture = read('.case-qa/fixtures/muze-editorial-gates-38169382703.json');
     const entry = snapshot.entries.find(e => e.id === fixture.case_id), record = clone(fixture.record);
-    record.candidate.qaPortfolioRegistry = clone(entry.candidate.qaPortfolioRegistry);
+    record.candidate.qaPortfolioRegistry = clone(historicalRegistry);
     const candidate = record.candidate, plan = Object.values(fixture.requests).find(r => r.purpose === 'editorial').plan;
     assert.equal(stableHash(candidate), record.candidate_hash);
     assert.throws(() => compileEditorialRevision(currentSnapshot, entry, candidate, plan), /EDITORIAL_GATES_FAILED/);
@@ -132,7 +147,7 @@ try {
   const hintFixture = read('.case-qa/fixtures/muze-hint-scope-38167302955.json');
   const hintEntry = snapshot.entries.find(e => e.id === hintFixture.case_id);
   const hintCandidate = clone(hintFixture.record.candidate);
-  hintCandidate.qaPortfolioRegistry = clone(hintEntry.candidate.qaPortfolioRegistry);
+  hintCandidate.qaPortfolioRegistry = clone(historicalRegistry);
   const hintResponse = Object.values(hintFixture.requests).find(r => r.model === currentPolicy.models.repair).plan;
   const hintValue = { case_id: hintEntry.id, hints: Object.fromEntries(hintCandidate.clues.filter(c => !c.isBonus)
     .map(c => [c.id, hintResponse.clues[c.id].deductionHint])) };
@@ -195,7 +210,7 @@ try {
   const latestNarrativeReview = read('.case-qa/fixtures/pazar-editorial-review-38165586423.json');
   const narrativeEntry = snapshot.entries.find(e => e.id === narrativeFixture.candidate.id);
   const narrativeCandidate = clone(narrativeFixture.candidate);
-  narrativeCandidate.qaPortfolioRegistry = clone(narrativeEntry.candidate.qaPortfolioRegistry);
+  narrativeCandidate.qaPortfolioRegistry = clone(historicalRegistry);
   const narrativeValue = { story: narrativeCandidate.story,
     clues: Object.fromEntries(narrativeCandidate.clues.map(c => [c.id, { text: c.text, deductionHint: c.deductionHint }])),
     profile_additions: Object.fromEntries(narrativeCandidate.suspects.map(s => [s.id,
@@ -306,7 +321,7 @@ try {
     const oldKey = process.env.GEMINI_API_KEY; process.env.GEMINI_API_KEY = 'offline-editorial-test';
     const fixture = read('.case-qa/fixtures/pazar-editorial-rejection-38159952807.json');
     const entry = snapshot.entries.find(e => e.id === fixture.candidate.id), candidate = clone(fixture.candidate);
-    candidate.qaPortfolioRegistry = clone(entry.candidate.qaPortfolioRegistry);
+    candidate.qaPortfolioRegistry = clone(historicalRegistry);
     assert.equal(stableHash(candidate), fixture.candidate_hash);
     assert.equal(assess(snapshot, entry, candidate).passed, true);
     assert.equal(playerPass(policy, candidate, playerView(candidate), fixture.player), true);
@@ -378,7 +393,11 @@ try {
     assert.equal(blindStore.state.cases[entry.id].review, undefined);
     // Reproduce the deployed run: rejection existed only in the request cache.
     const coldStore = storeFor(entry.id), reviewCost = Object.values(fixture.review_requests).reduce((s,r) => s + r.charged, 0);
-    const deployedSnapshot = { ...snapshot, simulatorHash: '04352c0a4ce07097cb752a1980b144fa00722e78' };
+    const deployedSnapshot = { ...snapshot, simulatorHash: '04352c0a4ce07097cb752a1980b144fa00722e78',
+      entries: snapshot.entries.filter(e => historicalContext.comparison_cases.some(c => c.id === e.id)).map(e => {
+        const saved = historicalContext.comparison_cases.find(c => c.id === e.id);
+        return { ...e, raw: { ...e.raw, title: saved.title, story: saved.story } };
+      }) };
     Object.assign(coldStore.state.cases[entry.id], { candidate, candidate_hash: stableHash(candidate),
       source_hash: entry.sourceHash, simulator_hash: deployedSnapshot.simulatorHash, spent: fixture.historical_spent });
     coldStore.state.campaign_spent = fixture.historical_spent;
@@ -399,7 +418,7 @@ try {
     const fixture = read('.case-qa/fixtures/pazar-editorial-name-rejection-38164243995.json');
     const base = read('.case-qa/fixtures/pazar-editorial-rejection-38159952807.json');
     const entry = snapshot.entries.find(e => e.id === base.candidate.id), candidate = clone(base.candidate);
-    candidate.qaPortfolioRegistry = clone(entry.candidate.qaPortfolioRegistry);
+    candidate.qaPortfolioRegistry = clone(historicalRegistry);
     const request = Object.values(fixture.requests).find(r => r.purpose === 'editorial');
     const oldPath = path.join(temporary, 'pre-ara-html.html');
     fs.writeFileSync(oldPath, execFileSync('git', ['show', fixture.record.simulator_hash]));
@@ -442,7 +461,7 @@ try {
   await test('actual Pazar response failed only on an investigator title; corrected exact HTML still blocks true double disclosures', () => {
     const fixture = read('.case-qa/fixtures/pazar-live-candidate-38158353700.json');
     const entry = snapshot.entries.find(e => e.id === fixture.candidate.id), candidate = clone(fixture.candidate);
-    candidate.qaPortfolioRegistry = clone(entry.candidate.qaPortfolioRegistry);
+    candidate.qaPortfolioRegistry = clone(historicalRegistry);
     assert.equal(stableHash(candidate), fixture.candidate_hash);
     const oldPath = path.join(temporary, 'original-html.html');
     fs.writeFileSync(oldPath, execFileSync('git', ['show', fixture.simulator_hash]));
@@ -464,7 +483,7 @@ try {
   await test('only fully passing checkpoints survive this exact simulator correction; reviews, spend and repair counts are preserved', async () => {
     const fixture = read('.case-qa/fixtures/pazar-live-candidate-38158353700.json');
     const entry = snapshot.entries.find(e => e.id === fixture.candidate.id), store = storeFor(entry.id);
-    const candidate = clone(fixture.candidate); candidate.qaPortfolioRegistry = clone(entry.candidate.qaPortfolioRegistry);
+    const candidate = clone(fixture.candidate); candidate.qaPortfolioRegistry = clone(historicalRegistry);
     Object.assign(store.state.cases[entry.id], { ...fixture, candidate, spent: 0.009551, source_hash: entry.sourceHash,
       review: { passed: true, candidate_hash: 'old-certificate' }, status: 'quarantined' });
     store.state.requests = Object.fromEntries([1,2].map(i => ['existing-' + i, {
@@ -669,7 +688,7 @@ try {
     } finally { if (oldKey === undefined) delete process.env.GEMINI_API_KEY; else process.env.GEMINI_API_KEY = oldKey; }
   });
   const fixture = read('.case-qa/fixtures/termal-97-run-33305310409.json').candidate;
-  fixture.qaPortfolioRegistry = clone(original.candidate.qaPortfolioRegistry);
+  fixture.qaPortfolioRegistry = clone(historicalRegistry);
   const entry = { ...original, candidate: fixture }, a97 = assess(snapshot, entry, fixture);
   const repaired = repairTermal(fixture);
   const plan = { case_id: entry.id, operations: [
