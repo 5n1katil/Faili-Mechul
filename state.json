@@ -9459,24 +9459,24 @@
         "title": "Adada Büyük Gizem",
         "difficulty": "caylak",
         "dayIndex": 7,
-        "story": "Büyükada'da yaz tatilinin huzuru, lüks bir villada işlenen cinayetle paramparça oldu. Adayı anakaraya bağlayan feribot seferleri iptal edilince, katil kurbanıyla aynı adada mahsur kaldı.",
+        "story": "Büyükada'da yaz tatilinin huzuru, lüks bir villada işlenen esrarengiz bir cinayetle paramparça oldu. Adayı anakaraya bağlayan tüm feribot seferleri olumsuz hava koşulları nedeniyle iptal edilince, katil kurbanıyla aynı adada mahsur kaldı. Savcılık, soruşturmayı derinleştirmek ve adadaki herkesin konumunu netleştirmek için kapsamlı bir inceleme başlatırken, her şüphelinin aynı zaman aralığında farklı bir noktada bulunduğunu ve farklı yöntemlere eriştiğini tespit etti. Soruşturma ekibi, ölümcül aracın ve suçlunun kimliğini bulmak için delilleri titizlikle inceliyor.",
         "suspects": [
           {
             "id": "s1",
             "name": "Emekli Albay",
-            "description": "Sabahları erken uyanıp yürüyüş yapan, disiplinli ve sert mizaçlı villa komşusu.",
+            "description": "Sabahları erken uyanıp yürüyüş yapan, disiplinli ve sert mizaçlı villa komşusu. Çevresindekilere mesafeli durur, kurallara son derece bağlı bir yaşam sürer.",
             "icon": "pa:adada_s1"
           },
           {
             "id": "s2",
             "name": "Ressam Leyla",
-            "description": "Bütün yazını adada manzara resimleri çizerek geçiren, sessiz ve içine kapanık sanatçı.",
+            "description": "Bütün yazını adada manzara resimleri çizerek geçiren, sessiz ve içine kapanık sanatçı. Günlerini genellikle atölyesinde veya dışarıda boya yaparak geçirir.",
             "icon": "pa:adada_s2"
           },
           {
             "id": "s3",
             "name": "Genç Yatçı",
-            "description": "Özel sürat teknesiyle adaya yeni gelen, fevri hareketleri olan gizemli misafir.",
+            "description": "Özel sürat teknesiyle adaya yeni gelen, fevri hareketleri olan gizemli misafir. Hızlı kararlar alan ve kimseye hesap vermeyen yapısıyla dikkat çeker.",
             "icon": "pa:adada_s3"
           }
         ],
@@ -9523,39 +9523,149 @@
         "clues": [
           {
             "id": "c1",
-            "text": "Cinayet sahil şeridinde veya sarp kayalıklarda işlenmedi; kurbanın bedeni villanın dışa kapalı peyzaj alanında bulundu.",
+            "text": "Olay gecesi yapılan detaylı eşya envanteri incelemesinde, sessiz sanatçının adadaki bu ortak zaman aralığında, kalın denizci ipine hiçbir şekilde dokunmadığı, onu depodan almadığı veya kullanmadığı kayıtlara geçmiştir.",
             "type": "evidence",
-            "isBonus": false
+            "isBonus": false,
+            "deductionHint": "Sanatçının kalın denizci ipiyle bağı olmadığını gösteren bu kaydı nasıl değerlendirirsiniz?",
+            "logicRules": [
+              {
+                "action": "eliminate",
+                "pair": [
+                  "s2",
+                  "w3"
+                ]
+              }
+            ],
+            "isCrimeAnchor": false,
+            "qaSemanticFacts": [],
+            "qaRationale": {
+              "matrixEffect": "Ressam Leyla ≠ Gemi Halatı elenir",
+              "evidenceLink": "Olay gecesi yapılan detaylı eşya envanteri incelemesinde, sessiz sanatçının adadaki bu ortak zaman aralığında, kalın denizci ipine hiçbir şekilde dokunmadığı, onu depodan almadığı veya kullanmadığı kayıtlara geçmiştir.",
+              "evidenceKind": "physical"
+            }
           },
           {
             "id": "c2",
-            "text": "Emekli Albay'ın sabah yürüyüşünü deniz dalgalarının vurduğu sahil yolunda yaptığı ve villaya hiç yaklaşmadığı anlaşıldı.",
+            "text": "Görgü tanıklarının ifadeleri ve akşam saatlerindeki sahil denetim raporları, doğal bitkilerden elde edilen sinsi bitki toksininin, dalgaların vurduğu uzun sahil yolunda bulunduğunu doğrulamaktadır.",
             "type": "witness",
-            "isBonus": false
+            "isBonus": false,
+            "deductionHint": "Zehir ile sahil şeridi arasındaki bu tanık doğrulaması neye işaret ediyor?",
+            "logicRules": [
+              {
+                "action": "confirm",
+                "pair": [
+                  "w2",
+                  "l2"
+                ]
+              }
+            ],
+            "isCrimeAnchor": false,
+            "qaSemanticFacts": [],
+            "qaRationale": {
+              "matrixEffect": "Zehir ↔ Sahil Şeridi doğrulanır",
+              "evidenceLink": "Görgü tanıklarının ifadeleri ve akşam saatlerindeki sahil denetim raporları, doğal bitkilerden elde edilen sinsi bitki toksininin, dalgaların vurduğu uzun sahil yolunda bulunduğunu doğrulamaktadır.",
+              "evidenceKind": "witness"
+            }
           },
           {
             "id": "c3",
-            "text": "Ressam Leyla, tüm sabahı uçurum kenarındaki sarp kayalıklarda resim çizerek geçirdiğini taslaklarıyla kanıtladı.",
-            "type": "witness",
-            "isBonus": false
+            "text": "Adadaki resmi mühürlü kilitli dolap kayıtları ve adli tıp raporu, ölümcül kompresyona ve boğulmaya neden olan suç unsurunun kesinlikle listedeki kalın denizci ipi olduğunu, ayrıca disiplinli villa komşusunun bu zaman aralığında bu ipi kesinlikle kullanmadığını kanıtlar.",
+            "type": "forensic",
+            "isBonus": false,
+            "deductionHint": "Ölümcül aracın ip olduğu ve komşunun buna erişmediği nasıl kanıtlanıyor?",
+            "logicRules": [
+              {
+                "action": "eliminate",
+                "pair": [
+                  "s1",
+                  "w3"
+                ]
+              }
+            ],
+            "isCrimeAnchor": true,
+            "qaSemanticFacts": [
+              {
+                "kind": "crime_component",
+                "component": "weapon",
+                "entityId": "w3",
+                "source": "clue:c3",
+                "evidence": "Adadaki resmi mühürlü kilitli dolap kayıtları ve adli tıp raporu, ölümcül kompresyona ve boğulmaya neden olan suç unsurunun kesinlikle listedeki kalın denizci ipi olduğunu, ayrıca disiplinli villa komşusunun bu zaman aralığında bu ipi kesinlikle kullanmadığını kanıtlar."
+              }
+            ],
+            "qaRationale": {
+              "matrixEffect": "Emekli Albay ≠ Gemi Halatı elenir",
+              "evidenceLink": "Adadaki resmi mühürlü kilitli dolap kayıtları ve adli tıp raporu, ölümcül kompresyona ve boğulmaya neden olan suç unsurunun kesinlikle listedeki kalın denizci ipi olduğunu, ayrıca disiplinli villa komşusunun bu zaman aralığında bu ipi kesinlikle kullanmadığını kanıtlar.",
+              "evidenceKind": "forensic"
+            }
           },
           {
             "id": "c4",
-            "text": "Otopsi raporu, kurbanın bir ateşli silahla vurulmadığını veya bitkisel bir toksinle zehirlenmediğini açıkça ortaya koydu.",
-            "type": "forensic",
-            "isBonus": false
+            "text": "Güvenlik birimlerinin tuttuğu resmi olay yeri kayıtları, yakından ateşlendiğinde korkunç ses çıkaran çift namlulu ateşli silahın, uçurum kenarındaki sarp alanda bulunduğunu doğrulamaktadır.",
+            "type": "record",
+            "isBonus": false,
+            "deductionHint": "Ateşli silah ile kayalık arasındaki bu resmi kayıt neyi kanıtlar?",
+            "logicRules": [
+              {
+                "action": "confirm",
+                "pair": [
+                  "w1",
+                  "l3"
+                ]
+              }
+            ],
+            "isCrimeAnchor": false,
+            "qaSemanticFacts": [],
+            "qaRationale": {
+              "matrixEffect": "Av Tüfeği ↔ Kayalık doğrulanır",
+              "evidenceLink": "Güvenlik birimlerinin tuttuğu resmi olay yeri kayıtları, yakından ateşlendiğinde korkunç ses çıkaran çift namlulu ateşli silahın, uçurum kenarındaki sarp alanda bulunduğunu doğrulamaktadır.",
+              "evidenceKind": "record"
+            }
           },
           {
             "id": "c5",
-            "text": "Olay yerindeki kalın denizci ipinin, adaya yeni gelen gizemli misafirin teknesinden söküldüğü tespit edildi.",
-            "type": "evidence",
-            "isBonus": true
+            "text": "Resmi arşiv kayıtları, disiplinli villa komşusunun dolapta saklanan çift namlulu ateşli silahı olay zaman aralığında yanında bulundurduğunu ve eriştiğini doğrulamaktadır.",
+            "type": "record",
+            "isBonus": true,
+            "deductionHint": "Albay ile av tüfeği arasındaki bu eşleşme nasıl bir yön gösteriyor?",
+            "logicRules": [
+              {
+                "action": "confirm",
+                "pair": [
+                  "s1",
+                  "w1"
+                ]
+              }
+            ],
+            "isCrimeAnchor": false,
+            "qaSemanticFacts": [],
+            "qaRationale": {
+              "matrixEffect": "Emekli Albay ↔ Av Tüfeği doğrulanır",
+              "evidenceLink": "Resmi arşiv kayıtları, disiplinli villa komşusunun dolapta saklanan çift namlulu ateşli silahı olay zaman aralığında yanında bulundurduğunu ve eriştiğini doğrulamaktadır.",
+              "evidenceKind": "record"
+            }
           },
           {
             "id": "c6",
-            "text": "Villa havuzunun kenarındaki çamurlu izler, Genç Yatçı'nın özel tasarım ayakkabılarıyla kusursuz bir eşleşme sağladı.",
-            "type": "forensic",
-            "isBonus": true
+            "text": "Güvenilir görgü tanıkları, sessiz sanatçının belirtilen kritik zaman aralığında dalgaların vurduğu uzun sahil yolunda vakit geçirdiğini açıkça doğrulamaktadır.",
+            "type": "witness",
+            "isBonus": true,
+            "deductionHint": "Leyla'nın sahil şeridindeki konumu soruşturmayı nasıl etkiler?",
+            "logicRules": [
+              {
+                "action": "confirm",
+                "pair": [
+                  "s2",
+                  "l2"
+                ]
+              }
+            ],
+            "isCrimeAnchor": false,
+            "qaSemanticFacts": [],
+            "qaRationale": {
+              "matrixEffect": "Ressam Leyla ↔ Sahil Şeridi doğrulanır",
+              "evidenceLink": "Güvenilir görgü tanıkları, sessiz sanatçının belirtilen kritik zaman aralığında dalgaların vurduğu uzun sahil yolunda vakit geçirdiğini açıkça doğrulamaktadır.",
+              "evidenceKind": "witness"
+            }
           }
         ],
         "solvabilityMeta": {
@@ -9578,8 +9688,8 @@
           "caseTier": "standard"
         },
         "qaPattern": {
-          "anchorSource": "none",
-          "designIntent": "Deterministik miras-vaka imzası: none:?; evidence:?:?; ????; ?|?|?|?; none."
+          "anchorSource": "clue:c3",
+          "designIntent": "Bağımsız teslim/erişim ve yer kanıtlarıyla çapraz eşleşme; dört temel ipucunun her biri zorunlu. Bonuslar masum eşleşmelerini tamamlar."
         },
         "qaPortfolioRegistry": {
           "schema_version": "fm_qa_portfolio_registry_v1",
@@ -10741,9 +10851,18 @@
             }
           ]
         },
-        "qaAuthoringVersion": "fm_case_qa_authoring_v3_2_deterministic_bootstrap"
+        "qaAuthoringVersion": "verified_text_v1",
+        "qaSemanticFacts": [
+          {
+            "kind": "crime_component",
+            "component": "weapon",
+            "entityId": "w3",
+            "source": "clue:c3",
+            "evidence": "Adadaki resmi mühürlü kilitli dolap kayıtları ve adli tıp raporu, ölümcül kompresyona ve boğulmaya neden olan suç unsurunun kesinlikle listedeki kalın denizci ipi olduğunu, ayrıca disiplinli villa komşusunun bu zaman aralığında bu ipi kesinlikle kullanmadığını kanıtlar."
+          }
+        ]
       },
-      "candidate_hash": "b8d608bc600f1220467e6ca4db26a0e50116dc24f1d9b75cde5c4421624b38ba",
+      "candidate_hash": "eaf2299dd8335a6fcfcdccabdc4245a455cb6b6edb13a67ab9da4cd6dd6a46a3",
       "best_score": 0
     }
   },
