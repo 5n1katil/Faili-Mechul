@@ -27,6 +27,7 @@ import { compileEditorial, editorialPrompt, editorialFailure, validEditorial, re
 import { reviewHash } from './review.mjs';
 import { qualityContract, REVIEW_VERSION } from './quality-contract.mjs';
 import { compileEditorialRevision, editorialRevisionPrompt, editorialRevisionSchema, validEditorialRevision } from './editorial.mjs';
+import { compileBoundedEditorial, recoverBoundedEditorial, editorialRevisionRequestPrompt } from './editorial.mjs';
 import { hintOnly, compileHints, recoverHintCleanup, validHints } from './hint-cleanup.mjs';
 import { reconcileKnownUnsent } from './reservation-recovery.mjs';
 
@@ -103,6 +104,30 @@ try {
     assert.equal(Object.keys(store.state.requests).length, 4);
     assert.equal(store.state.requests[fixture.key].reservation_failures.length, 1);
     assert.equal(store.state.requests[fixture.key].reservation_failures[0].transport_not_started, true);
+  });
+  await test('live museum revision remains rejected after optional omissions; no hidden quality exception or renewed revision right', async () => {
+    const fixture = read('.case-qa/fixtures/muze-editorial-gates-38169382703.json');
+    const entry = snapshot.entries.find(e => e.id === fixture.case_id), record = clone(fixture.record);
+    record.candidate.qaPortfolioRegistry = clone(entry.candidate.qaPortfolioRegistry);
+    const candidate = record.candidate, plan = Object.values(fixture.requests).find(r => r.purpose === 'editorial').plan;
+    assert.equal(stableHash(candidate), record.candidate_hash);
+    assert.throws(() => compileEditorialRevision(currentSnapshot, entry, candidate, plan), /EDITORIAL_GATES_FAILED/);
+    assert.throws(() => compileBoundedEditorial(currentSnapshot, entry, candidate, plan), error =>
+      /EDITORIAL_GATES_FAILED/.test(error.message) && error.assessment.result.score === 100 &&
+      error.assessment.result.qualityFindings.length > 0);
+    assert.equal(recoverBoundedEditorial(currentSnapshot, entry, candidate, record, fixture.requests), null);
+    const store = storeFor(entry.id); store.state.cases[entry.id] = record;
+    store.state.requests = clone(fixture.requests); store.state.campaign_spent = record.spent;
+    const result = await repairOne(currentSnapshot, entry, store, { allowAI: true,
+      caller: async () => { throw new Error('NO_MORE_PROVIDER_WORK_FOR_REJECTED_REVISION'); } });
+    assert.equal(result.status, 'quarantined'); assert.equal(result.run.calls, 0);
+    assert.deepEqual(store.state.requests, fixture.requests);
+    assert.equal(store.state.cases[entry.id].spent, fixture.record.spent);
+    const prompt = JSON.parse(editorialRevisionRequestPrompt(candidate, record.failed_review));
+    assert.deepEqual(prompt.revision_constraints.preserved_core_hints,
+      Object.fromEntries(candidate.clues.filter(c => !c.isBonus).map(c => [c.id, c.deductionHint])));
+    assert.deepEqual(prompt.revision_constraints.entity_labels,
+      [...candidate.suspects,...candidate.weapons,...candidate.locations].map(e => e.name));
   });
   const hintFixture = read('.case-qa/fixtures/muze-hint-scope-38167302955.json');
   const hintEntry = snapshot.entries.find(e => e.id === hintFixture.case_id);
@@ -225,6 +250,22 @@ try {
     assert.throws(() => compileEditorialRevision(currentSnapshot, narrativeEntry, narrativeCandidate, long), /EDITORIAL_PROFILE_LENGTH/);
     const leak = clone(narrativeValue); leak.profile_additions.s1 = 'Baklava ve Tezgah yalnızca onun kontrolündeydi, başka hiç kimsenin bunlara erişimi yoktu.';
     assert.throws(() => compileEditorialRevision(currentSnapshot, narrativeEntry, narrativeCandidate, leak), /EDITORIAL_GATES_FAILED/);
+  });
+  await test('bounded editorial omissions preserve validated hints and profiles while all strict gates still apply', () => {
+    const plan = clone(narrativeValue);
+    plan.clues.c1.deductionHint = 'Baklava ve Tezgah hangi şüphelinin elindeydi?';
+    plan.profile_additions.s1 = 'Baklava ve Tezgah yalnızca onun kontrolündeydi, başka hiç kimsenin bunlara erişimi yoktu.';
+    const next = compileBoundedEditorial(currentSnapshot, narrativeEntry, narrativeCandidate, plan);
+    assert.equal(next.assessment.passed, true);
+    assert.ok(next.omitted_fields.includes('profile_additions.s1'));
+    assert.equal(next.candidate.suspects[0].description, narrativeCandidate.suspects[0].description);
+    assert.equal(next.candidate.clues[0].deductionHint, narrativeCandidate.clues[0].deductionHint);
+    assert.equal(next.candidate.story, plan.story);
+    for (const field of ['weapons','locations','solution']) assert.deepEqual(next.candidate[field], narrativeCandidate[field]);
+    const short = clone(plan); short.story = 'Çok kısa.';
+    assert.throws(() => compileBoundedEditorial(currentSnapshot, narrativeEntry, narrativeCandidate, short), /EDITORIAL_CONTENT_TOO_SHORT/);
+    const invalid = clone(plan); invalid.solution = narrativeCandidate.solution;
+    assert.throws(() => compileBoundedEditorial(currentSnapshot, narrativeEntry, narrativeCandidate, invalid), /EDITORIAL_RESPONSE_INVALID/);
   });
   await test('production v2 orchestration performs one motivation revision and entirely fresh reviews within seven lifetime requests', async () => {
     process.env.GEMINI_API_KEY = 'offline-v2-test';

@@ -426,3 +426,29 @@ hatası, reserved kayıt ve transport öncesi save çağrısı; commit
 `b5eafec94ecccc1c3efe1fe783ae23190249ebe0`. Para/istek geçmişi silinmez ve
 yaşam boyu sınırlar artırılmaz. Sonraki Müze pilotu önceki oyuncu cevabını
 cache'den alıp henüz yapılmamış editör kontrolüne ilerler.
+
+### Canlı editoryal ret ve alan koruma
+
+Run 38169382703'te rezervasyon kurtarma çalıştı. Müze için oyuncu doğru üçlüyü
+%100 güvenle buldu; editör puanları 5/4/4/3/3 oldu. Kanlı ölüm ile uyutucu iğne
+uyumsuzluğu, bonusların mekân anlatımı ve bir yazım hatası raporlandı. Tek izinli
+editoryal cevap yardım metinlerinde isim verdi ve yeni profil ekinde eksen adı
+örtüşmesi oluşturdu. Bu run yalnız $0.010032 gerçek üretim maliyeti ekledi;
+Müze toplamı $0.02220635, kampanya toplamı $0.179299'dur. Henüz kabul yoktur.
+
+Yeni editoryal istek, geçerli core deductionHint'leri birebir taşır; entity
+etiketleriyle birlikte çekirdek isim parçalarından ve profil bağlantılarından
+kaçınmayı açıkça ister. Tek revizyon hakkı ve tüm yaşam boyu sınırlar aynıdır.
+Compiler gerekirse yalnız önceki geçerli core hint'leri korur ve sızıntı guard'ının
+işaretlediği isteğe bağlı profil eklerini atar. Hikâye ve kanıt metinlerini
+yeniden yazmaz; atılan alanları raporlar. Ardından aynı strict compiler ve tüm
+100/productionReady kapıları tekrar çalışır. Başarılı görünür içerik değişikliği
+her zaman iki yeni bağımsız değerlendirme gerektirir.
+
+Tamamlanmış editoryal cevap yalnız değişmeyen kaynak/motor/aday ve başarısız
+review hash'i, exact request body/key, purpose ve model eşleşmesiyle yeniden
+derlenebilir. Bu yeni bir yazım hakkı açmaz. Gerçek Müze cevabı bu alan koruma
+sonrasında da core metinlerde isim kullanımı bulguları nedeniyle reddedilir;
+fixture testi bunu özellikle korur. Aynı Müze pilotunu tekrar çalıştırmak onu
+düzeltmez veya yeni editoryal çağrı yapmaz. Yeni talimatın gerçek üretim kalitesi
+henüz canlı test edilmemiştir; sıradaki harcanmamış pilotla doğrulanmalıdır.

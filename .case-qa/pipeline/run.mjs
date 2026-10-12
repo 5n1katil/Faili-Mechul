@@ -11,7 +11,7 @@ import { callPaid, Stop, modelPreflight, countsAsRepair } from './provider.mjs';
 import { mediaPreflight, reviewCandidate, certificateValid } from './review.mjs';
 import { EDITORIAL_VERSION, EDITORIAL_SYSTEM, editorialSchema, validEditorial, editorialPrompt, editorialFailure, compileEditorial, recoverEditorial } from './editorial.mjs';
 import { EDITORIAL_REVISION_VERSION, EDITORIAL_REVISION_SYSTEM, editorialRevisionSchema, validEditorialRevision,
-  editorialRevisionPrompt, compileEditorialRevision } from './editorial.mjs';
+  editorialRevisionRequestPrompt, compileBoundedEditorial, recoverBoundedEditorial } from './editorial.mjs';
 import { REVIEW_VERSION } from './quality-contract.mjs';
 import { HINT_SYSTEM, hintOnly, hintSchema, hintPrompt, validHints, compileHints, recoverHintCleanup } from './hint-cleanup.mjs';
 import { reconcileKnownUnsent } from './reservation-recovery.mjs';
@@ -47,7 +47,8 @@ export async function repairOne(snapshot, entry, store, { allowAI = false, calle
   let current = resumed.candidate, assessment = resumed.assessment;
   const recoveredHints = recoverHintCleanup(snapshot, entry, current, record, state.requests);
   if (recoveredHints) { current = recoveredHints.candidate; assessment = recoveredHints.assessment; }
-  const recoveredEditorial = recoverEditorial(snapshot, entry, current, record, state.requests);
+  const recoveredEditorial = recoverEditorial(snapshot, entry, current, record, state.requests) ||
+    recoverBoundedEditorial(snapshot, entry, current, record, state.requests);
   if (recoveredEditorial) { current = recoveredEditorial.candidate; assessment = recoveredEditorial.assessment; }
   if (changed) { record.feedback = []; delete record.review; delete record.failed_review; }
   record.feedback ||= []; state.active_id = entry.id;
@@ -62,7 +63,7 @@ export async function repairOne(snapshot, entry, store, { allowAI = false, calle
   if (recoveredHints) run.attempts.push({ purpose: 'hint_cleanup', cached: true, score: assessment.result.score,
     retained: true, request_key: recoveredHints.request_key });
   if (recoveredEditorial) run.attempts.push({ purpose: 'editorial', cached: true, score: assessment.result.score,
-    retained: true, request_key: recoveredEditorial.request_key });
+    retained: true, request_key: recoveredEditorial.request_key, omitted_fields: recoveredEditorial.omitted_fields || [] });
   let status = 'audit_only', review;
   // A verified plan stays stable across attempts even if prose becomes nearly
   // ready. Otherwise a second call would silently return to the old patch path.
@@ -127,16 +128,16 @@ export async function repairOne(snapshot, entry, store, { allowAI = false, calle
             const response = await caller({ store, policy: snapshot.policy, run, caseId: entry.id,
               model: snapshot.policy.models.repair, purpose: 'editorial',
               system: revisedContract ? EDITORIAL_REVISION_SYSTEM : EDITORIAL_SYSTEM,
-              prompt: revisedContract ? editorialRevisionPrompt(current, review) : editorialPrompt(current, review),
+              prompt: revisedContract ? editorialRevisionRequestPrompt(current, review) : editorialPrompt(current, review),
               schema: revisedContract ? editorialRevisionSchema(current) : editorialSchema(current),
               validate: value => revisedContract ? validEditorialRevision(current, value) : validEditorial(current, value) });
             try {
-              const next = revisedContract ? compileEditorialRevision(snapshot, entry, current, response.plan) :
+              const next = revisedContract ? compileBoundedEditorial(snapshot, entry, current, response.plan) :
                 compileEditorial(snapshot, entry, current, response.plan);
               current = next.candidate; assessment = next.assessment;
               delete record.review; delete record.failed_review; persist();
               run.attempts.push({ purpose: 'editorial', version: revisedContract ? EDITORIAL_REVISION_VERSION : EDITORIAL_VERSION,
-                score: assessment.result.score, retained: true });
+                score: assessment.result.score, retained: true, omitted_fields: next.omitted_fields || [] });
               review = await reviewCandidate(snapshot, entry, current, store, run, caller);
               if (!review.passed) record.failed_review = clone(review);
             } catch (error) {
