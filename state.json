@@ -9450,7 +9450,7 @@
       }
     },
     "adada-buyuk-gizem": {
-      "spent": 0.012353450000000005,
+      "spent": 0.050420450000000006,
       "feedback": [],
       "source_hash": "89a454678038224ff04b0ebd9f6ecfd17d77fe7531ccc274b452ea203942b823",
       "simulator_hash": "0e27218c7817862f371febb6b7bb865821d9e5da",
@@ -13328,7 +13328,15 @@
         ],
         "issues": []
       }
+    },
+    "3eb39ae15d84e574e717b52f9c3ee58e7bb72c4a22ee08372865a2f4898971e6": {
+      "case_id": "adada-buyuk-gizem",
+      "model": "gemini-3.8-flash",
+      "purpose": "judge",
+      "day": "2026-10-12",
+      "status": "reserved",
+      "charged": 0.038067
     }
   },
-  "campaign_spent": 0.19165245000000006
+  "campaign_spent": 0.22971945000000005
 }
