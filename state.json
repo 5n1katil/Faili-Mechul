@@ -10900,7 +10900,7 @@
           "summary": "Vaka çaylak seviyesi için kusursuz bir mantıksal kurguya sahip. İpuçları (c1-c4) doğrudan kart metinlerindeki tanımlayıcı ifadeleri kullanarak hiçbir varsayıma gerek bırakmadan tekil çözümü (Genç Yatçı - Gemi Halatı - Villa Bahçesi) net bir şekilde kanıtlıyor. Anlatım açık, çelişkisiz ve amaca uygun şekilde dengeli."
         }
       },
-      "status": "awaiting_review",
+      "status": "ready_for_gates",
       "pr_url": "https://github.com/5n1katil/Faili-Mechul/pull/94"
     }
   },
