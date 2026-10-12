@@ -9450,7 +9450,7 @@
       }
     },
     "adada-buyuk-gizem": {
-      "spent": 0.04313645000000001,
+      "spent": 0.010818200000000007,
       "feedback": [],
       "source_hash": "89a454678038224ff04b0ebd9f6ecfd17d77fe7531ccc274b452ea203942b823",
       "simulator_hash": "0e27218c7817862f371febb6b7bb865821d9e5da",
@@ -13237,10 +13237,58 @@
       "model": "gemini-3.8-flash",
       "purpose": "repair",
       "day": "2026-10-12",
-      "status": "reserved",
-      "charged": 0.03963375,
-      "repair_method": "verified_text_v1"
+      "status": "completed",
+      "charged": 0.0073155,
+      "repair_method": "verified_text_v1",
+      "usage": {
+        "promptTokenCount": 3749,
+        "candidatesTokenCount": 1201,
+        "totalTokenCount": 4950,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 3749
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "plan": {
+        "case_id": "adada-buyuk-gizem",
+        "assessment": "Hazırlanan metin, 3x3 mantık ızgarasıyla tam olarak örtüşen dedüksiyon kurgusunu sunmaktadır. Temel ipuçlarında (c1-c4) doğrudan varlık isimleri kullanılmamış, kart betimlemelerine dayalı dolaylı ifadeler tercih edilmiştir. Çıkarım ipuçları cevabı ifşa etmeyen Sokratik sorular olarak biçimlendirilmiştir. Suç bileşeni (w3 - Gemi Halatı) c3 ipucunda doğrulanmış olup diğer ihtimaller sistemli şekilde elenebilmektedir.",
+        "story": "Büyükada'da yaz sezonunun en sakin gününde, adanın tanınmış simalarından birinin ani ve şüpheli ölümü ada halkını dehşete düşürdü. Fırtına sebebiyle ana karaya yapılan tüm deniz seferleri durdurulunca, cinayetin sorumlusunun halen adada mahsur kaldığı kesinleşti. Savcılık olayla ilgili titiz bir soruşturma başlattı. Elde edilen ilk bulgulara göre, cinayetin işlendiği kritik zaman diliminde şüphelilerin her birinin listede yer alan farklı bir noktada bulunduğu ve farklı bir vasıtaya erişim sağladığı tespit edildi. Dedektifler şimdi ölümcül yöntemin kesinleştiği bu tabloda, kullanılan aracın taşıyıcısını ve ait olduğu alanı kanıtlarla bir araya getirmeye çalışıyor.",
+        "suspect_descriptions": {
+          "s1": "Günün ilk ışıklarıyla yürüyüşe çıkan, dik duruşlu ve mesafeli eski asker. Gri bıyıkları, muntazam ütülü kıyafetleri ve nizamı önceleyen soğukkanlı tavırlarıyla çevresindekileri dikkatle süzer.",
+          "s2": "Mevsimi açık havada tual başında geçiren, sessiz ve gözlemci sanatçı. Üzerindeki keten önlüğü, lekeli parmakları ve etrafındaki olaylara karşı dalgın ama dikkatli bakışlarıyla tanınır.",
+          "s3": "Hızlı deniz araçlarıyla yeni gelmiş, sabırsız ve hareketli genç konuk. Güneşten yanmış teni, sportif kıyafetleri ve kurallara aldırış etmeyen fevri mizacıyla dikkatleri üzerine çeker."
+        },
+        "clues": {
+          "c1": {
+            "text": "Atölye girişindeki güvenlik kamerası bantları ve malzeme dolabı mühür kayıtları incelendi. İlgili zaman aralığında, tual başında çalışan sessiz sanatçının tekneleri iskeleye bağlamakta kullanılan kalın denizci ipine hiçbir temasının bulunmadığı teyit edildi.",
+            "deductionHint": "Kayıtlar, atölyesinde boya yapan sanatçının hangi aracı elinde bulundurmadığını gösteriyor olabilir mi?"
+          },
+          "c2": {
+            "text": "Kritik zaman aralığında devriye gezen güvenlik görevlisinin tuttuğu kontrol tutanağına göre, doğal bitkilerden elde edilen sinsi toksin şişesi, dalgaların vurduğu uzun yürüyüş yolundaki bir bankın üzerinde tespit edilmiştir.",
+            "deductionHint": "Denetim raporu, bitkisel maddenin tam olarak hangi yürüyüş güzergâhında bulunduğunu ortaya koyuyor olabilir mi?"
+          },
+          "c3": {
+            "text": "Adli tıp raporu, kurbandaki ölümcül boğulma izlerinin doğrudan tekneleri iskeleye bağlamak için kullanılan kalın denizci ipiyle oluştuğunu kesinleştirdi. Eş zamanlı parmak izi analizleri ve nöbet kütüğü, nizamına düşkün eski askerin bu ipe kesinlikle erişmediğini kanıtladı.",
+            "deductionHint": "Cinayette kullanılan ölümcül aracın kesinleşmesi, eski askeri hangi yöntemden tamamen muaf tutar?"
+          },
+          "c4": {
+            "text": "Bölge gözetleme istasyonunun kayıt kütüğüne göre, çift namlulu ateşli silahın cinayet anında adanın güney ucundaki uçurum kenarında yer alan sarp alanda korunaklı bir çantada durduğu belgelendi.",
+            "deductionHint": "Gözetleme kütüğü, çift namlulu ateşli silah ile sarp manzara noktası arasında nasıl bir bağ kuruyor?"
+          },
+          "c5": {
+            "text": "Emekli Albay'ın odasındaki malzeme zimmet tutanağı, ilgili zaman aralığında kendisinin Av Tüfeği ile birlikte olduğunu ve bu silahın sorumluluğunu taşıdığını kesinleştirmiştir.",
+            "deductionHint": "Bu kayıt Emekli Albay ile Av Tüfeği arasındaki doğrudan ilişkiyi doğrular mı?"
+          },
+          "c6": {
+            "text": "Yürüyüş yolundaki çay bahçesi işletmecisinin ifadesine göre Ressam Leyla, cinayetin işlendiği saatlerde Sahil Şeridi üzerinde otururken görülmüştür.",
+            "deductionHint": "Tanık ifadesi Ressam Leyla'nın Sahil Şeridi'nde bulunduğunu gösteriyor mu?"
+          }
+        }
+      }
     }
   },
-  "campaign_spent": 0.22243545000000003
+  "campaign_spent": 0.19011720000000004
 }
