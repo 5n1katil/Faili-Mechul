@@ -10867,8 +10867,8 @@
       "candidate_hash": "2161ff7d92decca71f7c692a79a7c8c033b140e5da4d4bde352b21abfb38454c",
       "best_score": 100,
       "failures": [],
-      "status": "ready_for_gates",
-      "pr_url": "https://github.com/5n1katil/Faili-Mechul/pull/96",
+      "status": "awaiting_review",
+      "pr_url": "https://github.com/5n1katil/Faili-Mechul/pull/98",
       "review": {
         "schema": "fm_case_review_v1",
         "review_hash": "c2c6f259809a3598fb82e44cc20460b0ded5cd6bad0440e467e49c367e831fd6",
