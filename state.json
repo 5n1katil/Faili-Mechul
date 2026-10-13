@@ -9450,7 +9450,7 @@
       }
     },
     "adada-buyuk-gizem": {
-      "spent": 0.01580345000000001,
+      "spent": 0.044504450000000015,
       "feedback": [],
       "source_hash": "ceafad461318f65294d977b48098c3908fb3240e925b6b4d1e364efd2f4071cf",
       "simulator_hash": "17170058b8f45eab789e14aaf2fb7a6605587fb8",
@@ -13364,7 +13364,15 @@
         "issues": [],
         "summary": "Vaka çaylak seviyesi için kusursuz bir mantıksal kurguya sahip. İpuçları (c1-c4) doğrudan kart metinlerindeki tanımlayıcı ifadeleri kullanarak hiçbir varsayıma gerek bırakmadan tekil çözümü (Genç Yatçı - Gemi Halatı - Villa Bahçesi) net bir şekilde kanıtlıyor. Anlatım açık, çelişkisiz ve amaca uygun şekilde dengeli."
       }
+    },
+    "196cfd2517223c373c321abbdbd240b8e8254d4733d6d018300f7def387db42a": {
+      "case_id": "adada-buyuk-gizem",
+      "model": "gemini-3.8-flash",
+      "purpose": "player",
+      "day": "2026-10-13",
+      "status": "reserved",
+      "charged": 0.028701
     }
   },
-  "campaign_spent": 0.19510245000000004
+  "campaign_spent": 0.22380345000000004
 }
