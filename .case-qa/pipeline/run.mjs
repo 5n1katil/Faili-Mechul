@@ -11,7 +11,7 @@ import { callPaid, Stop, modelPreflight, countsAsRepair } from './provider.mjs';
 import { mediaPreflight, reviewCandidate, certificateValid } from './review.mjs';
 import { EDITORIAL_VERSION, EDITORIAL_SYSTEM, editorialSchema, validEditorial, editorialPrompt, editorialFailure, compileEditorial, recoverEditorial } from './editorial.mjs';
 import { EDITORIAL_REVISION_VERSION, EDITORIAL_REVISION_SYSTEM, editorialRevisionSchema, validEditorialRevision,
-  editorialRevisionRequestPrompt, compileBoundedEditorial, recoverBoundedEditorial } from './editorial.mjs';
+  editorialRevisionRequestPrompt, editorialExperiencePrompt, compileBoundedEditorial, recoverBoundedEditorial } from './editorial.mjs';
 import { REVIEW_VERSION } from './quality-contract.mjs';
 import { HINT_SYSTEM, hintOnly, hintSchema, hintPrompt, validHints, compileHints, recoverHintCleanup } from './hint-cleanup.mjs';
 import { reconcileKnownUnsent } from './reservation-recovery.mjs';
@@ -124,11 +124,11 @@ export async function repairOne(snapshot, entry, store, { allowAI = false, calle
           const used = Object.values(state.requests).filter(r => r.case_id === entry.id).length;
           if (used + 3 <= snapshot.policy.sequential.max_requests_per_case &&
               run.calls + 3 <= snapshot.policy.sequential.max_calls_per_execute) {
-            const revisedContract = snapshot.policy.review.prompt_version === REVIEW_VERSION;
+            const revisedContract = ['fm-player-review-v2', REVIEW_VERSION].includes(snapshot.policy.review.prompt_version);
             const response = await caller({ store, policy: snapshot.policy, run, caseId: entry.id,
               model: snapshot.policy.models.repair, purpose: 'editorial',
               system: revisedContract ? EDITORIAL_REVISION_SYSTEM : EDITORIAL_SYSTEM,
-              prompt: revisedContract ? editorialRevisionRequestPrompt(current, review) : editorialPrompt(current, review),
+              prompt: revisedContract ? (snapshot.policy.review.prompt_version === REVIEW_VERSION ? editorialExperiencePrompt(current, review) : editorialRevisionRequestPrompt(current, review)) : editorialPrompt(current, review),
               schema: revisedContract ? editorialRevisionSchema(current) : editorialSchema(current),
               validate: value => revisedContract ? validEditorialRevision(current, value) : validEditorial(current, value) });
             try {

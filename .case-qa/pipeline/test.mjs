@@ -5,6 +5,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { createRequire } from 'node:module';
+import { gunzipSync } from 'node:zlib';
 import { read, write, clone, loadSnapshot, scan, selectNext, assess, guardedPatch, better,
   restoreBest, stageCandidate, repairPrompt, assertNoRegression, assertScope } from './core.mjs';
 import { emptyState, validateState, openStore, pushCheckpoint } from './state.mjs';
@@ -25,14 +26,30 @@ import { verifiedTextResponses } from '../fixtures/verified-text-responses.mjs';
 import { evaluatePreclueLeakage, n8nGuardSource } from '../case_qa_preclue_guard.mjs';
 import { compileEditorial, editorialPrompt, editorialFailure, validEditorial, recoverEditorial } from './editorial.mjs';
 import { reviewHash } from './review.mjs';
-import { qualityContract, REVIEW_VERSION } from './quality-contract.mjs';
+import { legacyQualityContract as qualityContract, REVIEW_VERSION } from './quality-contract.mjs';
 import { compileEditorialRevision, editorialRevisionPrompt, editorialRevisionSchema, validEditorialRevision } from './editorial.mjs';
 import { compileBoundedEditorial, recoverBoundedEditorial, editorialRevisionRequestPrompt } from './editorial.mjs';
 import { hintOnly, compileHints, recoverHintCleanup, validHints } from './hint-cleanup.mjs';
+import { EXPERIENCE_PROFILES, EXPERIENCE_VERSION, experienceProfile, experienceCheck, difficultyBand } from './experience.mjs';
+import { canonicalLogicSignature, logicNoveltyCheck } from './logic-patterns.mjs';
+import { qualityContract as experienceContract } from './quality-contract.mjs';
+import { editorialExperiencePrompt } from './editorial.mjs';
 import { reconcileKnownUnsent } from './reservation-recovery.mjs';
 
 globalThis.fetch = async () => { throw new Error('TEST_NETWORK_FORBIDDEN'); };
-const currentPolicy = read('.case-qa/pipeline/policy.json'), policy = clone(currentPolicy), root = process.cwd();
+const productionPolicy = read('.case-qa/pipeline/policy.json'), currentPolicy = clone(productionPolicy), root = process.cwd();
+// Preserve the historical engine and v2 wire for paid-cache regressions.
+// The six-category production path has dedicated tests below.
+const legacyParent = path.join(root, '.case-qa-output');
+fs.mkdirSync(legacyParent, { recursive: true });
+const legacyDirectory = fs.mkdtempSync(path.join(legacyParent, 'historical-engine-'));
+const legacyEngine = path.join(legacyDirectory, 'simulator.html');
+fs.writeFileSync(legacyEngine, gunzipSync(Buffer.from(fs.readFileSync('.case-qa/fixtures/simulator-0e27218c.html.gz.b64', 'utf8').trim(), 'base64')));
+currentPolicy.simulator.path = path.relative(root, legacyEngine);
+currentPolicy.simulator.git_blob_sha = '0e27218c7817862f371febb6b7bb865821d9e5da';
+currentPolicy.review.prompt_version = 'fm-player-review-v2';
+delete currentPolicy.authoring.experience_version;
+const policy = clone(currentPolicy);
 // Historical paid-cache fixtures must replay their original v1 wire contract.
 // The v2 production contract and orchestration are exercised explicitly below.
 policy.review.prompt_version = 'fm-player-review-v1';
@@ -73,6 +90,131 @@ try {
   for (const entry of snapshot.entries) entry.candidate.qaPortfolioRegistry = clone(historicalRegistry);
   const original = snapshot.entries.find(e => e.id === 'termal-otelde-supheli-vaka');
   const currentSnapshot = { ...snapshot, policy: currentPolicy };
+  const productionSnapshot = loadSnapshot(root, productionPolicy);
+  const adadaEntry = productionSnapshot.entries.find(e => e.id === 'adada-buyuk-gizem');
+  await test('six experience categories preserve correctness but vary density; all actual stored difficulties map explicitly', () => {
+    assert.equal(Object.keys(EXPERIENCE_PROFILES).length, 6);
+    assert.equal(productionPolicy.authoring.experience_version, EXPERIENCE_VERSION);
+    assert.equal(productionPolicy.review.prompt_version, REVIEW_VERSION);
+    const keys = new Set();
+    for (const e of productionSnapshot.entries) keys.add(experienceProfile(e.candidate,e.tier).key);
+    assert.equal(keys.size, 6);
+    assert.ok(EXPERIENCE_PROFILES.standard_caylak.story[1] < EXPERIENCE_PROFILES.premium_caylak.story[1]);
+    assert.ok(EXPERIENCE_PROFILES.standard_caylak.core[1] < EXPERIENCE_PROFILES.standard_dedektif.core[1]);
+    assert.equal(difficultyBand({ difficulty: 2 }), 'caylak');
+    assert.equal(difficultyBand({ difficulty: 3 }), 'dedektif');
+    assert.equal(difficultyBand({ difficulty: 5 }), 'baskomiser');
+    assert.throws(() => experienceProfile({ difficulty: 'unknown' }), /CATEGORY_UNKNOWN/);
+    assert.equal(productionPolicy.simulator.minimum_score,100);
+    assert.equal(productionPolicy.review.minimum_dimension_score,4);
+  });
+  await test('native HTML and authoring contract agree on all six word limits, including named standard difficulty labels', () => {
+    for(const [key,profile]of Object.entries(EXPERIENCE_PROFILES)){
+      const [tier,band]=key.split('_'),c=clone(adadaEntry.candidate);
+      c.qaPolicy.caseTier=tier;c.difficulty=tier==='standard'?band:({caylak:1,dedektif:3,baskomiser:5})[band];
+      c.story=Array(profile.story[1]+1).fill('kanıt').join(' ');
+      const qa=productionSnapshot.engine.computeQA(productionSnapshot.engine.normalize(c));
+      assert.ok(qa.contentQuality.warnings.some(w=>w.startsWith('Hikâye '+(profile.story[1]+1)+' kelime')),key);
+      c.story=adadaEntry.candidate.story;c.clues[0].text=Array(profile.core[1]+1).fill('kanıt').join(' ');
+      const clueQA=productionSnapshot.engine.computeQA(productionSnapshot.engine.normalize(c));
+      assert.ok(clueQA.contentQuality.warnings.some(w=>w.startsWith('İpucu 1: '+(profile.core[1]+1)+' kelime')),key);
+    }
+  });
+  await test('real human Adada feedback rejects the old density and disconnected scene; concise revision passes the exact engine without old approval', () => {
+    const f=read('.case-qa/fixtures/adada-human-feedback-20261013.json'), c=adadaEntry.candidate;
+    const before=clone(c); before.story=f.previous_story; before.clues[0].text=f.previous_c1;
+    const old=experienceCheck(before,'standard');
+    assert.ok(old.issues.some(i=>i.startsWith('EXPERIENCE_STORY_TOO_LONG')));
+    assert.ok(old.issues.some(i=>i.includes('UNINTRODUCED_SETTING:c1:atölye')));
+    assert.ok(old.issues.includes('EXPERIENCE_PREMATURE_METHOD_ASSERTION'));
+    const now=assess(productionSnapshot,adadaEntry,c);
+    assert.equal(now.result.score,100); assert.equal(now.passed,true);
+    assert.equal(now.experience.counts.story,44);
+    assert.ok(now.experience.counts.clues.every(x=>x.words<=x.maximum));
+    assert.equal(certificateValid(productionSnapshot,adadaEntry,c,f.previous_pipeline_review),false);
+    assert.equal(productionSnapshot.sidecar.cases[c.id].pipeline_review,undefined);
+  });
+  await test('native simulator and pipeline both enforce category density and scene continuity; a forensic institution is not an invented crime location', () => {
+    const c=clone(adadaEntry.candidate);
+    c.clues[0].text='Atölyenin girişindeki kamera, bütün gece sanatçının hareketlerini kesintisiz biçimde kaydetti.';
+    const bad=assess(productionSnapshot,adadaEntry,c);
+    assert.equal(bad.passed,false);assert.ok(bad.result.blockers.some(x=>x.includes('Sahne Bütünlüğü')));
+    const good=productionSnapshot.entries.find(e=>e.id==='pp_001');
+    assert.equal(assess(productionSnapshot,good,good.candidate).passed,true);
+    for(const id of productionPolicy.authoring.calibration_case_ids){const e=productionSnapshot.entries.find(e=>e.id===id);assert.equal(assess(productionSnapshot,e,e.candidate).passed,true);}
+    const long=clone(adadaEntry.candidate);long.clues[0].text=Array(31).fill('görüntüler').join(' ');
+    assert.ok(experienceCheck(long,'standard').issues.some(x=>x.includes('CLUE_TOO_LONG')));
+    assert.equal(assess(productionSnapshot,adadaEntry,long).passed,false);
+  });
+  await test('logical signature rejects reordered clues, renamed IDs and swapped innocent labels; graph changes remain distinguishable', () => {
+    const c=clone(adadaEntry.candidate), signature=canonicalLogicSignature(c);
+    c.clues.reverse(); assert.equal(canonicalLogicSignature(c),signature);
+    const regrouped=clone(c), regular=regrouped.clues.filter(x=>!x.isBonus);
+    regular[0].logicRules.push(...regular[1].logicRules);
+    regrouped.clues=regrouped.clues.filter(x=>x.id!==regular[1].id);
+    assert.equal(canonicalLogicSignature(regrouped),signature);
+    const swaps=new Map();
+    for(const axis of ['suspects','weapons','locations']) c[axis].forEach((e,i)=>swaps.set(e.id,axis+'_'+(8-i)));
+    for(const axis of ['suspects','weapons','locations']) c[axis].forEach(e=>{e.id=swaps.get(e.id);e.name='Different name';});
+    for(const k of ['suspectId','weaponId','locationId']) c.solution[k]=swaps.get(c.solution[k]);
+    for(const clue of c.clues) { for(const r of clue.logicRules) r.pair=r.pair.map(id=>swaps.get(id));
+      for(const f of clue.qaSemanticFacts||[]) if(f.entityId) f.entityId=swaps.get(f.entityId); }
+    for(const f of c.qaSemanticFacts||[]) if(f.entityId) f.entityId=swaps.get(f.entityId);
+    assert.equal(canonicalLogicSignature(c),signature);
+    const changed=clone(c); const rule=changed.clues.find(x=>!x.isBonus).logicRules[0];rule.action=rule.action==='confirm'?'eliminate':'confirm';
+    assert.notEqual(canonicalLogicSignature(changed),signature);
+    const duplicate={...adadaEntry,id:'duplicate',candidate:c};
+    assert.equal(logicNoveltyCheck({...productionSnapshot,entries:[adadaEntry,duplicate]},adadaEntry,adadaEntry.candidate).passed,false);
+  });
+  await test('new verified planner produces genuinely different graphs across new cases and independently proves every core necessary', () => {
+    let s={...productionSnapshot,entries:[...productionSnapshot.entries]};
+    const source=s.entries.find(e=>e.id==='tren-yolculugunda-cinayet'), signatures=new Set();
+    for(let i=0;i<5;i++){
+      const e={...source,id:'structural_case_'+i,candidate:clone(source.candidate)};e.candidate.id=e.id;
+      const p=textRepairPlan(s,e,e.candidate);assert.ok(p.distinctGraphsAvailable>20);
+      assert.equal(verifyTextPlan(e.candidate,p).coreNecessary,true);
+      assert.ok(!signatures.has(p.logicSignature));signatures.add(p.logicSignature);
+      const c=clone(e.candidate);c.qaSemanticFacts=[{kind:'crime_component',...p.anchor}];
+      c.clues.forEach(cl=>{const r=p.clues.find(x=>x.id===cl.id);cl.logicRules=[r.rule];cl.qaSemanticFacts=[];});
+      assert.equal(canonicalLogicSignature(c),p.logicSignature);s.entries.push({...e,candidate:c});
+    }
+    assert.equal(signatures.size,5);
+  });
+  await test('valid distinct graph is retained for narrative-only fixes and writer/editor share category and continuity requirements', () => {
+    const c=adadaEntry.candidate,p=textRepairPlan(productionSnapshot,adadaEntry,c);
+    assert.equal(p.retainedGraph,true);
+    assert.deepEqual(p.clues.map(x=>x.rule),c.clues.map(x=>x.logicRules[0]));
+    const a=assess(productionSnapshot,adadaEntry,c), prompt=textRepairPrompt(adadaEntry,c,p,a,[]);
+    assert.match(prompt,/target 25-55/);assert.doesNotMatch(prompt,/STORY: aim for 95-130|EACH CLUE: 35-70/);
+    assert.match(prompt,/Never say the lethal method is already confirmed/);
+    const feedback={certificate:{judge:validJudge()}};
+    assert.deepEqual(JSON.parse(editorialExperiencePrompt(c,feedback)).quality_contract,experienceContract(c));
+  });
+  await test('new review is independently blind and category-aware; no old certificate or generous scores can waive real issues', async () => {
+    const c=adadaEntry.candidate,seen=[];
+    const r=await reviewCandidate(productionSnapshot,adadaEntry,c,storeFor(c.id),runFor(),async args=>{
+      seen.push(JSON.parse(args.prompt));return {plan:args.purpose==='player'?playerFor(c):{...validJudge(),issues:['Opening and evidence do not form one event']}};
+    });
+    assert.equal(r.passed,false);
+    assert.deepEqual(Object.keys(seen[0]).sort(),['player_case','version']);
+    assert.equal(seen[0].player_case.solution,undefined);
+    assert.equal(seen[1].quality_contract.experience.key,'standard_caylak');
+    assert.equal(seen[1].logical_novelty.signature,canonicalLogicSignature(c));
+  });
+  await test('actual Adada review upgrade keeps all paid history and uses only two fresh category reviews, never another repair', async () => {
+    const f=read('.case-qa/fixtures/adada-review-upgrade-20261013.json'),store=storeFor(f.case_id),before=stableHash(f.requests);
+    store.state.cases[f.case_id]=clone(f.previous_record);store.state.requests=clone(f.requests);store.state.campaign_spent=f.previous_record.spent;
+    const purposes=[];process.env.GEMINI_API_KEY='offline-experience-upgrade';
+    const r=await repairOne(productionSnapshot,adadaEntry,store,{allowAI:true,caller:args=>{
+      purposes.push(args.purpose);assert.ok(['player','judge'].includes(args.purpose));
+      return callPaid({...args,transport:async()=>responseForFixture(args.purpose==='player'?playerFor(adadaEntry.candidate):validJudge())});
+    }});
+    assert.equal(r.status,'ready_for_gates');assert.deepEqual(purposes,['player','judge']);assert.equal(r.run.calls,2);
+    assert.equal(Object.keys(store.state.requests).length,Object.keys(f.requests).length+2);
+    assert.equal(stableHash(Object.fromEntries(Object.entries(store.state.requests).filter(([key])=>key in f.requests))),before);
+    assert.ok(store.state.cases[f.case_id].spent>f.previous_record.spent);
+    assert.equal(certificateValid(productionSnapshot,adadaEntry,adadaEntry.candidate,r.review.certificate),true);
+  });
   await test('durable pushes verify lost acknowledgements, retry only the same commit twice and never overwrite another writer', () => {
     const old = '1'.repeat(40), next = '2'.repeat(40), other = '3'.repeat(40), branch = 'automation/test';
     const exercise = mode => {
@@ -216,7 +358,7 @@ try {
     profile_additions: Object.fromEntries(narrativeCandidate.suspects.map(s => [s.id,
       'Bugün ailesine verdiği sözü tutmak istiyor, yaşanan belirsizlik yüzünden duyduğu kaygıyı gizlemeye çalışıyor.'])) };
   await test('v2 writer and independent editor share criteria; blind player receives no criteria or answer', async () => {
-    assert.equal(currentPolicy.review.prompt_version, REVIEW_VERSION);
+    assert.equal(currentPolicy.review.prompt_version, 'fm-player-review-v2');
     assert.equal(currentPolicy.review.minimum_dimension_score, 4);
     for (const entry of snapshot.entries) assert.equal(qualityContract(entry.candidate).tier, entry.tier);
     const contract = qualityContract(narrativeCandidate, narrativeEntry.tier);
@@ -1205,4 +1347,4 @@ try {
     other.state.active_id = 'b'; other.save(); store.state.active_id = 'stale'; assert.throws(() => store.save());
   });
   console.log('PASS: ' + passed + ' pipeline tests; exact HTML, zero paid calls.');
-} finally { delete process.env.GEMINI_API_KEY; fs.rmSync(temporary, { recursive: true, force: true }); }
+} finally { delete process.env.GEMINI_API_KEY; fs.rmSync(temporary, { recursive: true, force: true }); fs.rmSync(legacyDirectory, { recursive: true, force: true }); }

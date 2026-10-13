@@ -1,5 +1,63 @@
 # Faili Meçhul — güvenli vaka geliştirme akışı
 
+## Geçerli oyuncu deneyimi sözleşmesi — altı kategori (13.10.2026)
+
+Bu bölüm, aşağıdaki tarihsel run notlarındaki evrensel 60/95-130 kelime
+zorunluluğunun yerini alır. Doğruluk, adalet, temel ipuçlarıyla tek çözüm,
+kimlik/cevap koruması ve bağımsız review eşikleri bütün kategorilerde aynıdır.
+Yoğunluk, anlatı derinliği ve beklenen çıkarım karmaşıklığı kategoriye bağlıdır.
+
+| Kategori | Hikâye hedefi (kelime) | Temel ipucu hedefi (kelime) |
+|---|---:|---:|
+| Standart Çaylak | 25–55 | 12–30 |
+| Standart Dedektif | 35–75 | 18–42 |
+| Standart Baş Komiser | 45–95 | 22–55 |
+| Premium Çaylak | 40–125 | 18–42 |
+| Premium Dedektif | 55–145 | 24–58 |
+| Premium Baş Komiser | 70–180 | 28–70 |
+
+Alt hedef için dolgu üretmek yasaktır; üst sınırlar mobil yoğunluk kapısıdır.
+Bonus ve şüpheli bantları `experience.mjs` içindedir. Standart adlandırmalar
+çaylak/dedektif/baskomiser; saklanan premium 1–5 seviyesi 1–2 çaylak, 3 dedektif,
+4–5 baş komiser olarak gruplanır. Oyunun ham zorluk değerleri değiştirilmez.
+Native HTML ile bu tablo arasındaki altı kategori paritesi test edilir.
+
+Açılış, kartlar, bütün temel ve bonus ipuçları aynı olayın parçaları olmalıdır.
+Açıklanmayan atölye gibi yeni sahne mekânları ve kanıttan önce yöntemin
+kesinleştiği iddiası hem HTML hem pipeline kontrolünde reddedilir. Raporu
+hazırlayan adli laboratuvarın kurum olarak anılması, suç mekânı ataması sayılmaz.
+Bu dar otomatik tarama tam anlam denetimi değildir; v3 editör tüm olay akışını,
+anlatı sırasını ve kategoriye uygun okuma yükünü ayrıca değerlendirmelidir.
+
+`logic-patterns.mjs` adlar, varlık ID'leri, masum etiketleri, ipucu sırası ve düz
+metin ipuçlarının paketlenmesinden bağımsız mantık imzası hesaplar. Bunları
+değiştirmek yeni patern sağlamaz. 3x3 ağlarda tam kanonik karşılaştırma; daha
+büyük ağlarda türlendirilmiş graph refinement kullanılır (çakışmalar ihtiyatlı
+biçimde reddedilir). Gerçek mekanik türü/işlevi korunur. `diverse-text-plan.mjs`
+farklı kural kümeleri arar; her biri için bütün 36 atamayı ve her temel ipucunun
+zorunluluğunu bağımsız doğrular. Geçerli, benzersiz bir mevcut ağ, yalnız anlatı
+onarımında yeniden yazılmaz. Mantığı bilinmeyen eski vakalar `unknown` olarak
+raporlanır; tüm 105 ağ tamamlanmadan genel benzersizlik iddiası kurulamaz.
+
+Adada Büyük Gizem insan oynama testi sonrası sadeleştirildi: hikâye 88→44 kelime;
+atölye ve erken yöntem iddiası çıkarıldı. Kart kimlikleri, assetler ve çözüm
+korundu; native QA ve yeni kategori/graph kontrolleri 100 ile geçti. Eski v2 AI
+onayı yeni metne taşınmadı; fixture'da arşivlendi. Review v3 yeni kategori,
+bütünlük ve patern rubriğine bağlıdır. Mocked gerçek kayıt replay'i yalnız iki
+yeni review çağrısını kullanır; hiçbir yazım hakkı veya harcama geçmişi sıfırlanmaz.
+Bu mock gerçek editoryal kabul kanıtı değildir. Merge sonrası main/pilot/
+adada-buyuk-gizem ile taze oyuncu ve editör review'i alınmalıdır; bundan önce
+campaign ölçeklendirilmez. Bu geliştirmede ücretli API çağrısı yapılmamıştır.
+
+Eski motorun gzip/base64 fixture'ı yalnız tarihsel paid-cache regressions içindir.
+Canlı workflow daima policy'deki güncel exact HTML hash'ini çalıştırır. Legacy
+promptlar geçmiş request key'lerini denetlenebilir tutar; yeni üretim v3 kategori
+sözleşmesini kullanır. Eski review, sayı veya kalibrasyon tek başına yeni içerik
+onayı değildir.
+
+---
+
+
 Bu klasör yeni ücretli vaka akışının tek giriş noktasıdır. Eski Gemini autofix,
 v3 kampanya ve avatar otomatik birleştirme workflow'ları emekliye ayrılmıştır.
 Uyumluluk için eski motor yardımcıları ve ücretsiz regresyon testleri korunur.

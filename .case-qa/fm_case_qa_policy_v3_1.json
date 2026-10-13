@@ -19,7 +19,7 @@
     "require_preclue_guard_pass": true,
     "require_avatar_prompt_risk_false": true,
     "path": ".case-qa/Faili_Mechul_Vaka_Simulatoru_v29_4_Otomasyon_Temeli.html",
-    "git_blob_sha": "0e27218c7817862f371febb6b7bb865821d9e5da"
+    "git_blob_sha": "17170058b8f45eab789e14aaf2fb7a6605587fb8"
   },
   "repair": {
     "confirmed_preclue_leakage_only": true,

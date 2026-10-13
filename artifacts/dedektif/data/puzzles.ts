@@ -514,24 +514,24 @@ export const PUZZLES: Puzzle[] = [
     title: "Adada Büyük Gizem",
     difficulty: "caylak",
     dayIndex: 7,
-    story: "Büyükada'da yaz sezonunun en sakin gününde, adanın tanınmış simalarından birinin ani ve şüpheli ölümü ada halkını dehşete düşürdü. Fırtına sebebiyle ana karaya yapılan tüm deniz seferleri durdurulunca, cinayetin sorumlusunun halen adada mahsur kaldığı kesinleşti. Savcılık olayla ilgili titiz bir soruşturma başlattı. Elde edilen ilk bulgulara göre, cinayetin işlendiği kritik zaman diliminde şüphelilerin her birinin listede yer alan farklı bir noktada bulunduğu ve farklı bir vasıtaya erişim sağladığı tespit edildi. Dedektifler şimdi ölümcül yöntemin kesinleştiği bu tabloda, kullanılan aracın taşıyıcısını ve ait olduğu alanı kanıtlarla bir araya getirmeye çalışıyor.",
+    story: "Büyükada'daki bir yaz daveti, ev sahibinin öldürülmesiyle yarıda kaldı. Fırtına vapur seferlerini durdurdu; üç şüpheli adada kaldı. Cinayet saatinde her biri listedeki farklı bir yerdeydi ve farklı bir araca erişmişti. Davetlilerin ifadelerini, kayıtları ve adli raporu karşılaştırarak katili, kullandığı aracı ve cinayet yerini bulun.",
     suspects: [
       {
         id: "s1",
         name: "Emekli Albay",
-        description: "Günün ilk ışıklarıyla yürüyüşe çıkan, dik duruşlu ve mesafeli eski asker. Gri bıyıkları, muntazam ütülü kıyafetleri ve nizamı önceleyen soğukkanlı tavırlarıyla çevresindekileri dikkatle süzer.",
+        description: "Disiplinli eski asker. Gri bıyıklı, ütülü kıyafetli; davette sakin ve mesafeli davranıyor.",
         icon: "pa:adada_s1"
       },
       {
         id: "s2",
         name: "Ressam Leyla",
-        description: "Mevsimi açık havada tual başında geçiren, sessiz ve gözlemci sanatçı. Üzerindeki keten önlüğü, lekeli parmakları ve etrafındaki olaylara karşı dalgın ama dikkatli bakışlarıyla tanınır.",
+        description: "Sessiz, gözlemci sanatçı. Keten önlüğü ve boya lekeli parmaklarıyla tanınıyor; davette dalgın görünüyor.",
         icon: "pa:adada_s2"
       },
       {
         id: "s3",
         name: "Genç Yatçı",
-        description: "Hızlı deniz araçlarıyla yeni gelmiş, sabırsız ve hareketli genç konuk. Güneşten yanmış teni, sportif kıyafetleri ve kurallara aldırış etmeyen fevri mizacıyla dikkatleri üzerine çeker.",
+        description: "Sabırsız genç konuk. Güneşten yanmış teni ve sportif kıyafetleriyle tanınıyor; davette aceleci davranıyor.",
         icon: "pa:adada_s3"
       }
     ],
@@ -578,45 +578,45 @@ export const PUZZLES: Puzzle[] = [
     clues: [
       {
         id: "c1",
-        text: "Atölye girişindeki güvenlik kamerası bantları ve malzeme dolabı mühür kayıtları incelendi. İlgili zaman aralığında, tual başında çalışan sessiz sanatçının tekneleri iskeleye bağlamakta kullanılan kalın denizci ipine hiçbir temasının bulunmadığı teyit edildi.",
+        text: "Cinayet saatinin kesintisiz görüntüleri, sessiz sanatçının hangi aracı kullandığını baştan sona gösteriyor. Tekneleri bağlayan kalın ipi hiç almadığı veya kullanmadığı kesinleşiyor.",
         type: "evidence",
         isBonus: false,
-        deductionHint: "Kayıtlar, atölyesinde boya yapan sanatçının hangi aracı elinde bulundurmadığını gösteriyor olabilir mi?"
+        deductionHint: "Görüntüler, sanatçı için hangi eşleşmeyi eliyor?"
       },
       {
         id: "c2",
-        text: "Kritik zaman aralığında devriye gezen güvenlik görevlisinin tuttuğu kontrol tutanağına göre, doğal bitkilerden elde edilen sinsi toksin şişesi, dalgaların vurduğu uzun yürüyüş yolundaki bir bankın üzerinde tespit edilmiştir.",
+        text: "Dalgaların vurduğu yürüyüş yolunda bulunan bitkisel toksin şişesi, cinayet saatinde çekilmiş bir fotoğrafta görülüyor. Fotoğrafı çeken görevli, saati nöbet kaydıyla doğruluyor.",
         type: "witness",
         isBonus: false,
-        deductionHint: "Denetim raporu, bitkisel maddenin tam olarak hangi yürüyüş güzergâhında bulunduğunu ortaya koyuyor olabilir mi?"
+        deductionHint: "Şişeyi hangi yerin betimlemesiyle eşleştirebilirsin?"
       },
       {
         id: "c3",
-        text: "Adli tıp raporu, kurbandaki ölümcül boğulma izlerinin doğrudan tekneleri iskeleye bağlamak için kullanılan kalın denizci ipiyle oluştuğunu kesinleştirdi. Eş zamanlı parmak izi analizleri ve nöbet kütüğü, nizamına düşkün eski askerin bu ipe kesinlikle erişmediğini kanıtladı.",
+        text: "Adli rapor, ölümü tekneleri bağlayan kalın ipin yol açtığı boğulmaya bağlıyor. Cinayet saatinin kesintisiz görüntüleri, disiplinli eski askerin bu ipi hiç almadığını veya kullanmadığını gösteriyor.",
         type: "forensic",
         isBonus: false,
-        deductionHint: "Cinayette kullanılan ölümcül aracın kesinleşmesi, eski askeri hangi yöntemden tamamen muaf tutar?"
+        deductionHint: "Rapor hangi aracı kesinleştiriyor; görüntüler kimi eliyor?"
       },
       {
         id: "c4",
-        text: "Bölge gözetleme istasyonunun kayıt kütüğüne göre, çift namlulu ateşli silahın cinayet anında adanın güney ucundaki uçurum kenarında yer alan sarp alanda korunaklı bir çantada durduğu belgelendi.",
+        text: "Çift namlulu ateşli silah, cinayet saatinde adanın güney ucundaki sarp alanda bulunuyordu. Tarih ve saati doğrulanan gözetleme fotoğrafı bunu açıkça gösteriyor.",
         type: "record",
         isBonus: false,
-        deductionHint: "Gözetleme kütüğü, çift namlulu ateşli silah ile sarp manzara noktası arasında nasıl bir bağ kuruyor?"
+        deductionHint: "Fotoğraftaki manzara hangi yer kartına uyuyor?"
       },
       {
         id: "c5",
-        text: "Emekli Albay'ın odasındaki malzeme zimmet tutanağı, ilgili zaman aralığında kendisinin Av Tüfeği ile birlikte olduğunu ve bu silahın sorumluluğunu taşıdığını kesinleştirmiştir.",
+        text: "Davetin zimmet kaydı, cinayet saatinde Av Tüfeği'nin Emekli Albay'ın sorumluluğunda olduğunu doğruluyor.",
         type: "record",
         isBonus: true,
-        deductionHint: "Bu kayıt Emekli Albay ile Av Tüfeği arasındaki doğrudan ilişkiyi doğrular mı?"
+        deductionHint: "Bu kayıt hangi kişi–araç bağını tamamlıyor?"
       },
       {
         id: "c6",
-        text: "Yürüyüş yolundaki çay bahçesi işletmecisinin ifadesine göre Ressam Leyla, cinayetin işlendiği saatlerde Sahil Şeridi üzerinde otururken görülmüştür.",
+        text: "Saat damgası doğrulanan kamera görüntüsünde Ressam Leyla, cinayet sırasında Sahil Şeridi'nde görülüyor.",
         type: "witness",
         isBonus: true,
-        deductionHint: "Tanık ifadesi Ressam Leyla'nın Sahil Şeridi'nde bulunduğunu gösteriyor mu?"
+        deductionHint: "Görüntü hangi kişi–yer bağını doğruluyor?"
       }
     ],
     solvabilityMeta: {
