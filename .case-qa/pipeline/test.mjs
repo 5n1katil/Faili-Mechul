@@ -71,16 +71,17 @@ const response = (text, extra = {}) => ({ ok: true, status: 200, json: async () 
 const responseForFixture = value => response(JSON.stringify(value));
 try {
   const snapshot = loadSnapshot(root, policy), rows = scan(snapshot);
+  const productionSnapshot = loadSnapshot(root, productionPolicy);
   await test('exact engine and inventory cover the current repository without hardcoded total', () => {
     assert.equal(rows.length, snapshot.inventory.cases.length);
     for (const id of ['rc_001', 'pp_001']) assert.equal(rows.find(r => r.id === id).passed, true);
     assert.ok(campaignRows(snapshot).every(r => !r.content_locked || r.passed));
     // Check actual production certificates before freezing historical replays.
-    for (const entry of snapshot.entries) {
-      const saved = snapshot.sidecar.cases?.[entry.id]?.pipeline_review;
+    for (const entry of productionSnapshot.entries) {
+      const saved = productionSnapshot.sidecar.cases?.[entry.id]?.pipeline_review;
       if (saved) {
-        assert.equal(assess(snapshot, entry, entry.candidate).passed, true);
-        assert.equal(certificateValid({ ...snapshot, policy: currentPolicy }, entry, entry.candidate, saved), true);
+        assert.equal(assess(productionSnapshot, entry, entry.candidate).passed, true);
+        assert.equal(certificateValid(productionSnapshot, entry, entry.candidate, saved), true);
       }
     }
   });
@@ -90,7 +91,6 @@ try {
   for (const entry of snapshot.entries) entry.candidate.qaPortfolioRegistry = clone(historicalRegistry);
   const original = snapshot.entries.find(e => e.id === 'termal-otelde-supheli-vaka');
   const currentSnapshot = { ...snapshot, policy: currentPolicy };
-  const productionSnapshot = loadSnapshot(root, productionPolicy);
   const adadaEntry = productionSnapshot.entries.find(e => e.id === 'adada-buyuk-gizem');
   await test('six experience categories preserve correctness but vary density; all actual stored difficulties map explicitly', () => {
     assert.equal(Object.keys(EXPERIENCE_PROFILES).length, 6);
@@ -132,7 +132,11 @@ try {
     assert.equal(now.experience.counts.story,44);
     assert.ok(now.experience.counts.clues.every(x=>x.words<=x.maximum));
     assert.equal(certificateValid(productionSnapshot,adadaEntry,c,f.previous_pipeline_review),false);
-    assert.equal(productionSnapshot.sidecar.cases[c.id].pipeline_review,undefined);
+    const saved = productionSnapshot.sidecar.cases[c.id].pipeline_review;
+    if (saved) {
+      assert.notEqual(saved.review_hash, f.previous_pipeline_review.review_hash);
+      assert.equal(certificateValid(productionSnapshot, adadaEntry, c, saved), true);
+    }
   });
   await test('native simulator and pipeline both enforce category density and scene continuity; a forensic institution is not an invented crime location', () => {
     const c=clone(adadaEntry.candidate);
@@ -205,7 +209,10 @@ try {
     const f=read('.case-qa/fixtures/adada-review-upgrade-20261013.json'),store=storeFor(f.case_id),before=stableHash(f.requests);
     store.state.cases[f.case_id]=clone(f.previous_record);store.state.requests=clone(f.requests);store.state.campaign_spent=f.previous_record.spent;
     const purposes=[];process.env.GEMINI_API_KEY='offline-experience-upgrade';
-    const r=await repairOne(productionSnapshot,adadaEntry,store,{allowAI:true,caller:args=>{
+    // Replay the pre-upgrade certificate state even after production is approved.
+    const upgradeSnapshot = { ...productionSnapshot, sidecar: clone(productionSnapshot.sidecar) };
+    delete upgradeSnapshot.sidecar.cases[f.case_id].pipeline_review;
+    const r=await repairOne(upgradeSnapshot,adadaEntry,store,{allowAI:true,caller:args=>{
       purposes.push(args.purpose);assert.ok(['player','judge'].includes(args.purpose));
       return callPaid({...args,transport:async()=>responseForFixture(args.purpose==='player'?playerFor(adadaEntry.candidate):validJudge())});
     }});
