@@ -9452,31 +9452,31 @@
     "adada-buyuk-gizem": {
       "spent": 0.01580345000000001,
       "feedback": [],
-      "source_hash": "89a454678038224ff04b0ebd9f6ecfd17d77fe7531ccc274b452ea203942b823",
-      "simulator_hash": "0e27218c7817862f371febb6b7bb865821d9e5da",
+      "source_hash": "ceafad461318f65294d977b48098c3908fb3240e925b6b4d1e364efd2f4071cf",
+      "simulator_hash": "17170058b8f45eab789e14aaf2fb7a6605587fb8",
       "candidate": {
         "id": "adada-buyuk-gizem",
         "title": "Adada Büyük Gizem",
         "difficulty": "caylak",
         "dayIndex": 7,
-        "story": "Büyükada'da yaz sezonunun en sakin gününde, adanın tanınmış simalarından birinin ani ve şüpheli ölümü ada halkını dehşete düşürdü. Fırtına sebebiyle ana karaya yapılan tüm deniz seferleri durdurulunca, cinayetin sorumlusunun halen adada mahsur kaldığı kesinleşti. Savcılık olayla ilgili titiz bir soruşturma başlattı. Elde edilen ilk bulgulara göre, cinayetin işlendiği kritik zaman diliminde şüphelilerin her birinin listede yer alan farklı bir noktada bulunduğu ve farklı bir vasıtaya erişim sağladığı tespit edildi. Dedektifler şimdi ölümcül yöntemin kesinleştiği bu tabloda, kullanılan aracın taşıyıcısını ve ait olduğu alanı kanıtlarla bir araya getirmeye çalışıyor.",
+        "story": "Büyükada'daki bir yaz daveti, ev sahibinin öldürülmesiyle yarıda kaldı. Fırtına vapur seferlerini durdurdu; üç şüpheli adada kaldı. Cinayet saatinde her biri listedeki farklı bir yerdeydi ve farklı bir araca erişmişti. Davetlilerin ifadelerini, kayıtları ve adli raporu karşılaştırarak katili, kullandığı aracı ve cinayet yerini bulun.",
         "suspects": [
           {
             "id": "s1",
             "name": "Emekli Albay",
-            "description": "Günün ilk ışıklarıyla yürüyüşe çıkan, dik duruşlu ve mesafeli eski asker. Gri bıyıkları, muntazam ütülü kıyafetleri ve nizamı önceleyen soğukkanlı tavırlarıyla çevresindekileri dikkatle süzer.",
+            "description": "Disiplinli eski asker. Gri bıyıklı, ütülü kıyafetli; davette sakin ve mesafeli davranıyor.",
             "icon": "pa:adada_s1"
           },
           {
             "id": "s2",
             "name": "Ressam Leyla",
-            "description": "Mevsimi açık havada tual başında geçiren, sessiz ve gözlemci sanatçı. Üzerindeki keten önlüğü, lekeli parmakları ve etrafındaki olaylara karşı dalgın ama dikkatli bakışlarıyla tanınır.",
+            "description": "Sessiz, gözlemci sanatçı. Keten önlüğü ve boya lekeli parmaklarıyla tanınıyor; davette dalgın görünüyor.",
             "icon": "pa:adada_s2"
           },
           {
             "id": "s3",
             "name": "Genç Yatçı",
-            "description": "Hızlı deniz araçlarıyla yeni gelmiş, sabırsız ve hareketli genç konuk. Güneşten yanmış teni, sportif kıyafetleri ve kurallara aldırış etmeyen fevri mizacıyla dikkatleri üzerine çeker.",
+            "description": "Sabırsız genç konuk. Güneşten yanmış teni ve sportif kıyafetleriyle tanınıyor; davette aceleci davranıyor.",
             "icon": "pa:adada_s3"
           }
         ],
@@ -9523,10 +9523,10 @@
         "clues": [
           {
             "id": "c1",
-            "text": "Atölye girişindeki güvenlik kamerası bantları ve malzeme dolabı mühür kayıtları incelendi. İlgili zaman aralığında, tual başında çalışan sessiz sanatçının tekneleri iskeleye bağlamakta kullanılan kalın denizci ipine hiçbir temasının bulunmadığı teyit edildi.",
+            "text": "Cinayet saatinin kesintisiz görüntüleri, sessiz sanatçının hangi aracı kullandığını baştan sona gösteriyor. Tekneleri bağlayan kalın ipi hiç almadığı veya kullanmadığı kesinleşiyor.",
             "type": "evidence",
             "isBonus": false,
-            "deductionHint": "Kayıtlar, atölyesinde boya yapan sanatçının hangi aracı elinde bulundurmadığını gösteriyor olabilir mi?",
+            "deductionHint": "Görüntüler, sanatçı için hangi eşleşmeyi eliyor?",
             "logicRules": [
               {
                 "action": "eliminate",
@@ -9536,20 +9536,20 @@
                 ]
               }
             ],
-            "isCrimeAnchor": false,
-            "qaSemanticFacts": [],
             "qaRationale": {
               "matrixEffect": "Ressam Leyla ≠ Gemi Halatı elenir",
-              "evidenceLink": "Atölye girişindeki güvenlik kamerası bantları ve malzeme dolabı mühür kayıtları incelendi. İlgili zaman aralığında, tual başında çalışan sessiz sanatçının tekneleri iskeleye bağlamakta kullanılan kalın denizci ipine hiçbir temasının bulunmadığı teyit edildi.",
+              "evidenceLink": "Cinayet saatinin kesintisiz görüntüleri, sessiz sanatçının hangi aracı kullandığını baştan sona gösteriyor. Tekneleri bağlayan kalın ipi hiç almadığı veya kullanmadığı kesinleşiyor.",
               "evidenceKind": "physical"
-            }
+            },
+            "qaSemanticFacts": [],
+            "isCrimeAnchor": false
           },
           {
             "id": "c2",
-            "text": "Kritik zaman aralığında devriye gezen güvenlik görevlisinin tuttuğu kontrol tutanağına göre, doğal bitkilerden elde edilen sinsi toksin şişesi, dalgaların vurduğu uzun yürüyüş yolundaki bir bankın üzerinde tespit edilmiştir.",
+            "text": "Dalgaların vurduğu yürüyüş yolunda bulunan bitkisel toksin şişesi, cinayet saatinde çekilmiş bir fotoğrafta görülüyor. Fotoğrafı çeken görevli, saati nöbet kaydıyla doğruluyor.",
             "type": "witness",
             "isBonus": false,
-            "deductionHint": "Denetim raporu, bitkisel maddenin tam olarak hangi yürüyüş güzergâhında bulunduğunu ortaya koyuyor olabilir mi?",
+            "deductionHint": "Şişeyi hangi yerin betimlemesiyle eşleştirebilirsin?",
             "logicRules": [
               {
                 "action": "confirm",
@@ -9559,20 +9559,20 @@
                 ]
               }
             ],
-            "isCrimeAnchor": false,
-            "qaSemanticFacts": [],
             "qaRationale": {
               "matrixEffect": "Zehir ↔ Sahil Şeridi doğrulanır",
-              "evidenceLink": "Kritik zaman aralığında devriye gezen güvenlik görevlisinin tuttuğu kontrol tutanağına göre, doğal bitkilerden elde edilen sinsi toksin şişesi, dalgaların vurduğu uzun yürüyüş yolundaki bir bankın üzerinde tespit edilmiştir.",
+              "evidenceLink": "Dalgaların vurduğu yürüyüş yolunda bulunan bitkisel toksin şişesi, cinayet saatinde çekilmiş bir fotoğrafta görülüyor. Fotoğrafı çeken görevli, saati nöbet kaydıyla doğruluyor.",
               "evidenceKind": "witness"
-            }
+            },
+            "qaSemanticFacts": [],
+            "isCrimeAnchor": false
           },
           {
             "id": "c3",
-            "text": "Adli tıp raporu, kurbandaki ölümcül boğulma izlerinin doğrudan tekneleri iskeleye bağlamak için kullanılan kalın denizci ipiyle oluştuğunu kesinleştirdi. Eş zamanlı parmak izi analizleri ve nöbet kütüğü, nizamına düşkün eski askerin bu ipe kesinlikle erişmediğini kanıtladı.",
+            "text": "Adli rapor, ölümü tekneleri bağlayan kalın ipin yol açtığı boğulmaya bağlıyor. Cinayet saatinin kesintisiz görüntüleri, disiplinli eski askerin bu ipi hiç almadığını veya kullanmadığını gösteriyor.",
             "type": "forensic",
             "isBonus": false,
-            "deductionHint": "Cinayette kullanılan ölümcül aracın kesinleşmesi, eski askeri hangi yöntemden tamamen muaf tutar?",
+            "deductionHint": "Rapor hangi aracı kesinleştiriyor; görüntüler kimi eliyor?",
             "logicRules": [
               {
                 "action": "eliminate",
@@ -9582,28 +9582,28 @@
                 ]
               }
             ],
-            "isCrimeAnchor": true,
+            "qaRationale": {
+              "matrixEffect": "Emekli Albay ≠ Gemi Halatı elenir",
+              "evidenceLink": "Adli rapor, ölümü tekneleri bağlayan kalın ipin yol açtığı boğulmaya bağlıyor. Cinayet saatinin kesintisiz görüntüleri, disiplinli eski askerin bu ipi hiç almadığını veya kullanmadığını gösteriyor.",
+              "evidenceKind": "forensic"
+            },
             "qaSemanticFacts": [
               {
                 "kind": "crime_component",
                 "component": "weapon",
                 "entityId": "w3",
                 "source": "clue:c3",
-                "evidence": "Adli tıp raporu, kurbandaki ölümcül boğulma izlerinin doğrudan tekneleri iskeleye bağlamak için kullanılan kalın denizci ipiyle oluştuğunu kesinleştirdi. Eş zamanlı parmak izi analizleri ve nöbet kütüğü, nizamına düşkün eski askerin bu ipe kesinlikle erişmediğini kanıtladı."
+                "evidence": "Adli rapor, ölümü tekneleri bağlayan kalın ipin yol açtığı boğulmaya bağlıyor. Cinayet saatinin kesintisiz görüntüleri, disiplinli eski askerin bu ipi hiç almadığını veya kullanmadığını gösteriyor."
               }
             ],
-            "qaRationale": {
-              "matrixEffect": "Emekli Albay ≠ Gemi Halatı elenir",
-              "evidenceLink": "Adli tıp raporu, kurbandaki ölümcül boğulma izlerinin doğrudan tekneleri iskeleye bağlamak için kullanılan kalın denizci ipiyle oluştuğunu kesinleştirdi. Eş zamanlı parmak izi analizleri ve nöbet kütüğü, nizamına düşkün eski askerin bu ipe kesinlikle erişmediğini kanıtladı.",
-              "evidenceKind": "forensic"
-            }
+            "isCrimeAnchor": true
           },
           {
             "id": "c4",
-            "text": "Bölge gözetleme istasyonunun kayıt kütüğüne göre, çift namlulu ateşli silahın cinayet anında adanın güney ucundaki uçurum kenarında yer alan sarp alanda korunaklı bir çantada durduğu belgelendi.",
+            "text": "Çift namlulu ateşli silah, cinayet saatinde adanın güney ucundaki sarp alanda bulunuyordu. Tarih ve saati doğrulanan gözetleme fotoğrafı bunu açıkça gösteriyor.",
             "type": "record",
             "isBonus": false,
-            "deductionHint": "Gözetleme kütüğü, çift namlulu ateşli silah ile sarp manzara noktası arasında nasıl bir bağ kuruyor?",
+            "deductionHint": "Fotoğraftaki manzara hangi yer kartına uyuyor?",
             "logicRules": [
               {
                 "action": "confirm",
@@ -9613,20 +9613,20 @@
                 ]
               }
             ],
-            "isCrimeAnchor": false,
-            "qaSemanticFacts": [],
             "qaRationale": {
               "matrixEffect": "Av Tüfeği ↔ Kayalık doğrulanır",
-              "evidenceLink": "Bölge gözetleme istasyonunun kayıt kütüğüne göre, çift namlulu ateşli silahın cinayet anında adanın güney ucundaki uçurum kenarında yer alan sarp alanda korunaklı bir çantada durduğu belgelendi.",
+              "evidenceLink": "Çift namlulu ateşli silah, cinayet saatinde adanın güney ucundaki sarp alanda bulunuyordu. Tarih ve saati doğrulanan gözetleme fotoğrafı bunu açıkça gösteriyor.",
               "evidenceKind": "record"
-            }
+            },
+            "qaSemanticFacts": [],
+            "isCrimeAnchor": false
           },
           {
             "id": "c5",
-            "text": "Emekli Albay'ın odasındaki malzeme zimmet tutanağı, ilgili zaman aralığında kendisinin Av Tüfeği ile birlikte olduğunu ve bu silahın sorumluluğunu taşıdığını kesinleştirmiştir.",
+            "text": "Davetin zimmet kaydı, cinayet saatinde Av Tüfeği'nin Emekli Albay'ın sorumluluğunda olduğunu doğruluyor.",
             "type": "record",
             "isBonus": true,
-            "deductionHint": "Bu kayıt Emekli Albay ile Av Tüfeği arasındaki doğrudan ilişkiyi doğrular mı?",
+            "deductionHint": "Bu kayıt hangi kişi–araç bağını tamamlıyor?",
             "logicRules": [
               {
                 "action": "confirm",
@@ -9636,20 +9636,20 @@
                 ]
               }
             ],
-            "isCrimeAnchor": false,
-            "qaSemanticFacts": [],
             "qaRationale": {
               "matrixEffect": "Emekli Albay ↔ Av Tüfeği doğrulanır",
-              "evidenceLink": "Emekli Albay'ın odasındaki malzeme zimmet tutanağı, ilgili zaman aralığında kendisinin Av Tüfeği ile birlikte olduğunu ve bu silahın sorumluluğunu taşıdığını kesinleştirmiştir.",
+              "evidenceLink": "Davetin zimmet kaydı, cinayet saatinde Av Tüfeği'nin Emekli Albay'ın sorumluluğunda olduğunu doğruluyor.",
               "evidenceKind": "record"
-            }
+            },
+            "qaSemanticFacts": [],
+            "isCrimeAnchor": false
           },
           {
             "id": "c6",
-            "text": "Yürüyüş yolundaki çay bahçesi işletmecisinin ifadesine göre Ressam Leyla, cinayetin işlendiği saatlerde Sahil Şeridi üzerinde otururken görülmüştür.",
+            "text": "Saat damgası doğrulanan kamera görüntüsünde Ressam Leyla, cinayet sırasında Sahil Şeridi'nde görülüyor.",
             "type": "witness",
             "isBonus": true,
-            "deductionHint": "Tanık ifadesi Ressam Leyla'nın Sahil Şeridi'nde bulunduğunu gösteriyor mu?",
+            "deductionHint": "Görüntü hangi kişi–yer bağını doğruluyor?",
             "logicRules": [
               {
                 "action": "confirm",
@@ -9659,13 +9659,13 @@
                 ]
               }
             ],
-            "isCrimeAnchor": false,
-            "qaSemanticFacts": [],
             "qaRationale": {
               "matrixEffect": "Ressam Leyla ↔ Sahil Şeridi doğrulanır",
-              "evidenceLink": "Yürüyüş yolundaki çay bahçesi işletmecisinin ifadesine göre Ressam Leyla, cinayetin işlendiği saatlerde Sahil Şeridi üzerinde otururken görülmüştür.",
+              "evidenceLink": "Saat damgası doğrulanan kamera görüntüsünde Ressam Leyla, cinayet sırasında Sahil Şeridi'nde görülüyor.",
               "evidenceKind": "witness"
-            }
+            },
+            "qaSemanticFacts": [],
+            "isCrimeAnchor": false
           }
         ],
         "solvabilityMeta": {
@@ -9684,12 +9684,11 @@
           "weaponId": "w3",
           "locationId": "l1"
         },
-        "qaPolicy": {
-          "caseTier": "standard"
-        },
         "qaPattern": {
           "anchorSource": "clue:c3",
-          "designIntent": "Bağımsız teslim/erişim ve yer kanıtlarıyla çapraz eşleşme; dört temel ipucunun her biri zorunlu. Bonuslar masum eşleşmelerini tamamlar."
+          "designIntent": "Bağımsız teslim/erişim ve yer kanıtlarıyla çapraz eşleşme; dört temel ipucunun her biri zorunlu. Bonuslar masum eşleşmelerini tamamlar.",
+          "logicSignature": "exact-3x3-v1:cb506c102c197342863b1a3192a3e94bf43bb039858dab9cd61e40ef86706729",
+          "experienceCategory": "standard_caylak"
         },
         "qaPortfolioRegistry": {
           "schema_version": "fm_qa_portfolio_registry_v1",
@@ -9764,10 +9763,10 @@
               "puzzleId": "adada-buyuk-gizem",
               "title": "Adada Büyük Gizem",
               "signature": {
-                "anchorSig": "none:?",
-                "firstSig": "evidence:?:?",
-                "actions": "????",
-                "axes": "?|?|?|?",
+                "anchorSig": "clue:weapon",
+                "firstSig": "evidence:E:S-W",
+                "actions": "ECEC",
+                "axes": "S-W|L-W|S-W|L-W",
                 "miniSig": "none"
               }
             },
@@ -10851,56 +10850,24 @@
             }
           ]
         },
-        "qaAuthoringVersion": "verified_text_v1",
         "qaSemanticFacts": [
           {
             "kind": "crime_component",
             "component": "weapon",
             "entityId": "w3",
             "source": "clue:c3",
-            "evidence": "Adli tıp raporu, kurbandaki ölümcül boğulma izlerinin doğrudan tekneleri iskeleye bağlamak için kullanılan kalın denizci ipiyle oluştuğunu kesinleştirdi. Eş zamanlı parmak izi analizleri ve nöbet kütüğü, nizamına düşkün eski askerin bu ipe kesinlikle erişmediğini kanıtladı."
+            "evidence": "Adli rapor, ölümü tekneleri bağlayan kalın ipin yol açtığı boğulmaya bağlıyor. Cinayet saatinin kesintisiz görüntüleri, disiplinli eski askerin bu ipi hiç almadığını veya kullanmadığını gösteriyor."
           }
-        ]
+        ],
+        "qaPolicy": {
+          "caseTier": "standard"
+        },
+        "qaAuthoringVersion": "verified_text_v1"
       },
-      "candidate_hash": "44eb31f6981e5f75a8310210415fde9c824b397e7a7d4b850c186f7650af81ae",
+      "candidate_hash": "2161ff7d92decca71f7c692a79a7c8c033b140e5da4d4bde352b21abfb38454c",
       "best_score": 100,
       "failures": [],
-      "review": {
-        "schema": "fm_case_review_v1",
-        "review_hash": "531f8973ddc1317aa7de8dedc91921f94aa62a1bd1225c37d4fe829796a48143",
-        "player": {
-          "unique_solution": true,
-          "solution": {
-            "suspectId": "s3",
-            "weaponId": "w3",
-            "locationId": "l1"
-          },
-          "confidence": 100,
-          "evidence": [
-            {
-              "clue_id": "c3",
-              "quote": "Adli tıp raporu, kurbandaki ölümcül boğulma izlerinin doğrudan tekneleri iskeleye bağlamak için kullanılan kalın denizci ipiyle oluştuğunu kesinleştirdi."
-            },
-            {
-              "clue_id": "c1",
-              "quote": "tual başında çalışan sessiz sanatçının tekneleri iskeleye bağlamakta kullanılan kalın denizci ipine hiçbir temasının bulunmadığı teyit edildi."
-            }
-          ],
-          "issues": []
-        },
-        "judge": {
-          "scores": {
-            "fairness": 5,
-            "clarity": 5,
-            "consistency": 5,
-            "originality": 4,
-            "engagement": 4
-          },
-          "issues": [],
-          "summary": "Vaka çaylak seviyesi için kusursuz bir mantıksal kurguya sahip. İpuçları (c1-c4) doğrudan kart metinlerindeki tanımlayıcı ifadeleri kullanarak hiçbir varsayıma gerek bırakmadan tekil çözümü (Genç Yatçı - Gemi Halatı - Villa Bahçesi) net bir şekilde kanıtlıyor. Anlatım açık, çelişkisiz ve amaca uygun şekilde dengeli."
-        }
-      },
-      "status": "awaiting_review",
+      "status": "source_changed",
       "pr_url": "https://github.com/5n1katil/Faili-Mechul/pull/96"
     }
   },
