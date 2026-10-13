@@ -1,0 +1,47 @@
+{
+  "source_commit": "b300acd61ed775a221b0fc4422adf32ffd9b6d74",
+  "category": "standard_caylak",
+  "human_feedback": [
+    "Free novice content is too dense",
+    "Lethal method asserted before evidence",
+    "Unintroduced workshop disconnects story and clues",
+    "Clue order/name changes must not count as novel deductions"
+  ],
+  "previous_story": "Büyükada'da yaz sezonunun en sakin gününde, adanın tanınmış simalarından birinin ani ve şüpheli ölümü ada halkını dehşete düşürdü. Fırtına sebebiyle ana karaya yapılan tüm deniz seferleri durdurulunca, cinayetin sorumlusunun halen adada mahsur kaldığı kesinleşti. Savcılık olayla ilgili titiz bir soruşturma başlattı. Elde edilen ilk bulgulara göre, cinayetin işlendiği kritik zaman diliminde şüphelilerin her birinin listede yer alan farklı bir noktada bulunduğu ve farklı bir vasıtaya erişim sağladığı tespit edildi. Dedektifler şimdi ölümcül yöntemin kesinleştiği bu tabloda, kullanılan aracın taşıyıcısını ve ait olduğu alanı kanıtlarla bir araya getirmeye çalışıyor.",
+  "previous_c1": "Atölye girişindeki güvenlik kamerası bantları ve malzeme dolabı mühür kayıtları incelendi. İlgili zaman aralığında, tual başında çalışan sessiz sanatçının tekneleri iskeleye bağlamakta kullanılan kalın denizci ipine hiçbir temasının bulunmadığı teyit edildi.",
+  "previous_pipeline_review": {
+    "schema": "fm_case_review_v1",
+    "review_hash": "531f8973ddc1317aa7de8dedc91921f94aa62a1bd1225c37d4fe829796a48143",
+    "player": {
+      "unique_solution": true,
+      "solution": {
+        "suspectId": "s3",
+        "weaponId": "w3",
+        "locationId": "l1"
+      },
+      "confidence": 100,
+      "evidence": [
+        {
+          "clue_id": "c3",
+          "quote": "Adli tıp raporu, kurbandaki ölümcül boğulma izlerinin doğrudan tekneleri iskeleye bağlamak için kullanılan kalın denizci ipiyle oluştuğunu kesinleştirdi."
+        },
+        {
+          "clue_id": "c1",
+          "quote": "tual başında çalışan sessiz sanatçının tekneleri iskeleye bağlamakta kullanılan kalın denizci ipine hiçbir temasının bulunmadığı teyit edildi."
+        }
+      ],
+      "issues": []
+    },
+    "judge": {
+      "scores": {
+        "fairness": 5,
+        "clarity": 5,
+        "consistency": 5,
+        "originality": 4,
+        "engagement": 4
+      },
+      "issues": [],
+      "summary": "Vaka çaylak seviyesi için kusursuz bir mantıksal kurguya sahip. İpuçları (c1-c4) doğrudan kart metinlerindeki tanımlayıcı ifadeleri kullanarak hiçbir varsayıma gerek bırakmadan tekil çözümü (Genç Yatçı - Gemi Halatı - Villa Bahçesi) net bir şekilde kanıtlıyor. Anlatım açık, çelişkisiz ve amaca uygun şekilde dengeli."
+    }
+  }
+}

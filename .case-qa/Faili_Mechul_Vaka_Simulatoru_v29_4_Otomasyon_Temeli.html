@@ -3901,10 +3901,31 @@ function contentDepthAndNameCheck(c){
   });
 
   const storyWords=fmQaWordCount(c.story);
-  const storyMin=premium?110:60, storyMax=premium?360:220;
+  // Six experience categories: free/premium x novice/detective/chief.
+  // Stored five-level premium scale: 1-2 novice, 3 detective, 4-5 chief.
+  const namedBand=({'caylak':0,'çaylak':0,'dedektif':1,'baskomiser':2,'başkomiser':2})[String(c.difficulty||'').toLocaleLowerCase('tr').replace(/[\s_-]/g,'')];
+  const numericLevel=c.difficultyLevel??(typeof c.difficulty==='number'?c.difficulty:1);
+  const band=namedBand!==undefined?namedBand:numericLevel<=2?0:numericLevel===3?1:2;
+  const storyBands=premium?[[40,125],[55,145],[70,180]]:[[25,55],[35,75],[45,95]];
+  const [storyMin,storyMax]=storyBands[band];
   if(storyWords<25) flags.push(`HATA: Hikâye yalnız ${storyWords} kelime; olay, gerilim ve soruşturma bağlamı kurulmamış.`);
-  else if(storyWords<storyMin) warnings.push(`${fmCaseTierLabel(c)} hikâyesi ${storyWords} kelime; hedef derinlik yaklaşık ${storyMin}-${storyMax} kelime. Kimlikleri değiştirmeden olay ve atmosfer bağını güçlendir.`);
+  else if(storyWords<storyMin) findings.push(`${fmCaseTierLabel(c)} hikâyesi ${storyWords} kelime; hedef derinlik yaklaşık ${storyMin}-${storyMax} kelime. Kimlikleri değiştirmeden olay ve atmosfer bağını güçlendir.`);
   else if(storyWords>storyMax) warnings.push(`Hikâye ${storyWords} kelime; mobil okumada ağırlaşabilir. Tekrarları azalt, gizem ve gerekli bağlamı koru.`);
+
+  const coreWordMax=premium?[42,58,70][band]:[30,42,55][band];
+  const bonusWordMax=premium?[30,40,48][band]:[22,30,38][band];
+  const narrativeContext=fmNorm([c.story,...[...(c.suspects||[]),...(c.weapons||[]),...(c.locations||[])].map(e=>`${e.name||''} ${e.description||''} ${e.detail||''}`)].join(' '));
+  (c.clues||[]).forEach((cl,i)=>{
+    const count=fmQaWordCount(cl.text),limit=cl.isBonus?bonusWordMax:coreWordMax;
+    if(count>limit) warnings.push(`İpucu ${i+1}: ${count} kelime; bu kategori için üst sınır ${limit}. Gerekli kanıtı koruyarak sadeleştir.`);
+    ['atölye','laboratuvar','koridor','mahzen','mutfak','arşiv','gözetleme istasyonu'].forEach(term=>{
+      const forensicInstitution=term==='laboratuvar'&&/^\s*adli\s+laboratuvar[, ]+.{0,100}(?:saptadı|analiz|tespit|rapor)/iu.test(cl.text||'');
+      if(fmNorm(cl.text||'').includes(fmNorm(term))&&!narrativeContext.includes(fmNorm(term))&&!forensicInstitution)
+        flags.push(`HATA: Sahne Bütünlüğü — İpucu ${i+1} açıklanmamış "${term}" mekânına dayanıyor. Kartlar veya açılışla bağlantısını kur; kanıtı taşımak için yeni bir mekân uydurma.`);
+    });
+  });
+  if(/ölümcül\s+yöntem.{0,30}kesinleş|yöntemin\s+kesinleşti/iu.test(c.story||''))
+    flags.push('HATA: Anlatı Sırası — ölümcül yöntemin kanıtı görülmeden yöntem kesinleşmiş gibi anlatılıyor. Açılış olayı ve oyuncunun görevini vermeli.');
 
   const inspectProfiles=(label,arr,min,max)=>{
     const counts=[];
@@ -3921,7 +3942,7 @@ function contentDepthAndNameCheck(c){
       if(hi-lo>=16&&hi/Math.max(1,lo)>2.4) warnings.push(`${label} profilleri aynı vakada dengesiz (${lo}-${hi} kelime). Bir kart birkaç kelimeyken diğerinin paragraf olmasına izin verme.`);
     }
   };
-  inspectProfiles('Şüpheli',c.suspects||[],premium?22:12,premium?95:65);
+  inspectProfiles('Şüpheli',c.suspects||[],12,premium?[40,48,60][band]:[20,24,28][band]);
   inspectProfiles('Silah',c.weapons||[],premium?10:6,premium?75:50);
   inspectProfiles('Mekân',c.locations||[],premium?12:7,premium?80:55);
 

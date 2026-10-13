@@ -8,7 +8,10 @@ import { parseStandard, mergeSidecar, bootstrapAuthoring, buildPortfolioRegistry
   assessmentPenalty, buildPrompt, restoreBaselineAuthoring, stripAuthoring, authoringOverlay,
   replaceStandardCases } from '../fm_case_qa_runner.mjs';
 import { assertNearReadyCleanup } from '../fm_case_qa_cleanup_guard.mjs';
-import { qualityContract } from './quality-contract.mjs';
+import { qualityContract, legacyQualityContract } from './quality-contract.mjs';
+
+import { EXPERIENCE_VERSION, experienceCheck } from './experience.mjs';
+import { logicNoveltyCheck } from './logic-patterns.mjs';
 
 const { loadEngine } = createRequire(import.meta.url)('../fm_case_qa_core.cjs');
 export const clone = value => JSON.parse(JSON.stringify(value));
@@ -58,15 +61,21 @@ export function assess(snapshot, entry, candidate) {
   const result = evaluate(snapshot.engine, entry.raw, candidate);
   const completeness = authoringCompleteness(candidate);
   const contract = authoringContract(candidate);
-  return { ...result, completeness, contract,
-    passed: result.passed && completeness.complete && contract.passed && protectedIdentity(entry.raw) === protectedIdentity(candidate),
-    penalty: assessmentPenalty(result) + 1200 * (completeness.missing.length + contract.errors.length) };
+  const corePassed = result.passed && completeness.complete && contract.passed && protectedIdentity(entry.raw) === protectedIdentity(candidate);
+  const enabled = snapshot.policy.authoring.experience_version === EXPERIENCE_VERSION;
+  const experience = enabled ? experienceCheck(candidate, entry.tier) : { passed: true, issues: [] };
+  const novelty = enabled ? logicNoveltyCheck(snapshot, entry, candidate) : { passed: true, issues: [] };
+  const issues = experience.issues.concat(novelty.issues);
+  return { ...result, result: { ...result.result, blockers: [...result.result.blockers, ...issues] }, completeness, contract,
+    corePassed, experience, novelty, passed: corePassed && experience.passed && novelty.passed,
+    penalty: assessmentPenalty(result) + 1200 * (completeness.missing.length + contract.errors.length + issues.length) };
 }
 export function scan(snapshot) {
   return snapshot.entries.map(entry => {
     const a = assess(snapshot, entry, entry.candidate);
     return { id: entry.id, tier: entry.tier, source_hash: entry.sourceHash, passed: a.passed,
-      score: a.result.score, productionReady: a.result.simulatorProductionReady === true,
+      score: a.result.score, productionReady: a.passed && a.result.simulatorProductionReady === true,
+      experience: a.experience, novelty: a.novelty,
       result: compactReport(a.result, a.leakage), missing_authoring: a.completeness.missing, contract_errors: a.contract.errors };
   });
 }
@@ -80,9 +89,9 @@ export function counts(rows) {
   return { standard: done('standard'), premium: done('premium'), total: done(), expected: rows.length,
     unresolved: rows.length - done(), complete: rows.length > 0 && rows.every(r => r.passed) };
 }
-export function nearReady(a) { return a.result.score >= 90 && a.calibration.failed_required_gates.length === 0; }
+export function nearReady(a) { return a.experience?.passed !== false && a.novelty?.passed !== false && a.result.score >= 90 && a.calibration.failed_required_gates.length === 0; }
 export function logicalFailure(a) {
-  return !a.completeness.complete || !a.contract.passed ||
+  return a.experience?.passed === false || a.novelty?.passed === false || !a.completeness.complete || !a.contract.passed ||
     ['coreNecessity', 'semanticContract', 'visibleEvidence', 'mechanicContract', 'bonusFunctionality']
       .some(name => a.result.gates?.[name]?.passed !== true);
 }
@@ -124,7 +133,7 @@ export function repairPrompt(entry, candidate, assessment, rejected) {
     '- /qaPattern, /qaSemanticFacts, /qaNameRationales, /qaAuthoringVersion, /qaDeductionGraph');
   prompt = 'PIPELINE CODE LOCK: qaPolicy, qaPortfolioRegistry, intentionalMononymIds and all IDs/assets/solution are immutable. The portfolio registry is intentionally omitted from CASE and remains available to the evaluator. Never add or replace these locked fields.\n\n' + prompt;
   prompt += '\nNever suppress a gate. Return the smallest coherent repair for the reported deficit. Removed asset fields still exist in the real case and must not be changed. A positive witness statement that an entity was at a location supports confirm, not eliminate. Evidence about the crime weapon or location does not by itself identify the culprit. qaSemanticFacts must not turn an unsupported culprit identity into evidence. Repair visible prose and rules together; metadata alone cannot make an ambiguous core solvable.';
-  prompt += '\nSHARED QUALITY CONTRACT: ' + JSON.stringify(qualityContract(candidate, entry.tier));
+  prompt += '\nSHARED QUALITY CONTRACT: ' + JSON.stringify(assessment.experience?.profile ? qualityContract(candidate, entry.tier) : legacyQualityContract(candidate, entry.tier));
   return prompt;
 }
 export function restoreBest(snapshot, entry, record) {

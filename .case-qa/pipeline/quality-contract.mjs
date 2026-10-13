@@ -1,9 +1,11 @@
-export const QUALITY_VERSION = 'fm-narrative-quality-v1';
-export const REVIEW_VERSION = 'fm-player-review-v2';
+import { experienceProfile } from './experience.mjs';
+export const QUALITY_VERSION = 'fm-narrative-quality-v2';
+const LEGACY_QUALITY_VERSION = 'fm-narrative-quality-v1';
+export const REVIEW_VERSION = 'fm-player-review-v3';
 
-export function qualityContract(candidate, tier = candidate.qaPolicy?.caseTier || 'standard') {
+export function legacyQualityContract(candidate, tier = candidate.qaPolicy?.caseTier || 'standard') {
   return {
-    version: QUALITY_VERSION, tier, difficulty: candidate.difficulty ?? candidate.difficultyLevel ?? null,
+    version: LEGACY_QUALITY_VERSION, tier, difficulty: candidate.difficulty ?? candidate.difficultyLevel ?? null,
     format: 'deduction mystery: infer the crime triple from core evidence; bonus clues are optional',
     scale: '0-5: 3 has a concrete readiness defect; 4 is strong and ready for its declared tier/difficulty; 5 exceptional',
     dimensions: {
@@ -28,4 +30,20 @@ export function qualityContract(candidate, tier = candidate.qaPolicy?.caseTier |
       'Keep all real defects in issues and retain independent judgment; do not inflate scores to match the writer.'
     ]
   };
+}
+
+export function qualityContract(candidate, tier = candidate.qaPolicy?.caseTier || 'standard') {
+  const value = legacyQualityContract(candidate, tier);
+  value.version = QUALITY_VERSION;
+  value.experience = experienceProfile(candidate, tier);
+  value.dimensions.clarity += ' Assess reading load against the selected experience category. Free novice clarity requires short direct phrasing; professional jargon or long clues are not difficulty.';
+  value.dimensions.consistency += ' Read story, all cards and all clues as one event. An unintroduced workshop/office, a jump in what investigators already know or disconnected evidence is a readiness defect even if the grid solves.';
+  value.dimensions.originality = 'Compare the actual dependency graph and reasoning route with the supplied portfolio signatures. Reordered clues, renamed entities or different evidence labels are not new logical patterns. Require a distinct route appropriate to this category; familiar elementary deductions are allowed, a repeated full template is not.';
+  value.writer_requirements[1] = 'Give succinct recognizable people grounded in their existing cards. A neutral personal concern can enrich advanced/premium cases; appearance and manner are enough for a free novice. Never invent a motive or pad every profile merely for length.';
+  value.dimensions.engagement = 'A concrete opening question, recognizable people and a satisfying deduction appropriate to this category. Free novice cases need quick orientation and clarity; do not demand cinematic length, elaborate motives or premium atmosphere.';
+  value.writer_requirements.push(value.experience.narrative, value.experience.novelty,
+    'Follow the category word bands, favour useful concision, and never add filler to meet a minimum. For free novice cases avoid routine claims of panic, official thoroughness and bureaucratic logs. Each clue should support one clear necessary step.');
+  value.editor_requirements.push('Assess every category by the same correctness/fairness standard but by its OWN density and complexity expectations. A short free novice case is not inferior because it lacks premium atmosphere.',
+    'Flag undefined settings and premature knowledge explicitly. Cite the exact passage and how it disrupts player understanding. Do not assume a mathematically correct clue is narratively grounded.');
+  return value;
 }
