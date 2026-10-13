@@ -9450,7 +9450,7 @@
       }
     },
     "adada-buyuk-gizem": {
-      "spent": 0.044504450000000015,
+      "spent": 0.017577950000000016,
       "feedback": [],
       "source_hash": "ceafad461318f65294d977b48098c3908fb3240e925b6b4d1e364efd2f4071cf",
       "simulator_hash": "17170058b8f45eab789e14aaf2fb7a6605587fb8",
@@ -13370,9 +13370,49 @@
       "model": "gemini-3.8-flash",
       "purpose": "player",
       "day": "2026-10-13",
-      "status": "reserved",
-      "charged": 0.028701
+      "status": "completed",
+      "charged": 0.0017745,
+      "usage": {
+        "promptTokenCount": 816,
+        "candidatesTokenCount": 310,
+        "totalTokenCount": 1126,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 816
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "plan": {
+        "unique_solution": true,
+        "solution": {
+          "suspectId": "s3",
+          "weaponId": "w3",
+          "locationId": "l1"
+        },
+        "confidence": 100,
+        "evidence": [
+          {
+            "clue_id": "c3",
+            "quote": "Adli rapor, ölümü tekneleri bağlayan kalın ipin yol açtığı boğulmaya bağlıyor. Cinayet saatinin kesintisiz görüntüleri, disiplinli eski askerin bu ipi hiç almadığını veya kullanmadığını gösteriyor."
+          },
+          {
+            "clue_id": "c1",
+            "quote": "Tekneleri bağlayan kalın ipi hiç almadığı veya kullanmadığı kesinleşiyor."
+          },
+          {
+            "clue_id": "c2",
+            "quote": "Dalgaların vurduğu yürüyüş yolunda bulunan bitkisel toksin şişesi, cinayet saatinde çekilmiş bir fotoğrafta görülüyor."
+          },
+          {
+            "clue_id": "c4",
+            "quote": "Çift namlulu ateşli silah, cinayet saatinde adanın güney ucundaki sarp alanda bulunuyordu."
+          }
+        ],
+        "issues": []
+      }
     }
   },
-  "campaign_spent": 0.22380345000000004
+  "campaign_spent": 0.19687695000000005
 }
