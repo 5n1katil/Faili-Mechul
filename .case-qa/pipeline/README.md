@@ -6,6 +6,11 @@ Bu bölüm, aşağıdaki tarihsel run notlarındaki evrensel 60/95-130 kelime
 zorunluluğunun yerini alır. Doğruluk, adalet, temel ipuçlarıyla tek çözüm,
 kimlik/cevap koruması ve bağımsız review eşikleri bütün kategorilerde aynıdır.
 Yoğunluk, anlatı derinliği ve beklenen çıkarım karmaşıklığı kategoriye bağlıdır.
+Bütün altı kategoride akıcı, kolay anlaşılır, güçlü ve sinematik bir olay anlatımı
+ile vakaya özgü merak unsuru gerekir. Standart vakalar daha kısa ve az yoğundur;
+anlatım kalitesi veya atmosferden vazgeçilmez. Giriş ekranında gösterilen evrensel
+kişi–silah–mekân eşleştirme kuralı hikâyelerde tekrar edilmez; yalnız vakaya özgü
+bir istisna varsa açıklanır. Aynı açılış/cümle ritmini bütün vakalara kopyalamak yasaktır.
 
 | Kategori | Hikâye hedefi (kelime) | Temel ipucu hedefi (kelime) |
 |---|---:|---:|
@@ -38,6 +43,18 @@ farklı kural kümeleri arar; her biri için bütün 36 atamayı ve her temel ip
 zorunluluğunu bağımsız doğrular. Geçerli, benzersiz bir mevcut ağ, yalnız anlatı
 onarımında yeniden yazılmaz. Mantığı bilinmeyen eski vakalar `unknown` olarak
 raporlanır; tüm 105 ağ tamamlanmadan genel benzersizlik iddiası kurulamaz.
+
+### 23:00 anlatım geri bildirimi
+
+PR #98 ile kısa Adada sürümü canlı QA 100, kör oyuncu ve editör kabulü aldı.
+İnsan değerlendirmesi girişin yine fazla tutanak gibi olduğunu gösterdi.
+Yeni öneri, olayın gizemini ve oyuncuya hitabı öne çıkarır; evrensel eşleştirme
+cümlesini çıkarır. Çözüm ve bütün ipuçları korunur. Önceki AI sertifikası yalnız
+fixture içinde tarihsel kanıt olarak saklanır, yeni metne geçerli onay sayılmaz.
+Harcama/istek/onarım sayaçları ve sürümleri değişmez. Bu geliştirmede ücretli
+çağrı yoktur; yeni semantik review tamamlanmadan içerik kilitli sayılmaz.
+
+### Önceki yoğunluk geri bildirimi
 
 Adada Büyük Gizem insan oynama testi sonrası sadeleştirildi: hikâye 88→44 kelime;
 atölye ve erken yöntem iddiası çıkarıldı. Kart kimlikleri, assetler ve çözüm

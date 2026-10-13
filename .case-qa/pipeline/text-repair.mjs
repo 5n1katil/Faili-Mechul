@@ -188,7 +188,7 @@ export function textRepairPrompt(entry, candidate, plan, assessment, rejected) {
   if (!plan.experience) return original;
   const profile = experienceProfile(candidate, entry.tier);
   return original.replace(JSON.stringify(legacyQualityContract(candidate, entry.tier)), JSON.stringify(qualityContract(candidate, entry.tier)))
-    .replace(/STORY: aim for 95-130[^\n]+/, `STORY: target ${profile.story.join('-')} Turkish words for ${profile.key}. At least 25 meaningful words. Short, connected opening; do not pad or demand 5-7 sentences.`)
+    .replace(/STORY: aim for 95-130[^\n]+/, `STORY: target ${profile.story.join('-')} Turkish words for ${profile.key}. At least 25 meaningful words. Short cinematic opening with a case-specific hook, natural rhythm and an intriguing incident. Standard means less length/density, not weaker storytelling. Do not repeat the universal matching rule from the game introduction. Preserve facts and avoid solution leakage; do not pad or demand 5-7 sentences.`)
     .replace(/SUSPECT PROFILES: EACH must have[^.]+\./, `SUSPECT PROFILES: target ${profile.suspect.join('-')} words, comparable lengths; do not add visual filler.`)
     .replace(/EACH CLUE: 35-70 words,/, `EACH CORE CLUE: target ${profile.core.join('-')} words; BONUS target ${profile.bonus.join('-')} words,`)
     .replace('State that investigators seek the carrier/operator and corresponding place of the confirmed lethal item/method.', 'State what the player must discover. Never say the lethal method is already confirmed before its anchor clue.')

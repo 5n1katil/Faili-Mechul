@@ -138,6 +138,15 @@ try {
       assert.equal(certificateValid(productionSnapshot, adadaEntry, c, saved), true);
     }
   });
+  await test('cinematic Adada changes only the opening, preserves all evidence, and invalidates the exact previously approved certificate', () => {
+    const f = read('.case-qa/fixtures/adada-cinematic-feedback-20261013.json');
+    assert.equal(adadaEntry.raw.story, f.updated_story);
+    assert.deepEqual({ ...adadaEntry.raw, story: f.previous_raw.story }, f.previous_raw);
+    assert.equal(certificateValid(productionSnapshot, adadaEntry, adadaEntry.candidate, f.previous_pipeline_review), false);
+    const current = productionSnapshot.sidecar.cases[f.case_id].pipeline_review;
+    if (current) assert.equal(certificateValid(productionSnapshot, adadaEntry, adadaEntry.candidate, current), true);
+    assert.equal(assess(productionSnapshot, adadaEntry, adadaEntry.candidate).passed, true);
+  });
   await test('native simulator and pipeline both enforce category density and scene continuity; a forensic institution is not an invented crime location', () => {
     const c=clone(adadaEntry.candidate);
     c.clues[0].text='Atölyenin girişindeki kamera, bütün gece sanatçının hareketlerini kesintisiz biçimde kaydetti.';
