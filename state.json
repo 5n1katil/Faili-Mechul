@@ -9450,7 +9450,7 @@
       }
     },
     "adada-buyuk-gizem": {
-      "spent": 0.058151450000000014,
+      "spent": 0.021915200000000017,
       "feedback": [],
       "source_hash": "ceafad461318f65294d977b48098c3908fb3240e925b6b4d1e364efd2f4071cf",
       "simulator_hash": "17170058b8f45eab789e14aaf2fb7a6605587fb8",
@@ -13418,9 +13418,32 @@
       "model": "gemini-3.8-flash",
       "purpose": "judge",
       "day": "2026-10-13",
-      "status": "reserved",
-      "charged": 0.0405735
+      "status": "completed",
+      "charged": 0.00433725,
+      "usage": {
+        "promptTokenCount": 4718,
+        "candidatesTokenCount": 213,
+        "totalTokenCount": 4931,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 4718
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "plan": {
+        "scores": {
+          "fairness": 5,
+          "clarity": 5,
+          "consistency": 5,
+          "originality": 4,
+          "engagement": 4
+        },
+        "issues": [],
+        "summary": "Vaka 'çaylak' zorluk seviyesi ve standart format için kusursuz bir netliğe sahip. İpuçları doğrudan kart tanımlarına referans veriyor ve gereksiz bürokratik laf kalabalığı içermiyor. Katil, cinayet aleti ve cinayet yeri temel ipuçları üzerinden (W2-L2, W1-L3 doğrulamaları ve W3'ün S1 ile S2'den elenmesi yoluyla) net bir biçimde Genç Yatçı / Gemi Halatı / Villa Bahçesi üçlüsüne çıkıyor. Mantıksal boşluk ya da çelişki bulunmuyor, yayına hazır."
+      }
     }
   },
-  "campaign_spent": 0.23745045000000004
+  "campaign_spent": 0.20121420000000004
 }
