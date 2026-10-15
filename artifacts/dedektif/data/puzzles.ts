@@ -514,7 +514,7 @@ export const PUZZLES: Puzzle[] = [
     title: "Adada Büyük Gizem",
     difficulty: "caylak",
     dayIndex: 7,
-    story: "Büyükada'daki bir yaz daveti, ev sahibinin öldürülmesiyle yarıda kaldı. Fırtına vapur seferlerini durdurdu; üç şüpheli adada kaldı. Cinayet saatinde her biri listedeki farklı bir yerdeydi ve farklı bir araca erişmişti. Davetlilerin ifadelerini, kayıtları ve adli raporu karşılaştırarak katili, kullandığı aracı ve cinayet yerini bulun.",
+    story: "Büyükada'daki bir yaz daveti, ev sahibinin öldürülmesiyle kâbusa dönüştü. Fırtınanın vapur seferlerini durdurması sebebiyle üç şüpheli adada mahsur kaldı. Herkesin anlatacak bir hikâyesi vardı, ama hangisi gerçeği saklıyordu? Davetlilerin ifadelerini, kayıtları ve adli raporu bir araya getir. Katili, cinayet silahını ve cinayetin işlendiği yeri bul, dedektif!",
     suspects: [
       {
         id: "s1",

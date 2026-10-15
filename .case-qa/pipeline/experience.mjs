@@ -8,10 +8,10 @@ export function difficultyBand(candidate) {
   return ({ caylak: 'caylak', 'çaylak': 'caylak', dedektif: 'dedektif', baskomiser: 'baskomiser', 'başkomiser': 'baskomiser' })[key] || null;
 }
 export const EXPERIENCE_PROFILES = {
-  standard_caylak: { story: [25,55], core: [12,30], bonus: [8,22], suspect: [12,20], intent: 'Brief, immediately readable introduction; one clear fact per clue. No bureaucratic filler or decorative complication.' },
+  standard_caylak: { story: [25,55], core: [12,30], bonus: [8,22], suspect: [12,20], intent: 'Brief cinematic mystery with a case-specific hook and immediately readable Turkish; one clear fact per clue. Shorter reading, never weaker atmosphere or bureaucratic filler.' },
   standard_dedektif: { story: [35,75], core: [18,42], bonus: [12,30], suspect: [12,24], intent: 'Concise narrative with moderate linked deduction; complexity comes from evidence, not convoluted sentences.' },
   standard_baskomiser: { story: [45,95], core: [22,55], bonus: [15,38], suspect: [12,28], intent: 'Richer reasoning and layered connections, still economical mobile reading.' },
-  premium_caylak: { story: [40,125], core: [18,42], bonus: [12,30], suspect: [12,40], intent: 'More atmosphere than a free novice case, but easy orientation and accessible deductions; detail must earn its place.' },
+  premium_caylak: { story: [40,125], core: [18,42], bonus: [12,30], suspect: [12,40], intent: 'More room to develop cinematic atmosphere and the incident, with easy orientation and accessible deductions; free cases also need a strong hook and detail must earn its place.' },
   premium_dedektif: { story: [55,145], core: [24,58], bonus: [15,40], suspect: [12,48], intent: 'Developed incident and connected evidence with meaningful, varied deduction and justified mechanics.' },
   premium_baskomiser: { story: [70,180], core: [28,70], bonus: [18,48], suspect: [12,60], intent: 'Deep connected mystery; sophisticated reasoning, purposeful atmosphere and mechanics, never padding.' }
 };
@@ -21,7 +21,7 @@ export function experienceProfile(candidate, tier = candidate.qaPolicy?.caseTier
   if (!profile) throw new Error('EXPERIENCE_CATEGORY_UNKNOWN:' + key);
   return { version: EXPERIENCE_VERSION, key, tier, difficulty, ...profile,
     lengths: 'Word bands are writing targets. Upper limits prevent mobile overload; do not pad to hit a lower target.',
-    narrative: 'Story, suspect/item/place cards, all core and bonus clues form one event in one shared interval. Introduce meaningful background settings before using them. Do not invent a workshop or office solely to host evidence. Never claim a lethal method is already known before its designated evidence. Opening tells what happened and what the player seeks, not the solution.',
+    narrative: 'Story, suspect/item/place cards, all core and bonus clues form one event in one shared interval. Introduce meaningful background settings before using them. Do not invent a workshop or office solely to host evidence. Never claim a lethal method is already known before its designated evidence. Opening tells what happened and what the player seeks, not the solution. Every category needs a vivid, cinematic, intriguing incident in fluent natural Turkish; standard cases are shorter and less dense, never sterile summaries. Do not repeat the universal one-person/one-weapon/one-place matching rule already shown by the game. Explain only a genuinely case-specific exception. Avoid copied opening rhythms and stock rhetorical hooks across cases.',
     novelty: 'A different clue order, name, evidence label or positive/negative phrasing is not a new logical pattern. Compare the actual dependency graph and deduction route. Short novice cases must still have their own reasoning structure.' };
 }
 export const wordCount = value => (String(value || '').trim().match(/\S+/gu) || []).length;
