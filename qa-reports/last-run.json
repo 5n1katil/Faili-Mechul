@@ -1,0 +1,61 @@
+{
+  "generated_at": "2026-08-30T14:20:33.569Z",
+  "provider": "gemini",
+  "model": "gemini-flash-lite-latest",
+  "dry_run": false,
+  "acceptance_score": 95,
+  "max_attempts": 3,
+  "processed": 3,
+  "already_passing": 0,
+  "repaired": 0,
+  "quarantined": 3,
+  "quarantined_soft_gap_only": 1,
+  "errors": 0,
+  "token_usage": {
+    "input": 43333,
+    "output": 5687,
+    "thinking": 18063,
+    "calls": 8
+  },
+  "results": [
+    {
+      "case_id": "konakta-gece-yarisi-cinayeti",
+      "tier": "standard",
+      "status": "quarantined",
+      "score": 84,
+      "attempts": 3,
+      "blocking_flag_count": 0,
+      "soft_gap_only": true,
+      "remaining_flags": []
+    },
+    {
+      "case_id": "bogazda-kayip-elmas",
+      "tier": "standard",
+      "status": "quarantined",
+      "score": 0,
+      "attempts": 3,
+      "stopped_early": true,
+      "blocking_flag_count": 3,
+      "soft_gap_only": false,
+      "remaining_flags": [
+        "[traceabilityPolicy] HATA: QA İzlenebilirlik Sözleşmesi Eksik — bu zorlukta logicRules taşıyan her ipucu qaRationale {matrixEffect, evidenceLink, evidenceKind} ile belgelenmelidir. 4 ipucuda eksik/yetersiz köprü var.",
+        "[semantic] HATA: Semantik Sözleşme Eksik — İpucu 1 metni, oyuncuya suç mahalli olarak “Seyir Köprüsü” sonucunu çağrıştırıyor. Bu bilgi qaSemanticFacts ile belgelenmemiş; grid dışı erken çözüm/sızıntı denetlenemiyor.",
+        "[coreNecessity] HATA: Oyuncu-Görünür Çözüm Başarısız. Tüm standart ipuçları ve belgelenen/anlaşılan anlatı bilgileri birlikteyken cevap tek kalmıyor (1 olası cevap). Bonus açmadan s3|w1|l1 üçlüsüne zorunlu olarak ulaşılmalı."
+      ]
+    },
+    {
+      "case_id": "kapalicarsida-gizem",
+      "tier": "standard",
+      "status": "quarantined",
+      "score": 0,
+      "attempts": 3,
+      "blocking_flag_count": 3,
+      "soft_gap_only": false,
+      "remaining_flags": [
+        "[traceabilityPolicy] HATA: QA İzlenebilirlik Sözleşmesi Eksik — bu zorlukta logicRules taşıyan her ipucu qaRationale {matrixEffect, evidenceLink, evidenceKind} ile belgelenmelidir. 4 ipucuda eksik/yetersiz köprü var.",
+        "[visibleEvidenceScope] HATA: Oyuncu-Görünür Kural Taşkını — İpucu 1 metni şüpheli olarak “Ahmet Usta” sonucunu da adı doğrudan geçiyor; ancak logicRules yalnız Ağır Terazi ↔ Dükkan İçi etkisini tanımlıyor. Oyuncu bu ek hücreyi işaretlerse sonraki temel ipucu tekrara düşebilir.",
+        "[visibleEvidenceScope] HATA: Oyuncu-Görünür Kural Taşkını — İpucu 4 metni şüpheli olarak “Selma Teyze” sonucunu da adı doğrudan geçiyor; ancak logicRules yalnız Kerem Genç ↔ Ağır Terazi etkisini tanımlıyor. Oyuncu bu ek hücreyi işaretlerse sonraki temel ipucu tekrara düşebilir."
+      ]
+    }
+  ]
+}
