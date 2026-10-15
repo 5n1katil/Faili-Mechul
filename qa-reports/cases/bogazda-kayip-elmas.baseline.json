@@ -1,0 +1,124 @@
+{
+  "id": "bogazda-kayip-elmas",
+  "title": "Boğaz'da Kayıp Elmas",
+  "difficulty": "dedektif",
+  "dayIndex": 2,
+  "story": "İstanbul Boğazı'nın serin sularında süzülen lüks yatta düzenlenen o gösterişli sergi, kanlı bir geceyle son buldu. Paha biçilemez 'Boğaz Elması'nın çalındığı anlaşıldığında, geminin güvenlik şefi Orhan cansız yatıyordu. Dalgaların sesi yatı döverken, katil ve çaldığı elmas hala bu lüks kafesin içinde saklanıyor.",
+  "suspects": [
+    {
+      "id": "s1",
+      "name": "Kaptan Levent",
+      "description": "Geminin deneyimli kaptanı. Fiziksel olarak oldukça yapılı ve ağır nesneleri kolayca savurabilecek kuvvette.",
+      "icon": "pa:bogaz_s1"
+    },
+    {
+      "id": "s2",
+      "name": "Sponsor Murat",
+      "description": "Partinin zengin finansörü. İnce yapılı; ağır fiziksel güç gerektiren işlere ve kirli ortamlara hiç alışkın değil.",
+      "icon": "pa:bogaz_s2"
+    },
+    {
+      "id": "s3",
+      "name": "Organizatör Eda",
+      "description": "Serginin sorumlusu. Çevik, esnek ve geminin en dar, gizli alanlarında bile rahatça hareket edebilecek fiziksel yapıda.",
+      "icon": "pa:bogaz_s3"
+    }
+  ],
+  "weapons": [
+    {
+      "id": "w1",
+      "name": "Gemi Halatı",
+      "description": "Gemiyi iskeleye bağlamak için kullanılan kalın sentetik ip. Çok sağlam ve kıvrılabilen esnek bir yapıya sahip.",
+      "icon": "pa:bogaz_w1"
+    },
+    {
+      "id": "w2",
+      "name": "Demir Çekiç",
+      "description": "Ağır bakım ve onarım aleti. Ciddi bir fiziksel kütleye sahip, tek vuruşta kemik kırabilen paslanmaz çelik donanım.",
+      "icon": "pa:bogaz_w2"
+    },
+    {
+      "id": "w3",
+      "name": "Gaz Tüpü",
+      "description": "Basınçlı endüstriyel tüp. Kapalı bir alanda sızıntı yapması durumunda ortamdaki oksijeni tüketerek zehirleyici olabilir.",
+      "icon": "pa:bogaz_w3"
+    }
+  ],
+  "locations": [
+    {
+      "id": "l1",
+      "name": "Makine Dairesi",
+      "description": "Geminin en alt katında yer alan, zemini makine yağıyla kaplı, gürültülü, dar ve gözden uzak teknik alan.",
+      "icon": "pa:bogaz_l1"
+    },
+    {
+      "id": "l2",
+      "name": "Seyir Köprüsü",
+      "description": "En üst katta yer alan, geminin yönlendirildiği sürekli kameralarla izlenen aydınlık ve güvenli yönetim merkezi.",
+      "icon": "pa:bogaz_l2"
+    },
+    {
+      "id": "l3",
+      "name": "VIP Salon",
+      "description": "Misafirlerin ağırlandığı, beyaz halılarla kaplı, aydınlık, temiz ve oldukça geniş eğlence alanı.",
+      "icon": "pa:bogaz_l3"
+    }
+  ],
+  "clues": [
+    {
+      "id": "c1",
+      "text": "Gemi mühendislerinin raporuna göre, cinayet mahallindeki ağır makine yağı kokusu, olayın üst katlardaki temiz alanlarda yaşanmadığını kanıtlıyordu.",
+      "type": "evidence",
+      "isBonus": false
+    },
+    {
+      "id": "c2",
+      "text": "Kaptan Levent'in, telsiz odasından gelen acil bir çağrı üzerine gece boyunca misafirlerin yanından ayrılmadığı ve alt katlara hiç inmediği anlaşıldı.",
+      "type": "witness",
+      "isBonus": false
+    },
+    {
+      "id": "c3",
+      "text": "Otopsi sonuçları oldukça ilginçti; kurbanın boynundaki iz, soğuk bir demir veya sızan bir gazdan ziyade, pürüzlü ve esnek bir dokunun eseriydi.",
+      "type": "forensic",
+      "isBonus": false
+    },
+    {
+      "id": "c4",
+      "text": "Sponsor Murat'ın lüks İtalyan kesim takım elbisesinde tek bir toz zerresi bile yoktu; o karanlık ve kirli alana adım atmadığı çok açıktı.",
+      "type": "evidence",
+      "isBonus": false
+    },
+    {
+      "id": "c5",
+      "text": "Sergi hazırlıkları sırasında esnek gemi ekipmanlarını taşıyan tek kişinin, dar alanlarda rahatça hareket edebilen Eda olduğu lojistik defterine işlenmişti.",
+      "type": "record",
+      "isBonus": true
+    },
+    {
+      "id": "c6",
+      "text": "Kurbanın elleri arasında sıkışıp kopan kalın sentetik lifler, Eda'nın erişiminde olan bağlama ekipmanlarıyla birebir aynı kimyasal yapıdaydı.",
+      "type": "forensic",
+      "isBonus": true
+    }
+  ],
+  "solvabilityMeta": {
+    "freeEliminations": [
+      "s1",
+      "s2",
+      "w2",
+      "w3",
+      "l2",
+      "l3"
+    ],
+    "bonusEliminations": []
+  },
+  "solution": {
+    "suspectId": "s3",
+    "weaponId": "w1",
+    "locationId": "l1"
+  },
+  "caseTier": "standard",
+  "isPremium": false,
+  "difficultyLevel": 3
+}

@@ -1,0 +1,20 @@
+QA metadata deposu yok, yenisi olusturulacak.
+Yuklendi: 45 standart + 60 premium = 105 vaka
+Islenecek vaka sayisi: 3  |  saglayici: gemini  |  deneme siniri: 2  |  esik: 80
+
+  [1/3] konakta-gece-yarisi-cinayeti baslangic 0/100, 3 engelleyici bulgu
+      ucretsiz iskele: 84/100, 0 bulgu (API maliyeti 0)
+      (cila modu: yapisal olarak saglam, AI yalnizca iyilestirebilir)
+  [2/3] bogazda-kayip-elmas          baslangic 0/100, 5 engelleyici bulgu
+      ucretsiz iskele: 0/100, 3 bulgu (API maliyeti 0)
+      deneme 1: 0/100, 1 bulgu, kalan dunya 2
+      deneme 2: cikti kesildi, daha kisa istenecek
+  [3/3] kapalicarsida-gizem          baslangic 0/100, 5 engelleyici bulgu
+      ucretsiz iskele: 0/100, 3 bulgu (API maliyeti 0)
+      deneme 1: 0/100, 7 bulgu, kalan dunya 2
+      deneme 2: 0/100, 6 bulgu, kalan dunya 2
+
+================ OZET ================
+islenen=3 zaten100=0 onarilan=1 karantina=2 (bunlardan yalnizca-yumusak-fark=0) hata=0
+token: girdi=16433 cikti=10978 dusunme=6917 cagri=3
+======================================
