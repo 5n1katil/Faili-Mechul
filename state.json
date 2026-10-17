@@ -9452,14 +9452,14 @@
     "adada-buyuk-gizem": {
       "spent": 0.021915200000000017,
       "feedback": [],
-      "source_hash": "ceafad461318f65294d977b48098c3908fb3240e925b6b4d1e364efd2f4071cf",
+      "source_hash": "40f10f3099f3bcbf99a1c61e5268403a05296e417ec22bbc344f80a94bd8cff2",
       "simulator_hash": "17170058b8f45eab789e14aaf2fb7a6605587fb8",
       "candidate": {
         "id": "adada-buyuk-gizem",
         "title": "Adada Büyük Gizem",
         "difficulty": "caylak",
         "dayIndex": 7,
-        "story": "Büyükada'daki bir yaz daveti, ev sahibinin öldürülmesiyle yarıda kaldı. Fırtına vapur seferlerini durdurdu; üç şüpheli adada kaldı. Cinayet saatinde her biri listedeki farklı bir yerdeydi ve farklı bir araca erişmişti. Davetlilerin ifadelerini, kayıtları ve adli raporu karşılaştırarak katili, kullandığı aracı ve cinayet yerini bulun.",
+        "story": "Büyükada'daki bir yaz daveti, ev sahibinin öldürülmesiyle kâbusa dönüştü. Fırtınanın vapur seferlerini durdurması sebebiyle üç şüpheli adada mahsur kaldı. Herkesin anlatacak bir hikâyesi vardı, ama hangisi gerçeği saklıyordu? Davetlilerin ifadelerini, kayıtları ve adli raporu bir araya getir. Katili, cinayet silahını ve cinayetin işlendiği yeri bul, dedektif!",
         "suspects": [
           {
             "id": "s1",
@@ -10864,7 +10864,7 @@
         },
         "qaAuthoringVersion": "verified_text_v1"
       },
-      "candidate_hash": "2161ff7d92decca71f7c692a79a7c8c033b140e5da4d4bde352b21abfb38454c",
+      "candidate_hash": "f2ecdfa3c84a606e0fda71fb8bddb20a50a87b2e47ec56211c89e6f4c3e316c3",
       "best_score": 100,
       "failures": [],
       "status": "source_revised",
