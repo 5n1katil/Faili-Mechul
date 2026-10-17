@@ -7,6 +7,7 @@ import { read, write, clone, loadSnapshot, selectNext, stageCandidate, counts } 
 import { campaignRows, repairOne, reopenTextQuarantine } from './run.mjs';
 import { openStore } from './state.mjs';
 import { modelPreflight } from './provider.mjs';
+import { applyQueueReconciliation, blockingOpenReview, fetchQueuePulls, queueNeedsLookup } from './reconcile.mjs';
 
 export async function campaign(snapshot, store, { caseLimit = snapshot.policy.batch.default_case_limit,
   worker = repairOne, stage = stageCandidate, rows = campaignRows, saveResult = () => {} } = {}) {
@@ -16,8 +17,7 @@ export async function campaign(snapshot, store, { caseLimit = snapshot.policy.ba
     throw new Error('CAMPAIGN_LIMIT_INVALID');
   // Unmerged batches stay reviewable; do not produce competing changes on the
   // same production files while an earlier batch waits for its human review.
-  if (snapshot.entries.some(e => store.state.cases[e.id]?.status === 'awaiting_review' &&
-      store.state.cases[e.id].source_hash === e.sourceHash))
+  if (blockingOpenReview(snapshot, store.state.cases))
     return { status: 'awaiting_existing_review', selected_ids: [], cases: [], api_calls: 0, execute_cost_usd: 0 };
   const results = [], accepted = [], visited = new Set();
   let calls = 0, spent = 0, stop = null;
@@ -59,7 +59,7 @@ export async function campaign(snapshot, store, { caseLimit = snapshot.policy.ba
     if (stop === 'INFRASTRUCTURE_STOP') break;
     // Content failures are local; connection/auth/quota/uncertain transport and
     // global budget failures stop the batch without hitting the next case.
-    if (!['ready_for_gates', 'quarantined'].includes(result.status)) { stop = result.status; break; }
+    if (!['ready_for_gates', 'quarantined', 'review_pair_blocked'].includes(result.status)) { stop = result.status; break; }
   }
   const finalRows = rows(snapshot);
   return { status: stop === 'INFRASTRUCTURE_STOP' ? 'infrastructure_error' : accepted.length ? 'ready_for_gates' : stop ? 'campaign_paused' : 'quarantined',
@@ -78,11 +78,11 @@ async function main() {
   write(path.join(output, 'baseline.json'), baseline);
   const base = execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
   const store = openStore(root, policy);
-  for (const entry of snapshot.entries) {
-    const record = store.state.cases[entry.id];
-    if (record && record.source_hash !== entry.sourceHash) record.status = 'source_changed';
-  }
   reopenTextQuarantine(snapshot, store);
+  if (queueNeedsLookup(store.state)) {
+    const pulls = await fetchQueuePulls(store.state);
+    applyQueueReconciliation(store, snapshot, pulls);
+  }
   const preflight = await modelPreflight(policy);
   const report = await campaign(snapshot, store, {
     caseLimit: process.env.FM_PIPELINE_CASE_LIMIT ? Number(process.env.FM_PIPELINE_CASE_LIMIT) : policy.batch.default_case_limit,

@@ -73,7 +73,15 @@ export function requestKey(caseId, model, body, purpose) {
   return stableHash({ version: 1, provider: 'gemini', caseId, model, purpose, body });
 }
 const unsent = request => request?.status === 'failed' && request.transport_not_started === true && request.charged === 0;
-export function reserveRequest(store, policy, run, caseId, model, body, purpose = 'repair', now = new Date(), repairMethod = 'legacy_patch') {
+function revisionGrant(grant, purpose) {
+  if (!grant) return null;
+  if (grant.uses !== 1 || !Array.isArray(grant.purposes) || grant.purposes.length !== 2 ||
+      grant.purposes[0] !== 'player' || grant.purposes[1] !== 'judge' || !/^[a-z0-9-]{8,80}$/.test(grant.id || ''))
+    throw new Stop('REVISION_GRANT_INVALID');
+  if (!['player', 'judge'].includes(purpose)) throw new Stop('REVISION_GRANT_PURPOSE');
+  return grant;
+}
+export function reserveRequest(store, policy, run, caseId, model, body, purpose = 'repair', now = new Date(), repairMethod = 'legacy_patch', revision = null) {
   const key = requestKey(caseId, model, body, purpose);
   const previous = store.state.requests[key];
   if (previous?.status === 'completed' && previous.plan) return { key, cached: previous.plan };
@@ -89,7 +97,11 @@ export function reserveRequest(store, policy, run, caseId, model, body, purpose 
     !(k === key && unsent(r))).map(([,r]) => r);
   if (!Number.isInteger(config.max_requests_per_case) || config.max_requests_per_case < 1)
     throw new Stop('REQUEST_LIMIT_MISSING');
-  if (caseRequests.length >= config.max_requests_per_case) throw new Stop('CASE_REQUEST_LIMIT');
+  const grant = revisionGrant(revision, purpose);
+  const grantUses = grant ? caseRequests.filter(item => item.revision_grant_id === grant.id).length : 0;
+  if (grant && grantUses >= 2) throw new Stop('REVISION_GRANT_EXHAUSTED');
+  if (caseRequests.length >= config.max_requests_per_case && !grant) throw new Stop('CASE_REQUEST_LIMIT');
+  if (grant && caseRequests.length >= config.max_requests_per_case + 2) throw new Stop('CASE_REQUEST_LIMIT');
   const repairs = caseRequests.filter(countsAsRepair).length;
   if (purpose === 'editorial' && (config.editorial_revision_limit !== 1 ||
       caseRequests.some(r => r.purpose === 'editorial'))) throw new Stop('EDITORIAL_LIMIT');
@@ -107,7 +119,8 @@ export function reserveRequest(store, policy, run, caseId, model, body, purpose 
   store.state.requests[key] = { case_id: caseId, model, purpose, day, status: 'reserved', charged: projected,
     ...(previous ? { reservation_failures: [...(previous.reservation_failures || []),
       Object.fromEntries(Object.entries(previous).filter(([k]) => k !== 'reservation_failures'))] } : {}),
-    ...(purpose === 'repair' ? { repair_method: repairMethod } : {}) };
+    ...(purpose === 'repair' ? { repair_method: repairMethod } : {}),
+    ...(grant ? { revision_grant_id: grant.id } : {}) };
   record.spent += projected; store.state.campaign_spent += projected;
   run.spent += projected; run.calls++;
   try { store.save(); } // A failed durable reservation prevents transport.
@@ -130,7 +143,7 @@ export function settleRequest(store, run, request, amount, extra) {
   Object.assign(ledger, extra, { charged: amount }); store.save();
 }
 export async function callPaid({ store, policy, run, caseId, model, prompt, purpose = 'repair',
-  schema, system, repairMethod = 'legacy_patch', validate = value => value && typeof value === 'object', diagnose = () => [],
+  schema, system, repairMethod = 'legacy_patch', revisionGrant = null, validate = value => value && typeof value === 'object', diagnose = () => [],
   transport = fetch, now = new Date() }) {
   const body = requestBody(policy, model, prompt, { schema, system });
   const key = requestKey(caseId, model, body, purpose);
@@ -141,7 +154,7 @@ export async function callPaid({ store, policy, run, caseId, model, prompt, purp
   }
   if (previous && !unsent(previous)) throw new Stop('REPEATED_OR_UNCERTAIN_REQUEST');
   if (!process.env.GEMINI_API_KEY) throw new Stop('GEMINI_API_KEY_MISSING');
-  const request = reserveRequest(store, policy, run, caseId, model, body, purpose, now, repairMethod);
+  const request = reserveRequest(store, policy, run, caseId, model, body, purpose, now, repairMethod, revisionGrant);
   let payload, http;
   try {
     http = await transport('https://generativelanguage.googleapis.com/v1beta/models/' + model + ':generateContent', {

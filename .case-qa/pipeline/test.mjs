@@ -35,6 +35,8 @@ import { canonicalLogicSignature, logicNoveltyCheck } from './logic-patterns.mjs
 import { qualityContract as experienceContract } from './quality-contract.mjs';
 import { editorialExperiencePrompt } from './editorial.mjs';
 import { reconcileKnownUnsent } from './reservation-recovery.mjs';
+import { loadRevisionGrants, revisionGrantFor, validateGrant } from './review-revision.mjs';
+import { applyQueueReconciliation, fetchQueuePulls, normalizePull, queueAuditReport, reconcileQueue } from './reconcile.mjs';
 
 globalThis.fetch = async () => { throw new Error('TEST_NETWORK_FORBIDDEN'); };
 const productionPolicy = read('.case-qa/pipeline/policy.json'), currentPolicy = clone(productionPolicy), root = process.cwd();
@@ -1351,6 +1353,167 @@ try {
       const retired = fs.readFileSync('.github/workflows/' + file, 'utf8');
       assert.ok(!retired.includes('secrets.')); assert.ok(!retired.includes('pr merge'));
     }
+  });
+  const words = text => (String(text || '').trim().match(/\S+/g) || []).length;
+  const adadaLedger = () => {
+    const fixture = read('.case-qa/fixtures/adada-ledger-20261017.json');
+    const store = storeFor(fixture.case_id);
+    store.state.cases[fixture.case_id] = clone(fixture.record);
+    store.state.requests = clone(fixture.requests);
+    store.state.campaign_spent = fixture.record.spent;
+    validateState(store.state);
+    return { fixture, store };
+  };
+  const pull = (body) => normalizePull(body);
+  await test('Adada grant is one exact player/judge pair and does not raise the lifetime request cap', () => {
+    assert.equal(productionPolicy.sequential.max_requests_per_case, 7);
+    assert.equal(productionPolicy.review_revision.max_pair_uses, 1);
+    const grants = loadRevisionGrants(root, productionPolicy);
+    assert.equal(grants.length, 1);
+    const grant = revisionGrantFor(productionSnapshot, adadaEntry);
+    assert.equal(grant.id, 'adada-human-revision-9aabe510');
+    assert.equal(grant.content_hash, adadaEntry.sourceHash);
+    assert.deepEqual(grant.purposes, ['player', 'judge']);
+    assert.equal(words(adadaEntry.candidate.story), 46);
+    assert.equal(revisionGrantFor(productionSnapshot, { ...adadaEntry, sourceHash: 'ab'.repeat(32) }), null);
+    assert.throws(() => validateGrant({ ...grant, uses: 2 }), /REVISION_GRANT_UNLIMITED/);
+    assert.throws(() => validateGrant({ ...grant, purposes: ['repair', 'editorial'] }), /REVISION_GRANT_PURPOSE/);
+    const store = storeFor(adadaEntry.id);
+    assert.throws(() => reserveRequest(store, productionPolicy, runFor(), adadaEntry.id, productionPolicy.models.repair,
+      requestBody(productionPolicy, productionPolicy.models.repair, 'grant-cannot-repair'), 'repair', new Date(), 'legacy_patch', grant), /REVISION_GRANT_PURPOSE/);
+    assert.throws(() => reserveRequest(store, productionPolicy, runFor(), adadaEntry.id, productionPolicy.models.repair,
+      requestBody(productionPolicy, productionPolicy.models.repair, 'grant-cannot-edit'), 'editorial', new Date(), 'legacy_patch', grant), /REVISION_GRANT_PURPOSE/);
+    assert.equal(Object.keys(store.state.requests).length, 0);
+    const body = requestBody(productionPolicy, productionPolicy.models.reviewer, 'uncertain-granted-player', { schema: { type: 'object' }, system: 'player' });
+    const reserved = reserveRequest(store, productionPolicy, runFor(), adadaEntry.id, productionPolicy.models.reviewer, body, 'player', new Date(), 'legacy_patch', grant);
+    assert.equal(store.state.requests[reserved.key].status, 'reserved');
+    assert.throws(() => reserveRequest(store, productionPolicy, runFor(), adadaEntry.id, productionPolicy.models.reviewer, body, 'player', new Date(), 'legacy_patch', grant), /REPEATED_OR_UNCERTAIN_REQUEST/);
+    assert.equal(store.state.requests[reserved.key].status, 'reserved');
+    assert.equal(store.state.requests[reserved.key].charged > 0, true);
+  });
+  await test('six historical Adada requests stop a review pair before any call unless the exact grant applies once', async () => {
+    const bare = { ...productionSnapshot, policy: clone(productionSnapshot.policy) };
+    delete bare.policy.review_revision;
+    const blockedLedger = adadaLedger();
+    let blockedCalls = 0;
+    const blocked = await repairOne(bare, adadaEntry, blockedLedger.store, { allowAI: true, caller: () => { blockedCalls++; throw new Error('UNEXPECTED_CALL'); } });
+    assert.equal(blocked.status, 'review_pair_blocked');
+    assert.equal(blocked.run.calls, 0);
+    assert.equal(blockedCalls, 0);
+    assert.equal(Object.keys(blockedLedger.store.state.requests).length, 6);
+    assert.deepEqual(blockedLedger.store.state.requests, blockedLedger.fixture.requests);
+    const source = fs.readFileSync('artifacts/dedektif/data/puzzles.ts');
+    const { fixture, store } = adadaLedger();
+    let transports = 0;
+    const caller = args => callPaid({ ...args, transport: async () => {
+      transports++;
+      const plan = args.purpose === 'player' ? playerFor(adadaEntry.candidate) : validJudge();
+      return responseForFixture(plan);
+    } });
+    const reviewed = await repairOne(productionSnapshot, adadaEntry, store, { allowAI: true, caller });
+    assert.equal(reviewed.status, 'ready_for_gates');
+    assert.equal(reviewed.run.attempts.filter(item => item.purpose === 'repair' || item.purpose === 'editorial').length, 0);
+    assert.equal(transports, 2);
+    assert.equal(reviewed.run.calls, 2);
+    assert.equal(Object.keys(store.state.requests).length, 8);
+    for (const [key, value] of Object.entries(fixture.requests)) assert.deepEqual(store.state.requests[key], value);
+    assert.equal(Object.values(store.state.requests).filter(item => item.revision_grant_id === 'adada-human-revision-9aabe510').length, 2);
+    assert.equal(words(store.state.cases[adadaEntry.id].archived_candidate.story), 44);
+    assert.equal(words(store.state.cases[adadaEntry.id].candidate.story), 46);
+    assert.ok(source.equals(fs.readFileSync('artifacts/dedektif/data/puzzles.ts')));
+    assert.equal(certificateValid(productionSnapshot, adadaEntry, adadaEntry.candidate, reviewed.review.certificate), true);
+    const wrong = await repairOne(productionSnapshot, { ...adadaEntry, sourceHash: 'cd'.repeat(32) }, adadaLedger().store,
+      { allowAI: true, caller: () => { throw new Error('UNEXPECTED_CALL'); } });
+    assert.equal(wrong.status, 'review_pair_blocked');
+    assert.equal(wrong.run.calls, 0);
+    let repeat = 0;
+    const second = await repairOne(productionSnapshot, adadaEntry, store, { allowAI: true, caller: () => { repeat++; throw new Error('UNEXPECTED_CALL'); } });
+    assert.equal(second.status, 'ready_for_gates');
+    assert.equal(second.run.calls, 0);
+    assert.equal(repeat, 0);
+    assert.equal(transports, 2);
+    assert.throws(() => reserveRequest(store, productionPolicy, runFor(), adadaEntry.id, productionPolicy.models.reviewer,
+      requestBody(productionPolicy, productionPolicy.models.reviewer, 'another-granted-player'), 'player', new Date(), 'legacy_patch',
+      revisionGrantFor(productionSnapshot, adadaEntry)), /REVISION_GRANT_EXHAUSTED|CASE_REQUEST_LIMIT/);
+    assert.equal(Object.keys(store.state.requests).length, 8);
+  });
+  await test('merged, closed and stale pull requests reconcile without restoring old copy or spending', async () => {
+    const { fixture, store } = adadaLedger();
+    const requests = clone(store.state.requests);
+    const pulls = [
+      pull({ number: 98, state: 'closed', merged_at: '2026-10-13T19:07:01Z', merge_commit_sha: 'ac09f96af021e4a94c8a5f1a8cd5eabb83e97fba', title: 'reviewed Adada', head: { sha: '9c445af25917794286b61d7337733ad475a148ae' } }),
+      pull({ number: 94, state: 'open', draft: true, title: 'old Adada draft', head: { sha: 'b'.repeat(40) } })
+    ];
+    const preview = queueAuditReport(productionSnapshot, store.state, pulls);
+    assert.equal(preview.durable_store_updated, false);
+    assert.equal(preview.queue_reconciled, false);
+    assert.equal(preview.reconciliation_preview.find(item => item.id === adadaEntry.id).action, 'source_revised');
+    assert.equal(preview.untracked_open_prs.some(item => item.number === 94 && item.role === 'untracked_open_pr'), true);
+    assert.equal(store.state.cases[adadaEntry.id].status, 'awaiting_review');
+    const applied = applyQueueReconciliation(store, productionSnapshot, pulls);
+    assert.equal(applied.changed, true);
+    assert.equal(store.state.cases[adadaEntry.id].status, 'source_revised');
+    assert.equal(store.state.cases[adadaEntry.id].pr_state, 'merged');
+    assert.equal(words(store.state.cases[adadaEntry.id].archived_candidate.story), 44);
+    assert.equal(words(restoreBest(productionSnapshot, adadaEntry, store.state.cases[adadaEntry.id]).candidate.story), 46);
+    assert.deepEqual(store.state.requests, requests);
+    assert.equal(store.state.campaign_spent, fixture.record.spent);
+    assert.equal(applyQueueReconciliation(store, productionSnapshot, pulls).changed, false);
+    const closed = storeFor('keep');
+    closed.state.cases.keep = { spent: 0, status: 'awaiting_review', source_hash: 'keep', pr_url: 'https://github.com/5n1katil/Faili-Mechul/pull/12', candidate: { story: 'eski aday' } };
+    const closedPull = [pull({ number: 12, state: 'closed', title: 'abandoned' })];
+    applyQueueReconciliation(closed, { entries: [{ id: 'keep', sourceHash: 'keep' }] }, closedPull);
+    assert.equal(closed.state.cases.keep.status, 'review_closed');
+    assert.equal(closed.state.cases.keep.candidate.story, 'eski aday');
+    const unknown = storeFor('held');
+    unknown.state.cases.held = { spent: 0, status: 'awaiting_review', source_hash: 'held', pr_url: 'https://github.com/5n1katil/Faili-Mechul/pull/77' };
+    const held = reconcileQueue(unknown.state, { entries: [{ id: 'held', sourceHash: 'held' }] }, []);
+    assert.equal(held.changed, false);
+    assert.equal(held.notes[0].action, 'pr_unknown');
+    assert.equal(unknown.state.cases.held.status, 'awaiting_review');
+  });
+  await test('an open review of the same source blocks a rival batch; a merged or stale review does not', async () => {
+    const snapshot = batchSnapshot();
+    const store = storeFor('b');
+    store.state.cases.b = { spent: 0, status: 'awaiting_review', source_hash: 'b', pr_url: 'https://github.com/5n1katil/Faili-Mechul/pull/50' };
+    applyQueueReconciliation(store, snapshot, [pull({ number: 50, state: 'open', draft: true, title: 'current source', head: { sha: 'c'.repeat(40) } })]);
+    assert.equal(store.state.cases.b.status, 'awaiting_review');
+    const blocked = await campaign(snapshot, store, { rows: batchRows, worker: () => { throw new Error('UNEXPECTED_CALL'); } });
+    assert.equal(blocked.status, 'awaiting_existing_review');
+    assert.equal(blocked.api_calls, 0);
+    applyQueueReconciliation(store, snapshot, [pull({ number: 50, state: 'closed', merged_at: '2026-10-17T00:00:00Z', merge_commit_sha: 'd'.repeat(40), title: 'merged' })]);
+    assert.equal(store.state.cases.b.status, 'merged');
+    const seen = [];
+    const resumed = await campaign(snapshot, store, { rows: batchRows, worker: async (bounded, entry) => {
+      seen.push(entry.id);
+      if (entry.id === 'a') return { ...batchResult('review_pair_blocked'), run: { calls: 0, spent: 0, attempts: [] } };
+      if (entry.id === 'b') return batchResult('quarantined');
+      return batchResult('GEMINI_HTTP_429');
+    } });
+    assert.deepEqual(seen, ['a', 'b', 'c']);
+    assert.equal(resumed.stop_reason, 'GEMINI_HTTP_429');
+    assert.equal(resumed.api_calls, 4);
+    const stale = storeFor('b');
+    stale.state.cases.b = { spent: 0, status: 'awaiting_review', source_hash: 'old-copy', pr_url: 'https://github.com/5n1katil/Faili-Mechul/pull/94', candidate: { story: 'eski taslak' } };
+    applyQueueReconciliation(stale, snapshot, [pull({ number: 94, state: 'open', draft: true, title: 'stale draft', head: { sha: 'e'.repeat(40) } })]);
+    assert.equal(stale.state.cases.b.status, 'stale_open_draft');
+    assert.equal(stale.state.cases.b.candidate.story, 'eski taslak');
+    let staleSeen = false;
+    const moved = await campaign(snapshot, stale, { rows: batchRows, worker: async () => { staleSeen = true; return batchResult('quarantined'); } });
+    assert.equal(staleSeen, true);
+    assert.notEqual(moved.status, 'awaiting_existing_review');
+  });
+  await test('pull lookup keeps merged, closed and open states distinct', async () => {
+    const pulls = await fetchQueuePulls({ cases: { a: { pr_url: 'https://github.com/5n1katil/Faili-Mechul/pull/98' } } }, {
+      transport: async url => ({ ok: true, json: async () => url.includes('state=open')
+        ? [{ number: 94, state: 'open', draft: true, title: 'stale', head: { sha: 'a'.repeat(40) } }]
+        : { number: 98, state: 'closed', merged_at: '2026-10-13T19:07:01Z', merge_commit_sha: 'f'.repeat(40), title: 'merged' } })
+    });
+    assert.equal(pulls.find(item => item.number === 98).merged, true);
+    assert.equal(pulls.find(item => item.number === 94).state, 'open');
+    assert.equal(pulls.find(item => item.number === 94).merged, false);
+    const abandoned = pull({ number: 3, state: 'closed', title: 'not merged' });
+    assert.equal(abandoned.merged, false);
   });
   await test('durable Git ledger survives a fresh checkout and rejects stale writers', () => {
     const remote = path.join(temporary, 'remote.git'), repo = path.join(temporary, 'journal');

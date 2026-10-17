@@ -8,6 +8,9 @@ import { read, write, clone, loadSnapshot, scan, selectNext, counts, assess, res
   guardedPatch, better, repairPrompt, stageCandidate, nearReady, logicalFailure } from './core.mjs';
 import { openStore } from './state.mjs';
 import { callPaid, Stop, modelPreflight, countsAsRepair } from './provider.mjs';
+import { revisionGrantFor, sameReviewTarget } from './review-revision.mjs';
+import { queueAuditReport, queueNeedsLookup, fetchQueuePulls, applyQueueReconciliation } from './reconcile.mjs';
+import { readRemoteState } from './state.mjs';
 import { mediaPreflight, reviewCandidate, certificateValid } from './review.mjs';
 import { EDITORIAL_VERSION, EDITORIAL_SYSTEM, editorialSchema, validEditorial, editorialPrompt, editorialFailure, compileEditorial, recoverEditorial } from './editorial.mjs';
 import { EDITORIAL_REVISION_VERSION, EDITORIAL_REVISION_SYSTEM, editorialRevisionSchema, validEditorialRevision,
@@ -50,6 +53,11 @@ export async function repairOne(snapshot, entry, store, { allowAI = false, calle
   const recoveredEditorial = recoverEditorial(snapshot, entry, current, record, state.requests) ||
     recoverBoundedEditorial(snapshot, entry, current, record, state.requests);
   if (recoveredEditorial) { current = recoveredEditorial.candidate; assessment = recoveredEditorial.assessment; }
+  if (changed && record.candidate && !record.archived_candidate) {
+    record.archived_candidate = clone(record.candidate);
+    record.archived_candidate_hash = record.candidate_hash || null;
+  }
+  if (changed && record.review && !record.archived_review) record.archived_review = clone(record.review);
   if (changed) { record.feedback = []; delete record.review; delete record.failed_review; }
   record.feedback ||= []; state.active_id = entry.id;
   const persist = () => {
@@ -114,7 +122,21 @@ export async function repairOne(snapshot, entry, store, { allowAI = false, calle
         const saved = record.review || snapshot.sidecar.cases?.[entry.id]?.pipeline_review;
         if (certificateValid(snapshot, entry, current, saved)) review = { passed: true, certificate: saved, cached: true };
         else if (editorialFailure(snapshot, current, record.failed_review)) review = clone(record.failed_review);
-        else review = await reviewCandidate(snapshot, entry, current, store, run, caller);
+        else {
+          const sameTarget = sameReviewTarget(entry.candidate, current);
+          try {
+            review = await reviewCandidate(snapshot, entry, current, store, run, caller, {
+              revisionGrant: sameTarget ? revisionGrantFor(snapshot, entry, current) : null,
+              sourceHash: entry.sourceHash, sameTarget });
+          } catch (error) {
+            if (error instanceof Stop && run.calls === 0 &&
+                ['CASE_REQUEST_LIMIT', 'BUDGET_STOP', 'REVISION_GRANT_EXHAUSTED'].includes(error.message)) {
+              record.failures = [error.message]; status = 'review_pair_blocked'; record.status = status; persist();
+              return { candidate: current, assessment, run, status, failures: record.failures, provider_error: null };
+            }
+            throw error;
+          }
+        }
         if (!review.passed) { record.failed_review = clone(review); persist(); }
         if (editorialFailure(snapshot, current, review) && supportsTextRepair(entry, current) &&
             snapshot.policy.sequential.editorial_revision_limit === 1 &&
@@ -138,7 +160,10 @@ export async function repairOne(snapshot, entry, store, { allowAI = false, calle
               delete record.review; delete record.failed_review; persist();
               run.attempts.push({ purpose: 'editorial', version: revisedContract ? EDITORIAL_REVISION_VERSION : EDITORIAL_VERSION,
                 score: assessment.result.score, retained: true, omitted_fields: next.omitted_fields || [] });
-              review = await reviewCandidate(snapshot, entry, current, store, run, caller);
+              const sameTarget = sameReviewTarget(entry.candidate, current);
+              review = await reviewCandidate(snapshot, entry, current, store, run, caller, {
+                revisionGrant: sameTarget ? revisionGrantFor(snapshot, entry, current) : null,
+                sourceHash: entry.sourceHash, sameTarget });
               if (!review.passed) record.failed_review = clone(review);
             } catch (error) {
               if (!error.message.startsWith('EDITORIAL_')) throw error;
@@ -183,13 +208,7 @@ export async function main() {
   write(path.join(output, 'baseline.json'), baseline);
   const store = auditOnly ? { state: { active_id: null, cases: {} } } : openStore(root, policy,
     process.env.FM_PIPELINE_LOCAL_STATE ? { localFile: process.env.FM_PIPELINE_LOCAL_STATE } : {});
-  if (!auditOnly) {
-    for (const entry of snapshot.entries) {
-      const record = store.state.cases[entry.id];
-      if (record && record.source_hash !== entry.sourceHash) record.status = 'source_changed';
-    }
-    reopenTextQuarantine(snapshot, store);
-  }
+  if (!auditOnly) reopenTextQuarantine(snapshot, store);
   const rows = baseline.map(r => ({ ...r, passed: r.content_locked }));
   const requested = process.env.FM_PIPELINE_CASE_ID || '';
   if (requested && !snapshot.entries.some(e => e.id === requested)) throw new Error('UNKNOWN_CASE_ID');
@@ -198,8 +217,32 @@ export async function main() {
     status: selected ? 'audit_only' : rows.every(r => r.passed) ? 'all_content_locked' : 'queue_blocked',
     main_synchronized: false, deterministic_qa: counts(baseline), content_locked: counts(rows),
     selected_id: selected?.id || null, api_calls: 0, execute_cost_usd: 0,
+    queue_reconciled: false,
     main_sha: execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim() };
+  const lookupError = error => (/^[A-Z0-9_:-]{1,80}$/.test(error.message) ? error.message : 'LOOKUP_FAILED');
   try {
+    if (auditOnly) {
+      report.separation = {
+        deterministic_qa: 'source exact QA; not a content lock',
+        content_locked: 'source QA plus a certificate for this exact content',
+        selected_id: 'next source-scan case; the durable queue is not consulted',
+        durable_queue: 'read-only preview; audit does not write state.json'
+      };
+      report.queue_reconciliation = { applied: false, queue_reconciled: false, durable_store_updated: false };
+      try {
+        const remote = readRemoteState(root, policy);
+        const pulls = await fetchQueuePulls(remote.state);
+        report.queue_reconciliation = { ...queueAuditReport(snapshot, remote.state, pulls), available: true, state_sha: remote.sha };
+      } catch (error) {
+        report.queue_reconciliation = { applied: false, queue_reconciled: false, durable_store_updated: false, available: false, error: lookupError(error) };
+      }
+    } else if (queueNeedsLookup(store.state)) {
+      const pulls = await fetchQueuePulls(store.state);
+      const applied = applyQueueReconciliation(store, snapshot, pulls);
+      report.queue_reconciliation = { applied: true, queue_reconciled: applied.changed, durable_store_updated: applied.changed,
+        notes: applied.notes, untracked_open_prs: applied.untracked_open_prs };
+      report.queue_reconciled = applied.changed;
+    }
     if (selected && !auditOnly) {
       report.model_preflight = await modelPreflight(policy);
       const entry = snapshot.entries.find(e => e.id === selected.id);
