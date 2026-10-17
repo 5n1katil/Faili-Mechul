@@ -9,7 +9,7 @@ import { gunzipSync } from 'node:zlib';
 import { read, write, clone, loadSnapshot, scan, selectNext, assess, guardedPatch, better,
   restoreBest, stageCandidate, repairPrompt, assertNoRegression, assertScope } from './core.mjs';
 import { emptyState, validateState, openStore, pushCheckpoint } from './state.mjs';
-import { reserveRequest, requestBody, requestKey, callPaid, Stop, modelPreflight, providerErrorDetails } from './provider.mjs';
+import { reserveRequest, requestBody, requestKey, callPaid, Stop, modelPreflight, providerErrorDetails, prepaymentRejection } from './provider.mjs';
 import { assertDraftPolicy } from './publish-draft.mjs';
 import { playerView, playerPass, judgePass, reviewCandidate, mediaPreflight, certificateValid } from './review.mjs';
 import { repairOne, campaignRows, reopenTextQuarantine } from './run.mjs';
@@ -1489,6 +1489,129 @@ try {
     assert.equal(Object.keys(store.state.requests).length, 2);
     assert.equal(store.state.cases[adadaEntry.id].spent, pairSpent);
     assert.equal(store.state.campaign_spent, pairSpent);
+  });
+  const prepaymentMessage = 'Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ';
+  await test('the audited Adada prepayment rejection resumes once without refunding or widening limits', async () => {
+    const audited = {
+      case_id: 'adada-buyuk-gizem', model: productionPolicy.models.reviewer, purpose: 'player', day: '2026-10-17',
+      status: 'failed', charged: 0.028722, revision_grant_id: 'adada-human-revision-9aabe510', http_status: 402,
+      provider_error: { http_status: 402, status: 'RESOURCE_EXHAUSTED', message: prepaymentMessage, field_violations: [] }
+    };
+    assert.equal(prepaymentRejection(audited), true);
+    assert.equal(prepaymentRejection({ ...audited, purpose: 'repair' }), false);
+    assert.equal(prepaymentRejection({ ...audited, usage: { promptTokenCount: 10, candidatesTokenCount: 1, thoughtsTokenCount: 0 } }), false);
+    assert.equal(prepaymentRejection({ ...audited, provider_error: { ...audited.provider_error, message: 'Quota exceeded' } }), false);
+    assert.equal(prepaymentRejection({ ...audited, status: 'reserved' }), false);
+    assert.equal(productionPolicy.sequential.max_requests_per_case, 7);
+    const { fixture, store } = adadaLedger();
+    const historical = clone(fixture.requests);
+    const prompt = 'audited-adada-player-a9ce420fea33ddd0808008987c764ac0f52a40b9c68216af404fc37c0af05524';
+    const model = productionPolicy.models.reviewer;
+    const body = requestBody(productionPolicy, model, prompt, { schema: { type: 'object' }, system: 'player' });
+    const key = requestKey(adadaEntry.id, model, body, 'player');
+    store.state.requests[key] = audited;
+    store.state.cases[adadaEntry.id].spent += audited.charged;
+    store.state.campaign_spent += audited.charged;
+    validateState(store.state);
+    const held = store.state.campaign_spent;
+    let transports = 0;
+    const args = { store, policy: productionPolicy, run: runFor(), caseId: adadaEntry.id, model, prompt, purpose: 'player',
+      schema: { type: 'object' }, system: 'player', revisionGrant: revisionGrantFor(productionSnapshot, adadaEntry),
+      validate: value => value.answer === 'ok', transport: async () => { transports++; return response(JSON.stringify({ answer: 'ok' })); } };
+    const resumed = await callPaid(args);
+    assert.equal(resumed.cached, false);
+    assert.equal(transports, 1);
+    const row = store.state.requests[key];
+    assert.equal(row.status, 'completed');
+    assert.equal(row.prepayment_hold, audited.charged);
+    assert.equal(row.reservation_failures.length, 1);
+    assert.equal(row.reservation_failures[0].charged, audited.charged);
+    assert.equal(row.reservation_failures[0].http_status, 402);
+    assert.equal(row.reservation_failures[0].provider_error.status, 'RESOURCE_EXHAUSTED');
+    assert.equal(row.revision_grant_id, audited.revision_grant_id);
+    assert.ok(store.state.campaign_spent > held);
+    assert.equal(Object.keys(store.state.requests).length, Object.keys(historical).length + 1);
+    for (const [oldKey, value] of Object.entries(historical)) assert.deepEqual(store.state.requests[oldKey], value);
+    assert.equal((await callPaid({ ...args, run: runFor() })).cached, true);
+    assert.equal(transports, 1);
+    assert.equal(store.state.requests[key].prepayment_hold, audited.charged);
+    assert.throws(() => reserveRequest(store, productionPolicy, runFor(), adadaEntry.id, model,
+      requestBody(productionPolicy, model, 'second-player-key', { schema: { type: 'object' }, system: 'player' }),
+      'player', new Date(), 'legacy_patch', revisionGrantFor(productionSnapshot, adadaEntry)), /REVISION_GRANT_EXHAUSTED/);
+    assert.throws(() => reserveRequest(store, productionPolicy, runFor(), adadaEntry.id, productionPolicy.models.repair,
+      requestBody(productionPolicy, productionPolicy.models.repair, 'no-new-repair'), 'repair', new Date(), 'legacy_patch',
+      revisionGrantFor(productionSnapshot, adadaEntry)), /REVISION_GRANT_PURPOSE/);
+    assert.equal(Object.keys(store.state.requests).length, Object.keys(historical).length + 1);
+  });
+  await test('only one prepayment continuation is sent; timeout and other failures stay blocked', async () => {
+    const reject = (status, message) => ({ ok: false, status, json: async () => ({ error: { status: status === 402 ? 'RESOURCE_EXHAUSTED' : 'UNAVAILABLE', message } }) });
+    let calls = 0;
+    const blocked = storeFor(adadaEntry.id);
+    const args = { store: blocked, policy: productionPolicy, run: runFor(), caseId: adadaEntry.id, model: productionPolicy.models.reviewer,
+      prompt: 'second-prepayment', purpose: 'player', transport: async () => { calls++; return reject(402, prepaymentMessage); } };
+    await assert.rejects(callPaid(args), /GEMINI_HTTP_402/);
+    const held = blocked.state.campaign_spent;
+    const row = Object.values(blocked.state.requests)[0];
+    assert.equal(row.charged, 0);
+    assert.equal(row.prepayment_hold, held);
+    assert.equal(prepaymentRejection(row), true);
+    await assert.rejects(callPaid({ ...args, run: runFor() }), /GEMINI_HTTP_402/);
+    assert.equal(calls, 2);
+    assert.ok(blocked.state.campaign_spent >= held);
+    assert.equal(prepaymentRejection(Object.values(blocked.state.requests)[0]), false);
+    await assert.rejects(callPaid({ ...args, run: runFor() }), /REPEATED_OR_UNCERTAIN_REQUEST/);
+    assert.equal(calls, 2);
+    assert.equal(blocked.state.campaign_spent >= held, true);
+    for (const failure of [
+      { status: 500, message: 'internal' },
+      { status: 429, message: 'rate limit' },
+      { status: 402, message: 'billing account disabled' }
+    ]) {
+      let seen = 0;
+      const store = storeFor(adadaEntry.id);
+      const one = { store, policy: productionPolicy, run: runFor(), caseId: adadaEntry.id, model: productionPolicy.models.reviewer,
+        prompt: 'blocked-' + failure.status + failure.message, purpose: 'player',
+        transport: async () => { seen++; return reject(failure.status, failure.message); } };
+      await assert.rejects(callPaid(one), new RegExp('GEMINI_HTTP_' + failure.status));
+      const spent = store.state.campaign_spent;
+      await assert.rejects(callPaid({ ...one, run: runFor() }), /REPEATED_OR_UNCERTAIN_REQUEST/);
+      assert.equal(seen, 1);
+      assert.equal(store.state.campaign_spent, spent);
+    }
+    let timeouts = 0;
+    const uncertain = storeFor(adadaEntry.id);
+    const timeout = { store: uncertain, policy: productionPolicy, run: runFor(), caseId: adadaEntry.id,
+      model: productionPolicy.models.reviewer, prompt: 'player-timeout', purpose: 'player',
+      transport: async () => { timeouts++; throw new Error('timeout'); } };
+    await assert.rejects(callPaid(timeout), /TRANSPORT_UNCERTAIN/);
+    await assert.rejects(callPaid({ ...timeout, run: runFor() }), /REPEATED_OR_UNCERTAIN_REQUEST/);
+    assert.equal(timeouts, 1);
+    assert.ok(uncertain.state.campaign_spent > 0);
+  });
+  await test('Adada review continues after one prepayment rejection without a new repair', async () => {
+    const { fixture, store } = adadaLedger();
+    let transports = 0;
+    const caller = args => callPaid({ ...args, transport: async () => {
+      transports++;
+      if (transports === 1) return { ok: false, status: 402, json: async () => ({ error: {
+        status: 'RESOURCE_EXHAUSTED', message: prepaymentMessage } }) };
+      return responseForFixture(args.purpose === 'player' ? playerFor(adadaEntry.candidate) : validJudge());
+    } });
+    const failed = await repairOne(productionSnapshot, adadaEntry, store, { allowAI: true, caller });
+    assert.equal(failed.status, 'GEMINI_HTTP_402');
+    assert.equal(transports, 1);
+    assert.equal(failed.run.attempts.filter(item => item.purpose === 'repair' || item.purpose === 'editorial').length, 0);
+    for (const [key, value] of Object.entries(fixture.requests)) assert.deepEqual(store.state.requests[key], value);
+    const spent = store.state.campaign_spent;
+    const continued = await repairOne(productionSnapshot, adadaEntry, store, { allowAI: true, caller });
+    assert.equal(continued.status, 'ready_for_gates');
+    assert.equal(transports, 3);
+    assert.equal(continued.run.attempts.filter(item => item.purpose === 'repair' || item.purpose === 'editorial').length, 0);
+    assert.ok(store.state.campaign_spent >= spent);
+    const granted = Object.values(store.state.requests).filter(item => item.revision_grant_id === 'adada-human-revision-9aabe510');
+    assert.deepEqual(granted.map(item => item.purpose).sort(), ['judge', 'player']);
+    assert.ok(granted.find(item => item.purpose === 'player').prepayment_hold > 0);
+    assert.equal(productionPolicy.sequential.max_requests_per_case, 7);
   });
   await test('merged, closed and stale pull requests reconcile without restoring old copy or spending', async () => {
     const { fixture, store } = adadaLedger();
