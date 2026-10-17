@@ -10866,8 +10866,10 @@
       },
       "candidate_hash": "f2ecdfa3c84a606e0fda71fb8bddb20a50a87b2e47ec56211c89e6f4c3e316c3",
       "best_score": 100,
-      "failures": [],
-      "status": "source_revised",
+      "failures": [
+        "GEMINI_HTTP_402"
+      ],
+      "status": "GEMINI_HTTP_402",
       "pr_url": "https://github.com/5n1katil/Faili-Mechul/pull/98",
       "publication_history": [
         {
@@ -12334,7 +12336,13 @@
         }
       },
       "pr_state": "merged",
-      "merge_commit_sha": "ac09f96af021e4a94c8a5f1a8cd5eabb83e97fba"
+      "merge_commit_sha": "ac09f96af021e4a94c8a5f1a8cd5eabb83e97fba",
+      "provider_error": {
+        "http_status": 402,
+        "status": "RESOURCE_EXHAUSTED",
+        "message": "Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ",
+        "field_violations": []
+      }
     }
   },
   "requests": {
