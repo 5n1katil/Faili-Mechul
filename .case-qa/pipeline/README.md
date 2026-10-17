@@ -19,7 +19,10 @@ kullanım kanıtı taşımayan bir rezervasyondur. Tutar `prepayment_hold` olara
 kalır; iade varsayılmaz ve istek silinmez. Kullanıcının başlattığı sonraki
 çalıştırma aynı player veya judge isteğini bir kez yeniden gönderebilir.
 Zaman aşımı, belirsiz transport, başarılı çağrı, onarım ve farklı hatalar
-yeniden gönderilmez. İkinci bakiye reddi de durur.
+yeniden gönderilmez. İkinci bakiye reddi de durur. Bunun tek istisnası
+`.case-qa/pipeline/prepayment-continuations.json` dosyasındaki bir kayıttır:
+aynı Adada içerik hash’i ve aynı başarısız player isteği için bir ek gönderim.
+Bu ek deneme de bakiye reddiyle dönerse durur.
 
 Ücretsiz `audit` kalıcı `state.json` dosyasını yazmaz. Rapor kaynak QA,
 içerik kilidi, kuyruk ve PR durumunu ayrı gösterir. Pilot veya campaign,

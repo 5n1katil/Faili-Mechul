@@ -9,7 +9,7 @@ import { gunzipSync } from 'node:zlib';
 import { read, write, clone, loadSnapshot, scan, selectNext, assess, guardedPatch, better,
   restoreBest, stageCandidate, repairPrompt, assertNoRegression, assertScope } from './core.mjs';
 import { emptyState, validateState, openStore, pushCheckpoint } from './state.mjs';
-import { reserveRequest, requestBody, requestKey, callPaid, Stop, modelPreflight, providerErrorDetails, prepaymentRejection } from './provider.mjs';
+import { reserveRequest, requestBody, requestKey, callPaid, Stop, modelPreflight, providerErrorDetails, prepaymentRejection, canResumePrepayment } from './provider.mjs';
 import { assertDraftPolicy } from './publish-draft.mjs';
 import { playerView, playerPass, judgePass, reviewCandidate, mediaPreflight, certificateValid } from './review.mjs';
 import { repairOne, campaignRows, reopenTextQuarantine } from './run.mjs';
@@ -1612,6 +1612,106 @@ try {
     assert.deepEqual(granted.map(item => item.purpose).sort(), ['judge', 'player']);
     assert.ok(granted.find(item => item.purpose === 'player').prepayment_hold > 0);
     assert.equal(productionPolicy.sequential.max_requests_per_case, 7);
+  });
+  const adadaHash = '40f10f3099f3bcbf99a1c61e5268403a05296e417ec22bbc344f80a94bd8cff2';
+  const adadaPlayerKey = 'a9ce420fea33ddd0808008987c764ac0f52a40b9c68216af404fc37c0af05524';
+  const secondPrepayment = (archived) => ({ ...archived, charged: 0, prepayment_hold: 0.057444, reservation_failures: [archived] });
+  await test('the audited Adada player request gets one explicit continuation and a further rejection stops', async () => {
+    const archived = {
+      case_id: adadaEntry.id, model: 'gemini-3.8-flash', purpose: 'player', day: '2026-10-17', status: 'failed',
+      charged: 0.028722, revision_grant_id: 'adada-human-revision-9aabe510', http_status: 402,
+      provider_error: { http_status: 402, status: 'RESOURCE_EXHAUSTED', message: prepaymentMessage, field_violations: [] }
+    };
+    const active = secondPrepayment(archived);
+    assert.equal(prepaymentRejection(active), false);
+    const file = read('.case-qa/pipeline/prepayment-continuations.json');
+    assert.equal(file.continuations.length, 1);
+    assert.equal(file.continuations[0].case_id, adadaEntry.id);
+    assert.equal(file.continuations[0].content_hash, adadaHash);
+    assert.equal(file.continuations[0].request_key, adadaPlayerKey);
+    assert.equal(file.continuations[0].purpose, 'player');
+    assert.equal(file.continuations[0].prior_rejections, 2);
+    assert.equal(file.continuations[0].extra_uses, 1);
+    assert.equal(read('.case-qa/pipeline/review-revision-grants.json').grants[0].content_hash, adadaHash);
+    assert.equal(productionPolicy.sequential.max_requests_per_case, 7);
+    const audited = storeFor(adadaEntry.id);
+    audited.state.cases[adadaEntry.id].source_hash = adadaHash;
+    audited.state.cases[adadaEntry.id].spent = 0.057444;
+    audited.state.campaign_spent = 0.057444;
+    audited.state.requests[adadaPlayerKey] = clone(active);
+    validateState(audited.state);
+    assert.equal(canResumePrepayment(audited, productionPolicy, adadaEntry.id, adadaPlayerKey, active), true);
+    audited.state.cases[adadaEntry.id].source_hash = 'ab'.repeat(32);
+    assert.equal(canResumePrepayment(audited, productionPolicy, adadaEntry.id, adadaPlayerKey, active), false);
+    audited.state.cases[adadaEntry.id].source_hash = adadaHash;
+    assert.equal(canResumePrepayment(audited, productionPolicy, adadaEntry.id, 'c'.repeat(64), active), false);
+    assert.equal(canResumePrepayment(audited, productionPolicy, adadaEntry.id, adadaPlayerKey, { ...active, purpose: 'judge' }), false);
+    assert.equal(canResumePrepayment(audited, productionPolicy, adadaEntry.id, adadaPlayerKey, { ...active, status: 'reserved' }), false);
+    assert.equal(canResumePrepayment(audited, productionPolicy, adadaEntry.id, adadaPlayerKey, { ...active, usage: { promptTokenCount: 1 } }), false);
+    const third = { ...active, reservation_failures: [archived, { ...archived, charged: 0, prepayment_hold: 0.057444 }] };
+    assert.equal(canResumePrepayment(audited, productionPolicy, adadaEntry.id, adadaPlayerKey, third), false);
+    const prompt = 'explicit-extra-player';
+    const model = productionPolicy.models.reviewer;
+    const key = requestKey(adadaEntry.id, model, requestBody(productionPolicy, model, prompt, { schema: { type: 'object' }, system: 'player' }), 'player');
+    const allowancePolicy = clone(productionPolicy);
+    allowancePolicy.prepayment_continuation = { allowances: [{
+      id: 'synthetic-extra-player-once', case_id: adadaEntry.id, content_hash: adadaHash, request_key: key,
+      purpose: 'player', prior_rejections: 2, extra_uses: 1, reason: 'One test continuation for the same player request.'
+    }] };
+    const seed = (store) => {
+      store.state.cases[adadaEntry.id].source_hash = adadaHash;
+      store.state.cases[adadaEntry.id].spent = 0.057444;
+      store.state.campaign_spent = 0.057444;
+      store.state.requests[key] = { ...clone(active), model };
+      validateState(store.state);
+    };
+    const resumedStore = storeFor(adadaEntry.id);
+    seed(resumedStore);
+    let transports = 0;
+    const resumed = await callPaid({ store: resumedStore, policy: allowancePolicy, run: runFor(), caseId: adadaEntry.id, model, prompt,
+      purpose: 'player', schema: { type: 'object' }, system: 'player', validate: value => value.answer === 'ok',
+      transport: async () => { transports++; return response(JSON.stringify({ answer: 'ok' })); } });
+    assert.equal(resumed.cached, false);
+    assert.equal(transports, 1);
+    assert.equal(resumedStore.state.requests[key].prepayment_hold, 0.057444);
+    assert.equal(resumedStore.state.requests[key].status, 'completed');
+    assert.equal(resumedStore.state.requests[key].reservation_failures.length, 2);
+    assert.ok(resumedStore.state.campaign_spent >= 0.057444);
+    assert.equal((await callPaid({ store: resumedStore, policy: allowancePolicy, run: runFor(), caseId: adadaEntry.id, model, prompt,
+      purpose: 'player', schema: { type: 'object' }, system: 'player', validate: value => value.answer === 'ok',
+      transport: async () => { transports++; return response(JSON.stringify({ answer: 'ok' })); } })).cached, true);
+    assert.equal(transports, 1);
+    const rejected = storeFor(adadaEntry.id);
+    seed(rejected);
+    let rejectedCalls = 0;
+    const samePlayer = { schema: { type: 'object' }, system: 'player' };
+    const rejectArgs = { store: rejected, policy: allowancePolicy, run: runFor(), caseId: adadaEntry.id, model, prompt, purpose: 'player', ...samePlayer,
+      transport: async () => { rejectedCalls++; return { ok: false, status: 402, json: async () => ({ error: { status: 'RESOURCE_EXHAUSTED', message: prepaymentMessage } }) }; } };
+    await assert.rejects(callPaid(rejectArgs), /GEMINI_HTTP_402/);
+    const held = rejected.state.campaign_spent;
+    await assert.rejects(callPaid({ ...rejectArgs, run: runFor() }), /REPEATED_OR_UNCERTAIN_REQUEST/);
+    assert.equal(rejectedCalls, 1);
+    assert.ok(rejected.state.campaign_spent >= held);
+    assert.equal(rejected.state.requests[key].prepayment_hold >= 0.057444, true);
+    let timeouts = 0;
+    const uncertain = storeFor(adadaEntry.id);
+    seed(uncertain);
+    const before = uncertain.state.campaign_spent;
+    const timeout = { store: uncertain, policy: allowancePolicy, run: runFor(), caseId: adadaEntry.id, model, prompt, purpose: 'player', ...samePlayer,
+      transport: async () => { timeouts++; throw new Error('timeout'); } };
+    await assert.rejects(callPaid(timeout), /TRANSPORT_UNCERTAIN/);
+    await assert.rejects(callPaid({ ...timeout, run: runFor() }), /REPEATED_OR_UNCERTAIN_REQUEST/);
+    assert.equal(timeouts, 1);
+    assert.ok(uncertain.state.campaign_spent >= before);
+    const wrong = storeFor(adadaEntry.id);
+    seed(wrong);
+    wrong.state.cases[adadaEntry.id].source_hash = 'cd'.repeat(32);
+    validateState(wrong.state);
+    let wrongCalls = 0;
+    await assert.rejects(callPaid({ store: wrong, policy: allowancePolicy, run: runFor(), caseId: adadaEntry.id, model, prompt, purpose: 'player', ...samePlayer,
+      transport: async () => { wrongCalls++; throw new Error('UNEXPECTED_TRANSPORT'); } }), /REPEATED_OR_UNCERTAIN_REQUEST/);
+    assert.equal(wrongCalls, 0);
+    assert.equal(wrong.state.campaign_spent, 0.057444);
   });
   await test('merged, closed and stale pull requests reconcile without restoring old copy or spending', async () => {
     const { fixture, store } = adadaLedger();

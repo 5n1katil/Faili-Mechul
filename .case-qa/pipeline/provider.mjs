@@ -1,3 +1,5 @@
+import fs from 'node:fs';
+import path from 'node:path';
 import { PATCH_SCHEMA, SYSTEM_PROMPT, stableHash } from '../fm_case_qa_runner.mjs';
 import { requestCost } from './state.mjs';
 
@@ -74,18 +76,59 @@ export function requestKey(caseId, model, body, purpose) {
   return stableHash({ version: 1, provider: 'gemini', caseId, model, purpose, body });
 }
 const unsent = request => request?.status === 'failed' && request.transport_not_started === true && request.charged === 0;
-// One user-started continuation for a confirmed prepayment rejection. The same
-// player or judge key may be sent again. Timeout, success, and every other
-// failure stay blocked. A second prepayment rejection is not resumed.
-export function prepaymentRejection(request) {
+function prepaymentShape(request) {
   const error = request?.provider_error;
   if (!request || request.status !== 'failed' || request.http_status !== 402) return false;
   if (!['player', 'judge'].includes(request.purpose)) return false;
   if (error?.http_status !== 402 || error?.status !== 'RESOURCE_EXHAUSTED') return false;
   if (typeof error.message !== 'string' || !error.message.includes('prepayment credits are depleted')) return false;
   if (request.plan || request.usage || request.transport_not_started === true) return false;
-  if ((request.reservation_failures || []).some(item => prepaymentRejection({ ...item, reservation_failures: undefined }))) return false;
   try { return requestCost(request) > 0; } catch { return false; }
+}
+function archivedPrepaymentCount(request) {
+  return (request?.reservation_failures || []).filter(item => prepaymentShape({ ...item, reservation_failures: undefined })).length;
+}
+// The first confirmed prepayment rejection can be sent once more. A later
+// rejection is not resumed unless an explicit one-use allowance matches it.
+export function prepaymentRejection(request) {
+  return prepaymentShape(request) && archivedPrepaymentCount(request) === 0;
+}
+const CONTINUATION_KEYS = ['case_id', 'content_hash', 'extra_uses', 'id', 'prior_rejections', 'purpose', 'reason', 'request_key'];
+function validateContinuation(item) {
+  if (!item || typeof item !== 'object' || Array.isArray(item)) throw new Error('CONTINUATION_INVALID');
+  const keys = Object.keys(item).sort();
+  if (keys.length !== CONTINUATION_KEYS.length || keys.some(key => !CONTINUATION_KEYS.includes(key))) throw new Error('CONTINUATION_INVALID');
+  if (!/^[a-z0-9-]{8,80}$/.test(item.id) || !/^[a-z0-9-]{3,80}$/.test(item.case_id)) throw new Error('CONTINUATION_INVALID');
+  if (!/^[a-f0-9]{64}$/.test(item.content_hash) || !/^[a-f0-9]{64}$/.test(item.request_key)) throw new Error('CONTINUATION_INVALID');
+  if (item.purpose !== 'player' || item.prior_rejections !== 2 || item.extra_uses !== 1) throw new Error('CONTINUATION_UNLIMITED');
+  if (typeof item.reason !== 'string' || item.reason.length < 8 || item.reason.length > 240) throw new Error('CONTINUATION_INVALID');
+  return item;
+}
+function loadContinuations(policy) {
+  const config = policy?.prepayment_continuation;
+  if (!config) return [];
+  if (config.path && config.allowances) throw new Error('CONTINUATION_SCHEMA');
+  if (Array.isArray(config.allowances)) {
+    if (config.allowances.length !== 1) throw new Error('CONTINUATION_UNLIMITED');
+    return config.allowances.map(validateContinuation);
+  }
+  const relative = config.path;
+  if (typeof relative !== 'string' || !relative || relative.includes('..') || path.isAbsolute(relative)) throw new Error('CONTINUATION_SCHEMA');
+  const data = JSON.parse(fs.readFileSync(path.join(process.cwd(), relative), 'utf8'));
+  if (data.schema !== 'fm_prepayment_continuation_v1' || !Array.isArray(data.continuations) || data.continuations.length !== 1)
+    throw new Error('CONTINUATION_SCHEMA');
+  return data.continuations.map(validateContinuation);
+}
+function explicitPrepaymentContinuation(policy, caseRecord, caseId, key, request) {
+  if (!prepaymentShape(request) || archivedPrepaymentCount(request) !== 1) return false;
+  return loadContinuations(policy).some(item => item.request_key === key && item.case_id === caseId &&
+    item.purpose === request.purpose && caseRecord?.source_hash === item.content_hash &&
+    archivedPrepaymentCount(request) + 1 === item.prior_rejections && item.extra_uses === 1);
+}
+export function canResumePrepayment(store, policy, caseId, key, request) {
+  if (prepaymentRejection(request)) return true;
+  if (!request) return false;
+  return explicitPrepaymentContinuation(policy, store.state.cases?.[caseId], caseId, key, request);
 }
 function revisionGrant(grant, purpose) {
   if (!grant) return null;
@@ -99,7 +142,8 @@ export function reserveRequest(store, policy, run, caseId, model, body, purpose 
   const key = requestKey(caseId, model, body, purpose);
   const previous = store.state.requests[key];
   if (previous?.status === 'completed' && previous.plan) return { key, cached: previous.plan };
-  if (previous && !unsent(previous) && !prepaymentRejection(previous)) throw new Stop('REPEATED_OR_UNCERTAIN_REQUEST');
+  const resumable = canResumePrepayment(store, policy, caseId, key, previous);
+  if (previous && !unsent(previous) && !resumable) throw new Stop('REPEATED_OR_UNCERTAIN_REQUEST');
   const config = policy.sequential, record = store.state.cases[caseId];
   if (!record) throw new Stop('CASE_LEDGER_MISSING');
   const day = now.toISOString().slice(0, 10);
@@ -108,7 +152,7 @@ export function reserveRequest(store, policy, run, caseId, model, body, purpose 
   const daily = Object.values(store.state.requests).filter(r => r.day === day).reduce((s, r) => s + requestCost(r), 0);
   const projected = reserveCost(policy, model, body);
   const caseRequests = Object.entries(store.state.requests).filter(([k,r]) => r.case_id === caseId &&
-    !(k === key && (unsent(r) || prepaymentRejection(r)))).map(([,r]) => r);
+    !(k === key && (unsent(r) || resumable))).map(([,r]) => r);
   if (!Number.isInteger(config.max_requests_per_case) || config.max_requests_per_case < 1)
     throw new Stop('REQUEST_LIMIT_MISSING');
   const grant = revisionGrant(revision, purpose);
@@ -132,7 +176,7 @@ export function reserveRequest(store, policy, run, caseId, model, body, purpose 
   if (run.calls >= config.max_calls_per_execute || run.spent + projected > config.execute_budget_usd ||
       record.spent + projected > config.case_budget_usd || daily + projected > config.daily_budget_usd ||
       store.state.campaign_spent + projected > config.campaign_budget_usd) throw new Stop('BUDGET_STOP');
-  const retainedHold = prepaymentRejection(previous) ? requestCost(previous) : (Number.isFinite(previous?.prepayment_hold) ? previous.prepayment_hold : 0);
+  const retainedHold = resumable ? requestCost(previous) : (Number.isFinite(previous?.prepayment_hold) ? previous.prepayment_hold : 0);
   store.state.requests[key] = { case_id: caseId, model, purpose, day, status: 'reserved', charged: projected,
     ...(retainedHold > 0 ? { prepayment_hold: retainedHold } : {}),
     ...(previous ? { reservation_failures: [...(previous.reservation_failures || []),
@@ -172,7 +216,7 @@ export async function callPaid({ store, policy, run, caseId, model, prompt, purp
     if (!validate(previous.plan)) throw new Stop('INVALID_CACHED_RESPONSE');
     return { plan: previous.plan, cached: true };
   }
-  if (previous && !unsent(previous) && !prepaymentRejection(previous)) throw new Stop('REPEATED_OR_UNCERTAIN_REQUEST');
+  if (previous && !unsent(previous) && !canResumePrepayment(store, policy, caseId, key, previous)) throw new Stop('REPEATED_OR_UNCERTAIN_REQUEST');
   if (!process.env.GEMINI_API_KEY) throw new Stop('GEMINI_API_KEY_MISSING');
   const request = reserveRequest(store, policy, run, caseId, model, body, purpose, now, repairMethod, revisionGrant);
   let payload, http;

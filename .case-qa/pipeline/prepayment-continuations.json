@@ -1,0 +1,15 @@
+{
+  "schema": "fm_prepayment_continuation_v1",
+  "continuations": [
+    {
+      "id": "adada-player-402-39046409454",
+      "case_id": "adada-buyuk-gizem",
+      "content_hash": "40f10f3099f3bcbf99a1c61e5268403a05296e417ec22bbc344f80a94bd8cff2",
+      "request_key": "a9ce420fea33ddd0808008987c764ac0f52a40b9c68216af404fc37c0af05524",
+      "purpose": "player",
+      "prior_rejections": 2,
+      "extra_uses": 1,
+      "reason": "Runs 39034251782 and 39046409454 refused this same Adada player request for depleted prepayment credits. One further send only."
+    }
+  ]
+}

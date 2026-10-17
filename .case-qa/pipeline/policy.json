@@ -75,6 +75,9 @@
     "grants_path": ".case-qa/pipeline/review-revision-grants.json",
     "max_pair_uses": 1
   },
+  "prepayment_continuation": {
+    "path": ".case-qa/pipeline/prepayment-continuations.json"
+  },
   "review": {
     "prompt_version": "fm-player-review-v3",
     "minimum_confidence": 80,
