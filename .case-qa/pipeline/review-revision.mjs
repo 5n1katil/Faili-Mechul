@@ -43,11 +43,17 @@ export function mergeShaIsAncestor(root, sha) {
     return true;
   } catch { return false; }
 }
+// Same allowlist as the player card. Authoring prompts are not part of the target.
+const playerCard = entity => Object.fromEntries(['id', 'name', 'description', 'detail']
+  .filter(key => typeof entity?.[key] === 'string').map(key => [key, entity[key]]));
 export function reviewTarget(candidate) {
   return stableHash({
     story: candidate?.story || '',
     solution: candidate?.solution || null,
-    clues: (candidate?.clues || []).map(clue => ({ id: clue.id, text: clue.text || '', bonus: clue.isBonus === true }))
+    clues: (candidate?.clues || []).map(clue => ({ id: clue.id, text: clue.text || '', bonus: clue.isBonus === true })),
+    suspects: (candidate?.suspects || []).map(playerCard),
+    weapons: (candidate?.weapons || []).map(playerCard),
+    locations: (candidate?.locations || []).map(playerCard)
   });
 }
 export function sameReviewTarget(source, candidate) {

@@ -9,7 +9,7 @@ import { gunzipSync } from 'node:zlib';
 import { read, write, clone, loadSnapshot, scan, selectNext, assess, guardedPatch, better,
   restoreBest, stageCandidate, repairPrompt, assertNoRegression, assertScope } from './core.mjs';
 import { emptyState, validateState, openStore, pushCheckpoint } from './state.mjs';
-import { reserveRequest, requestBody, callPaid, Stop, modelPreflight, providerErrorDetails } from './provider.mjs';
+import { reserveRequest, requestBody, requestKey, callPaid, Stop, modelPreflight, providerErrorDetails } from './provider.mjs';
 import { assertDraftPolicy } from './publish-draft.mjs';
 import { playerView, playerPass, judgePass, reviewCandidate, mediaPreflight, certificateValid } from './review.mjs';
 import { repairOne, campaignRows, reopenTextQuarantine } from './run.mjs';
@@ -35,7 +35,7 @@ import { canonicalLogicSignature, logicNoveltyCheck } from './logic-patterns.mjs
 import { qualityContract as experienceContract } from './quality-contract.mjs';
 import { editorialExperiencePrompt } from './editorial.mjs';
 import { reconcileKnownUnsent } from './reservation-recovery.mjs';
-import { loadRevisionGrants, revisionGrantFor, validateGrant } from './review-revision.mjs';
+import { loadRevisionGrants, revisionGrantFor, sameReviewTarget, validateGrant } from './review-revision.mjs';
 import { applyQueueReconciliation, fetchQueuePulls, normalizePull, queueAuditReport, reconcileQueue } from './reconcile.mjs';
 
 globalThis.fetch = async () => { throw new Error('TEST_NETWORK_FORBIDDEN'); };
@@ -1436,6 +1436,59 @@ try {
       requestBody(productionPolicy, productionPolicy.models.reviewer, 'another-granted-player'), 'player', new Date(), 'legacy_patch',
       revisionGrantFor(productionSnapshot, adadaEntry)), /REVISION_GRANT_EXHAUSTED|CASE_REQUEST_LIMIT/);
     assert.equal(Object.keys(store.state.requests).length, 8);
+  });
+  await test('changed player cards cannot use the source revision grant', () => {
+    const source = adadaEntry.candidate;
+    assert.equal(sameReviewTarget(source, clone(source)), true);
+    assert.equal(revisionGrantFor(productionSnapshot, adadaEntry).content_hash, '40f10f3099f3bcbf99a1c61e5268403a05296e417ec22bbc344f80a94bd8cff2');
+    for (const axis of ['suspects', 'weapons', 'locations']) {
+      const changed = clone(source);
+      assert.equal(typeof changed[axis][0].description, 'string');
+      changed[axis][0].description += ' ek kart';
+      assert.equal(sameReviewTarget(source, changed), false, axis);
+      assert.equal(revisionGrantFor(productionSnapshot, adadaEntry, changed), null, axis);
+    }
+    const story = clone(source); story.story += ' ek cümle';
+    const clue = clone(source); clue.clues[0].text += ' ek ipucu';
+    const solution = clone(source); solution.solution = { ...solution.solution, weaponId: solution.solution.weaponId + '-x' };
+    assert.equal(sameReviewTarget(source, story), false);
+    assert.equal(sameReviewTarget(source, clue), false);
+    assert.equal(sameReviewTarget(source, solution), false);
+    const hidden = clone(source);
+    hidden.suspects[0].generationPrompt = 'oyuncunun görmediği yazar notu';
+    assert.equal(sameReviewTarget(source, hidden), true);
+    assert.equal(productionPolicy.sequential.max_requests_per_case, 7);
+  });
+  await test('a revision grant buys one player and one judge, not a second key of either', () => {
+    const grant = revisionGrantFor(productionSnapshot, adadaEntry);
+    const store = storeFor(adadaEntry.id);
+    const body = (text, system) => requestBody(productionPolicy, productionPolicy.models.reviewer, text, { schema: { type: 'object' }, system });
+    const reserve = (text, purpose, system) => reserveRequest(store, productionPolicy, runFor(), adadaEntry.id,
+      productionPolicy.models.reviewer, body(text, system), purpose, new Date(), 'legacy_patch', grant);
+    const player = reserve('player-one', 'player', 'player');
+    const spent = store.state.cases[adadaEntry.id].spent;
+    assert.notEqual(requestKey(adadaEntry.id, productionPolicy.models.reviewer, body('player-two', 'player'), 'player'), player.key);
+    assert.throws(() => reserve('player-two', 'player', 'player'), /REVISION_GRANT_EXHAUSTED/);
+    assert.throws(() => reserve('player-one', 'player', 'player'), /REPEATED_OR_UNCERTAIN_REQUEST/);
+    assert.equal(store.state.requests[player.key].status, 'reserved');
+    assert.equal(Object.keys(store.state.requests).length, 1);
+    assert.equal(store.state.cases[adadaEntry.id].spent, spent);
+    store.state.requests[player.key].status = 'completed';
+    store.state.requests[player.key].plan = { cached: true };
+    const replay = reserve('player-one', 'player', 'player');
+    assert.deepEqual(replay.cached, { cached: true });
+    assert.equal(store.state.cases[adadaEntry.id].spent, spent);
+    assert.equal(Object.keys(store.state.requests).length, 1);
+    const judge = reserve('judge-one', 'judge', 'judge');
+    const pairSpent = store.state.cases[adadaEntry.id].spent;
+    assert.throws(() => reserve('judge-two', 'judge', 'judge'), /REVISION_GRANT_EXHAUSTED/);
+    assert.throws(() => reserve('judge-one', 'judge', 'judge'), /REPEATED_OR_UNCERTAIN_REQUEST/);
+    assert.equal(store.state.requests[judge.key].status, 'reserved');
+    assert.equal(Object.values(store.state.requests).filter(item => item.purpose === 'player' && item.revision_grant_id === grant.id).length, 1);
+    assert.equal(Object.values(store.state.requests).filter(item => item.purpose === 'judge' && item.revision_grant_id === grant.id).length, 1);
+    assert.equal(Object.keys(store.state.requests).length, 2);
+    assert.equal(store.state.cases[adadaEntry.id].spent, pairSpent);
+    assert.equal(store.state.campaign_spent, pairSpent);
   });
   await test('merged, closed and stale pull requests reconcile without restoring old copy or spending', async () => {
     const { fixture, store } = adadaLedger();

@@ -4,9 +4,13 @@
 
 Vaka başına 7 istek sınırı değişmedi. Bir insan düzenlemesi, ancak
 `.case-qa/pipeline/review-revision-grants.json` içinde tek vaka, tek içerik
-hash’i ve bu hash’i içeren bir merge SHA için `uses: 1` yazılmışsa iki ek
-çağrı alabilir. Çağrılar yalnız `player` ve `judge` olabilir; onarım ve
-editoryal hak yenilenmez. Çiftin tahmini maliyeti ve çağrı kapasitesi ilk
+hash’i ve bu hash’i içeren bir merge SHA için `uses: 1` yazılmışsa bir
+`player` ve bir `judge` çağrısı alabilir. Aynı yetkiyle farklı bir istek
+anahtarı kullanan ikinci player veya ikinci judge reddedilir. Tamamlanmış
+aynı istek ücretsiz önbellekten kullanılır; belirsiz istek tekrarlanmaz.
+Hedef, hikâye, çözüm ve ipuçlarıyla birlikte oyuncunun gördüğü şüpheli,
+silah ve mekân kartlarını da kapsar. Kart metni değişen aday bu hakkı
+kullanamaz. Onarım ve editoryal hak yenilenmez. Çiftin tahmini maliyeti ve çağrı kapasitesi ilk
 çağrıdan önce denenir. Sığmıyorsa hiç çağrı yapılmaz. Aynı içerik ikinci kez
 çalışırsa kayıtlı yanıt ücretsiz kullanılır. Farklı hash eski yetkiyi kullanamaz.
 

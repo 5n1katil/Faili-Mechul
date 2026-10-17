@@ -98,8 +98,10 @@ export function reserveRequest(store, policy, run, caseId, model, body, purpose 
   if (!Number.isInteger(config.max_requests_per_case) || config.max_requests_per_case < 1)
     throw new Stop('REQUEST_LIMIT_MISSING');
   const grant = revisionGrant(revision, purpose);
-  const grantUses = grant ? caseRequests.filter(item => item.revision_grant_id === grant.id).length : 0;
-  if (grant && grantUses >= 2) throw new Stop('REVISION_GRANT_EXHAUSTED');
+  const grantRequests = grant ? caseRequests.filter(item => item.revision_grant_id === grant.id) : [];
+  // uses is one request per purpose: a second player or judge key cannot share the pair.
+  if (grant && (grantRequests.filter(item => item.purpose === purpose).length >= grant.uses ||
+      grantRequests.length >= grant.purposes.length)) throw new Stop('REVISION_GRANT_EXHAUSTED');
   if (caseRequests.length >= config.max_requests_per_case && !grant) throw new Stop('CASE_REQUEST_LIMIT');
   if (grant && caseRequests.length >= config.max_requests_per_case + 2) throw new Stop('CASE_REQUEST_LIMIT');
   const repairs = caseRequests.filter(countsAsRepair).length;
