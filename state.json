@@ -9450,7 +9450,7 @@
       }
     },
     "adada-buyuk-gizem": {
-      "spent": 0.05063720000000002,
+      "spent": 0.07935920000000002,
       "feedback": [],
       "source_hash": "40f10f3099f3bcbf99a1c61e5268403a05296e417ec22bbc344f80a94bd8cff2",
       "simulator_hash": "17170058b8f45eab789e14aaf2fb7a6605587fb8",
@@ -14917,17 +14917,29 @@
       "model": "gemini-3.8-flash",
       "purpose": "player",
       "day": "2026-10-17",
-      "status": "failed",
+      "status": "reserved",
       "charged": 0.028722,
-      "revision_grant_id": "adada-human-revision-9aabe510",
-      "http_status": 402,
-      "provider_error": {
-        "http_status": 402,
-        "status": "RESOURCE_EXHAUSTED",
-        "message": "Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ",
-        "field_violations": []
-      }
+      "prepayment_hold": 0.028722,
+      "reservation_failures": [
+        {
+          "case_id": "adada-buyuk-gizem",
+          "model": "gemini-3.8-flash",
+          "purpose": "player",
+          "day": "2026-10-17",
+          "status": "failed",
+          "charged": 0.028722,
+          "revision_grant_id": "adada-human-revision-9aabe510",
+          "http_status": 402,
+          "provider_error": {
+            "http_status": 402,
+            "status": "RESOURCE_EXHAUSTED",
+            "message": "Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ",
+            "field_violations": []
+          }
+        }
+      ],
+      "revision_grant_id": "adada-human-revision-9aabe510"
     }
   },
-  "campaign_spent": 0.22993620000000004
+  "campaign_spent": 0.25865820000000006
 }
