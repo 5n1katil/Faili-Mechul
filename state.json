@@ -10869,7 +10869,7 @@
       "failures": [
         "GEMINI_HTTP_402"
       ],
-      "status": "GEMINI_HTTP_402",
+      "status": "merged",
       "pr_url": "https://github.com/5n1katil/Faili-Mechul/pull/98",
       "publication_history": [
         {
