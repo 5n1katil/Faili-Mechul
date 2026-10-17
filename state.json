@@ -10866,10 +10866,8 @@
       },
       "candidate_hash": "f2ecdfa3c84a606e0fda71fb8bddb20a50a87b2e47ec56211c89e6f4c3e316c3",
       "best_score": 100,
-      "failures": [
-        "GEMINI_HTTP_402"
-      ],
-      "status": "merged",
+      "failures": [],
+      "status": "ready_for_gates",
       "pr_url": "https://github.com/5n1katil/Faili-Mechul/pull/98",
       "publication_history": [
         {
@@ -12336,7 +12334,50 @@
         }
       },
       "pr_state": "merged",
-      "merge_commit_sha": "ac09f96af021e4a94c8a5f1a8cd5eabb83e97fba"
+      "merge_commit_sha": "ac09f96af021e4a94c8a5f1a8cd5eabb83e97fba",
+      "review": {
+        "schema": "fm_case_review_v1",
+        "review_hash": "d4458564108cd43307c5dfb76b2764a8f92ee44121e399db1d7060185bba6e5c",
+        "player": {
+          "unique_solution": true,
+          "solution": {
+            "suspectId": "s3",
+            "weaponId": "w3",
+            "locationId": "l1"
+          },
+          "confidence": 100,
+          "evidence": [
+            {
+              "clue_id": "c3",
+              "quote": "Adli rapor, ölümü tekneleri bağlayan kalın ipin yol açtığı boğulmaya bağlıyor. Cinayet saatinin kesintisiz görüntüleri, disiplinli eski askerin bu ipi hiç almadığını veya kullanmadığını gösteriyor."
+            },
+            {
+              "clue_id": "c1",
+              "quote": "Tekneleri bağlayan kalın ipi hiç almadığı veya kullanmadığı kesinleşiyor."
+            },
+            {
+              "clue_id": "c2",
+              "quote": "Dalgaların vurduğu yürüyüş yolunda bulunan bitkisel toksin şişesi, cinayet saatinde çekilmiş bir fotoğrafta görülüyor."
+            },
+            {
+              "clue_id": "c4",
+              "quote": "Çift namlulu ateşli silah, cinayet saatinde adanın güney ucundaki sarp alanda bulunuyordu."
+            }
+          ],
+          "issues": []
+        },
+        "judge": {
+          "scores": {
+            "fairness": 5,
+            "clarity": 5,
+            "consistency": 5,
+            "originality": 4,
+            "engagement": 4
+          },
+          "issues": [],
+          "summary": "Vaka standart çaylak seviyesi için oldukça duru, tutarlı ve adil kurgulanmış. İpuçları doğrudan kart metinleriyle örtüşüyor; maktulün boğulma sebebi (c3) cinayet aletini 'Gemi Halatı' olarak sabitliyor, c1 ve c3 Albay ve Ressam'ı eleyerek katili 'Genç Yatçı' yapıyor, c2 ve c4 ise Zehir ve Av Tüfeği'nin yerlerini bağlayarak cinayet mahallini doğrudan 'Villa Bahçesi'ne bırakıyor. Herhangi bir mantıksal boşluk ya da pürüz bulunmuyor."
+        }
+      }
     }
   },
   "requests": {
