@@ -9450,7 +9450,7 @@
       }
     },
     "adada-buyuk-gizem": {
-      "spent": 0.12220445,
+      "spent": 0.0855302,
       "feedback": [],
       "source_hash": "40f10f3099f3bcbf99a1c61e5268403a05296e417ec22bbc344f80a94bd8cff2",
       "simulator_hash": "17170058b8f45eab789e14aaf2fb7a6605587fb8",
@@ -15002,10 +15002,33 @@
       "model": "gemini-3.8-flash",
       "purpose": "judge",
       "day": "2026-10-17",
-      "status": "reserved",
-      "charged": 0.04105725,
-      "revision_grant_id": "adada-human-revision-9aabe510"
+      "status": "completed",
+      "charged": 0.004383,
+      "revision_grant_id": "adada-human-revision-9aabe510",
+      "usage": {
+        "promptTokenCount": 4799,
+        "candidatesTokenCount": 209,
+        "totalTokenCount": 5008,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 4799
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "plan": {
+        "scores": {
+          "fairness": 5,
+          "clarity": 5,
+          "consistency": 5,
+          "originality": 4,
+          "engagement": 4
+        },
+        "issues": [],
+        "summary": "Vaka standart çaylak seviyesi için oldukça duru, tutarlı ve adil kurgulanmış. İpuçları doğrudan kart metinleriyle örtüşüyor; maktulün boğulma sebebi (c3) cinayet aletini 'Gemi Halatı' olarak sabitliyor, c1 ve c3 Albay ve Ressam'ı eleyerek katili 'Genç Yatçı' yapıyor, c2 ve c4 ise Zehir ve Av Tüfeği'nin yerlerini bağlayarak cinayet mahallini doğrudan 'Villa Bahçesi'ne bırakıyor. Herhangi bir mantıksal boşluk ya da pürüz bulunmuyor."
+      }
     }
   },
-  "campaign_spent": 0.30150345000000006
+  "campaign_spent": 0.26482920000000004
 }
