@@ -4,6 +4,13 @@ import { execFileSync } from 'node:child_process';
 import { read, write } from './core.mjs';
 
 export const emptyState = () => ({ schema: 'fm_case_pipeline_state_v1', active_id: null, cases: {}, requests: {}, campaign_spent: 0 });
+// `charged` is verified or still-open reservation. `prepayment_hold` is a provider
+// rejection with no usage proof. Both remain in the ledger until usage evidence exists.
+export function requestCost(record) {
+  const hold = record?.prepayment_hold;
+  if (hold !== undefined && (!Number.isFinite(hold) || hold < 0)) throw new Error('STATE_INVALID_LEDGER');
+  return record.charged + (hold || 0);
+}
 export function pushCheckpoint(git, branch, expected, proposed) {
   const ref = `refs/heads/${branch}`;
   const head = () => {
@@ -36,10 +43,10 @@ export function validateState(state) {
         !/^\d{4}-\d{2}-\d{2}$/.test(record.day || '') ||         !['repair', 'player', 'judge', 'editorial'].includes(record.purpose) ||
         !['reserved', 'completed', 'failed', 'invalid_response'].includes(record.status) ||
         (record.revision_grant_id !== undefined && !/^[a-z0-9-]{8,80}$/.test(record.revision_grant_id))) throw new Error('STATE_INVALID_LEDGER');
-  const total = Object.values(state.requests).reduce((sum, r) => sum + r.charged, 0);
+  const total = Object.values(state.requests).reduce((sum, r) => sum + requestCost(r), 0);
   if (Math.abs(total - state.campaign_spent) > 0.000001) throw new Error('STATE_LEDGER_MISMATCH');
   for (const [id, record] of Object.entries(state.cases)) {
-    const subtotal = Object.values(state.requests).filter(r => r.case_id === id).reduce((sum, r) => sum + r.charged, 0);
+    const subtotal = Object.values(state.requests).filter(r => r.case_id === id).reduce((sum, r) => sum + requestCost(r), 0);
     if (Math.abs(subtotal - record.spent) > 0.000001) throw new Error('STATE_CASE_LEDGER_MISMATCH');
   }
   return state;

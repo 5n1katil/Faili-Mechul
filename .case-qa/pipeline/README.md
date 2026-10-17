@@ -14,6 +14,13 @@ kullanamaz. Onarım ve editoryal hak yenilenmez. Çiftin tahmini maliyeti ve ça
 çağrıdan önce denenir. Sığmıyorsa hiç çağrı yapılmaz. Aynı içerik ikinci kez
 çalışırsa kayıtlı yanıt ücretsiz kullanılır. Farklı hash eski yetkiyi kullanamaz.
 
+Kesin `402 RESOURCE_EXHAUSTED` ve “prepayment credits are depleted” yanıtı,
+kullanım kanıtı taşımayan bir rezervasyondur. Tutar `prepayment_hold` olarak
+kalır; iade varsayılmaz ve istek silinmez. Kullanıcının başlattığı sonraki
+çalıştırma aynı player veya judge isteğini bir kez yeniden gönderebilir.
+Zaman aşımı, belirsiz transport, başarılı çağrı, onarım ve farklı hatalar
+yeniden gönderilmez. İkinci bakiye reddi de durur.
+
 Ücretsiz `audit` kalıcı `state.json` dosyasını yazmaz. Rapor kaynak QA,
 içerik kilidi, kuyruk ve PR durumunu ayrı gösterir. Pilot veya campaign,
 GitHub’da birleşmiş, kapanmış veya açık PR’ı ayırt edip kaydı günceller.
