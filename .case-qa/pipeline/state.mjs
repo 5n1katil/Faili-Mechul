@@ -33,8 +33,9 @@ export function validateState(state) {
     if (!Number.isFinite(record.spent) || record.spent < 0) throw new Error('STATE_INVALID_CASE_BUDGET');
   for (const record of Object.values(state.requests))
     if (!Number.isFinite(record.charged) || record.charged < 0 || !state.cases[record.case_id] ||
-        !/^\d{4}-\d{2}-\d{2}$/.test(record.day || '') || !['repair', 'player', 'judge', 'editorial'].includes(record.purpose) ||
-        !['reserved', 'completed', 'failed', 'invalid_response'].includes(record.status)) throw new Error('STATE_INVALID_LEDGER');
+        !/^\d{4}-\d{2}-\d{2}$/.test(record.day || '') ||         !['repair', 'player', 'judge', 'editorial'].includes(record.purpose) ||
+        !['reserved', 'completed', 'failed', 'invalid_response'].includes(record.status) ||
+        (record.revision_grant_id !== undefined && !/^[a-z0-9-]{8,80}$/.test(record.revision_grant_id))) throw new Error('STATE_INVALID_LEDGER');
   const total = Object.values(state.requests).reduce((sum, r) => sum + r.charged, 0);
   if (Math.abs(total - state.campaign_spent) > 0.000001) throw new Error('STATE_LEDGER_MISMATCH');
   for (const [id, record] of Object.entries(state.cases)) {
@@ -86,4 +87,16 @@ export function openStore(root, policy, { localFile } = {}) {
     pushCheckpoint(git, branch, oldHead, newHead);
     oldHead = newHead;
   } };
+}
+export function readRemoteState(root, policy) {
+  const branch = policy.sequential.state_branch;
+  if (!/^automation\/[a-z0-9-]+$/.test(branch)) throw new Error('INVALID_STATE_BRANCH');
+  const git = (...args) => execFileSync('git', args, { cwd: root, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }).trim();
+  const remote = git('ls-remote', '--heads', 'origin', `refs/heads/${branch}`);
+  if (!remote) throw new Error('STATE_BRANCH_MISSING');
+  git('fetch', 'origin', `refs/heads/${branch}`);
+  const sha = git('rev-parse', 'FETCH_HEAD');
+  if (!/^[a-f0-9]{40}$/.test(sha)) throw new Error('STATE_REMOTE_INVALID');
+  const text = execFileSync('git', ['show', `${sha}:state.json`], { cwd: root, encoding: 'utf8', maxBuffer: 20 * 1024 * 1024 });
+  return { sha, state: validateState(JSON.parse(text)) };
 }

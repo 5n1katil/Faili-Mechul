@@ -1,0 +1,14 @@
+{
+  "schema": "fm_review_revision_grant_v1",
+  "grants": [
+    {
+      "id": "adada-human-revision-9aabe510",
+      "case_id": "adada-buyuk-gizem",
+      "content_hash": "40f10f3099f3bcbf99a1c61e5268403a05296e417ec22bbc344f80a94bd8cff2",
+      "merge_sha": "9aabe510326ea751e2de55c140aa2bbc5c09a419",
+      "purposes": ["player", "judge"],
+      "uses": 1,
+      "reason": "PR #99 insan hikâye düzenlemesi için tek player/judge çifti. Onarım veya editoryal hak yenilemez."
+    }
+  ]
+}

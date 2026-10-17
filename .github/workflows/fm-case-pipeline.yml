@@ -57,6 +57,7 @@ jobs:
       - name: Free inventory and exact QA audit
         run: |
           node .case-qa/fm_case_qa_certify.mjs
+          # Read-only: this audit does not write or repair the durable queue.
           node .case-qa/pipeline/run.mjs
       - name: Certify selected candidate against its recorded base
         if: ${{ inputs.mode == 'certify' }}

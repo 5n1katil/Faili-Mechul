@@ -1,5 +1,26 @@
 # Faili Meçhul — güvenli vaka geliştirme akışı
 
+## İnsan revizyonu ve kuyruk uzlaştırması (17.10.2026)
+
+Vaka başına 7 istek sınırı değişmedi. Bir insan düzenlemesi, ancak
+`.case-qa/pipeline/review-revision-grants.json` içinde tek vaka, tek içerik
+hash’i ve bu hash’i içeren bir merge SHA için `uses: 1` yazılmışsa bir
+`player` ve bir `judge` çağrısı alabilir. Aynı yetkiyle farklı bir istek
+anahtarı kullanan ikinci player veya ikinci judge reddedilir. Tamamlanmış
+aynı istek ücretsiz önbellekten kullanılır; belirsiz istek tekrarlanmaz.
+Hedef, hikâye, çözüm ve ipuçlarıyla birlikte oyuncunun gördüğü şüpheli,
+silah ve mekân kartlarını da kapsar. Kart metni değişen aday bu hakkı
+kullanamaz. Onarım ve editoryal hak yenilenmez. Çiftin tahmini maliyeti ve çağrı kapasitesi ilk
+çağrıdan önce denenir. Sığmıyorsa hiç çağrı yapılmaz. Aynı içerik ikinci kez
+çalışırsa kayıtlı yanıt ücretsiz kullanılır. Farklı hash eski yetkiyi kullanamaz.
+
+Ücretsiz `audit` kalıcı `state.json` dosyasını yazmaz. Rapor kaynak QA,
+içerik kilidi, kuyruk ve PR durumunu ayrı gösterir. Pilot veya campaign,
+GitHub’da birleşmiş, kapanmış veya açık PR’ı ayırt edip kaydı günceller.
+Kaynak değişmişse eski aday ve sertifika yeni metnin üzerine yazılmaz; istek
+ve harcama geçmişi durur. Aynı kaynak için gerçekten açık bir inceleme,
+ikinci bir grup başlatmaz. Eşleşmeyen eski açık PR geçerli aday sayılmaz.
+
 ## Geçerli oyuncu deneyimi sözleşmesi — altı kategori (13.10.2026)
 
 Bu bölüm, aşağıdaki tarihsel run notlarındaki evrensel 60/95-130 kelime

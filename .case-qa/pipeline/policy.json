@@ -71,6 +71,10 @@
     "max_calls": 12,
     "budget_usd": 0.75
   },
+  "review_revision": {
+    "grants_path": ".case-qa/pipeline/review-revision-grants.json",
+    "max_pair_uses": 1
+  },
   "review": {
     "prompt_version": "fm-player-review-v3",
     "minimum_confidence": 80,
