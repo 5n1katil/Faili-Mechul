@@ -13886,7 +13886,7 @@
       "status": "quarantined"
     },
     "tarihi-hamamda-cinayet": {
-      "spent": 0.0031825000000000013,
+      "spent": 0.047109250000000005,
       "feedback": [
         {
           "error": "TEXT_CONTENT:suspects/0:MIN_12_WORDS:ACTUAL_10;suspects/1:MIN_12_WORDS:ACTUAL_9;suspects/2:MIN_12_WORDS:ACTUAL_8"
@@ -18047,7 +18047,16 @@
           }
         }
       }
+    },
+    "b07b471248b8e141fcc03c2fec24ee7a3cf5c3374a3c7f7bb50884d7e1a06d2a": {
+      "case_id": "tarihi-hamamda-cinayet",
+      "model": "gemini-3.8-flash",
+      "purpose": "repair",
+      "day": "2026-10-18",
+      "status": "reserved",
+      "charged": 0.04392675,
+      "repair_method": "verified_text_v1"
     }
   },
-  "campaign_spent": 0.27812500000000007
+  "campaign_spent": 0.3220517500000001
 }
