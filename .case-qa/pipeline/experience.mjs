@@ -18,16 +18,28 @@ export function experienceCategory(candidate) {
 export function difficultyBand(candidate) {
   return experienceCategory(candidate).category;
 }
-// An examining institution, not a one-sentence exception. The clue names an
-// adli / adli tıp / kriminal laboratory as the body that scanned, tested or
-// reported, and does not place the crime or the body in that laboratory.
+// An examining institution, not a one-sentence exception and not a blanket
+// exemption for the whole clue. A report or test in one sentence does not
+// cover entering or going to the laboratory in the same clue.
 const FORENSIC_BODY = /(?:adli(?:\s+t[ıi]p)?|kriminal)\s+laboratuvar/iu;
 const LAB_CRIME_SCENE = /laboratuvar(?:da|a|ın\s+içinde|in\s+içinde)\b[\s\S]{0,60}(?:işlendi|öldür|gerçekleşti|cinayet|ceset|maktul|beden|naaş)|(?:cinayet|ölüm|ceset|maktul|beden|naaş)[\s\S]{0,40}laboratuvar(?:da|a|ın\s+içinde|in\s+içinde)|laboratuvar[\s\S]{0,40}(?:cinayetin\s+işlendiği|olayın\s+geçtiği|cesedin\s+bulunduğu)/iu;
 const LAB_EXAMINATION = /(?:tarama|analiz|rapor|tespit|saptadı|saptan|incele|test|numune|parmak\s*iz)/iu;
+const LAB_DESTINATION = /laboratuvar(?:a|ına|ine)(?![\p{L}])/iu;
+const LAB_MOTION = /(?:gir(?:di|dik|ip|erek|er|mez|medi|iyor|miş)?|gid(?:erek|ip|er|iyor|ince|iyor)?|git(?:ti|tik|mek)?|gel(?:di|dik|ip|erek|ir)?|uğra(?:dı|dık|yıp|yarak)?|çık(?:tı|tık|ıp|arak)?|yönel(?:di|dik|ip|erek)?|götür(?:dü|dük|üp|erek)?|bırak(?:tı|tık|ıp|arak)?|sokul(?:du|duk|up|arak)?|in(?:di|dik|ip|erek|er|ince|mez|medi|iyor)?)(?![\p{L}])/iu;
+const LAB_EXAM_SITE = /laboratuvar(?:da|de|ında|inde)\s+(?:yapılan|gerçekleştirilen|yürütülen|tamamlanan|elde\s+edilen)\s+(?:[\p{L}']+\s+){0,4}(?:tarama|analiz|inceleme|test|rapor|tespit)/iu;
+function physicalLaboratoryUse(text) {
+  const raw = String(text || '');
+  if (LAB_CRIME_SCENE.test(raw)) return true;
+  if (LAB_DESTINATION.test(raw) && LAB_MOTION.test(raw.slice(raw.search(LAB_DESTINATION)))) return true;
+  if (new RegExp(LAB_MOTION.source + '[\\s\\S]{0,40}?' + LAB_DESTINATION.source, 'iu').test(raw)) return true;
+  if (/laboratuvar(?:da|de|ında|inde|ın\s+içinde|in\s+içinde)(?![\p{L}])/iu.test(raw) && !LAB_EXAM_SITE.test(raw)) return true;
+  return false;
+}
 export function forensicInstitutionMention(text) {
   const raw = String(text || '');
-  if (!FORENSIC_BODY.test(raw) || LAB_CRIME_SCENE.test(raw)) return false;
-  return LAB_EXAMINATION.test(raw);
+  const clauses = raw.split(/(?<=[.!?;])\s+/u).filter(part => /laboratuvar/iu.test(part));
+  if (!clauses.length || clauses.some(physicalLaboratoryUse)) return false;
+  return clauses.every(part => FORENSIC_BODY.test(part) && LAB_EXAMINATION.test(part));
 }
 export const EXPERIENCE_PROFILES = {
   standard_caylak: { story: [25,55], core: [12,30], bonus: [8,22], suspect: [12,20], intent: 'Brief cinematic mystery with a case-specific hook and immediately readable Turkish; one clear fact per clue. Shorter reading, never weaker atmosphere or bureaucratic filler.' },

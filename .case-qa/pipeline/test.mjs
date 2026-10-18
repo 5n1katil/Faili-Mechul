@@ -1966,6 +1966,8 @@ try {
       scene: 'Cinayet laboratuvarda işlendi. Ceset bu kapalı inceleme odasında bulundu.',
       bodyInside: 'Adli laboratuvarın içinde ceset bulundu.',
       unintroducedPlace: 'Şüpheli gece laboratuvara indi ve kanıtı orada bıraktı.',
+      enteredWithReport: 'Şüpheli kriminal laboratuvara girdi ve test raporunu kasadan aldı.',
+      reportThenVisit: 'Kriminal laboratuvar raporu hazırlandı. Şüpheli laboratuvara giderek numuneyi aldı.',
       savedScan: scan
     };
     const issuesFor = text => {
@@ -1989,12 +1991,12 @@ try {
       assert.equal(issuesFor(text).length, 0, text);
       assert.equal(htmlFlagsFor(text).length, 0, htmlFlagsFor(text).join(' | '));
     }
-    for (const text of [samples.scene, samples.bodyInside, samples.unintroducedPlace]) {
+    for (const text of [samples.scene, samples.bodyInside, samples.unintroducedPlace, samples.enteredWithReport, samples.reportThenVisit]) {
       assert.equal(issuesFor(text).length, 1, text);
       assert.equal(htmlFlagsFor(text).length, 1, text);
     }
     assert.match(samples.savedScan, /Kriminal laboratuvarın parmak izi taramasında/);
-    assert.equal(productionPolicy.simulator.git_blob_sha, '61899926998d84581501309a70685b83cd3d5e6a');
+    assert.equal(productionPolicy.simulator.git_blob_sha, '669721fc3afb1e12492f3abefdc55c86a1e2ee88');
   });
   await test('named and numeric difficulties share six categories and unknown stays unknown', () => {
     const pairs = [['caylak', false], ['çaylak', false], ['dedektif', true], ['baskomiser', true], ['başkomiser', true]];
