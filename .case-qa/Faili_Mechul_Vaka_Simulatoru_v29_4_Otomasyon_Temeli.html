@@ -1987,14 +1987,14 @@ function solvabilityCheck(c){
       const WEAPON_POS=/(ölüm(ün|ün asıl)?.{0,40}(ile|sıvısıyla|aletiyle|silahıyla|yöntemiyle|kullanılarak|sayesinde).{0,15}(gerçekleş|ol(du|muş)|işlen|netleş)|ile (öldürül|katledil|sustur|zehirlen)|ölüm (sebebi|silahı|nedeni).{0,40}(o |bu |şu )|(kullanılarak|aracılığıyla) (öldürül|sustur|katledil)|deriyi yakan.{0,30}(sıvı|çözücü|asit).{0,20}(gerçekleş|ile|sustur|öldür))/i;
       const scenePos=SCENE_POS.test(txt);
       const weaponPos=WEAPON_POS.test(txt);
-      if(scenePos && weaponPos){
+        if(scenePos && weaponPos){
         const idx=c.clues.indexOf(cl)+1;
-        const isHard=(lvl==null||lvl>=3);
+        const isHard=!fmNoviceCase(c);
         if(isHard){
           findings.push(`HATA: Çapa Metni Çift İfşası! Çapa ipucunuzun (İpucu ${idx}) METNİ, cinayetin HEM nerede işlendiğini (cinayet mekanını olumlu kuruyor) HEM de hangi silah/yöntemle işlendiğini (cinayet silahını olumlu kuruyor) aynı anda açıkça söylüyor. logicRules tek bir şüpheli elese bile, oyuncu sadece bu metni okuyarak cinayet mekanını ve silahını birden öğreniyor — bu, dedüksiyonun büyük kısmını tek hamlede bitirir. KURAL: Çapa, cinayetle ilişkili öğelerden YALNIZCA BİRİNİ olumlu versin (ya mekanı: "cinayetin işlendiği X"; ya da silahı/yöntemi: "ölüm Y ile gerçekleşti") — diğerini elemece ya da sonraki ipuçlara bırak. Şu an ikisi birden veriliyor; birini çıkar.`);
           return {weak:true};
         } else {
-          findings.push(`ⓘ NOT (Kolay Vaka): Çapa metni (İpucu ${idx}) hem cinayet mekanını hem silahını olumlu veriyor. Zorluk ${lvl}★ bir vakada kabul edilebilir, ama premium his için çapanın yalnızca birini olumlu vermesi (diğerini elemece bırakması) dedüksiyonu derinleştirir.`);
+          findings.push(`ⓘ NOT (Kolay Vaka): Çapa metni (İpucu ${idx}) hem cinayet mekanını hem silahını olumlu veriyor. ${fmDifficultyText(c)} bir vakada kabul edilebilir, ama daha zor bir kategoride çapanın yalnızca birini olumlu vermesi (diğerini elemece bırakması) dedüksiyonu derinleştirir.`);
         }
       }
     });
@@ -2039,17 +2039,14 @@ function solvabilityCheck(c){
       if(leak){
         const idx=c.clues.findIndex(cl=>cl.id===leak.id)+1;
         const lvl=c.difficultyLevel;
-        // GÜVENLİ VARSAYIM: zorluk belirtilmemişse (null) ZOR kabul et — çift ifşa fatal kalsın.
-        // Yalnızca açıkça kolay (1-2) işaretlenmiş vakalar bu kuraldan muaf.
-        const isHard = (lvl==null || lvl>=3);
+        // Acemi kategori: sayısal 1-2 veya çaylak/çaylak etiketi. Tanımsız değer çaylak sayılmaz.
+        const isHard = !fmNoviceCase(c);
         if(isHard){
-          // ZOR/PREMIUM veya zorluğu belirtilmemiş vaka: çapa fazla açık veriyor → FATAL
-          const lvlTxt = lvl==null ? 'zorluk belirtilmemiş — premium varsayıldı' : `${lvl}★`;
-          findings.push(`HATA: Çift İfşa Sızıntısı! Çapa ipucunuz (İpucu ${idx}), tek başına cinayet triadının iki öğesini (${leak.pair.map(nameById).join(' + ')}) kesin olarak birbirine bağlıyor — ister doğrudan confirm'le, ister birden çok elemenin tek seçenek bırakmasıyla. (${lvlTxt}) Bu, bulmaca örüntüsünü yok eder: cinayeti tek hamlede çözer. Çapa SADECE cinayetle ilişkili TEK bir öğeyi versin (ya mekanı, ya silahı, ya şüpheliyi); o öğeyi başka bir eksene bağlama işini diğer ipuçlara, tercihen ters-çapraz çıkarıma bırak. NOT: Bu vaka gerçekten kolaysa (Çaylak), JSON'a "difficulty": 1 veya 2 ekle — kolay vakalarda çapanın iki öğe vermesi serbesttir.`);
+          const lvlTxt = fmDifficultyText(c);
+          findings.push(`HATA: Çift İfşa Sızıntısı! Çapa ipucunuz (İpucu ${idx}), tek başına cinayet triadının iki öğesini (${leak.pair.map(nameById).join(' + ')}) kesin olarak birbirine bağlıyor — ister doğrudan confirm'le, ister birden çok elemenin tek seçenek bırakmasıyla. (${lvlTxt}) Bu, bulmaca örüntüsünü yok eder: cinayeti tek hamlede çözer. Çapa SADECE cinayetle ilişkili TEK bir öğeyi versin (ya mekanı, ya silahı, ya şüpheliyi); o öğeyi başka bir eksene bağlama işini diğer ipuçlara, tercihen ters-çapraz çıkarıma bırak. NOT: Çaylak etiketi ile difficulty 1 ve 2 aynı acemi kategorisidir. Dedektif, başkomiser ve tanımsız değer bu muafiyete girmez.`);
           return {score:0,findings,validWorlds:0,totalWorlds,coreWorlds:0,distinctSolutions:0,usesLogic:true,dualLeak:true};
         } else {
-          // AÇIKÇA kolay vaka (zorluk 1-2): çapanın iki öğeyi vermesi kabul edilebilir.
-          findings.push(`ⓘ NOT (Kolay Vaka): Çapa ipucu (İpucu ${idx}) cinayet triadının iki öğesini (${leak.pair.map(nameById).join(' + ')}) birden veriyor. Bu, zorluk ${lvl}★ bir vakada kabul edilebilir (kolay vakalar daha doğrudan olabilir). Daha zor/premium bir vaka hedefliyorsan, çapayı tek öğeye indirip kalan bağı diğer ipuçlara yayman dedüksiyonu derinleştirir — ama bu zorunlu değil.`);
+          findings.push(`ⓘ NOT (Kolay Vaka): Çapa ipucu (İpucu ${idx}) cinayet triadının iki öğesini (${leak.pair.map(nameById).join(' + ')}) birden veriyor. Bu, ${fmDifficultyText(c)} bir vakada kabul edilebilir (kolay vakalar daha doğrudan olabilir). Daha zor bir vaka hedefliyorsan, çapayı tek öğeye indirip kalan bağı diğer ipuçlara yayman dedüksiyonu derinleştirir — ama bu zorunlu değil.`);
         }
       }
     }
@@ -2086,13 +2083,13 @@ function solvabilityCheck(c){
       const idx=c.clues.findIndex(cl=>cl.id===overload.id)+1;
       const axName={'S-W':'şüpheli-silah','L-S':'şüpheli-mekan','L-W':'silah-mekan'};
       const lvl=c.difficultyLevel;
-      const isHard=(lvl==null || lvl>=3); // belirtilmemiş = premium varsay
+      const isHard=!fmNoviceCase(c);
       if(isHard){
-        const lvlTxt = lvl==null ? 'zorluk belirtilmemiş — premium varsayıldı' : `${lvl}★`;
-        findings.push(`HATA: Aşırı Bilgi Yükü! Temel ipucu ${idx}, tek başına birden fazla ayrı eşleşmeyi (${overload.axes.map(a=>axName[a]||a).join(' + ')}) aynı anda kesinleştiriyor. (${lvlTxt}) Bir temel ipucu en fazla TEK bir eksen eşleşmesi vermeli; iki çift birden vermek vakayı aşırı kolaylaştırır ve dedüksiyon örüntüsünü bozar. Fazla eşleşmeyi ayrı bir ipucuna taşı. (Ek/bonus ipuçları muaf.) NOT: Vaka gerçekten kolaysa "difficulty": 1 veya 2 ekle.`);
+        const lvlTxt = fmDifficultyText(c);
+        findings.push(`HATA: Aşırı Bilgi Yükü! Temel ipucu ${idx}, tek başına birden fazla ayrı eşleşmeyi (${overload.axes.map(a=>axName[a]||a).join(' + ')}) aynı anda kesinleştiriyor. (${lvlTxt}) Bir temel ipucu en fazla TEK bir eksen eşleşmesi vermeli; iki çift birden vermek vakayı aşırı kolaylaştırır ve dedüksiyon örüntüsünü bozar. Fazla eşleşmeyi ayrı bir ipucuna taşı. (Ek/bonus ipuçları muaf.) NOT: Çaylak etiketi ile difficulty 1 ve 2 aynı acemi kategorisidir; tanımsız bir değer çaylak sayılmaz.`);
         return {score:0,findings,validWorlds:0,totalWorlds,coreWorlds:0,distinctSolutions:0,usesLogic:true,overload:overload.id};
       } else {
-        findings.push(`ⓘ NOT (Kolay Vaka): Temel ipucu ${idx} tek başına birden fazla eşleşmeyi (${overload.axes.map(a=>axName[a]||a).join(' + ')}) veriyor. Zorluk ${lvl}★ bir vakada kabul edilebilir. Daha derin dedüksiyon için bu eşleşmeleri ayrı ipuçlara bölebilirsin (zorunlu değil).`);
+        findings.push(`ⓘ NOT (Kolay Vaka): Temel ipucu ${idx} tek başına birden fazla eşleşmeyi (${overload.axes.map(a=>axName[a]||a).join(' + ')}) veriyor. ${fmDifficultyText(c)} bir vakada kabul edilebilir. Daha derin dedüksiyon için bu eşleşmeleri ayrı ipuçlara bölebilirsin (zorunlu değil).`);
       }
     }
   }
@@ -2176,7 +2173,8 @@ function solvabilityCheck(c){
       });
       if(noContrib.length){
         const lvl=c.difficultyLevel;
-        const hard=(lvl==null||lvl>=4);
+        const category=fmExperienceCategory(c);
+        const hard=category==='baskomiser'||category==null;
         const vurgu = hard ? ' Bu ZOR bir vaka (difficulty '+(lvl??'?')+'); zorlukta her standart ipucunun çözüme katkı yapması özellikle önemlidir.' : '';
         // Zor vakada: prefix YOK → realAdvisory olur, "⚙ Geliştirilebilir" tetikler (puan kırmaz ama
         // "kusursuz değil, geliştir" mesajı verir). Kolay vakada: "ⓘ" prefix → sadece bilgi.
@@ -3702,7 +3700,7 @@ function visibleEvidenceScopeCheck(c){
 function semanticAudit(c){
   const findings=[],warnings=[],flags=[];
   const policy=(c.qaPolicy||{});
-  const requireContract=policy.requireSemanticContract!==false && (((c.difficultyLevel==null)||c.difficultyLevel>=3)||policy.enforceSemanticContract===true);
+  const requireContract=policy.requireSemanticContract!==false && (!fmNoviceCase(c)||policy.enforceSemanticContract===true);
   const provided=[],invalid=[];
   const rootFacts=Array.isArray(c.qaSemanticFacts)?c.qaSemanticFacts:[];
   rootFacts.forEach(f=>{ const n=fmNormalizeSemanticFact(c,f,'story'); if(n){ if(n.invalid)invalid.push(n); else provided.push(n); } });
@@ -3902,24 +3900,29 @@ function contentDepthAndNameCheck(c){
 
   const storyWords=fmQaWordCount(c.story);
   // Six experience categories: free/premium x novice/detective/chief.
-  // Stored five-level premium scale: 1-2 novice, 3 detective, 4-5 chief.
-  const namedBand=({'caylak':0,'çaylak':0,'dedektif':1,'baskomiser':2,'başkomiser':2})[String(c.difficulty||'').toLocaleLowerCase('tr').replace(/[\s_-]/g,'')];
-  const numericLevel=c.difficultyLevel??(typeof c.difficulty==='number'?c.difficulty:1);
-  const band=namedBand!==undefined?namedBand:numericLevel<=2?0:numericLevel===3?1:2;
+  // Stored numbers stay 1-2 novice, 3 detective, 4-5 chief. A known label is
+  // the same category. Unknown is not silently novice, so no caylak band applies.
+  const category=fmExperienceCategory(c);
+  const band=category==='caylak'?0:category==='dedektif'?1:category==='baskomiser'?2:null;
   const storyBands=premium?[[40,125],[55,145],[70,180]]:[[25,55],[35,75],[45,95]];
-  const [storyMin,storyMax]=storyBands[band];
   if(storyWords<25) flags.push(`HATA: Hikâye yalnız ${storyWords} kelime; olay, gerilim ve soruşturma bağlamı kurulmamış.`);
-  else if(storyWords<storyMin) findings.push(`${fmCaseTierLabel(c)} hikâyesi ${storyWords} kelime; hedef derinlik yaklaşık ${storyMin}-${storyMax} kelime. Kimlikleri değiştirmeden olay ve atmosfer bağını güçlendir.`);
-  else if(storyWords>storyMax) warnings.push(`Hikâye ${storyWords} kelime; mobil okumada ağırlaşabilir. Tekrarları azalt, gizem ve gerekli bağlamı koru.`);
+  else if(band==null) flags.push('HATA: Zorluk kategorisi tanımlı değil. Çaylak, dedektif, başkomiser veya 1-5 beklenir; bilinmeyen değer çaylak sayılmaz.');
+  else {
+    const [storyMin,storyMax]=storyBands[band];
+    if(storyWords<storyMin) findings.push(`${fmCaseTierLabel(c)} hikâyesi ${storyWords} kelime; hedef derinlik yaklaşık ${storyMin}-${storyMax} kelime. Kimlikleri değiştirmeden olay ve atmosfer bağını güçlendir.`);
+    else if(storyWords>storyMax) warnings.push(`Hikâye ${storyWords} kelime; mobil okumada ağırlaşabilir. Tekrarları azalt, gizem ve gerekli bağlamı koru.`);
+  }
 
-  const coreWordMax=premium?[42,58,70][band]:[30,42,55][band];
-  const bonusWordMax=premium?[30,40,48][band]:[22,30,38][band];
+  const coreWordMax=band==null?null:premium?[42,58,70][band]:[30,42,55][band];
+  const bonusWordMax=band==null?null:premium?[30,40,48][band]:[22,30,38][band];
   const narrativeContext=fmNorm([c.story,...[...(c.suspects||[]),...(c.weapons||[]),...(c.locations||[])].map(e=>`${e.name||''} ${e.description||''} ${e.detail||''}`)].join(' '));
   (c.clues||[]).forEach((cl,i)=>{
-    const count=fmQaWordCount(cl.text),limit=cl.isBonus?bonusWordMax:coreWordMax;
-    if(count>limit) warnings.push(`İpucu ${i+1}: ${count} kelime; bu kategori için üst sınır ${limit}. Gerekli kanıtı koruyarak sadeleştir.`);
+    if(coreWordMax!=null){
+      const count=fmQaWordCount(cl.text),limit=cl.isBonus?bonusWordMax:coreWordMax;
+      if(count>limit) warnings.push(`İpucu ${i+1}: ${count} kelime; bu kategori için üst sınır ${limit}. Gerekli kanıtı koruyarak sadeleştir.`);
+    }
     ['atölye','laboratuvar','koridor','mahzen','mutfak','arşiv','gözetleme istasyonu'].forEach(term=>{
-      const forensicInstitution=term==='laboratuvar'&&/^\s*adli\s+laboratuvar[, ]+.{0,100}(?:saptadı|analiz|tespit|rapor)/iu.test(cl.text||'');
+      const forensicInstitution=term==='laboratuvar'&&fmForensicInstitution(cl.text||'');
       if(fmNorm(cl.text||'').includes(fmNorm(term))&&!narrativeContext.includes(fmNorm(term))&&!forensicInstitution)
         flags.push(`HATA: Sahne Bütünlüğü — İpucu ${i+1} açıklanmamış "${term}" mekânına dayanıyor. Kartlar veya açılışla bağlantısını kur; kanıtı taşımak için yeni bir mekân uydurma.`);
     });
@@ -3942,7 +3945,7 @@ function contentDepthAndNameCheck(c){
       if(hi-lo>=16&&hi/Math.max(1,lo)>2.4) warnings.push(`${label} profilleri aynı vakada dengesiz (${lo}-${hi} kelime). Bir kart birkaç kelimeyken diğerinin paragraf olmasına izin verme.`);
     }
   };
-  inspectProfiles('Şüpheli',c.suspects||[],12,premium?[40,48,60][band]:[20,24,28][band]);
+  inspectProfiles('Şüpheli',c.suspects||[],12,band==null?Number.POSITIVE_INFINITY:(premium?[40,48,60][band]:[20,24,28][band]));
   inspectProfiles('Silah',c.weapons||[],premium?10:6,premium?75:50);
   inspectProfiles('Mekân',c.locations||[],premium?12:7,premium?80:55);
 
@@ -3958,7 +3961,45 @@ function contentDepthAndNameCheck(c){
    Bu katman, yalnızca ızgaranın çözülmesini değil, içerik ile kuralın
    gerçekten birbirini gerektirip gerektirmediğini ve mekanik varlığın
    oyunda render edilebilir olup olmadığını denetler. */
-function fmAdvancedCase(c){ return c.difficultyLevel==null || c.difficultyLevel>=3; }
+function fmExperienceCategory(c){
+  const label=c&&c.difficulty;
+  if(typeof label==='string' && label.trim() && !/^\d+$/.test(label.trim())){
+    const key=label.toLocaleLowerCase('tr').replace(/[\s_-]/g,'');
+    return ({caylak:'caylak','çaylak':'caylak',dedektif:'dedektif',baskomiser:'baskomiser','başkomiser':'baskomiser'})[key]||null;
+  }
+  const raw=c&&c.difficultyLevel!=null?c.difficultyLevel:label;
+  const level=typeof raw==='number'?raw:(typeof raw==='string' && /^\d+$/.test(raw.trim())?parseInt(raw.trim(),10):null);
+  if(Number.isInteger(level) && level>=1 && level<=5) return level<=2?'caylak':level===3?'dedektif':'baskomiser';
+  return null;
+}
+function fmNoviceCase(c){ return fmExperienceCategory(c)==='caylak'; }
+function fmChiefCase(c){ return fmExperienceCategory(c)==='baskomiser'; }
+function fmDifficultyText(c){
+  const category=fmExperienceCategory(c);
+  if(!category) return 'kategori tanımsız — çaylak sayılmadı';
+  return c.difficultyLevel!=null ? (c.difficultyLevel+'★ '+category) : category;
+}
+function fmForensicInstitution(text){
+  const raw=String(text||'');
+  const body=/(?:adli(?:\s+t[ıi]p)?|kriminal)\s+laboratuvar/iu;
+  const crime=/laboratuvar(?:da|a|ın\s+içinde|in\s+içinde)\b[\s\S]{0,60}(?:işlendi|öldür|gerçekleşti|cinayet|ceset|maktul|beden|naaş)|(?:cinayet|ölüm|ceset|maktul|beden|naaş)[\s\S]{0,40}laboratuvar(?:da|a|ın\s+içinde|in\s+içinde)|laboratuvar[\s\S]{0,40}(?:cinayetin\s+işlendiği|olayın\s+geçtiği|cesedin\s+bulunduğu)/iu;
+  const exam=/(?:tarama|analiz|rapor|tespit|saptadı|saptan|incele|test|numune|parmak\s*iz)/iu;
+  const destination=/laboratuvar(?:a|ına|ine)(?![\p{L}])/iu;
+  const motion=/(?:gir(?:di|dik|ip|erek|er|mez|medi|iyor|miş)?|gid(?:erek|ip|er|iyor|ince|iyor)?|git(?:ti|tik|mek)?|gel(?:di|dik|ip|erek|ir)?|uğra(?:dı|dık|yıp|yarak)?|çık(?:tı|tık|ıp|arak)?|yönel(?:di|dik|ip|erek)?|götür(?:dü|dük|üp|erek)?|bırak(?:tı|tık|ıp|arak)?|sokul(?:du|duk|up|arak)?|in(?:di|dik|ip|erek|er|ince|mez|medi|iyor)?)(?![\p{L}])/iu;
+  const examSite=/laboratuvar(?:da|de|ında|inde)\s+(?:yapılan|gerçekleştirilen|yürütülen|tamamlanan|elde\s+edilen)\s+(?:[\p{L}']+\s+){0,4}(?:tarama|analiz|inceleme|test|rapor|tespit)/iu;
+  const physical=part=>{
+    if(crime.test(part)) return true;
+    const at=part.search(destination);
+    if(at>=0 && motion.test(part.slice(at))) return true;
+    if(new RegExp(motion.source+'[\\s\\S]{0,40}?'+destination.source,'iu').test(part)) return true;
+    if(/laboratuvar(?:da|de|ında|inde|ın\s+içinde|in\s+içinde)(?![\p{L}])/iu.test(part) && !examSite.test(part)) return true;
+    return false;
+  };
+  const clauses=raw.split(/(?<=[.!?;])\s+/u).filter(part=>/laboratuvar/iu.test(part));
+  if(!clauses.length || clauses.some(physical)) return false;
+  return clauses.every(part=>body.test(part) && exam.test(part));
+}
+function fmAdvancedCase(c){ return !fmNoviceCase(c); }
 
 function traceabilityPolicyCheck(c,trace){
   const flags=[],warnings=[];
@@ -4229,7 +4270,7 @@ function solutionNarrativeCheck(c){
 function perClueDisclosureCheck(c){
   const flags=[],warnings=[];
   const level=c.difficultyLevel;
-  const hard=level==null||level>=3;
+  const hard=!fmNoviceCase(c);
   const cat=id=>fmEntityCategory(c,id);
   (c.clues||[]).forEach((cl,i)=>{
     if(cl.isBonus||!Array.isArray(cl.logicRules)||cl.logicRules.length<2) return;
@@ -4341,8 +4382,8 @@ function computeQA(c){
   const coreCount=c.clues.filter(cl=>!cl.isBonus).length;
   if(coreCount<4){
     advisories.push(`TAVSİYE (İpucu Ekonomisi): ${coreCount} standart ipucu çözüm akışını fazla kısa bırakıyor. Çözümü 4 veya daha fazla, birbirinden farklı ve tek tek zorunlu ipucuna yay.`);
-  } else if(coreCount===7 && Number(c.difficultyLevel||0)<4){
-    advisories.push(`TAVSİYE (İpucu Ekonomisi): 7 standart ipucu yalnız gerçekten zor vakalarda kullanılmalı. Bu vakanın zorluk seviyesi ${c.difficultyLevel||'?'}; akışı 4-6 tek tek zorunlu ipucuda sıkılaştır veya zorluk tasarımını açıkça gerekçelendir.`);
+  } else if(coreCount===7 && !fmChiefCase(c)){
+    advisories.push(`TAVSİYE (İpucu Ekonomisi): 7 standart ipucu yalnız başkomiser kategorisinde kullanılmalı. Bu vakanın kategorisi ${fmDifficultyText(c)}; akışı 4-6 tek tek zorunlu ipucuda sıkılaştır veya zorluk tasarımını açıkça gerekçelendir.`);
   } else if(coreCount>7){
     advisories.push(`TAVSİYE (İpucu Ekonomisi): ${coreCount} standart ipucu mobil akışı gereksiz uzatabilir. 4-6 doğal, gerçekten zor vakalarda 7 üst sınırdır; yalnız zorunlu olmayanları kaldır.`);
   }
