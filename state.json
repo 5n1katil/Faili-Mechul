@@ -13899,24 +13899,24 @@
         "title": "Tarihi Hamamda Cinayet",
         "difficulty": "caylak",
         "dayIndex": 9,
-        "story": "Sultanahmet'in asırlık kubbeleri altında yankılanan huzur verici su sesleri, dehşet dolu bir çığlıkla bıçak gibi kesildi. Tanınmış bir tüccar, tarihi hamamın yoğun buharlı sıcak odasında, göbek taşının hemen yanında cansız yatıyordu. Kapıların içeriden sürgülü olması ve dışarıdan kimsenin girmemiş olması, katilin hala o nefes kesici sisin ardında, peştamalların arasında gezindiğini kanıtlıyordu.",
+        "story": "Kubbeli yapının mermer koridorlarında yankılanan boğuk bir inilti, buhar bulutunu yırtıp geçti. Varlıklı bir tüccar, içeriden kilitli kubbenin altında son nefesini verdi. Olay anında içerideki üç kişiden her biri farklı bir bölümdeydi ve yalnızca tek bir vasıtaya erişebiliyordu. Gerçeği sis perdesi ardından çekip çıkarmak artık sizin elinizde.",
         "suspects": [
           {
             "id": "s1",
             "name": "Veznedar",
-            "description": "Hamamın girişinden, soyunma dolaplarından ve hesaplardan sorumlu genç görevli.",
+            "description": "Müşterilerin emanetlerini ve para keselerini teslim alan, solgun çehreli, genç ve dikkatli bir görevli.",
             "icon": "pa:hamam_s1"
           },
           {
             "id": "s2",
             "name": "Hamam Ağası",
-            "description": "Tarihi hamamın işletmecisi. Önemli konuklarla ve hamamın genel düzeniyle bizzat ilgilenen otoriter figür.",
+            "description": "Tesisi idare eden, sert bakışlı, kaşları çatık ve tavırlarıyla çalışanlara daima emirler yağdıran otoriter patron.",
             "icon": "pa:hamam_s2"
           },
           {
             "id": "s3",
             "name": "Tellak",
-            "description": "Yılların tecrübesine sahip, göbek taşında kese atan, son derece güçlü kollara sahip emektar çalışan.",
+            "description": "Kese işinde uzmanlaşmış, terden parıldayan pazıları ve nasırlı bilekleriyle dikkat çeken güçlü emektar çalışan.",
             "icon": "pa:hamam_s3"
           }
         ],
@@ -13963,39 +13963,149 @@
         "clues": [
           {
             "id": "c1",
-            "text": "Veznedar'ın vardiyası boyunca kasanın bulunduğu aydınlık giriş salonundan bir an olsun ayrılmadığı şahitlerle sabitlendi.",
-            "type": "witness",
-            "isBonus": false
+            "text": "Müşterilerin ayakkabılarını bıraktığı ana kapı eşiğindeki ıslak terlik izleri, buradaki işletmecinin cinayet vaktinde dış kapıdaki kasanın bulunduğu aydınlık alanda teftişte olduğunu kanıtladı.",
+            "type": "evidence",
+            "isBonus": false,
+            "deductionHint": "Tesis idarecisinin olay anında hangi bölmede kaldığını düşünebilir misiniz?",
+            "logicRules": [
+              {
+                "action": "confirm",
+                "pair": [
+                  "s2",
+                  "l3"
+                ]
+              }
+            ],
+            "isCrimeAnchor": false,
+            "qaSemanticFacts": [],
+            "qaRationale": {
+              "matrixEffect": "Hamam Ağası ↔ Giriş Salonu doğrulanır",
+              "evidenceLink": "Müşterilerin ayakkabılarını bıraktığı ana kapı eşiğindeki ıslak terlik izleri, buradaki işletmecinin cinayet vaktinde dış kapıdaki kasanın bulunduğu aydınlık alanda teftişte olduğunu kanıtladı.",
+              "evidenceKind": "physical"
+            }
           },
           {
             "id": "c2",
-            "text": "Hamam Ağası'nın şerbet servisinin yapıldığı serin odada derin bir uykuya daldığı ve cinayet saatinde uyanmadığı kanıtlandı.",
-            "type": "witness",
-            "isBonus": false
+            "text": "Olay yeri tutanağı cinayetin mermer yıkanma alanında işlendiğini kesinleştirdi; tecrübeli emektar çalışanın terli havlusu da tam o esnada göbek taşının bulunduğu bu yoğun buharlı bölümde tespit edildi.",
+            "type": "record",
+            "isBonus": false,
+            "deductionHint": "Cinayetin gerçekleştiği kesin yer ve oradaki güçlü çalışan kim olabilir?",
+            "logicRules": [
+              {
+                "action": "confirm",
+                "pair": [
+                  "s3",
+                  "l1"
+                ]
+              }
+            ],
+            "isCrimeAnchor": true,
+            "qaSemanticFacts": [
+              {
+                "kind": "crime_component",
+                "component": "location",
+                "entityId": "l1",
+                "source": "clue:c2",
+                "evidence": "Olay yeri tutanağı cinayetin mermer yıkanma alanında işlendiğini kesinleştirdi; tecrübeli emektar çalışanın terli havlusu da tam o esnada göbek taşının bulunduğu bu yoğun buharlı bölümde tespit edildi."
+              }
+            ],
+            "qaRationale": {
+              "matrixEffect": "Tellak ↔ Sıcak Oda doğrulanır",
+              "evidenceLink": "Olay yeri tutanağı cinayetin mermer yıkanma alanında işlendiğini kesinleştirdi; tecrübeli emektar çalışanın terli havlusu da tam o esnada göbek taşının bulunduğu bu yoğun buharlı bölümde tespit edildi.",
+              "evidenceKind": "record"
+            }
           },
           {
             "id": "c3",
-            "text": "Cinayetin aydınlık giriş salonunda veya serin dinlenme bölümünde değil, buharın göz gözü görmez ettiği mermer yıkanma alanında işlendiği kesinleşti.",
-            "type": "evidence",
-            "isBonus": false
+            "text": "Dış kapıdaki kasanın bulunduğu aydınlık alandaki eşyalarda yapılan ayrıntılı incelemede, hiçbir alet kullanmadan uygulanan doğrudan fiziksel boğma gücüne dair en ufak bir ize rastlanmadı.",
+            "type": "witness",
+            "isBonus": false,
+            "deductionHint": "Girişteki alanda fiziksel baskı yönteminin kullanılmadığı neyi gösterir?",
+            "logicRules": [
+              {
+                "action": "eliminate",
+                "pair": [
+                  "w3",
+                  "l3"
+                ]
+              }
+            ],
+            "isCrimeAnchor": false,
+            "qaSemanticFacts": [],
+            "qaRationale": {
+              "matrixEffect": "Çıplak El ≠ Giriş Salonu elenir",
+              "evidenceLink": "Dış kapıdaki kasanın bulunduğu aydınlık alandaki eşyalarda yapılan ayrıntılı incelemede, hiçbir alet kullanmadan uygulanan doğrudan fiziksel boğma gücüne dair en ufak bir ize rastlanmadı.",
+              "evidenceKind": "witness"
+            }
           },
           {
             "id": "c4",
-            "text": "Maktulün kanında bitkisel zehir veya kimyasal sabun kalıntısına rastlanmadı; ölüm doğrudan nefessiz bırakılma sonucu gerçekleşmişti.",
+            "text": "Tırnak arası ve doku analizleri, emanetleri alan solgun yüzlü gencin hiçbir alet kullanmadan uygulanan ölümcül fiziksel boğma gücüne kesinlikle başvurmadığını belgeledi.",
             "type": "forensic",
-            "isBonus": false
+            "isBonus": false,
+            "deductionHint": "Emanetlerle ilgilenen gencin hangi yöntemi uygulamadığı açıktır?",
+            "logicRules": [
+              {
+                "action": "eliminate",
+                "pair": [
+                  "s1",
+                  "w3"
+                ]
+              }
+            ],
+            "isCrimeAnchor": false,
+            "qaSemanticFacts": [],
+            "qaRationale": {
+              "matrixEffect": "Veznedar ≠ Çıplak El elenir",
+              "evidenceLink": "Tırnak arası ve doku analizleri, emanetleri alan solgun yüzlü gencin hiçbir alet kullanmadan uygulanan ölümcül fiziksel boğma gücüne kesinlikle başvurmadığını belgeledi.",
+              "evidenceKind": "forensic"
+            }
           },
           {
             "id": "c5",
-            "text": "Yoğun buharlı sıcaklık bölümünde kurbanla aynı anda bulunan tek kişi, göbek taşının emektar çalışanıydı.",
-            "type": "evidence",
-            "isBonus": true
+            "text": "Kayıt defterindeki teslim fişine göre Veznedar, zehirleme riski barındıran Acı Sabun paketini cinayet saatinden hemen önce teslim almıştır.",
+            "type": "record",
+            "isBonus": true,
+            "deductionHint": "Veznedar ile kayıt altına alınan sabun arasındaki bağ nedir?",
+            "logicRules": [
+              {
+                "action": "confirm",
+                "pair": [
+                  "s1",
+                  "w1"
+                ]
+              }
+            ],
+            "isCrimeAnchor": false,
+            "qaSemanticFacts": [],
+            "qaRationale": {
+              "matrixEffect": "Veznedar ↔ Acı Sabun doğrulanır",
+              "evidenceLink": "Kayıt defterindeki teslim fişine göre Veznedar, zehirleme riski barındıran Acı Sabun paketini cinayet saatinden hemen önce teslim almıştır.",
+              "evidenceKind": "record"
+            }
           },
           {
             "id": "c6",
-            "text": "Kurbanın boynundaki o korkunç baskı izleri, Tellak'ın yıllarca kese atmaktan güçlenmiş devasa elleriyle birebir örtüşüyordu.",
-            "type": "forensic",
-            "isBonus": true
+            "text": "Tanık ifadesine göre Hamam Ağası, ikram tepsisine konulan Zehirli Şerbet kadehini bizzat elinde taşırken görülmüştür.",
+            "type": "witness",
+            "isBonus": true,
+            "deductionHint": "Hamam Ağası hangi ölümcül içeceği bizzat taşımaktaydı?",
+            "logicRules": [
+              {
+                "action": "confirm",
+                "pair": [
+                  "s2",
+                  "w2"
+                ]
+              }
+            ],
+            "isCrimeAnchor": false,
+            "qaSemanticFacts": [],
+            "qaRationale": {
+              "matrixEffect": "Hamam Ağası ↔ Zehirli Şerbet doğrulanır",
+              "evidenceLink": "Tanık ifadesine göre Hamam Ağası, ikram tepsisine konulan Zehirli Şerbet kadehini bizzat elinde taşırken görülmüştür.",
+              "evidenceKind": "witness"
+            }
           }
         ],
         "solvabilityMeta": {
@@ -14018,8 +14128,10 @@
           "caseTier": "standard"
         },
         "qaPattern": {
-          "anchorSource": "none",
-          "designIntent": "Deterministik miras-vaka imzası: none:?; witness:?:?; ????; ?|?|?|?; none."
+          "anchorSource": "clue:c2",
+          "logicSignature": "exact-3x3-v1:7b2e88a6a225b301ee0e8f713fc23769f9acfabfbbdb7592b2bae919bad754a9",
+          "experienceCategory": "standard_caylak",
+          "designIntent": "Bağımsız teslim/erişim ve yer kanıtlarıyla çapraz eşleşme; dört temel ipucunun her biri zorunlu. Bonuslar masum eşleşmelerini tamamlar."
         },
         "qaPortfolioRegistry": {
           "schema_version": "fm_qa_portfolio_registry_v1",
@@ -15181,10 +15293,19 @@
             }
           ]
         },
-        "qaAuthoringVersion": "fm_case_qa_authoring_v3_2_deterministic_bootstrap"
+        "qaAuthoringVersion": "verified_text_v1",
+        "qaSemanticFacts": [
+          {
+            "kind": "crime_component",
+            "component": "location",
+            "entityId": "l1",
+            "source": "clue:c2",
+            "evidence": "Olay yeri tutanağı cinayetin mermer yıkanma alanında işlendiğini kesinleştirdi; tecrübeli emektar çalışanın terli havlusu da tam o esnada göbek taşının bulunduğu bu yoğun buharlı bölümde tespit edildi."
+          }
+        ]
       },
-      "candidate_hash": "5ca1bde3800431d4a3ae515e64a4fb11ae520680151b0f573ac7c75ddaedd66d",
-      "best_score": 0
+      "candidate_hash": "456e1bef32bb25166df759e69a697f490c23286fd614713629eb3a4793600d1d",
+      "best_score": 60
     }
   },
   "requests": {
