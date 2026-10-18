@@ -15412,7 +15412,7 @@
       "status": "quarantined"
     },
     "sabanci-muzesi-gasp": {
-      "spent": 0.07193644999999999,
+      "spent": 0.029955949999999995,
       "feedback": [
         {
           "score": 0,
@@ -19950,10 +19950,88 @@
       "model": "gemini-3.8-flash",
       "purpose": "repair",
       "day": "2026-10-18",
-      "status": "reserved",
-      "charged": 0.06331875,
-      "repair_method": "legacy_patch"
+      "status": "completed",
+      "charged": 0.02133825,
+      "repair_method": "legacy_patch",
+      "usage": {
+        "promptTokenCount": 12901,
+        "candidatesTokenCount": 3110,
+        "totalTokenCount": 16011,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 12901
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "plan": {
+        "case_id": "sabanci-muzesi-gasp",
+        "assessment": "Tamir planı: 1) s4 adını 'Nakliyeci' yerine 'Kadir Nakliyeci' yaparak tekil lakap uyarısını çözmek ve s4 profilindeki kaba/demir çakışmasını engellemek; 2) Clue 1'i suç çapası (isCrimeAnchor: true) olarak yapılandırıp sadece suç mekânı olan l2 (Güvenlik Merkezi) üzerinde tek bileşen sabitlemesi kurmak; 3) Clue 1-4 arasında çapraz eşleştirme ve elemelerle s2-w1-l2 çözümünün bonuslar olmadan tek ve zorunlu kalmasını (coreNecessity) sağlamak; 4) Her ipucuna kural taşkını içermeyen kesin metin, kanıta dayalı logicRules, qaRationale ve uygun qaSemanticFacts eklemek; 5) Bonus ipuçları c5 ve c6'ya ana çözümü bozmayan ancak matriste ek hücre eleyen/eşleştiren işlevsel kurallar vermek; 6) qaPattern imzasını portföy şablon çakışmasını giderecek biçimde güncellemek.",
+        "operations": [
+          {
+            "op": "replace",
+            "path": "/suspects/3/name",
+            "value_json": "\"Kadir Aksoy\"",
+            "reason": "Şüpheli adını tek sözcükten çıkarıp doğal ad-soyad yaparak isim uyarısını ve silah sızıntısını gidermek."
+          },
+          {
+            "op": "replace",
+            "path": "/suspects/3/description",
+            "value_json": "\"Eserleri müzeye taşıyan lojistik personelinden biri. Galanın açılışından önceki hazırlık evresinde görev almıştır.\"",
+            "reason": "Silah kartındaki 'kaba' kelimesiyle doğrudan örtüşmeyi kaldırarak avatar prompt riskini önlemek."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/0",
+            "value_json": "{\n  \"id\": \"c1\",\n  \"text\": \"Olay yeri inceleme ekipleri, kurbanın ve çalınan vitrin kontrol ünitesinin Güvenlik Merkezi içerisinde devre dışı bırakıldığını kesinleştirdi.\",\n  \"type\": \"forensic\",\n  \"isBonus\": false,\n  \"isCrimeAnchor\": true,\n  \"logicRules\": [\n    {\n      \"action\": \"eliminate\",\n      \"pair\": [\"s1\", \"l2\"]\n    }\n  ],\n  \"deductionHint\": \"Olayın geçtiği yer ile yöneticinin konumu arasındaki ilişkiyi nasıl değerlendirirsiniz?\",\n  \"qaRationale\": {\n    \"matrixEffect\": \"Güvenlik Merkezi ile Galeri Direktörü elenir\",\n    \"evidenceLink\": \"kurbanın ve çalınan vitrin kontrol ünitesinin Güvenlik Merkezi içerisinde devre dışı bırakıldığını kesinleştirdi\",\n    \"evidenceKind\": \"forensic\"\n  },\n  \"qaSemanticFacts\": [\n    {\n      \"kind\": \"crime_component\",\n      \"component\": \"location\",\n      \"entityId\": \"l2\",\n      \"source\": \"clue:c1\",\n      \"evidence\": \"Olay yeri inceleme ekipleri, kurbanın ve çalınan vitrin kontrol ünitesinin Güvenlik Merkezi içerisinde devre dışı bırakıldığını kesinleştirdi.\"\n    }\n  ]\n}",
+            "reason": "Suç çapası olarak sadece cinayet mekanını tespit eden adli kanıt sunmak, çift ifşa sızıntısından kaçınmak."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/1",
+            "value_json": "{\n  \"id\": \"c2\",\n  \"text\": \"Saldırıda kurbanın üzerine hiçbir gaz püskürtülmediği gibi darbe izi de bulunmadı; ancak olay mahalli olan izole odada yalnızca Elektrik Sopası taşındığı belirlendi.\",\n  \"type\": \"forensic\",\n  \"isBonus\": false,\n  \"isCrimeAnchor\": false,\n  \"logicRules\": [\n    {\n      \"action\": \"confirm\",\n      \"pair\": [\"w1\", \"l2\"]\n    }\n  ],\n  \"deductionHint\": \"Güvenlik odasında kullanılan tek ekipman hangisiydi?\",\n  \"qaRationale\": {\n    \"matrixEffect\": \"Elektrik Sopası ile Güvenlik Merkezi eşleşir\",\n    \"evidenceLink\": \"izole odada yalnızca Elektrik Sopası taşındığı belirlendi\",\n    \"evidenceKind\": \"forensic\"\n  },\n  \"qaSemanticFacts\": [\n    {\n      \"kind\": \"crime_component\",\n      \"component\": \"weapon\",\n      \"entityId\": \"w1\",\n      \"source\": \"clue:c2\",\n      \"evidence\": \"izole odada yalnızca Elektrik Sopası taşındığı belirlendi\"\n    }\n  ]\n}",
+            "reason": "Mekan-silah bağlantısını kuran ve silahı kesinleştiren kanıt."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/2",
+            "value_json": "{\n  \"id\": \"c3\",\n  \"text\": \"Müze kartlı geçiş kayıtlarında, Kadir Aksoy'un olay gecesi yalnızca mal kabulün yapıldığı Çıkış Noktası bölgesinde bulunduğu doğrulandı.\",\n  \"type\": \"record\",\n  \"isBonus\": false,\n  \"isCrimeAnchor\": false,\n  \"logicRules\": [\n    {\n      \"action\": \"confirm\",\n      \"pair\": [\"s4\", \"l4\"]\n    }\n  ],\n  \"deductionHint\": \"Lojistik görevlisinin gece boyunca bulunduğu yer neresiydi?\",\n  \"qaRationale\": {\n    \"matrixEffect\": \"Kadir Aksoy ile Çıkış Noktası eşleşir\",\n    \"evidenceLink\": \"Kadir Aksoy'un olay gecesi yalnızca mal kabulün yapıldığı Çıkış Noktası bölgesinde bulunduğu doğrulandı\",\n    \"evidenceKind\": \"record\"\n  },\n  \"qaSemanticFacts\": [\n    {\n      \"kind\": \"crime_component\",\n      \"component\": \"location\",\n      \"entityId\": \"l4\",\n      \"source\": \"clue:c3\",\n      \"evidence\": \"Kadir Aksoy'un olay gecesi yalnızca mal kabulün yapıldığı Çıkış Noktası bölgesinde bulunduğu doğrulandı\"\n    }\n  ]\n}",
+            "reason": "s4'ün mekanını sabitleyerek l2'den dışlamak."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/3",
+            "value_json": "{\n  \"id\": \"c4\",\n  \"text\": \"Gala nöbetçi defterine göre Güvenlik Şefi, organizasyon süresince kilitli Depo alanında devriye görevindeydi.\",\n  \"type\": \"record\",\n  \"isBonus\": false,\n  \"isCrimeAnchor\": false,\n  \"logicRules\": [\n    {\n      \"action\": \"confirm\",\n      \"pair\": [\"s3\", \"l3\"]\n    }\n  ],\n  \"deductionHint\": \"Nöbetçi defteri güvenlik şefinin nerede olduğunu belgeliyor?\",\n  \"qaRationale\": {\n    \"matrixEffect\": \"Güvenlik Şefi ile Depo eşleşir\",\n    \"evidenceLink\": \"Güvenlik Şefi, organizasyon süresince kilitli Depo alanında devriye görevindeydi\",\n    \"evidenceKind\": \"record\"\n  },\n  \"qaSemanticFacts\": [\n    {\n      \"kind\": \"crime_component\",\n      \"component\": \"location\",\n      \"entityId\": \"l3\",\n      \"source\": \"clue:c4\",\n      \"evidence\": \"Güvenlik Şefi, organizasyon süresince kilitli Depo alanında devriye görevindeydi\"\n    }\n  ]\n}",
+            "reason": "s3'ü l3'e bağlayarak l2 için geriye yalnızca s2'nin kalmasını sağlamak; s1 zaten c1'de elendiğinden s2-l2-w1 çözümü tek kalır."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/4",
+            "value_json": "{\n  \"id\": \"c5\",\n  \"text\": \"Depo girişinde yapılan balistik incelemede, buradaki kilitlerin zorlanmasında bir Demir Çubuk kullanıldığı saptandı.\",\n  \"type\": \"physical\",\n  \"isBonus\": true,\n  \"isCrimeAnchor\": false,\n  \"logicRules\": [\n    {\n      \"action\": \"confirm\",\n      \"pair\": [\"w3\", \"l3\"]\n    }\n  ],\n  \"deductionHint\": \"Depodaki izler hangi aracın orada kullanıldığını gösteriyor?\",\n  \"qaRationale\": {\n    \"matrixEffect\": \"Demir Çubuk ile Depo eşleşir\",\n    \"evidenceLink\": \"Depo girişinde yapılan balistik incelemede, buradaki kilitlerin zorlanmasında bir Demir Çubuk kullanıldığı saptandı\",\n    \"evidenceKind\": \"physical\"\n  },\n  \"qaSemanticFacts\": [\n    {\n      \"kind\": \"crime_component\",\n      \"component\": \"weapon\",\n      \"entityId\": \"w3\",\n      \"source\": \"clue:c5\",\n      \"evidence\": \"buradaki kilitlerin zorlanmasında bir Demir Çubuk kullanıldığı saptandı\"\n    }\n  ]\n}",
+            "reason": "Bonus ipucu olarak depodaki aleti doğrulayan ve gereksiz kalmadan matris desteği sağlayan kural."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/5",
+            "value_json": "{\n  \"id\": \"c6\",\n  \"text\": \"Açık havadaki mal kabul rampasında rüzgarın dağıttığı Kimyasal Sprey kalıntıları tespit edildi.\",\n  \"type\": \"forensic\",\n  \"isBonus\": true,\n  \"isCrimeAnchor\": false,\n  \"logicRules\": [\n    {\n      \"action\": \"confirm\",\n      \"pair\": [\"w2\", \"l4\"]\n    }\n  ],\n  \"deductionHint\": \"Açık alan incelemesinde hangi maddenin izine rastlandı?\",\n  \"qaRationale\": {\n    \"matrixEffect\": \"Kimyasal Sprey ile Çıkış Noktası eşleşir\",\n    \"evidenceLink\": \"mal kabul rampasında rüzgarın dağıttığı Kimyasal Sprey kalıntıları tespit edildi\",\n    \"evidenceKind\": \"forensic\"\n  },\n  \"qaSemanticFacts\": [\n    {\n      \"kind\": \"crime_component\",\n      \"component\": \"weapon\",\n      \"entityId\": \"w2\",\n      \"source\": \"clue:c6\",\n      \"evidence\": \"mal kabul rampasında rüzgarın dağıttığı Kimyasal Sprey kalıntıları tespit edildi\"\n    }\n  ]\n}",
+            "reason": "İkinci bonus ipucu olarak mal kabuldeki silahı sabitleyip ek doğrulama sağlayan kural."
+          },
+          {
+            "op": "add",
+            "path": "/qaSemanticFacts",
+            "value_json": "[\n  {\n    \"kind\": \"crime_component\",\n    \"component\": \"location\",\n    \"entityId\": \"l2\",\n    \"source\": \"clue:c1\",\n    \"evidence\": \"Olay yeri inceleme ekipleri, kurbanın ve çalınan vitrin kontrol ünitesinin Güvenlik Merkezi içerisinde devre dışı bırakıldığını kesinleştirdi.\"\n  },\n  {\n    \"kind\": \"crime_component\",\n    \"component\": \"weapon\",\n    \"entityId\": \"w1\",\n    \"source\": \"clue:c2\",\n    \"evidence\": \"izole odada yalnızca Elektrik Sopası taşındığı belirlendi\"\n  }\n]",
+            "reason": "Vakanın kanıta dayalı suç bileşeni semantik olguları."
+          },
+          {
+            "op": "replace",
+            "path": "/qaPattern",
+            "value_json": "{\n  \"anchorSource\": \"clue:c1\",\n  \"designIntent\": \"Özgün çapa ve kademeli eleme zinciri: c1 mekan çapası (l2) ve s1 elemesi; c2 w1-l2 teyidi; c3 s4-l4 teyidi; c4 s3-l3 teyidi ile s2-w1-l2 zorunlu çıkarımı.\"\n}",
+            "reason": "qaPattern'i gerçek dedüksiyon haritasıyla güncellemek."
+          }
+        ]
+      }
     }
   },
-  "campaign_spent": 0.3572142000000001
+  "campaign_spent": 0.3152337000000001
 }
