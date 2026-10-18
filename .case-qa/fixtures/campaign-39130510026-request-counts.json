@@ -1,0 +1,20 @@
+{
+  "schema": "fm_recorded_request_counts_v1",
+  "source": "Read-only excerpt of automation/case-pipeline-state. Spend, prompts and plans are omitted.",
+  "cases": {
+    "tren-yolculugunda-cinayet": {
+      "status": "quarantined",
+      "requests": [
+        { "purpose": "repair", "status": "completed", "repair_method": "verified_text_v1", "day": "2026-10-18" },
+        { "purpose": "repair", "status": "completed", "repair_method": "verified_text_v1", "day": "2026-10-18" }
+      ]
+    },
+    "tarihi-hamamda-cinayet": {
+      "status": "quarantined",
+      "requests": [
+        { "purpose": "repair", "status": "completed", "repair_method": "verified_text_v1", "day": "2026-10-18" },
+        { "purpose": "repair", "status": "completed", "repair_method": "verified_text_v1", "day": "2026-10-18" }
+      ]
+    }
+  }
+}
