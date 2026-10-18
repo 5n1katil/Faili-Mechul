@@ -12354,7 +12354,7 @@
         "title": "Tren Yolculuğunda Cinayet",
         "difficulty": "dedektif",
         "dayIndex": 8,
-        "story": "Ankara-İstanbul ekspresinin ritmik tekerlek sesleri, sessiz bir cinayeti gizlemeye yetmedi. Tren yoğun sis altında ilerlerken, birinci mevkide seyahat eden tanınmış bir iş insanı koltuğunda son nefesini vermişti. Tren istasyona varmadan katili bulmalısın.",
+        "story": "Ankara-İstanbul ekspresinin yoğun sis altındaki son kilometresinde, birinci mevki yolcusu koltuğunda hareketsiz bulundu. Tren istasyona yanaşırken, bu ölümün gizemini çözmek ve katilin kullandığı yöntemi ile yeri bulmak senin elinde.",
         "suspects": [
           {
             "id": "s1",
@@ -12418,39 +12418,149 @@
         "clues": [
           {
             "id": "c1",
-            "text": "Bilet kondüktörü, gergin iş kadınının tüm yolculuk boyunca trenin arka tarafındaki küçük kilitli tuvalette mahsur kaldığını ve panik atak geçirdiğini teyit etti.",
-            "type": "witness",
-            "isBonus": false
+            "text": "Sefer sırasında en arka bölgedeki dar ihtiyaç alanında yapılan detaylı incelemede, kurbanın boynuna baskı yaptığı anlaşılan ince naylon ip tespit edildi.",
+            "type": "evidence",
+            "isBonus": false,
+            "deductionHint": "Arka alandaki ip bulgusunu incele.",
+            "logicRules": [
+              {
+                "action": "confirm",
+                "pair": [
+                  "w3",
+                  "l3"
+                ]
+              }
+            ],
+            "isCrimeAnchor": false,
+            "qaSemanticFacts": [],
+            "qaRationale": {
+              "matrixEffect": "Boğma Halatı ↔ Tuvalet doğrulanır",
+              "evidenceLink": "Sefer sırasında en arka bölgedeki dar ihtiyaç alanında yapılan detaylı incelemede, kurbanın boynuna baskı yaptığı anlaşılan ince naylon ip tespit edildi.",
+              "evidenceKind": "physical"
+            }
           },
           {
             "id": "c2",
-            "text": "Cinayet, sadece bir kişinin sığabileceği kilitli dar odalarda değil; beyaz örtülü masaların bulunduğu geniş ve herkesin erişimine açık bir alanda işlenmişti.",
-            "type": "evidence",
-            "isBonus": false
+            "text": "Beyaz örtülü masaların bulunduğu ortak oturma alanında, küçük çakı bıçağına ait hiçbir iz veya adli bulguya rastlanmadı.",
+            "type": "record",
+            "isBonus": false,
+            "deductionHint": "Ortak alandaki bıçak dışlamasını kontrol et.",
+            "logicRules": [
+              {
+                "action": "eliminate",
+                "pair": [
+                  "w2",
+                  "l2"
+                ]
+              }
+            ],
+            "isCrimeAnchor": true,
+            "qaSemanticFacts": [
+              {
+                "kind": "crime_component",
+                "component": "location",
+                "entityId": "l2",
+                "source": "clue:c2",
+                "evidence": "Beyaz örtülü masaların bulunduğu ortak oturma alanında, küçük çakı bıçağına ait hiçbir iz veya adli bulguya rastlanmadı."
+              }
+            ],
+            "qaRationale": {
+              "matrixEffect": "Kesici Silah ≠ Yemekli Vagon elenir",
+              "evidenceLink": "Beyaz örtülü masaların bulunduğu ortak oturma alanında, küçük çakı bıçağına ait hiçbir iz veya adli bulguya rastlanmadı.",
+              "evidenceKind": "record"
+            }
           },
           {
             "id": "c3",
-            "text": "Maktulün boynunda hiçbir mekanik baskı izi yoktu; ayrıca hareket halindeki bir trende küçük bir bıçakla arkada hiç kan izi bırakmadan bu cinayeti işlemek imkansızdı.",
-            "type": "forensic",
-            "isBonus": false
+            "text": "Kayıtlar ve yolcu beyanları, kulaklıklı genç yolcunun sefer boyunca trenin en arka bölümündeki dar ihtiyaç alanında vakit geçirdiğini doğruluyor.",
+            "type": "witness",
+            "isBonus": false,
+            "deductionHint": "Genç yolcunun arka alanla bağını incele.",
+            "logicRules": [
+              {
+                "action": "confirm",
+                "pair": [
+                  "s2",
+                  "l3"
+                ]
+              }
+            ],
+            "isCrimeAnchor": false,
+            "qaSemanticFacts": [],
+            "qaRationale": {
+              "matrixEffect": "Üniversite Öğrencisi ↔ Tuvalet doğrulanır",
+              "evidenceLink": "Kayıtlar ve yolcu beyanları, kulaklıklı genç yolcunun sefer boyunca trenin en arka bölümündeki dar ihtiyaç alanında vakit geçirdiğini doğruluyor.",
+              "evidenceKind": "witness"
+            }
           },
           {
             "id": "c4",
-            "text": "Üniversite Öğrencisi'nin kulaklığını takıp kendi ahşap kompartımanından adımını bile atmadığı, koridor kamerasının kesintisiz kaydıyla ispatlandı.",
-            "type": "record",
-            "isBonus": false
+            "text": "Yaşlı doktorun eşyalarında yapılan incelemede, küçük çakı bıçağına dair hiçbir kesici veya delici kullanım izine rastlanmadı.",
+            "type": "forensic",
+            "isBonus": false,
+            "deductionHint": "Yaşlı yolcunun bıçakla ilişkisini test et.",
+            "logicRules": [
+              {
+                "action": "eliminate",
+                "pair": [
+                  "s3",
+                  "w2"
+                ]
+              }
+            ],
+            "isCrimeAnchor": false,
+            "qaSemanticFacts": [],
+            "qaRationale": {
+              "matrixEffect": "Emekli Doktor ≠ Kesici Silah elenir",
+              "evidenceLink": "Yaşlı doktorun eşyalarında yapılan incelemede, küçük çakı bıçağına dair hiçbir kesici veya delici kullanım izine rastlanmadı.",
+              "evidenceKind": "forensic"
+            }
           },
           {
             "id": "c5",
-            "text": "Ortak yemek alanındaki çay bardağının dibinde, sadece ileri derecede anatomik bilgiye sahip birinin dozajını ayarlayabileceği renksiz bir tıbbi madde bulundu.",
-            "type": "evidence",
-            "isBonus": true
+            "text": "Birinci mevki yolcusunun yanında, evrak çantasının gözünde küçük çakı bıçağı taşındığına dair kayıtlar yer alıyor.",
+            "type": "record",
+            "isBonus": true,
+            "deductionHint": "Birinci mevki yolcusunun bıçak taşıdığını not et.",
+            "logicRules": [
+              {
+                "action": "confirm",
+                "pair": [
+                  "s1",
+                  "w2"
+                ]
+              }
+            ],
+            "isCrimeAnchor": false,
+            "qaSemanticFacts": [],
+            "qaRationale": {
+              "matrixEffect": "İş Kadını ↔ Kesici Silah doğrulanır",
+              "evidenceLink": "Birinci mevki yolcusunun yanında, evrak çantasının gözünde küçük çakı bıçağı taşındığına dair kayıtlar yer alıyor.",
+              "evidenceKind": "record"
+            }
           },
           {
             "id": "c6",
-            "text": "Emekli Doktor'un sürekli yanında taşıdığı küçük çantadaki tıbbi şişelerden birinin eksik olduğu ve kurbandaki toksinle aynı profili taşıdığı ortaya çıktı.",
-            "type": "forensic",
-            "isBonus": true
+            "text": "Genç yolcunun eşyaları arasında bavuldan çıkarılan ince naylon ipin bulunduğu resmi tutanaklarla doğrulandı.",
+            "type": "witness",
+            "isBonus": true,
+            "deductionHint": "Genç yolcunun ip ile bağını kontrol et.",
+            "logicRules": [
+              {
+                "action": "confirm",
+                "pair": [
+                  "s2",
+                  "w3"
+                ]
+              }
+            ],
+            "isCrimeAnchor": false,
+            "qaSemanticFacts": [],
+            "qaRationale": {
+              "matrixEffect": "Üniversite Öğrencisi ↔ Boğma Halatı doğrulanır",
+              "evidenceLink": "Genç yolcunun eşyaları arasında bavuldan çıkarılan ince naylon ipin bulunduğu resmi tutanaklarla doğrulandı.",
+              "evidenceKind": "witness"
+            }
           }
         ],
         "solvabilityMeta": {
@@ -12473,8 +12583,10 @@
           "caseTier": "standard"
         },
         "qaPattern": {
-          "anchorSource": "none",
-          "designIntent": "Deterministik miras-vaka imzası: none:?; witness:?:?; ????; ?|?|?|?; none."
+          "anchorSource": "clue:c2",
+          "logicSignature": "exact-3x3-v1:3569bb71c5913d6e03e3acebe0710a1ca2f9c2a2af9000760017e5404946d92e",
+          "experienceCategory": "standard_dedektif",
+          "designIntent": "Bağımsız teslim/erişim ve yer kanıtlarıyla çapraz eşleşme; dört temel ipucunun her biri zorunlu. Bonuslar masum eşleşmelerini tamamlar."
         },
         "qaPortfolioRegistry": {
           "schema_version": "fm_qa_portfolio_registry_v1",
@@ -13636,10 +13748,19 @@
             }
           ]
         },
-        "qaAuthoringVersion": "fm_case_qa_authoring_v3_2_deterministic_bootstrap"
+        "qaAuthoringVersion": "verified_text_v1",
+        "qaSemanticFacts": [
+          {
+            "kind": "crime_component",
+            "component": "location",
+            "entityId": "l2",
+            "source": "clue:c2",
+            "evidence": "Beyaz örtülü masaların bulunduğu ortak oturma alanında, küçük çakı bıçağına ait hiçbir iz veya adli bulguya rastlanmadı."
+          }
+        ]
       },
-      "candidate_hash": "b419a5ad57403050910d1f2ef920f4209071761b05b8d5939629e2d0b54d3904",
-      "best_score": 0
+      "candidate_hash": "4d55629ed1f5d6fbc429ca3dcf5669a0e02d79513e24c0ef3441fa6590694fde",
+      "best_score": 60
     }
   },
   "requests": {
