@@ -32,7 +32,8 @@ import { compileBoundedEditorial, recoverBoundedEditorial, editorialRevisionRequ
 import { hintOnly, compileHints, recoverHintCleanup, validHints } from './hint-cleanup.mjs';
 import { EXPERIENCE_PROFILES, EXPERIENCE_VERSION, experienceProfile, experienceCheck, difficultyBand } from './experience.mjs';
 import { canonicalLogicSignature, logicNoveltyCheck } from './logic-patterns.mjs';
-import { CRIME_ANCHOR_SEMANTIC, anchorConfirmsTwoCrimeComponents, simulatorDifficultyLevel } from './anchor-contract.mjs';
+import { CRIME_ANCHOR_SEMANTIC, anchorConfirmsTwoCrimeComponents, hardAnchorContract, simulatorDifficultyLevel } from './anchor-contract.mjs';
+import { anchorContractExamples, hamamSourceNameCompletion } from '../fixtures/anchor-contract-examples.mjs';
 import { qualityContract as experienceContract } from './quality-contract.mjs';
 import { editorialExperiencePrompt } from './editorial.mjs';
 import { reconcileKnownUnsent } from './reservation-recovery.mjs';
@@ -1909,6 +1910,99 @@ try {
     assert.deepEqual(patched.assessment.novelty.issues, ['LOGIC_PATTERN_UNVERIFIED']);
     assert.ok(patched.assessment.result.blockers.some(b => b.includes('Güvenlik Şefi')));
     assert.ok(patched.candidate.qaSemanticFacts.filter(f => f.kind === 'crime_component').length > 1);
+    assert.equal(saved.cases[sab.id].grid, '4x4x4');
+  });
+  await test('handwritten corrected-plan examples pass the pinned simulator offline and are not live model proof', () => {
+    const within = (n, band) => n >= band[0] && n <= band[1];
+    for (const id of ['tren-yolculugunda-cinayet', 'tarihi-hamamda-cinayet']) {
+      const entry = productionSnapshot.entries.find(e => e.id === id);
+      const before = stableHash(entry.raw);
+      const plan = textRepairPlan(productionSnapshot, entry, entry.candidate);
+      const anchor = plan.clues.find(c => plan.anchor.source === 'clue:' + c.id);
+      assert.equal(anchorConfirmsTwoCrimeComponents(entry.candidate, anchor.rule), false);
+      const response = { case_id: id, assessment: 'Handwritten offline example, not a live model output', ...anchorContractExamples[id] };
+      const compiled = guardedPatch(productionSnapshot, entry, entry.candidate,
+        compileTextPatch(entry.candidate, plan, response), assess(productionSnapshot, entry, entry.candidate));
+      const a = compiled.assessment;
+      assert.equal(a.result.score, 100, id);
+      assert.equal(a.result.gates.visibleEvidence.passed, true, id);
+      assert.equal(a.result.gates.coreNecessity.passed, true, id);
+      assert.equal(a.result.gates.semanticContract.passed, true, id);
+      assert.equal(a.experience.passed, true, id);
+      assert.equal(a.novelty.passed, true, id);
+      assert.equal(within(a.experience.counts.story, a.experience.profile.story), true, id);
+      assert.ok(a.experience.counts.clues.every(c => within(c.words, entry.candidate.clues.find(x => x.id === c.id).isBonus ? a.experience.profile.bonus : a.experience.profile.core)), id);
+      assert.ok(a.experience.counts.suspects.every(s => within(s.words, a.experience.profile.suspect)), id);
+      assert.equal(stableHash(entry.raw), before);
+      assert.deepEqual(compiled.candidate.suspects.map(s => s.name), entry.candidate.suspects.map(s => s.name));
+      if (id === 'tren-yolculugunda-cinayet') {
+        assert.equal(a.passed, true);
+        assert.equal(a.result.simulatorProductionReady, true);
+        assert.deepEqual(a.result.blockers, []);
+      } else {
+        assert.equal(a.passed, false);
+        assert.equal(a.result.simulatorProductionReady, false);
+        assert.deepEqual(a.result.blockers.map(b => b.includes('tek sözcük')), [true, true]);
+        const named = clone(compiled.candidate);
+        for (const [sid, name] of Object.entries(hamamSourceNameCompletion)) named.suspects.find(s => s.id === sid).name = name;
+        const completed = assess(productionSnapshot, entry, named);
+        assert.equal(completed.result.score, 100);
+        assert.equal(completed.passed, true);
+        assert.equal(completed.result.simulatorProductionReady, true);
+        assert.deepEqual(completed.result.blockers, []);
+        assert.equal(completed.result.gates.visibleEvidence.passed, true);
+        assert.equal(completed.result.gates.coreNecessity.passed, true);
+        assert.equal(completed.experience.passed, true);
+        assert.equal(completed.novelty.passed, true);
+        assert.deepEqual(named.clues.map(c => [c.text, c.logicRules]), compiled.candidate.clues.map(c => [c.text, c.logicRules]));
+      }
+    }
+  });
+  await test('forensic laboratory institution and a new laboratory scene stay distinct; the current check still false-rejects the saved scan sentence', () => {
+    const tren = productionSnapshot.entries.find(e => e.id === 'tren-yolculugunda-cinayet');
+    const saved = read('.case-qa/fixtures/campaign-39130510026-repairs.json');
+    const scan = saved.cases[tren.id].responses.find(r => r.model.includes('3.8')).plan.clues.c4.text;
+    const samples = {
+      institution: 'Adli laboratuvar, parmak izi taramasında saptadı: küçük çakının kabzasında beyaz saçlı yolcuya ait temas izi yok.',
+      scene: 'Cinayet laboratuvarda işlendi. Ceset bu kapalı inceleme odasında bulundu.',
+      savedScan: scan
+    };
+    const issuesFor = text => {
+      const draft = clone(tren.candidate);
+      draft.story = 'Gece treninde bir yolcu hareketsiz bulundu. İnceleme aynı kısa aralığa bakıyor.';
+      draft.clues = draft.clues.map(c => c.id === 'c4' ? { ...c, text } : c);
+      return experienceCheck(draft, 'standard').issues.filter(i => i.includes('laboratuvar'));
+    };
+    const htmlFlagsFor = text => {
+      const draft = clone(tren.candidate);
+      draft.story = 'Gece treninde bir yolcu hareketsiz bulundu. İnceleme aynı kısa aralığa bakıyor.';
+      draft.clues = draft.clues.map(c => c.id === 'c4' ? { ...c, text } : c);
+      return productionSnapshot.engine.computeQA(productionSnapshot.engine.normalize(draft)).contentQuality.flags
+        .filter(f => f.includes('laboratuvar'));
+    };
+    const institutionIssues = issuesFor(samples.institution);
+    const institutionHtml = htmlFlagsFor(samples.institution);
+    assert.equal(institutionIssues.length, 0, institutionIssues.join(' | '));
+    assert.equal(institutionHtml.length, 0, institutionHtml.join(' | '));
+    assert.equal(issuesFor(samples.scene).length, 1);
+    assert.equal(htmlFlagsFor(samples.scene).length, 1);
+    assert.match(samples.savedScan, /Kriminal laboratuvarın parmak izi taramasında/);
+    assert.equal(issuesFor(samples.savedScan).length, 1);
+    assert.equal(htmlFlagsFor(samples.savedScan).length, 1);
+    assert.equal(productionPolicy.simulator.git_blob_sha, '17170058b8f45eab789e14aaf2fb7a6605587fb8');
+  });
+  await test('named caylak remains hard for the simulator; six-category alignment is not resolved here', () => {
+    assert.equal(difficultyBand({ difficulty: 'caylak' }), 'caylak');
+    assert.equal(difficultyBand({ difficulty: 'dedektif' }), 'dedektif');
+    assert.equal(difficultyBand({ difficulty: 'baskomiser' }), 'baskomiser');
+    for (const label of ['caylak', 'dedektif', 'baskomiser']) {
+      assert.equal(simulatorDifficultyLevel({ difficulty: label }), null);
+      assert.equal(hardAnchorContract({ difficulty: label }), true);
+    }
+    assert.equal(simulatorDifficultyLevel({ difficulty: 1 }), 1);
+    assert.equal(hardAnchorContract({ difficulty: 1 }), false);
+    assert.equal(simulatorDifficultyLevel({ difficulty: 3 }), 3);
+    assert.equal(hardAnchorContract({ difficulty: 3 }), true);
   });
   console.log('PASS: ' + passed + ' pipeline tests; exact HTML, zero paid calls.');
 } finally { delete process.env.GEMINI_API_KEY; fs.rmSync(temporary, { recursive: true, force: true }); fs.rmSync(legacyDirectory, { recursive: true, force: true }); }

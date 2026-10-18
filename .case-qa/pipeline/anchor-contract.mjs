@@ -2,6 +2,11 @@
 // not numbers: the HTML leaves difficultyLevel null and treats that as hard.
 // These predicates copy that behavior so the planner and the compiler reject
 // a candidate before it can be retained at a non-passing score.
+//
+// This copy is not a resolution of the six-category split. Word bands already
+// read caylak, dedektif and baskomiser, while anchor strictness does not.
+// Teaching the simulator those names belongs in a separate pin update. Do not
+// treat hardAnchorContract("caylak") === true as the intended end state.
 
 export const CRIME_ANCHOR_SEMANTIC = /(ölüm|öldür|öldürül|cinayet|maktul|can ver|can çek|son nefes|hayat[ıi]n[ıi] kaybet|katled|kurban|öldürücü|ölümcül|zehirlen|cesedi?|nâ?aş|telef|katlin|suç aleti|cinayet silah|ölüm sebeb|asıl sebep|öldüğü|öldürdü|işlendiği|infaz|suikast|boğul|boğarak|bıçaklan|vurularak|ecel|son buldu|hayatına son|öldürme|faili|sustur)/i;
 
