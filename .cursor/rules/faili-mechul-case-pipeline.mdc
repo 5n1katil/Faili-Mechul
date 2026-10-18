@@ -1,0 +1,51 @@
+---
+description: Faili Meçhul vaka kalitesi, pipeline sınırları ve ücretsiz doğrulama. Tarihli durum notu kalıcı kural değildir.
+alwaysApply: true
+---
+
+# Faili Meçhul vaka pipeline
+
+Ayrıntılı sınırlar `.case-qa/pipeline/README.md` ve `.case-qa/pipeline/policy.json` içindedir. Bu kural onları tekrar etmez. Avatar yerleşimi ve Vercel deploy kendi kurallarında kalır.
+
+## Amaç
+
+105 vakayı kaliteli, anlaşılır, oynanabilir ve birbirinden farklı çıkarım ağlarına getirmek. Simülatör puanı 100 tek başına kabul değildir; matematiksel doğruluk, anlatı bütünlüğü, bağımsız oyuncu çözümü ve editör değerlendirmesi birlikte gerekir. İçerik kilitlendikten sonra şüpheli, silah ve mekân görselleri onaylı metne ve ortak görsel evrene göre güncellenir. Onaylı görseller envanter çıkarılmadan toplu üretilmez. Şüpheli görsellerinden önce `.agents/memory/suspect-avatar-generation-policy.md` okunur.
+
+Altı kategori vardır: standart ve premium için çaylak, dedektif, baş komiser. Standart vakalar daha kısa ve sadedir. Kelime doldurmak için metin uzatılmaz. Hikâye, kartlar ve ipuçları tek olayın parçasıdır. Girişteki genel eşleştirme kuralı hikâyelerde tekrarlanmaz. Yalnız isimleri değişen çözüm şablonları ve ipucu sırası değişimi özgünlük sayılmaz. Doğrulanmayan portföy benzersiz kabul edilmez. İnsan tarafından düzenlenmiş veya onaylanmış hikâye gerekçesiz yeniden yazılmaz.
+
+## Mimari
+
+- Workflow: `Faili Mechul — Reviewed Case Pipeline`, `.github/workflows/fm-case-pipeline.yml`. `audit` ücretsizdir. `pilot` tek vakadır. `campaign` sınırlı gruptur. `certify` aday doğrulamasıdır. `diagnose` ücretli sağlayıcı kontrolüdür.
+- Oyun kaynakları: `artifacts/dedektif/data/puzzles.ts`, `artifacts/dedektif/data/puzzles_database.json`, `artifacts/dedektif/qa/case_qa_sidecars_v29_5.json`.
+- Aktif simülatör politika pinindedir. Dosya adındaki sürüme bakıp başka HTML seçilmez.
+- `sourceHash`, ham vaka ile sidecar kaydının tamamını kapsar. Değerlendirme kaydı bu hash’i değiştirir. Eski inceleme hakkı yeni hash’e taşınmaz ve hash kapsamı daraltılmaz.
+- Kalıcı kuyruk ve harcama `automation/case-pipeline-state` dalındaki `state.json` dosyasındadır. Audit bu dosyayı yazmaz.
+
+## Güvenli çalışma
+
+- Birleştirme kullanıcıya aittir. Açık PR kapatılmaz ve birleştirilmez.
+- Pilot, campaign ve diagnose kullanıcı başlatmadan çalışmaz. Gemini çağrısı yapılmaz.
+- Campaign, 100 olana kadar tekrar değildir. İçerik hatası sınırlı onarım bütçesiyle ele alınır; çözülemeyen vaka karantinaya alınır. Sağlayıcı, kimlik doğrulama ve belirsiz transport hatasında durulur.
+- Harcama ve istek geçmişi silinmez. Bakiye reddi rezervasyonu gerçek harcama veya iade diye yorumlanmaz. Yeni inceleme veya onarım hakkı açılmaz.
+- Sır, API anahtarı veya token dosyaya yazılmaz.
+
+## Doğrulama
+
+Ücretli moda geçmeden:
+
+```bash
+node .case-qa/pipeline/test.mjs
+node .case-qa/fm_case_qa_certify.mjs
+node .case-qa/pipeline/run.mjs
+```
+
+Aday sertifikası, workflow’un `certify` adımındaki `FM_PIPELINE_BASE_SHA`, `FM_PIPELINE_HEAD_SHA` ve `FM_PIPELINE_CASE_ID` ile `node .case-qa/pipeline/certify-candidate.mjs` çalıştırır. Oyun kaynağı dışındaki grant, politika ve workflow dosyaları bu kapsamda değildir.
+
+## Durum notu — 18 Ekim 2026
+
+Bu bölüm anlık kayıttır. Kalıcı kural gibi uygulanmaz; yeni durumla güncellenmeden doğru kabul edilmez.
+
+- #100, #101 ve #102 birleşti. Son başarılı pilot: https://github.com/5n1katil/Faili-Mechul/actions/runs/39058380419
+- Açık taslak: https://github.com/5n1katil/Faili-Mechul/pull/103. Eski safety koşusu https://github.com/5n1katil/Faili-Mechul/actions/runs/39058548976 başlık `a25a1afe188d47aaedf0c54de540f578eae56d7a` üzerindedir; aynı koşuyu yeniden çalıştırmak sonraki commit’i görmez.
+- Sıradaki iş, #103 kontrolleri geçtikten sonra kullanıcının birleştirmesidir. Ardından ücretsiz audit ile Adada kilidi ve kuyruk uzlaşması doğrulanır; üç vakalık campaign ayarı kullanıcı başlatmadan uygulanmaz.
+- #94 güncel Adada adayı değildir. #75, #73, #72, #71 ve #70 izinsiz kapatılmaz veya birleştirilmez.
