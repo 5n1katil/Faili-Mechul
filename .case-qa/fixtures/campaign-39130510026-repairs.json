@@ -1,0 +1,441 @@
+{
+  "run_id": "39130510026",
+  "main_sha": "afdb0451886f543495e43c74a9b41aba7ab72a46",
+  "cases": {
+    "tren-yolculugunda-cinayet": {
+      "difficulty": "dedektif",
+      "solution": {
+        "suspectId": "s3",
+        "weaponId": "w1",
+        "locationId": "l2"
+      },
+      "recorded_plan": {
+        "anchor": {
+          "component": "location",
+          "entityId": "l2",
+          "source": "clue:c2"
+        },
+        "clues": [
+          {
+            "id": "c1",
+            "isBonus": false,
+            "type": "evidence",
+            "rule": {
+              "action": "confirm",
+              "pair": [
+                "w3",
+                "l3"
+              ]
+            }
+          },
+          {
+            "id": "c2",
+            "isBonus": false,
+            "type": "record",
+            "rule": {
+              "action": "eliminate",
+              "pair": [
+                "w2",
+                "l2"
+              ]
+            }
+          },
+          {
+            "id": "c3",
+            "isBonus": false,
+            "type": "witness",
+            "rule": {
+              "action": "confirm",
+              "pair": [
+                "s2",
+                "l3"
+              ]
+            }
+          },
+          {
+            "id": "c4",
+            "isBonus": false,
+            "type": "forensic",
+            "rule": {
+              "action": "eliminate",
+              "pair": [
+                "s3",
+                "w2"
+              ]
+            }
+          },
+          {
+            "id": "c5",
+            "isBonus": true,
+            "type": "record",
+            "rule": {
+              "action": "confirm",
+              "pair": [
+                "s1",
+                "w2"
+              ]
+            }
+          },
+          {
+            "id": "c6",
+            "isBonus": true,
+            "type": "witness",
+            "rule": {
+              "action": "confirm",
+              "pair": [
+                "s2",
+                "w3"
+              ]
+            }
+          }
+        ],
+        "logicSignature": "exact-3x3-v1:3569bb71c5913d6e03e3acebe0710a1ca2f9c2a2af9000760017e5404946d92e"
+      },
+      "responses": [
+        {
+          "model": "gemini-3.5-flash-lite",
+          "purpose": "repair",
+          "repair_method": "verified_text_v1",
+          "plan": {
+            "case_id": "tren-yolculugunda-cinayet",
+            "assessment": "Case successfully verified under the standard deductive framework, avoiding all rule violations and narrative leaks.",
+            "story": "Ankara-İstanbul ekspresinin yoğun sis altındaki son kilometresinde, birinci mevki yolcusu koltuğunda hareketsiz bulundu. Tren istasyona yanaşırken, bu ölümün gizemini çözmek ve katilin kullandığı yöntemi ile yeri bulmak senin elinde.",
+            "suspect_descriptions": {
+              "s1": "Sürekli evrak çantasıyla gezen, gergin, sabırsız ve hassas işlemlere eli hiç yatkın olmayan birinci mevki yolcusu.",
+              "s2": "Kulağında kulaklıkla kendi odasından hiç çıkmayan, etrafındaki insanlarla sıfır etkileşim kuran ucuz biletli genç yolcu.",
+              "s3": "Anatomik bilgiye sahip, yanında sürekli çeşitli sıvılar ve aletlerin bulunduğu küçük tıbbi çantalar taşıyan sakin yaşlı yolcu."
+            },
+            "clues": {
+              "c1": {
+                "text": "Sefer sırasında en arka bölgedeki dar ihtiyaç alanında yapılan detaylı incelemede, kurbanın boynuna baskı yaptığı anlaşılan ince naylon ip tespit edildi.",
+                "deductionHint": "Arka alandaki ip bulgusunu incele."
+              },
+              "c2": {
+                "text": "Beyaz örtülü masaların bulunduğu ortak oturma alanında, küçük çakı bıçağına ait hiçbir iz veya adli bulguya rastlanmadı.",
+                "deductionHint": "Ortak alandaki bıçak dışlamasını kontrol et."
+              },
+              "c3": {
+                "text": "Kayıtlar ve yolcu beyanları, kulaklıklı genç yolcunun sefer boyunca trenin en arka bölümündeki dar ihtiyaç alanında vakit geçirdiğini doğruluyor.",
+                "deductionHint": "Genç yolcunun arka alanla bağını incele."
+              },
+              "c4": {
+                "text": "Yaşlı doktorun eşyalarında yapılan incelemede, küçük çakı bıçağına dair hiçbir kesici veya delici kullanım izine rastlanmadı.",
+                "deductionHint": "Yaşlı yolcunun bıçakla ilişkisini test et."
+              },
+              "c5": {
+                "text": "Birinci mevki yolcusunun yanında, evrak çantasının gözünde küçük çakı bıçağı taşındığına dair kayıtlar yer alıyor.",
+                "deductionHint": "Birinci mevki yolcusunun bıçak taşıdığını not et."
+              },
+              "c6": {
+                "text": "Genç yolcunun eşyaları arasında bavuldan çıkarılan ince naylon ipin bulunduğu resmi tutanaklarla doğrulandı.",
+                "deductionHint": "Genç yolcunun ip ile bağını kontrol et."
+              }
+            }
+          }
+        },
+        {
+          "model": "gemini-3.8-flash",
+          "purpose": "repair",
+          "repair_method": "verified_text_v1",
+          "plan": {
+            "case_id": "tren-yolculugunda-cinayet",
+            "assessment": "Planlanan tüm çıkarım kuralları harfiyen korunarak hikaye, şüpheli profilleri ve ipuçları sıfırdan kurgulandı. Çekirdek ipuçlarında kart isimleri doğrudan geçirilmeden yalnızca kart betimlemelerine dayanan dolaylı referanslar kullanıldı. İpucu c2'ye l2 (Yemekli Vagon) için cinayet konumu çıpası entegre edildi ve w2-l2 elemesi sağlandı. İpuçları ve profiller arasındaki kelime sızıntıları temizlendi.",
+            "story": "Ankara-İstanbul seferini yapan gece ekspresi yoğun sis altındaki son kilometrelerini geçerken kurbanın cansız bedeni bulundu. Tren perona yanaşmadan önce, her bir yolcunun belirli noktalarda bulunduğu ve farklı nesnelere ulaştığı bu kısa zaman aralığındaki cinayetin failini, yöntemini ve işlendiği yeri açığa çıkarmalısın.",
+            "suspect_descriptions": {
+              "s1": "Koyu renk takım elbisesi ve elinden düşürmediği evrak çantasıyla dikkat çeken, sürekli kolundaki saate bakan telaşlı bir yolcu.",
+              "s2": "Başında kapüşonu, boynunda kulaklığıyla dış dünyayla bağını tamamen koparmış gibi görünen, sırt çantalı dalgın bir genç.",
+              "s3": "Gözlüklerinin üzerinden etrafı süzen, cebinde küçük not defteri taşıyan, beyaz saçlı ve son derece soğukkanlı bir beyefendi."
+            },
+            "clues": {
+              "c1": {
+                "text": "Olay anında yapılan fiziki kontrolde, bavuldan çıkarılan ince naylon ipin trenin en arka bölümündeki mandalla kilitlenebilen o dar kabinde unutulduğu tespit edildi.",
+                "deductionHint": "Arka kısımdaki dar alanda bırakılan boğma düzeneği hangi mekana işaret ediyor?"
+              },
+              "c2": {
+                "text": "Cinayet masası incelemesi, ölümcül saldırının çay servisi yapılan beyaz örtülü masaların bulunduğu salonda gerçekleştiğini kesinleştirdi; servis personeli vardiya dökümü ise tek hamlede derin yara açan çakı bıçağının bu salonda asla yer almadığını belgeledi.",
+                "deductionHint": "Ölümün gerçekleştiği teyit edilen ortak alanda hangi nesnenin bulunmadığı kaydedilmiş?"
+              },
+              "c3": {
+                "text": "Kondüktörün denetim kaydına göre, kulağında kulaklığıyla gezen sırt çantalı genç yolcunun seferin son dakikalarında trenin en arka bölümündeki mandallı dar kabine girdiği görüldü.",
+                "deductionHint": "Kulaklıklı gencin sefer sırasında bulunduğu yer neresidir?"
+              },
+              "c4": {
+                "text": "Kriminal laboratuvarın parmak izi taramasında, küçük bir çakı bıçağı üzerinde yapılan detaylı swap testleri beyaz saçlı soğukkanlı beyefendiye ait hiçbir fiziksel izin bulunmadığını doğruladı.",
+                "deductionHint": "Soğukkanlı yaşlı yolcunun temas etmediği kesici alet hangisidir?"
+              },
+              "c5": {
+                "text": "Vagon amirinin tutanağına göre İş Kadını, çantasında taşıdığı Kesici Silah ile birlikte yolculuk boyunca kayıt altına alınmıştır.",
+                "deductionHint": "İş Kadını hangi suç aletiyle eşleşmektedir?"
+              },
+              "c6": {
+                "text": "Kompartıman görevlisinin şahitliğiyle, Üniversite Öğrencisi adlı yolcunun bagajındaki Boğma Halatı ile temas ettiği belgelenmiştir.",
+                "deductionHint": "Üniversite Öğrencisi hangi gereci elinde bulunduruyordu?"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "tarihi-hamamda-cinayet": {
+      "difficulty": "caylak",
+      "solution": {
+        "suspectId": "s3",
+        "weaponId": "w3",
+        "locationId": "l1"
+      },
+      "recorded_plan": {
+        "anchor": {
+          "component": "location",
+          "entityId": "l1",
+          "source": "clue:c2"
+        },
+        "clues": [
+          {
+            "id": "c1",
+            "isBonus": false,
+            "type": "evidence",
+            "rule": {
+              "action": "confirm",
+              "pair": [
+                "s2",
+                "l3"
+              ]
+            }
+          },
+          {
+            "id": "c2",
+            "isBonus": false,
+            "type": "record",
+            "rule": {
+              "action": "confirm",
+              "pair": [
+                "s3",
+                "l1"
+              ]
+            }
+          },
+          {
+            "id": "c3",
+            "isBonus": false,
+            "type": "witness",
+            "rule": {
+              "action": "eliminate",
+              "pair": [
+                "w3",
+                "l3"
+              ]
+            }
+          },
+          {
+            "id": "c4",
+            "isBonus": false,
+            "type": "forensic",
+            "rule": {
+              "action": "eliminate",
+              "pair": [
+                "s1",
+                "w3"
+              ]
+            }
+          },
+          {
+            "id": "c5",
+            "isBonus": true,
+            "type": "record",
+            "rule": {
+              "action": "confirm",
+              "pair": [
+                "s1",
+                "w1"
+              ]
+            }
+          },
+          {
+            "id": "c6",
+            "isBonus": true,
+            "type": "witness",
+            "rule": {
+              "action": "confirm",
+              "pair": [
+                "s2",
+                "w2"
+              ]
+            }
+          }
+        ],
+        "logicSignature": "exact-3x3-v1:7b2e88a6a225b301ee0e8f713fc23769f9acfabfbbdb7592b2bae919bad754a9"
+      },
+      "responses": [
+        {
+          "model": "gemini-3.5-flash-lite",
+          "purpose": "repair",
+          "repair_method": "verified_text_v1",
+          "plan": {
+            "case_id": "tarihi-hamamda-cinayet",
+            "assessment": "Case successfully transformed into a rigorous Turkish deduction mystery with correct entity references and strict plan adherence.",
+            "story": "Sultanahmet'in asırlık kubbeleri altında yükselen buhar bulutlarının arasında, dönemsel hesapları denetleyen tanınmış tüccar ani bir solunum kriziyle mermer zemine yığıldı. Kapılar dışarıdan tamamen kilitliydi; katil hamamın buğulu atmosferinde izlerini gizliyordu.",
+            "suspect_descriptions": {
+              "s1": "Genç ve telaşlı yüz hatlarına sahip, kayıt defterleriyle ilgilenen görevli.",
+              "s2": "Otoriter duruşlu, ağır kadife cüppesiyle dikkat çeken işletme yöneticisi.",
+              "s3": "Geniş omuzlu, yılların tecrübesiyle bilinen kıdemli mermer masajcısı."
+            },
+            "clues": {
+              "c1": {
+                "text": "Aynı zaman aralığında yapılan personel yoklamasında, otoriter duruşlu işletme yöneticisinin ana kapıdaki aydınlık bölümde bulunduğu resmi defterlerle doğrulanmıştır.",
+                "deductionHint": "Yöneticinin kayıtlı bulunduğu mekanı inceleyin."
+              },
+              "c2": {
+                "text": "Olay anındaki vardiya çizelgelerine göre, geniş omuzlu kıdemli mermer masajcısının yoğun buharlı sıcak odada görev yaptığı kanıtlanmıştır.",
+                "deductionHint": "Masajcının çalışma alanına dikkat edin."
+              },
+              "c3": {
+                "text": "Güvenlik kayıtları ve parmak izi incelemeleri sonucunda, hiçbir alet kullanılmadan uygulanan ölümcül boğma yönteminin ana kapıdaki aydınlık bölümde kullanılmadığı kesin olarak saptanmıştır.",
+                "deductionHint": "Bu yöntem ile ana alan arasındaki çelişkiyi değerlendirin."
+              },
+              "c4": {
+                "text": "Adli tıp raporları, genç ve telaşlı görevlinin hiçbir zaman çıplak elle boğma eylemini gerçekleştirmediğini doğrulamaktadır.",
+                "deductionHint": "Görevlinin fiziksel müdahale geçmişini inceleyin."
+              },
+              "c5": {
+                "text": "Dolap kayıtları, genç görevlinin ağır kimyasal içeren özel sabunla doğrudan teması olduğunu göstermektedir.",
+                "deductionHint": "Görevli ile sabun arasındaki ilişkiye bakın."
+              },
+              "c6": {
+                "text": "Tanık ifadeleri, işletme yöneticisinin maktule sunulan şerbet tepsisini hazırladığını doğrulamaktadır.",
+                "deductionHint": "Yöneticinin ikramla olan bağlantısını inceleyin."
+              }
+            }
+          }
+        },
+        {
+          "model": "gemini-3.8-flash",
+          "purpose": "repair",
+          "repair_method": "verified_text_v1",
+          "plan": {
+            "case_id": "tarihi-hamamda-cinayet",
+            "assessment": "Maktulün cesedi göbek taşının hemen yanında bulunmuştur; cinayetin tam olarak Sıcak Oda'da işlendiği adli kayıtlarla doğrulanmıştır. Her şüphelinin cinayet aralığında tek bir mekânda bulunduğu ve tek bir vasıtaya eriştiği bilinmektedir. Çapraz eşleştirmeler ve ipuçları sayesinde suçlu, vasıta ve mekân üçlüsü kesin olarak ortaya çıkar.",
+            "story": "Kubbeli yapının mermer koridorlarında yankılanan boğuk bir inilti, buhar bulutunu yırtıp geçti. Varlıklı bir tüccar, içeriden kilitli kubbenin altında son nefesini verdi. Olay anında içerideki üç kişiden her biri farklı bir bölümdeydi ve yalnızca tek bir vasıtaya erişebiliyordu. Gerçeği sis perdesi ardından çekip çıkarmak artık sizin elinizde.",
+            "suspect_descriptions": {
+              "s1": "Müşterilerin emanetlerini ve para keselerini teslim alan, solgun çehreli, genç ve dikkatli bir görevli.",
+              "s2": "Tesisi idare eden, sert bakışlı, kaşları çatık ve tavırlarıyla çalışanlara daima emirler yağdıran otoriter patron.",
+              "s3": "Kese işinde uzmanlaşmış, terden parıldayan pazıları ve nasırlı bilekleriyle dikkat çeken güçlü emektar çalışan."
+            },
+            "clues": {
+              "c1": {
+                "text": "Müşterilerin ayakkabılarını bıraktığı ana kapı eşiğindeki ıslak terlik izleri, buradaki işletmecinin cinayet vaktinde dış kapıdaki kasanın bulunduğu aydınlık alanda teftişte olduğunu kanıtladı.",
+                "deductionHint": "Tesis idarecisinin olay anında hangi bölmede kaldığını düşünebilir misiniz?"
+              },
+              "c2": {
+                "text": "Olay yeri tutanağı cinayetin mermer yıkanma alanında işlendiğini kesinleştirdi; tecrübeli emektar çalışanın terli havlusu da tam o esnada göbek taşının bulunduğu bu yoğun buharlı bölümde tespit edildi.",
+                "deductionHint": "Cinayetin gerçekleştiği kesin yer ve oradaki güçlü çalışan kim olabilir?"
+              },
+              "c3": {
+                "text": "Dış kapıdaki kasanın bulunduğu aydınlık alandaki eşyalarda yapılan ayrıntılı incelemede, hiçbir alet kullanmadan uygulanan doğrudan fiziksel boğma gücüne dair en ufak bir ize rastlanmadı.",
+                "deductionHint": "Girişteki alanda fiziksel baskı yönteminin kullanılmadığı neyi gösterir?"
+              },
+              "c4": {
+                "text": "Tırnak arası ve doku analizleri, emanetleri alan solgun yüzlü gencin hiçbir alet kullanmadan uygulanan ölümcül fiziksel boğma gücüne kesinlikle başvurmadığını belgeledi.",
+                "deductionHint": "Emanetlerle ilgilenen gencin hangi yöntemi uygulamadığı açıktır?"
+              },
+              "c5": {
+                "text": "Kayıt defterindeki teslim fişine göre Veznedar, zehirleme riski barındıran Acı Sabun paketini cinayet saatinden hemen önce teslim almıştır.",
+                "deductionHint": "Veznedar ile kayıt altına alınan sabun arasındaki bağ nedir?"
+              },
+              "c6": {
+                "text": "Tanık ifadesine göre Hamam Ağası, ikram tepsisine konulan Zehirli Şerbet kadehini bizzat elinde taşırken görülmüştür.",
+                "deductionHint": "Hamam Ağası hangi ölümcül içeceği bizzat taşımaktaydı?"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "sabanci-muzesi-gasp": {
+      "difficulty": "baskomiser",
+      "grid": "4x4x4",
+      "clue_types": [
+        "forensic",
+        "evidence",
+        "record",
+        "witness",
+        "record",
+        "evidence"
+      ],
+      "solution": {
+        "suspectId": "s2",
+        "weaponId": "w1",
+        "locationId": "l2"
+      },
+      "flash": {
+        "model": "gemini-3.8-flash",
+        "repair_method": "legacy_patch",
+        "plan": {
+          "case_id": "sabanci-muzesi-gasp",
+          "assessment": "Tamir planı: 1) s4 adını 'Nakliyeci' yerine 'Kadir Nakliyeci' yaparak tekil lakap uyarısını çözmek ve s4 profilindeki kaba/demir çakışmasını engellemek; 2) Clue 1'i suç çapası (isCrimeAnchor: true) olarak yapılandırıp sadece suç mekânı olan l2 (Güvenlik Merkezi) üzerinde tek bileşen sabitlemesi kurmak; 3) Clue 1-4 arasında çapraz eşleştirme ve elemelerle s2-w1-l2 çözümünün bonuslar olmadan tek ve zorunlu kalmasını (coreNecessity) sağlamak; 4) Her ipucuna kural taşkını içermeyen kesin metin, kanıta dayalı logicRules, qaRationale ve uygun qaSemanticFacts eklemek; 5) Bonus ipuçları c5 ve c6'ya ana çözümü bozmayan ancak matriste ek hücre eleyen/eşleştiren işlevsel kurallar vermek; 6) qaPattern imzasını portföy şablon çakışmasını giderecek biçimde güncellemek.",
+          "operations": [
+            {
+              "op": "replace",
+              "path": "/suspects/3/name",
+              "value_json": "\"Kadir Aksoy\"",
+              "reason": "Şüpheli adını tek sözcükten çıkarıp doğal ad-soyad yaparak isim uyarısını ve silah sızıntısını gidermek."
+            },
+            {
+              "op": "replace",
+              "path": "/suspects/3/description",
+              "value_json": "\"Eserleri müzeye taşıyan lojistik personelinden biri. Galanın açılışından önceki hazırlık evresinde görev almıştır.\"",
+              "reason": "Silah kartındaki 'kaba' kelimesiyle doğrudan örtüşmeyi kaldırarak avatar prompt riskini önlemek."
+            },
+            {
+              "op": "replace",
+              "path": "/clues/0",
+              "value_json": "{\n  \"id\": \"c1\",\n  \"text\": \"Olay yeri inceleme ekipleri, kurbanın ve çalınan vitrin kontrol ünitesinin Güvenlik Merkezi içerisinde devre dışı bırakıldığını kesinleştirdi.\",\n  \"type\": \"forensic\",\n  \"isBonus\": false,\n  \"isCrimeAnchor\": true,\n  \"logicRules\": [\n    {\n      \"action\": \"eliminate\",\n      \"pair\": [\"s1\", \"l2\"]\n    }\n  ],\n  \"deductionHint\": \"Olayın geçtiği yer ile yöneticinin konumu arasındaki ilişkiyi nasıl değerlendirirsiniz?\",\n  \"qaRationale\": {\n    \"matrixEffect\": \"Güvenlik Merkezi ile Galeri Direktörü elenir\",\n    \"evidenceLink\": \"kurbanın ve çalınan vitrin kontrol ünitesinin Güvenlik Merkezi içerisinde devre dışı bırakıldığını kesinleştirdi\",\n    \"evidenceKind\": \"forensic\"\n  },\n  \"qaSemanticFacts\": [\n    {\n      \"kind\": \"crime_component\",\n      \"component\": \"location\",\n      \"entityId\": \"l2\",\n      \"source\": \"clue:c1\",\n      \"evidence\": \"Olay yeri inceleme ekipleri, kurbanın ve çalınan vitrin kontrol ünitesinin Güvenlik Merkezi içerisinde devre dışı bırakıldığını kesinleştirdi.\"\n    }\n  ]\n}",
+              "reason": "Suç çapası olarak sadece cinayet mekanını tespit eden adli kanıt sunmak, çift ifşa sızıntısından kaçınmak."
+            },
+            {
+              "op": "replace",
+              "path": "/clues/1",
+              "value_json": "{\n  \"id\": \"c2\",\n  \"text\": \"Saldırıda kurbanın üzerine hiçbir gaz püskürtülmediği gibi darbe izi de bulunmadı; ancak olay mahalli olan izole odada yalnızca Elektrik Sopası taşındığı belirlendi.\",\n  \"type\": \"forensic\",\n  \"isBonus\": false,\n  \"isCrimeAnchor\": false,\n  \"logicRules\": [\n    {\n      \"action\": \"confirm\",\n      \"pair\": [\"w1\", \"l2\"]\n    }\n  ],\n  \"deductionHint\": \"Güvenlik odasında kullanılan tek ekipman hangisiydi?\",\n  \"qaRationale\": {\n    \"matrixEffect\": \"Elektrik Sopası ile Güvenlik Merkezi eşleşir\",\n    \"evidenceLink\": \"izole odada yalnızca Elektrik Sopası taşındığı belirlendi\",\n    \"evidenceKind\": \"forensic\"\n  },\n  \"qaSemanticFacts\": [\n    {\n      \"kind\": \"crime_component\",\n      \"component\": \"weapon\",\n      \"entityId\": \"w1\",\n      \"source\": \"clue:c2\",\n      \"evidence\": \"izole odada yalnızca Elektrik Sopası taşındığı belirlendi\"\n    }\n  ]\n}",
+              "reason": "Mekan-silah bağlantısını kuran ve silahı kesinleştiren kanıt."
+            },
+            {
+              "op": "replace",
+              "path": "/clues/2",
+              "value_json": "{\n  \"id\": \"c3\",\n  \"text\": \"Müze kartlı geçiş kayıtlarında, Kadir Aksoy'un olay gecesi yalnızca mal kabulün yapıldığı Çıkış Noktası bölgesinde bulunduğu doğrulandı.\",\n  \"type\": \"record\",\n  \"isBonus\": false,\n  \"isCrimeAnchor\": false,\n  \"logicRules\": [\n    {\n      \"action\": \"confirm\",\n      \"pair\": [\"s4\", \"l4\"]\n    }\n  ],\n  \"deductionHint\": \"Lojistik görevlisinin gece boyunca bulunduğu yer neresiydi?\",\n  \"qaRationale\": {\n    \"matrixEffect\": \"Kadir Aksoy ile Çıkış Noktası eşleşir\",\n    \"evidenceLink\": \"Kadir Aksoy'un olay gecesi yalnızca mal kabulün yapıldığı Çıkış Noktası bölgesinde bulunduğu doğrulandı\",\n    \"evidenceKind\": \"record\"\n  },\n  \"qaSemanticFacts\": [\n    {\n      \"kind\": \"crime_component\",\n      \"component\": \"location\",\n      \"entityId\": \"l4\",\n      \"source\": \"clue:c3\",\n      \"evidence\": \"Kadir Aksoy'un olay gecesi yalnızca mal kabulün yapıldığı Çıkış Noktası bölgesinde bulunduğu doğrulandı\"\n    }\n  ]\n}",
+              "reason": "s4'ün mekanını sabitleyerek l2'den dışlamak."
+            },
+            {
+              "op": "replace",
+              "path": "/clues/3",
+              "value_json": "{\n  \"id\": \"c4\",\n  \"text\": \"Gala nöbetçi defterine göre Güvenlik Şefi, organizasyon süresince kilitli Depo alanında devriye görevindeydi.\",\n  \"type\": \"record\",\n  \"isBonus\": false,\n  \"isCrimeAnchor\": false,\n  \"logicRules\": [\n    {\n      \"action\": \"confirm\",\n      \"pair\": [\"s3\", \"l3\"]\n    }\n  ],\n  \"deductionHint\": \"Nöbetçi defteri güvenlik şefinin nerede olduğunu belgeliyor?\",\n  \"qaRationale\": {\n    \"matrixEffect\": \"Güvenlik Şefi ile Depo eşleşir\",\n    \"evidenceLink\": \"Güvenlik Şefi, organizasyon süresince kilitli Depo alanında devriye görevindeydi\",\n    \"evidenceKind\": \"record\"\n  },\n  \"qaSemanticFacts\": [\n    {\n      \"kind\": \"crime_component\",\n      \"component\": \"location\",\n      \"entityId\": \"l3\",\n      \"source\": \"clue:c4\",\n      \"evidence\": \"Güvenlik Şefi, organizasyon süresince kilitli Depo alanında devriye görevindeydi\"\n    }\n  ]\n}",
+              "reason": "s3'ü l3'e bağlayarak l2 için geriye yalnızca s2'nin kalmasını sağlamak; s1 zaten c1'de elendiğinden s2-l2-w1 çözümü tek kalır."
+            },
+            {
+              "op": "replace",
+              "path": "/clues/4",
+              "value_json": "{\n  \"id\": \"c5\",\n  \"text\": \"Depo girişinde yapılan balistik incelemede, buradaki kilitlerin zorlanmasında bir Demir Çubuk kullanıldığı saptandı.\",\n  \"type\": \"physical\",\n  \"isBonus\": true,\n  \"isCrimeAnchor\": false,\n  \"logicRules\": [\n    {\n      \"action\": \"confirm\",\n      \"pair\": [\"w3\", \"l3\"]\n    }\n  ],\n  \"deductionHint\": \"Depodaki izler hangi aracın orada kullanıldığını gösteriyor?\",\n  \"qaRationale\": {\n    \"matrixEffect\": \"Demir Çubuk ile Depo eşleşir\",\n    \"evidenceLink\": \"Depo girişinde yapılan balistik incelemede, buradaki kilitlerin zorlanmasında bir Demir Çubuk kullanıldığı saptandı\",\n    \"evidenceKind\": \"physical\"\n  },\n  \"qaSemanticFacts\": [\n    {\n      \"kind\": \"crime_component\",\n      \"component\": \"weapon\",\n      \"entityId\": \"w3\",\n      \"source\": \"clue:c5\",\n      \"evidence\": \"buradaki kilitlerin zorlanmasında bir Demir Çubuk kullanıldığı saptandı\"\n    }\n  ]\n}",
+              "reason": "Bonus ipucu olarak depodaki aleti doğrulayan ve gereksiz kalmadan matris desteği sağlayan kural."
+            },
+            {
+              "op": "replace",
+              "path": "/clues/5",
+              "value_json": "{\n  \"id\": \"c6\",\n  \"text\": \"Açık havadaki mal kabul rampasında rüzgarın dağıttığı Kimyasal Sprey kalıntıları tespit edildi.\",\n  \"type\": \"forensic\",\n  \"isBonus\": true,\n  \"isCrimeAnchor\": false,\n  \"logicRules\": [\n    {\n      \"action\": \"confirm\",\n      \"pair\": [\"w2\", \"l4\"]\n    }\n  ],\n  \"deductionHint\": \"Açık alan incelemesinde hangi maddenin izine rastlandı?\",\n  \"qaRationale\": {\n    \"matrixEffect\": \"Kimyasal Sprey ile Çıkış Noktası eşleşir\",\n    \"evidenceLink\": \"mal kabul rampasında rüzgarın dağıttığı Kimyasal Sprey kalıntıları tespit edildi\",\n    \"evidenceKind\": \"forensic\"\n  },\n  \"qaSemanticFacts\": [\n    {\n      \"kind\": \"crime_component\",\n      \"component\": \"weapon\",\n      \"entityId\": \"w2\",\n      \"source\": \"clue:c6\",\n      \"evidence\": \"mal kabul rampasında rüzgarın dağıttığı Kimyasal Sprey kalıntıları tespit edildi\"\n    }\n  ]\n}",
+              "reason": "İkinci bonus ipucu olarak mal kabuldeki silahı sabitleyip ek doğrulama sağlayan kural."
+            },
+            {
+              "op": "add",
+              "path": "/qaSemanticFacts",
+              "value_json": "[\n  {\n    \"kind\": \"crime_component\",\n    \"component\": \"location\",\n    \"entityId\": \"l2\",\n    \"source\": \"clue:c1\",\n    \"evidence\": \"Olay yeri inceleme ekipleri, kurbanın ve çalınan vitrin kontrol ünitesinin Güvenlik Merkezi içerisinde devre dışı bırakıldığını kesinleştirdi.\"\n  },\n  {\n    \"kind\": \"crime_component\",\n    \"component\": \"weapon\",\n    \"entityId\": \"w1\",\n    \"source\": \"clue:c2\",\n    \"evidence\": \"izole odada yalnızca Elektrik Sopası taşındığı belirlendi\"\n  }\n]",
+              "reason": "Vakanın kanıta dayalı suç bileşeni semantik olguları."
+            },
+            {
+              "op": "replace",
+              "path": "/qaPattern",
+              "value_json": "{\n  \"anchorSource\": \"clue:c1\",\n  \"designIntent\": \"Özgün çapa ve kademeli eleme zinciri: c1 mekan çapası (l2) ve s1 elemesi; c2 w1-l2 teyidi; c3 s4-l4 teyidi; c4 s3-l3 teyidi ile s2-w1-l2 zorunlu çıkarımı.\"\n}",
+              "reason": "qaPattern'i gerçek dedüksiyon haritasıyla güncellemek."
+            }
+          ]
+        }
+      }
+    }
+  }
+}

@@ -3,6 +3,7 @@ import { qualityContract, legacyQualityContract } from './quality-contract.mjs';
 
 import { EXPERIENCE_VERSION, experienceProfile, experienceCheck } from './experience.mjs';
 import { diverseTextPlan } from './diverse-text-plan.mjs';
+import { CRIME_ANCHOR_SEMANTIC, anchorConfirmsTwoCrimeComponents, hardAnchorContract } from './anchor-contract.mjs';
 
 export const TEXT_METHOD = 'verified_text_v1';
 const axes = ['suspects', 'weapons', 'locations'];
@@ -48,6 +49,9 @@ export function verifyTextPlan(candidate, plan) {
   const unique = rows => new Set(rows.map(r => JSON.stringify(r)));
   if (core.length !== 4 || plan.clues.filter(c => c.isBonus).length !== 2 ||
       plan.clues.some(c => !['confirm','eliminate'].includes(c.rule.action))) throw new Error('TEXT_PLAN_INVALID_SHAPE');
+  const anchorClue = core.find(c => anchor?.source === 'clue:' + c.id);
+  if (hardAnchorContract(candidate) && anchorClue && anchorConfirmsTwoCrimeComponents(candidate, anchorClue.rule))
+    throw new Error('TEXT_PLAN_ANCHOR_DOUBLE_REVEAL:' + anchorClue.id);
   const solutions = enumerateTextGrid(candidate, core.map(c => c.rule), anchor);
   if (!solutions.length || solutions.some(s => !equal(s, candidate.solution))) throw new Error('TEXT_PLAN_NOT_UNIQUE');
   for (const removed of core) {
@@ -193,7 +197,8 @@ export function textRepairPrompt(entry, candidate, plan, assessment, rejected) {
     .replace(/EACH CLUE: 35-70 words,/, `EACH CORE CLUE: target ${profile.core.join('-')} words; BONUS target ${profile.bonus.join('-')} words,`)
     .replace('State that investigators seek the carrier/operator and corresponding place of the confirmed lethal item/method.', 'State what the player must discover. Never say the lethal method is already confirmed before its anchor clue.')
     .replace('BEFORE RETURNING: count story and each profile by whitespace; expand insufficient text with meaningful incident/visual detail.', 'BEFORE RETURNING: check the selected category, continuity and necessary evidence; remove redundant words. Never expand for length alone.')
-    + '\nLOGICAL NOVELTY: ' + plan.logicSignature + '. This is the order-independent dependency graph, not a renamed/reordered template. Preserve its exact rules.\nNARRATIVE CONTINUITY: ' + profile.narrative;
+    + '\nLOGICAL NOVELTY: ' + plan.logicSignature + '. This is the order-independent dependency graph, not a renamed/reordered template. Preserve its exact rules.\nNARRATIVE CONTINUITY: ' + profile.narrative
+    + '\nANCHOR ACCEPTANCE: the anchor clue is retained only when its text states the death or crime in words the simulator already requires, and its single planned rule does not confirm two members of the solution triple. A named difficulty such as caylak is not a numeric level, so that double confirmation is rejected. A forensic laboratory is an unintroduced setting unless the clue begins with the institution form "Adli laboratuvar," and then saptadı, analiz, tespit or rapor. "Kriminal laboratuvar" and a laboratory used as a place do not pass.';
 }
 export function compileTextPatch(candidate, plan, response) {
   if (!validTextResponse(candidate, plan, response)) throw new Error('TEXT_RESPONSE_INVALID');
@@ -210,6 +215,11 @@ export function compileTextPatch(candidate, plan, response) {
     if (response.clues[c.id].text.trim().length < 40) contentErrors.push('clues/' + i + '/text:MIN_40_CHARS');
     if (response.clues[c.id].deductionHint.trim().length < 12) contentErrors.push('clues/' + i + '/deductionHint:MIN_12_CHARS');
   });
+  const anchorRow = plan.clues.find(c => plan.anchor?.source === 'clue:' + c.id);
+  if (anchorRow && !CRIME_ANCHOR_SEMANTIC.test(response.clues[anchorRow.id].text))
+    contentErrors.push('ANCHOR_WEAK_CRIME_SEMANTIC:' + anchorRow.id);
+  if (anchorRow && hardAnchorContract(candidate) && anchorConfirmsTwoCrimeComponents(candidate, anchorRow.rule))
+    contentErrors.push('ANCHOR_DOUBLE_REVEAL:' + anchorRow.id);
   if (plan.experience) {
     const draft = { ...candidate, story: response.story, suspects: candidate.suspects.map(e => ({ ...e, description: response.suspect_descriptions[e.id] })),
       clues: candidate.clues.map(c => ({ ...c, text: response.clues[c.id].text })) };
