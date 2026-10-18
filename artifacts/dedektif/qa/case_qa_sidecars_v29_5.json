@@ -1643,7 +1643,7 @@
       "production_content_unchanged": true,
       "pipeline_review": {
         "schema": "fm_case_review_v1",
-        "review_hash": "d4458564108cd43307c5dfb76b2764a8f92ee44121e399db1d7060185bba6e5c",
+        "review_hash": "5255e3c02cdb10c448adad1032b7349eab800bd63cce4b5d24d6fd5442371cb5",
         "player": {
           "unique_solution": true,
           "solution": {
@@ -1683,6 +1683,18 @@
           "issues": [],
           "summary": "Vaka standart çaylak seviyesi için oldukça duru, tutarlı ve adil kurgulanmış. İpuçları doğrudan kart metinleriyle örtüşüyor; maktulün boğulma sebebi (c3) cinayet aletini 'Gemi Halatı' olarak sabitliyor, c1 ve c3 Albay ve Ressam'ı eleyerek katili 'Genç Yatçı' yapıyor, c2 ve c4 ise Zehir ve Av Tüfeği'nin yerlerini bağlayarak cinayet mahallini doğrudan 'Villa Bahçesi'ne bırakıyor. Herhangi bir mantıksal boşluk ya da pürüz bulunmuyor."
         }
+      },
+      "simulator_revalidation": {
+        "schema": "fm_simulator_revalidation_v1",
+        "method": "reviewHash",
+        "previous_simulator_pin": "17170058b8f45eab789e14aaf2fb7a6605587fb8",
+        "simulator_pin": "669721fc3afb1e12492f3abefdc55c86a1e2ee88",
+        "previous_review_hash": "d4458564108cd43307c5dfb76b2764a8f92ee44121e399db1d7060185bba6e5c",
+        "review_hash": "5255e3c02cdb10c448adad1032b7349eab800bd63cce4b5d24d6fd5442371cb5",
+        "player_request_key": "a9ce420fea33ddd0808008987c764ac0f52a40b9c68216af404fc37c0af05524",
+        "judge_request_key": "8fce2e49e63af27a33c9cf89be0d5d356289e74632e9b718ac3b80eaf52105d5",
+        "player_request_day": "2026-10-17",
+        "judge_request_day": "2026-10-17"
       }
     }
   },
