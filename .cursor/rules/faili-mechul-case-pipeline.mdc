@@ -45,7 +45,8 @@ Aday sertifikası, workflow’un `certify` adımındaki `FM_PIPELINE_BASE_SHA`, 
 
 Bu bölüm anlık kayıttır. Kalıcı kural gibi uygulanmaz; yeni durumla güncellenmeden doğru kabul edilmez.
 
-- #100, #101 ve #102 birleşti. Son başarılı pilot: https://github.com/5n1katil/Faili-Mechul/actions/runs/39058380419
-- Açık taslak: https://github.com/5n1katil/Faili-Mechul/pull/103. Eski safety koşusu https://github.com/5n1katil/Faili-Mechul/actions/runs/39058548976 başlık `a25a1afe188d47aaedf0c54de540f578eae56d7a` üzerindedir; aynı koşuyu yeniden çalıştırmak sonraki commit’i görmez.
-- Sıradaki iş, #103 kontrolleri geçtikten sonra kullanıcının birleştirmesidir. Ardından ücretsiz audit ile Adada kilidi ve kuyruk uzlaşması doğrulanır; üç vakalık campaign ayarı kullanıcı başlatmadan uygulanmaz.
-- #94 güncel Adada adayı değildir. #75, #73, #72, #71 ve #70 izinsiz kapatılmaz veya birleştirilmez.
+- #100, #101, #102 ve #103 birleşti. #103 merge commit’i `afdb0451886f543495e43c74a9b41aba7ab72a46`. Kabul pilotu: https://github.com/5n1katil/Faili-Mechul/actions/runs/39058380419
+- Adada içerik kilidi doğrulandı: QA 100 ve kayıtlı sertifika geçerli. Kalıcı kuyruk `dac4af70c3229630a7bdf527a537eaf905af7515` üzerinde yazılmadı. Kayıt hâlâ `awaiting_review`; salt okunur önizleme #103’ü birleşmiş görür, durumu `source_revised` yapardı ve yeni grubu engellemez.
+- Karantinalar atlandığında sıradaki üç vaka: `tren-yolculugunda-cinayet`, `tarihi-hamamda-cinayet`, `sabanci-muzesi-gasp`. Hak yenilenmedi, geçmiş sıfırlanmadı.
+- Sıradaki iş kullanıcıdadır: `main` üzerinde mode `campaign`, `case_limit` 3, `case_id` / `base_sha` / `head_sha` boş. Bu not campaign başlatmaz.
+- #94 güncel Adada adayı değildir. #104 bu kuralın taslağıdır. #75, #73, #72, #71 ve #70 izinsiz kapatılmaz veya birleştirilmez.
