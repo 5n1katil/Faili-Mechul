@@ -12346,7 +12346,11 @@
     },
     "tren-yolculugunda-cinayet": {
       "spent": 0.010113300000000006,
-      "feedback": [],
+      "feedback": [
+        {
+          "error": "TEXT_CONTENT:EXPERIENCE_UNINTRODUCED_SETTING:c4:laboratuvar"
+        }
+      ],
       "source_hash": "227118c0ab3d8583bd590792597f8d81961231a762c3b6391182152b2dfdf889",
       "simulator_hash": "17170058b8f45eab789e14aaf2fb7a6605587fb8",
       "candidate": {
