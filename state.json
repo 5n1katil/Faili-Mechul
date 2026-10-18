@@ -15413,7 +15413,138 @@
     },
     "sabanci-muzesi-gasp": {
       "spent": 0.008617699999999999,
-      "feedback": [],
+      "feedback": [
+        {
+          "score": 0,
+          "result": {
+            "score": 0,
+            "simulator_production_ready": false,
+            "blockers": [
+              "LOGIC_PATTERN_UNVERIFIED"
+            ],
+            "fixes": [
+              "SIKI TEMEL İPUCU EKONOMİSİ: Her isBonus:false ipucu çıkarıldığında katil+silah+mekan cevabı belirsiz kalmalıdır. Cevabı değiştirmeyen temel ipuçlarını bonusa taşıyın ya da onları eksik olan cevap bileşenini daraltacak biçimde yeniden yazın.",
+              "ÇİFT İFŞA (Çapa): Çapa ipucunun logicRules'u tek başına cinayet triadının iki öğesini bağlamamalı — ne tek confirm'le ne de bir mekandan/şüpheliden birden çok öğeyi eleyip tek seçenek bırakarak. Çapa SADECE cinayetle ilişkili tek bir öğeyi sabitlesin (örn. yalnızca cinayet mekanını: tek bir confirm ya da o mekana dair tek bir bilgi). Silah-mekan/katil-silah bağını ayrı ipuçlara, mümkünse ters-çapraz çıkarıma bırak.",
+              "En az 1 işlevsel isBonus:true ipucu kullan; cezasının karşılığında standart zinciri zorunlu kılmadan yeni ve doğrudan bir ✓/✕ matris yardımı versin. Sayıyı doldurmak için gereksiz bonus ekleme."
+            ],
+            "advisories": [
+              "TAVSİYE (Kanıt→Kural): İpucu 6: qaRationale.evidenceKind=\"evidence\" tanınmıyor. Standart sınıflardan birini kullan (forensic, documentary, record, witness, mechanical, medical, physical, audio, digital, transaction, inventory, chain_of_custody).",
+              "ⓘ Standart mod: Bu vaka metin tabanlı ilerliyor; ücretsiz/standart vakalarda gelişmiş mini oyun zorunlu değildir. Mantık zinciri ve oynanabilirlik güçlüyse 100/100 alabilir."
+            ],
+            "score_breakdown": {
+              "k1": {
+                "score": 0,
+                "maximum": 40,
+                "findings": [
+                  "HATA: Çift İfşa Sızıntısı! Çapa ipucunuz (İpucu 1), tek başına cinayet triadının iki öğesini (Ünlü Sanatçı + Elektrik Sopası) kesin olarak birbirine bağlıyor — ister doğrudan confirm'le, ister birden çok elemenin tek seçenek bırakmasıyla. (zorluk belirtilmemiş — premium varsayıldı) Bu, bulmaca örüntüsünü yok eder: cinayeti tek hamlede çözer. Çapa SADECE cinayetle ilişkili TEK bir öğeyi versin (ya mekanı, ya silahı, ya şüpheliyi); o öğeyi başka bir eksene bağlama işini diğer ipuçlara, tercihen ters-çapraz çıkarıma bırak. NOT: Bu vaka gerçekten kolaysa (Çaylak), JSON'a \"difficulty\": 1 veya 2 ekle — kolay vakalarda çapanın iki öğe vermesi serbesttir."
+                ]
+              },
+              "k2": {
+                "score": 20,
+                "maximum": 20,
+                "findings": [
+                  "Mini oyun alanlarında çözümü erken ele veren ifade bulunamadı. Temiz."
+                ]
+              },
+              "k3": {
+                "score": 20,
+                "maximum": 20,
+                "findings": [
+                  "Tip dağılımı: forensic×1, evidence×2, record×2, witness×1",
+                  "💡 TAVSİYE (opsiyonel): İpucu 2: \"Güvenlik Merkezi\" adı doğrudan veriyor. Oyuncu eforunu ve atmosferi artırmak için ismi doğrudan yazmak yerine profil kartındaki betimlemelere atıfta bulunan dolaylı ifadeler tercih edilebilir (örn. \"Hazinedar Hüseyin\" yerine \"kayıp altın meselesinin gölgesindeki adam\"). Bu bir kalite önerisidir; çözülebilirliği etkilemez."
+                ]
+              },
+              "k4": {
+                "score": 14,
+                "maximum": 20,
+                "findings": [
+                  "2 bonus ipucu var — sayı uygundur; tam puanı işlevsellik belirler.",
+                  "UYARI: Tekrarlayan Ek İpucu — İpucu 6 yalnızca standart ipuçlarında zaten bulunan aynı hücreyi tekrar ediyor. Ek ipucu farklı bir masum eşleşme, silah–mekân bağı veya ek eleme vermelidir."
+                ]
+              }
+            },
+            "quality_findings": [
+              "💡 TAVSİYE (opsiyonel): İpucu 2: \"Güvenlik Merkezi\" adı doğrudan veriyor. Oyuncu eforunu ve atmosferi artırmak için ismi doğrudan yazmak yerine profil kartındaki betimlemelere atıfta bulunan dolaylı ifadeler tercih edilebilir (örn. \"Hazinedar Hüseyin\" yerine \"kayıp altın meselesinin gölgesindeki adam\"). Bu bir kalite önerisidir; çözülebilirliği etkilemez.",
+              "UYARI: Tekrarlayan Ek İpucu — İpucu 6 yalnızca standart ipuçlarında zaten bulunan aynı hücreyi tekrar ediyor. Ek ipucu farklı bir masum eşleşme, silah–mekân bağı veya ek eleme vermelidir."
+            ],
+            "gates": {
+              "coreNecessity": {
+                "passed": false,
+                "flags": [
+                  "HATA: Oyuncu-Görünür Çözüm Başarısız. Tüm standart ipuçları ve belgelenen/anlaşılan anlatı bilgileri birlikteyken cevap tek kalmıyor (4 olası cevap). Bonus açmadan s2|w1|l2 üçlüsüne zorunlu olarak ulaşılmalı."
+                ],
+                "warnings": []
+              },
+              "patternGovernance": {
+                "passed": true,
+                "flags": [],
+                "warnings": []
+              },
+              "contentAndNames": {
+                "passed": true,
+                "flags": [],
+                "warnings": []
+              },
+              "semanticContract": {
+                "passed": true,
+                "flags": [],
+                "warnings": []
+              },
+              "visibleEvidence": {
+                "passed": true,
+                "flags": [],
+                "warnings": []
+              },
+              "mechanicContract": {
+                "passed": true,
+                "flags": [],
+                "warnings": []
+              },
+              "bonusFunctionality": {
+                "passed": false,
+                "score": 14,
+                "findings": [
+                  "2 bonus ipucu var — sayı uygundur; tam puanı işlevsellik belirler.",
+                  "UYARI: Tekrarlayan Ek İpucu — İpucu 6 yalnızca standart ipuçlarında zaten bulunan aynı hücreyi tekrar ediyor. Ek ipucu farklı bir masum eşleşme, silah–mekân bağı veya ek eleme vermelidir."
+                ]
+              }
+            },
+            "leakage": {
+              "status": "manual_review_required",
+              "severity": "review",
+              "avatar_prompt_risk": true,
+              "solution_triple_exposed": false,
+              "findings": [
+                {
+                  "case_id": "sabanci-muzesi-gasp",
+                  "suspect_id": "s4",
+                  "suspect_name": "Ahmet Demir",
+                  "axis_kind": "weapon",
+                  "axis_id": "w3",
+                  "axis_name": "Demir Çubuk",
+                  "strength": "direct",
+                  "direct_owner_binding": true,
+                  "profile_exact_axis_name": false,
+                  "distinctive_overlap_tokens": [
+                    "kaba"
+                  ],
+                  "axis_name_overlap_tokens": [],
+                  "avatar_prompt_risk": true,
+                  "reasons": [
+                    "axis_name_contains_suspect_identity",
+                    "distinctive_profile_overlap:kaba"
+                  ]
+                }
+              ],
+              "required_actions": [
+                "remove_direct_suspect_identity_from_weapon_or_location_names_and_visible_profiles",
+                "rewrite_avatar_source_profiles_to_non_grid_visual_traits"
+              ]
+            }
+          },
+          "reason": "No improvement or passed gate regressed"
+        }
+      ],
       "source_hash": "c709ad61f82bb14149d4e386c3f5c339f0baa898bcc5b5c38fafebb7e5700478",
       "simulator_hash": "17170058b8f45eab789e14aaf2fb7a6605587fb8",
       "candidate": {
