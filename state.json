@@ -13886,7 +13886,7 @@
       "status": "quarantined"
     },
     "tarihi-hamamda-cinayet": {
-      "spent": 0.047109250000000005,
+      "spent": 0.010335250000000004,
       "feedback": [
         {
           "error": "TEXT_CONTENT:suspects/0:MIN_12_WORDS:ACTUAL_10;suspects/1:MIN_12_WORDS:ACTUAL_9;suspects/2:MIN_12_WORDS:ACTUAL_8"
@@ -18053,10 +18053,58 @@
       "model": "gemini-3.8-flash",
       "purpose": "repair",
       "day": "2026-10-18",
-      "status": "reserved",
-      "charged": 0.04392675,
-      "repair_method": "verified_text_v1"
+      "status": "completed",
+      "charged": 0.00715275,
+      "repair_method": "verified_text_v1",
+      "usage": {
+        "promptTokenCount": 5012,
+        "candidatesTokenCount": 905,
+        "totalTokenCount": 5917,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 5012
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "plan": {
+        "case_id": "tarihi-hamamda-cinayet",
+        "assessment": "Maktulün cesedi göbek taşının hemen yanında bulunmuştur; cinayetin tam olarak Sıcak Oda'da işlendiği adli kayıtlarla doğrulanmıştır. Her şüphelinin cinayet aralığında tek bir mekânda bulunduğu ve tek bir vasıtaya eriştiği bilinmektedir. Çapraz eşleştirmeler ve ipuçları sayesinde suçlu, vasıta ve mekân üçlüsü kesin olarak ortaya çıkar.",
+        "story": "Kubbeli yapının mermer koridorlarında yankılanan boğuk bir inilti, buhar bulutunu yırtıp geçti. Varlıklı bir tüccar, içeriden kilitli kubbenin altında son nefesini verdi. Olay anında içerideki üç kişiden her biri farklı bir bölümdeydi ve yalnızca tek bir vasıtaya erişebiliyordu. Gerçeği sis perdesi ardından çekip çıkarmak artık sizin elinizde.",
+        "suspect_descriptions": {
+          "s1": "Müşterilerin emanetlerini ve para keselerini teslim alan, solgun çehreli, genç ve dikkatli bir görevli.",
+          "s2": "Tesisi idare eden, sert bakışlı, kaşları çatık ve tavırlarıyla çalışanlara daima emirler yağdıran otoriter patron.",
+          "s3": "Kese işinde uzmanlaşmış, terden parıldayan pazıları ve nasırlı bilekleriyle dikkat çeken güçlü emektar çalışan."
+        },
+        "clues": {
+          "c1": {
+            "text": "Müşterilerin ayakkabılarını bıraktığı ana kapı eşiğindeki ıslak terlik izleri, buradaki işletmecinin cinayet vaktinde dış kapıdaki kasanın bulunduğu aydınlık alanda teftişte olduğunu kanıtladı.",
+            "deductionHint": "Tesis idarecisinin olay anında hangi bölmede kaldığını düşünebilir misiniz?"
+          },
+          "c2": {
+            "text": "Olay yeri tutanağı cinayetin mermer yıkanma alanında işlendiğini kesinleştirdi; tecrübeli emektar çalışanın terli havlusu da tam o esnada göbek taşının bulunduğu bu yoğun buharlı bölümde tespit edildi.",
+            "deductionHint": "Cinayetin gerçekleştiği kesin yer ve oradaki güçlü çalışan kim olabilir?"
+          },
+          "c3": {
+            "text": "Dış kapıdaki kasanın bulunduğu aydınlık alandaki eşyalarda yapılan ayrıntılı incelemede, hiçbir alet kullanmadan uygulanan doğrudan fiziksel boğma gücüne dair en ufak bir ize rastlanmadı.",
+            "deductionHint": "Girişteki alanda fiziksel baskı yönteminin kullanılmadığı neyi gösterir?"
+          },
+          "c4": {
+            "text": "Tırnak arası ve doku analizleri, emanetleri alan solgun yüzlü gencin hiçbir alet kullanmadan uygulanan ölümcül fiziksel boğma gücüne kesinlikle başvurmadığını belgeledi.",
+            "deductionHint": "Emanetlerle ilgilenen gencin hangi yöntemi uygulamadığı açıktır?"
+          },
+          "c5": {
+            "text": "Kayıt defterindeki teslim fişine göre Veznedar, zehirleme riski barındıran Acı Sabun paketini cinayet saatinden hemen önce teslim almıştır.",
+            "deductionHint": "Veznedar ile kayıt altına alınan sabun arasındaki bağ nedir?"
+          },
+          "c6": {
+            "text": "Tanık ifadesine göre Hamam Ağası, ikram tepsisine konulan Zehirli Şerbet kadehini bizzat elinde taşırken görülmüştür.",
+            "deductionHint": "Hamam Ağası hangi ölümcül içeceği bizzat taşımaktaydı?"
+          }
+        }
+      }
     }
   },
-  "campaign_spent": 0.3220517500000001
+  "campaign_spent": 0.2852777500000001
 }
