@@ -15412,7 +15412,7 @@
       "status": "quarantined"
     },
     "sabanci-muzesi-gasp": {
-      "spent": 0,
+      "spent": 0.0294993,
       "feedback": [],
       "source_hash": "c709ad61f82bb14149d4e386c3f5c339f0baa898bcc5b5c38fafebb7e5700478",
       "simulator_hash": "17170058b8f45eab789e14aaf2fb7a6605587fb8",
@@ -19648,7 +19648,16 @@
           }
         }
       }
+    },
+    "5ec950815b4c95ecd8d2528267c8e6f55ffeb1e8e725b63c231c0fe7c1ef7c6e": {
+      "case_id": "sabanci-muzesi-gasp",
+      "model": "gemini-3.5-flash-lite",
+      "purpose": "repair",
+      "day": "2026-10-18",
+      "status": "reserved",
+      "charged": 0.0294993,
+      "repair_method": "legacy_patch"
     }
   },
-  "campaign_spent": 0.2852777500000001
+  "campaign_spent": 0.3147770500000001
 }
