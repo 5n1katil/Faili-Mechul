@@ -13764,7 +13764,126 @@
         ]
       },
       "candidate_hash": "4d55629ed1f5d6fbc429ca3dcf5669a0e02d79513e24c0ef3441fa6590694fde",
-      "best_score": 60
+      "best_score": 60,
+      "failures": [
+        {
+          "score": 60,
+          "simulator_production_ready": false,
+          "blockers": [],
+          "fixes": [
+            "ZAYIF ÇAPA: isCrimeAnchor ipucusunun metnine, eşleşmenin bizzat cinayet/ölüm olayı olduğunu söyleyen vurucu bir ifade ekle. Örn. \"Yatak odasında afyonla zehirlenen maktul son nefesini verdi\" — sadece \"afyon yatak odasındaydı\" yetmez; oyuncu bunun cinayet anı olduğunu net anlamalı."
+          ],
+          "advisories": [
+            "ⓘ Standart mod: Bu vaka metin tabanlı ilerliyor; ücretsiz/standart vakalarda gelişmiş mini oyun zorunlu değildir. Mantık zinciri ve oynanabilirlik güçlüyse 100/100 alabilir."
+          ],
+          "score_breakdown": {
+            "k1": {
+              "score": 0,
+              "maximum": 40,
+              "findings": [
+                "HATA: Zayıf Çapa Metni! \"isCrimeAnchor\" ipucusu (İpucu 2), oyuncuya bu eşleşmenin cinayet eylemi olduğunu şüpheye yer bırakmayacak şekilde bildirmek zorundadır. Şu an metin yalnızca iki objeyi bağlıyor ama bunun BİZZAT ölüm/cinayet sebebi olduğunu söylemiyor. Metne olayı suça bağlayan vurucu bir ifade ekle (örn. \"maktulün can verdiği\", \"ölümcül darbenin vurulduğu\", \"zehirin içirildiği\", \"cinayetin işlendiği\")."
+              ]
+            },
+            "k2": {
+              "score": 20,
+              "maximum": 20,
+              "findings": [
+                "Mini oyun alanlarında çözümü erken ele veren ifade bulunamadı. Temiz."
+              ]
+            },
+            "k3": {
+              "score": 20,
+              "maximum": 20,
+              "findings": [
+                "Tip dağılımı: evidence×1, record×2, witness×2, forensic×1",
+                "✓ Tüm deductionHint alanları isim sızdırmıyor (Sokratik kurala uygun).",
+                "💡 TAVSİYE (opsiyonel): İpucu 4: \"Kesici Silah\" adı doğrudan veriyor. Oyuncu eforunu ve atmosferi artırmak için ismi doğrudan yazmak yerine profil kartındaki betimlemelere atıfta bulunan dolaylı ifadeler tercih edilebilir (örn. \"Hazinedar Hüseyin\" yerine \"kayıp altın meselesinin gölgesindeki adam\"). Bu bir kalite önerisidir; çözülebilirliği etkilemez."
+              ]
+            },
+            "k4": {
+              "score": 20,
+              "maximum": 20,
+              "findings": [
+                "2 bonus ipucu var — sayı uygundur; tam puanı işlevsellik belirler.",
+                "✓ Matris yardımı: her ek ipucu, ana çözümü zorunlu kılmadan oyuncunun ızgarasında kullanılabilir yeni bir çıkarım veriyor."
+              ]
+            }
+          },
+          "quality_findings": [
+            "💡 TAVSİYE (opsiyonel): İpucu 4: \"Kesici Silah\" adı doğrudan veriyor. Oyuncu eforunu ve atmosferi artırmak için ismi doğrudan yazmak yerine profil kartındaki betimlemelere atıfta bulunan dolaylı ifadeler tercih edilebilir (örn. \"Hazinedar Hüseyin\" yerine \"kayıp altın meselesinin gölgesindeki adam\"). Bu bir kalite önerisidir; çözülebilirliği etkilemez."
+          ],
+          "gates": {
+            "coreNecessity": {
+              "passed": true,
+              "flags": [],
+              "warnings": []
+            },
+            "patternGovernance": {
+              "passed": true,
+              "flags": [],
+              "warnings": []
+            },
+            "contentAndNames": {
+              "passed": true,
+              "flags": [],
+              "warnings": []
+            },
+            "semanticContract": {
+              "passed": true,
+              "flags": [],
+              "warnings": []
+            },
+            "visibleEvidence": {
+              "passed": true,
+              "flags": [],
+              "warnings": []
+            },
+            "mechanicContract": {
+              "passed": true,
+              "flags": [],
+              "warnings": []
+            },
+            "bonusFunctionality": {
+              "passed": true,
+              "score": 20,
+              "findings": [
+                "2 bonus ipucu var — sayı uygundur; tam puanı işlevsellik belirler.",
+                "✓ Matris yardımı: her ek ipucu, ana çözümü zorunlu kılmadan oyuncunun ızgarasında kullanılabilir yeni bir çıkarım veriyor."
+              ]
+            }
+          },
+          "leakage": {
+            "status": "manual_review_required",
+            "severity": "review",
+            "avatar_prompt_risk": false,
+            "solution_triple_exposed": false,
+            "findings": [
+              {
+                "case_id": "tren-yolculugunda-cinayet",
+                "suspect_id": "s3",
+                "suspect_name": "Emekli Doktor",
+                "axis_kind": "weapon",
+                "axis_id": "w1",
+                "axis_name": "Zehirli İçecek",
+                "strength": "review_semantic",
+                "direct_owner_binding": false,
+                "profile_exact_axis_name": false,
+                "distinctive_overlap_tokens": [
+                  "sıvı",
+                  "tıbb"
+                ],
+                "axis_name_overlap_tokens": [],
+                "avatar_prompt_risk": false,
+                "reasons": [
+                  "distinctive_profile_overlap:sıvı,tıbb"
+                ]
+              }
+            ],
+            "required_actions": []
+          }
+        }
+      ],
+      "status": "quarantined"
     }
   },
   "requests": {
