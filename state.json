@@ -15305,7 +15305,111 @@
         ]
       },
       "candidate_hash": "456e1bef32bb25166df759e69a697f490c23286fd614713629eb3a4793600d1d",
-      "best_score": 60
+      "best_score": 60,
+      "failures": [
+        {
+          "score": 60,
+          "simulator_production_ready": false,
+          "blockers": [
+            "Şüpheli 1 adı \"Veznedar\" tek sözcük. Bu bilinçli bir lakap/sahne adı değilse doğal ad-soyadla tamamla.",
+            "Şüpheli 3 adı \"Tellak\" tek sözcük. Bu bilinçli bir lakap/sahne adı değilse doğal ad-soyadla tamamla."
+          ],
+          "fixes": [
+            "ÇİFT İFŞA (Çapa): Çapa ipucunun logicRules'u tek başına cinayet triadının iki öğesini bağlamamalı — ne tek confirm'le ne de bir mekandan/şüpheliden birden çok öğeyi eleyip tek seçenek bırakarak. Çapa SADECE cinayetle ilişkili tek bir öğeyi sabitlesin (örn. yalnızca cinayet mekanını: tek bir confirm ya da o mekana dair tek bir bilgi). Silah-mekan/katil-silah bağını ayrı ipuçlara, mümkünse ters-çapraz çıkarıma bırak."
+          ],
+          "advisories": [
+            "TAVSİYE (İsim/İçerik Derinliği): Şüpheli 1 adı \"Veznedar\" tek sözcük. Bu bilinçli bir lakap/sahne adı değilse doğal ad-soyadla tamamla.",
+            "TAVSİYE (İsim/İçerik Derinliği): Şüpheli 3 adı \"Tellak\" tek sözcük. Bu bilinçli bir lakap/sahne adı değilse doğal ad-soyadla tamamla.",
+            "ⓘ Standart mod: Bu vaka metin tabanlı ilerliyor; ücretsiz/standart vakalarda gelişmiş mini oyun zorunlu değildir. Mantık zinciri ve oynanabilirlik güçlüyse 100/100 alabilir."
+          ],
+          "score_breakdown": {
+            "k1": {
+              "score": 0,
+              "maximum": 40,
+              "findings": [
+                "HATA: Çift İfşa Sızıntısı! Çapa ipucunuz (İpucu 2), tek başına cinayet triadının iki öğesini (Tellak + Sıcak Oda) kesin olarak birbirine bağlıyor — ister doğrudan confirm'le, ister birden çok elemenin tek seçenek bırakmasıyla. (zorluk belirtilmemiş — premium varsayıldı) Bu, bulmaca örüntüsünü yok eder: cinayeti tek hamlede çözer. Çapa SADECE cinayetle ilişkili TEK bir öğeyi versin (ya mekanı, ya silahı, ya şüpheliyi); o öğeyi başka bir eksene bağlama işini diğer ipuçlara, tercihen ters-çapraz çıkarıma bırak. NOT: Bu vaka gerçekten kolaysa (Çaylak), JSON'a \"difficulty\": 1 veya 2 ekle — kolay vakalarda çapanın iki öğe vermesi serbesttir."
+              ]
+            },
+            "k2": {
+              "score": 20,
+              "maximum": 20,
+              "findings": [
+                "Mini oyun alanlarında çözümü erken ele veren ifade bulunamadı. Temiz."
+              ]
+            },
+            "k3": {
+              "score": 20,
+              "maximum": 20,
+              "findings": [
+                "Tip dağılımı: evidence×1, record×2, witness×2, forensic×1",
+                "✓ Tüm deductionHint alanları isim sızdırmıyor (Sokratik kurala uygun), 4'i doğrudan soru biçiminde.",
+                "✓ DOLAYLI BETİMLEME (KALİTE): İpuçlarının hiçbiri şüpheli/silah/mekan adını doğrudan vermiyor; çıkarım profil betimlemelerine (lore) dayandırılmış. Premium dedüksiyon kalitesi — tam not."
+              ]
+            },
+            "k4": {
+              "score": 20,
+              "maximum": 20,
+              "findings": [
+                "2 bonus ipucu var — sayı uygundur; tam puanı işlevsellik belirler.",
+                "✓ Matris yardımı: her ek ipucu, ana çözümü zorunlu kılmadan oyuncunun ızgarasında kullanılabilir yeni bir çıkarım veriyor."
+              ]
+            }
+          },
+          "quality_findings": [],
+          "gates": {
+            "coreNecessity": {
+              "passed": true,
+              "flags": [],
+              "warnings": []
+            },
+            "patternGovernance": {
+              "passed": true,
+              "flags": [],
+              "warnings": []
+            },
+            "contentAndNames": {
+              "passed": true,
+              "flags": [],
+              "warnings": [
+                "Şüpheli 1 adı \"Veznedar\" tek sözcük. Bu bilinçli bir lakap/sahne adı değilse doğal ad-soyadla tamamla.",
+                "Şüpheli 3 adı \"Tellak\" tek sözcük. Bu bilinçli bir lakap/sahne adı değilse doğal ad-soyadla tamamla."
+              ]
+            },
+            "semanticContract": {
+              "passed": true,
+              "flags": [],
+              "warnings": []
+            },
+            "visibleEvidence": {
+              "passed": true,
+              "flags": [],
+              "warnings": []
+            },
+            "mechanicContract": {
+              "passed": true,
+              "flags": [],
+              "warnings": []
+            },
+            "bonusFunctionality": {
+              "passed": true,
+              "score": 20,
+              "findings": [
+                "2 bonus ipucu var — sayı uygundur; tam puanı işlevsellik belirler.",
+                "✓ Matris yardımı: her ek ipucu, ana çözümü zorunlu kılmadan oyuncunun ızgarasında kullanılabilir yeni bir çıkarım veriyor."
+              ]
+            }
+          },
+          "leakage": {
+            "status": "passed",
+            "severity": "none",
+            "avatar_prompt_risk": false,
+            "solution_triple_exposed": false,
+            "findings": [],
+            "required_actions": []
+          }
+        }
+      ],
+      "status": "quarantined"
     }
   },
   "requests": {
