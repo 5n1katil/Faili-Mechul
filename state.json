@@ -13887,7 +13887,11 @@
     },
     "tarihi-hamamda-cinayet": {
       "spent": 0.0031825000000000013,
-      "feedback": [],
+      "feedback": [
+        {
+          "error": "TEXT_CONTENT:suspects/0:MIN_12_WORDS:ACTUAL_10;suspects/1:MIN_12_WORDS:ACTUAL_9;suspects/2:MIN_12_WORDS:ACTUAL_8"
+        }
+      ],
       "source_hash": "c904eb61273cccce7e1b3fda450ab24837b6f8f7d8ac87aadbeb354061f484d3",
       "simulator_hash": "17170058b8f45eab789e14aaf2fb7a6605587fb8",
       "candidate": {
