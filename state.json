@@ -13886,7 +13886,7 @@
       "status": "quarantined"
     },
     "tarihi-hamamda-cinayet": {
-      "spent": 0.0235323,
+      "spent": 0.0031825000000000013,
       "feedback": [],
       "source_hash": "c904eb61273cccce7e1b3fda450ab24837b6f8f7d8ac87aadbeb354061f484d3",
       "simulator_hash": "17170058b8f45eab789e14aaf2fb7a6605587fb8",
@@ -17992,10 +17992,58 @@
       "model": "gemini-3.5-flash-lite",
       "purpose": "repair",
       "day": "2026-10-18",
-      "status": "reserved",
-      "charged": 0.0235323,
-      "repair_method": "verified_text_v1"
+      "status": "completed",
+      "charged": 0.0031825,
+      "repair_method": "verified_text_v1",
+      "usage": {
+        "promptTokenCount": 4950,
+        "candidatesTokenCount": 679,
+        "totalTokenCount": 5629,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 4950
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "plan": {
+        "case_id": "tarihi-hamamda-cinayet",
+        "assessment": "Case successfully transformed into a rigorous Turkish deduction mystery with correct entity references and strict plan adherence.",
+        "story": "Sultanahmet'in asırlık kubbeleri altında yükselen buhar bulutlarının arasında, dönemsel hesapları denetleyen tanınmış tüccar ani bir solunum kriziyle mermer zemine yığıldı. Kapılar dışarıdan tamamen kilitliydi; katil hamamın buğulu atmosferinde izlerini gizliyordu.",
+        "suspect_descriptions": {
+          "s1": "Genç ve telaşlı yüz hatlarına sahip, kayıt defterleriyle ilgilenen görevli.",
+          "s2": "Otoriter duruşlu, ağır kadife cüppesiyle dikkat çeken işletme yöneticisi.",
+          "s3": "Geniş omuzlu, yılların tecrübesiyle bilinen kıdemli mermer masajcısı."
+        },
+        "clues": {
+          "c1": {
+            "text": "Aynı zaman aralığında yapılan personel yoklamasında, otoriter duruşlu işletme yöneticisinin ana kapıdaki aydınlık bölümde bulunduğu resmi defterlerle doğrulanmıştır.",
+            "deductionHint": "Yöneticinin kayıtlı bulunduğu mekanı inceleyin."
+          },
+          "c2": {
+            "text": "Olay anındaki vardiya çizelgelerine göre, geniş omuzlu kıdemli mermer masajcısının yoğun buharlı sıcak odada görev yaptığı kanıtlanmıştır.",
+            "deductionHint": "Masajcının çalışma alanına dikkat edin."
+          },
+          "c3": {
+            "text": "Güvenlik kayıtları ve parmak izi incelemeleri sonucunda, hiçbir alet kullanılmadan uygulanan ölümcül boğma yönteminin ana kapıdaki aydınlık bölümde kullanılmadığı kesin olarak saptanmıştır.",
+            "deductionHint": "Bu yöntem ile ana alan arasındaki çelişkiyi değerlendirin."
+          },
+          "c4": {
+            "text": "Adli tıp raporları, genç ve telaşlı görevlinin hiçbir zaman çıplak elle boğma eylemini gerçekleştirmediğini doğrulamaktadır.",
+            "deductionHint": "Görevlinin fiziksel müdahale geçmişini inceleyin."
+          },
+          "c5": {
+            "text": "Dolap kayıtları, genç görevlinin ağır kimyasal içeren özel sabunla doğrudan teması olduğunu göstermektedir.",
+            "deductionHint": "Görevli ile sabun arasındaki ilişkiye bakın."
+          },
+          "c6": {
+            "text": "Tanık ifadeleri, işletme yöneticisinin maktule sunulan şerbet tepsisini hazırladığını doğrulamaktadır.",
+            "deductionHint": "Yöneticinin ikramla olan bağlantısını inceleyin."
+          }
+        }
+      }
     }
   },
-  "campaign_spent": 0.29847480000000004
+  "campaign_spent": 0.27812500000000007
 }
