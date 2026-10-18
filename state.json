@@ -17025,7 +17025,114 @@
         ]
       },
       "candidate_hash": "85266916e2527dc3866da7e5fb1d67e82147c03449122fe5a2c2c1141721f827",
-      "best_score": 0
+      "best_score": 0,
+      "failures": [
+        {
+          "score": 0,
+          "simulator_production_ready": false,
+          "blockers": [
+            "İpucu 4: deductionHint cevabı ele veriyor — \"Güvenlik Şefi\" adı açıkça geçiyor. Yeni kural: çıkarım, ismi söylemek yerine oyuncuyu düşündüren Sokratik soru olmalı (örn. \"Listedeki silahlardan hangisi bu kadar ağır olabilir?\"). (Not: bu kural yalnızca STANDART ipuçları için; bonus ipuçları doğrudan isim verebilir.)",
+            "LOGIC_PATTERN_UNVERIFIED"
+          ],
+          "fixes": [
+            "SIKI TEMEL İPUCU EKONOMİSİ: Her isBonus:false ipucu çıkarıldığında katil+silah+mekan cevabı belirsiz kalmalıdır. Cevabı değiştirmeyen temel ipuçlarını bonusa taşıyın ya da onları eksik olan cevap bileşenini daraltacak biçimde yeniden yazın.",
+            "SPOILER RİSKİ: deductionHint alanlarında geçen isimleri kaldır, Sokratik soruya çevir. Soru, oyuncuyu ızgarada belirli bir X/✓ işaretine yönlendirmeli. Örn. \"Listedeki silahlardan hangisi bir kafatasını bu kütleyle parçalayabilir?\""
+          ],
+          "advisories": [
+            "TAVSİYE (Monotonluk): Aynı işlem (\"confirm\") art arda 3 kez kullanılmış (ipucu dizilimi tekdüze). Matrisi kırma stratejisini çeşitlendir: confirm ve eliminate adımlarını harmanla.",
+            "ⓘ Standart mod: Bu vaka metin tabanlı ilerliyor; ücretsiz/standart vakalarda gelişmiş mini oyun zorunlu değildir. Mantık zinciri ve oynanabilirlik güçlüyse 100/100 alabilir."
+          ],
+          "score_breakdown": {
+            "k1": {
+              "score": 40,
+              "maximum": 40,
+              "findings": [
+                "TEMEL ÇÖZÜLEBİLİRLİK ✓: Temel ipuçlarıyla (4 kural) cinayet üçlüsü TEK çözüme iniyor → Ünlü Sanatçı · Elektrik Sopası · Güvenlik Merkezi (matriste 6 olası tam-düzen var ama hepsi aynı katil üçlüsünü veriyor — masum dağılımı oyuncuya bırakılmış, sorun değil). Bonuslar gerekmeden katil/silah/mekan kesinleşiyor.",
+                "BONUS DOĞRULAMASI ✓: bonuslar katil üçlüsünü bozmuyor, sadece doğruluyor/derinlik katıyor.",
+                "✓ Dinamik tam-ızgara (Murdle) solver: özel mekanik climax testi + masum eşleşmeler dahil."
+              ]
+            },
+            "k2": {
+              "score": 20,
+              "maximum": 20,
+              "findings": [
+                "Mini oyun alanlarında çözümü erken ele veren ifade bulunamadı. Temiz."
+              ]
+            },
+            "k3": {
+              "score": 16,
+              "maximum": 20,
+              "findings": [
+                "Tip dağılımı: forensic×3, record×2, physical×1",
+                "İpucu 4: deductionHint cevabı ele veriyor — \"Güvenlik Şefi\" adı açıkça geçiyor. Yeni kural: çıkarım, ismi söylemek yerine oyuncuyu düşündüren Sokratik soru olmalı (örn. \"Listedeki silahlardan hangisi bu kadar ağır olabilir?\"). (Not: bu kural yalnızca STANDART ipuçları için; bonus ipuçları doğrudan isim verebilir.)",
+                "💡 TAVSİYE (opsiyonel): İpucu 1: \"Güvenlik Merkezi\", İpucu 2: \"Elektrik Sopası\", İpucu 3: \"Kadir Aksoy\" ve 1 ipucu daha adı doğrudan veriyor. Oyuncu eforunu ve atmosferi artırmak için ismi doğrudan yazmak yerine profil kartındaki betimlemelere atıfta bulunan dolaylı ifadeler tercih edilebilir (örn. \"Hazinedar Hüseyin\" yerine \"kayıp altın meselesinin gölgesindeki adam\"). Bu bir kalite önerisidir; çözülebilirliği etkilemez."
+              ]
+            },
+            "k4": {
+              "score": 20,
+              "maximum": 20,
+              "findings": [
+                "2 bonus ipucu var — sayı uygundur; tam puanı işlevsellik belirler.",
+                "✓ Matris yardımı: her ek ipucu, ana çözümü zorunlu kılmadan oyuncunun ızgarasında kullanılabilir yeni bir çıkarım veriyor."
+              ]
+            }
+          },
+          "quality_findings": [
+            "💡 TAVSİYE (opsiyonel): İpucu 1: \"Güvenlik Merkezi\", İpucu 2: \"Elektrik Sopası\", İpucu 3: \"Kadir Aksoy\" ve 1 ipucu daha adı doğrudan veriyor. Oyuncu eforunu ve atmosferi artırmak için ismi doğrudan yazmak yerine profil kartındaki betimlemelere atıfta bulunan dolaylı ifadeler tercih edilebilir (örn. \"Hazinedar Hüseyin\" yerine \"kayıp altın meselesinin gölgesindeki adam\"). Bu bir kalite önerisidir; çözülebilirliği etkilemez."
+          ],
+          "gates": {
+            "coreNecessity": {
+              "passed": false,
+              "flags": [
+                "HATA: Oyuncu-Görünür Çözüm Başarısız. Tüm standart ipuçları ve belgelenen/anlaşılan anlatı bilgileri birlikteyken cevap tek kalmıyor (36 olası cevap). Bonus açmadan s2|w1|l2 üçlüsüne zorunlu olarak ulaşılmalı."
+              ],
+              "warnings": []
+            },
+            "patternGovernance": {
+              "passed": true,
+              "flags": [],
+              "warnings": []
+            },
+            "contentAndNames": {
+              "passed": true,
+              "flags": [],
+              "warnings": []
+            },
+            "semanticContract": {
+              "passed": true,
+              "flags": [],
+              "warnings": []
+            },
+            "visibleEvidence": {
+              "passed": true,
+              "flags": [],
+              "warnings": []
+            },
+            "mechanicContract": {
+              "passed": true,
+              "flags": [],
+              "warnings": []
+            },
+            "bonusFunctionality": {
+              "passed": true,
+              "score": 20,
+              "findings": [
+                "2 bonus ipucu var — sayı uygundur; tam puanı işlevsellik belirler.",
+                "✓ Matris yardımı: her ek ipucu, ana çözümü zorunlu kılmadan oyuncunun ızgarasında kullanılabilir yeni bir çıkarım veriyor."
+              ]
+            }
+          },
+          "leakage": {
+            "status": "passed",
+            "severity": "none",
+            "avatar_prompt_risk": false,
+            "solution_triple_exposed": false,
+            "findings": [],
+            "required_actions": []
+          }
+        }
+      ],
+      "status": "quarantined"
     }
   },
   "requests": {
