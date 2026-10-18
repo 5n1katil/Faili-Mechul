@@ -12345,7 +12345,7 @@
       "merge_commit_sha": "afdb0451886f543495e43c74a9b41aba7ab72a46"
     },
     "tren-yolculugunda-cinayet": {
-      "spent": 0.04605555,
+      "spent": 0.010113300000000006,
       "feedback": [],
       "source_hash": "227118c0ab3d8583bd590792597f8d81961231a762c3b6391182152b2dfdf889",
       "simulator_hash": "17170058b8f45eab789e14aaf2fb7a6605587fb8",
@@ -16515,10 +16515,58 @@
       "model": "gemini-3.8-flash",
       "purpose": "repair",
       "day": "2026-10-18",
-      "status": "reserved",
-      "charged": 0.04283475,
-      "repair_method": "verified_text_v1"
+      "status": "completed",
+      "charged": 0.0068925,
+      "repair_method": "verified_text_v1",
+      "usage": {
+        "promptTokenCount": 4530,
+        "candidatesTokenCount": 932,
+        "totalTokenCount": 5462,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 4530
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "plan": {
+        "case_id": "tren-yolculugunda-cinayet",
+        "assessment": "Planlanan tüm çıkarım kuralları harfiyen korunarak hikaye, şüpheli profilleri ve ipuçları sıfırdan kurgulandı. Çekirdek ipuçlarında kart isimleri doğrudan geçirilmeden yalnızca kart betimlemelerine dayanan dolaylı referanslar kullanıldı. İpucu c2'ye l2 (Yemekli Vagon) için cinayet konumu çıpası entegre edildi ve w2-l2 elemesi sağlandı. İpuçları ve profiller arasındaki kelime sızıntıları temizlendi.",
+        "story": "Ankara-İstanbul seferini yapan gece ekspresi yoğun sis altındaki son kilometrelerini geçerken kurbanın cansız bedeni bulundu. Tren perona yanaşmadan önce, her bir yolcunun belirli noktalarda bulunduğu ve farklı nesnelere ulaştığı bu kısa zaman aralığındaki cinayetin failini, yöntemini ve işlendiği yeri açığa çıkarmalısın.",
+        "suspect_descriptions": {
+          "s1": "Koyu renk takım elbisesi ve elinden düşürmediği evrak çantasıyla dikkat çeken, sürekli kolundaki saate bakan telaşlı bir yolcu.",
+          "s2": "Başında kapüşonu, boynunda kulaklığıyla dış dünyayla bağını tamamen koparmış gibi görünen, sırt çantalı dalgın bir genç.",
+          "s3": "Gözlüklerinin üzerinden etrafı süzen, cebinde küçük not defteri taşıyan, beyaz saçlı ve son derece soğukkanlı bir beyefendi."
+        },
+        "clues": {
+          "c1": {
+            "text": "Olay anında yapılan fiziki kontrolde, bavuldan çıkarılan ince naylon ipin trenin en arka bölümündeki mandalla kilitlenebilen o dar kabinde unutulduğu tespit edildi.",
+            "deductionHint": "Arka kısımdaki dar alanda bırakılan boğma düzeneği hangi mekana işaret ediyor?"
+          },
+          "c2": {
+            "text": "Cinayet masası incelemesi, ölümcül saldırının çay servisi yapılan beyaz örtülü masaların bulunduğu salonda gerçekleştiğini kesinleştirdi; servis personeli vardiya dökümü ise tek hamlede derin yara açan çakı bıçağının bu salonda asla yer almadığını belgeledi.",
+            "deductionHint": "Ölümün gerçekleştiği teyit edilen ortak alanda hangi nesnenin bulunmadığı kaydedilmiş?"
+          },
+          "c3": {
+            "text": "Kondüktörün denetim kaydına göre, kulağında kulaklığıyla gezen sırt çantalı genç yolcunun seferin son dakikalarında trenin en arka bölümündeki mandallı dar kabine girdiği görüldü.",
+            "deductionHint": "Kulaklıklı gencin sefer sırasında bulunduğu yer neresidir?"
+          },
+          "c4": {
+            "text": "Kriminal laboratuvarın parmak izi taramasında, küçük bir çakı bıçağı üzerinde yapılan detaylı swap testleri beyaz saçlı soğukkanlı beyefendiye ait hiçbir fiziksel izin bulunmadığını doğruladı.",
+            "deductionHint": "Soğukkanlı yaşlı yolcunun temas etmediği kesici alet hangisidir?"
+          },
+          "c5": {
+            "text": "Vagon amirinin tutanağına göre İş Kadını, çantasında taşıdığı Kesici Silah ile birlikte yolculuk boyunca kayıt altına alınmıştır.",
+            "deductionHint": "İş Kadını hangi suç aletiyle eşleşmektedir?"
+          },
+          "c6": {
+            "text": "Kompartıman görevlisinin şahitliğiyle, Üniversite Öğrencisi adlı yolcunun bagajındaki Boğma Halatı ile temas ettiği belgelenmiştir.",
+            "deductionHint": "Üniversite Öğrencisi hangi gereci elinde bulunduruyordu?"
+          }
+        }
+      }
     }
   },
-  "campaign_spent": 0.31088475000000004
+  "campaign_spent": 0.27494250000000003
 }
