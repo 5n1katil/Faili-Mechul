@@ -15574,8 +15574,8 @@
           },
           {
             "id": "s4",
-            "name": "Nakliyeci",
-            "description": "Eserleri taşıyan lojistik sorumlusu. Sadece yükleme alanlarına erişimi olan, kaba kuvvet gerektiren işlere alışkın işçi.",
+            "name": "Kadir Aksoy",
+            "description": "Eserleri müzeye taşıyan lojistik personelinden biri. Galanın açılışından önceki hazırlık evresinde görev almıştır.",
             "icon": "pa:sabanci_s4"
           }
         ],
@@ -15634,39 +15634,189 @@
         "clues": [
           {
             "id": "c1",
-            "text": "Kurbanın sinir sistemi tamamen kilitlenmişti; olay yerinde ne bir gaz bulutu ne de zor kullanılmış bir şırınga vardı. Saldırgan sessiz bir teknoloji kullanmıştı.",
+            "text": "Olay yeri inceleme ekipleri, kurbanın ve çalınan vitrin kontrol ünitesinin Güvenlik Merkezi içerisinde devre dışı bırakıldığını kesinleştirdi.",
             "type": "forensic",
-            "isBonus": false
+            "isBonus": false,
+            "isCrimeAnchor": true,
+            "logicRules": [
+              {
+                "action": "eliminate",
+                "pair": [
+                  "s1",
+                  "l2"
+                ]
+              }
+            ],
+            "deductionHint": "Olayın geçtiği yer ile yöneticinin konumu arasındaki ilişkiyi nasıl değerlendirirsiniz?",
+            "qaRationale": {
+              "matrixEffect": "Galeri Direktörü ≠ Güvenlik Merkezi elenir",
+              "evidenceLink": "kurbanın ve çalınan vitrin kontrol ünitesinin Güvenlik Merkezi içerisinde devre dışı bırakıldığını kesinleştirdi",
+              "evidenceKind": "forensic"
+            },
+            "qaSemanticFacts": [
+              {
+                "kind": "crime_component",
+                "component": "location",
+                "entityId": "l2",
+                "source": "clue:c1",
+                "evidence": "Olay yeri inceleme ekipleri, kurbanın ve çalınan vitrin kontrol ünitesinin Güvenlik Merkezi içerisinde devre dışı bırakıldığını kesinleştirdi."
+              }
+            ]
           },
           {
             "id": "c2",
-            "text": "Kanıtlar, hırsızlığın rüzgar alan dış cephede veya eserlerin sergilendiği ana alanda değil, tüm kameraları kör eden merkezi ve kapalı bir odada gerçekleştiğini gösteriyor.",
-            "type": "evidence",
-            "isBonus": false
+            "text": "Saldırıda kurbanın üzerine hiçbir gaz püskürtülmediği gibi darbe izi de bulunmadı; ancak olay mahalli olan izole odada yalnızca Elektrik Sopası taşındığı belirlendi.",
+            "type": "forensic",
+            "isBonus": false,
+            "isCrimeAnchor": false,
+            "logicRules": [
+              {
+                "action": "confirm",
+                "pair": [
+                  "w1",
+                  "l2"
+                ]
+              }
+            ],
+            "deductionHint": "Güvenlik odasında kullanılan tek ekipman hangisiydi?",
+            "qaRationale": {
+              "matrixEffect": "Elektrik Sopası ↔ Güvenlik Merkezi doğrulanır",
+              "evidenceLink": "izole odada yalnızca Elektrik Sopası taşındığı belirlendi",
+              "evidenceKind": "forensic"
+            },
+            "qaSemanticFacts": [
+              {
+                "kind": "crime_component",
+                "component": "weapon",
+                "entityId": "w1",
+                "source": "clue:c2",
+                "evidence": "izole odada yalnızca Elektrik Sopası taşındığı belirlendi"
+              }
+            ]
           },
           {
             "id": "c3",
-            "text": "Kaba kuvvet gerektiren işlere alışkın olan lojistik ekibinin, galadan çok önce yüklemeyi bitirip müzeden ayrıldığı güvenlik loglarına yansıdı.",
+            "text": "Müze kartlı geçiş kayıtlarında, Kadir Aksoy'un olay gecesi yalnızca mal kabulün yapıldığı Çıkış Noktası bölgesinde bulunduğu doğrulandı.",
             "type": "record",
-            "isBonus": false
+            "isBonus": false,
+            "isCrimeAnchor": false,
+            "logicRules": [
+              {
+                "action": "confirm",
+                "pair": [
+                  "s4",
+                  "l4"
+                ]
+              }
+            ],
+            "deductionHint": "Lojistik görevlisinin gece boyunca bulunduğu yer neresiydi?",
+            "qaRationale": {
+              "matrixEffect": "Kadir Aksoy ↔ Çıkış Noktası doğrulanır",
+              "evidenceLink": "Kadir Aksoy'un olay gecesi yalnızca mal kabulün yapıldığı Çıkış Noktası bölgesinde bulunduğu doğrulandı",
+              "evidenceKind": "record"
+            },
+            "qaSemanticFacts": [
+              {
+                "kind": "crime_component",
+                "component": "location",
+                "entityId": "l4",
+                "source": "clue:c3",
+                "evidence": "Kadir Aksoy'un olay gecesi yalnızca mal kabulün yapıldığı Çıkış Noktası bölgesinde bulunduğu doğrulandı"
+              }
+            ]
           },
           {
             "id": "c4",
-            "text": "Galeri Direktörü, gece boyunca kalabalık sanatsever kafilesine bizzat rehberlik ettiğini onlarca şahitle doğrulattı.",
-            "type": "witness",
-            "isBonus": false
+            "text": "Gala nöbetçi defterine göre Güvenlik Şefi, organizasyon süresince kilitli Depo alanında devriye görevindeydi.",
+            "type": "record",
+            "isBonus": false,
+            "isCrimeAnchor": false,
+            "logicRules": [
+              {
+                "action": "confirm",
+                "pair": [
+                  "s3",
+                  "l3"
+                ]
+              }
+            ],
+            "deductionHint": "Nöbetçi defteri güvenlik şefinin nerede olduğunu belgeliyor?",
+            "qaRationale": {
+              "matrixEffect": "Güvenlik Şefi ↔ Depo doğrulanır",
+              "evidenceLink": "Güvenlik Şefi, organizasyon süresince kilitli Depo alanında devriye görevindeydi",
+              "evidenceKind": "record"
+            },
+            "qaSemanticFacts": [
+              {
+                "kind": "crime_component",
+                "component": "location",
+                "entityId": "l3",
+                "source": "clue:c4",
+                "evidence": "Güvenlik Şefi, organizasyon süresince kilitli Depo alanında devriye görevindeydi"
+              }
+            ]
           },
           {
             "id": "c5",
-            "text": "Asker kökenli güvenlik şefi, olay gecesi Ankara'daki bir kolluk kuvvetleri seminerinde olduğuna dair ıslak imzalı belge sundu.",
-            "type": "record",
-            "isBonus": true
+            "text": "Depo girişinde yapılan balistik incelemede, buradaki kilitlerin zorlanmasında bir Demir Çubuk kullanıldığı saptandı.",
+            "type": "physical",
+            "isBonus": true,
+            "isCrimeAnchor": false,
+            "logicRules": [
+              {
+                "action": "confirm",
+                "pair": [
+                  "w3",
+                  "l3"
+                ]
+              }
+            ],
+            "deductionHint": "Depodaki izler hangi aracın orada kullanıldığını gösteriyor?",
+            "qaRationale": {
+              "matrixEffect": "Demir Çubuk ↔ Depo doğrulanır",
+              "evidenceLink": "Depo girişinde yapılan balistik incelemede, buradaki kilitlerin zorlanmasında bir Demir Çubuk kullanıldığı saptandı",
+              "evidenceKind": "physical"
+            },
+            "qaSemanticFacts": [
+              {
+                "kind": "crime_component",
+                "component": "weapon",
+                "entityId": "w3",
+                "source": "clue:c5",
+                "evidence": "buradaki kilitlerin zorlanmasında bir Demir Çubuk kullanıldığı saptandı"
+              }
+            ]
           },
           {
             "id": "c6",
-            "text": "Kaprisli tavırlarıyla dikkat çeken elit konuğun, aslında modern sanat enstalasyonları sayesinde ileri düzey elektronik bilgisine sahip olduğu ve izole odaya giren tek kişi olduğu tespit edildi.",
-            "type": "evidence",
-            "isBonus": true
+            "text": "Açık havadaki mal kabul rampasında rüzgarın dağıttığı Kimyasal Sprey kalıntıları tespit edildi.",
+            "type": "forensic",
+            "isBonus": true,
+            "isCrimeAnchor": false,
+            "logicRules": [
+              {
+                "action": "confirm",
+                "pair": [
+                  "w2",
+                  "l4"
+                ]
+              }
+            ],
+            "deductionHint": "Açık alan incelemesinde hangi maddenin izine rastlandı?",
+            "qaRationale": {
+              "matrixEffect": "Kimyasal Sprey ↔ Çıkış Noktası doğrulanır",
+              "evidenceLink": "mal kabul rampasında rüzgarın dağıttığı Kimyasal Sprey kalıntıları tespit edildi",
+              "evidenceKind": "forensic"
+            },
+            "qaSemanticFacts": [
+              {
+                "kind": "crime_component",
+                "component": "weapon",
+                "entityId": "w2",
+                "source": "clue:c6",
+                "evidence": "mal kabul rampasında rüzgarın dağıttığı Kimyasal Sprey kalıntıları tespit edildi"
+              }
+            ]
           }
         ],
         "solvabilityMeta": {
@@ -15693,8 +15843,8 @@
           "caseTier": "standard"
         },
         "qaPattern": {
-          "anchorSource": "none",
-          "designIntent": "Deterministik miras-vaka imzası: none:?; forensic:?:?; ????; ?|?|?|?; none."
+          "anchorSource": "clue:c1",
+          "designIntent": "Özgün çapa ve kademeli eleme zinciri: c1 mekan çapası (l2) ve s1 elemesi; c2 w1-l2 teyidi; c3 s4-l4 teyidi; c4 s3-l3 teyidi ile s2-w1-l2 zorunlu çıkarımı."
         },
         "qaPortfolioRegistry": {
           "schema_version": "fm_qa_portfolio_registry_v1",
@@ -16856,9 +17006,25 @@
             }
           ]
         },
-        "qaAuthoringVersion": "fm_case_qa_authoring_v3_2_deterministic_bootstrap"
+        "qaAuthoringVersion": "fm_case_qa_authoring_v3_2_deterministic_bootstrap",
+        "qaSemanticFacts": [
+          {
+            "kind": "crime_component",
+            "component": "location",
+            "entityId": "l2",
+            "source": "clue:c1",
+            "evidence": "Olay yeri inceleme ekipleri, kurbanın ve çalınan vitrin kontrol ünitesinin Güvenlik Merkezi içerisinde devre dışı bırakıldığını kesinleştirdi."
+          },
+          {
+            "kind": "crime_component",
+            "component": "weapon",
+            "entityId": "w1",
+            "source": "clue:c2",
+            "evidence": "izole odada yalnızca Elektrik Sopası taşındığı belirlendi"
+          }
+        ]
       },
-      "candidate_hash": "26d9f401d6b53d1d3df47a3bec4ae34074893aef996a2341cafe4c32eef4cf84",
+      "candidate_hash": "85266916e2527dc3866da7e5fb1d67e82147c03449122fe5a2c2c1141721f827",
       "best_score": 0
     }
   },
