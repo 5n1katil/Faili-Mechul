@@ -34,6 +34,7 @@ import { EXPERIENCE_PROFILES, EXPERIENCE_VERSION, experienceProfile, experienceC
 import { canonicalLogicSignature, logicNoveltyCheck } from './logic-patterns.mjs';
 import { CRIME_ANCHOR_SEMANTIC, anchorConfirmsTwoCrimeComponents, hardAnchorContract, simulatorDifficultyLevel } from './anchor-contract.mjs';
 import { anchorContractExamples, hamamSourceNameCompletion } from '../fixtures/anchor-contract-examples.mjs';
+import { recoverTrenHints, recoverHamamRoles, reviewPairRoom, HAMAM_ROLE_MONONYMS } from './recorded-recovery.mjs';
 import { qualityContract as experienceContract } from './quality-contract.mjs';
 import { editorialExperiencePrompt } from './editorial.mjs';
 import { reconcileKnownUnsent } from './reservation-recovery.mjs';
@@ -1955,6 +1956,57 @@ try {
       }
     }
   });
+  await test('recorded Tren hints and Hamam role names recover offline without acceptance or new rights', () => {
+    const puzzles = fs.readFileSync('artifacts/dedektif/data/puzzles.ts');
+    const tren = recoverTrenHints(productionSnapshot);
+    assert.equal(tren.hint_path, 'compileHints');
+    assert.equal(tren.recorded_plan, tren.today_plan);
+    assert.deepEqual(tren.changed_hints, ['c1', 'c4']);
+    assert.equal(tren.visible_unchanged, true);
+    assert.equal(tren.qa.score, 100);
+    assert.equal(tren.qa.passed, true);
+    assert.equal(tren.qa.production_ready, true);
+    assert.equal(tren.qa.independent_review, false);
+    assert.equal(tren.qa.content_locked, false);
+    assert.equal(productionSnapshot.sidecar.cases[tren.case_id], undefined);
+    const hamam = recoverHamamRoles(productionSnapshot);
+    assert.notEqual(hamam.recorded_plan, hamam.today_plan);
+    assert.deepEqual(hamam.names, ['Veznedar', 'Hamam Ağası', 'Tellak']);
+    assert.deepEqual(hamam.candidate.intentionalMononymIds, HAMAM_ROLE_MONONYMS);
+    assert.equal(hamam.qa.score, 100);
+    assert.equal(hamam.qa.passed, true);
+    assert.equal(hamam.qa.production_ready, true);
+    assert.deepEqual(hamam.qa.blockers, []);
+    assert.equal(hamam.qa.independent_review, false);
+    assert.equal(hamam.qa.content_locked, false);
+    const undeclared = recoverHamamRoles(productionSnapshot, []);
+    assert.equal(undeclared.qa.production_ready, false);
+    assert.deepEqual(undeclared.qa.blockers.map(item => item.includes('tek sözcük')), [true, true]);
+    const tellakOnly = recoverHamamRoles(productionSnapshot, ['s1']);
+    assert.deepEqual(tellakOnly.qa.blockers.filter(item => item.includes('tek sözcük')).map(item => item.includes('Tellak')), [true]);
+    const generic = clone(hamam.candidate);
+    generic.suspects[0].name = 'Şüpheli';
+    const genericQa = assess(productionSnapshot, productionSnapshot.entries.find(item => item.id === hamam.case_id), generic);
+    assert.ok(genericQa.result.blockers.some(item => item.includes('yer tutucu/jenerik')));
+    const blank = clone(hamam.candidate);
+    blank.suspects[2].name = 'A';
+    const blankQa = assess(productionSnapshot, productionSnapshot.entries.find(item => item.id === hamam.case_id), blank);
+    assert.ok(blankQa.result.blockers.some(item => item.includes('anlamlı bir görünen ad yok')));
+    const exported = productionSnapshot.engine.buildCanonicalProduction(hamam.candidate);
+    assert.equal(exported.intentionalMononymIds, undefined);
+    const counts = read('.case-qa/fixtures/campaign-39130510026-request-counts.json');
+    for (const id of [tren.case_id, hamam.case_id]) {
+      const room = reviewPairRoom(productionPolicy, counts.cases[id]);
+      assert.equal(room.status, 'quarantined');
+      assert.equal(room.used, 2);
+      assert.equal(room.remaining, 5);
+      assert.equal(room.verified_text, '2/2');
+      assert.equal(room.verified_text_remaining, 0);
+      assert.equal(room.lifetime_pair_fits, true);
+      assert.equal(room.quarantine_open, false);
+    }
+    assert.ok(puzzles.equals(fs.readFileSync('artifacts/dedektif/data/puzzles.ts')));
+  });
   await test('forensic laboratory institution and an unintroduced laboratory scene stay distinct', () => {
     const tren = productionSnapshot.entries.find(e => e.id === 'tren-yolculugunda-cinayet');
     const saved = read('.case-qa/fixtures/campaign-39130510026-repairs.json');
@@ -1996,7 +2048,7 @@ try {
       assert.equal(htmlFlagsFor(text).length, 1, text);
     }
     assert.match(samples.savedScan, /Kriminal laboratuvarın parmak izi taramasında/);
-    assert.equal(productionPolicy.simulator.git_blob_sha, '669721fc3afb1e12492f3abefdc55c86a1e2ee88');
+    assert.equal(productionPolicy.simulator.git_blob_sha, '9042485f8699c220d71a8b0fa1b32e90ab3e27e3');
   });
   await test('named and numeric difficulties share six categories and unknown stays unknown', () => {
     const pairs = [['caylak', false], ['çaylak', false], ['dedektif', true], ['baskomiser', true], ['başkomiser', true]];

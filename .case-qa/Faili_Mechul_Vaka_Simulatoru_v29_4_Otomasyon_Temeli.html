@@ -791,6 +791,7 @@ function normalize(d){
     qaPolicy:g('qaPolicy','qaPolitikasi')||{},
     // V25 QA-only: patern yönetişimi ve kabul edilmiş vaka imzaları.
     qaPattern:g('qaPattern','patternPlan','paternPlani')||null,
+    intentionalMononymIds:Array.isArray(g('intentionalMononymIds'))?g('intentionalMononymIds').filter(id=>typeof id==='string').map(String):[],
     qaPortfolioRegistry:g('qaPortfolioRegistry','portfolioRegistry','portfoyKayitlari')||null,
     qaAiReview:g('qaAiReview','aiReview','yapayZekaDenetimi')||null,
     solutionNarrative:g('solutionNarrative','cozumAnlatimi')||''
@@ -3883,7 +3884,11 @@ function contentDepthAndNameCheck(c){
         if(generic.test(name)) flags.push(`HATA: ${label} ${i+1} adı "${name}" yer tutucu/jenerik. Vaka kimliğine uygun doğal bir Türkçe adlandırma gerekir.`);
         if(fileLike.test(name)||malformed.test(name)) flags.push(`HATA: ${label} ${i+1} adı "${name}" oyuncuya gösterilecek doğal bir ad değil; dosya/teknik anahtar görünümü taşıyor.`);
         const words=name.split(/\s+/u).filter(Boolean);
-        if(label==='Şüpheli'&&words.length<2) warnings.push(`${label} ${i+1} adı "${name}" tek sözcük. Bu bilinçli bir lakap/sahne adı değilse doğal ad-soyadla tamamla.`);
+        // A declared role mononym is an explicit suspect id, not every one-word name.
+        // Empty, generic and undeclared names stay blocked.
+        const declaredRole=label==='Şüpheli'&&words.length===1&&!generic.test(name)&&
+          (c.intentionalMononymIds||[]).includes(String(e.id));
+        if(label==='Şüpheli'&&words.length<2&&!declaredRole) warnings.push(`${label} ${i+1} adı "${name}" tek sözcük. Bu bilinçli bir lakap/sahne adı değilse doğal ad-soyadla tamamla.`);
         if((label==='Silah'||label==='Mekân')&&(words.some(w=>/^[A-ZÇĞİÖŞÜ]$/u.test(w))||words.some(w=>/^\d+$/u.test(w)))){
           flags.push(`HATA: ${label} ${i+1} adı "${name}" kod/koordinat gibi görünüyor. Oyuncunun anlayacağı vaka-içi doğal adı kullan.`);
         }
@@ -5771,7 +5776,7 @@ function buildCanonicalProduction(raw){
   const c=normalize(raw||{});
   const clone=v=>JSON.parse(JSON.stringify(v==null?null:v));
   const sourceClues=(raw&&((raw.clues)||raw.ipuclari))||[];
-  const aliases=new Set(['caseTier','caseType','accessTier','tier','packageTier','monetizationTier','isPremium','premium','paid','isPaid','title','baslik','isim','subtitle','altBaslik','difficulty','difficultyLabel','zorluk','difficultyLevel','zorlukSeviyesi','specialMechanic','ozelMekanik','story','olay','hikaye','senaryo','atmosphere','atmosfer','suspects','supheliler','weapons','silahlar','locations','mekanlar','clues','ipuclari','solution','cozum','solutionNarrative','cozumAnlatimi','qaSemanticFacts','semanticFacts','visibleFacts','oyuncuGorunenOlgular','qaPolicy','qaPolitikasi','qaPattern','patternPlan','paternPlani','qaPortfolioRegistry','portfolioRegistry','portfoyKayitlari','qaAiReview','aiReview','yapayZekaDenetimi','qaAssetBrief','assetProductionBrief','varlikUretimNotu','assetManifest','assets','varlikManifesti']);
+  const aliases=new Set(['caseTier','caseType','accessTier','tier','packageTier','monetizationTier','isPremium','premium','paid','isPaid','title','baslik','isim','subtitle','altBaslik','difficulty','difficultyLabel','zorluk','difficultyLevel','zorlukSeviyesi','specialMechanic','ozelMekanik','story','olay','hikaye','senaryo','atmosphere','atmosfer','suspects','supheliler','weapons','silahlar','locations','mekanlar','clues','ipuclari','solution','cozum','solutionNarrative','cozumAnlatimi','qaSemanticFacts','semanticFacts','visibleFacts','oyuncuGorunenOlgular','qaPolicy','qaPolitikasi','qaPattern','patternPlan','paternPlani','intentionalMononymIds','qaPortfolioRegistry','portfolioRegistry','portfoyKayitlari','qaAiReview','aiReview','yapayZekaDenetimi','qaAssetBrief','assetProductionBrief','varlikUretimNotu','assetManifest','assets','varlikManifesti']);
   const clean={};
   Object.entries(raw||{}).forEach(([k,v])=>{ if(!aliases.has(k)) clean[k]=clone(v); });
   const toProdEnt=(e,fp=false)=>{
