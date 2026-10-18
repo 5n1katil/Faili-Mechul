@@ -37,6 +37,7 @@ import { editorialExperiencePrompt } from './editorial.mjs';
 import { reconcileKnownUnsent } from './reservation-recovery.mjs';
 import { loadRevisionGrants, revisionGrantFor, sameReviewTarget, validateGrant } from './review-revision.mjs';
 import { applyQueueReconciliation, fetchQueuePulls, normalizePull, queueAuditReport, reconcileQueue } from './reconcile.mjs';
+import { certificationPaths } from './certify-candidate.mjs';
 
 globalThis.fetch = async () => { throw new Error('TEST_NETWORK_FORBIDDEN'); };
 const productionPolicy = read('.case-qa/pipeline/policy.json'), currentPolicy = clone(productionPolicy), root = process.cwd();
@@ -1355,6 +1356,20 @@ try {
     }
   });
   const words = text => (String(text || '').trim().match(/\S+/g) || []).length;
+  const adadaGrantHash = '40f10f3099f3bcbf99a1c61e5268403a05296e417ec22bbc344f80a94bd8cff2';
+  // The live sidecar now carries the accepted review. That overlay is part of
+  // sourceHash, so historical grant tests must keep the pre-review overlay.
+  const adadaBeforeReview = (() => {
+    const sidecar = clone(productionSnapshot.sidecar);
+    const overlay = sidecar.cases[adadaEntry.id];
+    delete overlay.pipeline_review;
+    overlay.production_content_unchanged = false;
+    const entry = { ...adadaEntry, sourceHash: stableHash({ raw: adadaEntry.raw, overlay }) };
+    return {
+      snapshot: { ...productionSnapshot, sidecar, entries: productionSnapshot.entries.map(item => item.id === entry.id ? entry : item) },
+      entry
+    };
+  })();
   const adadaLedger = () => {
     const fixture = read('.case-qa/fixtures/adada-ledger-20261017.json');
     const store = storeFor(fixture.case_id);
@@ -1370,12 +1385,14 @@ try {
     assert.equal(productionPolicy.review_revision.max_pair_uses, 1);
     const grants = loadRevisionGrants(root, productionPolicy);
     assert.equal(grants.length, 1);
-    const grant = revisionGrantFor(productionSnapshot, adadaEntry);
+    const grant = revisionGrantFor(adadaBeforeReview.snapshot, adadaBeforeReview.entry);
     assert.equal(grant.id, 'adada-human-revision-9aabe510');
-    assert.equal(grant.content_hash, adadaEntry.sourceHash);
+    assert.equal(adadaBeforeReview.entry.sourceHash, adadaGrantHash);
+    assert.equal(grant.content_hash, adadaBeforeReview.entry.sourceHash);
+    assert.notEqual(adadaEntry.sourceHash, adadaGrantHash);
     assert.deepEqual(grant.purposes, ['player', 'judge']);
-    assert.equal(words(adadaEntry.candidate.story), 46);
-    assert.equal(revisionGrantFor(productionSnapshot, { ...adadaEntry, sourceHash: 'ab'.repeat(32) }), null);
+    assert.equal(words(adadaBeforeReview.entry.candidate.story), 46);
+    assert.equal(revisionGrantFor(adadaBeforeReview.snapshot, { ...adadaBeforeReview.entry, sourceHash: 'ab'.repeat(32) }), null);
     assert.throws(() => validateGrant({ ...grant, uses: 2 }), /REVISION_GRANT_UNLIMITED/);
     assert.throws(() => validateGrant({ ...grant, purposes: ['repair', 'editorial'] }), /REVISION_GRANT_PURPOSE/);
     const store = storeFor(adadaEntry.id);
@@ -1391,12 +1408,55 @@ try {
     assert.equal(store.state.requests[reserved.key].status, 'reserved');
     assert.equal(store.state.requests[reserved.key].charged > 0, true);
   });
+  await test('saved Adada review is reusable and does not inherit the historical grant', async () => {
+    const saved = productionSnapshot.sidecar.cases[adadaEntry.id].pipeline_review;
+    assert.equal(saved.schema, 'fm_case_review_v1');
+    assert.equal(productionSnapshot.sidecar.cases[adadaEntry.id].production_content_unchanged, true);
+    assert.notEqual(adadaEntry.sourceHash, adadaGrantHash);
+    assert.equal(revisionGrantFor(productionSnapshot, adadaEntry), null);
+    assert.equal(read('.case-qa/pipeline/review-revision-grants.json').grants[0].content_hash, adadaGrantHash);
+    assert.equal(read('.case-qa/pipeline/prepayment-continuations.json').continuations[0].content_hash, adadaGrantHash);
+    assert.equal(words(adadaEntry.candidate.story), 46);
+    assert.equal(certificateValid(productionSnapshot, adadaEntry, adadaEntry.candidate, saved), true);
+    const changed = clone(adadaEntry.candidate);
+    changed.suspects[0].description += ' ek kart';
+    assert.equal(sameReviewTarget(adadaEntry.candidate, changed), false);
+    assert.equal(certificateValid(productionSnapshot, adadaEntry, changed, saved), false);
+    const store = storeFor(adadaEntry.id);
+    let calls = 0;
+    const reviewed = await repairOne(productionSnapshot, adadaEntry, store, {
+      allowAI: true, caller: () => { calls++; throw new Error('UNEXPECTED_CALL'); }
+    });
+    assert.equal(reviewed.status, 'ready_for_gates');
+    assert.equal(reviewed.run.calls, 0);
+    assert.equal(calls, 0);
+    assert.equal(reviewed.review.cached, true);
+    assert.equal(reviewed.review.certificate.review_hash, saved.review_hash);
+    assert.equal(Object.keys(store.state.requests).length, 0);
+    assert.equal(store.state.cases[adadaEntry.id].spent, 0);
+    const { fixture, store: ledger } = adadaLedger();
+    const spent = ledger.state.campaign_spent;
+    const again = await repairOne(productionSnapshot, adadaEntry, ledger, {
+      allowAI: true, caller: () => { calls++; throw new Error('UNEXPECTED_CALL'); }
+    });
+    assert.equal(again.status, 'ready_for_gates');
+    assert.equal(again.run.calls, 0);
+    assert.equal(calls, 0);
+    for (const [key, value] of Object.entries(fixture.requests)) assert.deepEqual(ledger.state.requests[key], value);
+    assert.equal(ledger.state.campaign_spent, spent);
+    const scope = certificationPaths(productionPolicy);
+    assert.deepEqual(scope, [productionPolicy.source.standard_path, productionPolicy.source.premium_path, productionPolicy.source.sidecar_path, '.case-qa/pipeline/test.mjs', '.case-qa/pipeline/certify-candidate.mjs']);
+    assert.equal(scope.includes(productionPolicy.source.standard_path), true);
+    for (const extra of ['.case-qa/pipeline/core.mjs', '.case-qa/pipeline/policy.json', '.case-qa/pipeline/review-revision-grants.json', '.case-qa/pipeline/prepayment-continuations.json', '.github/workflows/fm-case-pipeline.yml', '.cursor/rules/faili-mechul-case-pipeline.mdc'])
+      assert.equal(scope.includes(extra), false, extra);
+  });
   await test('six historical Adada requests stop a review pair before any call unless the exact grant applies once', async () => {
-    const bare = { ...productionSnapshot, policy: clone(productionSnapshot.policy) };
+    const { snapshot, entry } = adadaBeforeReview;
+    const bare = { ...snapshot, policy: clone(snapshot.policy) };
     delete bare.policy.review_revision;
     const blockedLedger = adadaLedger();
     let blockedCalls = 0;
-    const blocked = await repairOne(bare, adadaEntry, blockedLedger.store, { allowAI: true, caller: () => { blockedCalls++; throw new Error('UNEXPECTED_CALL'); } });
+    const blocked = await repairOne(bare, entry, blockedLedger.store, { allowAI: true, caller: () => { blockedCalls++; throw new Error('UNEXPECTED_CALL'); } });
     assert.equal(blocked.status, 'review_pair_blocked');
     assert.equal(blocked.run.calls, 0);
     assert.equal(blockedCalls, 0);
@@ -1407,10 +1467,10 @@ try {
     let transports = 0;
     const caller = args => callPaid({ ...args, transport: async () => {
       transports++;
-      const plan = args.purpose === 'player' ? playerFor(adadaEntry.candidate) : validJudge();
+      const plan = args.purpose === 'player' ? playerFor(entry.candidate) : validJudge();
       return responseForFixture(plan);
     } });
-    const reviewed = await repairOne(productionSnapshot, adadaEntry, store, { allowAI: true, caller });
+    const reviewed = await repairOne(snapshot, entry, store, { allowAI: true, caller });
     assert.equal(reviewed.status, 'ready_for_gates');
     assert.equal(reviewed.run.attempts.filter(item => item.purpose === 'repair' || item.purpose === 'editorial').length, 0);
     assert.equal(transports, 2);
@@ -1418,35 +1478,35 @@ try {
     assert.equal(Object.keys(store.state.requests).length, 8);
     for (const [key, value] of Object.entries(fixture.requests)) assert.deepEqual(store.state.requests[key], value);
     assert.equal(Object.values(store.state.requests).filter(item => item.revision_grant_id === 'adada-human-revision-9aabe510').length, 2);
-    assert.equal(words(store.state.cases[adadaEntry.id].archived_candidate.story), 44);
-    assert.equal(words(store.state.cases[adadaEntry.id].candidate.story), 46);
+    assert.equal(words(store.state.cases[entry.id].archived_candidate.story), 44);
+    assert.equal(words(store.state.cases[entry.id].candidate.story), 46);
     assert.ok(source.equals(fs.readFileSync('artifacts/dedektif/data/puzzles.ts')));
-    assert.equal(certificateValid(productionSnapshot, adadaEntry, adadaEntry.candidate, reviewed.review.certificate), true);
-    const wrong = await repairOne(productionSnapshot, { ...adadaEntry, sourceHash: 'cd'.repeat(32) }, adadaLedger().store,
+    assert.equal(certificateValid(snapshot, entry, entry.candidate, reviewed.review.certificate), true);
+    const wrong = await repairOne(snapshot, { ...entry, sourceHash: 'cd'.repeat(32) }, adadaLedger().store,
       { allowAI: true, caller: () => { throw new Error('UNEXPECTED_CALL'); } });
     assert.equal(wrong.status, 'review_pair_blocked');
     assert.equal(wrong.run.calls, 0);
     let repeat = 0;
-    const second = await repairOne(productionSnapshot, adadaEntry, store, { allowAI: true, caller: () => { repeat++; throw new Error('UNEXPECTED_CALL'); } });
+    const second = await repairOne(snapshot, entry, store, { allowAI: true, caller: () => { repeat++; throw new Error('UNEXPECTED_CALL'); } });
     assert.equal(second.status, 'ready_for_gates');
     assert.equal(second.run.calls, 0);
     assert.equal(repeat, 0);
     assert.equal(transports, 2);
     assert.throws(() => reserveRequest(store, productionPolicy, runFor(), adadaEntry.id, productionPolicy.models.reviewer,
       requestBody(productionPolicy, productionPolicy.models.reviewer, 'another-granted-player'), 'player', new Date(), 'legacy_patch',
-      revisionGrantFor(productionSnapshot, adadaEntry)), /REVISION_GRANT_EXHAUSTED|CASE_REQUEST_LIMIT/);
+      revisionGrantFor(snapshot, entry)), /REVISION_GRANT_EXHAUSTED|CASE_REQUEST_LIMIT/);
     assert.equal(Object.keys(store.state.requests).length, 8);
   });
   await test('changed player cards cannot use the source revision grant', () => {
-    const source = adadaEntry.candidate;
+    const source = adadaBeforeReview.entry.candidate;
     assert.equal(sameReviewTarget(source, clone(source)), true);
-    assert.equal(revisionGrantFor(productionSnapshot, adadaEntry).content_hash, '40f10f3099f3bcbf99a1c61e5268403a05296e417ec22bbc344f80a94bd8cff2');
+    assert.equal(revisionGrantFor(adadaBeforeReview.snapshot, adadaBeforeReview.entry).content_hash, adadaGrantHash);
     for (const axis of ['suspects', 'weapons', 'locations']) {
       const changed = clone(source);
       assert.equal(typeof changed[axis][0].description, 'string');
       changed[axis][0].description += ' ek kart';
       assert.equal(sameReviewTarget(source, changed), false, axis);
-      assert.equal(revisionGrantFor(productionSnapshot, adadaEntry, changed), null, axis);
+      assert.equal(revisionGrantFor(adadaBeforeReview.snapshot, adadaBeforeReview.entry, changed), null, axis);
     }
     const story = clone(source); story.story += ' ek cümle';
     const clue = clone(source); clue.clues[0].text += ' ek ipucu';
@@ -1460,7 +1520,7 @@ try {
     assert.equal(productionPolicy.sequential.max_requests_per_case, 7);
   });
   await test('a revision grant buys one player and one judge, not a second key of either', () => {
-    const grant = revisionGrantFor(productionSnapshot, adadaEntry);
+    const grant = revisionGrantFor(adadaBeforeReview.snapshot, adadaBeforeReview.entry);
     const store = storeFor(adadaEntry.id);
     const body = (text, system) => requestBody(productionPolicy, productionPolicy.models.reviewer, text, { schema: { type: 'object' }, system });
     const reserve = (text, purpose, system) => reserveRequest(store, productionPolicy, runFor(), adadaEntry.id,
@@ -1516,7 +1576,7 @@ try {
     const held = store.state.campaign_spent;
     let transports = 0;
     const args = { store, policy: productionPolicy, run: runFor(), caseId: adadaEntry.id, model, prompt, purpose: 'player',
-      schema: { type: 'object' }, system: 'player', revisionGrant: revisionGrantFor(productionSnapshot, adadaEntry),
+      schema: { type: 'object' }, system: 'player', revisionGrant: revisionGrantFor(adadaBeforeReview.snapshot, adadaBeforeReview.entry),
       validate: value => value.answer === 'ok', transport: async () => { transports++; return response(JSON.stringify({ answer: 'ok' })); } };
     const resumed = await callPaid(args);
     assert.equal(resumed.cached, false);
@@ -1537,10 +1597,10 @@ try {
     assert.equal(store.state.requests[key].prepayment_hold, audited.charged);
     assert.throws(() => reserveRequest(store, productionPolicy, runFor(), adadaEntry.id, model,
       requestBody(productionPolicy, model, 'second-player-key', { schema: { type: 'object' }, system: 'player' }),
-      'player', new Date(), 'legacy_patch', revisionGrantFor(productionSnapshot, adadaEntry)), /REVISION_GRANT_EXHAUSTED/);
+      'player', new Date(), 'legacy_patch', revisionGrantFor(adadaBeforeReview.snapshot, adadaBeforeReview.entry)), /REVISION_GRANT_EXHAUSTED/);
     assert.throws(() => reserveRequest(store, productionPolicy, runFor(), adadaEntry.id, productionPolicy.models.repair,
       requestBody(productionPolicy, productionPolicy.models.repair, 'no-new-repair'), 'repair', new Date(), 'legacy_patch',
-      revisionGrantFor(productionSnapshot, adadaEntry)), /REVISION_GRANT_PURPOSE/);
+      revisionGrantFor(adadaBeforeReview.snapshot, adadaBeforeReview.entry)), /REVISION_GRANT_PURPOSE/);
     assert.equal(Object.keys(store.state.requests).length, Object.keys(historical).length + 1);
   });
   await test('only one prepayment continuation is sent; timeout and other failures stay blocked', async () => {
@@ -1595,15 +1655,15 @@ try {
       transports++;
       if (transports === 1) return { ok: false, status: 402, json: async () => ({ error: {
         status: 'RESOURCE_EXHAUSTED', message: prepaymentMessage } }) };
-      return responseForFixture(args.purpose === 'player' ? playerFor(adadaEntry.candidate) : validJudge());
+      return responseForFixture(args.purpose === 'player' ? playerFor(adadaBeforeReview.entry.candidate) : validJudge());
     } });
-    const failed = await repairOne(productionSnapshot, adadaEntry, store, { allowAI: true, caller });
+    const failed = await repairOne(adadaBeforeReview.snapshot, adadaBeforeReview.entry, store, { allowAI: true, caller });
     assert.equal(failed.status, 'GEMINI_HTTP_402');
     assert.equal(transports, 1);
     assert.equal(failed.run.attempts.filter(item => item.purpose === 'repair' || item.purpose === 'editorial').length, 0);
     for (const [key, value] of Object.entries(fixture.requests)) assert.deepEqual(store.state.requests[key], value);
     const spent = store.state.campaign_spent;
-    const continued = await repairOne(productionSnapshot, adadaEntry, store, { allowAI: true, caller });
+    const continued = await repairOne(adadaBeforeReview.snapshot, adadaBeforeReview.entry, store, { allowAI: true, caller });
     assert.equal(continued.status, 'ready_for_gates');
     assert.equal(transports, 3);
     assert.equal(continued.run.attempts.filter(item => item.purpose === 'repair' || item.purpose === 'editorial').length, 0);
@@ -1613,7 +1673,7 @@ try {
     assert.ok(granted.find(item => item.purpose === 'player').prepayment_hold > 0);
     assert.equal(productionPolicy.sequential.max_requests_per_case, 7);
   });
-  const adadaHash = '40f10f3099f3bcbf99a1c61e5268403a05296e417ec22bbc344f80a94bd8cff2';
+  const adadaHash = adadaGrantHash;
   const adadaPlayerKey = 'a9ce420fea33ddd0808008987c764ac0f52a40b9c68216af404fc37c0af05524';
   const secondPrepayment = (archived) => ({ ...archived, charged: 0, prepayment_hold: 0.057444, reservation_failures: [archived] });
   await test('the audited Adada player request gets one explicit continuation and a further rejection stops', async () => {
