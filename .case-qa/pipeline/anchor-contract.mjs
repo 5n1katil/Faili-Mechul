@@ -1,25 +1,20 @@
-// The pinned simulator is the acceptance contract. Named difficulty labels are
-// not numbers: the HTML leaves difficultyLevel null and treats that as hard.
-// These predicates copy that behavior so the planner and the compiler reject
-// a candidate before it can be retained at a non-passing score.
-//
-// This copy is not a resolution of the six-category split. Word bands already
-// read caylak, dedektif and baskomiser, while anchor strictness does not.
-// Teaching the simulator those names belongs in a separate pin update. Do not
-// treat hardAnchorContract("caylak") === true as the intended end state.
+// The pinned simulator is the acceptance contract. Categories are shared with
+// experience.mjs: caylak matches numeric 1-2, dedektif matches 3, and
+// baskomiser matches 4-5. A label is not rewritten into a stored number.
+// Only the novice category may confirm two members of the solution triple
+// in the anchor. Unknown values stay strict; they are not novice.
+
+import { experienceCategory } from './experience.mjs';
 
 export const CRIME_ANCHOR_SEMANTIC = /(ölüm|öldür|öldürül|cinayet|maktul|can ver|can çek|son nefes|hayat[ıi]n[ıi] kaybet|katled|kurban|öldürücü|ölümcül|zehirlen|cesedi?|nâ?aş|telef|katlin|suç aleti|cinayet silah|ölüm sebeb|asıl sebep|öldüğü|öldürdü|işlendiği|infaz|suikast|boğul|boğarak|bıçaklan|vurularak|ecel|son buldu|hayatına son|öldürme|faili|sustur)/i;
 
 export function simulatorDifficultyLevel(candidate) {
-  const value = candidate?.difficultyLevel ?? candidate?.difficulty;
-  if (typeof value === 'number' && Number.isFinite(value)) return value;
-  if (typeof value === 'string' && /^\d+$/.test(value.trim())) return Number.parseInt(value.trim(), 10);
-  return null;
+  const resolved = experienceCategory(candidate);
+  return resolved.source === 'number' ? resolved.level : null;
 }
 
 export function hardAnchorContract(candidate) {
-  const level = simulatorDifficultyLevel(candidate);
-  return level == null || level >= 3;
+  return experienceCategory(candidate).category !== 'caylak';
 }
 
 // One confirm between two members of the solution triple is the simulator's

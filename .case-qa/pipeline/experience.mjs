@@ -1,11 +1,33 @@
 export const EXPERIENCE_VERSION = 'fm-player-experience-v1';
-// Five stored premium levels are grouped without changing the game's raw level.
-// 1-2: novice, 3: detective, 4-5: chief. Explicit named levels take precedence.
+// Stored values are not rewritten. Numbers 1-5 keep their bands. A known label
+// is the same category and wins over a numeric difficultyLevel. Anything else
+// stays unknown and is never treated as novice.
+const DIFFICULTY_LABELS = { caylak: 'caylak', 'çaylak': 'caylak', dedektif: 'dedektif', baskomiser: 'baskomiser', 'başkomiser': 'baskomiser' };
+export function experienceCategory(candidate) {
+  const label = candidate?.difficulty;
+  if (typeof label === 'string' && label.trim() && !/^\d+$/.test(label.trim())) {
+    const category = DIFFICULTY_LABELS[label.toLocaleLowerCase('tr').replace(/[\s_-]/g, '')];
+    return category ? { category, level: null, source: 'label' } : { category: null, level: null, source: 'unknown' };
+  }
+  const value = candidate?.difficultyLevel ?? label;
+  const level = typeof value === 'number' ? value : typeof value === 'string' && /^\d+$/.test(value.trim()) ? Number.parseInt(value.trim(), 10) : null;
+  if (Number.isInteger(level) && level >= 1 && level <= 5)
+    return { category: level <= 2 ? 'caylak' : level === 3 ? 'dedektif' : 'baskomiser', level, source: 'number' };
+  return { category: null, level: null, source: 'unknown' };
+}
 export function difficultyBand(candidate) {
-  const value = candidate.difficulty ?? candidate.difficultyLevel;
-  if (typeof value === 'number') return value >= 1 && value <= 5 ? value <= 2 ? 'caylak' : value === 3 ? 'dedektif' : 'baskomiser' : null;
-  const key = String(value || '').toLocaleLowerCase('tr').replace(/[\s_-]/g, '');
-  return ({ caylak: 'caylak', 'çaylak': 'caylak', dedektif: 'dedektif', baskomiser: 'baskomiser', 'başkomiser': 'baskomiser' })[key] || null;
+  return experienceCategory(candidate).category;
+}
+// An examining institution, not a one-sentence exception. The clue names an
+// adli / adli tıp / kriminal laboratory as the body that scanned, tested or
+// reported, and does not place the crime or the body in that laboratory.
+const FORENSIC_BODY = /(?:adli(?:\s+t[ıi]p)?|kriminal)\s+laboratuvar/iu;
+const LAB_CRIME_SCENE = /laboratuvar(?:da|a|ın\s+içinde|in\s+içinde)\b[\s\S]{0,60}(?:işlendi|öldür|gerçekleşti|cinayet|ceset|maktul|beden|naaş)|(?:cinayet|ölüm|ceset|maktul|beden|naaş)[\s\S]{0,40}laboratuvar(?:da|a|ın\s+içinde|in\s+içinde)|laboratuvar[\s\S]{0,40}(?:cinayetin\s+işlendiği|olayın\s+geçtiği|cesedin\s+bulunduğu)/iu;
+const LAB_EXAMINATION = /(?:tarama|analiz|rapor|tespit|saptadı|saptan|incele|test|numune|parmak\s*iz)/iu;
+export function forensicInstitutionMention(text) {
+  const raw = String(text || '');
+  if (!FORENSIC_BODY.test(raw) || LAB_CRIME_SCENE.test(raw)) return false;
+  return LAB_EXAMINATION.test(raw);
 }
 export const EXPERIENCE_PROFILES = {
   standard_caylak: { story: [25,55], core: [12,30], bonus: [8,22], suspect: [12,20], intent: 'Brief cinematic mystery with a case-specific hook and immediately readable Turkish; one clear fact per clue. Shorter reading, never weaker atmosphere or bureaucratic filler.' },
@@ -45,7 +67,7 @@ export function experienceCheck(candidate, tier) {
   // continuity and unfamiliar named people still require the independent editor.
   for (const clue of candidate.clues || []) for (const term of ['atölye','laboratuvar','koridor','mahzen','mutfak','arşiv','gözetleme istasyonu']) {
     const root = fold(term), text = fold(clue.text);
-    const forensicInstitution = term === 'laboratuvar' && /^\s*adli\s+laboratuvar[, ]+.{0,100}(?:saptadı|analiz|tespit|rapor)/iu.test(clue.text || '');
+    const forensicInstitution = term === 'laboratuvar' && forensicInstitutionMention(clue.text || '');
     if (text.includes(root) && !context.includes(root) && !forensicInstitution) issues.push('EXPERIENCE_UNINTRODUCED_SETTING:' + clue.id + ':' + term);
   }
   if (/ölümcül\s+yöntem.{0,30}kesinleş|yöntemin\s+kesinleşti/iu.test(candidate.story || ''))

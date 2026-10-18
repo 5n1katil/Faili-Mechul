@@ -2,7 +2,7 @@ import { stableHash } from '../fm_case_qa_runner.mjs';
 import { canonicalLogicSignature } from './logic-patterns.mjs';
 import { experienceProfile } from './experience.mjs';
 import { TEXT_METHOD, verifyTextPlan } from './text-repair.mjs';
-import { anchorConfirmsTwoCrimeComponents, hardAnchorContract } from './anchor-contract.mjs';
+import { anchorConfirmsTwoCrimeComponents } from './anchor-contract.mjs';
 const axes = ['suspects','weapons','locations'];
 const permutations = [[0,1,2],[0,2,1],[1,0,2],[1,2,0],[2,0,1],[2,1,0]];
 const kinds = ['evidence','record','witness','forensic'];
@@ -58,7 +58,10 @@ export function diverseTextPlan(snapshot, entry, candidate) {
         const ordered = chosen.map(r => r.rule).sort((x,y) => stableHash([entry.id,x]).localeCompare(stableHash([entry.id,y])));
         const anchorIndex = ordered.findIndex(r => r.pair.includes(crime));
         if (anchorIndex < 0) continue;
-        if (hardAnchorContract(candidate) && anchorConfirmsTwoCrimeComponents(candidate, ordered[anchorIndex])) continue;
+        // Acceptance follows the simulator: a novice case may keep this link.
+        // Search still chooses a single solution-triple link so an existing
+        // passing graph does not change merely because the exemption exists.
+        if (anchorConfirmsTwoCrimeComponents(candidate, ordered[anchorIndex])) continue;
         const used = new Set(ordered.map(key));
         const positives = rules.filter(r => r.rule.action === 'confirm' && !used.has(key(r.rule)) &&
           r.rule.pair.every(id => !Object.values(target).includes(id)));
