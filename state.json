@@ -12345,7 +12345,7 @@
       "merge_commit_sha": "afdb0451886f543495e43c74a9b41aba7ab72a46"
     },
     "tren-yolculugunda-cinayet": {
-      "spent": 0.0032207999999999994,
+      "spent": 0.04605555,
       "feedback": [],
       "source_hash": "227118c0ab3d8583bd590792597f8d81961231a762c3b6391182152b2dfdf889",
       "simulator_hash": "17170058b8f45eab789e14aaf2fb7a6605587fb8",
@@ -16509,7 +16509,16 @@
           }
         }
       }
+    },
+    "1d0a02a4c5b74cbc50d2da40f30d04aca933b5e48a337393c5ba71b164935176": {
+      "case_id": "tren-yolculugunda-cinayet",
+      "model": "gemini-3.8-flash",
+      "purpose": "repair",
+      "day": "2026-10-18",
+      "status": "reserved",
+      "charged": 0.04283475,
+      "repair_method": "verified_text_v1"
     }
   },
-  "campaign_spent": 0.26805000000000007
+  "campaign_spent": 0.31088475000000004
 }
