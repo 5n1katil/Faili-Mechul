@@ -12345,7 +12345,7 @@
       "merge_commit_sha": "afdb0451886f543495e43c74a9b41aba7ab72a46"
     },
     "tren-yolculugunda-cinayet": {
-      "spent": 0,
+      "spent": 0.02361,
       "feedback": [],
       "source_hash": "227118c0ab3d8583bd590792597f8d81961231a762c3b6391182152b2dfdf889",
       "simulator_hash": "17170058b8f45eab789e14aaf2fb7a6605587fb8",
@@ -16331,7 +16331,16 @@
         "issues": [],
         "summary": "Vaka standart çaylak seviyesi için oldukça duru, tutarlı ve adil kurgulanmış. İpuçları doğrudan kart metinleriyle örtüşüyor; maktulün boğulma sebebi (c3) cinayet aletini 'Gemi Halatı' olarak sabitliyor, c1 ve c3 Albay ve Ressam'ı eleyerek katili 'Genç Yatçı' yapıyor, c2 ve c4 ise Zehir ve Av Tüfeği'nin yerlerini bağlayarak cinayet mahallini doğrudan 'Villa Bahçesi'ne bırakıyor. Herhangi bir mantıksal boşluk ya da pürüz bulunmuyor."
       }
+    },
+    "709bd8b08b5d87336c50ba26cc90c896350985ff76dccc060bacfb416fc7dc44": {
+      "case_id": "tren-yolculugunda-cinayet",
+      "model": "gemini-3.5-flash-lite",
+      "purpose": "repair",
+      "day": "2026-10-18",
+      "status": "reserved",
+      "charged": 0.02361,
+      "repair_method": "verified_text_v1"
     }
   },
-  "campaign_spent": 0.26482920000000004
+  "campaign_spent": 0.28843920000000006
 }
