@@ -15412,7 +15412,7 @@
       "status": "quarantined"
     },
     "sabanci-muzesi-gasp": {
-      "spent": 0.0294993,
+      "spent": 0.008617699999999999,
       "feedback": [],
       "source_hash": "c709ad61f82bb14149d4e386c3f5c339f0baa898bcc5b5c38fafebb7e5700478",
       "simulator_hash": "17170058b8f45eab789e14aaf2fb7a6605587fb8",
@@ -19654,10 +19654,166 @@
       "model": "gemini-3.5-flash-lite",
       "purpose": "repair",
       "day": "2026-10-18",
-      "status": "reserved",
-      "charged": 0.0294993,
-      "repair_method": "legacy_patch"
+      "status": "completed",
+      "charged": 0.0086177,
+      "repair_method": "legacy_patch",
+      "usage": {
+        "promptTokenCount": 11284,
+        "candidatesTokenCount": 2093,
+        "totalTokenCount": 13377,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 11284
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "plan": {
+        "case_id": "sabanci-muzesi-gasp",
+        "assessment": "Completed comprehensive patch plan addressing core necessity, visible evidence rules, bonus functionality, semantic facts, and portfolio pattern governance.",
+        "operations": [
+          {
+            "op": "add",
+            "path": "/qaPattern",
+            "value_json": "{\"anchorSource\":\"none\",\"designIntent\":\"Standard baskomiser standard deduction pattern: forensic elimination followed by record confirmation and evidence isolation.\"}",
+            "reason": "Add qaPattern as required by QA checks."
+          },
+          {
+            "op": "add",
+            "path": "/qaSemanticFacts",
+            "value_json": "[{\"kind\":\"crime_component\",\"component\":\"suspect\",\"entityId\":\"s2\",\"source\":\"story\",\"evidence\":\"teknolojik sanat enstalasyonları sayesinde elektronik sistemlere son derece hakim figür\"},{\"kind\":\"crime_component\",\"component\":\"weapon\",\"entityId\":\"w1\",\"source\":\"clue:c1\",\"evidence\":\"Saldırgan sessiz bir teknoloji kullanmıştı.\"}]",
+            "reason": "Add case-level semantic facts."
+          },
+          {
+            "op": "replace",
+            "path": "/suspects/3/name",
+            "value_json": "\"Ahmet Demir\"",
+            "reason": "Replace single-word suspect name with a proper full name."
+          },
+          {
+            "op": "add",
+            "path": "/clues/0/logicRules",
+            "value_json": "[{\"action\":\"eliminate\",\"pair\":[\"w2\",\"s2\"]},{\"action\":\"confirm\",\"pair\":[\"w1\",\"s2\"]}]",
+            "reason": "Add logicRules to clue 0."
+          },
+          {
+            "op": "add",
+            "path": "/clues/0/qaRationale",
+            "value_json": "{\"matrixEffect\":\"eliminates non-tech weapons and confirms tech weapon\",\"evidenceKind\":\"forensic\",\"evidenceLink\":\"Kurbanın sinir sistemi tamamen kilitlenmişti; olay yerinde ne bir gaz bulutu ne de zor kullanılmış bir şırınga vardı.\"}",
+            "reason": "Add qaRationale to clue 0."
+          },
+          {
+            "op": "add",
+            "path": "/clues/0/qaSemanticFacts",
+            "value_json": "[{\"kind\":\"crime_component\",\"component\":\"weapon\",\"entityId\":\"w1\",\"source\":\"clue:c1\",\"evidence\":\"Saldırgan sessiz bir teknoloji kullanmıştı.\"}]",
+            "reason": "Add qaSemanticFacts to clue 0."
+          },
+          {
+            "op": "add",
+            "path": "/clues/0/isCrimeAnchor",
+            "value_json": "true",
+            "reason": "Define clue 0 as crime anchor."
+          },
+          {
+            "op": "add",
+            "path": "/clues/1/logicRules",
+            "value_json": "[{\"action\":\"confirm\",\"pair\":[\"l2\",\"s2\"]},{\"action\":\"eliminate\",\"pair\":[\"l1\",\"s2\"]}]",
+            "reason": "Add logicRules to clue 1."
+          },
+          {
+            "op": "add",
+            "path": "/clues/1/qaRationale",
+            "value_json": "{\"matrixEffect\":\"confirms centralized secure location\",\"evidenceKind\":\"forensic\",\"evidenceLink\":\"Kanıtlar, hırsızlığın rüzgar alan dış cephede veya eserlerin sergilendiği ana alanda değil, tüm kameraları kör eden merkezi ve kapalı bir odada gerçekleştiğini gösteriyor.\"}",
+            "reason": "Add qaRationale to clue 1."
+          },
+          {
+            "op": "add",
+            "path": "/clues/1/qaSemanticFacts",
+            "value_json": "[{\"kind\":\"crime_component\",\"component\":\"location\",\"entityId\":\"l2\",\"source\":\"clue:c2\",\"evidence\":\"merkezi ve kapalı bir odaydı\"}]",
+            "reason": "Add qaSemanticFacts to clue 1."
+          },
+          {
+            "op": "add",
+            "path": "/clues/2/logicRules",
+            "value_json": "[{\"action\":\"eliminate\",\"pair\":[\"s4\",\"l2\"]}]",
+            "reason": "Add logicRules to clue 2."
+          },
+          {
+            "op": "add",
+            "path": "/clues/2/qaRationale",
+            "value_json": "{\"matrixEffect\":\"eliminates logistics worker from central secure room\",\"evidenceKind\":\"record\",\"evidenceLink\":\"Kaba kuvvet gerektiren işlere alışkın olan lojistik ekibinin, galadan çok önce yüklemeyi bitirip müzeden ayrıldığı güvenlik loglarına yansıdı.\"}",
+            "reason": "Add qaRationale to clue 2."
+          },
+          {
+            "op": "add",
+            "path": "/clues/2/qaSemanticFacts",
+            "value_json": "[{\"kind\":\"crime_component\",\"component\":\"suspect\",\"entityId\":\"s4\",\"source\":\"clue:c3\",\"evidence\":\"lojistik ekibinin... müzeden ayrıldığı\"}]",
+            "reason": "Add qaSemanticFacts to clue 2."
+          },
+          {
+            "op": "add",
+            "path": "/clues/3/logicRules",
+            "value_json": "[{\"action\":\"eliminate\",\"pair\":[\"s1\",\"l2\"]}]",
+            "reason": "Add logicRules to clue 3, removing direct name leak by reframing text."
+          },
+          {
+            "op": "replace",
+            "path": "/clues/3/text",
+            "value_json": "\"Kurumun baş yöneticisi, gece boyunca kalabalık sanatsever kafilesine bizzat rehberlik ettiğini onlarca şahitle doğrulattı ve ana salondan hiç ayrılmadı.\"",
+            "reason": "Remove direct name leak from clue 3 text."
+          },
+          {
+            "op": "add",
+            "path": "/clues/3/qaRationale",
+            "value_json": "{\"matrixEffect\":\"eliminates director from isolated room\",\"evidenceKind\":\"witness\",\"evidenceLink\":\"kalabalık sanatsever kafilesine bizzat rehberlik ettiğini\"}",
+            "reason": "Add qaRationale to clue 3."
+          },
+          {
+            "op": "add",
+            "path": "/clues/3/qaSemanticFacts",
+            "value_json": "[{\"kind\":\"crime_component\",\"component\":\"suspect\",\"entityId\":\"s1\",\"source\":\"clue:c4\",\"evidence\":\"baş yöneticisi... ana salondan hiç ayrılmadı\"}]",
+            "reason": "Add qaSemanticFacts to clue 3."
+          },
+          {
+            "op": "add",
+            "path": "/clues/4/logicRules",
+            "value_json": "[{\"action\":\"eliminate\",\"pair\":[\"s3\",\"l2\"]}]",
+            "reason": "Add functional logicRules matrix effect to bonus clue 4."
+          },
+          {
+            "op": "add",
+            "path": "/clues/4/qaRationale",
+            "value_json": "{\"matrixEffect\":\"eliminates security chief due to out-of-town seminar record\",\"evidenceKind\":\"record\",\"evidenceLink\":\"Ankara'daki bir kolluk kuvvetleri seminerinde olduğuna dair ıslak imzalı belge sundu.\"}",
+            "reason": "Add qaRationale to bonus clue 4."
+          },
+          {
+            "op": "add",
+            "path": "/clues/4/qaSemanticFacts",
+            "value_json": "[{\"kind\":\"crime_component\",\"component\":\"suspect\",\"entityId\":\"s3\",\"source\":\"clue:c5\",\"evidence\":\"Ankara'daki bir kolluk kuvvetleri seminerinde\"}]",
+            "reason": "Add qaSemanticFacts to bonus clue 4."
+          },
+          {
+            "op": "add",
+            "path": "/clues/5/logicRules",
+            "value_json": "[{\"action\":\"confirm\",\"pair\":[\"s2\",\"l2\"]}]",
+            "reason": "Add functional logicRules matrix effect to bonus clue 5."
+          },
+          {
+            "op": "add",
+            "path": "/clues/5/qaRationale",
+            "value_json": "{\"matrixEffect\":\"confirms elit guest access to isolated room\",\"evidenceKind\":\"evidence\",\"evidenceLink\":\"izole odaya giren tek kişi olduğu tespit edildi.\"}",
+            "reason": "Add qaRationale to bonus clue 5."
+          },
+          {
+            "op": "add",
+            "path": "/clues/5/qaSemanticFacts",
+            "value_json": "[{\"kind\":\"crime_component\",\"component\":\"suspect\",\"entityId\":\"s2\",\"source\":\"clue:c6\",\"evidence\":\"izole odaya giren tek kişi\"}]",
+            "reason": "Add qaSemanticFacts to bonus clue 5."
+          }
+        ]
+      }
     }
   },
-  "campaign_spent": 0.3147770500000001
+  "campaign_spent": 0.2938954500000001
 }
