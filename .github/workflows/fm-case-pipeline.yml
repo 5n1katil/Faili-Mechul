@@ -13,9 +13,9 @@ on:
   workflow_dispatch:
     inputs:
       mode:
-        description: audit = free; pilot = one paid case + draft PR; certify = candidate CI
+        description: audit = free; pilot = one paid case + draft PR; recorded-review = one verified Tren or Hamam player/judge pair; certify = candidate CI
         type: choice
-        options: [audit, pilot, campaign, certify, diagnose]
+        options: [audit, pilot, campaign, recorded-review, certify, diagnose]
         default: audit
       case_id:
         description: Optional explicit case; empty resumes the queue
@@ -35,12 +35,12 @@ permissions:
   contents: read
 
 concurrency:
-  group: case-pipeline-${{ (inputs.mode == 'pilot' || inputs.mode == 'campaign' || inputs.mode == 'diagnose') && 'paid' || github.ref }}
+  group: case-pipeline-${{ (inputs.mode == 'pilot' || inputs.mode == 'campaign' || inputs.mode == 'diagnose' || inputs.mode == 'recorded-review') && 'paid' || github.ref }}
   cancel-in-progress: false
 
 jobs:
   safety:
-    if: ${{ github.event_name == 'pull_request' || (inputs.mode != 'pilot' && inputs.mode != 'campaign' && inputs.mode != 'diagnose') }}
+    if: ${{ github.event_name == 'pull_request' || (inputs.mode != 'pilot' && inputs.mode != 'campaign' && inputs.mode != 'diagnose' && inputs.mode != 'recorded-review') }}
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:
@@ -120,7 +120,7 @@ jobs:
           include-hidden-files: true
 
   pilot:
-    if: ${{ github.event_name == 'workflow_dispatch' && (inputs.mode == 'pilot' || inputs.mode == 'campaign') }}
+    if: ${{ github.event_name == 'workflow_dispatch' && (inputs.mode == 'pilot' || inputs.mode == 'campaign' || inputs.mode == 'recorded-review') }}
     runs-on: ubuntu-latest
     timeout-minutes: 45
     permissions:
@@ -143,12 +143,18 @@ jobs:
         run: |
           test -n "$GEMINI_API_KEY" || { echo 'GEMINI_API_KEY missing; zero calls'; exit 1; }
           test "$(git rev-parse HEAD)" = "$(gh api "repos/$GITHUB_REPOSITORY/git/ref/heads/main" --jq '.object.sha')"
+          if [ "${{ inputs.mode }}" = "recorded-review" ]; then
+            case "${{ inputs.case_id }}" in
+              tren-yolculugunda-cinayet|tarihi-hamamda-cinayet) ;;
+              *) echo "recorded-review accepts only tren-yolculugunda-cinayet or tarihi-hamamda-cinayet"; exit 1 ;;
+            esac
+          fi
       - name: Offline safety before spending
         run: node .case-qa/pipeline/test.mjs
       - name: Bounded case repair and independent reviews
         id: case_work
         env:
-          FM_PIPELINE_MODE: pilot
+          FM_PIPELINE_MODE: ${{ inputs.mode == 'recorded-review' && 'recorded-review' || 'pilot' }}
           FM_PIPELINE_CASE_ID: ${{ inputs.case_id }}
           FM_PIPELINE_CASE_LIMIT: ${{ inputs.case_limit }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
