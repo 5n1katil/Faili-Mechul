@@ -11,7 +11,7 @@ import { read, write, clone, loadSnapshot, scan, selectNext, assess, guardedPatc
 import { emptyState, validateState, openStore, pushCheckpoint } from './state.mjs';
 import { reserveRequest, requestBody, requestKey, callPaid, Stop, modelPreflight, providerErrorDetails, prepaymentRejection, canResumePrepayment } from './provider.mjs';
 import { assertDraftPolicy } from './publish-draft.mjs';
-import { playerView, playerPass, judgePass, reviewCandidate, mediaPreflight, certificateValid } from './review.mjs';
+import { playerView, playerPass, judgePass, reviewCandidate, mediaPreflight, certificateValid, revalidateSimulatorCertificate } from './review.mjs';
 import { repairOne, campaignRows, reopenTextQuarantine } from './run.mjs';
 import { validateNewCase, previewNewCase } from './intake.mjs';
 import { repairTermal } from '../fixtures/termal_reviewed_repair.mjs';
@@ -1368,6 +1368,8 @@ try {
     const sidecar = clone(productionSnapshot.sidecar);
     const overlay = sidecar.cases[adadaEntry.id];
     delete overlay.pipeline_review;
+    delete overlay.simulator_revalidation;
+    delete overlay.simulator_revalidation_history;
     overlay.production_content_unchanged = false;
     const entry = { ...adadaEntry, sourceHash: stableHash({ raw: adadaEntry.raw, overlay }) };
     return {
@@ -1413,30 +1415,67 @@ try {
     assert.equal(store.state.requests[reserved.key].status, 'reserved');
     assert.equal(store.state.requests[reserved.key].charged > 0, true);
   });
-  await test('Adada certificate stays bound to the previous simulator pin and is not renewed', async () => {
+  await test('Adada revalidation recomputes the current pin from the 2026-10-17 answers without replacing the stored certificate', async () => {
     const saved = productionSnapshot.sidecar.cases[adadaEntry.id].pipeline_review;
+    const proof = read('.case-qa/fixtures/adada-simulator-revalidation.json');
     const previousPin = '17170058b8f45eab789e14aaf2fb7a6605587fb8';
+    const previousHash = 'd4458564108cd43307c5dfb76b2764a8f92ee44121e399db1d7060185bba6e5c';
+    proof.previousCertificate = { ...saved, review_hash: previousHash };
     assert.equal(saved.schema, 'fm_case_review_v1');
     assert.equal(productionSnapshot.sidecar.cases[adadaEntry.id].production_content_unchanged, true);
+    assert.equal(productionSnapshot.sidecar.cases[adadaEntry.id].simulator_revalidation, undefined);
     assert.notEqual(adadaEntry.sourceHash, adadaGrantHash);
     assert.equal(revisionGrantFor(productionSnapshot, adadaEntry), null);
     assert.equal(read('.case-qa/pipeline/review-revision-grants.json').grants[0].content_hash, adadaGrantHash);
     assert.equal(read('.case-qa/pipeline/prepayment-continuations.json').continuations[0].content_hash, adadaGrantHash);
     assert.equal(words(adadaEntry.candidate.story), 46);
+    assert.equal(productionSnapshot.simulatorHash, '9042485f8699c220d71a8b0fa1b32e90ab3e27e3');
     assert.notEqual(productionSnapshot.simulatorHash, previousPin);
     assert.equal(certificateValid(productionSnapshot, adadaEntry, adadaEntry.candidate, saved), false);
-    assert.equal(saved.review_hash, 'd4458564108cd43307c5dfb76b2764a8f92ee44121e399db1d7060185bba6e5c');
-    const ledgerFixture = read('.case-qa/fixtures/adada-ledger-20261017.json');
-    assert.equal(ledgerFixture.record.simulator_hash, previousPin);
-    assert.equal(ledgerFixture.record.spent, 0.021915200000000017);
+    assert.equal(saved.review_hash, previousHash);
+    assert.equal(certificateValid(productionSnapshot, adadaEntry, adadaEntry.candidate, proof.previousCertificate), false);
+    const renewed = revalidateSimulatorCertificate(productionSnapshot, adadaEntry, adadaEntry.candidate, proof);
+    assert.equal(renewed.certificate.review_hash, reviewHash(productionSnapshot, adadaEntry.candidate, mediaPreflight(productionSnapshot, adadaEntry, adadaEntry.candidate).evidence));
+    assert.notEqual(renewed.certificate.review_hash, previousHash);
+    assert.notEqual(saved.review_hash, renewed.certificate.review_hash);
+    assert.deepEqual(renewed.certificate.player, proof.playerRequest.plan);
+    assert.deepEqual(renewed.certificate.judge, proof.judgeRequest.plan);
+    assert.deepEqual(saved.player, proof.playerRequest.plan);
+    assert.deepEqual(saved.judge, proof.judgeRequest.plan);
+    assert.equal(renewed.record.previous_simulator_pin, previousPin);
+    assert.equal(renewed.record.simulator_pin, productionSnapshot.simulatorHash);
+    assert.equal(renewed.record.previous_review_hash, previousHash);
+    assert.equal(renewed.record.review_hash, renewed.certificate.review_hash);
+    assert.equal(renewed.record.player_request_key, proof.playerRequest.key);
+    assert.equal(renewed.record.judge_request_key, proof.judgeRequest.key);
+    assert.equal(renewed.record.player_request_day, '2026-10-17');
+    assert.equal(renewed.record.judge_request_day, '2026-10-17');
+    assert.equal(certificateValid(productionSnapshot, adadaEntry, adadaEntry.candidate, renewed.certificate), true);
+    assert.equal(productionSnapshot.sidecar.cases[adadaEntry.id].pipeline_review.review_hash, previousHash);
+    assert.equal(productionSnapshot.sidecar.cases[adadaEntry.id].simulator_revalidation, undefined);
     const changed = clone(adadaEntry.candidate);
     changed.suspects[0].description += ' ek kart';
     assert.equal(sameReviewTarget(adadaEntry.candidate, changed), false);
+    assert.throws(() => revalidateSimulatorCertificate(productionSnapshot, adadaEntry, changed, proof), /REVALIDATION_CONTENT_CHANGED/);
+    const otherRequest = clone(proof);
+    otherRequest.playerRequest = { ...proof.playerRequest, key: 'ab'.repeat(32) };
+    assert.throws(() => revalidateSimulatorCertificate(productionSnapshot, adadaEntry, adadaEntry.candidate, otherRequest), /REVALIDATION_REQUEST_MISMATCH/);
+    const failed = clone(proof);
+    failed.previousCertificate = clone(proof.previousCertificate);
+    failed.playerRequest = clone(proof.playerRequest);
+    failed.previousCertificate.player = { ...failed.previousCertificate.player, issues: ['çözüm kapanmıyor'] };
+    failed.playerRequest.plan = failed.previousCertificate.player;
+    assert.throws(() => revalidateSimulatorCertificate(productionSnapshot, adadaEntry, adadaEntry.candidate, failed), /REVALIDATION_EVALUATION_FAILED/);
+    const hand = { ...renewed.certificate, review_hash: 'cd'.repeat(32) };
+    assert.equal(certificateValid(productionSnapshot, adadaEntry, adadaEntry.candidate, hand), false);
+    const ledgerFixture = read('.case-qa/fixtures/adada-ledger-20261017.json');
+    assert.equal(ledgerFixture.record.simulator_hash, previousPin);
+    assert.equal(ledgerFixture.record.spent, 0.021915200000000017);
     assert.equal(certificateValid(productionSnapshot, adadaEntry, changed, saved), false);
     const scope = certificationPaths(productionPolicy);
     assert.deepEqual(scope, [productionPolicy.source.standard_path, productionPolicy.source.premium_path, productionPolicy.source.sidecar_path, '.case-qa/pipeline/test.mjs', '.case-qa/pipeline/certify-candidate.mjs']);
     assert.equal(scope.includes(productionPolicy.source.standard_path), true);
-    for (const extra of ['.case-qa/pipeline/core.mjs', '.case-qa/pipeline/policy.json', '.case-qa/pipeline/review-revision-grants.json', '.case-qa/pipeline/prepayment-continuations.json', '.github/workflows/fm-case-pipeline.yml', '.cursor/rules/faili-mechul-case-pipeline.mdc'])
+    for (const extra of ['.case-qa/pipeline/core.mjs', '.case-qa/pipeline/review.mjs', '.case-qa/fixtures/adada-simulator-revalidation.json', '.case-qa/pipeline/policy.json', '.case-qa/pipeline/review-revision-grants.json', '.case-qa/pipeline/prepayment-continuations.json', '.github/workflows/fm-case-pipeline.yml', '.cursor/rules/faili-mechul-case-pipeline.mdc'])
       assert.equal(scope.includes(extra), false, extra);
   });
   await test('six historical Adada requests stop a review pair before any call unless the exact grant applies once', async () => {

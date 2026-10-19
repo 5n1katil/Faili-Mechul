@@ -1,9 +1,9 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
-import { read, clone } from './core.mjs';
+import { read, clone, assess } from './core.mjs';
 import { stableHash } from '../fm_case_qa_runner.mjs';
-import { callPaid, requestBody } from './provider.mjs';
+import { callPaid, requestBody, requestKey } from './provider.mjs';
 import { assertReviewPairReservable, completedRequest } from './review-revision.mjs';
 import { canonicalLogicSignature, logicPatternSummary } from './logic-patterns.mjs';
 import { qualityContract, legacyQualityContract, REVIEW_VERSION } from './quality-contract.mjs';
@@ -134,19 +134,70 @@ function judgePrompt(snapshot, entry, candidate, view, evidence, playerPlan) {
     ...(snapshot.policy.review.prompt_version === REVIEW_VERSION ? { logical_novelty: { signature: canonicalLogicSignature(candidate), pattern: logicPatternSummary(candidate),
       portfolio: snapshot.entries.filter(e => e.id !== entry.id).map(e => ({ id: e.id, signature: canonicalLogicSignature(e.candidate), pattern: logicPatternSummary(e.candidate) })).filter(e => e.signature) } } : {}) });
 }
-export async function reviewCandidate(snapshot, entry, candidate, store, run, caller = callPaid, options = {}) {
+export function reviewTransport(snapshot, entry, candidate, playerPlan = null) {
   const pre = mediaPreflight(snapshot, entry, candidate);
-  if (!pre.passed) return { passed: false, failures: pre.failures };
+  if (!pre.passed) return { pre };
   const view = playerView(candidate, pre.evidence);
   const model = snapshot.policy.models.reviewer;
+  const judgePlan = playerPlan || { evidence: view.clues.map(clue => ({ clue_id: clue.id, quote: clue.text || '' })) };
+  return {
+    pre, view, model,
+    playerBody: requestBody(snapshot.policy, model, playerPrompt(snapshot, view), { schema: PLAYER_SCHEMA, system: PLAYER_SYSTEM }),
+    judgeBody: requestBody(snapshot.policy, model, judgePrompt(snapshot, entry, candidate, view, pre.evidence, judgePlan),
+      { schema: JUDGE_SCHEMA, system: JUDGE_SYSTEM })
+  };
+}
+const completedReview = (request, purpose, entryId, model) => request?.status === 'completed' && request.purpose === purpose &&
+  request.case_id === entryId && request.model === model && typeof request.key === 'string' && request.plan;
+// Rebind an already completed player/judge pair to the current simulator pin.
+// The hash is reviewHash(); callers cannot supply a replacement hash. Grants,
+// request slots and spend are not read or written.
+export function revalidateSimulatorCertificate(snapshot, entry, candidate, proof) {
+  const qa = assess(snapshot, entry, candidate);
+  const gatesOpen = qa.passed === true && qa.result.score === 100 && qa.result.simulatorProductionReady === true &&
+    Object.values(qa.result.gates || {}).every(gate => gate.passed === true);
+  if (!gatesOpen) throw new Error('REVALIDATION_EVALUATION_FAILED');
+  const previous = proof?.previousCertificate;
+  const pin = proof?.previousSimulatorPin;
+  if (previous?.schema !== 'fm_case_review_v1' || !/^[a-f0-9]{40}$/.test(pin || '') || pin === snapshot.simulatorHash ||
+      !/^\d{4}-\d{2}-\d{2}$/.test(proof?.playerRequest?.day || '') || !/^\d{4}-\d{2}-\d{2}$/.test(proof?.judgeRequest?.day || ''))
+    throw new Error('REVALIDATION_PROOF_INVALID');
+  const pre = mediaPreflight(snapshot, entry, candidate);
+  if (!pre.passed) throw new Error('REVALIDATION_EVALUATION_FAILED');
+  if (previous.review_hash !== reviewHash({ ...snapshot, simulatorHash: pin }, candidate, pre.evidence))
+    throw new Error('REVALIDATION_CONTENT_CHANGED');
+  const model = snapshot.policy.models.reviewer;
+  const transport = reviewTransport(snapshot, entry, candidate, previous.player);
+  if (!completedReview(proof.playerRequest, 'player', entry.id, model) || !completedReview(proof.judgeRequest, 'judge', entry.id, model) ||
+      proof.playerRequest.key !== requestKey(entry.id, model, transport.playerBody, 'player') ||
+      proof.judgeRequest.key !== requestKey(entry.id, model, transport.judgeBody, 'judge') ||
+      stableHash(proof.playerRequest.plan) !== stableHash(previous.player) ||
+      stableHash(proof.judgeRequest.plan) !== stableHash(previous.judge))
+    throw new Error('REVALIDATION_REQUEST_MISMATCH');
+  const view = playerView(candidate, pre.evidence);
+  if (!playerPass(snapshot.policy, candidate, view, previous.player) || !judgePass(snapshot.policy, previous.judge))
+    throw new Error('REVALIDATION_EVALUATION_FAILED');
+  const certificate = { schema: 'fm_case_review_v1', review_hash: reviewHash(snapshot, candidate, pre.evidence),
+    player: clone(previous.player), judge: clone(previous.judge) };
+  if (!certificateValid(snapshot, entry, candidate, certificate) || certificate.review_hash === previous.review_hash)
+    throw new Error('REVALIDATION_EVALUATION_FAILED');
+  return { certificate, record: {
+    schema: 'fm_simulator_revalidation_v1', method: 'reviewHash',
+    previous_simulator_pin: pin, simulator_pin: snapshot.simulatorHash,
+    previous_review_hash: previous.review_hash, review_hash: certificate.review_hash,
+    player_request_key: proof.playerRequest.key, judge_request_key: proof.judgeRequest.key,
+    player_request_day: proof.playerRequest.day, judge_request_day: proof.judgeRequest.day
+  } };
+}
+export async function reviewCandidate(snapshot, entry, candidate, store, run, caller = callPaid, options = {}) {
+  const transport = reviewTransport(snapshot, entry, candidate);
+  if (!transport.pre.passed) return { passed: false, failures: transport.pre.failures };
+  const { pre, view, model, playerBody } = transport;
   const grant = options.revisionGrant && options.sameTarget === true && options.revisionGrant.content_hash === options.sourceHash
     ? options.revisionGrant : null;
-  const playerBody = requestBody(snapshot.policy, model, playerPrompt(snapshot, view), { schema: PLAYER_SCHEMA, system: PLAYER_SYSTEM });
   const cachedPlayer = completedRequest(store, entry.id, model, playerBody, 'player');
   const knownPlayer = cachedPlayer && validPlayer(cachedPlayer.plan) ? cachedPlayer.plan : null;
-  const judgeEstimate = knownPlayer || { evidence: view.clues.map(clue => ({ clue_id: clue.id, quote: clue.text || '' })) };
-  const judgeBody = requestBody(snapshot.policy, model, judgePrompt(snapshot, entry, candidate, view, pre.evidence, judgeEstimate),
-    { schema: JUDGE_SCHEMA, system: JUDGE_SYSTEM });
+  const judgeBody = reviewTransport(snapshot, entry, candidate, knownPlayer).judgeBody;
   const cachedJudge = knownPlayer ? completedRequest(store, entry.id, model, judgeBody, 'judge') : null;
   const openSlots = snapshot.policy.sequential.max_requests_per_case - Object.values(store.state.requests).filter(item =>
     item.case_id === entry.id && !(item.status === 'failed' && item.transport_not_started === true && item.charged === 0)).length;
