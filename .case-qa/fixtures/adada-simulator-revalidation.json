@@ -1,0 +1,60 @@
+{
+  "schema": "fm_simulator_revalidation_proof_v1",
+  "case_id": "adada-buyuk-gizem",
+  "previousSimulatorPin": "17170058b8f45eab789e14aaf2fb7a6605587fb8",
+  "playerRequest": {
+    "key": "a9ce420fea33ddd0808008987c764ac0f52a40b9c68216af404fc37c0af05524",
+    "case_id": "adada-buyuk-gizem",
+    "model": "gemini-3.8-flash",
+    "purpose": "player",
+    "day": "2026-10-17",
+    "status": "completed",
+    "plan": {
+      "unique_solution": true,
+      "solution": {
+        "suspectId": "s3",
+        "weaponId": "w3",
+        "locationId": "l1"
+      },
+      "confidence": 100,
+      "evidence": [
+        {
+          "clue_id": "c3",
+          "quote": "Adli rapor, ölümü tekneleri bağlayan kalın ipin yol açtığı boğulmaya bağlıyor. Cinayet saatinin kesintisiz görüntüleri, disiplinli eski askerin bu ipi hiç almadığını veya kullanmadığını gösteriyor."
+        },
+        {
+          "clue_id": "c1",
+          "quote": "Tekneleri bağlayan kalın ipi hiç almadığı veya kullanmadığı kesinleşiyor."
+        },
+        {
+          "clue_id": "c2",
+          "quote": "Dalgaların vurduğu yürüyüş yolunda bulunan bitkisel toksin şişesi, cinayet saatinde çekilmiş bir fotoğrafta görülüyor."
+        },
+        {
+          "clue_id": "c4",
+          "quote": "Çift namlulu ateşli silah, cinayet saatinde adanın güney ucundaki sarp alanda bulunuyordu."
+        }
+      ],
+      "issues": []
+    }
+  },
+  "judgeRequest": {
+    "key": "8fce2e49e63af27a33c9cf89be0d5d356289e74632e9b718ac3b80eaf52105d5",
+    "case_id": "adada-buyuk-gizem",
+    "model": "gemini-3.8-flash",
+    "purpose": "judge",
+    "day": "2026-10-17",
+    "status": "completed",
+    "plan": {
+      "scores": {
+        "fairness": 5,
+        "clarity": 5,
+        "consistency": 5,
+        "originality": 4,
+        "engagement": 4
+      },
+      "issues": [],
+      "summary": "Vaka standart çaylak seviyesi için oldukça duru, tutarlı ve adil kurgulanmış. İpuçları doğrudan kart metinleriyle örtüşüyor; maktulün boğulma sebebi (c3) cinayet aletini 'Gemi Halatı' olarak sabitliyor, c1 ve c3 Albay ve Ressam'ı eleyerek katili 'Genç Yatçı' yapıyor, c2 ve c4 ise Zehir ve Av Tüfeği'nin yerlerini bağlayarak cinayet mahallini doğrudan 'Villa Bahçesi'ne bırakıyor. Herhangi bir mantıksal boşluk ya da pürüz bulunmuyor."
+    }
+  }
+}
