@@ -20,6 +20,7 @@ import { HINT_SYSTEM, hintOnly, hintSchema, hintPrompt, validHints, compileHints
 import { reconcileKnownUnsent } from './reservation-recovery.mjs';
 import { TEXT_METHOD, TEXT_SYSTEM, textRepairPlan, textResponseSchema, textRepairPrompt,
   validTextResponse, explainTextResponse, compileTextPatch, supportsTextRepair } from './text-repair.mjs';
+import { reviewRecordedRecovery } from './recorded-recovery.mjs';
 
 export function reopenTextQuarantine(snapshot, store) {
   if (snapshot.policy.sequential.verified_text_repair_limit !== 2) return [];
@@ -201,19 +202,24 @@ export function campaignRows(snapshot) {
 export async function main() {
   const root = process.cwd(), policy = read(path.join(root, '.case-qa/pipeline/policy.json'));
   const output = path.join(root, '.case-qa-output/pipeline');
-  const auditOnly = process.env.FM_PIPELINE_MODE !== 'pilot';
+  const mode = process.env.FM_PIPELINE_MODE || 'audit';
+  const recordedReview = mode === 'recorded-review';
+  const auditOnly = mode !== 'pilot' && !recordedReview;
   if (!auditOnly && process.env.GITHUB_ACTIONS !== 'true' && !process.env.FM_PIPELINE_LOCAL_STATE)
     throw new Error('LOCAL_PILOT_REQUIRES_EXPLICIT_LOCAL_STATE');
   const snapshot = loadSnapshot(root, policy), baseline = campaignRows(snapshot);
   write(path.join(output, 'baseline.json'), baseline);
   const store = auditOnly ? { state: { active_id: null, cases: {} } } : openStore(root, policy,
     process.env.FM_PIPELINE_LOCAL_STATE ? { localFile: process.env.FM_PIPELINE_LOCAL_STATE } : {});
-  if (!auditOnly) reopenTextQuarantine(snapshot, store);
+  if (!auditOnly && !recordedReview) reopenTextQuarantine(snapshot, store);
   const rows = baseline.map(r => ({ ...r, passed: r.content_locked }));
   const requested = process.env.FM_PIPELINE_CASE_ID || '';
+  if (recordedReview && !['tren-yolculugunda-cinayet', 'tarihi-hamamda-cinayet'].includes(requested))
+    throw new Error('RECORDED_REVIEW_CASE');
   if (requested && !snapshot.entries.some(e => e.id === requested)) throw new Error('UNKNOWN_CASE_ID');
-  const selected = requested ? rows.find(r => r.id === requested) : selectNext(rows, store.state.active_id, store.state.cases);
-  const report = { schema: 'fm_case_pipeline_result_v1', run_id: process.env.GITHUB_RUN_ID || null,
+  const selected = recordedReview ? rows.find(r => r.id === requested) :
+    requested ? rows.find(r => r.id === requested) : selectNext(rows, store.state.active_id, store.state.cases);
+  const report = { schema: 'fm_case_pipeline_result_v1', mode, run_id: process.env.GITHUB_RUN_ID || null,
     status: selected ? 'audit_only' : rows.every(r => r.passed) ? 'all_content_locked' : 'queue_blocked',
     main_synchronized: false, deterministic_qa: counts(baseline), content_locked: counts(rows),
     selected_id: selected?.id || null, api_calls: 0, execute_cost_usd: 0,
@@ -246,7 +252,9 @@ export async function main() {
     if (selected && !auditOnly) {
       report.model_preflight = await modelPreflight(policy);
       const entry = snapshot.entries.find(e => e.id === selected.id);
-      const result = await repairOne(snapshot, entry, store, { allowAI: true });
+      const result = recordedReview
+        ? await reviewRecordedRecovery(snapshot, entry.id, store, { calls: 0, spent: 0, attempts: [] })
+        : await repairOne(snapshot, entry, store, { allowAI: true });
       Object.assign(report, { status: result.status, best_score: result.assessment.result.score,
         api_calls: result.run.calls, execute_cost_usd: result.run.spent,
         campaign_cost_usd: store.state.campaign_spent, attempts: result.run.attempts,

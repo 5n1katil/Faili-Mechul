@@ -11,7 +11,7 @@ import { read, write, clone, loadSnapshot, scan, selectNext, assess, guardedPatc
 import { emptyState, validateState, openStore, pushCheckpoint } from './state.mjs';
 import { reserveRequest, requestBody, requestKey, callPaid, Stop, modelPreflight, providerErrorDetails, prepaymentRejection, canResumePrepayment } from './provider.mjs';
 import { assertDraftPolicy } from './publish-draft.mjs';
-import { playerView, playerPass, judgePass, reviewCandidate, mediaPreflight, certificateValid, revalidateSimulatorCertificate } from './review.mjs';
+import { playerView, playerPass, judgePass, reviewCandidate, mediaPreflight, certificateValid, revalidateSimulatorCertificate, reviewTransport } from './review.mjs';
 import { repairOne, campaignRows, reopenTextQuarantine } from './run.mjs';
 import { validateNewCase, previewNewCase } from './intake.mjs';
 import { repairTermal } from '../fixtures/termal_reviewed_repair.mjs';
@@ -34,7 +34,7 @@ import { EXPERIENCE_PROFILES, EXPERIENCE_VERSION, experienceProfile, experienceC
 import { canonicalLogicSignature, logicNoveltyCheck } from './logic-patterns.mjs';
 import { CRIME_ANCHOR_SEMANTIC, anchorConfirmsTwoCrimeComponents, hardAnchorContract, simulatorDifficultyLevel } from './anchor-contract.mjs';
 import { anchorContractExamples, hamamSourceNameCompletion } from '../fixtures/anchor-contract-examples.mjs';
-import { recoverTrenHints, recoverHamamRoles, reviewPairRoom, verifyRecordedReview, reviewRecordedRecovery, HAMAM_ROLE_MONONYMS } from './recorded-recovery.mjs';
+import { recoverTrenHints, recoverHamamRoles, reviewPairRoom, verifyRecordedReview, recordedReviewSpecs, reviewRecordedRecovery, HAMAM_ROLE_MONONYMS } from './recorded-recovery.mjs';
 import { qualityContract as experienceContract } from './quality-contract.mjs';
 import { editorialExperiencePrompt } from './editorial.mjs';
 import { reconcileKnownUnsent } from './reservation-recovery.mjs';
@@ -2048,7 +2048,7 @@ try {
     }
     assert.ok(puzzles.equals(fs.readFileSync('artifacts/dedektif/data/puzzles.ts')));
   });
-  await test('recorded Tren and Hamam candidates enter player/judge review without a new repair', async () => {
+  await test('recorded Tren and Hamam reviews reserve through callPaid and resume without repeating paid work', async () => {
     const puzzles = fs.readFileSync('artifacts/dedektif/data/puzzles.ts');
     const grants = fs.readFileSync('.case-qa/pipeline/review-revision-grants.json');
     const continuations = fs.readFileSync('.case-qa/pipeline/prepayment-continuations.json');
@@ -2060,77 +2060,204 @@ try {
     };
     const bindings = read('.case-qa/fixtures/recorded-review-bindings.json');
     const ids = ['tren-yolculugunda-cinayet', 'tarihi-hamamda-cinayet'];
-    const ledgerFor = (id, { requests = 2, charged = 0.005, sourceHash = bindings.cases[id]?.source_hash || '' } = {}) => {
+    const workflow = fs.readFileSync('.github/workflows/fm-case-pipeline.yml', 'utf8');
+    const runner = fs.readFileSync('.case-qa/pipeline/run.mjs', 'utf8');
+    const campaignSource = fs.readFileSync('.case-qa/pipeline/campaign.mjs', 'utf8');
+    assert.match(workflow, /options: \[audit, pilot, campaign, recorded-review, certify, diagnose\]/);
+    assert.match(workflow, /inputs\.mode == 'recorded-review'/);
+    assert.match(workflow, /tren-yolculugunda-cinayet\|tarihi-hamamda-cinayet/);
+    assert.ok(workflow.includes('node .case-qa/pipeline/publish-draft.mjs'));
+    assert.ok(!workflow.includes('auto_merge: true'));
+    assert.ok(workflow.includes("inputs.mode != 'campaign' || steps.case_work.outputs.status == 'ready_for_gates'"));
+    assert.match(runner, /recordedReview[\s\S]*reviewRecordedRecovery/);
+    assert.match(runner, /if \(!auditOnly && !recordedReview\) reopenTextQuarantine/);
+    assert.match(runner, /result\.status === 'ready_for_gates' && result\.review\?\.passed[\s\S]*stageCandidate\(snapshot, entry, result\.candidate, result\.review\.certificate\)/);
+    assert.match(workflow, /r\.status!=='ready_for_gates'/);
+    assert.ok(!campaignSource.includes('reviewRecordedRecovery'));
+    const ledgerFor = (id, { requests = 2, charged = 0.005, sourceHash = bindings.cases[id]?.source_hash || '', journal = null } = {}) => {
       const state = emptyState();
-      for (let index = 0; index < requests; index++) state.requests[id + ':' + index] = {
-        case_id: id, model: 'gemini-3.8-flash', purpose: index < 2 ? 'repair' : 'player', status: 'completed',
-        repair_method: index < 2 ? 'verified_text_v1' : undefined, day: '2026-10-18', charged
+      for (let index = 0; index < requests; index++) state.requests[id + ':repair:' + index] = {
+        case_id: id, model: 'gemini-3.8-flash', purpose: 'repair', status: 'completed',
+        repair_method: 'verified_text_v1', day: '2026-10-18', charged
       };
       const spent = requests * charged;
       state.cases[id] = { status: 'quarantined', spent, source_hash: sourceHash };
       state.campaign_spent = spent;
       validateState(state);
-      return { state, save() { validateState(this.state); } };
+      const store = { state, save() { validateState(this.state); if (journal) fs.writeFileSync(journal, JSON.stringify(this.state)); } };
+      if (journal) store.save();
+      return store;
     };
-    const callerFor = candidate => {
+    const oldKey = process.env.GEMINI_API_KEY;
+    process.env.GEMINI_API_KEY = 'offline-recorded-review';
+    try {
+      let freshTransports = 0;
+      for (const id of ids) {
+        const entry = productionSnapshot.entries.find(item => item.id === id);
+        const proof = verifyRecordedReview(productionSnapshot, id);
+        assert.equal(proof.candidate_hash, bindings.cases[id].candidate_hash);
+        const journal = path.join(temporary, 'recorded-review-' + id + '.json');
+        const store = ledgerFor(id, { journal });
+        const repairs = stableHash(Object.fromEntries(Object.entries(store.state.requests)));
+        const spentBefore = store.state.cases[id].spent;
+        let transports = 0;
+        const transport = async (url, init) => {
+          assert.equal(url, 'https://generativelanguage.googleapis.com/v1beta/models/' + productionPolicy.models.reviewer + ':generateContent');
+          assert.equal(init.method, 'POST');
+          assert.equal(init.headers['x-goog-api-key'], 'offline-recorded-review');
+          const durable = JSON.parse(fs.readFileSync(journal, 'utf8'));
+          const reserved = Object.values(durable.requests).filter(item => item.status === 'reserved');
+          assert.equal(reserved.length, 1);
+          assert.equal(reserved[0].purpose, transports === 0 ? 'player' : 'judge');
+          assert.ok(reserved[0].charged > 0);
+          assert.ok(durable.cases[id].spent > spentBefore);
+          assert.equal(durable.campaign_spent, durable.cases[id].spent);
+          transports++; freshTransports++;
+          return responseForFixture(transports === 1 ? playerFor(proof.candidate) : validJudge());
+        };
+        const reviewed = await reviewRecordedRecovery(productionSnapshot, id, store, runFor(), { transport });
+        const settled = JSON.parse(fs.readFileSync(journal, 'utf8'));
+        assert.equal(settled.campaign_spent, store.state.campaign_spent);
+        assert.ok(Object.values(settled.requests).filter(item => item.purpose !== 'repair').every(item => item.status === 'completed' && item.plan));
+        assert.equal(transports, 2);
+        assert.equal(reviewed.status, 'ready_for_gates');
+        assert.equal(reviewed.calls, 2);
+        assert.equal(reviewed.review.passed, true);
+        assert.equal(store.state.cases[id].status, 'quarantined');
+        assert.ok(store.state.cases[id].spent > spentBefore);
+        assert.equal(store.state.campaign_spent, store.state.cases[id].spent);
+        const added = Object.values(store.state.requests).filter(item => item.purpose !== 'repair');
+        assert.deepEqual(added.map(item => item.purpose).sort(), ['judge', 'player']);
+        assert.ok(added.every(item => item.status === 'completed' && item.plan));
+        assert.equal(stableHash(Object.fromEntries(Object.entries(store.state.requests).filter(([, item]) => item.purpose === 'repair'))), repairs);
+        assert.equal(certificateValid(productionSnapshot, entry, proof.candidate, reviewed.review.certificate), true);
+        assert.equal(productionSnapshot.sidecar.cases[id], undefined);
+        const cachedSpent = store.state.campaign_spent;
+        let cachedTransports = 0;
+        const cached = await reviewRecordedRecovery(productionSnapshot, id, store, runFor(), { transport: async () => { cachedTransports++; throw new Error('UNEXPECTED_TRANSPORT'); } });
+        assert.equal(cachedTransports, 0);
+        assert.equal(cached.calls, 0);
+        assert.equal(cached.status, 'ready_for_gates');
+        assert.equal(store.state.campaign_spent, cachedSpent);
+        const player = Object.entries(store.state.requests).find(([, item]) => item.purpose === 'player');
+        const judge = Object.entries(store.state.requests).find(([, item]) => item.purpose === 'judge');
+        const playerBefore = clone(player[1]);
+        const resumedSpecs = recordedReviewSpecs(productionSnapshot, entry, proof.candidate, store);
+        assert.equal(resumedSpecs.specs.length, 0);
+        assert.equal(requestKey(id, productionPolicy.models.reviewer, resumedSpecs.judgeBody, 'judge'), judge[0]);
+        assert.notEqual(requestKey(id, productionPolicy.models.reviewer, reviewTransport(productionSnapshot, entry, proof.candidate).judgeBody, 'judge'), judge[0]);
+        const judgeCharge = judge[1].charged;
+        delete store.state.requests[judge[0]];
+        store.state.cases[id].spent -= judgeCharge;
+        store.state.campaign_spent -= judgeCharge;
+        validateState(store.state);
+        let judgeTransports = 0;
+        const resumed = await reviewRecordedRecovery(productionSnapshot, id, store, runFor(), { transport: async () => { judgeTransports++; return responseForFixture(validJudge()); } });
+        assert.equal(judgeTransports, 1);
+        assert.equal(resumed.calls, 1);
+        assert.equal(resumed.status, 'ready_for_gates');
+        assert.deepEqual(store.state.requests[player[0]], playerBefore);
+        assert.equal(store.state.requests[judge[0]].status, 'completed');
+        const uncertain = ledgerFor(id);
+        const playerKey = requestKey(id, productionPolicy.models.reviewer, reviewTransport(productionSnapshot, entry, proof.candidate).playerBody, 'player');
+        uncertain.state.requests[playerKey] = { case_id: id, model: productionPolicy.models.reviewer, purpose: 'player', status: 'reserved', day: '2026-10-18', charged: 0.01 };
+        uncertain.state.cases[id].spent += 0.01;
+        uncertain.state.campaign_spent += 0.01;
+        validateState(uncertain.state);
+        let uncertainTransports = 0;
+        const blockedUncertain = await reviewRecordedRecovery(productionSnapshot, id, uncertain, runFor(), { transport: async () => { uncertainTransports++; throw new Error('UNEXPECTED_TRANSPORT'); } });
+        assert.equal(uncertainTransports, 0);
+        assert.equal(blockedUncertain.calls, 0);
+        assert.deepEqual(blockedUncertain.failures, ['REPEATED_OR_UNCERTAIN_REQUEST']);
+        assert.equal(uncertain.state.requests[playerKey].status, 'reserved');
+        assert.equal(uncertain.state.requests[playerKey].plan, undefined);
+        const blocked = ledgerFor(id, { requests: 6, charged: 0.001 });
+        let blockedTransports = 0;
+        const capacity = await reviewRecordedRecovery(productionSnapshot, id, blocked, runFor(), { transport: async () => { blockedTransports++; throw new Error('UNEXPECTED_TRANSPORT'); } });
+        assert.equal(capacity.status, 'review_pair_blocked');
+        assert.deepEqual(capacity.failures, ['CASE_REQUEST_LIMIT']);
+        assert.equal(capacity.calls, 0);
+        assert.equal(blockedTransports, 0);
+        assert.equal(blocked.state.cases[id].status, 'quarantined');
+        const tight = ledgerFor(id, { charged: productionPolicy.sequential.case_budget_usd / 2 - 0.0000001 });
+        const tightHash = stableHash(tight.state);
+        let budgetTransports = 0;
+        const budget = await reviewRecordedRecovery(productionSnapshot, id, tight, runFor(), { transport: async () => { budgetTransports++; throw new Error('UNEXPECTED_TRANSPORT'); } });
+        assert.deepEqual(budget.failures, ['BUDGET_STOP']);
+        assert.equal(budgetTransports, 0);
+        assert.equal(stableHash(tight.state), tightHash);
+        const drifted = ledgerFor(id, { sourceHash: 'ab'.repeat(32) });
+        await assert.rejects(() => reviewRecordedRecovery(productionSnapshot, id, drifted, runFor(), { transport: async () => { throw new Error('UNEXPECTED_TRANSPORT'); } }), /RECORDED_REVIEW_HASH/);
+        assert.deepEqual(reopenTextQuarantine(productionSnapshot, store), []);
+      }
+      assert.equal(freshTransports, 4);
+      const wrongPin = clone(bindings);
+      wrongPin.cases[ids[0]] = { ...wrongPin.cases[ids[0]], candidate_hash: 'cd'.repeat(32) };
+      assert.throws(() => verifyRecordedReview(productionSnapshot, ids[0], wrongPin), /RECORDED_REVIEW_HASH/);
+      await assert.rejects(() => reviewRecordedRecovery(productionSnapshot, 'sabanci-muzesi-gasp', ledgerFor('sabanci-muzesi-gasp'), runFor(), { transport: async () => { throw new Error('UNEXPECTED_TRANSPORT'); } }), /RECORDED_REVIEW_CASE/);
+      const queue = { state: { ...emptyState(), cases: {
+        'tren-yolculugunda-cinayet': { status: 'quarantined', spent: 0 },
+        'tarihi-hamamda-cinayet': { status: 'quarantined', spent: 0 }
+      } }, save() {} };
       const seen = [];
-      const caller = async args => {
-        seen.push(args.purpose);
-        if (args.purpose === 'player') return { plan: playerFor(candidate) };
-        if (args.purpose === 'judge') return { plan: validJudge() };
-        throw new Error('UNEXPECTED_PURPOSE');
+      await campaign(productionSnapshot, queue, { caseLimit: 1, worker: async (_snapshot, entry) => {
+        seen.push(entry.id);
+        return { status: 'quarantined', assessment: { result: { score: 0 } }, run: { calls: 0, spent: 0, attempts: [] }, failures: [] };
+      } });
+      assert.equal(seen.includes('tren-yolculugunda-cinayet'), false);
+      assert.equal(seen.includes('tarihi-hamamda-cinayet'), false);
+      const cleanCopy = () => {
+        const dir = fs.mkdtempSync(path.join(temporary, 'recorded-review-stage-'));
+        for (const file of [productionPolicy.source.standard_path, productionPolicy.source.premium_path, productionPolicy.source.sidecar_path, productionPolicy.simulator.path, productionPolicy.source.inventory_path, productionPolicy.review.media_evidence_path]) {
+          fs.mkdirSync(path.dirname(path.join(dir, file)), { recursive: true });
+          fs.copyFileSync(path.join(root, file), path.join(dir, file));
+        }
+        return { dir, snapshot: loadSnapshot(dir, productionPolicy) };
       };
-      return { seen, caller };
-    };
-    let totalCalls = 0;
-    for (const id of ids) {
-      const proof = verifyRecordedReview(productionSnapshot, id);
-      assert.equal(proof.source_hash, bindings.cases[id].source_hash);
-      assert.equal(proof.response_hash, bindings.cases[id].response_hash);
-      assert.equal(proof.plan_signature, bindings.cases[id].plan_signature);
-      assert.equal(proof.candidate_hash, bindings.cases[id].candidate_hash);
-      const store = ledgerFor(id);
-      const before = stableHash(store.state);
-      const { seen, caller } = callerFor(proof.candidate);
-      const reviewed = await reviewRecordedRecovery(productionSnapshot, id, store, runFor(), caller);
-      totalCalls += seen.length;
-      assert.deepEqual(seen, ['player', 'judge']);
-      assert.equal(reviewed.admitted, true);
-      assert.equal(reviewed.calls, 2);
-      assert.equal(reviewed.queue_status, 'quarantined');
-      assert.equal(store.state.cases[id].status, 'quarantined');
-      assert.equal(reviewed.content_locked, false);
-      assert.equal(stableHash(store.state), before);
-      assert.equal(certificateValid(productionSnapshot, productionSnapshot.entries.find(item => item.id === id), proof.candidate, reviewed.review.certificate), true);
-      assert.equal(productionSnapshot.sidecar.cases[id], undefined);
-      assert.deepEqual(reopenTextQuarantine(productionSnapshot, store), []);
-      const blocked = ledgerFor(id, { requests: 6, charged: 0.001 });
-      let blockedCalls = 0;
-      const capacity = await reviewRecordedRecovery(productionSnapshot, id, blocked, runFor(), async () => { blockedCalls++; throw new Error('UNEXPECTED_CALL'); });
-      assert.equal(capacity.admitted, false);
-      assert.deepEqual(capacity.failures, ['CASE_REQUEST_LIMIT']);
-      assert.equal(capacity.calls, 0);
-      assert.equal(blockedCalls, 0);
-      assert.equal(blocked.state.cases[id].status, 'quarantined');
-      const tight = ledgerFor(id, { charged: productionPolicy.sequential.case_budget_usd / 2 - 0.0000001 });
-      let budgetCalls = 0;
-      const budget = await reviewRecordedRecovery(productionSnapshot, id, tight, runFor(), async () => { budgetCalls++; throw new Error('UNEXPECTED_CALL'); });
-      assert.equal(budget.admitted, false);
-      assert.deepEqual(budget.failures, ['BUDGET_STOP']);
-      assert.equal(budget.calls, 0);
-      assert.equal(budgetCalls, 0);
-      const drifted = ledgerFor(id, { sourceHash: 'ab'.repeat(32) });
-      await assert.rejects(() => reviewRecordedRecovery(productionSnapshot, id, drifted, runFor(), async () => { throw new Error('UNEXPECTED_CALL'); }), /RECORDED_REVIEW_HASH/);
+      const sourceBytes = dir => [productionPolicy.source.standard_path, productionPolicy.source.sidecar_path].map(file => fs.readFileSync(path.join(dir, file)));
+      const failedCopy = cleanCopy();
+      const stageId = 'tren-yolculugunda-cinayet';
+      const failedProof = verifyRecordedReview(failedCopy.snapshot, stageId);
+      const beforeFiles = sourceBytes(failedCopy.dir);
+      let failedTransports = 0;
+      const failed = await reviewRecordedRecovery(failedCopy.snapshot, stageId, ledgerFor(stageId), runFor(), { transport: async () => {
+        failedTransports++;
+        return responseForFixture({ ...playerFor(failedProof.candidate), solution: { ...failedProof.candidate.solution, suspectId: 's1' } });
+      } });
+      assert.equal(failedTransports, 1);
+      assert.equal(failed.status, 'quarantined');
+      assert.equal(failed.review.passed, false);
+      assert.deepEqual(sourceBytes(failedCopy.dir), beforeFiles);
+      const stageOne = async id => {
+        const copy = cleanCopy();
+        const entry = copy.snapshot.entries.find(item => item.id === id);
+        const proof = verifyRecordedReview(copy.snapshot, id);
+        let calls = 0;
+        const reviewed = await reviewRecordedRecovery(copy.snapshot, id, ledgerFor(id), runFor(), { transport: async (url) => {
+          assert.match(url, /:generateContent$/);
+          calls++;
+          return responseForFixture(calls === 1 ? playerFor(proof.candidate) : validJudge());
+        } });
+        assert.equal(calls, 2);
+        assert.equal(reviewed.status, 'ready_for_gates');
+        assert.equal(reviewed.review.passed, true);
+        const staged = stageCandidate(copy.snapshot, entry, reviewed.candidate, reviewed.review.certificate);
+        const reloaded = staged.entries.find(item => item.id === id);
+        assert.equal(certificateValid(staged, reloaded, reloaded.candidate, staged.sidecar.cases[id].pipeline_review), true);
+        return staged;
+      };
+      const trenStaged = await stageOne(stageId);
+      assert.equal(campaignRows(trenStaged).find(item => item.id === stageId).content_locked, true);
+      assert.equal(campaignRows(trenStaged).find(item => item.id === 'adada-buyuk-gizem').content_locked, true);
+      assert.equal(campaignRows(trenStaged).find(item => item.id === 'tarihi-hamamda-cinayet').content_locked, false);
+      assert.throws(() => verifyRecordedReview(trenStaged, 'tarihi-hamamda-cinayet'), /RECORDED_REVIEW_HASH/);
+      const hamamStaged = await stageOne('tarihi-hamamda-cinayet');
+      assert.equal(campaignRows(hamamStaged).find(item => item.id === 'tarihi-hamamda-cinayet').content_locked, true);
+      assert.equal(campaignRows(hamamStaged).find(item => item.id === 'adada-buyuk-gizem').content_locked, true);
+      assert.equal(campaignRows(hamamStaged).find(item => item.id === stageId).content_locked, false);
+    } finally {
+      if (oldKey === undefined) delete process.env.GEMINI_API_KEY; else process.env.GEMINI_API_KEY = oldKey;
     }
-    assert.equal(totalCalls, 4);
-    const wrongPin = clone(bindings);
-    wrongPin.cases[ids[0]] = { ...wrongPin.cases[ids[0]], candidate_hash: 'cd'.repeat(32) };
-    assert.throws(() => verifyRecordedReview(productionSnapshot, ids[0], wrongPin), /RECORDED_REVIEW_HASH/);
-    const other = ledgerFor('sabanci-muzesi-gasp');
-    other.state.cases['sabanci-muzesi-gasp'] = { status: 'quarantined', spent: 0, source_hash: 'cd'.repeat(32) };
-    let otherCalls = 0;
-    await assert.rejects(() => reviewRecordedRecovery(productionSnapshot, 'sabanci-muzesi-gasp', other, runFor(), async () => { otherCalls++; throw new Error('UNEXPECTED_CALL'); }), /RECORDED_REVIEW_CASE/);
-    assert.equal(otherCalls, 0);
     assert.equal(productionPolicy.sequential.max_requests_per_case, limits.requests);
     assert.equal(productionPolicy.sequential.verified_text_repair_limit, limits.verified);
     assert.equal(productionPolicy.sequential.max_repairs_per_case, limits.repairs);

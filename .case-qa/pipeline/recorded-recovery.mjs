@@ -3,9 +3,9 @@ import { compileTextPatch, textRepairPlan } from './text-repair.mjs';
 import { compileHints, hintOnly } from './hint-cleanup.mjs';
 import { experienceProfile } from './experience.mjs';
 import { stableHash } from '../fm_case_qa_runner.mjs';
-import { reviewTransport, reviewCandidate } from './review.mjs';
-import { assertReviewPairReservable } from './review-revision.mjs';
-import { Stop } from './provider.mjs';
+import { reviewTransport, reviewCandidate, validPlayer } from './review.mjs';
+import { assertReviewPairReservable, completedRequest } from './review-revision.mjs';
+import { callPaid, Stop } from './provider.mjs';
 
 // Offline reuse of campaign 39130510026 responses. These candidates are not
 // content-locked and have no independent player/judge review.
@@ -102,37 +102,56 @@ export function verifyRecordedReview(snapshot, id, bindings = read(BINDING_PATH)
     throw new Error('RECORDED_REVIEW_HASH');
   return proof;
 }
-// Explicit player/judge admission for the two recovered candidates. It does not
-// repair, publish, open quarantine, or spend; the caller performs any later call.
-export async function reviewRecordedRecovery(snapshot, id, store, run, caller, bindings) {
-  if (typeof caller !== 'function') throw new Error('RECORDED_REVIEW_CALLER');
-  const proof = verifyRecordedReview(snapshot, id, bindings);
+export function recordedReviewSpecs(snapshot, entry, candidate, store) {
+  const transport = reviewTransport(snapshot, entry, candidate);
+  if (!transport.pre.passed) return { transport, specs: null };
+  const cachedPlayer = completedRequest(store, entry.id, transport.model, transport.playerBody, 'player');
+  const knownPlayer = cachedPlayer && validPlayer(cachedPlayer.plan) ? cachedPlayer.plan : null;
+  const judgeBody = reviewTransport(snapshot, entry, candidate, knownPlayer).judgeBody;
+  const cachedJudge = knownPlayer ? completedRequest(store, entry.id, transport.model, judgeBody, 'judge') : null;
+  const specs = [];
+  if (!knownPlayer) specs.push({ model: transport.model, body: transport.playerBody, purpose: 'player' });
+  if (!cachedJudge) specs.push({ model: transport.model, body: judgeBody, purpose: 'judge' });
+  return { transport, knownPlayer, judgeBody, specs };
+}
+function recordedOutcome(snapshot, id, proof, entry, record, run, status, extra = {}) {
+  return {
+    case_id: id, candidate: proof.candidate, candidate_hash: proof.candidate_hash,
+    assessment: assess(snapshot, entry, proof.candidate), run,
+    status, failures: extra.failures || [], review: extra.review || null, calls: run.calls,
+    queue_status: record.status, provider_error: extra.provider_error || null
+  };
+}
+// Explicit player/judge admission. Repair, quarantine release and publication
+// stay outside this function. callPaid reserves and stores every new response.
+export async function reviewRecordedRecovery(snapshot, id, store, run, options = {}) {
+  if (typeof options === 'function') throw new Error('RECORDED_REVIEW_CALLER');
+  const proof = verifyRecordedReview(snapshot, id, options.bindings);
   const record = store.state.cases?.[id];
   if (record?.status !== 'quarantined') throw new Error('RECORDED_REVIEW_QUARANTINE');
   if (record.source_hash && record.source_hash !== proof.source_hash) throw new Error('RECORDED_REVIEW_HASH');
   const entry = snapshot.entries.find(item => item.id === id);
-  const transport = reviewTransport(snapshot, entry, proof.candidate);
-  if (!transport.pre.passed) throw new Error('RECORDED_REVIEW_NOT_READY');
-  const specs = [
-    { model: transport.model, body: transport.playerBody, purpose: 'player' },
-    { model: transport.model, body: transport.judgeBody, purpose: 'judge' }
-  ];
-  let gate;
-  try { gate = assertReviewPairReservable(store, snapshot.policy, run, id, specs); }
-  catch (error) {
-    if (error instanceof Stop && run.calls === 0) return {
-      case_id: id, admitted: false, status: 'review_pair_blocked', failures: [error.message], calls: 0,
-      queue_status: record.status, content_locked: false
-    };
-    throw error;
+  const planned = recordedReviewSpecs(snapshot, entry, proof.candidate, store);
+  if (!planned.transport.pre.passed || !planned.specs) throw new Error('RECORDED_REVIEW_NOT_READY');
+  if (planned.specs.length > 2) throw new Error('RECORDED_REVIEW_PAIR');
+  if (planned.specs.length) {
+    let gate;
+    try { gate = assertReviewPairReservable(store, snapshot.policy, run, id, planned.specs); }
+    catch (error) {
+      if (error instanceof Stop && run.calls === 0) return recordedOutcome(snapshot, id, proof, entry, record, run, 'review_pair_blocked', { failures: [error.message] });
+      throw error;
+    }
+    if (gate.calls !== planned.specs.length) throw new Error('RECORDED_REVIEW_PAIR');
   }
-  if (gate.calls !== 2) throw new Error('RECORDED_REVIEW_PAIR');
-  const review = await reviewCandidate(snapshot, entry, proof.candidate, store, run, caller, { sameTarget: false });
-  return {
-    case_id: id, admitted: review.passed === true, status: review.passed ? 'reviewed' : 'review_failed',
-    failures: review.failures || [], calls: gate.calls, projected: gate.projected, review,
-    candidate_hash: proof.candidate_hash, queue_status: record.status, content_locked: false
-  };
+  const caller = args => callPaid({ ...args, ...(options.transport ? { transport: options.transport } : {}) });
+  let review;
+  try { review = await reviewCandidate(snapshot, entry, proof.candidate, store, run, caller, { sameTarget: false }); }
+  catch (error) {
+    if (!(error instanceof Stop)) throw error;
+    return recordedOutcome(snapshot, id, proof, entry, record, run, error.message, { failures: [error.message], provider_error: error.provider_error || null });
+  }
+  return recordedOutcome(snapshot, id, proof, entry, record, run, review.passed ? 'ready_for_gates' : 'quarantined',
+    { review, failures: review.failures || [] });
 }
 export function reviewPairRoom(policy, record) {
   const rows = (record.requests || []).filter(item => !(item.status === 'failed' && item.transport_not_started === true));
