@@ -1,0 +1,20 @@
+{
+  "schema": "fm_recorded_review_binding_v1",
+  "simulator_pin": "9042485f8699c220d71a8b0fa1b32e90ab3e27e3",
+  "cases": {
+    "tren-yolculugunda-cinayet": {
+      "source_hash": "227118c0ab3d8583bd590792597f8d81961231a762c3b6391182152b2dfdf889",
+      "response_model": "gemini-3.8-flash",
+      "response_hash": "f19446848eb5ba5bf441e6bd12d9be7608c7e728ce69a36f7ea76e4653d1a840",
+      "plan_signature": "exact-3x3-v1:3569bb71c5913d6e03e3acebe0710a1ca2f9c2a2af9000760017e5404946d92e",
+      "candidate_hash": "6571ff39c1ba8c0a1c654deb9a62ea11128468f6c8057a741bc35d179bf5969a"
+    },
+    "tarihi-hamamda-cinayet": {
+      "source_hash": "c904eb61273cccce7e1b3fda450ab24837b6f8f7d8ac87aadbeb354061f484d3",
+      "response_model": "gemini-3.8-flash",
+      "response_hash": "8550a17ae033036b3a632d264f24c8d6444aa5f35331a7dee0410d85fa9e7d2d",
+      "plan_signature": "exact-3x3-v1:7b2e88a6a225b301ee0e8f713fc23769f9acfabfbbdb7592b2bae919bad754a9",
+      "candidate_hash": "1a1ff3cb6a57c71e45b156c4adaae5b9dd9cf268cabdf8cf0880c66c09dd4532"
+    }
+  }
+}

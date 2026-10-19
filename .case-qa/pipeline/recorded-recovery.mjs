@@ -3,6 +3,9 @@ import { compileTextPatch, textRepairPlan } from './text-repair.mjs';
 import { compileHints, hintOnly } from './hint-cleanup.mjs';
 import { experienceProfile } from './experience.mjs';
 import { stableHash } from '../fm_case_qa_runner.mjs';
+import { reviewTransport, reviewCandidate } from './review.mjs';
+import { assertReviewPairReservable } from './review-revision.mjs';
+import { Stop } from './provider.mjs';
 
 // Offline reuse of campaign 39130510026 responses. These candidates are not
 // content-locked and have no independent player/judge review.
@@ -64,6 +67,71 @@ export function recoverHamamRoles(snapshot, roleIds = HAMAM_ROLE_MONONYMS) {
     case_id: entry.id, recorded_plan: recorded.logicSignature, today_plan: today.logicSignature,
     names: candidate.suspects.map(entity => entity.name),
     candidate, qa: outcome(assess(snapshot, entry, candidate))
+  };
+}
+const BINDING_PATH = '.case-qa/fixtures/recorded-review-bindings.json';
+function recordedResponse(id) {
+  const saved = read('.case-qa/fixtures/campaign-39130510026-repairs.json');
+  const response = saved.cases?.[id]?.responses?.find(item => item.model.includes('3.8'));
+  if (!response?.plan) throw new Error('RECORDED_REVIEW_HASH');
+  return response;
+}
+export function verifyRecordedReview(snapshot, id, bindings = read(BINDING_PATH)) {
+  if (bindings?.schema !== 'fm_recorded_review_binding_v1' || bindings.simulator_pin !== snapshot.simulatorHash)
+    throw new Error('RECORDED_REVIEW_HASH');
+  const pin = bindings.cases?.[id];
+  const recovered = id === 'tren-yolculugunda-cinayet' ? recoverTrenHints(snapshot) :
+    id === 'tarihi-hamamda-cinayet' ? recoverHamamRoles(snapshot) : null;
+  if (!pin || !recovered) throw new Error('RECORDED_REVIEW_CASE');
+  const entry = snapshot.entries.find(item => item.id === id);
+  const response = recordedResponse(id);
+  const proof = {
+    case_id: id,
+    source_hash: entry?.sourceHash || '',
+    response_model: response.model,
+    response_hash: stableHash(response.plan),
+    plan_signature: recovered.recorded_plan,
+    candidate_hash: stableHash(recovered.candidate),
+    candidate: recovered.candidate,
+    qa: recovered.qa
+  };
+  if (proof.source_hash !== pin.source_hash || proof.response_model !== pin.response_model ||
+      proof.response_hash !== pin.response_hash || proof.plan_signature !== pin.plan_signature ||
+      proof.candidate_hash !== pin.candidate_hash || proof.qa.passed !== true || proof.qa.production_ready !== true ||
+      proof.qa.content_locked !== false || proof.qa.independent_review !== false)
+    throw new Error('RECORDED_REVIEW_HASH');
+  return proof;
+}
+// Explicit player/judge admission for the two recovered candidates. It does not
+// repair, publish, open quarantine, or spend; the caller performs any later call.
+export async function reviewRecordedRecovery(snapshot, id, store, run, caller, bindings) {
+  if (typeof caller !== 'function') throw new Error('RECORDED_REVIEW_CALLER');
+  const proof = verifyRecordedReview(snapshot, id, bindings);
+  const record = store.state.cases?.[id];
+  if (record?.status !== 'quarantined') throw new Error('RECORDED_REVIEW_QUARANTINE');
+  if (record.source_hash && record.source_hash !== proof.source_hash) throw new Error('RECORDED_REVIEW_HASH');
+  const entry = snapshot.entries.find(item => item.id === id);
+  const transport = reviewTransport(snapshot, entry, proof.candidate);
+  if (!transport.pre.passed) throw new Error('RECORDED_REVIEW_NOT_READY');
+  const specs = [
+    { model: transport.model, body: transport.playerBody, purpose: 'player' },
+    { model: transport.model, body: transport.judgeBody, purpose: 'judge' }
+  ];
+  let gate;
+  try { gate = assertReviewPairReservable(store, snapshot.policy, run, id, specs); }
+  catch (error) {
+    if (error instanceof Stop && run.calls === 0) return {
+      case_id: id, admitted: false, status: 'review_pair_blocked', failures: [error.message], calls: 0,
+      queue_status: record.status, content_locked: false
+    };
+    throw error;
+  }
+  if (gate.calls !== 2) throw new Error('RECORDED_REVIEW_PAIR');
+  const review = await reviewCandidate(snapshot, entry, proof.candidate, store, run, caller, { sameTarget: false });
+  return {
+    case_id: id, admitted: review.passed === true, status: review.passed ? 'reviewed' : 'review_failed',
+    failures: review.failures || [], calls: gate.calls, projected: gate.projected, review,
+    candidate_hash: proof.candidate_hash, queue_status: record.status, content_locked: false
   };
 }
 export function reviewPairRoom(policy, record) {

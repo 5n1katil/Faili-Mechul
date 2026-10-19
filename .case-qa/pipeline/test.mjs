@@ -34,7 +34,7 @@ import { EXPERIENCE_PROFILES, EXPERIENCE_VERSION, experienceProfile, experienceC
 import { canonicalLogicSignature, logicNoveltyCheck } from './logic-patterns.mjs';
 import { CRIME_ANCHOR_SEMANTIC, anchorConfirmsTwoCrimeComponents, hardAnchorContract, simulatorDifficultyLevel } from './anchor-contract.mjs';
 import { anchorContractExamples, hamamSourceNameCompletion } from '../fixtures/anchor-contract-examples.mjs';
-import { recoverTrenHints, recoverHamamRoles, reviewPairRoom, HAMAM_ROLE_MONONYMS } from './recorded-recovery.mjs';
+import { recoverTrenHints, recoverHamamRoles, reviewPairRoom, verifyRecordedReview, reviewRecordedRecovery, HAMAM_ROLE_MONONYMS } from './recorded-recovery.mjs';
 import { qualityContract as experienceContract } from './quality-contract.mjs';
 import { editorialExperiencePrompt } from './editorial.mjs';
 import { reconcileKnownUnsent } from './reservation-recovery.mjs';
@@ -2047,6 +2047,97 @@ try {
       assert.equal(room.quarantine_open, false);
     }
     assert.ok(puzzles.equals(fs.readFileSync('artifacts/dedektif/data/puzzles.ts')));
+  });
+  await test('recorded Tren and Hamam candidates enter player/judge review without a new repair', async () => {
+    const puzzles = fs.readFileSync('artifacts/dedektif/data/puzzles.ts');
+    const grants = fs.readFileSync('.case-qa/pipeline/review-revision-grants.json');
+    const continuations = fs.readFileSync('.case-qa/pipeline/prepayment-continuations.json');
+    const limits = {
+      requests: productionPolicy.sequential.max_requests_per_case,
+      verified: productionPolicy.sequential.verified_text_repair_limit,
+      repairs: productionPolicy.sequential.max_repairs_per_case,
+      editorial: productionPolicy.sequential.editorial_revision_limit
+    };
+    const bindings = read('.case-qa/fixtures/recorded-review-bindings.json');
+    const ids = ['tren-yolculugunda-cinayet', 'tarihi-hamamda-cinayet'];
+    const ledgerFor = (id, { requests = 2, charged = 0.005, sourceHash = bindings.cases[id]?.source_hash || '' } = {}) => {
+      const state = emptyState();
+      for (let index = 0; index < requests; index++) state.requests[id + ':' + index] = {
+        case_id: id, model: 'gemini-3.8-flash', purpose: index < 2 ? 'repair' : 'player', status: 'completed',
+        repair_method: index < 2 ? 'verified_text_v1' : undefined, day: '2026-10-18', charged
+      };
+      const spent = requests * charged;
+      state.cases[id] = { status: 'quarantined', spent, source_hash: sourceHash };
+      state.campaign_spent = spent;
+      validateState(state);
+      return { state, save() { validateState(this.state); } };
+    };
+    const callerFor = candidate => {
+      const seen = [];
+      const caller = async args => {
+        seen.push(args.purpose);
+        if (args.purpose === 'player') return { plan: playerFor(candidate) };
+        if (args.purpose === 'judge') return { plan: validJudge() };
+        throw new Error('UNEXPECTED_PURPOSE');
+      };
+      return { seen, caller };
+    };
+    let totalCalls = 0;
+    for (const id of ids) {
+      const proof = verifyRecordedReview(productionSnapshot, id);
+      assert.equal(proof.source_hash, bindings.cases[id].source_hash);
+      assert.equal(proof.response_hash, bindings.cases[id].response_hash);
+      assert.equal(proof.plan_signature, bindings.cases[id].plan_signature);
+      assert.equal(proof.candidate_hash, bindings.cases[id].candidate_hash);
+      const store = ledgerFor(id);
+      const before = stableHash(store.state);
+      const { seen, caller } = callerFor(proof.candidate);
+      const reviewed = await reviewRecordedRecovery(productionSnapshot, id, store, runFor(), caller);
+      totalCalls += seen.length;
+      assert.deepEqual(seen, ['player', 'judge']);
+      assert.equal(reviewed.admitted, true);
+      assert.equal(reviewed.calls, 2);
+      assert.equal(reviewed.queue_status, 'quarantined');
+      assert.equal(store.state.cases[id].status, 'quarantined');
+      assert.equal(reviewed.content_locked, false);
+      assert.equal(stableHash(store.state), before);
+      assert.equal(certificateValid(productionSnapshot, productionSnapshot.entries.find(item => item.id === id), proof.candidate, reviewed.review.certificate), true);
+      assert.equal(productionSnapshot.sidecar.cases[id], undefined);
+      assert.deepEqual(reopenTextQuarantine(productionSnapshot, store), []);
+      const blocked = ledgerFor(id, { requests: 6, charged: 0.001 });
+      let blockedCalls = 0;
+      const capacity = await reviewRecordedRecovery(productionSnapshot, id, blocked, runFor(), async () => { blockedCalls++; throw new Error('UNEXPECTED_CALL'); });
+      assert.equal(capacity.admitted, false);
+      assert.deepEqual(capacity.failures, ['CASE_REQUEST_LIMIT']);
+      assert.equal(capacity.calls, 0);
+      assert.equal(blockedCalls, 0);
+      assert.equal(blocked.state.cases[id].status, 'quarantined');
+      const tight = ledgerFor(id, { charged: productionPolicy.sequential.case_budget_usd / 2 - 0.0000001 });
+      let budgetCalls = 0;
+      const budget = await reviewRecordedRecovery(productionSnapshot, id, tight, runFor(), async () => { budgetCalls++; throw new Error('UNEXPECTED_CALL'); });
+      assert.equal(budget.admitted, false);
+      assert.deepEqual(budget.failures, ['BUDGET_STOP']);
+      assert.equal(budget.calls, 0);
+      assert.equal(budgetCalls, 0);
+      const drifted = ledgerFor(id, { sourceHash: 'ab'.repeat(32) });
+      await assert.rejects(() => reviewRecordedRecovery(productionSnapshot, id, drifted, runFor(), async () => { throw new Error('UNEXPECTED_CALL'); }), /RECORDED_REVIEW_HASH/);
+    }
+    assert.equal(totalCalls, 4);
+    const wrongPin = clone(bindings);
+    wrongPin.cases[ids[0]] = { ...wrongPin.cases[ids[0]], candidate_hash: 'cd'.repeat(32) };
+    assert.throws(() => verifyRecordedReview(productionSnapshot, ids[0], wrongPin), /RECORDED_REVIEW_HASH/);
+    const other = ledgerFor('sabanci-muzesi-gasp');
+    other.state.cases['sabanci-muzesi-gasp'] = { status: 'quarantined', spent: 0, source_hash: 'cd'.repeat(32) };
+    let otherCalls = 0;
+    await assert.rejects(() => reviewRecordedRecovery(productionSnapshot, 'sabanci-muzesi-gasp', other, runFor(), async () => { otherCalls++; throw new Error('UNEXPECTED_CALL'); }), /RECORDED_REVIEW_CASE/);
+    assert.equal(otherCalls, 0);
+    assert.equal(productionPolicy.sequential.max_requests_per_case, limits.requests);
+    assert.equal(productionPolicy.sequential.verified_text_repair_limit, limits.verified);
+    assert.equal(productionPolicy.sequential.max_repairs_per_case, limits.repairs);
+    assert.equal(productionPolicy.sequential.editorial_revision_limit, limits.editorial);
+    assert.ok(puzzles.equals(fs.readFileSync('artifacts/dedektif/data/puzzles.ts')));
+    assert.ok(grants.equals(fs.readFileSync('.case-qa/pipeline/review-revision-grants.json')));
+    assert.ok(continuations.equals(fs.readFileSync('.case-qa/pipeline/prepayment-continuations.json')));
   });
   await test('forensic laboratory institution and an unintroduced laboratory scene stay distinct', () => {
     const tren = productionSnapshot.entries.find(e => e.id === 'tren-yolculugunda-cinayet');
