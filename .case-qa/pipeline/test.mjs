@@ -88,8 +88,9 @@ try {
       if (saved) {
         assert.equal(assess(productionSnapshot, entry, entry.candidate).passed, true);
         assert.equal(entry.id, 'adada-buyuk-gizem');
-        assert.equal(saved.review_hash, 'd4458564108cd43307c5dfb76b2764a8f92ee44121e399db1d7060185bba6e5c');
-        assert.equal(certificateValid(productionSnapshot, entry, entry.candidate, saved), false);
+        assert.equal(saved.review_hash, reviewHash(productionSnapshot, entry.candidate, mediaPreflight(productionSnapshot, entry, entry.candidate).evidence));
+        assert.equal(certificateValid(productionSnapshot, entry, entry.candidate, saved), true);
+        assert.equal(certificateValid(productionSnapshot, entry, entry.candidate, { ...saved, review_hash: 'd4458564108cd43307c5dfb76b2764a8f92ee44121e399db1d7060185bba6e5c' }), false);
       }
     }
   });
@@ -144,7 +145,7 @@ try {
     const saved = productionSnapshot.sidecar.cases[c.id].pipeline_review;
     if (saved) {
       assert.notEqual(saved.review_hash, f.previous_pipeline_review.review_hash);
-      assert.equal(certificateValid(productionSnapshot, adadaEntry, c, saved), false);
+      assert.equal(certificateValid(productionSnapshot, adadaEntry, c, saved), true);
     }
   });
   await test('cinematic Adada changes only the opening, preserves all evidence, and invalidates the exact previously approved certificate', () => {
@@ -153,7 +154,7 @@ try {
     assert.deepEqual({ ...adadaEntry.raw, story: f.previous_raw.story }, f.previous_raw);
     assert.equal(certificateValid(productionSnapshot, adadaEntry, adadaEntry.candidate, f.previous_pipeline_review), false);
     const current = productionSnapshot.sidecar.cases[f.case_id].pipeline_review;
-    if (current) assert.equal(certificateValid(productionSnapshot, adadaEntry, adadaEntry.candidate, current), false);
+    if (current) assert.equal(certificateValid(productionSnapshot, adadaEntry, adadaEntry.candidate, current), true);
     assert.equal(assess(productionSnapshot, adadaEntry, adadaEntry.candidate).passed, true);
   });
   await test('native simulator and pipeline both enforce category density and scene continuity; a forensic institution is not an invented crime location', () => {
@@ -1415,15 +1416,15 @@ try {
     assert.equal(store.state.requests[reserved.key].status, 'reserved');
     assert.equal(store.state.requests[reserved.key].charged > 0, true);
   });
-  await test('Adada revalidation recomputes the current pin from the 2026-10-17 answers without replacing the stored certificate', async () => {
+  await test('Adada revalidation keeps the 2026-10-17 answers and recomputes only the simulator hash', async () => {
     const saved = productionSnapshot.sidecar.cases[adadaEntry.id].pipeline_review;
+    const record = productionSnapshot.sidecar.cases[adadaEntry.id].simulator_revalidation;
     const proof = read('.case-qa/fixtures/adada-simulator-revalidation.json');
     const previousPin = '17170058b8f45eab789e14aaf2fb7a6605587fb8';
     const previousHash = 'd4458564108cd43307c5dfb76b2764a8f92ee44121e399db1d7060185bba6e5c';
     proof.previousCertificate = { ...saved, review_hash: previousHash };
     assert.equal(saved.schema, 'fm_case_review_v1');
     assert.equal(productionSnapshot.sidecar.cases[adadaEntry.id].production_content_unchanged, true);
-    assert.equal(productionSnapshot.sidecar.cases[adadaEntry.id].simulator_revalidation, undefined);
     assert.notEqual(adadaEntry.sourceHash, adadaGrantHash);
     assert.equal(revisionGrantFor(productionSnapshot, adadaEntry), null);
     assert.equal(read('.case-qa/pipeline/review-revision-grants.json').grants[0].content_hash, adadaGrantHash);
@@ -1431,28 +1432,29 @@ try {
     assert.equal(words(adadaEntry.candidate.story), 46);
     assert.equal(productionSnapshot.simulatorHash, '9042485f8699c220d71a8b0fa1b32e90ab3e27e3');
     assert.notEqual(productionSnapshot.simulatorHash, previousPin);
-    assert.equal(certificateValid(productionSnapshot, adadaEntry, adadaEntry.candidate, saved), false);
-    assert.equal(saved.review_hash, previousHash);
     assert.equal(certificateValid(productionSnapshot, adadaEntry, adadaEntry.candidate, proof.previousCertificate), false);
     const renewed = revalidateSimulatorCertificate(productionSnapshot, adadaEntry, adadaEntry.candidate, proof);
     assert.equal(renewed.certificate.review_hash, reviewHash(productionSnapshot, adadaEntry.candidate, mediaPreflight(productionSnapshot, adadaEntry, adadaEntry.candidate).evidence));
     assert.notEqual(renewed.certificate.review_hash, previousHash);
-    assert.notEqual(saved.review_hash, renewed.certificate.review_hash);
     assert.deepEqual(renewed.certificate.player, proof.playerRequest.plan);
     assert.deepEqual(renewed.certificate.judge, proof.judgeRequest.plan);
     assert.deepEqual(saved.player, proof.playerRequest.plan);
     assert.deepEqual(saved.judge, proof.judgeRequest.plan);
-    assert.equal(renewed.record.previous_simulator_pin, previousPin);
-    assert.equal(renewed.record.simulator_pin, productionSnapshot.simulatorHash);
-    assert.equal(renewed.record.previous_review_hash, previousHash);
-    assert.equal(renewed.record.review_hash, renewed.certificate.review_hash);
-    assert.equal(renewed.record.player_request_key, proof.playerRequest.key);
-    assert.equal(renewed.record.judge_request_key, proof.judgeRequest.key);
-    assert.equal(renewed.record.player_request_day, '2026-10-17');
-    assert.equal(renewed.record.judge_request_day, '2026-10-17');
+    assert.equal(saved.review_hash, renewed.certificate.review_hash);
+    assert.deepEqual(record, renewed.record);
+    assert.equal(record.previous_simulator_pin, previousPin);
+    assert.equal(productionSnapshot.simulatorHash, '9042485f8699c220d71a8b0fa1b32e90ab3e27e3');
+    assert.equal(record.simulator_pin, productionSnapshot.simulatorHash);
+    assert.deepEqual(productionSnapshot.sidecar.cases[adadaEntry.id].simulator_revalidation_history, [{
+      schema: 'fm_simulator_revalidation_v1', method: 'reviewHash',
+      previous_simulator_pin: previousPin, simulator_pin: '669721fc3afb1e12492f3abefdc55c86a1e2ee88',
+      previous_review_hash: previousHash, review_hash: '5255e3c02cdb10c448adad1032b7349eab800bd63cce4b5d24d6fd5442371cb5',
+      player_request_key: proof.playerRequest.key, judge_request_key: proof.judgeRequest.key,
+      player_request_day: '2026-10-17', judge_request_day: '2026-10-17'
+    }]);
+    assert.equal(record.player_request_day, '2026-10-17');
+    assert.equal(record.judge_request_day, '2026-10-17');
     assert.equal(certificateValid(productionSnapshot, adadaEntry, adadaEntry.candidate, renewed.certificate), true);
-    assert.equal(productionSnapshot.sidecar.cases[adadaEntry.id].pipeline_review.review_hash, previousHash);
-    assert.equal(productionSnapshot.sidecar.cases[adadaEntry.id].simulator_revalidation, undefined);
     const changed = clone(adadaEntry.candidate);
     changed.suspects[0].description += ' ek kart';
     assert.equal(sameReviewTarget(adadaEntry.candidate, changed), false);
