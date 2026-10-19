@@ -1430,6 +1430,7 @@ try {
     assert.equal(read('.case-qa/pipeline/review-revision-grants.json').grants[0].content_hash, adadaGrantHash);
     assert.equal(read('.case-qa/pipeline/prepayment-continuations.json').continuations[0].content_hash, adadaGrantHash);
     assert.equal(words(adadaEntry.candidate.story), 46);
+    assert.equal(productionSnapshot.simulatorHash, '9042485f8699c220d71a8b0fa1b32e90ab3e27e3');
     assert.notEqual(productionSnapshot.simulatorHash, previousPin);
     assert.equal(certificateValid(productionSnapshot, adadaEntry, adadaEntry.candidate, proof.previousCertificate), false);
     const renewed = revalidateSimulatorCertificate(productionSnapshot, adadaEntry, adadaEntry.candidate, proof);
@@ -1476,7 +1477,7 @@ try {
     const scope = certificationPaths(productionPolicy);
     assert.deepEqual(scope, [productionPolicy.source.standard_path, productionPolicy.source.premium_path, productionPolicy.source.sidecar_path, '.case-qa/pipeline/test.mjs', '.case-qa/pipeline/certify-candidate.mjs']);
     assert.equal(scope.includes(productionPolicy.source.standard_path), true);
-    for (const extra of ['.case-qa/pipeline/core.mjs', '.case-qa/pipeline/policy.json', '.case-qa/pipeline/review-revision-grants.json', '.case-qa/pipeline/prepayment-continuations.json', '.github/workflows/fm-case-pipeline.yml', '.cursor/rules/faili-mechul-case-pipeline.mdc'])
+    for (const extra of ['.case-qa/pipeline/core.mjs', '.case-qa/pipeline/review.mjs', '.case-qa/fixtures/adada-simulator-revalidation.json', '.case-qa/pipeline/policy.json', '.case-qa/pipeline/review-revision-grants.json', '.case-qa/pipeline/prepayment-continuations.json', '.github/workflows/fm-case-pipeline.yml', '.cursor/rules/faili-mechul-case-pipeline.mdc'])
       assert.equal(scope.includes(extra), false, extra);
   });
   await test('six historical Adada requests stop a review pair before any call unless the exact grant applies once', async () => {
