@@ -12345,7 +12345,7 @@
       "merge_commit_sha": "afdb0451886f543495e43c74a9b41aba7ab72a46"
     },
     "tren-yolculugunda-cinayet": {
-      "spent": 0.0391128,
+      "spent": 0.012258300000000003,
       "feedback": [
         {
           "error": "TEXT_CONTENT:EXPERIENCE_UNINTRODUCED_SETTING:c4:laboratuvar"
@@ -20310,9 +20310,44 @@
       "model": "gemini-3.8-flash",
       "purpose": "player",
       "day": "2026-10-19",
-      "status": "reserved",
-      "charged": 0.0289995
+      "status": "completed",
+      "charged": 0.002145,
+      "usage": {
+        "promptTokenCount": 890,
+        "candidatesTokenCount": 394,
+        "totalTokenCount": 1284,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 890
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "plan": {
+        "unique_solution": false,
+        "solution": {
+          "suspectId": "s1",
+          "weaponId": "w1",
+          "locationId": "l2"
+        },
+        "confidence": 60,
+        "evidence": [
+          {
+            "clue_id": "c1",
+            "quote": "bavuldan çıkarılan ince naylon ipin trenin en arka bölümündeki mandalla kilitlenebilen o dar kabinde unutulduğu tespit edildi."
+          },
+          {
+            "clue_id": "c2",
+            "quote": "Cinayet masası incelemesi, ölümcül saldırının çay servisi yapılan beyaz örtülü masaların bulunduğu salonda gerçekleştiğini kesinleştirdi; servis personeli vardiya dökümü ise tek hamlede derin yara açan çakı bıçağının bu salonda asla yer almadığını belgeledi."
+          }
+        ],
+        "issues": [
+          "Olay yeri kesin olarak Yemekli Vagon (l2) ve kullanılan silah kesin olarak Zehirli İçecek (w1) olarak belirlenebilmektedir (w3 Tuvalet'te unutulmuş, w2 ise Yemekli Vagon'da hiç yer almamıştır).",
+          "Ancak şüphelilerden Üniversite Öğrencisi (s2) Tuvalet'te (l3) görüldüğü için elense bile, geriye kalan İş Kadını (s1) ve Emekli Doktor (s3) arasında faili tekilleştiren yeterli kanıt bulunmamaktadır (c4 yalnızca s3'ün bıçakta izi olmadığını söyler, ancak cinayet aleti zaten Zehirli İçecek'tir)."
+        ]
+      }
     }
   },
-  "campaign_spent": 0.34423320000000013
+  "campaign_spent": 0.3173787000000001
 }
