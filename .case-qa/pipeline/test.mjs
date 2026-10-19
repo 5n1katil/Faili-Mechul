@@ -34,7 +34,7 @@ import { EXPERIENCE_PROFILES, EXPERIENCE_VERSION, experienceProfile, experienceC
 import { canonicalLogicSignature, logicNoveltyCheck } from './logic-patterns.mjs';
 import { CRIME_ANCHOR_SEMANTIC, anchorConfirmsTwoCrimeComponents, hardAnchorContract, simulatorDifficultyLevel } from './anchor-contract.mjs';
 import { anchorContractExamples, hamamSourceNameCompletion } from '../fixtures/anchor-contract-examples.mjs';
-import { recoverTrenHints, recoverHamamRoles, reviewPairRoom, verifyRecordedReview, recordedReviewSpecs, reviewRecordedRecovery, HAMAM_ROLE_MONONYMS } from './recorded-recovery.mjs';
+import { recoverTrenHints, recoverHamamRoles, reviewPairRoom, verifyRecordedReview, recordedReviewSpecs, reviewRecordedRecovery, loadRecordedBaseline, HAMAM_ROLE_MONONYMS } from './recorded-recovery.mjs';
 import { qualityContract as experienceContract } from './quality-contract.mjs';
 import { editorialExperiencePrompt } from './editorial.mjs';
 import { reconcileKnownUnsent } from './reservation-recovery.mjs';
@@ -78,28 +78,40 @@ const responseForFixture = value => response(JSON.stringify(value));
 try {
   const snapshot = loadSnapshot(root, policy), rows = scan(snapshot);
   const productionSnapshot = loadSnapshot(root, productionPolicy);
+  const recordedBindings = read('.case-qa/fixtures/recorded-review-bindings.json');
+  const baselineSnapshot = loadRecordedBaseline(root, productionPolicy, recordedBindings.baseline_commit);
   await test('exact engine and inventory cover the current repository without hardcoded total', () => {
     assert.equal(rows.length, snapshot.inventory.cases.length);
     for (const id of ['rc_001', 'pp_001']) assert.equal(rows.find(r => r.id === id).passed, true);
     assert.ok(campaignRows(snapshot).every(r => !r.content_locked || r.passed));
-    // Check actual production certificates before freezing historical replays.
+    // Every stored certificate belongs to its own current case. Adada's historical
+    // hash stays in the revalidation test; this loop does not name a single case.
+    const certified = [];
     for (const entry of productionSnapshot.entries) {
       const saved = productionSnapshot.sidecar.cases?.[entry.id]?.pipeline_review;
-      if (saved) {
-        assert.equal(assess(productionSnapshot, entry, entry.candidate).passed, true);
-        assert.equal(entry.id, 'adada-buyuk-gizem');
-        assert.equal(saved.review_hash, reviewHash(productionSnapshot, entry.candidate, mediaPreflight(productionSnapshot, entry, entry.candidate).evidence));
-        assert.equal(certificateValid(productionSnapshot, entry, entry.candidate, saved), true);
-        assert.equal(certificateValid(productionSnapshot, entry, entry.candidate, { ...saved, review_hash: 'd4458564108cd43307c5dfb76b2764a8f92ee44121e399db1d7060185bba6e5c' }), false);
-      }
+      if (!saved) continue;
+      certified.push(entry.id);
+      const evidence = mediaPreflight(productionSnapshot, entry, entry.candidate).evidence;
+      assert.equal(assess(productionSnapshot, entry, entry.candidate).passed, true, entry.id);
+      assert.equal(saved.review_hash, reviewHash(productionSnapshot, entry.candidate, evidence), entry.id);
+      assert.equal(certificateValid(productionSnapshot, entry, entry.candidate, saved), true, entry.id);
+      assert.equal(certificateValid(productionSnapshot, entry, entry.candidate, { ...saved, review_hash: '00'.repeat(32) }), false, entry.id);
     }
+    assert.ok(certified.includes('adada-buyuk-gizem'));
   });
   // Paid request hashes include the portfolio. Historical scenario tests must
   // use the same inventory context at checkpoint restoration as at transport.
   // The current source/QA/certificates above and projection checks below remain live.
   for (const entry of snapshot.entries) entry.candidate.qaPortfolioRegistry = clone(historicalRegistry);
   const original = snapshot.entries.find(e => e.id === 'termal-otelde-supheli-vaka');
-  const currentSnapshot = { ...snapshot, policy: currentPolicy };
+  // Paid-cache replays keep the pinned pre-publication source. A later Tren or
+  // Hamam certificate must not move request keys that were stored against that tree.
+  const replaySimulator = path.join(baselineSnapshot.root, policy.simulator.path);
+  fs.mkdirSync(path.dirname(replaySimulator), { recursive: true });
+  fs.copyFileSync(legacyEngine, replaySimulator);
+  const replayLoaded = loadSnapshot(baselineSnapshot.root, policy);
+  for (const entry of replayLoaded.entries) entry.candidate.qaPortfolioRegistry = clone(historicalRegistry);
+  const currentSnapshot = { ...replayLoaded, policy: currentPolicy };
   const adadaEntry = productionSnapshot.entries.find(e => e.id === 'adada-buyuk-gizem');
   await test('six experience categories preserve correctness but vary density; all actual stored difficulties map explicitly', () => {
     assert.equal(Object.keys(EXPERIENCE_PROFILES).length, 6);
@@ -1417,24 +1429,26 @@ try {
     assert.equal(store.state.requests[reserved.key].charged > 0, true);
   });
   await test('Adada revalidation keeps the 2026-10-17 answers and recomputes only the simulator hash', async () => {
-    const saved = productionSnapshot.sidecar.cases[adadaEntry.id].pipeline_review;
-    const record = productionSnapshot.sidecar.cases[adadaEntry.id].simulator_revalidation;
+    const historicalSnapshot = baselineSnapshot;
+    const historicalAdada = historicalSnapshot.entries.find(item => item.id === 'adada-buyuk-gizem');
+    const saved = historicalSnapshot.sidecar.cases[historicalAdada.id].pipeline_review;
+    const record = historicalSnapshot.sidecar.cases[historicalAdada.id].simulator_revalidation;
     const proof = read('.case-qa/fixtures/adada-simulator-revalidation.json');
     const previousPin = '17170058b8f45eab789e14aaf2fb7a6605587fb8';
     const previousHash = 'd4458564108cd43307c5dfb76b2764a8f92ee44121e399db1d7060185bba6e5c';
     proof.previousCertificate = { ...saved, review_hash: previousHash };
     assert.equal(saved.schema, 'fm_case_review_v1');
-    assert.equal(productionSnapshot.sidecar.cases[adadaEntry.id].production_content_unchanged, true);
-    assert.notEqual(adadaEntry.sourceHash, adadaGrantHash);
-    assert.equal(revisionGrantFor(productionSnapshot, adadaEntry), null);
+    assert.equal(historicalSnapshot.sidecar.cases[historicalAdada.id].production_content_unchanged, true);
+    assert.notEqual(historicalAdada.sourceHash, adadaGrantHash);
+    assert.equal(revisionGrantFor(productionSnapshot, productionSnapshot.entries.find(item => item.id === 'adada-buyuk-gizem')), null);
     assert.equal(read('.case-qa/pipeline/review-revision-grants.json').grants[0].content_hash, adadaGrantHash);
     assert.equal(read('.case-qa/pipeline/prepayment-continuations.json').continuations[0].content_hash, adadaGrantHash);
-    assert.equal(words(adadaEntry.candidate.story), 46);
-    assert.equal(productionSnapshot.simulatorHash, '9042485f8699c220d71a8b0fa1b32e90ab3e27e3');
-    assert.notEqual(productionSnapshot.simulatorHash, previousPin);
-    assert.equal(certificateValid(productionSnapshot, adadaEntry, adadaEntry.candidate, proof.previousCertificate), false);
-    const renewed = revalidateSimulatorCertificate(productionSnapshot, adadaEntry, adadaEntry.candidate, proof);
-    assert.equal(renewed.certificate.review_hash, reviewHash(productionSnapshot, adadaEntry.candidate, mediaPreflight(productionSnapshot, adadaEntry, adadaEntry.candidate).evidence));
+    assert.equal(words(historicalAdada.candidate.story), 46);
+    assert.equal(historicalSnapshot.simulatorHash, '9042485f8699c220d71a8b0fa1b32e90ab3e27e3');
+    assert.notEqual(historicalSnapshot.simulatorHash, previousPin);
+    assert.equal(certificateValid(historicalSnapshot, historicalAdada, historicalAdada.candidate, proof.previousCertificate), false);
+    const renewed = revalidateSimulatorCertificate(historicalSnapshot, historicalAdada, historicalAdada.candidate, proof);
+    assert.equal(renewed.certificate.review_hash, reviewHash(historicalSnapshot, historicalAdada.candidate, mediaPreflight(historicalSnapshot, historicalAdada, historicalAdada.candidate).evidence));
     assert.notEqual(renewed.certificate.review_hash, previousHash);
     assert.deepEqual(renewed.certificate.player, proof.playerRequest.plan);
     assert.deepEqual(renewed.certificate.judge, proof.judgeRequest.plan);
@@ -1443,9 +1457,9 @@ try {
     assert.equal(saved.review_hash, renewed.certificate.review_hash);
     assert.deepEqual(record, renewed.record);
     assert.equal(record.previous_simulator_pin, previousPin);
-    assert.equal(productionSnapshot.simulatorHash, '9042485f8699c220d71a8b0fa1b32e90ab3e27e3');
-    assert.equal(record.simulator_pin, productionSnapshot.simulatorHash);
-    assert.deepEqual(productionSnapshot.sidecar.cases[adadaEntry.id].simulator_revalidation_history, [{
+    assert.equal(historicalSnapshot.simulatorHash, '9042485f8699c220d71a8b0fa1b32e90ab3e27e3');
+    assert.equal(record.simulator_pin, historicalSnapshot.simulatorHash);
+    assert.deepEqual(historicalSnapshot.sidecar.cases[historicalAdada.id].simulator_revalidation_history, [{
       schema: 'fm_simulator_revalidation_v1', method: 'reviewHash',
       previous_simulator_pin: previousPin, simulator_pin: '669721fc3afb1e12492f3abefdc55c86a1e2ee88',
       previous_review_hash: previousHash, review_hash: '5255e3c02cdb10c448adad1032b7349eab800bd63cce4b5d24d6fd5442371cb5',
@@ -1454,26 +1468,26 @@ try {
     }]);
     assert.equal(record.player_request_day, '2026-10-17');
     assert.equal(record.judge_request_day, '2026-10-17');
-    assert.equal(certificateValid(productionSnapshot, adadaEntry, adadaEntry.candidate, renewed.certificate), true);
-    const changed = clone(adadaEntry.candidate);
+    assert.equal(certificateValid(historicalSnapshot, historicalAdada, historicalAdada.candidate, renewed.certificate), true);
+    const changed = clone(historicalAdada.candidate);
     changed.suspects[0].description += ' ek kart';
-    assert.equal(sameReviewTarget(adadaEntry.candidate, changed), false);
-    assert.throws(() => revalidateSimulatorCertificate(productionSnapshot, adadaEntry, changed, proof), /REVALIDATION_CONTENT_CHANGED/);
+    assert.equal(sameReviewTarget(historicalAdada.candidate, changed), false);
+    assert.throws(() => revalidateSimulatorCertificate(historicalSnapshot, historicalAdada, changed, proof), /REVALIDATION_CONTENT_CHANGED/);
     const otherRequest = clone(proof);
     otherRequest.playerRequest = { ...proof.playerRequest, key: 'ab'.repeat(32) };
-    assert.throws(() => revalidateSimulatorCertificate(productionSnapshot, adadaEntry, adadaEntry.candidate, otherRequest), /REVALIDATION_REQUEST_MISMATCH/);
+    assert.throws(() => revalidateSimulatorCertificate(historicalSnapshot, historicalAdada, historicalAdada.candidate, otherRequest), /REVALIDATION_REQUEST_MISMATCH/);
     const failed = clone(proof);
     failed.previousCertificate = clone(proof.previousCertificate);
     failed.playerRequest = clone(proof.playerRequest);
     failed.previousCertificate.player = { ...failed.previousCertificate.player, issues: ['çözüm kapanmıyor'] };
     failed.playerRequest.plan = failed.previousCertificate.player;
-    assert.throws(() => revalidateSimulatorCertificate(productionSnapshot, adadaEntry, adadaEntry.candidate, failed), /REVALIDATION_EVALUATION_FAILED/);
+    assert.throws(() => revalidateSimulatorCertificate(historicalSnapshot, historicalAdada, historicalAdada.candidate, failed), /REVALIDATION_EVALUATION_FAILED/);
     const hand = { ...renewed.certificate, review_hash: 'cd'.repeat(32) };
-    assert.equal(certificateValid(productionSnapshot, adadaEntry, adadaEntry.candidate, hand), false);
+    assert.equal(certificateValid(historicalSnapshot, historicalAdada, historicalAdada.candidate, hand), false);
     const ledgerFixture = read('.case-qa/fixtures/adada-ledger-20261017.json');
     assert.equal(ledgerFixture.record.simulator_hash, previousPin);
     assert.equal(ledgerFixture.record.spent, 0.021915200000000017);
-    assert.equal(certificateValid(productionSnapshot, adadaEntry, changed, saved), false);
+    assert.equal(certificateValid(historicalSnapshot, historicalAdada, changed, saved), false);
     const scope = certificationPaths(productionPolicy);
     assert.deepEqual(scope, [productionPolicy.source.standard_path, productionPolicy.source.premium_path, productionPolicy.source.sidecar_path, '.case-qa/pipeline/test.mjs', '.case-qa/pipeline/certify-candidate.mjs']);
     assert.equal(scope.includes(productionPolicy.source.standard_path), true);
@@ -1897,8 +1911,8 @@ try {
     assert.equal(CRIME_ANCHOR_SEMANTIC.toString(), html.match(/const CRIME_SEMANTIC=(\/[\s\S]+?\/i);/)[1]);
     const saved = read('.case-qa/fixtures/campaign-39130510026-repairs.json');
     const byModel = (id, needle) => saved.cases[id].responses.find(r => r.model.includes(needle)).plan;
-    const tren = productionSnapshot.entries.find(e => e.id === 'tren-yolculugunda-cinayet');
-    const trenPlan = textRepairPlan(productionSnapshot, tren, tren.candidate);
+    const tren = baselineSnapshot.entries.find(e => e.id === 'tren-yolculugunda-cinayet');
+    const trenPlan = textRepairPlan(baselineSnapshot, tren, tren.candidate);
     assert.deepEqual(trenPlan.clues.map(c => c.rule), saved.cases[tren.id].recorded_plan.clues.map(c => c.rule));
     assert.equal(anchorConfirmsTwoCrimeComponents(tren.candidate, trenPlan.clues.find(c => c.id === 'c2').rule), false);
     assert.equal(simulatorDifficultyLevel(tren.candidate), null);
@@ -1912,14 +1926,14 @@ try {
     assert.ok(!forensicError || !/EXPERIENCE_UNINTRODUCED_SETTING:c4:laboratuvar/.test(forensicError.message), forensicError && forensicError.message);
     const allowed = clone(forensic);
     allowed.clues.c4.text = 'Adli laboratuvar, parmak izi taramasında saptadı: küçük bir çakı bıçağı üzerinde beyaz saçlı soğukkanlı beyefendiye ait hiçbir fiziksel iz bulunmadı.';
-    const countered = guardedPatch(productionSnapshot, tren, tren.candidate, compileTextPatch(tren.candidate, trenPlan, allowed), assess(productionSnapshot, tren, tren.candidate));
+    const countered = guardedPatch(baselineSnapshot, tren, tren.candidate, compileTextPatch(tren.candidate, trenPlan, allowed), assess(baselineSnapshot, tren, tren.candidate));
     assert.equal(countered.assessment.result.scoreBreakdown.k1.score, 40);
     assert.equal(countered.assessment.result.scoreBreakdown.k1.weakAnchor, undefined);
     assert.equal(countered.assessment.passed, false);
     assert.ok(countered.assessment.result.blockers.some(b => b.includes('Boğma Halatı')));
     assert.ok(countered.assessment.result.blockers.some(b => b.includes('Kesici Silah')));
-    assert.match(textRepairPrompt(tren, tren.candidate, trenPlan, assess(productionSnapshot, tren, tren.candidate), []), /kriminal laboratuvar/i);
-    const hamam = productionSnapshot.entries.find(e => e.id === 'tarihi-hamamda-cinayet');
+    assert.match(textRepairPrompt(tren, tren.candidate, trenPlan, assess(baselineSnapshot, tren, tren.candidate), []), /kriminal laboratuvar/i);
+    const hamam = baselineSnapshot.entries.find(e => e.id === 'tarihi-hamamda-cinayet');
     const recorded = { ...saved.cases[hamam.id].recorded_plan, experience: experienceProfile(hamam.candidate, 'standard') };
     assert.equal(anchorConfirmsTwoCrimeComponents(hamam.candidate, recorded.clues.find(c => c.id === 'c2').rule), true);
     assert.equal(verifyTextPlan(hamam.candidate, recorded).coreNecessary, true);
@@ -1927,7 +1941,7 @@ try {
     assert.equal(verifyTextPlan(easy, recorded).coreNecessary, true);
     const chief = clone(hamam.candidate); chief.difficulty = 'baskomiser';
     assert.throws(() => verifyTextPlan(chief, recorded), /TEXT_PLAN_ANCHOR_DOUBLE_REVEAL:c2/);
-    const hamamPlan = textRepairPlan(productionSnapshot, hamam, hamam.candidate);
+    const hamamPlan = textRepairPlan(baselineSnapshot, hamam, hamam.candidate);
     const hamamAnchor = hamamPlan.clues.find(c => hamamPlan.anchor.source === 'clue:' + c.id);
     assert.equal(anchorConfirmsTwoCrimeComponents(hamam.candidate, hamamAnchor.rule), false);
     assert.equal(verifyTextPlan(hamam.candidate, hamamPlan).coreNecessary, true);
@@ -1939,11 +1953,11 @@ try {
     assert.ok(!hamamFlashError || !/ANCHOR_DOUBLE_REVEAL/.test(hamamFlashError.message), hamamFlashError && hamamFlashError.message);
     const chiefCase = clone(hamam.candidate); chiefCase.difficulty = 'baskomiser';
     assert.throws(() => compileTextPatch(chiefCase, recorded, hamamFlash), /ANCHOR_DOUBLE_REVEAL:c2/);
-    const sab = productionSnapshot.entries.find(e => e.id === 'sabanci-muzesi-gasp');
+    const sab = baselineSnapshot.entries.find(e => e.id === 'sabanci-muzesi-gasp');
     assert.equal(supportsTextRepair(sab, sab.candidate), false);
-    assert.equal(textRepairPlan(productionSnapshot, sab, sab.candidate), null);
+    assert.equal(textRepairPlan(baselineSnapshot, sab, sab.candidate), null);
     assert.equal(saved.cases[sab.id].flash.repair_method, 'legacy_patch');
-    const patched = guardedPatch(productionSnapshot, sab, sab.candidate, saved.cases[sab.id].flash.plan, assess(productionSnapshot, sab, sab.candidate));
+    const patched = guardedPatch(baselineSnapshot, sab, sab.candidate, saved.cases[sab.id].flash.plan, assess(baselineSnapshot, sab, sab.candidate));
     assert.equal(patched.assessment.result.score, 0);
     assert.equal(patched.assessment.result.gates.coreNecessity.passed, false);
     assert.deepEqual(patched.assessment.novelty.issues, ['LOGIC_PATTERN_UNVERIFIED']);
@@ -1954,14 +1968,14 @@ try {
   await test('handwritten corrected-plan examples pass the pinned simulator offline and are not live model proof', () => {
     const within = (n, band) => n >= band[0] && n <= band[1];
     for (const id of ['tren-yolculugunda-cinayet', 'tarihi-hamamda-cinayet']) {
-      const entry = productionSnapshot.entries.find(e => e.id === id);
+      const entry = baselineSnapshot.entries.find(e => e.id === id);
       const before = stableHash(entry.raw);
-      const plan = textRepairPlan(productionSnapshot, entry, entry.candidate);
+      const plan = textRepairPlan(baselineSnapshot, entry, entry.candidate);
       const anchor = plan.clues.find(c => plan.anchor.source === 'clue:' + c.id);
       assert.equal(anchorConfirmsTwoCrimeComponents(entry.candidate, anchor.rule), false);
       const response = { case_id: id, assessment: 'Handwritten offline example, not a live model output', ...anchorContractExamples[id] };
-      const compiled = guardedPatch(productionSnapshot, entry, entry.candidate,
-        compileTextPatch(entry.candidate, plan, response), assess(productionSnapshot, entry, entry.candidate));
+      const compiled = guardedPatch(baselineSnapshot, entry, entry.candidate,
+        compileTextPatch(entry.candidate, plan, response), assess(baselineSnapshot, entry, entry.candidate));
       const a = compiled.assessment;
       assert.equal(a.result.score, 100, id);
       assert.equal(a.result.gates.visibleEvidence.passed, true, id);
@@ -1984,7 +1998,7 @@ try {
         assert.deepEqual(a.result.blockers.map(b => b.includes('tek sözcük')), [true, true]);
         const named = clone(compiled.candidate);
         for (const [sid, name] of Object.entries(hamamSourceNameCompletion)) named.suspects.find(s => s.id === sid).name = name;
-        const completed = assess(productionSnapshot, entry, named);
+        const completed = assess(baselineSnapshot, entry, named);
         assert.equal(completed.result.score, 100);
         assert.equal(completed.passed, true);
         assert.equal(completed.result.simulatorProductionReady, true);
@@ -1999,7 +2013,7 @@ try {
   });
   await test('recorded Tren hints and Hamam role names recover offline without acceptance or new rights', () => {
     const puzzles = fs.readFileSync('artifacts/dedektif/data/puzzles.ts');
-    const tren = recoverTrenHints(productionSnapshot);
+    const tren = recoverTrenHints(baselineSnapshot);
     assert.equal(tren.hint_path, 'compileHints');
     assert.equal(tren.recorded_plan, tren.today_plan);
     assert.deepEqual(tren.changed_hints, ['c1', 'c4']);
@@ -2009,8 +2023,8 @@ try {
     assert.equal(tren.qa.production_ready, true);
     assert.equal(tren.qa.independent_review, false);
     assert.equal(tren.qa.content_locked, false);
-    assert.equal(productionSnapshot.sidecar.cases[tren.case_id], undefined);
-    const hamam = recoverHamamRoles(productionSnapshot);
+    assert.equal(baselineSnapshot.sidecar.cases[tren.case_id], undefined);
+    const hamam = recoverHamamRoles(baselineSnapshot);
     assert.notEqual(hamam.recorded_plan, hamam.today_plan);
     assert.deepEqual(hamam.names, ['Veznedar', 'Hamam Ağası', 'Tellak']);
     assert.deepEqual(hamam.candidate.intentionalMononymIds, HAMAM_ROLE_MONONYMS);
@@ -2020,20 +2034,20 @@ try {
     assert.deepEqual(hamam.qa.blockers, []);
     assert.equal(hamam.qa.independent_review, false);
     assert.equal(hamam.qa.content_locked, false);
-    const undeclared = recoverHamamRoles(productionSnapshot, []);
+    const undeclared = recoverHamamRoles(baselineSnapshot, []);
     assert.equal(undeclared.qa.production_ready, false);
     assert.deepEqual(undeclared.qa.blockers.map(item => item.includes('tek sözcük')), [true, true]);
-    const tellakOnly = recoverHamamRoles(productionSnapshot, ['s1']);
+    const tellakOnly = recoverHamamRoles(baselineSnapshot, ['s1']);
     assert.deepEqual(tellakOnly.qa.blockers.filter(item => item.includes('tek sözcük')).map(item => item.includes('Tellak')), [true]);
     const generic = clone(hamam.candidate);
     generic.suspects[0].name = 'Şüpheli';
-    const genericQa = assess(productionSnapshot, productionSnapshot.entries.find(item => item.id === hamam.case_id), generic);
+    const genericQa = assess(baselineSnapshot, baselineSnapshot.entries.find(item => item.id === hamam.case_id), generic);
     assert.ok(genericQa.result.blockers.some(item => item.includes('yer tutucu/jenerik')));
     const blank = clone(hamam.candidate);
     blank.suspects[2].name = 'A';
-    const blankQa = assess(productionSnapshot, productionSnapshot.entries.find(item => item.id === hamam.case_id), blank);
+    const blankQa = assess(baselineSnapshot, baselineSnapshot.entries.find(item => item.id === hamam.case_id), blank);
     assert.ok(blankQa.result.blockers.some(item => item.includes('anlamlı bir görünen ad yok')));
-    const exported = productionSnapshot.engine.buildCanonicalProduction(hamam.candidate);
+    const exported = baselineSnapshot.engine.buildCanonicalProduction(hamam.candidate);
     assert.equal(exported.intentionalMononymIds, undefined);
     const counts = read('.case-qa/fixtures/campaign-39130510026-request-counts.json');
     for (const id of [tren.case_id, hamam.case_id]) {
@@ -2092,9 +2106,10 @@ try {
     process.env.GEMINI_API_KEY = 'offline-recorded-review';
     try {
       let freshTransports = 0;
+      let exactReview = null;
       for (const id of ids) {
-        const entry = productionSnapshot.entries.find(item => item.id === id);
-        const proof = verifyRecordedReview(productionSnapshot, id);
+        const entry = baselineSnapshot.entries.find(item => item.id === id);
+        const proof = verifyRecordedReview(baselineSnapshot, id);
         assert.equal(proof.candidate_hash, bindings.cases[id].candidate_hash);
         const journal = path.join(temporary, 'recorded-review-' + id + '.json');
         const store = ledgerFor(id, { journal });
@@ -2115,12 +2130,14 @@ try {
           transports++; freshTransports++;
           return responseForFixture(transports === 1 ? playerFor(proof.candidate) : validJudge());
         };
-        const reviewed = await reviewRecordedRecovery(productionSnapshot, id, store, runFor(), { transport });
+        const reviewed = await reviewRecordedRecovery(baselineSnapshot, id, store, runFor(), { transport });
         const settled = JSON.parse(fs.readFileSync(journal, 'utf8'));
         assert.equal(settled.campaign_spent, store.state.campaign_spent);
         assert.ok(Object.values(settled.requests).filter(item => item.purpose !== 'repair').every(item => item.status === 'completed' && item.plan));
         assert.equal(transports, 2);
         assert.equal(reviewed.status, 'ready_for_gates');
+        assert.equal(reviewed.portfolio_drift, false);
+        exactReview = reviewed;
         assert.equal(reviewed.calls, 2);
         assert.equal(reviewed.review.passed, true);
         assert.equal(store.state.cases[id].status, 'quarantined');
@@ -2130,11 +2147,11 @@ try {
         assert.deepEqual(added.map(item => item.purpose).sort(), ['judge', 'player']);
         assert.ok(added.every(item => item.status === 'completed' && item.plan));
         assert.equal(stableHash(Object.fromEntries(Object.entries(store.state.requests).filter(([, item]) => item.purpose === 'repair'))), repairs);
-        assert.equal(certificateValid(productionSnapshot, entry, proof.candidate, reviewed.review.certificate), true);
-        assert.equal(productionSnapshot.sidecar.cases[id], undefined);
+        assert.equal(certificateValid(baselineSnapshot, entry, proof.candidate, reviewed.review.certificate), true);
+        assert.equal(baselineSnapshot.sidecar.cases[id], undefined);
         const cachedSpent = store.state.campaign_spent;
         let cachedTransports = 0;
-        const cached = await reviewRecordedRecovery(productionSnapshot, id, store, runFor(), { transport: async () => { cachedTransports++; throw new Error('UNEXPECTED_TRANSPORT'); } });
+        const cached = await reviewRecordedRecovery(baselineSnapshot, id, store, runFor(), { transport: async () => { cachedTransports++; throw new Error('UNEXPECTED_TRANSPORT'); } });
         assert.equal(cachedTransports, 0);
         assert.equal(cached.calls, 0);
         assert.equal(cached.status, 'ready_for_gates');
@@ -2142,30 +2159,30 @@ try {
         const player = Object.entries(store.state.requests).find(([, item]) => item.purpose === 'player');
         const judge = Object.entries(store.state.requests).find(([, item]) => item.purpose === 'judge');
         const playerBefore = clone(player[1]);
-        const resumedSpecs = recordedReviewSpecs(productionSnapshot, entry, proof.candidate, store);
+        const resumedSpecs = recordedReviewSpecs(baselineSnapshot, entry, proof.candidate, store);
         assert.equal(resumedSpecs.specs.length, 0);
         assert.equal(requestKey(id, productionPolicy.models.reviewer, resumedSpecs.judgeBody, 'judge'), judge[0]);
-        assert.notEqual(requestKey(id, productionPolicy.models.reviewer, reviewTransport(productionSnapshot, entry, proof.candidate).judgeBody, 'judge'), judge[0]);
+        assert.notEqual(requestKey(id, productionPolicy.models.reviewer, reviewTransport(baselineSnapshot, entry, proof.candidate).judgeBody, 'judge'), judge[0]);
         const judgeCharge = judge[1].charged;
         delete store.state.requests[judge[0]];
         store.state.cases[id].spent -= judgeCharge;
         store.state.campaign_spent -= judgeCharge;
         validateState(store.state);
         let judgeTransports = 0;
-        const resumed = await reviewRecordedRecovery(productionSnapshot, id, store, runFor(), { transport: async () => { judgeTransports++; return responseForFixture(validJudge()); } });
+        const resumed = await reviewRecordedRecovery(baselineSnapshot, id, store, runFor(), { transport: async () => { judgeTransports++; return responseForFixture(validJudge()); } });
         assert.equal(judgeTransports, 1);
         assert.equal(resumed.calls, 1);
         assert.equal(resumed.status, 'ready_for_gates');
         assert.deepEqual(store.state.requests[player[0]], playerBefore);
         assert.equal(store.state.requests[judge[0]].status, 'completed');
         const uncertain = ledgerFor(id);
-        const playerKey = requestKey(id, productionPolicy.models.reviewer, reviewTransport(productionSnapshot, entry, proof.candidate).playerBody, 'player');
+        const playerKey = requestKey(id, productionPolicy.models.reviewer, reviewTransport(baselineSnapshot, entry, proof.candidate).playerBody, 'player');
         uncertain.state.requests[playerKey] = { case_id: id, model: productionPolicy.models.reviewer, purpose: 'player', status: 'reserved', day: '2026-10-18', charged: 0.01 };
         uncertain.state.cases[id].spent += 0.01;
         uncertain.state.campaign_spent += 0.01;
         validateState(uncertain.state);
         let uncertainTransports = 0;
-        const blockedUncertain = await reviewRecordedRecovery(productionSnapshot, id, uncertain, runFor(), { transport: async () => { uncertainTransports++; throw new Error('UNEXPECTED_TRANSPORT'); } });
+        const blockedUncertain = await reviewRecordedRecovery(baselineSnapshot, id, uncertain, runFor(), { transport: async () => { uncertainTransports++; throw new Error('UNEXPECTED_TRANSPORT'); } });
         assert.equal(uncertainTransports, 0);
         assert.equal(blockedUncertain.calls, 0);
         assert.deepEqual(blockedUncertain.failures, ['REPEATED_OR_UNCERTAIN_REQUEST']);
@@ -2173,7 +2190,7 @@ try {
         assert.equal(uncertain.state.requests[playerKey].plan, undefined);
         const blocked = ledgerFor(id, { requests: 6, charged: 0.001 });
         let blockedTransports = 0;
-        const capacity = await reviewRecordedRecovery(productionSnapshot, id, blocked, runFor(), { transport: async () => { blockedTransports++; throw new Error('UNEXPECTED_TRANSPORT'); } });
+        const capacity = await reviewRecordedRecovery(baselineSnapshot, id, blocked, runFor(), { transport: async () => { blockedTransports++; throw new Error('UNEXPECTED_TRANSPORT'); } });
         assert.equal(capacity.status, 'review_pair_blocked');
         assert.deepEqual(capacity.failures, ['CASE_REQUEST_LIMIT']);
         assert.equal(capacity.calls, 0);
@@ -2182,40 +2199,44 @@ try {
         const tight = ledgerFor(id, { charged: productionPolicy.sequential.case_budget_usd / 2 - 0.0000001 });
         const tightHash = stableHash(tight.state);
         let budgetTransports = 0;
-        const budget = await reviewRecordedRecovery(productionSnapshot, id, tight, runFor(), { transport: async () => { budgetTransports++; throw new Error('UNEXPECTED_TRANSPORT'); } });
+        const budget = await reviewRecordedRecovery(baselineSnapshot, id, tight, runFor(), { transport: async () => { budgetTransports++; throw new Error('UNEXPECTED_TRANSPORT'); } });
         assert.deepEqual(budget.failures, ['BUDGET_STOP']);
         assert.equal(budgetTransports, 0);
         assert.equal(stableHash(tight.state), tightHash);
         const drifted = ledgerFor(id, { sourceHash: 'ab'.repeat(32) });
-        await assert.rejects(() => reviewRecordedRecovery(productionSnapshot, id, drifted, runFor(), { transport: async () => { throw new Error('UNEXPECTED_TRANSPORT'); } }), /RECORDED_REVIEW_HASH/);
-        assert.deepEqual(reopenTextQuarantine(productionSnapshot, store), []);
+        await assert.rejects(() => reviewRecordedRecovery(baselineSnapshot, id, drifted, runFor(), { transport: async () => { throw new Error('UNEXPECTED_TRANSPORT'); } }), /RECORDED_REVIEW_HASH/);
+        assert.deepEqual(reopenTextQuarantine(baselineSnapshot, store), []);
       }
       assert.equal(freshTransports, 4);
       const wrongPin = clone(bindings);
       wrongPin.cases[ids[0]] = { ...wrongPin.cases[ids[0]], candidate_hash: 'cd'.repeat(32) };
-      assert.throws(() => verifyRecordedReview(productionSnapshot, ids[0], wrongPin), /RECORDED_REVIEW_HASH/);
-      await assert.rejects(() => reviewRecordedRecovery(productionSnapshot, 'sabanci-muzesi-gasp', ledgerFor('sabanci-muzesi-gasp'), runFor(), { transport: async () => { throw new Error('UNEXPECTED_TRANSPORT'); } }), /RECORDED_REVIEW_CASE/);
+      assert.throws(() => verifyRecordedReview(baselineSnapshot, ids[0], wrongPin), /RECORDED_REVIEW_HASH/);
+      await assert.rejects(() => reviewRecordedRecovery(baselineSnapshot, 'sabanci-muzesi-gasp', ledgerFor('sabanci-muzesi-gasp'), runFor(), { transport: async () => { throw new Error('UNEXPECTED_TRANSPORT'); } }), /RECORDED_REVIEW_CASE/);
       const queue = { state: { ...emptyState(), cases: {
         'tren-yolculugunda-cinayet': { status: 'quarantined', spent: 0 },
         'tarihi-hamamda-cinayet': { status: 'quarantined', spent: 0 }
       } }, save() {} };
       const seen = [];
-      await campaign(productionSnapshot, queue, { caseLimit: 1, worker: async (_snapshot, entry) => {
+      await campaign(baselineSnapshot, queue, { caseLimit: 1, worker: async (_snapshot, entry) => {
         seen.push(entry.id);
         return { status: 'quarantined', assessment: { result: { score: 0 } }, run: { calls: 0, spent: 0, attempts: [] }, failures: [] };
       } });
       assert.equal(seen.includes('tren-yolculugunda-cinayet'), false);
       assert.equal(seen.includes('tarihi-hamamda-cinayet'), false);
-      const cleanCopy = () => {
+      assert.equal(exactReview.portfolio_drift, false);
+      if (process.env.FM_PIPELINE_CONTENT_CHECKOUT === '1') return;
+      const contentPaths = [productionPolicy.source.standard_path, productionPolicy.source.premium_path, productionPolicy.source.sidecar_path];
+      const baselineFiles = [productionPolicy.source.standard_path, productionPolicy.source.premium_path, productionPolicy.source.sidecar_path, productionPolicy.simulator.path, productionPolicy.source.inventory_path, productionPolicy.review.media_evidence_path];
+      const copyBaseline = () => {
         const dir = fs.mkdtempSync(path.join(temporary, 'recorded-review-stage-'));
-        for (const file of [productionPolicy.source.standard_path, productionPolicy.source.premium_path, productionPolicy.source.sidecar_path, productionPolicy.simulator.path, productionPolicy.source.inventory_path, productionPolicy.review.media_evidence_path]) {
+        for (const file of baselineFiles) {
           fs.mkdirSync(path.dirname(path.join(dir, file)), { recursive: true });
-          fs.copyFileSync(path.join(root, file), path.join(dir, file));
+          fs.copyFileSync(path.join(baselineSnapshot.root, file), path.join(dir, file));
         }
         return { dir, snapshot: loadSnapshot(dir, productionPolicy) };
       };
       const sourceBytes = dir => [productionPolicy.source.standard_path, productionPolicy.source.sidecar_path].map(file => fs.readFileSync(path.join(dir, file)));
-      const failedCopy = cleanCopy();
+      const failedCopy = copyBaseline();
       const stageId = 'tren-yolculugunda-cinayet';
       const failedProof = verifyRecordedReview(failedCopy.snapshot, stageId);
       const beforeFiles = sourceBytes(failedCopy.dir);
@@ -2228,12 +2249,59 @@ try {
       assert.equal(failed.status, 'quarantined');
       assert.equal(failed.review.passed, false);
       assert.deepEqual(sourceBytes(failedCopy.dir), beforeFiles);
-      const stageOne = async id => {
-        const copy = cleanCopy();
-        const entry = copy.snapshot.entries.find(item => item.id === id);
-        const proof = verifyRecordedReview(copy.snapshot, id);
+      const runChecked = (args, cwd, env) => {
+        try {
+          return execFileSync(args[0], args.slice(1), { cwd, env, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'], maxBuffer: 16 * 1024 * 1024 });
+        } catch (error) {
+          throw new Error(args.join(' ') + '\n' + String(error.stdout || '') + String(error.stderr || ''));
+        }
+      };
+      const gitIdentity = ['-c', 'user.email=qa@example.invalid', '-c', 'user.name=recorded-review'];
+      const commitIfNeeded = (dir, message, files) => {
+        const git = (...args) => runChecked(['git', ...args], dir, process.env).trim();
+        git('add', '--', ...files);
+        if (!git('diff', '--cached', '--name-only').trim()) return git('rev-parse', 'HEAD');
+        git(...gitIdentity, 'commit', '-m', message);
+        return git('rev-parse', 'HEAD');
+      };
+      const proveContentPull = async (dir, id, base) => {
+        const git = (...args) => runChecked(['git', ...args], dir, process.env).trim();
+        git('add', '--', ...contentPaths);
+        const head = commitIfNeeded(dir, 'stage ' + id, contentPaths);
+        const diff = git('diff', '--name-only', base, head).split('\n').filter(Boolean);
+        assert.deepEqual(diff.filter(file => !contentPaths.includes(file)), []);
+        assert.ok(diff.includes(productionPolicy.source.sidecar_path));
+        const nestedEnv = { ...process.env, FM_PIPELINE_CONTENT_CHECKOUT: '1' };
+        delete nestedEnv.GEMINI_API_KEY;
+        const suite = runChecked([process.execPath, '.case-qa/pipeline/test.mjs'], dir, nestedEnv);
+        assert.match(suite, /PASS: \d+ pipeline tests; exact HTML, zero paid calls\./);
+        const certified = runChecked([process.execPath, '.case-qa/pipeline/certify-candidate.mjs'], dir, {
+          ...nestedEnv, FM_PIPELINE_BASE_SHA: base, FM_PIPELINE_HEAD_SHA: head, FM_PIPELINE_CASE_ID: id
+        });
+        assert.match(certified, /PASS: selected case, independent review certificate, source scope and portfolio regression/);
+        const published = loadSnapshot(dir, productionPolicy);
+        assert.equal(campaignRows(published).find(item => item.id === id).content_locked, true);
+        assert.equal(campaignRows(published).find(item => item.id === 'adada-buyuk-gizem').content_locked, true);
+        return { head, published };
+      };
+      const prepareCheckout = () => {
+        const dir = fs.mkdtempSync(path.join(temporary, 'content-pr-'));
+        const branch = runChecked(['git', 'rev-parse', '--abbrev-ref', 'HEAD'], root, process.env).trim();
+        runChecked(['git', 'clone', '--shared', '--branch', branch, root, dir], root, process.env);
+        const overlay = ['.case-qa/pipeline/test.mjs', '.case-qa/pipeline/recorded-recovery.mjs', '.case-qa/pipeline/run.mjs', '.github/workflows/fm-case-pipeline.yml', '.case-qa/fixtures/recorded-review-bindings.json'];
+        for (const file of overlay) fs.copyFileSync(path.join(root, file), path.join(dir, file));
+        commitIfNeeded(dir, 'recorded review checkout code', overlay);
+        runChecked(['git', 'checkout', recordedBindings.baseline_commit, '--', ...baselineFiles], dir, process.env);
+        const base = commitIfNeeded(dir, 'recorded review baseline content', baselineFiles);
+        return { dir, base };
+      };
+      const stageReviewed = async (dir, id) => {
+        const snap = loadSnapshot(dir, productionPolicy);
+        const entry = snap.entries.find(item => item.id === id);
+        const proof = verifyRecordedReview(snap, id);
+        assert.equal(proof.portfolio_drift, false);
         let calls = 0;
-        const reviewed = await reviewRecordedRecovery(copy.snapshot, id, ledgerFor(id), runFor(), { transport: async (url) => {
+        const reviewed = await reviewRecordedRecovery(snap, id, ledgerFor(id), runFor(), { transport: async (url) => {
           assert.match(url, /:generateContent$/);
           calls++;
           return responseForFixture(calls === 1 ? playerFor(proof.candidate) : validJudge());
@@ -2241,20 +2309,74 @@ try {
         assert.equal(calls, 2);
         assert.equal(reviewed.status, 'ready_for_gates');
         assert.equal(reviewed.review.passed, true);
-        const staged = stageCandidate(copy.snapshot, entry, reviewed.candidate, reviewed.review.certificate);
-        const reloaded = staged.entries.find(item => item.id === id);
-        assert.equal(certificateValid(staged, reloaded, reloaded.candidate, staged.sidecar.cases[id].pipeline_review), true);
-        return staged;
+        stageCandidate(snap, entry, reviewed.candidate, reviewed.review.certificate);
+        return reviewed;
       };
-      const trenStaged = await stageOne(stageId);
-      assert.equal(campaignRows(trenStaged).find(item => item.id === stageId).content_locked, true);
-      assert.equal(campaignRows(trenStaged).find(item => item.id === 'adada-buyuk-gizem').content_locked, true);
-      assert.equal(campaignRows(trenStaged).find(item => item.id === 'tarihi-hamamda-cinayet').content_locked, false);
-      assert.throws(() => verifyRecordedReview(trenStaged, 'tarihi-hamamda-cinayet'), /RECORDED_REVIEW_HASH/);
-      const hamamStaged = await stageOne('tarihi-hamamda-cinayet');
-      assert.equal(campaignRows(hamamStaged).find(item => item.id === 'tarihi-hamamda-cinayet').content_locked, true);
-      assert.equal(campaignRows(hamamStaged).find(item => item.id === 'adada-buyuk-gizem').content_locked, true);
-      assert.equal(campaignRows(hamamStaged).find(item => item.id === stageId).content_locked, false);
+      const trenCheckout = prepareCheckout();
+      await stageReviewed(trenCheckout.dir, stageId);
+      const trenPublished = await proveContentPull(trenCheckout.dir, stageId, trenCheckout.base);
+      assert.equal(campaignRows(trenPublished.published).find(item => item.id === 'tarihi-hamamda-cinayet').content_locked, false);
+      const hamamCheckout = prepareCheckout();
+      await stageReviewed(hamamCheckout.dir, 'tarihi-hamamda-cinayet');
+      const hamamPublished = await proveContentPull(hamamCheckout.dir, 'tarihi-hamamda-cinayet', hamamCheckout.base);
+      assert.equal(campaignRows(hamamPublished.published).find(item => item.id === stageId).content_locked, false);
+      const bindingPath = '.case-qa/fixtures/recorded-review-bindings.json';
+      const bindingBytes = fs.readFileSync(path.join(root, bindingPath));
+      const hamamOnTren = verifyRecordedReview(trenPublished.published, 'tarihi-hamamda-cinayet');
+      const trenOnHamam = verifyRecordedReview(hamamPublished.published, stageId);
+      assert.equal(hamamOnTren.portfolio_drift, true);
+      assert.equal(trenOnHamam.portfolio_drift, true);
+      assert.equal(hamamOnTren.candidate_content_hash, bindings.cases['tarihi-hamamda-cinayet'].candidate_content_hash);
+      assert.equal(trenOnHamam.candidate_content_hash, bindings.cases[stageId].candidate_content_hash);
+      assert.notEqual(hamamOnTren.candidate_hash, bindings.cases['tarihi-hamamda-cinayet'].candidate_hash);
+      assert.equal(hamamOnTren.pinned_candidate_hash, bindings.cases['tarihi-hamamda-cinayet'].candidate_hash);
+      assert.equal(hamamOnTren.source_hash, bindings.cases['tarihi-hamamda-cinayet'].source_hash);
+      assert.equal(hamamOnTren.plan_signature, bindings.cases['tarihi-hamamda-cinayet'].plan_signature);
+      assert.ok(bindingBytes.equals(fs.readFileSync(path.join(root, bindingPath))));
+      assert.ok(bindingBytes.equals(fs.readFileSync(path.join(trenCheckout.dir, bindingPath))));
+      const renewed = clone(bindings);
+      renewed.cases['tarihi-hamamda-cinayet'] = { ...renewed.cases['tarihi-hamamda-cinayet'], candidate_hash: hamamOnTren.candidate_hash, candidate_content_hash: '11'.repeat(32) };
+      assert.throws(() => verifyRecordedReview(trenPublished.published, 'tarihi-hamamda-cinayet', renewed), /RECORDED_REVIEW_HASH/);
+      const hamamEntry = baselineSnapshot.entries.find(item => item.id === 'tarihi-hamamda-cinayet');
+      const pinnedHamam = verifyRecordedReview(baselineSnapshot, 'tarihi-hamamda-cinayet');
+      const mergedEntry = trenPublished.published.entries.find(item => item.id === 'tarihi-hamamda-cinayet');
+      const playerKey = body => requestKey('tarihi-hamamda-cinayet', productionPolicy.models.reviewer, body, 'player');
+      const judgeKey = body => requestKey('tarihi-hamamda-cinayet', productionPolicy.models.reviewer, body, 'judge');
+      const pinnedTransport = reviewTransport(baselineSnapshot, hamamEntry, pinnedHamam.candidate);
+      const mergedTransport = reviewTransport(trenPublished.published, mergedEntry, hamamOnTren.candidate);
+      assert.equal(playerKey(pinnedTransport.playerBody), playerKey(mergedTransport.playerBody));
+      assert.notEqual(judgeKey(pinnedTransport.judgeBody), judgeKey(mergedTransport.judgeBody));
+      const secondStore = ledgerFor('tarihi-hamamda-cinayet');
+      let secondCalls = 0;
+      const second = await reviewRecordedRecovery(trenPublished.published, 'tarihi-hamamda-cinayet', secondStore, runFor(), { transport: async () => {
+        secondCalls++;
+        return responseForFixture(secondCalls === 1 ? playerFor(hamamOnTren.candidate) : validJudge());
+      } });
+      assert.equal(secondCalls, 2);
+      assert.equal(second.status, 'ready_for_gates');
+      assert.equal(second.portfolio_drift, true);
+      assert.equal(second.pinned_candidate_hash, bindings.cases['tarihi-hamamda-cinayet'].candidate_hash);
+      assert.notEqual(second.candidate_hash, second.pinned_candidate_hash);
+      const carried = ledgerFor('tarihi-hamamda-cinayet');
+      const savedPlayer = Object.entries(secondStore.state.requests).find(([, item]) => item.purpose === 'player');
+      carried.state.requests[savedPlayer[0]] = clone(savedPlayer[1]);
+      carried.state.cases['tarihi-hamamda-cinayet'].spent += savedPlayer[1].charged;
+      carried.state.campaign_spent += savedPlayer[1].charged;
+      validateState(carried.state);
+      let editorCalls = 0;
+      const editorOnly = await reviewRecordedRecovery(trenPublished.published, 'tarihi-hamamda-cinayet', carried, runFor(), { transport: async () => {
+        editorCalls++;
+        return responseForFixture(validJudge());
+      } });
+      assert.equal(editorCalls, 1);
+      assert.equal(editorOnly.calls, 1);
+      assert.equal(editorOnly.status, 'ready_for_gates');
+      assert.equal(carried.state.requests[savedPlayer[0]].status, 'completed');
+      stageCandidate(trenPublished.published, mergedEntry, second.candidate, second.review.certificate);
+      const follow = await proveContentPull(trenCheckout.dir, 'tarihi-hamamda-cinayet', trenPublished.head);
+      assert.equal(campaignRows(follow.published).find(item => item.id === stageId).content_locked, true);
+      assert.equal(campaignRows(follow.published).find(item => item.id === 'tarihi-hamamda-cinayet').content_locked, true);
+      assert.ok(bindingBytes.equals(fs.readFileSync(path.join(root, bindingPath))));
     } finally {
       if (oldKey === undefined) delete process.env.GEMINI_API_KEY; else process.env.GEMINI_API_KEY = oldKey;
     }

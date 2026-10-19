@@ -1,4 +1,8 @@
-import { read, clone, assess, guardedPatch } from './core.mjs';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import { execFileSync } from 'node:child_process';
+import { read, clone, assess, guardedPatch, loadSnapshot } from './core.mjs';
 import { compileTextPatch, textRepairPlan } from './text-repair.mjs';
 import { compileHints, hintOnly } from './hint-cleanup.mjs';
 import { experienceProfile } from './experience.mjs';
@@ -70,6 +74,38 @@ export function recoverHamamRoles(snapshot, roleIds = HAMAM_ROLE_MONONYMS) {
   };
 }
 const BINDING_PATH = '.case-qa/fixtures/recorded-review-bindings.json';
+const baselineCache = new Map();
+function contentFiles(policy) {
+  return [policy.source.standard_path, policy.source.premium_path, policy.source.sidecar_path,
+    policy.simulator.path, policy.source.inventory_path, policy.review.media_evidence_path];
+}
+// The pre-publication tree pinned by the binding. Historical recovery reads this
+// commit, not whatever sidecar the current production source happens to contain.
+export function loadRecordedBaseline(gitRoot, policy, sha) {
+  if (!/^[a-f0-9]{40}$/.test(sha || '')) throw new Error('RECORDED_REVIEW_HASH');
+  const key = gitRoot + '\0' + sha;
+  if (baselineCache.has(key)) return baselineCache.get(key);
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'fm-recorded-baseline-'));
+  for (const file of contentFiles(policy)) {
+    const data = execFileSync('git', ['show', sha + ':' + file], { cwd: gitRoot, maxBuffer: 8 * 1024 * 1024 });
+    const target = path.join(dir, file);
+    fs.mkdirSync(path.dirname(target), { recursive: true });
+    fs.writeFileSync(target, data);
+  }
+  const snapshot = loadSnapshot(dir, policy);
+  snapshot.gitRoot = gitRoot;
+  baselineCache.set(key, snapshot);
+  return snapshot;
+}
+export function candidateContentHash(candidate) {
+  const copy = clone(candidate);
+  delete copy.qaPortfolioRegistry;
+  return stableHash(copy);
+}
+function changedFields(left, right) {
+  const keys = new Set([...Object.keys(left || {}), ...Object.keys(right || {})]);
+  return [...keys].filter(key => stableHash(left?.[key] ?? null) !== stableHash(right?.[key] ?? null)).sort();
+}
 function recordedResponse(id) {
   const saved = read('.case-qa/fixtures/campaign-39130510026-repairs.json');
   const response = saved.cases?.[id]?.responses?.find(item => item.model.includes('3.8'));
@@ -77,7 +113,8 @@ function recordedResponse(id) {
   return response;
 }
 export function verifyRecordedReview(snapshot, id, bindings = read(BINDING_PATH)) {
-  if (bindings?.schema !== 'fm_recorded_review_binding_v1' || bindings.simulator_pin !== snapshot.simulatorHash)
+  if (bindings?.schema !== 'fm_recorded_review_binding_v1' || bindings.simulator_pin !== snapshot.simulatorHash ||
+      !/^[a-f0-9]{40}$/.test(bindings.baseline_commit || ''))
     throw new Error('RECORDED_REVIEW_HASH');
   const pin = bindings.cases?.[id];
   const recovered = id === 'tren-yolculugunda-cinayet' ? recoverTrenHints(snapshot) :
@@ -85,6 +122,7 @@ export function verifyRecordedReview(snapshot, id, bindings = read(BINDING_PATH)
   if (!pin || !recovered) throw new Error('RECORDED_REVIEW_CASE');
   const entry = snapshot.entries.find(item => item.id === id);
   const response = recordedResponse(id);
+  const contentHash = candidateContentHash(recovered.candidate);
   const proof = {
     case_id: id,
     source_hash: entry?.sourceHash || '',
@@ -92,14 +130,28 @@ export function verifyRecordedReview(snapshot, id, bindings = read(BINDING_PATH)
     response_hash: stableHash(response.plan),
     plan_signature: recovered.recorded_plan,
     candidate_hash: stableHash(recovered.candidate),
+    candidate_content_hash: contentHash,
+    pinned_candidate_hash: pin.candidate_hash,
+    portfolio_drift: false,
     candidate: recovered.candidate,
     qa: recovered.qa
   };
-  if (proof.source_hash !== pin.source_hash || proof.response_model !== pin.response_model ||
-      proof.response_hash !== pin.response_hash || proof.plan_signature !== pin.plan_signature ||
-      proof.candidate_hash !== pin.candidate_hash || proof.qa.passed !== true || proof.qa.production_ready !== true ||
-      proof.qa.content_locked !== false || proof.qa.independent_review !== false)
+  const sameCase = proof.source_hash === pin.source_hash && proof.response_model === pin.response_model &&
+    proof.response_hash === pin.response_hash && proof.plan_signature === pin.plan_signature &&
+    contentHash === pin.candidate_content_hash && proof.qa.passed === true && proof.qa.production_ready === true &&
+    proof.qa.content_locked === false && proof.qa.independent_review === false &&
+    stableHash(recovered.candidate.qaPortfolioRegistry ?? null) === stableHash(entry?.candidate?.qaPortfolioRegistry ?? null);
+  if (!sameCase) throw new Error('RECORDED_REVIEW_HASH');
+  if (proof.candidate_hash === pin.candidate_hash) return proof;
+  // Another accepted case changes only the portfolio registry. The stored full
+  // hash stays the baseline pin; it is not rewritten to the new registry.
+  const baseline = loadRecordedBaseline(snapshot.gitRoot || snapshot.root, snapshot.policy, bindings.baseline_commit);
+  const pinned = id === 'tren-yolculugunda-cinayet' ? recoverTrenHints(baseline) : recoverHamamRoles(baseline);
+  if (stableHash(pinned.candidate) !== pin.candidate_hash || candidateContentHash(pinned.candidate) !== contentHash)
     throw new Error('RECORDED_REVIEW_HASH');
+  const changed = changedFields(pinned.candidate, recovered.candidate);
+  if (changed.length !== 1 || changed[0] !== 'qaPortfolioRegistry') throw new Error('RECORDED_REVIEW_HASH');
+  proof.portfolio_drift = true;
   return proof;
 }
 export function recordedReviewSpecs(snapshot, entry, candidate, store) {
@@ -117,6 +169,8 @@ export function recordedReviewSpecs(snapshot, entry, candidate, store) {
 function recordedOutcome(snapshot, id, proof, entry, record, run, status, extra = {}) {
   return {
     case_id: id, candidate: proof.candidate, candidate_hash: proof.candidate_hash,
+    candidate_content_hash: proof.candidate_content_hash, pinned_candidate_hash: proof.pinned_candidate_hash,
+    portfolio_drift: proof.portfolio_drift === true,
     assessment: assess(snapshot, entry, proof.candidate), run,
     status, failures: extra.failures || [], review: extra.review || null, calls: run.calls,
     queue_status: record.status, provider_error: extra.provider_error || null
