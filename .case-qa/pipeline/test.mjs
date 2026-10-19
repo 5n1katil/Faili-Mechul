@@ -2284,10 +2284,37 @@ try {
         assert.equal(campaignRows(published).find(item => item.id === 'adada-buyuk-gizem').content_locked, true);
         return { head, published };
       };
-      const prepareCheckout = () => {
+      const sourceHead = (source) => {
+        const sha = runChecked(['git', 'rev-parse', 'HEAD'], source, process.env).trim();
+        if (!/^[a-f0-9]{40}$/.test(sha)) throw new Error('RECORDED_REVIEW_HEAD');
+        return sha;
+      };
+      const cloneAtCommit = (source) => {
+        const sha = sourceHead(source);
         const dir = fs.mkdtempSync(path.join(temporary, 'content-pr-'));
-        const branch = runChecked(['git', 'rev-parse', '--abbrev-ref', 'HEAD'], root, process.env).trim();
-        runChecked(['git', 'clone', '--shared', '--branch', branch, root, dir], root, process.env);
+        // Detached HEAD makes --abbrev-ref print HEAD; --branch HEAD then looks up a remote branch.
+        const cloneArgs = ['git', 'clone', '--shared', '--no-checkout', source, dir];
+        assert.equal(cloneArgs.includes('--branch'), false);
+        runChecked(cloneArgs, source, process.env);
+        runChecked(['git', 'checkout', '--detach', sha], dir, process.env);
+        if (sourceHead(dir) !== sha) throw new Error('RECORDED_REVIEW_HEAD');
+        return { dir, sha };
+      };
+      const localSha = sourceHead(root);
+      const namedSource = cloneAtCommit(root);
+      runChecked(['git', 'checkout', '-B', 'recorded-review-sha-probe', localSha], namedSource.dir, process.env);
+      assert.equal(runChecked(['git', 'rev-parse', '--abbrev-ref', 'HEAD'], namedSource.dir, process.env).trim(), 'recorded-review-sha-probe');
+      const fromNamed = cloneAtCommit(namedSource.dir);
+      const detachedSource = cloneAtCommit(root);
+      assert.equal(runChecked(['git', 'rev-parse', '--abbrev-ref', 'HEAD'], detachedSource.dir, process.env).trim(), 'HEAD');
+      const fromDetached = cloneAtCommit(detachedSource.dir);
+      assert.equal(fromNamed.sha, localSha);
+      assert.equal(fromDetached.sha, localSha);
+      assert.equal(sourceHead(fromNamed.dir), localSha);
+      assert.equal(sourceHead(fromDetached.dir), localSha);
+      const prepareCheckout = () => {
+        const { dir, sha } = cloneAtCommit(root);
+        assert.equal(sha, localSha);
         const overlay = ['.case-qa/pipeline/test.mjs', '.case-qa/pipeline/recorded-recovery.mjs', '.case-qa/pipeline/run.mjs', '.github/workflows/fm-case-pipeline.yml', '.case-qa/fixtures/recorded-review-bindings.json'];
         for (const file of overlay) fs.copyFileSync(path.join(root, file), path.join(dir, file));
         commitIfNeeded(dir, 'recorded review checkout code', overlay);
