@@ -1370,6 +1370,7 @@ try {
     const overlay = sidecar.cases[adadaEntry.id];
     delete overlay.pipeline_review;
     delete overlay.simulator_revalidation;
+    delete overlay.simulator_revalidation_history;
     overlay.production_content_unchanged = false;
     const entry = { ...adadaEntry, sourceHash: stableHash({ raw: adadaEntry.raw, overlay }) };
     return {
@@ -1441,7 +1442,15 @@ try {
     assert.equal(saved.review_hash, renewed.certificate.review_hash);
     assert.deepEqual(record, renewed.record);
     assert.equal(record.previous_simulator_pin, previousPin);
+    assert.equal(productionSnapshot.simulatorHash, '9042485f8699c220d71a8b0fa1b32e90ab3e27e3');
     assert.equal(record.simulator_pin, productionSnapshot.simulatorHash);
+    assert.deepEqual(productionSnapshot.sidecar.cases[adadaEntry.id].simulator_revalidation_history, [{
+      schema: 'fm_simulator_revalidation_v1', method: 'reviewHash',
+      previous_simulator_pin: previousPin, simulator_pin: '669721fc3afb1e12492f3abefdc55c86a1e2ee88',
+      previous_review_hash: previousHash, review_hash: '5255e3c02cdb10c448adad1032b7349eab800bd63cce4b5d24d6fd5442371cb5',
+      player_request_key: proof.playerRequest.key, judge_request_key: proof.judgeRequest.key,
+      player_request_day: '2026-10-17', judge_request_day: '2026-10-17'
+    }]);
     assert.equal(record.player_request_day, '2026-10-17');
     assert.equal(record.judge_request_day, '2026-10-17');
     assert.equal(certificateValid(productionSnapshot, adadaEntry, adadaEntry.candidate, renewed.certificate), true);
