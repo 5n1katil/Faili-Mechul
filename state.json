@@ -13883,7 +13883,8 @@
           }
         }
       ],
-      "status": "quarantined"
+      "status": "awaiting_review",
+      "pr_url": "https://github.com/5n1katil/Faili-Mechul/pull/112"
     },
     "tarihi-hamamda-cinayet": {
       "spent": 0.010335250000000004,
