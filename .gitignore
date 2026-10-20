@@ -58,3 +58,6 @@ Thumbs.db
 /.case-qa-output/
 /.case-qa/intake/
 /.case-pipeline-journal-*/
+
+# Play preview is built from the deployment commit. Do not commit case JSON.
+/artifacts/dedektif/public/oyna/

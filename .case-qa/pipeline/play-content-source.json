@@ -1,0 +1,8 @@
+{
+  "schema": "fm_play_content_source_v1",
+  "commit": "3bb803f1eedead9bc7e1af497b94a8d141cb1c73",
+  "files": {
+    "artifacts/dedektif/data/puzzles.ts": "29ae2ae38e339dafb3326666cc39d23b90043895691d6df63b736a6529887639",
+    "artifacts/dedektif/qa/case_qa_sidecars_v29_5.json": "1aa395f264799e581f446698a1b702d43207d4b849cb411b3993de26ce35c23d"
+  }
+}
