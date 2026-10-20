@@ -11,7 +11,7 @@ import { callPaid, Stop, modelPreflight, countsAsRepair } from './provider.mjs';
 import { revisionGrantFor, sameReviewTarget } from './review-revision.mjs';
 import { queueAuditReport, queueNeedsLookup, fetchQueuePulls, applyQueueReconciliation } from './reconcile.mjs';
 import { readRemoteState } from './state.mjs';
-import { mediaPreflight, reviewCandidate, certificateValid } from './review.mjs';
+import { mediaPreflight, reviewCandidate, certificateValid, acceptedEvaluation } from './review.mjs';
 import { EDITORIAL_VERSION, EDITORIAL_SYSTEM, editorialSchema, validEditorial, editorialPrompt, editorialFailure, compileEditorial, recoverEditorial } from './editorial.mjs';
 import { EDITORIAL_REVISION_VERSION, EDITORIAL_REVISION_SYSTEM, editorialRevisionSchema, validEditorialRevision,
   editorialRevisionRequestPrompt, editorialExperiencePrompt, compileBoundedEditorial, recoverBoundedEditorial } from './editorial.mjs';
@@ -20,7 +20,7 @@ import { HINT_SYSTEM, hintOnly, hintSchema, hintPrompt, validHints, compileHints
 import { reconcileKnownUnsent } from './reservation-recovery.mjs';
 import { TEXT_METHOD, TEXT_SYSTEM, textRepairPlan, textResponseSchema, textRepairPrompt,
   validTextResponse, explainTextResponse, compileTextPatch, supportsTextRepair } from './text-repair.mjs';
-import { reviewRecordedRecovery } from './recorded-recovery.mjs';
+import { reviewRecordedRecovery, reviewManualContentRevision } from './recorded-recovery.mjs';
 
 export function reopenTextQuarantine(snapshot, store) {
   if (snapshot.policy.sequential.verified_text_repair_limit !== 2) return [];
@@ -195,8 +195,9 @@ export async function repairOne(snapshot, entry, store, { allowAI = false, calle
 export function campaignRows(snapshot) {
   return scan(snapshot).map(row => {
     const entry = snapshot.entries.find(e => e.id === row.id);
-    return { ...row, content_locked: row.passed &&
-      certificateValid(snapshot, entry, entry.candidate, snapshot.sidecar.cases?.[row.id]?.pipeline_review) };
+    const acceptance = acceptedEvaluation(snapshot, entry, entry.candidate, snapshot.sidecar.cases?.[row.id]?.pipeline_review);
+    return { ...row, content_locked: row.passed && acceptance.accepted,
+      evaluation_contract: acceptance.accepted ? acceptance.contract : null };
   });
 }
 export async function main() {
@@ -253,12 +254,15 @@ export async function main() {
       report.model_preflight = await modelPreflight(policy);
       const entry = snapshot.entries.find(e => e.id === selected.id);
       const result = recordedReview
-        ? await reviewRecordedRecovery(snapshot, entry.id, store, { calls: 0, spent: 0, attempts: [] })
+        ? await (entry.id === 'tren-yolculugunda-cinayet'
+          ? reviewManualContentRevision(snapshot, entry.id, store, { calls: 0, spent: 0, attempts: [] })
+          : reviewRecordedRecovery(snapshot, entry.id, store, { calls: 0, spent: 0, attempts: [] }))
         : await repairOne(snapshot, entry, store, { allowAI: true });
       Object.assign(report, { status: result.status, best_score: result.assessment.result.score,
         api_calls: result.run.calls, execute_cost_usd: result.run.spent,
         campaign_cost_usd: store.state.campaign_spent, attempts: result.run.attempts,
         failures: result.failures, provider_error: result.provider_error, resumed_score: result.run.resumed_score });
+      if (result.revision) report.content_revision = result.revision;
       if (result.review) {
         report.review = result.review;
         write(path.join(output, 'review.json'), result.review);
@@ -266,7 +270,8 @@ export async function main() {
       // Rejected candidates are retained for diagnosis but never staged.
       write(path.join(output, 'candidate.json'), result.candidate);
       if (result.status === 'ready_for_gates' && result.review?.passed) {
-        stageCandidate(snapshot, entry, result.candidate, result.review.certificate);
+        stageCandidate(snapshot, entry, result.candidate, result.review.certificate,
+          result.revision ? { manual_content_revision: result.revision } : null);
         write(path.join(output, 'review.json'), result.review.certificate);
         write(path.join(output, 'staged.json'), campaignRows(loadSnapshot(root, policy)));
       }

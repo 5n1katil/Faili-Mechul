@@ -190,14 +190,15 @@ export function assertNoRegression(beforeRows, afterRows, selectedId) {
     if (!after.get(id)?.passed) throw new Error('SELECTED_NOT_100');
   for (const row of beforeRows) if (row.passed && !after.get(row.id)?.passed) throw new Error(`PORTFOLIO_REGRESSION:${row.id}`);
 }
-export function stageCandidate(snapshot, entry, candidate, reviewCertificate) {
+export function stageCandidate(snapshot, entry, candidate, reviewCertificate, extras = null) {
   const production = restoreBaselineAuthoring(candidate, entry.raw);
   const sidecar = clone(snapshot.sidecar);
   sidecar.cases[entry.id] = { schema_version: 'fm_case_qa_sidecar_entry_v2', simulator_version: '29.4',
     prompt_version: 'fm-case-pipeline-v1', source_content_hash: stableHash(stripAuthoring(production)),
     overlay: authoringOverlay(candidate), authoring_contract: authoringContract(candidate),
     production_content_unchanged: stableHash(stripAuthoring(entry.raw)) === stableHash(stripAuthoring(production)),
-    ...(reviewCertificate ? { pipeline_review: clone(reviewCertificate) } : {}) };
+    ...(reviewCertificate ? { pipeline_review: clone(reviewCertificate) } : {}),
+    ...(extras?.manual_content_revision ? { manual_content_revision: clone(extras.manual_content_revision) } : {}) };
   sidecar.count = Object.keys(sidecar.cases).length;
   const premium = clone(snapshot.premium);
   let standard = snapshot.standardText;

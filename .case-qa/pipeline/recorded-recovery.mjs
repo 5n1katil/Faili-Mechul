@@ -7,9 +7,10 @@ import { compileTextPatch, textRepairPlan } from './text-repair.mjs';
 import { compileHints, hintOnly } from './hint-cleanup.mjs';
 import { experienceProfile } from './experience.mjs';
 import { stableHash } from '../fm_case_qa_runner.mjs';
-import { reviewTransport, reviewCandidate, validPlayer } from './review.mjs';
+import { reviewTransport, reviewCandidate, reviewHash, validPlayer } from './review.mjs';
 import { assertReviewPairReservable, completedRequest } from './review-revision.mjs';
-import { callPaid, Stop } from './provider.mjs';
+import { callPaid, requestKey, Stop } from './provider.mjs';
+import { enumerateTextGrid, verifyTextPlan } from './text-repair.mjs';
 
 // Offline reuse of campaign 39130510026 responses. These candidates are not
 // content-locked and have no independent player/judge review.
@@ -17,6 +18,61 @@ export const TREN_SOCRATIC_HINTS = {
   c1: 'Mandallı dar kabinde unutulan ince naylon ip hangi yeri gösteriyor?',
   c4: 'Parmak izi taraması beyaz saçlı yolcuyu hangi küçük çakıdan uzak tutuyor?'
 };
+// Narrow check for this recorded c4 only. It is not a portfolio semantic gate.
+// Replaces the recorded c4 sentence. Absence of a fingerprint does not prove
+// that the white-haired passenger never received or used the knife. The logic
+// rule stays eliminate s3–w2; only the visible evidence changes.
+export const TREN_C4_TEXT = 'Seferin o kısa aralığında mühürlü teslim defteri ile kesintisiz kamera kaydı, küçük çakı bıçağını beyaz saçlı soğukkanlı beyefendinin ne teslim aldığını ne de kullandığını birlikte gösteriyor.';
+export const TREN_C4_HINT = 'Mühürlü teslim defteri beyaz saçlı yolcuyu hangi küçük çakıdan kesin olarak uzak tutuyor?';
+const TRACE_ABSENCE = /parmak\s*izi|swap\s+test|fiziksel\s+iz|temas\s+izi/iu;
+const TRACE_MISSING = /bulunmad|rastlanmad|iz(?:i|ine)?\s+yok/iu;
+const CUSTODY_RECORD = /teslim\s+defter|mühürlü\s+teslim|kesintisiz/iu;
+const NOT_RECEIVED_OR_USED = /ne\s+teslim\s+ald|hiç\s+(?:teslim\s+)?almad|ne\s+de\s+kulland|kullanmad/iu;
+export function eliminationSupported(text) {
+  const raw = String(text || '');
+  if (TRACE_ABSENCE.test(raw) && TRACE_MISSING.test(raw) && !NOT_RECEIVED_OR_USED.test(raw))
+    return { supported: false, reason: 'TRACE_ABSENCE_IS_NOT_EXCLUSION' };
+  if (!CUSTODY_RECORD.test(raw) || !NOT_RECEIVED_OR_USED.test(raw))
+    return { supported: false, reason: 'ELIMINATION_NOT_GROUNDED' };
+  return { supported: true, reason: 'custody_record' };
+}
+export function correctTrenEvidence(candidate) {
+  const next = clone(candidate);
+  const clue = next.clues.find(item => item.id === 'c4');
+  const rule = clue?.logicRules?.[0];
+  if (!rule || rule.action !== 'eliminate' || stableHash(rule.pair) !== stableHash(['s3', 'w2'])) throw new Error('TREN_C4_RULE');
+  clue.text = TREN_C4_TEXT;
+  clue.deductionHint = TREN_C4_HINT;
+  if (clue.qaRationale) clue.qaRationale.evidenceLink = clue.text;
+  for (const fact of clue.qaSemanticFacts || []) if (typeof fact.evidence === 'string') fact.evidence = clue.text;
+  const support = eliminationSupported(clue.text);
+  if (!support.supported) throw new Error(support.reason);
+  return next;
+}
+export function prepareTrenCorrectionReview(snapshot) {
+  const historical = recoverTrenHints(snapshot);
+  const entry = snapshot.entries.find(item => item.id === historical.case_id);
+  const corrected = correctTrenEvidence(historical.candidate);
+  const transport = reviewTransport(snapshot, entry, corrected);
+  const pinned = reviewTransport(snapshot, entry, historical.candidate);
+  const plan = recordedResponse(historical.case_id) && read('.case-qa/fixtures/campaign-39130510026-repairs.json').cases[historical.case_id].recorded_plan;
+  return {
+    candidate: corrected,
+    historical: historical.candidate,
+    support: eliminationSupported(corrected.clues.find(item => item.id === 'c4').text),
+    historical_support: eliminationSupported(historical.candidate.clues.find(item => item.id === 'c4').text),
+    grid: verifyTextPlan(corrected, plan),
+    without_c4: enumerateTextGrid(corrected, plan.clues.filter(item => !item.isBonus && item.id !== 'c4').map(item => item.rule), plan.anchor).length,
+    candidate_content_hash: candidateContentHash(corrected),
+    pinned_candidate_content_hash: candidateContentHash(historical.candidate),
+    player_request_key: requestKey(entry.id, transport.model, transport.playerBody, 'player'),
+    pinned_player_request_key: requestKey(entry.id, pinned.model, pinned.playerBody, 'player'),
+    review_hash: reviewHash(snapshot, corrected, transport.pre.evidence),
+    pinned_review_hash: reviewHash(snapshot, historical.candidate, pinned.pre.evidence),
+    certificate: null,
+    repair_rights_renewed: false
+  };
+}
 export const HAMAM_ROLE_MONONYMS = ['s1', 's3'];
 
 function recordedCandidate(snapshot, id) {
@@ -167,14 +223,44 @@ export function recordedReviewSpecs(snapshot, entry, candidate, store) {
   return { transport, knownPlayer, judgeBody, specs };
 }
 function recordedOutcome(snapshot, id, proof, entry, record, run, status, extra = {}) {
+  const candidate = extra.candidate || proof.candidate;
+  const revised = extra.candidate && candidateContentHash(extra.candidate) !== proof.candidate_content_hash;
   return {
-    case_id: id, candidate: proof.candidate, candidate_hash: proof.candidate_hash,
-    candidate_content_hash: proof.candidate_content_hash, pinned_candidate_hash: proof.pinned_candidate_hash,
+    case_id: id, candidate, candidate_hash: revised ? stableHash(candidate) : proof.candidate_hash,
+    candidate_content_hash: revised ? candidateContentHash(candidate) : proof.candidate_content_hash,
+    pinned_candidate_hash: proof.pinned_candidate_hash,
     portfolio_drift: proof.portfolio_drift === true,
-    assessment: assess(snapshot, entry, proof.candidate), run,
+    assessment: assess(snapshot, entry, candidate), run,
     status, failures: extra.failures || [], review: extra.review || null, calls: run.calls,
-    queue_status: record.status, provider_error: extra.provider_error || null
+    queue_status: record.status, provider_error: extra.provider_error || null,
+    revision: extra.revision || null
   };
+}
+async function reviewBoundCandidate(snapshot, id, store, run, options, proof, candidate, extra = {}) {
+  const entry = snapshot.entries.find(item => item.id === id);
+  const record = store.state.cases?.[id];
+  const planned = recordedReviewSpecs(snapshot, entry, candidate, store);
+  if (!planned.transport.pre.passed || !planned.specs) throw new Error('RECORDED_REVIEW_NOT_READY');
+  if (planned.specs.length > 2) throw new Error('RECORDED_REVIEW_PAIR');
+  if (planned.specs.length) {
+    let gate;
+    try { gate = assertReviewPairReservable(store, snapshot.policy, run, id, planned.specs); }
+    catch (error) {
+      if (error instanceof Stop && run.calls === 0)
+        return recordedOutcome(snapshot, id, proof, entry, record, run, 'review_pair_blocked', { ...extra, candidate, failures: [error.message] });
+      throw error;
+    }
+    if (gate.calls !== planned.specs.length) throw new Error('RECORDED_REVIEW_PAIR');
+  }
+  const caller = args => callPaid({ ...args, ...(options.transport ? { transport: options.transport } : {}) });
+  let review;
+  try { review = await reviewCandidate(snapshot, entry, candidate, store, run, caller, { sameTarget: false }); }
+  catch (error) {
+    if (!(error instanceof Stop)) throw error;
+    return recordedOutcome(snapshot, id, proof, entry, record, run, error.message, { ...extra, candidate, failures: [error.message], provider_error: error.provider_error || null });
+  }
+  return recordedOutcome(snapshot, id, proof, entry, record, run, review.passed ? 'ready_for_gates' : 'quarantined',
+    { ...extra, candidate, review, failures: review.failures || [] });
 }
 // Explicit player/judge admission. Repair, quarantine release and publication
 // stay outside this function. callPaid reserves and stores every new response.
@@ -185,27 +271,58 @@ export async function reviewRecordedRecovery(snapshot, id, store, run, options =
   if (record?.status !== 'quarantined') throw new Error('RECORDED_REVIEW_QUARANTINE');
   if (record.source_hash && record.source_hash !== proof.source_hash) throw new Error('RECORDED_REVIEW_HASH');
   const entry = snapshot.entries.find(item => item.id === id);
-  const planned = recordedReviewSpecs(snapshot, entry, proof.candidate, store);
-  if (!planned.transport.pre.passed || !planned.specs) throw new Error('RECORDED_REVIEW_NOT_READY');
-  if (planned.specs.length > 2) throw new Error('RECORDED_REVIEW_PAIR');
-  if (planned.specs.length) {
-    let gate;
-    try { gate = assertReviewPairReservable(store, snapshot.policy, run, id, planned.specs); }
-    catch (error) {
-      if (error instanceof Stop && run.calls === 0) return recordedOutcome(snapshot, id, proof, entry, record, run, 'review_pair_blocked', { failures: [error.message] });
-      throw error;
+  if (id === 'tren-yolculugunda-cinayet') {
+    const clue = proof.candidate.clues.find(item => item.id === 'c4');
+    const support = eliminationSupported(clue?.text);
+    if (!support.supported) {
+      const corrected = correctTrenEvidence(proof.candidate);
+      const transport = reviewTransport(snapshot, entry, corrected);
+      const pinned = reviewTransport(snapshot, entry, proof.candidate);
+      return {
+        ...recordedOutcome(snapshot, id, proof, entry, record, run, 'text_logic_gap', { failures: ['TEXT_LOGIC_GAP'] }),
+        correction: {
+          reason: support.reason,
+          candidate_content_hash: candidateContentHash(corrected),
+          pinned_candidate_content_hash: proof.candidate_content_hash,
+          player_request_key: requestKey(id, transport.model, transport.playerBody, 'player'),
+          pinned_player_request_key: requestKey(id, pinned.model, pinned.playerBody, 'player'),
+          review_hash: reviewHash(snapshot, corrected, transport.pre.evidence),
+          pinned_review_hash: reviewHash(snapshot, proof.candidate, pinned.pre.evidence),
+          certificate: null,
+          repair_rights_renewed: false
+        }
+      };
     }
-    if (gate.calls !== planned.specs.length) throw new Error('RECORDED_REVIEW_PAIR');
   }
-  const caller = args => callPaid({ ...args, ...(options.transport ? { transport: options.transport } : {}) });
-  let review;
-  try { review = await reviewCandidate(snapshot, entry, proof.candidate, store, run, caller, { sameTarget: false }); }
-  catch (error) {
-    if (!(error instanceof Stop)) throw error;
-    return recordedOutcome(snapshot, id, proof, entry, record, run, error.message, { failures: [error.message], provider_error: error.provider_error || null });
-  }
-  return recordedOutcome(snapshot, id, proof, entry, record, run, review.passed ? 'ready_for_gates' : 'quarantined',
-    { review, failures: review.failures || [] });
+  return reviewBoundCandidate(snapshot, id, store, run, options, proof, proof.candidate);
+}
+// Cursor/human edit of the corrected Tren text. Not a repair, not a new repair
+// right, and not a rewrite of the recorded binding. The corrected candidate is
+// built here; a supplied content hash that differs stops before any reservation.
+export async function reviewManualContentRevision(snapshot, id, store, run, options = {}) {
+  if (typeof options === 'function') throw new Error('RECORDED_REVIEW_CALLER');
+  if (id !== 'tren-yolculugunda-cinayet') throw new Error('MANUAL_REVISION_CASE');
+  const proof = verifyRecordedReview(snapshot, id, options.bindings);
+  const record = store.state.cases?.[id];
+  if (record?.status !== 'quarantined') throw new Error('RECORDED_REVIEW_QUARANTINE');
+  if (record.source_hash && record.source_hash !== proof.source_hash) throw new Error('RECORDED_REVIEW_HASH');
+  const support = eliminationSupported(proof.candidate.clues.find(item => item.id === 'c4')?.text);
+  if (support.supported) throw new Error('MANUAL_REVISION_NOT_REQUIRED');
+  const corrected = correctTrenEvidence(proof.candidate);
+  const contentHash = candidateContentHash(corrected);
+  if (options.candidateContentHash !== undefined && options.candidateContentHash !== contentHash)
+    throw new Error('MANUAL_REVISION_CONTENT');
+  const revision = {
+    schema: 'fm_manual_content_revision_v1',
+    source: 'human_tool_content_revision',
+    case_id: id,
+    replaces_candidate_content_hash: proof.candidate_content_hash,
+    candidate_content_hash: contentHash,
+    changed_clues: ['c4'],
+    repair_request: false,
+    repair_rights_renewed: false
+  };
+  return reviewBoundCandidate(snapshot, id, store, run, options, proof, corrected, { revision });
 }
 export function reviewPairRoom(policy, record) {
   const rows = (record.requests || []).filter(item => !(item.status === 'failed' && item.transport_not_started === true));

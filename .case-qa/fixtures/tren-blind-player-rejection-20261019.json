@@ -1,0 +1,33 @@
+{
+  "schema": "fm_blind_player_rejection_v1",
+  "run_id": "39310744807",
+  "run_url": "https://github.com/5n1katil/Faili-Mechul/actions/runs/39310744807",
+  "case_id": "tren-yolculugunda-cinayet",
+  "main_sha": "a104d9ae16ee4541b05b2152302ec6a225bddf55",
+  "api_calls": 1,
+  "execute_cost_usd": 0.002145,
+  "failure": "BLIND_PLAYER_FAILED",
+  "player": {
+    "unique_solution": false,
+    "solution": {
+      "suspectId": "s1",
+      "weaponId": "w1",
+      "locationId": "l2"
+    },
+    "confidence": 60,
+    "evidence": [
+      {
+        "clue_id": "c1",
+        "quote": "bavuldan çıkarılan ince naylon ipin trenin en arka bölümündeki mandalla kilitlenebilen o dar kabinde unutulduğu tespit edildi."
+      },
+      {
+        "clue_id": "c2",
+        "quote": "Cinayet masası incelemesi, ölümcül saldırının çay servisi yapılan beyaz örtülü masaların bulunduğu salonda gerçekleştiğini kesinleştirdi; servis personeli vardiya dökümü ise tek hamlede derin yara açan çakı bıçağının bu salonda asla yer almadığını belgeledi."
+      }
+    ],
+    "issues": [
+      "Olay yeri kesin olarak Yemekli Vagon (l2) ve kullanılan silah kesin olarak Zehirli İçecek (w1) olarak belirlenebilmektedir (w3 Tuvalet'te unutulmuş, w2 ise Yemekli Vagon'da hiç yer almamıştır).",
+      "Ancak şüphelilerden Üniversite Öğrencisi (s2) Tuvalet'te (l3) görüldüğü için elense bile, geriye kalan İş Kadını (s1) ve Emekli Doktor (s3) arasında faili tekilleştiren yeterli kanıt bulunmamaktadır (c4 yalnızca s3'ün bıçakta izi olmadığını söyler, ancak cinayet aleti zaten Zehirli İçecek'tir)."
+    ]
+  }
+}
