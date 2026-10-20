@@ -21,12 +21,20 @@ Yeni altyapı yalnız yanlış içeriği engelliyor, doğru içeriğin yayımın
 
 Onaylanan içeriğin görselleri, kalan metinler bitmeden hazırlanabilir. Üretimden önce referans, kapsam ve maliyet sunulur. Beğenilmiş görseller gerekmeden değiştirilmez. Görseller çözümü sızdırmaz. App Store hazırlığı içerik işinden ayrıdır: depoda doğrulananlar ile cihaz veya hesap erişimi isteyenler ayrı yazılır. Görülmeyen bir özelliğe çalışıyor denmez. Mağaza gönderimi, yeni servis ve geniş mimari değişiklik bu notla başlamaz.
 
+## Oynanış önizlemesi
+
+İçerik PR’ının Vercel önizlemesine `/oyna/?case=<vaka-id>` yolu eklenir. Sayfa, o önizlemenin üretildiği commit’teki standart metin adayını sabit HTML simülatörünün kopyasında açar. Aktif simülatör dosyası ve pin değiştirilmez. Kopyanın kaynak SHA-256 özeti sayfada görünür. Üretim `artifacts/dedektif/public/oyna/` altına yazılır ve depoya girmez.
+
+Doğru tahmin kalite onayı, sertifika veya birleştirme değildir. Simülatördeki “manuel onaylandı” cümlesi pipeline onayı sayılmaz. Değerlendirme yerelde kopyalanır veya indirilir; GitHub’a otomatik yorum gitmez. Premium vakalar ve metin dışı mekanikler oynatılmaz; eksikleri ekranda yazılır.
+
+Taslak PR gövdesi bu yolu ekler. Otomatik birleştirme yoktur.
+
 ## Durum notu — 20 Ekim 2026
 
 Bu not kalıcı kural değildir.
 
 - Oyuna girmiş geçerli değerlendirme: Adada, tarihsel sözleşme `historical`. Güncel `fm-evaluation-contract-v1` ile yeniden onaylanmış sayılmaz.
-- Tren düzeltilmiş c4 adayı değerlendirmeye hazırdır; henüz oyunda değildir. Eski parmak izi metni ve 19 Ekim oyuncu reddi regresyon kanıtıdır. O eski metin için ikinci ücretli çağrı yapılmaz.
+- Tren düzeltilmiş c4 adayı değerlendirmeye hazırdır; henüz oyunda değildir. İçerik taslağı PR #112’dedir. Bu altyapı işi o metni değiştirmez. Eski parmak izi metni ve 19 Ekim oyuncu reddi regresyon kanıtıdır. O eski metin için ikinci ücretli çağrı yapılmaz.
 - Hamam, Tren içerik PR’ı güncel main’de birleşip doğrulanmadan başlamaz.
 - Görsel üretimi ve mağaza gönderimi bu notla başlatılmamıştır.
 
