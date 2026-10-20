@@ -11,7 +11,7 @@ import { read, write, clone, loadSnapshot, scan, selectNext, assess, guardedPatc
 import { emptyState, validateState, openStore, pushCheckpoint } from './state.mjs';
 import { reserveRequest, requestBody, requestKey, callPaid, Stop, modelPreflight, providerErrorDetails, prepaymentRejection, canResumePrepayment } from './provider.mjs';
 import { assertDraftPolicy } from './publish-draft.mjs';
-import { playerView, playerPass, judgePass, reviewCandidate, mediaPreflight, certificateValid, revalidateSimulatorCertificate, reviewTransport, HISTORICAL_PLAYER_CONTRACT, playerMatchingRules } from './review.mjs';
+import { playerView, playerPass, judgePass, reviewCandidate, mediaPreflight, certificateValid, revalidateSimulatorCertificate, reviewTransport, HISTORICAL_PLAYER_CONTRACT, playerMatchingRules, EVALUATION_CONTRACT } from './review.mjs';
 import { repairOne, campaignRows, reopenTextQuarantine } from './run.mjs';
 import { validateNewCase, previewNewCase } from './intake.mjs';
 import { repairTermal } from '../fixtures/termal_reviewed_repair.mjs';
@@ -34,7 +34,7 @@ import { EXPERIENCE_PROFILES, EXPERIENCE_VERSION, experienceProfile, experienceC
 import { canonicalLogicSignature, logicNoveltyCheck } from './logic-patterns.mjs';
 import { CRIME_ANCHOR_SEMANTIC, anchorConfirmsTwoCrimeComponents, hardAnchorContract, simulatorDifficultyLevel } from './anchor-contract.mjs';
 import { anchorContractExamples, hamamSourceNameCompletion } from '../fixtures/anchor-contract-examples.mjs';
-import { recoverTrenHints, recoverHamamRoles, reviewPairRoom, verifyRecordedReview, recordedReviewSpecs, reviewRecordedRecovery, loadRecordedBaseline, HAMAM_ROLE_MONONYMS, prepareTrenCorrectionReview, eliminationSupported } from './recorded-recovery.mjs';
+import { recoverTrenHints, recoverHamamRoles, reviewPairRoom, verifyRecordedReview, recordedReviewSpecs, reviewRecordedRecovery, reviewManualContentRevision, loadRecordedBaseline, HAMAM_ROLE_MONONYMS, prepareTrenCorrectionReview, eliminationSupported, correctTrenEvidence, TREN_C4_TEXT } from './recorded-recovery.mjs';
 import { qualityContract as experienceContract } from './quality-contract.mjs';
 import { editorialExperiencePrompt } from './editorial.mjs';
 import { reconcileKnownUnsent } from './reservation-recovery.mjs';
@@ -84,20 +84,36 @@ try {
     assert.equal(rows.length, snapshot.inventory.cases.length);
     for (const id of ['rc_001', 'pp_001']) assert.equal(rows.find(r => r.id === id).passed, true);
     assert.ok(campaignRows(snapshot).every(r => !r.content_locked || r.passed));
-    // Every stored certificate belongs to its own current case. Adada's historical
-    // hash stays in the revalidation test; this loop does not name a single case.
+    // Each stored certificate matches the contract it was issued under.
+    // A historical hash is not treated as the current evaluation contract.
     const certified = [];
+    const lockedRows = campaignRows(productionSnapshot);
     for (const entry of productionSnapshot.entries) {
       const saved = productionSnapshot.sidecar.cases?.[entry.id]?.pipeline_review;
       if (!saved) continue;
       certified.push(entry.id);
       const evidence = mediaPreflight(productionSnapshot, entry, entry.candidate).evidence;
+      const currentHash = reviewHash(productionSnapshot, entry.candidate, evidence);
+      const historicalHash = reviewHash(productionSnapshot, entry.candidate, evidence, HISTORICAL_PLAYER_CONTRACT);
+      const currentValid = certificateValid(productionSnapshot, entry, entry.candidate, saved);
+      const historicalValid = certificateValid(productionSnapshot, entry, entry.candidate, saved, HISTORICAL_PLAYER_CONTRACT);
       assert.equal(assess(productionSnapshot, entry, entry.candidate).passed, true, entry.id);
-      assert.equal(saved.review_hash, reviewHash(productionSnapshot, entry.candidate, evidence), entry.id);
-      assert.equal(certificateValid(productionSnapshot, entry, entry.candidate, saved), true, entry.id);
+      assert.equal(currentValid && historicalValid, false, entry.id);
+      if (saved.review_hash === historicalHash) {
+        assert.equal(currentValid, false, entry.id);
+        assert.equal(historicalValid, true, entry.id);
+        assert.notEqual(saved.review_hash, currentHash, entry.id);
+      } else if (saved.review_hash === currentHash) {
+        assert.equal(currentValid, true, entry.id);
+        assert.equal(historicalValid, false, entry.id);
+      } else assert.fail('unbound certificate ' + entry.id);
       assert.equal(certificateValid(productionSnapshot, entry, entry.candidate, { ...saved, review_hash: '00'.repeat(32) }), false, entry.id);
+      const row = lockedRows.find(item => item.id === entry.id);
+      assert.equal(row.content_locked, true, entry.id);
+      assert.equal(row.evaluation_contract, currentValid ? 'current' : HISTORICAL_PLAYER_CONTRACT, entry.id);
     }
     assert.ok(certified.includes('adada-buyuk-gizem'));
+    assert.equal(lockedRows.find(item => item.id === 'adada-buyuk-gizem').evaluation_contract, HISTORICAL_PLAYER_CONTRACT);
   });
   // Paid request hashes include the portfolio. Historical scenario tests must
   // use the same inventory context at checkpoint restoration as at transport.
@@ -157,7 +173,8 @@ try {
     const saved = productionSnapshot.sidecar.cases[c.id].pipeline_review;
     if (saved) {
       assert.notEqual(saved.review_hash, f.previous_pipeline_review.review_hash);
-      assert.equal(certificateValid(productionSnapshot, adadaEntry, c, saved), true);
+      assert.equal(certificateValid(productionSnapshot, adadaEntry, c, saved), false);
+      assert.equal(certificateValid(productionSnapshot, adadaEntry, c, saved, HISTORICAL_PLAYER_CONTRACT), true);
     }
   });
   await test('cinematic Adada changes only the opening, preserves all evidence, and invalidates the exact previously approved certificate', () => {
@@ -166,7 +183,10 @@ try {
     assert.deepEqual({ ...adadaEntry.raw, story: f.previous_raw.story }, f.previous_raw);
     assert.equal(certificateValid(productionSnapshot, adadaEntry, adadaEntry.candidate, f.previous_pipeline_review), false);
     const current = productionSnapshot.sidecar.cases[f.case_id].pipeline_review;
-    if (current) assert.equal(certificateValid(productionSnapshot, adadaEntry, adadaEntry.candidate, current), true);
+    if (current) {
+      assert.equal(certificateValid(productionSnapshot, adadaEntry, adadaEntry.candidate, current), false);
+      assert.equal(certificateValid(productionSnapshot, adadaEntry, adadaEntry.candidate, current, HISTORICAL_PLAYER_CONTRACT), true);
+    }
     assert.equal(assess(productionSnapshot, adadaEntry, adadaEntry.candidate).passed, true);
   });
   await test('native simulator and pipeline both enforce category density and scene continuity; a forensic institution is not an invented crime location', () => {
@@ -231,8 +251,11 @@ try {
       seen.push(JSON.parse(args.prompt));return {plan:args.purpose==='player'?playerFor(c):{...validJudge(),issues:['Opening and evidence do not form one event']}};
     });
     assert.equal(r.passed,false);
-    assert.deepEqual(Object.keys(seen[0]).sort(),['matching_rules','player_case','version']);
+    assert.deepEqual(Object.keys(seen[0]).sort(),['evaluation_contract','matching_rules','player_case','version']);
+    assert.equal(seen[0].evaluation_contract, EVALUATION_CONTRACT);
     assert.deepEqual(seen[0].matching_rules, playerMatchingRules());
+    assert.equal(seen[1].evaluation_contract, EVALUATION_CONTRACT);
+    assert.deepEqual(seen[1].matching_rules, playerMatchingRules());
     assert.equal(seen[0].player_case.solution,undefined);
     assert.equal(JSON.stringify(seen[0].player_case).includes('logicRules'), false);
     assert.equal(seen[0].player_case.story.includes('tek bir mekana tek bir silah'), false);
@@ -1451,7 +1474,9 @@ try {
     assert.notEqual(historicalSnapshot.simulatorHash, previousPin);
     assert.equal(certificateValid(historicalSnapshot, historicalAdada, historicalAdada.candidate, proof.previousCertificate), false);
     const renewed = revalidateSimulatorCertificate(historicalSnapshot, historicalAdada, historicalAdada.candidate, proof);
-    assert.equal(renewed.certificate.review_hash, reviewHash(historicalSnapshot, historicalAdada.candidate, mediaPreflight(historicalSnapshot, historicalAdada, historicalAdada.candidate).evidence));
+    const historicalEvidence = mediaPreflight(historicalSnapshot, historicalAdada, historicalAdada.candidate).evidence;
+    assert.equal(renewed.certificate.review_hash, reviewHash(historicalSnapshot, historicalAdada.candidate, historicalEvidence, HISTORICAL_PLAYER_CONTRACT));
+    assert.notEqual(renewed.certificate.review_hash, reviewHash(historicalSnapshot, historicalAdada.candidate, historicalEvidence));
     assert.notEqual(renewed.certificate.review_hash, previousHash);
     assert.deepEqual(renewed.certificate.player, proof.playerRequest.plan);
     assert.deepEqual(renewed.certificate.judge, proof.judgeRequest.plan);
@@ -1471,15 +1496,25 @@ try {
     }]);
     assert.equal(record.player_request_day, '2026-10-17');
     assert.equal(record.judge_request_day, '2026-10-17');
-    assert.equal(certificateValid(historicalSnapshot, historicalAdada, historicalAdada.candidate, renewed.certificate), true);
+    assert.equal(certificateValid(historicalSnapshot, historicalAdada, historicalAdada.candidate, renewed.certificate), false);
+    assert.equal(certificateValid(historicalSnapshot, historicalAdada, historicalAdada.candidate, renewed.certificate, HISTORICAL_PLAYER_CONTRACT), true);
     const liveTransport = reviewTransport(historicalSnapshot, historicalAdada, historicalAdada.candidate, proof.previousCertificate.player);
     const historicalTransport = reviewTransport(historicalSnapshot, historicalAdada, historicalAdada.candidate, proof.previousCertificate.player, HISTORICAL_PLAYER_CONTRACT);
+    const promptOf = body => JSON.parse(body.contents[0].parts[0].text);
     assert.equal(requestKey(historicalAdada.id, productionPolicy.models.reviewer, historicalTransport.playerBody, 'player'), proof.playerRequest.key);
     assert.equal(requestKey(historicalAdada.id, productionPolicy.models.reviewer, historicalTransport.judgeBody, 'judge'), proof.judgeRequest.key);
     assert.notEqual(requestKey(historicalAdada.id, productionPolicy.models.reviewer, liveTransport.playerBody, 'player'), proof.playerRequest.key);
-    assert.equal(requestKey(historicalAdada.id, productionPolicy.models.reviewer, liveTransport.judgeBody, 'judge'), proof.judgeRequest.key);
-    assert.equal(saved.review_hash, reviewHash(productionSnapshot, productionSnapshot.entries.find(item => item.id === 'adada-buyuk-gizem').candidate, mediaPreflight(productionSnapshot, productionSnapshot.entries.find(item => item.id === 'adada-buyuk-gizem'), productionSnapshot.entries.find(item => item.id === 'adada-buyuk-gizem').candidate).evidence));
+    assert.notEqual(requestKey(historicalAdada.id, productionPolicy.models.reviewer, liveTransport.judgeBody, 'judge'), proof.judgeRequest.key);
+    assert.equal(promptOf(historicalTransport.judgeBody).matching_rules, undefined);
+    assert.deepEqual(promptOf(liveTransport.judgeBody).matching_rules, playerMatchingRules());
+    assert.equal(promptOf(liveTransport.playerBody).evaluation_contract, EVALUATION_CONTRACT);
+    assert.equal(promptOf(historicalTransport.playerBody).evaluation_contract, undefined);
+    const liveAdada = productionSnapshot.entries.find(item => item.id === 'adada-buyuk-gizem');
+    const liveEvidence = mediaPreflight(productionSnapshot, liveAdada, liveAdada.candidate).evidence;
+    assert.equal(saved.review_hash, reviewHash(productionSnapshot, liveAdada.candidate, liveEvidence, HISTORICAL_PLAYER_CONTRACT));
+    assert.notEqual(saved.review_hash, reviewHash(productionSnapshot, liveAdada.candidate, liveEvidence));
     assert.equal(campaignRows(productionSnapshot).find(item => item.id === 'adada-buyuk-gizem').content_locked, true);
+    assert.equal(campaignRows(productionSnapshot).find(item => item.id === 'adada-buyuk-gizem').evaluation_contract, HISTORICAL_PLAYER_CONTRACT);
     const changed = clone(historicalAdada.candidate);
     changed.suspects[0].description += ' ek kart';
     assert.equal(sameReviewTarget(historicalAdada.candidate, changed), false);
@@ -2138,11 +2173,13 @@ try {
     assert.ok(workflow.includes('node .case-qa/pipeline/publish-draft.mjs'));
     assert.ok(!workflow.includes('auto_merge: true'));
     assert.ok(workflow.includes("inputs.mode != 'campaign' || steps.case_work.outputs.status == 'ready_for_gates'"));
-    assert.match(runner, /recordedReview[\s\S]*reviewRecordedRecovery/);
+    assert.match(runner, /entry\.id === 'tren-yolculugunda-cinayet'[\s\S]*reviewManualContentRevision/);
+    assert.match(runner, /reviewRecordedRecovery/);
     assert.match(runner, /if \(!auditOnly && !recordedReview\) reopenTextQuarantine/);
-    assert.match(runner, /result\.status === 'ready_for_gates' && result\.review\?\.passed[\s\S]*stageCandidate\(snapshot, entry, result\.candidate, result\.review\.certificate\)/);
+    assert.match(runner, /result\.status === 'ready_for_gates' && result\.review\?\.passed[\s\S]*stageCandidate\(snapshot, entry, result\.candidate, result\.review\.certificate/);
     assert.match(workflow, /r\.status!=='ready_for_gates'/);
     assert.ok(!campaignSource.includes('reviewRecordedRecovery'));
+    assert.ok(!campaignSource.includes('reviewManualContentRevision'));
     const ledgerFor = (id, { requests = 2, charged = 0.005, sourceHash = bindings.cases[id]?.source_hash || '', journal = null } = {}) => {
       const state = emptyState();
       for (let index = 0; index < requests; index++) state.requests[id + ':repair:' + index] = {
@@ -2177,6 +2214,51 @@ try {
           assert.notEqual(blockedTren.correction.candidate_content_hash, blockedTren.correction.pinned_candidate_content_hash);
           assert.notEqual(blockedTren.correction.player_request_key, blockedTren.correction.pinned_player_request_key);
           assert.equal(stableHash(Object.fromEntries(Object.entries(trenStore.state.requests))), repairs);
+          const corrected = correctTrenEvidence(blockedTren.candidate);
+          let mismatchCalls = 0;
+          await assert.rejects(() => reviewManualContentRevision(baselineSnapshot, id, ledgerFor(id), runFor(), {
+            candidateContentHash: 'ab'.repeat(32),
+            transport: async () => { mismatchCalls++; throw new Error('UNEXPECTED_TRANSPORT'); }
+          }), /MANUAL_REVISION_CONTENT/);
+          assert.equal(mismatchCalls, 0);
+          const manualJournal = path.join(temporary, 'tren-manual-revision.json');
+          const manualStore = ledgerFor(id, { journal: manualJournal });
+          const manualSpent = manualStore.state.cases[id].spent;
+          let manualTransports = 0;
+          const transportManual = async () => {
+            manualTransports++;
+            return responseForFixture(manualTransports === 1 ? playerFor(corrected) : validJudge());
+          };
+          const manual = await reviewManualContentRevision(baselineSnapshot, id, manualStore, runFor(), { transport: transportManual });
+          assert.equal(manualTransports, 2);
+          assert.equal(manual.status, 'ready_for_gates');
+          assert.equal(manual.review.passed, true);
+          assert.equal(manual.candidate.clues.find(item => item.id === 'c4').text, TREN_C4_TEXT);
+          assert.equal(manual.candidate_content_hash, blockedTren.correction.candidate_content_hash);
+          assert.notEqual(manual.candidate_content_hash, bindings.cases[id].candidate_content_hash);
+          assert.equal(manual.revision.source, 'human_tool_content_revision');
+          assert.equal(manual.revision.repair_request, false);
+          assert.equal(manual.revision.repair_rights_renewed, false);
+          assert.equal(manualStore.state.cases[id].status, 'quarantined');
+          assert.equal(Object.values(manualStore.state.requests).filter(item => item.repair_method === 'verified_text_v1').length, 2);
+          assert.deepEqual(Object.values(manualStore.state.requests).filter(item => item.purpose !== 'repair').map(item => item.purpose).sort(), ['judge', 'player']);
+          assert.ok(manualStore.state.cases[id].spent > manualSpent);
+          let cachedManual = 0;
+          const cachedRevision = await reviewManualContentRevision(baselineSnapshot, id, manualStore, runFor(), { transport: async () => { cachedManual++; throw new Error('UNEXPECTED_TRANSPORT'); } });
+          assert.equal(cachedManual, 0);
+          assert.equal(cachedRevision.calls, 0);
+          assert.equal(cachedRevision.status, 'ready_for_gates');
+          const failedManualStore = ledgerFor(id);
+          let failedManualCalls = 0;
+          const failedManual = await reviewManualContentRevision(baselineSnapshot, id, failedManualStore, runFor(), { transport: async () => {
+            failedManualCalls++;
+            return responseForFixture({ ...playerFor(corrected), unique_solution: false, issues: ['c4 kapanmıyor'] });
+          } });
+          assert.equal(failedManualCalls, 1);
+          assert.equal(failedManual.status, 'quarantined');
+          assert.equal(failedManual.review.passed, false);
+          assert.deepEqual(failedManual.failures, ['BLIND_PLAYER_FAILED']);
+          assert.equal(Object.values(failedManualStore.state.requests).some(item => item.purpose === 'judge'), false);
           continue;
         }
         const entry = baselineSnapshot.entries.find(item => item.id === id);
@@ -2388,7 +2470,7 @@ try {
       const prepareCheckout = () => {
         const { dir, sha } = cloneAtCommit(root);
         assert.equal(sha, localSha);
-        const overlay = ['.case-qa/pipeline/test.mjs', '.case-qa/pipeline/review.mjs', '.case-qa/pipeline/recorded-recovery.mjs', '.case-qa/pipeline/run.mjs', '.github/workflows/fm-case-pipeline.yml', '.case-qa/fixtures/recorded-review-bindings.json', '.case-qa/fixtures/tren-blind-player-rejection-20261019.json'];
+        const overlay = ['.case-qa/pipeline/test.mjs', '.case-qa/pipeline/review.mjs', '.case-qa/pipeline/recorded-recovery.mjs', '.case-qa/pipeline/run.mjs', '.case-qa/pipeline/core.mjs', '.github/workflows/fm-case-pipeline.yml', '.case-qa/fixtures/recorded-review-bindings.json', '.case-qa/fixtures/tren-blind-player-rejection-20261019.json'];
         for (const file of overlay) fs.copyFileSync(path.join(root, file), path.join(dir, file));
         commitIfNeeded(dir, 'recorded review checkout code', overlay);
         runChecked(['git', 'checkout', recordedBindings.baseline_commit, '--', ...baselineFiles], dir, process.env);
@@ -2400,11 +2482,12 @@ try {
         const entry = snap.entries.find(item => item.id === id);
         const proof = verifyRecordedReview(snap, id);
         assert.equal(proof.portfolio_drift, false);
+        const subject = id === 'tren-yolculugunda-cinayet' ? correctTrenEvidence(proof.candidate) : proof.candidate;
         let calls = 0;
         const transport = async (url) => {
           assert.match(url, /:generateContent$/);
           calls++;
-          return responseForFixture(calls === 1 ? playerFor(proof.candidate) : validJudge());
+          return responseForFixture(calls === 1 ? playerFor(subject) : validJudge());
         };
         if (id === 'tren-yolculugunda-cinayet') {
           let gateCalls = 0;
@@ -2412,10 +2495,22 @@ try {
           assert.equal(gateCalls, 0);
           assert.equal(gate.status, 'text_logic_gap');
           assert.equal(gate.correction.certificate, null);
-          const reviewed = await reviewCandidate(snap, entry, proof.candidate, ledgerFor(id), runFor(), args => callPaid({ ...args, transport }));
+          const unchanged = sourceBytes(dir);
+          const reviewed = await reviewManualContentRevision(snap, id, ledgerFor(id), runFor(), { transport });
           assert.equal(calls, 2);
-          assert.equal(reviewed.passed, true);
-          stageCandidate(snap, entry, proof.candidate, reviewed.certificate);
+          assert.equal(reviewed.status, 'ready_for_gates');
+          assert.equal(reviewed.review.passed, true);
+          assert.equal(reviewed.candidate.clues.find(item => item.id === 'c4').text, TREN_C4_TEXT);
+          assert.notEqual(reviewed.candidate_content_hash, proof.candidate_content_hash);
+          assert.equal(reviewed.revision.repair_request, false);
+          stageCandidate(snap, entry, reviewed.candidate, reviewed.review.certificate, { manual_content_revision: reviewed.revision });
+          const staged = fs.readFileSync(path.join(dir, productionPolicy.source.standard_path), 'utf8');
+          assert.ok(staged.includes(TREN_C4_TEXT));
+          assert.equal(staged.includes('detaylı swap testleri'), false);
+          assert.notDeepEqual(sourceBytes(dir), unchanged);
+          const sidecar = JSON.parse(fs.readFileSync(path.join(dir, productionPolicy.source.sidecar_path), 'utf8'));
+          assert.equal(sidecar.cases[id].manual_content_revision.source, 'human_tool_content_revision');
+          assert.equal(sidecar.cases[id].manual_content_revision.candidate_content_hash, reviewed.candidate_content_hash);
           return reviewed;
         }
         const reviewed = await reviewRecordedRecovery(snap, id, ledgerFor(id), runFor(), { transport });

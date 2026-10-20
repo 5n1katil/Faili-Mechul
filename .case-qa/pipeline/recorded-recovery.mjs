@@ -18,6 +18,7 @@ export const TREN_SOCRATIC_HINTS = {
   c1: 'Mandallı dar kabinde unutulan ince naylon ip hangi yeri gösteriyor?',
   c4: 'Parmak izi taraması beyaz saçlı yolcuyu hangi küçük çakıdan uzak tutuyor?'
 };
+// Narrow check for this recorded c4 only. It is not a portfolio semantic gate.
 // Replaces the recorded c4 sentence. Absence of a fingerprint does not prove
 // that the white-haired passenger never received or used the knife. The logic
 // rule stays eliminate s3–w2; only the visible evidence changes.
@@ -222,14 +223,44 @@ export function recordedReviewSpecs(snapshot, entry, candidate, store) {
   return { transport, knownPlayer, judgeBody, specs };
 }
 function recordedOutcome(snapshot, id, proof, entry, record, run, status, extra = {}) {
+  const candidate = extra.candidate || proof.candidate;
+  const revised = extra.candidate && candidateContentHash(extra.candidate) !== proof.candidate_content_hash;
   return {
-    case_id: id, candidate: proof.candidate, candidate_hash: proof.candidate_hash,
-    candidate_content_hash: proof.candidate_content_hash, pinned_candidate_hash: proof.pinned_candidate_hash,
+    case_id: id, candidate, candidate_hash: revised ? stableHash(candidate) : proof.candidate_hash,
+    candidate_content_hash: revised ? candidateContentHash(candidate) : proof.candidate_content_hash,
+    pinned_candidate_hash: proof.pinned_candidate_hash,
     portfolio_drift: proof.portfolio_drift === true,
-    assessment: assess(snapshot, entry, proof.candidate), run,
+    assessment: assess(snapshot, entry, candidate), run,
     status, failures: extra.failures || [], review: extra.review || null, calls: run.calls,
-    queue_status: record.status, provider_error: extra.provider_error || null
+    queue_status: record.status, provider_error: extra.provider_error || null,
+    revision: extra.revision || null
   };
+}
+async function reviewBoundCandidate(snapshot, id, store, run, options, proof, candidate, extra = {}) {
+  const entry = snapshot.entries.find(item => item.id === id);
+  const record = store.state.cases?.[id];
+  const planned = recordedReviewSpecs(snapshot, entry, candidate, store);
+  if (!planned.transport.pre.passed || !planned.specs) throw new Error('RECORDED_REVIEW_NOT_READY');
+  if (planned.specs.length > 2) throw new Error('RECORDED_REVIEW_PAIR');
+  if (planned.specs.length) {
+    let gate;
+    try { gate = assertReviewPairReservable(store, snapshot.policy, run, id, planned.specs); }
+    catch (error) {
+      if (error instanceof Stop && run.calls === 0)
+        return recordedOutcome(snapshot, id, proof, entry, record, run, 'review_pair_blocked', { ...extra, candidate, failures: [error.message] });
+      throw error;
+    }
+    if (gate.calls !== planned.specs.length) throw new Error('RECORDED_REVIEW_PAIR');
+  }
+  const caller = args => callPaid({ ...args, ...(options.transport ? { transport: options.transport } : {}) });
+  let review;
+  try { review = await reviewCandidate(snapshot, entry, candidate, store, run, caller, { sameTarget: false }); }
+  catch (error) {
+    if (!(error instanceof Stop)) throw error;
+    return recordedOutcome(snapshot, id, proof, entry, record, run, error.message, { ...extra, candidate, failures: [error.message], provider_error: error.provider_error || null });
+  }
+  return recordedOutcome(snapshot, id, proof, entry, record, run, review.passed ? 'ready_for_gates' : 'quarantined',
+    { ...extra, candidate, review, failures: review.failures || [] });
 }
 // Explicit player/judge admission. Repair, quarantine release and publication
 // stay outside this function. callPaid reserves and stores every new response.
@@ -263,27 +294,35 @@ export async function reviewRecordedRecovery(snapshot, id, store, run, options =
       };
     }
   }
-  const planned = recordedReviewSpecs(snapshot, entry, proof.candidate, store);
-  if (!planned.transport.pre.passed || !planned.specs) throw new Error('RECORDED_REVIEW_NOT_READY');
-  if (planned.specs.length > 2) throw new Error('RECORDED_REVIEW_PAIR');
-  if (planned.specs.length) {
-    let gate;
-    try { gate = assertReviewPairReservable(store, snapshot.policy, run, id, planned.specs); }
-    catch (error) {
-      if (error instanceof Stop && run.calls === 0) return recordedOutcome(snapshot, id, proof, entry, record, run, 'review_pair_blocked', { failures: [error.message] });
-      throw error;
-    }
-    if (gate.calls !== planned.specs.length) throw new Error('RECORDED_REVIEW_PAIR');
-  }
-  const caller = args => callPaid({ ...args, ...(options.transport ? { transport: options.transport } : {}) });
-  let review;
-  try { review = await reviewCandidate(snapshot, entry, proof.candidate, store, run, caller, { sameTarget: false }); }
-  catch (error) {
-    if (!(error instanceof Stop)) throw error;
-    return recordedOutcome(snapshot, id, proof, entry, record, run, error.message, { failures: [error.message], provider_error: error.provider_error || null });
-  }
-  return recordedOutcome(snapshot, id, proof, entry, record, run, review.passed ? 'ready_for_gates' : 'quarantined',
-    { review, failures: review.failures || [] });
+  return reviewBoundCandidate(snapshot, id, store, run, options, proof, proof.candidate);
+}
+// Cursor/human edit of the corrected Tren text. Not a repair, not a new repair
+// right, and not a rewrite of the recorded binding. The corrected candidate is
+// built here; a supplied content hash that differs stops before any reservation.
+export async function reviewManualContentRevision(snapshot, id, store, run, options = {}) {
+  if (typeof options === 'function') throw new Error('RECORDED_REVIEW_CALLER');
+  if (id !== 'tren-yolculugunda-cinayet') throw new Error('MANUAL_REVISION_CASE');
+  const proof = verifyRecordedReview(snapshot, id, options.bindings);
+  const record = store.state.cases?.[id];
+  if (record?.status !== 'quarantined') throw new Error('RECORDED_REVIEW_QUARANTINE');
+  if (record.source_hash && record.source_hash !== proof.source_hash) throw new Error('RECORDED_REVIEW_HASH');
+  const support = eliminationSupported(proof.candidate.clues.find(item => item.id === 'c4')?.text);
+  if (support.supported) throw new Error('MANUAL_REVISION_NOT_REQUIRED');
+  const corrected = correctTrenEvidence(proof.candidate);
+  const contentHash = candidateContentHash(corrected);
+  if (options.candidateContentHash !== undefined && options.candidateContentHash !== contentHash)
+    throw new Error('MANUAL_REVISION_CONTENT');
+  const revision = {
+    schema: 'fm_manual_content_revision_v1',
+    source: 'human_tool_content_revision',
+    case_id: id,
+    replaces_candidate_content_hash: proof.candidate_content_hash,
+    candidate_content_hash: contentHash,
+    changed_clues: ['c4'],
+    repair_request: false,
+    repair_rights_renewed: false
+  };
+  return reviewBoundCandidate(snapshot, id, store, run, options, proof, corrected, { revision });
 }
 export function reviewPairRoom(policy, record) {
   const rows = (record.requests || []).filter(item => !(item.status === 'failed' && item.transport_not_started === true));

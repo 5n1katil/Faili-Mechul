@@ -1,5 +1,35 @@
 # Faili Meçhul — güvenli vaka geliştirme akışı
 
+## Çalışma modeli
+
+Bu bölüm kalıcı kuraldır. Alttaki tarihli notlar anlık kayıttır; yeni durumla güncellenmeden doğru kabul edilmez.
+
+Başarı, eklenen test veya altyapı PR’ı sayısı değildir. Ölçülen şey oyuna giren onaylı vaka, tamamlanan görsel ve kapanan yayın engelidir. Envanter sertifikasının 105 vakayı doğrulaması, 105 vakanın içerik kalitesinin onaylandığı anlamına gelmez. Altyapı testleri ile içerik kabulü ayrı raporlanır.
+
+İki üretim yolu aynı kalite kapılarından ve bağımsız oyuncu/editör değerlendirmesinden geçer:
+
+- Otomasyonun ürettiği aday.
+- Cursor’ın vaka ve QA raporundan doğrudan düzenlediği aday. Bu bir ücretli onarım değildir. Kaynağı `human_tool_content_revision` olarak kayıtlıdır; onarım hakkı yenilenmez ve karantina bu yüzden açılmaz.
+
+Doğrudan düzenleme kalite kapısını atlamaz. Sabit bir kural gerçek bir yanlış ret üretirse bu kanıtlanır ve dar kapsamlı düzeltilir. Vakayı geçirmek için eşik düşürülmez. QA 100, oyuncu deneyimi onayı değildir. Gizli mantık tablosu doğru olsa bile metin o ilişkiyi kanıtlamıyorsa aday hazır değildir.
+
+Sıra: mevcut vaka uçtan uca biter, sonraki vaka ayrı içerik PR’ında ilerler. Bir vaka takılırsa açık neden ve sonraki işlemle bekler; diğer uygun vakalar durmaz. Ücretli çalıştırma limitleri artırılmaz. İçerik hazırlama grubu ile ücretli workflow grubu karıştırılmaz. Sabancı’nın 4×4 ihtiyacı 3×3 üretimini bekletmez.
+
+Yeni altyapı yalnız yanlış içeriği engelliyor, doğru içeriğin yayımını kesen doğrulanmış bir hatayı gideriyor veya tekrarlanan işi ya da maliyeti somut azaltıyorsa öncelik alır. Her altyapı değişikliği hangi içerik işini açtığını belirtir.
+
+Ücretli çağrı ve workflow dispatch, aday metni, çevrimdışı sonuç, komut ayarları ve bütçe üst sınırı incelemeye sunulmadan başlamaz. İstek geçmişi, maliyet, rezervasyon ve karantina silinmez. Belirsiz istek yeniden gönderilmez. Değişen içerik eski sertifika veya elle yazılmış hash ile geçmez.
+
+Onaylanan içeriğin görselleri, kalan metinler bitmeden hazırlanabilir. Üretimden önce referans, kapsam ve maliyet sunulur. Beğenilmiş görseller gerekmeden değiştirilmez. Görseller çözümü sızdırmaz. App Store hazırlığı içerik işinden ayrıdır: depoda doğrulananlar ile cihaz veya hesap erişimi isteyenler ayrı yazılır. Görülmeyen bir özelliğe çalışıyor denmez. Mağaza gönderimi, yeni servis ve geniş mimari değişiklik bu notla başlamaz.
+
+## Durum notu — 20 Ekim 2026
+
+Bu not kalıcı kural değildir.
+
+- Oyuna girmiş geçerli değerlendirme: Adada, tarihsel sözleşme `historical`. Güncel `fm-evaluation-contract-v1` ile yeniden onaylanmış sayılmaz.
+- Tren düzeltilmiş c4 adayı değerlendirmeye hazırdır; henüz oyunda değildir. Eski parmak izi metni ve 19 Ekim oyuncu reddi regresyon kanıtıdır. O eski metin için ikinci ücretli çağrı yapılmaz.
+- Hamam, Tren içerik PR’ı güncel main’de birleşip doğrulanmadan başlamaz.
+- Görsel üretimi ve mağaza gönderimi bu notla başlatılmamıştır.
+
 ## İnsan revizyonu ve kuyruk uzlaştırması (17.10.2026)
 
 Vaka başına 7 istek sınırı değişmedi. Bir insan düzenlemesi, ancak
