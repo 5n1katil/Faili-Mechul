@@ -30,6 +30,35 @@ export function repoRoot(start = process.cwd()) {
   throw new Error('PLAY_REPO_ROOT_MISSING');
 }
 
+const CONTENT_SOURCE_PIN = '.case-qa/pipeline/play-content-source.json';
+
+function readContentPin(repo, policy) {
+  const file = path.join(repo, CONTENT_SOURCE_PIN);
+  if (!fs.existsSync(file)) return null;
+  const pin = JSON.parse(fs.readFileSync(file, 'utf8'));
+  const allowed = [policy.source.standard_path, policy.source.sidecar_path].sort();
+  const files = pin.files || {};
+  if (pin.schema !== 'fm_play_content_source_v1' || !/^[0-9a-f]{40}$/.test(pin.commit || '') ||
+      Object.keys(files).sort().join('\n') !== allowed.join('\n'))
+    throw new Error('PLAY_CONTENT_SOURCE_INVALID');
+  for (const rel of allowed) {
+    if (!/^[a-f0-9]{64}$/.test(files[rel] || '')) throw new Error('PLAY_CONTENT_SOURCE_INVALID');
+    if (sha256(fs.readFileSync(path.join(repo, rel))) !== files[rel]) throw new Error('PLAY_CONTENT_SOURCE_MISMATCH');
+  }
+  return pin.commit;
+}
+
+function deploymentCommit(repo) {
+  let git = '';
+  try {
+    git = execFileSync('git', ['rev-parse', 'HEAD'], { cwd: repo, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim();
+  } catch { git = ''; }
+  const vercel = String(process.env.VERCEL_GIT_COMMIT_SHA || '').trim();
+  if (git && vercel && git !== vercel) throw new Error('PLAY_BUILD_COMMIT_MISMATCH');
+  if (!git && !/^[0-9a-f]{40}$/.test(vercel)) throw new Error('PLAY_BUILD_COMMIT_MISSING');
+  return git || vercel;
+}
+
 function gitBlobSha(bytes) {
   return crypto.createHash('sha1').update(Buffer.concat([Buffer.from(`blob ${bytes.length}\0`), bytes])).digest('hex');
 }
@@ -182,7 +211,10 @@ function materializeRoot(repo, policy, contentSha) {
 export function buildPlaySite({ repo = repoRoot(), contentSha = null } = {}) {
   const policy = read(path.join(repo, '.case-qa', 'pipeline', 'policy.json'));
   if (contentSha) assertCommit(repo, contentSha);
-  const commit = contentSha || execFileSync('git', ['rev-parse', 'HEAD'], { cwd: repo, encoding: 'utf8' }).trim();
+  const buildCommit = deploymentCommit(repo);
+  const pinnedCommit = readContentPin(repo, policy);
+  if (contentSha && pinnedCommit && contentSha !== pinnedCommit) throw new Error('PLAY_CONTENT_SOURCE_MISMATCH');
+  const contentCommit = contentSha || pinnedCommit || buildCommit;
   const simulatorBytes = fs.readFileSync(path.join(repo, policy.simulator.path));
   const simulatorSha256 = sha256(simulatorBytes);
   const simulatorBlob = gitBlobSha(simulatorBytes);
@@ -228,8 +260,10 @@ export function buildPlaySite({ repo = repoRoot(), contentSha = null } = {}) {
   const manifest = {
     schema: 'fm_play_preview_v1',
     approval: 'playtest_only',
-    commit,
-    content_source: contentSha ? 'commit' : 'worktree',
+    build_commit: buildCommit,
+    content_commit: contentCommit,
+    commit: contentCommit,
+    content_source: contentSha ? 'commit' : pinnedCommit ? 'pinned' : 'build',
     simulator: {
       path: policy.simulator.path,
       git_blob_sha: simulatorBlob,

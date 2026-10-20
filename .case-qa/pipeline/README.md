@@ -23,7 +23,7 @@ Onaylanan içeriğin görselleri, kalan metinler bitmeden hazırlanabilir. Üret
 
 ## Oynanış önizlemesi
 
-İçerik PR’ının Vercel önizlemesine `/oyna/?case=<vaka-id>` yolu eklenir. Sayfa, o önizlemenin üretildiği commit’teki standart metin adayını sabit HTML simülatörünün kopyasında açar. Aktif simülatör dosyası ve pin değiştirilmez. Kopyanın kaynak SHA-256 özeti sayfada görünür. Üretim `artifacts/dedektif/public/oyna/` altına yazılır ve depoya girmez.
+İçerik PR’ının Vercel önizlemesine `/oyna/?case=<vaka-id>` yolu eklenir. Sayfa, o önizlemenin üretildiği commit’teki standart metin adayını sabit HTML simülatörünün kopyasında açar. Altyapı build commit’i ile vaka içeriğinin kaynak commit’i ayrı gösterilir. `play-content-source.json` varsa standart ve sidecar dosyalarının SHA-256 özeti pin ile eşleşmeden sayfa üretilmez. Aktif simülatör dosyası ve pin değiştirilmez. Kopyanın kaynak SHA-256 özeti sayfada görünür. Üretim `artifacts/dedektif/public/oyna/` altına yazılır ve depoya girmez.
 
 Doğru tahmin kalite onayı, sertifika veya birleştirme değildir. Simülatördeki “manuel onaylandı” cümlesi pipeline onayı sayılmaz. Değerlendirme yerelde kopyalanır veya indirilir; GitHub’a otomatik yorum gitmez. Premium vakalar ve metin dışı mekanikler oynatılmaz; eksikleri ekranda yazılır.
 

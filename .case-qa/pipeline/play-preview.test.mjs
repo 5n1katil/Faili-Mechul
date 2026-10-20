@@ -49,11 +49,23 @@ test('play preview keeps the simulator pin and hides QA from the player payload'
   assert.equal(site.simulatorBlob, policy.simulator.git_blob_sha);
   assert.equal(site.manifest.simulator.git_blob_sha, policy.simulator.git_blob_sha);
   assert.equal(site.manifest.approval, 'playtest_only');
-  assert.equal(site.manifest.commit, execFileSync('git', ['rev-parse', 'HEAD'], { cwd: repo, encoding: 'utf8' }).trim());
-  assert.match(trenClue(site, 'c4'), new RegExp(OLD_C4));
-  assert.equal(trenClue(site, 'c4').includes(NEW_C4), false);
+  const head = execFileSync('git', ['rev-parse', 'HEAD'], { cwd: repo, encoding: 'utf8' }).trim();
+  assert.equal(site.manifest.build_commit, head);
+  assert.equal(site.manifest.content_commit, CONTENT);
+  assert.equal(site.manifest.commit, CONTENT);
+  assert.equal(site.manifest.content_source, 'pinned');
+  const pin = JSON.parse(fs.readFileSync(path.join(repo, '.case-qa/pipeline/play-content-source.json'), 'utf8'));
+  for (const [rel, expected] of Object.entries(pin.files)) {
+    const blob = execFileSync('git', ['show', `${CONTENT}:${rel}`], { cwd: repo, maxBuffer: 32 * 1024 * 1024 });
+    assert.equal(crypto.createHash('sha256').update(blob).digest('hex'), expected);
+    assert.equal(sha256(rel), expected);
+  }
+  assert.match(trenClue(site, 'c4'), new RegExp(NEW_C4));
+  assert.equal(trenClue(site, 'c4').includes(OLD_C4), false);
+  assert.equal(fs.readFileSync(new URL('./play-client.js', import.meta.url), 'utf8').includes('Altyapı build'), true);
   assert.equal(JSON.stringify(site.manifest).includes(FINGERPRINT), false);
   const tren = site.manifest.cases.find(item => item.id === 'tren-yolculugunda-cinayet');
+  assert.equal(tren.content_hash, '41215658d17efe3c91f2405287a32908560e67cbbce137fb62139395f6b2a468');
   assert.equal(Object.hasOwn(tren.payload, 'logicRules'), false);
   assert.equal(JSON.stringify(tren.payload).includes('logicRules'), false);
   assert.equal(JSON.stringify(tren.payload).includes('qaRationale'), false);
@@ -77,6 +89,8 @@ test('PR 112 Tren preview uses that commit, not main', { skip: !hasCommit(CONTEN
   const before = hashes();
   const site = buildPlaySite({ repo, contentSha: CONTENT });
   assert.deepEqual(hashes(), before);
+  assert.equal(site.manifest.build_commit, execFileSync('git', ['rev-parse', 'HEAD'], { cwd: repo, encoding: 'utf8' }).trim());
+  assert.equal(site.manifest.content_commit, CONTENT);
   assert.equal(site.manifest.commit, CONTENT);
   const tren = site.manifest.cases.find(item => item.id === 'tren-yolculugunda-cinayet');
   assert.equal(tren.playable, true);

@@ -63,7 +63,7 @@
     title.textContent = 'Oynanış önizlemesi';
     const note = document.createElement('p');
     note.className = 'fm-note';
-    note.textContent = 'Bu sayfa ' + manifest.commit + ' commit’indeki adayları gösterir. main’deki eski vaka burada açılmaz.';
+    note.textContent = 'Altyapı build ' + manifest.build_commit + '. Vaka içeriği ' + manifest.content_commit + '. main’deki eski vaka bu içerik commit’inin yerine geçmez.';
     box.append(title, note, rulesBlock());
     const playable = document.createElement('ul');
     const blocked = document.createElement('ul');
@@ -133,9 +133,10 @@
     dl.className = 'fm-meta';
     const rows = [
       ['Vaka', entry ? entry.id : '—'],
-      ['Kaynak commit', manifest.commit],
+      ['Altyapı build', manifest.build_commit],
+      ['Vaka içeriği', manifest.content_commit],
       ['Aday içerik', entry ? entry.content_hash : '—'],
-      ['Sürüm', 'Aday · bu önizlemenin commit’i. Üretim sürümü değil.'],
+      ['Sürüm', 'Aday. Üretim sürümü değil. Altyapı build’i ile vaka içeriği ayrı commit’lerdir.'],
       ['Kategori', entry ? entry.tier + ' · ' + entry.difficulty_label : '—'],
       ['Simülatör', manifest.simulator.sha256]
     ];
@@ -426,7 +427,9 @@
       approval: 'playtest_only',
       case_id: entry.id,
       title: entry.title,
-      commit: manifest.commit,
+      build_commit: manifest.build_commit,
+      content_commit: manifest.content_commit,
+      commit: manifest.content_commit,
       content_hash: entry.content_hash,
       simulator_sha256: manifest.simulator.sha256,
       simulator_git_blob_sha: manifest.simulator.git_blob_sha,

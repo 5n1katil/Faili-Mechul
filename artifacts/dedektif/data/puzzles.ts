@@ -641,36 +641,127 @@ export const PUZZLES: Puzzle[] = [
     title: "Tren Yolculuğunda Cinayet",
     difficulty: "dedektif",
     dayIndex: 8,
-    story:
-      "Ankara-İstanbul ekspresinin ritmik tekerlek sesleri, sessiz bir cinayeti gizlemeye yetmedi. Tren yoğun sis altında ilerlerken, birinci mevkide seyahat eden tanınmış bir iş insanı koltuğunda son nefesini vermişti. Tren istasyona varmadan katili bulmalısın.",
+    story: "Ankara-İstanbul seferini yapan gece ekspresi yoğun sis altındaki son kilometrelerini geçerken kurbanın cansız bedeni bulundu. Tren perona yanaşmadan önce, her bir yolcunun belirli noktalarda bulunduğu ve farklı nesnelere ulaştığı bu kısa zaman aralığındaki cinayetin failini, yöntemini ve işlendiği yeri açığa çıkarmalısın.",
     suspects: [
-      { id: "s1", name: "İş Kadını", description: "Sürekli evrak çantasıyla gezen, gergin, sabırsız ve hassas işlemlere eli hiç yatkın olmayan birinci mevki yolcusu.", icon: "pa:tren_s1" },
-      { id: "s2", name: "Üniversite Öğrencisi", description: "Kulağında kulaklıkla kendi odasından hiç çıkmayan, etrafındaki insanlarla sıfır etkileşim kuran ucuz biletli genç yolcu.", icon: "pa:tren_s2" },
-      { id: "s3", name: "Emekli Doktor", description: "Anatomik bilgiye sahip, yanında sürekli çeşitli sıvılar ve aletlerin bulunduğu küçük tıbbi çantalar taşıyan sakin yaşlı yolcu.", icon: "pa:tren_s3" },
+      {
+        id: "s1",
+        name: "İş Kadını",
+        description: "Koyu renk takım elbisesi ve elinden düşürmediği evrak çantasıyla dikkat çeken, sürekli kolundaki saate bakan telaşlı bir yolcu.",
+        icon: "pa:tren_s1"
+      },
+      {
+        id: "s2",
+        name: "Üniversite Öğrencisi",
+        description: "Başında kapüşonu, boynunda kulaklığıyla dış dünyayla bağını tamamen koparmış gibi görünen, sırt çantalı dalgın bir genç.",
+        icon: "pa:tren_s2"
+      },
+      {
+        id: "s3",
+        name: "Emekli Doktor",
+        description: "Gözlüklerinin üzerinden etrafı süzen, cebinde küçük not defteri taşıyan, beyaz saçlı ve son derece soğukkanlı bir beyefendi.",
+        icon: "pa:tren_s3"
+      }
     ],
     weapons: [
-      { id: "w1", name: "Zehirli İçecek", description: "Bardağa damlatıldığında doğrudan kalp krizini tetikleyen, fark edilmesi imkansız renksiz ve tatsız tıbbi sıvı.", icon: "pa:tren_w1" },
-      { id: "w2", name: "Kesici Silah", description: "Hareketli trende saklaması kolay, doğru açıdan vurulduğunda tek hamlede derin yara açan küçük çakı bıçağı.", icon: "pa:tren_w2" },
-      { id: "w3", name: "Boğma Halatı", description: "Bavuldan çıkarılan, kurbanın arkasından boyuna dolandığında mekanik baskıyla nefesi anında kesen ince naylon ip.", icon: "pa:tren_w3" },
+      {
+        id: "w1",
+        name: "Zehirli İçecek",
+        description: "Bardağa damlatıldığında doğrudan kalp krizini tetikleyen, fark edilmesi imkansız renksiz ve tatsız tıbbi sıvı.",
+        icon: "pa:tren_w1"
+      },
+      {
+        id: "w2",
+        name: "Kesici Silah",
+        description: "Hareketli trende saklaması kolay, doğru açıdan vurulduğunda tek hamlede derin yara açan küçük çakı bıçağı.",
+        icon: "pa:tren_w2"
+      },
+      {
+        id: "w3",
+        name: "Boğma Halatı",
+        description: "Bavuldan çıkarılan, kurbanın arkasından boyuna dolandığında mekanik baskıyla nefesi anında kesen ince naylon ip.",
+        icon: "pa:tren_w3"
+      }
     ],
     locations: [
-      { id: "l1", name: "Kompartıman", description: "Sadece kendi biletli yolcusunun girebildiği dar, dört kişilik ahşap bölmeli, kapısı kapalı özel konaklama odası.", icon: "pa:tren_l1" },
-      { id: "l2", name: "Yemekli Vagon", description: "Beyaz örtülü masaların bulunduğu, çay servisinin yapıldığı, herkesin girip çıkabildiği ortak ve geniş oturma alanı.", icon: "pa:tren_l2" },
-      { id: "l3", name: "Tuvalet", description: "Trenin en arka bölümünde yer alan, içeriden mandalla kilitlenebilen, oldukça küçük ve dar ihtiyaç alanı.", icon: "pa:tren_l3" },
+      {
+        id: "l1",
+        name: "Kompartıman",
+        description: "Sadece kendi biletli yolcusunun girebildiği dar, dört kişilik ahşap bölmeli, kapısı kapalı özel konaklama odası.",
+        icon: "pa:tren_l1"
+      },
+      {
+        id: "l2",
+        name: "Yemekli Vagon",
+        description: "Beyaz örtülü masaların bulunduğu, çay servisinin yapıldığı, herkesin girip çıkabildiği ortak ve geniş oturma alanı.",
+        icon: "pa:tren_l2"
+      },
+      {
+        id: "l3",
+        name: "Tuvalet",
+        description: "Trenin en arka bölümünde yer alan, içeriden mandalla kilitlenebilen, oldukça küçük ve dar ihtiyaç alanı.",
+        icon: "pa:tren_l3"
+      }
     ],
     clues: [
-      { id: "c1", text: "Bilet kondüktörü, gergin iş kadınının tüm yolculuk boyunca trenin arka tarafındaki küçük kilitli tuvalette mahsur kaldığını ve panik atak geçirdiğini teyit etti.", type: "witness", isBonus: false },
-      { id: "c2", text: "Cinayet, sadece bir kişinin sığabileceği kilitli dar odalarda değil; beyaz örtülü masaların bulunduğu geniş ve herkesin erişimine açık bir alanda işlenmişti.", type: "evidence", isBonus: false },
-      { id: "c3", text: "Maktulün boynunda hiçbir mekanik baskı izi yoktu; ayrıca hareket halindeki bir trende küçük bir bıçakla arkada hiç kan izi bırakmadan bu cinayeti işlemek imkansızdı.", type: "forensic", isBonus: false },
-      { id: "c4", text: "Üniversite Öğrencisi'nin kulaklığını takıp kendi ahşap kompartımanından adımını bile atmadığı, koridor kamerasının kesintisiz kaydıyla ispatlandı.", type: "record", isBonus: false },
-      { id: "c5", text: "Ortak yemek alanındaki çay bardağının dibinde, sadece ileri derecede anatomik bilgiye sahip birinin dozajını ayarlayabileceği renksiz bir tıbbi madde bulundu.", type: "evidence", isBonus: true },
-      { id: "c6", text: "Emekli Doktor'un sürekli yanında taşıdığı küçük çantadaki tıbbi şişelerden birinin eksik olduğu ve kurbandaki toksinle aynı profili taşıdığı ortaya çıktı.", type: "forensic", isBonus: true },
+      {
+        id: "c1",
+        text: "Olay anında yapılan fiziki kontrolde, bavuldan çıkarılan ince naylon ipin trenin en arka bölümündeki mandalla kilitlenebilen o dar kabinde unutulduğu tespit edildi.",
+        type: "evidence",
+        isBonus: false,
+        deductionHint: "Mandallı dar kabinde unutulan ince naylon ip hangi yeri gösteriyor?"
+      },
+      {
+        id: "c2",
+        text: "Cinayet masası incelemesi, ölümcül saldırının çay servisi yapılan beyaz örtülü masaların bulunduğu salonda gerçekleştiğini kesinleştirdi; servis personeli vardiya dökümü ise tek hamlede derin yara açan çakı bıçağının bu salonda asla yer almadığını belgeledi.",
+        type: "record",
+        isBonus: false,
+        deductionHint: "Ölümün gerçekleştiği teyit edilen ortak alanda hangi nesnenin bulunmadığı kaydedilmiş?"
+      },
+      {
+        id: "c3",
+        text: "Kondüktörün denetim kaydına göre, kulağında kulaklığıyla gezen sırt çantalı genç yolcunun seferin son dakikalarında trenin en arka bölümündeki mandallı dar kabine girdiği görüldü.",
+        type: "witness",
+        isBonus: false,
+        deductionHint: "Kulaklıklı gencin sefer sırasında bulunduğu yer neresidir?"
+      },
+      {
+        id: "c4",
+        text: "Seferin o kısa aralığında mühürlü teslim defteri ile kesintisiz kamera kaydı, küçük çakı bıçağını beyaz saçlı soğukkanlı beyefendinin ne teslim aldığını ne de kullandığını birlikte gösteriyor.",
+        type: "forensic",
+        isBonus: false,
+        deductionHint: "Mühürlü teslim defteri beyaz saçlı yolcuyu hangi küçük çakıdan kesin olarak uzak tutuyor?"
+      },
+      {
+        id: "c5",
+        text: "Vagon amirinin tutanağına göre İş Kadını, çantasında taşıdığı Kesici Silah ile birlikte yolculuk boyunca kayıt altına alınmıştır.",
+        type: "record",
+        isBonus: true,
+        deductionHint: "İş Kadını hangi suç aletiyle eşleşmektedir?"
+      },
+      {
+        id: "c6",
+        text: "Kompartıman görevlisinin şahitliğiyle, Üniversite Öğrencisi adlı yolcunun bagajındaki Boğma Halatı ile temas ettiği belgelenmiştir.",
+        type: "witness",
+        isBonus: true,
+        deductionHint: "Üniversite Öğrencisi hangi gereci elinde bulunduruyordu?"
+      }
     ],
     solvabilityMeta: {
-      freeEliminations: ["l3", "s2", "w3", "l1", "w2", "s1"],
-      bonusEliminations: [],
+      freeEliminations: [
+        "l3",
+        "s2",
+        "w3",
+        "l1",
+        "w2",
+        "s1"
+      ],
+      bonusEliminations: []
     },
-    solution: { suspectId: "s3", weaponId: "w1", locationId: "l2" },
+    solution: {
+      suspectId: "s3",
+      weaponId: "w1",
+      locationId: "l2"
+    }
   },
   {
     id: "tarihi-hamamda-cinayet",
