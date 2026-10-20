@@ -7,6 +7,7 @@ import { read, write, loadSnapshot, assertNoRegression, scan } from './core.mjs'
 import { certificateValid } from './review.mjs';
 import { openStore } from './state.mjs';
 import { api } from './github.mjs';
+import { playPreviewBody } from './play-preview.mjs';
 
 export function assertDraftPolicy(policy) {
   if (policy.publication?.draft_only !== true || policy.publication?.auto_merge !== false)
@@ -60,7 +61,8 @@ export async function publishDraft() {
     pr = api('repos/' + repo + '/pulls', 'POST', { base: 'main', head: branch, draft: true,
       title: 'Case QA: ' + ids.join(', ') + ' — reviewed 100/100',
       body: ids.length + ' case(s); exact QA, blind player and independent editorial review passed.\n\nAPI calls: ' + report.api_calls +
-        '; estimated USD at configured rates: ' + report.execute_cost_usd + '.\n\nDraft only. No automatic merge; no avatar generation. Candidate CI must pass and a person must review the game diff before merging.' });
+        '; estimated USD at configured rates: ' + report.execute_cost_usd + '.\n\nDraft only. No automatic merge; no avatar generation. Candidate CI must pass and a person must review the game diff before merging.\n\n' +
+        playPreviewBody(ids) });
   }
   Object.assign(report, { status: 'awaiting_review', pr_url: pr.html_url, pr_number: pr.number, candidate_sha: head,
     main_synchronized: false });
