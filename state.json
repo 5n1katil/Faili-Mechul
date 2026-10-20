@@ -12345,7 +12345,7 @@
       "merge_commit_sha": "afdb0451886f543495e43c74a9b41aba7ab72a46"
     },
     "tren-yolculugunda-cinayet": {
-      "spent": 0.05859705000000001,
+      "spent": 0.019285800000000013,
       "feedback": [
         {
           "error": "TEXT_CONTENT:EXPERIENCE_UNINTRODUCED_SETTING:c4:laboratuvar"
@@ -20401,9 +20401,32 @@
       "model": "gemini-3.8-flash",
       "purpose": "judge",
       "day": "2026-10-20",
-      "status": "reserved",
-      "charged": 0.0442455
+      "status": "completed",
+      "charged": 0.00493425,
+      "usage": {
+        "promptTokenCount": 5854,
+        "candidatesTokenCount": 145,
+        "totalTokenCount": 5999,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 5854
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "plan": {
+        "scores": {
+          "fairness": 5,
+          "clarity": 5,
+          "consistency": 5,
+          "originality": 4,
+          "engagement": 4
+        },
+        "issues": [],
+        "summary": "Dava metni kurallara tam uyumlu, açık ve akıcı bir kurguya sahip. İpuçları kart tanımlarıyla örtüşüyor; mantıksal zincir tek bir suç üçlüsünü (Emekli Doktor - Zehirli İçecek - Yemekli Vagon) fazladan tahmin gerektirmeden kesinleştiriyor. Yayına hazır."
+      }
     }
   },
-  "campaign_spent": 0.36371745000000016
+  "campaign_spent": 0.32440620000000014
 }
