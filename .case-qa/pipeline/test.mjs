@@ -11,7 +11,7 @@ import { read, write, clone, loadSnapshot, scan, selectNext, assess, guardedPatc
 import { emptyState, validateState, openStore, pushCheckpoint } from './state.mjs';
 import { reserveRequest, requestBody, requestKey, callPaid, Stop, modelPreflight, providerErrorDetails, prepaymentRejection, canResumePrepayment } from './provider.mjs';
 import { assertDraftPolicy } from './publish-draft.mjs';
-import { playerView, playerPass, judgePass, reviewCandidate, mediaPreflight, certificateValid, revalidateSimulatorCertificate, reviewTransport } from './review.mjs';
+import { playerView, playerPass, judgePass, reviewCandidate, mediaPreflight, certificateValid, revalidateSimulatorCertificate, reviewTransport, HISTORICAL_PLAYER_CONTRACT, playerMatchingRules } from './review.mjs';
 import { repairOne, campaignRows, reopenTextQuarantine } from './run.mjs';
 import { validateNewCase, previewNewCase } from './intake.mjs';
 import { repairTermal } from '../fixtures/termal_reviewed_repair.mjs';
@@ -34,7 +34,7 @@ import { EXPERIENCE_PROFILES, EXPERIENCE_VERSION, experienceProfile, experienceC
 import { canonicalLogicSignature, logicNoveltyCheck } from './logic-patterns.mjs';
 import { CRIME_ANCHOR_SEMANTIC, anchorConfirmsTwoCrimeComponents, hardAnchorContract, simulatorDifficultyLevel } from './anchor-contract.mjs';
 import { anchorContractExamples, hamamSourceNameCompletion } from '../fixtures/anchor-contract-examples.mjs';
-import { recoverTrenHints, recoverHamamRoles, reviewPairRoom, verifyRecordedReview, recordedReviewSpecs, reviewRecordedRecovery, loadRecordedBaseline, HAMAM_ROLE_MONONYMS } from './recorded-recovery.mjs';
+import { recoverTrenHints, recoverHamamRoles, reviewPairRoom, verifyRecordedReview, recordedReviewSpecs, reviewRecordedRecovery, loadRecordedBaseline, HAMAM_ROLE_MONONYMS, prepareTrenCorrectionReview, eliminationSupported } from './recorded-recovery.mjs';
 import { qualityContract as experienceContract } from './quality-contract.mjs';
 import { editorialExperiencePrompt } from './editorial.mjs';
 import { reconcileKnownUnsent } from './reservation-recovery.mjs';
@@ -231,8 +231,11 @@ try {
       seen.push(JSON.parse(args.prompt));return {plan:args.purpose==='player'?playerFor(c):{...validJudge(),issues:['Opening and evidence do not form one event']}};
     });
     assert.equal(r.passed,false);
-    assert.deepEqual(Object.keys(seen[0]).sort(),['player_case','version']);
+    assert.deepEqual(Object.keys(seen[0]).sort(),['matching_rules','player_case','version']);
+    assert.deepEqual(seen[0].matching_rules, playerMatchingRules());
     assert.equal(seen[0].player_case.solution,undefined);
+    assert.equal(JSON.stringify(seen[0].player_case).includes('logicRules'), false);
+    assert.equal(seen[0].player_case.story.includes('tek bir mekana tek bir silah'), false);
     assert.equal(seen[1].quality_contract.experience.key,'standard_caylak');
     assert.equal(seen[1].logical_novelty.signature,canonicalLogicSignature(c));
   });
@@ -1469,6 +1472,14 @@ try {
     assert.equal(record.player_request_day, '2026-10-17');
     assert.equal(record.judge_request_day, '2026-10-17');
     assert.equal(certificateValid(historicalSnapshot, historicalAdada, historicalAdada.candidate, renewed.certificate), true);
+    const liveTransport = reviewTransport(historicalSnapshot, historicalAdada, historicalAdada.candidate, proof.previousCertificate.player);
+    const historicalTransport = reviewTransport(historicalSnapshot, historicalAdada, historicalAdada.candidate, proof.previousCertificate.player, HISTORICAL_PLAYER_CONTRACT);
+    assert.equal(requestKey(historicalAdada.id, productionPolicy.models.reviewer, historicalTransport.playerBody, 'player'), proof.playerRequest.key);
+    assert.equal(requestKey(historicalAdada.id, productionPolicy.models.reviewer, historicalTransport.judgeBody, 'judge'), proof.judgeRequest.key);
+    assert.notEqual(requestKey(historicalAdada.id, productionPolicy.models.reviewer, liveTransport.playerBody, 'player'), proof.playerRequest.key);
+    assert.equal(requestKey(historicalAdada.id, productionPolicy.models.reviewer, liveTransport.judgeBody, 'judge'), proof.judgeRequest.key);
+    assert.equal(saved.review_hash, reviewHash(productionSnapshot, productionSnapshot.entries.find(item => item.id === 'adada-buyuk-gizem').candidate, mediaPreflight(productionSnapshot, productionSnapshot.entries.find(item => item.id === 'adada-buyuk-gizem'), productionSnapshot.entries.find(item => item.id === 'adada-buyuk-gizem').candidate).evidence));
+    assert.equal(campaignRows(productionSnapshot).find(item => item.id === 'adada-buyuk-gizem').content_locked, true);
     const changed = clone(historicalAdada.candidate);
     changed.suspects[0].description += ' ek kart';
     assert.equal(sameReviewTarget(historicalAdada.candidate, changed), false);
@@ -2062,6 +2073,50 @@ try {
     }
     assert.ok(puzzles.equals(fs.readFileSync('artifacts/dedektif/data/puzzles.ts')));
   });
+  await test('Tren c4 must prove the recorded elimination before another player request', () => {
+    const bindings = read('.case-qa/fixtures/recorded-review-bindings.json');
+    const bindingBytes = fs.readFileSync('.case-qa/fixtures/recorded-review-bindings.json');
+    const puzzles = fs.readFileSync('artifacts/dedektif/data/puzzles.ts');
+    const grants = fs.readFileSync('.case-qa/pipeline/review-revision-grants.json');
+    const counts = read('.case-qa/fixtures/campaign-39130510026-request-counts.json');
+    const rejection = read('.case-qa/fixtures/tren-blind-player-rejection-20261019.json');
+    const entry = baselineSnapshot.entries.find(item => item.id === 'tren-yolculugunda-cinayet');
+    const prepared = prepareTrenCorrectionReview(baselineSnapshot);
+    const oldClue = prepared.historical.clues.find(item => item.id === 'c4');
+    const newClue = prepared.candidate.clues.find(item => item.id === 'c4');
+    assert.equal(prepared.historical_support.reason, 'TRACE_ABSENCE_IS_NOT_EXCLUSION');
+    assert.equal(prepared.support.supported, true);
+    assert.equal(eliminationSupported(oldClue.text).supported, false);
+    assert.notEqual(newClue.text, oldClue.text);
+    assert.deepEqual(newClue.logicRules, oldClue.logicRules);
+    assert.deepEqual(newClue.logicRules[0], { action: 'eliminate', pair: ['s3', 'w2'] });
+    assert.equal(prepared.candidate.story.includes('tek bir mekana tek bir silah'), false);
+    assert.equal(prepared.grid.coreNecessary, true);
+    assert.ok(prepared.without_c4 >= 2);
+    const qa = assess(baselineSnapshot, entry, prepared.candidate);
+    assert.equal(qa.passed, true);
+    assert.equal(qa.result.score, 100);
+    assert.equal(qa.result.simulatorProductionReady, true);
+    assert.equal(experienceCheck(prepared.candidate, 'standard').passed, true, experienceCheck(prepared.candidate, 'standard').issues.join(' | '));
+    assert.notEqual(prepared.candidate_content_hash, bindings.cases[entry.id].candidate_content_hash);
+    assert.notEqual(prepared.player_request_key, prepared.pinned_player_request_key);
+    assert.notEqual(prepared.review_hash, prepared.pinned_review_hash);
+    assert.equal(prepared.certificate, null);
+    assert.equal(prepared.repair_rights_renewed, false);
+    const forged = { schema: 'fm_case_review_v1', review_hash: prepared.pinned_review_hash, player: playerFor(prepared.candidate), judge: validJudge() };
+    assert.equal(certificateValid(baselineSnapshot, entry, prepared.candidate, forged), false);
+    assert.equal(playerPass(productionPolicy, prepared.historical, playerView(prepared.historical), rejection.player), false);
+    assert.equal(rejection.player.unique_solution, false);
+    assert.equal(rejection.player.solution.suspectId, 's1');
+    assert.match(rejection.player.issues.join('\n'), /c4 yalnızca s3'ün bıçakta izi olmadığını söyler/);
+    assert.equal(reviewPairRoom(productionPolicy, counts.cases[entry.id]).verified_text, '2/2');
+    assert.equal(reviewPairRoom(productionPolicy, counts.cases[entry.id]).verified_text_remaining, 0);
+    assert.deepEqual(reopenTextQuarantine(baselineSnapshot, { state: { cases: { [entry.id]: { status: 'quarantined', spent: 0 } } } }), []);
+    assert.equal(campaignRows(productionSnapshot).find(item => item.id === 'adada-buyuk-gizem').content_locked, true);
+    assert.ok(bindingBytes.equals(fs.readFileSync('.case-qa/fixtures/recorded-review-bindings.json')));
+    assert.ok(puzzles.equals(fs.readFileSync('artifacts/dedektif/data/puzzles.ts')));
+    assert.ok(grants.equals(fs.readFileSync('.case-qa/pipeline/review-revision-grants.json')));
+  });
   await test('recorded Tren and Hamam reviews reserve through callPaid and resume without repeating paid work', async () => {
     const puzzles = fs.readFileSync('artifacts/dedektif/data/puzzles.ts');
     const grants = fs.readFileSync('.case-qa/pipeline/review-revision-grants.json');
@@ -2108,6 +2163,22 @@ try {
       let freshTransports = 0;
       let exactReview = null;
       for (const id of ids) {
+        if (id === 'tren-yolculugunda-cinayet') {
+          const trenStore = ledgerFor(id);
+          const repairs = stableHash(Object.fromEntries(Object.entries(trenStore.state.requests)));
+          let trenTransports = 0;
+          const blockedTren = await reviewRecordedRecovery(baselineSnapshot, id, trenStore, runFor(), { transport: async () => { trenTransports++; throw new Error('UNEXPECTED_TRANSPORT'); } });
+          assert.equal(trenTransports, 0);
+          assert.equal(blockedTren.calls, 0);
+          assert.equal(blockedTren.status, 'text_logic_gap');
+          assert.deepEqual(blockedTren.failures, ['TEXT_LOGIC_GAP']);
+          assert.equal(blockedTren.correction.certificate, null);
+          assert.equal(blockedTren.correction.repair_rights_renewed, false);
+          assert.notEqual(blockedTren.correction.candidate_content_hash, blockedTren.correction.pinned_candidate_content_hash);
+          assert.notEqual(blockedTren.correction.player_request_key, blockedTren.correction.pinned_player_request_key);
+          assert.equal(stableHash(Object.fromEntries(Object.entries(trenStore.state.requests))), repairs);
+          continue;
+        }
         const entry = baselineSnapshot.entries.find(item => item.id === id);
         const proof = verifyRecordedReview(baselineSnapshot, id);
         assert.equal(proof.candidate_hash, bindings.cases[id].candidate_hash);
@@ -2207,7 +2278,7 @@ try {
         await assert.rejects(() => reviewRecordedRecovery(baselineSnapshot, id, drifted, runFor(), { transport: async () => { throw new Error('UNEXPECTED_TRANSPORT'); } }), /RECORDED_REVIEW_HASH/);
         assert.deepEqual(reopenTextQuarantine(baselineSnapshot, store), []);
       }
-      assert.equal(freshTransports, 4);
+      assert.equal(freshTransports, 2);
       const wrongPin = clone(bindings);
       wrongPin.cases[ids[0]] = { ...wrongPin.cases[ids[0]], candidate_hash: 'cd'.repeat(32) };
       assert.throws(() => verifyRecordedReview(baselineSnapshot, ids[0], wrongPin), /RECORDED_REVIEW_HASH/);
@@ -2245,9 +2316,11 @@ try {
         failedTransports++;
         return responseForFixture({ ...playerFor(failedProof.candidate), solution: { ...failedProof.candidate.solution, suspectId: 's1' } });
       } });
-      assert.equal(failedTransports, 1);
-      assert.equal(failed.status, 'quarantined');
-      assert.equal(failed.review.passed, false);
+      assert.equal(failedTransports, 0);
+      assert.equal(failed.calls, 0);
+      assert.equal(failed.status, 'text_logic_gap');
+      assert.deepEqual(failed.failures, ['TEXT_LOGIC_GAP']);
+      assert.equal(failed.correction.certificate, null);
       assert.deepEqual(sourceBytes(failedCopy.dir), beforeFiles);
       const runChecked = (args, cwd, env) => {
         try {
@@ -2315,7 +2388,7 @@ try {
       const prepareCheckout = () => {
         const { dir, sha } = cloneAtCommit(root);
         assert.equal(sha, localSha);
-        const overlay = ['.case-qa/pipeline/test.mjs', '.case-qa/pipeline/recorded-recovery.mjs', '.case-qa/pipeline/run.mjs', '.github/workflows/fm-case-pipeline.yml', '.case-qa/fixtures/recorded-review-bindings.json'];
+        const overlay = ['.case-qa/pipeline/test.mjs', '.case-qa/pipeline/review.mjs', '.case-qa/pipeline/recorded-recovery.mjs', '.case-qa/pipeline/run.mjs', '.github/workflows/fm-case-pipeline.yml', '.case-qa/fixtures/recorded-review-bindings.json', '.case-qa/fixtures/tren-blind-player-rejection-20261019.json'];
         for (const file of overlay) fs.copyFileSync(path.join(root, file), path.join(dir, file));
         commitIfNeeded(dir, 'recorded review checkout code', overlay);
         runChecked(['git', 'checkout', recordedBindings.baseline_commit, '--', ...baselineFiles], dir, process.env);
@@ -2328,11 +2401,24 @@ try {
         const proof = verifyRecordedReview(snap, id);
         assert.equal(proof.portfolio_drift, false);
         let calls = 0;
-        const reviewed = await reviewRecordedRecovery(snap, id, ledgerFor(id), runFor(), { transport: async (url) => {
+        const transport = async (url) => {
           assert.match(url, /:generateContent$/);
           calls++;
           return responseForFixture(calls === 1 ? playerFor(proof.candidate) : validJudge());
-        } });
+        };
+        if (id === 'tren-yolculugunda-cinayet') {
+          let gateCalls = 0;
+          const gate = await reviewRecordedRecovery(snap, id, ledgerFor(id), runFor(), { transport: async () => { gateCalls++; throw new Error('UNEXPECTED_TRANSPORT'); } });
+          assert.equal(gateCalls, 0);
+          assert.equal(gate.status, 'text_logic_gap');
+          assert.equal(gate.correction.certificate, null);
+          const reviewed = await reviewCandidate(snap, entry, proof.candidate, ledgerFor(id), runFor(), args => callPaid({ ...args, transport }));
+          assert.equal(calls, 2);
+          assert.equal(reviewed.passed, true);
+          stageCandidate(snap, entry, proof.candidate, reviewed.certificate);
+          return reviewed;
+        }
+        const reviewed = await reviewRecordedRecovery(snap, id, ledgerFor(id), runFor(), { transport });
         assert.equal(calls, 2);
         assert.equal(reviewed.status, 'ready_for_gates');
         assert.equal(reviewed.review.passed, true);
