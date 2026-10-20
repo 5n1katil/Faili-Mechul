@@ -12345,7 +12345,7 @@
       "merge_commit_sha": "afdb0451886f543495e43c74a9b41aba7ab72a46"
     },
     "tren-yolculugunda-cinayet": {
-      "spent": 0.014351550000000008,
+      "spent": 0.05859705000000001,
       "feedback": [
         {
           "error": "TEXT_CONTENT:EXPERIENCE_UNINTRODUCED_SETTING:c4:laboratuvar"
@@ -20395,7 +20395,15 @@
         ],
         "issues": []
       }
+    },
+    "10a8491f737d00994fea35293620de5b5074feb6fde8593fe843968cf7bf0b81": {
+      "case_id": "tren-yolculugunda-cinayet",
+      "model": "gemini-3.8-flash",
+      "purpose": "judge",
+      "day": "2026-10-20",
+      "status": "reserved",
+      "charged": 0.0442455
     }
   },
-  "campaign_spent": 0.31947195000000017
+  "campaign_spent": 0.36371745000000016
 }
