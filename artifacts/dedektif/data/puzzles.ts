@@ -764,7 +764,7 @@ export const PUZZLES: Puzzle[] = [
       weaponId: "w1",
       locationId: "l2"
     },
-    solutionNarrative: "Emekli doktor, çay servisinin yapıldığı yemekli vagonda kurbanın bardağına bildiği renksiz tıbbi sıvıyı damlattı. Koyu takım elbiseli yolcu küçük çakıyı evrak çantasına koyup kendi kompartımanında kalmıştı. Uçları düğümlü naylon kordon mandallı tuvalette unutulmuştu; kulaklıklı genç de oradaydı. Yemekli vagonda kalan kişi ve yöntem bunlardı."
+    solutionNarrative: "Küçük çakı koyu takım elbiseli yolcunun evrak çantasına geri konmuş, uçları düğümlü naylon kordon da mandallı tuvalette kulaklıklı gençle kalmıştı. Çay servisinin yapıldığı yemekli vagonda ikisi de yoktu. Çakının ve kordonun bu yolculara bağlanması, yemekli vagondaki ölümü emekli doktorun bardağa damlattığı zehirli içeceğe bırakıyordu."
   },
   {
     id: "tarihi-hamamda-cinayet",
