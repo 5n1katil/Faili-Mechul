@@ -62,6 +62,8 @@ test('play preview keeps the simulator pin and hides QA from the player payload'
   assert.match(tren.closing, new RegExp(CLOSING));
   assert.match(trenClue(site, 'c2'), new RegExp(C2));
   assert.equal(trenClue(site, 'c2').includes('ölümcül saldırının'), false);
+  assert.equal(trenClue(site, 'c2').includes('servis personeli vardiya dökümü'), false);
+  assert.equal(trenClue(site, 'c2').includes('tek hamlede derin yara açan'), false);
   assert.equal(tren.closing.includes(RETIRED_CLOSING), false);
   assert.equal(tren.closing.includes('Yemekli vagonda kalan kişi ve yöntem bunlardı'), false);
   assert.equal(JSON.stringify(tren.payload).includes(CLOSING), false);

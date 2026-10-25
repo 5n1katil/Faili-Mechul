@@ -714,7 +714,7 @@ export const PUZZLES: Puzzle[] = [
       },
       {
         id: "c2",
-        text: "Cinayet masası, ölümün çay servisi yapılan beyaz örtülü masaların bulunduğu salonda gerçekleştiğini kesinleştirdi; servis personeli vardiya dökümü ise tek hamlede derin yara açan çakı bıçağının bu salonda asla yer almadığını belgeledi.",
+        text: "Cinayet masası, ölümün çay servisi yapılan beyaz örtülü masaların bulunduğu salonda gerçekleştiğini kesinleştirdi; çakı bıçağının bu salonda asla yer almadığını belgeledi.",
         type: "record",
         isBonus: false,
         deductionHint: "Ölümün gerçekleştiği teyit edilen ortak alanda hangi nesnenin bulunmadığı kaydedilmiş?"

@@ -88,12 +88,13 @@ test('real HTML bonus buttons use the simulator lets and charge 30, 60 and 90', 
   const chrome = spawn('google-chrome', [
     '--headless=new', '--disable-gpu', '--no-sandbox', '--disable-dev-shm-usage',
     `--remote-debugging-port=${debugPort}`, `--user-data-dir=${profile}`, 'about:blank'
-  ], { stdio: 'ignore' });
+  ], { stdio: 'ignore', detached: true });
   let session;
+  let browserSession;
   try {
     const version = await waitFor(`http://127.0.0.1:${debugPort}/json/version`);
     const browser = await version.json();
-    const browserSession = connect(browser.webSocketDebuggerUrl);
+    browserSession = connect(browser.webSocketDebuggerUrl);
     await browserSession.ready;
     const created = await browserSession.send('Target.createTarget', {
       url: `http://127.0.0.1:${sitePort}/oyna/?case=${CASE_ID}`
@@ -132,6 +133,8 @@ test('real HTML bonus buttons use the simulator lets and charge 30, 60 and 90', 
     assert.match(initial.cost4, /\+30 sn/);
     assert.match(initial.cost5, /\+90/);
     assert.match(initial.c2, /çakı bıçağının bu salonda asla yer almadığını/);
+    assert.equal(initial.c2.includes('servis personeli vardiya dökümü'), false);
+    assert.equal(initial.c2.includes('tek hamlede derin yara açan'), false);
     assert.equal(initial.closing, false);
     acceptDialog = false;
     await evaluate(session, `document.querySelector('#clue5 .lock-overlay').click()`);
@@ -180,10 +183,59 @@ test('real HTML bonus buttons use the simulator lets and charge 30, 60 and 90', 
     assert.equal(both.point5, 60);
     assert.match(both.tracker, /90 sn/);
   } finally {
-    if (session) session.close();
-    chrome.kill();
+    await stopChrome(chrome, browserSession, session);
     server.close();
     fs.rmSync(dir, { recursive: true, force: true });
-    fs.rmSync(profile, { recursive: true, force: true });
+    removeTree(profile);
   }
 });
+
+function signalChrome(chrome, signal) {
+  try {
+    process.kill(-chrome.pid, signal);
+  } catch {
+    try { chrome.kill(signal); } catch { /* already exited */ }
+  }
+}
+
+function chromeExited(chrome) {
+  if (chrome.exitCode !== null || chrome.signalCode !== null) return Promise.resolve();
+  return new Promise(resolve => {
+    chrome.once('exit', () => resolve());
+    if (chrome.exitCode !== null || chrome.signalCode !== null) resolve();
+  });
+}
+
+async function stopChrome(chrome, browserSession, session) {
+  if (session) {
+    try { session.close(); } catch { /* socket already closed */ }
+  }
+  const exited = chromeExited(chrome);
+  if (browserSession) {
+    try { await browserSession.send('Browser.close'); } catch { /* browser already gone */ }
+    try { browserSession.close(); } catch { /* socket already closed */ }
+  }
+  if (chrome.exitCode === null && chrome.signalCode === null) signalChrome(chrome, 'SIGTERM');
+  const finished = (limit) => Promise.race([
+    exited.then(() => true),
+    new Promise(resolve => setTimeout(resolve, limit, false))
+  ]);
+  if (!(await finished(5000))) signalChrome(chrome, 'SIGKILL');
+  if (!(await finished(5000))) throw new Error('CHROME_STILL_RUNNING');
+}
+
+function removeTree(target) {
+  let last;
+  for (let attempt = 0; attempt < 8; attempt += 1) {
+    try {
+      fs.rmSync(target, { recursive: true, force: true });
+      return;
+    } catch (error) {
+      last = error;
+      if (error.code === 'ENOENT') return;
+      if (!['ENOTEMPTY', 'EBUSY', 'EPERM'].includes(error.code)) throw error;
+      Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 50 * (attempt + 1));
+    }
+  }
+  throw last;
+}

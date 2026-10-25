@@ -2648,7 +2648,16 @@ try {
       assert.equal(offline.model, 'gemini-3.8-flash');
       assert.deepEqual(offline.requests, ['player', 'judge']);
       assert.equal(offline.command, trenReviewCommand());
+      assert.equal(fs.readFileSync('.case-qa/pipeline/tren-review.mjs', 'utf8').includes('fm-tren-pin-'), false);
       assert.notEqual(TREN_REVIEW_CONTENT_HASH, 'a084f84420e8e67d7eae702e8a3f839f34e27e00b3a6874c25d15eb487933e3a');
+      assert.notEqual(TREN_REVIEW_CONTENT_HASH, 'd65b04b02b787fb1e2d0b337a76868bbd1178f0ed05371b8c71b68f7fda01694');
+      const drift = fs.mkdtempSync('/tmp/fm-tren-drift-');
+      await assert.rejects(() => reviewTrenCandidate({
+        root: drift,
+        caller: async () => { calls++; throw new Error('UNEXPECTED_TRANSPORT'); }
+      }), /TREN_REVIEW_CONTENT/);
+      assert.equal(calls, 0);
+      fs.rmSync(drift, { recursive: true, force: true });
       await assert.rejects(() => reviewTrenCandidate({ paid: true, confirm: 'wrong', caller: async () => { calls++; throw new Error('UNEXPECTED_TRANSPORT'); } }), /TREN_REVIEW_CONFIRM/);
       assert.equal(calls, 0);
       const state = emptyState();
