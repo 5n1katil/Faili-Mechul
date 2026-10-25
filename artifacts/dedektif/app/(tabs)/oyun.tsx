@@ -2074,7 +2074,17 @@ export default function VakalarScreen() {
           {puzzle.clues.map((clue, i) => {
             const isBonus = isBonusClue(puzzle, i);
             const isRevealed = cluesRevealed.includes(i);
-            const bonusCopy = isBonus ? bonusUnlockCopy(bonusCluesRevealedCount) : null;
+            const bonusOrder = puzzle.clues.reduce<number[]>((order, clue, index) => {
+              if (clue.isBonus) order.push(index);
+              return order;
+            }, []);
+            const lightIndex = bonusOrder[0];
+            const bonusCopy = isBonus
+              ? bonusUnlockCopy({
+                  tier: i === lightIndex ? "light" : "strong",
+                  lightOpen: lightIndex !== undefined && cluesRevealed.includes(lightIndex),
+                })
+              : null;
             return (
               <ClueCard
                 key={clue.id}
@@ -2084,6 +2094,8 @@ export default function VakalarScreen() {
                 isBonus={isBonus}
                 isSolved={solvedMechanics.includes(clue.id)}
                 bonusSeconds={bonusCopy?.seconds}
+                bonusChargeSeconds={bonusCopy?.chargeSeconds}
+                bonusTagText={bonusCopy?.tag}
                 bonusConfirmMessage={bonusCopy?.message}
                 onRevealBonus={
                   isBonus && !isRevealed && !gameState.isComplete

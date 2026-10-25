@@ -58,7 +58,7 @@ test.describe("Scoring system", () => {
     expect(computeScore(10, 0, 0, "baskomiser")).toBeGreaterThan(13000);
   });
 
-  test("scoring: wrong guess costs 500 pts + 30s; bonuses cost 300 pts plus 30s then 60s", async ({ page: _page }) => {
+  test("scoring: wrong guess costs 500 pts + 30s; light bonus +30s, strong bonus +60s, direct strong opens both", async ({ page: _page }) => {
     const computeScore = (
       timeElapsed: number,
       wrongGuesses: number,
@@ -75,8 +75,12 @@ test.describe("Scoring system", () => {
     const withFirstBonus = computeScore(60 + 30, 0, 1, "caylak");
     const withBothBonuses = computeScore(60 + 30 + 60, 0, 2, "caylak");
 
+    const directStrong = computeScore(60 + 90, 0, 2, "caylak");
+
     expect(baseScore - withWrongGuess).toBe(500 + 30 * 10);
     expect(baseScore - withFirstBonus).toBe(300 + 30 * 10);
     expect(withFirstBonus - withBothBonuses).toBe(300 + 60 * 10);
+    expect(directStrong).toBe(withBothBonuses);
+    expect(baseScore - directStrong).toBe(600 + 90 * 10);
   });
 });

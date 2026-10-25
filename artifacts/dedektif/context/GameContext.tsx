@@ -12,7 +12,7 @@ import React, {
 } from "react";
 import { Platform } from "react-native";
 import { generateUUID, syncProfileToBackend, type PrivacySettings } from "@/utils/apiClient";
-import { applyBonusOpen } from "@/utils/bonusPenalty";
+import { applyBonusOpen, bonusOpenPlan } from "@/utils/bonusPenalty";
 import {
   getDailyPuzzle,
   getStandardClueIndices,
@@ -608,15 +608,26 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
       if (!prev || !prev.puzzle) return prev;
       if (prev.cluesRevealed.includes(index)) return prev;
       if (!isBonusClue(prev.puzzle, index)) return prev;
+      const plan = bonusOpenPlan({
+        clues: prev.puzzle.clues,
+        targetIndex: index,
+        revealed: prev.cluesRevealed,
+      });
+      if (!plan.indices.length) return prev;
       const alreadyOpened = prev.cluesRevealed.filter((idx) => isBonusClue(prev.puzzle!, idx)).length;
       const opened = applyBonusOpen({
-        alreadyOpened,
+        seconds: plan.seconds,
         timeElapsed: prev.timeElapsed,
         bonusPenaltySeconds: prev.bonusPenaltySeconds,
+        alreadyOpened,
       });
+      const cluesRevealed = [...prev.cluesRevealed];
+      for (const idx of plan.indices) {
+        if (!cluesRevealed.includes(idx)) cluesRevealed.push(idx);
+      }
       const nextState = {
         ...prev,
-        cluesRevealed: [...prev.cluesRevealed, index],
+        cluesRevealed,
         timeElapsed: opened.timeElapsed,
         bonusPenaltySeconds: opened.bonusPenaltySeconds,
       };
