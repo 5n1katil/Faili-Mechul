@@ -290,6 +290,8 @@ export interface Puzzle {
   difficulty: Difficulty;
   dayIndex: number;
   solvabilityMeta: SolvabilityMeta;
+  // Shown only after a correct solution. Absent on older cases.
+  solutionNarrative?: string;
 }
 
 export const PUZZLES: Puzzle[] = [
@@ -678,7 +680,7 @@ export const PUZZLES: Puzzle[] = [
       {
         id: "w3",
         name: "Boğma Halatı",
-        description: "Bavuldan çıkarılan, kurbanın arkasından boyuna dolandığında mekanik baskıyla nefesi anında kesen ince naylon ip.",
+        description: "İnce ve sağlam naylon kordon. Uçlarındaki düğümler ve aşınmış lifler dikkat çekiyor.",
         icon: "pa:tren_w3"
       }
     ],
@@ -705,10 +707,10 @@ export const PUZZLES: Puzzle[] = [
     clues: [
       {
         id: "c1",
-        text: "Olay anında yapılan fiziki kontrolde, bavuldan çıkarılan ince naylon ipin trenin en arka bölümündeki mandalla kilitlenebilen o dar kabinde unutulduğu tespit edildi.",
+        text: "Trenin en arka bölümündeki mandalla kilitlenen dar kabinde, uçları düğümlü ve lifleri aşınmış ince bir naylon kordon unutulmuştu.",
         type: "evidence",
         isBonus: false,
-        deductionHint: "Mandallı dar kabinde unutulan ince naylon ip hangi yeri gösteriyor?"
+        deductionHint: "Mandallı dar kabinde unutulan naylon kordon hangi yeri gösteriyor?"
       },
       {
         id: "c2",
@@ -726,24 +728,24 @@ export const PUZZLES: Puzzle[] = [
       },
       {
         id: "c4",
-        text: "Seferin o kısa aralığında mühürlü teslim defteri ile kesintisiz kamera kaydı, küçük çakı bıçağını beyaz saçlı soğukkanlı beyefendinin ne teslim aldığını ne de kullandığını birlikte gösteriyor.",
-        type: "forensic",
+        text: "Yolcular birbirine çarpınca koyu takım elbiseli telaşlı yolcunun evrak çantası açıldı. İçinden küçük çakı bıçağı düştü; yolcu onu kondüktörün gözü önünde çantasına geri koydu.",
+        type: "witness",
         isBonus: false,
-        deductionHint: "Mühürlü teslim defteri beyaz saçlı yolcuyu hangi küçük çakıdan kesin olarak uzak tutuyor?"
+        deductionHint: "Evrak çantasından düşen küçük çakı hangi yolcuda kaldı?"
       },
       {
         id: "c5",
-        text: "Vagon amirinin tutanağına göre İş Kadını, çantasında taşıdığı Kesici Silah ile birlikte yolculuk boyunca kayıt altına alınmıştır.",
-        type: "record",
+        text: "Koyu takım elbiseli telaşlı yolcu, sisin altındaki son kilometreleri kapısı kapalı kendi ahşap kompartımanında geçirdi.",
+        type: "witness",
         isBonus: true,
-        deductionHint: "İş Kadını hangi suç aletiyle eşleşmektedir?"
+        deductionHint: "Telaşlı yolcu son kilometreleri nerede geçirdi?"
       },
       {
         id: "c6",
-        text: "Kompartıman görevlisinin şahitliğiyle, Üniversite Öğrencisi adlı yolcunun bagajındaki Boğma Halatı ile temas ettiği belgelenmiştir.",
+        text: "Beyaz saçlı soğukkanlı beyefendinin iç cebinden, bardağa damlatılınca kalbi durduran renksiz tıbbi sıvı çıktı.",
         type: "witness",
         isBonus: true,
-        deductionHint: "Üniversite Öğrencisi hangi gereci elinde bulunduruyordu?"
+        deductionHint: "Renksiz tıbbi sıvı hangi yolcunun cebinden çıktı?"
       }
     ],
     solvabilityMeta: {
@@ -761,7 +763,8 @@ export const PUZZLES: Puzzle[] = [
       suspectId: "s3",
       weaponId: "w1",
       locationId: "l2"
-    }
+    },
+    solutionNarrative: "Küçük çakı koyu takım elbiseli yolcunun evrak çantasına geri konmuş, uçları düğümlü naylon kordon da mandallı tuvalette kulaklıklı gençle kalmıştı. Çay servisinin yapıldığı yemekli vagonda ikisi de yoktu. Çakının ve kordonun bu yolculara bağlanması, yemekli vagondaki ölümü emekli doktorun bardağa damlattığı zehirli içeceğe bırakıyordu."
   },
   {
     id: "tarihi-hamamda-cinayet",

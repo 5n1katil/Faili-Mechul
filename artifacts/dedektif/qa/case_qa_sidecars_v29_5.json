@@ -1715,14 +1715,14 @@
       "schema_version": "fm_case_qa_sidecar_entry_v2",
       "simulator_version": "29.4",
       "prompt_version": "fm-case-pipeline-v1",
-      "source_content_hash": "58f5941a7801a801a84310355de5356d909b322966540f28e0a3c1d27d4719b9",
+      "source_content_hash": "f3a5090ba7e83eebb6f345ba2da65cf9ccd160264b310802f73756bfd837710b",
       "overlay": {
         "top_level": {
           "qaPattern": {
             "anchorSource": "clue:c2",
-            "logicSignature": "exact-3x3-v1:3569bb71c5913d6e03e3acebe0710a1ca2f9c2a2af9000760017e5404946d92e",
+            "logicSignature": "exact-3x3-v1:4571bcfd009ed99d78a32b95d6330206161f8bd27a84501a7ed4d33256ee6ac5",
             "experienceCategory": "standard_dedektif",
-            "designIntent": "Bağımsız teslim/erişim ve yer kanıtlarıyla çapraz eşleşme; dört temel ipucunun her biri zorunlu. Bonuslar masum eşleşmelerini tamamlar."
+            "designIntent": "Çakının evrak çantasına geri konduğu görülür; dört temel ipucu zorunlu. Bonuslar masum yerini ve katilin sıvısını kısaltır."
           },
           "qaPortfolioRegistry": {
             "schema_version": "fm_qa_portfolio_registry_v1",
@@ -2911,7 +2911,7 @@
             ],
             "qaRationale": {
               "matrixEffect": "Boğma Halatı ↔ Tuvalet doğrulanır",
-              "evidenceLink": "Olay anında yapılan fiziki kontrolde, bavuldan çıkarılan ince naylon ipin trenin en arka bölümündeki mandalla kilitlenebilen o dar kabinde unutulduğu tespit edildi.",
+              "evidenceLink": "Trenin en arka bölümündeki mandalla kilitlenen dar kabinde, uçları düğümlü ve lifleri aşınmış ince bir naylon kordon unutulmuştu.",
               "evidenceKind": "physical"
             },
             "qaSemanticFacts": [],
@@ -2964,17 +2964,17 @@
           "c4": {
             "logicRules": [
               {
-                "action": "eliminate",
+                "action": "confirm",
                 "pair": [
-                  "s3",
+                  "s1",
                   "w2"
                 ]
               }
             ],
             "qaRationale": {
-              "matrixEffect": "Emekli Doktor ≠ Kesici Silah elenir",
-              "evidenceLink": "Seferin o kısa aralığında mühürlü teslim defteri ile kesintisiz kamera kaydı, küçük çakı bıçağını beyaz saçlı soğukkanlı beyefendinin ne teslim aldığını ne de kullandığını birlikte gösteriyor.",
-              "evidenceKind": "forensic"
+              "matrixEffect": "İş Kadını ↔ Kesici Silah doğrulanır",
+              "evidenceLink": "Yolcular birbirine çarpınca koyu takım elbiseli telaşlı yolcunun evrak çantası açıldı. İçinden küçük çakı bıçağı düştü; yolcu onu kondüktörün gözü önünde çantasına geri koydu.",
+              "evidenceKind": "witness"
             },
             "qaSemanticFacts": [],
             "isCrimeAnchor": false
@@ -2985,14 +2985,14 @@
                 "action": "confirm",
                 "pair": [
                   "s1",
-                  "w2"
+                  "l1"
                 ]
               }
             ],
             "qaRationale": {
-              "matrixEffect": "İş Kadını ↔ Kesici Silah doğrulanır",
-              "evidenceLink": "Vagon amirinin tutanağına göre İş Kadını, çantasında taşıdığı Kesici Silah ile birlikte yolculuk boyunca kayıt altına alınmıştır.",
-              "evidenceKind": "record"
+              "matrixEffect": "İş Kadını ↔ Kompartıman doğrulanır",
+              "evidenceLink": "Koyu takım elbiseli telaşlı yolcu, sisin altındaki son kilometreleri kapısı kapalı kendi ahşap kompartımanında geçirdi.",
+              "evidenceKind": "witness"
             },
             "qaSemanticFacts": [],
             "isCrimeAnchor": false
@@ -3002,14 +3002,14 @@
               {
                 "action": "confirm",
                 "pair": [
-                  "s2",
-                  "w3"
+                  "s3",
+                  "w1"
                 ]
               }
             ],
             "qaRationale": {
-              "matrixEffect": "Üniversite Öğrencisi ↔ Boğma Halatı doğrulanır",
-              "evidenceLink": "Kompartıman görevlisinin şahitliğiyle, Üniversite Öğrencisi adlı yolcunun bagajındaki Boğma Halatı ile temas ettiği belgelenmiştir.",
+              "matrixEffect": "Emekli Doktor ↔ Zehirli İçecek doğrulanır",
+              "evidenceLink": "Beyaz saçlı soğukkanlı beyefendinin iç cebinden, bardağa damlatılınca kalbi durduran renksiz tıbbi sıvı çıktı.",
               "evidenceKind": "witness"
             },
             "qaSemanticFacts": [],
@@ -3023,60 +3023,25 @@
         "errors": []
       },
       "production_content_unchanged": false,
-      "pipeline_review": {
-        "schema": "fm_case_review_v1",
-        "review_hash": "1cbe5bdebbf20a538efd586ac02135eeccd5a270676b025e1592e541b49fd83b",
-        "player": {
-          "unique_solution": true,
-          "solution": {
-            "suspectId": "s3",
-            "weaponId": "w1",
-            "locationId": "l2"
-          },
-          "confidence": 100,
-          "evidence": [
-            {
-              "clue_id": "c2",
-              "quote": "ölümcül saldırının çay servisi yapılan beyaz örtülü masaların bulunduğu salonda gerçekleştiğini kesinleştirdi; servis personeli vardiya dökümü ise tek hamlede derin yara açan çakı bıçağının bu salonda asla yer almadığını belgeledi."
-            },
-            {
-              "clue_id": "c1",
-              "quote": "bavuldan çıkarılan ince naylon ipin trenin en arka bölümündeki mandalla kilitlenebilen o dar kabinde unutulduğu tespit edildi."
-            },
-            {
-              "clue_id": "c3",
-              "quote": "kulağında kulaklığıyla gezen sırt çantalı genç yolcunun seferin son dakikalarında trenin en arka bölümündeki mandallı dar kabine girdiği görüldü."
-            },
-            {
-              "clue_id": "c4",
-              "quote": "küçük çakı bıçağını beyaz saçlı soğukkanlı beyefendinin ne teslim aldığını ne de kullandığını birlikte gösteriyor."
-            }
-          ],
-          "issues": []
-        },
-        "judge": {
-          "scores": {
-            "fairness": 5,
-            "clarity": 5,
-            "consistency": 5,
-            "originality": 4,
-            "engagement": 4
-          },
-          "issues": [],
-          "summary": "Dava metni kurallara tam uyumlu, açık ve akıcı bir kurguya sahip. İpuçları kart tanımlarıyla örtüşüyor; mantıksal zincir tek bir suç üçlüsünü (Emekli Doktor - Zehirli İçecek - Yemekli Vagon) fazladan tahmin gerektirmeden kesinleştiriyor. Yayına hazır."
-        }
-      },
       "manual_content_revision": {
         "schema": "fm_manual_content_revision_v1",
         "source": "human_tool_content_revision",
         "case_id": "tren-yolculugunda-cinayet",
-        "replaces_candidate_content_hash": "a084f84420e8e67d7eae702e8a3f839f34e27e00b3a6874c25d15eb487933e3a",
-        "candidate_content_hash": "15a8f61697d3919ab5aeb4570afee4dc00ec1ce7667ff842b260cdd6a242a140",
+        "replaces_candidate_content_hash": "15a8f61697d3919ab5aeb4570afee4dc00ec1ce7667ff842b260cdd6a242a140",
+        "candidate_content_hash": "d65b04b02b787fb1e2d0b337a76868bbd1178f0ed05371b8c71b68f7fda01694",
         "changed_clues": [
-          "c4"
+          "c1",
+          "c4",
+          "c5",
+          "c6"
+        ],
+        "changed_fields": [
+          "weapons.w3.description",
+          "solutionNarrative"
         ],
         "repair_request": false,
-        "repair_rights_renewed": false
+        "repair_rights_renewed": false,
+        "certificate": null
       }
     }
   },
