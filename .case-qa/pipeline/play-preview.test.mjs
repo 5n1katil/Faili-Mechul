@@ -16,6 +16,8 @@ const CONTENT = '3bb803f1eedead9bc7e1af497b94a8d141cb1c73';
 const FINGERPRINT = 'detaylı swap testleri';
 const OLD_C4 = 'ahşap kompartımanından adımını bile atmadığı';
 const NEW_C4 = 'mühürlü teslim defteri';
+const REVISED_C4 = 'çantasına geri koydu';
+const CLOSING = 'bildiği renksiz tıbbi sıvıyı damlattı';
 const guarded = [
   policy.simulator.path,
   '.case-qa/pipeline/policy.json',
@@ -50,11 +52,14 @@ test('play preview keeps the simulator pin and hides QA from the player payload'
   assert.equal(site.manifest.simulator.git_blob_sha, policy.simulator.git_blob_sha);
   assert.equal(site.manifest.approval, 'playtest_only');
   assert.equal(site.manifest.commit, execFileSync('git', ['rev-parse', 'HEAD'], { cwd: repo, encoding: 'utf8' }).trim());
-  assert.match(trenClue(site, 'c4'), new RegExp(OLD_C4));
+  assert.match(trenClue(site, 'c4'), new RegExp(REVISED_C4));
   assert.equal(trenClue(site, 'c4').includes(NEW_C4), false);
+  assert.equal(trenClue(site, 'c4').includes(OLD_C4), false);
   assert.equal(JSON.stringify(site.manifest).includes(FINGERPRINT), false);
   const tren = site.manifest.cases.find(item => item.id === 'tren-yolculugunda-cinayet');
-  assert.equal(tren.closing, undefined);
+  assert.match(tren.closing, new RegExp(CLOSING));
+  assert.equal(JSON.stringify(tren.payload).includes(CLOSING), false);
+  assert.equal(JSON.stringify(tren.payload).includes('solutionNarrative'), false);
   assert.equal(Object.hasOwn(tren.payload, 'logicRules'), false);
   assert.equal(Object.hasOwn(tren.payload, 'solutionNarrative'), false);
   assert.equal(JSON.stringify(tren.payload).includes('logicRules'), false);
