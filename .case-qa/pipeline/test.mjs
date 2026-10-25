@@ -34,6 +34,7 @@ import { EXPERIENCE_PROFILES, EXPERIENCE_VERSION, experienceProfile, experienceC
 import { canonicalLogicSignature, logicNoveltyCheck } from './logic-patterns.mjs';
 import { CRIME_ANCHOR_SEMANTIC, anchorConfirmsTwoCrimeComponents, hardAnchorContract, simulatorDifficultyLevel } from './anchor-contract.mjs';
 import { anchorContractExamples, hamamSourceNameCompletion } from '../fixtures/anchor-contract-examples.mjs';
+import { reviewTrenCandidate, TREN_REVIEW_COMMIT, TREN_REVIEW_CONTENT_HASH, TREN_REVIEW_SOURCE_HASH, trenReviewCommand } from './tren-review.mjs';
 import { recoverTrenHints, recoverHamamRoles, reviewPairRoom, verifyRecordedReview, recordedReviewSpecs, reviewRecordedRecovery, reviewManualContentRevision, loadRecordedBaseline, HAMAM_ROLE_MONONYMS, prepareTrenCorrectionReview, eliminationSupported, keywordCustodyGate, correctTrenEvidence, TREN_C4_TEXT } from './recorded-recovery.mjs';
 import { qualityContract as experienceContract } from './quality-contract.mjs';
 import { editorialExperiencePrompt } from './editorial.mjs';
@@ -2482,7 +2483,7 @@ try {
       const prepareCheckout = () => {
         const { dir, sha } = cloneAtCommit(root);
         assert.equal(sha, localSha);
-        const overlay = ['.case-qa/pipeline/test.mjs', '.case-qa/pipeline/review.mjs', '.case-qa/pipeline/recorded-recovery.mjs', '.case-qa/pipeline/run.mjs', '.case-qa/pipeline/core.mjs', '.github/workflows/fm-case-pipeline.yml', '.case-qa/fixtures/recorded-review-bindings.json', '.case-qa/fixtures/tren-blind-player-rejection-20261019.json'];
+        const overlay = ['.case-qa/pipeline/test.mjs', '.case-qa/pipeline/review.mjs', '.case-qa/pipeline/recorded-recovery.mjs', '.case-qa/pipeline/tren-review.mjs', '.case-qa/pipeline/run.mjs', '.case-qa/pipeline/core.mjs', '.github/workflows/fm-case-pipeline.yml', '.case-qa/fixtures/recorded-review-bindings.json', '.case-qa/fixtures/tren-blind-player-rejection-20261019.json'];
         for (const file of overlay) fs.copyFileSync(path.join(root, file), path.join(dir, file));
         commitIfNeeded(dir, 'recorded review checkout code', overlay);
         runChecked(['git', 'checkout', recordedBindings.baseline_commit, '--', ...baselineFiles], dir, process.env);
@@ -2618,6 +2619,89 @@ try {
     assert.match(samples.savedScan, /Kriminal laboratuvarın parmak izi taramasında/);
     assert.equal(productionPolicy.simulator.git_blob_sha, '9042485f8699c220d71a8b0fa1b32e90ab3e27e3');
   });
+  await test('new Tren review uses the pinned candidate and does not publish or spend offline', async () => {
+    if (process.env.FM_PIPELINE_CONTENT_CHECKOUT === '1') return;
+    const grants = fs.readFileSync('.case-qa/pipeline/review-revision-grants.json');
+    const bindings = fs.readFileSync('.case-qa/fixtures/recorded-review-bindings.json');
+    const continuations = fs.readFileSync('.case-qa/pipeline/prepayment-continuations.json');
+    const puzzles = fs.readFileSync('artifacts/dedektif/data/puzzles.ts');
+    const workflow = fs.readFileSync('.github/workflows/fm-case-pipeline.yml', 'utf8');
+    assert.equal(workflow.includes('tren-review.mjs'), false);
+    assert.match(workflow, /options: \[audit, pilot, campaign, recorded-review, certify, diagnose\]/);
+    const previousKey = process.env.GEMINI_API_KEY;
+    const previousMode = process.env.FM_PIPELINE_MODE;
+    delete process.env.FM_PIPELINE_MODE;
+    process.env.GEMINI_API_KEY = 'offline-tren-review';
+    let calls = 0;
+    try {
+      const offline = await reviewTrenCandidate({ caller: async () => { calls++; throw new Error('UNEXPECTED_TRANSPORT'); } });
+      assert.equal(calls, 0);
+      assert.equal(offline.status, 'offline_ready');
+      assert.equal(offline.published, false);
+      assert.equal(offline.calls, 0);
+      assert.equal(offline.commit, TREN_REVIEW_COMMIT);
+      assert.equal(offline.candidate_content_hash, TREN_REVIEW_CONTENT_HASH);
+      assert.equal(offline.source_content_hash, TREN_REVIEW_SOURCE_HASH);
+      assert.equal(offline.recorded_candidate, false);
+      assert.equal(offline.closing_in_player, false);
+      assert.equal(offline.closing_in_judge, true);
+      assert.equal(offline.model, 'gemini-3.8-flash');
+      assert.deepEqual(offline.requests, ['player', 'judge']);
+      assert.equal(offline.command, trenReviewCommand());
+      assert.equal(fs.readFileSync('.case-qa/pipeline/tren-review.mjs', 'utf8').includes('fm-tren-pin-'), false);
+      assert.notEqual(TREN_REVIEW_CONTENT_HASH, 'a084f84420e8e67d7eae702e8a3f839f34e27e00b3a6874c25d15eb487933e3a');
+      assert.notEqual(TREN_REVIEW_CONTENT_HASH, 'd65b04b02b787fb1e2d0b337a76868bbd1178f0ed05371b8c71b68f7fda01694');
+      const drift = fs.mkdtempSync('/tmp/fm-tren-drift-');
+      await assert.rejects(() => reviewTrenCandidate({
+        root: drift,
+        caller: async () => { calls++; throw new Error('UNEXPECTED_TRANSPORT'); }
+      }), /TREN_REVIEW_CONTENT/);
+      assert.equal(calls, 0);
+      fs.rmSync(drift, { recursive: true, force: true });
+      await assert.rejects(() => reviewTrenCandidate({ paid: true, confirm: 'wrong', caller: async () => { calls++; throw new Error('UNEXPECTED_TRANSPORT'); } }), /TREN_REVIEW_CONFIRM/);
+      assert.equal(calls, 0);
+      const state = emptyState();
+      state.cases[TREN_REVIEW_CASE_ID()] = { status: 'quarantined', spent: 0.01, source_hash: 'old-recorded-source' };
+      state.requests['old-repair'] = {
+        case_id: 'tren-yolculugunda-cinayet', model: 'gemini-3.8-flash', purpose: 'repair', status: 'completed',
+        repair_method: 'verified_text_v1', day: '2026-10-18', charged: 0.01
+      };
+      state.campaign_spent = 0.01;
+      const store = { state, save() {} };
+      const rejected = await reviewTrenCandidate({
+        paid: true,
+        confirm: TREN_REVIEW_COMMIT + ':' + TREN_REVIEW_CONTENT_HASH,
+        store,
+        caller: args => callPaid({ ...args, transport: async () => response(JSON.stringify({
+          unique_solution: false,
+          solution: { suspectId: 's1', weaponId: 'w2', locationId: 'l1' },
+          confidence: 20,
+          evidence: [],
+          issues: ['kalan çözüm var']
+        })) })
+      });
+      assert.equal(rejected.published, false);
+      assert.equal(rejected.certificate, null);
+      assert.equal(rejected.status, 'rejected');
+      assert.deepEqual(rejected.failures, ['BLIND_PLAYER_FAILED']);
+      assert.equal(store.state.cases['tren-yolculugunda-cinayet'].status, 'quarantined');
+      assert.equal(store.state.requests['old-repair'].status, 'completed');
+      assert.equal(store.state.requests['old-repair'].charged, 0.01);
+      assert.ok(store.state.cases['tren-yolculugunda-cinayet'].spent > 0.01);
+      assert.equal(Object.values(store.state.requests).some(item => item.purpose === 'player'), true);
+      assert.equal(Object.values(store.state.requests).some(item => item.purpose === 'judge'), false);
+    } finally {
+      if (previousKey === undefined) delete process.env.GEMINI_API_KEY;
+      else process.env.GEMINI_API_KEY = previousKey;
+      if (previousMode === undefined) delete process.env.FM_PIPELINE_MODE;
+      else process.env.FM_PIPELINE_MODE = previousMode;
+    }
+    assert.ok(grants.equals(fs.readFileSync('.case-qa/pipeline/review-revision-grants.json')));
+    assert.ok(bindings.equals(fs.readFileSync('.case-qa/fixtures/recorded-review-bindings.json')));
+    assert.ok(continuations.equals(fs.readFileSync('.case-qa/pipeline/prepayment-continuations.json')));
+    assert.ok(puzzles.equals(fs.readFileSync('artifacts/dedektif/data/puzzles.ts')));
+  });
+  function TREN_REVIEW_CASE_ID() { return 'tren-yolculugunda-cinayet'; }
   await test('named and numeric difficulties share six categories and unknown stays unknown', () => {
     const pairs = [['caylak', false], ['çaylak', false], ['dedektif', true], ['baskomiser', true], ['başkomiser', true]];
     for (const [label, hard] of pairs) {

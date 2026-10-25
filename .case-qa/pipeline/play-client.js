@@ -36,11 +36,18 @@
     #fm-play-list { margin-bottom: 18px; }
     #fm-play-list h1 { font-family: Cinzel, serif; font-size: 24px; margin-bottom: 8px; }
     #fm-play-list ul { list-style: none; display: grid; gap: 8px; margin-top: 12px; }
-    #fm-play-status { font-size: 12px; color: var(--text-dim); min-height: 1.2em; }
+    #fm-play-status, #fm-play-draft-status { font-size: 12px; color: var(--text-dim); min-height: 1.2em; }
+    .fm-draft-banner, .fm-draft-tag { color: #fbbf24; font-size: 12.5px; font-weight: 700; margin: 8px 0; }
+    .fm-edit-btn { font: inherit; font-size: 12px; color: var(--gold); background: transparent;
+      border: 1px dashed var(--gold-soft); border-radius: 8px; padding: 6px 10px; cursor: pointer; margin-top: 6px; }
+    .fm-editor { display: grid; gap: 8px; margin-top: 8px; }
+    .fm-editor textarea { width: 100%; min-height: 96px; background: var(--bg-2); color: var(--text);
+      border: 1px solid var(--line); border-radius: 8px; padding: 8px; font: inherit; font-size: 16px; }
+    .fm-editor-note { margin: 0; font-size: 12px; color: var(--text-dim); }
     @media (max-width: 560px) {
       #fm-play-shell h1 { font-size: 22px; }
       .fm-meta div { grid-template-columns: 1fr; gap: 0; }
-      .fm-actions button, .fm-eval-actions button { width: 100%; }
+      .fm-actions button, .fm-eval-actions button, .fm-edit-btn { width: 100%; }
     }
   `;
   document.head.appendChild(style);
@@ -50,6 +57,8 @@
   if (logo) logo.textContent = 'OYNANIŞ ÖNİZLEMESİ';
   window.auditCase = function () { return ''; };
 
+  const LOCAL_LABEL = 'Yerel düzenleme — yeniden değerlendirilmedi';
+  const TEXT_PATH = /^(story|closing|(?:suspects|weapons|locations)\.[A-Za-z0-9_-]+\.description|clues\.[A-Za-z0-9_-]+\.(?:text|deductionHint))$/;
   let restoring = false;
   const params = new URLSearchParams(location.search);
   const selectedId = params.get('case');
@@ -109,8 +118,27 @@
     const list = document.createElement('a');
     list.href = '/oyna/';
     list.textContent = 'Vaka listesi';
+    if (entry && entry.playable) {
+      const copyChanges = document.createElement('button');
+      copyChanges.type = 'button';
+      copyChanges.textContent = 'Değişiklikleri kopyala';
+      copyChanges.addEventListener('click', () => copyRevision(entry));
+      const downloadChanges = document.createElement('button');
+      downloadChanges.type = 'button';
+      downloadChanges.textContent = 'Değişiklikleri indir';
+      downloadChanges.addEventListener('click', () => downloadRevision(entry));
+      const resetChanges = document.createElement('button');
+      resetChanges.type = 'button';
+      resetChanges.textContent = 'Bütün yerel değişiklikleri sıfırla';
+      resetChanges.addEventListener('click', () => resetDraft(entry));
+      actions.append(copyChanges, downloadChanges, resetChanges);
+    }
     actions.append(restart, list);
     shell.append(actions);
+    const draftStatus = document.createElement('p');
+    draftStatus.id = 'fm-play-draft-status';
+    draftStatus.className = 'fm-note';
+    shell.append(draftStatus);
     const gap = document.createElement('div');
     gap.className = 'fm-gap';
     gap.hidden = true;
@@ -123,7 +151,7 @@
     parent.append(evaluation);
     wireSimulator(entry, evaluation);
     const input = document.getElementById('jsonIn');
-    input.value = JSON.stringify(entry.payload);
+    input.value = JSON.stringify(draftedPayload(entry));
     window.loadCase();
     const error = document.getElementById('err');
     if (error && error.style.display === 'block') showGap(gap, [error.textContent]);
@@ -155,7 +183,7 @@
   function note() {
     const p = document.createElement('p');
     p.className = 'fm-note';
-    p.textContent = 'Doğru tahmin kalite onayı, sertifika veya birleştirme oluşturmaz. Yeni commit’in içeriği bu hash ile aynı değilse eski ızgara ve değerlendirme ona ait değildir.';
+    p.textContent = 'Doğru tahmin kalite onayı, sertifika veya birleştirme oluşturmaz. Metin düzenlemesi yalnız bu tarayıcıda kalır; yerel düzenleme yeniden değerlendirilmedi sayılır. Yeni commit’in içeriği bu hash ile aynı değilse eski ızgara, değerlendirme ve metin taslağı ona ait değildir.';
     return p;
   }
   function rulesBlock() {
@@ -207,6 +235,7 @@
     const revealed = document.getElementById('solBox') && document.getElementById('solBox').style.display === 'block';
     return {
       cells, bonuses, solution_revealed: Boolean(revealed || previous.solution_revealed),
+      spoiler_fields: Array.isArray(previous.spoiler_fields) ? previous.spoiler_fields.slice() : [],
       bonus_penalty_seconds: Number(window.TEST_PENALTY) || 0,
       evaluation: previous.evaluation || {}
     };
@@ -269,21 +298,34 @@
     const tracker = document.getElementById('penaltyTracker');
     if (tracker) tracker.textContent = `Playtest cezası: ${Number(window.TEST_PENALTY) || 0} sn`;
   }
+  function displayedClosing(entry) {
+    const draft = readDraft(entry);
+    if (draft && Object.prototype.hasOwnProperty.call(draft.fields, 'closing')) return draft.fields.closing;
+    return entry.closing || '';
+  }
   function ensureClosing(entry) {
-    if (!entry.closing) return;
+    const closing = displayedClosing(entry);
+    if (!closing) return;
     const won = document.querySelector('#ptResult.win');
     const sol = document.getElementById('solBox');
     const open = sol && sol.style.display === 'block';
     if (!won && !open) return;
-    if (document.getElementById('fm-play-closing')) return;
-    const node = document.createElement('div');
-    node.id = 'fm-play-closing';
-    const title = document.createElement('strong');
-    title.textContent = 'Vaka kapanışı';
-    const body = document.createElement('p');
-    body.textContent = entry.closing;
-    node.append(title, body);
-    (sol && sol.parentElement ? sol.parentElement : document.getElementById('game')).append(node);
+    markSpoiler(entry, 'closing');
+    let node = document.getElementById('fm-play-closing');
+    if (!node) {
+      node = document.createElement('div');
+      node.id = 'fm-play-closing';
+      const title = document.createElement('strong');
+      title.textContent = 'Vaka kapanışı';
+      const body = document.createElement('p');
+      body.textContent = closing;
+      node.append(title, body);
+      (sol && sol.parentElement ? sol.parentElement : document.getElementById('game')).append(node);
+    } else {
+      const body = node.querySelector('p');
+      if (body) body.textContent = closing;
+    }
+    placeEditor(entry, node.querySelector('p') || node, 'closing', 'Kapanış');
   }
   function persist(entry) { writeState(entry, currentState(entry)); }
 
@@ -324,7 +366,18 @@
       if (!button || !button.textContent.includes('Çözümü Göster')) return;
       setTimeout(() => ensureClosing(entry), 0);
     });
-    window.openEnt = function (cat, id) { baseOpen(cat, id); decorate(document.querySelector('#entModal .modal-box') || document.body); };
+    window.openEnt = function (cat, id) {
+      baseOpen(cat, id);
+      const box = document.querySelector('#entModal .modal-box') || document.body;
+      decorate(box);
+      const sections = box.querySelectorAll ? box.querySelectorAll('.modal-sec') : [];
+      sections.forEach(section => {
+        const name = section.querySelector('.modal-lbl');
+        if (!name || name.textContent.trim() !== 'Tanım') return;
+        const paragraph = section.querySelector('p');
+        if (paragraph) placeEditor(entry, paragraph, cat + '.' + id + '.description', 'Kart açıklaması');
+      });
+    };
     evaluation.addEventListener('input', () => {
       const state = currentState(entry);
       state.evaluation = formValue(evaluation);
@@ -334,10 +387,12 @@
   function afterRender(entry) {
     document.querySelectorAll('.audit, .peek-btn').forEach(node => node.remove());
     decorate(document.getElementById('game'));
+    attachTextEditors(entry);
     restore(entry);
     scrubApproval();
     refreshPenaltyLabels();
     refreshStatus(entry);
+    refreshDraftBanner(entry);
   }
   function decorate(root) {
     if (!root) return;
@@ -414,11 +469,12 @@
   function restartCase(entry) {
     if (!entry || !entry.playable) return;
     localStorage.removeItem(storageKey(entry));
-    document.getElementById('jsonIn').value = JSON.stringify(entry.payload);
+    document.getElementById('jsonIn').value = JSON.stringify(draftedPayload(entry));
     window.loadCase();
     const form = document.getElementById('fm-play-eval');
     if (form) form.reset();
     refreshStatus(entry);
+    refreshDraftBanner(entry);
   }
 
   function evaluationForm(entry) {
@@ -525,8 +581,10 @@
     const status = document.getElementById('fm-play-status');
     if (!status) return;
     const state = readState(entry) || { bonuses: [], solution_revealed: false };
+    const spoiler = state.solution_revealed || (state.spoiler_fields || []).length > 0;
     status.textContent = 'Açılan bonuslar: ' + ((state.bonuses || []).join(', ') || 'yok') +
-      '. Çözüm gösterildi: ' + (state.solution_revealed ? 'evet' : 'hayır') + '.';
+      '. Çözüm gösterildi: ' + (state.solution_revealed ? 'evet' : 'hayır') + '.' +
+      (spoiler ? ' Spoiler görüldü.' : '');
   }
   function reportFor(entry, form) {
     const state = currentState(entry);
@@ -545,9 +603,246 @@
       difficulty: entry.difficulty,
       opened_bonuses: state.bonuses,
       solution_revealed: state.solution_revealed,
+      local_revision: revisionPackage(entry).changes.length > 0,
+      spoiler: state.solution_revealed || (state.spoiler_fields || []).length > 0,
+      spoiler_fields: state.spoiler_fields || [],
       answers: state.evaluation,
       note: 'Bu dosya kalite onayı, sertifika veya birleştirme değildir.'
     };
+  }
+
+  function draftKey(entry) { return 'fm-play-draft:' + entry.id + ':' + entry.content_hash; }
+  function readDraft(entry) {
+    try {
+      const draft = JSON.parse(localStorage.getItem(draftKey(entry)) || 'null');
+      if (!draft || draft.schema !== 'fm_local_text_draft_v1') return null;
+      if (draft.case_id !== entry.id || draft.content_hash !== entry.content_hash) return null;
+      if (!draft.fields || typeof draft.fields !== 'object' || Array.isArray(draft.fields)) return null;
+      return draft;
+    } catch { return null; }
+  }
+  function writeDraft(entry, draft) {
+    draft.schema = 'fm_local_text_draft_v1';
+    draft.case_id = entry.id;
+    draft.content_hash = entry.content_hash;
+    draft.commit = manifest.commit;
+    localStorage.setItem(draftKey(entry), JSON.stringify(draft));
+  }
+  function sourceText(entry, path) {
+    if (path === 'story') return entry.payload.story || '';
+    if (path === 'closing') return entry.closing || '';
+    const card = path.match(/^(suspects|weapons|locations)\.([^.]+)\.description$/);
+    if (card) {
+      const entity = (entry.payload[card[1]] || []).find(item => item.id === card[2]);
+      return entity ? entity.description || '' : '';
+    }
+    const clue = path.match(/^clues\.([^.]+)\.(text|deductionHint)$/);
+    if (!clue) return '';
+    const item = (entry.payload.clues || []).find(entryClue => entryClue.id === clue[1]);
+    return item ? item[clue[2]] || '' : '';
+  }
+  function draftedPayload(entry) {
+    const payload = JSON.parse(JSON.stringify(entry.payload));
+    const draft = readDraft(entry);
+    if (!draft) return payload;
+    for (const [path, value] of Object.entries(draft.fields)) {
+      if (!TEXT_PATH.test(path) || path === 'closing' || typeof value !== 'string') continue;
+      if (path === 'story') { payload.story = value; continue; }
+      const card = path.match(/^(suspects|weapons|locations)\.([^.]+)\.description$/);
+      if (card) {
+        const entity = (payload[card[1]] || []).find(item => item.id === card[2]);
+        if (entity) entity.description = value;
+        continue;
+      }
+      const clue = path.match(/^clues\.([^.]+)\.(text|deductionHint)$/);
+      const item = clue && (payload.clues || []).find(entryClue => entryClue.id === clue[1]);
+      if (item) item[clue[2]] = value;
+    }
+    return payload;
+  }
+  function revisionPackage(entry) {
+    const draft = readDraft(entry);
+    const changes = [];
+    for (const [path, after] of Object.entries(draft ? draft.fields : {})) {
+      if (!TEXT_PATH.test(path) || typeof after !== 'string') continue;
+      const before = sourceText(entry, path);
+      if (after === before) continue;
+      changes.push({ path, before, after });
+    }
+    return {
+      schema: 'fm_local_text_revision_v1',
+      approval: 'not_reviewed',
+      logic_safety: 'not_assessed',
+      publication: 'not_performed',
+      case_id: entry.id,
+      commit: manifest.commit,
+      content_hash: entry.content_hash,
+      changes,
+      note: LOCAL_LABEL + '. Kalite onayı, sertifika veya yayımlama değildir.'
+    };
+  }
+  function setDraftStatus(message) {
+    const status = document.getElementById('fm-play-draft-status');
+    if (status) status.textContent = message;
+  }
+  function markSpoiler(entry, field) {
+    const state = currentState(entry);
+    const fields = new Set(state.spoiler_fields || []);
+    fields.add(field);
+    state.spoiler_fields = [...fields];
+    writeState(entry, state);
+    refreshStatus(entry);
+  }
+  function childBy(host, path, key) {
+    return [...(host.children || [])].find(child => child.dataset && child.dataset[key] === path) || null;
+  }
+  function placeEditor(entry, anchor, path, label) {
+    if (!TEXT_PATH.test(path) || !anchor) return;
+    const host = anchor.parentElement || anchor;
+    if (childBy(host, path, 'fmEdit')) {
+      markDrafted(host, entry, path);
+      return;
+    }
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'fm-edit-btn';
+    button.dataset.fmEdit = path;
+    button.textContent = 'Metni düzenle';
+    button.addEventListener('click', event => {
+      event.preventDefault();
+      event.stopPropagation();
+      openEditor(entry, path, label, button);
+    });
+    if (anchor.after) anchor.after(button);
+    else host.append(button);
+    markDrafted(host, entry, path);
+  }
+  function markDrafted(host, entry, path) {
+    const draft = readDraft(entry);
+    const changed = !!(draft && draft.fields[path] !== undefined && draft.fields[path] !== sourceText(entry, path));
+    const existing = childBy(host, path, 'fmDraft');
+    if (!changed) { if (existing) existing.remove(); return; }
+    if (existing) return;
+    const tag = document.createElement('p');
+    tag.className = 'fm-draft-tag';
+    tag.dataset.fmDraft = path;
+    tag.textContent = LOCAL_LABEL;
+    host.append(tag);
+  }
+  function attachTextEditors(entry) {
+    if (!entry || !entry.payload) return;
+    const story = document.querySelector('.story-copy');
+    if (story) placeEditor(entry, story, 'story', 'Hikâye');
+    (entry.payload.clues || []).forEach((clue, index) => {
+      const card = document.getElementById('clue' + index);
+      if (!card || !clue || !clue.id) return;
+      const body = card.querySelector('.clue-text');
+      if (body) placeEditor(entry, body, 'clues.' + clue.id + '.text', 'İpucu ' + clue.id);
+      const hint = document.getElementById('ded' + index);
+      if (hint) placeEditor(entry, hint, 'clues.' + clue.id + '.deductionHint', 'Yönlendirici soru ' + clue.id);
+    });
+    refreshDraftBanner(entry);
+  }
+  function refreshDraftBanner(entry) {
+    const shell = document.getElementById('fm-play-shell');
+    if (!shell) return;
+    let banner = document.getElementById('fm-play-draft-banner');
+    if (!revisionPackage(entry).changes.length) { if (banner) banner.remove(); return; }
+    if (!banner) {
+      banner = document.createElement('p');
+      banner.id = 'fm-play-draft-banner';
+      banner.className = 'fm-draft-banner';
+      shell.prepend(banner);
+    }
+    banner.textContent = LOCAL_LABEL;
+  }
+  function openEditor(entry, path, label, anchor) {
+    if (path === 'closing') markSpoiler(entry, 'closing');
+    const open = document.querySelector('.fm-editor');
+    if (open) open.remove();
+    const form = document.createElement('form');
+    form.className = 'fm-editor';
+    form.addEventListener('submit', event => event.preventDefault());
+    const heading = document.createElement('strong');
+    heading.textContent = label;
+    const area = document.createElement('textarea');
+    const draft = readDraft(entry);
+    area.value = draft && draft.fields[path] !== undefined ? draft.fields[path] : sourceText(entry, path);
+    const note = document.createElement('p');
+    note.className = 'fm-editor-note';
+    note.textContent = 'Kaydetmek oyuna yayımlamaz ve kalite onayı vermez.';
+    const row = document.createElement('div');
+    row.className = 'fm-actions';
+    row.append(
+      editorButton('Kaydet', () => saveField(entry, path, area.value)),
+      editorButton('Vazgeç', () => form.remove()),
+      editorButton('Alanı kaynak sürüme döndür', () => revertField(entry, path))
+    );
+    form.append(heading, area, note, row);
+    if (anchor.after) anchor.after(form);
+    else anchor.parentElement.append(form);
+  }
+  function editorButton(label, action) {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.textContent = label;
+    button.addEventListener('click', event => {
+      event.preventDefault();
+      event.stopPropagation();
+      action();
+    });
+    return button;
+  }
+  function saveField(entry, path, value) {
+    if (!String(value || '').trim()) { setDraftStatus('Metin boş bırakılamaz.'); return; }
+    const draft = readDraft(entry) || { fields: {} };
+    if (value === sourceText(entry, path)) delete draft.fields[path];
+    else draft.fields[path] = value;
+    if (Object.keys(draft.fields).length) writeDraft(entry, draft);
+    else localStorage.removeItem(draftKey(entry));
+    setDraftStatus(LOCAL_LABEL);
+    reloadPlay(entry);
+  }
+  function revertField(entry, path) {
+    const draft = readDraft(entry);
+    if (draft) {
+      delete draft.fields[path];
+      if (Object.keys(draft.fields).length) writeDraft(entry, draft);
+      else localStorage.removeItem(draftKey(entry));
+    }
+    setDraftStatus('Alan kaynak sürüme döndü.');
+    reloadPlay(entry);
+  }
+  function resetDraft(entry) {
+    if (!window.confirm('Bütün yerel metin değişiklikleri silinsin mi? Kaynağa yazılmaz.')) return;
+    localStorage.removeItem(draftKey(entry));
+    setDraftStatus('Yerel metinler kaynak sürüme döndü.');
+    reloadPlay(entry);
+  }
+  function reloadPlay(entry) {
+    writeState(entry, currentState(entry));
+    document.getElementById('jsonIn').value = JSON.stringify(draftedPayload(entry));
+    window.loadCase();
+    if (window.closeEnt) window.closeEnt();
+  }
+  async function copyRevision(entry) {
+    const pack = revisionPackage(entry);
+    if (!pack.changes.length) { setDraftStatus('Kopyalanacak yerel değişiklik yok.'); return; }
+    try {
+      await navigator.clipboard.writeText(JSON.stringify(pack, null, 2));
+      setDraftStatus('Değişiklik paketi kopyalandı. GitHub’a gönderilmedi.');
+    } catch { setDraftStatus('Kopyalanamadı. İndirmeyi kullan.'); }
+  }
+  function downloadRevision(entry) {
+    const pack = revisionPackage(entry);
+    if (!pack.changes.length) { setDraftStatus('İndirilecek yerel değişiklik yok.'); return; }
+    const blob = new Blob([JSON.stringify(pack, null, 2) + '\n'], { type: 'application/json' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'fm-text-' + entry.id + '-' + entry.content_hash.slice(0, 12) + '.json';
+    link.click();
+    URL.revokeObjectURL(link.href);
+    setDraftStatus('Değişiklik paketi indirildi. GitHub’a gönderilmedi.');
   }
 
   document.getElementById('game').addEventListener('click', event => {

@@ -186,7 +186,7 @@ function judgePrompt(snapshot, entry, candidate, view, evidence, playerPlan, con
   return JSON.stringify({ version: snapshot.policy.review.prompt_version,
     ...(rules ? { evaluation_contract: EVALUATION_CONTRACT, matching_rules: playerMatchingRules(), prose_review: proseReview(),
       closing_narrative: closingNarrative(candidate),
-      closing_review: 'Bu metin yalnız doğru çözümden sonra gösterilir. Oyuncu paketine girmez. Çözmek için gereken yeni bir kanıt eklemesin. Akıcı Türkçe olsun; olayları art arda sıralamak yetmez, ipuçlarının sonuca nasıl bağlandığı görülsün.' } : {}),
+      closing_review: 'Bu metin yalnız doğru çözümden sonra gösterilir. Oyuncu paketine girmez. Kısa bir olay hikâyesi anlatsın ve ipuçlarının sonuca nasıl bağlandığını olayın sahnesine oturtsun. Olayları art arda sıralamak yetmez. Kanıtsız motif, itiraf veya çözmek için gereken yeni bir delil eklemesin. Akıcı Türkçe olsun.' } : {}),
     player_case: view,
     ...(['fm-player-review-v2', REVIEW_VERSION].includes(snapshot.policy.review.prompt_version) ? { ...(snapshot.policy.review.prompt_version === REVIEW_VERSION ? { logic_signature: canonicalLogicSignature(candidate) } : {}), quality_contract: (snapshot.policy.review.prompt_version === REVIEW_VERSION ? qualityContract : legacyQualityContract)(candidate, entry.tier) } : {}),
     expected_solution: candidate.solution, player_evidence: playerPlan.evidence,

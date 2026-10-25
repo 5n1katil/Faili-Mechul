@@ -11,7 +11,7 @@ import { execFileSync } from 'node:child_process';
 import { pathToFileURL } from 'node:url';
 import { loadSnapshot, read } from './core.mjs';
 import { playerMatchingRules } from './review.mjs';
-import { stableHash } from '../fm_case_qa_runner.mjs';
+import { playContentHash } from './local-text-revision.mjs';
 
 const TYPE_LABELS = {
   witness: 'tanik', evidence: 'kanit', forensic: 'adli', record: 'kanit',
@@ -205,13 +205,14 @@ export function buildPlaySite({ repo = repoRoot(), contentSha = null } = {}) {
   for (const entry of snapshot.entries) {
     const record = assertPlayMatchesCandidate(entry.candidate);
     const gaps = playability(entry, record);
-    const contentHash = stableHash(record);
     const item = {
       id: record.id, title: record.title, tier: entry.tier, difficulty: record.difficulty,
       difficulty_label: DIFFICULTY_LABELS[record.difficulty] || record.difficulty,
-      playable: gaps.length === 0, content_hash: contentHash, gaps
+      gaps
     };
     const closing = text(entry.candidate.solutionNarrative || entry.candidate.closingNarrative || entry.candidate.cozumAnlatimi);
+    item.content_hash = playContentHash(record, closing);
+    item.playable = gaps.length === 0;
     if (item.playable) {
       item.payload = simulatorPayload(record);
       if (closing && JSON.stringify(item.payload).includes(closing)) throw new Error('PLAY_CLOSING_LEAK');
@@ -247,12 +248,31 @@ export function buildPlaySite({ repo = repoRoot(), contentSha = null } = {}) {
   return { manifest, html, client, assetFiles, simulatorSha256, simulatorBlob };
 }
 
+// The pinned simulator keeps CASE, OPENED_BONUS and TEST_PENALTY as top-level
+// let bindings. A later script cannot see those bindings, and they are not
+// window properties. The preview copy publishes them from inside the original
+// script. The source file and its QA pin stay unchanged.
+export function exposeSimulatorBindings(html) {
+  if (!html.includes('let CASE=null;') || !html.includes('let TEST_PENALTY=0;') || !html.includes('let OPENED_BONUS=new Set();'))
+    throw new Error('PLAY_SIMULATOR_BINDINGS_MISSING');
+  const at = html.lastIndexOf('</script>');
+  if (at < 0) throw new Error('PLAY_HTML_SCRIPT_MISSING');
+  const bridge = [
+    "Object.defineProperty(window,'CASE',{configurable:true,get:function(){return CASE;},set:function(value){CASE=value;}});",
+    "Object.defineProperty(window,'OPENED_BONUS',{configurable:true,get:function(){return OPENED_BONUS;},set:function(value){OPENED_BONUS=value;}});",
+    "Object.defineProperty(window,'TEST_PENALTY',{configurable:true,get:function(){return TEST_PENALTY;},set:function(value){TEST_PENALTY=value;}});",
+    ''
+  ].join('\n');
+  return html.slice(0, at) + bridge + html.slice(at);
+}
+
 function injectShell(html, manifest) {
-  const at = html.lastIndexOf('</body>');
+  const bridged = exposeSimulatorBindings(html);
+  const at = bridged.lastIndexOf('</body>');
   if (at < 0) throw new Error('PLAY_HTML_BODY_MISSING');
   const json = JSON.stringify(manifest).replace(/</g, '\\u003c');
   const shell = `\n<script type="application/json" id="fm-play-manifest">${json}</script>\n<script src="play-client.js"></script>\n`;
-  return html.slice(0, at) + shell + html.slice(at);
+  return bridged.slice(0, at) + shell + bridged.slice(at);
 }
 
 export function writePlaySite(dir, site) {
