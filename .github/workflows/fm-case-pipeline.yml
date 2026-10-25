@@ -58,6 +58,7 @@ jobs:
         run: |
           node --test .case-qa/pipeline/play-preview.test.mjs
           node --test .case-qa/pipeline/bonus-penalty.test.mjs
+          node --test .case-qa/pipeline/local-text-revision.test.mjs
       - name: Free inventory and exact QA audit
         run: |
           node .case-qa/fm_case_qa_certify.mjs

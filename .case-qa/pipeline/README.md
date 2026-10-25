@@ -27,6 +27,8 @@ Onaylanan içeriğin görselleri, kalan metinler bitmeden hazırlanabilir. Üret
 
 Doğru tahmin kalite onayı, sertifika veya birleştirme değildir. Simülatördeki “manuel onaylandı” cümlesi pipeline onayı sayılmaz. Değerlendirme yerelde kopyalanır veya indirilir; GitHub’a otomatik yorum gitmez. Premium vakalar ve metin dışı mekanikler oynatılmaz; eksikleri ekranda yazılır.
 
+Hikâye, kart açıklaması, ipucu, yönlendirici soru ve kapanış için “Metni düzenle” yalnız tarayıcı taslağına yazar. Taslak vaka kimliği ve aday içerik hash’i ile saklanır; hash değişince eski taslak yeni sürüme uygulanmaz. Kopyalanan paket vaka kimliği, kaynak commit, içerik hash’i, alan yolu, eski metin ve yeni metni taşır. Kaynak sürüm veya eski metin tutmuyorsa uygulanmaz. Uygulama kalite onayı, mantık güvenliği veya yayımlama değildir. Kapanışın görünmesi spoiler olarak kaydedilir. Mantık kuralları, çözüm, kimlikler, bonus kademesi ve cezalar bu düzenleyiciden değişmez.
+
 Taslak PR gövdesi bu yolu ekler. Otomatik birleştirme yoktur.
 
 ## Durum notu — 20 Ekim 2026

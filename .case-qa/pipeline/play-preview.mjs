@@ -11,7 +11,7 @@ import { execFileSync } from 'node:child_process';
 import { pathToFileURL } from 'node:url';
 import { loadSnapshot, read } from './core.mjs';
 import { playerMatchingRules } from './review.mjs';
-import { stableHash } from '../fm_case_qa_runner.mjs';
+import { playContentHash } from './local-text-revision.mjs';
 
 const TYPE_LABELS = {
   witness: 'tanik', evidence: 'kanit', forensic: 'adli', record: 'kanit',
@@ -205,13 +205,14 @@ export function buildPlaySite({ repo = repoRoot(), contentSha = null } = {}) {
   for (const entry of snapshot.entries) {
     const record = assertPlayMatchesCandidate(entry.candidate);
     const gaps = playability(entry, record);
-    const contentHash = stableHash(record);
     const item = {
       id: record.id, title: record.title, tier: entry.tier, difficulty: record.difficulty,
       difficulty_label: DIFFICULTY_LABELS[record.difficulty] || record.difficulty,
-      playable: gaps.length === 0, content_hash: contentHash, gaps
+      gaps
     };
     const closing = text(entry.candidate.solutionNarrative || entry.candidate.closingNarrative || entry.candidate.cozumAnlatimi);
+    item.content_hash = playContentHash(record, closing);
+    item.playable = gaps.length === 0;
     if (item.playable) {
       item.payload = simulatorPayload(record);
       if (closing && JSON.stringify(item.payload).includes(closing)) throw new Error('PLAY_CLOSING_LEAK');
