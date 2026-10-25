@@ -714,7 +714,7 @@ export const PUZZLES: Puzzle[] = [
       },
       {
         id: "c2",
-        text: "Cinayet masası incelemesi, ölümcül saldırının çay servisi yapılan beyaz örtülü masaların bulunduğu salonda gerçekleştiğini kesinleştirdi; servis personeli vardiya dökümü ise tek hamlede derin yara açan çakı bıçağının bu salonda asla yer almadığını belgeledi.",
+        text: "Cinayet masası, ölümün çay servisi yapılan beyaz örtülü masaların bulunduğu salonda gerçekleştiğini kesinleştirdi; servis personeli vardiya dökümü ise tek hamlede derin yara açan çakı bıçağının bu salonda asla yer almadığını belgeledi.",
         type: "record",
         isBonus: false,
         deductionHint: "Ölümün gerçekleştiği teyit edilen ortak alanda hangi nesnenin bulunmadığı kaydedilmiş?"
@@ -764,7 +764,7 @@ export const PUZZLES: Puzzle[] = [
       weaponId: "w1",
       locationId: "l2"
     },
-    solutionNarrative: "Küçük çakı koyu takım elbiseli yolcunun evrak çantasına geri konmuş, uçları düğümlü naylon kordon da mandallı tuvalette kulaklıklı gençle kalmıştı. Çay servisinin yapıldığı yemekli vagonda ikisi de yoktu. Çakının ve kordonun bu yolculara bağlanması, yemekli vagondaki ölümü emekli doktorun bardağa damlattığı zehirli içeceğe bırakıyordu."
+    solutionNarrative: "Gece ekspresi sisin içinden istasyona yaklaşırken, yemekli vagondaki ölümün ardındaki gerçek ortaya çıktı. Emekli Doktor, çay servisinin yapıldığı salonda kurbanın bardağına zehirli sıvıyı damlatmıştı. Evrak çantasından düşen çakı şüpheleri telaşlı yolcuya çekse de bu bıçak cinayet yerinde bulunmamıştı. Mandallı kabinde unutulan naylon kordon ve orada görülen kulaklıklı genç ise soruşturmanın diğer parçalarını tamamladı. Silahlarla yolcular arasındaki bağlantılar kurulduğunda geriye tek bir eşleşme kaldı: yemekli vagon, zehirli içecek ve Emekli Doktor. Tren perona yanaşırken, yolculuk bitmeden çözülmesi gereken sır artık aydınlanmıştı."
   },
   {
     id: "tarihi-hamamda-cinayet",

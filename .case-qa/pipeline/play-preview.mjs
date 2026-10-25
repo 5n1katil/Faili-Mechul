@@ -248,12 +248,31 @@ export function buildPlaySite({ repo = repoRoot(), contentSha = null } = {}) {
   return { manifest, html, client, assetFiles, simulatorSha256, simulatorBlob };
 }
 
+// The pinned simulator keeps CASE, OPENED_BONUS and TEST_PENALTY as top-level
+// let bindings. A later script cannot see those bindings, and they are not
+// window properties. The preview copy publishes them from inside the original
+// script. The source file and its QA pin stay unchanged.
+export function exposeSimulatorBindings(html) {
+  if (!html.includes('let CASE=null;') || !html.includes('let TEST_PENALTY=0;') || !html.includes('let OPENED_BONUS=new Set();'))
+    throw new Error('PLAY_SIMULATOR_BINDINGS_MISSING');
+  const at = html.lastIndexOf('</script>');
+  if (at < 0) throw new Error('PLAY_HTML_SCRIPT_MISSING');
+  const bridge = [
+    "Object.defineProperty(window,'CASE',{configurable:true,get:function(){return CASE;},set:function(value){CASE=value;}});",
+    "Object.defineProperty(window,'OPENED_BONUS',{configurable:true,get:function(){return OPENED_BONUS;},set:function(value){OPENED_BONUS=value;}});",
+    "Object.defineProperty(window,'TEST_PENALTY',{configurable:true,get:function(){return TEST_PENALTY;},set:function(value){TEST_PENALTY=value;}});",
+    ''
+  ].join('\n');
+  return html.slice(0, at) + bridge + html.slice(at);
+}
+
 function injectShell(html, manifest) {
-  const at = html.lastIndexOf('</body>');
+  const bridged = exposeSimulatorBindings(html);
+  const at = bridged.lastIndexOf('</body>');
   if (at < 0) throw new Error('PLAY_HTML_BODY_MISSING');
   const json = JSON.stringify(manifest).replace(/</g, '\\u003c');
   const shell = `\n<script type="application/json" id="fm-play-manifest">${json}</script>\n<script src="play-client.js"></script>\n`;
-  return html.slice(0, at) + shell + html.slice(at);
+  return bridged.slice(0, at) + shell + bridged.slice(at);
 }
 
 export function writePlaySite(dir, site) {

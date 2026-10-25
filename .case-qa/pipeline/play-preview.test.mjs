@@ -17,7 +17,8 @@ const FINGERPRINT = 'detaylı swap testleri';
 const OLD_C4 = 'ahşap kompartımanından adımını bile atmadığı';
 const NEW_C4 = 'mühürlü teslim defteri';
 const REVISED_C4 = 'çantasına geri koydu';
-const CLOSING = 'bardağa damlattığı zehirli içeceğe';
+const CLOSING = 'yolculuk bitmeden çözülmesi gereken sır artık aydınlanmıştı';
+const C2 = 'çakı bıçağının bu salonda asla yer almadığını';
 const RETIRED_CLOSING = 'bildiği renksiz tıbbi sıvıyı damlattı';
 const guarded = [
   policy.simulator.path,
@@ -59,6 +60,8 @@ test('play preview keeps the simulator pin and hides QA from the player payload'
   assert.equal(JSON.stringify(site.manifest).includes(FINGERPRINT), false);
   const tren = site.manifest.cases.find(item => item.id === 'tren-yolculugunda-cinayet');
   assert.match(tren.closing, new RegExp(CLOSING));
+  assert.match(trenClue(site, 'c2'), new RegExp(C2));
+  assert.equal(trenClue(site, 'c2').includes('ölümcül saldırının'), false);
   assert.equal(tren.closing.includes(RETIRED_CLOSING), false);
   assert.equal(tren.closing.includes('Yemekli vagonda kalan kişi ve yöntem bunlardı'), false);
   assert.equal(JSON.stringify(tren.payload).includes(CLOSING), false);
@@ -70,6 +73,11 @@ test('play preview keeps the simulator pin and hides QA from the player payload'
   assert.match(site.manifest.matching_rules.statements[0], /tek bir mekana tek bir silah/);
   assert.equal(site.html.includes('.sol{display:none'), true);
   assert.equal(site.html.includes('id="fm-play-manifest"'), true);
+  assert.equal(site.html.includes("Object.defineProperty(window,'CASE'"), true);
+  assert.equal(site.html.includes("Object.defineProperty(window,'OPENED_BONUS'"), true);
+  assert.equal(site.html.includes("Object.defineProperty(window,'TEST_PENALTY'"), true);
+  assert.equal(fs.readFileSync(simulatorPath, 'utf8').includes("Object.defineProperty(window,'CASE'"), false);
+  assert.equal(fs.readFileSync(simulatorPath, 'utf8').includes('let CASE=null;'), true);
   assert.equal(site.html.includes('</html>\n<script'), false);
   const premium = site.manifest.cases.find(item => item.tier === 'premium');
   assert.equal(premium.playable, false);

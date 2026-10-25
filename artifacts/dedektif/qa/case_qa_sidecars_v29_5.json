@@ -1715,7 +1715,7 @@
       "schema_version": "fm_case_qa_sidecar_entry_v2",
       "simulator_version": "29.4",
       "prompt_version": "fm-case-pipeline-v1",
-      "source_content_hash": "f3a5090ba7e83eebb6f345ba2da65cf9ccd160264b310802f73756bfd837710b",
+      "source_content_hash": "2dc20db63c90bc381be67a7ef3c011924ec814fe17ceb382dfe3e9fc173af051",
       "overlay": {
         "top_level": {
           "qaPattern": {
@@ -2890,7 +2890,7 @@
               "component": "location",
               "entityId": "l2",
               "source": "clue:c2",
-              "evidence": "Cinayet masası incelemesi, ölümcül saldırının çay servisi yapılan beyaz örtülü masaların bulunduğu salonda gerçekleştiğini kesinleştirdi; servis personeli vardiya dökümü ise tek hamlede derin yara açan çakı bıçağının bu salonda asla yer almadığını belgeledi."
+              "evidence": "Cinayet masası, ölümün çay servisi yapılan beyaz örtülü masaların bulunduğu salonda gerçekleştiğini kesinleştirdi; servis personeli vardiya dökümü ise tek hamlede derin yara açan çakı bıçağının bu salonda asla yer almadığını belgeledi."
             }
           ],
           "qaPolicy": {
@@ -2929,7 +2929,7 @@
             ],
             "qaRationale": {
               "matrixEffect": "Kesici Silah ≠ Yemekli Vagon elenir",
-              "evidenceLink": "Cinayet masası incelemesi, ölümcül saldırının çay servisi yapılan beyaz örtülü masaların bulunduğu salonda gerçekleştiğini kesinleştirdi; servis personeli vardiya dökümü ise tek hamlede derin yara açan çakı bıçağının bu salonda asla yer almadığını belgeledi.",
+              "evidenceLink": "Cinayet masası, ölümün çay servisi yapılan beyaz örtülü masaların bulunduğu salonda gerçekleştiğini kesinleştirdi; servis personeli vardiya dökümü ise tek hamlede derin yara açan çakı bıçağının bu salonda asla yer almadığını belgeledi.",
               "evidenceKind": "record"
             },
             "qaSemanticFacts": [
@@ -2938,7 +2938,7 @@
                 "component": "location",
                 "entityId": "l2",
                 "source": "clue:c2",
-                "evidence": "Cinayet masası incelemesi, ölümcül saldırının çay servisi yapılan beyaz örtülü masaların bulunduğu salonda gerçekleştiğini kesinleştirdi; servis personeli vardiya dökümü ise tek hamlede derin yara açan çakı bıçağının bu salonda asla yer almadığını belgeledi."
+                "evidence": "Cinayet masası, ölümün çay servisi yapılan beyaz örtülü masaların bulunduğu salonda gerçekleştiğini kesinleştirdi; servis personeli vardiya dökümü ise tek hamlede derin yara açan çakı bıçağının bu salonda asla yer almadığını belgeledi."
               }
             ],
             "isCrimeAnchor": true

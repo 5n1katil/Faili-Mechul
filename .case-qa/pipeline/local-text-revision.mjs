@@ -4,7 +4,7 @@
 import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
 import { pathToFileURL } from 'node:url';
-import { stableHash } from '../fm_case_qa_runner.mjs';
+import { parseStandard, stableHash, stripAuthoring } from '../fm_case_qa_runner.mjs';
 
 export const LOCAL_REVISION_LABEL = 'Yerel düzenleme — yeniden değerlendirilmedi';
 export const LOCAL_REVISION_SCHEMA = 'fm_local_text_revision_v1';
@@ -147,14 +147,70 @@ function flag(args, name) {
   return value && !value.startsWith('--') ? value : true;
 }
 
+function syncVerbatimQuotes(node, changes) {
+  if (!node || typeof node !== 'object') return;
+  if (Array.isArray(node)) {
+    for (const item of node) syncVerbatimQuotes(item, changes);
+    return;
+  }
+  for (const [key, value] of Object.entries(node)) {
+    if ((key === 'evidence' || key === 'evidenceLink') && typeof value === 'string') {
+      const change = changes.find(item => item.before === value);
+      if (change) node[key] = change.after;
+    } else syncVerbatimQuotes(value, changes);
+  }
+}
+
+export async function applyRevisionFile(root, revision) {
+  const { loadSnapshot, read } = await import('./core.mjs');
+  const { playContentRecord } = await import('./play-preview.mjs');
+  const policy = read(pathJoin(root, '.case-qa/pipeline/policy.json'));
+  const snapshot = loadSnapshot(root, policy);
+  const entry = snapshot.entries.find(item => item.id === revision.case_id);
+  if (!entry) throw new Error('REVISION_CASE');
+  const closing = text(entry.candidate.solutionNarrative || entry.candidate.closingNarrative || entry.candidate.cozumAnlatimi);
+  const contentHash = playContentHash(playContentRecord(entry.candidate), closing);
+  const commit = execFileSync('git', ['rev-parse', 'HEAD'], { cwd: root, encoding: 'utf8' }).trim();
+  const check = assessLocalTextRevision(entry.candidate, revision, {
+    root, case_id: entry.id, commit, content_hash: contentHash
+  });
+  if (check.status !== 'applicable_unreviewed') return { ...check, applied: false };
+  const puzzlesPath = pathJoin(root, policy.source.standard_path);
+  const patched = patchPuzzleSource(fs.readFileSync(puzzlesPath, 'utf8'), entry.id, revision.changes);
+  const raw = parseStandard(patched).cases.find(item => (item.puzzleId || item.id) === entry.id);
+  if (!raw) throw new Error('CASE_BLOCK_MISSING');
+  const sidecarPath = pathJoin(root, policy.source.sidecar_path);
+  const sidecar = JSON.parse(fs.readFileSync(sidecarPath, 'utf8'));
+  const caseEntry = sidecar.cases && sidecar.cases[entry.id];
+  if (caseEntry && caseEntry.overlay) syncVerbatimQuotes(caseEntry.overlay, revision.changes);
+  if (caseEntry) caseEntry.source_content_hash = stableHash(stripAuthoring(raw));
+  if (caseEntry && caseEntry.manual_content_revision) caseEntry.manual_content_revision.certificate = null;
+  fs.writeFileSync(puzzlesPath, patched);
+  fs.writeFileSync(sidecarPath, JSON.stringify(sidecar, null, 2) + '\n');
+  return { ...check, applied: true, publication: 'not_performed' };
+}
+
+function pathJoin(root, rel) {
+  return root.replace(/\/$/, '') + '/' + rel;
+}
+
 async function main() {
   const args = process.argv.slice(2);
-  const file = flag(args, '--check');
+  const checkFile = flag(args, '--check');
+  const applyFile = flag(args, '--apply');
+  const file = typeof applyFile === 'string' ? applyFile : checkFile;
   if (typeof file !== 'string') throw new Error('REVISION_FILE_MISSING');
   const revision = JSON.parse(fs.readFileSync(file, 'utf8'));
-  const { loadSnapshot, read } = await import('./core.mjs');
-  const { playContentRecord, repoRoot } = await import('./play-preview.mjs');
+  const { repoRoot } = await import('./play-preview.mjs');
   const root = repoRoot();
+  if (typeof applyFile === 'string') {
+    const result = await applyRevisionFile(root, revision);
+    process.stdout.write(JSON.stringify(result, null, 2) + '\n');
+    if (!result.applied) process.exitCode = 2;
+    return;
+  }
+  const { loadSnapshot, read } = await import('./core.mjs');
+  const { playContentRecord } = await import('./play-preview.mjs');
   const policy = read(root + '/.case-qa/pipeline/policy.json');
   const snapshot = loadSnapshot(root, policy);
   const entry = snapshot.entries.find(item => item.id === revision.case_id);

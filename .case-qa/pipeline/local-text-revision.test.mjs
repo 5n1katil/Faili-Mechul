@@ -31,8 +31,14 @@ test('Tren c2 wording can be checked and applied without treating it as approved
   const contentHash = playContentHash(playContentRecord(entry.candidate), closing);
   assert.equal(preview.content_hash, contentHash);
   assert.equal(JSON.stringify(preview.payload).includes(closing), false);
+  const shipped = 'Cinayet masası, ölümün çay servisi yapılan beyaz örtülü masaların bulunduğu salonda gerçekleştiğini kesinleştirdi; servis personeli vardiya dökümü ise tek hamlede derin yara açan çakı bıçağının bu salonda asla yer almadığını belgeledi.';
+  const shippedClosing = 'Gece ekspresi sisin içinden istasyona yaklaşırken, yemekli vagondaki ölümün ardındaki gerçek ortaya çıktı. Emekli Doktor, çay servisinin yapıldığı salonda kurbanın bardağına zehirli sıvıyı damlatmıştı. Evrak çantasından düşen çakı şüpheleri telaşlı yolcuya çekse de bu bıçak cinayet yerinde bulunmamıştı. Mandallı kabinde unutulan naylon kordon ve orada görülen kulaklıklı genç ise soruşturmanın diğer parçalarını tamamladı. Silahlarla yolcular arasındaki bağlantılar kurulduğunda geriye tek bir eşleşme kaldı: yemekli vagon, zehirli içecek ve Emekli Doktor. Tren perona yanaşırken, yolculuk bitmeden çözülmesi gereken sır artık aydınlanmıştı.';
+  assert.equal(sourceField(entry.candidate, 'clues.c2.text'), shipped);
+  assert.equal(closing, shippedClosing);
+  assert.equal(JSON.stringify(preview.payload).includes(shippedClosing), false);
+  assert.deepEqual(entry.candidate.clues.find(clue => clue.id === 'c2').logicRules, [{ action: 'eliminate', pair: ['w2', 'l2'] }]);
   const before = sourceField(entry.candidate, 'clues.c2.text');
-  const after = before.replace('Cinayet masası incelemesi, ölümcül saldırının', 'Cinayet masası, ölümün');
+  const after = before.replace('servis personeli', 'servis ekibi');
   assert.notEqual(after, before);
   assert.match(after, /çakı bıçağının bu salonda asla yer almadığını/);
   assert.equal(/çakı[\s\S]*bulundu/.test(after), false);

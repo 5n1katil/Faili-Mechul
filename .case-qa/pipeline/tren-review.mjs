@@ -2,6 +2,9 @@
 // One entry for the new Tren candidate. It calls the existing reviewCandidate
 // path and never the recorded-review candidate, a repair, or publication.
 import { execFileSync } from 'node:child_process';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { loadSnapshot, read } from './core.mjs';
 import { stableHash, stripAuthoring } from '../fm_case_qa_runner.mjs';
@@ -39,42 +42,80 @@ function contentTreeMatches(root) {
   }
 }
 
+// The pin reviews the committed candidate, not a later text edit. When the
+// working puzzles or sidecar have moved on, load that commit's content into a
+// temporary tree. The new text does not inherit the old approval.
+function pinnedContentRoot(root, policy) {
+  if (contentTreeMatches(root)) return { root, cleanup() {} };
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'fm-tren-pin-'));
+  const pinned = new Set([policy.source.standard_path, policy.source.sidecar_path]);
+  const files = [policy.source.standard_path, policy.source.premium_path, policy.source.sidecar_path,
+    policy.source.inventory_path, policy.simulator.path, policy.review.media_evidence_path];
+  try {
+    for (const rel of files) {
+      const bytes = pinned.has(rel)
+        ? execFileSync('git', ['show', `${TREN_REVIEW_COMMIT}:${rel}`], { cwd: root, maxBuffer: 32 * 1024 * 1024 })
+        : fs.readFileSync(path.join(root, rel));
+      const dest = path.join(dir, rel);
+      fs.mkdirSync(path.dirname(dest), { recursive: true });
+      fs.writeFileSync(dest, bytes);
+    }
+  } catch (error) {
+    fs.rmSync(dir, { recursive: true, force: true });
+    throw error;
+  }
+  return { root: dir, cleanup() { fs.rmSync(dir, { recursive: true, force: true }); } };
+}
+
 export function loadPinnedTrenReview(root = process.cwd()) {
   if (process.env.FM_PIPELINE_MODE === 'recorded-review') throw new Error('TREN_REVIEW_RECORDED_MODE');
-  if (!contentTreeMatches(root)) throw new Error('TREN_REVIEW_COMMIT');
   const policy = read(root + '/.case-qa/pipeline/policy.json');
-  const snapshot = loadSnapshot(root, policy);
-  const entry = snapshot.entries.find(item => item.id === TREN_REVIEW_CASE);
-  if (!entry) throw new Error('TREN_REVIEW_CASE');
-  const candidate = entry.candidate;
-  const contentHash = candidateContentHash(candidate);
-  const sourceHash = stableHash(stripAuthoring(entry.raw));
-  if (contentHash !== TREN_REVIEW_CONTENT_HASH || contentHash === RECORDED_CONTENT_HASH) throw new Error('TREN_REVIEW_CONTENT');
-  if (sourceHash !== TREN_REVIEW_SOURCE_HASH) throw new Error('TREN_REVIEW_CONTENT');
-  const c4 = candidate.clues.find(item => item.id === 'c4')?.text || '';
-  if (!c4.includes('çantasına geri koydu') || c4.includes(TREN_C4_TEXT) || c4.includes('mühürlü teslim defteri'))
-    throw new Error('TREN_REVIEW_RECORDED');
-  const closing = closingNarrative(candidate);
-  if (!closing.includes('zehirli içeceğe') || closing.includes('bildiği')) throw new Error('TREN_REVIEW_CLOSING');
-  const transport = reviewTransport(snapshot, entry, candidate);
-  if (!transport.pre.passed) throw new Error('TREN_REVIEW_MEDIA');
-  const player = JSON.stringify(transport.playerBody);
-  const judge = JSON.stringify(transport.judgeBody);
-  if (player.includes(closing) || player.includes('closing_narrative') || player.includes('solutionNarrative'))
-    throw new Error('TREN_REVIEW_PLAYER_LEAK');
-  if (!judge.includes(closing) || !judge.includes('closing_narrative')) throw new Error('TREN_REVIEW_JUDGE');
-  const currentHash = reviewHash(snapshot, candidate, transport.pre.evidence);
-  const without = { ...candidate };
-  delete without.solutionNarrative;
-  if (currentHash === reviewHash(snapshot, without, transport.pre.evidence)) throw new Error('TREN_REVIEW_HASH');
-  return {
-    snapshot, entry, candidate, contentHash, sourceHash, closing, transport,
-    head: git(root, ['rev-parse', 'HEAD'])
-  };
+  const pinned = pinnedContentRoot(root, policy);
+  let snapshot;
+  try {
+    snapshot = loadSnapshot(pinned.root, policy);
+  } catch (error) {
+    pinned.cleanup();
+    throw error;
+  }
+  try {
+    const entry = snapshot.entries.find(item => item.id === TREN_REVIEW_CASE);
+    if (!entry) throw new Error('TREN_REVIEW_CASE');
+    const candidate = entry.candidate;
+    const contentHash = candidateContentHash(candidate);
+    const sourceHash = stableHash(stripAuthoring(entry.raw));
+    if (contentHash !== TREN_REVIEW_CONTENT_HASH || contentHash === RECORDED_CONTENT_HASH) throw new Error('TREN_REVIEW_CONTENT');
+    if (sourceHash !== TREN_REVIEW_SOURCE_HASH) throw new Error('TREN_REVIEW_CONTENT');
+    const c4 = candidate.clues.find(item => item.id === 'c4')?.text || '';
+    if (!c4.includes('çantasına geri koydu') || c4.includes(TREN_C4_TEXT) || c4.includes('mühürlü teslim defteri'))
+      throw new Error('TREN_REVIEW_RECORDED');
+    const closing = closingNarrative(candidate);
+    if (!closing.includes('zehirli içeceğe') || closing.includes('bildiği')) throw new Error('TREN_REVIEW_CLOSING');
+    const transport = reviewTransport(snapshot, entry, candidate);
+    if (!transport.pre.passed) throw new Error('TREN_REVIEW_MEDIA');
+    const player = JSON.stringify(transport.playerBody);
+    const judge = JSON.stringify(transport.judgeBody);
+    if (player.includes(closing) || player.includes('closing_narrative') || player.includes('solutionNarrative'))
+      throw new Error('TREN_REVIEW_PLAYER_LEAK');
+    if (!judge.includes(closing) || !judge.includes('closing_narrative')) throw new Error('TREN_REVIEW_JUDGE');
+    const currentHash = reviewHash(snapshot, candidate, transport.pre.evidence);
+    const without = { ...candidate };
+    delete without.solutionNarrative;
+    if (currentHash === reviewHash(snapshot, without, transport.pre.evidence)) throw new Error('TREN_REVIEW_HASH');
+    return {
+      snapshot, entry, candidate, contentHash, sourceHash, closing, transport,
+      head: git(root, ['rev-parse', 'HEAD']),
+      cleanup: pinned.cleanup
+    };
+  } catch (error) {
+    pinned.cleanup();
+    throw error;
+  }
 }
 
 export async function reviewTrenCandidate({ root = process.cwd(), paid = false, confirm = '', store = null, caller = callPaid } = {}) {
   const pinned = loadPinnedTrenReview(root);
+  try {
   const report = {
     schema: 'fm_tren_review_v1',
     mode: paid ? 'call' : 'offline',
@@ -123,6 +164,9 @@ export async function reviewTrenCandidate({ root = process.cwd(), paid = false, 
     failures: review.failures || [],
     certificate: review.passed ? review.certificate : null
   };
+  } finally {
+    pinned.cleanup();
+  }
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
