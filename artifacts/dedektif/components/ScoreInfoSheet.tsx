@@ -52,8 +52,8 @@ export default function ScoreInfoSheet({ visible, onClose }: Props) {
       icon: "lock-open",
       iconColor: "#f97316",
       label: "Ek İpucu",
-      formula: "−300 puan",
-      note: "İpuçsuz çözdükçe puanın artar",
+      formula: "−300 puan + süre",
+      note: "Hafif yardım +30 sn. Güçlü yardım, hafif yardım açıldıktan sonra +60 sn. Güçlüye doğrudan basmak ikisini açar: toplam +90 sn ve iki kez 300 puan. Eklenen her saniye, süre satırında 10 puan daha düşürür.",
     },
     {
       icon: "upgrade",

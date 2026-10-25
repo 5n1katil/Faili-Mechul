@@ -290,6 +290,8 @@ export interface Puzzle {
   difficulty: Difficulty;
   dayIndex: number;
   solvabilityMeta: SolvabilityMeta;
+  // Shown only after a correct solution. Absent on older cases.
+  solutionNarrative?: string;
 }
 
 export const PUZZLES: Puzzle[] = [

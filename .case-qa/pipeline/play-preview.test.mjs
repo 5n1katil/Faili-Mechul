@@ -54,7 +54,9 @@ test('play preview keeps the simulator pin and hides QA from the player payload'
   assert.equal(trenClue(site, 'c4').includes(NEW_C4), false);
   assert.equal(JSON.stringify(site.manifest).includes(FINGERPRINT), false);
   const tren = site.manifest.cases.find(item => item.id === 'tren-yolculugunda-cinayet');
+  assert.equal(tren.closing, undefined);
   assert.equal(Object.hasOwn(tren.payload, 'logicRules'), false);
+  assert.equal(Object.hasOwn(tren.payload, 'solutionNarrative'), false);
   assert.equal(JSON.stringify(tren.payload).includes('logicRules'), false);
   assert.equal(JSON.stringify(tren.payload).includes('qaRationale'), false);
   assert.match(site.manifest.matching_rules.statements[0], /tek bir mekana tek bir silah/);
@@ -81,6 +83,8 @@ test('PR 112 Tren preview uses that commit, not main', { skip: !hasCommit(CONTEN
   const tren = site.manifest.cases.find(item => item.id === 'tren-yolculugunda-cinayet');
   assert.equal(tren.playable, true);
   assert.match(trenClue(site, 'c4'), new RegExp(NEW_C4));
+  assert.equal(tren.closing, undefined);
+  assert.equal(Object.hasOwn(tren.payload, 'solutionNarrative'), false);
   assert.equal(JSON.stringify(tren.payload).includes(FINGERPRINT), false);
   assert.equal(JSON.stringify(tren.payload).includes(OLD_C4), false);
   assert.equal(site.manifest.assets['pa:tren_s1']?.startsWith('assets/'), true);

@@ -12,6 +12,7 @@ import React, {
 } from "react";
 import { Platform } from "react-native";
 import { generateUUID, syncProfileToBackend, type PrivacySettings } from "@/utils/apiClient";
+import { applyBonusOpen, bonusOpenPlan } from "@/utils/bonusPenalty";
 import {
   getDailyPuzzle,
   getStandardClueIndices,
@@ -123,6 +124,7 @@ export interface GameState {
   timerActive: boolean;
   isRanked: boolean;
   solvedMechanics: string[];
+  bonusPenaltySeconds?: number;
 }
 
 export interface BestResult {
@@ -184,6 +186,7 @@ interface SavedDraft {
   timeElapsed: number;
   wrongGuesses: number;
   solvedMechanics?: string[];
+  bonusPenaltySeconds?: number;
 }
 
 const DEFAULT_PROFILE: PlayerProfile = {
@@ -380,6 +383,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
       timeElapsed: gs.timeElapsed,
       wrongGuesses: gs.wrongGuesses,
       solvedMechanics: gs.solvedMechanics,
+      ...(typeof gs.bonusPenaltySeconds === "number" ? { bonusPenaltySeconds: gs.bonusPenaltySeconds } : {}),
     };
     await AsyncStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
     setPendingDraft(draft);
@@ -453,10 +457,11 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         if (!draft) return standardIndices;
         const count = puzzle.clues.length;
         const validDraft = draft.cluesRevealed.filter(
-          (idx) => idx < count && !puzzle.clues[idx]?.isBonus
+          (idx) => idx < count && Boolean(puzzle.clues[idx])
         );
         return [...new Set([...validDraft, ...standardIndices])];
       })(),
+      bonusPenaltySeconds: typeof draft?.bonusPenaltySeconds === "number" ? draft.bonusPenaltySeconds : undefined,
       timeElapsed: draft?.timeElapsed ?? 0,
       wrongGuesses: draft?.wrongGuesses ?? 0,
       isComplete: false,
@@ -603,10 +608,28 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
       if (!prev || !prev.puzzle) return prev;
       if (prev.cluesRevealed.includes(index)) return prev;
       if (!isBonusClue(prev.puzzle, index)) return prev;
+      const plan = bonusOpenPlan({
+        clues: prev.puzzle.clues,
+        targetIndex: index,
+        revealed: prev.cluesRevealed,
+      });
+      if (!plan.indices.length) return prev;
+      const alreadyOpened = prev.cluesRevealed.filter((idx) => isBonusClue(prev.puzzle!, idx)).length;
+      const opened = applyBonusOpen({
+        seconds: plan.seconds,
+        timeElapsed: prev.timeElapsed,
+        bonusPenaltySeconds: prev.bonusPenaltySeconds,
+        alreadyOpened,
+      });
+      const cluesRevealed = [...prev.cluesRevealed];
+      for (const idx of plan.indices) {
+        if (!cluesRevealed.includes(idx)) cluesRevealed.push(idx);
+      }
       const nextState = {
         ...prev,
-        cluesRevealed: [...prev.cluesRevealed, index],
-        timeElapsed: prev.timeElapsed + 30,
+        cluesRevealed,
+        timeElapsed: opened.timeElapsed,
+        bonusPenaltySeconds: opened.bonusPenaltySeconds,
       };
       saveDraft(nextState);
       return nextState;

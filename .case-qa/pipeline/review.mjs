@@ -7,6 +7,7 @@ import { callPaid, requestBody, requestKey } from './provider.mjs';
 import { assertReviewPairReservable, completedRequest } from './review-revision.mjs';
 import { canonicalLogicSignature, logicPatternSummary } from './logic-patterns.mjs';
 import { qualityContract, legacyQualityContract, REVIEW_VERSION } from './quality-contract.mjs';
+import { TREN_C4_TEXT } from './recorded-recovery.mjs';
 
 const entityFields = entity => Object.fromEntries(['id', 'name', 'description', 'detail']
   .filter(k => typeof entity[k] === 'string').map(k => [k, entity[k]]));
@@ -107,6 +108,13 @@ export function comparisonCorpus(snapshot, entry) {
 // New reviews bind this contract. It is not prompt_version: v3 stays so the
 // historical Adada packet can still be rebuilt without these fields.
 export const EVALUATION_CONTRACT = 'fm-evaluation-contract-v1';
+// Shown after a correct solution. It is content for the current certificate
+// and the editor, and stays out of the player view. Historical certificates
+// omit the field so cases written before it existed keep their hash.
+export function closingNarrative(candidate) {
+  const value = candidate?.solutionNarrative || candidate?.closingNarrative || candidate?.cozumAnlatimi || '';
+  return typeof value === 'string' ? value : '';
+}
 export function reviewHash(snapshot, candidate, evidence, contract = 'current') {
   const currentRules = usesMatchingRules(snapshot, contract);
   return stableHash({ view: playerView(candidate, evidence), solution: candidate.solution,
@@ -115,7 +123,7 @@ export function reviewHash(snapshot, candidate, evidence, contract = 'current') 
     simulator: snapshot.simulatorHash, version: snapshot.policy.review.prompt_version,
     model: snapshot.policy.models.reviewer,
     ...(['fm-player-review-v2', REVIEW_VERSION].includes(snapshot.policy.review.prompt_version) ? { ...(snapshot.policy.review.prompt_version === REVIEW_VERSION ? { logic_signature: canonicalLogicSignature(candidate) } : {}), quality_contract: (snapshot.policy.review.prompt_version === REVIEW_VERSION ? qualityContract : legacyQualityContract)(candidate) } : {}),
-    ...(currentRules ? { evaluation_contract: EVALUATION_CONTRACT, matching_rules: playerMatchingRules() } : {}) });
+    ...(currentRules ? { evaluation_contract: EVALUATION_CONTRACT, matching_rules: playerMatchingRules(), closing: closingNarrative(candidate) } : {}) });
 }
 export function certificateValid(snapshot, entry, candidate, certificate, contract = 'current') {
   const pre = mediaPreflight(snapshot, entry, candidate);
@@ -162,10 +170,23 @@ function playerPrompt(snapshot, view, contract) {
   return JSON.stringify({ version: snapshot.policy.review.prompt_version, evaluation_contract: EVALUATION_CONTRACT,
     matching_rules: playerMatchingRules(), player_case: view });
 }
+// Current editor packet only. Kept off JUDGE_SYSTEM, qualityContract and the
+// historical Adada request so stored certificates and request keys stay valid.
+export function proseReview() {
+  return {
+    natural_turkish: 'Cümleler konuşulan Türkçeye yakın olsun. Özne ve nesne ilk okuyuşta belli olsun. Kelime sayısını doldurmak için cümle uzatma.',
+    subject_object: 'Kimin neyi yaptığı, hangi nesnenin nerede durduğu açık olsun. Sahiplik veya olay bilgisi kart tanımından sızmasın.',
+    evidence_limit: 'Sonuç, cümledeki gözlemden çıksın. Kamerada görünmemek veya teslim kaydında olmamak, nesnenin gizlice taşınmadığını ya da kullanılmadığını kanıtlamaz.',
+    bureaucratic_filler: 'Mühürlü, kesintisiz veya adli rapor gibi sıfatlar anlamın doğru olduğunu göstermez. Gereksiz bürokratik dil bir gerekçe değildir.',
+    negative_example: TREN_C4_TEXT
+  };
+}
 function judgePrompt(snapshot, entry, candidate, view, evidence, playerPlan, contract = 'current') {
   const rules = usesMatchingRules(snapshot, contract);
   return JSON.stringify({ version: snapshot.policy.review.prompt_version,
-    ...(rules ? { evaluation_contract: EVALUATION_CONTRACT, matching_rules: playerMatchingRules() } : {}),
+    ...(rules ? { evaluation_contract: EVALUATION_CONTRACT, matching_rules: playerMatchingRules(), prose_review: proseReview(),
+      closing_narrative: closingNarrative(candidate),
+      closing_review: 'Bu metin yalnız doğru çözümden sonra gösterilir. Oyuncu paketine girmez. Çözmek için gereken yeni bir kanıt eklemesin. Akıcı Türkçe olsun; olayları art arda sıralamak yetmez, ipuçlarının sonuca nasıl bağlandığı görülsün.' } : {}),
     player_case: view,
     ...(['fm-player-review-v2', REVIEW_VERSION].includes(snapshot.policy.review.prompt_version) ? { ...(snapshot.policy.review.prompt_version === REVIEW_VERSION ? { logic_signature: canonicalLogicSignature(candidate) } : {}), quality_contract: (snapshot.policy.review.prompt_version === REVIEW_VERSION ? qualityContract : legacyQualityContract)(candidate, entry.tier) } : {}),
     expected_solution: candidate.solution, player_evidence: playerPlan.evidence,

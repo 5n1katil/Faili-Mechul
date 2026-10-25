@@ -55,7 +55,9 @@ jobs:
       - name: Offline pipeline regressions
         run: node .case-qa/pipeline/test.mjs
       - name: Play preview
-        run: node --test .case-qa/pipeline/play-preview.test.mjs
+        run: |
+          node --test .case-qa/pipeline/play-preview.test.mjs
+          node --test .case-qa/pipeline/bonus-penalty.test.mjs
       - name: Free inventory and exact QA audit
         run: |
           node .case-qa/fm_case_qa_certify.mjs

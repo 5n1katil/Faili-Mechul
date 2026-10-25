@@ -50,6 +50,7 @@ import {
   type Difficulty,
   type GridMark,
 } from "@/data/puzzles";
+import { bonusUnlockCopy } from "@/utils/bonusPenalty";
 import { PACKS, PURCHASABLE_PACKS, getPuzzlesForPack, PACK_PRODUCT_IDS } from "@/data/packs";
 import { fetchLeaderboard } from "@/utils/apiClient";
 import { isPuzzleAsset, getPuzzleAsset } from "@/utils/puzzleAssetMap";
@@ -1890,6 +1891,7 @@ export default function VakalarScreen() {
           timeSeconds={timeElapsed}
           wrongGuesses={wrongGuesses}
           bonusCluesRevealedCount={bonusCluesRevealedCount}
+          bonusPenaltySeconds={gameState.bonusPenaltySeconds}
           gridState={gridState}
           finalRank={finalRank}
           totalPlayers={totalPlayers}
@@ -2072,6 +2074,17 @@ export default function VakalarScreen() {
           {puzzle.clues.map((clue, i) => {
             const isBonus = isBonusClue(puzzle, i);
             const isRevealed = cluesRevealed.includes(i);
+            const bonusOrder = puzzle.clues.reduce<number[]>((order, clue, index) => {
+              if (clue.isBonus) order.push(index);
+              return order;
+            }, []);
+            const lightIndex = bonusOrder[0];
+            const bonusCopy = isBonus
+              ? bonusUnlockCopy({
+                  tier: i === lightIndex ? "light" : "strong",
+                  lightOpen: lightIndex !== undefined && cluesRevealed.includes(lightIndex),
+                })
+              : null;
             return (
               <ClueCard
                 key={clue.id}
@@ -2080,6 +2093,10 @@ export default function VakalarScreen() {
                 isRevealed={isRevealed}
                 isBonus={isBonus}
                 isSolved={solvedMechanics.includes(clue.id)}
+                bonusSeconds={bonusCopy?.seconds}
+                bonusChargeSeconds={bonusCopy?.chargeSeconds}
+                bonusTagText={bonusCopy?.tag}
+                bonusConfirmMessage={bonusCopy?.message}
                 onRevealBonus={
                   isBonus && !isRevealed && !gameState.isComplete
                     ? () => handleRevealBonusClue(i)

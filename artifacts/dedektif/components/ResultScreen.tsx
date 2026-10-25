@@ -29,6 +29,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useColors } from "@/hooks/useColors";
 import type { Puzzle, GridMark } from "@/data/puzzles";
 import ScoreInfoSheet from "@/components/ScoreInfoSheet";
+import { bonusScoreNote } from "@/utils/bonusPenalty";
 
 
 interface Props {
@@ -38,6 +39,7 @@ interface Props {
   timeSeconds: number;
   wrongGuesses: number;
   bonusCluesRevealedCount: number;
+  bonusPenaltySeconds?: number;
   gridState: { [key: string]: GridMark };
   finalRank: number;
   totalPlayers: number;
@@ -229,6 +231,7 @@ function ScoreBreakdownCard({
   timeSeconds,
   wrongGuesses,
   bonusCluesRevealedCount,
+  bonusPenaltySeconds,
   difficulty,
   currentStreak,
   finalScore,
@@ -237,6 +240,7 @@ function ScoreBreakdownCard({
   timeSeconds: number;
   wrongGuesses: number;
   bonusCluesRevealedCount: number;
+  bonusPenaltySeconds?: number;
   difficulty: string;
   currentStreak: number;
   finalScore: number;
@@ -283,6 +287,11 @@ function ScoreBreakdownCard({
           <Text style={[styles.breakdownValue, { color: row.color }]}>{row.value}</Text>
         </View>
       ))}
+      {bonusCluesRevealedCount > 0 && (
+        <Text style={[styles.breakdownNote, { color: colors.mutedForeground }]}>
+          {bonusScoreNote(bonusCluesRevealedCount, bonusPenaltySeconds)}
+        </Text>
+      )}
       <View style={[styles.breakdownDivider, { backgroundColor: colors.border }]} />
       <View style={styles.breakdownRow}>
         <MaterialIcons name="emoji-events" size={14} color={colors.primary} />
@@ -351,6 +360,7 @@ export default function ResultScreen({
   timeSeconds,
   wrongGuesses,
   bonusCluesRevealedCount,
+  bonusPenaltySeconds,
   gridState,
   finalRank,
   totalPlayers,
@@ -552,6 +562,9 @@ export default function ResultScreen({
               <MaterialIcons name="location-on" size={16} color={colors.primary} />
               <Text style={[styles.solutionText, { color: colors.foreground }]}>{location?.name ?? "-"}</Text>
             </View>
+            {success && puzzle.solutionNarrative ? (
+              <Text style={[styles.closingText, { color: colors.foreground }]}>{puzzle.solutionNarrative}</Text>
+            ) : null}
           </View>
 
           {success && (
@@ -578,6 +591,7 @@ export default function ResultScreen({
               timeSeconds={timeSeconds}
               wrongGuesses={wrongGuesses}
               bonusCluesRevealedCount={bonusCluesRevealedCount}
+              bonusPenaltySeconds={bonusPenaltySeconds}
               difficulty={puzzle.difficulty}
               currentStreak={currentStreak}
               finalScore={score}
@@ -738,6 +752,18 @@ const styles = StyleSheet.create({
     fontFamily: "DroidSerifRegular",
     fontSize: 16,
     fontWeight: "600",
+  },
+  closingText: {
+    fontFamily: "DroidSerifRegular",
+    fontSize: 14,
+    lineHeight: 22,
+    marginTop: 8,
+  },
+  breakdownNote: {
+    fontFamily: "DroidSerifRegular",
+    fontSize: 12,
+    lineHeight: 18,
+    marginTop: 8,
   },
   statsRow: {
     flexDirection: "row",
