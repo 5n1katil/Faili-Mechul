@@ -336,6 +336,7 @@
     decorate(document.getElementById('game'));
     restore(entry);
     scrubApproval();
+    refreshPenaltyLabels();
     refreshStatus(entry);
   }
   function decorate(root) {

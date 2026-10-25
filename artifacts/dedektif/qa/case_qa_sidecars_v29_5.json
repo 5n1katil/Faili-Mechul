@@ -1715,7 +1715,7 @@
       "schema_version": "fm_case_qa_sidecar_entry_v2",
       "simulator_version": "29.4",
       "prompt_version": "fm-case-pipeline-v1",
-      "source_content_hash": "0f396c39c06a507c27f02fb664019041c38d79c03a4434da7928b690f0f0a98d",
+      "source_content_hash": "f3a5090ba7e83eebb6f345ba2da65cf9ccd160264b310802f73756bfd837710b",
       "overlay": {
         "top_level": {
           "qaPattern": {
@@ -3028,7 +3028,7 @@
         "source": "human_tool_content_revision",
         "case_id": "tren-yolculugunda-cinayet",
         "replaces_candidate_content_hash": "15a8f61697d3919ab5aeb4570afee4dc00ec1ce7667ff842b260cdd6a242a140",
-        "candidate_content_hash": "16fc76a1a3d1706029096a11a2817dc5cffa2e7c51e63bff67ab1ea7876b660d",
+        "candidate_content_hash": "d65b04b02b787fb1e2d0b337a76868bbd1178f0ed05371b8c71b68f7fda01694",
         "changed_clues": [
           "c1",
           "c4",

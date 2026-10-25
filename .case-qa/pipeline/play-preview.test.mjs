@@ -17,7 +17,8 @@ const FINGERPRINT = 'detaylı swap testleri';
 const OLD_C4 = 'ahşap kompartımanından adımını bile atmadığı';
 const NEW_C4 = 'mühürlü teslim defteri';
 const REVISED_C4 = 'çantasına geri koydu';
-const CLOSING = 'bildiği renksiz tıbbi sıvıyı damlattı';
+const CLOSING = 'bardağa damlattığı zehirli içeceğe';
+const RETIRED_CLOSING = 'bildiği renksiz tıbbi sıvıyı damlattı';
 const guarded = [
   policy.simulator.path,
   '.case-qa/pipeline/policy.json',
@@ -58,6 +59,8 @@ test('play preview keeps the simulator pin and hides QA from the player payload'
   assert.equal(JSON.stringify(site.manifest).includes(FINGERPRINT), false);
   const tren = site.manifest.cases.find(item => item.id === 'tren-yolculugunda-cinayet');
   assert.match(tren.closing, new RegExp(CLOSING));
+  assert.equal(tren.closing.includes(RETIRED_CLOSING), false);
+  assert.equal(tren.closing.includes('Yemekli vagonda kalan kişi ve yöntem bunlardı'), false);
   assert.equal(JSON.stringify(tren.payload).includes(CLOSING), false);
   assert.equal(JSON.stringify(tren.payload).includes('solutionNarrative'), false);
   assert.equal(Object.hasOwn(tren.payload, 'logicRules'), false);
