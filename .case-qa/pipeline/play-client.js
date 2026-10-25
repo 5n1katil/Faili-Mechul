@@ -211,17 +211,61 @@
       evaluation: previous.evaluation || {}
     };
   }
-  function bonusSecondsForOpen(already) {
-    return already <= 0 ? 30 : 60;
+  const BUNDLED_BONUS_CONFIRM = 'İki yardımı aç: toplam +90 saniye ve iki bonusun puan kesintisi. Hafif yardım +30 saniye, güçlü yardım +60 saniye. İki kesinti 2 × 300 = 600 puan. Eklenen 90 saniye, süre hesabında 900 puan daha düşürür (10 puan/sn).';
+  function bonusClueIndexes() {
+    return (window.CASE && window.CASE.clues || []).reduce((order, clue, index) => {
+      if (clue && clue.isBonus) order.push(index);
+      return order;
+    }, []);
   }
-  function openedBonusCount() {
-    return document.querySelectorAll('.clue.bonus:not(.locked)').length;
+  function revealedBonusIndexes() {
+    const open = [];
+    document.querySelectorAll('.clue.bonus').forEach(node => {
+      if (node.classList.contains('locked')) return;
+      const index = Number(String(node.id).replace('clue', ''));
+      if (Number.isInteger(index)) open.push(index);
+    });
+    return open;
+  }
+  function bonusOpenPlan(targetIndex) {
+    const order = bonusClueIndexes();
+    const opened = new Set(revealedBonusIndexes());
+    if (!order.includes(targetIndex) || opened.has(targetIndex)) {
+      return { steps: [], bundled: false, message: '' };
+    }
+    const light = order[0];
+    if (targetIndex === light) {
+      return {
+        steps: [{ index: targetIndex, seconds: 30 }],
+        bundled: false,
+        message: 'Bu hafif yardım süreye +30 saniye ekler. Güçlü yardım ancak bu açıldıktan sonra kullanılabilir ve +60 saniye ekler. Her ek ipucu ayrıca 300 puan düşer. Eklenen her saniye, süre hesabında 10 puan daha düşürür.'
+      };
+    }
+    if (!opened.has(light)) {
+      return {
+        steps: [{ index: light, seconds: 30 }, { index: targetIndex, seconds: 60 }],
+        bundled: true,
+        message: BUNDLED_BONUS_CONFIRM
+      };
+    }
+    return {
+      steps: [{ index: targetIndex, seconds: 60 }],
+      bundled: false,
+      message: 'Bu güçlü yardım süreye +60 saniye ekler. Toplam süre cezası +90 saniye olur. Bu açılış ayrıca 300 puan düşer. Süre etkisi süre satırındadır: saniye başına 10 puan (bu açılış 600 puan).'
+    };
   }
   function refreshPenaltyLabels() {
-    const already = openedBonusCount();
-    const seconds = bonusSecondsForOpen(already);
-    const label = already <= 0 ? `⏱ +${seconds} sn` : `⏱ +${seconds} sn · toplam +${30 + seconds} sn`;
-    document.querySelectorAll('.clue.bonus.locked .cost').forEach(node => { node.textContent = label; });
+    const order = bonusClueIndexes();
+    const revealed = new Set(revealedBonusIndexes());
+    const light = order[0];
+    document.querySelectorAll('.clue.bonus.locked').forEach(card => {
+      const cost = card.querySelector('.cost');
+      if (!cost) return;
+      const index = Number(String(card.id).replace('clue', ''));
+      if (index === light) cost.textContent = '⏱ +30 sn';
+      else if (light !== undefined && !revealed.has(light)) cost.textContent = '⏱ +60 sn · iki yardım +90 sn';
+      else cost.textContent = '⏱ +60 sn';
+    });
     const tracker = document.getElementById('penaltyTracker');
     if (tracker) tracker.textContent = `Playtest cezası: ${Number(window.TEST_PENALTY) || 0} sn`;
   }
@@ -256,22 +300,23 @@
       const alreadyOpen = window.OPENED_BONUS && window.OPENED_BONUS.has(index);
       if (restoring) {
         if (clue) clue.pointCost = 0;
-      } else if (!alreadyOpen) {
-        const already = openedBonusCount();
-        const seconds = bonusSecondsForOpen(already);
-        const cumulative = already <= 0 ? seconds : 30 + seconds;
-        const message = already <= 0
-          ? `İlk ek ipucu +${seconds} sn. İkinci +60 sn; ikisi birlikte +90 sn. Her ek ipucu ayrıca 300 puan düşer. Her saniye süre hesabında 10 puan daha düşürür.`
-          : `Bu açılış +${seconds} sn. Toplam süre cezası +${cumulative} sn. Her ek ipucu ayrıca 300 puan düşer; süre etkisi 10 puan/sn ve süre satırındadır.`;
-        if (!window.confirm(message)) return;
-        if (clue) clue.pointCost = seconds;
+        baseUnlock(index);
+        return;
       }
-      baseUnlock(index);
-      if (!restoring) {
-        refreshPenaltyLabels();
-        persist(entry);
-        refreshStatus(entry);
+      if (alreadyOpen) {
+        baseUnlock(index);
+        return;
       }
+      const plan = bonusOpenPlan(index);
+      if (!plan.steps.length || !window.confirm(plan.message)) return;
+      for (const step of plan.steps) {
+        const target = window.CASE && window.CASE.clues && window.CASE.clues[step.index];
+        if (target) target.pointCost = step.seconds;
+        baseUnlock(step.index);
+      }
+      refreshPenaltyLabels();
+      persist(entry);
+      refreshStatus(entry);
     };
     window.checkPlaytest = function () { baseCheck(); scrubApproval(); ensureClosing(entry); persist(entry); };
     document.addEventListener('click', event => {

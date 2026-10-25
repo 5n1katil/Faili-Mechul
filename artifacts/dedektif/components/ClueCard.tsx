@@ -63,6 +63,8 @@ interface Props {
   onRevealBonus?: () => void;
   onSolveMechanic?: () => void;
   bonusSeconds?: number;
+  bonusChargeSeconds?: number;
+  bonusTagText?: string;
   bonusConfirmMessage?: string;
 }
 
@@ -4194,6 +4196,8 @@ export default function ClueCard({
   onRevealBonus,
   onSolveMechanic,
   bonusSeconds = 30,
+  bonusChargeSeconds,
+  bonusTagText,
   bonusConfirmMessage,
 }: Props) {
   const colors = useColors();
@@ -4228,7 +4232,7 @@ export default function ClueCard({
       [
         { text: "Vazgeç", style: "cancel" },
         {
-          text: `Aç (+${bonusSeconds} sn)`,
+          text: `Aç (+${bonusChargeSeconds ?? bonusSeconds} sn)`,
           style: "destructive",
           onPress: () => onRevealBonus?.(),
         },
@@ -4278,7 +4282,7 @@ export default function ClueCard({
                 <Text style={[styles.unlockBtnText, { color: "#D4A843" }]}>Açmak için dokun</Text>
                 <View style={[styles.penaltyTag, { backgroundColor: "#C8372D22", borderColor: "#C8372D44" }]}>
                   <MaterialIcons name="timer" size={10} color="#C8372D" />
-                  <Text style={[styles.penaltyTagText, { color: "#C8372D" }]}>+{bonusSeconds} sn</Text>
+                  <Text style={[styles.penaltyTagText, { color: "#C8372D" }]}>{bonusTagText ?? `+${bonusSeconds} sn`}</Text>
                 </View>
               </Pressable>
             )}

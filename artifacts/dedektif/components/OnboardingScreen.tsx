@@ -143,7 +143,7 @@ function ClueExampleBox({ contentWidth }: { contentWidth: number }) {
           <View style={{ backgroundColor: RED, borderRadius: 5, paddingHorizontal: 7, paddingVertical: 3 }}>
             <Text style={{ fontFamily: "DroidSerifRegular", fontSize: 10, fontWeight: "700", color: "#FFF" }}>+30 / +60</Text>
           </View>
-          <Text style={{ fontFamily: "DroidSerifRegular", fontSize: 12, color: "#6B7280" }}>İlk ve ikinci bonus</Text>
+          <Text style={{ fontFamily: "DroidSerifRegular", fontSize: 12, color: "#6B7280" }}>Hafif ve güçlü yardım</Text>
         </View>
       </View>
 
@@ -398,7 +398,7 @@ const SLIDES: Slide[] = [
     title: "İpuçları",
     subtitle: "Delilleri Değerlendir",
     showClueExample: true,
-    body: "Her bulmacada baştan en az 4 standart ipucu açık gelir. Bunlar; tanık ifadeleri, adli raporlar ve fiziksel delillerden oluşur — her biri seni bir adım daha yaklaştırır.\n\nDaha fazlasına ihtiyaç duyarsan kilitli bir ek ipucu açabilirsin. İlki kronometreye +30 saniye, ikincisi +60 saniye ekler. Her biri ayrıca 300 puan düşer; eklenen saniyeler de süre hesabında 10 puan/saniye olarak işler.",
+    body: "Her bulmacada baştan en az 4 standart ipucu açık gelir. Bunlar; tanık ifadeleri, adli raporlar ve fiziksel delillerden oluşur — her biri seni bir adım daha yaklaştırır.\n\nDaha fazlasına ihtiyaç duyarsan kilitli bir ek ipucu açabilirsin. Hafif yardım kronometreye +30 saniye ekler. Güçlü yardım, hafif yardım açıldıktan sonra +60 saniye ekler. Güçlü yardıma doğrudan basarsan ikisi birden açılır: toplam +90 saniye ve iki bonusun puan kesintisi. Her ek ipucu 300 puan düşer; eklenen saniyeler de süre hesabında 10 puan/saniye olarak işler.",
     tip: "İpuçsuz çözersen daha yüksek puan alırsın — sadece gerçekten gerektiğinde bonus ipucu aç!",
   },
   {
