@@ -11,7 +11,7 @@ import { callPaid, Stop } from './provider.mjs';
 import { openStore } from './state.mjs';
 
 export const TREN_REVIEW_CASE = 'tren-yolculugunda-cinayet';
-export const TREN_REVIEW_COMMIT = '99a6b33965861beeae032628031e8351b62268be';
+export const TREN_REVIEW_COMMIT = '6a106522f55989994a78ff6944ef56e94b3303a2';
 export const TREN_REVIEW_CONTENT_HASH = 'ca62c0494d65d6a2dddcc3dc6279af2f4332634bdd53c42a5d765b2655d1e218';
 export const TREN_REVIEW_SOURCE_HASH = 'a252062c8d4326f21bd48bcaaab64029070cdd78c44ca1d7f25f1b058a7a269d';
 const RECORDED_CONTENT_HASH = 'a084f84420e8e67d7eae702e8a3f839f34e27e00b3a6874c25d15eb487933e3a';
