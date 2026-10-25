@@ -7,11 +7,9 @@ import { compileTextPatch, textRepairPlan } from './text-repair.mjs';
 import { compileHints, hintOnly } from './hint-cleanup.mjs';
 import { experienceProfile } from './experience.mjs';
 import { stableHash } from '../fm_case_qa_runner.mjs';
-import { reviewTransport, reviewCandidate, reviewHash, validPlayer } from './review.mjs';
+import { reviewTransport, reviewCandidate, validPlayer } from './review.mjs';
 import { assertReviewPairReservable, completedRequest } from './review-revision.mjs';
-import { callPaid, requestKey, Stop } from './provider.mjs';
-import { enumerateTextGrid, verifyTextPlan } from './text-repair.mjs';
-
+import { callPaid, Stop } from './provider.mjs';
 // Offline reuse of campaign 39130510026 responses. These candidates are not
 // content-locked and have no independent player/judge review.
 export const TREN_SOCRATIC_HINTS = {
@@ -26,49 +24,35 @@ export const TREN_C4_TEXT = 'Seferin o kısa aralığında mühürlü teslim def
 export const TREN_C4_HINT = 'Mühürlü teslim defteri beyaz saçlı yolcuyu hangi küçük çakıdan kesin olarak uzak tutuyor?';
 const TRACE_ABSENCE = /parmak\s*izi|swap\s+test|fiziksel\s+iz|temas\s+izi/iu;
 const TRACE_MISSING = /bulunmad|rastlanmad|iz(?:i|ine)?\s+yok/iu;
-const CUSTODY_RECORD = /teslim\s+defter|mühürlü\s+teslim|kesintisiz/iu;
+const CAMERA = /kamera/iu;
+const LEDGER = /teslim\s+defter/iu;
+const SEALED = /mühürlü|kesintisiz|adli\s+rapor/iu;
 const NOT_RECEIVED_OR_USED = /ne\s+teslim\s+ald|hiç\s+(?:teslim\s+)?almad|ne\s+de\s+kulland|kullanmad/iu;
+// Retired acceptance check. Matching these words is not evidence.
+export function keywordCustodyGate(text) {
+  const raw = String(text || '');
+  return (CAMERA.test(raw) && LEDGER.test(raw)) || (SEALED.test(raw) && LEDGER.test(raw) && NOT_RECEIVED_OR_USED.test(raw));
+}
 export function eliminationSupported(text) {
   const raw = String(text || '');
-  if (TRACE_ABSENCE.test(raw) && TRACE_MISSING.test(raw) && !NOT_RECEIVED_OR_USED.test(raw))
+  if (TRACE_ABSENCE.test(raw) && TRACE_MISSING.test(raw))
     return { supported: false, reason: 'TRACE_ABSENCE_IS_NOT_EXCLUSION' };
-  if (!CUSTODY_RECORD.test(raw) || !NOT_RECEIVED_OR_USED.test(raw))
-    return { supported: false, reason: 'ELIMINATION_NOT_GROUNDED' };
-  return { supported: true, reason: 'custody_record' };
+  if (keywordCustodyGate(raw))
+    return { supported: false, reason: 'RECORD_ABSENCE_IS_NOT_EXCLUSION' };
+  return { supported: false, reason: 'ELIMINATION_NOT_GROUNDED' };
 }
-export function correctTrenEvidence(candidate) {
-  const next = clone(candidate);
-  const clue = next.clues.find(item => item.id === 'c4');
-  const rule = clue?.logicRules?.[0];
-  if (!rule || rule.action !== 'eliminate' || stableHash(rule.pair) !== stableHash(['s3', 'w2'])) throw new Error('TREN_C4_RULE');
-  clue.text = TREN_C4_TEXT;
-  clue.deductionHint = TREN_C4_HINT;
-  if (clue.qaRationale) clue.qaRationale.evidenceLink = clue.text;
-  for (const fact of clue.qaSemanticFacts || []) if (typeof fact.evidence === 'string') fact.evidence = clue.text;
-  const support = eliminationSupported(clue.text);
-  if (!support.supported) throw new Error(support.reason);
-  return next;
+export function correctTrenEvidence() {
+  throw new Error('TREN_C4_REJECTED');
 }
 export function prepareTrenCorrectionReview(snapshot) {
   const historical = recoverTrenHints(snapshot);
-  const entry = snapshot.entries.find(item => item.id === historical.case_id);
-  const corrected = correctTrenEvidence(historical.candidate);
-  const transport = reviewTransport(snapshot, entry, corrected);
-  const pinned = reviewTransport(snapshot, entry, historical.candidate);
-  const plan = recordedResponse(historical.case_id) && read('.case-qa/fixtures/campaign-39130510026-repairs.json').cases[historical.case_id].recorded_plan;
+  const oldText = historical.candidate.clues.find(item => item.id === 'c4').text;
   return {
-    candidate: corrected,
     historical: historical.candidate,
-    support: eliminationSupported(corrected.clues.find(item => item.id === 'c4').text),
-    historical_support: eliminationSupported(historical.candidate.clues.find(item => item.id === 'c4').text),
-    grid: verifyTextPlan(corrected, plan),
-    without_c4: enumerateTextGrid(corrected, plan.clues.filter(item => !item.isBonus && item.id !== 'c4').map(item => item.rule), plan.anchor).length,
-    candidate_content_hash: candidateContentHash(corrected),
-    pinned_candidate_content_hash: candidateContentHash(historical.candidate),
-    player_request_key: requestKey(entry.id, transport.model, transport.playerBody, 'player'),
-    pinned_player_request_key: requestKey(entry.id, pinned.model, pinned.playerBody, 'player'),
-    review_hash: reviewHash(snapshot, corrected, transport.pre.evidence),
-    pinned_review_hash: reviewHash(snapshot, historical.candidate, pinned.pre.evidence),
+    rejected_example: TREN_C4_TEXT,
+    support: eliminationSupported(TREN_C4_TEXT),
+    historical_support: eliminationSupported(oldText),
+    keyword_gate_would_accept: keywordCustodyGate(TREN_C4_TEXT),
     certificate: null,
     repair_rights_renewed: false
   };
@@ -275,19 +259,12 @@ export async function reviewRecordedRecovery(snapshot, id, store, run, options =
     const clue = proof.candidate.clues.find(item => item.id === 'c4');
     const support = eliminationSupported(clue?.text);
     if (!support.supported) {
-      const corrected = correctTrenEvidence(proof.candidate);
-      const transport = reviewTransport(snapshot, entry, corrected);
-      const pinned = reviewTransport(snapshot, entry, proof.candidate);
       return {
         ...recordedOutcome(snapshot, id, proof, entry, record, run, 'text_logic_gap', { failures: ['TEXT_LOGIC_GAP'] }),
         correction: {
           reason: support.reason,
-          candidate_content_hash: candidateContentHash(corrected),
-          pinned_candidate_content_hash: proof.candidate_content_hash,
-          player_request_key: requestKey(id, transport.model, transport.playerBody, 'player'),
-          pinned_player_request_key: requestKey(id, pinned.model, pinned.playerBody, 'player'),
-          review_hash: reviewHash(snapshot, corrected, transport.pre.evidence),
-          pinned_review_hash: reviewHash(snapshot, proof.candidate, pinned.pre.evidence),
+          accepted: false,
+          rejected_example: TREN_C4_TEXT,
           certificate: null,
           repair_rights_renewed: false
         }
@@ -306,23 +283,26 @@ export async function reviewManualContentRevision(snapshot, id, store, run, opti
   const record = store.state.cases?.[id];
   if (record?.status !== 'quarantined') throw new Error('RECORDED_REVIEW_QUARANTINE');
   if (record.source_hash && record.source_hash !== proof.source_hash) throw new Error('RECORDED_REVIEW_HASH');
+  if (options.candidateContentHash !== undefined && options.candidateContentHash !== proof.candidate_content_hash)
+    throw new Error('MANUAL_REVISION_CONTENT');
+  if (eliminationSupported(TREN_C4_TEXT).supported) throw new Error('TREN_C4_GUARD');
   const support = eliminationSupported(proof.candidate.clues.find(item => item.id === 'c4')?.text);
   if (support.supported) throw new Error('MANUAL_REVISION_NOT_REQUIRED');
-  const corrected = correctTrenEvidence(proof.candidate);
-  const contentHash = candidateContentHash(corrected);
-  if (options.candidateContentHash !== undefined && options.candidateContentHash !== contentHash)
-    throw new Error('MANUAL_REVISION_CONTENT');
-  const revision = {
-    schema: 'fm_manual_content_revision_v1',
-    source: 'human_tool_content_revision',
-    case_id: id,
-    replaces_candidate_content_hash: proof.candidate_content_hash,
-    candidate_content_hash: contentHash,
-    changed_clues: ['c4'],
-    repair_request: false,
-    repair_rights_renewed: false
-  };
-  return reviewBoundCandidate(snapshot, id, store, run, options, proof, corrected, { revision });
+  const entry = snapshot.entries.find(item => item.id === id);
+  return recordedOutcome(snapshot, id, proof, entry, record, run, 'text_logic_gap', {
+    failures: ['TEXT_LOGIC_GAP'],
+    revision: {
+      schema: 'fm_manual_content_revision_v1',
+      source: 'human_tool_content_revision',
+      case_id: id,
+      replaces_candidate_content_hash: proof.candidate_content_hash,
+      candidate_content_hash: proof.candidate_content_hash,
+      rejected_example: 'tren_c4_custody_record',
+      repair_request: false,
+      repair_rights_renewed: false,
+      certificate: null
+    }
+  });
 }
 export function reviewPairRoom(policy, record) {
   const rows = (record.requests || []).filter(item => !(item.status === 'failed' && item.transport_not_started === true));

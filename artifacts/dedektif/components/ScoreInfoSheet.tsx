@@ -52,8 +52,8 @@ export default function ScoreInfoSheet({ visible, onClose }: Props) {
       icon: "lock-open",
       iconColor: "#f97316",
       label: "Ek İpucu",
-      formula: "−300 puan",
-      note: "İpuçsuz çözdükçe puanın artar",
+      formula: "−300 puan + süre",
+      note: "İlk ek ipucu +30 sn, ikinci +60 sn (toplam +90 sn). 300 puan ayrıca düşer. Eklenen her saniye, süre satırında 10 puan daha düşürür.",
     },
     {
       icon: "upgrade",

@@ -62,6 +62,8 @@ interface Props {
   isSolved?: boolean;
   onRevealBonus?: () => void;
   onSolveMechanic?: () => void;
+  bonusSeconds?: number;
+  bonusConfirmMessage?: string;
 }
 
 const CLUE_META: Record<
@@ -4191,6 +4193,8 @@ export default function ClueCard({
   isSolved = false,
   onRevealBonus,
   onSolveMechanic,
+  bonusSeconds = 30,
+  bonusConfirmMessage,
 }: Props) {
   const colors = useColors();
   const opacity = useSharedValue(isRevealed ? 1 : isBonus ? 0.9 : 0.4);
@@ -4210,21 +4214,21 @@ export default function ClueCard({
   const mechanic = clue.mechanicType ?? "text";
 
   const handleBonusReveal = () => {
+    const message = bonusConfirmMessage
+      ?? `Bu ipucunu açmak zaman sayacınıza +${bonusSeconds} saniye ekler. Her ek ipucu ayrıca 300 puan düşer. Devam etmek istiyor musunuz?`;
     if (Platform.OS === "web") {
-      const confirmed = globalThis.confirm(
-        "Bu ipucunu açmak zaman sayacınıza +30 saniye ekler. Devam etmek istiyor musunuz?"
-      );
+      const confirmed = globalThis.confirm(message);
       if (confirmed) onRevealBonus?.();
       return;
     }
 
     Alert.alert(
       "Ek İpucu",
-      "Bu ipucunu açmak zaman sayacınıza +30 saniye ekler. Devam etmek istiyor musunuz?",
+      message,
       [
         { text: "Vazgeç", style: "cancel" },
         {
-          text: "Aç (+30 sn)",
+          text: `Aç (+${bonusSeconds} sn)`,
           style: "destructive",
           onPress: () => onRevealBonus?.(),
         },
@@ -4274,7 +4278,7 @@ export default function ClueCard({
                 <Text style={[styles.unlockBtnText, { color: "#D4A843" }]}>Açmak için dokun</Text>
                 <View style={[styles.penaltyTag, { backgroundColor: "#C8372D22", borderColor: "#C8372D44" }]}>
                   <MaterialIcons name="timer" size={10} color="#C8372D" />
-                  <Text style={[styles.penaltyTagText, { color: "#C8372D" }]}>+30 sn</Text>
+                  <Text style={[styles.penaltyTagText, { color: "#C8372D" }]}>+{bonusSeconds} sn</Text>
                 </View>
               </Pressable>
             )}

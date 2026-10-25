@@ -7,6 +7,7 @@ import { callPaid, requestBody, requestKey } from './provider.mjs';
 import { assertReviewPairReservable, completedRequest } from './review-revision.mjs';
 import { canonicalLogicSignature, logicPatternSummary } from './logic-patterns.mjs';
 import { qualityContract, legacyQualityContract, REVIEW_VERSION } from './quality-contract.mjs';
+import { TREN_C4_TEXT } from './recorded-recovery.mjs';
 
 const entityFields = entity => Object.fromEntries(['id', 'name', 'description', 'detail']
   .filter(k => typeof entity[k] === 'string').map(k => [k, entity[k]]));
@@ -162,10 +163,21 @@ function playerPrompt(snapshot, view, contract) {
   return JSON.stringify({ version: snapshot.policy.review.prompt_version, evaluation_contract: EVALUATION_CONTRACT,
     matching_rules: playerMatchingRules(), player_case: view });
 }
+// Current editor packet only. Kept off JUDGE_SYSTEM, qualityContract and the
+// historical Adada request so stored certificates and request keys stay valid.
+export function proseReview() {
+  return {
+    natural_turkish: 'Cümleler konuşulan Türkçeye yakın olsun. Özne ve nesne ilk okuyuşta belli olsun. Kelime sayısını doldurmak için cümle uzatma.',
+    subject_object: 'Kimin neyi yaptığı, hangi nesnenin nerede durduğu açık olsun. Sahiplik veya olay bilgisi kart tanımından sızmasın.',
+    evidence_limit: 'Sonuç, cümledeki gözlemden çıksın. Kamerada görünmemek veya teslim kaydında olmamak, nesnenin gizlice taşınmadığını ya da kullanılmadığını kanıtlamaz.',
+    bureaucratic_filler: 'Mühürlü, kesintisiz veya adli rapor gibi sıfatlar anlamın doğru olduğunu göstermez. Gereksiz bürokratik dil bir gerekçe değildir.',
+    negative_example: TREN_C4_TEXT
+  };
+}
 function judgePrompt(snapshot, entry, candidate, view, evidence, playerPlan, contract = 'current') {
   const rules = usesMatchingRules(snapshot, contract);
   return JSON.stringify({ version: snapshot.policy.review.prompt_version,
-    ...(rules ? { evaluation_contract: EVALUATION_CONTRACT, matching_rules: playerMatchingRules() } : {}),
+    ...(rules ? { evaluation_contract: EVALUATION_CONTRACT, matching_rules: playerMatchingRules(), prose_review: proseReview() } : {}),
     player_case: view,
     ...(['fm-player-review-v2', REVIEW_VERSION].includes(snapshot.policy.review.prompt_version) ? { ...(snapshot.policy.review.prompt_version === REVIEW_VERSION ? { logic_signature: canonicalLogicSignature(candidate) } : {}), quality_contract: (snapshot.policy.review.prompt_version === REVIEW_VERSION ? qualityContract : legacyQualityContract)(candidate, entry.tier) } : {}),
     expected_solution: candidate.solution, player_evidence: playerPlan.evidence,

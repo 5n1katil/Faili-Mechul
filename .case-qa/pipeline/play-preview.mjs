@@ -211,8 +211,11 @@ export function buildPlaySite({ repo = repoRoot(), contentSha = null } = {}) {
       difficulty_label: DIFFICULTY_LABELS[record.difficulty] || record.difficulty,
       playable: gaps.length === 0, content_hash: contentHash, gaps
     };
+    const closing = text(entry.candidate.solutionNarrative || entry.candidate.closingNarrative || entry.candidate.cozumAnlatimi);
     if (item.playable) {
       item.payload = simulatorPayload(record);
+      if (closing && JSON.stringify(item.payload).includes(closing)) throw new Error('PLAY_CLOSING_LEAK');
+      if (closing) item.closing = closing;
       for (const card of [...record.suspects, ...record.weapons, ...record.locations]) {
         const located = iconPath(card.icon);
         if (!located || Object.prototype.hasOwnProperty.call(assetUrls, card.icon)) continue;

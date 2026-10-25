@@ -58,7 +58,7 @@ test.describe("Scoring system", () => {
     expect(computeScore(10, 0, 0, "baskomiser")).toBeGreaterThan(13000);
   });
 
-  test("scoring: wrong guess costs 500 pts + 30s, bonus clue costs 300 pts + 30s", async ({ page: _page }) => {
+  test("scoring: wrong guess costs 500 pts + 30s; bonuses cost 300 pts plus 30s then 60s", async ({ page: _page }) => {
     const computeScore = (
       timeElapsed: number,
       wrongGuesses: number,
@@ -72,9 +72,11 @@ test.describe("Scoring system", () => {
 
     const baseScore = computeScore(60, 0, 0, "caylak");
     const withWrongGuess = computeScore(60 + 30, 1, 0, "caylak");
-    const withBonusClue = computeScore(60 + 30, 0, 1, "caylak");
+    const withFirstBonus = computeScore(60 + 30, 0, 1, "caylak");
+    const withBothBonuses = computeScore(60 + 30 + 60, 0, 2, "caylak");
 
     expect(baseScore - withWrongGuess).toBe(500 + 30 * 10);
-    expect(baseScore - withBonusClue).toBe(300 + 30 * 10);
+    expect(baseScore - withFirstBonus).toBe(300 + 30 * 10);
+    expect(withFirstBonus - withBothBonuses).toBe(300 + 60 * 10);
   });
 });

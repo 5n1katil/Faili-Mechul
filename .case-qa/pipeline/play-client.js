@@ -20,6 +20,8 @@
     .fm-gap { border: 1px solid #7c2d12; background: rgba(180,83,9,.12); border-radius: 10px; padding: 10px; margin-top: 10px; }
     .fm-rules { margin-top: 12px; font-size: 12.5px; }
     .fm-rules p { white-space: pre-wrap; margin: 8px 0 0; }
+    #fm-play-closing { margin-top: 12px; font-size: 14px; line-height: 1.55; }
+    #fm-play-closing p { margin: 6px 0 0; }
     .fm-actions, .fm-eval-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
     .fm-actions button, .fm-eval-actions button, .fm-list a {
       font: inherit; color: var(--text); background: var(--panel-2); border: 1px solid var(--line);
@@ -205,8 +207,39 @@
     const revealed = document.getElementById('solBox') && document.getElementById('solBox').style.display === 'block';
     return {
       cells, bonuses, solution_revealed: Boolean(revealed || previous.solution_revealed),
+      bonus_penalty_seconds: Number(window.TEST_PENALTY) || 0,
       evaluation: previous.evaluation || {}
     };
+  }
+  function bonusSecondsForOpen(already) {
+    return already <= 0 ? 30 : 60;
+  }
+  function openedBonusCount() {
+    return document.querySelectorAll('.clue.bonus:not(.locked)').length;
+  }
+  function refreshPenaltyLabels() {
+    const already = openedBonusCount();
+    const seconds = bonusSecondsForOpen(already);
+    const label = already <= 0 ? `⏱ +${seconds} sn` : `⏱ +${seconds} sn · toplam +${30 + seconds} sn`;
+    document.querySelectorAll('.clue.bonus.locked .cost').forEach(node => { node.textContent = label; });
+    const tracker = document.getElementById('penaltyTracker');
+    if (tracker) tracker.textContent = `Playtest cezası: ${Number(window.TEST_PENALTY) || 0} sn`;
+  }
+  function ensureClosing(entry) {
+    if (!entry.closing) return;
+    const won = document.querySelector('#ptResult.win');
+    const sol = document.getElementById('solBox');
+    const open = sol && sol.style.display === 'block';
+    if (!won && !open) return;
+    if (document.getElementById('fm-play-closing')) return;
+    const node = document.createElement('div');
+    node.id = 'fm-play-closing';
+    const title = document.createElement('strong');
+    title.textContent = 'Vaka kapanışı';
+    const body = document.createElement('p');
+    body.textContent = entry.closing;
+    node.append(title, body);
+    (sol && sol.parentElement ? sol.parentElement : document.getElementById('game')).append(node);
   }
   function persist(entry) { writeState(entry, currentState(entry)); }
 
@@ -218,8 +251,34 @@
     const baseOpen = window.openEnt;
     window.render = function () { baseRender(); afterRender(entry); };
     window.cycleCell = function (cell) { baseCycle(cell); if (!restoring) persist(entry); };
-    window.unlock = function (index) { baseUnlock(index); if (!restoring) { persist(entry); refreshStatus(entry); } };
-    window.checkPlaytest = function () { baseCheck(); scrubApproval(); persist(entry); };
+    window.unlock = function (index) {
+      const clue = window.CASE && window.CASE.clues && window.CASE.clues[index];
+      const alreadyOpen = window.OPENED_BONUS && window.OPENED_BONUS.has(index);
+      if (restoring) {
+        if (clue) clue.pointCost = 0;
+      } else if (!alreadyOpen) {
+        const already = openedBonusCount();
+        const seconds = bonusSecondsForOpen(already);
+        const cumulative = already <= 0 ? seconds : 30 + seconds;
+        const message = already <= 0
+          ? `İlk ek ipucu +${seconds} sn. İkinci +60 sn; ikisi birlikte +90 sn. Her ek ipucu ayrıca 300 puan düşer. Her saniye süre hesabında 10 puan daha düşürür.`
+          : `Bu açılış +${seconds} sn. Toplam süre cezası +${cumulative} sn. Her ek ipucu ayrıca 300 puan düşer; süre etkisi 10 puan/sn ve süre satırındadır.`;
+        if (!window.confirm(message)) return;
+        if (clue) clue.pointCost = seconds;
+      }
+      baseUnlock(index);
+      if (!restoring) {
+        refreshPenaltyLabels();
+        persist(entry);
+        refreshStatus(entry);
+      }
+    };
+    window.checkPlaytest = function () { baseCheck(); scrubApproval(); ensureClosing(entry); persist(entry); };
+    document.addEventListener('click', event => {
+      const button = event.target && event.target.closest ? event.target.closest('button') : null;
+      if (!button || !button.textContent.includes('Çözümü Göster')) return;
+      setTimeout(() => ensureClosing(entry), 0);
+    });
     window.openEnt = function (cat, id) { baseOpen(cat, id); decorate(document.querySelector('#entModal .modal-box') || document.body); };
     evaluation.addEventListener('input', () => {
       const state = currentState(entry);
@@ -286,6 +345,12 @@
         const box = document.getElementById('solBox');
         if (box) box.style.display = 'block';
       }
+      const savedSeconds = Number.isFinite(saved.bonus_penalty_seconds)
+        ? saved.bonus_penalty_seconds
+        : (saved.bonuses || []).length * 30;
+      window.TEST_PENALTY = savedSeconds;
+      refreshPenaltyLabels();
+      ensureClosing(entry);
       const form = document.getElementById('fm-play-eval');
       if (form && saved.evaluation) applyForm(form, saved.evaluation);
     } finally {

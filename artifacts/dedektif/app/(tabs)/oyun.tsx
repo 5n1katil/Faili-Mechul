@@ -50,6 +50,7 @@ import {
   type Difficulty,
   type GridMark,
 } from "@/data/puzzles";
+import { bonusUnlockCopy } from "@/utils/bonusPenalty";
 import { PACKS, PURCHASABLE_PACKS, getPuzzlesForPack, PACK_PRODUCT_IDS } from "@/data/packs";
 import { fetchLeaderboard } from "@/utils/apiClient";
 import { isPuzzleAsset, getPuzzleAsset } from "@/utils/puzzleAssetMap";
@@ -1890,6 +1891,7 @@ export default function VakalarScreen() {
           timeSeconds={timeElapsed}
           wrongGuesses={wrongGuesses}
           bonusCluesRevealedCount={bonusCluesRevealedCount}
+          bonusPenaltySeconds={gameState.bonusPenaltySeconds}
           gridState={gridState}
           finalRank={finalRank}
           totalPlayers={totalPlayers}
@@ -2072,6 +2074,7 @@ export default function VakalarScreen() {
           {puzzle.clues.map((clue, i) => {
             const isBonus = isBonusClue(puzzle, i);
             const isRevealed = cluesRevealed.includes(i);
+            const bonusCopy = isBonus ? bonusUnlockCopy(bonusCluesRevealedCount) : null;
             return (
               <ClueCard
                 key={clue.id}
@@ -2080,6 +2083,8 @@ export default function VakalarScreen() {
                 isRevealed={isRevealed}
                 isBonus={isBonus}
                 isSolved={solvedMechanics.includes(clue.id)}
+                bonusSeconds={bonusCopy?.seconds}
+                bonusConfirmMessage={bonusCopy?.message}
                 onRevealBonus={
                   isBonus && !isRevealed && !gameState.isComplete
                     ? () => handleRevealBonusClue(i)
